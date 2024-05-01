@@ -24,7 +24,7 @@ const _setup = _scope => {
   _a(_scope, [0]);
   _b(_scope, 1);
 };
-export const template = "<button> </button>";
-export const walks = /* get, next(1), get, out(1) */" D l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko");
+export const _template_ = "<button> </button>";
+export const _walks_ = /* get, next(1), get, out(1) */" D l";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko");

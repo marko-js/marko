@@ -24,7 +24,7 @@ const _setup = _scope => {
   _x(_scope, 1);
   _dynamicTagName(_scope, tags[0]);
 };
-export const template = "<!><button>Count: <!></button><!><div>Parent: <!></div>";
-export const walks = /* get, next(1), over(1), replace, out(1), replace, over(1), next(1), over(1), replace, out(1) */"D Db%l%bDb%l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args-tag-var/template.marko");
+export const _template_ = "<!><button>Count: <!></button><!><div>Parent: <!></div>";
+export const _walks_ = /* get, next(1), over(1), replace, out(1), replace, over(1), next(1), over(1), replace, out(1) */"D Db%l%bDb%l";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args-tag-var/template.marko");

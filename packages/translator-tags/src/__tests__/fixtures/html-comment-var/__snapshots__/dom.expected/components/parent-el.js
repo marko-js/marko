@@ -5,7 +5,7 @@ const _setup = _scope => {
   _queueEffect(_scope, _setup_effect);
   _tagName(_scope, undefined);
 };
-export const template = "<!--Body Text-->";
-export const walks = /* get, over(1) */" b";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/html-comment-var/components/parent-el.marko");
+export const _template_ = "<!--Body Text-->";
+export const _walks_ = /* get, over(1) */" b";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/html-comment-var/components/parent-el.marko");

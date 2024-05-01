@@ -1,5 +1,5 @@
-export const template = "<!><p class=par>paragraph</p><!>";
-export const walks = /* over(1) */"DbD";
-export const setup = function () {};
+export const _template_ = "<!><p class=par>paragraph</p><!>";
+export const _walks_ = /* over(1) */"DbD";
+export const _setup_ = function () {};
 import { createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-native/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-native/template.marko");

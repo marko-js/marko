@@ -13,7 +13,7 @@ const _count = /* @__PURE__ */_value("count", (_scope, count) => {
 const _setup = _scope => {
   _count(_scope, 0);
 };
-export const template = "<div><button> </button><!----></div>";
-export const walks = /* next(1), get, next(1), get, out(1), get, out(1) */"D D l l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/html-comment-counter/template.marko");
+export const _template_ = "<div><button> </button><!----></div>";
+export const _walks_ = /* next(1), get, next(1), get, out(1), get, out(1) */"D D l l";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/html-comment-counter/template.marko");

@@ -17,7 +17,7 @@ const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName) => {
 const _setup = _scope => {
   _tagName(_scope, child);
 };
-export const template = "<!><button></button><!><!>";
-export const walks = /* get, over(1), replace, over(1) */"D b%bD";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko");
+export const _template_ = "<!><button></button><!><!>";
+export const _walks_ = /* get, over(1), replace, over(1) */"D b%bD";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko");

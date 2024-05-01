@@ -6,12 +6,12 @@ const _destructure2 = (_scope, {
   _value(_scope, value);
 };
 const _input = /* @__PURE__ */_value2("input", (_scope, input) => _destructure2(_scope, input));
-export const args = (_scope, _destructure3, _clean) => {
+export const _args_ = (_scope, _destructure3, _clean) => {
   let input;
   if (!_clean) [input] = _destructure3;
   _input(_scope, input, _clean);
 };
-export const template = "<em>Testing</em> <!>";
-export const walks = /* over(2), replace, over(1) */"c%b";
-export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/update-html/template.marko");
+export const _template_ = "<em>Testing</em> <!>";
+export const _walks_ = /* over(2), replace, over(1) */"c%b";
+export const _setup_ = function () {};
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _args_), "packages/translator-tags/src/__tests__/fixtures/update-html/template.marko");

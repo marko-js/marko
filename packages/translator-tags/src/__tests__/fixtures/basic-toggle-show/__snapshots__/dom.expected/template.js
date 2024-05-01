@@ -14,7 +14,7 @@ const _show = /* @__PURE__ */_value("show", (_scope, show) => {
 const _setup = _scope => {
   _show(_scope, true);
 };
-export const template = "<div><!><button>Toggle</button></div>";
-export const walks = /* next(1), replace, over(1), get, out(1) */"D%b l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko");
+export const _template_ = "<div><!><button>Toggle</button></div>";
+export const _walks_ = /* next(1), replace, over(1), get, out(1) */"D%b l";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko");

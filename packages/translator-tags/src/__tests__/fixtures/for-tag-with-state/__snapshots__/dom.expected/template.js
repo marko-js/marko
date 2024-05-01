@@ -23,7 +23,7 @@ const _setup = _scope => {
   _arrA(_scope, [1, 2, 3]);
   _arrB(_scope, [1, 2, 3]);
 };
-export const template = "<!><!><!><!>";
-export const walks = /* replace, over(1), replace, over(1) */"D%b%bD";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/for-tag-with-state/template.marko");
+export const _template_ = "<!><!><!><!>";
+export const _walks_ = /* replace, over(1), replace, over(1) */"D%b%bD";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/for-tag-with-state/template.marko");

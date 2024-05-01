@@ -18,12 +18,12 @@ const _setup = _scope => {
   _a(_scope, 0);
   _b(_scope, 0);
 };
-export const args = (_scope, _destructure, _clean) => {
+export const _args_ = (_scope, _destructure, _clean) => {
   let input;
   if (!_clean) [input] = _destructure;
   _input(_scope, input, _clean);
 };
-export const template = "<div><!> <!></div>";
-export const walks = /* next(1), replace, over(2), replace, out(1) */"D%c%l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/user-effect-abort-signal/template.marko");
+export const _template_ = "<div><!> <!></div>";
+export const _walks_ = /* next(1), replace, over(2), replace, out(1) */"D%c%l";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _args_), "packages/translator-tags/src/__tests__/fixtures/user-effect-abort-signal/template.marko");

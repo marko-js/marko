@@ -3,7 +3,7 @@ const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures
 const _setup = _scope => {
   _queueEffect(_scope, _setup_effect);
 };
-export const template = "";
-export const walks = "";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-effect-no-deps/template.marko");
+export const _template_ = "";
+export const _walks_ = "";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-effect-no-deps/template.marko");

@@ -6,7 +6,7 @@ import { classAttr as _classAttr, createRenderer as _createRenderer, createTempl
 const _setup = _scope => {
   _classAttr(_scope["#div/1"], content);
 };
-export const template = "<div>Hello</div>";
-export const walks = /* get, over(1) */" b";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/style-tag-modules-destructured/template.marko");
+export const _template_ = "<div>Hello</div>";
+export const _walks_ = /* get, over(1) */" b";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/style-tag-modules-destructured/template.marko");

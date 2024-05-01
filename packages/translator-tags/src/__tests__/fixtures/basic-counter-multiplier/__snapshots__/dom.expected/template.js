@@ -28,7 +28,7 @@ const _setup = _scope => {
   _count(_scope, 0);
   _multiplier(_scope, 1);
 };
-export const template = "<button id=multiplier>increase multiplier (<!>)</button><button id=count>increase count</button><div> </div>";
-export const walks = /* get, next(1), over(1), replace, out(1), get, over(1), next(1), get, out(1) */" Db%l bD l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko");
+export const _template_ = "<button id=multiplier>increase multiplier (<!>)</button><button id=count>increase count</button><div> </div>";
+export const _walks_ = /* get, next(1), over(1), replace, out(1), get, over(1), next(1), get, out(1) */" Db%l bD l";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko");

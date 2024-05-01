@@ -3,7 +3,7 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => _tagVarSignal(_scope, x), v
 const _setup = _scope => {
   _x(_scope, 1);
 };
-export const template = "<span>child</span>";
-export const walks = /* over(1) */"b";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/return-tag-no-var/components/child.marko");
+export const _template_ = "<span>child</span>";
+export const _walks_ = /* over(1) */"b";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/return-tag-no-var/components/child.marko");

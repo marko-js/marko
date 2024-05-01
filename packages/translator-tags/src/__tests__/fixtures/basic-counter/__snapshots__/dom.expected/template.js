@@ -12,7 +12,7 @@ const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => 
 const _setup = _scope => {
   _clickCount(_scope, 0);
 };
-export const template = "<div><button> </button></div>";
-export const walks = /* next(1), get, next(1), get, out(2) */"D D m";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-counter/template.marko");
+export const _template_ = "<div><button> </button></div>";
+export const _walks_ = /* next(1), get, next(1), get, out(2) */"D D m";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-counter/template.marko");

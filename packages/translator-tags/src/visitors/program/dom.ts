@@ -22,12 +22,15 @@ export default {
     exit(program: t.NodePath<t.Program>) {
       visit(program);
       const section = getSection(program);
-      const templateIdentifier = t.identifier("template");
-      const walksIdentifier = t.identifier("walks");
-      const setupIdentifier = t.identifier("setup");
-      const argsSignalIdentifier = t.identifier("args");
-      const closuresIdentifier = t.identifier("closures");
+
       const { walks, writes, setup } = writer.getSectionMeta(section);
+
+      const domExports = program.node.extra.domExports!;
+      const templateIdentifier = t.identifier(domExports.template);
+      const walksIdentifier = t.identifier(domExports.walks);
+      const setupIdentifier = t.identifier(domExports.setup);
+      const argsIdentifier = t.identifier(domExports.args);
+      const closuresIdentifier = t.identifier(domExports.closures);
 
       forEachSectionReverse((childSection) => {
         const sectionPath = getSectionPath(childSection);
@@ -77,7 +80,7 @@ export default {
           t.exportNamedDeclaration(
             t.variableDeclaration("const", [
               t.variableDeclarator(
-                argsSignalIdentifier,
+                t.identifier(domExports.args),
                 getDestructureSignal(
                   { input: programInput as t.Identifier },
                   t.arrayPattern([programInput]),
@@ -94,7 +97,7 @@ export default {
         t.exportNamedDeclaration(
           t.variableDeclaration("const", [
             t.variableDeclarator(
-              templateIdentifier,
+              t.identifier(domExports.template),
               writes || t.stringLiteral(""),
             ),
           ]),
@@ -142,7 +145,7 @@ export default {
               setupIdentifier,
               closures.length && closuresIdentifier,
               undefined,
-              inputBinding && argsSignalIdentifier,
+              inputBinding && argsIdentifier,
             ),
             t.stringLiteral(getTemplateId(optimize, `${filename}`)),
           ),

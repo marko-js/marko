@@ -40,7 +40,7 @@ const _setup = _scope => {
     description: "HTML Reimagined"
   }]);
 };
-export const template = "<div><!><button id=add>Add</button><button id=remove>Remove</button></div>";
-export const walks = /* next(1), replace, over(1), get, over(1), get, out(1) */"D%b b l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko");
+export const _template_ = "<div><!><button id=add>Add</button><button id=remove>Remove</button></div>";
+export const _walks_ = /* next(1), replace, over(1), get, over(1), get, out(1) */"D%b b l";
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko");

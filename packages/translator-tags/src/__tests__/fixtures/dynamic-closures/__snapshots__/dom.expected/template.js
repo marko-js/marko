@@ -1,6 +1,6 @@
 const a = 1;
 import { on as _on, queueSource as _queueSource, data as _data, bindRenderer as _bindRenderer, inChild as _inChild, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, createRenderer as _createRenderer, conditional as _conditional, register as _register, dynamicSubscribers as _dynamicSubscribers, value as _value, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-import { setup as _customTag, args as _customTag_args, template as _customTag_template, walks as _customTag_walks } from "./components/custom-tag.marko";
+import { _setup_ as _customTag, _args_ as _customTag_args, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag.marko";
 const _c$ifBody = _registerSubscriber("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_3_c/subscriber", /* @__PURE__ */_dynamicClosure("c", (_scope, c) => _data(_scope["#text/2"], c), _scope => _scope._._));
 const _b$ifBody = /* @__PURE__ */_dynamicClosure("b", (_scope, b) => _data(_scope["#text/1"], b), _scope => _scope._._);
 const _setup$ifBody = _scope => {
@@ -34,7 +34,7 @@ const _setup = _scope => {
   }]);
   _if(_scope, Math.random() ? _ifBody : null);
 };
-export const template = `<button></button>${_customTag_template}<div><!></div>`;
-export const walks = /* get, over(1), beginChild, _customTag_walks, endChild, next(1), replace, out(1) */` b/${_customTag_walks}&D%l`;
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko");
+export const _template_ = `<button></button>${_customTag_template}<div><!></div>`;
+export const _walks_ = /* get, over(1), beginChild, _customTag_walks, endChild, next(1), replace, out(1) */` b/${_customTag_walks}&D%l`;
+export const _setup_ = _setup;
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko");
