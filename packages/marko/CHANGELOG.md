@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.34.3
+
+### Patch Changes
+
+- [#2223](https://github.com/marko-js/marko/pull/2223) [`1453eb8`](https://github.com/marko-js/marko/commit/1453eb8c88912aaf58c6fee34d9550af8d06e1fb) Thanks [@LuLaValva](https://github.com/LuLaValva)! - fix native tag return types
+
 ## 5.34.2
 
 ### Patch Changes
