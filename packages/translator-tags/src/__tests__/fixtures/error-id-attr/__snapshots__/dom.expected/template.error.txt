@@ -1,0 +1,5 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-id-attr/template.marko:1:17
+    > 1 | <id/firstNameId x=1/>
+        |                 ^^^ Invalid "id" tag attribute: "x".
+      2 |
