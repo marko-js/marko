@@ -1,0 +1,2 @@
+The '<if>' tag requires body content.
+    at packages/translator-tags/src/__tests__/fixtures/error-if-no-content/template.marko
