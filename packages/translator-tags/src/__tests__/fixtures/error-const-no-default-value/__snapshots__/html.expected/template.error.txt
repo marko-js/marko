@@ -1,0 +1,5 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-const-no-default-value/template.marko:1:2
+    > 1 | <const/x/>
+        |  ^^^^^ The 'const' tag requires a default 'value' attribute.
+      2 |
