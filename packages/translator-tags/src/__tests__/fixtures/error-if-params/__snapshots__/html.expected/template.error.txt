@@ -1,0 +1,5 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-if-params/template.marko:1:5
+    > 1 | <if|x|=input.show>Hello World</if>
+        |     ^ Tag does not support parameters.
+      2 |
