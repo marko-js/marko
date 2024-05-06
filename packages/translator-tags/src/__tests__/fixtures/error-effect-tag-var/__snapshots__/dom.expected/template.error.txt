@@ -1,0 +1,5 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-effect-tag-var/template.marko:1:9
+    > 1 | <effect/x=(() => {})/>
+        |         ^ Tag does not support a variable.
+      2 |
