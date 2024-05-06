@@ -1,0 +1,5 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-effect-extra-attr/template.marko:1:2
+    > 1 | <effect=(() => {}) y=1/>
+        |  ^^^^^^ The 'effect' tag only supports the default 'value' attribute.
+      2 |
