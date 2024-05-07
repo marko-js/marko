@@ -1,0 +1,6 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-return-multiple/template.marko:2:2
+      1 | <return=1/>
+    > 2 | <return=2/>
+        |  ^^^^^^ The '<return>' tag can only be used once per template.
+      3 |

@@ -1,6 +1,6 @@
-import { type Tag, assertNoParams } from "@marko/babel-utils";
+import { type Tag, assertNoParams, assertNoArgs } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import { assertNoBodyContent } from "../util/assert";
+import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
@@ -18,13 +18,31 @@ export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
     const { node } = tag;
     const tagVar = node.var;
-    const valueAttr = node.attributes.find(
-      (attr) => t.isMarkoAttribute(attr) && attr.name === "value",
-    );
+    const [valueAttr, valueChangeAttr] = node.attributes;
 
+    assertNoArgs(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
+    assertNoSpreadAttrs(tag);
 
+    if (
+      valueChangeAttr &&
+      (valueChangeAttr as t.MarkoAttribute).name !== "valueChange"
+    ) {
+      const start = valueChangeAttr.loc?.start;
+      const end = valueChangeAttr.loc?.end;
+      const msg =
+        "The 'let' tag only supports the default 'value' attribute and its change handler.";
+
+      if (start == null || end == null) {
+        throw tag.get("name").buildCodeFrameError(msg);
+      } else {
+        throw tag.hub.buildError(
+          { loc: { start, end } } as unknown as t.Node,
+          msg,
+          Error,
+        );
+    }
     if (!tagVar) {
       throw tag
         .get("name")
