@@ -1,4 +1,9 @@
-import { type Tag, assertNoParams } from "@marko/babel-utils";
+import {
+  type Tag,
+  assertNoParams,
+  assertNoArgs,
+  assertNoVar,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
 import attrsToObject from "../util/attrs-to-object";
@@ -16,6 +21,7 @@ import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 
 const kRef = Symbol("lifecycle attrs reference");
+const supportedAttrNames = new Set(["onMount", "onUpdate", "onDestroy"]);
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -25,6 +31,8 @@ declare module "@marko/compiler/dist/types" {
 
 export default {
   analyze(tag) {
+    assertNoArgs(tag);
+    assertNoVar(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
 
@@ -38,7 +46,28 @@ export default {
       tagExtra,
     );
 
+    if (node.attributes.length === 0) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError(
+          "The 'lifecycle' tag requires at least one attribute.",
+        );
+    }
+
     for (const attr of node.attributes) {
+      if (t.isMarkoSpreadAttribute(attr)) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            "The 'lifecycle' tag does not support ...spread attributes.",
+          );
+      } else if (!supportedAttrNames.has(attr.name)) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            `The 'lifecycle' tag does not support the '${attr.name}' attribute.`,
+          );
+      }
       (attr.value.extra ??= {}).isEffect = true;
     }
 

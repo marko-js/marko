@@ -1,0 +1,7 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-lifecycle-var/template.marko:1:12
+    > 1 | <lifecycle/x
+        |            ^ Tag does not support a variable.
+      2 |   onMount() {}
+      3 |   onUpdate() {}
+      4 |   onDestroy() {}
