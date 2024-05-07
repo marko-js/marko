@@ -68,7 +68,7 @@ export default {
 
     if (node.body.body.length === 0) {
       throw tag
-        .get("body")
+        .get("name")
         .buildCodeFrameError(`The '<if>' tag requires body content.`);
     }
 
