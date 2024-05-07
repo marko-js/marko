@@ -1,0 +1,5 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-return-extra-attr/template.marko:1:11
+    > 1 | <return=3 y=5/>
+        |           ^^^ The '<return>' tag only supports the default 'value' attribute.
+      2 |

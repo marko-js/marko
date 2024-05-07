@@ -1,6 +1,6 @@
-import { type Tag, assertNoParams, computeNode } from "@marko/babel-utils";
+import { type Tag, assertNoParams, computeNode, assertNoArgs } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import { assertNoBodyContent } from "../util/assert";
+import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { getMarkoOpts, isOutputDOM } from "../util/marko-config";
 import { size } from "../util/optional";
 import {
@@ -29,16 +29,34 @@ export default {
     const { node } = tag;
     const tagVar = node.var;
     const { optimize } = getMarkoOpts();
-    const valueAttr = node.attributes.find(
-      (attr) => t.isMarkoAttribute(attr) && attr.name === "value",
-    );
+    const [valueAttr, valueChangeAttr] = node.attributes;
     const valueChangeAttr = node.attributes.find(
       (attr) => t.isMarkoAttribute(attr) && attr.name === "valueChange",
     );
 
+    assertNoArgs(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
+    assertNoSpreadAttrs(tag);
 
+    if (
+      valueChangeAttr &&
+      (valueChangeAttr as t.MarkoAttribute).name !== "valueChange"
+    ) {
+      const start = valueChangeAttr.loc?.start;
+      const end = valueChangeAttr.loc?.end;
+      const msg =
+        "The 'let' tag only supports the default 'value' attribute and its change handler.";
+
+      if (start == null || end == null) {
+        throw tag.get("name").buildCodeFrameError(msg);
+      } else {
+        throw tag.hub.buildError(
+          { loc: { start, end } } as unknown as t.Node,
+          msg,
+          Error,
+        );
+    }
     if (!tagVar) {
       throw tag
         .get("name")
