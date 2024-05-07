@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-let-extra-attr/template.marko:1:2
+    at packages/translator-tags/src/__tests__/fixtures/error-let-extra-attr/template.marko:1:14
     > 1 | <let/count=0 y=3/>
-        |  ^^^ The 'let' tag only supports the default 'value' attribute and its change handler.
+        |              ^^^ The 'let' tag only supports the default 'value' attribute and its change handler.
       2 |
