@@ -1,0 +1,6 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-elseif-no-default-value/template.marko:2:2
+      1 | <if=false>Skipped</if>
+    > 2 | <else-if>Hello World</else-if>
+        |  ^^^^^^^ The '<else-if>' tag requires a default attribute like '<else-if=condition>'.
+      3 |
