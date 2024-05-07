@@ -56,6 +56,7 @@ export default {
           msg,
           Error,
         );
+      }
     }
     if (!tagVar) {
       throw tag
