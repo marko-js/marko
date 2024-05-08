@@ -1,0 +1,5 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-log-body-content/template.marko:1:2
+    > 1 | <log="Hello">Hello</log>
+        |  ^^^ The <"log"> tag does not support body content.
+      2 |
