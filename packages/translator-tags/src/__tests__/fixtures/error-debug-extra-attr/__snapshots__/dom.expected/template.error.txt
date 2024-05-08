@@ -1,0 +1,6 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-debug-extra-attr/template.marko:2:2
+      1 | <const/x=0/>
+    > 2 | <debug=x y=1/>
+        |  ^^^^^ The 'debug' tag only supports the 'value' attribute.
+      3 |
