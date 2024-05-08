@@ -1,0 +1,6 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-define-assignment/template.marko:2:24
+      1 | <define/x>Hello!</define>
+    > 2 | <button onClick=(() => x++)>increment</button>
+        |                        ^^^ Cannot assign to a 'define' tag variable.
+      3 |
