@@ -1,9 +1,10 @@
-import { type Tag } from "@marko/babel-utils";
+import { assertNoArgs, type Tag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import attrsToObject from "../util/attrs-to-object";
 import { isOutputHTML } from "../util/marko-config";
 import {
   BindingType,
+  getBindingIdentifiers,
   mergeReferences,
   trackParamsReferences,
   trackVarReferences,
@@ -21,6 +22,15 @@ import { scopeIdentifier } from "../visitors/program";
 
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
+    assertNoArgs(tag);
+    if (!tag.node.var) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError(
+          "<define> requires a variable to be specified, eg <define/NAME>.",
+        );
+    }
+
     const tagBody = tag.get("body");
     startSection(tagBody);
     trackVarReferences(tag, BindingType.derived);
@@ -29,16 +39,21 @@ export default {
       tag,
       tag.node.attributes.map((attr) => attr.value),
     );
+
+    for (const { identifier } of getBindingIdentifiers(tag.node.var)) {
+      const binding = tag.scope.getBinding(identifier.name);
+      if (binding) {
+        const violations = binding?.constantViolations;
+        if (violations && violations.length > 0) {
+          throw violations[0].buildCodeFrameError(
+            "Cannot assign to a 'define' tag variable.",
+          );
+        }
+      }
+    }
   },
   translate: {
     enter(tag) {
-      if (!tag.node.var) {
-        throw tag
-          .get("name")
-          .buildCodeFrameError(
-            "<define> requires a variable to be specified, eg <define/NAME>.",
-          );
-      }
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }
