@@ -38,7 +38,6 @@ export default {
         );
     }
     usedTag.add(tag.hub);
-    tag.hub;
 
     const {
       node,
