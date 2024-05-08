@@ -1,4 +1,9 @@
-import { assertNoParams, type Tag } from "@marko/babel-utils";
+import {
+  assertNoArgs,
+  assertNoParams,
+  assertNoVar,
+  type Tag,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
@@ -9,8 +14,10 @@ import { scopeIdentifier } from "../visitors/program";
 export default {
   analyze(tag) {
     const [valueAttr] = tag.node.attributes;
+    assertNoArgs(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
+    assertNoVar(tag);
 
     if (!valueAttr) {
       throw tag
