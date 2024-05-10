@@ -50,9 +50,27 @@ module.exports = function (input, out) {
     }
 
     function handleAwait(awaitInfo) {
+      let flushedScript = false;
+      let flushedContent = false;
+      let flushedPlaceholder = false;
+      awaitInfo.parent.on("___toString", () => {
+        flushedPlaceholder = true;
+        if (!flushedScript && flushedContent) {
+          flushedScript = true;
+          asyncOut.script(
+            `$${reorderFunctionId}(` +
+              (typeof awaitInfo.id === "number"
+                ? awaitInfo.id
+                : '"' + awaitInfo.id + '"') +
+              (awaitInfo.after ? ',"' + awaitInfo.after + '"' : "") +
+              ")",
+          );
+        }
+      });
       awaitInfo.out
         .on("___toString", out.emit.bind(out, "___toString"))
         .on("finish", function (result) {
+          flushedContent = true;
           if (!global._afRuntime) {
             // Minified version of ./client-reorder-runtime.js
             asyncOut.script(
@@ -86,14 +104,17 @@ module.exports = function (input, out) {
             );
           }
 
-          asyncOut.script(
-            `$${reorderFunctionId}(` +
-              (typeof awaitInfo.id === "number"
-                ? awaitInfo.id
-                : '"' + awaitInfo.id + '"') +
-              (awaitInfo.after ? ',"' + awaitInfo.after + '"' : "") +
-              ")",
-          );
+          if (!flushedScript && flushedPlaceholder) {
+            flushedScript = true;
+            asyncOut.script(
+              `$${reorderFunctionId}(` +
+                (typeof awaitInfo.id === "number"
+                  ? awaitInfo.id
+                  : '"' + awaitInfo.id + '"') +
+                (awaitInfo.after ? ',"' + awaitInfo.after + '"' : "") +
+                ")",
+            );
+          }
 
           awaitInfo.out.writer = asyncOut.writer;
 

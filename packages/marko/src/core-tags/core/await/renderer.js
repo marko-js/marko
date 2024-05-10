@@ -106,6 +106,7 @@ module.exports = function awaitTag(input, out) {
   };
 
   if (clientReorder) {
+    awaitInfo.parent = out;
     awaitInfo.after = input.showAfter;
 
     clientReorderContext =
