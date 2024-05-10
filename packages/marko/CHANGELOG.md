@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.34.4
+
+### Patch Changes
+
+- [#2226](https://github.com/marko-js/marko/pull/2226) [`7691418`](https://github.com/marko-js/marko/commit/7691418bc5fc8cc0fb50510111e3d92aadaca3cb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where an out of order await contained an in order await and then another out of order await. This previously caused a race condition where if the final out of order await resolved first, it'd try to send it's content without it's placeholder location being available.
+
 ## 5.34.3
 
 ### Patch Changes
