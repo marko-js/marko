@@ -9,7 +9,7 @@
       1
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/effect-tag/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.a={0:{x:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/effect-tag/template.marko_0_x",])
     </script>
   </body>
 </html>

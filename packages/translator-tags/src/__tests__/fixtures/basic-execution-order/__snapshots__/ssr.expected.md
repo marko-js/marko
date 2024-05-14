@@ -1,5 +1,5 @@
 # Write
-  <button>hide</button><!M*0 #button/0>hi<!M*1 #text/0><!M|0 #text/1 1><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:h={message:{text:"hi"},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_1_renderer"),"#text/1!":j={}},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_0",])</script>
+  <button>hide</button><!M*0 #button/0>hi<!M*1 #text/0><!M|0 #text/1 1><script>(M$h=[]).push(_=>(_.c={0:_.a={"#scope":0,message:{text:"hi"},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_1_renderer"],"#text/1!":_.b={"#scope":1}},1:_.b},_.b._=_.a,_.c),[0,"packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_0",])</script>
 
 
 # Render "End"
@@ -15,7 +15,7 @@
     <!--M*1 #text/0-->
     <!--M|0 #text/1 1-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={message:{text:"hi"},"#text/1(":b("packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_1_renderer"),"#text/1!":j={}},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_0",])
+      (M$h=[]).push(_=&gt;(_.c={0:_.a={"#scope":0,message:{text:"hi"},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_1_renderer"],"#text/1!":_.b={"#scope":1}},1:_.b},_.b._=_.a,_.c),[0,"packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_0",])
     </script>
   </body>
 </html>

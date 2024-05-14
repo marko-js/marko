@@ -7,14 +7,17 @@ const _expr_Text_x_y = /* @__PURE__ */_intersection(3, _scope => {
   } = _scope;
   _inputRenderBody_input(_scope, () => [x, y]);
 });
-const _expr_x_y_effect = _register("packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y", _scope => _on(_scope["#button/0"], "click", function () {
+const _onClick = _scope => {
   const {
     x,
     y
   } = _scope;
-  _queueSource(_scope, _x, x + 1);
-  _queueSource(_scope, _y, y + 1);
-}));
+  return function () {
+    _queueSource(_scope, _x, x + 1);
+    _queueSource(_scope, _y, y + 1);
+  };
+};
+const _expr_x_y_effect = _register("packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _expr_x_y = /* @__PURE__ */_intersection(2, _scope => {
   const {
     x,

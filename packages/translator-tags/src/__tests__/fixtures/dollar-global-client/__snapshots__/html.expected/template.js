@@ -1,13 +1,13 @@
-import { write as _write, getStreamData as _getStreamData, escapeXML as _escapeXML, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeNode as _markResumeNode, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, getStreamData as _getStreamData, escapeXML as _escapeXML, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, markResumeNode as _markResumeNode, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const show = false;
   _write("<div>");
-  let _ifScopeId, _scope1_, _ifRenderer;
+  let _ifScopeId, _ifRenderer;
   if (show) {
     const _scope1_id = _nextScopeId();
     _write(`<span>${_escapeXML(_getStreamData().global.x)}</span>`);
-    _writeScope(_scope1_id, _scope1_ = {});
+    _writeScope(_scope1_id, {});
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
@@ -16,7 +16,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _writeScope(_scope0_id, {
     "show": show,
     "#text/0(": _ifRenderer,
-    "#text/0!": _scope1_
+    "#text/0!": _getScopeById(_ifScopeId)
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko");

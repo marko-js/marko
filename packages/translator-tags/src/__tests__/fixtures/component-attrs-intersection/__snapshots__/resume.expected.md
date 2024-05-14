@@ -10,7 +10,7 @@
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#childScope/0":h={value:0,dummy:{}}},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count",])
+      (M$h=[]).push(_=&gt;(_.b={0:{count:0,"#childScope/0":_.a={"#scope":1,value:0,dummy:{}},"#scope":0},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -36,7 +36,7 @@ container.querySelector("button").click()
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#childScope/0":h={value:0,dummy:{}}},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count",])
+      (M$h=[]).push(_=&gt;(_.b={0:{count:0,"#childScope/0":_.a={"#scope":1,value:0,dummy:{}},"#scope":0},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count",])
     </script>
   </body>
 </html>

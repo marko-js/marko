@@ -1,7 +1,7 @@
 import { _setup_ as _parentEl, _template_ as _parentEl_template, _walks_ as _parentEl_walks } from "./components/parent-el.marko";
-import { setTagVar as _setTagVar, data as _data, value as _value, register as _register, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _spanName = _register("packages/translator-tags/src/__tests__/fixtures/html-comment-var/template.marko_0_spanName", /* @__PURE__ */_value("spanName", (_scope, spanName) => _data(_scope["#text/3"], spanName)));
-const _divName = _register("packages/translator-tags/src/__tests__/fixtures/html-comment-var/template.marko_0_divName", /* @__PURE__ */_value("divName", (_scope, divName) => _data(_scope["#text/1"], divName)));
+import { setTagVar as _setTagVar, data as _data, value as _value, registerBoundSignal as _registerBoundSignal, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _spanName = _registerBoundSignal("packages/translator-tags/src/__tests__/fixtures/html-comment-var/template.marko_0_spanName", /* @__PURE__ */_value("spanName", (_scope, spanName) => _data(_scope["#text/3"], spanName)));
+const _divName = _registerBoundSignal("packages/translator-tags/src/__tests__/fixtures/html-comment-var/template.marko_0_divName", /* @__PURE__ */_value("divName", (_scope, divName) => _data(_scope["#text/1"], divName)));
 const _setup = _scope => {
   _setTagVar(_scope, "#childScope/0", _divName);
   _parentEl(_scope["#childScope/0"]);

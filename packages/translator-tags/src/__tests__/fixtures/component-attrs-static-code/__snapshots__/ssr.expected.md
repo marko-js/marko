@@ -1,5 +1,5 @@
 # Write
-  <button>$0.00<!M*1 #text/1></button><!M*1 #button/0><script>(M$h=[]).push((b,s,h)=>({0:{"#childScope/0":h={input:{},count:0}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/components/counter.marko_0_count",])</script>
+  <button>$0.00<!M*1 #text/1></button><!M*1 #button/0><script>(M$h=[]).push(_=>(_.b={0:{"#childScope/0":_.a={"#scope":1,input:{},count:0},"#scope":0},1:_.a}),[1,"packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/components/counter.marko_0_count",])</script>
 
 
 # Render "End"
@@ -13,7 +13,7 @@
     </button>
     <!--M*1 #button/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{"#childScope/0":h={input:{},count:0}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/components/counter.marko_0_count",])
+      (M$h=[]).push(_=&gt;(_.b={0:{"#childScope/0":_.a={"#scope":1,input:{},count:0},"#scope":0},1:_.a}),[1,"packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/components/counter.marko_0_count",])
     </script>
   </body>
 </html>

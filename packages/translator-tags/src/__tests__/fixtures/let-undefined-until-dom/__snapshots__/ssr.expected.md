@@ -1,5 +1,5 @@
 # Write
-  <div>&zwj;<!M*0 #text/0></div><script>(M$h=[]).push(null,[0,"packages/translator-tags/src/__tests__/fixtures/let-undefined-until-dom/template.marko_0",])</script>
+  <div>&zwj;<!M*0 #text/0></div><script>(M$h=[]).push(_=>(null),[0,"packages/translator-tags/src/__tests__/fixtures/let-undefined-until-dom/template.marko_0",])</script>
 
 
 # Render "End"
@@ -12,7 +12,7 @@
       <!--M*0 #text/0-->
     </div>
     <script>
-      (M$h=[]).push(null,[0,"packages/translator-tags/src/__tests__/fixtures/let-undefined-until-dom/template.marko_0",])
+      (M$h=[]).push(_=&gt;(null),[0,"packages/translator-tags/src/__tests__/fixtures/let-undefined-until-dom/template.marko_0",])
     </script>
   </body>
 </html>

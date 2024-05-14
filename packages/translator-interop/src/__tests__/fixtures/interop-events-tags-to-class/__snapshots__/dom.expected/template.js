@@ -1,13 +1,13 @@
-import { queueSource as _queueSource, register as _register, bindFunction as _bindFunction, data as _data, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { queueSource as _queueSource, register as _register, data as _data, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import _classCounter from "./components/class-counter.marko";
 import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 _register("packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko", _classCounter);
-const _temp = _register("packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/anonymous", function (_scope, newCount) {
+const _onCount = _register("packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/onCount", _scope => function (newCount) {
   _queueSource(_scope, _count, newCount);
 });
 const _classCounter_input = _dynamicTagAttrs("#text/0");
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _classCounter_input(_scope, () => ({
-  onCount: /* @__PURE__ */_bindFunction(_scope, _temp)
+  onCount: _onCount(_scope)
 })), void 0, _classCounter_input);
 const _count = /* @__PURE__ */_value("count", (_scope, count) => _data(_scope["#text/1"], count));
 const _setup = _scope => {

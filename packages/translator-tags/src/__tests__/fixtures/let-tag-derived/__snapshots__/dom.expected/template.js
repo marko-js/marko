@@ -1,10 +1,11 @@
 import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, value as _value, initValue as _initValue, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _b_effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko_0_b", _scope => _on(_scope["#button/0"], "click", () => {
+const _onClick = _scope => {
   const {
     b
   } = _scope;
-  return _queueSource(_scope, _b, b + 1), b;
-}));
+  return () => (_queueSource(_scope, _b, b + 1), b);
+};
+const _b_effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko_0_b", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _b = /* @__PURE__ */_value("b", (_scope, b) => {
   _data(_scope["#text/2"], b);
   _queueEffect(_scope, _b_effect);

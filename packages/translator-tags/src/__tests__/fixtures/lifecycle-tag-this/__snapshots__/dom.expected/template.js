@@ -1,25 +1,30 @@
-import { register as _register, bindFunction as _bindFunction, lifecycle as _lifecycle, on as _on, queueSource as _queueSource, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _temp = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0/anonymous", function (_scope) {
+import { register as _register, lifecycle as _lifecycle, on as _on, queueSource as _queueSource, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _onMount = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0/onMount", _scope => function () {
   this.onUpdate();
 });
-const _onUpdate = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0/onUpdate", function (_scope) {
+const _onUpdate = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0/onUpdate", _scope => {
   const {
     x
   } = _scope;
-  document.getElementById("ref").textContent = `x=${x}, was=${this.cur}`;
-  this.cur = x;
+  return function () {
+    document.getElementById("ref").textContent = `x=${x}, was=${this.cur}`;
+    this.cur = x;
+  };
 });
+const _onClick = _scope => {
+  const {
+    x
+  } = _scope;
+  return function () {
+    _queueSource(_scope, _x, x + 1);
+  };
+};
 const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x", _scope => {
   _lifecycle(_scope, "_lifecycle", {
-    onMount: /* @__PURE__ */_bindFunction(_scope, _temp),
-    onUpdate: /* @__PURE__ */_bindFunction(_scope, _onUpdate)
+    onMount: _onMount(_scope),
+    onUpdate: _onUpdate(_scope)
   });
-  _on(_scope["#button/0"], "click", function () {
-    const {
-      x
-    } = _scope;
-    _queueSource(_scope, _x, x + 1);
-  });
+  _on(_scope["#button/0"], "click", _onClick(_scope));
 });
 const _x = /* @__PURE__ */_value("x", (_scope, x) => _queueEffect(_scope, _x_effect));
 const _setup = _scope => {

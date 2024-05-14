@@ -2,12 +2,15 @@ import { on as _on, queueSource as _queueSource, createRenderer as _createRender
 const _xBody = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_1_renderer", /* @__PURE__ */_createRenderer("Body Content", ""));
 const _x_input = _dynamicTagAttrs("#text/0", _xBody);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _x_input(_scope, () => ({})), void 0, _x_input);
-const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x", _scope => _on(_scope["#button/1"], "click", function () {
+const _onClick = _scope => {
   const {
     x
   } = _scope;
-  _queueSource(_scope, _x, x ? null : "div");
-}));
+  return function () {
+    _queueSource(_scope, _x, x ? null : "div");
+  };
+};
+const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
 const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _queueEffect(_scope, _x_effect);
   _dynamicTagName(_scope, x || _xBody);

@@ -6,12 +6,15 @@ const _expr_input_count = /* @__PURE__ */_intersection(2, _scope => {
   } = _scope;
   _data(_scope["#text/1"], input.format(count));
 });
-const _count_effect = _register("packages/translator-tags/src/__tests__/fixtures/component-attrs-import-value/components/counter.marko_0_count", _scope => _on(_scope["#button/0"], "click", function () {
+const _onClick = _scope => {
   const {
     count
   } = _scope;
-  _queueSource(_scope, _count, count + 1);
-}));
+  return function () {
+    _queueSource(_scope, _count, count + 1);
+  };
+};
+const _count_effect = _register("packages/translator-tags/src/__tests__/fixtures/component-attrs-import-value/components/counter.marko_0_count", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _count = /* @__PURE__ */_value("count", (_scope, count) => _queueEffect(_scope, _count_effect), _expr_input_count);
 const _input = /* @__PURE__ */_value("input", null, _expr_input_count);
 const _setup = _scope => {

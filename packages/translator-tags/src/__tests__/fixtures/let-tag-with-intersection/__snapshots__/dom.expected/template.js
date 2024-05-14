@@ -9,12 +9,13 @@ const _expr_y_z = /* @__PURE__ */_intersection(2, _scope => {
 const _a = /* @__PURE__ */_value("a", (_scope, a) => _data(_scope["#text/4"], a));
 const _z = /* @__PURE__ */_value("z", (_scope, z) => _data(_scope["#text/3"], z), _expr_y_z);
 const _y = /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/2"], y), _expr_y_z);
-const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x", _scope => _on(_scope["#button/0"], "click", () => {
+const _onClick = _scope => {
   const {
     x
   } = _scope;
-  return _queueSource(_scope, _x, x + 1), x;
-}));
+  return () => (_queueSource(_scope, _x, x + 1), x);
+};
+const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   _queueEffect(_scope, _x_effect);

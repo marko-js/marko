@@ -9,7 +9,7 @@
     </button>
     <!--M*1 #button/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={clickCount:0},1:{onClick:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])
+      (M$h=[]).push(_=&gt;(_.b={0:_.a={"#scope":0,clickCount:0},1:{onClick:_._.clickHandler(_.a),"#scope":1},2:{_:{clickCount:0},"#scope":2}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])
     </script>
   </body>
 </html>
@@ -29,12 +29,12 @@ container.querySelector("button").click()
   <head />
   <body>
     <button>
-      1
+      0
       <!--M*2 #text/0-->
     </button>
     <!--M*1 #button/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={clickCount:0},1:{onClick:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])
+      (M$h=[]).push(_=&gt;(_.b={0:_.a={"#scope":0,clickCount:0},1:{onClick:_._.clickHandler(_.a),"#scope":1},2:{_:{clickCount:0},"#scope":2}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])
     </script>
   </body>
 </html>
@@ -42,7 +42,7 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/button0/#text0: "0" => "1"
+
 ```
 
 
@@ -54,12 +54,12 @@ container.querySelector("button").click()
   <head />
   <body>
     <button>
-      2
+      0
       <!--M*2 #text/0-->
     </button>
     <!--M*1 #button/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={clickCount:0},1:{onClick:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])
+      (M$h=[]).push(_=&gt;(_.b={0:_.a={"#scope":0,clickCount:0},1:{onClick:_._.clickHandler(_.a),"#scope":1},2:{_:{clickCount:0},"#scope":2}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])
     </script>
   </body>
 </html>
@@ -67,7 +67,7 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/button0/#text0: "1" => "2"
+
 ```
 
 
@@ -79,12 +79,12 @@ container.querySelector("button").click()
   <head />
   <body>
     <button>
-      3
+      0
       <!--M*2 #text/0-->
     </button>
     <!--M*1 #button/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={clickCount:0},1:{onClick:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])
+      (M$h=[]).push(_=&gt;(_.b={0:_.a={"#scope":0,clickCount:0},1:{onClick:_._.clickHandler(_.a),"#scope":1},2:{_:{clickCount:0},"#scope":2}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])
     </script>
   </body>
 </html>
@@ -92,5 +92,5 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/button0/#text0: "2" => "3"
+
 ```

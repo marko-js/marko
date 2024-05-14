@@ -1,8 +1,8 @@
-import { write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, peekSerializedScope as _peekSerializedScope, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, peekNextScope as _peekNextScope, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _child from "./components/child/index.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
-  const _childScope = _peekSerializedScope();
+  const _childScope = _peekNextScope();
   _child._({
     name: "World",
     renderBody: /* @__PURE__ */_createRenderer(() => {

@@ -10,7 +10,7 @@
       0
     </button>
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/anonymous",0]]],"f":1,"p":null}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"]})
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/onCount",null]]],"f":1,"p":null}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"]})
     </script>
     <!--M]0 #text/0-->
     <div
@@ -20,7 +20,7 @@
       <!--M*0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={m5c:"s0"},"#text/0(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"),!0)},1:h}),[])
+      (M$h=[]).push(_=&gt;(_.b={0:{"#scope":0,"#text/0!":_.a={"#scope":1,m5c:"s0"},"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"])},1:_.a}),[])
     </script>
   </body>
 </html>
@@ -49,17 +49,17 @@ container.querySelector("#class-api").click()
       1
     </button>
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/anonymous",0]]],"f":1,"p":null}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"]})
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/onCount",null]]],"f":1,"p":null}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"]})
     </script>
     <!--M]0 #text/0-->
     <div
       id="tags-api"
     >
-      1
+      0
       <!--M*0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={m5c:"s0"},"#text/0(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"),!0)},1:h}),[])
+      (M$h=[]).push(_=&gt;(_.b={0:{"#scope":0,"#text/0!":_.a={"#scope":1,m5c:"s0"},"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"])},1:_.a}),[])
     </script>
   </body>
 </html>
@@ -67,7 +67,6 @@ container.querySelector("#class-api").click()
 
 # Mutations
 ```
-#document/html0/body1/div6/#text0: "0" => "1"
 #document/html0/body1/button2/#text0: "0" => "1"
 ```
 
@@ -86,17 +85,17 @@ container.querySelector("#class-api").click()
       2
     </button>
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/anonymous",0]]],"f":1,"p":null}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"]})
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/onCount",null]]],"f":1,"p":null}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"]})
     </script>
     <!--M]0 #text/0-->
     <div
       id="tags-api"
     >
-      2
+      0
       <!--M*0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={m5c:"s0"},"#text/0(":b("@marko/tags-compat-5-to-6")(b("packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"),!0)},1:h}),[])
+      (M$h=[]).push(_=&gt;(_.b={0:{"#scope":0,"#text/0!":_.a={"#scope":1,m5c:"s0"},"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"])},1:_.a}),[])
     </script>
   </body>
 </html>
@@ -104,6 +103,5 @@ container.querySelector("#class-api").click()
 
 # Mutations
 ```
-#document/html0/body1/div6/#text0: "1" => "2"
 #document/html0/body1/button2/#text0: "1" => "2"
 ```

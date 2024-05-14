@@ -6,24 +6,31 @@ const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/basi
   _x$forBody(_scope, x, _clean);
 }));
 const _for = /* @__PURE__ */_loopOf("#ul/0", _forBody);
-const _list_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list", _scope => _on(_scope["#button/2"], "click", function () {
+const _onClick = _scope => {
   const {
     list
   } = _scope;
-  _queueSource(_scope, _list, [].concat(list).reverse());
-}));
+  return function () {
+    _queueSource(_scope, _list, [].concat(list).reverse());
+  };
+};
+const _list_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list", _scope => _on(_scope["#button/2"], "click", _onClick(_scope)));
+const _by = _scope => function (x) {
+  return x;
+};
 const _list = /* @__PURE__ */_value("list", (_scope, list) => {
   _queueEffect(_scope, _list_effect);
-  _for(_scope, [list, function (x) {
-    return x;
-  }]);
+  _for(_scope, [list, _by(_scope)]);
 });
-const _open_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open", _scope => _on(_scope["#button/1"], "click", function () {
+const _onClick2 = _scope => {
   const {
     open
   } = _scope;
-  _queueSource(_scope, _open, !open);
-}));
+  return function () {
+    _queueSource(_scope, _open, !open);
+  };
+};
+const _open_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open", _scope => _on(_scope["#button/1"], "click", _onClick2(_scope)));
 const _open = /* @__PURE__ */_value("open", (_scope, open) => {
   _attr(_scope["#ul/0"], "hidden", !open);
   _queueEffect(_scope, _open_effect);

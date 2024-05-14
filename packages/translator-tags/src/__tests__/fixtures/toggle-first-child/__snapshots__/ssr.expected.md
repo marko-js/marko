@@ -1,5 +1,5 @@
 # Write
-  <div><span>Hello<!M*1 #text/0></span><!M|0 #text/0 1><span></span><span></span></div><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:h={value:"Hello","#text/0(":b("packages/translator-tags/src/__tests__/fixtures/toggle-first-child/template.marko_1_renderer"),"#text/0!":j={}},1:j},j._=h,k),[])</script>
+  <div><span>Hello<!M*1 #text/0></span><!M|0 #text/0 1><span></span><span></span></div><script>(M$h=[]).push(_=>(_.c={0:_.a={"#scope":0,value:"Hello","#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/toggle-first-child/template.marko_1_renderer"],"#text/0!":_.b={"#scope":1}},1:_.b},_.b._=_.a,_.c),[])</script>
 
 
 # Render "End"
@@ -17,7 +17,7 @@
       <span />
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={value:"Hello","#text/0(":b("packages/translator-tags/src/__tests__/fixtures/toggle-first-child/template.marko_1_renderer"),"#text/0!":j={}},1:j},j._=h,k),[])
+      (M$h=[]).push(_=&gt;(_.c={0:_.a={"#scope":0,value:"Hello","#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/toggle-first-child/template.marko_1_renderer"],"#text/0!":_.b={"#scope":1}},1:_.b},_.b._=_.a,_.c),[])
     </script>
   </body>
 </html>

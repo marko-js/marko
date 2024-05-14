@@ -1,4 +1,4 @@
-import { write as _write, createRenderer as _createRenderer, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, escapeXML as _escapeXML, writeScope as _writeScope, peekSerializedScope as _peekSerializedScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, createRenderer as _createRenderer, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, escapeXML as _escapeXML, writeScope as _writeScope, peekNextScope as _peekNextScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _hello from "./components/hello/index.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -66,7 +66,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       })
     }
   });
-  const _childScope = _peekSerializedScope();
+  const _childScope = _peekNextScope();
   _hello._({
     list: {
       item: _item

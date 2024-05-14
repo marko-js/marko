@@ -1,5 +1,5 @@
 # Write
-  <button>Count: <!>1<!M*0 #text/1></button><!M*0 #button/0><!M[1><div>1<!M*1 #text/0></div><!M]0 #text/2><script>(M$h=[]).push((b,s,h)=>({0:{x:1,"#text/2!":h={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/components/custom-tag.marko")},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/template.marko_0_x",])</script>
+  <button>Count: <!>1<!M*0 #text/1></button><!M*0 #button/0><!M[1><div>1<!M*1 #text/0></div><!M]0 #text/2><script>(M$h=[]).push(_=>(_.b={0:{x:1,"#text/2!":_.a={"#scope":1},"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/components/custom-tag.marko"],"#scope":0},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/template.marko_0_x",])</script>
 
 
 # Render "End"
@@ -21,7 +21,7 @@
     </div>
     <!--M]0 #text/2-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{x:1,"#text/2!":h={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/components/custom-tag.marko")},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.b={0:{x:1,"#text/2!":_.a={"#scope":1},"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/components/custom-tag.marko"],"#scope":0},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/template.marko_0_x",])
     </script>
   </body>
 </html>

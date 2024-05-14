@@ -28,12 +28,15 @@ const _expr_input_i$forBody = /* @__PURE__ */_intersection(2, _scope => {
   _id$forBody(_scope, `${input.path || "c"}-${i}`);
 });
 const _if$forBody = /* @__PURE__ */_conditional("#text/4");
-const _open$forBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _scope => _on(_scope["#button/2"], "click", function () {
+const _onClick = _scope => {
   const {
     open
   } = _scope;
-  _queueSource(_scope, _open$forBody, !open);
-}));
+  return function () {
+    _queueSource(_scope, _open$forBody, !open);
+  };
+};
+const _open$forBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _scope => _on(_scope["#button/2"], "click", _onClick(_scope)));
 const _open$forBody = /* @__PURE__ */_value("open", (_scope, open) => {
   _attr(_scope["#li/0"], "hidden", !open);
   _data(_scope["#text/3"], open ? "[-]" : "[+]");

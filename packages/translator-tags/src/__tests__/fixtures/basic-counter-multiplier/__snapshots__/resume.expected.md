@@ -24,7 +24,7 @@
       <!--M*0 #text/3-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0,multiplier:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier",])
+      (M$h=[]).push(_=&gt;(_.a={0:{count:0,multiplier:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier",])
     </script>
   </body>
 </html>
@@ -64,7 +64,7 @@ container.querySelector("button#count").click()
       <!--M*0 #text/3-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0,multiplier:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier",])
+      (M$h=[]).push(_=&gt;(_.a={0:{count:0,multiplier:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier",])
     </script>
   </body>
 </html>
@@ -104,7 +104,7 @@ container.querySelector("button#count").click()
       <!--M*0 #text/3-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0,multiplier:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier",])
+      (M$h=[]).push(_=&gt;(_.a={0:{count:0,multiplier:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier",])
     </script>
   </body>
 </html>
@@ -144,7 +144,7 @@ container.querySelector("button#multiplier").click()
       <!--M*0 #text/3-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0,multiplier:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier",])
+      (M$h=[]).push(_=&gt;(_.a={0:{count:0,multiplier:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier",])
     </script>
   </body>
 </html>

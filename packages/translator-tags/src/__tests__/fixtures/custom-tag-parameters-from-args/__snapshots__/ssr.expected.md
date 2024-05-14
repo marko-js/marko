@@ -1,5 +1,5 @@
 # Write
-  <button class=inc>1<!M*1 #text/1>,<!>10<!M*1 #text/2></button><!M*1 #button/0><!M[2><div>Counts: <!>1<!M*2 #text/0>,<!>10<!M*2 #text/1></div><!M]1 #text/3><script>(M$h=[]).push((b,s,h,j)=>({0:{"#childScope/0":h={x:1,y:10,"#text/3!":j={}}},1:h,2:j}),[1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y",])</script>
+  <button class=inc>1<!M*1 #text/1>,<!>10<!M*1 #text/2></button><!M*1 #button/0><!M[2><div>Counts: <!>1<!M*2 #text/0>,<!>10<!M*2 #text/1></div><!M]1 #text/3><script>(M$h=[]).push(_=>(_.c={0:{"#childScope/0":_.a={"#scope":1,x:1,y:10,"#text/3!":_.b={"#scope":2}},"#scope":0},1:_.a,2:_.b}),[1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y",])</script>
 
 
 # Render "End"
@@ -31,7 +31,7 @@
     </div>
     <!--M]1 #text/3-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{"#childScope/0":h={x:1,y:10,"#text/3!":j={}}},1:h,2:j}),[1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y",])
+      (M$h=[]).push(_=&gt;(_.c={0:{"#childScope/0":_.a={"#scope":1,x:1,y:10,"#text/3!":_.b={"#scope":2}},"#scope":0},1:_.a,2:_.b}),[1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y",])
     </script>
   </body>
 </html>

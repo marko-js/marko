@@ -1,6 +1,6 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, peekSerializedScope as _peekSerializedScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, peekNextScope as _peekNextScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const {
@@ -44,17 +44,17 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   });
   const _tagName3 = showTagA && tagA;
   _write(`${_markResumeControlEnd(_scope0_id, "#text/5")}`);
-  const _childScope = _peekSerializedScope();
+  const _childScope = _peekNextScope();
   if (_tagName3._) _tagName3._({
     class: ["a", "b"],
     other: other
   });
   const _tagName4 = showTagA && tagA;
-  const _childScope2 = _peekSerializedScope();
+  const _childScope2 = _peekNextScope();
   const _renderBody = _register( /* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _write("Body content");
-  }), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer", _scope0_id);
+  }), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer");
   if (_tagName4._) _tagName4._({
     class: ["a", "b"],
     other: other

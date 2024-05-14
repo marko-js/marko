@@ -1,5 +1,5 @@
 # Write
-  <!--M#s0--><button id=class>0</button><!--F#1--><button id=tags data-parent=0>0<!M*0 #text/1></button><!M*0 #button/0><script>(M$h=[]).push((b,s)=>({0:{count:0}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])</script><!--F/--><!--M/--><script>$MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-1":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/template.marko"]})</script>
+  <!--M#s0--><button id=class>0</button><!--F#1--><button id=tags data-parent=0>0<!M*0 #text/1></button><!M*0 #button/0><script>(M$h=[]).push(_=>(_.a={0:{count:0,"#scope":0}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])</script><!--F/--><!--M/--><script>$MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-1":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/template.marko"]})</script>
 
 
 # Render "End"
@@ -23,7 +23,7 @@
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
+      (M$h=[]).push(_=&gt;(_.a={0:{count:0,"#scope":0}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
     </script>
     <!--F/-->
     <!--M/-->

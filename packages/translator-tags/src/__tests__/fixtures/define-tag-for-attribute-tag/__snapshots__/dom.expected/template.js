@@ -4,12 +4,15 @@ const _defineBody = _register("packages/translator-tags/src/__tests__/fixtures/d
 const _myThing = /* @__PURE__ */_value("myThing", (_scope, myThing) => _child_args(_scope["#childScope/0"], [{
   thing: myThing
 }]), void 0, _inChild("#childScope/0", _child_args));
-const _selected_effect = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_0_selected", _scope => _on(_scope["#button/1"], "click", function () {
+const _onClick = _scope => {
   const {
     selected
   } = _scope;
-  _queueSource(_scope, _selected, !selected);
-}));
+  return function () {
+    _queueSource(_scope, _selected, !selected);
+  };
+};
+const _selected_effect = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_0_selected", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
 const _selected = /* @__PURE__ */_value("selected", (_scope, selected) => {
   _queueEffect(_scope, _selected_effect);
   _myThing(_scope, {

@@ -1,5 +1,5 @@
 # Write
-  <div></div><div></div><script>(M$h=[]).push((b,s)=>({0:{"#childScope/0":void 0,"#childScope/1":void 0}}),[])</script>
+  <div></div><div></div><script>(M$h=[]).push(_=>(_.a={0:{"#childScope/0":{"#scope":1},"#childScope/1":{"#scope":2},"#scope":0}}),[])</script>
 
 
 # Render "End"
@@ -10,7 +10,7 @@
     <div />
     <div />
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{"#childScope/0":void 0,"#childScope/1":void 0}}),[])
+      (M$h=[]).push(_=&gt;(_.a={0:{"#childScope/0":{"#scope":1},"#childScope/1":{"#scope":2},"#scope":0}}),[])
     </script>
   </body>
 </html>

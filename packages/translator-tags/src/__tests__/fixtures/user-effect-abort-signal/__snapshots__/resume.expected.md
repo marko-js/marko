@@ -12,7 +12,7 @@
       <!--M*0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{input:{value:0}}}),[0,"packages/translator-tags/src/__tests__/fixtures/user-effect-abort-signal/template.marko_0_input",])
+      (M$h=[]).push(_=&gt;(_.a={0:{input:{value:0},"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/user-effect-abort-signal/template.marko_0_input",])
     </script>
   </body>
 </html>
@@ -38,7 +38,7 @@
       <!--M*0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{input:{value:0}}}),[0,"packages/translator-tags/src/__tests__/fixtures/user-effect-abort-signal/template.marko_0_input",])
+      (M$h=[]).push(_=&gt;(_.a={0:{input:{value:0},"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/user-effect-abort-signal/template.marko_0_input",])
     </script>
   </body>
 </html>

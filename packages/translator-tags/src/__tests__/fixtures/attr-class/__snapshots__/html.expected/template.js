@@ -1,4 +1,4 @@
-import { classAttr as _classAttr, markResumeNode as _markResumeNode, write as _write, peekSerializedScope as _peekSerializedScope, createRenderer as _createRenderer, serializedScope as _serializedScope, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { classAttr as _classAttr, markResumeNode as _markResumeNode, write as _write, peekNextScope as _peekNextScope, createRenderer as _createRenderer, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -10,14 +10,14 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     b: c,
     d
   }])}></div>${_markResumeNode(_scope0_id, "#div/0")}<div class="a b"></div><div class="a b c"></div>`);
-  const _childScope = _peekSerializedScope();
+  const _childScope = _peekNextScope();
   _customTag._({
     class: ["a", {
       b: c,
       d
     }]
   });
-  const _childScope2 = _peekSerializedScope();
+  const _childScope2 = _peekNextScope();
   _customTag._({
     class: ["a", false, "b"]
   });
@@ -40,9 +40,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_1_c/subscriber");
     _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_1_d/subscriber");
     _writeScope(_scope1_id, {
-      "_": _serializedScope(_scope0_id)
+      "_": _ensureScopeWithId(_scope0_id)
     });
-  }), "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_1_renderer", _scope0_id));
+  }), "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_1_renderer"));
   _write(`${_markResumeControlEnd(_scope0_id, "#text/3")}`);
   _writeScope(_scope0_id, {
     "c": c,

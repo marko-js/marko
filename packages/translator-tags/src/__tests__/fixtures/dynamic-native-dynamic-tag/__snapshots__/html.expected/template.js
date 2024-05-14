@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   }, _register( /* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _write("body content");
-  }), "packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_1_renderer", _scope0_id));
+  }), "packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_1_renderer"));
   _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}<button></button>${_markResumeNode(_scope0_id, "#button/1")}`);
   _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName");
   _writeScope(_scope0_id, {

@@ -1,5 +1,5 @@
 # Write
-  <!M[1><div>1<!M*1 #text/0></div><!M]0 #text/0><button>1<!M*0 #text/2></button><!M*0 #button/1><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:h={x:1,"#text/0!":j={},"#text/0(":{}},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-closure/template.marko_1_x/subscriber",0,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-closure/template.marko_0_x",])</script>
+  <!M[1><div>1<!M*1 #text/0></div><!M]0 #text/0><button>1<!M*0 #text/2></button><!M*0 #button/1><script>(M$h=[]).push(_=>(_.c={0:_.a={"#scope":0,x:1,"#text/0!":_.b={"#scope":1},"#text/0(":{}},1:_.b},_.b._=_.a,_.c),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-closure/template.marko_1_x/subscriber",0,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-closure/template.marko_0_x",])</script>
 
 
 # Render "End"
@@ -19,7 +19,7 @@
     </button>
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={x:1,"#text/0!":j={},"#text/0(":{}},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-closure/template.marko_1_x/subscriber",0,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-closure/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.c={0:_.a={"#scope":0,x:1,"#text/0!":_.b={"#scope":1},"#text/0(":{}},1:_.b},_.b._=_.a,_.c),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-closure/template.marko_1_x/subscriber",0,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-closure/template.marko_0_x",])
     </script>
   </body>
 </html>

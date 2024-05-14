@@ -7,7 +7,7 @@
       <!--M]0 #text/0-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{value1:"Hello",value2:"World"}}),[])
+      (M$h=[]).push(_=&gt;(_.a={0:{value1:"Hello",value2:"World","#scope":0}}),[])
     </script>
   </body>
 </html>

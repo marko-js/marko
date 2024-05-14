@@ -1,5 +1,5 @@
 # Write
-  <div></div><!M*0 #div/0><script>(M$h=[]).push((b,s,h)=>({0:{"#childScope/1":h={}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko_0_el",])</script>
+  <div></div><!M*0 #div/0><script>(M$h=[]).push(_=>(_.b={0:{"#childScope/1":_.a={"#scope":1},"#scope":0},1:_.a}),[1,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko_0_el",])</script>
 
 
 # Render "End"
@@ -10,7 +10,7 @@
     <div />
     <!--M*0 #div/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{"#childScope/1":h={}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko_0_el",])
+      (M$h=[]).push(_=&gt;(_.b={0:{"#childScope/1":_.a={"#scope":1},"#scope":0},1:_.a}),[1,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko_0_el",])
     </script>
   </body>
 </html>

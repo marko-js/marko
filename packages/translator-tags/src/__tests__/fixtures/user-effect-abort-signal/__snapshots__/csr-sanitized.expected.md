@@ -17,7 +17,7 @@
 # Render {"value":1}
 ```html
 <div>
-  1 1
+  1 0
 </div>
 ```
 
@@ -25,6 +25,6 @@
 # Render "ASYNC"
 ```html
 <div>
-  2 1
+  2 0
 </div>
 ```

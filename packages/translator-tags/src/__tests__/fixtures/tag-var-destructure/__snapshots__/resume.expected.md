@@ -37,7 +37,7 @@
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push(null,[0,"packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0",])
+      (M$h=[]).push(_=&gt;(null),[0,"packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0",])
     </script>
   </body>
 </html>
@@ -90,7 +90,7 @@ container?.querySelector("button").click()
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push(null,[0,"packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0",])
+      (M$h=[]).push(_=&gt;(null),[0,"packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0",])
     </script>
   </body>
 </html>

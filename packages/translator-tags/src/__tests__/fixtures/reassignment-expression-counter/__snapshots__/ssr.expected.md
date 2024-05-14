@@ -1,5 +1,5 @@
 # Write
-  <button id=addTwo>0<!M*0 #text/1></button><!M*0 #button/0><button id=triple>0<!M*0 #text/3></button><!M*0 #button/2><button id=cube>0<!M*0 #text/5></button><!M*0 #button/4><script>(M$h=[]).push((b,s)=>({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])</script>
+  <button id=addTwo>0<!M*0 #text/1></button><!M*0 #button/0><button id=triple>0<!M*0 #text/3></button><!M*0 #button/2><button id=cube>0<!M*0 #text/5></button><!M*0 #button/4><script>(M$h=[]).push(_=>(_.a={0:{count:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])</script>
 
 
 # Render "End"
@@ -29,7 +29,7 @@
     </button>
     <!--M*0 #button/4-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
+      (M$h=[]).push(_=&gt;(_.a={0:{count:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
     </script>
   </body>
 </html>

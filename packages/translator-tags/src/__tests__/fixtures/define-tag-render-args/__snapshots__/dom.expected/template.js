@@ -18,12 +18,15 @@ const _expr_Text_x = /* @__PURE__ */_intersection(2, _scope => {
 });
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, _expr_Text_x);
 const _myTag = /* @__PURE__ */_value("myTag", (_scope, myTag) => _dynamicTagName(_scope, myTag), void 0, _dynamicTagName);
-const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_0_x", _scope => _on(_scope["#button/1"], "click", function () {
+const _onClick = _scope => {
   const {
     x
   } = _scope;
-  _queueSource(_scope, _x, x + 1);
-}));
+  return function () {
+    _queueSource(_scope, _x, x + 1);
+  };
+};
+const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_0_x", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
 const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/2"], x);
   _queueEffect(_scope, _x_effect);
