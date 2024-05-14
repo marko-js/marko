@@ -1,6 +1,6 @@
-import { styleAttr as _styleAttr, write as _write, createRenderer as _createRenderer, register as _register, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { styleAttr as _styleAttr, bindRenderer as _bindRenderer, createRenderer as _createRenderer, register as _register, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _customTag, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag.marko";
-const _testBody2 = _register("packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko_2_renderer", /* @__PURE__ */_createRenderer("", ""));
+const _testBody2 = _register("packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko_2_renderer", /* @__PURE__ */_createRenderer("Hello", ""));
 const _testBody = _register("packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko_1_renderer", /* @__PURE__ */_createRenderer("", ""));
 const _test_input = _dynamicTagAttrs("#text/4", _testBody);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/4", _scope => _test_input(_scope, () => ({
@@ -11,9 +11,7 @@ const _dynamicTagName = /* @__PURE__ */_conditional("#text/4", _scope => _test_i
     style: {
       color: "green"
     },
-    renderBody: () => {
-      _write("Hello");
-    }
+    renderBody: /* @__PURE__ */_bindRenderer(_scope, _testBody2)
   }
 })), _test_input);
 export const _test_ = /* @__PURE__ */_value("test", (_scope, test) => _dynamicTagName(_scope, test || _testBody), _dynamicTagName);

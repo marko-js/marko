@@ -124,9 +124,9 @@ export default {
         case TagNameType.DynamicTag:
           DynamicTag.translate.enter(tag);
           break;
-        case TagNameType.AttributeTag:
-          AttributeTag.translate.enter(tag);
-          break;
+        // case TagNameType.AttributeTag:
+        //   AttributeTag.translate.enter(tag);
+        //   break;
       }
     },
 

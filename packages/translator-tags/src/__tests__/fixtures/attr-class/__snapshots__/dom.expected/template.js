@@ -1,6 +1,6 @@
-import { classAttr as _classAttr, write as _write, createRenderer as _createRenderer, register as _register, registerRenderer as _registerRenderer, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, intersections as _intersections, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { classAttr as _classAttr, bindRenderer as _bindRenderer, createRenderer as _createRenderer, register as _register, registerRenderer as _registerRenderer, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, intersections as _intersections, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _customTag, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag.marko";
-const _testBody = _register("packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_2_renderer", /* @__PURE__ */_createRenderer("", ""));
+const _testBody = _register("packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_2_renderer", /* @__PURE__ */_createRenderer("Hello", ""));
 const _inputTestBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_1_renderer", /* @__PURE__ */_createRenderer("", ""));
 const _inputTest_input = _dynamicTagAttrs("#text/3", _inputTestBody);
 const _expr_Text_c_d = /* @__PURE__ */_intersection(3, _scope => {
@@ -18,9 +18,7 @@ const _expr_Text_c_d = /* @__PURE__ */_intersection(3, _scope => {
         b: c,
         d
       }],
-      renderBody: () => {
-        _write("Hello");
-      }
+      renderBody: /* @__PURE__ */_bindRenderer(_scope, _testBody)
     }
   }));
 });
