@@ -81,13 +81,13 @@ exports.p = function (domCompat) {
 
   domCompat.patchConditionals((conditional) => (...args) => {
     const signal = conditional(...args);
-    const hasAttrs = args.length > 1;
+    const skipAttrs = args.length <= 1;
     return (scope, renderer, clean) => {
-      return signal(scope, create5to6Renderer(renderer, hasAttrs), clean);
+      return signal(scope, create5to6Renderer(renderer, skipAttrs), clean);
     };
   });
 
-  function create5to6Renderer(renderer, hasAttrs) {
+  function create5to6Renderer(renderer, skipAttrs) {
     let newRenderer = renderer;
     if (renderer && typeof renderer !== "string") {
       const rendererFromAnywhere =
@@ -115,7 +115,7 @@ exports.p = function (domCompat) {
           }
           newRenderer = domCompat.createRenderer(
             (scope) => {
-              if (!hasAttrs) {
+              if (skipAttrs) {
                 renderAndMorph(scope, rendererFromAnywhere, renderer, {});
               }
             },

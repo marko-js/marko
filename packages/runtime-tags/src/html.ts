@@ -24,15 +24,13 @@ export {
   markResumeControlEnd,
   markResumeControlSingleNodeEnd,
   createRenderFn,
-  peekSerializedScope,
+  peekNextScope,
+  ensureScopeWithId,
+  getScopeById,
   getStreamData,
+  register,
+  serializerRegister,
+  getRegistryInfo,
 } from "./html/writer";
 
 export { createTemplate } from "./html/template";
-
-export {
-  register,
-  makeSerializable,
-  serializedScope,
-  getRegistryInfo,
-} from "./html/serializer";

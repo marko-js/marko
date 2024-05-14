@@ -6,8 +6,7 @@ import type {
   Renderer,
   RenderResult,
 } from "../common/types";
-import { register } from "./serializer";
-import { type Writable, createRenderFn } from "./writer";
+import { type Writable, createRenderFn, register } from "./writer";
 
 export const createTemplate = (renderer: Renderer, id = "") =>
   register(new ServerTemplate(renderer), id);

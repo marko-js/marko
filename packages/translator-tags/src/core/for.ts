@@ -32,7 +32,6 @@ import {
   getSerializedScopeProperties,
   getSignal,
   setForceResumeScope,
-  setRegisterScopeBuilder,
   setSubscriberBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
@@ -320,26 +319,6 @@ const translateHTML = {
     }
 
     if (isStateful || hasStatefulClosures) {
-      setRegisterScopeBuilder(tag, (scope: t.Expression) => {
-        const tempScopeIdentifier =
-          currentProgramPath.scope.generateUidIdentifier("s");
-        return t.callExpression(
-          t.arrowFunctionExpression(
-            [tempScopeIdentifier],
-            t.sequenceExpression([
-              t.callExpression(
-                t.memberExpression(
-                  getScopeIdentifier(bodySection),
-                  t.identifier("set"),
-                ),
-                [keyExpression!, tempScopeIdentifier],
-              ),
-              tempScopeIdentifier,
-            ]),
-          ),
-          [scope],
-        );
-      });
       setForceResumeScope(bodySection);
     }
 
@@ -567,6 +546,23 @@ const translateHTML = {
     // know if a scope requires dynamic subscriptions
     setSubscriberBuilder(tag, (() => {}) as any);
     writeHTMLResumeStatements(tagBody);
+
+    if (isStateful || hasStatefulClosures) {
+      tag.node.body.body.push(
+        t.expressionStatement(
+          t.callExpression(
+            t.memberExpression(
+              getScopeIdentifier(bodySection),
+              t.identifier("set"),
+            ),
+            [
+              keyExpression!,
+              callRuntime("getScopeById", getScopeIdIdentifier(bodySection)),
+            ],
+          ),
+        ) as any,
+      );
+    }
 
     block.body.push(t.expressionStatement(callRuntime("maybeFlush")));
 

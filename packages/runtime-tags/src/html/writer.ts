@@ -1,6 +1,12 @@
 import { type Accessor, type Renderer, ResumeSymbol } from "../common/types";
 import reorderRuntime from "./reorder-runtime";
-import { Serializer, serializedScope } from "./serializer";
+import {
+  Serializer,
+  getRegistered,
+  register as serializerRegister,
+} from "./serializer";
+
+export { serializerRegister };
 
 const runtimeId = ResumeSymbol.DefaultRuntimeId;
 const reorderRuntimeString = String(reorderRuntime).replace(
@@ -458,8 +464,47 @@ export function peekNextScopeId() {
   return $_streamData!.scopeId;
 }
 
-export function peekSerializedScope() {
-  return serializedScope(peekNextScopeId());
+export function peekNextScope() {
+  return ensureScopeWithId(peekNextScopeId());
+}
+
+export function getScopeById(scopeId: number | undefined) {
+  if (scopeId !== undefined) {
+    return $_streamData!.scopeLookup.get(scopeId);
+  }
+}
+
+export function ensureScopeWithId(scopeId: number) {
+  const scopeLookup = $_streamData!.scopeLookup;
+  let scope = scopeLookup.get(scopeId);
+  if (!scope) {
+    scope = {};
+    scopeLookup.set(scopeId, scope);
+    if (MARKO_DEBUG) {
+      (scope as any)["#scope"] = scopeId;
+    }
+  }
+
+  return scope;
+}
+
+export function register<T extends WeakKey>(
+  val: T,
+  id: string,
+  scopeId?: number,
+): T {
+  return scopeId === undefined
+    ? serializerRegister(id, val)
+    : serializerRegister(id, val, ensureScopeWithId(scopeId));
+}
+
+export function getRegistryInfo(val: WeakKey) {
+  const registered = getRegistered(val);
+  if (registered) {
+    return registered.scope
+      ? [registered.id, getRegistered(registered.scope)?.id]
+      : [registered.id];
+  }
 }
 
 export function writeEffect(scopeId: number, fnId: string) {
@@ -474,7 +519,12 @@ export function writeScope(
     | PartialScope[]
     | undefined = $_streamData!.scopeLookup.get(scopeId),
 ) {
-  if (assignTo !== undefined) {
+  if (assignTo === undefined) {
+    if (MARKO_DEBUG) {
+      (scope as any)["#scope"] = scopeId;
+    }
+    $_streamData!.scopeLookup.set(scopeId, scope);
+  } else if (assignTo !== scope) {
     if (Array.isArray(assignTo)) {
       assignTo.push(scope);
     } else {
@@ -485,7 +535,6 @@ export function writeScope(
     $global: getFilteredGlobals($_streamData!.global) as any,
   };
   $_buffer!.scopes[scopeId] = scope;
-  $_streamData!.scopeLookup.set(scopeId, scope);
 }
 
 export function markResumeNode(scopeId: number, index: Accessor) {
@@ -522,9 +571,7 @@ function getResumeScript(
     let isFirstFlush;
     let serializer = streamState.serializer;
     if ((isFirstFlush = !serializer)) {
-      serializer = streamState.serializer = new Serializer(
-        streamState.scopeLookup,
-      );
+      serializer = streamState.serializer = new Serializer();
     }
     return `<script>${
       isFirstFlush

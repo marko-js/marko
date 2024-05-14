@@ -97,16 +97,6 @@ export const [getSerializedScopeProperties] = createSectionState<
   Map<t.StringLiteral | t.NumericLiteral, t.Expression>
 >("serializedScopeProperties", () => new Map());
 
-const [getRegisterScopeBuilder, _setRegisterScopeBuilder] = createSectionState<
-  registerScopeBuilder | undefined
->("register");
-export function setRegisterScopeBuilder(
-  tag: t.NodePath<t.MarkoTag>,
-  builder: registerScopeBuilder,
-) {
-  _setRegisterScopeBuilder(getSection(tag.get("body")), builder);
-}
-
 const unimplementedBuild = () => {
   return t.stringLiteral("SIGNAL NOT INITIALIZED");
 };
@@ -731,7 +721,7 @@ export function writeHTMLResumeStatements(
         getSerializedScopeProperties(currentSection).set(
           t.stringLiteral("_"),
           callRuntime(
-            "serializedScope",
+            "ensureScopeWithId",
             getScopeIdIdentifier((currentSection = currentSection.parent!)),
           ),
         );
@@ -808,16 +798,13 @@ export function writeHTMLResumeStatements(
   }
 
   if (serializedProperties.length || forceResumeScope(section)) {
-    const builder = getRegisterScopeBuilder(section);
     path.pushContainer(
       "body",
       t.expressionStatement(
         callRuntime(
           "writeScope",
           scopeIdIdentifier,
-          builder
-            ? builder(t.objectExpression(serializedProperties))
-            : t.objectExpression(serializedProperties),
+          t.objectExpression(serializedProperties),
         ),
       ),
     );
