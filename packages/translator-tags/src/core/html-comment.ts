@@ -45,7 +45,7 @@ export default {
         throw tag
           .get("var")
           .buildCodeFrameError(
-            "The `<html-comment>` tag's return value cannot be destructured.",
+            "The `html-comment` tag cannot be destructured.",
           );
       }
       needsBinding = true;

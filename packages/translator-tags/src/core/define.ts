@@ -4,7 +4,6 @@ import attrsToObject from "../util/attrs-to-object";
 import { isOutputHTML } from "../util/marko-config";
 import {
   BindingType,
-  getBindingIdentifiers,
   mergeReferences,
   trackParamsReferences,
   trackVarReferences,
@@ -26,9 +25,7 @@ export default {
     if (!tag.node.var) {
       throw tag
         .get("name")
-        .buildCodeFrameError(
-          "<define> requires a variable to be specified, eg <define/NAME>.",
-        );
+        .buildCodeFrameError("The `define` tag requires a tag variable.");
     }
 
     const tagBody = tag.get("body");
@@ -39,18 +36,6 @@ export default {
       tag,
       tag.node.attributes.map((attr) => attr.value),
     );
-
-    for (const { identifier } of getBindingIdentifiers(tag.node.var)) {
-      const binding = tag.scope.getBinding(identifier.name);
-      if (binding) {
-        const violations = binding?.constantViolations;
-        if (violations && violations.length > 0) {
-          throw violations[0].buildCodeFrameError(
-            "Cannot assign to a 'define' tag variable.",
-          );
-        }
-      }
-    }
   },
   translate: {
     enter(tag) {

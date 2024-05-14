@@ -1,5 +1,5 @@
 
     at packages/translator-tags/src/__tests__/fixtures/error-return-body-content/template.marko:1:2
     > 1 | <return=3>Hello</return>
-        |  ^^^^^^ The <"return"> tag does not support body content.
+        |  ^^^^^^ The `return` tag does not support body content.
       2 |

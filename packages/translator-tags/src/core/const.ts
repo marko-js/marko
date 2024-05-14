@@ -2,11 +2,7 @@ import { type Tag, assertNoParams, assertNoArgs } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
-import {
-  BindingType,
-  getBindingIdentifiers,
-  trackVarReferences,
-} from "../util/references";
+import { BindingType, trackVarReferences } from "../util/references";
 import { getSection } from "../util/sections";
 import { addValue, getTagVarSignal } from "../util/signals";
 import translateVar from "../util/translate-var";
@@ -22,15 +18,13 @@ export default {
     if (!node.var) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The 'const' tag requires a tag variable.");
+        .buildCodeFrameError("The `const` tag requires a tag variable.");
     }
 
     if (!valueAttr) {
       throw tag
         .get("name")
-        .buildCodeFrameError(
-          "The 'const' tag requires a default 'value' attribute.",
-        );
+        .buildCodeFrameError("The `const` tag requires a value.");
     }
 
     if (
@@ -41,7 +35,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The 'const' tag only supports the default 'value' attribute.",
+          "The `const` tag only supports the `value` attribute.",
         );
     }
 
@@ -55,18 +49,6 @@ export default {
       upstreamAlias,
       (valueAttr.value.extra ??= {}),
     );
-
-    for (const { identifier } of getBindingIdentifiers(node.var)) {
-      const binding = tag.scope.getBinding(identifier.name);
-      if (binding) {
-        const violations = binding?.constantViolations;
-        if (violations && violations.length > 0) {
-          throw violations[0].buildCodeFrameError(
-            "Cannot assign to a 'const' tag variable.",
-          );
-        }
-      }
-    }
   },
   translate(tag) {
     const { node } = tag;

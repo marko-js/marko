@@ -22,7 +22,7 @@ export default {
     if (!valueAttr) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The 'do' tag requires a 'value' attribute.");
+        .buildCodeFrameError("The `do` tag requires a value.");
     }
 
     if (
@@ -33,7 +33,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The 'do' tag only supports the 'value' attribute.",
+          "The `do` tag only supports the `value` attribute.",
         );
     }
   },

@@ -25,7 +25,7 @@ export default {
           identifier.parentPath.replaceWith(t.identifier("$global"));
         } else {
           throw identifier.buildCodeFrameError(
-            "Only out.global is supported for compatibility.",
+            "Only `out.global` is supported for compatibility.",
           );
         }
         break;

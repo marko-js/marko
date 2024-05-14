@@ -27,7 +27,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The 'debug' tag only supports the 'value' attribute.",
+          "The `debug` tag only supports the `value` attribute.",
         );
     }
   },

@@ -61,21 +61,19 @@ export default {
     if (!t.isMarkoAttribute(testAttr) || !testAttr.default) {
       throw tag
         .get("name")
-        .buildCodeFrameError(
-          `The '<if>' tag requires a default attribute like '<if=condition>'.`,
-        );
+        .buildCodeFrameError("The `if` tag requires a value.");
     }
 
     if (node.body.body.length === 0) {
       throw tag
         .get("name")
-        .buildCodeFrameError(`The '<if>' tag requires body content.`);
+        .buildCodeFrameError("The `if` tag requires body content.");
     }
 
     if (node.attributes.length > 1) {
       const start = node.attributes[1].loc?.start;
       const end = node.attributes[node.attributes.length - 1].loc?.end;
-      const msg = `The '<if>' tag only supports the default 'value' attribute.`;
+      const msg = "The `if` tag only supports the `value` attribute.";
 
       if (start == null || end == null) {
         throw tag.get("name").buildCodeFrameError(msg);

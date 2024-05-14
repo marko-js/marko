@@ -1,5 +1,5 @@
 
     at packages/translator-tags/src/__tests__/fixtures/error-const-extra-attr/template.marko:1:2
     > 1 | <const/x=1 y=2/>
-        |  ^^^^^ The 'const' tag only supports the default 'value' attribute.
+        |  ^^^^^ The `const` tag only supports the `value` attribute.
       2 |
