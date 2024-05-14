@@ -19,7 +19,7 @@ export default {
     if (node.body.body.length === 0) {
       throw tag
         .get("name")
-        .buildCodeFrameError(`The '<else>' tag requires body content.`);
+        .buildCodeFrameError("The `else` tag requires body content.");
     }
 
     if (
@@ -28,7 +28,7 @@ export default {
     ) {
       const start = node.attributes[1].loc?.start;
       const end = node.attributes[node.attributes.length - 1].loc?.end;
-      const msg = `The '<else>' tag only supports an if attribute.`;
+      const msg = "The `else` tag only supports an `if=` attribute.";
 
       if (start == null || end == null) {
         throw tag.get("name").buildCodeFrameError(msg);

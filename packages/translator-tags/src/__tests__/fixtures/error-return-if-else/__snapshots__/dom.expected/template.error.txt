@@ -3,5 +3,5 @@
       3 | </if>
       4 | <else>
     > 5 |   <return=2/>
-        |    ^^^^^^ The '<return>' tag can only be used once per template.
+        |    ^^^^^^ The `return` tag can only be used once per template.
       6 | </else>

@@ -34,7 +34,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          `The '<return>' tag can only be used once per template.`,
+          "The `return` tag can only be used once per template.",
         );
     }
     usedTag.add(tag.hub);
@@ -48,9 +48,7 @@ export default {
     if (!t.isMarkoAttribute(valueAttr) || !valueAttr.default) {
       throw tag
         .get("name")
-        .buildCodeFrameError(
-          `The '<return>' tag requires default attribute like '<return=VALUE>'.`,
-        );
+        .buildCodeFrameError("The `return` tag requires a value.");
     }
 
     if (
@@ -59,7 +57,7 @@ export default {
     ) {
       const start = node.attributes[1].loc?.start;
       const end = node.attributes[node.attributes.length - 1].loc?.end;
-      const msg = `The '<return>' tag only supports the default 'value' attribute.`;
+      const msg = "The `return` tag only supports the `value` attribute.";
 
       if (start == null || end == null) {
         throw tag.get("name").buildCodeFrameError(msg);

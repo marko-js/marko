@@ -1,5 +1,5 @@
 
     at packages/translator-tags/src/__tests__/fixtures/error-let-body-content/template.marko:1:2
     > 1 | <let/count=0>Hello</let>
-        |  ^^^ The <"let"> tag does not support body content.
+        |  ^^^ The `let` tag does not support body content.
       2 |

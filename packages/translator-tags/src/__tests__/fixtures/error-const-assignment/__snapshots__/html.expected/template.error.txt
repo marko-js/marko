@@ -1,6 +1,0 @@
-
-    at packages/translator-tags/src/__tests__/fixtures/error-const-assignment/template.marko:2:24
-      1 | <const/x = 1/>
-    > 2 | <button onClick=(() => x++)>increment</button>
-        |                        ^^^ Cannot assign to a 'const' tag variable.
-      3 |

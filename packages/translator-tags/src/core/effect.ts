@@ -23,9 +23,7 @@ export default {
     if (!valueAttr) {
       throw tag
         .get("name")
-        .buildCodeFrameError(
-          "The 'effect' tag requires a default 'value' attribute.",
-        );
+        .buildCodeFrameError("The `effect` tag requires a value.");
     }
 
     if (
@@ -36,15 +34,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The 'effect' tag only supports the default 'value' attribute.",
-        );
-    }
-
-    if (!valueAttr) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "The 'effect' tag requires a default 'value' attribute.",
+          "The `effect` tag only supports the `value` attribute.",
         );
     }
 

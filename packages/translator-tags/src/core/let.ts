@@ -46,7 +46,7 @@ export default {
       const start = valueChangeAttr.loc?.start;
       const end = valueChangeAttr.loc?.end;
       const msg =
-        "The 'let' tag only supports the default 'value' attribute and its change handler.";
+        "The `let` tag only supports the `value` attribute and its change handler.";
 
       if (start == null || end == null) {
         throw tag.get("name").buildCodeFrameError(msg);
@@ -61,13 +61,13 @@ export default {
     if (!tagVar) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The 'let' tag requires a tag variable.");
+        .buildCodeFrameError("The `let` tag requires a tag variable.");
     }
 
     if (!t.isIdentifier(tagVar)) {
       throw tag
         .get("var")
-        .buildCodeFrameError("The 'let' cannot be destructured.");
+        .buildCodeFrameError("The `let` cannot be destructured.");
     }
 
     if (valueChangeAttr && computeNode(valueChangeAttr.value)) {

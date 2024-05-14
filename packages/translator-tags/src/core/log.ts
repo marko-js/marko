@@ -21,7 +21,7 @@ export default {
     if (!valueAttr) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The 'log' tag requires a 'value' attribute.");
+        .buildCodeFrameError("The `log` tag requires a value.");
     }
 
     if (
@@ -32,7 +32,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The 'log' tag only supports the 'value' attribute.",
+          "The `log` tag only supports the `value` attribute.",
         );
     }
   },

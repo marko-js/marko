@@ -28,13 +28,13 @@ export default {
     if (!node.var) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The 'id' tag requires a tag variable.");
+        .buildCodeFrameError("The `id` tag requires a tag variable.");
     }
 
     if (!t.isIdentifier(tagVar)) {
       throw tag
         .get("var")
-        .buildCodeFrameError("The 'id' tag cannot be destructured");
+        .buildCodeFrameError("The `id` tag cannot be destructured");
     }
 
     if (isOutputHTML()) {

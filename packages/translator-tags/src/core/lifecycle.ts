@@ -50,7 +50,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The 'lifecycle' tag requires at least one attribute.",
+          "The `lifecycle` tag requires at least one attribute.",
         );
     }
 
@@ -59,13 +59,13 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            "The 'lifecycle' tag does not support ...spread attributes.",
+            "The `lifecycle` tag does not support `...spread` attributes.",
           );
       } else if (!supportedAttrNames.has(attr.name)) {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            `The 'lifecycle' tag does not support the '${attr.name}' attribute.`,
+            `The \`lifecycle\` tag does not support the \`${attr.name}\` attribute.`,
           );
       }
       (attr.value.extra ??= {}).isEffect = true;
@@ -80,19 +80,6 @@ export default {
   translate: {
     exit(tag) {
       const { node } = tag;
-
-      // TODO: Check attributes?
-      // if (
-      //   node.attributes.length > 1 ||
-      //   !t.isMarkoAttribute(valueAttr) ||
-      //   (!valueAttr.default && valueAttr.name !== "default")
-      // ) {
-      //   throw tag
-      //     .get("name")
-      //     .buildCodeFrameError(
-      //       "The 'lifecycle' tag only supports the 'default' attribute."
-      //     );
-      // }
 
       const section = getSection(tag);
       const tagExtra = node.extra!;
