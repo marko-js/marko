@@ -17,7 +17,11 @@ import {
   createScopeReadExpression,
   getScopeExpression,
 } from "../../util/scope-read";
-import { getOrCreateSection, getSection } from "../../util/sections";
+import {
+  getOrCreateSection,
+  getScopeIdIdentifier,
+  getSection,
+} from "../../util/sections";
 import { addHTMLEffectCall, addStatement } from "../../util/signals";
 import translateVar from "../../util/translate-var";
 import * as walks from "../../util/walks";
@@ -168,21 +172,27 @@ export default {
       write`<${name.node}`;
 
       if (hasSpread) {
+        const attrsObj = attrsToObject(tag)!;
         if (isHTML) {
-          write`${callRuntime("attrs", attrsToObject(tag)!)}`;
+          addHTMLEffectCall(section, extra.referencedBindings);
+          write`${callRuntime("attrs", attrsObj, visitAccessor, getScopeIdIdentifier(section))}`;
         } else {
           addStatement(
             "render",
             section,
             extra.referencedBindings,
             t.expressionStatement(
-              callRuntime(
-                "attrs",
-                scopeIdentifier,
-                visitAccessor,
-                attrsToObject(tag)!,
-              ),
+              callRuntime("attrs", scopeIdentifier, visitAccessor, attrsObj),
             ),
+          );
+          addStatement(
+            "effect",
+            section,
+            extra.referencedBindings,
+            t.expressionStatement(
+              callRuntime("attrsEvents", scopeIdentifier, visitAccessor),
+            ),
+            attrsObj,
           );
         }
       } else {

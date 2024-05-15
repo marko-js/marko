@@ -13,6 +13,7 @@ export {
   html,
   attr,
   attrs,
+  attrsEvents,
   classAttr,
   styleAttr,
   props,
