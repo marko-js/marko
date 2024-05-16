@@ -1,5 +1,11 @@
 # Change Log
 
+## 6.0.1
+
+### Patch Changes
+
+- [#2232](https://github.com/marko-js/marko/pull/2232) [`a67e1c4`](https://github.com/marko-js/marko/commit/a67e1c42b04ede5d9b9ef3cb2f8e21bedd2f004f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where the `ignoreUnrecognizedTags` compiler option was incorrectly escaping attribute tags for recognized tags that did not explicitly define their attribute tags in a marko.json
+
 ## 6.0.0
 
 ### Major Changes
