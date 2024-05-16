@@ -16,7 +16,6 @@ import {
   type Section,
   getOrCreateSection,
   getScopeIdIdentifier,
-  getScopeIdentifier,
   getSection,
   startSection,
   checkStatefulClosures,
@@ -29,7 +28,6 @@ import {
   getSignal,
   getSignalFn,
   setForceResumeScope,
-  setRegisterScopeBuilder,
   setSubscriberBuilder,
   writeHTMLResumeStatements,
 } from "../../util/signals";
@@ -196,13 +194,6 @@ export const translate = {
 
     if (isOutputHTML()) {
       if (isStateful || hasStatefulClosures) {
-        setRegisterScopeBuilder(tag, (scope: t.Expression) => {
-          return t.assignmentExpression(
-            "=",
-            getScopeIdentifier(bodySection),
-            scope,
-          );
-        });
         setForceResumeScope(bodySection);
       }
       writer.flushInto(tag);
@@ -256,19 +247,16 @@ export const translate = {
         const nextTag = tag.getNextSibling();
         const ifScopeIdIdentifier =
           tag.scope.generateUidIdentifier("ifScopeId");
-        const ifScopeIdentifier = getScopeIdentifier(branches[0].section);
         const ifRendererIdentifier =
           tag.scope.generateUidIdentifier("ifRenderer");
 
         let statement: t.Statement | undefined;
         for (let i = branches.length; i--; ) {
           const { tag, section } = branches[i];
-          const branchScopeIdentifier = getScopeIdentifier(section, true);
           const branchHasStatefulClosures = checkStatefulClosures(
             section,
             true,
           );
-          branchScopeIdentifier.name = ifScopeIdentifier.name;
 
           if (isStateful) {
             tag.node.body.body.push(
@@ -289,17 +277,15 @@ export const translate = {
             );
           }
           if (isStateful || branchHasStatefulClosures) {
-            if (singleNodeOptimization) {
-              tag.node.body.body.push(
-                t.expressionStatement(
-                  t.assignmentExpression(
-                    "=",
-                    ifScopeIdIdentifier,
-                    getScopeIdIdentifier(section),
-                  ),
-                ) as any,
-              );
-            }
+            tag.node.body.body.push(
+              t.expressionStatement(
+                t.assignmentExpression(
+                  "=",
+                  ifScopeIdIdentifier,
+                  getScopeIdIdentifier(section),
+                ),
+              ) as any,
+            );
           }
 
           const [testAttr] = tag.node.attributes;
@@ -321,9 +307,7 @@ export const translate = {
             t.variableDeclaration(
               "let",
               [
-                singleNodeOptimization &&
-                  t.variableDeclarator(ifScopeIdIdentifier),
-                t.variableDeclarator(ifScopeIdentifier),
+                t.variableDeclarator(ifScopeIdIdentifier),
                 isStateful && t.variableDeclarator(ifRendererIdentifier),
               ].filter(Boolean) as t.VariableDeclarator[],
             ),
@@ -357,7 +341,7 @@ export const translate = {
               getScopeAccessorLiteral(nodeRef).value +
                 AccessorChar.ConditionalScope,
             ),
-            ifScopeIdentifier,
+            callRuntime("getScopeById", ifScopeIdIdentifier),
           );
         }
       }

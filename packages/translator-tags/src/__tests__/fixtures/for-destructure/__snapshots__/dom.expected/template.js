@@ -11,22 +11,28 @@ const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/for-
   _description$forBody(_scope, description, _clean);
 }));
 const _for = /* @__PURE__ */_loopOf("#text/0", _forBody);
-const _items_effect = _register("packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items", _scope => {
-  _on(_scope["#button/1"], "click", function () {
-    const {
-      items
-    } = _scope;
+const _onClick = _scope => {
+  const {
+    items
+  } = _scope;
+  return function () {
     _queueSource(_scope, _items, [...items, {
       name: "JavaScript",
       description: "Java, but scriptier"
     }]);
-  });
-  _on(_scope["#button/2"], "click", function () {
-    const {
-      items
-    } = _scope;
+  };
+};
+const _onClick2 = _scope => {
+  const {
+    items
+  } = _scope;
+  return function () {
     _queueSource(_scope, _items, items.slice(0, -1));
-  });
+  };
+};
+const _items_effect = _register("packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items", _scope => {
+  _on(_scope["#button/1"], "click", _onClick(_scope));
+  _on(_scope["#button/2"], "click", _onClick2(_scope));
 });
 const _items = /* @__PURE__ */_value("items", (_scope, items) => {
   _queueEffect(_scope, _items_effect);

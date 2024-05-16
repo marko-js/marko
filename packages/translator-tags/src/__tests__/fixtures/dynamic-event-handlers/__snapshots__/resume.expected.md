@@ -9,7 +9,7 @@
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount",])
+      (M$h=[]).push(_=&gt;(_.a={0:{clickCount:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount",])
     </script>
   </body>
 </html>
@@ -34,7 +34,7 @@ container.querySelector("button").click()
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount",])
+      (M$h=[]).push(_=&gt;(_.a={0:{clickCount:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount",])
     </script>
   </body>
 </html>
@@ -59,7 +59,7 @@ container.querySelector("button").click()
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount",])
+      (M$h=[]).push(_=&gt;(_.a={0:{clickCount:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount",])
     </script>
   </body>
 </html>
@@ -84,7 +84,7 @@ container.querySelector("button").click()
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount",])
+      (M$h=[]).push(_=&gt;(_.a={0:{clickCount:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount",])
     </script>
   </body>
 </html>

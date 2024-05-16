@@ -6,9 +6,10 @@ const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/move
   _child$forBody(_scope, child, _clean);
 }));
 const _for = /* @__PURE__ */_loopOf("#text/0", _forBody);
-const _input = /* @__PURE__ */_value("input", (_scope, input) => _for(_scope, [input.children, function (c) {
+const _by = _scope => function (c) {
   return c.id;
-}]));
+};
+const _input = /* @__PURE__ */_value("input", (_scope, input) => _for(_scope, [input.children, _by(_scope)]));
 export const _args_ = (_scope, _destructure2, _clean) => {
   let input;
   if (!_clean) [input] = _destructure2;

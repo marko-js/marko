@@ -1,16 +1,20 @@
 import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, intersection as _intersection, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _expr_a_b_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b", _scope => _on(_scope["#button/0"], "click", function () {
+const _onClick = _scope => {
+  const {
+    b
+  } = _scope;
+  return a => b;
+};
+const _onClick2 = _scope => {
   const {
     a,
     b
   } = _scope;
-  _queueSource(_scope, _a, a.map(a => {
-    const {
-      b
-    } = _scope;
-    return b;
-  }));
-}));
+  return function () {
+    _queueSource(_scope, _a, a.map(_onClick(_scope)));
+  };
+};
+const _expr_a_b_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b", _scope => _on(_scope["#button/0"], "click", _onClick2(_scope)));
 const _expr_a_b = /* @__PURE__ */_intersection(2, _scope => {
   const {
     a,

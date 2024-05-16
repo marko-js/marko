@@ -1,11 +1,12 @@
 import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, intersection as _intersection, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _expr_x_y_effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag/template.marko_0_x_y", _scope => _on(_scope["#button/0"], "click", () => {
+const _onClick = _scope => {
   const {
     x,
     y
   } = _scope;
-  return _queueSource(_scope, _x, _queueSource(_scope, _y, x + y));
-}));
+  return () => _queueSource(_scope, _x, _queueSource(_scope, _y, x + y));
+};
+const _expr_x_y_effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag/template.marko_0_x_y", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _expr_x_y = /* @__PURE__ */_intersection(2, _scope => {
   const {
     x,

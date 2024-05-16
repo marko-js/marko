@@ -117,7 +117,10 @@ const _clickCount = value(
 );
 
 export const clickHandler = (scope: Scope) => {
-  queueSource(scope, _clickCount, scope[Index.CLICK_COUNT] + 1);
+  const clickCount = scope[Index.CLICK_COUNT];
+  return () => {
+    queueSource(scope, _clickCount, clickCount + 1);
+  };
 };
 
 export const clickCount$renderBody = dynamicClosure(

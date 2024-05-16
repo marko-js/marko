@@ -12,12 +12,15 @@ const _expr_Text_val = /* @__PURE__ */_intersection(2, _scope => {
 });
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, _expr_Text_val);
 const _val = /* @__PURE__ */_value("val", null, _expr_Text_val);
-const _tagName_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", function () {
+const _onClick = _scope => {
   const {
     tagName
   } = _scope;
-  _queueSource(_scope, _tagName, tagName === child1 ? child2 : child1);
-}));
+  return function () {
+    _queueSource(_scope, _tagName, tagName === child1 ? child2 : child1);
+  };
+};
+const _tagName_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName) => {
   _queueEffect(_scope, _tagName_effect);
   _dynamicTagName(_scope, tagName);

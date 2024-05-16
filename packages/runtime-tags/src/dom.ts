@@ -26,8 +26,9 @@ export { on } from "./dom/event";
 export {
   init,
   register,
+  registerRenderer,
+  registerBoundSignal,
   registerSubscriber,
-  getRegisteredWithScope,
   scopeLookup,
 } from "./dom/resume";
 

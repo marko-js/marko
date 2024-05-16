@@ -1,9 +1,9 @@
 import _myButton from "./components/my-button.marko";
-import { register as _register, peekSerializedScope as _peekSerializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { register as _register, peekNextScope as _peekNextScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const clickCount = 0;
-  const _childScope = _peekSerializedScope();
+  const _childScope = _peekNextScope();
   _myButton._({
     text: clickCount,
     onClick: _register(function () {

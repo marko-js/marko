@@ -134,7 +134,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const peekScopeId = tag.scope.generateUidIdentifier(childScopeBinding?.name);
   tag.insertBefore(
     t.variableDeclaration("const", [
-      t.variableDeclarator(peekScopeId, callRuntime("peekSerializedScope")),
+      t.variableDeclarator(peekScopeId, callRuntime("peekNextScope")),
     ]),
   );
 
@@ -170,7 +170,8 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
               t.stringLiteral(
                 getResumeRegisterId(renderBodySection, "renderer"),
               ),
-              getScopeIdIdentifier(section),
+              (section.closures.size || tag.node.var) &&
+                getScopeIdIdentifier(section),
             ),
           ),
         ]),

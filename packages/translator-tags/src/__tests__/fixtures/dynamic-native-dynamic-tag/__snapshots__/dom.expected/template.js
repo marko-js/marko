@@ -11,12 +11,15 @@ const _expr_Text_className = /* @__PURE__ */_intersection(2, _scope => {
 });
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, _expr_Text_className);
 const _className = /* @__PURE__ */_value("className", null, _expr_Text_className);
-const _tagName_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", function () {
+const _onClick = _scope => {
   const {
     tagName
   } = _scope;
-  _queueSource(_scope, _tagName, tagName === "span" ? "div" : "span");
-}));
+  return function () {
+    _queueSource(_scope, _tagName, tagName === "span" ? "div" : "span");
+  };
+};
+const _tagName_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName) => {
   _queueEffect(_scope, _tagName_effect);
   _dynamicTagName(_scope, tagName || _tagNameBody);

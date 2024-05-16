@@ -1,5 +1,5 @@
 # Write
-  <body><button>0<!M*2 #text/0></button><!M*1 #button/0></body><script>(M$h=[]).push((b,s,h)=>({0:h={clickCount:0},1:{onClick:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])</script>
+  <body><button>0<!M*2 #text/0></button><!M*1 #button/0></body><script>(M$h=[]).push(_=>(_.b={0:_.a={"#scope":0,clickCount:0},1:{onClick:_._.clickHandler(_.a),"#scope":1},2:{_:{clickCount:0},"#scope":2}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])</script>
 
 
 # Render "End"
@@ -13,7 +13,7 @@
     </button>
     <!--M*1 #button/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:h={clickCount:0},1:{onClick:b("clickHandler",h)},2:{_:h}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])
+      (M$h=[]).push(_=&gt;(_.b={0:_.a={"#scope":0,clickCount:0},1:{onClick:_._.clickHandler(_.a),"#scope":1},2:{_:{clickCount:0},"#scope":2}}),[2,"subscribe_clickCount$renderBody",1,"FancyButton$onclick_effect",])
     </script>
   </body>
 </html>

@@ -1,9 +1,9 @@
-import { write as _write, peekSerializedScope as _peekSerializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, peekNextScope as _peekNextScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _counter from "./components/counter.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   _write("<div>");
-  const _childScope = _peekSerializedScope();
+  const _childScope = _peekNextScope();
   _counter._({});
   _write("</div>");
   _writeScope(_scope0_id, {

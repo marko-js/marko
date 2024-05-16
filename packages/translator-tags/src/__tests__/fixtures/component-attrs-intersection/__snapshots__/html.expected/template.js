@@ -1,9 +1,9 @@
 import _displayIntersection from "./components/display-intersection.marko";
-import { peekSerializedScope as _peekSerializedScope, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { peekNextScope as _peekNextScope, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const count = 0;
-  const _childScope = _peekSerializedScope();
+  const _childScope = _peekNextScope();
   _displayIntersection._({
     value: count
   });

@@ -183,7 +183,8 @@ export default {
               t.stringLiteral(
                 getResumeRegisterId(renderBodySection, "renderer"),
               ),
-              getScopeIdIdentifier(section),
+              (section.closures.size || tag.node.var) &&
+                getScopeIdIdentifier(section),
             ),
           );
         }

@@ -1,15 +1,18 @@
 import { on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _onClick = _scope => {
+  const {
+    clickCount
+  } = _scope;
+  return function () {
+    _queueSource(_scope, _clickCount, clickCount + 1);
+  };
+};
 const _clickCount_effect = _register("packages/translator-tags/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount", _scope => {
   const {
     clickCount
   } = _scope;
   document.getElementById("button").textContent = clickCount;
-  _on(_scope["#button/0"], "click", function () {
-    const {
-      clickCount
-    } = _scope;
-    _queueSource(_scope, _clickCount, clickCount + 1);
-  });
+  _on(_scope["#button/0"], "click", _onClick(_scope));
 });
 const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => _queueEffect(_scope, _clickCount_effect));
 const _setup = _scope => {

@@ -3,7 +3,7 @@
 <html>
   <head>
     <script>
-      (M$h=[]).push(null,[0,"packages/translator-tags/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0",])
+      (M$h=[]).push(_=&gt;(null),[0,"packages/translator-tags/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0",])
     </script>
   </head>
   <body

@@ -21,7 +21,7 @@
     </button>
     <!--M*0 #button/2-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{x:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.a={0:{x:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x",])
     </script>
   </body>
 </html>
@@ -58,7 +58,7 @@ container.querySelector("#increment")?.click()
     </button>
     <!--M*0 #button/2-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{x:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.a={0:{x:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x",])
     </script>
   </body>
 </html>
@@ -96,7 +96,7 @@ container.querySelector("#increment")?.click()
     </button>
     <!--M*0 #button/2-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{x:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.a={0:{x:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x",])
     </script>
   </body>
 </html>
@@ -131,7 +131,7 @@ container.querySelector("#increment")?.click()
     </button>
     <!--M*0 #button/2-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{x:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.a={0:{x:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x",])
     </script>
   </body>
 </html>

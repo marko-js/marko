@@ -19,7 +19,7 @@
     />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{"#childScope/0":j={count:0}},3:j}),[3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
+      (M$h=[]).push(_=&gt;(_.c={0:{tagName:"div","#text/0!":_.a={"#scope":1},"#text/0(":"div","#scope":0},1:_.a,2:{"#childScope/0":_.b={"#scope":3,count:0},"#scope":2},3:_.b}),[3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
     </script>
   </body>
 </html>
@@ -55,7 +55,7 @@ container.querySelector("#count").click()
     />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{"#childScope/0":j={count:0}},3:j}),[3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
+      (M$h=[]).push(_=&gt;(_.c={0:{tagName:"div","#text/0!":_.a={"#scope":1},"#text/0(":"div","#scope":0},1:_.a,2:{"#childScope/0":_.b={"#scope":3,count:0},"#scope":2},3:_.b}),[3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
     </script>
   </body>
 </html>
@@ -87,7 +87,7 @@ container.querySelector("#changeTag").click()
     />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{"#childScope/0":j={count:0}},3:j}),[3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
+      (M$h=[]).push(_=&gt;(_.c={0:{tagName:"div","#text/0!":_.a={"#scope":1},"#text/0(":"div","#scope":0},1:_.a,2:{"#childScope/0":_.b={"#scope":3,count:0},"#scope":2},3:_.b}),[3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
     </script>
   </body>
 </html>
@@ -122,7 +122,7 @@ container.querySelector("#count").click()
     />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{"#childScope/0":j={count:0}},3:j}),[3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
+      (M$h=[]).push(_=&gt;(_.c={0:{tagName:"div","#text/0!":_.a={"#scope":1},"#text/0(":"div","#scope":0},1:_.a,2:{"#childScope/0":_.b={"#scope":3,count:0},"#scope":2},3:_.b}),[3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
     </script>
   </body>
 </html>

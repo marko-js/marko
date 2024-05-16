@@ -7,13 +7,14 @@ const _logOutput = /* @__PURE__ */_value("logOutput", (_scope, logOutput) => _da
 const _str = /* @__PURE__ */_value("str", (_scope, str) => log.let += str);
 const _fromConst = /* @__PURE__ */_value("fromConst", (_scope, fromConst) => fromConst(_scope));
 const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/do-tag/template.marko_0", _scope => _queueSource(_scope, _logOutput, JSON.stringify(log)));
+const _ = _scope => function () {
+  log.const += "rendered";
+};
 const _setup = _scope => {
   log.block += "rendered";
   fromStatic(_scope);
   _queueEffect(_scope, _setup_effect);
-  _fromConst(_scope, function () {
-    log.const += "rendered";
-  });
+  _fromConst(_scope, _(_scope));
   _str(_scope, "rendered");
   _logOutput(_scope, JSON.stringify(log));
 };

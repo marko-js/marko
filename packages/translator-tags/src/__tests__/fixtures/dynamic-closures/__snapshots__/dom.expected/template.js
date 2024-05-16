@@ -21,9 +21,10 @@ const _customTagBody = _register("packages/translator-tags/src/__tests__/fixture
 const _if = /* @__PURE__ */_conditional("#text/2");
 const _c = /* @__PURE__ */_value("c", null, _dynamicSubscribers("c"));
 const _b = /* @__PURE__ */_value("b", null, _dynamicSubscribers("b"));
-const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_0", _scope => _on(_scope["#button/0"], "click", function () {
+const _onClick = _scope => function () {
   _queueSource(_scope, _c, 4);
-}));
+};
+const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_0", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _setup = _scope => {
   _customTag(_scope["#childScope/1"]);
   _queueEffect(_scope, _setup_effect);

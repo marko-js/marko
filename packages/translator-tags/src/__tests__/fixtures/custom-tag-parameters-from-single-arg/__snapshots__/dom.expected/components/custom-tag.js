@@ -7,12 +7,15 @@ const _expr_Text_x = /* @__PURE__ */_intersection(2, _scope => {
   _inputRenderBody_input(_scope, () => x);
 });
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", null, _expr_Text_x);
-const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-single-arg/components/custom-tag.marko_0_x", _scope => _on(_scope["#button/0"], "click", function () {
+const _onClick = _scope => {
   const {
     x
   } = _scope;
-  _queueSource(_scope, _x, x + 1);
-}));
+  return function () {
+    _queueSource(_scope, _x, x + 1);
+  };
+};
+const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-single-arg/components/custom-tag.marko_0_x", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   _queueEffect(_scope, _x_effect);

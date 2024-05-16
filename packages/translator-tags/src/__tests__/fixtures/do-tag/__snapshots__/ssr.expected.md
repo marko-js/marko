@@ -1,5 +1,5 @@
 # Write
-  <!>{"let":"rendered","const":"rendered","static":"rendered","block":"rendered"}<!M*0 #text/0><script>(M$h=[]).push(null,[0,"packages/translator-tags/src/__tests__/fixtures/do-tag/template.marko_0",])</script>
+  <!>{"let":"rendered","const":"rendered","static":"rendered","block":"rendered"}<!M*0 #text/0><script>(M$h=[]).push(_=>(null),[0,"packages/translator-tags/src/__tests__/fixtures/do-tag/template.marko_0",])</script>
 
 
 # Render "End"
@@ -11,7 +11,7 @@
     {"let":"rendered","const":"rendered","static":"rendered","block":"rendered"}
     <!--M*0 #text/0-->
     <script>
-      (M$h=[]).push(null,[0,"packages/translator-tags/src/__tests__/fixtures/do-tag/template.marko_0",])
+      (M$h=[]).push(_=&gt;(null),[0,"packages/translator-tags/src/__tests__/fixtures/do-tag/template.marko_0",])
     </script>
   </body>
 </html>

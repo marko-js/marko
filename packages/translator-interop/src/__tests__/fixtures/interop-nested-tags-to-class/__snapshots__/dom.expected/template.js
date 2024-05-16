@@ -2,14 +2,17 @@ import { on as _on, queueSource as _queueSource, data as _data, register as _reg
 import _classLayout from "./components/class-layout.marko";
 import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 _register("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko", _classLayout);
-const _count$classLayoutBody_effect = _register("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count", _scope => _on(_scope["#button/0"], "click", function () {
+const _onClick = _scope => {
   const {
     _: {
       count
     }
   } = _scope;
-  _queueSource(_scope._, _count, count + 1);
-}));
+  return function () {
+    _queueSource(_scope._, _count, count + 1);
+  };
+};
+const _count$classLayoutBody_effect = _register("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _count$classLayoutBody = _registerSubscriber("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber", /* @__PURE__ */_dynamicClosure("count", (_scope, count) => {
   _data(_scope["#text/1"], count);
   _queueEffect(_scope, _count$classLayoutBody_effect);

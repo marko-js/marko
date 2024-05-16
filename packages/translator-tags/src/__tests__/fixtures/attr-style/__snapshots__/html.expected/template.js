@@ -1,4 +1,4 @@
-import { styleAttr as _styleAttr, markResumeNode as _markResumeNode, write as _write, peekSerializedScope as _peekSerializedScope, createRenderer as _createRenderer, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { styleAttr as _styleAttr, markResumeNode as _markResumeNode, write as _write, peekNextScope as _peekNextScope, createRenderer as _createRenderer, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -9,19 +9,19 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _write(`<div${_styleAttr({
     color: color
   })}></div>${_markResumeNode(_scope0_id, "#div/0")}<div style=width:100px></div><div style="color: green"></div>`);
-  const _childScope = _peekSerializedScope();
+  const _childScope = _peekNextScope();
   _customTag._({
     style: {
       color: color
     }
   });
-  const _childScope2 = _peekSerializedScope();
+  const _childScope2 = _peekNextScope();
   _customTag._({
     style: {
       width: 100
     }
   });
-  const _childScope3 = _peekSerializedScope();
+  const _childScope3 = _peekNextScope();
   _customTag._({
     style: "color: green"
   });

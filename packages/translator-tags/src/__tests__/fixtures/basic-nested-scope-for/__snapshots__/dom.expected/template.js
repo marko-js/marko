@@ -9,12 +9,15 @@ const _expr_selected_num$forBody = /* @__PURE__ */_intersection(2, _scope => {
   _attr(_scope["#button/0"], "data-selected", selected === num);
   _attr(_scope["#button/0"], "data-multiple", num % selected === 0);
 });
-const _num$forBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num", _scope => _on(_scope["#button/0"], "click", function () {
+const _onClick = _scope => {
   const {
     num
   } = _scope;
-  _queueSource(_scope._, _selected, num);
-}));
+  return function () {
+    _queueSource(_scope._, _selected, num);
+  };
+};
+const _num$forBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _num$forBody = /* @__PURE__ */_value("num", (_scope, num) => {
   _data(_scope["#text/1"], num);
   _queueEffect(_scope, _num$forBody_effect);

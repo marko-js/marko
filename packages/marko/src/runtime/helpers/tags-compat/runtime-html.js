@@ -12,8 +12,7 @@ exports.p = function (tagsAPI) {
     createRenderFn,
     fork,
     write,
-    makeSerializable,
-    register,
+    serializerRegister,
     writeScope,
     nextScopeId,
     getRegistryInfo,
@@ -168,19 +167,11 @@ exports.p = function (tagsAPI) {
     },
   );
 
-  function dummyCreate5to6Renderer() {}
-
-  register(dummyCreate5to6Renderer, "@marko/tags-compat-5-to-6");
-
   return function serialized5to6(renderer, id) {
-    const dummyRenderer = () => {};
-    register(dummyRenderer, id);
-    return makeSerializable(renderer, (s) =>
-      s
-        .value(dummyCreate5to6Renderer)
-        .code("(")
-        .value(dummyRenderer)
-        .code(",!0)"),
+    return serializerRegister(
+      "@marko/tags-compat-5-to-6",
+      renderer,
+      serializerRegister(id, () => {}),
     );
   };
 };

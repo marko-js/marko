@@ -5,16 +5,19 @@ const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/basi
   if (!_clean) [item] = _destructure;
   _item$forBody(_scope, item, _clean);
 }));
-const _expr_id_items_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items", _scope => _on(_scope["#button/1"], "click", function () {
+const _onClick = _scope => {
   const {
     id,
     items
   } = _scope;
-  // TODO: nested writes ([...items, id++]) don't work
-  const nextId = id + 1;
-  _queueSource(_scope, _id, nextId);
-  _queueSource(_scope, _items, [...items, nextId]);
-}));
+  return function () {
+    // TODO: nested writes ([...items, id++]) don't work
+    const nextId = id + 1;
+    _queueSource(_scope, _id, nextId);
+    _queueSource(_scope, _items, [...items, nextId]);
+  };
+};
+const _expr_id_items_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
 const _expr_id_items = /* @__PURE__ */_intersection(2, _scope => {
   const {
     id,
@@ -23,12 +26,15 @@ const _expr_id_items = /* @__PURE__ */_intersection(2, _scope => {
   _queueEffect(_scope, _expr_id_items_effect);
 });
 const _for = /* @__PURE__ */_loopOf("#text/0", _forBody);
-const _items_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items", _scope => _on(_scope["#button/2"], "click", function () {
+const _onClick2 = _scope => {
   const {
     items
   } = _scope;
-  _queueSource(_scope, _items, items.slice(0, -1));
-}));
+  return function () {
+    _queueSource(_scope, _items, items.slice(0, -1));
+  };
+};
+const _items_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items", _scope => _on(_scope["#button/2"], "click", _onClick2(_scope)));
 const _items = /* @__PURE__ */_value("items", (_scope, items) => {
   _queueEffect(_scope, _items_effect);
   _for(_scope, [items]);

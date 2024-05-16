@@ -1,5 +1,5 @@
 import { getTemplateId } from "@marko/babel-utils";
-import type { types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
 import { getSection, type Section } from "../util/sections";
 import { currentProgramPath } from "./program";
 const functionIdsBySection = new WeakMap<Section, Map<string, number>>();
@@ -26,7 +26,23 @@ export default {
       functionIdsBySection.set(section, functionNameCounts);
     }
 
-    const name = (extra.name as string | undefined) || "anonymous";
+    let name = extra.name as string | undefined;
+    if (name === undefined) {
+      const markoRoot = fn.parentPath;
+      if (markoRoot.isMarkoAttribute()) {
+        name = markoRoot.node.default
+          ? t.toIdentifier(
+              (markoRoot.parentPath.parentPath as t.NodePath<t.MarkoTag>).get(
+                "name",
+              ),
+            )
+          : markoRoot.node.name;
+      } else {
+        name = "anonymous";
+      }
+
+      extra.name = name;
+    }
     const index = functionNameCounts.get(name);
     let id = "";
     if (index === undefined) {

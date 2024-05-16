@@ -1,4 +1,4 @@
-import { write as _write, createRenderer as _createRenderer, writeScope as _writeScope, nextScopeId as _nextScopeId, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, serializedScope as _serializedScope, writeEffect as _writeEffect, peekSerializedScope as _peekSerializedScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, createRenderer as _createRenderer, writeScope as _writeScope, nextScopeId as _nextScopeId, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, peekNextScope as _peekNextScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _customTag from "./components/custom-tag/index.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -7,7 +7,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   } = input;
   let _thing;
   const _scope1_id = _nextScopeId();
-  let _ifScopeId, _scope2_, _ifRenderer;
+  let _ifScopeId, _ifRenderer;
   if (x) {
     const _scope2_id = _nextScopeId();
     _thing = {
@@ -16,7 +16,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         _write("Hello");
       })
     };
-    _writeScope(_scope2_id, _scope2_ = {});
+    _writeScope(_scope2_id, {});
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_2_renderer");
     _ifScopeId = _scope2_id;
   }
@@ -24,10 +24,10 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_1_x/subscriber");
   _writeScope(_scope1_id, {
     "#text/0(": _ifRenderer,
-    "#text/0!": _scope2_,
-    "_": _serializedScope(_scope0_id)
+    "#text/0!": _getScopeById(_ifScopeId),
+    "_": _ensureScopeWithId(_scope0_id)
   });
-  const _childScope = _peekSerializedScope();
+  const _childScope = _peekNextScope();
   _customTag._({
     thing: _thing
   });

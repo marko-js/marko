@@ -245,10 +245,10 @@ export function setTagVar(
   childAccessor: Accessor,
   tagVarSignal: ValueSignal,
 ) {
-  scope[childAccessor][AccessorChar.TagVariable] = bindFunction(
-    scope,
-    tagVarSignal as any,
-  ) as BoundValueSignal;
+  scope[childAccessor][AccessorChar.TagVariable] = (
+    value: unknown,
+    clean?: boolean | 1,
+  ) => tagVarSignal(scope, value, clean);
 }
 
 export const tagVarSignal = (

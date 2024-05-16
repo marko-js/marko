@@ -1,14 +1,17 @@
 import { on as _on, queueSource as _queueSource, data as _data, closure as _closure, createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, conditional as _conditional, inConditionalScope as _inConditionalScope, intersections as _intersections, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _clickCount$elseBody = /* @__PURE__ */_closure("clickCount", (_scope, clickCount) => _data(_scope["#text/0"], clickCount));
 const _elseBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_2_renderer", /* @__PURE__ */_createRenderer("<span>The button was clicked <!> times.</span>", /* next(1), over(1), replace */"Db%", void 0, [_clickCount$elseBody]));
-const _clickCount$ifBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount", _scope => _on(_scope["#button/0"], "click", function () {
+const _onClick = _scope => {
   const {
     _: {
       clickCount
     }
   } = _scope;
-  _queueSource(_scope._, _clickCount, clickCount + 1);
-}));
+  return function () {
+    _queueSource(_scope._, _clickCount, clickCount + 1);
+  };
+};
+const _clickCount$ifBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _clickCount$ifBody = /* @__PURE__ */_closure("clickCount", (_scope, clickCount) => {
   _data(_scope["#text/1"], clickCount);
   _queueEffect(_scope, _clickCount$ifBody_effect);

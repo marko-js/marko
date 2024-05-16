@@ -1,30 +1,46 @@
 import { ResumeSymbol, type Scope } from "../common/types";
 import type { Renderer } from "./renderer";
-import { bindFunction, bindRenderer } from "./scope";
+import { bindRenderer } from "./scope";
 import type { IntersectionSignal, ValueSignal } from "./signals";
 
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
-const registeredObjects = new Map<
-  string,
-  RegisteredFn | ValueSignal | Renderer
->();
+const registeredValues: Record<string, unknown> = {};
 const doc = document;
 
 export function register<T>(id: string, obj: T): T {
-  registeredObjects.set(id, obj as any);
+  registeredValues[id] = obj;
   return obj;
 }
 
-export function getRegisteredWithScope(registryId: string, scope: Scope) {
-  const obj = registeredObjects.get(registryId);
-  if (!scope) {
-    return obj;
-  } else if ((obj as Renderer).___template) {
-    return bindRenderer(scope, obj as Renderer);
-  } else {
-    return bindFunction(scope, obj as RegisteredFn);
+export function registerBoundSignal<T extends ValueSignal>(
+  id: string,
+  signal: T,
+): T {
+  registeredValues[id] =
+    (scope: Scope) => (value: unknown, clean?: boolean | 1) =>
+      signal(scope, value, clean);
+  return signal;
+}
+
+export function registerRenderer(id: string, renderer: Renderer) {
+  registeredValues[id] = (scope: Scope) => bindRenderer(scope, renderer);
+  return renderer;
+}
+
+export function getRegisteredWithScope(id: string, scope?: Scope) {
+  const val = registeredValues[id];
+  if (scope) {
+    if (val) {
+      if ((val as Renderer).___template) {
+        return bindRenderer(scope, val as Renderer);
+      }
+
+      return (val as RegisteredFn)(scope);
+    }
   }
+
+  return val;
 }
 
 export const scopeLookup = {} as Record<number | string, Scope>;
@@ -56,6 +72,7 @@ export function init(runtimeId = ResumeSymbol.DefaultRuntimeId) {
     scopeLookup[id] ?? (scopeLookup[id] = {} as Scope);
   const stack: number[] = [];
   const fakeArray = { push: resume };
+  const serializeContext: Record<string, unknown> = { _: registeredValues };
 
   if (initialHydration) {
     for (let i = 0; i < initialHydration.length; i += 2) {
@@ -66,13 +83,7 @@ export function init(runtimeId = ResumeSymbol.DefaultRuntimeId) {
   }
 
   function resume(
-    scopesFn:
-      | null
-      | ((
-          b: typeof getRegisteredWithScope,
-          s: typeof scopeLookup,
-          ...rest: unknown[]
-        ) => Record<string, Scope>),
+    scopesFn: (ctx: typeof serializeContext) => Record<string, Scope> | null,
     calls: Array<string | number>,
   ) {
     // TODO: Can be refactored/removed when adding runtimeId and componentIdPrefix
@@ -83,8 +94,8 @@ export function init(runtimeId = ResumeSymbol.DefaultRuntimeId) {
       walker.currentNode = doc;
     }
 
-    if (scopesFn) {
-      const scopes = scopesFn(getRegisteredWithScope, scopeLookup);
+    const scopes = scopesFn(serializeContext);
+    if (scopes) {
       scopeLookup.$global ||= scopes.$global || {};
 
       /**
@@ -155,7 +166,7 @@ export function init(runtimeId = ResumeSymbol.DefaultRuntimeId) {
     }
 
     for (let i = 0; i < calls.length; i += 2) {
-      (registeredObjects.get(calls[i + 1] as string) as RegisteredFn)(
+      (registeredValues[calls[i + 1] as string] as RegisteredFn)(
         scopeLookup[calls[i] as number]!,
       );
     }

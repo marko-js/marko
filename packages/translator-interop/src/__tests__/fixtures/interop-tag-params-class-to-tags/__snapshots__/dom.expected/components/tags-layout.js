@@ -7,12 +7,15 @@ const _expr_Text_count = /* @__PURE__ */_intersection(2, _scope => {
   _inputRenderBody_input(_scope, () => [count, "hello"]);
 });
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", null, _expr_Text_count);
-const _count_effect = _register("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count", _scope => _on(_scope["#button/0"], "click", function () {
+const _onClick = _scope => {
   const {
     count
   } = _scope;
-  _queueSource(_scope, _count, count + 1);
-}));
+  return function () {
+    _queueSource(_scope, _count, count + 1);
+  };
+};
+const _count_effect = _register("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _count = /* @__PURE__ */_value("count", (_scope, count) => {
   _data(_scope["#text/1"], count);
   _queueEffect(_scope, _count_effect);

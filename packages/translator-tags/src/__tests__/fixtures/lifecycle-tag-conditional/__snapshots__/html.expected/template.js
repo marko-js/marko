@@ -1,14 +1,14 @@
-import { serializedScope as _serializedScope, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, markResumeNode as _markResumeNode, write as _write, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, markResumeNode as _markResumeNode, write as _write, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const x = 0;
   const show = true;
-  let _ifScopeId, _scope1_, _ifRenderer;
+  let _ifScopeId, _ifRenderer;
   if (show) {
     const _scope1_id = _nextScopeId();
     _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_x");
-    _writeScope(_scope1_id, _scope1_ = {
-      "_": _serializedScope(_scope0_id)
+    _writeScope(_scope1_id, {
+      "_": _ensureScopeWithId(_scope0_id)
     });
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
@@ -20,7 +20,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     "x": x,
     "show": show,
     "#text/0(": _ifRenderer,
-    "#text/0!": _scope1_
+    "#text/0!": _getScopeById(_ifScopeId)
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko");

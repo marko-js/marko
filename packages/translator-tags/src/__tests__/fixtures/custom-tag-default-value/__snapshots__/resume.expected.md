@@ -12,7 +12,7 @@
     <!--M*2 #text/0-->
      
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{"#childScope/0":void 0,"#childScope/1":void 0}}),[])
+      (M$h=[]).push(_=&gt;(_.a={0:{"#childScope/0":{"#scope":1},"#childScope/1":{"#scope":2},"#scope":0}}),[])
     </script>
   </body>
 </html>

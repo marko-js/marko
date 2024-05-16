@@ -1,10 +1,10 @@
 import type { Renderer } from "../common/types";
 import { attrs } from "./attrs";
-import { serializedScope } from "./serializer";
 import type { ServerTemplate as Template } from "./template";
 import {
   markResumeScopeStart,
   nextScopeId,
+  peekNextScope,
   peekNextScopeId,
   write,
   writeScope,
@@ -25,9 +25,9 @@ export function dynamicTagInput(
   if (!tag && !renderBody) return undefined;
 
   const futureScopeId = peekNextScopeId();
-  const futureScope = serializedScope(futureScopeId);
+  const futureScope = peekNextScope();
   write(`${markResumeScopeStart(futureScopeId)}`);
-  writeScope(futureScopeId, {});
+  writeScope(futureScopeId, futureScope);
 
   if (!tag) {
     renderBody!();
@@ -70,9 +70,9 @@ export function dynamicTagArgs(
   if (!tag) return undefined;
 
   const futureScopeId = peekNextScopeId();
-  const futureScope = serializedScope(futureScopeId);
+  const futureScope = peekNextScope();
   write(`${markResumeScopeStart(futureScopeId)}`);
-  writeScope(futureScopeId, {});
+  writeScope(futureScopeId, futureScope);
 
   if (typeof tag === "string") {
     nextScopeId();

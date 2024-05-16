@@ -1,5 +1,5 @@
 # Write
-  Hello <!>Frank<!M*1 #text/0>!<script>(M$h=[]).push((b,s)=>({0:{"#childScope/0":void 0}}),[])</script>
+  Hello <!>Frank<!M*1 #text/0>!<script>(M$h=[]).push(_=>(_.a={0:{"#childScope/0":{"#scope":1},"#scope":0}}),[])</script>
 
 
 # Render "End"
@@ -13,7 +13,7 @@
     <!--M*1 #text/0-->
     !
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{"#childScope/0":void 0}}),[])
+      (M$h=[]).push(_=&gt;(_.a={0:{"#childScope/0":{"#scope":1},"#scope":0}}),[])
     </script>
   </body>
 </html>

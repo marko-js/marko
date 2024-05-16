@@ -6,12 +6,15 @@ const _setup$tagNameBody = _scope => {
 const _tagNameBody = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_1_renderer", /* @__PURE__ */_createRenderer(`${_counter_template}`, /* beginChild, _counter_walks, endChild */`/${_counter_walks}&`, _setup$tagNameBody));
 const _tagName_input = _dynamicTagAttrs("#text/0", _tagNameBody);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _tagName_input(_scope, () => ({})), void 0, _tagName_input);
-const _tagName_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", function () {
+const _onClick = _scope => {
   const {
     tagName
   } = _scope;
-  _queueSource(_scope, _tagName, tagName === "span" ? "div" : "span");
-}));
+  return function () {
+    _queueSource(_scope, _tagName, tagName === "span" ? "div" : "span");
+  };
+};
+const _tagName_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName) => {
   _queueEffect(_scope, _tagName_effect);
   _dynamicTagName(_scope, tagName || _tagNameBody);

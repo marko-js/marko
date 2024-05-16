@@ -1,5 +1,5 @@
 # Write
-  <button class=inc></button><!M*0 #button/0><button class=toggle></button><!M*0 #button/1><span>0<!M*1 #text/0></span><!M|0 #text/2 1><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:h={show:!0,count:0,"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer"),"#text/2!":j={}},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",])</script>
+  <button class=inc></button><!M*0 #button/0><button class=toggle></button><!M*0 #button/1><span>0<!M*1 #text/0></span><!M|0 #text/2 1><script>(M$h=[]).push(_=>(_.c={0:_.a={"#scope":0,show:!0,count:0,"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer"],"#text/2!":_.b={"#scope":1}},1:_.b},_.b._=_.a,_.c),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",])</script>
 
 
 # Render "End"
@@ -21,7 +21,7 @@
     </span>
     <!--M|0 #text/2 1-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer"),"#text/2!":j={}},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",])
+      (M$h=[]).push(_=&gt;(_.c={0:_.a={"#scope":0,show:!0,count:0,"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer"],"#text/2!":_.b={"#scope":1}},1:_.b},_.b._=_.a,_.c),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",])
     </script>
   </body>
 </html>

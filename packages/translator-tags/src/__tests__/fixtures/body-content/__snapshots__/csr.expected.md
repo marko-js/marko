@@ -16,13 +16,13 @@ container.querySelector("button").click()
 
 ```html
 <button>
-  1
+  0
 </button>
 ```
 
 # Mutations
 ```
-button0/#text0: "0" => "1"
+
 ```
 
 
@@ -31,13 +31,13 @@ container.querySelector("button").click()
 
 ```html
 <button>
-  2
+  0
 </button>
 ```
 
 # Mutations
 ```
-button0/#text0: "1" => "2"
+
 ```
 
 
@@ -46,11 +46,11 @@ container.querySelector("button").click()
 
 ```html
 <button>
-  3
+  0
 </button>
 ```
 
 # Mutations
 ```
-button0/#text0: "2" => "3"
+
 ```

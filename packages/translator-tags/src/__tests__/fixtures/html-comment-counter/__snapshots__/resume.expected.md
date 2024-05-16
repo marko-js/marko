@@ -13,7 +13,7 @@
       <!--M*0 #comment/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/html-comment-counter/template.marko_0_count",])
+      (M$h=[]).push(_=&gt;(_.a={0:{count:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/html-comment-counter/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -42,7 +42,7 @@ container.querySelector("button").click()
       <!--M*0 #comment/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/html-comment-counter/template.marko_0_count",])
+      (M$h=[]).push(_=&gt;(_.a={0:{count:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/html-comment-counter/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -72,7 +72,7 @@ container.querySelector("button").click()
       <!--M*0 #comment/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/html-comment-counter/template.marko_0_count",])
+      (M$h=[]).push(_=&gt;(_.a={0:{count:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/html-comment-counter/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -102,7 +102,7 @@ container.querySelector("button").click()
       <!--M*0 #comment/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/html-comment-counter/template.marko_0_count",])
+      (M$h=[]).push(_=&gt;(_.a={0:{count:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/html-comment-counter/template.marko_0_count",])
     </script>
   </body>
 </html>

@@ -7,7 +7,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _dynamicScope = _dynamicTagInput(_classCounter, {
     onCount: _register(function (newCount) {
       count = newCount;
-    }, "packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/anonymous", _scope0_id)
+    }, "packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/onCount", _scope0_id)
   });
   _s(_classCounter, "packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko");
   _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}<div id=tags-api>${_escapeXML(count)}${_markResumeNode(_scope0_id, "#text/1")}</div>`);

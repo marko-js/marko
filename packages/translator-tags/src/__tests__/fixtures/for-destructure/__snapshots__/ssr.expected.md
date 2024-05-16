@@ -1,5 +1,5 @@
 # Write
-  <div><div>Marko<!M*1 #text/0>: <!>HTML Reimagined<!M*1 #text/1></div><!M|0 #text/0 1><button id=add>Add</button><!M*0 #button/1><button id=remove>Remove</button><!M*0 #button/2></div><script>(M$h=[]).push((b,s,h)=>({0:{items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map([[0,h={}]])},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])</script>
+  <div><div>Marko<!M*1 #text/0>: <!>HTML Reimagined<!M*1 #text/1></div><!M|0 #text/0 1><button id=add>Add</button><!M*0 #button/1><button id=remove>Remove</button><!M*0 #button/2></div><script>(M$h=[]).push(_=>(_.c={0:{items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map(_.a=[[0,_.b={"#scope":1}]]),"#scope":0},1:_.b}),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])</script>
 
 
 # Render "End"
@@ -31,7 +31,7 @@
       <!--M*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map([[0,h={}]])},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])
+      (M$h=[]).push(_=&gt;(_.c={0:{items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map(_.a=[[0,_.b={"#scope":1}]]),"#scope":0},1:_.b}),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])
     </script>
   </body>
 </html>

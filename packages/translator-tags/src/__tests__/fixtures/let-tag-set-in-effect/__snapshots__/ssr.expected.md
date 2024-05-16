@@ -1,5 +1,5 @@
 # Write
-  <span>1<!M*0 #text/0></span><span>0<!M*0 #text/1></span><script>(M$h=[]).push((b,s)=>({0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])</script>
+  <span>1<!M*0 #text/0></span><span>0<!M*0 #text/1></span><script>(M$h=[]).push(_=>(_.a={0:{x:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])</script>
 
 
 # Render "End"
@@ -16,7 +16,7 @@
       <!--M*0 #text/1-->
     </span>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.a={0:{x:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])
     </script>
   </body>
 </html>

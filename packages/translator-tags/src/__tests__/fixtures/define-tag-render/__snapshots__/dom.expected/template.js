@@ -1,10 +1,13 @@
 import { data as _data, on as _on, queueSource as _queueSource, bindRenderer as _bindRenderer, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _y$defineBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y", _scope => _on(_scope["#button/2"], "click", function () {
+const _onClick = _scope => {
   const {
     y
   } = _scope;
-  _queueSource(_scope, _y$defineBody, y + 1);
-}));
+  return function () {
+    _queueSource(_scope, _y$defineBody, y + 1);
+  };
+};
+const _y$defineBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y", _scope => _on(_scope["#button/2"], "click", _onClick(_scope)));
 const _y$defineBody = /* @__PURE__ */_value("y", (_scope, y) => {
   _data(_scope["#text/1"], y);
   _data(_scope["#text/3"], y);

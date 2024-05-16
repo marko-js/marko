@@ -7,22 +7,28 @@ const _expr_count_multiplier = /* @__PURE__ */_intersection(2, _scope => {
   _multipliedCount(_scope, count * multiplier);
 });
 const _multipliedCount = /* @__PURE__ */_value("multipliedCount", (_scope, multipliedCount) => _data(_scope["#text/3"], multipliedCount));
-const _multiplier_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier", _scope => _on(_scope["#button/0"], "click", function () {
+const _onClick = _scope => {
   const {
     multiplier
   } = _scope;
-  _queueSource(_scope, _multiplier, multiplier + 1);
-}));
+  return function () {
+    _queueSource(_scope, _multiplier, multiplier + 1);
+  };
+};
+const _multiplier_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _multiplier = /* @__PURE__ */_value("multiplier", (_scope, multiplier) => {
   _data(_scope["#text/1"], multiplier);
   _queueEffect(_scope, _multiplier_effect);
 }, _expr_count_multiplier);
-const _count_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count", _scope => _on(_scope["#button/2"], "click", function () {
+const _onClick2 = _scope => {
   const {
     count
   } = _scope;
-  _queueSource(_scope, _count, count + 1);
-}));
+  return function () {
+    _queueSource(_scope, _count, count + 1);
+  };
+};
+const _count_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count", _scope => _on(_scope["#button/2"], "click", _onClick2(_scope)));
 const _count = /* @__PURE__ */_value("count", (_scope, count) => _queueEffect(_scope, _count_effect), _expr_count_multiplier);
 const _setup = _scope => {
   _count(_scope, 0);

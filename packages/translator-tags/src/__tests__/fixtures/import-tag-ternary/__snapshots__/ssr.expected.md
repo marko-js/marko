@@ -1,5 +1,5 @@
 # Write
-  <!M[1><div>baz</div><!M]0 #text/0><script>(M$h=[]).push((b,s,h)=>({0:{"#text/0!":h={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/import-tag-ternary/components/baz.marko")},1:h}),[])</script>
+  <!M[1><div>baz</div><!M]0 #text/0><script>(M$h=[]).push(_=>(_.b={0:{"#text/0!":_.a={"#scope":1},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/import-tag-ternary/components/baz.marko"],"#scope":0},1:_.a}),[])</script>
 
 
 # Render "End"
@@ -13,7 +13,7 @@
     </div>
     <!--M]0 #text/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{"#text/0!":h={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/import-tag-ternary/components/baz.marko")},1:h}),[])
+      (M$h=[]).push(_=&gt;(_.b={0:{"#text/0!":_.a={"#scope":1},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/import-tag-ternary/components/baz.marko"],"#scope":0},1:_.a}),[])
     </script>
   </body>
 </html>
