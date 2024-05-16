@@ -77,6 +77,7 @@ export default [
   },
   {
     module: {
+      entry: "./browser.js",
       rules: [
         {
           test: /\.marko$/,
