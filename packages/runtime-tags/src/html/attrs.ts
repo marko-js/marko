@@ -1,4 +1,6 @@
 import { classValue, isVoid, styleValue } from "../common/helpers";
+import { AccessorChar, type Accessor } from "../common/types";
+import { ensureScopeWithId } from "./writer";
 
 export function classAttr(val: unknown) {
   return stringAttr("class", classValue(val));
@@ -12,8 +14,13 @@ export function attr(name: string, val: unknown) {
   return isVoid(val) ? "" : nonVoidAttr(name, val);
 }
 
-export function attrs(data: Record<string, unknown>) {
+export function attrs(
+  data: Record<string, unknown>,
+  elementAccessor?: Accessor,
+  scopeId?: number,
+) {
   let result = "";
+  let events: undefined | Record<string, unknown>;
 
   for (const name in data) {
     const val = data[name];
@@ -29,11 +36,23 @@ export function attrs(data: Record<string, unknown>) {
         // https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
         // Avoids outputting attribute names that would be invalid or
         // be an event handler / renderBody.
-        if (!(isVoid(val) || /^on[A-Z-]|^renderBody$|[\s/>"'=]/.test(name))) {
-          result += nonVoidAttr(name, val);
+        if (!isVoid(val)) {
+          if (/^on[A-Z-]/.test(name)) {
+            (events ??= {})[
+              name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()
+            ] = val;
+          } else if (!/^renderBody$|[\s/>"'=]/.test(name)) {
+            result += nonVoidAttr(name, val);
+          }
         }
         break;
     }
+  }
+
+  if (events && elementAccessor) {
+    ensureScopeWithId(scopeId!)[
+      (elementAccessor + AccessorChar.EventAttributes) as any
+    ] = events;
   }
 
   return result;

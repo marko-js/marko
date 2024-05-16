@@ -50,7 +50,7 @@ export enum AccessorChar {
   LoopScopeArray = "!",
   LoopScopeMap = "(",
   LoopValue = ")",
-  PreviousAttributes = "~",
+  EventAttributes = "~",
 }
 
 export enum NodeType {

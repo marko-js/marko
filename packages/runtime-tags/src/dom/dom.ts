@@ -8,6 +8,8 @@ import {
 import { getAbortSignal } from "./abort-signal";
 import { on } from "./event";
 
+const eventHandlerReg = /^on[A-Z-]/;
+
 export function isDocumentFragment(node: Node): node is DocumentFragment {
   return node.nodeType === NodeType.DocumentFragment;
 }
@@ -49,48 +51,48 @@ export function attrs(
   elementAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
-  const prevAttrs: typeof nextAttrs =
-    scope[elementAccessor + AccessorChar.PreviousAttributes] || {};
   const element = scope[elementAccessor] as Element;
+  let events: undefined | Record<string, unknown>;
 
-  if (prevAttrs) {
-    for (const name in prevAttrs) {
-      if (!(nextAttrs && name in nextAttrs)) {
-        element.removeAttribute(name);
-      }
+  for (const { name } of element.attributes) {
+    if (!(nextAttrs && name in nextAttrs)) {
+      element.removeAttribute(name);
     }
   }
+
   // https://jsperf.com/object-keys-vs-for-in-with-closure/194
   for (const name in nextAttrs) {
     const value = nextAttrs[name];
-    if (value !== prevAttrs[name]) {
-      switch (name) {
-        case "class":
-          classAttr(element, value);
-          break;
-        case "style":
-          styleAttr(element, value);
-          break;
-        case "renderBody":
-          break;
-        default:
-          if (/^on[A-Z-]/.test(name)) {
-            on(
-              element,
-              (name[2] === "-"
-                ? name.slice(3)
-                : name.slice(2).toLowerCase()) as any,
-              value as any,
-            );
-          } else {
-            attr(element, name, value);
-          }
-          break;
-      }
+    switch (name) {
+      case "class":
+        classAttr(element, value);
+        break;
+      case "style":
+        styleAttr(element, value);
+        break;
+      case "renderBody":
+        break;
+      default:
+        if (eventHandlerReg.test(name)) {
+          (events ??= {})[
+            name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()
+          ] = value;
+        } else {
+          attr(element, name, value);
+        }
+        break;
     }
   }
 
-  scope[elementAccessor + AccessorChar.PreviousAttributes] = nextAttrs;
+  scope[elementAccessor + AccessorChar.EventAttributes] = events;
+}
+
+export function attrsEvents(scope: Scope, elementAccessor: Accessor) {
+  const element = scope[elementAccessor] as Element;
+  const events = scope[elementAccessor + AccessorChar.EventAttributes];
+  for (const name in events) {
+    on(element, name as any, events[name] as any);
+  }
 }
 
 const doc = document;
