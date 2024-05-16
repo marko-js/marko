@@ -60,7 +60,7 @@ export default [
 ```javascript
 import MarkoPlugin from "@marko/webpack/plugin";
 
-const markoPlugin = new MarkoPlugin();
+const markoPlugin = new MarkoPlugin.default();
 
 export default [
   {
@@ -76,17 +76,19 @@ export default [
     plugins: [markoPlugin.server],
   },
   {
-    rules: [
-      {
-        test: /\.marko$/,
-        loader: "@marko/webpack/loader",
-      },
-      // If using `style` blocks with Marko you must use an appropriate loader
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"],
-      },
-    ],
+    module: {
+      rules: [
+        {
+          test: /\.marko$/,
+          loader: "@marko/webpack/loader",
+        },
+        // If using `style` blocks with Marko you must use an appropriate loader
+        {
+          test: /\.css$/,
+          use: ["style-loader", "css-loader"],
+        },
+      ]
+    },
     plugins: [markoPlugin.browser],
   },
 ];
