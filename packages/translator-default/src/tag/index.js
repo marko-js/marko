@@ -44,16 +44,17 @@ export default {
       }
     }
 
-    if (path.hub.file.markoOpts.ignoreUnrecognizedTags && !tagDef) {
-      findAttributeTags(path).forEach((child) => {
-        child.set(
-          "name",
-          t.stringLiteral(`at_${child.get("name.value").node.slice(1)}`),
-        );
-      });
-    }
-
     if (!isAttributeTag(path)) {
+      if (path.hub.file.markoOpts.ignoreUnrecognizedTags && !tagDef) {
+        findAttributeTags(path).forEach(function replaceAttrTagName(child) {
+          child.set(
+            "name",
+            t.stringLiteral(`at_${child.get("name.value").node.slice(1)}`),
+          );
+          findAttributeTags(child).forEach(replaceAttrTagName);
+        });
+      }
+
       if (isDynamicTag(path) || !(isMacroTag(path) || isNativeTag(path))) {
         analyzeAttributeTags(path);
       }
