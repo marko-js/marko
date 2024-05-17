@@ -55,6 +55,7 @@ export type Signal = {
   closures: Map<Section, Signal>;
   hasDownstreamIntersections: () => boolean;
   hasDynamicSubscribers?: true;
+  export: boolean;
 };
 
 const [getSignals] = createSectionState<Map<unknown, Signal>>(
@@ -109,12 +110,20 @@ export function getSignal(
   const signals = getSignals(section);
   let signal = signals.get(referencedBindings)!;
   if (!signal) {
+    const exportName =
+      referencedBindings &&
+      !Array.isArray(referencedBindings) &&
+      referencedBindings.section === section &&
+      referencedBindings.export;
+
     signals.set(
       referencedBindings,
       (signal = {
-        identifier: currentProgramPath.scope.generateUidIdentifier(
-          name + section.name.replace("_", "$"),
-        ),
+        identifier: exportName
+          ? t.identifier(exportName)
+          : currentProgramPath.scope.generateUidIdentifier(
+              name + section.name.replace("_", "$"),
+            ),
         referencedBindings,
         section,
         values: [],
@@ -138,6 +147,7 @@ export function getSignal(
           }
         },
         build: unimplementedBuild,
+        export: !!exportName,
       } as Signal),
     );
 
@@ -647,14 +657,20 @@ export function writeSignals(section: Section) {
     }
 
     const signalDeclarator = t.variableDeclarator(signal.identifier, value);
+    let signalDeclaration: t.Statement = t.variableDeclaration("const", [
+      signalDeclarator,
+    ]);
+    if (signal.export) {
+      signalDeclaration = t.exportNamedDeclaration(signalDeclaration);
+    }
     const roots = currentProgramPath.pushContainer(
       "body",
       effectDeclarator
         ? [
             t.variableDeclaration("const", [effectDeclarator]),
-            t.variableDeclaration("const", [signalDeclarator]),
+            signalDeclaration,
           ]
-        : t.variableDeclaration("const", [signalDeclarator]),
+        : signalDeclaration,
     );
 
     for (const root of roots) {

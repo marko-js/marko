@@ -9,13 +9,12 @@ const _for = /* @__PURE__ */_loopOf("#text/0", _forBody);
 const _by = _scope => function (c) {
   return c.id;
 };
-const _input = /* @__PURE__ */_value("input", (_scope, input) => _for(_scope, [input.children, _by(_scope)]));
-export const _args_ = (_scope, _destructure2, _clean) => {
-  let input;
-  if (!_clean) [input] = _destructure2;
-  _input(_scope, input, _clean);
-};
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _for(_scope, [input.children, _by(_scope)]));
 export const _template_ = "<!><!><!>";
 export const _walks_ = /* replace, over(1) */"D%bD";
 export const _setup_ = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _args_), "packages/translator-tags/src/__tests__/fixtures/move-and-clear-top-level/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, (_scope, _destructure2, _clean) => {
+  let input;
+  if (!_clean) [input] = _destructure2;
+  _input_(_scope, input, _clean);
+}), "packages/translator-tags/src/__tests__/fixtures/move-and-clear-top-level/template.marko");

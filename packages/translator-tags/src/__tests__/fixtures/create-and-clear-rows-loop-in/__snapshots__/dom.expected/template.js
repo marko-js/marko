@@ -15,16 +15,15 @@ const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/crea
 }));
 const _for2 = /* @__PURE__ */_loopIn("#text/1", _forBody2);
 const _for = /* @__PURE__ */_loopIn("#text/0", _forBody);
-const _input = /* @__PURE__ */_value("input", (_scope, input) => {
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _for(_scope, [input.children]);
   _for2(_scope, [input.children]);
 });
-export const _args_ = (_scope, _destructure3, _clean) => {
-  let input;
-  if (!_clean) [input] = _destructure3;
-  _input(_scope, input, _clean);
-};
 export const _template_ = "<div><!><!></div>";
 export const _walks_ = /* next(1), replace, over(1), replace, out(1) */"D%b%l";
 export const _setup_ = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _args_), "packages/translator-tags/src/__tests__/fixtures/create-and-clear-rows-loop-in/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, (_scope, _destructure3, _clean) => {
+  let input;
+  if (!_clean) [input] = _destructure3;
+  _input_(_scope, input, _clean);
+}), "packages/translator-tags/src/__tests__/fixtures/create-and-clear-rows-loop-in/template.marko");

@@ -1,4 +1,4 @@
-import { _setup_ as _displayIntersection, _args_ as _displayIntersection_args, _template_ as _displayIntersection_template, _walks_ as _displayIntersection_walks } from "./components/display-intersection.marko";
+import { _setup_ as _displayIntersection, _input_ as _displayIntersection_args, _template_ as _displayIntersection_template, _walks_ as _displayIntersection_walks } from "./components/display-intersection.marko";
 import { inChild as _inChild, on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onClick = _scope => {
   const {
@@ -11,9 +11,9 @@ const _onClick = _scope => {
 const _count_effect = _register("packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
 const _count = /* @__PURE__ */_value("count", (_scope, count) => {
   _queueEffect(_scope, _count_effect);
-  _displayIntersection_args(_scope["#childScope/0"], [{
+  _displayIntersection_args(_scope["#childScope/0"], {
     value: count
-  }]);
+  });
 }, void 0, _inChild("#childScope/0", _displayIntersection_args));
 const _setup = _scope => {
   _displayIntersection(_scope["#childScope/0"]);

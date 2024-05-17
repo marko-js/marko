@@ -165,6 +165,7 @@ describe("translator-tags", () => {
         if (errors.length === 1) {
           throw errors[0];
         } else if (errors.length > 1) {
+          console.error(errors);
           throw new AggregateError(
             errors,
             "\n" + errors.map((e) => e.toString()).join("\n"),
