@@ -1,6 +1,22 @@
 # Getting started
 
-The easiest way to get started with Marko is to use the [Try Online](https://markojs.com/try-online) feature. You can just open it in another tab and follow along. If you'd rather develop locally, check out the [Installation](./installing.md) page.
+## Setup
+
+### Marko Run (Recommended)
+
+[Marko Run](https://github.com/marko-js/run) makes it easy to get started with little to no config and is the recommended starting point for a new Marko project.
+
+To set up your project:
+
+1. `npm init marko -- -t basic`
+2. `cd ./<PROJECT_NAME>`
+3. `npm run dev`
+
+Open `src/routes/_index/+page.marko` in your editor to change the index page. See the [routing documentation](https://github.com/marko-js/run#file-based-routing) to learn how to add additional pages to your project.
+
+### Other setups
+
+If you just want to test out Marko in your browser, use the [Try Online](https://markojs.com/try-online) feature. You can open it in another tab and follow along. For other setups, check out the [Installation](./installing.md) page.
 
 ## Hello world
 

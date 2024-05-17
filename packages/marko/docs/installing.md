@@ -9,10 +9,10 @@ If you just want to play around with Marko in the browser, head on over to our [
 If you're starting from scratch, you can use Marko's [CLI](https://github.com/marko-js/cli) commands to quickly create a starter app:
 
 ```bash
-npx @marko/create
+npm init marko
 ```
 
-This will use an interactive [CLI](https://github.com/marko-js/cli) to automatically create a project for you using the pre-made starter template of your choosing. The `basic` template is the most minimal and the easiest way to get started. It uses our batteries-included `@marko/build` and `@marko/serve` tools that handle building, bundling, and serving your web application. These projects are config-free with built-in file based routing and automatic code reloading.
+This will use an interactive [CLI](https://github.com/marko-js/cli) to automatically create a project for you using the pre-made starter template of your choosing. The `basic` template is the most minimal and the easiest way to get started. It uses our recommended app framework [Marko Run](https://github.com/marko-js/run) that handles building, bundling, and serving your web application. These projects are config-free with built-in file based routing and automatic code reloading.
 
 ## Custom Bundling
 
