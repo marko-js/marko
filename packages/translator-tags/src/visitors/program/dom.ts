@@ -29,7 +29,6 @@ export default {
       const templateIdentifier = t.identifier(domExports.template);
       const walksIdentifier = t.identifier(domExports.walks);
       const setupIdentifier = t.identifier(domExports.setup);
-      const argsIdentifier = t.identifier(domExports.args);
       const closuresIdentifier = t.identifier(domExports.closures);
 
       forEachSectionReverse((childSection) => {
@@ -73,24 +72,6 @@ export default {
         }
       });
 
-      const [programInput] = program.node.params;
-      const inputBinding = programInput.extra?.binding;
-      if (inputBinding) {
-        program.node.body.push(
-          t.exportNamedDeclaration(
-            t.variableDeclaration("const", [
-              t.variableDeclarator(
-                t.identifier(domExports.args),
-                getDestructureSignal(
-                  { input: programInput as t.Identifier },
-                  t.arrayPattern([programInput]),
-                )?.build(),
-              ),
-            ]),
-          ),
-        );
-      }
-
       const closures = getClosures(section);
 
       program.node.body.push(
@@ -130,10 +111,13 @@ export default {
           ),
         );
       }
+
       const {
         markoOpts: { optimize },
         opts: { filename },
       } = program.hub.file;
+      const [programInput] = program.node.params;
+      const inputBinding = programInput.extra?.binding;
       program.node.body.push(
         t.exportDefaultDeclaration(
           callRuntime(
@@ -145,7 +129,11 @@ export default {
               setupIdentifier,
               closures.length && closuresIdentifier,
               undefined,
-              inputBinding && argsIdentifier,
+              inputBinding &&
+                getDestructureSignal(
+                  { input: programInput as t.Identifier },
+                  t.arrayPattern([programInput]),
+                )?.build(),
             ),
             t.stringLiteral(getTemplateId(optimize, `${filename}`)),
           ),

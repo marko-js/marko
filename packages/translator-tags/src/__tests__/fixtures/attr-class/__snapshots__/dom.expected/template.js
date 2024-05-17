@@ -46,7 +46,7 @@ const _destructure2 = (_scope, _destructure, _clean) => {
   _c(_scope, c, _clean);
   _d(_scope, d, _clean);
 };
-const _input = /* @__PURE__ */_value("input", (_scope, input) => {
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _destructure2(_scope, input);
   _dynamicTagName(_scope, input.test || _inputTestBody);
 }, void 0, _values([_destructure2, _dynamicTagName]));
@@ -54,12 +54,11 @@ const _setup = _scope => {
   _customTag(_scope["#childScope/1"]);
   _customTag(_scope["#childScope/2"]);
 };
-export const _args_ = (_scope, _destructure3, _clean) => {
-  let input;
-  if (!_clean) [input] = _destructure3;
-  _input(_scope, input, _clean);
-};
 export const _template_ = `<div></div><div class="a b"></div><div class="a b c"></div>${_customTag_template}${_customTag_template}<!><!>`;
 export const _walks_ = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(1) */` d/${_customTag_walks}&/${_customTag_walks}&%bD`;
 export const _setup_ = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _args_), "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, (_scope, _destructure3, _clean) => {
+  let input;
+  if (!_clean) [input] = _destructure3;
+  _input_(_scope, input, _clean);
+}), "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko");

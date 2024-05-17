@@ -7,17 +7,16 @@ const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/if-ta
 const _if3 = /* @__PURE__ */_conditional("#text/2");
 const _if2 = /* @__PURE__ */_conditional("#text/1");
 const _if = /* @__PURE__ */_conditional("#text/0");
-const _input = /* @__PURE__ */_value("input", (_scope, input) => {
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _if(_scope, input.a + input.b ? _ifBody : null);
   _if2(_scope, (input.a, input.b) ? _ifBody2 : null);
   _if3(_scope, input.x ? _ifBody3 : input.y ? _elseIfBody : _elseBody);
 });
-export const _args_ = (_scope, _destructure, _clean) => {
-  let input;
-  if (!_clean) [input] = _destructure;
-  _input(_scope, input, _clean);
-};
 export const _template_ = "<!><!><!><div><!></div>";
 export const _walks_ = /* replace, over(1), replace, over(1), next(1), replace, out(1) */"D%b%bD%l";
 export const _setup_ = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _args_), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, (_scope, _destructure, _clean) => {
+  let input;
+  if (!_clean) [input] = _destructure;
+  _input_(_scope, input, _clean);
+}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko");

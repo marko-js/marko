@@ -36,6 +36,7 @@ export type Binding = {
   upstreamExpression: t.NodeExtra | undefined;
   downstreamAliases: Map<Binding, Opt<string>>;
   downstreamExpressions: Set<t.NodeExtra>;
+  export: string | undefined;
 };
 
 export type ReferencedBindings = Opt<Binding>;
@@ -80,6 +81,7 @@ export function createBinding(
     upstreamExpression,
     downstreamAliases: new Map(),
     downstreamExpressions: new Set(),
+    export: undefined,
   };
   while (upstreamAlias?.upstreamAlias) {
     property = concat(

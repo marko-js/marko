@@ -12,6 +12,7 @@ import {
   createBinding,
   finalizeReferences,
   trackReferencesForBinding,
+  type Binding,
 } from "../../util/references";
 import { startSection } from "../../util/sections";
 import { initValue } from "../../util/signals";
@@ -27,13 +28,17 @@ const previousProgramPath: WeakMap<
   t.NodePath<t.Program> | undefined
 > = new WeakMap();
 
+type ParamsExports = {
+  id: string;
+  props: { [prop: string]: ParamsExports } | undefined;
+};
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     domExports?: {
       template: string;
       walks: string;
       setup: string;
-      args: string;
+      params: ParamsExports | undefined;
       closures: string;
     };
   }
@@ -57,17 +62,15 @@ export default {
       currentProgramPath = program;
       const section = startSection(program)!;
 
-      const inputBinding = program.scope.getBinding("input")!;
+      const babelInputBinding = program.scope.getBinding("input")!;
+      let inputBinding: Binding | undefined = undefined;
       if (
-        inputBinding.referencePaths.length ||
-        inputBinding.constantViolations.length
+        babelInputBinding.referencePaths.length ||
+        babelInputBinding.constantViolations.length
       ) {
-        (inputBinding.identifier.extra ??= {}).binding = createBinding(
-          "input",
-          BindingType.input,
-          section,
-        );
-        trackReferencesForBinding(inputBinding);
+        inputBinding = (babelInputBinding.identifier.extra ??= {}).binding =
+          createBinding("input", BindingType.input, section);
+        trackReferencesForBinding(babelInputBinding);
       }
       const { extra } = program.node;
       const { scope } = program;
@@ -75,13 +78,37 @@ export default {
         template: scope.generateUid("template_"),
         walks: scope.generateUid("walks_"),
         setup: scope.generateUid("setup_"),
-        args: scope.generateUid("args_"),
+        params: inputBinding && {
+          id: scope.generateUid("args_"),
+          props: {
+            0: {
+              id: (inputBinding.export ??= scope.generateUid(
+                inputBinding.name + "_",
+              )),
+              props: undefined,
+            },
+          },
+        },
         closures: scope.generateUid("closures_"),
       };
     },
 
-    exit() {
+    exit(program: t.NodePath<t.Program>) {
       finalizeReferences();
+      const {
+        scope,
+        node: {
+          extra,
+          params: [{ extra: inputExtra }],
+        },
+      } = program;
+
+      if (inputExtra?.binding) {
+        extra.domExports!.params!.props![0] = recurseAndBuildExportTree(
+          inputExtra.binding,
+          scope,
+        );
+      }
       currentProgramPath = previousProgramPath.get(currentProgramPath)!;
     },
   },
@@ -146,4 +173,28 @@ function resolveRelativeToEntry(
           ? path.join(file.opts.filename as string, "..", req)
           : req,
       );
+}
+
+function recurseAndBuildExportTree(binding: Binding, scope: t.Scope) {
+  const exportTree: ParamsExports = {
+    id: (binding.export ??= scope.generateUid(binding.name + "_")),
+    props: undefined,
+  };
+  const { downstreamAliases, downstreamExpressions } = binding;
+  const nonAliasExpressions = new Set(downstreamExpressions);
+  for (const alias of downstreamAliases.keys()) {
+    nonAliasExpressions.delete(alias.upstreamExpression!);
+  }
+  if (!nonAliasExpressions.size) {
+    exportTree.props = {};
+    for (const [binding, property] of downstreamAliases) {
+      if (Array.isArray(property)) {
+        exportTree.props[property[property.length - 1]] =
+          recurseAndBuildExportTree(binding, scope);
+      } else {
+        exportTree.props[property!] = recurseAndBuildExportTree(binding, scope);
+      }
+    }
+  }
+  return exportTree;
 }

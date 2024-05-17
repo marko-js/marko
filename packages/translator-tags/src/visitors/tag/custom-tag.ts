@@ -255,7 +255,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     tagAttrsIdentifier = importNamed(
       file,
       relativePath,
-      childProgram.extra.domExports!.args,
+      childProgram.extra.domExports!.params!.props![0].id,
       `${tagName}_args`,
     );
   }
@@ -324,7 +324,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         identifier: tagAttrsIdentifier,
         hasDownstreamIntersections: () => true,
       },
-      t.arrayExpression([attrsObject]),
+      attrsObject,
       createScopeReadExpression(tagSection, childScopeBinding),
       callRuntime(
         "inChild",

@@ -1,6 +1,6 @@
 const a = 1;
 import { on as _on, queueSource as _queueSource, data as _data, bindRenderer as _bindRenderer, inChild as _inChild, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, createRenderer as _createRenderer, conditional as _conditional, register as _register, dynamicSubscribers as _dynamicSubscribers, value as _value, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _customTag, _args_ as _customTag_args, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag.marko";
+import { _setup_ as _customTag, _input_ as _customTag_args, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag.marko";
 const _c$ifBody = _registerSubscriber("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_3_c/subscriber", /* @__PURE__ */_dynamicClosure("c", (_scope, c) => _data(_scope["#text/2"], c), _scope => _scope._._));
 const _b$ifBody = /* @__PURE__ */_dynamicClosure("b", (_scope, b) => _data(_scope["#text/1"], b), _scope => _scope._._);
 const _setup$ifBody = _scope => {
@@ -30,9 +30,9 @@ const _setup = _scope => {
   _queueEffect(_scope, _setup_effect);
   _b(_scope, 2);
   _c(_scope, 3);
-  _customTag_args(_scope["#childScope/1"], [{
+  _customTag_args(_scope["#childScope/1"], {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _customTagBody)
-  }]);
+  });
   _if(_scope, Math.random() ? _ifBody : null);
 };
 export const _template_ = `<button></button>${_customTag_template}<div><!></div>`;
