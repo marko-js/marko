@@ -1,0 +1,5 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-let-no-tag-var/template.marko:1:2
+    > 1 | <let=0/>
+        |  ^^^ The `let` tag requires a tag variable.
+      2 |

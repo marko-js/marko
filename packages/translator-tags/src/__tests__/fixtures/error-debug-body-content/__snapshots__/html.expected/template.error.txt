@@ -1,0 +1,5 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-debug-body-content/template.marko:1:2
+    > 1 | <debug>Hello</debug>
+        |  ^^^^^ The `debug` tag does not support body content.
+      2 |

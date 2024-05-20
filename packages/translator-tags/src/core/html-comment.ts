@@ -1,5 +1,5 @@
 import {
-  assertNoAttributeTags,
+  assertNoArgs,
   assertNoAttributes,
   assertNoParams,
   type Tag,
@@ -35,9 +35,9 @@ declare module "@marko/compiler/dist/types" {
 
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
+    assertNoArgs(tag);
     assertNoParams(tag);
     assertNoAttributes(tag);
-    assertNoAttributeTags(tag);
 
     let needsBinding = false;
     if (tag.has("var")) {
@@ -45,7 +45,7 @@ export default {
         throw tag
           .get("var")
           .buildCodeFrameError(
-            "The `<html-comment>` tag's return value cannot be destructured.",
+            "The `html-comment` tag cannot be destructured.",
           );
       }
       needsBinding = true;

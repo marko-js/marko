@@ -1,0 +1,7 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-lifecycle-extra-attr/template.marko:1:2
+    > 1 | <lifecycle 
+        |  ^^^^^^^^^ The `lifecycle` tag does not support the `y` attribute.
+      2 |   onMount() {}
+      3 |   onUpdate() {}
+      4 |   onDestroy() {}

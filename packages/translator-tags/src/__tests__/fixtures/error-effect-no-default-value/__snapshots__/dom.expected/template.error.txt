@@ -1,0 +1,5 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-effect-no-default-value/template.marko:1:2
+    > 1 | <effect/>
+        |  ^^^^^^ The `effect` tag requires a value.
+      2 |

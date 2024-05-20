@@ -1,4 +1,9 @@
-import { type Tag, assertNoParams } from "@marko/babel-utils";
+import {
+  type Tag,
+  assertNoParams,
+  assertNoArgs,
+  assertNoVar,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
@@ -10,8 +15,16 @@ export default {
   analyze(tag) {
     const { node } = tag;
     const [valueAttr] = node.attributes;
+    assertNoArgs(tag);
+    assertNoVar(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
+
+    if (!valueAttr) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError("The `effect` tag requires a value.");
+    }
 
     if (
       node.attributes.length > 1 ||
@@ -21,14 +34,8 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The 'effect' tag only supports the 'value' attribute.",
+          "The `effect` tag only supports the `value` attribute.",
         );
-    }
-
-    if (!valueAttr) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError("The 'effect' tag requires a 'value' attribute.");
     }
 
     (valueAttr.value.extra ??= {}).isEffect = true;
