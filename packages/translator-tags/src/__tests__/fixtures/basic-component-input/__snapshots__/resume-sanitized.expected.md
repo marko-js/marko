@@ -14,3 +14,13 @@ container.querySelector("button").click()
   1
 </button>
 ```
+
+
+# Render 
+container.querySelector("button").click()
+
+```html
+<button>
+  2
+</button>
+```

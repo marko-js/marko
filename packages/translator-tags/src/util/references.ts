@@ -8,7 +8,6 @@ import {
   type Opt,
   type Many,
   Sorted,
-  concat,
   push,
   forEach,
 } from "./optional";
@@ -83,13 +82,6 @@ export function createBinding(
     downstreamExpressions: new Set(),
     export: undefined,
   };
-  while (upstreamAlias?.upstreamAlias) {
-    property = concat(
-      upstreamAlias.upstreamAlias.downstreamAliases.get(upstreamAlias),
-      property,
-    );
-    upstreamAlias = upstreamAlias.upstreamAlias;
-  }
   if (upstreamAlias) {
     upstreamAlias.downstreamAliases.set(binding, property);
     binding.upstreamAlias = upstreamAlias;

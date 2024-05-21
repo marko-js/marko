@@ -1,8 +1,8 @@
-import { _setup_ as _hello, _input_ as _hello_args, _template_ as _hello_template, _walks_ as _hello_walks } from "./hello.marko";
+import { _setup_ as _hello, _input_ as _hello_input, _template_ as _hello_template, _walks_ as _hello_walks } from "./hello.marko";
 import { inChild as _inChild, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _setup = _scope => {
   _hello(_scope["#childScope/0"]);
-  _hello_args(_scope["#childScope/0"], {
+  _hello_input(_scope["#childScope/0"], {
     name: "Frank"
   });
 };

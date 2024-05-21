@@ -1,5 +1,5 @@
 import { attr as _attr, data as _data, on as _on, queueSource as _queueSource, inChild as _inChild, intersection as _intersection, closure as _closure, createRenderer as _createRenderer, register as _register, conditional as _conditional, queueEffect as _queueEffect, value as _value, inConditionalScope as _inConditionalScope, loopOf as _loopOf, inLoopScope as _inLoopScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _comments, _input_ as _comments_args, _template_ as _comments_template, _walks_ as _comments_walks } from "./comments.marko";
+import { _setup_ as _comments, _input_ as _comments_input, _template_ as _comments_template, _walks_ as _comments_walks } from "./comments.marko";
 const _expr_comment_id$ifBody = /* @__PURE__ */_intersection(2, _scope => {
   const {
     _: {
@@ -7,7 +7,7 @@ const _expr_comment_id$ifBody = /* @__PURE__ */_intersection(2, _scope => {
       id
     }
   } = _scope;
-  _comments_args(_scope["#childScope/0"], {
+  _comments_input(_scope["#childScope/0"], {
     comments: comment.comments,
     path: id
   });

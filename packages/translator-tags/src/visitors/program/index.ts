@@ -74,6 +74,7 @@ export default {
       }
       const { extra } = program.node;
       const { scope } = program;
+      // TODO: make any exports undefined if they are noops/empty
       extra.domExports = {
         template: scope.generateUid("template_"),
         walks: scope.generateUid("walks_"),
@@ -187,12 +188,25 @@ function recurseAndBuildExportTree(binding: Binding, scope: t.Scope) {
   }
   if (!nonAliasExpressions.size) {
     exportTree.props = {};
-    for (const [binding, property] of downstreamAliases) {
+    for (const [downstreamBinding, property] of downstreamAliases) {
       if (Array.isArray(property)) {
-        exportTree.props[property[property.length - 1]] =
-          recurseAndBuildExportTree(binding, scope);
+        exportTree.props = undefined;
+        return exportTree;
+      } else if (typeof property === "string") {
+        exportTree.props[property] = recurseAndBuildExportTree(
+          downstreamBinding,
+          scope,
+        );
       } else {
-        exportTree.props[property!] = recurseAndBuildExportTree(binding, scope);
+        // TODO: handle spreads
+        const alias = recurseAndBuildExportTree(downstreamBinding, scope);
+        if (alias.props) {
+          // TODO: this allows one alias to overwrite another
+          exportTree.props = { ...exportTree.props, ...alias.props };
+        } else {
+          exportTree.props = undefined;
+          return exportTree;
+        }
       }
     }
   }

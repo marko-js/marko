@@ -1,6 +1,6 @@
 import { queueSource as _queueSource, inChild as _inChild, register as _register, values as _values, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _myButton, _text_ as _myButton__text_, _onClick_ as _myButton__onClick_, _template_ as _myButton_template, _walks_ as _myButton_walks } from "./components/my-button.marko";
-const _onClick = _register("packages/translator-tags/src/__tests__/fixtures/basic-component-attrs/template.marko_0/onClick", _scope => {
+const _onClick = _register("packages/translator-tags/src/__tests__/fixtures/basic-component-input-alias/template.marko_0/onClick", _scope => {
   const {
     clickCount
   } = _scope;
@@ -19,4 +19,4 @@ const _setup = _scope => {
 export const _template_ = `${_myButton_template}`;
 export const _walks_ = /* beginChild, _myButton_walks, endChild */`/${_myButton_walks}&`;
 export const _setup_ = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-component-attrs/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-component-input-alias/template.marko");

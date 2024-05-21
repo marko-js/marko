@@ -15,7 +15,7 @@ const htmlHoistFunctionVisitor: t.Visitor<{ section: Section }> = {
   ArrowFunctionExpression: { exit: htmlFunctionVisit },
 };
 
-const domHoistFunctionVisitor: t.Visitor<{ section: Section }> = {
+export const domHoistFunctionVisitor: t.Visitor<{ section: Section }> = {
   FunctionExpression: { exit: domFunctionVisit },
   ArrowFunctionExpression: { exit: domFunctionVisit },
 };

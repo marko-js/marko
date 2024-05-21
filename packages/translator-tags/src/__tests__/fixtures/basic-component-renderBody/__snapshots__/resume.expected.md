@@ -31,7 +31,9 @@ container.querySelector("button").click()
   <head />
   <body>
     <button>
+      <!--M[2-->
       1
+      <!--M*2 #text/0-->
       <!--M]1 #text/1-->
     </button>
     <!--M*1 #button/0-->
@@ -44,11 +46,7 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/button0/#text0
-removed #comment after #document/html0/body1/button0/#text0
-removed #text after #document/html0/body1/button0/#text0
-removed #comment after #document/html0/body1/button0/#text0
-#document/html0/body1/button0/#text0: " " => "1"
+#document/html0/body1/button0/#text1: "0" => "1"
 ```
 
 
@@ -60,7 +58,9 @@ container.querySelector("button").click()
   <head />
   <body>
     <button>
+      <!--M[2-->
       2
+      <!--M*2 #text/0-->
       <!--M]1 #text/1-->
     </button>
     <!--M*1 #button/0-->
@@ -73,7 +73,7 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/button0/#text0: "1" => "2"
+#document/html0/body1/button0/#text1: "1" => "2"
 ```
 
 
@@ -85,7 +85,9 @@ container.querySelector("button").click()
   <head />
   <body>
     <button>
+      <!--M[2-->
       3
+      <!--M*2 #text/0-->
       <!--M]1 #text/1-->
     </button>
     <!--M*1 #button/0-->
@@ -98,5 +100,5 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/button0/#text0: "2" => "3"
+#document/html0/body1/button0/#text1: "2" => "3"
 ```

@@ -1,5 +1,5 @@
 import { data as _data, bindRenderer as _bindRenderer, inChild as _inChild, value as _value, createRenderer as _createRenderer, register as _register, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _customTag, _input_ as _customTag_args, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag.marko";
+import { _setup_ as _customTag, _input_ as _customTag_input, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag.marko";
 const _count2$customTagBody = /* @__PURE__ */_value("count2", (_scope, count2) => _data(_scope["#text/1"], count2));
 const _count$customTagBody = /* @__PURE__ */_value("count", (_scope, count) => _data(_scope["#text/0"], count));
 const _customTagBody = _register("packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<div>Counts: <!>,<!></div>", /* next(1), over(1), replace, over(2), replace */"Db%c%", void 0, void 0, void 0, (_scope, _destructure, _clean) => {
@@ -10,7 +10,7 @@ const _customTagBody = _register("packages/translator-tags/src/__tests__/fixture
 }));
 const _setup = _scope => {
   _customTag(_scope["#childScope/0"]);
-  _customTag_args(_scope["#childScope/0"], {
+  _customTag_input(_scope["#childScope/0"], {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _customTagBody)
   });
 };
