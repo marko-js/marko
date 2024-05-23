@@ -1,4 +1,4 @@
-import { queueSource as _queueSource, data as _data, register as _register, inChild as _inChild, bindRenderer as _bindRenderer, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, createRenderer as _createRenderer, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { queueSource as _queueSource, data as _data, register as _register, inChild as _inChild, bindRenderer as _bindRenderer, createRenderer as _createRenderer, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _myButton, _onClick_ as _myButton__onClick_, _renderBody_ as _myButton_renderBody, _template_ as _myButton_template, _walks_ as _myButton_walks } from "./components/my-button.marko";
 const _onClick = _register("packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_0/onClick", _scope => {
   const {

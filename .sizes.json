@@ -44,31 +44,31 @@
     {
       "name": "comments",
       "user": {
-        "min": 1159,
-        "brotli": 627
+        "min": 1085,
+        "brotli": 584
       },
       "runtime": {
-        "min": 7344,
-        "brotli": 3068
+        "min": 6976,
+        "brotli": 2935
       },
       "total": {
-        "min": 8503,
-        "brotli": 3695
+        "min": 8061,
+        "brotli": 3519
       }
     },
     {
       "name": "comments 💧",
       "user": {
-        "min": 918,
-        "brotli": 540
+        "min": 855,
+        "brotli": 510
       },
       "runtime": {
-        "min": 7600,
-        "brotli": 3181
+        "min": 7235,
+        "brotli": 3045
       },
       "total": {
-        "min": 8518,
-        "brotli": 3721
+        "min": 8090,
+        "brotli": 3555
       }
     }
   ]

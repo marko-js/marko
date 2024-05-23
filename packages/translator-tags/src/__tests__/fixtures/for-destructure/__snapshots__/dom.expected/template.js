@@ -1,15 +1,12 @@
-import { data as _data, on as _on, queueSource as _queueSource, value as _value, createRenderer as _createRenderer, register as _register, loopOf as _loopOf, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { data as _data, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, value as _value, register as _register, loopOf as _loopOf, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _description$forBody = /* @__PURE__ */_value("description", (_scope, description) => _data(_scope["#text/1"], description));
 const _name$forBody = /* @__PURE__ */_value("name", (_scope, name) => _data(_scope["#text/0"], name));
-const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, void 0, (_scope, _destructure, _clean) => {
-  let name, description;
-  if (!_clean) [{
-    name,
-    description
-  }] = _destructure;
-  _name$forBody(_scope, name, _clean);
-  _description$forBody(_scope, description, _clean);
-}));
+const _pattern_$forBody = /* @__PURE__ */_value("_pattern_", (_scope, _pattern_) => {
+  _name$forBody(_scope, _pattern_.name);
+  _description$forBody(_scope, _pattern_.description);
+});
+const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _pattern_$forBody(_scope, _params_2[0]));
+const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, void 0, _params_2$forBody));
 const _for = /* @__PURE__ */_loopOf("#text/0", _forBody);
 const _onClick = _scope => {
   const {

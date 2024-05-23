@@ -24,14 +24,11 @@ export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _attrs(_scope, "#div/0", input.value);
   _queueEffect(_scope, _input__effect);
 }, _expr_input_a);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
 const _setup = _scope => {
   _a(_scope, 0);
 };
 export const _template_ = "<div></div><div></div><div></div>";
 export const _walks_ = /* get, over(1), get, over(1), get, over(1) */" b b b";
 export const _setup_ = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, (_scope, _destructure, _clean) => {
-  let input;
-  if (!_clean) [input] = _destructure;
-  _input_(_scope, input, _clean);
-}), "packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko");

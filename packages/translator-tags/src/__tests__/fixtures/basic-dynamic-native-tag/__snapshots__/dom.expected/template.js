@@ -5,19 +5,9 @@ const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _tagNam
   class: ["a", "b"]
 })), void 0, _tagName_input);
 export const _tagName_ = /* @__PURE__ */_value("tagName", (_scope, tagName) => _dynamicTagName(_scope, tagName || _tagNameBody), void 0, _dynamicTagName);
-const _destructure2 = (_scope, _destructure, _clean) => {
-  let tagName;
-  if (!_clean) ({
-    tagName
-  } = _destructure);
-  _tagName_(_scope, tagName, _clean);
-};
-export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _destructure2(_scope, input), void 0, _destructure2);
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _tagName_(_scope, input.tagName), void 0, _tagName_);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
 export const _template_ = "<!><!><!>";
 export const _walks_ = /* replace, over(1) */"D%bD";
 export const _setup_ = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, (_scope, _destructure3, _clean) => {
-  let input;
-  if (!_clean) [input] = _destructure3;
-  _input_(_scope, input, _clean);
-}), "packages/translator-tags/src/__tests__/fixtures/basic-dynamic-native-tag/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/basic-dynamic-native-tag/template.marko");

@@ -1,10 +1,7 @@
-import { attr as _attr, data as _data, on as _on, queueSource as _queueSource, value as _value, createRenderer as _createRenderer, register as _register, loopOf as _loopOf, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { attr as _attr, data as _data, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, value as _value, register as _register, loopOf as _loopOf, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _x$forBody = /* @__PURE__ */_value("x", (_scope, x) => _data(_scope["#text/0"], x));
-const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<li> </li>", /* next(1), get */"D ", void 0, void 0, void 0, (_scope, _destructure, _clean) => {
-  let x;
-  if (!_clean) [x] = _destructure;
-  _x$forBody(_scope, x, _clean);
-}));
+const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _x$forBody(_scope, _params_2[0]));
+const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<li> </li>", /* next(1), get */"D ", void 0, void 0, void 0, _params_2$forBody));
 const _for = /* @__PURE__ */_loopOf("#ul/0", _forBody);
 const _onClick = _scope => {
   const {

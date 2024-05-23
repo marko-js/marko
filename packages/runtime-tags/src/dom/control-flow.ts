@@ -211,6 +211,7 @@ function loop(
     value: [unknown, (...args: unknown[]) => unknown],
     clean: boolean | 1,
   ) => {
+    debugger;
     if (clean) {
       for (const childScope of scope[loopScopeAccessor]) {
         params?.(childScope, null, clean);

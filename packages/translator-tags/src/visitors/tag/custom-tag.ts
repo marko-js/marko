@@ -258,8 +258,8 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     childProgram.extra.domExports!.setup,
     tagName,
   );
-  if (childProgram.params[0].extra?.binding?.downstreamExpressions.size) {
-    const inputExport = childProgram.extra.domExports!.params!.props![0];
+  const inputExport = childProgram.extra.domExports!.params?.props?.[0];
+  if (inputExport) {
     // TODO: if we made inputExport undefined in the case of the child
     // not using input, we could skip creating an object here
     if (

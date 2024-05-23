@@ -1,0 +1,11 @@
+static function createWrapper(a: string) {
+  return { a };
+}
+
+<let/count = 0/>
+<const/{ a, a: b } = createWrapper(count)/>
+
+<button onClick() { count++ }>
+  ${a} ${b}
+</button>
+

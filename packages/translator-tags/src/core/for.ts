@@ -252,27 +252,27 @@ const translateDOM = {
       );
     };
 
-    signal.hasDownstreamIntersections = () => {
-      if (getClosures(bodySection).length > 0) {
-        return true;
-      }
+    // signal.hasDownstreamIntersections = () => {
+    //   if (getClosures(bodySection).length > 0) {
+    //     return true;
+    //   }
 
-      if (paramIdentifiers.length) {
-        const binding = paramIdentifiers[0].extra!.binding!;
-        for (const { referencedBindings } of binding.downstreamExpressions) {
-          if (
-            getSignal(
-              bodySection,
-              referencedBindings,
-            ).hasDownstreamIntersections()
-          ) {
-            return true;
-          }
-        }
-      }
+    //   if (paramIdentifiers.length) {
+    //     const binding = paramIdentifiers[0].extra!.binding!;
+    //     for (const { referencedBindings } of binding.downstreamExpressions) {
+    //       if (
+    //         getSignal(
+    //           bodySection,
+    //           referencedBindings,
+    //         ).hasDownstreamIntersections()
+    //       ) {
+    //         return true;
+    //       }
+    //     }
+    //   }
 
-      return false;
-    };
+    //   return false;
+    // };
 
     addValue(
       tagSection,

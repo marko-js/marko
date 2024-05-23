@@ -8,22 +8,12 @@ const _expr_value_dummy = /* @__PURE__ */_intersection(2, _scope => {
 });
 const _dummy = /* @__PURE__ */_value("dummy", null, _expr_value_dummy);
 export const _value_ = /* @__PURE__ */_value("value", null, _expr_value_dummy);
-const _destructure2 = (_scope, _destructure, _clean) => {
-  let value;
-  if (!_clean) ({
-    value
-  } = _destructure);
-  _value_(_scope, value, _clean);
-};
-export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _destructure2(_scope, input), void 0, _destructure2);
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _value_(_scope, input.value), void 0, _value_);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
 const _setup = _scope => {
   _dummy(_scope, {});
 };
 export const _template_ = "<div> </div>";
 export const _walks_ = /* next(1), get, out(1) */"D l";
 export const _setup_ = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, (_scope, _destructure3, _clean) => {
-  let input;
-  if (!_clean) [input] = _destructure3;
-  _input_(_scope, input, _clean);
-}), "packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/components/display-intersection.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/components/display-intersection.marko");

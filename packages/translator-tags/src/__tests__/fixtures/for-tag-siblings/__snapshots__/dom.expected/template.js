@@ -1,16 +1,10 @@
-import { data as _data, value as _value, createRenderer as _createRenderer, loopOf as _loopOf, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { data as _data, createRenderer as _createRenderer, value as _value, loopOf as _loopOf, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _val$forBody2 = /* @__PURE__ */_value("val", (_scope, val) => _data(_scope["#text/0"], val));
-const _forBody2 = /* @__PURE__ */_createRenderer("<div> </div>", /* next(1), get */"D ", void 0, void 0, void 0, (_scope, _destructure, _clean) => {
-  let val;
-  if (!_clean) [val] = _destructure;
-  _val$forBody2(_scope, val, _clean);
-});
+const _params_3$forBody = /* @__PURE__ */_value("_params_3", (_scope, _params_3) => _val$forBody2(_scope, _params_3[0]));
+const _forBody2 = /* @__PURE__ */_createRenderer("<div> </div>", /* next(1), get */"D ", void 0, void 0, void 0, _params_3$forBody);
 const _val$forBody = /* @__PURE__ */_value("val", (_scope, val) => _data(_scope["#text/0"], val));
-const _forBody = /* @__PURE__ */_createRenderer("<div> </div>", /* next(1), get */"D ", void 0, void 0, void 0, (_scope, _destructure2, _clean) => {
-  let val;
-  if (!_clean) [val] = _destructure2;
-  _val$forBody(_scope, val, _clean);
-});
+const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _val$forBody(_scope, _params_2[0]));
+const _forBody = /* @__PURE__ */_createRenderer("<div> </div>", /* next(1), get */"D ", void 0, void 0, void 0, _params_2$forBody);
 const _for2 = /* @__PURE__ */_loopOf("#text/1", _forBody2);
 const _for = /* @__PURE__ */_loopOf("#div/0", _forBody);
 const _arrA = /* @__PURE__ */_value("arrA", (_scope, arrA) => {

@@ -8,7 +8,6 @@ import {
   type Opt,
   type Many,
   Sorted,
-  push,
   forEach,
 } from "./optional";
 import { type Section, getOrCreateSection, forEachSection } from "./sections";
@@ -31,9 +30,12 @@ export type Binding = {
   type: BindingType;
   section: Section;
   serialize: boolean | Set<Binding>;
+  aliases: Set<Binding>;
+  property: string | undefined;
+  propertyAliases: Map<string, Binding>;
+  excludeProperties: undefined | string[];
   upstreamAlias: Binding | undefined;
   upstreamExpression: t.NodeExtra | undefined;
-  downstreamAliases: Map<Binding, Opt<string>>;
   downstreamExpressions: Set<t.NodeExtra>;
   export: string | undefined;
 };
@@ -67,7 +69,7 @@ export function createBinding(
   section: Section,
   upstreamAlias?: Binding["upstreamAlias"],
   upstreamExpression?: Binding["upstreamExpression"],
-  property?: Opt<string>,
+  property?: string,
 ): Binding {
   const id = getNextBindingId();
   const binding: Binding = {
@@ -75,17 +77,30 @@ export function createBinding(
     name,
     type,
     section,
+    property,
+    excludeProperties: undefined,
     serialize: false,
+    aliases: new Set(),
+    propertyAliases: new Map(),
     upstreamAlias,
     upstreamExpression,
-    downstreamAliases: new Map(),
     downstreamExpressions: new Set(),
     export: undefined,
   };
-  if (upstreamAlias) {
-    upstreamAlias.downstreamAliases.set(binding, property);
-    binding.upstreamAlias = upstreamAlias;
+
+  if (property) {
+    const propBinding = upstreamAlias!.propertyAliases.get(property);
+    if (propBinding) {
+      propBinding.aliases.add(binding);
+      binding.upstreamAlias = propBinding;
+    } else {
+      // TODO: check if default is used, if so an intermediate binding is needed
+      upstreamAlias!.propertyAliases.set(property, binding);
+    }
+  } else if (upstreamAlias) {
+    upstreamAlias.aliases.add(binding);
   }
+
   setNextBindingId(id + 1);
   getBindings().add(binding);
   return binding;
@@ -99,19 +114,16 @@ export function trackVarReferences(
 ) {
   const tagVar = tag.node.var;
   if (tagVar) {
-    const section = getOrCreateSection(tag);
-    for (const { identifier, property } of getBindingIdentifiers(tagVar)) {
-      const binding = createBinding(
-        identifier.name,
-        type,
-        section,
-        upstreamAlias,
-        upstreamExpression,
-        property,
-      );
-      (identifier.extra ??= {}).binding = binding;
-      trackReferencesForBinding(tag.scope.getBinding(identifier.name)!);
-    }
+    upstreamAlias?.downstreamExpressions.delete(upstreamExpression!);
+    createBindingsAndTrackReferences(
+      tagVar,
+      type,
+      tag.scope,
+      getOrCreateSection(tag),
+      upstreamAlias,
+      upstreamExpression,
+      undefined,
+    );
   }
 }
 
@@ -123,23 +135,30 @@ export function trackParamsReferences(
 ) {
   const params = body.node.params;
   if (body.get("body").length && params.length) {
+    upstreamAlias?.downstreamExpressions.delete(upstreamExpression!);
     const section = getOrCreateSection(body);
+    const paramsBinding =
+      upstreamAlias ||
+      ((body.node.extra ??= {}).binding = createBinding(
+        body.scope.generateUid("params_"),
+        type,
+        section,
+        upstreamAlias,
+        upstreamExpression,
+        undefined,
+      ));
+
     for (let i = 0; i < params.length; i++) {
-      for (const { identifier, property } of getBindingIdentifiers(
+      // TODO: need to support spread here.
+      createBindingsAndTrackReferences(
         params[i],
+        type,
+        body.scope,
+        section,
+        paramsBinding,
+        undefined,
         i + "",
-      )) {
-        const binding = createBinding(
-          identifier.name,
-          type,
-          section,
-          upstreamAlias,
-          upstreamExpression,
-          property,
-        );
-        (identifier.extra ??= {}).binding = binding;
-        trackReferencesForBinding(body.scope.getBinding(identifier.name)!);
-      }
+      );
     }
   }
 }
@@ -173,26 +192,52 @@ export function trackReferencesForBinding(babelBinding: t.Binding) {
   }
 }
 
-function* getBindingIdentifiers(
+function createBindingsAndTrackReferences(
   lVal: t.LVal,
-  property?: Opt<string>,
-): Generator<{
-  identifier: t.Identifier;
-  property: Opt<string>;
-}> {
+  type: BindingType,
+  scope: t.Scope,
+  section: Section,
+  upstreamAlias?: Binding["upstreamAlias"],
+  upstreamExpression?: Binding["upstreamExpression"],
+  property?: string,
+) {
   switch (lVal.type) {
     case "Identifier":
-      yield {
-        identifier: lVal,
+      (lVal.extra ??= {}).binding = createBinding(
+        lVal.name,
+        type,
+        section,
+        upstreamAlias,
+        upstreamExpression,
         property,
-      };
+      );
+      trackReferencesForBinding(scope.getBinding(lVal.name)!);
       break;
-    case "ObjectPattern":
+    case "ObjectPattern": {
+      const patternBinding =
+        (!property && upstreamAlias) ||
+        ((lVal.extra ??= {}).binding = createBinding(
+          scope.generateUid("pattern_"),
+          type,
+          section,
+          upstreamAlias,
+          upstreamExpression,
+          property,
+        ));
+
       for (const prop of lVal.properties) {
         if (prop.type === "RestElement") {
           // TODO: this makes rest an alias, but it really should be
           // a partial alias with some keys removed
-          yield* getBindingIdentifiers(prop.argument, property);
+          createBindingsAndTrackReferences(
+            prop.argument,
+            type,
+            scope,
+            section,
+            patternBinding,
+            undefined,
+            property,
+          );
         } else {
           let key: string;
 
@@ -205,14 +250,31 @@ function* getBindingIdentifiers(
             throw new Error("computed keys not supported in object pattern");
           }
 
-          yield* getBindingIdentifiers(
+          createBindingsAndTrackReferences(
             prop.value as t.LVal,
-            push(property, key),
+            type,
+            scope,
+            section,
+            patternBinding,
+            undefined,
+            key,
           );
         }
       }
       break;
+    }
     case "ArrayPattern": {
+      const patternBinding =
+        (!property && upstreamAlias) ||
+        ((lVal.extra ??= {}).binding = createBinding(
+          scope.generateUid("pattern_"),
+          type,
+          section,
+          upstreamAlias,
+          upstreamExpression,
+          property,
+        ));
+
       let i = -1;
       for (const element of lVal.elements) {
         i++;
@@ -220,9 +282,25 @@ function* getBindingIdentifiers(
           if (element.type === "RestElement") {
             // TODO: this makes rest an alias, but it really should be
             // a partial alias with some keys removed
-            yield* getBindingIdentifiers(element.argument, property);
+            createBindingsAndTrackReferences(
+              element.argument,
+              type,
+              scope,
+              section,
+              patternBinding,
+              undefined,
+              property,
+            );
           } else {
-            yield* getBindingIdentifiers(element, push(property, `${i}`));
+            createBindingsAndTrackReferences(
+              element,
+              type,
+              scope,
+              section,
+              patternBinding,
+              undefined,
+              `${i}`,
+            );
           }
         }
       }
@@ -231,7 +309,15 @@ function* getBindingIdentifiers(
     case "AssignmentPattern":
       // TODO: this makes a default value an alias,
       // but it really should be a computed value
-      yield* getBindingIdentifiers(lVal.left, property);
+      createBindingsAndTrackReferences(
+        lVal.left,
+        type,
+        scope,
+        section,
+        upstreamAlias,
+        upstreamExpression,
+        property,
+      );
       break;
   }
 }
@@ -347,21 +433,25 @@ export function finalizeReferences() {
   }
 
   const bindings = getBindings();
-  bindings.forEach(function pruneBinding(binding: Binding) {
-    const { upstreamExpression, downstreamExpressions, type } = binding;
-    if (
-      upstreamExpression &&
-      !downstreamExpressions.size &&
-      type !== BindingType.dom
-    ) {
-      forEach(upstreamExpression.referencedBindings, (bindingReference) => {
-        bindingReference.downstreamExpressions.delete(upstreamExpression);
-        pruneBinding(bindingReference);
-      });
-      bindings.delete(binding);
-      binding.upstreamAlias?.downstreamAliases.delete(binding);
+
+  for (const binding of bindings) {
+    if (binding.type !== BindingType.dom && !binding.upstreamAlias) {
+      if (pruneBinding(bindings, binding)) {
+        const { upstreamExpression } = binding;
+        if (upstreamExpression) {
+          forEach(
+            upstreamExpression.referencedBindings,
+            (referencedBinding) => {
+              referencedBinding.downstreamExpressions.delete(
+                upstreamExpression,
+              );
+              pruneBinding(bindings, referencedBinding);
+            },
+          );
+        }
+      }
     }
-  });
+  }
 
   const intersections = new Set<Intersection>();
 
@@ -547,6 +637,31 @@ export function getScopeAccessorLiteral(binding: Binding) {
   return t.stringLiteral(
     binding.name + (binding.type === BindingType.dom ? `/${binding.id}` : ""),
   );
+}
+
+function pruneBinding(bindings: Set<Binding>, binding: Binding) {
+  let shouldPrune = !binding.downstreamExpressions.size;
+  for (const alias of binding.aliases) {
+    if (pruneBinding(bindings, alias)) {
+      binding.aliases.delete(alias);
+    } else {
+      shouldPrune = false;
+    }
+  }
+
+  for (const [key, alias] of binding.propertyAliases) {
+    if (pruneBinding(bindings, alias)) {
+      binding.propertyAliases.delete(key);
+    } else {
+      shouldPrune = false;
+    }
+  }
+
+  if (shouldPrune) {
+    bindings.delete(binding);
+  }
+
+  return shouldPrune;
 }
 
 // TODO: we need this? maybe for passing input to child?

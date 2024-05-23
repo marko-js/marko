@@ -1,14 +1,10 @@
 import { data as _data, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _y = /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/1"], y));
 const _x = /* @__PURE__ */_value("x", (_scope, x) => _data(_scope["#text/0"], x));
-const _destructure2 = (_scope, {
-  x,
-  y
-}) => {
-  _x(_scope, x);
-  _y(_scope, y);
-};
-const _z = /* @__PURE__ */_value("z", (_scope, z) => _destructure2(_scope, z));
+const _z = /* @__PURE__ */_value("z", (_scope, z) => {
+  _x(_scope, z.x);
+  _y(_scope, z.y);
+});
 const _setup = _scope => {
   _z(_scope, {
     x: 1,
