@@ -215,7 +215,9 @@ function createBindingsAndTrackReferences(
       break;
     case "ObjectPattern": {
       const patternBinding =
-        (!property && upstreamAlias) ||
+        (property
+          ? upstreamAlias!.propertyAliases.get(property)
+          : upstreamAlias) ||
         ((lVal.extra ??= {}).binding = createBinding(
           scope.generateUid("pattern_"),
           type,
@@ -265,7 +267,9 @@ function createBindingsAndTrackReferences(
     }
     case "ArrayPattern": {
       const patternBinding =
-        (!property && upstreamAlias) ||
+        (property
+          ? upstreamAlias!.propertyAliases.get(property)
+          : upstreamAlias) ||
         ((lVal.extra ??= {}).binding = createBinding(
           scope.generateUid("pattern_"),
           type,

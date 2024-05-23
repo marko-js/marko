@@ -28,7 +28,6 @@ import {
 } from "../util/sections";
 import {
   addValue,
-  getClosures,
   getSerializedScopeProperties,
   getSignal,
   setForceResumeScope,
@@ -193,9 +192,6 @@ const translateDOM = {
     const nodeRef = isOnlyChild
       ? tag.parentPath.parent.extra![kNativeTagBinding]!
       : tag.node.extra![kForMarkerBinding]!;
-    const paramIdentifiers = Object.values(
-      tagBody.getBindingIdentifiers(),
-    ) as t.Identifier[];
 
     setSubscriberBuilder(tag, (signal: t.Expression) => {
       return callRuntime(
@@ -208,13 +204,12 @@ const translateDOM = {
     tag.remove();
 
     const rendererId = writer.getRenderer(bodySection);
-
     const ofAttr = findName(attributes, "of");
     const toAttr = findName(attributes, "to");
     const inAttr = findName(attributes, "in");
-
     const loopArgs: t.Expression[] = [];
     let loopKind: "loopOf" | "loopIn" | "loopTo";
+
     if (ofAttr) {
       loopKind = "loopOf";
       loopArgs.push(ofAttr.value);

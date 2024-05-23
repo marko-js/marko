@@ -14,6 +14,7 @@ import {
   trackParamsReferences,
   type Binding,
 } from "../../util/references";
+import { startSection } from "../../util/sections";
 import programDOM from "./dom";
 import programHTML from "./html";
 
@@ -58,6 +59,7 @@ export default {
     enter(program: t.NodePath<t.Program>) {
       previousProgramPath.set(program, currentProgramPath);
       currentProgramPath = program;
+      startSection(program);
       trackParamsReferences(program, BindingType.input);
       const { scope } = program;
       // TODO: make any exports undefined if they are noops/empty
