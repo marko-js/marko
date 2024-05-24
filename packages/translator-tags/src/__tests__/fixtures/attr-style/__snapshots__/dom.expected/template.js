@@ -20,16 +20,11 @@ export const _test_ = /* @__PURE__ */_value("test", (_scope, test) => _dynamicTa
 export const _color_ = /* @__PURE__ */_value("color", (_scope, color) => _styleAttr(_scope["#div/0"], {
   color: color
 }));
-const _destructure2 = (_scope, _destructure, _clean) => {
-  let color, test;
-  if (!_clean) ({
-    color,
-    test
-  } = _destructure);
-  _color_(_scope, color, _clean);
-  _test_(_scope, test, _clean);
-};
-export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _destructure2(_scope, input), void 0, _destructure2);
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
+  _color_(_scope, input.color);
+  _test_(_scope, input.test);
+}, void 0, _test_);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
 const _setup = _scope => {
   _customTag(_scope["#childScope/1"]);
   _customTag(_scope["#childScope/2"]);
@@ -38,8 +33,4 @@ const _setup = _scope => {
 export const _template_ = `<div></div><div style=width:100px></div><div style="color: green"></div>${_customTag_template}${_customTag_template}${_customTag_template}<!><!>`;
 export const _walks_ = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(1) */` d/${_customTag_walks}&/${_customTag_walks}&/${_customTag_walks}&%bD`;
 export const _setup_ = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, (_scope, _destructure3, _clean) => {
-  let input;
-  if (!_clean) [input] = _destructure3;
-  _input_(_scope, input, _clean);
-}), "packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko");

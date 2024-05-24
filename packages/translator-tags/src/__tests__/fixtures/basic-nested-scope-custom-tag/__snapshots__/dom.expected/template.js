@@ -1,5 +1,5 @@
-import { on as _on, queueSource as _queueSource, data as _data, bindRenderer as _bindRenderer, inChild as _inChild, register as _register, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, createRenderer as _createRenderer, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _child, _input_ as _child_args, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
+import { on as _on, queueSource as _queueSource, data as _data, bindRenderer as _bindRenderer, inChild as _inChild, createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { _setup_ as _child, _input_ as _child_input, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
 const _onClick = _scope => {
   const {
     _: {
@@ -20,7 +20,7 @@ const _count = /* @__PURE__ */_value("count", null, _dynamicSubscribers("count")
 const _setup = _scope => {
   _child(_scope["#childScope/0"]);
   _count(_scope, 0);
-  _child_args(_scope["#childScope/0"], {
+  _child_input(_scope["#childScope/0"], {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _childBody)
   });
 };

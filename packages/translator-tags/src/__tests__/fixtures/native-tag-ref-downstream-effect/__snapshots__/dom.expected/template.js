@@ -1,4 +1,4 @@
-import { register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, conditional as _conditional, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, conditional as _conditional, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _setup$ifBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko_1", _scope => _scope._["#div/0"].textContent = "hello");
 const _setup$ifBody = _scope => {
   _queueEffect(_scope, _setup$ifBody_effect);

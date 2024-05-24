@@ -7,19 +7,12 @@ const _onClick__effect = _register("packages/translator-tags/src/__tests__/fixtu
   _on(_scope["#button/0"], "click", onClick);
 });
 export const _onClick_ = /* @__PURE__ */_value("onClick", (_scope, onClick) => _queueEffect(_scope, _onClick__effect));
-const _destructure2 = (_scope, {
-  onClick,
-  text
-}) => {
-  _onClick_(_scope, onClick);
-  _text_(_scope, text);
-};
-export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _destructure2(_scope, input));
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
+  _onClick_(_scope, input.onClick);
+  _text_(_scope, input.text);
+});
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export const _template_ = "<button> </button>";
 export const _walks_ = /* get, next(1), get, out(1) */" D l";
 export const _setup_ = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, (_scope, _destructure3, _clean) => {
-  let input;
-  if (!_clean) [input] = _destructure3;
-  _input_(_scope, input, _clean);
-}), "packages/translator-tags/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko");

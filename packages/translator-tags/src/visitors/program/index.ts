@@ -1,6 +1,7 @@
 import path from "path";
 import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import entryBuilder from "../../util/entry-builder";
 import {
   getMarkoOpts,
@@ -9,13 +10,11 @@ import {
 } from "../../util/marko-config";
 import {
   BindingType,
-  createBinding,
   finalizeReferences,
-  trackReferencesForBinding,
+  trackParamsReferences,
   type Binding,
 } from "../../util/references";
 import { startSection } from "../../util/sections";
-import { initValue } from "../../util/signals";
 import programDOM from "./dom";
 import programHTML from "./html";
 
@@ -60,35 +59,15 @@ export default {
     enter(program: t.NodePath<t.Program>) {
       previousProgramPath.set(program, currentProgramPath);
       currentProgramPath = program;
-      const section = startSection(program)!;
-
-      const babelInputBinding = program.scope.getBinding("input")!;
-      let inputBinding: Binding | undefined = undefined;
-      if (
-        babelInputBinding.referencePaths.length ||
-        babelInputBinding.constantViolations.length
-      ) {
-        inputBinding = (babelInputBinding.identifier.extra ??= {}).binding =
-          createBinding("input", BindingType.input, section);
-        trackReferencesForBinding(babelInputBinding);
-      }
-      const { extra } = program.node;
+      startSection(program);
+      trackParamsReferences(program, BindingType.input);
       const { scope } = program;
-      extra.domExports = {
+      // TODO: make any exports undefined if they are noops/empty
+      (program.node.extra ??= {}).domExports = {
         template: scope.generateUid("template_"),
         walks: scope.generateUid("walks_"),
         setup: scope.generateUid("setup_"),
-        params: inputBinding && {
-          id: scope.generateUid("args_"),
-          props: {
-            0: {
-              id: (inputBinding.export ??= scope.generateUid(
-                inputBinding.name + "_",
-              )),
-              props: undefined,
-            },
-          },
-        },
+        params: undefined, // TODO look into recursive components with fine grained params.
         closures: scope.generateUid("closures_"),
       };
     },
@@ -97,15 +76,12 @@ export default {
       finalizeReferences();
       const {
         scope,
-        node: {
-          extra,
-          params: [{ extra: inputExtra }],
-        },
+        node: { extra },
       } = program;
 
-      if (inputExtra?.binding) {
-        extra.domExports!.params!.props![0] = recurseAndBuildExportTree(
-          inputExtra.binding,
+      if (extra.binding && bindingHasDownstreamExpressions(extra.binding)) {
+        extra.domExports!.params = recurseAndBuildExportTree(
+          extra.binding!,
           scope,
         );
       }
@@ -143,11 +119,6 @@ export default {
         program.skip();
         return;
       }
-
-      const inputBinding = program.node.params[0].extra?.binding;
-      if (inputBinding) {
-        initValue(inputBinding);
-      }
     },
     exit(program: t.NodePath<t.Program>) {
       if (isOutputHTML()) {
@@ -180,21 +151,26 @@ function recurseAndBuildExportTree(binding: Binding, scope: t.Scope) {
     id: (binding.export ??= scope.generateUid(binding.name + "_")),
     props: undefined,
   };
-  const { downstreamAliases, downstreamExpressions } = binding;
-  const nonAliasExpressions = new Set(downstreamExpressions);
-  for (const alias of downstreamAliases.keys()) {
-    nonAliasExpressions.delete(alias.upstreamExpression!);
-  }
-  if (!nonAliasExpressions.size) {
+  const { aliases, propertyAliases, downstreamExpressions } = binding;
+
+  if (!downstreamExpressions.size) {
     exportTree.props = {};
-    for (const [binding, property] of downstreamAliases) {
-      if (Array.isArray(property)) {
-        exportTree.props[property[property.length - 1]] =
-          recurseAndBuildExportTree(binding, scope);
+    for (const [property, alias] of propertyAliases) {
+      exportTree.props[property] = recurseAndBuildExportTree(alias, scope);
+    }
+
+    for (const alias of aliases) {
+      // TODO: handle spreads
+      const exports = recurseAndBuildExportTree(alias, scope);
+      if (exports.props) {
+        // TODO: this allows one alias to overwrite another
+        exportTree.props = { ...exportTree.props, ...exports.props };
       } else {
-        exportTree.props[property!] = recurseAndBuildExportTree(binding, scope);
+        exportTree.props = undefined;
+        return exportTree;
       }
     }
   }
+
   return exportTree;
 }

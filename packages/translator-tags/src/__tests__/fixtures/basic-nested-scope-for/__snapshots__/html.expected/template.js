@@ -7,7 +7,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   for (const num of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
     const _scope1_id = _nextScopeId();
     let _i = _i2++;
-    _write(`<button${_attr("data-selected", selected === num)}${_attr("data-multiple", num % selected === 0)}>${_escapeXML(num)}</button>${_markResumeNode(_scope1_id, "#button/0")}`);
+    _write(`<button${_attr("data-selected", selected === num)}${_attr("data-multiple", num % selected === 0)}>${_escapeXML(num)}${_markResumeNode(_scope1_id, "#text/1")}</button>${_markResumeNode(_scope1_id, "#button/0")}`);
     _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num");
     _writeScope(_scope1_id, {
       "num": num,

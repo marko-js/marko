@@ -7,7 +7,10 @@ import {
   resolveRelativePath,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
+import attrsToObject, {
+  domHoistFunctionVisitor,
+  getRenderBodyProp,
+} from "../../util/attrs-to-object";
 import { isOutputHTML } from "../../util/marko-config";
 import {
   createBinding,
@@ -74,12 +77,17 @@ export default {
       const hasInteractiveChild =
         childProgramExtra?.isInteractive ||
         childProgramExtra?.hasInteractiveChild;
-
-      // TODO: only if dynamic attributes
-      mergeReferences(
-        tag,
-        tag.node.attributes.map((attr) => attr.value),
-      );
+      const inputExport = childProgramExtra?.domExports?.params?.props?.[0];
+      // TODO: any properties after a spread could still be optimized
+      if (
+        !inputExport?.props ||
+        tag.node.attributes.find((attr) => t.isMarkoSpreadAttribute(attr))
+      ) {
+        mergeReferences(
+          tag,
+          tag.node.attributes.map((attr) => attr.value),
+        );
+      }
 
       if (hasInteractiveChild) {
         (currentProgramPath.node.extra ?? {}).hasInteractiveChild = true;
@@ -250,14 +258,115 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     childProgram.extra.domExports!.setup,
     tagName,
   );
-  let tagAttrsIdentifier: t.Identifier | undefined;
-  if (childProgram.params[0].extra?.binding?.downstreamExpressions.size) {
-    tagAttrsIdentifier = importNamed(
-      file,
-      relativePath,
-      childProgram.extra.domExports!.params!.props![0].id,
-      `${tagName}_args`,
-    );
+  const inputExport = childProgram.extra.domExports!.params?.props?.[0];
+  if (inputExport) {
+    // TODO: if we made inputExport undefined in the case of the child
+    // not using input, we could skip creating an object here
+    if (
+      !inputExport.props ||
+      tag.node.attributes.some((attr) => t.isMarkoSpreadAttribute(attr))
+    ) {
+      let attrsObject = attrsToObject(tag);
+
+      if (tagBodySection !== tagSection) {
+        attrsObject ??= t.objectExpression([]);
+        (attrsObject as t.ObjectExpression).properties.push(
+          t.objectProperty(
+            t.identifier("renderBody"),
+            callRuntime(
+              "bindRenderer",
+              scopeIdentifier,
+              writer.getRenderer(tagBodySection),
+            ),
+          ),
+        );
+      }
+
+      const tagAttrsIdentifier = importNamed(
+        file,
+        relativePath,
+        inputExport.id,
+        `${tagName}_input`,
+      );
+
+      addValue(
+        tagSection,
+        extra.referencedBindings,
+        {
+          identifier: tagAttrsIdentifier,
+          hasDownstreamIntersections: () => true,
+        },
+        attrsObject,
+        createScopeReadExpression(tagSection, childScopeBinding),
+        callRuntime(
+          "inChild",
+          getScopeAccessorLiteral(childScopeBinding),
+          t.identifier(tagAttrsIdentifier.name),
+        ),
+      );
+    } else {
+      // TODO: we must pass undefined in `setup` for
+      // attrExports that are not defined by this custom tag
+      // TODO: handle attributeTags (<@>)
+      for (const attrPath of tag.get(
+        "attributes",
+      ) as t.NodePath<t.MarkoAttribute>[]) {
+        const attr = attrPath.node;
+        const attrExport = inputExport.props[attr.name];
+        if (attrExport) {
+          const attrExportIdentifier = importNamed(
+            file,
+            relativePath,
+            attrExport.id,
+            `${tagName}_${attrExport.id}`,
+          );
+          const attrReferences = attr.value.extra?.referencedBindings;
+          attrPath.traverse(domHoistFunctionVisitor, { section: tagSection });
+          addValue(
+            tagSection,
+            attrReferences,
+            {
+              identifier: attrExportIdentifier,
+              hasDownstreamIntersections: () => true,
+            },
+            attr.value,
+            createScopeReadExpression(tagSection, childScopeBinding),
+            callRuntime(
+              "inChild",
+              getScopeAccessorLiteral(childScopeBinding),
+              t.identifier(attrExportIdentifier.name),
+            ),
+          );
+        }
+      }
+      if (inputExport.props.renderBody && tagBodySection !== tagSection) {
+        const renderBodyExportIdentifier = importNamed(
+          file,
+          relativePath,
+          inputExport.props.renderBody.id,
+          `${tagName}_renderBody`,
+        );
+        addValue(
+          tagSection,
+          undefined,
+          {
+            identifier: renderBodyExportIdentifier,
+            hasDownstreamIntersections: () => true,
+          },
+          callRuntime(
+            "bindRenderer",
+            scopeIdentifier,
+            writer.getRenderer(tagBodySection),
+          ),
+          createScopeReadExpression(tagSection, childScopeBinding),
+          callRuntime(
+            "inChild",
+            getScopeAccessorLiteral(childScopeBinding),
+            t.identifier(renderBodyExportIdentifier.name),
+          ),
+        );
+      }
+    }
   }
   write`${importNamed(file, relativePath, childProgram.extra.domExports!.template, `${tagName}_template`)}`;
   walks.injectWalks(
@@ -269,22 +378,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       `${tagName}_walks`,
     ),
   );
-
-  let attrsObject = attrsToObject(tag); // TODO: need to build each attribute individually
-
-  if (tagBodySection !== tagSection) {
-    attrsObject ??= t.objectExpression([]);
-    (attrsObject as t.ObjectExpression).properties.push(
-      t.objectProperty(
-        t.identifier("renderBody"),
-        callRuntime(
-          "bindRenderer",
-          scopeIdentifier,
-          writer.getRenderer(tagBodySection),
-        ),
-      ),
-    );
-  }
 
   if (node.var) {
     const source = initValue(
@@ -316,23 +409,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       ]),
     ),
   );
-  if (attrsObject && tagAttrsIdentifier) {
-    addValue(
-      tagSection,
-      extra.referencedBindings,
-      {
-        identifier: tagAttrsIdentifier,
-        hasDownstreamIntersections: () => true,
-      },
-      attrsObject,
-      createScopeReadExpression(tagSection, childScopeBinding),
-      callRuntime(
-        "inChild",
-        getScopeAccessorLiteral(childScopeBinding),
-        t.identifier(tagAttrsIdentifier.name),
-      ),
-    );
-  }
   tag.remove();
 }
 

@@ -6,11 +6,8 @@ export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   });
   _dynamicTagName(_scope, input.thing.renderBody);
 }, void 0, _dynamicTagName);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
 export const _template_ = "<div><!></div>";
 export const _walks_ = /* get, next(1), replace, out(1) */" D%l";
 export const _setup_ = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, (_scope, _destructure, _clean) => {
-  let input;
-  if (!_clean) [input] = _destructure;
-  _input_(_scope, input, _clean);
-}), "packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/components/child.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/components/child.marko");

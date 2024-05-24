@@ -4,7 +4,7 @@ import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import { BindingType, trackVarReferences } from "../util/references";
 import { getSection } from "../util/sections";
-import { addValue, getTagVarSignal } from "../util/signals";
+import { addValue, initValue } from "../util/signals";
 import translateVar from "../util/translate-var";
 
 export default {
@@ -56,10 +56,12 @@ export default {
 
     if (isOutputDOM()) {
       const section = getSection(tag);
-      const derivation = getTagVarSignal(tag.get("var"))!;
+      const varBinding = node.var!.extra?.binding;
 
-      // TODO: optimize for cases like `const/x=y`
-      addValue(section, value.extra?.referencedBindings, derivation, value);
+      if (varBinding && !varBinding.upstreamAlias) {
+        const derivation = initValue(varBinding)!;
+        addValue(section, value.extra?.referencedBindings, derivation, value);
+      }
     } else {
       translateVar(tag, value);
     }

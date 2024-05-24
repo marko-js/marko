@@ -134,17 +134,37 @@ export function getSignal(
         subscribers: [],
         closures: new Map(),
         hasDownstreamIntersections: () => {
-          if (
-            signal.intersection ||
-            signal.closures.size ||
-            signal.values.some((v) => v.signal.hasDownstreamIntersections())
-          ) {
-            signal.hasDownstreamIntersections = () => true;
-            return true;
-          } else {
-            signal.hasDownstreamIntersections = () => false;
-            return false;
+          let hasDownstreamIntersections: boolean = !!(
+            signal.intersection || signal.closures.size
+          );
+          if (!hasDownstreamIntersections) {
+            for (const value of signal.values) {
+              if (value.signal.hasDownstreamIntersections()) {
+                hasDownstreamIntersections = true;
+                break;
+              }
+            }
           }
+          if (!hasDownstreamIntersections) {
+            if (!Array.isArray(referencedBindings) && referencedBindings) {
+              for (const alias of referencedBindings.aliases) {
+                if (getSignal(section, alias).hasDownstreamIntersections()) {
+                  hasDownstreamIntersections = true;
+                  break;
+                }
+              }
+              if (!hasDownstreamIntersections) {
+                for (const [, alias] of referencedBindings.propertyAliases) {
+                  if (getSignal(section, alias).hasDownstreamIntersections()) {
+                    hasDownstreamIntersections = true;
+                    break;
+                  }
+                }
+              }
+            }
+          }
+          signal.hasDownstreamIntersections = () => hasDownstreamIntersections;
+          return hasDownstreamIntersections;
         },
         build: unimplementedBuild,
         export: !!exportName,
@@ -171,7 +191,7 @@ export function getSignal(
       );
       addClosure(
         section,
-        section.parent! /*reserve.section*/,
+        section.parent! /*binding.section*/,
         signal.identifier,
       );
       provider.closures.set(section, signal);
@@ -205,10 +225,8 @@ export function getSignal(
   return signal;
 }
 
-export function initValue(
-  binding: Binding,
-  valueAccessor = getScopeAccessorLiteral(binding),
-) {
+export function initValue(binding: Binding) {
+  const valueAccessor = getScopeAccessorLiteral(binding);
   const section = binding.section;
   const signal = getSignal(section, binding);
   signal.build = () => {
@@ -218,11 +236,19 @@ export function initValue(
     ]);
     const intersections = buildSignalIntersections(signal);
     const valuesWithIntersections = buildSignalValuesWithIntersections(signal);
-    if (
-      (fn.body as t.BlockStatement).body.length > 0 ||
-      intersections ||
-      valuesWithIntersections
-    ) {
+    const isParamBinding =
+      !binding.upstreamAlias &&
+      (binding.type === BindingType.param ||
+        binding.type === BindingType.input);
+    const isNakedAlias = binding.upstreamAlias && !binding.property;
+    const needsGuard =
+      !isNakedAlias &&
+      (binding.downstreamExpressions.size ||
+        (fn.body as t.BlockStatement).body.length > 0);
+    const needsCache = needsGuard || intersections;
+    const needsMarks =
+      isParamBinding || intersections || valuesWithIntersections;
+    if (needsCache || needsMarks) {
       return callRuntime(
         "value",
         valueAccessor,
@@ -235,6 +261,15 @@ export function initValue(
     }
   };
   signal.valueAccessor = valueAccessor;
+
+  for (const alias of binding.aliases) {
+    initValue(alias);
+  }
+
+  for (const alias of binding.propertyAliases.values()) {
+    initValue(alias);
+  }
+
   return signal;
 }
 
@@ -244,6 +279,35 @@ export function getSignalFn(
   referencedBindings?: ReferencedBindings,
 ) {
   const section = signal.section;
+  const binding = signal.referencedBindings;
+
+  if (binding && !Array.isArray(binding) && binding.section === section) {
+    const [scopeIdentifier, valueIdentifier] = params as [
+      t.Identifier,
+      t.Identifier,
+    ];
+    for (const alias of binding.aliases) {
+      signal.render.push(
+        t.expressionStatement(
+          t.callExpression(getSignal(alias.section, alias).identifier, [
+            scopeIdentifier,
+            valueIdentifier,
+          ]),
+        ),
+      );
+    }
+
+    for (const [key, alias] of binding.propertyAliases) {
+      signal.render.push(
+        t.expressionStatement(
+          t.callExpression(getSignal(alias.section, alias).identifier, [
+            scopeIdentifier,
+            toMemberExpression(valueIdentifier, key),
+          ]),
+        ),
+      );
+    }
+  }
 
   for (const value of signal.values) {
     signal.render.push(
@@ -301,6 +365,33 @@ export function buildSignalIntersections(signal: Signal) {
 
 export function buildSignalValuesWithIntersections(signal: Signal) {
   let valuesWithIntersections: Opt<t.Expression>;
+  const binding = signal.referencedBindings;
+
+  if (
+    binding &&
+    !Array.isArray(binding) &&
+    binding.section === signal.section
+  ) {
+    for (const alias of binding.aliases) {
+      const signal = getSignal(alias.section, alias);
+      if (signal.hasDownstreamIntersections()) {
+        valuesWithIntersections = push(
+          valuesWithIntersections,
+          t.identifier(signal.identifier.name),
+        );
+      }
+    }
+
+    for (const [, alias] of binding.propertyAliases) {
+      const signal = getSignal(alias.section, alias);
+      if (signal.hasDownstreamIntersections()) {
+        valuesWithIntersections = push(
+          valuesWithIntersections,
+          t.identifier(signal.identifier.name),
+        );
+      }
+    }
+  }
 
   for (const value of signal.values) {
     if (value.signal.hasDownstreamIntersections()) {
@@ -315,29 +406,6 @@ export function buildSignalValuesWithIntersections(signal: Signal) {
   return Array.isArray(valuesWithIntersections)
     ? callRuntime("values", t.arrayExpression(valuesWithIntersections))
     : valuesWithIntersections;
-}
-
-export function getTagVarSignal(varPath: t.NodePath<t.LVal | null>) {
-  if (varPath.isIdentifier()) {
-    return initValue(varPath.node.extra!.binding!);
-  } else {
-    return getDestructureSignal(
-      Object.values(varPath.getBindingIdentifiers()) as t.Identifier[],
-      varPath.node!,
-    )!;
-  }
-}
-
-export function getTagParamsSignal(
-  paramsPaths: t.NodePath<t.Identifier | t.RestElement | t.Pattern>[],
-  pattern: t.ArrayPattern = t.arrayPattern(
-    paramsPaths.map((path) => path.node!),
-  ),
-) {
-  const parameterBindings = paramsPaths.reduce((bindingsLookup, path) => {
-    return Object.assign(bindingsLookup, path.getBindingIdentifiers());
-  }, {});
-  return getDestructureSignal(parameterBindings, pattern);
 }
 
 export function getDestructureSignal(
@@ -883,4 +951,23 @@ function bindFunction(
 
 export function getSetup(section: Section) {
   return getSignals(section).get(undefined)?.identifier;
+}
+
+function toMemberExpression(value: t.Expression, key: string) {
+  const keyLiteral = keyToNode(key);
+  return t.memberExpression(
+    value,
+    keyLiteral,
+    keyLiteral.type !== "Identifier",
+  );
+}
+
+function keyToNode(key: string) {
+  if (/^[a-z_$][a-z0-9_$]*$/i.test(key)) {
+    return t.identifier(key);
+  } else if (/^(?:0|[1-9][0-9]*)$/.test(key)) {
+    return t.numericLiteral(parseInt(key, 10));
+  }
+
+  return t.stringLiteral(key);
 }

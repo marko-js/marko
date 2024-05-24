@@ -28,7 +28,6 @@ import {
 } from "../util/sections";
 import {
   addValue,
-  getClosures,
   getSerializedScopeProperties,
   getSignal,
   setForceResumeScope,
@@ -193,9 +192,6 @@ const translateDOM = {
     const nodeRef = isOnlyChild
       ? tag.parentPath.parent.extra![kNativeTagBinding]!
       : tag.node.extra![kForMarkerBinding]!;
-    const paramIdentifiers = Object.values(
-      tagBody.getBindingIdentifiers(),
-    ) as t.Identifier[];
 
     setSubscriberBuilder(tag, (signal: t.Expression) => {
       return callRuntime(
@@ -208,13 +204,12 @@ const translateDOM = {
     tag.remove();
 
     const rendererId = writer.getRenderer(bodySection);
-
     const ofAttr = findName(attributes, "of");
     const toAttr = findName(attributes, "to");
     const inAttr = findName(attributes, "in");
-
     const loopArgs: t.Expression[] = [];
     let loopKind: "loopOf" | "loopIn" | "loopTo";
+
     if (ofAttr) {
       loopKind = "loopOf";
       loopArgs.push(ofAttr.value);
@@ -252,27 +247,27 @@ const translateDOM = {
       );
     };
 
-    signal.hasDownstreamIntersections = () => {
-      if (getClosures(bodySection).length > 0) {
-        return true;
-      }
+    // signal.hasDownstreamIntersections = () => {
+    //   if (getClosures(bodySection).length > 0) {
+    //     return true;
+    //   }
 
-      if (paramIdentifiers.length) {
-        const binding = paramIdentifiers[0].extra!.binding!;
-        for (const { referencedBindings } of binding.downstreamExpressions) {
-          if (
-            getSignal(
-              bodySection,
-              referencedBindings,
-            ).hasDownstreamIntersections()
-          ) {
-            return true;
-          }
-        }
-      }
+    //   if (paramIdentifiers.length) {
+    //     const binding = paramIdentifiers[0].extra!.binding!;
+    //     for (const { referencedBindings } of binding.downstreamExpressions) {
+    //       if (
+    //         getSignal(
+    //           bodySection,
+    //           referencedBindings,
+    //         ).hasDownstreamIntersections()
+    //       ) {
+    //         return true;
+    //       }
+    //     }
+    //   }
 
-      return false;
-    };
+    //   return false;
+    // };
 
     addValue(
       tagSection,

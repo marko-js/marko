@@ -21,14 +21,11 @@ const _count = /* @__PURE__ */_value("count", (_scope, count) => {
   _queueEffect(_scope, _count_effect);
 }, _expr_Text_count);
 export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _dynamicTagName(_scope, input.renderBody), void 0, _dynamicTagName);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
 const _setup = _scope => {
   _count(_scope, 0);
 };
 export const _template_ = "<button id=tags> </button><div><!></div>";
 export const _walks_ = /* get, next(1), get, out(1), next(1), replace, out(1) */" D lD%l";
 export const _setup_ = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, (_scope, _destructure, _clean) => {
-  let input;
-  if (!_clean) [input] = _destructure;
-  _input_(_scope, input, _clean);
-}), "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko");

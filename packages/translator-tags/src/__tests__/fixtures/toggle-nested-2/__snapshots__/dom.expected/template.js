@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, createRenderer as _createRenderer, conditional as _conditional, closure as _closure, dynamicSubscribers as _dynamicSubscribers, value as _value, inConditionalScope as _inConditionalScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, queueSource as _queueSource, data as _data, createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, conditional as _conditional, closure as _closure, dynamicSubscribers as _dynamicSubscribers, value as _value, inConditionalScope as _inConditionalScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onClick = _scope => {
   const {
     _: {

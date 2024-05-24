@@ -1,4 +1,4 @@
-import { register as _register, lifecycle as _lifecycle, on as _on, queueSource as _queueSource, queueEffect as _queueEffect, closure as _closure, createRenderer as _createRenderer, conditional as _conditional, value as _value, inConditionalScope as _inConditionalScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { register as _register, lifecycle as _lifecycle, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, queueEffect as _queueEffect, closure as _closure, conditional as _conditional, value as _value, inConditionalScope as _inConditionalScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onMount = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1/onMount", _scope => {
   const {
     _: {

@@ -12,7 +12,7 @@ import { callRuntime } from "../util/runtime";
 import { getSection, startSection } from "../util/sections";
 import {
   addValue,
-  getTagVarSignal,
+  initValue,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import translateVar from "../util/translate-var";
@@ -56,7 +56,7 @@ export default {
         const tagBody = tag.get("body");
         const tagBodySection = getSection(tagBody);
         const referencedBindings = node.extra?.referencedBindings;
-        const derivation = getTagVarSignal(tag.get("var"))!;
+        const derivation = initValue(tag.get("var").node!.extra!.binding!)!;
 
         let attrsObject = attrsToObject(tag);
         if (tagBodySection !== section) {
