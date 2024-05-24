@@ -1,5 +1,5 @@
 const a = 1;
-import { markResumeNode as _markResumeNode, write as _write, escapeXML as _escapeXML, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, peekNextScope as _peekNextScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { markResumeNode as _markResumeNode, write as _write, escapeXML as _escapeXML, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, peekNextScope as _peekNextScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -8,14 +8,14 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _write(`<button></button>${_markResumeNode(_scope0_id, "#button/0")}`);
   const _childScope = _peekNextScope();
   _customTag._({
-    renderBody: /* @__PURE__ */_createRenderer(() => {
+    renderBody: _register( /* @__PURE__ */_createRenderer(() => {
       const _scope1_id = _nextScopeId();
       _write(`${_escapeXML(a)} ${_escapeXML(b)} <!>${_escapeXML(c)}${_markResumeNode(_scope1_id, "#text/2")}`);
       _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_c/subscriber");
       _writeScope(_scope1_id, {
         "_": _ensureScopeWithId(_scope0_id)
       });
-    })
+    }), "packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_renderer", _scope0_id)
   });
   _write("<div>");
   if (Math.random()) {

@@ -1,13 +1,13 @@
-import { write as _write, createRenderer as _createRenderer, peekNextScope as _peekNextScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, createRenderer as _createRenderer, register as _register, peekNextScope as _peekNextScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _hello from "./components/hello/index.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const _childScope = _peekNextScope();
   _hello._({
     foo: {
-      renderBody: /* @__PURE__ */_createRenderer(() => {
+      renderBody: _register( /* @__PURE__ */_createRenderer(() => {
         _write("Foo!");
-      })
+      }), "packages/translator-tags/src/__tests__/fixtures/at-tags/template.marko_2_renderer")
     }
   });
   _writeScope(_scope0_id, {

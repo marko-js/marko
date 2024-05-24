@@ -11,7 +11,7 @@
     </h1>
     <!--M]0 #text/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{"#text/0!":_.a={"#scope":1},"#text/0(":"h1","#scope":0},1:_.a}),[])
+      (M$h=[]).push(_=&gt;(_.b={0:{"#text/0!":_.a={},"#text/0(":"h1"},1:_.a}),[])
     </script>
   </body>
 </html>

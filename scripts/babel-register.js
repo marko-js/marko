@@ -8,5 +8,5 @@ require("@babel/register")({
     "@babel/plugin-transform-modules-commonjs",
     "@babel/plugin-transform-export-namespace-from",
   ],
-  presets: ["@babel/preset-typescript"],
+  presets: [["@babel/preset-typescript", { allowDeclareFields: true }]],
 });

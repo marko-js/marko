@@ -9,7 +9,7 @@
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{x:null,"#text/0!":_.a={"#scope":1},"#text/0(":null,"#scope":0},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.b={0:{x:null,"#text/0!":_.a={},"#text/0(":null},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x",])
     </script>
   </body>
 </html>
@@ -36,7 +36,7 @@ container.querySelector("button").click()
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{x:null,"#text/0!":_.a={"#scope":1},"#text/0(":null,"#scope":0},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.b={0:{x:null,"#text/0!":_.a={},"#text/0(":null},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x",])
     </script>
   </body>
 </html>
@@ -63,7 +63,7 @@ container.querySelector("button").click()
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{x:null,"#text/0!":_.a={"#scope":1},"#text/0(":null,"#scope":0},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.b={0:{x:null,"#text/0!":_.a={},"#text/0(":null},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x",])
     </script>
   </body>
 </html>

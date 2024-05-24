@@ -42,7 +42,7 @@ export default {
             sectionParamsBinding && initValue(sectionParamsBinding);
           const { walks, writes, setup } = writer.getSectionMeta(childSection);
           const closures = getClosures(childSection);
-          const identifier = writer.getRenderer(childSection);
+          const identifier = t.identifier(childSection.name);
           const renderer = callRuntime(
             "createRenderer",
             writes,
@@ -59,7 +59,9 @@ export default {
                 identifier,
                 isStatefulSection(childSection)
                   ? callRuntime(
-                      "register",
+                      childSection.closures.size
+                        ? "registerRenderer"
+                        : "register",
                       t.stringLiteral(
                         getResumeRegisterId(childSection, "renderer"),
                       ),

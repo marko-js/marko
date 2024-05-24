@@ -14,7 +14,7 @@
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"],val:3,"#text/0!":_.a={"#scope":1},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"],"#scope":0},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName",])
+      (M$h=[]).push(_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"],val:3,"#text/0!":_.a={},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"]},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName",])
     </script>
   </body>
 </html>
@@ -41,7 +41,7 @@ container.querySelector("button").click()
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"],val:3,"#text/0!":_.a={"#scope":1},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"],"#scope":0},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName",])
+      (M$h=[]).push(_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"],val:3,"#text/0!":_.a={},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"]},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName",])
     </script>
   </body>
 </html>
@@ -70,7 +70,7 @@ container.querySelector("button").click()
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"],val:3,"#text/0!":_.a={"#scope":1},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"],"#scope":0},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName",])
+      (M$h=[]).push(_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"],val:3,"#text/0!":_.a={},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/components/child1.marko"]},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko_0_tagName",])
     </script>
   </body>
 </html>

@@ -211,14 +211,14 @@ export const translate = {
         for (let i = branches.length; i--; ) {
           const { tag, section } = branches[i];
           const [testAttr] = tag.node.attributes;
-          const id = writer.getRenderer(section);
+          const id = t.identifier(section.name);
 
           setSubscriberBuilder(tag, (subscriber) => {
             return callRuntime(
               "inConditionalScope",
               subscriber,
               getScopeAccessorLiteral(nodeRef),
-              /*writer.getRenderer(section)*/
+              /*t.identifier(section.name)*/
             );
           });
 
@@ -272,6 +272,8 @@ export const translate = {
                     ),
                   ),
                   t.stringLiteral(getResumeRegisterId(section, "renderer")),
+                  section.closures.size &&
+                    getScopeIdIdentifier(section.parent!),
                 ),
               ) as any,
             );

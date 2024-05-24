@@ -1,5 +1,5 @@
 # Write
-  <button></button><!M*0 #button/0><!M[1><div>Id is <!>dynamic<!M*1 #text/0></div><!M]0 #text/1><script>(M$h=[]).push(_=>(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"],"#text/1!":_.a={"#scope":1},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"],"#scope":0},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",])</script>
+  <button></button><!M*0 #button/0><!M[1><div>Id is <!>dynamic<!M*1 #text/0></div><!M]0 #text/1><script>(M$h=[]).push(_=>(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"],"#text/1!":_.a={},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"]},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",])</script>
 
 
 # Render "End"
@@ -18,7 +18,7 @@
     </div>
     <!--M]0 #text/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"],"#text/1!":_.a={"#scope":1},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"],"#scope":0},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",])
+      (M$h=[]).push(_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"],"#text/1!":_.a={},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"]},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",])
     </script>
   </body>
 </html>

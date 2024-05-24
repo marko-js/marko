@@ -10,7 +10,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _writeScope(_scope1_id, {
       "_": _ensureScopeWithId(_scope0_id)
     });
-    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_renderer");
+    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_renderer", _scope0_id);
     _ifScopeId = _scope1_id;
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _ifScopeId)}<div id=ref></div><button id=increment>Increment</button>${_markResumeNode(_scope0_id, "#button/1")}<button id=toggle>Toggle</button>${_markResumeNode(_scope0_id, "#button/2")}`);

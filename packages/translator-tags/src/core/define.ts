@@ -67,7 +67,7 @@ export default {
               callRuntime(
                 "bindRenderer",
                 scopeIdentifier,
-                writer.getRenderer(tagBodySection),
+                t.identifier(tagBodySection.name),
               ),
             ),
           );

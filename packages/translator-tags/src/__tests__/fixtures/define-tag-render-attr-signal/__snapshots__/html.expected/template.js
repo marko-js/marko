@@ -1,14 +1,14 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const x = 1;
   const myTag = {
-    renderBody: /* @__PURE__ */_createRenderer(({
+    renderBody: _register( /* @__PURE__ */_createRenderer(({
       number
     }) => {
       const _scope1_id = _nextScopeId();
       _write(`<div>${_escapeXML(number)}${_markResumeNode(_scope1_id, "#text/0")}</div>`);
-    })
+    }), "packages/translator-tags/src/__tests__/fixtures/define-tag-render-attr-signal/template.marko_1_renderer")
   };
   const _dynamicScope = _dynamicTagInput(myTag, {
     number: x

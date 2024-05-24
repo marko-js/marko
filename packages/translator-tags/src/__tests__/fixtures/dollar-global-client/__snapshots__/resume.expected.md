@@ -11,7 +11,7 @@
       <!--M*0 #button/1-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{show:!1,"#scope":0},$global:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show",])
+      (M$h=[]).push(_=&gt;(_.a={0:{show:!1},$global:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show",])
     </script>
   </body>
 </html>
@@ -40,7 +40,7 @@ container.querySelector("button").click()
       <!--M*0 #button/1-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{show:!1,"#scope":0},$global:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show",])
+      (M$h=[]).push(_=&gt;(_.a={0:{show:!1},$global:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show",])
     </script>
   </body>
 </html>
@@ -68,7 +68,7 @@ container.querySelector("button").click()
       <!--M*0 #button/1-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{show:!1,"#scope":0},$global:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show",])
+      (M$h=[]).push(_=&gt;(_.a={0:{show:!1},$global:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show",])
     </script>
   </body>
 </html>
@@ -98,7 +98,7 @@ container.querySelector("button").click()
       <!--M*0 #button/1-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{show:!1,"#scope":0},$global:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show",])
+      (M$h=[]).push(_=&gt;(_.a={0:{show:!1},$global:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show",])
     </script>
   </body>
 </html>

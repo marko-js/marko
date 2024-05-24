@@ -1,5 +1,5 @@
 # Write
-  <!M[1>Body Content<!M]0 #text/0><button></button><!M*0 #button/1><script>(M$h=[]).push(_=>(_.b={0:{x:null,"#text/0!":_.a={"#scope":1},"#text/0(":null,"#scope":0},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x",])</script>
+  <!M[1>Body Content<!M]0 #text/0><button></button><!M*0 #button/1><script>(M$h=[]).push(_=>(_.b={0:{x:null,"#text/0!":_.a={},"#text/0(":null},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x",])</script>
 
 
 # Render "End"
@@ -13,7 +13,7 @@
     <button />
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{x:null,"#text/0!":_.a={"#scope":1},"#text/0(":null,"#scope":0},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.b={0:{x:null,"#text/0!":_.a={},"#text/0(":null},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x",])
     </script>
   </body>
 </html>

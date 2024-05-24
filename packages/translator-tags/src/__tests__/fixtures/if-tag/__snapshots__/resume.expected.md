@@ -12,7 +12,7 @@
       <!--M|0 #text/2 3-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.d={0:{"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_1_renderer"],"#text/0!":_.a={"#scope":1},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_2_renderer"],"#text/1!":_.b={"#scope":2},"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_4_renderer"],"#text/2!":_.c={"#scope":3},"#scope":0},1:_.a,2:_.b,3:_.c}),[])
+      (M$h=[]).push(_=&gt;(_.d={0:{"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_1_renderer"],"#text/0!":_.a={},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_2_renderer"],"#text/1!":_.b={},"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_4_renderer"],"#text/2!":_.c={}},1:_.a,2:_.b,3:_.c}),[])
     </script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-import { write as _write, createRenderer as _createRenderer, nextScopeId as _nextScopeId, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, createRenderer as _createRenderer, register as _register, nextScopeId as _nextScopeId, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const {
@@ -7,15 +7,15 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _dynamicScope = _dynamicTagInput(x, {
     header: {
       class: "my-header",
-      renderBody: /* @__PURE__ */_createRenderer(() => {
+      renderBody: _register( /* @__PURE__ */_createRenderer(() => {
         _write("Header content");
-      })
+      }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic-tag-parent/template.marko_2_renderer")
     },
     footer: {
       class: "my-footer",
-      renderBody: /* @__PURE__ */_createRenderer(() => {
+      renderBody: _register( /* @__PURE__ */_createRenderer(() => {
         _write("Footer content");
-      })
+      }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic-tag-parent/template.marko_3_renderer")
     }
   }, _register( /* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();

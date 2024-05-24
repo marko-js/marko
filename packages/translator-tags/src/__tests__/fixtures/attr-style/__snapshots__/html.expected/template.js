@@ -1,4 +1,4 @@
-import { styleAttr as _styleAttr, markResumeNode as _markResumeNode, write as _write, peekNextScope as _peekNextScope, createRenderer as _createRenderer, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { styleAttr as _styleAttr, markResumeNode as _markResumeNode, write as _write, peekNextScope as _peekNextScope, createRenderer as _createRenderer, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -33,9 +33,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       style: {
         color: "green"
       },
-      renderBody: /* @__PURE__ */_createRenderer(() => {
+      renderBody: _register( /* @__PURE__ */_createRenderer(() => {
         _write("Hello");
-      })
+      }), "packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko_2_renderer")
     }
   });
   _write(`${_markResumeControlEnd(_scope0_id, "#text/4")}`);

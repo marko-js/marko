@@ -5,7 +5,7 @@
   <body>
     <!--M[1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.c={1:_.a={"#scope":1,baseCount:0,_:_.b={"#scope":0,multiplier:1,"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"])}},2:{m5c:"s0","#scope":2}},_.b["#text/0!"]=_.a,_.c),[])
+      (M$h=[]).push(_=&gt;(_.c={1:_.a={baseCount:0,_:_.b={multiplier:1,"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"])}},2:{m5c:"s0"}},_.b["#text/0!"]=_.a,_.c),[])
     </script>
     <button
       id="class"
@@ -37,7 +37,7 @@
       </script>
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer"]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer"]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})
+      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})
     </script>
     <!--M]0 #text/0-->
     <script>
@@ -73,7 +73,7 @@ container.querySelector("#tags").click()
   <body>
     <!--M[1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.c={1:_.a={"#scope":1,baseCount:0,_:_.b={"#scope":0,multiplier:1,"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"])}},2:{m5c:"s0","#scope":2}},_.b["#text/0!"]=_.a,_.c),[])
+      (M$h=[]).push(_=&gt;(_.c={1:_.a={baseCount:0,_:_.b={multiplier:1,"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"])}},2:{m5c:"s0"}},_.b["#text/0!"]=_.a,_.c),[])
     </script>
     <button
       id="class"
@@ -105,7 +105,7 @@ container.querySelector("#tags").click()
       </script>
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer"]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer"]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})
+      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})
     </script>
     <!--M]0 #text/0-->
     <script>
@@ -130,7 +130,7 @@ container.querySelector("#class").click()
   <body>
     <!--M[1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.c={1:_.a={"#scope":1,baseCount:0,_:_.b={"#scope":0,multiplier:1,"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"])}},2:{m5c:"s0","#scope":2}},_.b["#text/0!"]=_.a,_.c),[])
+      (M$h=[]).push(_=&gt;(_.c={1:_.a={baseCount:0,_:_.b={multiplier:1,"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"])}},2:{m5c:"s0"}},_.b["#text/0!"]=_.a,_.c),[])
     </script>
     <button
       id="class"
@@ -162,7 +162,7 @@ container.querySelector("#class").click()
       </script>
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer"]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer"]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})
+      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})
     </script>
     <!--M]0 #text/0-->
     <script>
@@ -189,7 +189,7 @@ container.querySelector("#tags").click()
   <body>
     <!--M[1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.c={1:_.a={"#scope":1,baseCount:0,_:_.b={"#scope":0,multiplier:1,"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"])}},2:{m5c:"s0","#scope":2}},_.b["#text/0!"]=_.a,_.c),[])
+      (M$h=[]).push(_=&gt;(_.c={1:_.a={baseCount:0,_:_.b={multiplier:1,"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"])}},2:{m5c:"s0"}},_.b["#text/0!"]=_.a,_.c),[])
     </script>
     <button
       id="class"
@@ -221,7 +221,7 @@ container.querySelector("#tags").click()
       </script>
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer"]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer"]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})
+      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})
     </script>
     <!--M]0 #text/0-->
     <script>
@@ -247,7 +247,7 @@ container.querySelector("#class").click()
   <body>
     <!--M[1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.c={1:_.a={"#scope":1,baseCount:0,_:_.b={"#scope":0,multiplier:1,"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"])}},2:{m5c:"s0","#scope":2}},_.b["#text/0!"]=_.a,_.c),[])
+      (M$h=[]).push(_=&gt;(_.c={1:_.a={baseCount:0,_:_.b={multiplier:1,"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"])}},2:{m5c:"s0"}},_.b["#text/0!"]=_.a,_.c),[])
     </script>
     <button
       id="class"
@@ -279,7 +279,7 @@ container.querySelector("#class").click()
       </script>
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer"]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer"]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})
+      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})
     </script>
     <!--M]0 #text/0-->
     <script>
@@ -306,7 +306,7 @@ container.querySelector("#tags").click()
   <body>
     <!--M[1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.c={1:_.a={"#scope":1,baseCount:0,_:_.b={"#scope":0,multiplier:1,"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"])}},2:{m5c:"s0","#scope":2}},_.b["#text/0!"]=_.a,_.c),[])
+      (M$h=[]).push(_=&gt;(_.c={1:_.a={baseCount:0,_:_.b={multiplier:1,"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"])}},2:{m5c:"s0"}},_.b["#text/0!"]=_.a,_.c),[])
     </script>
     <button
       id="class"
@@ -338,7 +338,7 @@ container.querySelector("#tags").click()
       </script>
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer"]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer"]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})
+      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-2":1}},"w":[["s0",0,{"renderBody":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]},{"f":1,"r":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer",0]}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko"]})
     </script>
     <!--M]0 #text/0-->
     <script>

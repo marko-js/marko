@@ -1,5 +1,5 @@
 # Write
-  <button>1<!M*0 #text/1></button><!M*0 #button/0>2<!M*0 #text/2> <!>3<!M*0 #text/3> <!>5<!M*0 #text/4><script>(M$h=[]).push(_=>(_.a={0:{x:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x",])</script>
+  <button>1<!M*0 #text/1></button><!M*0 #button/0>2<!M*0 #text/2> <!>3<!M*0 #text/3> <!>5<!M*0 #text/4><script>(M$h=[]).push(_=>(_.a={0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x",])</script>
 
 
 # Render "End"
@@ -23,7 +23,7 @@
     5
     <!--M*0 #text/4-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.a={0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x",])
     </script>
   </body>
 </html>

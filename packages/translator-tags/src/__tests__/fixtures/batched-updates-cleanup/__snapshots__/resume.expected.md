@@ -11,7 +11,7 @@
     </span>
     <!--M|0 #text/1 1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.c={0:_.a={"#scope":0,show:!0,message:"hi","#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_1_renderer"],"#text/1!":_.b={"#scope":1}},1:_.b},_.b._=_.a,_.c),[0,"packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_0_show",])
+      (M$h=[]).push(_=&gt;(_.c={0:_.a={show:!0,message:"hi","#text/1!":_.b={}},1:_.b},_.a["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_1_renderer"](_.a),_.b._=_.a,_.c),[0,"packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_0_show",])
     </script>
   </body>
 </html>
@@ -34,7 +34,7 @@ container.querySelector("button").click()
     <!--M*0 #button/0-->
     <!--M|0 #text/1 1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.c={0:_.a={"#scope":0,show:!0,message:"hi","#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_1_renderer"],"#text/1!":_.b={"#scope":1}},1:_.b},_.b._=_.a,_.c),[0,"packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_0_show",])
+      (M$h=[]).push(_=&gt;(_.c={0:_.a={show:!0,message:"hi","#text/1!":_.b={}},1:_.b},_.a["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_1_renderer"](_.a),_.b._=_.a,_.c),[0,"packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_0_show",])
     </script>
   </body>
 </html>

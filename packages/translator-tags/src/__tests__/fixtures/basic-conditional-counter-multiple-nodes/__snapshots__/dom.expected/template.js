@@ -1,6 +1,6 @@
-import { on as _on, queueSource as _queueSource, data as _data, createRenderer as _createRenderer, closure as _closure, register as _register, conditional as _conditional, queueEffect as _queueEffect, inConditionalScope as _inConditionalScope, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, queueSource as _queueSource, data as _data, createRenderer as _createRenderer, closure as _closure, registerRenderer as _registerRenderer, conditional as _conditional, register as _register, queueEffect as _queueEffect, inConditionalScope as _inConditionalScope, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _count$ifBody = /* @__PURE__ */_closure("count", (_scope, count) => _data(_scope["#text/0"], count));
-const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer", /* @__PURE__ */_createRenderer("The count is <!>", /* over(1), replace */"b%", void 0, [_count$ifBody]));
+const _ifBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer", /* @__PURE__ */_createRenderer("The count is <!>", /* over(1), replace */"b%", void 0, [_count$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/2");
 const _onClick = _scope => {
   const {

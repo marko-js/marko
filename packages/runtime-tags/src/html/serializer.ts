@@ -512,7 +512,7 @@ function writeRegistered(
       state.buf.push(access + "(" + scopeId + ")");
     } else {
       state.buf.push(access + "(");
-      writeProp(state, scope, null, "");
+      writeProp(state, scope, parent, "");
       const scopeRef = state.refs.get(scope);
       if (scopeRef) ensureId(state, scopeRef);
       state.buf.push(")");

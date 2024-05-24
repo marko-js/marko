@@ -1,5 +1,5 @@
 # Write
-  <button>1<!M*0 #text/1></button><!M*0 #button/0>1<!M*0 #text/2><script>(M$h=[]).push(_=>(_.a={0:{x:1,y:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag/template.marko_0_x_y",])</script>
+  <button>1<!M*0 #text/1></button><!M*0 #button/0>1<!M*0 #text/2><script>(M$h=[]).push(_=>(_.a={0:{x:1,y:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag/template.marko_0_x_y",])</script>
 
 
 # Render "End"
@@ -15,7 +15,7 @@
     1
     <!--M*0 #text/2-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:1,y:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag/template.marko_0_x_y",])
+      (M$h=[]).push(_=&gt;(_.a={0:{x:1,y:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag/template.marko_0_x_y",])
     </script>
   </body>
 </html>

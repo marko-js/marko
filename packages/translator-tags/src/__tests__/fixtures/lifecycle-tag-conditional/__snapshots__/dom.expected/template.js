@@ -1,4 +1,4 @@
-import { register as _register, lifecycle as _lifecycle, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, queueEffect as _queueEffect, closure as _closure, conditional as _conditional, value as _value, inConditionalScope as _inConditionalScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { register as _register, lifecycle as _lifecycle, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, queueEffect as _queueEffect, closure as _closure, registerRenderer as _registerRenderer, conditional as _conditional, value as _value, inConditionalScope as _inConditionalScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onMount = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1/onMount", _scope => {
   const {
     _: {
@@ -28,7 +28,7 @@ const _x$ifBody_effect = _register("packages/translator-tags/src/__tests__/fixtu
   onDestroy: _onDestroy(_scope)
 }));
 const _x$ifBody = /* @__PURE__ */_closure("x", (_scope, x) => _queueEffect(_scope, _x$ifBody_effect));
-const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_renderer", /* @__PURE__ */_createRenderer("", "", void 0, [_x$ifBody]));
+const _ifBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_renderer", /* @__PURE__ */_createRenderer("", "", void 0, [_x$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/0");
 const _onClick = _scope => {
   const {

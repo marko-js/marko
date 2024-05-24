@@ -1,4 +1,4 @@
-import { escapeXML as _escapeXML, write as _write, createRenderer as _createRenderer, writeScope as _writeScope, nextScopeId as _nextScopeId, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, peekNextScope as _peekNextScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { escapeXML as _escapeXML, write as _write, createRenderer as _createRenderer, register as _register, writeScope as _writeScope, nextScopeId as _nextScopeId, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, peekNextScope as _peekNextScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _hello from "./components/hello/index.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -11,9 +11,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   if (x) {
     const _scope2_id = _nextScopeId();
     _item = {
-      renderBody: /* @__PURE__ */_createRenderer(y => {
+      renderBody: _register( /* @__PURE__ */_createRenderer(y => {
         _write(`${_escapeXML(y)}`);
-      })
+      }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic-with-params/template.marko_3_renderer")
     };
     _writeScope(_scope2_id, {});
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic-with-params/template.marko_2_renderer");

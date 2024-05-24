@@ -11,7 +11,7 @@
     <!--M*1 #text/0-->
     <!--M|0 #text/1 1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.c={0:_.a={"#scope":0,message:{text:"hi"},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_1_renderer"],"#text/1!":_.b={"#scope":1}},1:_.b},_.b._=_.a,_.c),[0,"packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_0",])
+      (M$h=[]).push(_=&gt;(_.c={0:_.a={message:{text:"hi"},"#text/1!":_.b={}},1:_.b},_.a["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_1_renderer"](_.a),_.b._=_.a,_.c),[0,"packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_0",])
     </script>
   </body>
 </html>
@@ -37,7 +37,7 @@ container.querySelector("button").click()
     <!--M|0 #text/1 1-->
     <!--M*1 #text/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.c={0:_.a={"#scope":0,message:{text:"hi"},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_1_renderer"],"#text/1!":_.b={"#scope":1}},1:_.b},_.b._=_.a,_.c),[0,"packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_0",])
+      (M$h=[]).push(_=&gt;(_.c={0:_.a={message:{text:"hi"},"#text/1!":_.b={}},1:_.b},_.a["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_1_renderer"](_.a),_.b._=_.a,_.c),[0,"packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_0",])
     </script>
   </body>
 </html>

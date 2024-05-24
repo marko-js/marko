@@ -203,7 +203,7 @@ const translateDOM = {
 
     tag.remove();
 
-    const rendererId = writer.getRenderer(bodySection);
+    const rendererId = t.identifier(bodySection.name);
     const ofAttr = findName(attributes, "of");
     const toAttr = findName(attributes, "to");
     const inAttr = findName(attributes, "in");
