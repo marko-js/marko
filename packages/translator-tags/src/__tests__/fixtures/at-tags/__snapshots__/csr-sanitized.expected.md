@@ -1,0 +1,4 @@
+# Render undefined
+```html
+Foo!
+```
