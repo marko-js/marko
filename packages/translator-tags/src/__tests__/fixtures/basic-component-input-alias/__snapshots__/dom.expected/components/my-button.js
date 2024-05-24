@@ -7,12 +7,9 @@ const _onClick__effect = _register("packages/translator-tags/src/__tests__/fixtu
 });
 export const _onClick_ = /* @__PURE__ */_value("onClick", (_scope, onClick) => _queueEffect(_scope, _onClick__effect));
 export const _text_ = /* @__PURE__ */_value("text", (_scope, text) => _data(_scope["#text/1"], text));
-export const _attrs_ = (_scope, attrs) => {
-  _onClick_(_scope, attrs.onClick);
-};
 export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
-  _attrs_(_scope, input);
   _text_(_scope, input.text);
+  _onClick_(_scope, input.onClick);
 });
 export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export const _template_ = "<button> </button>";

@@ -1,5 +1,7 @@
 import { on as _on, data as _data, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _textAlias = /* @__PURE__ */_value("textAlias", (_scope, textAlias) => _data(_scope["#text/2"], textAlias));
+const _textAlias = (_scope, textAlias) => {
+  _data(_scope["#text/2"], textAlias);
+};
 export const _text_ = /* @__PURE__ */_value("text", (_scope, text) => {
   _data(_scope["#text/1"], text);
   _textAlias(_scope, text);

@@ -4,7 +4,9 @@ function createWrapper(a) {
   };
 }
 import { on as _on, queueSource as _queueSource, data as _data, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _b = /* @__PURE__ */_value("b", (_scope, b) => _data(_scope["#text/2"], b));
+const _b = (_scope, b) => {
+  _data(_scope["#text/2"], b);
+};
 const _a = /* @__PURE__ */_value("a", (_scope, a) => {
   _data(_scope["#text/1"], a);
   _b(_scope, a);

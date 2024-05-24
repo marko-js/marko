@@ -91,8 +91,9 @@ export function createBinding(
   if (property) {
     const propBinding = upstreamAlias!.propertyAliases.get(property);
     if (propBinding) {
-      propBinding.aliases.add(binding);
+      binding.property = undefined;
       binding.upstreamAlias = propBinding;
+      propBinding.aliases.add(binding);
     } else {
       // TODO: check if default is used, if so an intermediate binding is needed
       upstreamAlias!.propertyAliases.set(property, binding);
@@ -114,13 +115,15 @@ export function trackVarReferences(
 ) {
   const tagVar = tag.node.var;
   if (tagVar) {
+    const section = getOrCreateSection(tag);
+    const canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
     upstreamAlias?.downstreamExpressions.delete(upstreamExpression!);
     createBindingsAndTrackReferences(
       tagVar,
       type,
       tag.scope,
-      getOrCreateSection(tag),
-      upstreamAlias,
+      section,
+      canonicalUpstreamAlias,
       upstreamExpression,
       undefined,
     );
@@ -137,13 +140,14 @@ export function trackParamsReferences(
   if (body.get("body").length && params.length) {
     upstreamAlias?.downstreamExpressions.delete(upstreamExpression!);
     const section = getOrCreateSection(body);
+    const canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
     const paramsBinding =
-      upstreamAlias ||
+      canonicalUpstreamAlias ||
       ((body.node.extra ??= {}).binding = createBinding(
         body.scope.generateUid("params_"),
         type,
         section,
-        upstreamAlias,
+        canonicalUpstreamAlias,
         upstreamExpression,
         undefined,
       ));
@@ -595,6 +599,12 @@ export function addReferenceToExpression(path: t.NodePath, binding: Binding) {
     binding,
   );
   binding.downstreamExpressions.add(exprExtra);
+}
+
+export function getCanonicalBinding(binding?: Binding) {
+  return (
+    binding && (binding.property ? binding : binding.upstreamAlias || binding)
+  );
 }
 
 function addReference(
