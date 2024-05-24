@@ -3,7 +3,7 @@ import { on as _on, queueSource as _queueSource, dynamicTagAttrs as _dynamicTagA
 const _tagName_input = _dynamicTagAttrs("#text/1");
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/1", _scope => _tagName_input(_scope, () => ({
   id: "dynamic"
-})), void 0, _tagName_input);
+})), _tagName_input);
 const _onClick = _scope => {
   const {
     tagName
@@ -16,7 +16,7 @@ const _tagName_effect = _register("packages/translator-tags/src/__tests__/fixtur
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName) => {
   _queueEffect(_scope, _tagName_effect);
   _dynamicTagName(_scope, tagName);
-}, void 0, _dynamicTagName);
+}, _dynamicTagName);
 const _setup = _scope => {
   _tagName(_scope, child);
 };

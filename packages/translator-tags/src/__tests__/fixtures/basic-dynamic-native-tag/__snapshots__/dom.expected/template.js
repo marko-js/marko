@@ -3,10 +3,10 @@ const _tagNameBody = _register("packages/translator-tags/src/__tests__/fixtures/
 const _tagName_input = _dynamicTagAttrs("#text/0", _tagNameBody);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _tagName_input(_scope, () => ({
   class: ["a", "b"]
-})), void 0, _tagName_input);
-export const _tagName_ = /* @__PURE__ */_value("tagName", (_scope, tagName) => _dynamicTagName(_scope, tagName || _tagNameBody), void 0, _dynamicTagName);
-export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _tagName_(_scope, input.tagName), void 0, _tagName_);
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
+})), _tagName_input);
+export const _tagName_ = /* @__PURE__ */_value("tagName", (_scope, tagName) => _dynamicTagName(_scope, tagName || _tagNameBody), _dynamicTagName);
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _tagName_(_scope, input.tagName), _tagName_);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
 export const _template_ = "<!><!><!>";
 export const _walks_ = /* replace, over(1) */"D%bD";
 export const _setup_ = function () {};

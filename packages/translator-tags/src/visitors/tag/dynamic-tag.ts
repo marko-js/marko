@@ -29,7 +29,6 @@ import {
 import {
   addValue,
   buildSignalIntersections,
-  buildSignalValuesWithIntersections,
   getResumeRegisterId,
   getSerializedScopeProperties,
   getSignal,
@@ -236,7 +235,6 @@ export default {
             getScopeAccessorLiteral(nodeRef),
             getSignalFn(signal, [scopeIdentifier]),
             buildSignalIntersections(signal),
-            buildSignalValuesWithIntersections(signal),
           );
         };
         signal.hasDownstreamIntersections = () => true;

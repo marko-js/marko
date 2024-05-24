@@ -1,5 +1,5 @@
 import { tagVarSignal as _tagVarSignal, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _x = /* @__PURE__ */_value("x", (_scope, x) => _tagVarSignal(_scope, x + 3), void 0, _tagVarSignal);
+const _x = /* @__PURE__ */_value("x", (_scope, x) => _tagVarSignal(_scope, x + 3), _tagVarSignal);
 const _setup = _scope => {
   _x(_scope, 1);
 };

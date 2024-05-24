@@ -3,8 +3,8 @@ import { _setup_ as _layout, _renderBody_ as _layout_renderBody, _template_ as _
 const _name$layoutBody = _registerSubscriber("packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko_1_name/subscriber", /* @__PURE__ */_dynamicClosure("name", (_scope, name) => _data(_scope["#text/0"], name)));
 const _layoutBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<h1>Hello <!></h1>", /* next(1), over(1), replace */"Db%", void 0, [_name$layoutBody]));
 export const _name_ = /* @__PURE__ */_value("name", null, _dynamicSubscribers("name"));
-export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _name_(_scope, input.name), void 0, _name_);
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _name_(_scope, input.name), _name_);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
 const _setup = _scope => {
   _layout(_scope["#childScope/0"]);
   _layout_renderBody(_scope["#childScope/0"], /* @__PURE__ */_bindRenderer(_scope, _layoutBody));

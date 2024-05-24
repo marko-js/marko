@@ -22,7 +22,7 @@ const _num$forBody = /* @__PURE__ */_value("num", (_scope, num) => {
   _data(_scope["#text/1"], num);
   _queueEffect(_scope, _num$forBody_effect);
 }, _expr_selected_num$forBody);
-const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _num$forBody(_scope, _params_2[0]), void 0, _num$forBody);
+const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _num$forBody(_scope, _params_2[0]), _num$forBody);
 const _selected$forBody = /* @__PURE__ */_closure("selected", null, void 0, _expr_selected_num$forBody);
 const _forBody = /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, [_selected$forBody], void 0, _params_2$forBody);
 const _for = /* @__PURE__ */_loopOf("#text/0", _forBody);

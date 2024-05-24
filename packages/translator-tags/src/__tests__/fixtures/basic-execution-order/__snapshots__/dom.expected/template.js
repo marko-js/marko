@@ -2,7 +2,7 @@ import { on as _on, queueSource as _queueSource, data as _data, createRenderer a
 const _message$ifBody = /* @__PURE__ */_closure("message", (_scope, message) => _data(_scope["#text/0"], message.text));
 const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_1_renderer", /* @__PURE__ */_createRenderer(" ", /* get */" ", void 0, [_message$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/1");
-const _show = /* @__PURE__ */_value("show", (_scope, show) => _if(_scope, show ? _ifBody : null), void 0, _if);
+const _show = /* @__PURE__ */_value("show", (_scope, show) => _if(_scope, show ? _ifBody : null), _if);
 const _message = /* @__PURE__ */_value("message", null, _inConditionalScope(_message$ifBody, "#text/1"));
 const _onClick = _scope => function () {
   _queueSource(_scope, _message, null);

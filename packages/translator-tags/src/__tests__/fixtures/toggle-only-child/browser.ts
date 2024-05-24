@@ -7,6 +7,7 @@ import {
   data,
   inConditionalScope,
   value,
+  intersections,
 } from "@marko/runtime-tags/dom";
 import { get, next, over } from "../../utils/walks";
 import type { steps } from "./test";
@@ -56,8 +57,7 @@ const _value = value(
   (scope, value) => {
     _if(scope, value ? _ifBody : undefined);
   },
-  inConditionalScope(value$if, INDEX.conditional),
-  _if,
+  intersections([inConditionalScope(value$if, INDEX.conditional), _if]),
 );
 
 export const args = (

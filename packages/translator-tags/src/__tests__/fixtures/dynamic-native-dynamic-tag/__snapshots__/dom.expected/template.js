@@ -23,7 +23,7 @@ const _tagName_effect = _register("packages/translator-tags/src/__tests__/fixtur
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName) => {
   _queueEffect(_scope, _tagName_effect);
   _dynamicTagName(_scope, tagName || _tagNameBody);
-}, void 0, _dynamicTagName);
+}, _dynamicTagName);
 const _setup = _scope => {
   _tagName(_scope, "span");
   _className(_scope, "A");

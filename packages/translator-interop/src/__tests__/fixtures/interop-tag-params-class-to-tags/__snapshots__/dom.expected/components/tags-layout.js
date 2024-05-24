@@ -20,8 +20,8 @@ const _count = /* @__PURE__ */_value("count", (_scope, count) => {
   _data(_scope["#text/1"], count);
   _queueEffect(_scope, _count_effect);
 }, _expr_Text_count);
-export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _dynamicTagName(_scope, input.renderBody), void 0, _dynamicTagName);
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _dynamicTagName(_scope, input.renderBody), _dynamicTagName);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
 const _setup = _scope => {
   _count(_scope, 0);
 };

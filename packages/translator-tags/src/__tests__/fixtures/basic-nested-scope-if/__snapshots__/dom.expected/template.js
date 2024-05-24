@@ -18,7 +18,7 @@ const _clickCount$ifBody = /* @__PURE__ */_closure("clickCount", (_scope, clickC
 });
 const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, [_clickCount$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/0");
-const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => _if(_scope, clickCount < 3 ? _ifBody : _elseBody), _intersections([_inConditionalScope(_clickCount$ifBody, "#text/0"), _inConditionalScope(_clickCount$elseBody, "#text/0")]), _if);
+const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => _if(_scope, clickCount < 3 ? _ifBody : _elseBody), _intersections([_if, _inConditionalScope(_clickCount$ifBody, "#text/0"), _inConditionalScope(_clickCount$elseBody, "#text/0")]));
 const _setup = _scope => {
   _clickCount(_scope, 0);
 };

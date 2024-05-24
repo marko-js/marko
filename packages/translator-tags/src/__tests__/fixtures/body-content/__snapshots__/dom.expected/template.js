@@ -1,4 +1,4 @@
-import { queueSource as _queueSource, data as _data, register as _register, bindRenderer as _bindRenderer, inChild as _inChild, createRenderer as _createRenderer, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { queueSource as _queueSource, data as _data, register as _register, bindRenderer as _bindRenderer, inChild as _inChild, createRenderer as _createRenderer, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, dynamicSubscribers as _dynamicSubscribers, intersections as _intersections, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _FancyButton, _input_ as _FancyButton_input, _template_ as _FancyButton_template, _walks_ as _FancyButton_walks } from "./components/FancyButton.marko";
 const _onClick = _register("packages/translator-tags/src/__tests__/fixtures/body-content/template.marko_0/onClick", _scope => {
   const {
@@ -13,7 +13,7 @@ const _FancyButtonBody = _register("packages/translator-tags/src/__tests__/fixtu
 const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => _FancyButton_input(_scope["#childScope/0"], {
   onClick: _onClick(_scope),
   renderBody: /* @__PURE__ */_bindRenderer(_scope, _FancyButtonBody)
-}), _dynamicSubscribers("clickCount"), _inChild("#childScope/0", _FancyButton_input));
+}), _intersections([_inChild("#childScope/0", _FancyButton_input), _dynamicSubscribers("clickCount")]));
 const _setup = _scope => {
   _FancyButton(_scope["#childScope/0"]);
   _clickCount(_scope, 0);

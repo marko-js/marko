@@ -40,7 +40,6 @@ export let conditional = function conditional(
   nodeAccessor: Accessor,
   fn?: (scope: Scope) => void,
   intersection?: IntersectionSignal,
-  valueWithIntersection?: ValueSignal,
 ): ValueSignal<RendererOrElementName | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
@@ -68,7 +67,6 @@ export let conditional = function conditional(
       }
     }
     intersection?.(scope, op);
-    valueWithIntersection?.(scope, op);
     renderBodyClosures(currentRenderer, scope[childScopeAccessor], op);
   };
 };
@@ -125,7 +123,6 @@ export let conditionalOnlyChild = function conditional(
   nodeAccessor: Accessor,
   fn?: (scope: Scope) => void,
   intersection?: IntersectionSignal,
-  valueWithIntersection?: ValueSignal,
 ): ValueSignal<RendererOrElementName | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
@@ -157,7 +154,6 @@ export let conditionalOnlyChild = function conditional(
       }
     }
     intersection?.(scope, op);
-    valueWithIntersection?.(scope, op);
     renderBodyClosures(currentRenderer, scope[childScopeAccessor], op);
   };
 };

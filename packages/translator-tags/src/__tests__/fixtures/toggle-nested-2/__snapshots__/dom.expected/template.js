@@ -32,7 +32,7 @@ const _inner$ifBody_effect = _register("packages/translator-tags/src/__tests__/f
 const _inner$ifBody = /* @__PURE__ */_closure("inner", (_scope, inner) => {
   _queueEffect(_scope, _inner$ifBody_effect);
   _if$ifBody(_scope, inner ? _ifBody2 : null);
-}, void 0, void 0, _if$ifBody);
+}, void 0, _if$ifBody);
 const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<button id=inner></button><!><!>", /* get, over(1), replace */" b%D", void 0, [_inner$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/1");
 const _count = /* @__PURE__ */_value("count", null, _dynamicSubscribers("count"));
@@ -49,7 +49,7 @@ const _outer_effect = _register("packages/translator-tags/src/__tests__/fixtures
 const _outer = /* @__PURE__ */_value("outer", (_scope, outer) => {
   _queueEffect(_scope, _outer_effect);
   _if(_scope, outer ? _ifBody : null);
-}, void 0, _if);
+}, _if);
 const _setup = _scope => {
   _outer(_scope, true);
   _inner(_scope, true);

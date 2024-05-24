@@ -1,6 +1,6 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { attr as _attr, createRenderer as _createRenderer, register as _register, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, intersections as _intersections, values as _values, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { attr as _attr, createRenderer as _createRenderer, register as _register, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, intersections as _intersections, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _tag, _template_ as _tag_template, _walks_ as _tag_walks } from "./components/tag-a/index.marko";
 const _showTagATagABody = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer", /* @__PURE__ */_createRenderer("Body content", ""));
 const _largeHeadingH2_input = _dynamicTagAttrs("#text/9");
@@ -73,7 +73,7 @@ const _dynamicTagName2 = /* @__PURE__ */_conditional("#text/1", null, _expr_Text
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, _expr_Text_other);
 const _tagConstB = /* @__PURE__ */_value("tagConstB");
 const _tagConstA = /* @__PURE__ */_value("tagConstA");
-const _largeHeading = /* @__PURE__ */_value("largeHeading", (_scope, largeHeading) => _dynamicTagName6(_scope, largeHeading || "h2"), void 0, _dynamicTagName6);
+const _largeHeading = /* @__PURE__ */_value("largeHeading", (_scope, largeHeading) => _dynamicTagName6(_scope, largeHeading || "h2"), _dynamicTagName6);
 export const _other_ = /* @__PURE__ */_value("other", (_scope, other) => {
   _attr(_scope["#showDivNull/2"], "other", other);
   _attr(_scope["#showDiv/3"], "other", other);
@@ -84,15 +84,15 @@ export const _other_ = /* @__PURE__ */_value("other", (_scope, other) => {
   _attr(_scope["#tagConstB/14"], "other", other);
 }, _intersections([_expr_Text_other, _expr_Text_other2, _expr_Text_other3, _expr_Text_other4, _expr_Text_other5, _expr_Text_other6]));
 export const _level_ = /* @__PURE__ */_value("level");
-export const _tag_ = /* @__PURE__ */_value("tag", (_scope, tag) => _dynamicTagName5(_scope, tag || tagA), void 0, _dynamicTagName5);
+export const _tag_ = /* @__PURE__ */_value("tag", (_scope, tag) => _dynamicTagName5(_scope, tag || tagA), _dynamicTagName5);
 export const _isLarge_ = /* @__PURE__ */_value("isLarge", (_scope, isLarge) => {
   _dynamicTagName3(_scope, isLarge ? "h1" : "h2");
   _largeHeading(_scope, isLarge && "h1");
-}, void 0, _values([_dynamicTagName3, _largeHeading]));
-export const _showTagA_ = /* @__PURE__ */_value("showTagA", (_scope, showTagA) => _dynamicTagName4(_scope, showTagA ? tagA : tagB), void 0, _dynamicTagName4);
+}, _intersections([_dynamicTagName3, _largeHeading]));
+export const _showTagA_ = /* @__PURE__ */_value("showTagA", (_scope, showTagA) => _dynamicTagName4(_scope, showTagA ? tagA : tagB), _dynamicTagName4);
 export const _show_ = /* @__PURE__ */_value("show", (_scope, show) => _tagConstB(_scope, show ? "div" : null));
-export const _x_ = /* @__PURE__ */_value("x", (_scope, x) => _dynamicTagName2(_scope, x), void 0, _dynamicTagName2);
-export const _renderBody_ = /* @__PURE__ */_value("renderBody", (_scope, renderBody) => _dynamicTagName(_scope, renderBody), void 0, _dynamicTagName);
+export const _x_ = /* @__PURE__ */_value("x", (_scope, x) => _dynamicTagName2(_scope, x), _dynamicTagName2);
+export const _renderBody_ = /* @__PURE__ */_value("renderBody", (_scope, renderBody) => _dynamicTagName(_scope, renderBody), _dynamicTagName);
 export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _renderBody_(_scope, input.renderBody);
   _x_(_scope, input.x);
@@ -102,8 +102,8 @@ export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _tag_(_scope, input.tag);
   _level_(_scope, input.level);
   _other_(_scope, input.other);
-}, void 0, _values([_renderBody_, _x_, _showTagA_, _isLarge_, _tag_, _other_]));
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
+}, _intersections([_renderBody_, _x_, _showTagA_, _isLarge_, _tag_, _other_]));
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
 const _setup = _scope => {
   _tag(_scope["#childScope/6"]);
   _tag(_scope["#childScope/7"]);

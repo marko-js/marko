@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, queueSource as _queueSource, data as _data, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, intersections as _intersections, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _inputRenderBody_input = _dynamicTagAttrs("#text/2");
 const _expr_Text_input_x = /* @__PURE__ */_intersection(3, _scope => {
   const {
@@ -24,8 +24,8 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   _queueEffect(_scope, _x_effect);
 }, _expr_Text_input_x);
-export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _dynamicTagName(_scope, input.renderBody), _expr_Text_input_x, _dynamicTagName);
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _dynamicTagName(_scope, input.renderBody), _intersections([_expr_Text_input_x, _dynamicTagName]));
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
 const _setup = _scope => {
   _x(_scope, 1);
 };

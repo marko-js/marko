@@ -42,14 +42,12 @@ export function value<T>(
   valueAccessor: Accessor,
   fn?: SignalFn<T>,
   intersection?: IntersectionSignal,
-  valueWithIntersection?: ValueSignal<any>,
 ): ValueSignal<T> {
   const markAccessor = valueAccessor + AccessorChar.Mark;
   return (scope, valueOrOp) => {
     if (valueOrOp === MARK) {
       if ((scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) === 1) {
         intersection?.(scope, MARK);
-        valueWithIntersection?.(scope, MARK);
       }
     } else if (valueOrOp !== DIRTY) {
       const existing = scope[markAccessor] !== undefined;
@@ -59,12 +57,10 @@ export function value<T>(
           (existing && scope[valueAccessor] === valueOrOp)
         ) {
           intersection?.(scope, CLEAN);
-          valueWithIntersection?.(scope, CLEAN);
         } else {
           scope[valueAccessor] = valueOrOp;
           fn?.(scope, valueOrOp);
           intersection?.(scope, DIRTY);
-          valueWithIntersection?.(scope, DIRTY);
         }
       }
       // closure needs this to be called after the fn
@@ -80,7 +76,6 @@ export function intersection(
   count: number,
   fn: SignalFn<never>,
   intersection?: IntersectionSignal,
-  valueWithIntersection?: ValueSignal,
 ): IntersectionSignal {
   const dirtyAccessor = AccessorChar.Dynamic + accessorId++;
   const markAccessor = dirtyAccessor + AccessorChar.Mark;
@@ -88,7 +83,6 @@ export function intersection(
     if (op === MARK) {
       if ((scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) === 1) {
         intersection?.(scope, MARK);
-        valueWithIntersection?.(scope, MARK);
       }
     } else if (scope[markAccessor] === undefined) {
       scope[markAccessor] = count - 1;
@@ -98,10 +92,8 @@ export function intersection(
         scope[dirtyAccessor] = false;
         fn(scope, 0 as never);
         intersection?.(scope, DIRTY);
-        valueWithIntersection?.(scope, DIRTY);
       } else {
         intersection?.(scope, CLEAN);
-        valueWithIntersection?.(scope, CLEAN);
       }
     } else {
       scope[dirtyAccessor] ||= op === DIRTY;
@@ -116,7 +108,6 @@ export function closure<T>(
   fn?: SignalFn<T>,
   _getOwnerScope?: (scope: Scope) => Scope,
   intersection?: IntersectionSignal,
-  valueWithIntersection?: ValueSignal<any>,
 ): IntersectionSignal {
   const dirtyAccessor = AccessorChar.Dynamic + accessorId++;
   const markAccessor = dirtyAccessor + 1;
@@ -129,7 +120,6 @@ export function closure<T>(
     if (op === MARK) {
       if ((scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) === 1) {
         intersection?.(scope, MARK);
-        valueWithIntersection?.(scope, MARK);
       }
     } else {
       let ownerScope, ownerValueAccessor;
@@ -149,10 +139,8 @@ export function closure<T>(
           ownerValueAccessor ??= getOwnerValueAccessor(scope);
           fn?.(scope, ownerScope[ownerValueAccessor]);
           intersection?.(scope, DIRTY);
-          valueWithIntersection?.(scope, DIRTY);
         } else {
           intersection?.(scope, CLEAN);
-          valueWithIntersection?.(scope, CLEAN);
         }
       } else {
         scope[dirtyAccessor] ||= op === DIRTY;
@@ -166,7 +154,6 @@ export function dynamicClosure<T>(
   fn: ValueSignal<T>,
   _getOwnerScope?: (scope: Scope) => Scope,
   intersection?: IntersectionSignal,
-  valueWithIntersection?: ValueSignal,
 ): IntersectionSignal {
   const getOwnerScope = _getOwnerScope || defaultGetOwnerScope;
   const getOwnerValueAccessor =
@@ -178,7 +165,6 @@ export function dynamicClosure<T>(
     fn,
     getOwnerScope,
     intersection,
-    valueWithIntersection,
   );
   signalFn.___subscribe = (scope: Scope) => {
     const ownerScope = getOwnerScope(scope);
@@ -295,5 +281,3 @@ export function intersections(
     }
   };
 }
-
-export { intersections as values };

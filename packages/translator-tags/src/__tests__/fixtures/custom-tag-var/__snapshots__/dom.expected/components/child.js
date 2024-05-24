@@ -12,7 +12,7 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   _queueEffect(_scope, _x_effect);
   _tagVarSignal(_scope, x);
-}, void 0, _tagVarSignal);
+}, _tagVarSignal);
 const _setup = _scope => {
   _x(_scope, 1);
 };

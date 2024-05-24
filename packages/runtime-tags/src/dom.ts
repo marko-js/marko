@@ -65,7 +65,6 @@ export {
   tagVarSignal,
   nextTagId,
   inChild,
-  values,
   intersections,
 } from "./dom/signals";
 

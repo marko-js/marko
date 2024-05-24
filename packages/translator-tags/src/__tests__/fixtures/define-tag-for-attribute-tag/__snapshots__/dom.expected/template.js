@@ -3,7 +3,7 @@ import { _setup_ as _child, _input_ as _child_input, _template_ as _child_templa
 const _defineBody = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<span>The thing</span>", ""));
 const _myThing = /* @__PURE__ */_value("myThing", (_scope, myThing) => _child_input(_scope["#childScope/0"], {
   thing: myThing
-}), void 0, _inChild("#childScope/0", _child_input));
+}), _inChild("#childScope/0", _child_input));
 const _onClick = _scope => {
   const {
     selected
@@ -19,7 +19,7 @@ const _selected = /* @__PURE__ */_value("selected", (_scope, selected) => {
     selected: selected,
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _defineBody)
   });
-}, void 0, _myThing);
+}, _myThing);
 const _setup = _scope => {
   _child(_scope["#childScope/0"]);
   _selected(_scope, false);

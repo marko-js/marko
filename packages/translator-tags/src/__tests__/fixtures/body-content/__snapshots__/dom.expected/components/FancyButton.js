@@ -5,12 +5,12 @@ export const _attrs_ = (_scope, attrs) => {
   _attrs(_scope, "#button/0", attrs);
   _queueEffect(_scope, _attrs__effect);
 };
-export const _renderBody_ = /* @__PURE__ */_value("renderBody", (_scope, renderBody) => _dynamicTagName(_scope, renderBody), void 0, _dynamicTagName);
+export const _renderBody_ = /* @__PURE__ */_value("renderBody", (_scope, renderBody) => _dynamicTagName(_scope, renderBody), _dynamicTagName);
 export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _attrs_(_scope, input);
   _renderBody_(_scope, input.renderBody);
-}, void 0, _renderBody_);
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
+}, _renderBody_);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
 export const _template_ = "<button><!></button>";
 export const _walks_ = /* get, next(1), replace, out(1) */" D%l";
 export const _setup_ = function () {};

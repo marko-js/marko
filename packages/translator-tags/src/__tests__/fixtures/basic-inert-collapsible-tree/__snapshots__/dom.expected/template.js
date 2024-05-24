@@ -1,7 +1,7 @@
 import { _setup_ as _comments, _input_ as _comments_input, _template_ as _comments_template, _walks_ as _comments_walks } from "./components/comments.marko";
 import { inChild as _inChild, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _comments_input(_scope["#childScope/0"], input), void 0, _inChild("#childScope/0", _comments_input));
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _comments_input(_scope["#childScope/0"], input), _inChild("#childScope/0", _comments_input));
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
 const _setup = _scope => {
   _comments(_scope["#childScope/0"]);
 };

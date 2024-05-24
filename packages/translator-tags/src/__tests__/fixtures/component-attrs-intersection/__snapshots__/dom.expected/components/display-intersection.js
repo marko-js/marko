@@ -8,8 +8,8 @@ const _expr_value_dummy = /* @__PURE__ */_intersection(2, _scope => {
 });
 const _dummy = /* @__PURE__ */_value("dummy", null, _expr_value_dummy);
 export const _value_ = /* @__PURE__ */_value("value", null, _expr_value_dummy);
-export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _value_(_scope, input.value), void 0, _value_);
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _value_(_scope, input.value), _value_);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
 const _setup = _scope => {
   _dummy(_scope, {});
 };
