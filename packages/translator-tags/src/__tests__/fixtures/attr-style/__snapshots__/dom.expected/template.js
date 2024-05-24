@@ -15,16 +15,16 @@ const _dynamicTagName = /* @__PURE__ */_conditional("#text/4", _scope => _test_i
       _write("Hello");
     }
   }
-})), void 0, _test_input);
-export const _test_ = /* @__PURE__ */_value("test", (_scope, test) => _dynamicTagName(_scope, test || _testBody), void 0, _dynamicTagName);
+})), _test_input);
+export const _test_ = /* @__PURE__ */_value("test", (_scope, test) => _dynamicTagName(_scope, test || _testBody), _dynamicTagName);
 export const _color_ = /* @__PURE__ */_value("color", (_scope, color) => _styleAttr(_scope["#div/0"], {
   color: color
 }));
 export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _color_(_scope, input.color);
   _test_(_scope, input.test);
-}, void 0, _test_);
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
+}, _test_);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
 const _setup = _scope => {
   _customTag(_scope["#childScope/1"]);
   _customTag(_scope["#childScope/2"]);

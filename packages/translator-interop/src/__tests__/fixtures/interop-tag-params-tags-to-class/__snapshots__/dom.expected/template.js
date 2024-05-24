@@ -16,7 +16,7 @@ const _baseCount$classLayoutBody = /* @__PURE__ */_value("baseCount", (_scope, b
 const _params_2$classLayoutBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => {
   _baseCount$classLayoutBody(_scope, _params_2[0]);
   _message$classLayoutBody(_scope, _params_2[1]);
-}, void 0, _baseCount$classLayoutBody);
+}, _baseCount$classLayoutBody);
 const _onClick = _scope => {
   const {
     _: {
@@ -34,7 +34,7 @@ const _multiplier$classLayoutBody = _registerSubscriber("packages/translator-int
 }, void 0, _expr_multiplier_baseCount$classLayoutBody));
 const _classLayoutBody = _register("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<h1> </h1><button id=tags><!> * <!> = <!></button>", /* next(1), get, out(1), get, next(1), replace, over(2), replace, over(2), replace */"D l D%c%c%", void 0, [_multiplier$classLayoutBody], void 0, _params_2$classLayoutBody));
 const _classLayout_input = _dynamicTagAttrs("#text/0", _classLayoutBody);
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _classLayout_input(_scope, () => ({})), void 0, _classLayout_input);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _classLayout_input(_scope, () => ({})), _classLayout_input);
 const _multiplier = /* @__PURE__ */_value("multiplier", null, _dynamicSubscribers("multiplier"));
 const _setup = _scope => {
   _multiplier(_scope, 1);

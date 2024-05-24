@@ -11,7 +11,7 @@ container.querySelector("button").click()
 
 ```html
 <button>
-  0
+  1
 </button>
 ```
 
@@ -21,7 +21,7 @@ container.querySelector("button").click()
 
 ```html
 <button>
-  0
+  2
 </button>
 ```
 
@@ -31,6 +31,6 @@ container.querySelector("button").click()
 
 ```html
 <button>
-  0
+  3
 </button>
 ```

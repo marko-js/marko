@@ -217,7 +217,6 @@ export function getSignal(
             ? null
             : t.arrowFunctionExpression([scopeIdentifier], ownerScope),
           buildSignalIntersections(signal),
-          buildSignalValuesWithIntersections(signal),
         );
       };
     }
@@ -235,7 +234,6 @@ export function initValue(binding: Binding) {
       t.identifier(binding.name),
     ]);
     const intersections = buildSignalIntersections(signal);
-    const valuesWithIntersections = buildSignalValuesWithIntersections(signal);
     const isParamBinding =
       !binding.upstreamAlias &&
       (binding.type === BindingType.param ||
@@ -246,16 +244,9 @@ export function initValue(binding: Binding) {
       (binding.downstreamExpressions.size ||
         (fn.body as t.BlockStatement).body.length > 0);
     const needsCache = needsGuard || intersections;
-    const needsMarks =
-      isParamBinding || intersections || valuesWithIntersections;
+    const needsMarks = isParamBinding || intersections;
     if (needsCache || needsMarks) {
-      return callRuntime(
-        "value",
-        valueAccessor,
-        fn,
-        intersections,
-        valuesWithIntersections,
-      );
+      return callRuntime("value", valueAccessor, fn, intersections);
     } else {
       return fn;
     }
@@ -334,6 +325,43 @@ export function getSignalFn(
 export function buildSignalIntersections(signal: Signal) {
   const section = signal.section;
   let intersections = signal.intersection;
+  const binding = signal.referencedBindings;
+
+  if (
+    binding &&
+    !Array.isArray(binding) &&
+    binding.section === signal.section
+  ) {
+    for (const alias of binding.aliases) {
+      const signal = getSignal(alias.section, alias);
+      if (signal.hasDownstreamIntersections()) {
+        intersections = push(
+          intersections,
+          t.identifier(signal.identifier.name),
+        );
+      }
+    }
+
+    for (const [, alias] of binding.propertyAliases) {
+      const signal = getSignal(alias.section, alias);
+      if (signal.hasDownstreamIntersections()) {
+        intersections = push(
+          intersections,
+          t.identifier(signal.identifier.name),
+        );
+      }
+    }
+  }
+
+  for (const value of signal.values) {
+    if (value.signal.hasDownstreamIntersections()) {
+      intersections = push(
+        intersections,
+        value.intersectionExpression ??
+          t.identifier(value.signal.identifier.name),
+      );
+    }
+  }
 
   // In order to ensure correct topological ordering, closures must be called last
   // with closures higher in the tree called before calling closures lower in the tree
@@ -361,51 +389,6 @@ export function buildSignalIntersections(signal: Signal) {
   return Array.isArray(intersections)
     ? callRuntime("intersections", t.arrayExpression(intersections))
     : intersections;
-}
-
-export function buildSignalValuesWithIntersections(signal: Signal) {
-  let valuesWithIntersections: Opt<t.Expression>;
-  const binding = signal.referencedBindings;
-
-  if (
-    binding &&
-    !Array.isArray(binding) &&
-    binding.section === signal.section
-  ) {
-    for (const alias of binding.aliases) {
-      const signal = getSignal(alias.section, alias);
-      if (signal.hasDownstreamIntersections()) {
-        valuesWithIntersections = push(
-          valuesWithIntersections,
-          t.identifier(signal.identifier.name),
-        );
-      }
-    }
-
-    for (const [, alias] of binding.propertyAliases) {
-      const signal = getSignal(alias.section, alias);
-      if (signal.hasDownstreamIntersections()) {
-        valuesWithIntersections = push(
-          valuesWithIntersections,
-          t.identifier(signal.identifier.name),
-        );
-      }
-    }
-  }
-
-  for (const value of signal.values) {
-    if (value.signal.hasDownstreamIntersections()) {
-      valuesWithIntersections = push(
-        valuesWithIntersections,
-        value.intersectionExpression ??
-          t.identifier(value.signal.identifier.name),
-      );
-    }
-  }
-
-  return Array.isArray(valuesWithIntersections)
-    ? callRuntime("values", t.arrayExpression(valuesWithIntersections))
-    : valuesWithIntersections;
 }
 
 export function getDestructureSignal(

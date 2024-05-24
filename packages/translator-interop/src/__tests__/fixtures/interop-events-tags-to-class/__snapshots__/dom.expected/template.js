@@ -8,7 +8,7 @@ const _onCount = _register("packages/translator-interop/src/__tests__/fixtures/i
 const _classCounter_input = _dynamicTagAttrs("#text/0");
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _classCounter_input(_scope, () => ({
   onCount: _onCount(_scope)
-})), void 0, _classCounter_input);
+})), _classCounter_input);
 const _count = /* @__PURE__ */_value("count", (_scope, count) => _data(_scope["#text/1"], count));
 const _setup = _scope => {
   _count(_scope, 0);

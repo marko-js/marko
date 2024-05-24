@@ -82,8 +82,13 @@ exports.p = function (domCompat) {
   domCompat.patchConditionals((conditional) => (...args) => {
     const signal = conditional(...args);
     const skipAttrs = args.length <= 1;
-    return (scope, renderer, clean) => {
-      return signal(scope, create5to6Renderer(renderer, skipAttrs), clean);
+    return (scope, rendererOrOp) => {
+      return signal(
+        scope,
+        domCompat.isOp(rendererOrOp)
+          ? rendererOrOp
+          : create5to6Renderer(rendererOrOp, skipAttrs),
+      );
     };
   });
 
@@ -124,8 +129,8 @@ exports.p = function (domCompat) {
               ___createFragmentNode(null, null, realFragment);
               return realFragment;
             },
-            (scope, input, clean) => {
-              if (clean) return;
+            (scope, input) => {
+              if (domCompat.isOp(input)) return;
               renderAndMorph(scope, rendererFromAnywhere, renderer, input);
             },
           );

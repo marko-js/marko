@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data, intersection as _intersection, value as _value, register as _register, queueEffect as _queueEffect, values as _values, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, queueSource as _queueSource, data as _data, intersection as _intersection, value as _value, register as _register, queueEffect as _queueEffect, intersections as _intersections, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _expr_y_z = /* @__PURE__ */_intersection(2, _scope => {
   const {
     y,
@@ -21,7 +21,7 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _queueEffect(_scope, _x_effect);
   _y(_scope, x + 1);
   _z(_scope, x + 2);
-}, void 0, _values([_y, _z]));
+}, _intersections([_y, _z]));
 const _setup = _scope => {
   _x(_scope, 1);
 };

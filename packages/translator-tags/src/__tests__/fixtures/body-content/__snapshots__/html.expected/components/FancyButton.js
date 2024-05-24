@@ -8,11 +8,11 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _write(`<button${_attrs(attrs, "#button/0", _scope0_id)}>`);
   const _dynamicScope = _dynamicTagInput(renderBody, {});
   _write(`${_markResumeControlEnd(_scope0_id, "#text/1")}</button>${_markResumeNode(_scope0_id, "#button/0")}`);
-  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/body-content-new/components/FancyButton.marko_0_attrs");
+  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/body-content/components/FancyButton.marko_0_attrs");
   _writeScope(_scope0_id, {
     "attrs": attrs,
     "#text/1!": _dynamicScope,
     "#text/1(": renderBody
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/body-content-new/components/FancyButton.marko");
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/body-content/components/FancyButton.marko");

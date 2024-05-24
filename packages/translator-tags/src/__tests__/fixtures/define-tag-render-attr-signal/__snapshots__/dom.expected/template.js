@@ -26,7 +26,7 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/2"], x);
   _queueEffect(_scope, _x_effect);
 }, _expr_Text_x);
-const _myTag = /* @__PURE__ */_value("myTag", (_scope, myTag) => _dynamicTagName(_scope, myTag), void 0, _dynamicTagName);
+const _myTag = /* @__PURE__ */_value("myTag", (_scope, myTag) => _dynamicTagName(_scope, myTag), _dynamicTagName);
 const _setup = _scope => {
   _x(_scope, 1);
   _myTag(_scope, {

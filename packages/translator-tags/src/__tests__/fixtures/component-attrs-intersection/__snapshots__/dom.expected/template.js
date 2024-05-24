@@ -12,7 +12,7 @@ const _count_effect = _register("packages/translator-tags/src/__tests__/fixtures
 const _count = /* @__PURE__ */_value("count", (_scope, count) => {
   _queueEffect(_scope, _count_effect);
   _displayIntersection__value_(_scope["#childScope/0"], count);
-}, void 0, _inChild("#childScope/0", _displayIntersection__value_));
+}, _inChild("#childScope/0", _displayIntersection__value_));
 const _setup = _scope => {
   _displayIntersection(_scope["#childScope/0"]);
   _count(_scope, 0);

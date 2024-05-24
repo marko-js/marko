@@ -2,8 +2,8 @@ import { data as _data, tagVarSignal as _tagVarSignal, value as _value, createRe
 export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _data(_scope["#text/0"], input);
   _tagVarSignal(_scope, input);
-}, void 0, _tagVarSignal);
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
+}, _tagVarSignal);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
 export const _template_ = "<div>Child: <!></div>";
 export const _walks_ = /* next(1), over(1), replace, out(1) */"Db%l";
 export const _setup_ = function () {};

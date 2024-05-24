@@ -17,7 +17,7 @@ const _onClick = _scope => {
 const _count_effect = _register("packages/translator-tags/src/__tests__/fixtures/component-attrs-import-value/components/counter.marko_0_count", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _count = /* @__PURE__ */_value("count", (_scope, count) => _queueEffect(_scope, _count_effect), _expr_input_count);
 export const _input_ = /* @__PURE__ */_value("input", null, _expr_input_count);
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), void 0, _input_);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
 const _setup = _scope => {
   _count(_scope, 0);
 };

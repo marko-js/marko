@@ -42,7 +42,7 @@ const _show_effect = _register("packages/translator-tags/src/__tests__/fixtures/
 const _show = /* @__PURE__ */_value("show", (_scope, show) => {
   _queueEffect(_scope, _show_effect);
   _if(_scope, show ? _ifBody : null);
-}, void 0, _if);
+}, _if);
 const _onClick2 = _scope => {
   const {
     x
