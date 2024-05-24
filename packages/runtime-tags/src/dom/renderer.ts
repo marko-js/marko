@@ -8,7 +8,14 @@ import {
 import { setConditionalRendererOnlyChild } from "./control-flow";
 import { attrs } from "./dom";
 import { bindRenderer, createScope } from "./scope";
-import type { IntersectionSignal, ValueSignal } from "./signals";
+import {
+  CLEAN,
+  DIRTY,
+  MARK,
+  type IntersectionSignal,
+  type SignalOp,
+  type ValueSignal,
+} from "./signals";
 import { trimWalkString, walk } from "./walker";
 
 export type Renderer = {
@@ -77,47 +84,46 @@ export function dynamicTagAttrs(
 ) {
   return (
     scope: Scope,
-    getAttrs: () => Record<string, unknown>,
-    clean?: boolean | 1,
+    attrsOrOp: (() => Record<string, unknown>) | SignalOp,
   ) => {
     const renderer = scope[
       nodeAccessor + AccessorChar.ConditionalRenderer
     ] as Renderer;
 
-    if (!renderer || renderer === renderBody || (clean && !renderer.___args)) {
+    if (!renderer || renderer === renderBody || attrsOrOp === DIRTY) {
       return;
     }
 
     const childScope = scope[nodeAccessor + AccessorChar.ConditionalScope];
+
+    if (attrsOrOp === MARK || attrsOrOp === CLEAN) {
+      return renderer.___args?.(childScope, attrsOrOp);
+    }
+
     if (typeof renderer === "string") {
       // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
       const elementAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
-      attrs(childScope, elementAccessor, getAttrs());
+      attrs(childScope, elementAccessor, attrsOrOp());
       setConditionalRendererOnlyChild(
         childScope,
         elementAccessor,
         renderBody && bindRenderer(scope, renderBody),
       );
     } else if (renderer.___args) {
-      if (clean) {
-        renderer.___args(childScope, null as any, clean);
-      } else {
-        const attributes = getAttrs();
-        renderer.___args(
-          childScope,
-          inputIsArgs
-            ? attributes
-            : [
-                renderBody
-                  ? {
-                      ...attributes,
-                      renderBody: bindRenderer(scope, renderBody),
-                    }
-                  : attributes,
-              ],
-          clean,
-        );
-      }
+      const attributes = attrsOrOp();
+      renderer.___args(
+        childScope,
+        inputIsArgs
+          ? attributes
+          : [
+              renderBody
+                ? {
+                    ...attributes,
+                    renderBody: bindRenderer(scope, renderBody),
+                  }
+                : attributes,
+            ],
+      );
     }
   };
 }

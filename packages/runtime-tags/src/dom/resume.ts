@@ -1,7 +1,7 @@
 import { ResumeSymbol, type Scope } from "../common/types";
 import type { Renderer } from "./renderer";
 import { bindRenderer } from "./scope";
-import type { IntersectionSignal, ValueSignal } from "./signals";
+import type { IntersectionSignal, SignalOp, ValueSignal } from "./signals";
 
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
@@ -17,9 +17,8 @@ export function registerBoundSignal<T extends ValueSignal>(
   id: string,
   signal: T,
 ): T {
-  registeredValues[id] =
-    (scope: Scope) => (value: unknown, clean?: boolean | 1) =>
-      signal(scope, value, clean);
+  registeredValues[id] = (scope: Scope) => (valueOrOp: unknown | SignalOp) =>
+    signal(scope, valueOrOp);
   return signal;
 }
 

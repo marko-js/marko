@@ -9,6 +9,7 @@ import { prepare, runEffects, runSync } from "./queue";
 import { type Renderer, initRenderer } from "./renderer";
 import { register } from "./resume";
 import { createScope, removeAndDestroyScope } from "./scope";
+import { MARK } from "./signals";
 
 export const createTemplate = (renderer: Renderer, templateId?: string) =>
   register(templateId!, new ClientTemplate(renderer));
@@ -67,7 +68,7 @@ export class ClientTemplate implements Template {
       update: (newInput: unknown) => {
         if (args) {
           runSync(() => {
-            args(scope, null, 1);
+            args(scope, MARK);
             args(scope, [newInput]);
           });
         }

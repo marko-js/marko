@@ -63,13 +63,15 @@ const _value = value(
 export const args = (
   scope: Scope,
   _destructure: [Input],
-  clean?: boolean | 1,
 ) => {
   let value;
-  if (!clean) {
+  try {
     [{ value }] = _destructure;
+  } catch {
+    // TODO: this is a really bad hack because I'm lazy 
+    // and we shouldn't be manually compiling this test anyways
   }
-  _value(scope, value, clean);
+  _value(scope, value ?? _destructure);
 };
 
 export default createTemplate(

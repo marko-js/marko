@@ -15,6 +15,10 @@ import {
   type IntersectionSignal,
   type ValueSignal,
   renderBodyClosures,
+  DIRTY,
+  MARK,
+  CLEAN,
+  type SignalOp,
 } from "./signals";
 import type { ClientTemplate as Template } from "./template";
 
@@ -34,34 +38,38 @@ export function patchConditionals(
 
 export let conditional = function conditional(
   nodeAccessor: Accessor,
-  dynamicTagAttrs?: IntersectionSignal,
+  fn?: (scope: Scope) => void,
   intersection?: IntersectionSignal,
   valueWithIntersection?: ValueSignal,
 ): ValueSignal<RendererOrElementName | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
-  return (scope, newRenderer, clean) => {
+  return (scope, newRendererOrOp) => {
+    if (newRendererOrOp === DIRTY) return;
+
     let currentRenderer = scope[rendererAccessor] as
       | RendererOrElementName
       | undefined;
-    if (
-      !clean &&
-      !(clean =
-        currentRenderer ===
-        (currentRenderer = newRenderer
-          ? (newRenderer as any as Template)._ ||
-            (newRenderer as any).renderBody ||
-            newRenderer
-          : undefined))
-    ) {
-      scope[rendererAccessor] = currentRenderer;
-      setConditionalRenderer(scope, nodeAccessor, currentRenderer);
-      dynamicTagAttrs?.(scope);
-    } else {
-      valueWithIntersection?.(scope, 0, clean);
+    let op = newRendererOrOp as SignalOp;
+
+    if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
+      const normalizedRenderer = newRendererOrOp
+        ? (newRendererOrOp as any as Template)._ ||
+          (newRendererOrOp as any).renderBody ||
+          newRendererOrOp
+        : undefined;
+      if (normalizedRenderer !== currentRenderer) {
+        currentRenderer = scope[rendererAccessor] = normalizedRenderer;
+        setConditionalRenderer(scope, nodeAccessor, normalizedRenderer);
+        fn?.(scope);
+        op = DIRTY;
+      } else {
+        op = CLEAN;
+      }
     }
-    intersection?.(scope, clean);
-    renderBodyClosures(currentRenderer, scope[childScopeAccessor], clean);
+    intersection?.(scope, op);
+    valueWithIntersection?.(scope, op);
+    renderBodyClosures(currentRenderer, scope[childScopeAccessor], op);
   };
 };
 
@@ -72,7 +80,7 @@ export function inConditionalScope<S extends Scope>(
 ): IntersectionSignal {
   const scopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
-  return (scope: Scope, clean?: boolean | 1) => {
+  return (scope: Scope, op: SignalOp) => {
     const conditionalScope = scope[scopeAccessor] as S;
     if (conditionalScope) {
       const conditionalRenderer = scope[rendererAccessor] as Renderer;
@@ -80,7 +88,7 @@ export function inConditionalScope<S extends Scope>(
         !conditionalRenderer?.___closureSignals ||
         conditionalRenderer.___closureSignals.has(signal)
       ) {
-        signal(conditionalScope, clean);
+        signal(conditionalScope, op);
       }
     }
   };
@@ -113,22 +121,44 @@ export function setConditionalRenderer<ChildScope extends Scope>(
   removeAndDestroyScope(prevScope);
 }
 
-export let conditionalOnlyChild = function conditionalOnlyChild(
+export let conditionalOnlyChild = function conditional(
   nodeAccessor: Accessor,
-  action?: ValueSignal<RendererOrElementName | undefined>,
+  fn?: (scope: Scope) => void,
+  intersection?: IntersectionSignal,
+  valueWithIntersection?: ValueSignal,
 ): ValueSignal<RendererOrElementName | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
-  return (scope, newRenderer, clean) => {
+  return (scope, newRendererOrOp) => {
+    if (newRendererOrOp === DIRTY) return;
+
     let currentRenderer = scope[rendererAccessor] as
       | RendererOrElementName
       | undefined;
-    if (!clean && currentRenderer !== newRenderer) {
-      currentRenderer = scope[rendererAccessor] = newRenderer;
-      setConditionalRendererOnlyChild(scope, nodeAccessor, newRenderer);
+    let op = newRendererOrOp as SignalOp;
+
+    if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
+      const normalizedRenderer = newRendererOrOp
+        ? (newRendererOrOp as any as Template)._ ||
+          (newRendererOrOp as any).renderBody ||
+          newRendererOrOp
+        : undefined;
+      if (normalizedRenderer !== currentRenderer) {
+        currentRenderer = scope[rendererAccessor] = normalizedRenderer;
+        setConditionalRendererOnlyChild(
+          scope,
+          nodeAccessor,
+          normalizedRenderer,
+        );
+        fn?.(scope);
+        op = DIRTY;
+      } else {
+        op = CLEAN;
+      }
     }
-    renderBodyClosures(currentRenderer, scope[childScopeAccessor], clean);
-    action?.(scope, currentRenderer, clean);
+    intersection?.(scope, op);
+    valueWithIntersection?.(scope, op);
+    renderBodyClosures(currentRenderer, scope[childScopeAccessor], op);
   };
 };
 
@@ -208,14 +238,14 @@ function loop(
   const params = renderer.___args;
   return (
     scope: Scope,
-    value: [unknown, (...args: unknown[]) => unknown],
-    clean: boolean | 1,
+    valueOrOp: [unknown, (...args: unknown[]) => unknown] | SignalOp,
   ) => {
-    if (clean) {
+    if (valueOrOp === DIRTY) return;
+    if (valueOrOp === MARK || valueOrOp === CLEAN) {
       for (const childScope of scope[loopScopeAccessor]) {
-        params?.(childScope, null, clean);
+        params?.(childScope, valueOrOp);
         for (const signal of closureSignals) {
-          signal(childScope, clean);
+          signal(childScope, valueOrOp);
         }
       }
 
@@ -242,11 +272,12 @@ function loop(
     let parentNode: Node & ParentNode;
     let needsReconciliation = true;
 
-    forEach(value, (key, args) => {
+    forEach(valueOrOp, (key, args) => {
       let childScope = oldMap.get(key);
-      const isNew = !childScope;
+      let closureOp: SignalOp = CLEAN;
       if (!childScope) {
         childScope = createScopeWithRenderer(renderer, scope.$global, scope);
+        closureOp = DIRTY;
         // TODO: once we can track moves
         // needsReconciliation = true;
       } else {
@@ -258,7 +289,7 @@ function loop(
       }
       if (closureSignals) {
         for (const signal of closureSignals) {
-          signal(childScope, isNew);
+          signal(childScope, closureOp);
         }
       }
 
@@ -316,13 +347,13 @@ export function inLoopScope(
   loopNodeAccessor: Accessor,
 ) {
   const loopScopeAccessor = loopNodeAccessor + AccessorChar.LoopScopeArray;
-  return (scope: Scope, clean?: boolean | 1) => {
+  return (scope: Scope, op: SignalOp) => {
     const loopScopes =
       scope[loopScopeAccessor] ??
       scope[loopNodeAccessor + AccessorChar.LoopScopeMap]?.values() ??
       [];
     for (const scope of loopScopes) {
-      signal(scope, clean);
+      signal(scope, op);
     }
   };
 }

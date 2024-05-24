@@ -1,6 +1,6 @@
 import type { Scope } from "../common/types";
 import { schedule } from "./schedule";
-import type { ValueSignal } from "./signals";
+import { MARK, type ValueSignal } from "./signals";
 
 const enum BatchOffset {
   Scope = 0,
@@ -22,7 +22,7 @@ let currentEffects: unknown[] = [];
 
 export function queueSource<T>(scope: Scope, signal: ValueSignal, value: T) {
   schedule();
-  signal(scope, 0, 1);
+  signal(scope, MARK);
   currentBatch.push(scope, signal, value);
   return value;
 }

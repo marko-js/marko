@@ -6,11 +6,15 @@ import {
   type Renderer,
 } from "./renderer";
 import { getRegisteredWithScope, register, scopeLookup } from "./resume";
+import { CLEAN, DIRTY, MARK } from "./signals";
 
 export const compat = {
   register,
   patchConditionals,
   queueEffect,
+  isOp(value: any) {
+    return value === MARK || value === CLEAN || value === DIRTY;
+  },
   isRenderer(renderer: any) {
     return renderer.___clone !== undefined;
   },
@@ -66,11 +70,11 @@ export const compat = {
         const closures = renderer.___closureSignals;
         if (closures) {
           for (const signal of closures) {
-            signal(component.scope, true);
+            signal(component.scope, CLEAN);
           }
         }
       } else {
-        args(scope, input, 1);
+        args(scope, MARK);
         existing = true;
       }
       args(scope, input);
