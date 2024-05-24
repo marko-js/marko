@@ -6,7 +6,7 @@ import { getScopeAccessorLiteral } from "./references";
 import { callRuntime } from "./runtime";
 import { createScopeReadPattern } from "./scope-read";
 import { getScopeIdIdentifier, getSection, type Section } from "./sections";
-import { getSerializedScopeProperties } from "./signals";
+import { getResumeRegisterId, getSerializedScopeProperties } from "./signals";
 import toPropertyName from "./to-property-name";
 
 const renderBodyProps = new WeakMap<t.Expression, t.ArrowFunctionExpression>();
@@ -136,20 +136,34 @@ export default function attrsToObject(
     }
 
     if (body.length) {
+      const renderBodySection = getSection(tag.get("body"));
       const renderBodyExpression = t.arrowFunctionExpression(
         params,
         t.blockStatement(body),
       );
 
       renderBodyProps.set(result, renderBodyExpression);
-      (result as t.ObjectExpression).properties.push(
-        t.objectProperty(
-          t.identifier("renderBody"),
-          isOutputHTML()
-            ? callRuntime("createRenderer", renderBodyExpression)
-            : renderBodyExpression,
-        ),
-      );
+
+      if (isOutputHTML()) {
+        (result as t.ObjectExpression).properties.push(
+          t.objectProperty(
+            t.identifier("renderBody"),
+            callRuntime(
+              "register",
+              callRuntime("createRenderer", renderBodyExpression),
+              t.stringLiteral(
+                getResumeRegisterId(renderBodySection, "renderer"),
+              ),
+              renderBodySection.closures.size &&
+                getScopeIdIdentifier(renderBodySection.parent!),
+            ),
+          ),
+        );
+      } else {
+        (result as t.ObjectExpression).properties.push(
+          t.objectProperty(t.identifier("renderBody"), renderBodyExpression),
+        );
+      }
     }
   }
 

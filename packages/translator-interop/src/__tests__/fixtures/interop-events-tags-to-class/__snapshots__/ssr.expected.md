@@ -1,5 +1,5 @@
 # Write
-  <!M[1><!--M#s0--><button id=class-api>0</button><!--M/--><script>$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/onCount",null]]],"f":1,"p":null}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"]})</script><!M]0 #text/0><div id=tags-api>0<!M*0 #text/1></div><script>(M$h=[]).push(_=>(_.b={0:{"#scope":0,"#text/0!":_.a={"#scope":1,m5c:"s0"},"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"])},1:_.a}),[])</script>
+  <!M[1><!--M#s0--><button id=class-api>0</button><!--M/--><script>$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/onCount",0]]],"f":1,"p":null}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"]})</script><!M]0 #text/0><div id=tags-api>0<!M*0 #text/1></div><script>(M$h=[]).push(_=>(_.b={0:{"#text/0!":_.a={m5c:"s0"},"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"])},1:_.a}),[])</script>
 
 
 # Render "End"
@@ -16,7 +16,7 @@
     </button>
     <!--M/-->
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/onCount",null]]],"f":1,"p":null}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"]})
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/onCount",0]]],"f":1,"p":null}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"]})
     </script>
     <!--M]0 #text/0-->
     <div
@@ -26,7 +26,7 @@
       <!--M*0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{"#scope":0,"#text/0!":_.a={"#scope":1,m5c:"s0"},"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"])},1:_.a}),[])
+      (M$h=[]).push(_=&gt;(_.b={0:{"#text/0!":_.a={m5c:"s0"},"#text/0(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko"])},1:_.a}),[])
     </script>
   </body>
 </html>

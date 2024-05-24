@@ -19,7 +19,7 @@
     5
     <!--M*0 #text/4-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.a={0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x",])
     </script>
   </body>
 </html>
@@ -54,7 +54,7 @@ container.querySelector("button").click()
     7
     <!--M*0 #text/4-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.a={0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x",])
     </script>
   </body>
 </html>
@@ -92,7 +92,7 @@ container.querySelector("button").click()
     9
     <!--M*0 #text/4-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.a={0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x",])
     </script>
   </body>
 </html>
@@ -130,7 +130,7 @@ container.querySelector("button").click()
     11
     <!--M*0 #text/4-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:1,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.a={0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x",])
     </script>
   </body>
 </html>

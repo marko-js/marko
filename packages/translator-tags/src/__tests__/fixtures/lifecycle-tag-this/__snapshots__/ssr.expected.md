@@ -1,5 +1,5 @@
 # Write
-  <div id=ref></div><button id=increment>Increment</button><!M*0 #button/0><script>(M$h=[]).push(_=>(_.a={0:{x:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x",])</script>
+  <div id=ref></div><button id=increment>Increment</button><!M*0 #button/0><script>(M$h=[]).push(_=>(_.a={0:{x:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x",])</script>
 
 
 # Render "End"
@@ -17,7 +17,7 @@
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x",])
+      (M$h=[]).push(_=&gt;(_.a={0:{x:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x",])
     </script>
   </body>
 </html>

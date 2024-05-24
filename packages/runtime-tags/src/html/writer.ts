@@ -8,13 +8,14 @@ import {
 
 export { serializerRegister };
 
+const kScopeId = Symbol("scopeId");
 const runtimeId = ResumeSymbol.DefaultRuntimeId;
 const reorderRuntimeString = String(reorderRuntime).replace(
   "RUNTIME_ID",
   runtimeId,
 );
 
-type PartialScope = Record<string | number, unknown> | unknown[];
+type PartialScope = Record<PropertyKey, unknown> | unknown[];
 
 export interface Writable {
   write(data: string): void;
@@ -478,11 +479,7 @@ export function ensureScopeWithId(scopeId: number) {
   const scopeLookup = $_streamData!.scopeLookup;
   let scope = scopeLookup.get(scopeId);
   if (!scope) {
-    scope = {};
-    scopeLookup.set(scopeId, scope);
-    if (MARKO_DEBUG) {
-      (scope as any)["#scope"] = scopeId;
-    }
+    scopeLookup.set(scopeId, (scope = { [kScopeId]: scopeId }));
   }
 
   return scope;
@@ -502,7 +499,7 @@ export function getRegistryInfo(val: WeakKey) {
   const registered = getRegistered(val);
   if (registered) {
     return registered.scope
-      ? [registered.id, getRegistered(registered.scope)?.id]
+      ? [registered.id, (registered.scope as any)[kScopeId]]
       : [registered.id];
   }
 }
@@ -520,9 +517,7 @@ export function writeScope(
     | undefined = $_streamData!.scopeLookup.get(scopeId),
 ) {
   if (assignTo === undefined) {
-    if (MARKO_DEBUG) {
-      (scope as any)["#scope"] = scopeId;
-    }
+    (scope as any)[kScopeId] = scopeId;
     $_streamData!.scopeLookup.set(scopeId, scope);
   } else if (assignTo !== scope) {
     if (Array.isArray(assignTo)) {

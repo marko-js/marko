@@ -165,7 +165,6 @@ export default {
         ];
 
         if (t.isObjectExpression(attrsObject) && renderBodyProp) {
-          const section = getSection(tag);
           const renderBodySection = getSection(tag.get("body"));
           attrsObject.properties.pop();
           args.push(
@@ -182,8 +181,8 @@ export default {
               t.stringLiteral(
                 getResumeRegisterId(renderBodySection, "renderer"),
               ),
-              (section.closures.size || tag.node.var) &&
-                getScopeIdIdentifier(section),
+              renderBodySection.closures.size &&
+                getScopeIdIdentifier(renderBodySection.parent!),
             ),
           );
         }
@@ -227,7 +226,7 @@ export default {
         const section = getSection(tag);
         const bodySection = getSection(tag.get("body"));
         const hasBody = section !== bodySection;
-        const renderBodyIdentifier = hasBody && writer.getRenderer(bodySection);
+        const renderBodyIdentifier = hasBody && t.identifier(bodySection.name);
         const signal = getSignal(section, nodeRef, "dynamicTagName");
         signal.build = () => {
           return callRuntime(

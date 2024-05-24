@@ -1,5 +1,5 @@
 # Write
-  <div><!M[2><span>The thing</span><!M]1 #text/1></div><!M*1 #div/0><button>Toggle</button><!M*0 #button/1><script>(M$h=[]).push(_=>(_.c={0:{selected:!1,"#childScope/0":_.a={"#scope":1,"#text/1!":_.b={"#scope":2}},"#scope":0},1:_.a,2:_.b}),[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_0_selected",])</script>
+  <div><!M[2><span>The thing</span><!M]1 #text/1></div><!M*1 #div/0><button>Toggle</button><!M*0 #button/1><script>(M$h=[]).push(_=>(_.c={0:{selected:!1,"#childScope/0":_.a={"#text/1!":_.b={},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_1_renderer"]}},1:_.a,2:_.b}),[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_0_selected",])</script>
 
 
 # Render "End"
@@ -20,7 +20,7 @@
     </button>
     <!--M*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.c={0:{selected:!1,"#childScope/0":_.a={"#scope":1,"#text/1!":_.b={"#scope":2}},"#scope":0},1:_.a,2:_.b}),[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_0_selected",])
+      (M$h=[]).push(_=&gt;(_.c={0:{selected:!1,"#childScope/0":_.a={"#text/1!":_.b={},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_1_renderer"]}},1:_.a,2:_.b}),[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_0_selected",])
     </script>
   </body>
 </html>

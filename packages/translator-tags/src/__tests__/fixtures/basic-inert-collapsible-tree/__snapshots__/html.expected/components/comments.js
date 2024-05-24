@@ -23,7 +23,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         "#childScope/0": _childScope,
         "_": _ensureScopeWithId(_scope1_id)
       });
-      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer");
+      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer", _scope1_id);
       _ifScopeId = _scope2_id;
     }
     _write(`${_markResumeControlSingleNodeEnd(_scope1_id, "#text/4", _ifScopeId)}</li>${_markResumeNode(_scope1_id, "#li/0")}`);

@@ -1,4 +1,4 @@
-import { write as _write, createRenderer as _createRenderer, ensureScopeWithId as _ensureScopeWithId, writeScope as _writeScope, nextScopeId as _nextScopeId, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, maybeFlush as _maybeFlush, escapeXML as _escapeXML, markResumeNode as _markResumeNode, peekNextScope as _peekNextScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, createRenderer as _createRenderer, register as _register, ensureScopeWithId as _ensureScopeWithId, writeScope as _writeScope, nextScopeId as _nextScopeId, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, maybeFlush as _maybeFlush, escapeXML as _escapeXML, markResumeNode as _markResumeNode, peekNextScope as _peekNextScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _hello from "./components/hello/index.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -14,14 +14,14 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         style: {
           color
         },
-        renderBody: /* @__PURE__ */_createRenderer(() => {
+        renderBody: _register( /* @__PURE__ */_createRenderer(() => {
           _write("foo");
-        })
+        }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_6_renderer")
       });
       _writeScope(_scope4_id, {
         "_": _ensureScopeWithId(_scope3_id)
       });
-      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_4_renderer");
+      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_4_renderer", _scope3_id);
       _ifScopeId = _scope4_id;
     } else {
       const _scope5_id = _nextScopeId();
@@ -29,14 +29,14 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         style: {
           color
         },
-        renderBody: /* @__PURE__ */_createRenderer(() => {
+        renderBody: _register( /* @__PURE__ */_createRenderer(() => {
           _write("bar");
-        })
+        }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_7_renderer")
       });
       _writeScope(_scope5_id, {
         "_": _ensureScopeWithId(_scope3_id)
       });
-      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_5_renderer");
+      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_5_renderer", _scope3_id);
       _ifScopeId = _scope5_id;
     }
     _write(`${_markResumeControlSingleNodeEnd(_scope3_id, "#text/0", _ifScopeId)}`);
@@ -58,9 +58,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       let _i = _i2++;
       _row.push({
         row: row,
-        renderBody: /* @__PURE__ */_createRenderer(() => {
+        renderBody: _register( /* @__PURE__ */_createRenderer(() => {
           _write(`${_escapeXML(row)}${_markResumeNode(_scope11_id, "#text/0")}`);
-        })
+        }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_11_renderer", _scope10_id)
       });
       _writeScope(_scope10_id, {
         "row": row
@@ -81,9 +81,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     outside: true,
     row: {
       row: -1,
-      renderBody: /* @__PURE__ */_createRenderer(() => {
+      renderBody: _register( /* @__PURE__ */_createRenderer(() => {
         _write("Outside");
-      })
+      }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_13_renderer")
     }
   });
   const _childScope = _peekNextScope();

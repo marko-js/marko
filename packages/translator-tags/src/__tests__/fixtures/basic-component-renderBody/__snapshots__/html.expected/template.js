@@ -8,14 +8,14 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     onClick: _register(function () {
       clickCount++;
     }, "packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_0/onClick", _scope0_id),
-    renderBody: /* @__PURE__ */_createRenderer(() => {
+    renderBody: _register( /* @__PURE__ */_createRenderer(() => {
       const _scope1_id = _nextScopeId();
       _write(`${_escapeXML(clickCount)}${_markResumeNode(_scope1_id, "#text/0")}`);
       _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_1_clickCount/subscriber");
       _writeScope(_scope1_id, {
         "_": _ensureScopeWithId(_scope0_id)
       });
-    })
+    }), "packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_1_renderer", _scope0_id)
   });
   _writeScope(_scope0_id, {
     "clickCount": clickCount,

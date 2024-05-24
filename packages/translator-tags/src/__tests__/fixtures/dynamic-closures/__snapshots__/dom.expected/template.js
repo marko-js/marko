@@ -1,5 +1,5 @@
 const a = 1;
-import { on as _on, queueSource as _queueSource, data as _data, bindRenderer as _bindRenderer, inChild as _inChild, createRenderer as _createRenderer, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, conditional as _conditional, register as _register, dynamicSubscribers as _dynamicSubscribers, value as _value, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, queueSource as _queueSource, data as _data, bindRenderer as _bindRenderer, inChild as _inChild, createRenderer as _createRenderer, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, conditional as _conditional, registerRenderer as _registerRenderer, dynamicSubscribers as _dynamicSubscribers, value as _value, register as _register, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _customTag, _input_ as _customTag_input, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag.marko";
 const _c$ifBody = _registerSubscriber("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_3_c/subscriber", /* @__PURE__ */_dynamicClosure("c", (_scope, c) => _data(_scope["#text/2"], c), _scope => _scope._._));
 const _b$ifBody = /* @__PURE__ */_dynamicClosure("b", (_scope, b) => _data(_scope["#text/1"], b), _scope => _scope._._);
@@ -17,7 +17,7 @@ const _b$customTagBody = /* @__PURE__ */_dynamicClosure("b", (_scope, b) => _dat
 const _setup$customTagBody = _scope => {
   _data(_scope["#text/0"], a);
 };
-const _customTagBody = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$customTagBody, [_b$customTagBody, _c$customTagBody]));
+const _customTagBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$customTagBody, [_b$customTagBody, _c$customTagBody]));
 const _if = /* @__PURE__ */_conditional("#text/2");
 const _c = /* @__PURE__ */_value("c", null, _dynamicSubscribers("c"));
 const _b = /* @__PURE__ */_value("b", null, _dynamicSubscribers("b"));

@@ -1,4 +1,4 @@
-import { data as _data, on as _on, queueSource as _queueSource, register as _register, createRenderer as _createRenderer, intersection as _intersection, value as _value, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { data as _data, on as _on, queueSource as _queueSource, register as _register, createRenderer as _createRenderer, intersection as _intersection, value as _value, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, registerRenderer as _registerRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import _classLayout from "./components/class-layout.marko";
 import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 _register("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko", _classLayout);
@@ -32,7 +32,7 @@ const _multiplier$classLayoutBody = _registerSubscriber("packages/translator-int
   _data(_scope["#text/2"], multiplier);
   _queueEffect(_scope, _multiplier$classLayoutBody_effect);
 }, void 0, _expr_multiplier_baseCount$classLayoutBody));
-const _classLayoutBody = _register("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<h1> </h1><button id=tags><!> * <!> = <!></button>", /* next(1), get, out(1), get, next(1), replace, over(2), replace, over(2), replace */"D l D%c%c%", void 0, [_multiplier$classLayoutBody], void 0, _params_2$classLayoutBody));
+const _classLayoutBody = _registerRenderer("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<h1> </h1><button id=tags><!> * <!> = <!></button>", /* next(1), get, out(1), get, next(1), replace, over(2), replace, over(2), replace */"D l D%c%c%", void 0, [_multiplier$classLayoutBody], void 0, _params_2$classLayoutBody));
 const _classLayout_input = _dynamicTagAttrs("#text/0", _classLayoutBody);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _classLayout_input(_scope, () => ({})), _classLayout_input);
 const _multiplier = /* @__PURE__ */_value("multiplier", null, _dynamicSubscribers("multiplier"));

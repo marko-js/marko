@@ -1,5 +1,5 @@
 # Write
-  a<!M*1 #text/0>b<!M*2 #text/0>c<!M*3 #text/0><!M|0 #text/0 1,2,3><script>(M$h=[]).push(_=>(_.e={0:{"#text/0(":new Map(_.a=[[1,_.b={"#scope":1}],[2,_.c={"#scope":2}],[3,_.d={"#scope":3}]]),"#scope":0},1:_.b,2:_.c,3:_.d}),[])</script>
+  a<!M*1 #text/0>b<!M*2 #text/0>c<!M*3 #text/0><!M|0 #text/0 1,2,3><script>(M$h=[]).push(_=>(_.e={0:{"#text/0(":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},1:_.b,2:_.c,3:_.d}),[])</script>
 
 
 # Render "End"
@@ -15,7 +15,7 @@
     <!--M*3 #text/0-->
     <!--M|0 #text/0 1,2,3-->
     <script>
-      (M$h=[]).push(_=&gt;(_.e={0:{"#text/0(":new Map(_.a=[[1,_.b={"#scope":1}],[2,_.c={"#scope":2}],[3,_.d={"#scope":3}]]),"#scope":0},1:_.b,2:_.c,3:_.d}),[])
+      (M$h=[]).push(_=&gt;(_.e={0:{"#text/0(":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},1:_.b,2:_.c,3:_.d}),[])
     </script>
   </body>
 </html>

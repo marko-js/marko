@@ -12,7 +12,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _writeScope(_scope1_id, {
       "_": _ensureScopeWithId(_scope0_id)
     });
-  }), "packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer"));
+  }), "packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer", _scope0_id));
   _s(_classLayout, "packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko");
   _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}`);
   _writeScope(_scope0_id, {

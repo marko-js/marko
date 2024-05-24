@@ -19,7 +19,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       _writeScope(_scope2_id, {
         "_": _ensureScopeWithId(_scope1_id)
       });
-      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_2_renderer");
+      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_2_renderer", _scope1_id);
       _ifScopeId = _scope2_id;
     }
     _write(`${_markResumeControlSingleNodeEnd(_scope1_id, "#text/0", _ifScopeId)}`);
@@ -31,7 +31,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       _writeScope(_scope3_id, {
         "_": _ensureScopeWithId(_scope1_id)
       });
-      _register(_ifRenderer2 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_3_renderer");
+      _register(_ifRenderer2 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_3_renderer", _scope1_id);
       _ifScopeId2 = _scope3_id;
     }
     _write(`${_markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId2)}`);
@@ -42,7 +42,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       "#text/1(": _ifRenderer2,
       "#text/1!": _getScopeById(_ifScopeId2)
     });
-    _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_1_renderer");
+    _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_1_renderer", _scope0_id);
     _ifScopeId3 = _scope1_id;
   }
   _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}</div>`);

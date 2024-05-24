@@ -19,13 +19,6 @@ import toTemplateOrStringLiteral, {
 } from "./to-template-string-or-literal";
 import { getWalkString } from "./walks";
 
-const [getRenderer] = createSectionState<t.Identifier>(
-  "renderer",
-  (section: Section) => t.identifier(section.name),
-);
-
-export { getRenderer };
-
 const [getWrites] = createSectionState<(string | t.Expression)[]>(
   "writes",
   () => [""],

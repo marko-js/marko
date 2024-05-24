@@ -1,4 +1,4 @@
-import { classAttr as _classAttr, markResumeNode as _markResumeNode, write as _write, peekNextScope as _peekNextScope, createRenderer as _createRenderer, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { classAttr as _classAttr, markResumeNode as _markResumeNode, write as _write, peekNextScope as _peekNextScope, createRenderer as _createRenderer, register as _register, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -31,9 +31,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         b: c,
         d
       }],
-      renderBody: /* @__PURE__ */_createRenderer(() => {
+      renderBody: _register( /* @__PURE__ */_createRenderer(() => {
         _write("Hello");
-      })
+      }), "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_2_renderer")
     }
   }, _register( /* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
@@ -42,7 +42,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _writeScope(_scope1_id, {
       "_": _ensureScopeWithId(_scope0_id)
     });
-  }), "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_1_renderer"));
+  }), "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_1_renderer", _scope0_id));
   _write(`${_markResumeControlEnd(_scope0_id, "#text/3")}`);
   _writeScope(_scope0_id, {
     "c": c,

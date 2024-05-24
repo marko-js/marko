@@ -1,6 +1,6 @@
-import { on as _on, queueSource as _queueSource, data as _data, createRenderer as _createRenderer, closure as _closure, register as _register, conditional as _conditional, inConditionalScope as _inConditionalScope, value as _value, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, queueSource as _queueSource, data as _data, createRenderer as _createRenderer, closure as _closure, registerRenderer as _registerRenderer, conditional as _conditional, inConditionalScope as _inConditionalScope, value as _value, register as _register, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _message$ifBody = /* @__PURE__ */_closure("message", (_scope, message) => _data(_scope["#text/0"], message));
-const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<span> </span>", /* next(1), get */"D ", void 0, [_message$ifBody]));
+const _ifBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<span> </span>", /* next(1), get */"D ", void 0, [_message$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/1");
 const _message = /* @__PURE__ */_value("message", null, _inConditionalScope(_message$ifBody, "#text/1"));
 const _onClick = _scope => {

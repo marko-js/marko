@@ -13,7 +13,7 @@
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{count:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0_count",])
+      (M$h=[]).push(_=&gt;(_.a={0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -42,7 +42,7 @@ container.querySelector("button").click()
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{count:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0_count",])
+      (M$h=[]).push(_=&gt;(_.a={0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0_count",])
     </script>
   </body>
 </html>
@@ -72,7 +72,7 @@ container.querySelector("button").click()
     </button>
     <!--M*0 #button/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{count:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0_count",])
+      (M$h=[]).push(_=&gt;(_.a={0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0_count",])
     </script>
   </body>
 </html>

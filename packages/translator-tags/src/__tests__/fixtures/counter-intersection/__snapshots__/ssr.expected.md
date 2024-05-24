@@ -1,5 +1,5 @@
 # Write
-  <div><button class=a>0<!M*0 #text/1></button><!M*0 #button/0> + <button class=b>0<!M*0 #text/3></button><!M*0 #button/2> = <!>0<!M*0 #text/4></div><script>(M$h=[]).push(_=>(_.a={0:{a:0,b:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0",])</script>
+  <div><button class=a>0<!M*0 #text/1></button><!M*0 #button/0> + <button class=b>0<!M*0 #text/3></button><!M*0 #button/2> = <!>0<!M*0 #text/4></div><script>(M$h=[]).push(_=>(_.a={0:{a:0,b:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0",])</script>
 
 
 # Render "End"
@@ -29,7 +29,7 @@
       <!--M*0 #text/4-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{a:0,b:0,"#scope":0}}),[0,"packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0",])
+      (M$h=[]).push(_=&gt;(_.a={0:{a:0,b:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0",])
     </script>
   </body>
 </html>
