@@ -5,8 +5,14 @@ import * as compiler from "@marko/compiler";
 import pluginTerser from "@rollup/plugin-terser";
 import pluginVirtual from "@rollup/plugin-virtual";
 import kleur from "kleur";
+import { format } from "prettier";
 import { type OutputChunk, rollup } from "rollup";
 import { table } from "table";
+
+const compiledOutputDir = path.join(process.cwd(), ".sizes");
+
+fs.rmSync(compiledOutputDir, { recursive: true });
+fs.mkdirSync(compiledOutputDir);
 
 interface Sizes {
   min: number;
@@ -126,21 +132,45 @@ function renderSize(
 }
 
 async function getResults(examples: Record<string, string>) {
+  const [, , runtimeTotal, runtimeFiles] = await bundleExample(
+    runtimePath,
+    false,
+  );
   const results: Result[] = [
     {
       name: "*",
-      total: (await bundleExample(runtimePath, false))[2], // await getSizesForSrc(fs.readFileSync(runtimePath, "utf-8")),
+      total: runtimeTotal,
     },
   ];
 
+  for (const [name, code] of Object.entries(runtimeFiles)) {
+    fs.writeFileSync(
+      path.join(compiledOutputDir, name),
+      await format(code, { parser: "babel" }),
+    );
+  }
+
   for (const [exampleName, examplePath] of Object.entries(examples)) {
-    for (const hydrate of ["", " 💧"]) {
-      const [user, runtime, total] = await bundleExample(
+    for (const hydrate of [false, true]) {
+      const [user, runtime, total, files] = await bundleExample(
         examplePath,
-        !!hydrate,
+        hydrate,
       );
+
+      for (const [name, code] of Object.entries(files)) {
+        const exampleOutputFolder = path.join(
+          compiledOutputDir,
+          exampleName + (hydrate ? ".ssr" : ".csr"),
+        );
+        fs.mkdirSync(exampleOutputFolder, { recursive: true });
+        fs.writeFileSync(
+          path.join(exampleOutputFolder, name),
+          await format(code, { parser: "babel" }),
+        );
+      }
+
       results.push({
-        name: exampleName + hydrate,
+        name: exampleName + (hydrate ? " 💧" : ""),
         user,
         runtime,
         total,
@@ -170,8 +200,10 @@ function addSizes(all: Sizes[]) {
 }
 
 async function bundleExample(examplePath: string, hydrate: boolean) {
+  const isRuntime = examplePath === runtimePath;
+  const virtualEntry = "./entry.js";
   const bundle = await rollup({
-    input: hydrate ? "./hydrate.js" : examplePath,
+    input: isRuntime ? runtimePath : virtualEntry,
     plugins: [
       {
         name: "marko",
@@ -198,11 +230,13 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
           return null;
         },
       },
-      hydrate &&
+      !isRuntime &&
         pluginVirtual({
-          "./hydrate.js": `import ${JSON.stringify(
-            examplePath,
-          )}; import { init } from "@marko/runtime-tags/dom"; init();`,
+          [virtualEntry]: hydrate
+            ? `import ${JSON.stringify(
+                examplePath,
+              )}; import { init } from "@marko/runtime-tags/dom"; init();`
+            : `import template from ${JSON.stringify(examplePath)};template.mount();`,
         }),
       pluginTerser({ compress: {}, mangle: { module: true } }),
     ],
@@ -230,7 +264,13 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
     ),
   );
   const totalSize = addSizes([userSize, runtimeSize].filter(Boolean));
-  return [userSize, runtimeSize, totalSize];
+  const files: Record<string, string> = {};
+  for (const chunk of isRuntime ? output : userCodeChunks) {
+    if (chunk.type === "chunk") {
+      files[chunk.name + ".js"] = chunk.code;
+    }
+  }
+  return [userSize, runtimeSize, totalSize, files] as const;
 }
 
 function brotli(src: string): Promise<Buffer> {
