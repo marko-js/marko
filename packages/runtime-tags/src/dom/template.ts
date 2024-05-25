@@ -1,10 +1,4 @@
-import type {
-  Template,
-  Input,
-  TemplateInstance,
-  Scope,
-  RenderResult,
-} from "../common/types";
+import type { Template, Input, TemplateInstance, Scope } from "../common/types";
 import { prepare, runEffects, runSync } from "./queue";
 import { type Renderer, initRenderer } from "./renderer";
 import { register } from "./resume";
@@ -79,9 +73,13 @@ export class ClientTemplate implements Template {
     };
   }
 
-  render(): RenderResult {
+  declare render: never;
+}
+
+if (MARKO_DEBUG) {
+  (ClientTemplate.prototype as any).render = () => {
     throw new Error(
       `render() is not implemented for the DOM compilation of a Marko template`,
     );
-  }
+  };
 }
