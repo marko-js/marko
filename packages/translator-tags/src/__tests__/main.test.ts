@@ -10,6 +10,7 @@ import type { DOMWindow } from "jsdom";
 import snap from "mocha-snap";
 import glob from "tiny-glob";
 import * as translator from "..";
+import { bundle } from "./utils/bundle";
 import createBrowser from "./utils/create-browser";
 import { isWait } from "./utils/resolve";
 import createMutationTracker from "./utils/track-mutations";
@@ -145,17 +146,10 @@ describe("translator-tags", () => {
               !skipResume &&
               !config.error_compiler
             ) {
-              await targetSnap(
-                () =>
-                  compileCode(file, {
-                    ...finalConfig,
-                    output: "hydrate",
-                  }),
-                {
-                  file: name.replace(".marko", ".hydrate.js"),
-                  dir: fixtureDir,
-                },
-              );
+              await targetSnap(() => bundle(file, finalConfig), {
+                file: name.replace(".marko", ".hydrate.js"),
+                dir: fixtureDir,
+              });
             }
           } catch (e) {
             errors.push(e as Error);

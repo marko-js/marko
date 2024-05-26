@@ -1,2 +1,1 @@
-import "./template.marko";
-import "./hello.marko";
+// size: 0
