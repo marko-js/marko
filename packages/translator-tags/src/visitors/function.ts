@@ -15,7 +15,7 @@ export default {
     const { node } = fn;
     const extra = (node.extra ??= {});
     const {
-      markoOpts: { optimize },
+      markoOpts,
       opts: { filename },
     } = currentProgramPath.hub.file;
 
@@ -52,7 +52,7 @@ export default {
     }
 
     extra.registerId = getTemplateId(
-      optimize,
+      markoOpts,
       `${filename}_${section.id}/${name + id}`,
     );
   },

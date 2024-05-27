@@ -296,10 +296,25 @@ export function loadFileForImport(file, request) {
   }
 }
 
-export function getTemplateId(optimize, request) {
+export function getTemplateId(opts, request) {
   const id = relative(ROOT, request);
+  const optimize = typeof opts === "object" ? opts.optimize : opts;
 
   if (optimize) {
+    const optimizedRegistryIds =
+      typeof opts === "object" && opts.optimizedRegistryIds;
+    if (optimizedRegistryIds) {
+      let registryId = optimizedRegistryIds.get(id);
+      if (!registryId) {
+        optimizedRegistryIds.set(
+          id,
+          (registryId = encodeTemplateId(optimizedRegistryIds.size)),
+        );
+      }
+
+      return registryId;
+    }
+
     return createHash("MD5").update(id).digest("base64").slice(0, 8);
   }
 
@@ -351,4 +366,25 @@ function createNewFileOpts(opts, filename) {
       sourceFileName,
     },
   };
+}
+
+const ENCODE_START_CHARS =
+  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_";
+const ENCODE_START_CHARS_LEN = ENCODE_START_CHARS.length;
+const ENCODE_CHARS =
+  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$_";
+const ENCODE_CHARS_LEN = ENCODE_CHARS.length;
+
+function encodeTemplateId(index) {
+  let mod = index % ENCODE_START_CHARS_LEN;
+  let id = ENCODE_START_CHARS[mod];
+  index = (index - mod) / ENCODE_START_CHARS_LEN;
+
+  while (index > 0) {
+    mod = index % ENCODE_CHARS_LEN;
+    id += ENCODE_CHARS[mod];
+    index = (index - mod) / ENCODE_CHARS_LEN;
+  }
+
+  return id;
 }

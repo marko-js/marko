@@ -206,6 +206,13 @@ Default: [environment based](https://github.com/marko-js/marko/blob/0f212897d2d3
 
 Enables production mode optimizations.
 
+#### `optimizedRegistryIds`
+
+Type: `Map<string, string>`<br>
+Default: `undefined`
+
+If `optimize` is enabled you can provide a Map which the compiler will use to store shorter registry/template id's in. This can only be used if the same `optimizedRegistryIds` are used for both server and client compilations.
+
 #### `resolveVirtualDependency`
 
 Type:

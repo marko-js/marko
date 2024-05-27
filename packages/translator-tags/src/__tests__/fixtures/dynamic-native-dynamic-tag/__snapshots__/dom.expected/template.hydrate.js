@@ -1,4 +1,4 @@
-// size: 453 (min) 282 (brotli)
+// size: 439 (min) 273 (brotli)
 
 import {
   register as n,
@@ -6,39 +6,39 @@ import {
   dynamicTagAttrs as t,
   on as c,
   queueSource as s,
-  value as m,
-  queueEffect as r,
-  conditional as a,
-  intersection as i,
-  init as l,
+  value as r,
+  queueEffect as a,
+  conditional as i,
+  intersection as m,
+  init as d,
 } from "@marko/runtime-tags/dom";
-const u = n("mEmzbrWW", o("body content", "")),
-  d = t(0, u),
-  e = a(
+const l = n("c", o("body content", "")),
+  u = t(0, l),
+  e = i(
     0,
     null,
-    i(2, (n) => {
+    m(2, (n) => {
       const { 3: o } = n;
-      d(n, () => ({ class: o }));
+      u(n, () => ({ class: o }));
     }),
   ),
-  p = n("1V70385H", (n) =>
+  p = n("d", (n) =>
     c(
       n[1],
       "click",
       ((n) => {
         const { 2: o } = n;
         return function () {
-          s(n, b, "span" === o ? "div" : "span");
+          s(n, f, "span" === o ? "div" : "span");
         };
       })(n),
     ),
   ),
-  b = m(
+  f = r(
     2,
     (n, o) => {
-      r(n, p), e(n, o || u);
+      a(n, p), e(n, o || l);
     },
     e,
   );
-l();
+d();

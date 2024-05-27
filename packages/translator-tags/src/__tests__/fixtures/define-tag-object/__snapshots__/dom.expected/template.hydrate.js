@@ -1,16 +1,16 @@
-// size: 322 (min) 208 (brotli)
+// size: 315 (min) 197 (brotli)
 
 import {
   register as o,
   on as r,
   queueSource as t,
-  value as i,
-  data as n,
-  queueEffect as c,
+  value as n,
+  data as c,
+  queueEffect as i,
   init as m,
 } from "@marko/runtime-tags/dom";
-const f = i(4, (o, r) => n(o[0], JSON.stringify(r))),
-  s = o("JjSoNSTi", (o) =>
+const f = n(4, (o, r) => c(o[0], JSON.stringify(r))),
+  s = o("c", (o) =>
     r(
       o[1],
       "click",
@@ -22,7 +22,7 @@ const f = i(4, (o, r) => n(o[0], JSON.stringify(r))),
       })(o),
     ),
   ),
-  a = i(3, (o, r) => {
-    n(o[2], r), c(o, s), f(o, { foo: 1, bar: r + 1 });
+  a = n(3, (o, r) => {
+    c(o[2], r), i(o, s), f(o, { foo: 1, bar: r + 1 });
   });
 m();

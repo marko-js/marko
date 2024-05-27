@@ -616,7 +616,7 @@ export function getResumeRegisterId(
   type?: string,
 ) {
   const {
-    markoOpts: { optimize },
+    markoOpts,
     opts: { filename },
   } = currentProgramPath.hub.file;
   let name = "";
@@ -632,7 +632,7 @@ export function getResumeRegisterId(
     }
   }
   return getTemplateId(
-    optimize,
+    markoOpts,
     `${filename}_${section.id}${name}${type ? "/" + type : ""}`,
   );
 }

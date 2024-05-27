@@ -1,4 +1,4 @@
-// size: 490 (min) 304 (brotli)
+// size: 483 (min) 288 (brotli)
 
 import {
   register as r,
@@ -15,7 +15,7 @@ const l = o(9, (r, a) => t(r[5], JSON.stringify(a))),
   m = o(7, (r, a) => t(r[2], a)),
   b = o(6, (r, a) => t(r[1], a)),
   f = (r, a) => {};
-r("uVPZBZB6", (r) =>
+r("d", (r) =>
   a(
     r[0],
     "click",

@@ -1,42 +1,42 @@
-// size: 486 (min) 268 (brotli)
+// size: 465 (min) 230 (brotli)
 
 import {
-  register as n,
-  queueSource as t,
+  register as t,
+  queueSource as n,
   value as o,
-  data as r,
-  lifecycle as c,
+  data as c,
+  lifecycle as r,
   on as u,
   queueEffect as i,
   init as s,
 } from "@marko/runtime-tags/dom";
-const e = n("LPO3Dfve", (n) => {
-    const { 3: t } = n;
+const e = t("b", (t) => {
+    const { 3: n } = t;
     return function () {
-      this.cur = t;
+      this.cur = n;
     };
   }),
-  f = n("aZfvFuwW", (n) => {
-    const { 3: o } = n;
+  m = t("c", (t) => {
+    const { 3: o } = t;
     return function () {
-      t(n, m, this.cur), (this.cur = o);
+      n(t, f, this.cur), (this.cur = o);
     };
   }),
-  m = o(4, (n, t) => r(n[1], t)),
-  a = n("nJi9FlJX", (n) => {
-    c(n, 4, { onMount: e(n), onUpdate: f(n) }),
+  f = o(4, (t, n) => c(t[1], n)),
+  a = t("e", (t) => {
+    r(t, 4, { onMount: e(t), onUpdate: m(t) }),
       u(
-        n[2],
+        t[2],
         "click",
-        ((n) => {
-          const { 3: o } = n;
+        ((t) => {
+          const { 3: o } = t;
           return function () {
-            t(n, h, o + 1);
+            n(t, h, o + 1);
           };
-        })(n),
+        })(t),
       );
   }),
-  h = o(3, (n, t) => {
-    r(n[0], t), i(n, a);
+  h = o(3, (t, n) => {
+    c(t[0], n), i(t, a);
   });
 s();

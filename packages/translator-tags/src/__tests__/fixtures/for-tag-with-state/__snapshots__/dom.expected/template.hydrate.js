@@ -1,4 +1,4 @@
-// size: 253 (min) 190 (brotli)
+// size: 246 (min) 163 (brotli)
 
 import {
   register as o,
@@ -9,7 +9,7 @@ import {
 const v = d(4, (o, i) => m(o[0], i)),
   r = d(3, (o, i) => m(o[1], i));
 o(
-  "CVPzn4Nz",
+  "b",
   i(
     "<div><!>: <!></div>",
     "D%c%",

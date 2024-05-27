@@ -1,61 +1,61 @@
-// size: 627 (min) 341 (brotli)
+// size: 613 (min) 312 (brotli)
 
 import {
   register as i,
-  createRenderer as t,
-  on as c,
-  value as o,
-  queueSource as n,
+  createRenderer as c,
+  on as t,
+  value as n,
+  queueSource as o,
   queueEffect as r,
   loopOf as e,
-  data as s,
+  data as d,
   init as a,
 } from "@marko/runtime-tags/dom";
-const d = o(5, (i, t) => s(i[1], t)),
-  m = o(4, (i, t) => s(i[0], t)),
-  v = o(3, (i, t) => {
-    m(i, t.name), d(i, t.description);
+const s = n(5, (i, c) => d(i[1], c)),
+  m = n(4, (i, c) => d(i[0], c)),
+  v = n(3, (i, c) => {
+    m(i, c.name), s(i, c.description);
   }),
   u = e(
     0,
     i(
-      "7swXtCmY",
-      t(
+      "d",
+      c(
         "<div><!>: <!></div>",
         "D%c%",
         void 0,
         void 0,
         void 0,
-        o(2, (i, t) => v(i, t[0])),
+        n(2, (i, c) => v(i, c[0])),
       ),
     ),
   ),
-  p = i("boz4JJ9D", (i) => {
-    c(
+  p = i("e", (i) => {
+    t(
       i[1],
       "click",
       ((i) => {
-        const { 3: t } = i;
+        const { 3: c } = i;
         return function () {
-          n(i, J, [
-            ...t,
+          o(i, f, [
+            ...c,
             { name: "JavaScript", description: "Java, but scriptier" },
           ]);
         };
       })(i),
     ),
-      c(
+      t(
         i[2],
         "click",
         ((i) => {
-          const { 3: t } = i;
+          const { 3: c } = i;
           return function () {
-            n(i, J, t.slice(0, -1));
+            o(i, f, c.slice(0, -1));
           };
         })(i),
       );
   }),
-  J = o(3, (i, t) => {
-    r(i, p), u(i, [t]);
+  f = n(3, (i, c) => {
+    r(i, p), u(i, [c]);
   });
 a();

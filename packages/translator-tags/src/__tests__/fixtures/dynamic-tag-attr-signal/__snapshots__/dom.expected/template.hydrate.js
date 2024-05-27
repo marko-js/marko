@@ -1,15 +1,15 @@
-// size: 276 (min) 179 (brotli)
+// size: 269 (min) 179 (brotli)
 
 import {
   register as o,
   on as t,
   queueSource as c,
-  value as m,
-  classAttr as n,
-  queueEffect as r,
+  value as n,
+  classAttr as r,
+  queueEffect as m,
   init as i,
 } from "@marko/runtime-tags/dom";
-const s = o("iDj/cm4C", (o) =>
+const s = o("c", (o) =>
     t(
       o[1],
       "click",
@@ -21,7 +21,7 @@ const s = o("iDj/cm4C", (o) =>
       })(o),
     ),
   ),
-  u = m(2, (o, t) => {
-    n(o[0], t), r(o, s);
+  u = n(2, (o, t) => {
+    r(o[0], t), m(o, s);
   });
 i();

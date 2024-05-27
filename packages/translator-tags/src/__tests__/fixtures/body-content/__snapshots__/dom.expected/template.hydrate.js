@@ -1,55 +1,55 @@
-// size: 675 (min) 375 (brotli)
+// size: 647 (min) 348 (brotli)
 
 import {
   register as o,
   attrsEvents as r,
   value as n,
-  attrs as m,
-  queueEffect as t,
-  conditional as d,
-  queueSource as e,
+  attrs as d,
+  queueEffect as e,
+  conditional as t,
+  queueSource as c,
   registerSubscriber as i,
-  dynamicClosure as c,
+  dynamicClosure as m,
   data as f,
-  registerRenderer as l,
-  createRenderer as s,
-  bindRenderer as u,
-  intersections as a,
-  inChild as j,
-  dynamicSubscribers as k,
-  init as q,
+  registerRenderer as s,
+  createRenderer as u,
+  bindRenderer as a,
+  intersections as k,
+  inChild as y,
+  dynamicSubscribers as B,
+  init as g,
 } from "@marko/runtime-tags/dom";
-const y = d(1),
-  B = o("mC20UZ41", (o) => r(o, 0)),
-  C = n(4, (o, r) => y(o, r), y),
-  I = n(
+const l = t(1),
+  p = o("f", (o) => r(o, 0)),
+  v = n(4, (o, r) => l(o, r), l),
+  C = n(
     3,
     (o, r) => {
       ((o, r) => {
-        m(o, 0, r), t(o, B);
+        d(o, 0, r), e(o, p);
       })(o, r),
-        C(o, r.renderBody);
+        v(o, r.renderBody);
     },
-    C,
+    v,
   ),
-  Y = o("Yf8IJN4I", (o) => {
+  b = o("c", (o) => {
     const { 1: r } = o;
     return function () {
-      e(o, b, r + 1);
+      c(o, j, r + 1);
     };
   }),
-  Z = l(
-    "mqrqoljj",
-    s(" ", " ", void 0, [
+  h = s(
+    "e",
+    u(" ", " ", void 0, [
       i(
-        "YPZV5lbi",
-        c(1, (o, r) => f(o[0], r)),
+        "d",
+        m(1, (o, r) => f(o[0], r)),
       ),
     ]),
   ),
-  b = n(
+  j = n(
     1,
-    (o, r) => I(o[0], { onClick: Y(o), renderBody: u(o, Z) }),
-    a([j(0, I), k(1)]),
+    (o, r) => C(o[0], { onClick: b(o), renderBody: a(o, h) }),
+    k([y(0, C), B(1)]),
   );
-q();
+g();

@@ -1,4 +1,4 @@
-// size: 306 (min) 192 (brotli)
+// size: 285 (min) 170 (brotli)
 
 import {
   register as m,
@@ -7,16 +7,16 @@ import {
   tagVarSignal as a,
   registerBoundSignal as o,
   data as r,
-  init as k,
+  init as n,
 } from "@marko/runtime-tags/dom";
-const n = e(1, (m, t) => a(m, t), a);
-m("ewSmwts/", (m) => t(m, n, m[0].parentElement.tagName)),
+const d = e(1, (m, t) => a(m, t), a);
+m("f", (m) => t(m, d, m[0].parentElement.tagName)),
   o(
-    "B9k32Qkp",
+    "d",
     e(5, (m, t) => r(m[3], t)),
   ),
   o(
-    "ekpIzON8",
+    "e",
     e(4, (m, t) => r(m[1], t)),
   ),
-  k();
+  n();

@@ -1,20 +1,20 @@
-// size: 463 (min) 273 (brotli)
+// size: 442 (min) 255 (brotli)
 
 import {
   register as t,
   on as o,
   registerSubscriber as n,
-  dynamicClosure as i,
-  data as c,
+  dynamicClosure as c,
+  data as r,
   queueEffect as u,
-  registerRenderer as m,
-  createRenderer as r,
-  value as d,
-  dynamicSubscribers as f,
-  queueSource as s,
-  init as b,
+  registerRenderer as i,
+  createRenderer as m,
+  value as s,
+  dynamicSubscribers as d,
+  queueSource as e,
+  init as f,
 } from "@marko/runtime-tags/dom";
-const k = t("ibmdBFfO", (t) =>
+const l = t("d", (t) =>
   o(
     t[0],
     "click",
@@ -23,21 +23,21 @@ const k = t("ibmdBFfO", (t) =>
         _: { 1: o },
       } = t;
       return function () {
-        s(t._, l, o + 1);
+        e(t._, a, o + 1);
       };
     })(t),
   ),
 );
-m(
-  "710cJdfq",
-  r("<button> </button>", " D ", void 0, [
+i(
+  "f",
+  m("<button> </button>", " D ", void 0, [
     n(
-      "qi7pYkui",
-      i(1, (t, o) => {
-        c(t[1], o), u(t, k);
+      "e",
+      c(1, (t, o) => {
+        r(t[1], o), u(t, l);
       }),
     ),
   ]),
 );
-const l = d(1, null, f(1));
-b();
+const a = s(1, null, d(1));
+f();

@@ -1,4 +1,4 @@
-// size: 205 (min) 153 (brotli)
+// size: 198 (min) 136 (brotli)
 
 import {
   register as o,
@@ -8,5 +8,5 @@ import {
   init as i,
 } from "@marko/runtime-tags/dom";
 import s from "./test-log";
-const a = m(3, (o, t) => r(o[0], t));
-o("1qy0hIFa", (o) => t(o, a, JSON.stringify(s))), i();
+const e = m(3, (o, t) => r(o[0], t));
+o("e", (o) => t(o, e, JSON.stringify(s))), i();

@@ -38,7 +38,7 @@ export default {
 
       const rendererId = program.scope.generateUidIdentifier("renderer");
       const {
-        markoOpts: { optimize },
+        markoOpts,
         opts: { filename },
       } = program.hub.file;
       program.pushContainer("body", [
@@ -59,7 +59,7 @@ export default {
           callRuntime(
             "createTemplate",
             rendererId,
-            t.stringLiteral(getTemplateId(optimize, `${filename}`)),
+            t.stringLiteral(getTemplateId(markoOpts, `${filename}`)),
           ),
         ),
       ]);

@@ -1,4 +1,4 @@
-// size: 590 (min) 324 (brotli)
+// size: 569 (min) 306 (brotli)
 
 import {
   register as n,
@@ -9,10 +9,10 @@ import {
   queueEffect as r,
   createRenderer as u,
   dynamicTagAttrs as s,
-  conditional as a,
-  init as m,
+  conditional as m,
+  init as a,
 } from "@marko/runtime-tags/dom";
-const d = n("Ux/0dqX4", (n) =>
+const e = n("g", (n) =>
     t(
       n[0],
       "click",
@@ -25,20 +25,20 @@ const d = n("Ux/0dqX4", (n) =>
     ),
   ),
   f = c(2, (n, t) => {
-    i(n[1], t), r(n, d);
+    i(n[1], t), r(n, e);
   }),
-  e = (n) => {
+  d = (n) => {
     f(n, 0);
   },
   k = n(
-    "nJhY4IXW",
+    "e",
     u("<button id=count> </button>", "/ D l&", (n) => {
-      e(n[0]);
+      d(n[0]);
     }),
   ),
   l = s(0, k),
-  p = a(0, (n) => l(n, () => ({})), l),
-  b = n("O3LagfRZ", (n) =>
+  p = m(0, (n) => l(n, () => ({})), l),
+  b = n("f", (n) =>
     t(
       n[1],
       "click",
@@ -57,4 +57,4 @@ const d = n("Ux/0dqX4", (n) =>
     },
     p,
   );
-m();
+a();

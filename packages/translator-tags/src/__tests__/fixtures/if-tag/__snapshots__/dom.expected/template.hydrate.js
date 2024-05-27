@@ -1,8 +1,8 @@
-// size: 199 (min) 123 (brotli)
+// size: 164 (min) 93 (brotli)
 
 import { register as o, createRenderer as m } from "@marko/runtime-tags/dom";
-o("7PP+5B0N", m("C", "")),
-  o("1XS5lsf4", m("B", "")),
-  o("M6kDZTTj", m("A", "")),
-  o("aD0Fsw1D", m("World", "")),
-  o("GM01LdVi", m("Hello", ""));
+o("b", m("C", "")),
+  o("c", m("B", "")),
+  o("d", m("A", "")),
+  o("e", m("World", "")),
+  o("f", m("Hello", ""));

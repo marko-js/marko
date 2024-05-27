@@ -1,4 +1,4 @@
-// size: 199 (min) 154 (brotli)
+// size: 192 (min) 129 (brotli)
 
 import {
   register as o,
@@ -6,15 +6,15 @@ import {
   value as i,
   data as m,
 } from "@marko/runtime-tags/dom";
-const r = i(2, (o, t) => m(o[0], t.text));
+const d = i(2, (o, t) => m(o[0], t.text));
 o(
-  "yZfIVR3r",
+  "c",
   t(
     " ",
     " ",
     void 0,
     void 0,
     void 0,
-    i(1, (o, t) => r(o, t[0])),
+    i(1, (o, t) => d(o, t[0])),
   ),
 );

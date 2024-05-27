@@ -1,97 +1,97 @@
-// size: 917 (min) 442 (brotli)
+// size: 875 (min) 402 (brotli)
 
 import {
   register as n,
-  on as o,
-  registerSubscriber as t,
+  on as t,
+  registerSubscriber as o,
   dynamicClosure as u,
   data as i,
   queueEffect as c,
-  registerRenderer as r,
-  createRenderer as l,
+  registerRenderer as l,
+  createRenderer as r,
   value as _,
-  dynamicSubscribers as b,
-  inConditionalScope as m,
-  queueSource as d,
-  closure as s,
-  conditional as e,
-  init as k,
+  dynamicSubscribers as d,
+  inConditionalScope as e,
+  queueSource as b,
+  closure as f,
+  conditional as m,
+  init as s,
 } from "@marko/runtime-tags/dom";
-const f = n("9oJMoY/u", (n) =>
-    o(
+const k = n("e", (n) =>
+    t(
       n[0],
       "click",
       ((n) => {
         const {
           _: {
-            _: { 4: o },
+            _: { 4: t },
           },
         } = n;
         return function () {
-          d(n._._, O, o + 1);
+          b(n._._, p, t + 1);
         };
       })(n),
     ),
   ),
-  v = r(
-    "I7+sr80A",
-    l("<button id=count> </button>", " D ", void 0, [
-      t(
-        "C+Vp7Pow",
+  v = l(
+    "g",
+    r("<button id=count> </button>", " D ", void 0, [
+      o(
+        "f",
         u(
           4,
-          (n, o) => {
-            i(n[1], o), c(n, f);
+          (n, t) => {
+            i(n[1], t), c(n, k);
           },
           (n) => n._._,
         ),
       ),
     ]),
   ),
-  a = e(1),
-  p = n("RObkSOLJ", (n) =>
-    o(
+  a = m(1),
+  g = n("h", (n) =>
+    t(
       n[0],
       "click",
       ((n) => {
         const {
-          _: { 3: o },
+          _: { 3: t },
         } = n;
         return function () {
-          d(n._, R, !o);
+          b(n._, q, !t);
         };
       })(n),
     ),
   ),
-  B = s(
+  D = f(
     3,
-    (n, o) => {
-      c(n, p), a(n, o ? v : null);
+    (n, t) => {
+      c(n, g), a(n, t ? v : null);
     },
     void 0,
     a,
   ),
-  D = r("mqmVZBUB", l("<button id=inner></button><!><!>", " b%D", void 0, [B])),
-  J = e(1),
-  O = _(4, null, b(4)),
-  R = _(3, null, m(B, 1)),
-  V = n("biWTuxiR", (n) =>
-    o(
+  h = l("i", r("<button id=inner></button><!><!>", " b%D", void 0, [D])),
+  j = m(1),
+  p = _(4, null, d(4)),
+  q = _(3, null, e(D, 1)),
+  w = n("j", (n) =>
+    t(
       n[0],
       "click",
       ((n) => {
-        const { 2: o } = n;
+        const { 2: t } = n;
         return function () {
-          d(n, g, !o);
+          b(n, x, !t);
         };
       })(n),
     ),
   ),
-  g = _(
+  x = _(
     2,
-    (n, o) => {
-      c(n, V), J(n, o ? D : null);
+    (n, t) => {
+      c(n, w), j(n, t ? h : null);
     },
-    J,
+    j,
   );
-k();
+s();

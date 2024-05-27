@@ -1,4 +1,4 @@
-// size: 352 (min) 231 (brotli)
+// size: 345 (min) 213 (brotli)
 
 import {
   value as n,
@@ -16,22 +16,22 @@ const l = o(2, (n) => {
     t(n[0], o);
   }),
   a = n(3, null, l),
-  e = c("008PXIN6", (n) =>
+  d = c("d", (n) =>
     r(
       n[1],
       "click",
       ((n) => {
         const { 2: o } = n;
         return function () {
-          s(n, f, o + 1);
+          s(n, e, o + 1);
         };
       })(n),
     ),
   ),
-  f = n(
+  e = n(
     2,
     (n, o) => {
-      m(n, e), a(n[0], o);
+      m(n, d), a(n[0], o);
     },
     i(0, a),
   );

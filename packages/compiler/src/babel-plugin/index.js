@@ -158,7 +158,7 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
   const isSource = markoOpts.output === "source";
   const isMigrate = markoOpts.output === "migrate";
   const canCache = !(isSource || isMigrate);
-  const id = getTemplateId(markoOpts.optimize, filename);
+  const id = getTemplateId(markoOpts, filename);
   const contentHash = canCache && createHash("MD5").update(code).digest("hex");
   const cacheKey = canCache && createHash("MD5").update(id).digest("hex");
 

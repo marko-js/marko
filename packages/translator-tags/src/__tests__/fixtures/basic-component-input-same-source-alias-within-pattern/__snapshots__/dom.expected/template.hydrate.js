@@ -1,39 +1,39 @@
-// size: 458 (min) 262 (brotli)
+// size: 444 (min) 244 (brotli)
 
 import {
   register as t,
-  on as n,
-  value as o,
-  queueEffect as c,
+  on as o,
+  value as c,
+  queueEffect as n,
   data as r,
-  queueSource as e,
-  intersections as i,
-  inChild as m,
+  queueSource as m,
+  intersections as e,
+  inChild as i,
   init as s,
 } from "@marko/runtime-tags/dom";
-const u = o(7, (t, n) => {
-    r(t[1], n),
-      ((t, n) => {
-        r(t[2], n);
-      })(t, n);
+const u = c(7, (t, o) => {
+    r(t[1], o),
+      ((t, o) => {
+        r(t[2], o);
+      })(t, o);
   }),
-  d = o(6, (t, n) => u(t, n.text)),
-  a = t("GinqTe+q", (t) => {
-    const { 5: o } = t;
-    n(t[0], "click", o);
+  a = c(6, (t, o) => u(t, o.text)),
+  d = t("d", (t) => {
+    const { 5: c } = t;
+    o(t[0], "click", c);
   }),
-  f = o(5, (t, n) => c(t, a)),
-  k = t("O2ud1l4d", (t) => {
-    const { 1: n } = t;
+  f = c(5, (t, o) => n(t, d)),
+  k = t("c", (t) => {
+    const { 1: o } = t;
     return function () {
-      e(t, l, n + 1);
+      m(t, x, o + 1);
     };
   }),
-  l = o(
+  x = c(
     1,
-    (t, n) => {
-      d(t[0], { text: n }), f(t[0], k(t));
+    (t, o) => {
+      a(t[0], { text: o }), f(t[0], k(t));
     },
-    i([m(0, d), m(0, f)]),
+    e([i(0, a), i(0, f)]),
   );
 s();

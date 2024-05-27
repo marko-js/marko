@@ -1,35 +1,35 @@
-// size: 346 (min) 211 (brotli)
+// size: 339 (min) 191 (brotli)
 
 import {
   register as c,
-  on as i,
-  queueSource as o,
-  value as n,
-  data as t,
+  on as o,
+  queueSource as n,
+  value as t,
+  data as i,
   intersection as m,
   init as r,
 } from "@marko/runtime-tags/dom";
-const a = m(2, (c) => {
-    const { 5: i, 6: o } = c;
-    t(c[4], i + o);
+const f = m(2, (c) => {
+    const { 5: o, 6: n } = c;
+    i(c[4], o + n);
   }),
-  f = n(6, (c, i) => t(c[3], i), a),
-  k = n(5, (c, i) => t(c[1], i), a);
-c("TiN/KiCa", (c) => {
-  i(
+  k = t(6, (c, o) => i(c[3], o), f),
+  s = t(5, (c, o) => i(c[1], o), f);
+c("d", (c) => {
+  o(
     c[0],
     "click",
     ((c) =>
       function () {
-        o(c, k, 10);
+        n(c, s, 10);
       })(c),
   ),
-    i(
+    o(
       c[2],
       "click",
       ((c) =>
         function () {
-          o(c, f, 5);
+          n(c, k, 5);
         })(c),
     );
 }),

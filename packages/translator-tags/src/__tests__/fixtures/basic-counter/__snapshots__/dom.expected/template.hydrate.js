@@ -1,27 +1,27 @@
-// size: 259 (min) 174 (brotli)
+// size: 252 (min) 160 (brotli)
 
 import {
-  register as t,
-  on as o,
-  queueSource as n,
-  value as r,
-  data as c,
+  register as o,
+  on as t,
+  queueSource as c,
+  value as n,
+  data as r,
   queueEffect as m,
   init as i,
 } from "@marko/runtime-tags/dom";
-const e = t("eSP3qy+t", (t) =>
-    o(
-      t[0],
+const s = o("c", (o) =>
+    t(
+      o[0],
       "click",
-      ((t) => {
-        const { 2: o } = t;
+      ((o) => {
+        const { 2: t } = o;
         return function () {
-          n(t, s, o + 1);
+          c(o, u, t + 1);
         };
-      })(t),
+      })(o),
     ),
   ),
-  s = r(2, (t, o) => {
-    c(t[1], o), m(t, e);
+  u = n(2, (o, t) => {
+    r(o[1], t), m(o, s);
   });
 i();

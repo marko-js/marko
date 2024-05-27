@@ -117,7 +117,7 @@ export default {
       }
 
       const {
-        markoOpts: { optimize },
+        markoOpts,
         opts: { filename },
       } = program.hub.file;
       program.node.body.push(
@@ -133,7 +133,7 @@ export default {
               undefined,
               programParamsSignal?.identifier,
             ),
-            t.stringLiteral(getTemplateId(optimize, `${filename}`)),
+            t.stringLiteral(getTemplateId(markoOpts, `${filename}`)),
           ),
         ),
       );

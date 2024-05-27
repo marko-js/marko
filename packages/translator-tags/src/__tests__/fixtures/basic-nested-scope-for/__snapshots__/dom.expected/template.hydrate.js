@@ -1,4 +1,4 @@
-// size: 391 (min) 238 (brotli)
+// size: 384 (min) 225 (brotli)
 
 import {
   register as t,
@@ -6,19 +6,19 @@ import {
   value as o,
   inLoopScope as c,
   queueSource as l,
-  closure as i,
-  intersection as r,
-  attr as a,
-  init as e,
+  closure as a,
+  intersection as e,
+  attr as i,
+  init as m,
 } from "@marko/runtime-tags/dom";
-const m = r(2, (t) => {
+const r = e(2, (t) => {
   const {
     _: { 1: n },
     3: o,
   } = t;
-  a(t[0], "data-selected", n === o), a(t[0], "data-multiple", o % n == 0);
+  i(t[0], "data-selected", n === o), i(t[0], "data-multiple", o % n == 0);
 });
-t("M0KirTnz", (t) =>
+t("c", (t) =>
   n(
     t[0],
     "click",
@@ -30,5 +30,5 @@ t("M0KirTnz", (t) =>
     })(t),
   ),
 );
-const s = o(1, null, c(i(1, null, void 0, m), 0));
-e();
+const s = o(1, null, c(a(1, null, void 0, r), 0));
+m();

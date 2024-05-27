@@ -1,4 +1,4 @@
-import type { types as t } from "@marko/compiler";
+import type { types as t, Config } from "@marko/compiler";
 
 export interface AttributeDefinition {
   allowExpressions: boolean;
@@ -314,7 +314,10 @@ export function getTagDefForTagName(
   tagName: string,
 ): TagDefinition | undefined;
 
-export function getTemplateId(optimize: boolean, request: string): string;
+export function getTemplateId(
+  optimize: boolean | Config,
+  request: string,
+): string;
 export function resolveTagImport(
   path: t.NodePath<any>,
   request: string,

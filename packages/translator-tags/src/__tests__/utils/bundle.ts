@@ -1,3 +1,4 @@
+import fs from "fs/promises";
 import zlib from "zlib";
 import * as compiler from "@marko/compiler";
 import pluginTerser from "@rollup/plugin-terser";
@@ -13,7 +14,9 @@ export async function bundle(
   entryTemplate: string,
   compilerConfig: compiler.Config,
 ) {
+  const optimizedRegistryIds = new Map<string, string>();
   const hydratePrefix = "\0hydrate:";
+  const entryCode = await fs.readFile(entryTemplate, "utf-8");
   const bundle = await rollup({
     input: hydratePrefix + entryTemplate,
     onwarn(warning, warn) {
@@ -48,7 +51,18 @@ export async function bundle(
             });
           }
         },
-        async load(id) {
+        load(id) {
+          if (id.startsWith(hydratePrefix)) {
+            id = id.slice(hydratePrefix.length);
+          }
+
+          if (id === entryTemplate) {
+            return entryCode;
+          }
+
+          return null;
+        },
+        async transform(code, id) {
           if (id.endsWith(".marko")) {
             const isHydrate = id.startsWith(hydratePrefix);
             if (isHydrate) {
@@ -56,9 +70,10 @@ export async function bundle(
             }
 
             return (
-              await compiler.compileFile(id, {
+              await compiler.compile(code, id, {
                 ...compilerConfig,
                 optimize: true,
+                optimizedRegistryIds,
                 output: isHydrate ? "hydrate" : "dom",
               })
             ).code;

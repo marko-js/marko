@@ -1,16 +1,16 @@
-// size: 338 (min) 205 (brotli)
+// size: 331 (min) 202 (brotli)
 
 import {
   register as n,
   on as o,
   queueSource as t,
   value as r,
-  data as m,
-  intersection as c,
+  data as c,
+  intersection as m,
   queueEffect as i,
   init as s,
 } from "@marko/runtime-tags/dom";
-const u = n("T3T47mzW", (n) =>
+const u = n("d", (n) =>
     o(
       n[0],
       "click",
@@ -33,8 +33,8 @@ const u = n("T3T47mzW", (n) =>
   ),
   a = r(
     2,
-    (n, o) => m(n[1], o.join("")),
-    c(2, (n) => {
+    (n, o) => c(n[1], o.join("")),
+    m(2, (n) => {
       i(n, u);
     }),
   );
