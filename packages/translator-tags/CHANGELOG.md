@@ -1,5 +1,16 @@
 # @marko/translator-tags
 
+## 0.2.0
+
+### Minor Changes
+
+- [#2238](https://github.com/marko-js/marko/pull/2238) [`a741f36`](https://github.com/marko-js/marko/commit/a741f36e60583a2403a912627765c3ec2aa824e5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add new optimizedRegistryIds compiler option
+
+### Patch Changes
+
+- Updated dependencies [[`a741f36`](https://github.com/marko-js/marko/commit/a741f36e60583a2403a912627765c3ec2aa824e5)]:
+  - @marko/babel-utils@6.5.0
+
 ## 0.1.14
 
 ### Patch Changes
