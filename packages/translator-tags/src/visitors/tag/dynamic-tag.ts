@@ -8,7 +8,7 @@ import {
 import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
-import { isOptimize, isOutputHTML } from "../../util/marko-config";
+import { isOutputHTML } from "../../util/marko-config";
 import {
   mergeReferences,
   getScopeAccessorLiteral,
@@ -128,7 +128,7 @@ export default {
                 t.identifier((tagExpression as t.Identifier).name),
                 t.stringLiteral(
                   getTemplateId(
-                    isOptimize(),
+                    markoOpts,
                     loadFileForTag(tag)!.metadata.marko.id,
                   ),
                 ),
@@ -143,7 +143,7 @@ export default {
                 "register",
                 t.stringLiteral(
                   getTemplateId(
-                    isOptimize(),
+                    markoOpts,
                     loadFileForTag(tag)!.metadata.marko.id,
                   ),
                 ),

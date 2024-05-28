@@ -114,6 +114,13 @@ const config = {
   optimize: undefined,
 
   /**
+   * If `optimize` is enabled you can provide a Map which the compiler will
+   * use to store shorter registry/template id's in. This can only be used
+   * if the same `optimizedRegistryIds` are used for both server and client compilations.
+   */
+  optimizedRegistryIds: undefined,
+
+  /**
    * This option should be set if `hydrate` output is specified.
    * Maps a virtual dependency to a resolved file which can be implemented
    * for specific bundlers.
