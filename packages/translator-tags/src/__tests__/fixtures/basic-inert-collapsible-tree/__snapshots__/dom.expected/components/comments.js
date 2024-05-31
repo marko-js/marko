@@ -58,7 +58,7 @@ const _setup$forBody = _scope => {
 };
 const _forBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_renderer", /* @__PURE__ */_createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", _setup$forBody, [_input$forBody], void 0, _params_2$forBody));
 const _for = /* @__PURE__ */_loopOf("#ul/0", _forBody);
-export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _for(_scope, [input.comments]), _inLoopScope(_input$forBody, "#ul/0"));
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _for(_scope, [input.comments]), _intersections([_for, _inLoopScope(_input$forBody, "#ul/0")]));
 export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
 export const _template_ = "<ul></ul>";
 export const _walks_ = /* get, over(1) */" b";

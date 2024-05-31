@@ -238,7 +238,8 @@ function loop(
   ) => {
     if (valueOrOp === DIRTY) return;
     if (valueOrOp === MARK || valueOrOp === CLEAN) {
-      for (const childScope of scope[loopScopeAccessor]) {
+      for (const childScope of scope[loopScopeAccessor] ??
+        scope[nodeAccessor + AccessorChar.LoopScopeMap].values()) {
         params?.(childScope, valueOrOp);
         for (const signal of closureSignals) {
           signal(childScope, valueOrOp);
