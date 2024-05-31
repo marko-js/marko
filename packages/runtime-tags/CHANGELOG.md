@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.1.6
+
+### Patch Changes
+
+- [#2240](https://github.com/marko-js/marko/pull/2240) [`a6bac65`](https://github.com/marko-js/marko/commit/a6bac65c114a22ac705490f9fbf2a81463762cd1) Thanks [@mlrawlings](https://github.com/mlrawlings)! - Stale closure bug
+
 ## 0.1.5
 
 ### Patch Changes
