@@ -28,6 +28,7 @@ import {
 } from "../util/sections";
 import {
   addValue,
+  getClosures,
   getSerializedScopeProperties,
   getSignal,
   setForceResumeScope,
@@ -247,27 +248,31 @@ const translateDOM = {
       );
     };
 
-    // signal.hasDownstreamIntersections = () => {
-    //   if (getClosures(bodySection).length > 0) {
-    //     return true;
-    //   }
+    const paramIdentifiers = Object.values(
+      tagBody.getBindingIdentifiers(),
+    ) as t.Identifier[];
 
-    //   if (paramIdentifiers.length) {
-    //     const binding = paramIdentifiers[0].extra!.binding!;
-    //     for (const { referencedBindings } of binding.downstreamExpressions) {
-    //       if (
-    //         getSignal(
-    //           bodySection,
-    //           referencedBindings,
-    //         ).hasDownstreamIntersections()
-    //       ) {
-    //         return true;
-    //       }
-    //     }
-    //   }
+    signal.hasDownstreamIntersections = () => {
+      if (getClosures(bodySection).length > 0) {
+        return true;
+      }
 
-    //   return false;
-    // };
+      if (paramIdentifiers.length) {
+        const binding = paramIdentifiers[0].extra!.binding!;
+        for (const { referencedBindings } of binding.downstreamExpressions) {
+          if (
+            getSignal(
+              bodySection,
+              referencedBindings,
+            ).hasDownstreamIntersections()
+          ) {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    };
 
     addValue(
       tagSection,

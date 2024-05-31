@@ -65,6 +65,9 @@ container.querySelector("button").click()
     <button>
       1
     </button>
+    <button>
+      2
+    </button>
     <!--M*1 #button/0-->
     <!--M|0 #text/0 1-->
     <script>
@@ -76,7 +79,7 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-
+inserted #document/html0/body1/button2
 ```
 
 
@@ -94,6 +97,12 @@ container.querySelector("button").click()
     <button>
       1
     </button>
+    <button>
+      2
+    </button>
+    <button>
+      3
+    </button>
     <!--M*1 #button/0-->
     <!--M|0 #text/0 1-->
     <script>
@@ -105,7 +114,7 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-
+inserted #document/html0/body1/button3
 ```
 
 
@@ -123,6 +132,15 @@ container.querySelector("button").click()
     <button>
       1
     </button>
+    <button>
+      2
+    </button>
+    <button>
+      3
+    </button>
+    <button>
+      4
+    </button>
     <!--M*1 #button/0-->
     <!--M|0 #text/0 1-->
     <script>
@@ -134,7 +152,7 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-
+inserted #document/html0/body1/button4
 ```
 
 
@@ -152,6 +170,18 @@ container.querySelector("button").click()
     <button>
       1
     </button>
+    <button>
+      2
+    </button>
+    <button>
+      3
+    </button>
+    <button>
+      4
+    </button>
+    <button>
+      5
+    </button>
     <!--M*1 #button/0-->
     <!--M|0 #text/0 1-->
     <script>
@@ -163,5 +193,5 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-
+inserted #document/html0/body1/button5
 ```

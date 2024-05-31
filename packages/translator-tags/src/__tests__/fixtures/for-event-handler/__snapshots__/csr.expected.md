@@ -44,12 +44,15 @@ container.querySelector("button").click()
 <button>
   1
 </button>
+<button>
+  2
+</button>
 <!---->
 ```
 
 # Mutations
 ```
-
+inserted button3
 ```
 
 
@@ -64,12 +67,18 @@ container.querySelector("button").click()
 <button>
   1
 </button>
+<button>
+  2
+</button>
+<button>
+  3
+</button>
 <!---->
 ```
 
 # Mutations
 ```
-
+inserted button4
 ```
 
 
@@ -84,12 +93,21 @@ container.querySelector("button").click()
 <button>
   1
 </button>
+<button>
+  2
+</button>
+<button>
+  3
+</button>
+<button>
+  4
+</button>
 <!---->
 ```
 
 # Mutations
 ```
-
+inserted button5
 ```
 
 
@@ -104,10 +122,22 @@ container.querySelector("button").click()
 <button>
   1
 </button>
+<button>
+  2
+</button>
+<button>
+  3
+</button>
+<button>
+  4
+</button>
+<button>
+  5
+</button>
 <!---->
 ```
 
 # Mutations
 ```
-
+inserted button6
 ```
