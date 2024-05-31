@@ -1,5 +1,14 @@
 # @marko/translator-tags
 
+## 0.2.1
+
+### Patch Changes
+
+- [#2240](https://github.com/marko-js/marko/pull/2240) [`a6bac65`](https://github.com/marko-js/marko/commit/a6bac65c114a22ac705490f9fbf2a81463762cd1) Thanks [@mlrawlings](https://github.com/mlrawlings)! - Stale closure bug
+
+- Updated dependencies [[`a6bac65`](https://github.com/marko-js/marko/commit/a6bac65c114a22ac705490f9fbf2a81463762cd1)]:
+  - @marko/runtime-tags@0.1.6
+
 ## 0.2.0
 
 ### Minor Changes
