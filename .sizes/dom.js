@@ -548,9 +548,9 @@ function Ne(e, t, r) {
   return (s, d) => {
     if (d === I) return;
     if (d === O || d === q) {
-      for (let e of s[o]) {
-        f?.(e, d);
-        for (let t of l) t(e, d);
+      for (let t of s[o] ?? s[e + "("].values()) {
+        f?.(t, d);
+        for (let e of l) e(t, d);
       }
       return;
     }

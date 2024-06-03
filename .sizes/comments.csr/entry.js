@@ -17,7 +17,7 @@ import {
   k as b,
   m as f,
   n as p,
-} from "./runtime-Cw1kg4Iu.js";
+} from "./runtime-BUIbQm-R.js";
 const h = o(2, (s) => {
     const {
       _: { 6: n, 8: a },
@@ -58,23 +58,23 @@ const h = o(2, (s) => {
     ),
   ),
   V = t(9, (s, n) => {
-    u(s[0], "hidden", !n), d(s[3], n ? "[-]" : "[+]"), e(s, G);
+    m(s[0], "hidden", !n), d(s[3], n ? "[-]" : "[+]"), e(s, G);
   }),
-  X = t(8, (s, n) => u(s[0], "id", n), c(g, 4)),
+  X = t(8, (s, n) => m(s[0], "id", n), u(g, 4)),
   _ = t(7, null, D),
   q = t(
     6,
     (s, n) => {
       d(s[1], n.text), E(s, n.comments ? k : null);
     },
-    m([E, c(j, 4)]),
+    l([E, u(j, 4)]),
   ),
   x = t(
     5,
     (s, n) => {
       q(s, n[0]), _(s, n[1]);
     },
-    m([q, _]),
+    l([q, _]),
   ),
   y = a(2, null, void 0, D),
   A = i(
@@ -93,7 +93,7 @@ const h = o(2, (s) => {
       ),
     ),
   ),
-  H = t(2, (s, n) => A(s, [n.comments]), l(y, 0)),
+  H = t(2, (s, n) => A(s, [n.comments]), l([A, c(y, 0)])),
   K = "<ul></ul>",
   P = " b",
   w = function () {},

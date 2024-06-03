@@ -16,7 +16,7 @@ import {
   k as f,
   l as p,
   m as b,
-} from "./runtime-BDGaykzf.js";
+} from "./runtime-C35w6ZnD.js";
 const h = m(2, (s) => {
     const {
       _: { 6: n, 8: a },
@@ -92,7 +92,7 @@ const h = m(2, (s) => {
       ),
     ),
   ),
-  H = o(2, (s, n) => D(s, [n.comments]), v(A, 0)),
+  H = o(2, (s, n) => D(s, [n.comments]), u([D, v(A, 0)])),
   K = "<ul></ul>",
   V = " b",
   w = function () {};
