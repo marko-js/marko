@@ -1,31 +1,31 @@
 import {
-  c as t,
-  a as s,
+  c as s,
+  a as t,
   v as a,
   d as n,
   q as o,
   r as c,
   o as i,
-  b as m,
+  b as r,
 } from "./runtime-C853KoX8.js";
-const r = c("eSP3qy+t", (t) =>
+const u = c("XBSGKvBc", (s) =>
     i(
-      t[0],
+      s[0],
       "click",
-      ((t) => {
-        const { 2: s } = t;
+      ((s) => {
+        const { 2: t } = s;
         return function () {
-          m(t, u, s + 1);
+          r(s, m, t + 1);
         };
-      })(t),
+      })(s),
     ),
   ),
-  u = a(2, (t, s) => {
-    n(t[1], s), o(t, r);
+  m = a(2, (s, t) => {
+    n(s[1], t), o(s, u);
   });
-t(
-  s("<div><button> </button></div>", "D D m", (t) => {
-    u(t, 0);
+s(
+  t("<div><button> </button></div>", "D D m", (s) => {
+    m(s, 0);
   }),
-  "QIqKtmwZ",
+  "tPaZsVqd",
 ).mount();

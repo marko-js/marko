@@ -1,4 +1,4 @@
-// size: 328 (min) 196 (brotli)
+// size: 329 (min) 201 (brotli)
 
 import {
   register as n,
@@ -10,7 +10,7 @@ import {
   queueEffect as m,
   init as u,
 } from "@marko/runtime-tags/dom";
-const i = n("c", (n) =>
+const i = n("a1", (n) =>
     o(
       n[0],
       "click",

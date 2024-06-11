@@ -1,4 +1,4 @@
-// size: 111 (min) 80 (brotli)
+// size: 112 (min) 89 (brotli)
 
 import { register as o, createRenderer as t } from "@marko/runtime-tags/dom";
-o("c", t("This is the body content", ""));
+o("b0", t("This is the body content", ""));

@@ -53,7 +53,8 @@ export default {
 
     extra.registerId = getTemplateId(
       markoOpts,
-      `${filename}_${section.id}/${name + id}`,
+      filename as string,
+      `${section.id}/${name + id}`,
     );
   },
 };

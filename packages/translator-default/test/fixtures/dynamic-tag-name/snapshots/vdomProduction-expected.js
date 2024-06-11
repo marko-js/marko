@@ -1,5 +1,5 @@
 import { t as _t } from "marko/dist/runtime/vdom/index.js";
-const _marko_componentType = "FiPq+pCl",
+const _marko_componentType = "oWpiEthb",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import tagA from "./components/tag-a/index.marko";

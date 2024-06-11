@@ -296,29 +296,55 @@ export function loadFileForImport(file, request) {
   }
 }
 
-export function getTemplateId(opts, request) {
+const idCache = new WeakMap();
+export function getTemplateId(opts, request, child) {
   const id = relative(ROOT, request);
   const optimize = typeof opts === "object" ? opts.optimize : opts;
 
   if (optimize) {
-    const optimizedRegistryIds =
-      typeof opts === "object" && opts.optimizedRegistryIds;
-    if (optimizedRegistryIds) {
-      let registryId = optimizedRegistryIds.get(id);
-      if (!registryId) {
-        optimizedRegistryIds.set(
-          id,
-          (registryId = encodeTemplateId(optimizedRegistryIds.size)),
-        );
-      }
+    const optimizeKnownTemplates =
+      typeof opts === "object" && opts.optimizeKnownTemplates;
+    const knownTemplatesSize = optimizeKnownTemplates?.length || 0;
 
-      return registryId;
+    if (knownTemplatesSize) {
+      let lookup = idCache.get(optimizeKnownTemplates);
+      if (!lookup) {
+        lookup = new Map();
+        idCache.set(optimizeKnownTemplates, lookup);
+        for (let i = 0; i < knownTemplatesSize; i++) {
+          lookup.set(optimizeKnownTemplates[i], {
+            id: encodeTemplateId(i),
+            children: new Map(),
+          });
+        }
+      }
+      let registered = lookup.get(request);
+      if (registered) {
+        if (child) {
+          let childId = registered.children.get(child);
+          if (childId === undefined) {
+            childId = registered.children.size;
+            registered.children.set(child, childId);
+          }
+          return registered.id + childId;
+        }
+
+        return registered.id;
+      }
     }
 
-    return createHash("MD5").update(id).digest("base64").slice(0, 8);
+    const hash = createHash("MD5").update(id);
+
+    if (child) {
+      hash.update(child);
+    }
+
+    return encodeTemplateId(
+      parseInt(hash.digest("hex").slice(0, 11), 16) + knownTemplatesSize,
+    );
   }
 
-  return id;
+  return id + (child ? `_${child}` : "");
 }
 
 export function resolveTagImport(path, request) {
@@ -368,23 +394,18 @@ function createNewFileOpts(opts, filename) {
   };
 }
 
-const ENCODE_START_CHARS =
-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_";
-const ENCODE_START_CHARS_LEN = ENCODE_START_CHARS.length;
-const ENCODE_CHARS =
-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$_";
+const ENCODE_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_";
 const ENCODE_CHARS_LEN = ENCODE_CHARS.length;
 
 function encodeTemplateId(index) {
-  let mod = index % ENCODE_START_CHARS_LEN;
-  let id = ENCODE_START_CHARS[mod];
-  index = (index - mod) / ENCODE_START_CHARS_LEN;
+  let id = "";
+  let cur = index;
 
-  while (index > 0) {
-    mod = index % ENCODE_CHARS_LEN;
+  do {
+    const mod = cur % ENCODE_CHARS_LEN;
     id += ENCODE_CHARS[mod];
-    index = (index - mod) / ENCODE_CHARS_LEN;
-  }
+    cur = (cur - mod) / ENCODE_CHARS_LEN;
+  } while (cur > 0);
 
   return id;
 }

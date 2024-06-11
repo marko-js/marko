@@ -1,6 +1,5 @@
 import {
   assertAttributesOrArgs,
-  getTemplateId,
   importDefault,
   importNamed,
   loadFileForTag,
@@ -126,12 +125,7 @@ export default {
             t.expressionStatement(
               t.callExpression(serialized5to6, [
                 t.identifier((tagExpression as t.Identifier).name),
-                t.stringLiteral(
-                  getTemplateId(
-                    markoOpts,
-                    loadFileForTag(tag)!.metadata.marko.id,
-                  ),
-                ),
+                t.stringLiteral(loadFileForTag(tag)!.metadata.marko.id),
               ]),
             ),
           );
@@ -141,12 +135,7 @@ export default {
             t.expressionStatement(
               callRuntime(
                 "register",
-                t.stringLiteral(
-                  getTemplateId(
-                    markoOpts,
-                    loadFileForTag(tag)!.metadata.marko.id,
-                  ),
-                ),
+                t.stringLiteral(loadFileForTag(tag)!.metadata.marko.id),
                 t.identifier((tagExpression as t.Identifier).name),
               ),
             ),

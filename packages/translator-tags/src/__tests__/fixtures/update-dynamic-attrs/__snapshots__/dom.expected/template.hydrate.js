@@ -1,12 +1,12 @@
-// size: 129 (min) 99 (brotli)
+// size: 131 (min) 101 (brotli)
 
 import {
   register as m,
-  attrsEvents as o,
-  init as r,
+  attrsEvents as a,
+  init as o,
 } from "@marko/runtime-tags/dom";
-m("b", (m) => {
-  o(m, 1), o(m, 2);
+m("a0", (m) => {
+  a(m, 1), a(m, 2);
 }),
-  m("c", (m) => o(m, 0)),
-  r();
+  m("a1", (m) => a(m, 0)),
+  o();

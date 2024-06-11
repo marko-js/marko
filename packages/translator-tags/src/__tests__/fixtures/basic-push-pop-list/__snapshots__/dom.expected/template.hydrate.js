@@ -1,4 +1,4 @@
-// size: 561 (min) 307 (brotli)
+// size: 564 (min) 305 (brotli)
 
 import {
   register as o,
@@ -9,22 +9,22 @@ import {
   queueEffect as r,
   data as s,
   intersection as u,
-  loopOf as d,
-  init as e,
+  loopOf as a,
+  init as l,
 } from "@marko/runtime-tags/dom";
-const l = t(2, (o, n) => s(o[0], n)),
-  m = o(
-    "d",
+const m = t(2, (o, n) => s(o[0], n)),
+  d = o(
+    "a2",
     n(
       " ",
       " ",
       void 0,
       void 0,
       void 0,
-      t(1, (o, n) => l(o, n[0])),
+      t(1, (o, n) => m(o, n[0])),
     ),
   ),
-  f = o("e", (o) =>
+  e = o("a3", (o) =>
     c(
       o[1],
       "click",
@@ -37,11 +37,11 @@ const l = t(2, (o, n) => s(o[0], n)),
       })(o),
     ),
   ),
-  k = u(2, (o) => {
-    r(o, f);
+  f = u(2, (o) => {
+    r(o, e);
   }),
-  v = d(0, m),
-  a = o("f", (o) =>
+  k = a(0, d),
+  v = o("a4", (o) =>
     c(
       o[2],
       "click",
@@ -56,9 +56,9 @@ const l = t(2, (o, n) => s(o[0], n)),
   g = t(
     4,
     (o, n) => {
-      r(o, a), v(o, [n]);
+      r(o, v), k(o, [n]);
     },
-    k,
+    f,
   ),
-  p = t(3, null, k);
-e();
+  p = t(3, null, f);
+l();

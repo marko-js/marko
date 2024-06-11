@@ -1,51 +1,51 @@
-// size: 665 (min) 315 (brotli)
+// size: 670 (min) 316 (brotli)
 
 import {
-  registerSubscriber as n,
-  dynamicClosure as l,
-  data as o,
-  registerRenderer as d,
+  registerSubscriber as a,
+  dynamicClosure as n,
+  data as l,
+  registerRenderer as o,
   createRenderer as i,
-  value as a,
+  value as d,
   intersections as s,
   inConditionalScope as u,
   dynamicSubscribers as m,
   closure as p,
   conditional as v,
 } from "@marko/runtime-tags/dom";
-const r = d(
-    "c",
+const r = o(
+    "a1",
     i("<span> </span>", "D ", void 0, [
-      n(
-        "b",
-        l(
+      a(
+        "a0",
+        n(
           5,
-          (n, l) => o(n[0], l),
-          (n) => n._._,
+          (a, n) => l(a[0], n),
+          (a) => a._._,
         ),
       ),
     ]),
   ),
-  t = d(
-    "e",
+  t = o(
+    "a3",
     i("<span> </span>", "D ", void 0, [
-      n(
-        "d",
-        l(
+      a(
+        "a2",
+        n(
           4,
-          (n, l) => o(n[0], l),
-          (n) => n._._,
+          (a, n) => l(a[0], n),
+          (a) => a._._,
         ),
       ),
     ]),
   ),
   D = v(1),
   _ = v(0),
-  b = p(5, (n, l) => D(n, l ? r : null), void 0, D),
-  c = p(4, (n, l) => _(n, l ? t : null), void 0, _),
-  e = d("f", i("<!><!><!><!>", "D%b%D", void 0, [c, b])),
+  b = p(5, (a, n) => D(a, n ? r : null), void 0, D),
+  c = p(4, (a, n) => _(a, n ? t : null), void 0, _),
+  e = o("a4", i("<!><!><!><!>", "D%b%D", void 0, [c, b])),
   f = v(0),
-  g = a(5, null, s([u(b, 0), m(5)])),
-  k = a(4, null, s([u(c, 0), m(4)])),
-  h = a(3, (n, l) => f(n, l ? e : null), f);
+  g = d(5, null, s([u(b, 0), m(5)])),
+  k = d(4, null, s([u(c, 0), m(4)])),
+  h = d(3, (a, n) => f(a, n ? e : null), f);
 s([h, k, g]);

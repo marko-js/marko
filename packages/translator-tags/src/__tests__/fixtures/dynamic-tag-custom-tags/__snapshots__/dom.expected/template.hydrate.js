@@ -1,15 +1,15 @@
-// size: 752 (min) 369 (brotli)
+// size: 753 (min) 345 (brotli)
 
 import {
   createTemplate as i,
   createRenderer as o,
   value as n,
   data as v,
-  dynamicTagAttrs as d,
-  register as t,
-  on as c,
-  queueSource as l,
-  queueEffect as a,
+  dynamicTagAttrs as t,
+  register as c,
+  on as d,
+  queueSource as a,
+  queueEffect as l,
   conditional as u,
   intersection as r,
   init as s,
@@ -25,7 +25,7 @@ var f = i(
     void 0,
     n(1, (i, o) => m(i, o[0])),
   ),
-  "d",
+  "a",
 );
 const h = n(3, (i, o) => v(i[0], o)),
   b = n(2, (i, o) => h(i, o.value));
@@ -38,9 +38,9 @@ var k = i(
     void 0,
     n(1, (i, o) => b(i, o[0])),
   ),
-  "e",
+  "b",
 );
-const C = d(0),
+const C = t(0),
   D = u(
     0,
     null,
@@ -49,14 +49,14 @@ const C = d(0),
       C(i, () => ({ value: o }));
     }),
   ),
-  g = t("c", (i) =>
-    c(
+  g = c("c1", (i) =>
+    d(
       i[1],
       "click",
       ((i) => {
         const { 2: o } = i;
         return function () {
-          l(i, p, o === f ? k : f);
+          a(i, p, o === f ? k : f);
         };
       })(i),
     ),
@@ -64,7 +64,7 @@ const C = d(0),
   p = n(
     2,
     (i, o) => {
-      a(i, g), D(i, o);
+      l(i, g), D(i, o);
     },
     D,
   );
