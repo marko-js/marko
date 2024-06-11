@@ -1,55 +1,55 @@
-// size: 647 (min) 348 (brotli)
+// size: 651 (min) 366 (brotli)
 
 import {
   register as o,
   attrsEvents as r,
   value as n,
-  attrs as d,
-  queueEffect as e,
-  conditional as t,
-  queueSource as c,
-  registerSubscriber as i,
-  dynamicClosure as m,
-  data as f,
-  registerRenderer as s,
-  createRenderer as u,
-  bindRenderer as a,
-  intersections as k,
-  inChild as y,
-  dynamicSubscribers as B,
-  init as g,
+  attrs as t,
+  queueEffect as d,
+  conditional as e,
+  queueSource as i,
+  registerSubscriber as m,
+  dynamicClosure as c,
+  data as a,
+  registerRenderer as b,
+  createRenderer as s,
+  bindRenderer as u,
+  intersections as f,
+  inChild as k,
+  dynamicSubscribers as y,
+  init as B,
 } from "@marko/runtime-tags/dom";
-const l = t(1),
-  p = o("f", (o) => r(o, 0)),
-  v = n(4, (o, r) => l(o, r), l),
-  C = n(
+const g = e(1),
+  l = o("a0", (o) => r(o, 0)),
+  p = n(4, (o, r) => g(o, r), g),
+  v = n(
     3,
     (o, r) => {
       ((o, r) => {
-        d(o, 0, r), e(o, p);
+        t(o, 0, r), d(o, l);
       })(o, r),
-        v(o, r.renderBody);
+        p(o, r.renderBody);
     },
-    v,
+    p,
   ),
-  b = o("c", (o) => {
+  C = o("b0", (o) => {
     const { 1: r } = o;
     return function () {
-      c(o, j, r + 1);
+      i(o, j, r + 1);
     };
   }),
-  h = s(
-    "e",
-    u(" ", " ", void 0, [
-      i(
-        "d",
-        m(1, (o, r) => f(o[0], r)),
+  h = b(
+    "b2",
+    s(" ", " ", void 0, [
+      m(
+        "b1",
+        c(1, (o, r) => a(o[0], r)),
       ),
     ]),
   ),
   j = n(
     1,
-    (o, r) => C(o[0], { onClick: b(o), renderBody: a(o, h) }),
-    k([y(0, C), B(1)]),
+    (o, r) => v(o[0], { onClick: C(o), renderBody: u(o, h) }),
+    f([k(0, v), y(1)]),
   );
-g();
+B();

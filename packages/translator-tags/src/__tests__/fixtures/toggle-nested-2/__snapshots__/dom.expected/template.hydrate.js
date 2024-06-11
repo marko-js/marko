@@ -1,23 +1,23 @@
-// size: 875 (min) 402 (brotli)
+// size: 881 (min) 402 (brotli)
 
 import {
   register as n,
   on as t,
   registerSubscriber as o,
   dynamicClosure as u,
-  data as i,
-  queueEffect as c,
+  data as c,
+  queueEffect as i,
   registerRenderer as l,
   createRenderer as r,
-  value as _,
-  dynamicSubscribers as d,
-  inConditionalScope as e,
+  value as a,
+  dynamicSubscribers as _,
+  inConditionalScope as d,
   queueSource as b,
-  closure as f,
+  closure as e,
   conditional as m,
   init as s,
 } from "@marko/runtime-tags/dom";
-const k = n("e", (n) =>
+const f = n("a3", (n) =>
     t(
       n[0],
       "click",
@@ -28,28 +28,28 @@ const k = n("e", (n) =>
           },
         } = n;
         return function () {
-          b(n._._, p, t + 1);
+          b(n._._, j, t + 1);
         };
       })(n),
     ),
   ),
-  v = l(
-    "g",
+  k = l(
+    "a5",
     r("<button id=count> </button>", " D ", void 0, [
       o(
-        "f",
+        "a4",
         u(
           4,
           (n, t) => {
-            i(n[1], t), c(n, k);
+            c(n[1], t), i(n, f);
           },
           (n) => n._._,
         ),
       ),
     ]),
   ),
-  a = m(1),
-  g = n("h", (n) =>
+  v = m(1),
+  D = n("a6", (n) =>
     t(
       n[0],
       "click",
@@ -63,19 +63,19 @@ const k = n("e", (n) =>
       })(n),
     ),
   ),
-  D = f(
+  g = e(
     3,
     (n, t) => {
-      c(n, g), a(n, t ? v : null);
+      i(n, D), v(n, t ? k : null);
     },
     void 0,
-    a,
+    v,
   ),
-  h = l("i", r("<button id=inner></button><!><!>", " b%D", void 0, [D])),
-  j = m(1),
-  p = _(4, null, d(4)),
-  q = _(3, null, e(D, 1)),
-  w = n("j", (n) =>
+  p = l("a7", r("<button id=inner></button><!><!>", " b%D", void 0, [g])),
+  h = m(1),
+  j = a(4, null, _(4)),
+  q = a(3, null, d(g, 1)),
+  w = n("a8", (n) =>
     t(
       n[0],
       "click",
@@ -87,11 +87,11 @@ const k = n("e", (n) =>
       })(n),
     ),
   ),
-  x = _(
+  x = a(
     2,
     (n, t) => {
-      c(n, w), j(n, t ? h : null);
+      i(n, w), h(n, t ? p : null);
     },
-    j,
+    h,
   );
 s();

@@ -1,4 +1,4 @@
-// size: 384 (min) 225 (brotli)
+// size: 385 (min) 226 (brotli)
 
 import {
   register as t,
@@ -18,7 +18,7 @@ const r = e(2, (t) => {
   } = t;
   i(t[0], "data-selected", n === o), i(t[0], "data-multiple", o % n == 0);
 });
-t("c", (t) =>
+t("a1", (t) =>
   n(
     t[0],
     "click",

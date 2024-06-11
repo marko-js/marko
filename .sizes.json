@@ -30,7 +30,7 @@
       "name": "counter 💧",
       "user": {
         "min": 219,
-        "brotli": 158
+        "brotli": 160
       },
       "runtime": {
         "min": 2297,
@@ -38,14 +38,14 @@
       },
       "total": {
         "min": 2516,
-        "brotli": 1244
+        "brotli": 1246
       }
     },
     {
       "name": "comments",
       "user": {
         "min": 1071,
-        "brotli": 598
+        "brotli": 588
       },
       "runtime": {
         "min": 7435,
@@ -53,22 +53,22 @@
       },
       "total": {
         "min": 8506,
-        "brotli": 3662
+        "brotli": 3652
       }
     },
     {
       "name": "comments 💧",
       "user": {
-        "min": 939,
-        "brotli": 545
+        "min": 934,
+        "brotli": 544
       },
       "runtime": {
         "min": 7927,
         "brotli": 3302
       },
       "total": {
-        "min": 8866,
-        "brotli": 3847
+        "min": 8861,
+        "brotli": 3846
       }
     }
   ]

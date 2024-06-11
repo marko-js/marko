@@ -1,4 +1,4 @@
-// size: 453 (min) 237 (brotli)
+// size: 456 (min) 240 (brotli)
 
 import {
   register as t,
@@ -10,31 +10,31 @@ import {
   init as u,
 } from "@marko/runtime-tags/dom";
 const i = t(
-    "b",
+    "a0",
     (t) =>
       function () {
         this.onUpdate();
       },
   ),
-  s = t("c", (t) => {
+  a = t("a1", (t) => {
     const { 1: n } = t;
     return function () {
       (document.getElementById("ref").textContent = `x=${n}, was=${this.cur}`),
         (this.cur = n);
     };
   }),
-  m = t("e", (t) => {
-    n(t, 3, { onMount: i(t), onUpdate: s(t) }),
+  s = t("a3", (t) => {
+    n(t, 3, { onMount: i(t), onUpdate: a(t) }),
       o(
         t[0],
         "click",
         ((t) => {
           const { 1: n } = t;
           return function () {
-            e(t, a, n + 1);
+            e(t, m, n + 1);
           };
         })(t),
       );
   }),
-  a = c(1, (t, n) => r(t, m));
+  m = c(1, (t, n) => r(t, s));
 u();

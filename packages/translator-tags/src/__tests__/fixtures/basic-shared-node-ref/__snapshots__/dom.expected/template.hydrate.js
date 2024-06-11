@@ -1,4 +1,4 @@
-// size: 567 (min) 313 (brotli)
+// size: 570 (min) 291 (brotli)
 
 import {
   register as n,
@@ -9,14 +9,14 @@ import {
   queueEffect as r,
   attr as e,
   data as u,
-  loopOf as d,
-  init as f,
+  loopOf as a,
+  init as d,
 } from "@marko/runtime-tags/dom";
 const m = t(2, (n, o) => u(n[0], o)),
-  s = d(
+  s = a(
     0,
     n(
-      "e",
+      "a3",
       o(
         "<li> </li>",
         "D ",
@@ -27,20 +27,20 @@ const m = t(2, (n, o) => u(n[0], o)),
       ),
     ),
   ),
-  l = n("f", (n) =>
+  f = n("a4", (n) =>
     i(
       n[2],
       "click",
       ((n) => {
         const { 4: o } = n;
         return function () {
-          c(n, v, [].concat(o).reverse());
+          c(n, l, [].concat(o).reverse());
         };
       })(n),
     ),
   ),
-  v = t(4, (n, o) => {
-    r(n, l),
+  l = t(4, (n, o) => {
+    r(n, f),
       s(n, [
         o,
         function (n) {
@@ -48,7 +48,7 @@ const m = t(2, (n, o) => u(n[0], o)),
         },
       ]);
   }),
-  a = n("g", (n) =>
+  v = n("a5", (n) =>
     i(
       n[1],
       "click",
@@ -61,6 +61,6 @@ const m = t(2, (n, o) => u(n[0], o)),
     ),
   ),
   k = t(3, (n, o) => {
-    e(n[0], "hidden", !o), r(n, a);
+    e(n[0], "hidden", !o), r(n, v);
   });
-f();
+d();

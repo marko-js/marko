@@ -1,4 +1,4 @@
-// size: 102 (min) 81 (brotli)
+// size: 103 (min) 82 (brotli)
 
 import { register as t, init as o } from "@marko/runtime-tags/dom";
-t("c", (t) => (t[0].textContent = "hello")), o();
+t("a1", (t) => (t[0].textContent = "hello")), o();

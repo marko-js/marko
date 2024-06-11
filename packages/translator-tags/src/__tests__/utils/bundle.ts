@@ -1,9 +1,11 @@
 import fs from "fs/promises";
+import path from "path";
 import zlib from "zlib";
 import * as compiler from "@marko/compiler";
 import pluginTerser from "@rollup/plugin-terser";
 import { format } from "prettier";
 import { type OutputChunk, rollup } from "rollup";
+import glob from "tiny-glob";
 
 interface Sizes {
   min: number;
@@ -14,7 +16,10 @@ export async function bundle(
   entryTemplate: string,
   compilerConfig: compiler.Config,
 ) {
-  const optimizedRegistryIds = new Map<string, string>();
+  const optimizeKnownTemplates: string[] = await glob(
+    path.join(path.dirname(entryTemplate), "**/*.marko"),
+    { absolute: true },
+  );
   const hydratePrefix = "\0hydrate:";
   const entryCode = await fs.readFile(entryTemplate, "utf-8");
   const bundle = await rollup({
@@ -73,7 +78,7 @@ export async function bundle(
               await compiler.compile(code, id, {
                 ...compilerConfig,
                 optimize: true,
-                optimizedRegistryIds,
+                optimizeKnownTemplates,
                 output: isHydrate ? "hydrate" : "dom",
               })
             ).code;

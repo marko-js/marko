@@ -1,4 +1,3 @@
-import { getTemplateId } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { returnId } from "../../core/return";
 import isStatic from "../../util/is-static";
@@ -37,10 +36,6 @@ export default {
       }
 
       const rendererId = program.scope.generateUidIdentifier("renderer");
-      const {
-        markoOpts,
-        opts: { filename },
-      } = program.hub.file;
       program.pushContainer("body", [
         t.variableDeclaration("const", [
           t.variableDeclarator(
@@ -59,7 +54,7 @@ export default {
           callRuntime(
             "createTemplate",
             rendererId,
-            t.stringLiteral(getTemplateId(markoOpts, `${filename}`)),
+            t.stringLiteral(program.hub.file.metadata.marko.id),
           ),
         ),
       ]);

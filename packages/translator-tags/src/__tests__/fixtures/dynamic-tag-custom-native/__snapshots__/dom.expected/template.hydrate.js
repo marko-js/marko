@@ -1,50 +1,50 @@
-// size: 545 (min) 332 (brotli)
+// size: 546 (min) 321 (brotli)
 
 import {
   createTemplate as i,
-  createRenderer as d,
-  value as o,
+  createRenderer as o,
+  value as d,
   data as n,
-  dynamicTagAttrs as c,
-  register as t,
+  dynamicTagAttrs as t,
+  register as c,
   on as r,
   queueSource as m,
   queueEffect as v,
-  conditional as s,
-  init as a,
+  conditional as a,
+  init as s,
 } from "@marko/runtime-tags/dom";
-const u = o(3, (i, d) => n(i[0], d)),
-  f = o(2, (i, d) => u(i, d.id));
-var e = i(
-  d(
+const u = d(3, (i, o) => n(i[0], o)),
+  f = d(2, (i, o) => u(i, o.id));
+var b = i(
+  o(
     "<div>Id is <!></div>",
     "Db%l",
     function () {},
     void 0,
     void 0,
-    o(1, (i, d) => f(i, d[0])),
+    d(1, (i, o) => f(i, o[0])),
   ),
-  "d",
+  "a",
 );
-const k = c(1),
-  l = s(1, (i) => k(i, () => ({ id: "dynamic" })), k),
-  b = t("c", (i) =>
+const e = t(1),
+  k = a(1, (i) => e(i, () => ({ id: "dynamic" })), e),
+  l = c("b1", (i) =>
     r(
       i[0],
       "click",
       ((i) => {
-        const { 2: d } = i;
+        const { 2: o } = i;
         return function () {
-          m(i, g, d === e ? "div" : e);
+          m(i, g, o === b ? "div" : b);
         };
       })(i),
     ),
   ),
-  g = o(
+  g = d(
     2,
-    (i, d) => {
-      v(i, b), l(i, d);
+    (i, o) => {
+      v(i, l), k(i, o);
     },
-    l,
+    k,
   );
-a();
+s();

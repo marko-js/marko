@@ -1,4 +1,3 @@
-import { getTemplateId } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import { callRuntime } from "../../util/runtime";
@@ -116,10 +115,6 @@ export default {
         );
       }
 
-      const {
-        markoOpts,
-        opts: { filename },
-      } = program.hub.file;
       program.node.body.push(
         t.exportDefaultDeclaration(
           callRuntime(
@@ -133,7 +128,7 @@ export default {
               undefined,
               programParamsSignal?.identifier,
             ),
-            t.stringLiteral(getTemplateId(markoOpts, `${filename}`)),
+            t.stringLiteral(program.hub.file.metadata.marko.id),
           ),
         ),
       );

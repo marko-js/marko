@@ -1,4 +1,4 @@
-// size: 293 (min) 169 (brotli)
+// size: 294 (min) 170 (brotli)
 
 import {
   register as t,
@@ -8,7 +8,7 @@ import {
   queueEffect as c,
   init as m,
 } from "@marko/runtime-tags/dom";
-const r = t("d", (t) => {
+const r = t("a2", (t) => {
     const { 1: e } = t;
     (document.getElementById("button").textContent = e),
       n(

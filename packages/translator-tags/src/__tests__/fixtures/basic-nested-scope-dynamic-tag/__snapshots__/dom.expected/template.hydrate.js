@@ -1,4 +1,4 @@
-// size: 468 (min) 267 (brotli)
+// size: 471 (min) 273 (brotli)
 
 import {
   register as t,
@@ -7,15 +7,15 @@ import {
   dynamicClosure as c,
   data as r,
   queueEffect as u,
-  registerRenderer as i,
-  createRenderer as m,
-  dynamicTagAttrs as s,
-  value as d,
-  dynamicSubscribers as e,
-  queueSource as l,
-  init as a,
+  registerRenderer as b,
+  createRenderer as i,
+  dynamicTagAttrs as m,
+  value as s,
+  dynamicSubscribers as l,
+  queueSource as a,
+  init as d,
 } from "@marko/runtime-tags/dom";
-const b = t("c", (t) =>
+const e = t("b1", (t) =>
   o(
     t[0],
     "click",
@@ -24,24 +24,24 @@ const b = t("c", (t) =>
         _: { 1: o },
       } = t;
       return function () {
-        l(t._, f, o + 1);
+        a(t._, f, o + 1);
       };
     })(t),
   ),
 );
-s(
+m(
   0,
-  i(
-    "e",
-    m("<button> </button>", " D ", void 0, [
+  b(
+    "b3",
+    i("<button> </button>", " D ", void 0, [
       n(
-        "d",
+        "b2",
         c(1, (t, o) => {
-          r(t[1], o), u(t, b);
+          r(t[1], o), u(t, e);
         }),
       ),
     ]),
   ),
 );
-const f = d(1, null, e(1));
-a();
+const f = s(1, null, l(1));
+d();

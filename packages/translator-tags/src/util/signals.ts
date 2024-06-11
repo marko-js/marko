@@ -633,7 +633,8 @@ export function getResumeRegisterId(
   }
   return getTemplateId(
     markoOpts,
-    `${filename}_${section.id}${name}${type ? "/" + type : ""}`,
+    filename as string,
+    `${section.id}${name}${type ? "/" + type : ""}`,
   );
 }
 

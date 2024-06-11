@@ -1,21 +1,21 @@
-// size: 200 (min) 131 (brotli)
+// size: 201 (min) 134 (brotli)
 
 import {
   register as o,
-  on as c,
-  queueSource as m,
-  value as t,
+  on as m,
+  queueSource as t,
+  value as c,
   data as i,
   init as n,
 } from "@marko/runtime-tags/dom";
-const r = t(2, (o, c) => i(o[1], c));
-o("c", (o) =>
-  c(
+const r = c(2, (o, m) => i(o[1], m));
+o("a1", (o) =>
+  m(
     o[0],
     "click",
     ((o) =>
       function () {
-        m(o, r, 1);
+        t(o, r, 1);
       })(o),
   ),
 ),

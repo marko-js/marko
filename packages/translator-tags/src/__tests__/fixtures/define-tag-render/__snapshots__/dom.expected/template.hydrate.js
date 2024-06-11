@@ -1,4 +1,4 @@
-// size: 481 (min) 290 (brotli)
+// size: 483 (min) 285 (brotli)
 
 import {
   register as o,
@@ -6,40 +6,40 @@ import {
   createRenderer as n,
   dynamicTagAttrs as i,
   queueSource as c,
-  value as d,
-  data as m,
-  queueEffect as r,
-  init as u,
+  value as m,
+  data as r,
+  queueEffect as a,
+  init as d,
 } from "@marko/runtime-tags/dom";
-const e = o("c", (o) =>
+const u = o("a1", (o) =>
     t(
       o[2],
       "click",
       ((o) => {
         const { 7: t } = o;
         return function () {
-          c(o, l, t + 1);
+          c(o, e, t + 1);
         };
       })(o),
     ),
   ),
-  l = d(7, (o, t) => {
-    m(o[1], t), m(o[3], t), r(o, e);
+  e = m(7, (o, t) => {
+    r(o[1], t), r(o[3], t), a(o, u);
   }),
-  v = d(6, (o, t) => m(o[0], t)),
-  a = d(5, (o, t) => v(o, t.name));
+  l = m(6, (o, t) => r(o[0], t)),
+  v = m(5, (o, t) => l(o, t.name));
 o(
-  "d",
+  "a2",
   n(
     "<div>Hello <!> <!></div><button> </button>",
     "Db%c%l D ",
     (o) => {
-      l(o, 1);
+      e(o, 1);
     },
     void 0,
     void 0,
-    d(4, (o, t) => a(o, t[0])),
+    m(4, (o, t) => v(o, t[0])),
   ),
 ),
   i(0),
-  u();
+  d();

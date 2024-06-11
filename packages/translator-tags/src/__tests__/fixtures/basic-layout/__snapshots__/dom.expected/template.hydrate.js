@@ -1,19 +1,19 @@
-// size: 250 (min) 177 (brotli)
+// size: 252 (min) 165 (brotli)
 
 import {
   registerSubscriber as o,
   dynamicClosure as m,
   data as r,
-  registerRenderer as d,
+  registerRenderer as b,
   createRenderer as i,
   value as t,
   dynamicSubscribers as a,
 } from "@marko/runtime-tags/dom";
-d(
-  "d",
+b(
+  "b1",
   i("<h1>Hello <!></h1>", "Db%", void 0, [
     o(
-      "c",
+      "b0",
       m(3, (o, m) => r(o[0], m)),
     ),
   ]),

@@ -317,6 +317,7 @@ export function getTagDefForTagName(
 export function getTemplateId(
   optimize: boolean | Config,
   request: string,
+  child?: string,
 ): string;
 export function resolveTagImport(
   path: t.NodePath<any>,
