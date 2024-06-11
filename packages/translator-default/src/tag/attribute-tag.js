@@ -195,7 +195,7 @@ function getContentType(tag) {
           hasRenderBody = true;
           break;
       }
-    } else if (!child.isMarkoScriptlet()) {
+    } else if (!child.isMarkoScriptlet() && !child.isMarkoComment()) {
       hasRenderBody = true;
     }
 
