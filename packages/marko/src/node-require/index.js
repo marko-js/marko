@@ -8,6 +8,11 @@ const defaultCompilerOptions = {
   // eslint-disable-next-line no-constant-condition
   sourceMaps: "MARKO_DEBUG" ? "inline" : false,
   meta: true,
+  babelConfig: {
+    babelrc: false,
+    configFile: false,
+    browserslistConfigFile: false,
+  },
 };
 const MARKO_EXTENSIONS = Symbol("MARKO_EXTENSIONS");
 

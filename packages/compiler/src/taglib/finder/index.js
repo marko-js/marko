@@ -127,7 +127,9 @@ function find(dirname, registeredTaglibs) {
     });
   }
 
-  found = found.concat(registeredTaglibs);
+  for (const registeredTaglib of registeredTaglibs) {
+    helper.addTaglib(registeredTaglib);
+  }
 
   findCache[dirname] = found;
 
