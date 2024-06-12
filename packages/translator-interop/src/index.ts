@@ -1,12 +1,13 @@
 import path from "path";
 import generate from "@babel/generator";
 import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
-import { types as t, type Config } from "@marko/compiler";
+import { types as t, type Config, taglib } from "@marko/compiler";
 
 import {
   internalEntryBuilder as internalEntryBuilder5,
   getRuntimeEntryFiles as getRuntimeEntryFiles5,
   analyze as analyze5,
+  optionalTaglibs as optionalTaglibs5,
   taglibs as taglibs5,
   translate as translate5,
 } from "@marko/translator-default";
@@ -33,7 +34,10 @@ const CANONICAL_TAGDEF_KEYS = {
 };
 const VISITOR_TAGDEF_KEYS = ["parse", "migrate", "transform", "translate"];
 
-export const taglibs = mergeTaglibs(taglibs5, taglibs6);
+export const taglibs = mergeTaglibs(
+  taglib.resolveOptionalTaglibs(optionalTaglibs5).concat(taglibs5),
+  taglibs6,
+);
 export const analyze = mergeVisitors(analyze5, analyze6);
 export const translate = patchTranslateProgram(
   mergeVisitors(translate5, translate6),

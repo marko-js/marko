@@ -1,4 +1,5 @@
 import path from "path";
+import { getRootPackage } from "lasso-package-root";
 import markoModules from "../../modules";
 import tryLoadTranslator from "../util/try-load-translator";
 import taglibConfig from "./config";
@@ -35,7 +36,9 @@ export function buildLookup(dirname, requestedTranslator, onError) {
     loadedTranslatorsTaglibs.set(
       translator,
       (taglibsForDir = registeredTaglibs.concat(
-        translator.taglibs.map(([id, props]) => loadTaglib(id, props)),
+        resolveOptionalTaglibs(translator.optionalTaglibs || [])
+          .concat(translator.taglibs)
+          .map(([id, props]) => loadTaglib(id, props)),
       )),
     );
   }
@@ -80,21 +83,8 @@ export function buildLookup(dirname, requestedTranslator, onError) {
 
 export function register(id, props) {
   if (typeof props === "undefined") {
-    switch (id[0]) {
-      case ".":
-      case "/":
-      case "\\":
-        break;
-      default:
-        if (!id.endsWith(".json")) {
-          id = path.join(id, "marko.json");
-        }
-        break;
-    }
-    id = markoModules.require.resolve(id);
-    props = markoModules.require(id);
+    [id, props] = resolveTaglib(id);
   }
-
   registeredTaglibs.push(loadTaglib(id, props));
 }
 
@@ -104,10 +94,43 @@ export function clearCaches() {
   lookupCache = Object.create(null);
 }
 
+export function resolveOptionalTaglibs(taglibIds) {
+  const resolvedTaglibs = [];
+  for (const id of taglibIds) {
+    if (hasRootDependency(id)) {
+      resolvedTaglibs.push(resolveTaglib(id));
+    }
+  }
+
+  return resolvedTaglibs;
+}
+
 // Used by legacy compiler api.
 export const _loader = loader;
 export const _finder = finder;
 
 function loadTaglib(id, props) {
   return loader.loadTaglibFromProps(loader.createTaglib(id), props);
+}
+
+function resolveTaglib(id) {
+  switch (id[0]) {
+    case ".":
+    case "/":
+    case "\\":
+      break;
+    default:
+      if (!id.endsWith(".json")) {
+        id = path.join(id, "marko.json");
+      }
+      break;
+  }
+
+  const resolved = markoModules.require.resolve(id);
+  return [resolved, markoModules.require(resolved)];
+}
+
+function hasRootDependency(id) {
+  const pkg = getRootPackage(process.cwd());
+  return !!((pkg && pkg.dependencies?.[id]) || pkg.devDependencies?.[id]);
 }
