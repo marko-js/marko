@@ -1,5 +1,19 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.16
+
+### Patch Changes
+
+- [#2246](https://github.com/marko-js/marko/pull/2246) [`a699cd9`](https://github.com/marko-js/marko/commit/a699cd9434996b8da0a14acba39fd1db03c0329a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Misc backward compat improvements:
+
+  - Expose `marko/browser-refresh` as a noop
+  - Allow translators to specify "optional" taglibs to load if they're installed (used for automatically loading compat taglibs)
+  - `marko/node-require` legacy require hook now disables user babel transforms by default
+  - Allow `<macro>` tag instances to use tag arguments syntax
+
+- Updated dependencies [[`a699cd9`](https://github.com/marko-js/marko/commit/a699cd9434996b8da0a14acba39fd1db03c0329a)]:
+  - @marko/translator-default@6.0.3
+
 ## 0.1.15
 
 ### Patch Changes
