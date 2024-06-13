@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.35.3
+
+### Patch Changes
+
+- [#2248](https://github.com/marko-js/marko/pull/2248) [`0ced6e1`](https://github.com/marko-js/marko/commit/0ced6e17c24808586bd24f025d77cfb3c391ea2e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix typo in upgrade docs and adding missing `browser-refresh` module.
+
+- Updated dependencies [[`0ced6e1`](https://github.com/marko-js/marko/commit/0ced6e17c24808586bd24f025d77cfb3c391ea2e)]:
+  - @marko/compiler@5.37.3
+  - @marko/translator-default@6.0.4
+
 ## 5.35.2
 
 ### Patch Changes
