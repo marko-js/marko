@@ -28,7 +28,7 @@ Run your application and tests to ensure your project is in a working state. The
 
 ```bash
 # Update Marko, and related ecosystem dependencies
-npx -y ncu -u \
+npx -y npm-check-updates -u \
   marko \
   `# for webpack projects` \
   @marko/webpack \
