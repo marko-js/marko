@@ -1,6 +1,6 @@
 {
   "name": "@marko/compiler",
-  "version": "5.37.2",
+  "version": "5.37.3",
   "description": "Marko template to JS compiler.",
   "keywords": [
     "babel",
@@ -80,7 +80,7 @@
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
-    "@marko/translator-default": "^6.0.3"
+    "@marko/translator-default": "^6.0.4"
   },
   "publishConfig": {
     "access": "public"
