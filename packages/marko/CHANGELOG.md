@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.35.4
+
+### Patch Changes
+
+- [#2250](https://github.com/marko-js/marko/pull/2250) [`2cf464f`](https://github.com/marko-js/marko/commit/2cf464f46b1fc6186fb033024063418270c32e1a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow registering/loading top level hydrated components _after_ the "load" event. Previously after the load event it was assumed all assets would have been loaded but this is not always accurate for assets loaded through interactions.
+
 ## 5.35.3
 
 ### Patch Changes
