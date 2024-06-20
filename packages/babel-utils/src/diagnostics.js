@@ -28,10 +28,14 @@ function add(type, path, options) {
   let fix = false;
 
   if (rawFix) {
-    if (file.___compileStage !== "migrate") {
-      throw new Error(
-        "Diagnostic fixes can only be registered during the migrate stage.",
-      );
+    switch (file.___compileStage) {
+      case "parse":
+      case "migrate":
+        break;
+      default:
+        throw new Error(
+          "Diagnostic fixes can only be registered up to and including the migrate stage.",
+        );
     }
 
     const { applyFixes } = file.markoOpts;

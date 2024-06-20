@@ -68,6 +68,9 @@ export default function (path) {
     diagnosticDeprecate(path, {
       label: "Component class should not have a name.",
       loc: parsed.id.loc,
+      fix() {
+        parsed.id = null;
+      },
     });
   }
 
