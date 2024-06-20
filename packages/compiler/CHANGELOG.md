@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.37.4
+
+### Patch Changes
+
+- [#2252](https://github.com/marko-js/marko/pull/2252) [`bfe85d1`](https://github.com/marko-js/marko/commit/bfe85d18772f244abfced05d7cde5698b7e077ec) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - When loading a taglib, always process exports field if inside node_modules folder.
+
+- [#2252](https://github.com/marko-js/marko/pull/2252) [`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow diagnostic fixes in parse stage.
+
+- Updated dependencies [[`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba)]:
+  - @marko/babel-utils@6.5.1
+
 ## 5.37.3
 
 ### Patch Changes

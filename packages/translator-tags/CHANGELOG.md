@@ -1,5 +1,15 @@
 # @marko/translator-tags
 
+## 0.2.2
+
+### Patch Changes
+
+- [#2252](https://github.com/marko-js/marko/pull/2252) [`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow diagnostic fixes in parse stage.
+
+- Updated dependencies [[`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba)]:
+  - @marko/babel-utils@6.5.1
+  - @marko/runtime-tags@0.1.7
+
 ## 0.2.1
 
 ### Patch Changes

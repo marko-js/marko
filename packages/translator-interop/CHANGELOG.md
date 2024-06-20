@@ -1,5 +1,16 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.18
+
+### Patch Changes
+
+- [#2252](https://github.com/marko-js/marko/pull/2252) [`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow diagnostic fixes in parse stage.
+
+- Updated dependencies [[`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba), [`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba), [`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba)]:
+  - @marko/translator-default@6.0.5
+  - @marko/babel-utils@6.5.1
+  - @marko/translator-tags@0.2.2
+
 ## 0.1.17
 
 ### Patch Changes

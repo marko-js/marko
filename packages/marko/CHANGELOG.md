@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.35.5
+
+### Patch Changes
+
+- [#2252](https://github.com/marko-js/marko/pull/2252) [`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow diagnostic fixes in parse stage.
+
+- Updated dependencies [[`bfe85d1`](https://github.com/marko-js/marko/commit/bfe85d18772f244abfced05d7cde5698b7e077ec), [`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba), [`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba), [`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba)]:
+  - @marko/compiler@5.37.4
+  - @marko/translator-default@6.0.5
+
 ## 5.35.4
 
 ### Patch Changes
