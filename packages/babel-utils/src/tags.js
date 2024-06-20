@@ -3,6 +3,7 @@ import { basename, dirname, relative, resolve, join } from "path";
 import { types as t } from "@marko/compiler";
 import { getRootDir } from "lasso-package-root";
 import resolveFrom from "resolve-from";
+import { diagnosticWarn } from "./diagnostics";
 import { resolveRelativePath } from "./imports";
 import { getTagDefForTagName } from "./taglib";
 
@@ -63,9 +64,12 @@ export function registerMacro(path, name) {
 
   if (macroNames) {
     if (macroNames[name]) {
-      throw path.buildCodeFrameError(
-        `A macro with the name "${name}" already exists.`,
-      );
+      diagnosticWarn(path, {
+        label: `A macro with the name "${name}" already exists.`,
+        fix() {
+          findParentTag(path).remove();
+        },
+      });
     }
     macroNames[name] = true;
   } else {
