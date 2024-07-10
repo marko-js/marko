@@ -1,6 +1,6 @@
 import { data as _data, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _fullName = /* @__PURE__ */_value("fullName", (_scope, fullName) => _data(_scope["#text/0"], fullName));
-const _user = (_scope, user) => {};
+const _user = /* @__PURE__ */_value("user");
 const _setup = _scope => {
   _user(_scope, {
     firstName: "George",
