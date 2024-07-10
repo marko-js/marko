@@ -43,6 +43,7 @@ export type Signal = {
       identifier: t.Identifier;
       hasDownstreamIntersections: () => boolean;
       buildDeclaration?: () => t.VariableDeclaration;
+      callee?: t.Expression;
     };
     value: t.Expression;
     scope: t.Expression;
@@ -56,6 +57,7 @@ export type Signal = {
   hasDownstreamIntersections: () => boolean;
   hasDynamicSubscribers?: true;
   export: boolean;
+  callee?: t.Expression;
 };
 
 const [getSignals] = createSectionState<Map<unknown, Signal>>(
@@ -278,9 +280,10 @@ export function getSignalFn(
       t.Identifier,
     ];
     for (const alias of binding.aliases) {
+      const aliasSignal = getSignal(alias.section, alias);
       signal.render.push(
         t.expressionStatement(
-          t.callExpression(getSignal(alias.section, alias).identifier, [
+          t.callExpression(aliasSignal.callee || aliasSignal.identifier, [
             scopeIdentifier,
             valueIdentifier,
           ]),
@@ -289,9 +292,10 @@ export function getSignalFn(
     }
 
     for (const [key, alias] of binding.propertyAliases) {
+      const aliasSignal = getSignal(alias.section, alias);
       signal.render.push(
         t.expressionStatement(
-          t.callExpression(getSignal(alias.section, alias).identifier, [
+          t.callExpression(aliasSignal.callee || aliasSignal.identifier, [
             scopeIdentifier,
             toMemberExpression(valueIdentifier, key),
           ]),
@@ -303,7 +307,10 @@ export function getSignalFn(
   for (const value of signal.values) {
     signal.render.push(
       t.expressionStatement(
-        t.callExpression(value.signal.identifier, [value.scope, value.value]),
+        t.callExpression(value.signal.callee || value.signal.identifier, [
+          value.scope,
+          value.value,
+        ]),
       ),
     );
   }
@@ -433,7 +440,7 @@ export function getDestructureSignal(
             t.blockStatement(
               bindingSignals.map((signal, i) =>
                 t.expressionStatement(
-                  t.callExpression(signal.identifier, [
+                  t.callExpression(signal.callee || signal.identifier, [
                     scopeIdentifier,
                     bindingIdentifiers[i],
                   ]),
@@ -458,7 +465,7 @@ export function getDestructureSignal(
             ),
             ...bindingSignals.map((signal, i) =>
               t.expressionStatement(
-                t.callExpression(signal.identifier, [
+                t.callExpression(signal.callee || signal.identifier, [
                   scopeIdentifier,
                   bindingIdentifiers[i],
                   cleanIdentifier,
@@ -513,11 +520,27 @@ export function queueSource(
   source: Signal,
   value: t.Expression,
   targetSection: Section,
-) {
+  changeBinding?: Binding,
+): t.Expression {
+  if (!changeBinding) {
+    return callRuntime(
+      "queueSource",
+      getScopeExpression(targetSection, source.section),
+      source.identifier,
+      value,
+    );
+  }
+
+  const changeBindingId = t.identifier(changeBinding.name);
+
+  if (changeBinding.upstreamExpression?.static) {
+    return t.callExpression(changeBindingId, [value]);
+  }
   return callRuntime(
-    "queueSource",
+    "queueControllableSource",
     getScopeExpression(targetSection, source.section),
     source.identifier,
+    changeBindingId,
     value,
   );
 }

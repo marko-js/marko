@@ -112,6 +112,7 @@ export function trackVarReferences(
   type: BindingType,
   upstreamAlias?: Binding["upstreamAlias"],
   upstreamExpression?: Binding["upstreamExpression"],
+  changeBinding?: Binding,
 ) {
   const tagVar = tag.node.var;
   if (tagVar) {
@@ -126,6 +127,7 @@ export function trackVarReferences(
       canonicalUpstreamAlias,
       upstreamExpression,
       undefined,
+      changeBinding,
     );
   }
 }
@@ -167,7 +169,10 @@ export function trackParamsReferences(
   }
 }
 
-export function trackReferencesForBinding(babelBinding: t.Binding) {
+export function trackReferencesForBinding(
+  babelBinding: t.Binding,
+  changeBinding?: Binding,
+) {
   const { identifier, referencePaths, constantViolations } = babelBinding;
   const binding = identifier.extra!.binding!;
 
@@ -193,6 +198,14 @@ export function trackReferencesForBinding(babelBinding: t.Binding) {
         binding,
       );
     }
+    if (changeBinding) {
+      trackReference(
+        (referencePath as t.NodePath<t.AssignmentExpression>).get(
+          "left",
+        ) as t.NodePath<t.Identifier>,
+        changeBinding,
+      );
+    }
   }
 }
 
@@ -204,6 +217,7 @@ function createBindingsAndTrackReferences(
   upstreamAlias?: Binding["upstreamAlias"],
   upstreamExpression?: Binding["upstreamExpression"],
   property?: string,
+  changeBinding?: Binding,
 ) {
   switch (lVal.type) {
     case "Identifier":
@@ -215,7 +229,7 @@ function createBindingsAndTrackReferences(
         upstreamExpression,
         property,
       );
-      trackReferencesForBinding(scope.getBinding(lVal.name)!);
+      trackReferencesForBinding(scope.getBinding(lVal.name)!, changeBinding);
       break;
     case "ObjectPattern": {
       const patternBinding =

@@ -1,0 +1,6 @@
+<let/x=1/>
+<let/handler(newValue) { x = newValue + 1; }/>
+<let/y=x valueChange=handler/>
+<button onClick() { y++; }>
+  ${x}|${y}
+</button>

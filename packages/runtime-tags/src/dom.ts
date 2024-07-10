@@ -35,6 +35,7 @@ export {
 
 export {
   queueSource,
+  queueControllableSource,
   queueEffect,
   run,
   prepare,
@@ -56,6 +57,7 @@ export { createTemplate } from "./dom/template";
 export {
   value,
   initValue,
+  changeHandler,
   intersection,
   closure,
   dynamicClosure,

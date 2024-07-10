@@ -1,0 +1,8 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-compile-error/template.marko:2:22
+      1 | <let/x=1/>
+    > 2 | <let/y=x valueChange=5 />
+        |                      ^ The 'let' tag 'valueChange' attribute must be a function.
+      3 | <button onClick() { y++; }>
+      4 |   ${x}|${y}
+      5 | </button>
