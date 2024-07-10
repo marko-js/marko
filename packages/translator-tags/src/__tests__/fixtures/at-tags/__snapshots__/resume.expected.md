@@ -7,7 +7,7 @@
     Foo!
     <!--M]1 #text/0-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{"#childScope/0":h={"#text/0!":j={},"#text/0(":{}}},1:h,2:j}),[])
+      (M$h=[]).push(_=&gt;(_.c={0:{"#childScope/0":_.a={"#text/0!":_.b={},"#text/0(":{renderBody:_._["packages/translator-tags/src/__tests__/fixtures/at-tags/template.marko_2_renderer"]}}},1:_.a,2:_.b}),[])
     </script>
   </body>
 </html>
