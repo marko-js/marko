@@ -3,9 +3,11 @@ import {
   assertAllowedAttributes,
   assertNoVar,
   getTagDef,
+  computeNode,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
+import evaluate from "../util/evaluate";
 import { isStatefulReferences } from "../util/is-stateful";
 import { isOutputHTML } from "../util/marko-config";
 import analyzeAttributeTags from "../util/nested-attribute-tags";
@@ -57,6 +59,22 @@ export default {
     const tagBody = tag.get("body");
     const section = getOrCreateSection(tag);
     const bodySection = startSection(tagBody)!;
+    const ofAttr = tag
+      .get("attributes")
+      .find((attr) => (attr.node as t.MarkoAttribute).name === "of");
+    const inAttr = tag
+      .get("attributes")
+      .find((attr) => (attr.node as t.MarkoAttribute).name === "in");
+    const byAttr = tag
+      .get("attributes")
+      .find((attr) => (attr.node as t.MarkoAttribute).name === "by");
+    const byValue = byAttr && evaluate(byAttr);
+
+    if (byValue?.confident && typeof byValue.computed !== "string" && !ofAttr) {
+      throw new Error(
+        `<for ${inAttr ? "in" : "from...to"}> does not support a string as the \`by\` attribute. Use a function that returns the key.`,
+      );
+    }
 
     if (isOnlyChild) {
       const parentTag = tag.parentPath.parent as t.MarkoTag;
@@ -307,6 +325,11 @@ const translateHTML = {
     const inAttr = findName(attributes, "in");
     const toAttr = findName(attributes, "to");
     const byAttr = findName(attributes, "by");
+    const byComputed = byAttr && computeNode(byAttr.value);
+    const byProperty =
+      byComputed && typeof byComputed.value === "string"
+        ? byComputed.value
+        : undefined;
     const block = t.blockStatement(body);
     const write = writer.writeTo(tag);
     const replacement: t.Node[] = [];
@@ -322,13 +345,60 @@ const translateHTML = {
       setForceResumeScope(bodySection);
     }
 
-    if (byAttr && isStateful) {
-      const byIdentifier = currentProgramPath.scope.generateUidIdentifier("by");
+    if (byAttr && !byProperty && isStateful) {
+      let byIdentifier = currentProgramPath.scope.generateUidIdentifier("by");
       replacement.push(
         t.variableDeclaration("const", [
           t.variableDeclarator(byIdentifier, byAttr.value!),
         ]),
       );
+      if (
+        byAttr.value.type !== "FunctionExpression" &&
+        byAttr.value.type !== "ArrowFunctionExpression"
+      ) {
+        const byAttrIdentifier = byIdentifier;
+        const valueIdentifier =
+          currentProgramPath.scope.generateUidIdentifier("v");
+        byIdentifier =
+          currentProgramPath.scope.generateUidIdentifier("byNormalized");
+        replacement.push(
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              byIdentifier,
+              t.conditionalExpression(
+                t.binaryExpression(
+                  "===",
+                  t.unaryExpression("typeof", byAttrIdentifier),
+                  t.stringLiteral("string"),
+                ),
+                ofAttr
+                  ? t.arrowFunctionExpression(
+                      [valueIdentifier],
+                      t.memberExpression(
+                        valueIdentifier,
+                        byAttrIdentifier,
+                        true,
+                      ),
+                    )
+                  : t.callExpression(
+                      t.arrowFunctionExpression(
+                        [],
+                        t.blockStatement([
+                          t.throwStatement(
+                            t.stringLiteral(
+                              `<for ${inAttr ? "in" : "from...to"}> does not support a string as the \`by\` attribute. Use a function that returns the key.`,
+                            ),
+                          ),
+                        ]),
+                      ),
+                      [],
+                    ),
+                byAttrIdentifier,
+              ),
+            ),
+          ]),
+        );
+      }
       byParams = [];
       keyExpression = t.callExpression(byIdentifier, byParams);
     }
@@ -336,7 +406,15 @@ const translateHTML = {
     if (inAttr) {
       const [keyParam, valParam] = params;
 
-      keyExpression = keyParam as t.Identifier;
+      if (!byAttr) {
+        keyExpression = keyParam as t.Identifier;
+      } else if (byProperty) {
+        throw new Error(
+          "<for in> does not support a string as the `by` attribute. Use a function that returns the key.",
+        );
+      } else {
+        byParams!.push(keyParam as t.Identifier, valParam as t.Identifier);
+      }
 
       if (valParam) {
         // TODO: account for keyParam being a non identifier.
@@ -368,7 +446,7 @@ const translateHTML = {
         );
       }
 
-      if (!t.isIdentifier(valParam) && byParams!) {
+      if (!t.isIdentifier(valParam) && byAttr) {
         const tempValParam =
           currentProgramPath.scope.generateUidIdentifier("v");
         block.body.unshift(
@@ -413,10 +491,16 @@ const translateHTML = {
         );
       }
 
-      if (byParams!) {
-        byParams.push(valParam as t.Identifier, indexParam as t.Identifier);
-      } else {
+      if (!byAttr) {
         keyExpression = indexParam as t.Identifier;
+      } else if (byProperty) {
+        keyExpression = t.memberExpression(
+          valParam as t.Identifier,
+          t.stringLiteral(byProperty),
+          true,
+        );
+      } else {
+        byParams!.push(valParam as t.Identifier, indexParam as t.Identifier);
       }
 
       replacement.push(
@@ -439,7 +523,17 @@ const translateHTML = {
 
       if (indexParam || isStateful || hasStatefulClosures) {
         indexParam ??= currentProgramPath.scope.generateUidIdentifier("i");
-        keyExpression = indexParam as t.Identifier;
+
+        if (!byAttr) {
+          keyExpression = indexParam as t.Identifier;
+        } else if (byProperty) {
+          throw new Error(
+            "<for from...to> does not support a string as the `by` attribute. Use a function that returns the key.",
+          );
+        } else {
+          byParams!.push(indexParam as t.Identifier);
+        }
+
         block.body.unshift(
           t.variableDeclaration("const", [
             t.variableDeclarator(
