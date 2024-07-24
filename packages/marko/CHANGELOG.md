@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.35.6
+
+### Patch Changes
+
+- [#2261](https://github.com/marko-js/marko/pull/2261) [`daa22a8`](https://github.com/marko-js/marko/commit/daa22a88d96cf4a943cf9fd81126aca4ae5a91bc) Thanks [@vwong](https://github.com/vwong)! - Add popover attribute to typings
+
 ## 5.35.5
 
 ### Patch Changes
