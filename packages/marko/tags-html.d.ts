@@ -2511,6 +2511,12 @@ declare global {
       nonce?: AttrString;
 
       /**
+       * Specifies that the element won't be rendered until it becomes shown, at which point it will be rendered on top of other page content.
+       * @see https://html.spec.whatwg.org/multipage/popover.html#attr-popover
+       */
+      popover?: AttrBoolean | "auto" | "manual";
+
+      /**
        * Specifies a list of part names for the element that can be targeted by the ::part() CSS pseudo-element.
        * @see https://drafts.csswg.org/css-shadow-parts-1/#part-attribute
        */
