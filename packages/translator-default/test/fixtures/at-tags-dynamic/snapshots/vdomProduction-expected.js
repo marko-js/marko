@@ -3,6 +3,7 @@ const _marko_componentType = "LOwmoBub",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import { r as _marko_repeated_attr_tag, a as _marko_repeatable_attr_tag, i as _marko_render_input } from "marko/dist/runtime/helpers/attr-tag.js";
+import _of_fallback from "marko/dist/runtime/helpers/of-fallback.js";
 import _hello from "./components/hello/index.marko";
 import _marko_tag from "marko/dist/runtime/helpers/render-tag.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
@@ -12,7 +13,7 @@ const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   _marko_tag(_hello, _marko_render_input(() => {
     _marko_repeatable_attr_tag("list", _marko_render_input(() => {
-      for (const color of input.colors || []) {
+      for (const color of _of_fallback(input.colors)) {
         if (x) {
           _marko_repeated_attr_tag("items", {
             "style": {
@@ -51,9 +52,9 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
         });
       }
     }));
-    for (const col of input.table || []) {
+    for (const col of _of_fallback(input.table)) {
       _marko_repeated_attr_tag("cols", _marko_render_input(() => {
-        for (const row of col || []) {
+        for (const row of _of_fallback(col)) {
           _marko_repeated_attr_tag("rows", {
             "row": row,
             "renderBody": out => {
