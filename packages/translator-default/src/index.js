@@ -497,6 +497,7 @@ export function getRuntimeEntryFiles(output, optimize) {
     `${base}runtime/components/attach-detach.js`,
     `${base}runtime/helpers/assign.js`,
     `${base}runtime/helpers/class-value.js`,
+    `${base}runtime/helpers/of-fallback.js`,
     `${base}runtime/helpers/dynamic-tag.js`,
     `${base}runtime/helpers/attr-tag.js`,
     `${base}runtime/helpers/merge.js`,
