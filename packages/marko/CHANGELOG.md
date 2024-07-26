@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.35.7
+
+### Patch Changes
+
+- [#2264](https://github.com/marko-js/marko/pull/2264) [`992753e`](https://github.com/marko-js/marko/commit/992753e695e054d2789cdc1b439da5065468cb3a) Thanks [@LuLaValva](https://github.com/LuLaValva)! - For-of loop code coverage improvement
+
+- Updated dependencies [[`992753e`](https://github.com/marko-js/marko/commit/992753e695e054d2789cdc1b439da5065468cb3a)]:
+  - @marko/translator-default@6.0.6
+
 ## 5.35.6
 
 ### Patch Changes
