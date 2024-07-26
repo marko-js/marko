@@ -1,5 +1,11 @@
 # Change Log
 
+## 6.0.6
+
+### Patch Changes
+
+- [#2264](https://github.com/marko-js/marko/pull/2264) [`992753e`](https://github.com/marko-js/marko/commit/992753e695e054d2789cdc1b439da5065468cb3a) Thanks [@LuLaValva](https://github.com/LuLaValva)! - For-of loop code coverage improvement
+
 ## 6.0.5
 
 ### Patch Changes
