@@ -190,9 +190,16 @@ export function loopOf(nodeAccessor: Accessor, renderer: Renderer) {
     const [all, by = bySecondArg] = value as typeof value &
       [all: unknown[], by?: (item: unknown, index: number) => unknown];
     let i = 0;
-    for (const item of all) {
-      cb(by(item, i), [item, i, all]);
-      i++;
+    if (typeof by === "string") {
+      for (const item of all) {
+        cb((item as Record<string, unknown>)[by], [item, i, all]);
+        i++;
+      }
+    } else {
+      for (const item of all) {
+        cb(by(item, i), [item, i, all]);
+        i++;
+      }
     }
   });
 }
@@ -201,6 +208,9 @@ export function loopIn(nodeAccessor: Accessor, renderer: Renderer) {
   return loop(nodeAccessor, renderer, (value, cb) => {
     const [all, by = byFirstArg] = value as typeof value &
       [all: Record<string, unknown>, by?: (key: string, v: unknown) => unknown];
+    if (MARKO_DEBUG && typeof by === "string") {
+      throw "<for in> does not support a string as the `by` attribute. Use a function that returns the key.";
+    }
     for (const key in all) {
       const v = all[key];
       cb(by(key, v), [key, v, all]);
@@ -216,6 +226,9 @@ export function loopTo(nodeAccessor: Accessor, renderer: Renderer) {
       step: number,
       by?: (v: number) => unknown,
     ];
+    if (MARKO_DEBUG && typeof by === "string") {
+      throw "<for from...to> does not support a string as the `by` attribute. Use a function that returns the key.";
+    }
     const steps = (to - from) / step;
     for (let i = 0; i <= steps; i++) {
       const v = from + i * step;

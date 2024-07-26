@@ -1,0 +1,7 @@
+<div>
+  <let/items=[{ id:0, text: "first"}, { id:1, text: "second"}, { id:2, text: "third"}]/>
+
+  <for|{ text }| of=items by="id">${text}</for>
+
+  <button onClick() { items = [...items.slice(1), items[0]]; }>Rotate</button>
+</div>

@@ -105,17 +105,17 @@ function b(e, t) {
   );
 }
 var v = new Map(),
-  m = new WeakMap(),
-  y = { capture: !0 };
+  y = new WeakMap(),
+  m = { capture: !0 };
 function w(e, t, n) {
   let r = v.get(t);
   r || v.set(t, (r = new WeakMap())),
     r.has(e) ||
       (function (e, t) {
         let n = e.getRootNode(),
-          r = m.get(n);
-        r || m.set(n, (r = new Set())),
-          r.has(t) || (r.add(t), n.addEventListener(t, N, y));
+          r = y.get(n);
+        r || y.set(n, (r = new Set())),
+          r.has(t) || (r.add(t), n.addEventListener(t, N, m));
       })(e, t),
     r.set(e, n || void 0);
 }
@@ -537,12 +537,13 @@ function he(e, t, n) {
 var pe = new Map([[Symbol(), n(void 0)]]),
   be = [n(void 0)],
   ve = new Map(),
-  me = [];
-function ye(e, t) {
+  ye = [];
+function me(e, t) {
   return Se(e, t, (e, t) => {
     let [n, r = xe] = e,
       o = 0;
-    for (let e of n) t(r(e, o), [e, o, n]), o++;
+    if ("string" == typeof r) for (let e of n) t(e[r], [e, o, n]), o++;
+    else for (let e of n) t(r(e, o), [e, o, n]), o++;
   });
 }
 function we(e, t) {
@@ -582,13 +583,13 @@ function Se(e, t, r) {
       p,
       b,
       v = s[e],
-      m = 8 === v.nodeType || 3 === v.nodeType,
-      y = s[e + "("] || (m ? pe : ve),
-      w = s[e + "!"] || Array.from(y.values()),
+      y = 8 === v.nodeType || 3 === v.nodeType,
+      m = s[e + "("] || (y ? pe : ve),
+      w = s[e + "!"] || Array.from(m.values()),
       N = !0;
     if (
       (r(d, (e, n) => {
-        let r = y.get(e),
+        let r = m.get(e),
           o = O;
         if ((r || ((r = oe(t, s.$global, s)), (o = q)), f && f(r, n), l))
           for (let e of l) e(r, o);
@@ -596,14 +597,14 @@ function Se(e, t, r) {
       }),
       !g)
     )
-      if (m) (g = pe), (h = be), n(v);
+      if (y) (g = pe), (h = be), n(v);
       else {
         if (t.r) for (let e = 0; e < w.length; e++) i(w[e]);
-        (v.textContent = ""), (g = ve), (h = me), (N = !1);
+        (v.textContent = ""), (g = ve), (h = ye), (N = !1);
       }
     if (N) {
-      if (m) {
-        y === pe && n(v);
+      if (y) {
+        m === pe && n(v);
         let e = w[w.length - 1];
         (p = e.b.nextSibling), (b = e.a.parentNode);
       } else (p = null), (b = v);
@@ -619,17 +620,17 @@ function Se(e, t, r) {
           p = t.length - 1,
           b = n.length - 1,
           v = t[g],
-          m = n[h],
-          y = t[p],
+          y = n[h],
+          m = t[p],
           w = n[b];
         e: {
-          for (; v === m; ) {
+          for (; v === y; ) {
             if ((++g, ++h, g > p || h > b)) break e;
-            (v = t[g]), (m = n[h]);
+            (v = t[g]), (y = n[h]);
           }
-          for (; y === w; ) {
+          for (; m === w; ) {
             if ((--p, --b, g > p || h > b)) break e;
-            (y = t[p]), (w = n[b]);
+            (m = t[p]), (w = n[b]);
           }
         }
         if (g > p) {
@@ -645,15 +646,15 @@ function Se(e, t, r) {
           } while (g <= p);
         else {
           let v = p - g + 1,
-            m = b - h + 1,
-            y = t,
-            w = new Array(m);
-          for (o = 0; o < m; ++o) w[o] = -1;
+            y = b - h + 1,
+            m = t,
+            w = new Array(y);
+          for (o = 0; o < y; ++o) w[o] = -1;
           let N = 0,
             S = 0,
             C = new Map();
           for (l = h; l <= b; ++l) C.set(n[l], l);
-          for (o = g; o <= p && S < m; ++o)
+          for (o = g; o <= p && S < y; ++o)
             (s = t[o]),
               (l = C.get(s)),
               void 0 !== l &&
@@ -661,12 +662,12 @@ function Se(e, t, r) {
                 ++S,
                 (d = n[l]),
                 (w[l - h] = o),
-                (y[o] = null));
+                (m[o] = null));
           if (v === t.length && 0 === S) {
-            for (; h < m; ++h) a(n[h], e, r);
+            for (; h < y; ++h) a(n[h], e, r);
             for (; g < v; ++g) u(t[g]);
           } else {
-            for (o = v - S; o > 0; ) (s = y[g++]), null !== s && (u(s), o--);
+            for (o = v - S; o > 0; ) (s = m[g++]), null !== s && (u(s), o--);
             if (N === c) {
               let t = (function (e) {
                 let t,
@@ -690,15 +691,15 @@ function Se(e, t, r) {
                   (o[t] = n), (n = r[n]);
                 return o;
               })(w);
-              for (l = t.length - 1, i = n.length, o = m - 1; o >= 0; --o)
+              for (l = t.length - 1, i = n.length, o = y - 1; o >= 0; --o)
                 -1 === w[o] || l < 0 || o !== t[l]
                   ? ((N = o + h),
                     (d = n[N++]),
                     (f = N < i ? n[N].a : r),
                     a(d, e, f))
                   : --l;
-            } else if (S !== m)
-              for (i = n.length, o = m - 1; o >= 0; --o)
+            } else if (S !== y)
+              for (i = n.length, o = y - 1; o >= 0; --o)
                 -1 === w[o] &&
                   ((N = o + h),
                   (d = n[N++]),
@@ -995,7 +996,7 @@ export {
   Y as intersections,
   j as lifecycle,
   we as loopIn,
-  ye as loopOf,
+  me as loopOf,
   Ne as loopTo,
   Q as nextTagId,
   w as on,
