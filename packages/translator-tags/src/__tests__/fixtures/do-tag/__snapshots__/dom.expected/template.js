@@ -2,7 +2,7 @@ import log from "./test-log";
 function fromStatic() {
   log.static += "rendered";
 }
-import { queueSource as _queueSource, data as _data, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { data as _data, queueSource as _queueSource, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _logOutput = /* @__PURE__ */_value("logOutput", (_scope, logOutput) => _data(_scope["#text/0"], logOutput));
 const _str = /* @__PURE__ */_value("str", (_scope, str) => log.let += str);
 const _fromConst = /* @__PURE__ */_value("fromConst", (_scope, fromConst) => fromConst(_scope));

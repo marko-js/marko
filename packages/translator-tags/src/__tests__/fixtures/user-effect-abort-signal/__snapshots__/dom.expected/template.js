@@ -1,4 +1,4 @@
-import { data as _data, queueSource as _queueSource, resetAbortSignal as _resetAbortSignal, getAbortSignal as _getAbortSignal, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { data as _data, resetAbortSignal as _resetAbortSignal, getAbortSignal as _getAbortSignal, queueSource as _queueSource, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _b = /* @__PURE__ */_value("b", (_scope, b) => _data(_scope["#text/1"], b));
 const _a = /* @__PURE__ */_value("a", (_scope, a) => _data(_scope["#text/0"], a));
 const _anonymous = _scope => () => _queueSource(_scope, _b, previousValue);

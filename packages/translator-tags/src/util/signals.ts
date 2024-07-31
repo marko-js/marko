@@ -11,8 +11,8 @@ import { isStatefulReferences } from "./is-stateful";
 import { isOutputHTML } from "./marko-config";
 import { type Opt, push } from "./optional";
 import {
-  BindingType,
   type Binding,
+  BindingType,
   type ReferencedBindings,
   bindingUtil,
   getScopeAccessorLiteral,
@@ -58,6 +58,10 @@ export type Signal = {
   hasDynamicSubscribers?: true;
   export: boolean;
   callee?: t.Expression;
+  buildAssignment?: (
+    valueSection: Section,
+    value: t.Expression,
+  ) => t.Expression;
 };
 
 const [getSignals] = createSectionState<Map<unknown, Signal>>(
@@ -661,6 +665,64 @@ export function getResumeRegisterId(
   );
 }
 
+export function replaceAssignments() {
+  if (currentProgramPath.node.extra.assignments) {
+    for (const [valueSection, assignment] of currentProgramPath.node.extra
+      .assignments) {
+      const { node } = assignment;
+      if (node.type === "UpdateExpression") {
+        const binding = node.argument.extra?.source;
+        if (binding) {
+          const { buildAssignment } = getSignal(binding.section, binding);
+          if (buildAssignment) {
+            const replacement = buildAssignment(
+              valueSection,
+              t.binaryExpression(
+                node.operator === "++" ? "+" : "-",
+                node.argument,
+                t.numericLiteral(1),
+              ),
+            );
+            assignment.replaceWith(
+              node.prefix || assignment.parentPath.isExpressionStatement()
+                ? replacement
+                : t.sequenceExpression([replacement, node.argument]),
+            );
+          }
+        }
+      } else {
+        if (
+          node.left.type === "ObjectPattern" ||
+          node.left.type === "ArrayPattern"
+        ) {
+          handleDestructure(assignment, node.left, valueSection);
+        } else if (node.left.type === "Identifier") {
+          const binding = node.left.extra?.source;
+          if (binding) {
+            const { buildAssignment } = getSignal(binding.section, binding);
+            if (buildAssignment) {
+              const replacement = buildAssignment(
+                valueSection,
+                node.operator === "="
+                  ? node.right
+                  : t.binaryExpression(
+                      node.operator.slice(
+                        0,
+                        -1,
+                      ) as t.BinaryExpression["operator"],
+                      node.left as t.Identifier,
+                      node.right,
+                    ),
+              );
+              assignment.replaceWith(replacement);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 export function writeSignals(section: Section) {
   const signals = [...getSignals(section).values()].sort(sortSignals);
   for (const signal of signals) {
@@ -918,6 +980,84 @@ const bindFunctionsVisitor: t.Visitor<{
   FunctionExpression: { exit: bindFunction },
   ArrowFunctionExpression: { exit: bindFunction },
 };
+
+function handleDestructure(
+  assignment: t.NodePath,
+  node: t.LVal | t.ObjectProperty | t.ObjectProperty["value"],
+  section: Section,
+  ctx?: {
+    statement: t.NodePath;
+    end: t.NodePath;
+  },
+  replace?: (value: t.Identifier) => void,
+) {
+  if (!ctx) {
+    ctx = {
+      statement: assignment.getStatementParent()!,
+      end: assignment.getStatementParent()!,
+    };
+  }
+
+  switch (node.type) {
+    case "ObjectPattern":
+      for (const prop of node.properties) {
+        handleDestructure(assignment, prop, section, ctx);
+      }
+      break;
+    case "ArrayPattern":
+      for (const i in node.elements) {
+        if (node.elements[i] === null) continue;
+
+        handleDestructure(
+          assignment,
+          node.elements[i]!,
+          section,
+          ctx,
+          (id) => (node.elements[i] = id),
+        );
+      }
+      break;
+    case "RestElement":
+      handleDestructure(
+        assignment,
+        node.argument,
+        section,
+        ctx,
+        (id) => (node.argument = id),
+      );
+      break;
+    case "ObjectProperty":
+      handleDestructure(
+        assignment,
+        node.value,
+        section,
+        ctx,
+        (id) => (node.value = id),
+      );
+      break;
+    case "Identifier":
+      {
+        const binding = node.extra?.source;
+        if (binding) {
+          const { buildAssignment } = getSignal(binding.section, binding);
+          if (buildAssignment) {
+            const valueId = ctx.statement.scope.generateUidIdentifier(
+              node.name,
+            );
+
+            ctx.statement.insertBefore(
+              t.variableDeclaration("let", [t.variableDeclarator(valueId)]),
+            );
+            replace?.(valueId);
+            [ctx.end] = ctx.end.insertAfter(
+              t.expressionStatement(buildAssignment(section, valueId)),
+            );
+          }
+        }
+      }
+      break;
+  }
+}
 
 function bindFunction(
   fn: t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression>,

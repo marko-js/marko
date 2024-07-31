@@ -8,7 +8,7 @@
     b    2    0
   </pre>
   <pre>
-    c  {c:4}  0
+    c  {c:4}  {}
   </pre>
   <pre>
     d    7    0

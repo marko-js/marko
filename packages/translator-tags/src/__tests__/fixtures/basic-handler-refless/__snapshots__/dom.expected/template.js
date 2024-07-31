@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data2, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, data as _data2, queueSource as _queueSource, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _data = /* @__PURE__ */_value("data", (_scope, data) => _data2(_scope["#text/1"], data));
 const _onClick = _scope => function () {
   _queueSource(_scope, _data, 1);

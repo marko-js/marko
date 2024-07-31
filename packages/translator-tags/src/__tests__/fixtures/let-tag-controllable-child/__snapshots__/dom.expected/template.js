@@ -1,5 +1,5 @@
-import { queueSource as _queueSource, register as _register, inChild as _inChild, data as _data, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _child, _input_ as _child_input, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
+import { register as _register, inChild as _inChild, data as _data, queueSource as _queueSource, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _valueChange = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/template.marko_0/valueChange", _scope => function (newValue) {
   _queueSource(_scope, _source, newValue);
 });

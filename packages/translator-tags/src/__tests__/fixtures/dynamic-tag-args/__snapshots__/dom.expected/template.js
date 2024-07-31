@@ -1,6 +1,6 @@
 import customTag from './components/custom-tag.marko';
 const tags = [customTag];
-import { on as _on, queueSource as _queueSource, data as _data, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, data as _data, queueSource as _queueSource, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _tags0_input = _dynamicTagAttrs("#text/2", void 0, true);
 const _expr_Text_x = /* @__PURE__ */_intersection(2, _scope => {
   const {

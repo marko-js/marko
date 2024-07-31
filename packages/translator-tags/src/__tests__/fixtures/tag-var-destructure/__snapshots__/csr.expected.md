@@ -8,7 +8,7 @@
     b    2    0
   </pre>
   <pre>
-    c  {c:4}  0
+    c  {c:4}  {}
   </pre>
   <pre>
     d    7    0
@@ -37,7 +37,7 @@ container?.querySelector("button").click()
     b    2    2
   </pre>
   <pre>
-    c  {c:4}  7
+    c  {c:4}  {"c":4}
   </pre>
   <pre>
     d    7    7
@@ -52,7 +52,7 @@ container?.querySelector("button").click()
 ```
 button0/pre0/#text1: "0" => "1"
 button0/pre1/#text1: "0" => "2"
-button0/pre2/#text1: "0" => "7"
+button0/pre2/#text1: "{}" => "{\"c\":4}"
 button0/pre3/#text1: "0" => "7"
 button0/pre4/#text1: "[]" => "[9]"
 ```

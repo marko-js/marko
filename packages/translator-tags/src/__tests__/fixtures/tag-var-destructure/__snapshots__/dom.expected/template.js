@@ -1,13 +1,10 @@
 function noop(_) {}
-import { on as _on, queueSource as _queueSource, data as _data, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, data as _data, queueSource as _queueSource, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _e = /* @__PURE__ */_value("e", (_scope, e) => _data(_scope["#text/5"], JSON.stringify(e)));
-const _d = /* @__PURE__ */_value("d", (_scope, d) => {
-  _data(_scope["#text/3"], JSON.stringify(d));
-  _data(_scope["#text/4"], d);
-});
+const _d = /* @__PURE__ */_value("d", (_scope, d) => _data(_scope["#text/4"], d));
+const _c = /* @__PURE__ */_value("c", (_scope, c) => _data(_scope["#text/3"], JSON.stringify(c)));
 const _b = /* @__PURE__ */_value("b", (_scope, b) => _data(_scope["#text/2"], b));
 const _a = /* @__PURE__ */_value("a", (_scope, a) => _data(_scope["#text/1"], a));
-const _c = (_scope, c) => {};
 const _onClick = _scope => function () {
   let local;
   let _a2;
