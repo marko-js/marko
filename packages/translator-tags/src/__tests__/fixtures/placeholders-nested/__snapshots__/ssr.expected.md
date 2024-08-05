@@ -1,5 +1,5 @@
 # Write
-  a<!M$1>i...<!M$1/>j
+  a<!--M_!^a-->i...<!--M_!a-->j<style M_>t{display:none}</style><t M_=a>b<!--M_#b-->d<!--M_!^c-->h...<!--M_!c--></t><t M_=c>e<!--M_#d-->g</t><script>WALKER_RUNTIME("M")("_");REORDER_RUNTIME(M._);M._.w()</script>
 
 
 # Write
@@ -7,19 +7,41 @@
 
 
 # Write
-  <t id="M$1">bcd<!M$0>h...<!M$0/></t><script>(M$r=REORDER_RUNTIME)(1)</script>
+  <t c M_=b>cd<!--M_!^c-->h...<!--M_!c--></t><script>M._.w()</script>
 
 
 # Write
-  <t id="M$0">efg</t><script>M$r(0)</script>
+  <t c M_=d>fg</t><script>M._.d=1;M._.w()</script>
 
 
 # Render "End"
 ```html
 <html>
-  <head />
+  <head>
+    <style
+      m_=""
+    >
+      t{display:none}
+    </style>
+  </head>
   <body>
-    abcdefgjkl
+    ab
+    <!--M_#b-->
+    de
+    <!--M_#d-->
+    g
+    <script>
+      M._.w()
+    </script>
+    <t
+      c=""
+      m_="d"
+    >
+      fg
+    </t>
+    <script>
+      M._.d=1;M._.w()
+    </script>
   </body>
 </html>
 ```
@@ -33,36 +55,54 @@ inserted #document/html0/body1/#text0
 inserted #comment
 inserted #text
 inserted #comment
-inserted #document/html0/body1/#text3
+inserted #text
+inserted #document/html0/head0/style0
+inserted #document/html0/head0/style0/#text0
 inserted t
 inserted #document/html0/body1/#text1
+inserted #document/html0/body1/#comment2
+inserted #document/html0/body1/#text3
 inserted #comment
 inserted #text
 inserted #comment
+inserted t
+inserted #document/html0/body1/#text4
+inserted #document/html0/body1/#comment5
+inserted #document/html0/body1/#text6
 inserted script
 inserted script/#text0
-removed #document/html0/body1/#text1 before #comment
-inserted #document/html0/body1/#text1
-removed #comment before #text
-inserted #comment
-removed #text before #comment
+removed #document/html0/head0/style0 after #text
+inserted #document/html0/head0/style0
 inserted #text
-removed #comment in t
-inserted #comment
-removed script after t
-removed t after #document/html0/body1/#text3
-removed #comment after #comment
+inserted t
+inserted t/#text0
+inserted t/#comment1
+inserted t/#text2
+inserted t/#comment3
+inserted #document/html0/body1/script7
+inserted #document/html0/body1/script7/#text0
 removed #text after #comment
 removed #comment after #comment
-inserted t
-inserted #document/html0/body1/#text2
-inserted script
-inserted script/#text0
-removed #document/html0/body1/#text2 in t
-inserted #document/html0/body1/#text2
-removed script after t
-removed t after #document/html0/body1/#text3
-removed #comment after #document/html0/body1/#text2
-removed #text after #document/html0/body1/#text2
-removed #comment after #document/html0/body1/#text2
+removed #document/html0/body1/#text1 before #document/html0/body1/#comment2
+removed #document/html0/body1/#comment2 before #document/html0/body1/#text3
+removed #document/html0/body1/#text3 before #comment
+removed #comment before #text
+removed #text before #comment
+removed #comment in t
+removed #comment after #document/html0/body1/#text0
+inserted #document/html0/body1/#text1, #document/html0/body1/#comment2, #document/html0/body1/#text3, #comment, #text, #comment
+removed t after #text
+inserted #document/html0/body1/t8
+inserted #document/html0/body1/t8/#text0
+inserted #document/html0/body1/script9
+inserted #document/html0/body1/script9/#text0
+removed #text after #comment
+removed #comment after #comment
+removed #text after #comment
+removed t after #comment
+removed script after #comment
+removed #text after #comment
+removed t after #comment
+removed #comment after #document/html0/body1/#text3
+inserted #document/html0/body1/#text4, #document/html0/body1/#comment5, #document/html0/body1/#text6
 ```

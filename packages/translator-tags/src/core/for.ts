@@ -564,8 +564,6 @@ const translateHTML = {
       );
     }
 
-    block.body.push(t.expressionStatement(callRuntime("maybeFlush")));
-
     tag.replaceWithMultiple(replacement);
   },
 };

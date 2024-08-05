@@ -1,4 +1,4 @@
-import { nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, peekNextScope as _peekNextScope, writeScope as _writeScope, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { nextScopeId as _nextScopeId, peekNextScope as _peekNextScope, writeScope as _writeScope, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _hello from "./components/hello/index.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -10,7 +10,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   }) {
     const _scope2_id = _nextScopeId();
     _item.push({});
-    _maybeFlush();
   }
   const _childScope = _peekNextScope();
   _hello._({

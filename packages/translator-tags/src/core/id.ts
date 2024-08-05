@@ -10,12 +10,15 @@ import { isOutputHTML } from "../util/marko-config";
 import { callRuntime } from "../util/runtime";
 import { getSection } from "../util/sections";
 import { addValue, initValue } from "../util/signals";
+import { scopeIdentifier } from "../visitors/program";
 
 export default {
   translate(tag) {
     const { node } = tag;
     const { var: tagVar } = node;
-    const id = callRuntime("nextTagId");
+    const id = isOutputHTML()
+      ? callRuntime("nextTagId")
+      : callRuntime("nextTagId", scopeIdentifier);
 
     assertNoArgs(tag);
     assertNoAttributes(tag);

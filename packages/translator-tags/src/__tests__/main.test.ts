@@ -1,11 +1,9 @@
-import "./test-globals";
 import assert from "assert";
 import fs from "fs";
 import path from "path";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
 import type { Template, Input } from "@marko/runtime-tags/common/types";
-import reorderRuntime from "@marko/runtime-tags/html/reorder-runtime";
 import type { DOMWindow } from "jsdom";
 import snap from "mocha-snap";
 import glob from "tiny-glob";
@@ -13,13 +11,8 @@ import * as translator from "..";
 import { bundle } from "./utils/bundle";
 import createBrowser from "./utils/create-browser";
 import { isThrows, isWait } from "./utils/resolve";
+import { stripInlineRuntime } from "./utils/strip-inline-runtime";
 import createMutationTracker from "./utils/track-mutations";
-
-const runtimeId = "M";
-const reorderRuntimeString = String(reorderRuntime).replace(
-  "RUNTIME_ID",
-  runtimeId,
-);
 
 type TestConfig = {
   steps?: unknown[] | (() => Promise<unknown[]>);
@@ -212,11 +205,7 @@ describe("translator-tags", () => {
         try {
           for await (const data of serverTemplate.render(input)) {
             buffer += data;
-            tracker.log(
-              `# Write\n${indent(
-                data.replace(reorderRuntimeString, "REORDER_RUNTIME"),
-              )}`,
-            );
+            tracker.log(`# Write\n${indent(stripInlineRuntime(data))}`);
           }
           document.write(buffer);
           document.close();
@@ -403,8 +392,8 @@ describe("translator-tags", () => {
             .getRawLogs(true)
             .slice(0, resumeLogs.length);
           assert.strictEqual(
-            csrLogs.join("\n\n").replace(/[cs]\d+/g, "%id"),
-            resumeLogs.join("\n\n").replace(/[cs]\d+/g, "%id"),
+            csrLogs.join("\n\n").replace(/[cs]M_[a-z0-9]+/g, "%id"),
+            resumeLogs.join("\n\n").replace(/[cs]M_[a-z0-9]+/g, "%id"),
           );
         });
       });

@@ -1,5 +1,5 @@
 # Write
-  <button>1<!M*0 #text/0> <!>1<!M*0 #text/1></button>
+  <button>1<!--M_*0 #text/0--> <!>1<!--M_*0 #text/1--></button><script>WALKER_RUNTIME("M")("_");M._.d=1</script>
 
 
 # Render "End"
@@ -9,12 +9,15 @@
   <body>
     <button>
       1
-      <!--M*0 #text/0-->
+      <!--M_*0 #text/0-->
        
       <!---->
       1
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </button>
+    <script>
+      WALKER_RUNTIME("M")("_");M._.d=1
+    </script>
   </body>
 </html>
 ```
@@ -31,4 +34,6 @@ inserted #document/html0/body1/button0/#text2
 inserted #document/html0/body1/button0/#comment3
 inserted #document/html0/body1/button0/#text4
 inserted #document/html0/body1/button0/#comment5
+inserted #document/html0/body1/script1
+inserted #document/html0/body1/script1/#text0
 ```

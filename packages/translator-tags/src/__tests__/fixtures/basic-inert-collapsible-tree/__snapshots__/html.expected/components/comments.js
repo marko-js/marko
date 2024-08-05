@@ -1,4 +1,4 @@
-import { write as _write, markResumeScopeStart as _markResumeScopeStart, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, peekNextScope as _peekNextScope, ensureScopeWithId as _ensureScopeWithId, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, maybeFlush as _maybeFlush, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, markResumeScopeStart as _markResumeScopeStart, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, peekNextScope as _peekNextScope, ensureScopeWithId as _ensureScopeWithId, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _comments from "./comments.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -37,7 +37,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       "_": _ensureScopeWithId(_scope0_id)
     });
     _scope1_.set(i, _getScopeById(_scope1_id));
-    _maybeFlush();
   }
   _write(`${_markResumeControlEnd(_scope0_id, "#ul/0")}</ul>${_markResumeNode(_scope0_id, "#ul/0")}`);
   _writeScope(_scope0_id, {

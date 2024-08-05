@@ -1,5 +1,5 @@
 # Write
-  <div></div><!M[1><div></div><!M]0 #text/0><script>(M$h=[]).push(_=>(_.b={0:{"#text/0!":_.a={},"#text/0(":"div"},1:_.a}),[])</script>
+  <div></div><!--M_[1--><div></div><!--M_]0 #text/0--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.b={0:{"#text/0!":_.a={},"#text/0(":"div"},1:_.a})];M._.d=1</script>
 
 
 # Render "End"
@@ -8,11 +8,11 @@
   <head />
   <body>
     <div />
-    <!--M[1-->
+    <!--M_[1-->
     <div />
-    <!--M]0 #text/0-->
+    <!--M_]0 #text/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{"#text/0!":_.a={},"#text/0(":"div"},1:_.a}),[])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{"#text/0!":_.a={},"#text/0(":"div"},1:_.a})];M._.d=1
     </script>
   </body>
 </html>

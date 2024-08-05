@@ -1,5 +1,5 @@
 # Write
-  <div><button>0<!M*0 #text/1></button><!M*0 #button/0><!--0 + 0 = 0--><!M*0 #comment/2></div><script>(M$h=[]).push(_=>(_.a={0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/html-comment-counter/template.marko_0_count",])</script>
+  <div><button>0<!--M_*0 #text/1--></button><!--M_*0 #button/0--><!--0 + 0 = 0--><!--M_*0 #comment/2--></div><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.a={0:{count:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/html-comment-counter/template.marko_0_count"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -10,14 +10,14 @@
     <div>
       <button>
         0
-        <!--M*0 #text/1-->
+        <!--M_*0 #text/1-->
       </button>
-      <!--M*0 #button/0-->
+      <!--M_*0 #button/0-->
       <!--0 + 0 = 0-->
-      <!--M*0 #comment/2-->
+      <!--M_*0 #comment/2-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/html-comment-counter/template.marko_0_count",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{count:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/html-comment-counter/template.marko_0_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

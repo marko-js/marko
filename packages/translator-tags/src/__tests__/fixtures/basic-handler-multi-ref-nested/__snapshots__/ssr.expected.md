@@ -1,5 +1,5 @@
 # Write
-  <button>0<!M*0 #text/1></button><!M*0 #button/0><script>(M$h=[]).push(_=>(_.a={0:{a:[0],b:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b",])</script>
+  <button>0<!--M_*0 #text/1--></button><!--M_*0 #button/0--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.a={0:{a:[0],b:1}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -9,11 +9,11 @@
   <body>
     <button>
       0
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{a:[0],b:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{a:[0],b:1}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko_0_a_b"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

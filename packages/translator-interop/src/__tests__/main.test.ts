@@ -3,19 +3,13 @@ import path from "path";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
 import type { Input, Template } from "@marko/runtime-tags/common/types";
-import reorderRuntime from "@marko/runtime-tags/html/reorder-runtime";
+import { stripInlineRuntime } from "@marko/translator-tags/src/__tests__/utils/strip-inline-runtime";
 import type { DOMWindow } from "jsdom";
 import snap from "mocha-snap";
 import glob from "tiny-glob";
 import createBrowser from "../../../translator-tags/src/__tests__/utils/create-browser";
 import { isWait } from "../../../translator-tags/src/__tests__/utils/resolve";
 import createMutationTracker from "../../../translator-tags/src/__tests__/utils/track-mutations";
-
-const runtimeId = "X";
-const reorderRuntimeString = String(reorderRuntime).replace(
-  "RUNTIME_ID",
-  runtimeId,
-);
 
 const baseConfig: compiler.Config = {
   translator: require.resolve(".."),
@@ -58,7 +52,7 @@ describe("translator-interop", () => {
   after(() => {
     // TODO: remove this once we have a better way to patch dynamic tags
     delete require("marko/src/runtime/helpers/dynamic-tag").___runtimeCompat;
-    require("@marko/runtime-tags/html").patchDynamicTag(
+    require("@marko/runtime-tags/html").compat.patchDynamicTag(
       (tag: any) => tag._ || tag.renderBody || tag,
       (v: any) => v,
     );
@@ -180,14 +174,9 @@ describe("translator-interop", () => {
         const tracker = createMutationTracker(browser.window, document);
 
         try {
-          const iteratable = serverTemplate.render(input);
-          for await (const data of iteratable) {
-            buffer += data;
-            tracker.log(
-              `# Write\n${indent(
-                data.replace(reorderRuntimeString, "REORDER_RUNTIME"),
-              )}`,
-            );
+          for await (const chunk of serverTemplate.render(input)) {
+            buffer += chunk;
+            tracker.log(`# Write\n${indent(stripInlineRuntime(chunk))}`);
           }
           document.write(`<html><body>${buffer}</body></html>`);
           document.close();

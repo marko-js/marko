@@ -1,3 +1,8 @@
+import {
+  RENDERER_REGISTER_ID,
+  SET_SCOPE_REGISTER_ID,
+} from "../common/compat-meta";
+import type { Scope } from "../dom";
 import { patchConditionals } from "./control-flow";
 import { prepare, queueEffect, runEffects } from "./queue";
 import {
@@ -5,13 +10,21 @@ import {
   createScopeWithRenderer,
   type Renderer,
 } from "./renderer";
-import { getRegisteredWithScope, register, scopeLookup } from "./resume";
+import { getRegisteredWithScope, register } from "./resume";
 import { CLEAN, DIRTY, MARK } from "./signals";
+const classIdToScope = new Map<string, Scope>();
 
 export const compat = {
-  register,
   patchConditionals,
   queueEffect,
+  init() {
+    register(SET_SCOPE_REGISTER_ID, (scope: Scope & { m5c: string }) => {
+      classIdToScope.set(scope.m5c, scope);
+    });
+  },
+  registerRenderer(fn: any) {
+    register(RENDERER_REGISTER_ID, fn);
+  },
   isOp(value: any) {
     return value === MARK || value === CLEAN || value === DIRTY;
   },
@@ -28,18 +41,24 @@ export const compat = {
   runComponentEffects(this: any) {
     runEffects(this.effects);
   },
-  resolveRenderer(renderer: any) {
-    if (renderer && typeof renderer === "object") {
-      if (Array.isArray(renderer)) {
-        const [registerId, scopeId] = renderer;
-        const scope = scopeLookup[scopeId];
-        return getRegisteredWithScope(registerId, scope);
-      }
-
-      if (renderer.___clone) {
-        return renderer;
-      }
+  resolveRegistered(
+    value: any,
+    {
+      runtimeId,
+      componentIdPrefix,
+    }: { runtimeId: string; componentIdPrefix: string },
+  ) {
+    if (Array.isArray(value) && typeof value[0] === "string") {
+      return getRegisteredWithScope(
+        value[0],
+        value.length === 2 &&
+          (window as any)[runtimeId]?.[
+            componentIdPrefix === "s" ? "_" : componentIdPrefix
+          ]?.___scopeLookup[value[1]],
+      );
     }
+
+    return value;
   },
   createRenderer(
     setup: Renderer["___setup"],
@@ -50,19 +69,19 @@ export const compat = {
     renderer.___clone = clone;
     return renderer;
   },
-  render(
-    isHydrate: boolean,
-    out: any,
-    component: any,
-    renderer: Renderer,
-    input: any,
-  ) {
+  render(out: any, component: any, renderer: Renderer, input: any) {
+    let scope: Scope = component.scope;
+
+    if (!scope) {
+      scope = classIdToScope.get(component.id)!;
+      if (scope) {
+        component.scope = scope;
+        classIdToScope.delete(component.id);
+      }
+    }
+
     const args = renderer.___args || noop;
     let existing = false;
-    let scope: any = isHydrate
-      ? (component.scope =
-          scopeLookup[(out.global.componentIdToScopeId as any)[component.id]])
-      : component.scope;
 
     component.effects = prepare(() => {
       if (!scope) {

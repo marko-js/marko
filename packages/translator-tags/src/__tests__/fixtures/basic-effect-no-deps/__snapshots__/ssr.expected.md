@@ -1,5 +1,5 @@
 # Write
-  <script>(M$h=[]).push(_=>(null),[0,"packages/translator-tags/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0",])</script>
+  <script>WALKER_RUNTIME("M")("_");M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -7,7 +7,7 @@
 <html>
   <head>
     <script>
-      (M$h=[]).push(_=&gt;(null),[0,"packages/translator-tags/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0",])
+      WALKER_RUNTIME("M")("_");M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0"];M._.d=1;M._.w()
     </script>
   </head>
   <body />

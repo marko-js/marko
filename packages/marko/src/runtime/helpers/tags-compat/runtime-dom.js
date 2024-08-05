@@ -15,12 +15,17 @@ exports.p = function (domCompat) {
     renderer,
     renderBody,
     args,
+    global,
   ) {
-    const tagsRenderer = domCompat.resolveRenderer(renderer || renderBody);
+    const tagsRenderer = domCompat.resolveRegistered(
+      renderer || renderBody,
+      global,
+    );
 
-    if (tagsRenderer) {
-      return (input, out) =>
-        TagsCompat({ i: args ? args : input, r: tagsRenderer }, out);
+    if (tagsRenderer && domCompat.isRenderer(tagsRenderer)) {
+      return (input, out) => {
+        return TagsCompat({ i: args ? args : input, r: tagsRenderer }, out);
+      };
     }
 
     return renderer;
@@ -29,17 +34,9 @@ exports.p = function (domCompat) {
   const TagsCompatId = "tags-compat";
   const TagsCompat = createRenderer(
     function (_, out, componentDef, component) {
-      const isHydrate =
-        ___getComponentsContext(out).___globalContext.___isHydrate;
       const input = Array.isArray(_.i) ? _.i : [_.i];
-      const tagsRenderer = domCompat.resolveRenderer(_.r);
-      const newNode = domCompat.render(
-        isHydrate,
-        out,
-        component,
-        tagsRenderer,
-        input,
-      );
+      const tagsRenderer = domCompat.resolveRegistered(_.r, global);
+      const newNode = domCompat.render(out, component, tagsRenderer, input);
 
       out.bf(out.___assignedKey, component, !newNode);
       if (newNode) {
@@ -111,8 +108,12 @@ exports.p = function (domCompat) {
               customEvents,
               scopeId,
             ) {
+              const global = this.___global;
               for (const customEvent of customEvents) {
-                customEvent[1] = domCompat.resolveRenderer(customEvent[1]);
+                customEvent[1] = domCompat.resolveRegistered(
+                  customEvent[1],
+                  global,
+                );
               }
 
               setCustomEvents.call(this, customEvents, scopeId);
@@ -141,19 +142,21 @@ exports.p = function (domCompat) {
     return newRenderer;
   }
 
-  domCompat.register("@marko/tags-compat-5-to-6", create5to6Renderer);
+  domCompat.registerRenderer(create5to6Renderer);
+  domCompat.init();
 
   function renderAndMorph(scope, renderer, renderBody, input) {
     const out = defaultCreateOut();
     let host = domCompat.getStartNode(scope);
     let rootNode = host.fragment;
     if (!rootNode) {
-      const component = (scope.marko5Component = ___componentLookup[scope.m5c]);
+      const component = (scope.___marko5Component =
+        ___componentLookup[scope.m5c]);
       rootNode = component.___rootNode;
       host = rootNode.startNode;
       domCompat.setScopeNodes(host, rootNode.endNode);
     }
-    const existingComponent = scope.marko5Component;
+    const existingComponent = scope.___marko5Component;
     const componentsContext = ___getComponentsContext(out);
     const globalComponentsContext = componentsContext.___globalContext;
     let customEvents;
@@ -191,7 +194,7 @@ exports.p = function (domCompat) {
       component.___rootNode = rootNode;
       component.___input = input[0];
       component.___customEvents = customEvents;
-      scope.marko5Component = component;
+      scope.___marko5Component = component;
     });
   }
 

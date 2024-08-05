@@ -3,15 +3,15 @@
 <html>
   <head />
   <body>
-    <!--M[2-->
+    <!--M_[2-->
     <button>
       0
-      <!--M*2 #text/1-->
+      <!--M_*2 #text/1-->
     </button>
-    <!--M*2 #button/0-->
-    <!--M]1 #text/0-->
+    <!--M_*2 #button/0-->
+    <!--M_]1 #text/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.d={0:_.a={count:0,"#childScope/0":_.c={"#text/0!":_.b={}}},1:_.c,2:_.b},_.b._=_.a,_.c["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_renderer"](_.a),_.d),[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.d={0:_.a={count:0,"#childScope/0":_.c={"#text/0!":_.b={}}},1:_.c,2:_.b},_.b._=_.a,_.c["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_renderer"](_.a),_.d)];M._.e=[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -31,15 +31,15 @@ container.querySelector("button").click()
 <html>
   <head />
   <body>
-    <!--M[2-->
+    <!--M_[2-->
     <button>
       1
-      <!--M*2 #text/1-->
+      <!--M_*2 #text/1-->
     </button>
-    <!--M*2 #button/0-->
-    <!--M]1 #text/0-->
+    <!--M_*2 #button/0-->
+    <!--M_]1 #text/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.d={0:_.a={count:0,"#childScope/0":_.c={"#text/0!":_.b={}}},1:_.c,2:_.b},_.b._=_.a,_.c["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_renderer"](_.a),_.d),[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.d={0:_.a={count:0,"#childScope/0":_.c={"#text/0!":_.b={}}},1:_.c,2:_.b},_.b._=_.a,_.c["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_renderer"](_.a),_.d)];M._.e=[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -58,15 +58,15 @@ container.querySelector("button").click()
 <html>
   <head />
   <body>
-    <!--M[2-->
+    <!--M_[2-->
     <button>
       2
-      <!--M*2 #text/1-->
+      <!--M_*2 #text/1-->
     </button>
-    <!--M*2 #button/0-->
-    <!--M]1 #text/0-->
+    <!--M_*2 #button/0-->
+    <!--M_]1 #text/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.d={0:_.a={count:0,"#childScope/0":_.c={"#text/0!":_.b={}}},1:_.c,2:_.b},_.b._=_.a,_.c["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_renderer"](_.a),_.d),[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.d={0:_.a={count:0,"#childScope/0":_.c={"#text/0!":_.b={}}},1:_.c,2:_.b},_.b._=_.a,_.c["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_renderer"](_.a),_.d)];M._.e=[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -85,15 +85,15 @@ container.querySelector("button").click()
 <html>
   <head />
   <body>
-    <!--M[2-->
+    <!--M_[2-->
     <button>
       3
-      <!--M*2 #text/1-->
+      <!--M_*2 #text/1-->
     </button>
-    <!--M*2 #button/0-->
-    <!--M]1 #text/0-->
+    <!--M_*2 #button/0-->
+    <!--M_]1 #text/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.d={0:_.a={count:0,"#childScope/0":_.c={"#text/0!":_.b={}}},1:_.c,2:_.b},_.b._=_.a,_.c["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_renderer"](_.a),_.d),[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.d={0:_.a={count:0,"#childScope/0":_.c={"#text/0!":_.b={}}},1:_.c,2:_.b},_.b._=_.a,_.c["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_renderer"](_.a),_.d)];M._.e=[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 # Write
-  <button id=inc>1<!M*0 #text/1>|<!>1<!M*0 #text/2></button><!M*0 #button/0><button id=toggle>toggle</button><!M*0 #button/3><script>(M$h=[]).push(_=>(_.a={0:{y:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0",0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0__y_change_y",])</script>
+  <button id=inc>1<!--M_*0 #text/1-->|<!>1<!--M_*0 #text/2--></button><!--M_*0 #button/0--><button id=toggle>toggle</button><!--M_*0 #button/3--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.a={0:{y:1}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0",0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0__y_change_y"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -11,21 +11,21 @@
       id="inc"
     >
       1
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
       |
       <!---->
       1
-      <!--M*0 #text/2-->
+      <!--M_*0 #text/2-->
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <button
       id="toggle"
     >
       toggle
     </button>
-    <!--M*0 #button/3-->
+    <!--M_*0 #button/3-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{y:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0",0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0__y_change_y",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{y:1}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0",0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0__y_change_y"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

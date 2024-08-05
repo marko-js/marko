@@ -6,12 +6,10 @@ export {
   dynamicTagInput,
   dynamicTagArgs,
   createRenderer,
-  patchDynamicTag,
 } from "./html/dynamic-tag";
 
 export {
   write,
-  maybeFlush,
   fork,
   tryPlaceholder,
   tryCatch,
@@ -23,14 +21,13 @@ export {
   markResumeScopeStart,
   markResumeControlEnd,
   markResumeControlSingleNodeEnd,
-  createRenderFn,
   peekNextScope,
   ensureScopeWithId,
   getScopeById,
   getStreamData,
   register,
-  serializerRegister,
-  getRegistryInfo,
 } from "./html/writer";
 
 export { createTemplate } from "./html/template";
+
+export { compat } from "./html/compat";

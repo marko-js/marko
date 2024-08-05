@@ -1,3 +1,5 @@
+import type { Boundary } from "./writer";
+
 const { hasOwnProperty } = {};
 const Generator = (function* () {})().constructor;
 const AsyncGenerator = (async function* () {})().constructor;
@@ -15,11 +17,6 @@ type TypedArray =
   | Float64Array;
 
 const REGISTRY = new WeakMap<WeakKey, Registered>();
-const REF_START_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$"; // Avoids chars that cannot start a property name and reserves _ for user refs.
-const REF_START_CHARS_LEN = REF_START_CHARS.length;
-const REF_CHARS =
-  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$_";
-const REF_CHARS_LEN = REF_CHARS.length;
 const KNOWN_SYMBOLS = (() => {
   const KNOWN_SYMBOLS = new Map<symbol, string>();
   for (const name of Object.getOwnPropertyNames(Symbol)) {
@@ -267,34 +264,11 @@ const KNOWN_OBJECTS = new Map<object, string>([
 class State {
   ids = 0;
   flush = 0;
+  flushed = false;
   buf = [] as string[];
   refs = new WeakMap<WeakKey, Reference>();
   assigned = new Set<Reference>();
-  promises: Promises | null = null;
-}
-
-class Promises {
-  public remaining = 0;
-  public next: Promise<void> | null = null;
-  #resolve: (() => void) | null = null;
-  start() {
-    if (++this.remaining === 1) {
-      this.#next();
-    }
-  }
-  end() {
-    this.#resolve?.();
-
-    if (--this.remaining > 0) {
-      this.#next();
-    } else {
-      this.#resolve = null;
-      this.next = null;
-    }
-  }
-  #next() {
-    this.next = new Promise((resolve) => (this.#resolve = resolve));
-  }
+  boundary: Boundary | undefined = undefined;
 }
 
 class Reference {
@@ -302,7 +276,7 @@ class Reference {
   public assigns = "";
   constructor(
     public parent: Reference | null,
-    public accessor: string | number | null,
+    public accessor: string | null,
     public flush: number,
     public pos: number | null = null,
     public id: string | null = null,
@@ -317,36 +291,18 @@ class Reference {
 
 export class Serializer {
   #state = new State();
-  get pending() {
-    return this.#state.buf.length
-      ? this.#consumePending()
-      : this.#state.promises?.next?.then(() => this.#consumePending());
-  }
-  stringify(val: unknown) {
+  stringify(val: unknown, boundary: Boundary) {
     try {
+      this.#state.flushed = false;
+      this.#state.boundary = boundary;
       return writeRoot(this.#state, val);
     } finally {
       this.#flush();
     }
   }
 
-  #consumePending() {
-    const state = this.#state;
-    let result = state.buf[0];
-
-    for (let i = 1; i < state.buf.length; i++) {
-      result += state.buf[i];
-    }
-
-    if (state.assigned.size) {
-      for (const valueRef of state.assigned) {
-        result += ";" + valueRef.assigns + (valueRef.init || valueRef.id);
-        valueRef.init = "";
-      }
-    }
-
-    this.#flush();
-    return "_=>{" + result + "}";
+  get flushed() {
+    return this.#state.flushed;
   }
 
   #flush() {
@@ -380,41 +336,60 @@ export function stringify(val: unknown) {
 }
 
 function writeRoot(state: State, root: unknown) {
+  const { buf, assigned } = state;
+  const hadBuf = buf.length !== 0;
+  let result = "";
+  if (hadBuf) {
+    buf.push(",");
+  }
+
   if (writeProp(state, root, null, "")) {
     const rootRef = state.refs.get(root as object);
-    const { buf, assigned } = state;
-    if (rootRef) ensureId(state, rootRef);
-    let returnsRoot = true;
-    let result = buf[0];
-
-    for (let i = 1; i < buf.length; i++) {
-      result += buf[i];
+    if (rootRef) {
+      ensureId(state, rootRef);
     }
 
     if (assigned.size) {
       if (assigned.delete(rootRef!)) {
         assigned.add(rootRef!);
+        writeAssigned(state);
       } else {
-        returnsRoot = false;
-      }
-
-      for (const valueRef of assigned) {
-        result += "," + valueRef.assigns + (valueRef.init || valueRef.id);
-        valueRef.init = "";
+        writeAssigned(state);
+        buf.push("," + rootRef!.id!);
       }
     }
 
-    return "_=>(" + (returnsRoot ? result : result + "," + rootRef!.id!) + ")";
+    result = "(";
+    buf.push(")");
+  } else {
+    if (hadBuf) {
+      buf.pop();
+      writeAssigned(state);
+    }
+
+    result = "{";
+    buf.push("}");
   }
 
-  return "_=>{}";
+  for (const chunk of buf) {
+    result += chunk;
+  }
+
+  return "_=>" + result;
+}
+
+function writeAssigned(state: State) {
+  for (const valueRef of state.assigned) {
+    state.buf.push("," + valueRef.assigns + (valueRef.init || valueRef.id));
+    valueRef.init = "";
+  }
 }
 
 function writeProp(
   state: State,
   val: unknown,
   parent: Reference | null,
-  accessor: string | number,
+  accessor: string,
 ): boolean {
   switch (typeof val) {
     case "string":
@@ -448,7 +423,7 @@ function writeReferenceOr(
   write: (state: State, val: any, ref: Reference) => boolean,
   val: WeakKey,
   parent: Reference | null,
-  accessor: string | number,
+  accessor: string,
 ) {
   let ref = state.refs.get(val);
   if (ref) {
@@ -488,7 +463,7 @@ function writeRegistered(
   state: State,
   val: WeakKey,
   parent: Reference | null,
-  accessor: string | number,
+  accessor: string,
   { access, scope }: Registered,
 ) {
   if (scope) {
@@ -549,7 +524,7 @@ function writeFunction(
   // eslint-disable-next-line @typescript-eslint/ban-types
   val: Function,
   parent: Reference | null,
-  accessor: string | number,
+  accessor: string,
 ) {
   const wellKnownFunction = KNOWN_FUNCTIONS.get(val);
   if (wellKnownFunction) {
@@ -564,7 +539,7 @@ function writeSymbol(
   state: State,
   val: symbol,
   parent: Reference | null,
-  accessor: string | number,
+  accessor: string,
 ) {
   const wellKnownSymbol = KNOWN_SYMBOLS.get(val);
   if (wellKnownSymbol) {
@@ -599,7 +574,7 @@ function writeObject(
   state: State,
   val: object | null,
   parent: Reference | null,
-  accessor: string | number,
+  accessor: string,
 ) {
   if (val === null) return writeNull(state);
 
@@ -689,11 +664,11 @@ function writePlainObject(state: State, val: object, ref: Reference) {
 
 function writeArray(state: State, val: unknown[], ref: Reference) {
   state.buf.push("[");
-  writeProp(state, val[0], ref, 0);
+  writeProp(state, val[0], ref, "0");
 
   for (let i = 1; i < val.length; i++) {
     state.buf.push(",");
-    writeProp(state, val[i], ref, i);
+    writeProp(state, val[i], ref, "" + i);
   }
 
   state.buf.push("]");
@@ -711,14 +686,17 @@ function writeRegExp(state: State, val: RegExp) {
 }
 
 function writePromise(state: State, val: Promise<unknown>, ref: Reference) {
+  const { boundary } = state;
+  if (!boundary) return false;
+
   const pId = nextRefAccess(state);
   const pRef = new Reference(ref, null, state.flush, null, pId);
   state.buf.push("new Promise((f,r)=>" + pId + "={f,r})");
   val.then(
-    (v) => writeAsyncCall(state, pRef, "f", v, pId),
-    (v) => writeAsyncCall(state, pRef, "r", v, pId),
+    (v) => writeAsyncCall(state, boundary, pRef, "f", v, pId),
+    (v) => writeAsyncCall(state, boundary, pRef, "r", v, pId),
   );
-  (state.promises ||= new Promises()).start();
+  boundary.startAsync();
   return true;
 }
 
@@ -1041,33 +1019,33 @@ function writeReadableStream(
   val: ReadableStream<unknown>,
   ref: Reference,
 ) {
-  if (val.locked) return false;
+  const { boundary } = state;
+  if (!boundary || val.locked) return false;
 
+  const reader = val.getReader();
   const iterId = nextRefAccess(state);
   const iterRef = new Reference(ref, null, state.flush, null, iterId);
+  const onFulfilled = ({ value, done }: ReadableStreamReadResult<unknown>) => {
+    if (done) {
+      writeAsyncCall(state, boundary, iterRef, "r", value);
+    } else if (!boundary.signal.aborted) {
+      reader.read().then(onFulfilled, onRejected);
+      boundary.startAsync();
+      writeAsyncCall(state, boundary, iterRef, "f", value);
+    }
+  };
+  const onRejected = (reason: unknown) => {
+    writeAsyncCall(state, boundary, iterRef, "j", reason);
+  };
+
   state.buf.push(
     "new ReadableStream({start(c){(async(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()]))=>{for(i of a)v=await i,i==l?c.close():c.enqueue(v)})(" +
       iterId +
       "={}).catch(e=>c.error(e))}})",
   );
-  const reader = val.getReader();
-  const promises = (state.promises ||= new Promises());
-  promises.start();
+
   reader.read().then(onFulfilled, onRejected);
-
-  function onFulfilled({ value, done }: ReadableStreamReadResult<unknown>) {
-    if (done) {
-      writeAsyncCall(state, iterRef, "r", value);
-    } else {
-      promises.start();
-      reader.read().then(onFulfilled, onRejected);
-      writeAsyncCall(state, iterRef, "f", value);
-    }
-  }
-
-  function onRejected(reason: unknown) {
-    writeAsyncCall(state, iterRef, "j", reason);
-  }
+  boundary.startAsync();
 
   return true;
 }
@@ -1104,30 +1082,31 @@ function writeAsyncGenerator(
   iter: AsyncGenerator,
   ref: Reference,
 ) {
+  const { boundary } = state;
+  if (!boundary) return false;
+
   const iterId = nextRefAccess(state);
   const iterRef = new Reference(ref, null, state.flush, null, iterId);
+  const onFulfilled = ({ value, done }: IteratorResult<unknown>) => {
+    if (done) {
+      writeAsyncCall(state, boundary, iterRef, "r", value);
+    } else if (!boundary.signal.aborted) {
+      iter.next().then(onFulfilled, onRejected);
+      boundary.startAsync();
+      writeAsyncCall(state, boundary, iterRef, "f", value);
+    }
+  };
+  const onRejected = (reason: unknown) => {
+    writeAsyncCall(state, boundary, iterRef, "j", reason);
+  };
+
   state.buf.push(
     "(async function*(_,f,v,l,i,p=a=>l=new Promise((r,j)=>{f=_.r=r;_.j=j}),a=((_.f=v=>{f(v);a.push(p())}),[p()])){for(i of a)v=await i,i!=l&&(yield v);return v})(" +
       iterId +
       "={})",
   );
-  const promises = (state.promises ||= new Promises());
-  promises.start();
   iter.next().then(onFulfilled, onRejected);
-
-  function onFulfilled({ value, done }: IteratorResult<unknown>) {
-    if (done) {
-      writeAsyncCall(state, iterRef, "r", value);
-    } else {
-      promises.start();
-      iter.next().then(onFulfilled, onRejected);
-      writeAsyncCall(state, iterRef, "f", value);
-    }
-  }
-
-  function onRejected(reason: unknown) {
-    writeAsyncCall(state, iterRef, "j", reason);
-  }
+  boundary.startAsync();
 
   return true;
 }
@@ -1189,14 +1168,17 @@ function writeObjectProps(state: State, val: object, ref: Reference) {
 
 function writeAsyncCall(
   state: State,
+  boundary: Boundary,
   ref: Reference,
   method: string,
   value: unknown,
   preferredValueId: string | null = null,
 ) {
-  state.promises!.end();
+  if (boundary.signal.aborted) return;
+
+  state.flushed = true;
   const valueStartIndex = state.buf.push(
-    (state.buf.length === 0 ? "" : ";") + ref.id + "." + method + "(",
+    (state.buf.length === 0 ? "" : ",") + ref.id + "." + method + "(",
   );
   if (writeProp(state, value, ref, "")) {
     const valueRef = state.refs.get(value as object);
@@ -1207,6 +1189,7 @@ function writeAsyncCall(
     }
   }
   state.buf.push(")");
+  boundary.endAsync();
 }
 
 function isCircular(
@@ -1223,33 +1206,41 @@ function isCircular(
 }
 
 function toObjectKey(name: string) {
-  const invalidKeyStart = getInvalidObjectKeyPos(name);
-  return invalidKeyStart === -1 ? name : quote(name, invalidKeyStart);
-}
-
-function toAccess(accessor: string | number) {
-  return typeof accessor === "number" || accessor[0] === '"'
-    ? "[" + accessor + "]"
-    : "." + accessor;
-}
-
-function getInvalidObjectKeyPos(name: string) {
-  for (let i = 0; i < name.length; i++) {
-    const char = name[i];
-    if (
-      !(
-        (char >= "a" && char <= "z") ||
-        (char >= "A" && char <= "Z") ||
-        (char >= "0" && char <= "9") ||
-        char === "$" ||
-        char === "_"
-      )
-    ) {
-      return i;
-    }
+  if (name === "") {
+    return '""';
   }
 
-  return -1;
+  const startChar = name[0];
+  if (isDigit(startChar)) {
+    if (startChar === "0") {
+      if (name !== "0") {
+        return quote(name, 1);
+      }
+    } else {
+      for (let i = 1; i < name.length; i++) {
+        if (!isDigit(name[i])) {
+          return quote(name, i);
+        }
+      }
+    }
+  } else if (isWord(startChar)) {
+    for (let i = 1; i < name.length; i++) {
+      if (!isWordOrDigit(name[i])) {
+        return quote(name, i);
+      }
+    }
+  } else {
+    return quote(name, 0);
+  }
+
+  return name;
+}
+
+function toAccess(accessor: string) {
+  const start = accessor[0];
+  return start === '"' || (start >= "0" && start <= "9")
+    ? "[" + accessor + "]"
+    : "." + accessor;
 }
 
 // Creates a JavaScript double quoted string and escapes all characters not listed as DoubleStringCharacters on
@@ -1336,15 +1327,19 @@ function assignId(state: State, ref: Reference) {
 }
 
 function nextRefAccess(state: State) {
+  const encodeChars =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
+  const encodeLen = encodeChars.length;
+  const encodeStartLen = encodeLen - 11; // Avoids chars that cannot start a property name and _ (reserved).
   let index = state.ids++;
-  let mod = index % REF_START_CHARS_LEN;
-  let id = "_." + REF_START_CHARS[mod];
-  index = (index - mod) / REF_START_CHARS_LEN;
+  let mod = index % encodeStartLen;
+  let id = "_." + encodeChars[mod];
+  index = (index - mod) / encodeStartLen;
 
   while (index > 0) {
-    mod = index % REF_CHARS_LEN;
-    id += REF_CHARS[mod];
-    index = (index - mod) / REF_CHARS_LEN;
+    mod = index % encodeLen;
+    id += encodeChars[mod];
+    index = (index - mod) / encodeLen;
   }
 
   return id;
@@ -1385,4 +1380,21 @@ function hasOnlyZeros(typedArray: TypedArray) {
   }
 
   return true;
+}
+
+function isWordOrDigit(char: string) {
+  return isWord(char) || isDigit(char);
+}
+
+function isDigit(char: string) {
+  return char >= "0" && char <= "9";
+}
+
+function isWord(char: string) {
+  return (
+    (char >= "a" && char <= "z") ||
+    (char >= "A" && char <= "Z") ||
+    char === "_" ||
+    char === "$"
+  );
 }

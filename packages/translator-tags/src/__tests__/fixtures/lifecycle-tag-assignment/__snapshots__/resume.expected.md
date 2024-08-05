@@ -7,21 +7,21 @@
       x=
       <span>
         0
-        <!--M*0 #text/0-->
+        <!--M_*0 #text/0-->
       </span>
       , was=
       <!---->
       ‍
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </div>
     <button
       id="increment"
     >
       Increment
     </button>
-    <!--M*0 #button/2-->
+    <!--M_*0 #button/2-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{x:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -44,21 +44,21 @@ container.querySelector("#increment")?.click()
       x=
       <span>
         1
-        <!--M*0 #text/0-->
+        <!--M_*0 #text/0-->
       </span>
       , was=
       <!---->
       0
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </div>
     <button
       id="increment"
     >
       Increment
     </button>
-    <!--M*0 #button/2-->
+    <!--M_*0 #button/2-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{x:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -82,21 +82,21 @@ container.querySelector("#increment")?.click()
       x=
       <span>
         2
-        <!--M*0 #text/0-->
+        <!--M_*0 #text/0-->
       </span>
       , was=
       <!---->
       0
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </div>
     <button
       id="increment"
     >
       Increment
     </button>
-    <!--M*0 #button/2-->
+    <!--M_*0 #button/2-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{x:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -117,21 +117,21 @@ container.querySelector("#increment")?.click()
       x=
       <span>
         2
-        <!--M*0 #text/0-->
+        <!--M_*0 #text/0-->
       </span>
       , was=
       <!---->
       1
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </div>
     <button
       id="increment"
     >
       Increment
     </button>
-    <!--M*0 #button/2-->
+    <!--M_*0 #button/2-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{x:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

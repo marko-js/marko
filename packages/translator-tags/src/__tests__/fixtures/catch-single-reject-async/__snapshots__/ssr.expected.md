@@ -1,17 +1,26 @@
 # Write
-  a<!M$0>b
+  a<!--M_!^a-->b
 
 
 # Write
-  <t id="M$0">ERROR!</t><script>(M$r=REORDER_RUNTIME)(0)</script>efg
+  <!--M_!a-->efg<style M_>t{display:none}</style><t c M_=a>ERROR!</t><script>WALKER_RUNTIME("M")("_");REORDER_RUNTIME(M._);M._.d=1;M._.w()</script>
 
 
 # Render "End"
 ```html
 <html>
-  <head />
+  <head>
+    <style
+      m_=""
+    >
+      t{display:none}
+    </style>
+  </head>
   <body>
     aERROR!efg
+    <script>
+      WALKER_RUNTIME("M")("_");REORDER_RUNTIME(M._);M._.d=1;M._.w()
+    </script>
   </body>
 </html>
 ```
@@ -24,15 +33,20 @@ inserted #document/html0/body1
 inserted #document/html0/body1/#text0
 inserted #comment
 inserted #text
+inserted #comment
+inserted #document/html0/body1/#text2
+inserted #document/html0/head0/style0
+inserted #document/html0/head0/style0/#text0
 inserted t
 inserted #document/html0/body1/#text1
-inserted script
-inserted script/#text0
+inserted #document/html0/body1/script3
+inserted #document/html0/body1/script3/#text0
+removed #document/html0/head0/style0 after #document/html0/body1/#text2
+inserted #document/html0/head0/style0
+removed #text after #comment
+removed #comment after #comment
 removed #document/html0/body1/#text1 in t
+removed #comment after #document/html0/body1/#text0
 inserted #document/html0/body1/#text1
-removed script after t
-removed t after #text
-removed #comment after #document/html0/body1/#text1
-removed #text after #document/html0/body1/#text1
-#document/html0/body1/#text1: "ERROR!" => "ERROR!efg"
+removed t after #document/html0/body1/#text2
 ```
