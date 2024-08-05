@@ -854,6 +854,8 @@ declare global {
       interface Head extends HTMLAttributes<HTMLHeadElement> {
         /** @deprecated */
         profile?: AttrString;
+        /** @see https://ogp.me/ */
+        prefix?: AttrString;
       }
       interface Header extends HTMLAttributes<HTMLElement> {}
       interface HGroup extends HTMLAttributes<HTMLElement> {}
@@ -876,6 +878,8 @@ declare global {
         manifest?: AttrString;
         /** @deprecated */
         version?: AttrString;
+        /** @see https://ogp.me/ */
+        prefix?: AttrString;
       }
       interface I extends HTMLAttributes<HTMLElement> {}
       interface IFrame extends HTMLAttributes<HTMLIFrameElement> {
@@ -1509,6 +1513,9 @@ declare global {
          * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-name
          */
         name?: AttrString;
+  
+        /** @see https://ogp.me/ */
+        property?: AttrString;
       }
       interface Meter extends HTMLAttributes<HTMLMeterElement> {
         /**
