@@ -1,25 +1,25 @@
 import {
   r as s,
   o as a,
-  q as c,
-  v as n,
-  d as o,
-  a as r,
-  i as t,
-} from "./runtime-BOMPXhWq.js";
-const i = s("XBSGKvBc", (s) =>
+  q as n,
+  v as o,
+  d as r,
+  a as t,
+  i as c,
+} from "./runtime-BP-z7kLQ.js";
+const i = s("CNVTfOlg", (s) =>
     a(
       s[0],
       "click",
       ((s) => {
         const { 2: a } = s;
         return function () {
-          c(s, m, a + 1);
+          n(s, f, a + 1);
         };
       })(s),
     ),
   ),
-  m = n(2, (s, a) => {
-    o(s[1], a), r(s, i);
+  f = o(2, (s, a) => {
+    r(s[1], a), t(s, i);
   });
-t();
+c();

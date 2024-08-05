@@ -1,3 +1,4 @@
+import { DEFAULT_RUNTIME_ID, DEFAULT_RENDER_ID } from "../common/meta";
 import type { Template, Input, TemplateInstance, Scope } from "../common/types";
 import { prepare, runEffects, runSync } from "./queue";
 import { type Renderer, initRenderer } from "./renderer";
@@ -16,12 +17,26 @@ export class ClientTemplate implements Template {
   }
 
   mount(
-    templateInput: Input & { $global?: Record<string, unknown> } = {},
+    input: Input & { $global?: Record<string, unknown> } = {},
     reference: ParentNode & Node,
     position?: InsertPosition,
   ): TemplateInstance {
     let scope!: Scope, dom!: Node;
-    const { $global = {}, ...input } = templateInput;
+    let { $global } = input;
+    if ($global) {
+      ({ $global, ...input } = input);
+      $global = {
+        runtimeId: DEFAULT_RUNTIME_ID,
+        renderId: DEFAULT_RENDER_ID,
+        ...$global,
+      };
+    } else {
+      $global = {
+        runtimeId: DEFAULT_RUNTIME_ID,
+        renderId: DEFAULT_RENDER_ID,
+      };
+    }
+
     const args = this._.___args;
     const effects = prepare(() => {
       scope = createScope($global);

@@ -1,15 +1,9 @@
-import reorderRuntime from "@marko/runtime-tags/html/reorder-runtime";
 import type { JSDOM } from "jsdom";
 import format, { plugins } from "pretty-format";
 import { getNodePath } from "./get-node-info";
+import { stripInlineRuntime } from "./strip-inline-runtime";
 
 const { DOMElement, DOMCollection } = plugins;
-
-const runtimeId = "M";
-const reorderRuntimeString = String(reorderRuntime).replace(
-  "RUNTIME_ID",
-  runtimeId,
-);
 
 export default function createMutationTracker(
   window: JSDOM["window"],
@@ -141,15 +135,17 @@ function getStatusString(
   omitMutations?: boolean,
 ) {
   const updateString = getUpdateString(update);
-  const formattedHTML = Array.from(container.childNodes)
-    .map((child) =>
-      format(child, {
-        plugins: [DOMElement, DOMCollection],
-      }).trim(),
-    )
-    .filter(Boolean)
-    .join("\n")
-    .trim();
+  const formattedHTML = stripInlineRuntime(
+    Array.from(container.childNodes)
+      .map((child) =>
+        format(child, {
+          plugins: [DOMElement, DOMCollection],
+        }).trim(),
+      )
+      .filter(Boolean)
+      .join("\n")
+      .trim(),
+  );
 
   return `# Render ${updateString}\n\`\`\`html\n${formattedHTML}\n\`\`\`${
     omitMutations
@@ -204,13 +200,8 @@ function formatMutationRecord(record: MutationRecord) {
       }
 
       return `${getNodePath(target)}: ${JSON.stringify(
-        (oldValue || "").replace(reorderRuntimeString, "REORDER_RUNTIME"),
-      )} => ${JSON.stringify(
-        (target.nodeValue || "").replace(
-          reorderRuntimeString,
-          "REORDER_RUNTIME",
-        ),
-      )}`;
+        oldValue || "",
+      )} => ${JSON.stringify(target.nodeValue || "")}`;
     }
 
     case "childList": {

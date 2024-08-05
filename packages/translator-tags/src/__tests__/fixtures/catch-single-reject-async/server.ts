@@ -15,7 +15,7 @@ const renderer = () => {
       write("d");
     },
     (err) => {
-      write(err.message);
+      write((err as Error).message);
     },
   );
   write("e");

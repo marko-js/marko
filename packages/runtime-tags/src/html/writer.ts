@@ -1,488 +1,55 @@
-import { type Accessor, type Renderer, ResumeSymbol } from "../common/types";
-import reorderRuntime from "./reorder-runtime";
-import {
-  Serializer,
-  getRegistered,
-  register as serializerRegister,
-} from "./serializer";
+/* eslint-disable @typescript-eslint/no-this-alias */
+import { type Accessor } from "../common/types";
+import { escapeAttrValue } from "./attrs";
+import { REORDER_RUNTIME_CODE, WALKER_RUNTIME_CODE } from "./inlined-runtimes";
+import { Serializer, register as serializerRegister } from "./serializer";
 
-export { serializerRegister };
+type PartialScope = Record<Accessor, unknown>;
+type ScopeInternals = PartialScope & {
+  [K_SCOPE_ID]?: number;
+};
 
-const kScopeId = Symbol("scopeId");
-const runtimeId = ResumeSymbol.DefaultRuntimeId;
-const reorderRuntimeString = String(reorderRuntime).replace(
-  "RUNTIME_ID",
-  runtimeId,
-);
+let $chunk: Chunk;
+const NOOP = () => {};
+const K_SCOPE_ID = Symbol("Scope ID");
 
-type PartialScope = Record<PropertyKey, unknown> | unknown[];
-
-export interface Writable {
-  write(data: string): void;
-  end(): void;
-  flush?(): void;
-  emit(name: string, data: unknown): void;
+enum Mark {
+  Placeholder = "!^",
+  PlaceholderEnd = "!",
+  ReorderMarker = "#",
+  SectionStart = "[",
+  SectionEnd = "]",
+  SectionSingleNodesEnd = "|",
+  Node = "*",
 }
 
-interface Buffer {
-  stream?: Writable;
-  pending: boolean;
-  flushed: boolean;
-  disabled: boolean;
-  next: Buffer | null;
-  prev: Buffer | null;
-  content: string;
-  calls: string;
-  scopes: Record<string, PartialScope> | null;
-  onAsync?: (complete: boolean, isPlaceholder?: boolean) => void;
-  onReject?: (err: Error) => void;
+enum RuntimeKey {
+  Walk = ".w",
+  Scopes = ".s",
+  Effects = ".e",
+  Scripts = ".j",
+  Done = ".d",
 }
 
-interface StreamData {
-  scopeId: number;
-  tagId: number;
-  placeholderId: number;
-  scopeLookup: Map<number, PartialScope>;
-  runtimeFlushed: boolean;
-  global: Record<string, unknown>;
-  serializer?: Serializer;
+export function getChunk(): Chunk | undefined {
+  return $chunk;
 }
 
-let $_buffer: Buffer | null = null;
-let $_streamData: StreamData | null = null;
-
-export function getStreamData() {
-  return $_streamData;
+export function getScopeId(scope: unknown): number | undefined {
+  return (scope as ScopeInternals)[K_SCOPE_ID];
 }
 
-export function createRenderFn(renderer: Renderer) {
-  type Input = Parameters<Renderer>[0];
-  return (
-    stream: Writable,
-    input: Input = {},
-    $global?: Record<string, unknown>,
-    streamState: Partial<StreamData> = {},
-  ) => {
-    let remainingChildren = 1;
-
-    const originalBuffer = $_buffer;
-    const originalStreamState = $_streamData;
-    const reject = (err: Error) => {
-      stream.emit("error", err);
-    };
-    const async = (complete: boolean) => {
-      remainingChildren += complete ? -1 : 1;
-      if (!remainingChildren) {
-        setImmediate(() => stream.end());
-      }
-    };
-
-    $_buffer = createInitialBuffer(stream);
-    streamState.global = $global;
-    $_streamData = createStreamState(streamState);
-
-    $_buffer.onReject = reject;
-    $_buffer.onAsync = async;
-
-    try {
-      scheduleFlush();
-      renderer(input);
-      async(true);
-    } catch (err) {
-      reject(err as Error);
-    } finally {
-      $_buffer = originalBuffer;
-      $_streamData = originalStreamState;
-    }
-  };
+export function write(html: string) {
+  $chunk.writeHTML(html);
 }
 
-export function write(data: string) {
-  $_buffer!.content += data;
+export function writeScript(script: string) {
+  $chunk.writeScript(script);
 }
 
-const TARGET_BUFFER_SIZE = 64000;
-export function maybeFlush() {
-  if (!$_buffer!.prev && $_buffer!.content.length > TARGET_BUFFER_SIZE) {
-    // TODO: figure out if we can do this
-    // The idea is to flush in a `<for>` if the buffer gets too large.
-    //
-    // However, a synchronous flush will break the owner scope reference
-    //   as things are currently implemented: the owner scope object will
-    //   not have been created if you flush in a scope that closes over it
-    // However, a scheduled flush will be too late:
-    //   the entire contents of the `<for>` will have been written
-    //   by the time the flush occurs defeating the purpose
-    // Additionally, because we aren't eagerly merging buffers,
-    //   buffer.content.length isn't necessarily 100% accurate
-  }
-}
-
-export function scheduleFlush() {
-  const buffer = $_buffer!;
-  const streamState = $_streamData!;
-  if (!buffer.prev) {
-    setImmediate(() => flushToStream(buffer, streamState));
-  }
-}
-
-function flushToStream(buffer: Buffer, streamState: StreamData) {
-  while (buffer.prev) buffer = buffer.prev;
-  if (buffer.disabled) return;
-
-  const stream = buffer.stream!;
-
-  let { content, calls, scopes } = buffer;
-  buffer.flushed = true;
-  while (!buffer.pending && buffer.next) {
-    // TODO: we shouldn't need to clear here
-    clearBuffer(buffer);
-    buffer = buffer.next;
-    buffer.prev = null;
-    buffer.flushed = true;
-    content += buffer.content;
-    calls += buffer.calls;
-    if (buffer.scopes) {
-      if (scopes) {
-        Object.assign(scopes, buffer.scopes);
-      } else {
-        scopes = buffer.scopes;
-      }
-    }
-  }
-  const data = content + getResumeScript(calls, scopes, streamState);
-
-  if (data) {
-    stream.write(data);
-    stream.flush?.();
-  }
-
-  // TODO: we should only have to call clearBuffer if the buffer is pending
-  // (which means it will flush again in the future). Otherwise, it can just
-  // be garbage collected.
-  clearBuffer(buffer);
-}
-
-function createStreamState(state: Partial<StreamData>): StreamData {
-  state.scopeId ??= 0;
-  state.tagId ??= 0;
-  state.placeholderId ??= 0;
-  state.scopeLookup ??= new Map();
-  state.runtimeFlushed ??= false;
-  return state as StreamData;
-}
-
-function createNextBuffer(prevBuffer: Buffer): Buffer {
-  const newBuffer = {
-    stream: prevBuffer.stream,
-    pending: false,
-    flushed: false,
-    disabled: false,
-    prev: prevBuffer,
-    next: prevBuffer?.next ?? null,
-    content: "",
-    calls: "",
-    scopes: null,
-    onReject: prevBuffer.onReject,
-    onAsync: prevBuffer.onAsync,
-  };
-  if (prevBuffer.next) {
-    prevBuffer.next.prev = prevBuffer;
-  }
-  prevBuffer.next = newBuffer;
-  return newBuffer;
-}
-
-function createDetatchedBuffer(parentBuffer: Buffer): Buffer {
-  return {
-    stream: parentBuffer.stream,
-    pending: false,
-    flushed: false,
-    disabled: true,
-    prev: null,
-    next: null,
-    content: "",
-    calls: "",
-    scopes: null,
-    onReject: parentBuffer.onReject,
-    onAsync: parentBuffer.onAsync,
-  };
-}
-
-function createInitialBuffer(stream: Writable): Buffer {
-  return {
-    stream,
-    pending: false,
-    flushed: false,
-    disabled: false,
-    prev: null,
-    next: null,
-    content: "",
-    calls: "",
-    scopes: null,
-    onReject: undefined,
-    onAsync: undefined,
-  };
-}
-
-export async function fork<T>(
-  promise: Promise<T>,
-  renderResult: (result: T) => void,
-) {
-  const originalBuffer = $_buffer!;
-  const originalStreamState = $_streamData!;
-
-  scheduleFlush();
-  $_buffer!.pending = true;
-  $_buffer!.onAsync?.(false);
-  $_buffer = createNextBuffer($_buffer!);
-
-  try {
-    let result;
-    try {
-      result = await promise;
-      originalBuffer!.pending = false;
-    } finally {
-      $_buffer = originalBuffer;
-      $_streamData = originalStreamState;
-      scheduleFlush();
-    }
-    renderResult(result);
-  } catch (err) {
-    $_buffer!.onReject?.(err as Error);
-  } finally {
-    $_buffer!.onAsync?.(true);
-    clearScope();
-  }
-}
-
-export function tryCatch(
-  renderBody: () => void,
-  renderError: (err: Error) => void,
-) {
-  const id = nextPlaceholderId();
-  let err: Error | null = null;
-
-  const originalBuffer = $_buffer!;
-  const tryBuffer = createDetatchedBuffer(originalBuffer);
-  let finalTryBuffer: Buffer;
-
-  tryBuffer.onReject = (asyncErr) => {
-    const errorBuffer = createDetatchedBuffer(originalBuffer);
-    $_buffer = errorBuffer;
-    renderError(asyncErr);
-    const finalErrorBuffer = $_buffer;
-    replaceBuffers(
-      id,
-      tryBuffer,
-      finalTryBuffer,
-      errorBuffer,
-      finalErrorBuffer,
-    );
-  };
-
-  try {
-    $_buffer = tryBuffer;
-    renderBody();
-  } catch (_err) {
-    err = _err as Error;
-  } finally {
-    if (err) {
-      $_buffer = originalBuffer;
-      renderError(err);
-    } else {
-      tryBuffer.disabled = false;
-      originalBuffer.next = tryBuffer;
-      tryBuffer.prev = originalBuffer;
-      if ($_buffer !== tryBuffer) {
-        tryBuffer.content = `<!${marker(id)}>` + tryBuffer.content;
-        markReplaceEnd(id);
-        finalTryBuffer = $_buffer!;
-        $_buffer = createNextBuffer(finalTryBuffer);
-      }
-      $_buffer.onReject = originalBuffer.onReject;
-    }
-  }
-}
-
-export function tryPlaceholder(
-  renderBody: () => void,
-  renderPlaceholder: () => void,
-) {
-  const originalBuffer = $_buffer!;
-  const asyncBuffer = createDetatchedBuffer(originalBuffer);
-  let id: number,
-    placeholderBuffer: Buffer,
-    finalPlaceholderBuffer: Buffer,
-    finalAsyncBuffer: Buffer;
-  let remainingChildren = 0;
-  let remainingPlaceholders = 0;
-
-  asyncBuffer.onAsync = (complete: boolean, isPlaceholder?: boolean) => {
-    const delta = complete ? -1 : 1;
-    if (isPlaceholder) {
-      remainingPlaceholders += delta;
-    } else {
-      remainingChildren += delta;
-    }
-    if (!remainingChildren) {
-      if (!isPlaceholder) {
-        // last child has finished, replace the placeholder
-        // however, the replacement content may contain its own placeholder(s)
-        replaceBuffers(
-          id,
-          placeholderBuffer,
-          finalPlaceholderBuffer,
-          asyncBuffer,
-          finalAsyncBuffer,
-        );
-      }
-      if (!remainingPlaceholders) {
-        // all async content under this placeholder is complete
-        originalBuffer.onAsync?.(true, true);
-      }
-    }
-  };
-
-  $_buffer = asyncBuffer;
-  renderBody();
-
-  if ($_buffer === asyncBuffer) {
-    originalBuffer.next = asyncBuffer;
-    asyncBuffer.prev = originalBuffer;
-    asyncBuffer.disabled = false;
-    asyncBuffer.onAsync = originalBuffer.onAsync;
-  } else {
-    id = nextPlaceholderId();
-    placeholderBuffer = createNextBuffer(originalBuffer);
-    finalAsyncBuffer = $_buffer;
-    $_buffer = placeholderBuffer;
-    markReplaceStart(id);
-    renderPlaceholder();
-    markReplaceEnd(id);
-    finalPlaceholderBuffer = $_buffer;
-    $_buffer = createNextBuffer(finalPlaceholderBuffer);
-    originalBuffer.onAsync?.(false, true);
-  }
-}
-
-function clearBuffer(buffer: Buffer) {
-  buffer.content = "";
-  buffer.calls = "";
-  buffer.scopes = null;
-}
-
-function clearScope() {
-  $_buffer = $_streamData = null;
-}
-
-/* Async */
-
-export function markReplaceStart(id: number) {
-  return ($_buffer!.content += `<!${marker(id)}>`);
-}
-
-export function markReplaceEnd(id: number) {
-  return ($_buffer!.content += `<!${marker(id)}/>`);
-}
-
-function replaceBuffers(
-  id: number,
-  placeholderStart: Buffer,
-  placeholderEnd: Buffer,
-  replacementStart: Buffer,
-  replacementEnd: Buffer,
-) {
-  if (placeholderStart.flushed) {
-    addReplacementWrapper(id, replacementStart, replacementEnd);
-
-    let next: Buffer | null = placeholderEnd.next;
-    if (placeholderEnd.flushed) {
-      while (next && !next.pending && next.flushed) {
-        next = next.next;
-      }
-    } else {
-      // TODO: ensure the remaining original content cannot flush
-    }
-
-    if (next) {
-      replacementStart.next = next;
-      next.prev = replacementEnd;
-    }
-
-    $_buffer = replacementStart;
-    scheduleFlush();
-  } else {
-    const prev = placeholderStart.prev;
-    const next = placeholderEnd.next;
-    if (prev) {
-      prev.next = replacementStart;
-      replacementStart.prev = prev;
-    }
-    if (next) {
-      next.prev = replacementEnd;
-      replacementEnd.next = next;
-    }
-  }
-
-  replacementStart.disabled = false;
-}
-
-function addReplacementWrapper(
-  id: number,
-  replacementStart: Buffer,
-  replacementEnd: Buffer,
-) {
-  let runtimeCall = runtimeId + ResumeSymbol.VarReorderRuntime;
-  if (!$_streamData!.runtimeFlushed) {
-    runtimeCall = `(${runtimeCall}=${reorderRuntimeString})`;
-    $_streamData!.runtimeFlushed = true;
-  }
-  replacementStart.content =
-    `<t id="${marker(id)}">` + replacementStart.content;
-  replacementEnd.content += `</t><script>${runtimeCall}(${id})</script>`;
-}
-
-function marker(id: number) {
-  return `${runtimeId}$${id}`;
-}
-
-/* Hydration */
-
-export function nextTagId() {
-  return "s" + $_streamData!.tagId++;
-}
-
-export function nextPlaceholderId() {
-  return $_streamData!.placeholderId++;
-}
-
-export function nextScopeId() {
-  return $_streamData!.scopeId++;
-}
-
-export function peekNextScopeId() {
-  return $_streamData!.scopeId;
-}
-
-export function peekNextScope() {
-  return ensureScopeWithId(peekNextScopeId());
-}
-
-export function getScopeById(scopeId: number | undefined) {
-  if (scopeId !== undefined) {
-    return $_streamData!.scopeLookup.get(scopeId);
-  }
-}
-
-export function ensureScopeWithId(scopeId: number) {
-  const scopeLookup = $_streamData!.scopeLookup;
-  let scope = scopeLookup.get(scopeId);
-  if (!scope) {
-    scopeLookup.set(scopeId, (scope = { [kScopeId]: scopeId }));
-  }
-
-  return scope;
+export function writeEffect(scopeId: number, registryId: string) {
+  $chunk.boundary.state.needsMainRuntime = true;
+  $chunk.writeEffect(scopeId, registryId);
 }
 
 export function register<T extends WeakKey>(
@@ -495,86 +62,659 @@ export function register<T extends WeakKey>(
     : serializerRegister(id, val, ensureScopeWithId(scopeId));
 }
 
-export function getRegistryInfo(val: WeakKey) {
-  const registered = getRegistered(val);
-  if (registered) {
-    return registered.scope
-      ? [registered.id, (registered.scope as any)[kScopeId]]
-      : [registered.id];
+export function nextTagId() {
+  const state = $chunk.boundary.state;
+  const { $global } = state;
+  return (
+    "s" + $global.runtimeId + $global.renderId + (state.tagIndex++).toString(36)
+  );
+}
+
+export function nextScopeId() {
+  return $chunk.boundary.state.scopeIndex++;
+}
+
+export function peekNextScopeId() {
+  return $chunk.boundary.state.scopeIndex;
+}
+
+export function peekNextScope() {
+  return ensureScopeWithId(peekNextScopeId());
+}
+
+export function getScopeById(scopeId: number | undefined) {
+  if (scopeId !== undefined) {
+    return $chunk.boundary.state.scopes.get(scopeId);
   }
 }
 
-export function writeEffect(scopeId: number, fnId: string) {
-  $_buffer!.calls += `${scopeId},"${fnId}",`;
+export function markResumeNode(scopeId: number, accessor: Accessor) {
+  const { state } = $chunk.boundary;
+  state.needsMainRuntime = true;
+  return state.mark(Mark.Node, scopeId + " " + accessor);
 }
 
-export function writeScope(
-  scopeId: number,
-  scope: PartialScope,
-  assignTo:
-    | PartialScope
-    | PartialScope[]
-    | undefined = $_streamData!.scopeLookup.get(scopeId),
-) {
-  if (assignTo === undefined) {
-    (scope as any)[kScopeId] = scopeId;
-    $_streamData!.scopeLookup.set(scopeId, scope);
-  } else if (assignTo !== scope) {
-    if (Array.isArray(assignTo)) {
-      assignTo.push(scope);
-    } else {
-      scope = Object.assign(assignTo, scope);
-    }
-  }
-  $_buffer!.scopes ??= {
-    $global: getFilteredGlobals($_streamData!.global) as any,
-  };
-  $_buffer!.scopes[scopeId] = scope;
+export function markResumeScopeStart(scopeId: number, accessor?: Accessor) {
+  return $chunk.boundary.state.mark(
+    Mark.SectionStart,
+    scopeId + (accessor ? " " + accessor : ""),
+  );
 }
 
-export function markResumeNode(scopeId: number, index: Accessor) {
-  // TODO: can we only include the scope id when it differs from the prvious node marker?
-  return `<!${runtimeId}${ResumeSymbol.Node}${scopeId} ${index}>`;
-}
-
-export function markResumeScopeStart(scopeId: number, key?: string) {
-  return `<!${runtimeId}${ResumeSymbol.SectionStart}${scopeId}${
-    key ? " " + key : ""
-  }>`;
-}
-
-export function markResumeControlEnd(scopeId: number, index: Accessor) {
-  return `<!${runtimeId}${ResumeSymbol.SectionEnd}${scopeId} ${index}>`;
+export function markResumeControlEnd(scopeId: number, accessor: Accessor) {
+  return $chunk.boundary.state.mark(Mark.SectionEnd, scopeId + " " + accessor);
 }
 
 export function markResumeControlSingleNodeEnd(
   scopeId: number,
-  index: Accessor,
+  accessor: Accessor,
   childScopeIds?: number | number[],
 ) {
-  return `<!${runtimeId}${
-    ResumeSymbol.SectionSingleNodesEnd
-  }${scopeId} ${index} ${childScopeIds ?? ""}>`;
+  return $chunk.boundary.state.mark(
+    Mark.SectionSingleNodesEnd,
+    scopeId + " " + accessor + " " + (childScopeIds ?? ""),
+  );
 }
 
-function getResumeScript(
-  calls: string,
-  scopes: Buffer["scopes"],
-  streamState: StreamData,
-) {
-  if (calls || scopes) {
-    let isFirstFlush;
-    let serializer = streamState.serializer;
-    if ((isFirstFlush = !serializer)) {
-      serializer = streamState.serializer = new Serializer();
-    }
-    return `<script>${
-      isFirstFlush
-        ? `(${runtimeId + ResumeSymbol.VarResume}=[])`
-        : runtimeId + ResumeSymbol.VarResume
-    }.push(${serializer.stringify(scopes)},[${calls}])</script>`;
+export function writeScope(scopeId: number, partialScope: PartialScope) {
+  const { state } = $chunk.boundary;
+  const { scopes } = state;
+  let scope: ScopeInternals | undefined = scopes.get(scopeId);
+  state.needsMainRuntime = true;
+
+  if (scope) {
+    Object.assign(scope, partialScope);
+  } else {
+    scope = partialScope;
+    state.scopes.set(scopeId, partialScope);
   }
-  return "";
+
+  if (state.writeScopes) {
+    state.writeScopes[scopeId] = scope;
+  } else if (state.hasGlobals) {
+    state.writeScopes = { [scopeId]: scope };
+  } else {
+    state.hasGlobals = true;
+    state.writeScopes = {
+      $: getFilteredGlobals(state.$global),
+      [scopeId]: scope,
+    };
+  }
+}
+
+export function ensureScopeWithId(scopeId: number) {
+  const { state } = $chunk.boundary;
+  let scope = state.scopes.get(scopeId);
+  if (!scope) {
+    scope = { [K_SCOPE_ID]: scopeId };
+    state.scopes.set(scopeId, scope);
+  }
+
+  return scope;
+}
+
+export function getStreamData() {
+  return $chunk.boundary.state;
+}
+
+export function fork<T>(
+  promise: Promise<T> | T,
+  renderBody: (value: T) => void,
+) {
+  if (!isPromise(promise)) {
+    renderBody(promise);
+    return;
+  }
+
+  const chunk = $chunk;
+  const { boundary } = chunk;
+  chunk.next = $chunk = new Chunk(boundary, chunk.next);
+  chunk.async = true;
+  boundary.startAsync();
+  promise.then(
+    (value) => {
+      if (chunk.async) {
+        chunk.async = false;
+
+        if (!boundary.signal.aborted) {
+          chunk.render(renderBody, value);
+          boundary.endAsync(chunk);
+        }
+      }
+    },
+    (err) => {
+      chunk.async = false;
+      boundary.abort(err);
+    },
+  );
+}
+
+export function tryPlaceholder(
+  renderBody: () => void,
+  renderPlaceholder: () => void,
+) {
+  const chunk = $chunk;
+  const { boundary } = chunk;
+  const body = new Chunk(boundary, null);
+
+  if (body === body.render(renderBody)) {
+    chunk.append(body);
+    return;
+  }
+
+  chunk.next = $chunk = new Chunk(boundary, chunk.next);
+  chunk.placeholderBody = body;
+  chunk.placeholderRender = renderPlaceholder;
+}
+
+export function tryCatch(
+  renderBody: () => void,
+  renderCatch: (err: unknown) => void,
+) {
+  const chunk = $chunk;
+  const { boundary } = chunk;
+  const { state } = boundary;
+  const catchBoundary = new Boundary(state);
+  const body = new Chunk(catchBoundary, null);
+  const bodyEnd = body.render(renderBody);
+
+  if (catchBoundary.signal.aborted) {
+    // Sync error
+    renderCatch(catchBoundary.signal.reason);
+    return;
+  }
+
+  if (body === bodyEnd) {
+    // Sync success
+    chunk.append(body);
+    return;
+  }
+
+  const reorderId = state.nextReorderId();
+  const endMarker = state.mark(Mark.PlaceholderEnd, reorderId);
+  const bodyNext = (bodyEnd.next = $chunk = new Chunk(boundary, chunk.next));
+  chunk.next = body;
+  chunk.writeHTML(state.mark(Mark.Placeholder, reorderId));
+  bodyEnd.writeHTML(endMarker);
+  boundary.startAsync();
+  catchBoundary.onNext = () => {
+    if (boundary.signal.aborted) return;
+    if (catchBoundary.signal.aborted) {
+      if (!bodyEnd.consumed) {
+        let cur: Chunk = body;
+        let writeMarker = true;
+
+        do {
+          const next = cur.next!;
+
+          if (cur.boundary !== catchBoundary) {
+            cur.boundary.abort(catchBoundary.signal.reason);
+          }
+
+          if (writeMarker && !cur.consumed) {
+            writeMarker = false;
+            cur.async = false;
+            cur.next = bodyNext;
+            cur.html = endMarker;
+            cur.scripts = cur.effects = "";
+            cur.placeholderBody = cur.placeholderRender = cur.reorderId = null;
+          }
+
+          cur = next;
+        } while (cur !== bodyNext);
+      }
+
+      const catchChunk = new Chunk(boundary, null);
+      catchChunk.reorderId = reorderId;
+      catchChunk.render(renderCatch, catchBoundary.signal.reason);
+      state.reorder(catchChunk);
+      boundary.endAsync();
+    } else if (catchBoundary.done) {
+      boundary.endAsync();
+    } else {
+      boundary.onNext();
+    }
+  };
+}
+
+export class State {
+  public tagIndex = 0;
+  public scopeIndex = 0;
+  public reorderIndex = 0;
+  public hasGlobals = false;
+  public needsMainRuntime = false;
+  public hasMainRuntime = false;
+  public hasReorderRuntime = false;
+  public hasWrittenScopes = false;
+  public hasWrittenEffects = false;
+  public serializer = new Serializer();
+  public writeReorders: Chunk[] | null = null;
+  public scopes = new Map<number, PartialScope>();
+  public writeScopes: null | (Record<number, PartialScope> & { $?: unknown }) =
+    null;
+  constructor(
+    public $global: Record<string, unknown> & {
+      renderId: string;
+      runtimeId: string;
+    },
+  ) {
+    this.$global = $global;
+  }
+
+  get runtimePrefix() {
+    const { $global } = this;
+    return $global.runtimeId + "." + $global.renderId;
+  }
+
+  get commentPrefix() {
+    const { $global } = this;
+    return $global.runtimeId + $global.renderId;
+  }
+
+  reorder(chunk: Chunk) {
+    if (this.writeReorders) {
+      this.writeReorders.push(chunk);
+    } else {
+      this.needsMainRuntime = true;
+      this.writeReorders = [chunk];
+    }
+  }
+
+  nextReorderId() {
+    const encodeChars =
+      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
+    const encodeLen = encodeChars.length;
+    const encodeStartLen = encodeLen - 10; // Avoids chars that cannot start a property name.
+    let index = this.reorderIndex++;
+    let mod = index % encodeStartLen;
+    let id = encodeChars[mod];
+    index = (index - mod) / encodeStartLen;
+
+    while (index > 0) {
+      mod = index % encodeLen;
+      id += encodeChars[mod];
+      index = (index - mod) / encodeLen;
+    }
+
+    return id;
+  }
+
+  mark(code: Mark, str: string) {
+    return "<!--" + this.commentPrefix + code + str + "-->";
+  }
+}
+
+export class Boundary extends AbortController {
+  public onNext = NOOP;
+  private count = 0;
+  constructor(
+    public state: State,
+    parent?: AbortSignal,
+  ) {
+    super();
+    this.state = state;
+    this.signal.addEventListener("abort", () => {
+      this.count = 0;
+      this.state = new State(this.state.$global);
+      this.onNext();
+    });
+
+    if (parent) {
+      if (parent.aborted) {
+        this.abort(parent.reason);
+      } else {
+        parent.addEventListener("abort", () => {
+          this.abort(parent.reason);
+        });
+      }
+    }
+  }
+
+  get done() {
+    return this.count === 0;
+  }
+
+  startAsync() {
+    if (!this.signal.aborted) {
+      this.count++;
+    }
+  }
+
+  endAsync(chunk?: Chunk) {
+    if (!this.signal.aborted && this.count) {
+      this.count--;
+
+      if (chunk?.reorderId) {
+        this.state.reorder(chunk);
+      }
+
+      this.onNext();
+    }
+  }
+}
+
+export class Chunk {
+  public html = "";
+  public scripts = "";
+  public effects = "";
+  public async = false;
+  public consumed = false;
+  public reorderId: string | null = null;
+  public placeholderBody: Chunk | null = null;
+  public placeholderRender: (() => void) | null = null;
+  constructor(
+    public boundary: Boundary,
+    public next: Chunk | null,
+  ) {
+    this.boundary = boundary;
+    this.next = next;
+  }
+
+  writeHTML(html: string) {
+    this.html += html;
+  }
+
+  writeEffect(scopeId: number, registryId: string) {
+    this.effects = concatEffects(
+      this.effects,
+      scopeId + ',"' + registryId + '"',
+    );
+  }
+
+  writeScript(script: string) {
+    this.scripts = concatScripts(this.scripts, script);
+  }
+
+  append(chunk: Chunk) {
+    this.html += chunk.html;
+    this.effects = concatEffects(this.effects, chunk.effects);
+    this.scripts = concatScripts(this.scripts, chunk.scripts);
+  }
+  flushPlaceholder() {
+    if (this.placeholderBody) {
+      const body = this.placeholderBody.consume();
+
+      if (body.async) {
+        const { state } = this.boundary;
+        const reorderId = (body.reorderId = state.nextReorderId());
+        this.writeHTML(state.mark(Mark.Placeholder, reorderId));
+        const after = this.render(this.placeholderRender!);
+        if (after !== this) {
+          // TODO: eventually this should be allowed.
+          // Once it's allowed we'll need check if placeholder needs to be disposed once body complete.
+          this.boundary.abort(
+            new Error("An @placeholder cannot contain async content."),
+          );
+        }
+        after.writeHTML(state.mark(Mark.PlaceholderEnd, reorderId));
+        state.reorder(body);
+      } else {
+        body.next = this.next;
+        this.next = body;
+      }
+
+      this.placeholderRender = this.placeholderBody = null;
+    }
+  }
+
+  consume() {
+    let cur: Chunk = this;
+
+    if (cur.next && !cur.async) {
+      let html = "";
+      let effects = "";
+      let scripts = "";
+      do {
+        cur.flushPlaceholder();
+        html += cur.html;
+        effects += cur.effects;
+        scripts = concatScripts(scripts, cur.scripts);
+        cur.consumed = true;
+        cur = cur.next;
+      } while (cur.next && !cur.async);
+
+      cur.html = html + cur.html;
+      cur.effects = concatEffects(effects, cur.effects);
+      cur.scripts = concatScripts(scripts, cur.scripts);
+    }
+
+    return cur;
+  }
+
+  render(renderBody: () => void): Chunk;
+  render<T>(renderBody: (val: T) => void, val: T): Chunk;
+  render<T>(renderBody: (val?: T) => void, val?: T): Chunk {
+    const prev = $chunk;
+    $chunk = this;
+    try {
+      renderBody(val);
+      return $chunk;
+    } catch (err) {
+      this.boundary.abort(err);
+      return this;
+    } finally {
+      $chunk = prev;
+    }
+  }
+}
+
+export function prepareChunk(chunk: Chunk) {
+  const head = chunk.consume();
+  const { boundary, effects } = head;
+  const { state } = boundary;
+  const { $global, runtimePrefix, serializer } = state;
+  const nonceAttr = $global.cspNonce
+    ? " nonce=" + escapeAttrValue($global.cspNonce + "")
+    : "";
+  let { html, scripts } = head;
+  let hasWalk = false;
+  head.effects = "";
+
+  if (state.needsMainRuntime && !state.hasMainRuntime) {
+    state.hasMainRuntime = true;
+    scripts = concatScripts(
+      scripts,
+      WALKER_RUNTIME_CODE +
+        '("' +
+        $global.runtimeId +
+        '")("' +
+        $global.renderId +
+        '")',
+    );
+  }
+
+  if (state.writeScopes || serializer.flushed) {
+    const serialized = state.serializer.stringify(
+      state.writeScopes || {},
+      boundary,
+    );
+    let script = runtimePrefix + RuntimeKey.Scopes;
+    state.writeScopes = null;
+    if (state.hasWrittenScopes) {
+      script += ".push(" + serialized + ")";
+    } else {
+      state.hasWrittenScopes = true;
+      script += "=[" + serialized + "]";
+    }
+
+    scripts = concatScripts(scripts, script);
+  }
+
+  if (effects) {
+    let script = runtimePrefix + RuntimeKey.Effects;
+    hasWalk = true;
+
+    if (state.hasWrittenEffects) {
+      script += ".push(" + effects + ")";
+    } else {
+      state.hasWrittenEffects = true;
+      script += "=[" + effects + "]";
+    }
+
+    scripts = concatScripts(scripts, script);
+  }
+
+  if (state.writeReorders) {
+    hasWalk = true;
+
+    if (!state.hasReorderRuntime) {
+      state.hasReorderRuntime = true;
+      html +=
+        "<style " +
+        state.commentPrefix +
+        nonceAttr +
+        ">t{display:none}</style>";
+      scripts = concatScripts(
+        scripts,
+        REORDER_RUNTIME_CODE + "(" + runtimePrefix + ")",
+      );
+    }
+
+    for (const reorderedChunk of state.writeReorders) {
+      const { reorderId } = reorderedChunk;
+      let isSync = true;
+      let reorderHTML = "";
+      let reorderEffects = "";
+      let reorderScripts = "";
+      let cur = reorderedChunk;
+      reorderedChunk.reorderId = null;
+
+      for (;;) {
+        cur.flushPlaceholder();
+        reorderHTML += cur.html;
+        reorderEffects = concatEffects(reorderEffects, cur.effects);
+        reorderScripts = concatScripts(reorderScripts, cur.scripts);
+
+        if (cur.async) {
+          reorderHTML += state.mark(
+            Mark.ReorderMarker,
+            (cur.reorderId = state.nextReorderId()),
+          );
+          cur.html = cur.effects = cur.scripts = "";
+          isSync = false;
+        }
+
+        if (cur.next) {
+          cur = cur.next;
+        } else {
+          break;
+        }
+      }
+
+      if (reorderEffects) {
+        if (!state.hasWrittenEffects) {
+          state.hasWrittenEffects = true;
+          scripts = concatScripts(
+            scripts,
+            runtimePrefix + RuntimeKey.Effects + "=[]",
+          );
+        }
+
+        reorderScripts = concatScripts(
+          reorderScripts,
+          runtimePrefix + RuntimeKey.Effects + ".push(" + reorderEffects + ")",
+        );
+      }
+
+      scripts = concatScripts(
+        scripts,
+        reorderScripts &&
+          runtimePrefix +
+            RuntimeKey.Scripts +
+            "." +
+            reorderId +
+            "=()=>{" +
+            reorderScripts +
+            "}",
+      );
+
+      html +=
+        "<t " +
+        (isSync ? "c " : "") +
+        state.commentPrefix +
+        "=" +
+        reorderId +
+        ">" +
+        reorderHTML +
+        "</t>";
+    }
+
+    state.writeReorders = null;
+  }
+
+  if (state.needsMainRuntime && boundary.done) {
+    scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Done + "=1");
+  }
+
+  if (hasWalk) {
+    scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Walk + "()");
+  }
+
+  head.html = html;
+  head.scripts = scripts;
+  return head;
+}
+
+export function flushChunk(head: Chunk) {
+  const { html, scripts } = head;
+  head.html = head.scripts = "";
+  return (
+    html +
+    (scripts
+      ? "<script" +
+        (head.boundary.state.$global.cspNonce
+          ? " nonce=" +
+            escapeAttrValue(head.boundary.state.$global.cspNonce + "")
+          : "") +
+        ">" +
+        scripts +
+        "</script>"
+      : "")
+  );
+}
+
+function concatEffects(a: string, b: string) {
+  return a ? (b ? a + "," + b : a) : b;
+}
+
+function concatScripts(a: string, b: string) {
+  return a ? (b ? a + ";" + b : a) : b;
+}
+
+type QueueCallback = (ticked: true) => void;
+const tick =
+  globalThis.setImmediate ||
+  globalThis.setTimeout ||
+  globalThis.queueMicrotask ||
+  ((cb: () => void) => Promise.resolve().then(cb));
+let tickQueue: Set<QueueCallback> | undefined;
+
+export function queueTick(cb: QueueCallback) {
+  if (tickQueue) {
+    tickQueue.add(cb);
+  } else {
+    tickQueue = new Set([cb]);
+    tick(flushTickQueue);
+  }
+}
+
+export function offTick(cb: QueueCallback) {
+  tickQueue?.delete(cb);
+}
+
+function flushTickQueue() {
+  const queue = tickQueue!;
+  tickQueue = undefined;
+
+  for (const cb of queue) {
+    cb(true);
+  }
+}
+
+function isPromise(value: unknown): value is Promise<unknown> {
+  return (
+    value != null && typeof (value as Promise<unknown>).then === "function"
+  );
 }
 
 function getFilteredGlobals($global: Record<string, unknown>) {

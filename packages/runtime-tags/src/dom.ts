@@ -30,7 +30,6 @@ export {
   registerRenderer,
   registerBoundSignal,
   registerSubscriber,
-  scopeLookup,
 } from "./dom/resume";
 
 export {

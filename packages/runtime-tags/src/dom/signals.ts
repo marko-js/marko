@@ -129,7 +129,7 @@ export function intersection(
   };
 }
 
-const defaultGetOwnerScope = (scope: Scope) => scope._!;
+const defaultGetOwnerScope = (scope: Scope) => scope._ as Scope;
 
 export function closure<T>(
   ownerValueAccessor: Accessor | ((scope: Scope) => Accessor),
@@ -289,9 +289,11 @@ export const inMany = (
   }
 };
 
-let tagId = 0;
-export function nextTagId() {
-  return "c" + tagId++;
+const tagIdsByGlobal = new WeakMap<Scope["___global"], number>();
+export function nextTagId({ $global }: Scope) {
+  const id = tagIdsByGlobal.get($global) || 0;
+  tagIdsByGlobal.set($global, id + 1);
+  return "c" + $global.runtimeId + $global.renderId + id.toString(36);
 }
 
 export function inChild(childAccessor: Accessor, signal: ValueSignal) {
