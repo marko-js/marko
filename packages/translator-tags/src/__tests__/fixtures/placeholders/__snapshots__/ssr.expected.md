@@ -1,7 +1,7 @@
 # Write
-  <!>replaced<!M*0 #text/0><span>replaced<!M*0 #text/1><div></div></span><div><div>a</div>replaced<!M*0 #text/2>Hello Text &lt;a/><!>replaced<!M*0 #text/3>Hello HTML <a/><script>
+  <!>replaced<!--M_*0 #text/0--><span>replaced<!--M_*0 #text/1--><div></div></span><div><div>a</div>replaced<!--M_*0 #text/2-->Hello Text &lt;a/><!>replaced<!--M_*0 #text/3-->Hello HTML <a/><script>
       Hello &lt;b> &lt;/script>
-    </script></div>
+    </script></div><script>WALKER_RUNTIME("M")("_");M._.d=1</script>
 
 
 # Render "End"
@@ -11,10 +11,10 @@
   <head />
   <body>
     replaced
-    <!--M*0 #text/0-->
+    <!--M_*0 #text/0-->
     <span>
       replaced
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
       <div />
     </span>
     <div>
@@ -22,11 +22,11 @@
         a
       </div>
       replaced
-      <!--M*0 #text/2-->
+      <!--M_*0 #text/2-->
       Hello Text &lt;a/&gt;
       <!---->
       replaced
-      <!--M*0 #text/3-->
+      <!--M_*0 #text/3-->
       Hello HTML 
       <a>
         <script>
@@ -36,6 +36,9 @@
         </script>
       </a>
     </div>
+    <script>
+      WALKER_RUNTIME("M")("_");M._.d=1
+    </script>
   </body>
 </html>
 ```
@@ -65,4 +68,6 @@ inserted #document/html1/body1/div3/#text7
 inserted #document/html1/body1/div3/a8
 inserted #document/html1/body1/div3/a8/script0
 inserted #document/html1/body1/div3/a8/script0/#text0
+inserted #document/html1/body1/script4
+inserted #document/html1/body1/script4/#text0
 ```

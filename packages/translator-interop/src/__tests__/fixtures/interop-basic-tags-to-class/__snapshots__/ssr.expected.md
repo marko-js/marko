@@ -1,5 +1,5 @@
 # Write
-  <button id=tags>0<!M*0 #text/1></button><!M*0 #button/0><!M[1><!--M#s0--><button id=class data-parent=0>0</button><!--M/--><script>$MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"]})</script><!M]0 #text/2><script>(M$h=[]).push(_=>(_.b={0:{count:0,"#text/2!":_.a={m5c:"s0"},"#text/2(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"])},1:_.a}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])</script>
+  <button id=tags>0<!--M_*0 #text/1--></button><!--M_*0 #button/0--><!--M_[1--><!--M#s0--><button id=class data-parent=0>0</button><!--M/--><!--M_]0 #text/2--><script>$MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.s=[_=>(_.b={0:{count:0,"#text/2!":_.a={m5c:"s0"},"#text/2(":_._.$compat_renderer(_._["packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"])},1:_.a})];M._.e=[1,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -11,10 +11,10 @@
       id="tags"
     >
       0
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </button>
-    <!--M*0 #button/0-->
-    <!--M[1-->
+    <!--M_*0 #button/0-->
+    <!--M_[1-->
     <!--M#s0-->
     <button
       data-parent="0"
@@ -23,12 +23,9 @@
       0
     </button>
     <!--M/-->
+    <!--M_]0 #text/2-->
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"]})
-    </script>
-    <!--M]0 #text/2-->
-    <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{count:0,"#text/2!":_.a={m5c:"s0"},"#text/2(":_._["@marko/tags-compat-5-to-6"](_._["packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"])},1:_.a}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count",])
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{count:0,"#text/2!":_.a={m5c:"s0"},"#text/2(":_._.$compat_renderer(_._["packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko"])},1:_.a})];M._.e=[1,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -48,9 +45,7 @@ inserted #document/html0/body1/#comment3
 inserted #document/html0/body1/button4
 inserted #document/html0/body1/button4/#text0
 inserted #document/html0/body1/#comment5
-inserted #document/html0/body1/script6
-inserted #document/html0/body1/script6/#text0
-inserted #document/html0/body1/#comment7
-inserted #document/html0/body1/script8
-inserted #document/html0/body1/script8/#text0
+inserted #document/html0/body1/#comment6
+inserted #document/html0/body1/script7
+inserted #document/html0/body1/script7/#text0
 ```

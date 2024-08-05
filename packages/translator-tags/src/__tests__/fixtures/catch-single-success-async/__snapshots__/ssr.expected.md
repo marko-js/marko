@@ -1,9 +1,9 @@
 # Write
-  a<!M$0>b
+  a<!--M_!^a-->b
 
 
 # Write
-  cd<!M$0/>fgh
+  cd<!--M_!a-->fgh
 
 
 # Render "End"
@@ -12,9 +12,9 @@
   <head />
   <body>
     a
-    <!--M$0-->
+    <!--M_!^a-->
     bcd
-    <!--M$0/-->
+    <!--M_!a-->
     fgh
   </body>
 </html>

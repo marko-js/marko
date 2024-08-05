@@ -1,5 +1,5 @@
 # Write
-  <button>1<!M*1 #text/1>|<!>1<!M*1 #text/2></button><!M*1 #button/0>source=<!>1<!M*0 #text/1><script>(M$h=[]).push(_=>(_.c={0:_.a={"#childScope/0":_.b={state:1}},1:_.b},_.b._state_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/template.marko_0/valueChange"](_.a),_.c),[1,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0__state_change_state",])</script>
+  <button>1<!--M_*1 #text/1-->|<!>1<!--M_*1 #text/2--></button><!--M_*1 #button/0-->source=<!>1<!--M_*0 #text/1--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.c={0:_.a={"#childScope/0":_.b={state:1}},1:_.b},_.b._state_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/template.marko_0/valueChange"](_.a),_.c)];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0__state_change_state"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -9,19 +9,19 @@
   <body>
     <button>
       1
-      <!--M*1 #text/1-->
+      <!--M_*1 #text/1-->
       |
       <!---->
       1
-      <!--M*1 #text/2-->
+      <!--M_*1 #text/2-->
     </button>
-    <!--M*1 #button/0-->
+    <!--M_*1 #button/0-->
     source=
     <!---->
     1
-    <!--M*0 #text/1-->
+    <!--M_*0 #text/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.c={0:_.a={"#childScope/0":_.b={state:1}},1:_.b},_.b._state_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/template.marko_0/valueChange"](_.a),_.c),[1,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0__state_change_state",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.c={0:_.a={"#childScope/0":_.b={state:1}},1:_.b},_.b._state_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/template.marko_0/valueChange"](_.a),_.c)];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0__state_change_state"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

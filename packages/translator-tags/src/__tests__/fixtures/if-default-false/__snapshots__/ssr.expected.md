@@ -1,5 +1,5 @@
 # Write
-  <button></button><!M*0 #button/0><!M|0 #text/1 ><script>(M$h=[]).push(_=>(_.a={0:{show:!1}}),[0,"packages/translator-tags/src/__tests__/fixtures/if-default-false/template.marko_0_show",])</script>
+  <button></button><!--M_*0 #button/0--><!--M_|0 #text/1 --><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.a={0:{show:!1}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/if-default-false/template.marko_0_show"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -8,10 +8,10 @@
   <head />
   <body>
     <button />
-    <!--M*0 #button/0-->
-    <!--M|0 #text/1 -->
+    <!--M_*0 #button/0-->
+    <!--M_|0 #text/1 -->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{show:!1}}),[0,"packages/translator-tags/src/__tests__/fixtures/if-default-false/template.marko_0_show",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{show:!1}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/if-default-false/template.marko_0_show"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

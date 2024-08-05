@@ -6,7 +6,10 @@
     <div
       foo="Hello Marko"
     />
-    <!--M*0 #div/0-->
+    <!--M_*0 #div/0-->
+    <script>
+      WALKER_RUNTIME("M")("_");M._.d=1
+    </script>
   </body>
 </html>
 ```

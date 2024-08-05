@@ -1,9 +1,9 @@
 # Render undefined
 ```html
 <div>
-  c0
+  cM_0
 </div>
-c1
+cM_1
 ```
 
 # Mutations

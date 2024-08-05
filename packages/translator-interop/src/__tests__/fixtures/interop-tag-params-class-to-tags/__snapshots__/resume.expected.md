@@ -7,9 +7,9 @@
       id="tags"
     >
       0
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <div>
       <h1>
         hello
@@ -19,13 +19,10 @@
       >
         1 * 0 = 0
       </button>
-      <!--M]0 #text/2-->
+      <!--M_]0 #text/2-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{count:0,"#text/2!":_.a={}},1:_.a}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count",])
-    </script>
-    <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-0":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a})];M._.e=[0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count"];M._.d=1;M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/template.marko"]})
     </script>
   </body>
 </html>
@@ -34,22 +31,22 @@
 # Mutations
 ```
 inserted #document/html0/body1/#text0
-inserted #document/html0/body1/#text9
+inserted #document/html0/body1/#text8
 removed #comment before #document/html0/body1/#text0
-removed #comment after #document/html0/body1/#text9
+removed #comment after #document/html0/body1/#text8
 inserted #document/html0/body1/div5/#text0
 inserted #document/html0/body1/div5/#text5
 removed #comment after #document/html0/body1/div5/#text5
 removed h1 after #document/html0/body1/div5/#text5
 removed button after #document/html0/body1/div5/#text5
 inserted #document/html0/body1/#text1
-inserted #document/html0/body1/#text8
-inserted #document/html0/body1/#text2
 inserted #document/html0/body1/#text7
+inserted #document/html0/body1/#text2
+inserted #document/html0/body1/#text6
 removed #comment after #document/html0/body1/#text2
-removed #comment after #document/html0/body1/script6
-removed #document/html0/body1/#text8 after #document/html0/body1/#text7
-inserted #document/html0/body1/#text8
+removed #comment after #document/html0/body1/div5
+removed #document/html0/body1/#text7 after #document/html0/body1/#text6
+inserted #document/html0/body1/#text7
 inserted #document/html0/body1/div5/#text1
 inserted #document/html0/body1/div5/#text4
 inserted #document/html0/body1/div5/h12
@@ -74,9 +71,9 @@ container.querySelector("#tags").click()
       id="tags"
     >
       1
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <div>
       <h1>
         hello
@@ -86,13 +83,10 @@ container.querySelector("#tags").click()
       >
         1 * 1 = 1
       </button>
-      <!--M]0 #text/2-->
+      <!--M_]0 #text/2-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{count:0,"#text/2!":_.a={}},1:_.a}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count",])
-    </script>
-    <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-0":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a})];M._.e=[0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count"];M._.d=1;M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/template.marko"]})
     </script>
   </body>
 </html>
@@ -117,9 +111,9 @@ container.querySelector("#class").click()
       id="tags"
     >
       1
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <div>
       <h1>
         hello
@@ -129,13 +123,10 @@ container.querySelector("#class").click()
       >
         2 * 1 = 2
       </button>
-      <!--M]0 #text/2-->
+      <!--M_]0 #text/2-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{count:0,"#text/2!":_.a={}},1:_.a}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count",])
-    </script>
-    <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-0":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a})];M._.e=[0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count"];M._.d=1;M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/template.marko"]})
     </script>
   </body>
 </html>
@@ -175,9 +166,9 @@ container.querySelector("#tags").click()
       id="tags"
     >
       2
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <div>
       <h1>
         hello
@@ -187,13 +178,10 @@ container.querySelector("#tags").click()
       >
         2 * 2 = 4
       </button>
-      <!--M]0 #text/2-->
+      <!--M_]0 #text/2-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{count:0,"#text/2!":_.a={}},1:_.a}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count",])
-    </script>
-    <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-0":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a})];M._.e=[0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count"];M._.d=1;M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/template.marko"]})
     </script>
   </body>
 </html>
@@ -218,9 +206,9 @@ container.querySelector("#class").click()
       id="tags"
     >
       2
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <div>
       <h1>
         hello
@@ -230,13 +218,10 @@ container.querySelector("#class").click()
       >
         3 * 2 = 6
       </button>
-      <!--M]0 #text/2-->
+      <!--M_]0 #text/2-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{count:0,"#text/2!":_.a={}},1:_.a}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count",])
-    </script>
-    <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-0":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a})];M._.e=[0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count"];M._.d=1;M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/template.marko"]})
     </script>
   </body>
 </html>
@@ -276,9 +261,9 @@ container.querySelector("#tags").click()
       id="tags"
     >
       3
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <div>
       <h1>
         hello
@@ -288,13 +273,10 @@ container.querySelector("#tags").click()
       >
         3 * 3 = 9
       </button>
-      <!--M]0 #text/2-->
+      <!--M_]0 #text/2-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{count:0,"#text/2!":_.a={}},1:_.a}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count",])
-    </script>
-    <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-0":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a})];M._.e=[0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/components/tags-layout.marko_0_count"];M._.d=1;M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-tag-params-class-to-tags/template.marko"]})
     </script>
   </body>
 </html>

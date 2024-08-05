@@ -5,12 +5,12 @@
   <body>
     <div>
       0
-      <!--M*1 #text/0-->
+      <!--M_*1 #text/0-->
     </div>
     <button />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{count:0,"#childScope/0":_.a={value:0,dummy:{}}},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{count:0,"#childScope/0":_.a={value:0,dummy:{}}},1:_.a})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -31,12 +31,12 @@ container.querySelector("button").click()
   <body>
     <div>
       1
-      <!--M*1 #text/0-->
+      <!--M_*1 #text/0-->
     </div>
     <button />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{count:0,"#childScope/0":_.a={value:0,dummy:{}}},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{count:0,"#childScope/0":_.a={value:0,dummy:{}}},1:_.a})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

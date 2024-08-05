@@ -6,9 +6,9 @@
     <div>
       hello
     </div>
-    <!--M*0 #div/0-->
+    <!--M_*0 #div/0-->
     <script>
-      (M$h=[]).push(_=&gt;(null),[0,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect/template.marko_0",])
+      WALKER_RUNTIME("M")("_");M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect/template.marko_0"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

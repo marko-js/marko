@@ -8,7 +8,7 @@ import {
   d as i,
   b as r,
 } from "./runtime-BhCks4YK.js";
-const u = s("CNVTfOlg", (s) =>
+const u = s("XBSGKvBc", (s) =>
     a(
       s[0],
       "click",

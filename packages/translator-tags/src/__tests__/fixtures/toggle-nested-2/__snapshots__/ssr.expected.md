@@ -1,5 +1,5 @@
 # Write
-  <div><button id=outer></button><!M*0 #button/0><!M[1><button id=inner></button><!M*1 #button/0><button id=count>0<!M*2 #text/1></button><!M*2 #button/0><!M|1 #text/1 2><!M]0 #text/1></div><script>(M$h=[]).push(_=>(_.d={0:_.a={outer:!0,inner:!0,count:0,"#text/1!":_.b={"#text/1!":_.c={}}},1:_.b,2:_.c},_.a["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer"](_.a),_.b._=_.a,_.b["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer"](_.b),_.c._=_.b,_.d),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])</script>
+  <div><button id=outer></button><!--M_*0 #button/0--><!--M_[1--><button id=inner></button><!--M_*1 #button/0--><button id=count>0<!--M_*2 #text/1--></button><!--M_*2 #button/0--><!--M_|1 #text/1 2--><!--M_]0 #text/1--></div><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.d={0:_.a={outer:!0,inner:!0,count:0,"#text/1!":_.b={"#text/1!":_.c={}}},1:_.b,2:_.c},_.a["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer"](_.a),_.b._=_.a,_.b["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer"](_.b),_.c._=_.b,_.d)];M._.e=[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -11,24 +11,24 @@
       <button
         id="outer"
       />
-      <!--M*0 #button/0-->
-      <!--M[1-->
+      <!--M_*0 #button/0-->
+      <!--M_[1-->
       <button
         id="inner"
       />
-      <!--M*1 #button/0-->
+      <!--M_*1 #button/0-->
       <button
         id="count"
       >
         0
-        <!--M*2 #text/1-->
+        <!--M_*2 #text/1-->
       </button>
-      <!--M*2 #button/0-->
-      <!--M|1 #text/1 2-->
-      <!--M]0 #text/1-->
+      <!--M_*2 #button/0-->
+      <!--M_|1 #text/1 2-->
+      <!--M_]0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.d={0:_.a={outer:!0,inner:!0,count:0,"#text/1!":_.b={"#text/1!":_.c={}}},1:_.b,2:_.c},_.a["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer"](_.a),_.b._=_.a,_.b["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer"](_.b),_.c._=_.b,_.d),[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.d={0:_.a={outer:!0,inner:!0,count:0,"#text/1!":_.b={"#text/1!":_.c={}}},1:_.b,2:_.c},_.a["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer"](_.a),_.b._=_.a,_.b["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer"](_.b),_.c._=_.b,_.d)];M._.e=[2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_count",1,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner",0,"packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_0_outer"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
