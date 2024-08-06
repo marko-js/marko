@@ -1513,7 +1513,7 @@ declare global {
          * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-name
          */
         name?: AttrString;
-  
+
         /** @see https://ogp.me/ */
         property?: AttrString;
       }
