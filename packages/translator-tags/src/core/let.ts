@@ -1,4 +1,9 @@
-import { type Tag, assertNoParams, computeNode, assertNoArgs } from "@marko/babel-utils";
+import {
+  type Tag,
+  assertNoParams,
+  computeNode,
+  assertNoArgs,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { getMarkoOpts, isOutputDOM } from "../util/marko-config";
@@ -29,35 +34,38 @@ export default {
     const { node } = tag;
     const tagVar = node.var;
     const { optimize } = getMarkoOpts();
-    const [valueAttr, valueChangeAttr] = node.attributes;
-    const valueChangeAttr = node.attributes.find(
-      (attr) => t.isMarkoAttribute(attr) && attr.name === "valueChange",
-    );
+    let valueAttr: t.MarkoAttribute | undefined;
+    let valueChangeAttr: t.MarkoAttribute | undefined;
+    for (const attr of node.attributes) {
+      if (t.isMarkoAttribute(attr)) {
+        if (attr.name === "value") {
+          valueAttr = attr;
+        } else if (attr.name === "valueChange") {
+          valueChangeAttr = attr;
+        } else {
+          const start = attr.loc?.start;
+          const end = attr.loc?.end;
+          const msg =
+            "The `let` tag only supports the `value` attribute and its change handler.";
+
+          if (start == null || end == null) {
+            throw tag.get("name").buildCodeFrameError(msg);
+          } else {
+            throw tag.hub.buildError(
+              { loc: { start, end } } as unknown as t.Node,
+              msg,
+              Error,
+            );
+          }
+        }
+      }
+    }
 
     assertNoArgs(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
     assertNoSpreadAttrs(tag);
 
-    if (
-      valueChangeAttr &&
-      (valueChangeAttr as t.MarkoAttribute).name !== "valueChange"
-    ) {
-      const start = valueChangeAttr.loc?.start;
-      const end = valueChangeAttr.loc?.end;
-      const msg =
-        "The `let` tag only supports the `value` attribute and its change handler.";
-
-      if (start == null || end == null) {
-        throw tag.get("name").buildCodeFrameError(msg);
-      } else {
-        throw tag.hub.buildError(
-          { loc: { start, end } } as unknown as t.Node,
-          msg,
-          Error,
-        );
-      }
-    }
     if (!tagVar) {
       throw tag
         .get("name")
