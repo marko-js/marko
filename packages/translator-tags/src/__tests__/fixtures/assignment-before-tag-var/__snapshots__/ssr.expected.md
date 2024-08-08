@@ -1,5 +1,5 @@
 # Write
-  <button>0<!M*0 #text/1> was <!>&zwj;<!M*0 #text/2></button><!M*0 #button/0><script>(M$h=[]).push(_=>(_.a={0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/assignment-before-tag-var/template.marko_0_clickCount",])</script>
+  <button>+</button><!M*0 #button/0><span>0<!M*0 #text/1> was <!>&zwj;<!M*0 #text/2></span><script>(M$h=[]).push(_=>(_.a={0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/assignment-before-tag-var/template.marko_0_clickCount",])</script>
 
 
 # Render "End"
@@ -8,14 +8,17 @@
   <head />
   <body>
     <button>
+      +
+    </button>
+    <!--M*0 #button/0-->
+    <span>
       0
       <!--M*0 #text/1-->
        was 
       <!---->
       ‍
       <!--M*0 #text/2-->
-    </button>
-    <!--M*0 #button/0-->
+    </span>
     <script>
       (M$h=[]).push(_=&gt;(_.a={0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/assignment-before-tag-var/template.marko_0_clickCount",])
     </script>
@@ -30,12 +33,14 @@ inserted #document/html0/head0
 inserted #document/html0/body1
 inserted #document/html0/body1/button0
 inserted #document/html0/body1/button0/#text0
-inserted #document/html0/body1/button0/#comment1
-inserted #document/html0/body1/button0/#text2
-inserted #document/html0/body1/button0/#comment3
-inserted #document/html0/body1/button0/#text4
-inserted #document/html0/body1/button0/#comment5
 inserted #document/html0/body1/#comment1
-inserted #document/html0/body1/script2
-inserted #document/html0/body1/script2/#text0
+inserted #document/html0/body1/span2
+inserted #document/html0/body1/span2/#text0
+inserted #document/html0/body1/span2/#comment1
+inserted #document/html0/body1/span2/#text2
+inserted #document/html0/body1/span2/#comment3
+inserted #document/html0/body1/span2/#text4
+inserted #document/html0/body1/span2/#comment5
+inserted #document/html0/body1/script3
+inserted #document/html0/body1/script3/#text0
 ```

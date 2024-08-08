@@ -1,6 +1,9 @@
 # Render "End"
 ```html
 <button>
-  0 was ‍
+  +
 </button>
+<span>
+  0 was ‍
+</span>
 ```

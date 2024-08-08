@@ -1,8 +1,11 @@
 # Render {}
 ```html
 <button>
+  +
+</button>
+<span>
   0 was ‍
-</button>
+</span>
 ```
 
 
@@ -11,8 +14,11 @@ container.querySelector("button").click()
 
 ```html
 <button>
+  +
+</button>
+<span>
   1 was 0
-</button>
+</span>
 ```
 
 
@@ -21,8 +27,11 @@ container.querySelector("button").click()
 
 ```html
 <button>
+  +
+</button>
+<span>
   2 was 1
-</button>
+</span>
 ```
 
 
@@ -31,6 +40,9 @@ container.querySelector("button").click()
 
 ```html
 <button>
-  3 was 2
+  +
 </button>
+<span>
+  3 was 2
+</span>
 ```

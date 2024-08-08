@@ -18,7 +18,7 @@ const _setup = _scope => {
   _clickCount(_scope, 0);
   _lastClickCount(_scope, undefined);
 };
-export const _template_ = "<button><!> was <!></button>";
-export const _walks_ = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l";
+export const _template_ = "<button>+</button><span><!> was <!></span>";
+export const _walks_ = /* get, over(1), next(1), replace, over(2), replace, out(1) */" bD%c%l";
 export const _setup_ = _setup;
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/assignment-before-tag-var/template.marko");
