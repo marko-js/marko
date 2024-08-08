@@ -90,6 +90,7 @@ AsyncValue.prototype = {
     }
 
     if (value && typeof value.then === "function") {
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
       var asyncValue = this;
 
       var finalPromise = value.then(

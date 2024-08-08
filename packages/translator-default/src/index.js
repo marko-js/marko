@@ -1,4 +1,3 @@
-import { resolve } from "path";
 import {
   findParentTag,
   getTagDef,
@@ -16,6 +15,8 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { version } from "marko/package.json";
+import { resolve } from "path";
+
 import MarkoCDATA from "./cdata";
 import MarkoClass from "./class";
 import MarkoComment from "./comment";
@@ -30,7 +31,7 @@ import getComponentFiles from "./util/get-component-files";
 import { optimizeHTMLWrites } from "./util/optimize-html-writes";
 import { analyzeStaticVDOM } from "./util/optimize-vdom-create";
 
-export { default as taglibs, optionalTaglibs } from "./taglib";
+export { optionalTaglibs, default as taglibs } from "./taglib";
 export { entryBuilder as internalEntryBuilder } from "./util/add-dependencies";
 
 export const analyze = {

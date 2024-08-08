@@ -7,19 +7,20 @@ import {
   resolveRelativePath,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import attrsToObject, {
   domHoistFunctionVisitor,
   getRenderBodyProp,
 } from "../../util/attrs-to-object";
 import { isOutputHTML } from "../../util/marko-config";
 import {
-  createBinding,
-  trackVarReferences,
-  trackParamsReferences,
-  getScopeAccessorLiteral,
   type Binding,
   BindingType,
+  createBinding,
+  getScopeAccessorLiteral,
   mergeReferences,
+  trackParamsReferences,
+  trackVarReferences,
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";

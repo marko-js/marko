@@ -1,6 +1,7 @@
 import { getTemplateId } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { AccessorChar } from "@marko/runtime-tags/common/types";
+
 import { returnId } from "../core/return";
 import {
   cleanIdentifier,
@@ -13,17 +14,17 @@ import { type Opt, push } from "./optional";
 import {
   type Binding,
   BindingType,
-  type ReferencedBindings,
   bindingUtil,
   getScopeAccessorLiteral,
+  type ReferencedBindings,
 } from "./references";
 import { callRuntime } from "./runtime";
 import { createScopeReadPattern, getScopeExpression } from "./scope-read";
 import {
-  type Section,
   getScopeIdIdentifier,
   getSection,
   hasSection,
+  type Section,
 } from "./sections";
 import { createSectionState } from "./state";
 

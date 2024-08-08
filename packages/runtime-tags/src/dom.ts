@@ -1,72 +1,61 @@
+export type { Scope } from "./common/types";
+export { getAbortSignal, resetAbortSignal } from "./dom/abort-signal";
+export { compat } from "./dom/compat";
 export {
   conditional,
   conditionalOnlyChild,
   inConditionalScope,
-  loopOf,
-  loopIn,
-  loopTo,
   inLoopScope,
+  loopIn,
+  loopOf,
+  loopTo,
 } from "./dom/control-flow";
-
 export {
-  data,
-  html,
   attr,
   attrs,
   attrsEvents,
   classAttr,
-  styleAttr,
-  props,
+  data,
+  html,
   lifecycle,
+  props,
+  styleAttr,
 } from "./dom/dom";
-
-export { resetAbortSignal, getAbortSignal } from "./dom/abort-signal";
-
 export { on } from "./dom/event";
-
+export {
+  prepare,
+  queueControllableSource,
+  queueEffect,
+  queueSource,
+  run,
+  runEffects,
+} from "./dom/queue";
+export {
+  createRenderer,
+  createScopeWithRenderer,
+  dynamicTagAttrs,
+} from "./dom/renderer";
 export {
   init,
   register,
-  registerRenderer,
   registerBoundSignal,
+  registerRenderer,
   registerSubscriber,
 } from "./dom/resume";
-
-export {
-  queueSource,
-  queueControllableSource,
-  queueEffect,
-  run,
-  prepare,
-  runEffects,
-} from "./dom/queue";
-
 export { bindFunction, bindRenderer, createScope } from "./dom/scope";
-
-export type { Scope } from "./common/types";
-
 export {
-  createRenderer,
-  dynamicTagAttrs,
-  createScopeWithRenderer,
-} from "./dom/renderer";
-
-export { createTemplate } from "./dom/template";
-
-export {
-  value,
-  initValue,
   changeHandler,
-  intersection,
+  childClosures,
   closure,
   dynamicClosure,
   dynamicSubscribers,
-  childClosures,
+  inChild,
+  initValue,
+  intersection,
+  intersections,
+  nextTagId,
   setTagVar,
   tagVarSignal,
-  nextTagId,
-  inChild,
-  intersections,
+  value,
 } from "./dom/signals";
-
-export { compat } from "./dom/compat";
+export { createTemplate } from "./dom/template";

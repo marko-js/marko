@@ -1,5 +1,5 @@
-import path from "path";
 import { build } from "esbuild";
+import path from "path";
 
 const absWorkingDir = path.join(__dirname, "..");
 

@@ -9,6 +9,7 @@ import {
   styleAttr,
   toString,
 } from "@marko/runtime-tags/html";
+
 import { currentProgramPath } from "../visitors/program";
 import { getMarkoOpts } from "./marko-config";
 import type { Binding } from "./references";

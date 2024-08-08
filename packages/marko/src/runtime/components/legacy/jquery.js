@@ -9,6 +9,7 @@ exports.patchComponent = function (jQuery, proto, delayThrow) {
 
   (proto || require("../Component").prototype).$ = function jqueryProxy(arg) {
     var args = arguments;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     var self = this;
 
     if (!(jQuery || (jQuery = window.$))) {

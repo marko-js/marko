@@ -4,6 +4,7 @@ import defineType from "@babel/types/lib/definitions/utils";
 import * as generatedValidators from "@babel/types/lib/validators/generated";
 import * as referencedValidators from "@babel/types/lib/validators/isReferenced";
 import validate from "@babel/types/lib/validators/validate";
+
 import definitions, { MARKO_ALIAS_TYPES, MARKO_TYPES } from "./definitions";
 
 const {
@@ -100,7 +101,7 @@ function builder(type, args) {
   }
 
   // (assume all enumerable properties are own)
-  // eslint-disable-next-line guard-for-in
+
   for (const key in node) {
     validate(node, key, node[key]);
   }

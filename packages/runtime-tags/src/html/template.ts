@@ -1,21 +1,21 @@
-import { DEFAULT_RUNTIME_ID, DEFAULT_RENDER_ID } from "../common/meta";
+import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import type {
-  Template,
   Input,
-  TemplateInput,
-  TemplateInstance,
   Renderer,
   RenderResult,
+  Template,
+  TemplateInput,
+  TemplateInstance,
 } from "../common/types";
 import {
-  register,
-  queueTick,
-  offTick,
-  prepareChunk,
   Boundary,
   Chunk,
-  State,
   flushChunk,
+  offTick,
+  prepareChunk,
+  queueTick,
+  register,
+  State,
 } from "./writer";
 
 export const createTemplate = (renderer: Renderer, id = "") =>

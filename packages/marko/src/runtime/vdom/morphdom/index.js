@@ -360,7 +360,6 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                   var depth = 0;
                   var nodeValue;
 
-                  // eslint-disable-next-line no-constant-condition
                   while (true) {
                     if (endNode.nodeType === COMMENT_NODE) {
                       nodeValue = endNode.nodeValue;

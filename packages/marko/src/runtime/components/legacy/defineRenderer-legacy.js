@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
 var componentLookup = require("@internal/components-util").___componentLookup;
 var req = require("@internal/require");

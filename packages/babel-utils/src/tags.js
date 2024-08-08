@@ -1,8 +1,9 @@
-import { createHash } from "crypto";
-import { basename, dirname, relative, resolve, join } from "path";
 import { types as t } from "@marko/compiler";
+import { createHash } from "crypto";
 import { getRootDir } from "lasso-package-root";
+import { basename, dirname, join, relative, resolve } from "path";
 import resolveFrom from "resolve-from";
+
 import { diagnosticWarn } from "./diagnostics";
 import { resolveRelativePath } from "./imports";
 import { getTagDefForTagName } from "./taglib";

@@ -6,9 +6,10 @@ var Component = {
 
     this.name = "app-dom-events";
 
-    var _this = this;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    var self = this;
     function log(data) {
-      _this.logOutput.push(data);
+      self.logOutput.push(data);
     }
 
     this.log = log;

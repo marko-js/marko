@@ -3,6 +3,7 @@ import {
   assertNoAttributes,
   assertNoParams,
 } from "@marko/babel-utils";
+
 import write from "../../util/html-out-write";
 
 export function enter(path) {

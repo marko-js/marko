@@ -1,10 +1,11 @@
 export * as types from "./babel-types";
-import path from "path";
 import * as babel from "@babel/core";
 import tsSyntaxPlugin from "@babel/plugin-syntax-typescript";
 import cjsPlugin from "@babel/plugin-transform-modules-commonjs";
 import tsTransformPlugin from "@babel/plugin-transform-typescript";
 import { DiagnosticType } from "@marko/babel-utils";
+import path from "path";
+
 import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";
 import * as taglib from "./taglib";

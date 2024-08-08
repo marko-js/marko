@@ -1,11 +1,11 @@
-import fs from "fs/promises";
-import path from "path";
-import zlib from "zlib";
 import * as compiler from "@marko/compiler";
 import pluginTerser from "@rollup/plugin-terser";
+import fs from "fs/promises";
+import path from "path";
 import { format } from "prettier";
 import { type OutputChunk, rollup } from "rollup";
 import glob from "tiny-glob";
+import zlib from "zlib";
 
 interface Sizes {
   min: number;

@@ -6,17 +6,18 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
+
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
 import { isOutputHTML } from "../../util/marko-config";
 import {
-  mergeReferences,
-  getScopeAccessorLiteral,
-  type Binding,
-  createBinding,
-  BindingType,
   addReferenceToExpression,
-  trackVarReferences,
+  type Binding,
+  BindingType,
+  createBinding,
+  getScopeAccessorLiteral,
+  mergeReferences,
   trackParamsReferences,
+  trackVarReferences,
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {

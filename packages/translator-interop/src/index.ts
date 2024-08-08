@@ -1,23 +1,23 @@
-import path from "path";
 import generate from "@babel/generator";
 import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
-import { types as t, type Config, taglib } from "@marko/compiler";
-
+import { type Config, taglib, types as t } from "@marko/compiler";
 import {
-  internalEntryBuilder as internalEntryBuilder5,
-  getRuntimeEntryFiles as getRuntimeEntryFiles5,
   analyze as analyze5,
+  getRuntimeEntryFiles as getRuntimeEntryFiles5,
+  internalEntryBuilder as internalEntryBuilder5,
   optionalTaglibs as optionalTaglibs5,
   taglibs as taglibs5,
   translate as translate5,
 } from "@marko/translator-default";
 import {
-  internalEntryBuilder as internalEntryBuilder6,
-  getRuntimeEntryFiles as getRuntimeEntryFiles6,
   analyze as analyze6,
+  getRuntimeEntryFiles as getRuntimeEntryFiles6,
+  internalEntryBuilder as internalEntryBuilder6,
   taglibs as taglibs6,
   translate as translate6,
 } from "@marko/translator-tags";
+import path from "path";
+
 import { isTagsAPI } from "./feature-detection";
 
 type TagDef = Record<string, unknown>;
@@ -310,5 +310,7 @@ function normalizeTagDefVisitors(visitor: any): t.Visitor {
 }
 
 function normalizeTagDefVisitor(visitor: any): t.VisitNode<any, t.Node> {
-  return typeof visitor === "function" ? visitor : visitor?.default ?? visitor;
+  return typeof visitor === "function"
+    ? visitor
+    : (visitor?.default ?? visitor);
 }

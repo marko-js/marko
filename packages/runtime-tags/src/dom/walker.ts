@@ -1,4 +1,4 @@
-import { type Scope, NodeType, WalkCode, WalkRangeSize } from "../common/types";
+import { NodeType, type Scope, WalkCode, WalkRangeSize } from "../common/types";
 import { createScope } from "./scope";
 
 export const walker = /* @__PURE__ */ document.createTreeWalker(document);

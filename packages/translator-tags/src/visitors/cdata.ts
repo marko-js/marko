@@ -1,4 +1,5 @@
 import type { types as t } from "@marko/compiler";
+
 import { isOutputHTML } from "../util/marko-config";
 import * as writer from "../util/writer";
 

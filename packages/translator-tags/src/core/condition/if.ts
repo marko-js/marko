@@ -1,29 +1,30 @@
 import {
-  type Tag,
+  assertNoArgs,
   assertNoParams,
   assertNoVar,
-  assertNoArgs,
+  type Tag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
+
 import { isCoreTagName } from "../../util/is-core-tag";
 import { isStatefulReferences } from "../../util/is-stateful";
 import { isOutputDOM, isOutputHTML } from "../../util/marko-config";
 import {
-  mergeReferences,
-  BindingType,
-  getScopeAccessorLiteral,
   type Binding,
+  BindingType,
   createBinding,
+  getScopeAccessorLiteral,
+  mergeReferences,
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {
-  type Section,
+  checkStatefulClosures,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
+  type Section,
   startSection,
-  checkStatefulClosures,
 } from "../../util/sections";
 import {
   addValue,

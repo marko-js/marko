@@ -1,16 +1,17 @@
 import { types as t } from "@marko/compiler";
+
 import { getExprRoot, getFnRoot, getMarkoRoot } from "./get-root";
 import { isStatefulReferences } from "./is-stateful";
 import { isOptimize } from "./marko-config";
 import {
   addSorted,
   findSorted,
-  type Opt,
-  type Many,
-  Sorted,
   forEach,
+  type Many,
+  type Opt,
+  Sorted,
 } from "./optional";
-import { type Section, getOrCreateSection, forEachSection } from "./sections";
+import { forEachSection, getOrCreateSection, type Section } from "./sections";
 import { createProgramState, createSectionState } from "./state";
 
 export type Aliases = undefined | Binding | { [property: string]: Aliases };

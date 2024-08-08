@@ -2,6 +2,8 @@
 
 var ok = require("assert").ok;
 var fs = require("fs");
+
+// eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
 var compiler = require("@marko/compiler");
 var extend = require("raptor-util/extend");

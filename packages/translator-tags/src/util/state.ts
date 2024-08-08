@@ -1,4 +1,5 @@
 import type { types as t } from "@marko/compiler";
+
 import { currentProgramPath } from "../visitors/program";
 import type { Section } from "./sections";
 

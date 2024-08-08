@@ -1,19 +1,20 @@
 import {
-  type Tag,
+  assertNoArgs,
   assertNoParams,
   computeNode,
-  assertNoArgs,
+  type Tag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { getMarkoOpts, isOutputDOM } from "../util/marko-config";
 import { size } from "../util/optional";
 import {
+  type Binding,
   BindingType,
   createBinding,
   getScopeAccessorLiteral,
   trackVarReferences,
-  type Binding,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { createScopeReadExpression } from "../util/scope-read";

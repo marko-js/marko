@@ -1,11 +1,12 @@
-import { resolve } from "path";
 import {
   getTagDef,
   importDefault,
   normalizeTemplateString,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { resolve } from "path";
 import SELF_CLOSING from "self-closing-tags";
+
 import write from "../../util/html-out-write";
 import { hasUserKey } from "../../util/key-manager";
 import withPreviousLocation from "../../util/with-previous-location";

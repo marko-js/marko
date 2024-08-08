@@ -6,10 +6,11 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
+
 import { isOutputHTML } from "../util/marko-config";
 import {
-  BindingType,
   type Binding,
+  BindingType,
   createBinding,
   getScopeAccessorLiteral,
   mergeReferences,

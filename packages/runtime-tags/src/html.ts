@@ -1,33 +1,28 @@
-export { toString, escapeScript, escapeStyle, escapeXML } from "./html/content";
-
 export { attr, attrs, classAttr, styleAttr } from "./html/attrs";
-
+export { compat } from "./html/compat";
+export { escapeScript, escapeStyle, escapeXML, toString } from "./html/content";
 export {
-  dynamicTagInput,
-  dynamicTagArgs,
   createRenderer,
+  dynamicTagArgs,
+  dynamicTagInput,
 } from "./html/dynamic-tag";
-
+export { createTemplate } from "./html/template";
 export {
-  write,
-  fork,
-  tryPlaceholder,
-  tryCatch,
-  nextTagId,
-  nextScopeId,
-  markResumeNode,
-  writeEffect,
-  writeScope,
-  markResumeScopeStart,
-  markResumeControlEnd,
-  markResumeControlSingleNodeEnd,
-  peekNextScope,
   ensureScopeWithId,
+  fork,
   getScopeById,
   getStreamData,
+  markResumeControlEnd,
+  markResumeControlSingleNodeEnd,
+  markResumeNode,
+  markResumeScopeStart,
+  nextScopeId,
+  nextTagId,
+  peekNextScope,
   register,
+  tryCatch,
+  tryPlaceholder,
+  write,
+  writeEffect,
+  writeScope,
 } from "./html/writer";
-
-export { createTemplate } from "./html/template";
-
-export { compat } from "./html/compat";

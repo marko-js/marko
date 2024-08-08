@@ -1,6 +1,6 @@
 "use strict";
-/* jshint newcap:false */
 
+// eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
 var EventEmitter = require("events-light");
 var SubscriptionTracker = require("listener-tracker");
@@ -513,6 +513,7 @@ Component.prototype = componentProto = {
   },
 
   ___scheduleRerender: function () {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     var self = this;
     var renderer = self.___renderer;
 

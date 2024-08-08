@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
-import { type Accessor } from "../common/types";
+import type { Accessor } from "../common/types";
 import { escapeAttrValue } from "./attrs";
 import { REORDER_RUNTIME_CODE, WALKER_RUNTIME_CODE } from "./inlined-runtimes";
-import { Serializer, register as serializerRegister } from "./serializer";
+import { register as serializerRegister, Serializer } from "./serializer";
 
 type PartialScope = Record<Accessor, unknown>;
 type ScopeInternals = PartialScope & {

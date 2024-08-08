@@ -5,6 +5,7 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import type { MarkoTagExtra } from "@marko/compiler/babel-types";
+
 import withPreviousLocation from "./with-previous-location";
 
 declare module "@marko/compiler/dist/types" {

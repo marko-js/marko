@@ -1,4 +1,5 @@
 var domInsert = require("./dom-insert");
+// eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
 
 function getRootNode(el) {

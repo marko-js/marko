@@ -1,7 +1,7 @@
 import {
+  type Binding,
   BindingType,
   type ReferencedBindings,
-  type Binding,
 } from "./references";
 
 export function isStatefulReferences(referencedBindings: ReferencedBindings) {

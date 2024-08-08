@@ -1,5 +1,5 @@
 "use strict";
-
+// eslint-disable-next-line no-constant-binary-expression
 const complain = "MARKO_DEBUG" && require("complain");
 const path = require("path");
 const resolveFrom = require("resolve-from");

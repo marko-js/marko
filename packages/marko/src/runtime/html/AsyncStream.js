@@ -725,6 +725,7 @@ var proto = (AsyncStream.prototype = {
   },
 
   then: function (fn, fnErr) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     var out = this;
     return new Promise(function (resolve, reject) {
       out.on("error", reject);

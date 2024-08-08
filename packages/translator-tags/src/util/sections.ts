@@ -4,6 +4,7 @@ import {
   loadFileForTag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import { currentProgramPath } from "../visitors/program";
 import { isStatefulReferences } from "./is-stateful";
 import type { Binding } from "./references";
@@ -88,7 +89,6 @@ export function startSection(
 export function getOrCreateSection(path: t.NodePath<any>) {
   let cur = path;
 
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     if (
       cur.type === "Program" ||

@@ -1,62 +1,57 @@
 export {
-  isNativeTag,
-  isMacroTag,
-  isDynamicTag,
-  isAttributeTag,
-  isTransparentTag,
-  isLoopTag,
-  registerMacro,
-  hasMacro,
-  getMacroIdentifierForName,
-  getMacroIdentifier,
-  getTagTemplate,
-  getTagDef,
-  getFullyResolvedTagName,
-  findParentTag,
-  findAttributeTags,
-  getArgOrSequence,
-  loadFileForTag,
-  loadFileForImport,
-  getTemplateId,
-  resolveTagImport,
-} from "./tags";
-export {
   assertAllowedAttributes,
-  assertNoArgs,
-  assertNoAttributes,
-  assertNoParams,
-  assertNoVar,
-  assertNoAttributeTags,
   assertAttributesOrArgs,
   assertAttributesOrSingleArg,
+  assertNoArgs,
+  assertNoAttributes,
+  assertNoAttributeTags,
+  assertNoParams,
+  assertNoVar,
 } from "./assert";
 export { computeNode } from "./compute";
-export { normalizeTemplateString } from "./template-string";
-
-export { getLoc, getLocRange, withLoc } from "./loc";
-
 export {
-  parseStatements,
+  diagnosticDeprecate,
+  diagnosticError,
+  diagnosticSuggest,
+  DiagnosticType,
+  diagnosticWarn,
+} from "./diagnostics";
+export { importDefault, importNamed, resolveRelativePath } from "./imports";
+export { getLoc, getLocRange, withLoc } from "./loc";
+export {
+  parseArgs,
   parseExpression,
   parseParams,
-  parseArgs,
-  parseVar,
+  parseStatements,
   parseTemplateLiteral,
   parseTypeArgs,
   parseTypeParams,
+  parseVar,
 } from "./parse";
-
-export { resolveRelativePath, importDefault, importNamed } from "./imports";
-
-export { getTaglibLookup, getTagDefForTagName } from "./taglib";
-
+export { getTagDefForTagName, getTaglibLookup } from "./taglib";
 export {
-  DiagnosticType,
-  diagnosticError,
-  diagnosticDeprecate,
-  diagnosticWarn,
-  diagnosticSuggest,
-} from "./diagnostics";
+  findAttributeTags,
+  findParentTag,
+  getArgOrSequence,
+  getFullyResolvedTagName,
+  getMacroIdentifier,
+  getMacroIdentifierForName,
+  getTagDef,
+  getTagTemplate,
+  getTemplateId,
+  hasMacro,
+  isAttributeTag,
+  isDynamicTag,
+  isLoopTag,
+  isMacroTag,
+  isNativeTag,
+  isTransparentTag,
+  loadFileForImport,
+  loadFileForTag,
+  registerMacro,
+  resolveTagImport,
+} from "./tags";
+export { normalizeTemplateString } from "./template-string";
 
 export function defineTag(tag) {
   return tag;

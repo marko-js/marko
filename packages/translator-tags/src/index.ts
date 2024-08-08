@@ -1,4 +1,5 @@
-import type { types as t, Config } from "@marko/compiler";
+import type { Config, types as t } from "@marko/compiler";
+
 import coreTagLib from "./core";
 import AssignmentExpression from "./visitors/assignment-expression";
 import MarkoCDATA from "./visitors/cdata";
@@ -65,7 +66,6 @@ export function getRuntimeEntryFiles(
   ];
 }
 
-/* eslint-disable @typescript-eslint/no-empty-interface */
 declare module "@marko/compiler/dist/types" {
   // This is extended by individual helpers.
   export interface ProgramExtra {}

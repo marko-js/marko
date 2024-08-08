@@ -1,9 +1,9 @@
 import { type Accessor, AccessorChar, type Scope } from "../common/types";
 import { reconcile } from "./reconcile";
 import {
+  createScopeWithRenderer,
   type Renderer,
   type RendererOrElementName,
-  createScopeWithRenderer,
 } from "./renderer";
 import {
   destroyScope,
@@ -12,13 +12,13 @@ import {
   removeAndDestroyScope,
 } from "./scope";
 import {
-  type IntersectionSignal,
-  type ValueSignal,
-  renderBodyClosures,
-  DIRTY,
-  MARK,
   CLEAN,
+  DIRTY,
+  type IntersectionSignal,
+  MARK,
+  renderBodyClosures,
   type SignalOp,
+  type ValueSignal,
 } from "./signals";
 import type { ClientTemplate as Template } from "./template";
 

@@ -1,7 +1,8 @@
-import { createHash } from "crypto";
-import path from "path";
 import { visitors } from "@babel/traverse";
 import { diagnosticError, getTemplateId } from "@marko/babel-utils";
+import { createHash } from "crypto";
+import path from "path";
+
 import * as t from "../babel-types";
 import { buildLookup } from "../taglib";
 import taglibConfig from "../taglib/config";

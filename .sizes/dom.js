@@ -51,47 +51,14 @@ function a(e, t, n) {
     t.insertBefore(r, n), (r = e);
   }
 }
-var c = 2147483647;
-function s(e, t) {
-  return t ? e : "";
-}
-var d = /^(--|ta|or|li|z)|n-c|i(do|nk|m|t)|w$|we/;
-function h(e, t) {
-  return t || 0 === t
-    ? `${e}:${"number" == typeof t && t && !d.test(e) ? t + "px" : t}`
-    : "";
-}
-function g(e, t, n) {
-  switch (typeof e) {
-    case "string":
-      return e;
-    case "object":
-      if (null !== e) {
-        let r = "",
-          o = "";
-        if (Array.isArray(e))
-          for (let i of e) {
-            let e = g(i, t, n);
-            "" !== e && ((r += o + e), (o = t));
-          }
-        else
-          for (let i in e) {
-            let l = n(i, e[i]);
-            "" !== l && ((r += o + l), (o = t));
-          }
-        return r;
-      }
-  }
-  return "";
-}
-function p(e, t) {
+function c(e, t) {
   let n = e.o;
   if (n) {
     let e = n.get(t);
     e && (e.abort(), n.delete(t));
   }
 }
-function b(e, t) {
+function s(e, t) {
   let n = (e.o ??= new Map()),
     r = n.get(t);
   return (
@@ -103,6 +70,39 @@ function b(e, t) {
       n.set(t, (r = new AbortController()))),
     r.signal
   );
+}
+var d = 2147483647;
+function h(e, t) {
+  return t ? e : "";
+}
+var g = /^(--|ta|or|li|z)|n-c|i(do|nk|m|t)|w$|we/;
+function p(e, t) {
+  return t || 0 === t
+    ? `${e}:${"number" == typeof t && t && !g.test(e) ? t + "px" : t}`
+    : "";
+}
+function b(e, t, n) {
+  switch (typeof e) {
+    case "string":
+      return e;
+    case "object":
+      if (null !== e) {
+        let r = "",
+          o = "";
+        if (Array.isArray(e))
+          for (let i of e) {
+            let e = b(i, t, n);
+            "" !== e && ((r += o + e), (o = t));
+          }
+        else
+          for (let i in e) {
+            let l = n(i, e[i]);
+            "" !== l && ((r += o + l), (o = t));
+          }
+        return r;
+      }
+  }
+  return "";
 }
 var v = new Map(),
   w = new WeakMap(),
@@ -145,7 +145,7 @@ function N(e, t) {
     e,
     "class",
     (function (e) {
-      return g(e, " ", s);
+      return b(e, " ", h);
     })(t) || void 0,
   );
 }
@@ -154,7 +154,7 @@ function M(e, t) {
     e,
     "style",
     (function (e) {
-      return g(e, ";", h);
+      return b(e, ";", p);
     })(t) || void 0,
   );
 }
@@ -222,7 +222,7 @@ function T(e, t, n) {
     ? (Object.assign(r, n), r.onUpdate?.())
     : ((e[t] = n),
       n.onMount?.(),
-      (b(e, "-" + t).onabort = () => n.onDestroy?.()));
+      (s(e, "-" + t).onabort = () => n.onDestroy?.()));
 }
 var j = {},
   O = {},
@@ -569,12 +569,12 @@ function xe(e, t, r) {
   let o = e + "!",
     i = t.c,
     f = t.f;
-  return (s, d) => {
-    if (d === q) return;
-    if (d === j || d === O) {
-      for (let t of s[o] ?? s[e + "("].values()) {
-        f?.(t, d);
-        for (let e of i) e(t, d);
+  return (c, s) => {
+    if (s === q) return;
+    if (s === j || s === O) {
+      for (let t of c[o] ?? c[e + "("].values()) {
+        f?.(t, s);
+        for (let e of i) e(t, s);
       }
       return;
     }
@@ -582,16 +582,16 @@ function xe(e, t, r) {
       g,
       p,
       b,
-      v = s[e],
+      v = c[e],
       w = 8 === v.nodeType || 3 === v.nodeType,
-      m = s[e + "("] || (w ? pe : ve),
-      y = s[e + "!"] || Array.from(m.values()),
+      m = c[e + "("] || (w ? pe : ve),
+      y = c[e + "!"] || Array.from(m.values()),
       C = !0;
     if (
-      (r(d, (e, n) => {
+      (r(s, (e, n) => {
         let r = m.get(e),
           o = O;
-        if ((r || ((r = oe(t, s.$global, s)), (o = q)), f && f(r, n), i))
+        if ((r || ((r = oe(t, c.$global, c)), (o = q)), f && f(r, n), i))
           for (let e of i) e(r, o);
         h ? (h.set(e, r), g.push(r)) : ((h = new Map([[e, r]])), (g = [r]));
       }),
@@ -613,8 +613,8 @@ function xe(e, t, r) {
           i,
           l,
           f,
+          c,
           s,
-          d,
           h = 0,
           g = 0,
           p = t.length - 1,
@@ -655,20 +655,20 @@ function xe(e, t, r) {
             $ = new Map();
           for (i = g; i <= b; ++i) $.set(n[i], i);
           for (o = h; o <= p && x < w; ++o)
-            (s = t[o]),
-              (i = $.get(s)),
+            (c = t[o]),
+              (i = $.get(c)),
               void 0 !== i &&
-                ((C = C > i ? c : i),
+                ((C = C > i ? d : i),
                 ++x,
-                (d = n[i]),
+                (s = n[i]),
                 (y[i - g] = o),
                 (m[o] = null));
           if (v === t.length && 0 === x) {
             for (; g < w; ++g) a(n[g], e, r);
             for (; h < v; ++h) u(t[h]);
           } else {
-            for (o = v - x; o > 0; ) (s = m[h++]), null !== s && (u(s), o--);
-            if (C === c) {
+            for (o = v - x; o > 0; ) (c = m[h++]), null !== c && (u(c), o--);
+            if (C === d) {
               let t = (function (e) {
                 let t,
                   n,
@@ -694,22 +694,22 @@ function xe(e, t, r) {
               for (i = t.length - 1, l = n.length, o = w - 1; o >= 0; --o)
                 -1 === y[o] || i < 0 || o !== t[i]
                   ? ((C = o + g),
-                    (d = n[C++]),
+                    (s = n[C++]),
                     (f = C < l ? n[C].a : r),
-                    a(d, e, f))
+                    a(s, e, f))
                   : --i;
             } else if (x !== w)
               for (l = n.length, o = w - 1; o >= 0; --o)
                 -1 === y[o] &&
                   ((C = o + g),
-                  (d = n[C++]),
+                  (s = n[C++]),
                   (f = C < l ? n[C].a : r),
-                  a(d, e, f));
+                  a(s, e, f));
           }
         }
       })(b, y, g, p);
     }
-    (s[e + "("] = h), (s[e + "!"] = g);
+    (c[e + "("] = h), (c[e + "!"] = g);
   };
 }
 function $e(e, t) {
@@ -725,11 +725,74 @@ function Se(e, t) {
 function Ne(e) {
   return e;
 }
-var Me = {},
-  ke = class {
+var Me,
+  ke = (() => {
+    let { port1: e, port2: t } = new MessageChannel();
+    return (
+      (e.onmessage = () => {
+        (Me = !1), Oe();
+      }),
+      t
+    );
+  })();
+function Ae() {
+  Oe(), requestAnimationFrame(_e);
+}
+function _e() {
+  ke.postMessage(0);
+}
+var Ee = [],
+  Be = [];
+function Ie(e, t, n, r) {
+  return n ? (n(r), r) : Te(e, t, r);
+}
+function Te(e, t, n) {
+  return Me || ((Me = !0), queueMicrotask(Ae)), t(e, j), Ee.push(e, t, n), n;
+}
+function je(e, t) {
+  Be.push(e, t);
+}
+function Oe() {
+  try {
+    ze();
+  } finally {
+    Ee = [];
+  }
+  try {
+    Re();
+  } finally {
+    Be = [];
+  }
+}
+function qe(e) {
+  let t = Ee,
+    n = Be,
+    r = (Be = []);
+  Ee = [];
+  try {
+    e(), ze();
+  } finally {
+    (Ee = t), (Be = n);
+  }
+  return r;
+}
+function Re(e = Be) {
+  for (let t = 0; t < e.length; t += 2) {
+    let n = e[t];
+    (0, e[t + 1])(n);
+  }
+}
+function ze() {
+  for (let e = 0; e < Ee.length; e += 3) {
+    let t = Ee[e + 0];
+    (0, Ee[e + 1])(t, Ee[e + 2]);
+  }
+}
+var De = {},
+  Fe = class {
     u = [];
     x = {};
-    E = { _: Me };
+    E = { _: De };
     constructor(e, t, n) {
       (this.F = e), (this.G = t), (this.y = n), (this.z = e[n]), this.A();
     }
@@ -794,23 +857,23 @@ var Me = {},
       let i = e.e;
       if (i) {
         e.e = [];
-        for (let e = 0; e < i.length; e += 2) Me[i[e + 1]](n[i[e]]);
+        for (let e = 0; e < i.length; e += 2) De[i[e + 1]](n[i[e]]);
       }
       e.d && delete this.F[this.y];
     }
   };
-function Ae(e, t) {
-  return (Me[e] = t), t;
+function Le(e, t) {
+  return (De[e] = t), t;
 }
-function _e(e, t) {
-  return (Me[e] = (e) => (n) => t(e, n)), t;
+function We(e, t) {
+  return (De[e] = (e) => (n) => t(e, n)), t;
 }
-function Ee(e, t) {
-  return (Me[e] = (e) => o(e, t)), t;
+function Pe(e, t) {
+  return (De[e] = (e) => o(e, t)), t;
 }
-function Be(e = "M") {
+function Ge(e = "M") {
   let t,
-    n = (r) => (n[r] = t[r] = new ke(t, e, r));
+    n = (r) => (n[r] = t[r] = new Fe(t, e, r));
   function r(r) {
     t = r;
     for (let e in r) n(e);
@@ -820,74 +883,66 @@ function Be(e = "M") {
     ? r(window[e])
     : Object.defineProperty(window, e, { configurable: !0, set: r });
 }
-function Ie(e, t) {
-  return Ae(e, t.g), t;
+function He(e, t) {
+  return Le(e, t.g), t;
 }
-var Te,
-  je = (() => {
-    let { port1: e, port2: t } = new MessageChannel();
-    return (
-      (e.onmessage = () => {
-        (Te = !1), We();
-      }),
-      t
-    );
-  })();
-function Oe() {
-  We(), requestAnimationFrame(qe);
-}
-function qe() {
-  je.postMessage(0);
-}
-var Re = [],
-  ze = [];
-function De(e, t, n, r) {
-  return n ? (n(r), r) : Fe(e, t, r);
-}
-function Fe(e, t, n) {
-  return Te || ((Te = !0), queueMicrotask(Oe)), t(e, j), Re.push(e, t, n), n;
-}
-function Le(e, t) {
-  ze.push(e, t);
-}
-function We() {
-  try {
-    He();
-  } finally {
-    Re = [];
-  }
-  try {
-    Ge();
-  } finally {
-    ze = [];
-  }
-}
-function Pe(e) {
-  let t = Re,
-    n = ze,
-    r = (ze = []);
-  Re = [];
-  try {
-    e(), He();
-  } finally {
-    (Re = t), (ze = n);
-  }
-  return r;
-}
-function Ge(e = ze) {
-  for (let t = 0; t < e.length; t += 2) {
-    let n = e[t];
-    (0, e[t + 1])(n);
-  }
-}
-function He() {
-  for (let e = 0; e < Re.length; e += 3) {
-    let t = Re[e + 0];
-    (0, Re[e + 1])(t, Re[e + 2]);
-  }
-}
-var Je = (e, t) => Ae(t, new Ue(e)),
-  Ue = class {
+var Je = new Map(),
+  Ue = {
+    patchConditionals: function (e) {
+      (se = e(se)), (he = e(he));
+    },
+    queueEffect: je,
+    init() {
+      Le("$C_s", (e) => {
+        Je.set(e.m5c, e);
+      });
+    },
+    registerRenderer(e) {
+      Le("$C_r", e);
+    },
+    isOp: (e) => e === j || e === O || e === q,
+    isRenderer: (e) => void 0 !== e.l,
+    getStartNode: (e) => e.a,
+    setScopeNodes(e, t, n) {
+      (e.a = t), (e.b = n);
+    },
+    runComponentEffects() {
+      Re(this.effects);
+    },
+    resolveRegistered: (e, { runtimeId: t, componentIdPrefix: n }) =>
+      Array.isArray(e) && "string" == typeof e[0]
+        ? (function (e, t) {
+            let n = De[e];
+            return t && n ? (n.r ? o(t, n) : n(t)) : n;
+          })(e[0], 2 === e.length && window[t]?.["s" === n ? "_" : n]?.x[e[1]])
+        : e,
+    createRenderer(e, t, n) {
+      let r = fe("", void 0, e, void 0, 1, n);
+      return (r.l = t), r;
+    },
+    render(e, t, n, r) {
+      let o = t.scope;
+      o || ((o = Je.get(t.id)), o && ((t.scope = o), Je.delete(t.id)));
+      let i = n.f || Ze,
+        l = !1;
+      if (
+        ((t.effects = qe(() => {
+          if (o) i(o, j), (l = !0);
+          else {
+            o = t.scope = oe(n, e.global);
+            let r = n.c;
+            if (r) for (let e of r) e(t.scope, O);
+          }
+          i(o, r);
+        })),
+        !l)
+      )
+        return o.a === o.b ? o.a : o.a.parentNode;
+    },
+  };
+function Ze() {}
+var Ke = (e, t) => Le(t, new Qe(e)),
+  Qe = class {
     _;
     constructor(e) {
       this._ = e;
@@ -901,7 +956,7 @@ var Je = (e, t) => Ae(t, new Ue(e)),
           (l = { runtimeId: "M", renderId: "_", ...l }))
         : (l = { runtimeId: "M", renderId: "_" });
       let f = this._.f,
-        a = Pe(() => {
+        a = qe(() => {
           (o = e(l)), (i = ie(this._, o)), f && f(o, [t]);
         });
       switch (r) {
@@ -918,18 +973,18 @@ var Je = (e, t) => Ae(t, new Ue(e)),
           n.appendChild(i);
       }
       return (
-        Ge(a),
+        Re(a),
         {
           update: (e) => {
             f &&
               (function (e) {
-                let t = Re,
-                  n = ze;
-                (Re = []), (ze = []);
+                let t = Ee,
+                  n = Be;
+                (Ee = []), (Be = []);
                 try {
-                  e(), He(), (Re = t), Ge();
+                  e(), ze(), (Ee = t), Re();
                 } finally {
-                  (Re = t), (ze = n);
+                  (Ee = t), (Be = n);
                 }
               })(() => {
                 f(o, j), f(o, [e]);
@@ -941,62 +996,7 @@ var Je = (e, t) => Ae(t, new Ue(e)),
         }
       );
     }
-  },
-  Ze = new Map(),
-  Ke = {
-    patchConditionals: function (e) {
-      (se = e(se)), (he = e(he));
-    },
-    queueEffect: Le,
-    init() {
-      Ae("$C_s", (e) => {
-        Ze.set(e.m5c, e);
-      });
-    },
-    registerRenderer(e) {
-      Ae("$C_r", e);
-    },
-    isOp: (e) => e === j || e === O || e === q,
-    isRenderer: (e) => void 0 !== e.l,
-    getStartNode: (e) => e.a,
-    setScopeNodes(e, t, n) {
-      (e.a = t), (e.b = n);
-    },
-    runComponentEffects() {
-      Ge(this.effects);
-    },
-    resolveRegistered: (e, { runtimeId: t, componentIdPrefix: n }) =>
-      Array.isArray(e) && "string" == typeof e[0]
-        ? (function (e, t) {
-            let n = Me[e];
-            return t && n ? (n.r ? o(t, n) : n(t)) : n;
-          })(e[0], 2 === e.length && window[t]?.["s" === n ? "_" : n]?.x[e[1]])
-        : e,
-    createRenderer(e, t, n) {
-      let r = fe("", void 0, e, void 0, 1, n);
-      return (r.l = t), r;
-    },
-    render(e, t, n, r) {
-      let o = t.scope;
-      o || ((o = Ze.get(t.id)), o && ((t.scope = o), Ze.delete(t.id)));
-      let i = n.f || Qe,
-        l = !1;
-      if (
-        ((t.effects = Pe(() => {
-          if (o) i(o, j), (l = !0);
-          else {
-            o = t.scope = oe(n, e.global);
-            let r = n.c;
-            if (r) for (let e of r) e(t.scope, O);
-          }
-          i(o, r);
-        })),
-        !l)
-      )
-        return o.a === o.b ? o.a : o.a.parentNode;
-    },
   };
-function Qe() {}
 export {
   $ as attr,
   A as attrs,
@@ -1007,23 +1007,23 @@ export {
   H as childClosures,
   N as classAttr,
   P as closure,
-  Ke as compat,
+  Ue as compat,
   se as conditional,
   he as conditionalOnlyChild,
   fe as createRenderer,
   e as createScope,
   oe as createScopeWithRenderer,
-  Je as createTemplate,
+  Ke as createTemplate,
   k as data,
   G as dynamicClosure,
   J as dynamicSubscribers,
   le as dynamicTagAttrs,
-  b as getAbortSignal,
+  s as getAbortSignal,
   B as html,
   X as inChild,
   de as inConditionalScope,
   $e as inLoopScope,
-  Be as init,
+  Ge as init,
   R as initValue,
   L as intersection,
   Y as intersections,
@@ -1033,18 +1033,18 @@ export {
   Ce as loopTo,
   V as nextTagId,
   y as on,
-  Pe as prepare,
+  qe as prepare,
   I as props,
-  De as queueControllableSource,
-  Le as queueEffect,
-  Fe as queueSource,
-  Ae as register,
-  _e as registerBoundSignal,
-  Ee as registerRenderer,
-  Ie as registerSubscriber,
-  p as resetAbortSignal,
-  We as run,
-  Ge as runEffects,
+  Ie as queueControllableSource,
+  je as queueEffect,
+  Te as queueSource,
+  Le as register,
+  We as registerBoundSignal,
+  Pe as registerRenderer,
+  He as registerSubscriber,
+  c as resetAbortSignal,
+  Oe as run,
+  Re as runEffects,
   U as setTagVar,
   M as styleAttr,
   Z as tagVarSignal,

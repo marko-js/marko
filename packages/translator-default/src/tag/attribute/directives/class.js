@@ -1,6 +1,7 @@
 import { computeNode, importDefault, isNativeTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import classToString from "marko/src/runtime/helpers/class-value";
+
 import withPreviousLocation from "../../../util/with-previous-location";
 
 export default {

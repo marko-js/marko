@@ -1,19 +1,20 @@
 import {
-  type Tag,
-  assertNoParams,
   assertNoArgs,
+  assertNoParams,
   assertNoVar,
+  type Tag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import { assertNoBodyContent } from "../util/assert";
 import attrsToObject from "../util/attrs-to-object";
 import { isOutputDOM } from "../util/marko-config";
 import {
-  mergeReferences,
-  getScopeAccessorLiteral,
   type Binding,
-  createBinding,
   BindingType,
+  createBinding,
+  getScopeAccessorLiteral,
+  mergeReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";

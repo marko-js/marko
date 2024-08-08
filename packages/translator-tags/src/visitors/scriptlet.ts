@@ -1,4 +1,5 @@
 import type { types as t } from "@marko/compiler";
+
 import { isOutputHTML } from "../util/marko-config";
 import { mergeReferences } from "../util/references";
 import { getSection } from "../util/sections";

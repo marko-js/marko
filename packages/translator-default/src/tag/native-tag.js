@@ -3,6 +3,7 @@ import {
   assertNoAttributeTags,
   assertNoParams,
 } from "@marko/babel-utils";
+
 import nativeTagHtml from "./native-tag[html]";
 import nativeTagVdom from "./native-tag[vdom]";
 

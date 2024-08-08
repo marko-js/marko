@@ -7,7 +7,6 @@ declare module "*.marko" {
 
 declare global {
   namespace NodeJS {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
     interface ReadableStream {}
   }
 
@@ -79,11 +78,9 @@ declare global {
     }
 
     /** Body content created from by a component, typically held in an object with a renderBody property. */
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+
     export interface Body<
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       in Params extends readonly any[] = [],
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       out Return = void,
     > {}
 
@@ -214,7 +211,6 @@ declare global {
     }
 
     /** The top level api for a Marko Template. */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     export abstract class Template<Input = unknown, Return = unknown> {
       /** Creates a Marko compatible output stream. */
       createOut(): Out;

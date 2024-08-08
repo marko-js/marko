@@ -7,6 +7,7 @@ module.exports = {
   },
 
   onMount: function () {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     var self = this;
 
     if (this.channel) {

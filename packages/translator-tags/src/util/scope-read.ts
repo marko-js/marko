@@ -1,10 +1,11 @@
 import { types as t } from "@marko/compiler";
+
 import { scopeIdentifier } from "../visitors/program";
 import { forEach } from "./optional";
 import {
   type Binding,
-  type ReferencedBindings,
   getScopeAccessorLiteral,
+  type ReferencedBindings,
 } from "./references";
 import type { Section } from "./sections";
 

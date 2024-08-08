@@ -1,5 +1,6 @@
 import * as babelParser from "@babel/parser";
 import { types as t } from "@marko/compiler";
+
 import { getLocRange } from "./loc";
 
 const CODE_AS_WHITE_SPACE_KEY = Symbol();

@@ -2,8 +2,8 @@ import {
   type Accessor,
   AccessorChar,
   NodeType,
-  WalkCode,
   type Scope,
+  WalkCode,
 } from "../common/types";
 import { setConditionalRendererOnlyChild } from "./control-flow";
 import { attrs } from "./dom";
@@ -11,8 +11,8 @@ import { bindRenderer, createScope } from "./scope";
 import {
   CLEAN,
   DIRTY,
-  MARK,
   type IntersectionSignal,
+  MARK,
   type SignalOp,
   type ValueSignal,
 } from "./signals";

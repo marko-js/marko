@@ -8,6 +8,7 @@ import {
   isTransparentTag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import { getAttrs } from "./util";
 
 const attributeTagsForTag = new WeakMap();

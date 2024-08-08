@@ -1,6 +1,6 @@
+import { build } from "esbuild";
 import fs from "fs";
 import path from "path";
-import { build } from "esbuild";
 
 const absWorkingDir = path.join(__dirname, "..");
 const pkg = JSON.parse(

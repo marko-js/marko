@@ -1,10 +1,11 @@
 import {
-  type Tag,
   assertNoArgs,
   assertNoAttributes,
   assertNoParams,
+  type Tag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
 import { callRuntime } from "../util/runtime";

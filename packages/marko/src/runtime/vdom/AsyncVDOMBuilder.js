@@ -418,6 +418,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
   },
 
   then: function (fn, fnErr) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     var out = this;
     var promise = new Promise(function (resolve, reject) {
       out.on("error", reject).on(EVENT_FINISH, function (result) {

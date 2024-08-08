@@ -1,12 +1,13 @@
-import assert from "assert";
-import fs from "fs";
-import path from "path";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
-import type { Template, Input } from "@marko/runtime-tags/common/types";
+import type { Input, Template } from "@marko/runtime-tags/common/types";
+import assert from "assert";
+import fs from "fs";
 import type { DOMWindow } from "jsdom";
 import snap from "mocha-snap";
+import path from "path";
 import glob from "tiny-glob";
+
 import * as translator from "..";
 import { bundle } from "./utils/bundle";
 import createBrowser from "./utils/create-browser";
@@ -70,7 +71,6 @@ describe("translator-tags", () => {
       const config: TestConfig = (() => {
         try {
           return require(resolve("test.ts"));
-          // eslint-disable-next-line no-empty
         } catch {
           return {};
         }
@@ -169,7 +169,6 @@ describe("translator-tags", () => {
         const hooks: TestHooks = (() => {
           try {
             return require(resolve("hooks.ts"));
-            // eslint-disable-next-line no-empty
           } catch {
             return {};
           }
@@ -238,7 +237,6 @@ describe("translator-tags", () => {
         const hooks: TestHooks = (() => {
           try {
             return browser.require(resolve("hooks.ts"));
-            // eslint-disable-next-line no-empty
           } catch {
             return {};
           }

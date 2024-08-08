@@ -1,5 +1,6 @@
 import { getTagDef, normalizeTemplateString } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import * as FLAGS from "../../util/runtime-flags";
 import write from "../../util/vdom-out-write";
 import withPreviousLocation from "../../util/with-previous-location";

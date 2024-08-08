@@ -1,5 +1,4 @@
 "use strict";
-/* jshint newcap:false */
 
 var inherit = require("raptor-util/inherit");
 var BaseComponent = require("./Component");

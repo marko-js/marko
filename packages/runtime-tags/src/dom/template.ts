@@ -1,7 +1,7 @@
-import { DEFAULT_RUNTIME_ID, DEFAULT_RENDER_ID } from "../common/meta";
-import type { Template, Input, TemplateInstance, Scope } from "../common/types";
+import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
+import type { Input, Scope, Template, TemplateInstance } from "../common/types";
 import { prepare, runEffects, runSync } from "./queue";
-import { type Renderer, initRenderer } from "./renderer";
+import { initRenderer, type Renderer } from "./renderer";
 import { register } from "./resume";
 import { createScope, removeAndDestroyScope } from "./scope";
 import { MARK } from "./signals";
