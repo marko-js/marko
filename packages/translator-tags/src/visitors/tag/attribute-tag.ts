@@ -1,33 +1,24 @@
 import { assertNoArgs, assertNoVar, findParentTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import attrsToObject from "../../util/attrs-to-object";
+import { isOutputHTML } from "../../util/marko-config";
+import { callRuntime } from "../../util/runtime";
 import { getSection, startSection } from "../../util/sections";
 import { TagNameType } from "../../util/tag-name-type";
 import * as writer from "../../util/writer";
+import { scopeIdentifier } from "../program";
 
 export default {
   analyze: {
     enter(tag: t.NodePath<t.MarkoTag>) {
+      assertNoVar(tag);
+      assertNoArgs(tag);
+
       startSection(tag.get("body"));
     },
   },
   translate: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
-      assertNoArgs(tag);
-
-      getSection(tag.get("body"));
-      if (writer.hasPendingHTML(tag)) {
-        throw tag
-          .get("name")
-          .buildCodeFrameError(
-            "Dynamic @tags cannot be mixed with body content.",
-          );
-      }
-    },
     exit(tag: t.NodePath<t.MarkoTag>) {
-      assertNoVar(tag);
-      writer.flushInto(tag);
-
       const parentTag = findParentTag(tag);
 
       if (!parentTag) {
@@ -42,6 +33,21 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError("@tags cannot be nested under native tags.");
+      }
+
+      if (isOutputHTML()) {
+        writer.flushInto(tag);
+      } else {
+        tag.node.attributes.push(
+          t.markoAttribute(
+            "renderBody",
+            callRuntime(
+              "bindRenderer",
+              scopeIdentifier,
+              t.identifier(getSection(tag.get("body")).name),
+            ),
+          ),
+        );
       }
 
       const attrName = (tag.node.name as t.StringLiteral).value.slice(1);
