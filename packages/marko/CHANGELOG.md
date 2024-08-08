@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.35.8
+
+### Patch Changes
+
+- [#2267](https://github.com/marko-js/marko/pull/2267) [`b533216`](https://github.com/marko-js/marko/commit/b5332168b7134cb3b5c8518f789357c0d77b2ae6) Thanks [@mlrawlings](https://github.com/mlrawlings)! - Add open graph attributes to type defs
+
 ## 5.35.7
 
 ### Patch Changes
