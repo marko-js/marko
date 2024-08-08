@@ -1,4 +1,5 @@
 import path from "path";
+
 import getComponentFiles from "../../util/get-component-files";
 
 const STYLE_REG = /^style((?:\.[^.\s\\/:*?"<>|({]+)+)?\s*\{/;

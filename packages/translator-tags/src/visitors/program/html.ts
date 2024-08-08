@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+
 import { returnId } from "../../core/return";
 import isStatic from "../../util/is-static";
 import { callRuntime } from "../../util/runtime";

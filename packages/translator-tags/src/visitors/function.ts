@@ -1,5 +1,6 @@
 import { getTemplateId } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import { getSection, type Section } from "../util/sections";
 import { currentProgramPath } from "./program";
 const functionIdsBySection = new WeakMap<Section, Map<string, number>>();

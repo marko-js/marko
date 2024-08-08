@@ -1,15 +1,16 @@
 import { types as t } from "@marko/compiler";
+
 import {
-  type Section,
+  ContentType,
   getScopeIdIdentifier,
   getSection,
-  ContentType,
+  type Section,
 } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
 import {
+  type Binding,
   BindingType,
   getScopeAccessorLiteral,
-  type Binding,
 } from "./references";
 import { callRuntime } from "./runtime";
 import { getSetup } from "./signals";

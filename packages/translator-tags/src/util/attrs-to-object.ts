@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import { isOutputHTML } from "./marko-config";
 import { forEach } from "./optional";

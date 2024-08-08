@@ -1,5 +1,4 @@
-/* jshint newcap:false */
-
+// eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
 var inherit = require("raptor-util/inherit");
 var componentsUtil = require("@internal/components-util");

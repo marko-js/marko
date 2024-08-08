@@ -2,20 +2,20 @@ import {
   RENDERER_REGISTER_ID,
   SET_SCOPE_REGISTER_ID,
 } from "../common/compat-meta";
-import { DEFAULT_RUNTIME_ID, DEFAULT_RENDER_ID } from "../common/meta";
+import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import type { Renderer, Scope } from "../common/types";
 import { patchDynamicTag } from "./dynamic-tag";
 import { getRegistered, register } from "./serializer";
 import {
-  Chunk,
   Boundary,
-  State,
-  prepareChunk,
+  Chunk,
   fork,
   getChunk,
   getScopeId,
   nextScopeId,
   peekNextScopeId,
+  prepareChunk,
+  State,
   write,
   writeEffect,
   writeScope,

@@ -6,9 +6,10 @@ module.exports = {
 
     this.name = "app-dom-events";
 
-    var slef = this;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    var self = this;
     function log(data) {
-      slef.logOutput.push(data);
+      self.logOutput.push(data);
     }
 
     this.log = log;

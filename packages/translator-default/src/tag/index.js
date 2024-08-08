@@ -1,4 +1,3 @@
-import nodePath from "path";
 import {
   assertNoVar,
   findAttributeTags,
@@ -9,6 +8,8 @@ import {
   isNativeTag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import nodePath from "path";
+
 import { getKeyManager } from "../util/key-manager";
 import { optimizeStaticVDOM } from "../util/optimize-vdom-create";
 import { enter, exit } from "../util/plugin-hooks";

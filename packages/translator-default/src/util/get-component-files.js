@@ -1,4 +1,5 @@
 import path from "path";
+
 import { escapeRegExp } from "./escape-regexp";
 
 const COMPONENT_FILES_KEY = "___marko_component_files___";

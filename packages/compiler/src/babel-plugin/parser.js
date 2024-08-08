@@ -9,7 +9,8 @@ import {
   parseTypeParams,
   parseVar,
 } from "@marko/babel-utils";
-import { TagType, createParser } from "htmljs-parser";
+import { createParser, TagType } from "htmljs-parser";
+
 import * as t from "../babel-types";
 
 const noop = () => {};

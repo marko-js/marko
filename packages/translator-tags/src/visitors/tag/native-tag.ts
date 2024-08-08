@@ -1,16 +1,17 @@
 import { assertNoArgs, getTagDef } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
+
 import attrsToObject from "../../util/attrs-to-object";
 import evaluate from "../../util/evaluate";
 import { isStatefulReferences } from "../../util/is-stateful";
 import { isOutputHTML } from "../../util/marko-config";
 import {
-  mergeReferences,
-  getScopeAccessorLiteral,
   type Binding,
-  createBinding,
   BindingType,
+  createBinding,
+  getScopeAccessorLiteral,
+  mergeReferences,
 } from "../../util/references";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 import {

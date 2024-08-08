@@ -1,4 +1,3 @@
-import path from "path";
 import {
   loadFileForImport,
   parseStatements,
@@ -6,6 +5,7 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import MagicString from "magic-string";
+import path from "path";
 import resolveFrom from "resolve-from";
 const kEntryState = Symbol();
 

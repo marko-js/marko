@@ -188,7 +188,6 @@ declare global {
           | "prev"
           | "search"
           | "tag"
-          // eslint-disable-next-line @typescript-eslint/ban-types
           | (string & {});
 
         /**
@@ -316,7 +315,6 @@ declare global {
           | "nofullscreen"
           | "noplaybackrate"
           | "noremoteplayback"
-          // eslint-disable-next-line @typescript-eslint/ban-types
           | (string & {});
 
         /**
@@ -820,7 +818,6 @@ declare global {
           | "opener"
           | "prev"
           | "search"
-          // eslint-disable-next-line @typescript-eslint/ban-types
           | (string & {});
         /**
          * Specifies the browsing context in which the linked resource will be opened.
@@ -934,7 +931,6 @@ declare global {
           | "allow-top-navigation-by-user-activation"
           | "allow-top-navigation-to-custom-protocols"
           | "allow-top-navigation"
-          // eslint-disable-next-line @typescript-eslint/ban-types
           | (string & {});
         /**
          * The URL of the page to embed in the iframe.
@@ -1439,7 +1435,6 @@ declare global {
           | "prev"
           | "search"
           | "stylesheet"
-          // eslint-disable-next-line @typescript-eslint/ban-types
           | (string & {});
 
         /**
@@ -1793,7 +1788,6 @@ declare global {
           | "application/javascript"
           | "module"
           | "import-map"
-          // eslint-disable-next-line @typescript-eslint/ban-types
           | (string & {});
 
         /** @deprecated */
@@ -2251,7 +2245,6 @@ declare global {
           | "nofullscreen"
           | "noplaybackrate"
           | "noremoteplayback"
-          // eslint-disable-next-line @typescript-eslint/ban-types
           | (string & {});
 
         /**
@@ -3787,7 +3780,6 @@ type AttrTarget =
   | "_parent"
   | "_self"
   | "_top"
-  // eslint-disable-next-line @typescript-eslint/ban-types
   | (string & {});
 type AttrReferrerPolicy =
   | AttrMissing
@@ -3860,5 +3852,4 @@ type AttrAutoComplete =
   | "mobile"
   | "fax"
   | "pager"
-  // eslint-disable-next-line @typescript-eslint/ban-types
   | (string & {});

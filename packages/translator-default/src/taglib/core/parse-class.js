@@ -4,6 +4,7 @@ import {
   parseExpression,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import getComponentFiles from "../../util/get-component-files";
 
 export default function (path) {

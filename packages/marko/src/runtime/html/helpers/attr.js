@@ -3,6 +3,7 @@
 var escapeQuoteHelpers = require("./escape-quotes");
 var escapeDoubleQuotes = escapeQuoteHelpers.___escapeDoubleQuotes;
 var escapeSingleQuotes = escapeQuoteHelpers.___escapeSingleQuotes;
+// eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
 
 module.exports = maybeEmptyAttr;

@@ -28,23 +28,19 @@ function State(component) {
 
 State.prototype = {
   ___reset: function () {
-    var self = this;
-
-    self.___dirty = false;
-    self.___old = null;
-    self.___changes = null;
-    self.___forced = null;
+    this.___dirty = false;
+    this.___old = null;
+    this.___changes = null;
+    this.___forced = null;
   },
 
   ___replace: function (newState) {
-    var state = this;
     var key;
-
     var rawState = this.___raw;
 
     for (key in rawState) {
       if (!(key in newState)) {
-        state.___set(
+        this.___set(
           key,
           undefined,
           false /* ensure:false */,
@@ -54,7 +50,7 @@ State.prototype = {
     }
 
     for (key in newState) {
-      state.___set(
+      this.___set(
         key,
         newState[key],
         true /* ensure:true */,

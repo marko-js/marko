@@ -1,14 +1,15 @@
 import {
-  type Scope,
   closure,
   conditionalOnlyChild,
   createRenderer,
   createTemplate,
   data,
   inConditionalScope,
-  value,
   intersections,
+  type Scope,
+  value,
 } from "@marko/runtime-tags/dom";
+
 import { get, next, over } from "../../utils/walks";
 import type { steps } from "./test";
 

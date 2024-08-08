@@ -1,5 +1,6 @@
 import type { JSDOM } from "jsdom";
 import format, { plugins } from "pretty-format";
+
 import { getNodePath } from "./get-node-info";
 import { stripInlineRuntime } from "./strip-inline-runtime";
 

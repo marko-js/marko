@@ -1,5 +1,6 @@
 import { assertNoArgs, type Tag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import attrsToObject from "../util/attrs-to-object";
 import { isOutputHTML } from "../util/marko-config";
 import {

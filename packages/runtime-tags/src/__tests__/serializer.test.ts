@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { inspect } from "node:util";
-import { Serializer, register, stringify } from "../html/serializer";
+
+import { register, Serializer, stringify } from "../html/serializer";
 import type { Boundary } from "../html/writer";
 
 describe("serializer", () => {
@@ -1367,7 +1368,6 @@ async function consumeIterator(iter: AsyncIterator<unknown>) {
   let errored: unknown = undefined;
   let returned: unknown = undefined;
 
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     try {
       const next = await iter.next();
@@ -1390,7 +1390,6 @@ async function consumeReader(reader: ReadableStreamDefaultReader) {
   let errored: unknown = undefined;
   let returned: unknown = undefined;
 
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     try {
       const next = await reader.read();

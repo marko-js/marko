@@ -1,12 +1,13 @@
-import fs from "fs";
-import path from "path";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
 import type { Input, Template } from "@marko/runtime-tags/common/types";
 import { stripInlineRuntime } from "@marko/translator-tags/src/__tests__/utils/strip-inline-runtime";
+import fs from "fs";
 import type { DOMWindow } from "jsdom";
 import snap from "mocha-snap";
+import path from "path";
 import glob from "tiny-glob";
+
 import createBrowser from "../../../translator-tags/src/__tests__/utils/create-browser";
 import { isWait } from "../../../translator-tags/src/__tests__/utils/resolve";
 import createMutationTracker from "../../../translator-tags/src/__tests__/utils/track-mutations";
@@ -70,7 +71,6 @@ describe("translator-interop", () => {
       const config: TestConfig = (() => {
         try {
           return require(resolve("test.ts"));
-          // eslint-disable-next-line no-empty
         } catch {
           return {};
         }

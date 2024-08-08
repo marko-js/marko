@@ -28,7 +28,7 @@ const KNOWN_SYMBOLS = (() => {
 
   return KNOWN_SYMBOLS;
 })();
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 const KNOWN_FUNCTIONS = new Map<Function, string>([
   // This is by no means an exhaustive list,
   // but it should cover most of the built-in functions.
@@ -521,7 +521,7 @@ function writeBigInt(state: State, val: bigint) {
 
 function writeFunction(
   state: State,
-  // eslint-disable-next-line @typescript-eslint/ban-types
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
   val: Function,
   parent: Reference | null,
   accessor: string,
@@ -1053,7 +1053,7 @@ function writeReadableStream(
 function writeGenerator(state: State, iter: Generator, ref: Reference) {
   let sep = "";
   state.buf.push("(function*(){");
-  // eslint-disable-next-line no-constant-condition
+
   while (true) {
     const { value, done } = iter.next();
     if (done) {

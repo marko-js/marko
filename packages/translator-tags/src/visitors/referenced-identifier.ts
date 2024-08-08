@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+
 import { getExprRoot } from "../util/get-root";
 import { isOutputHTML } from "../util/marko-config";
 import { importRuntime } from "../util/runtime";

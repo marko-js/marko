@@ -1,13 +1,13 @@
-import fs from "fs";
-import path from "path";
-import zlib from "zlib";
 import * as compiler from "@marko/compiler";
 import pluginTerser from "@rollup/plugin-terser";
 import pluginVirtual from "@rollup/plugin-virtual";
+import fs from "fs";
 import kleur from "kleur";
+import path from "path";
 import { format } from "prettier";
 import { type OutputChunk, rollup } from "rollup";
 import { table } from "table";
+import zlib from "zlib";
 
 const compiledOutputDir = path.join(process.cwd(), ".sizes");
 

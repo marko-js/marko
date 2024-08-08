@@ -5,6 +5,7 @@ import {
   type Tag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
 import { getSection } from "../util/sections";

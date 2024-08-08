@@ -1,6 +1,7 @@
 import { importDefault, normalizeTemplateString } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import attrHelper from "marko/src/runtime/html/helpers/attr";
+
 import { evaluateAttr } from "../util";
 
 export default function (path, attrs) {

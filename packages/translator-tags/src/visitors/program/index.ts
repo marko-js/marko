@@ -1,6 +1,7 @@
-import path from "path";
 import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import path from "path";
+
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import entryBuilder from "../../util/entry-builder";
 import {
@@ -9,10 +10,10 @@ import {
   isOutputHTML,
 } from "../../util/marko-config";
 import {
+  type Binding,
   BindingType,
   finalizeReferences,
   trackParamsReferences,
-  type Binding,
 } from "../../util/references";
 import { startSection } from "../../util/sections";
 import programDOM from "./dom";

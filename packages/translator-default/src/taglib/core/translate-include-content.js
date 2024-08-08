@@ -1,6 +1,6 @@
-import path from "path";
 import { assertNoAttributes, assertNoParams } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import path from "path";
 
 export function enter(tag) {
   const {

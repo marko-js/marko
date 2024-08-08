@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+
 import { isOutputDOM } from "../util/marko-config";
 import { getSection } from "../util/sections";
 import { currentProgramPath } from "./program";

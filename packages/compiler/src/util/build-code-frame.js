@@ -1,6 +1,7 @@
-import path from "path";
 import { codeFrameColumns } from "@babel/code-frame";
 import color from "kleur";
+import path from "path";
+
 import { stripAnsi } from "./strip-ansi";
 const CWD = process.cwd();
 const indent = "    ";

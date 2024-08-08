@@ -1,10 +1,11 @@
 import {
-  type Tag,
+  assertNoArgs,
   assertNoParams,
   assertNoVar,
-  assertNoArgs,
+  type Tag,
 } from "@marko/babel-utils";
 import type { types as t } from "@marko/compiler";
+
 import { analyze, translate } from "./if";
 
 export default {

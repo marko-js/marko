@@ -1,4 +1,4 @@
-import type { types as t, Config } from "@marko/compiler";
+import type { Config, types as t } from "@marko/compiler";
 
 export interface AttributeDefinition {
   allowExpressions: boolean;

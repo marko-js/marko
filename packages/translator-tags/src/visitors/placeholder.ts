@@ -1,14 +1,15 @@
 import { isNativeTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
+
 import evaluate from "../util/evaluate";
 import { isStatefulReferences } from "../util/is-stateful";
 import { isOutputHTML } from "../util/marko-config";
 import {
+  type Binding,
   BindingType,
   createBinding,
   getScopeAccessorLiteral,
-  type Binding,
 } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import {

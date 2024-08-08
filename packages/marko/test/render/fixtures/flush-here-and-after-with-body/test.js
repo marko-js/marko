@@ -2,4 +2,4 @@ exports.templateData = {
   wait: (timeout) => new Promise((resolve) => setTimeout(resolve, timeout)),
 };
 
-exports["fails_html ≅ vdom"] = true;
+exports.skip_vdom = true;

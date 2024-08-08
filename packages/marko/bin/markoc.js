@@ -1,7 +1,5 @@
 // TODO: Should deprecate and move into marko/cli
 
-/* eslint-disable no-console */
-
 var fs = require("fs");
 var nodePath = require("path");
 var cwd = process.cwd();

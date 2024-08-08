@@ -1,5 +1,5 @@
-import path from "path";
 import { types as t } from "@marko/compiler";
+import path from "path";
 import { relativeImportPath } from "relative-import-path";
 
 const IMPORTS_KEY = Symbol();

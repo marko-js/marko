@@ -28,9 +28,9 @@
     "build": "babel ./src --out-dir ./dist --copy-files --config-file ../../babel.config.js --env-name=production"
   },
   "dependencies": {
-    "@babel/runtime": "^7.24.1",
+    "@babel/runtime": "^7.25.0",
     "@marko/babel-utils": "^6.5.1",
-    "magic-string": "^0.30.8",
+    "magic-string": "^0.30.11",
     "self-closing-tags": "^1.0.1"
   },
   "devDependencies": {

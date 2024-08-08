@@ -1,5 +1,5 @@
 import { classValue, isVoid, styleValue } from "../common/helpers";
-import { AccessorChar, type Accessor } from "../common/types";
+import { type Accessor, AccessorChar } from "../common/types";
 import { ensureScopeWithId } from "./writer";
 
 export function classAttr(val: unknown) {
