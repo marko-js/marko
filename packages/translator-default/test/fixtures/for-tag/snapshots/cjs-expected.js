@@ -7,7 +7,7 @@ var _escapeXml = require("marko/src/runtime/html/helpers/escape-xml.js");
 var _ofFallback = _interopRequireDefault(require("marko/src/runtime/helpers/of-fallback.js"));
 var _dataMarko = _interopRequireDefault(require("marko/src/runtime/html/helpers/data-marko.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 const _marko_componentType = "packages/translator-default/test/fixtures/for-tag/template.marko",
   _marko_template = (0, _index.t)(_marko_componentType);
 var _default = exports.default = _marko_template;
