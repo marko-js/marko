@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, data as _data, queueSource as _queueSource, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/2");
 const _onClick = _scope => {
   const {

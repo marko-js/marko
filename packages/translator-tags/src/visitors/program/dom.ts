@@ -11,6 +11,7 @@ import {
   getClosures,
   getResumeRegisterId,
   initValue,
+  replaceAssignments,
   writeSignals,
 } from "../../util/signals";
 import { visit } from "../../util/walks";
@@ -32,6 +33,8 @@ export default {
         paramsBinding && bindingHasDownstreamExpressions(paramsBinding)
           ? initValue(paramsBinding)
           : undefined;
+
+      replaceAssignments();
 
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {

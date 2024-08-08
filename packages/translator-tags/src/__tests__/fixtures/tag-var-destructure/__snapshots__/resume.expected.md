@@ -19,7 +19,7 @@
       <pre>
         c  {c:4}  
         <!---->
-        0
+        {}
         <!--M_*0 #text/3-->
       </pre>
       <pre>
@@ -72,7 +72,7 @@ container?.querySelector("button").click()
       <pre>
         c  {c:4}  
         <!---->
-        7
+        {"c":4}
         <!--M_*0 #text/3-->
       </pre>
       <pre>
@@ -100,7 +100,7 @@ container?.querySelector("button").click()
 ```
 #document/html0/body1/button0/pre0/#text2: "0" => "1"
 #document/html0/body1/button0/pre1/#text2: "0" => "2"
-#document/html0/body1/button0/pre2/#text2: "0" => "7"
+#document/html0/body1/button0/pre2/#text2: "{}" => "{\"c\":4}"
 #document/html0/body1/button0/pre3/#text2: "0" => "7"
 #document/html0/body1/button0/pre4/#text2: "[]" => "[9]"
 ```

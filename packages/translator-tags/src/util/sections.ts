@@ -35,6 +35,12 @@ declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     section?: Section;
     sections?: Section[];
+    assignments?: [
+      valueSection: Section,
+      assignment:
+        | t.NodePath<t.UpdateExpression>
+        | t.NodePath<t.AssignmentExpression>,
+    ][];
   }
 
   export interface MarkoTagBodyExtra {

@@ -8,7 +8,7 @@
     b    2    0
   </pre>
   <pre>
-    c  {c:4}  0
+    c  {c:4}  {}
   </pre>
   <pre>
     d    7    0
@@ -32,7 +32,7 @@ container?.querySelector("button").click()
     b    2    2
   </pre>
   <pre>
-    c  {c:4}  7
+    c  {c:4}  {"c":4}
   </pre>
   <pre>
     d    7    7

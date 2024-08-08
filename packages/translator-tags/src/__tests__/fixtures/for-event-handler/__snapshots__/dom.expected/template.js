@@ -1,4 +1,4 @@
-import { on as _on, queueSource as _queueSource, data as _data, createRenderer as _createRenderer, value as _value, register as _register, queueEffect as _queueEffect, closure as _closure, registerRenderer as _registerRenderer, loopTo as _loopTo, inLoopScope as _inLoopScope, intersections as _intersections, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, data as _data, queueSource as _queueSource, createRenderer as _createRenderer, value as _value, register as _register, queueEffect as _queueEffect, closure as _closure, registerRenderer as _registerRenderer, loopTo as _loopTo, inLoopScope as _inLoopScope, intersections as _intersections, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _i$forBody = /* @__PURE__ */_value("i", (_scope, i) => _data(_scope["#text/1"], i));
 const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _i$forBody(_scope, _params_2[0]));
 const _onClick = _scope => {

@@ -1,6 +1,6 @@
-import { queueSource as _queueSource, register as _register, data as _data, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import _classCounter from "./components/class-counter.marko";
 import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
+import { register as _register, data as _data, queueSource as _queueSource, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 _register("packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko", _classCounter);
 const _onCount = _register("packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/onCount", _scope => function (newCount) {
   _queueSource(_scope, _count, newCount);

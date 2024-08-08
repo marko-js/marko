@@ -47,6 +47,7 @@ declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     referencedBindings?: ReferencedBindings;
     binding?: Binding;
+    source?: Binding;
     isEffect?: true;
   }
 
@@ -186,6 +187,15 @@ export function trackReferencesForBinding(
      * We need this so we can handle `+=` and friends
      */
     const node = referencePath.node;
+
+    if (t.isAssignmentExpression(node)) {
+      assignBinding(node.left, binding);
+    }
+
+    if (t.isUpdateExpression(node)) {
+      assignBinding(node.argument, binding);
+    }
+
     if (
       t.isAssignmentExpression(node) &&
       t.isIdentifier(node.left) &&
@@ -206,6 +216,37 @@ export function trackReferencesForBinding(
         changeBinding,
       );
     }
+  }
+}
+
+function assignBinding(
+  node: t.LVal | t.ObjectProperty | t.ObjectProperty["value"],
+  binding: Binding,
+) {
+  switch (node.type) {
+    case "ObjectPattern":
+      for (const prop of node.properties) {
+        assignBinding(prop, binding);
+      }
+      break;
+    case "ArrayPattern":
+      for (const element of node.elements) {
+        if (element !== null) {
+          assignBinding(element, binding);
+        }
+      }
+      break;
+    case "RestElement":
+      assignBinding(node.argument, binding);
+      break;
+    case "ObjectProperty":
+      assignBinding(node.value, binding);
+      break;
+    case "Identifier":
+      if (node.name === binding.name) {
+        (node.extra ??= {}).source = binding;
+      }
+      break;
   }
 }
 

@@ -15,7 +15,6 @@ import {
   trackVarReferences,
   type Binding,
 } from "../util/references";
-import { registerAssignmentGenerator } from "../util/replace-assignments";
 import { callRuntime } from "../util/runtime";
 import { createScopeReadExpression } from "../util/scope-read";
 import { getSection } from "../util/sections";
@@ -207,17 +206,9 @@ export default {
           });
         }
 
-        registerAssignmentGenerator(
-          tag.scope.getBinding(binding.name)!,
-          (assignment, value) => {
-            return queueSource(
-              signal,
-              value,
-              getSection(assignment),
-              valueChangeBinding,
-            );
-          },
-        );
+        signal.buildAssignment = (valueSection, value) => {
+          return queueSource(signal, value, valueSection, valueChangeBinding);
+        };
       } else {
         translateVar(tag, valueAttr.value);
         if (valueChangeBinding) {
