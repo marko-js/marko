@@ -81,7 +81,7 @@ export default {
         if (attr.isMarkoAttribute()) {
           if (attr.node.arguments) {
             throw attr.buildCodeFrameError(
-              `Unsupported arguments on the "${attr.node.name}" attribute.`,
+              `Unsupported arguments on the \`${attr.node.name}\` attribute.`,
             );
           }
 
@@ -90,7 +90,7 @@ export default {
               attr.node.name += `:${attr.node.modifier}`;
             } else {
               throw attr.buildCodeFrameError(
-                `Unsupported modifier "${attr.node.modifier}".`,
+                `Unsupported modifier \`${attr.node.modifier}\`.`,
               );
             }
           }

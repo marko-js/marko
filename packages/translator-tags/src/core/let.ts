@@ -1,6 +1,11 @@
-import { type Tag, assertNoParams, computeNode } from "@marko/babel-utils";
+import {
+  type Tag,
+  assertNoParams,
+  computeNode,
+  assertNoArgs,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import { assertNoBodyContent } from "../util/assert";
+import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { getMarkoOpts, isOutputDOM } from "../util/marko-config";
 import { size } from "../util/optional";
 import {
@@ -29,26 +34,48 @@ export default {
     const { node } = tag;
     const tagVar = node.var;
     const { optimize } = getMarkoOpts();
-    const valueAttr = node.attributes.find(
-      (attr) => t.isMarkoAttribute(attr) && attr.name === "value",
-    );
-    const valueChangeAttr = node.attributes.find(
-      (attr) => t.isMarkoAttribute(attr) && attr.name === "valueChange",
-    );
+    let valueAttr: t.MarkoAttribute | undefined;
+    let valueChangeAttr: t.MarkoAttribute | undefined;
+    for (const attr of node.attributes) {
+      if (t.isMarkoAttribute(attr)) {
+        if (attr.name === "value") {
+          valueAttr = attr;
+        } else if (attr.name === "valueChange") {
+          valueChangeAttr = attr;
+        } else {
+          const start = attr.loc?.start;
+          const end = attr.loc?.end;
+          const msg =
+            "The `let` tag only supports the `value` attribute and its change handler.";
 
+          if (start == null || end == null) {
+            throw tag.get("name").buildCodeFrameError(msg);
+          } else {
+            throw tag.hub.buildError(
+              { loc: { start, end } } as unknown as t.Node,
+              msg,
+              Error,
+            );
+          }
+        }
+      }
+    }
+
+    assertNoArgs(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
+    assertNoSpreadAttrs(tag);
 
     if (!tagVar) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The 'let' tag requires a tag variable.");
+        .buildCodeFrameError("The `let` tag requires a tag variable.");
     }
 
     if (!t.isIdentifier(tagVar)) {
       throw tag
         .get("var")
-        .buildCodeFrameError("The 'let' cannot be destructured.");
+        .buildCodeFrameError("The `let` cannot be destructured.");
     }
 
     if (valueChangeAttr && computeNode(valueChangeAttr.value)) {

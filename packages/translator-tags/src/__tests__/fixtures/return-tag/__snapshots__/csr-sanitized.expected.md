@@ -1,4 +1,0 @@
-# Render {"show":true}
-```html
-
-```

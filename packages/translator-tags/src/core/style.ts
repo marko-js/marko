@@ -28,7 +28,7 @@ export default {
 
     if (typeAttr && classAttr) {
       throw classAttr.buildCodeFrameError(
-        `<style> must only use "type" or "class" and not both.`,
+        "The `style` tag must only use `type` or `class` and not both.",
       );
     } else if (typeAttr) {
       const typeValue = typeAttr.get("value");
@@ -36,7 +36,7 @@ export default {
         type = typeValue.node.value;
       } else {
         throw typeValue.buildCodeFrameError(
-          `<style> "type" attribute can only be a string literal.`,
+          "The `style` tag `type` attribute can only be a string literal.",
         );
       }
     } else if (classAttr) {
@@ -45,7 +45,7 @@ export default {
         type = classValue.node.value;
       } else {
         throw classValue.buildCodeFrameError(
-          `<style> "class" attribute can only be a string literal.`,
+          "The `style` tag `class` attribute can only be a string literal.",
         );
       }
     }
@@ -63,7 +63,7 @@ export default {
 
     if (body.length !== 1 || !markoText.isMarkoText()) {
       throw (markoText.isMarkoText() ? body[1] : body[0]).buildCodeFrameError(
-        "The '<style>' tag currently only supports static content.",
+        "The `style` tag currently only supports static content.",
       );
     }
 

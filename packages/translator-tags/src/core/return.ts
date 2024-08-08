@@ -1,4 +1,9 @@
-import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
+import {
+  type Tag,
+  assertNoParams,
+  assertNoVar,
+  assertNoArgs,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
@@ -13,14 +18,26 @@ const [returnId, _setReturnId] = createSectionState<t.Identifier | undefined>(
 );
 export { returnId };
 
+const usedTag = new WeakSet<t.Hub>();
+
 export default {
   translate(tag) {
+    assertNoArgs(tag);
     assertNoVar(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
     assertNoSpreadAttrs(tag);
 
     const section = getSection(tag);
+
+    if (usedTag.has(tag.hub)) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError(
+          "The `return` tag can only be used once per template.",
+        );
+    }
+    usedTag.add(tag.hub);
 
     const {
       node,
@@ -31,15 +48,16 @@ export default {
     if (!t.isMarkoAttribute(valueAttr) || !valueAttr.default) {
       throw tag
         .get("name")
-        .buildCodeFrameError(
-          `The '<return>' tag requires default attribute like '<return=VALUE>'.`,
-        );
+        .buildCodeFrameError("The `return` tag requires a value.");
     }
 
-    if (node.attributes.length > 1) {
+    if (
+      node.attributes.length > 1 &&
+      (node.attributes[1] as t.MarkoAttribute).name !== "valueChange"
+    ) {
       const start = node.attributes[1].loc?.start;
       const end = node.attributes[node.attributes.length - 1].loc?.end;
-      const msg = `The '<return>' tag only supports a default attribute.`;
+      const msg = "The `return` tag only supports the `value` attribute.";
 
       if (start == null || end == null) {
         throw tag.get("name").buildCodeFrameError(msg);
