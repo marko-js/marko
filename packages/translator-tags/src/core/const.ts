@@ -49,20 +49,6 @@ export default {
       upstreamAlias,
       (valueAttr.value.extra ??= {}),
     );
-
-    for (const identifier of Object.values(
-      tag.get("var").getBindingIdentifiers(),
-    )) {
-      const binding = tag.scope.getBinding(identifier.name);
-      if (binding) {
-        const violations = binding?.constantViolations;
-        if (violations && violations.length > 0) {
-          throw violations[0].buildCodeFrameError(
-            "Cannot assign to a 'const' tag variable.",
-          );
-        }
-      }
-    }
   },
   translate(tag) {
     const { node } = tag;
