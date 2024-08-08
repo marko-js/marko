@@ -1,5 +1,5 @@
 # Write
-  <button>+</button><!M*0 #button/0><span>0<!M*0 #text/1> was <!>&zwj;<!M*0 #text/2></span><script>(M$h=[]).push(_=>(_.a={0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/assignment-before-tag-var/template.marko_0_clickCount",])</script>
+  <button>+</button><!--M_*0 #button/0--><span>0<!--M_*0 #text/1--> was <!>&zwj;<!--M_*0 #text/2--></span><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.a={0:{clickCount:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/assignment-before-tag-var/template.marko_0_clickCount"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -10,17 +10,17 @@
     <button>
       +
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <span>
       0
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
        was 
       <!---->
       ‍
-      <!--M*0 #text/2-->
+      <!--M_*0 #text/2-->
     </span>
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/assignment-before-tag-var/template.marko_0_clickCount",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{clickCount:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/assignment-before-tag-var/template.marko_0_clickCount"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
