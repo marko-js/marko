@@ -29,12 +29,6 @@ export type Section = {
   startNodeContentType: ContentType;
   endNodeContentType: ContentType;
   upstreamExpression: t.NodeExtra | undefined;
-  assignments?: [
-    valueSection: Section,
-    assignment:
-      | t.NodePath<t.UpdateExpression>
-      | t.NodePath<t.AssignmentExpression>,
-  ][];
 };
 
 declare module "@marko/compiler/dist/types" {
