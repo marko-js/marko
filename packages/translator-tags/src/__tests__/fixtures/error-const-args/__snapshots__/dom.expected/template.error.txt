@@ -1,0 +1,5 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-const-args/template.marko:1:8
+    > 1 | <const(y)/x=1/>
+        |        ^ Tag does not support arguments.
+      2 |

@@ -1,5 +1,20 @@
 # Change Log
 
+## 5.35.7
+
+### Patch Changes
+
+- [#2264](https://github.com/marko-js/marko/pull/2264) [`992753e`](https://github.com/marko-js/marko/commit/992753e695e054d2789cdc1b439da5065468cb3a) Thanks [@LuLaValva](https://github.com/LuLaValva)! - For-of loop code coverage improvement
+
+- Updated dependencies [[`992753e`](https://github.com/marko-js/marko/commit/992753e695e054d2789cdc1b439da5065468cb3a)]:
+  - @marko/translator-default@6.0.6
+
+## 5.35.6
+
+### Patch Changes
+
+- [#2261](https://github.com/marko-js/marko/pull/2261) [`daa22a8`](https://github.com/marko-js/marko/commit/daa22a88d96cf4a943cf9fd81126aca4ae5a91bc) Thanks [@vwong](https://github.com/vwong)! - Add popover attribute to typings
+
 ## 5.35.5
 
 ### Patch Changes

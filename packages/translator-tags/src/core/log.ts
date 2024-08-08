@@ -1,4 +1,9 @@
-import { assertNoParams, type Tag } from "@marko/babel-utils";
+import {
+  assertNoArgs,
+  assertNoParams,
+  assertNoVar,
+  type Tag,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
@@ -8,13 +13,15 @@ import { addStatement } from "../util/signals";
 export default {
   analyze(tag) {
     const [valueAttr] = tag.node.attributes;
+    assertNoArgs(tag);
+    assertNoVar(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
 
     if (!valueAttr) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The 'log' tag requires a 'value' attribute.");
+        .buildCodeFrameError("The `log` tag requires a value.");
     }
 
     if (
@@ -25,7 +32,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The 'log' tag only supports the 'value' attribute.",
+          "The `log` tag only supports the `value` attribute.",
         );
     }
   },

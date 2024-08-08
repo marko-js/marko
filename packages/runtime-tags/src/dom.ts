@@ -30,11 +30,11 @@ export {
   registerRenderer,
   registerBoundSignal,
   registerSubscriber,
-  scopeLookup,
 } from "./dom/resume";
 
 export {
   queueSource,
+  queueControllableSource,
   queueEffect,
   run,
   prepare,
@@ -56,6 +56,7 @@ export { createTemplate } from "./dom/template";
 export {
   value,
   initValue,
+  changeHandler,
   intersection,
   closure,
   dynamicClosure,

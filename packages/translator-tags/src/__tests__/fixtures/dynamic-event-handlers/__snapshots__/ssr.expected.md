@@ -1,5 +1,5 @@
 # Write
-  <button>0<!M*0 #text/1></button><!M*0 #button/0><script>(M$h=[]).push(_=>(_.a={0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount",])</script>
+  <button>0<!--M_*0 #text/1--></button><!--M_*0 #button/0--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.a={0:{clickCount:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -9,11 +9,11 @@
   <body>
     <button>
       0
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{clickCount:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{clickCount:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

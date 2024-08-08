@@ -3,17 +3,17 @@
 <html>
   <head />
   <body>
-    <!--M[1-->
+    <!--M_[1-->
     <span
       class="A"
     >
       body content
     </span>
-    <!--M]0 #text/0-->
+    <!--M_]0 #text/0-->
     <button />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{tagName:"span",className:"A","#text/0!":_.a={},"#text/0(":"span"},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{tagName:"span",className:"A","#text/0!":_.a={},"#text/0(":"span"},1:_.a})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -38,11 +38,11 @@ container.querySelector("button").click()
     >
       body content
     </div>
-    <!--M]0 #text/0-->
+    <!--M_]0 #text/0-->
     <button />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{tagName:"span",className:"A","#text/0!":_.a={},"#text/0(":"span"},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{tagName:"span",className:"A","#text/0!":_.a={},"#text/0(":"span"},1:_.a})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -70,11 +70,11 @@ container.querySelector("button").click()
     >
       body content
     </span>
-    <!--M]0 #text/0-->
+    <!--M_]0 #text/0-->
     <button />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{tagName:"span",className:"A","#text/0!":_.a={},"#text/0(":"span"},1:_.a}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{tagName:"span",className:"A","#text/0!":_.a={},"#text/0(":"span"},1:_.a})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

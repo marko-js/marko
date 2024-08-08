@@ -1,5 +1,5 @@
 # Write
-  <!>{"identifier":true,"tag var":true,"static var":true}<!M*0 #text/0><script>(M$h=[]).push(_=>(null),[0,"packages/translator-tags/src/__tests__/fixtures/log-tag/template.marko_0",])</script>
+  <!>{"identifier":true,"tag var":true,"static var":true}<!--M_*0 #text/0--><script>WALKER_RUNTIME("M")("_");M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/log-tag/template.marko_0"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -9,9 +9,9 @@
   <head />
   <body>
     {"identifier":true,"tag var":true,"static var":true}
-    <!--M*0 #text/0-->
+    <!--M_*0 #text/0-->
     <script>
-      (M$h=[]).push(_=&gt;(null),[0,"packages/translator-tags/src/__tests__/fixtures/log-tag/template.marko_0",])
+      WALKER_RUNTIME("M")("_");M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/log-tag/template.marko_0"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

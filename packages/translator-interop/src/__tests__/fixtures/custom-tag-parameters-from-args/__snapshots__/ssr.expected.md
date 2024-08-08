@@ -1,5 +1,5 @@
 # Write
-  <button class=inc>1<!M*0 #text/1>,<!>10<!M*0 #text/2></button><!M*0 #button/0><!M[1><div>Counts: 1,10</div><!M]0 #text/3><script>(M$h=[]).push(_=>(_.b={0:{x:1,y:10,"#text/3!":_.a={}},1:_.a}),[0,"packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y",])</script>
+  <button class=inc>1<!--M_*0 #text/1-->,<!>10<!--M_*0 #text/2--></button><!--M_*0 #button/0--><!--M_[1--><div>Counts: 1,10</div><!--M_]0 #text/3--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.b={0:{x:1,y:10,"#text/3!":_.a={}},1:_.a})];M._.e=[0,"packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -11,20 +11,20 @@
       class="inc"
     >
       1
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
       ,
       <!---->
       10
-      <!--M*0 #text/2-->
+      <!--M_*0 #text/2-->
     </button>
-    <!--M*0 #button/0-->
-    <!--M[1-->
+    <!--M_*0 #button/0-->
+    <!--M_[1-->
     <div>
       Counts: 1,10
     </div>
-    <!--M]0 #text/3-->
+    <!--M_]0 #text/3-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{x:1,y:10,"#text/3!":_.a={}},1:_.a}),[0,"packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{x:1,y:10,"#text/3!":_.a={}},1:_.a})];M._.e=[0,"packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 # Write
-  <button>1<!M*0 #text/1></button><!M*0 #button/0>2<!M*0 #text/2> <!>3<!M*0 #text/3> <!>5<!M*0 #text/4><script>(M$h=[]).push(_=>(_.a={0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x",])</script>
+  <button>1<!--M_*0 #text/1--></button><!--M_*0 #button/0-->2<!--M_*0 #text/2--> <!>3<!--M_*0 #text/3--> <!>5<!--M_*0 #text/4--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.a={0:{x:1}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -9,21 +9,21 @@
   <body>
     <button>
       1
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     2
-    <!--M*0 #text/2-->
+    <!--M_*0 #text/2-->
      
     <!---->
     3
-    <!--M*0 #text/3-->
+    <!--M_*0 #text/3-->
      
     <!---->
     5
-    <!--M*0 #text/4-->
+    <!--M_*0 #text/4-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{x:1}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

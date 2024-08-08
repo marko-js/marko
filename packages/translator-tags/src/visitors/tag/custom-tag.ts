@@ -431,9 +431,9 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
     throw tag
       .get("name")
       .buildCodeFrameError(
-        `Unable to find entry point for custom tag <${
+        `Unable to find entry point for custom tag \`${
           nameIsString ? (node.name as t.StringLiteral).value : node.name
-        }>.`,
+        }\`.`,
       );
   }
 

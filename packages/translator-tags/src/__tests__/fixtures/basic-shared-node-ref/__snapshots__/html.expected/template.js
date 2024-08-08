@@ -1,4 +1,4 @@
-import { attr as _attr, write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, maybeFlush as _maybeFlush, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { attr as _attr, write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const open = true;
@@ -17,7 +17,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _write(`<li>${_escapeXML(x)}${_markResumeNode(_scope1_id, "#text/0")}</li>`);
     _writeScope(_scope1_id, {});
     _scope1_.set(_by(x, _i), _getScopeById(_scope1_id));
-    _maybeFlush();
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#ul/0", _forScopeIds)}</ul>${_markResumeNode(_scope0_id, "#ul/0")}<button id=toggle>Toggle</button>${_markResumeNode(_scope0_id, "#button/1")}<button id=reverse>Reverse</button>${_markResumeNode(_scope0_id, "#button/2")}`);
   _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list");

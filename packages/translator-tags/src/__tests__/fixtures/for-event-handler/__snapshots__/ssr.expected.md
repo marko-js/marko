@@ -1,5 +1,5 @@
 # Write
-  <button>0<!M*1 #text/1></button><!M*1 #button/0><!M|0 #text/0 1><script>(M$h=[]).push(_=>(_.d={0:_.b={num:0,"#text/0(":new Map(_.a=[[0,_.c={}]])},1:_.c},_.c._=_.b,_.d),[1,"packages/translator-tags/src/__tests__/fixtures/for-event-handler/template.marko_1_num",])</script>
+  <button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0--><!--M_|0 #text/0 1--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.d={0:_.b={num:0,"#text/0(":new Map(_.a=[[0,_.c={}]])},1:_.c},_.c._=_.b,_.d)];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/for-event-handler/template.marko_1_num"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -9,12 +9,12 @@
   <body>
     <button>
       0
-      <!--M*1 #text/1-->
+      <!--M_*1 #text/1-->
     </button>
-    <!--M*1 #button/0-->
-    <!--M|0 #text/0 1-->
+    <!--M_*1 #button/0-->
+    <!--M_|0 #text/0 1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.d={0:_.b={num:0,"#text/0(":new Map(_.a=[[0,_.c={}]])},1:_.c},_.c._=_.b,_.d),[1,"packages/translator-tags/src/__tests__/fixtures/for-event-handler/template.marko_1_num",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.d={0:_.b={num:0,"#text/0(":new Map(_.a=[[0,_.c={}]])},1:_.c},_.c._=_.b,_.d)];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/for-event-handler/template.marko_1_num"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

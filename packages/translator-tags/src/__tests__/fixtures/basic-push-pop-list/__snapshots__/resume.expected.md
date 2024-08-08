@@ -4,22 +4,22 @@
   <head />
   <body>
     <div>
-      <!--M|0 #text/0 -->
+      <!--M_|0 #text/0 -->
       <button
         id="add"
       >
         Add
       </button>
-      <!--M*0 #button/1-->
+      <!--M_*0 #button/1-->
       <button
         id="remove"
       >
         Remove
       </button>
-      <!--M*0 #button/2-->
+      <!--M_*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{id:0,items:[]}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{id:0,items:[]}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -45,16 +45,16 @@ container.querySelector("#add").click()
       >
         Add
       </button>
-      <!--M*0 #button/1-->
+      <!--M_*0 #button/1-->
       <button
         id="remove"
       >
         Remove
       </button>
-      <!--M*0 #button/2-->
+      <!--M_*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{id:0,items:[]}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{id:0,items:[]}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -81,16 +81,16 @@ container.querySelector("#add").click()
       >
         Add
       </button>
-      <!--M*0 #button/1-->
+      <!--M_*0 #button/1-->
       <button
         id="remove"
       >
         Remove
       </button>
-      <!--M*0 #button/2-->
+      <!--M_*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{id:0,items:[]}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{id:0,items:[]}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -116,16 +116,16 @@ container.querySelector("#remove").click()
       >
         Add
       </button>
-      <!--M*0 #button/1-->
+      <!--M_*0 #button/1-->
       <button
         id="remove"
       >
         Remove
       </button>
-      <!--M*0 #button/2-->
+      <!--M_*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{id:0,items:[]}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{id:0,items:[]}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -151,16 +151,16 @@ container.querySelector("#add").click()
       >
         Add
       </button>
-      <!--M*0 #button/1-->
+      <!--M_*0 #button/1-->
       <button
         id="remove"
       >
         Remove
       </button>
-      <!--M*0 #button/2-->
+      <!--M_*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{id:0,items:[]}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{id:0,items:[]}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

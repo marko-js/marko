@@ -6,12 +6,12 @@
     <button>
       hide
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     hi
-    <!--M*1 #text/0-->
-    <!--M|0 #text/1 1-->
+    <!--M_*1 #text/0-->
+    <!--M_|0 #text/1 1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.c={0:_.a={message:{text:"hi"},"#text/1!":_.b={}},1:_.b},_.a["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_1_renderer"](_.a),_.b._=_.a,_.c),[0,"packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_0",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.c={0:_.a={message:{text:"hi"},"#text/1!":_.b={}},1:_.b},_.a["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_1_renderer"](_.a),_.b._=_.a,_.c)];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_0"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -33,11 +33,11 @@ container.querySelector("button").click()
     <button>
       hide
     </button>
-    <!--M*0 #button/0-->
-    <!--M|0 #text/1 1-->
-    <!--M*1 #text/0-->
+    <!--M_*0 #button/0-->
+    <!--M_|0 #text/1 1-->
+    <!--M_*1 #text/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.c={0:_.a={message:{text:"hi"},"#text/1!":_.b={}},1:_.b},_.a["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_1_renderer"](_.a),_.b._=_.a,_.c),[0,"packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_0",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.c={0:_.a={message:{text:"hi"},"#text/1!":_.b={}},1:_.b},_.a["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_1_renderer"](_.a),_.b._=_.a,_.c)];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_0"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

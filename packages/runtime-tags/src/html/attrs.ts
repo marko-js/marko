@@ -85,7 +85,7 @@ function attrAssignment(val: string) {
 }
 
 const unsafeAttrChars = /["'>\s]/g;
-function escapeAttrValue(str: string) {
+export function escapeAttrValue(str: string) {
   if (unsafeAttrChars.test(str)) {
     const c = str[unsafeAttrChars.lastIndex - 1];
     unsafeAttrChars.lastIndex = 0;

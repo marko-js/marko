@@ -33,7 +33,6 @@ export enum ResumeSymbol {
   PlaceholderStart = "",
   PlaceholderEnd = "",
   ReplacementId = "",
-  VarResume = "$h",
   VarReorderRuntime = "$r",
 }
 
@@ -97,8 +96,19 @@ export enum WalkRangeSize {
 }
 
 export type Accessor = string | number;
-export type Input = Record<string, unknown>;
-export type Context = Record<string, unknown>;
+export interface $Global {
+  [x: PropertyKey]: unknown;
+  signal?: AbortSignal;
+  cspNonce?: string;
+  renderId?: string;
+  runtimeId?: string;
+}
+export interface Input {
+  [x: PropertyKey]: unknown;
+}
+export interface TemplateInput extends Input {
+  $global?: $Global;
+}
 
 export interface Template {
   _: unknown;
@@ -115,7 +125,7 @@ export interface TemplateInstance {
   destroy(): void;
 }
 
-export type RenderResult = Promise<string> &
+export type RenderResult = PromiseLike<string> &
   AsyncIterable<string> & {
     toReadable(): ReadableStream;
   };

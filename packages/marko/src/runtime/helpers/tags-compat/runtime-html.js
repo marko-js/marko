@@ -6,37 +6,28 @@ const createRenderer = require("../../components/renderer");
 const defaultCreateOut = require("../../createOut");
 const dynamicTag5 = require("../dynamic-tag");
 
-exports.p = function (tagsAPI) {
-  const {
-    patchDynamicTag,
-    createRenderFn,
-    fork,
-    write,
-    serializerRegister,
-    writeScope,
-    nextScopeId,
-    getRegistryInfo,
-  } = tagsAPI;
-  const FN_TO_JSON = function () {
-    // TODO: this should instead return an object that contains getRegistryInfo
-    // then in the dom-compat, handle that object to lookup the function in the registry
-    // (we also need to do this for events)
-    return getRegistryInfo(this);
-  };
-
+exports.p = function (htmlCompat) {
   const isMarko6 = (fn) => !!fn.___isTagsAPI;
   const isMarko5 = (fn) => !fn.___isTagsAPI;
+  const writeHTML = (result) => {
+    const state = result.out._state;
+    const writer = state.writer;
+    state.events.emit("___toString", writer);
+    htmlCompat.writeScript(writer._scripts);
+    htmlCompat.write(writer._content);
+  };
 
   dynamicTag5.___runtimeCompat = function tagsToVdom(
     tagsRenderer,
     renderBody,
     args,
   ) {
-    if (tagsRenderer ? isMarko5(tagsRenderer) : isMarko5(renderBody))
+    if (tagsRenderer ? isMarko5(tagsRenderer) : isMarko5(renderBody)) {
       return tagsRenderer;
+    }
 
     if (!tagsRenderer && renderBody) {
-      renderBody.toJSON = FN_TO_JSON;
+      renderBody.toJSON = htmlCompat.toJSON;
     }
 
     return (input, out) =>
@@ -53,29 +44,9 @@ exports.p = function (tagsAPI) {
     function (_, out, componentDef, component) {
       const input = _.i;
       const tagsRenderer = _.r;
-      const renderFn = createRenderFn(tagsRenderer);
       const willRerender = componentDef._wrr;
-      const $global = out.global;
-      const streamData = ($global.streamData = $global.streamData || {});
-
-      if (willRerender) {
-        $global.serializedGlobals = $global.serializedGlobals || {};
-        $global.serializedGlobals.componentIdToScopeId = true;
-        $global.componentIdToScopeId = $global.componentIdToScopeId || {};
-        $global.componentIdToScopeId[component.id] = streamData.scopeId || 0;
-      }
-
       out.bf(out.___assignedKey, component, willRerender);
-      renderFn(
-        out.beginAsync(),
-        input,
-        {
-          ...$global,
-          componentIdToScopeId: undefined,
-          streamData: undefined,
-        },
-        streamData,
-      );
+      htmlCompat.render(tagsRenderer, willRerender, out, component, input);
       out.ef();
     },
     // eslint-disable-next-line no-constant-condition
@@ -92,7 +63,7 @@ exports.p = function (tagsAPI) {
     {},
   );
 
-  patchDynamicTag(
+  htmlCompat.patchDynamicTag(
     function getRenderer(tag) {
       const renderer = tag._ || tag.renderBody || tag;
       if (isMarko6(renderer)) return renderer;
@@ -108,8 +79,6 @@ exports.p = function (tagsAPI) {
         const out = defaultCreateOut();
         let customEvents;
 
-        out.global.streamData = tagsAPI.getStreamData();
-
         if (renderer5) {
           const normalizedInput = {};
 
@@ -122,7 +91,7 @@ exports.p = function (tagsAPI) {
                 (c === "-" ? "" : c.toLowerCase()) + key.slice(3),
                 value,
               ]);
-              value.toJSON = FN_TO_JSON;
+              value.toJSON = htmlCompat.toJSON;
             } else {
               normalizedInput[key] = input[key];
             }
@@ -136,9 +105,7 @@ exports.p = function (tagsAPI) {
         const component = componentsContext.___components[0];
         if (component) {
           component.___component.___customEvents = customEvents;
-          writeScope(nextScopeId(), {
-            m5c: component.id,
-          });
+          htmlCompat.writeSetScopeForComponent(component.id);
         }
 
         initComponentsTag({}, out);
@@ -147,7 +114,7 @@ exports.p = function (tagsAPI) {
         out.once("finish", (result) => {
           if (!async) {
             async = false;
-            write(result.toString());
+            writeHTML(result);
           }
         });
 
@@ -155,9 +122,7 @@ exports.p = function (tagsAPI) {
 
         if (async !== false) {
           async = true;
-          fork(out, (result) => {
-            write(result.toString());
-          });
+          htmlCompat.fork(out, writeHTML);
         }
       };
     },
@@ -167,11 +132,5 @@ exports.p = function (tagsAPI) {
     },
   );
 
-  return function serialized5to6(renderer, id) {
-    return serializerRegister(
-      "@marko/tags-compat-5-to-6",
-      renderer,
-      serializerRegister(id, () => {}),
-    );
-  };
+  return htmlCompat.registerRenderer;
 };

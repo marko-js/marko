@@ -1,5 +1,5 @@
 # Write
-  <div><button>0<!M*1 #text/1></button><!M*1 #button/0><!M|0 #text/0 1></div><script>(M$h=[]).push(_=>(_.c={0:_.a={clickCount:0,"#text/0!":_.b={}},1:_.b},_.a["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer"](_.a),_.b._=_.a,_.c),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])</script>
+  <div><button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0--><!--M_|0 #text/0 1--></div><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.c={0:_.a={clickCount:0,"#text/0!":_.b={}},1:_.b},_.a["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer"](_.a),_.b._=_.a,_.c)];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -10,13 +10,13 @@
     <div>
       <button>
         0
-        <!--M*1 #text/1-->
+        <!--M_*1 #text/1-->
       </button>
-      <!--M*1 #button/0-->
-      <!--M|0 #text/0 1-->
+      <!--M_*1 #button/0-->
+      <!--M_|0 #text/0 1-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.c={0:_.a={clickCount:0,"#text/0!":_.b={}},1:_.b},_.a["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer"](_.a),_.b._=_.a,_.c),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.c={0:_.a={clickCount:0,"#text/0!":_.b={}},1:_.b},_.a["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer"](_.a),_.b._=_.a,_.c)];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

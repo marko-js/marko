@@ -1,4 +1,4 @@
-import { type Tag, assertNoParams } from "@marko/babel-utils";
+import { type Tag, assertNoParams, assertNoArgs } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
@@ -9,6 +9,7 @@ import translateVar from "../util/translate-var";
 
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
+    assertNoArgs(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
     const { node } = tag;
@@ -17,13 +18,13 @@ export default {
     if (!node.var) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The 'const' tag requires a tag variable.");
+        .buildCodeFrameError("The `const` tag requires a tag variable.");
     }
 
     if (!valueAttr) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The 'const' tag requires a default attribute.");
+        .buildCodeFrameError("The `const` tag requires a value.");
     }
 
     if (
@@ -34,7 +35,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The 'const' tag only supports the 'default' attribute.",
+          "The `const` tag only supports the `value` attribute.",
         );
     }
 

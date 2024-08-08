@@ -3,12 +3,13 @@ const _marko_componentType = "packages/translator-default/test/fixtures/for-tag/
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import { x as _marko_escapeXml } from "marko/src/runtime/html/helpers/escape-xml.js";
+import _of_fallback from "marko/src/runtime/helpers/of-fallback.js";
 import _marko_props from "marko/src/runtime/html/helpers/data-marko.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 const _marko_component = {};
 _marko_template._ = _marko_renderer(function (input, out, _componentDef, _component, state, $global) {
   let _i = 0;
-  for (const val of arr || []) {
+  for (const val of _of_fallback(arr)) {
     let i = _i++;
     const _keyScope = `[${i}]`;
     out.w("<div>");
@@ -40,7 +41,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     out.w("<div></div>");
   }
   let _i2 = 0;
-  for (const val of arr || []) {
+  for (const val of _of_fallback(arr)) {
     let i = _i2++;
     const _keyValue = `@${i}`,
       _keyScope4 = `[${_keyValue}]`;

@@ -1,8 +1,8 @@
 "use strict";
 var complain = "MARKO_DEBUG" && require("complain");
 var extend = require("raptor-util/extend");
-var w10Noop = require("warp10/constants").NOOP;
 var componentUtil = require("@internal/components-util");
+var w10NOOP = require("../helpers/serialize-noop").___noop;
 var attachBubblingEvent = componentUtil.___attachBubblingEvent;
 var addDelegatedEventHandler =
   require("./event-delegation").___addDelegatedEventHandler;
@@ -98,7 +98,7 @@ ComponentDef.___deserialize = function (o, types, global, registry) {
   var componentProps = extra.w || EMPTY_OBJECT;
   var flags = extra.f;
   var isLegacy = flags & FLAG_IS_LEGACY;
-  var renderBody = flags & FLAG_HAS_RENDER_BODY ? w10Noop : extra.r;
+  var renderBody = flags & FLAG_HAS_RENDER_BODY ? w10NOOP : extra.r;
 
   var component =
     typeName /* legacy */ &&
@@ -107,6 +107,7 @@ ComponentDef.___deserialize = function (o, types, global, registry) {
   // Prevent newly created component from being queued for update since we area
   // just building it from the server info
   component.___updateQueued = true;
+  component.___global = global;
 
   if (isLegacy) {
     component.widgetConfig = componentProps;
@@ -155,8 +156,6 @@ ComponentDef.___deserialize = function (o, types, global, registry) {
   if (customEvents) {
     component.___setCustomEvents(customEvents, scope);
   }
-
-  component.___global = global;
 
   return {
     id: id,

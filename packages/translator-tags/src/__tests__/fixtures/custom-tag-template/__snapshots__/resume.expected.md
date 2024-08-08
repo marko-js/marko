@@ -6,10 +6,10 @@
     Hello 
     <!---->
     Frank
-    <!--M*1 #text/0-->
+    <!--M_*1 #text/0-->
     !
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{"#childScope/0":{}}}),[])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{"#childScope/0":{}}})];M._.d=1
     </script>
   </body>
 </html>

@@ -8,11 +8,11 @@
     >
       paragraph
     </p>
-    <!--M*0 #p/0-->
+    <!--M_*0 #p/0-->
     <button />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{className:"A"}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{className:"A"}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -36,11 +36,11 @@ container.querySelector("button").click()
     >
       paragraph
     </p>
-    <!--M*0 #p/0-->
+    <!--M_*0 #p/0-->
     <button />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{className:"A"}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{className:"A"}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -64,11 +64,11 @@ container.querySelector("button").click()
     >
       paragraph
     </p>
-    <!--M*0 #p/0-->
+    <!--M_*0 #p/0-->
     <button />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{className:"A"}}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{className:"A"}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 # Write
-  Hello <!>Marko<!M*0 #text/0>! Hello <!>Marko<!M*0 #text/1>! Hello <!><!M*0 #text/2>!
+  Hello <!>Marko<!--M_*0 #text/0-->! Hello <!>Marko<!--M_*0 #text/1-->! Hello <!><!--M_*0 #text/2-->!<script>WALKER_RUNTIME("M")("_");M._.d=1</script>
 
 
 # Render "End"
@@ -10,15 +10,18 @@
     Hello 
     <!---->
     Marko
-    <!--M*0 #text/0-->
+    <!--M_*0 #text/0-->
     ! Hello 
     <!---->
     Marko
-    <!--M*0 #text/1-->
+    <!--M_*0 #text/1-->
     ! Hello 
     <!---->
-    <!--M*0 #text/2-->
+    <!--M_*0 #text/2-->
     !
+    <script>
+      WALKER_RUNTIME("M")("_");M._.d=1
+    </script>
   </body>
 </html>
 ```
@@ -40,4 +43,6 @@ inserted #document/html0/body1/#text8
 inserted #document/html0/body1/#comment9
 inserted #document/html0/body1/#comment10
 inserted #document/html0/body1/#text11
+inserted #document/html0/body1/script12
+inserted #document/html0/body1/script12/#text0
 ```

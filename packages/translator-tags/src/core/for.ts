@@ -52,6 +52,8 @@ declare module "@marko/compiler/dist/types" {
 
 export default {
   analyze(tag) {
+    validateFor(tag);
+
     const isOnlyChild = checkOnlyChild(tag);
     const tagExtra = (tag.node.extra ??= {});
     const tagBody = tag.get("body");
@@ -85,8 +87,6 @@ export default {
   },
   translate: {
     enter(tag) {
-      validateFor(tag);
-
       const tagBody = tag.get("body");
       const bodySection = getSection(tagBody);
       const tagExtra = tag.node.extra!;
@@ -226,12 +226,6 @@ const translateDOM = {
         fromAttr ? fromAttr.value : t.numericLiteral(0),
         stepAttr ? stepAttr.value : t.numericLiteral(1),
       );
-    } else {
-      throw tag
-        .get("name")
-        .buildCodeFrameError(
-          "Invalid <for> tag. Expected either an 'of', 'to', or 'in' attribute.",
-        );
     }
 
     const byAttr = findName(attributes, "by");
@@ -302,7 +296,6 @@ const translateHTML = {
     const nodeRef = isOnlyChild
       ? tag.parentPath.parent.extra![kNativeTagBinding]!
       : tag.node.extra![kForMarkerBinding]!;
-    const namePath = tag.get("name");
     const ofAttr = findName(attributes, "of");
     const inAttr = findName(attributes, "in");
     const toAttr = findName(attributes, "to");
@@ -361,12 +354,6 @@ const translateHTML = {
       let ofAttrValue = ofAttr.value!;
       // eslint-disable-next-line prefer-const
       let [valParam, indexParam, loopParam] = params;
-
-      if (!valParam) {
-        throw namePath.buildCodeFrameError(
-          "Invalid 'for of' tag, missing |value, index| params.",
-        );
-      }
 
       if (!t.isIdentifier(valParam) && byParams!) {
         const tempValParam =
@@ -564,8 +551,6 @@ const translateHTML = {
       );
     }
 
-    block.body.push(t.expressionStatement(callRuntime("maybeFlush")));
-
     tag.replaceWithMultiple(replacement);
   },
 };
@@ -587,21 +572,21 @@ function validateFor(tag: t.NodePath<t.MarkoTag>) {
     assertAllowedAttributes(tag, ["of", "by"]);
     if (!hasParams) {
       throw tag.buildCodeFrameError(
-        `Invalid 'for of' tag, missing |value, index| params.`,
+        "Invalid `for of` tag, missing `|value, index|` params.",
       );
     }
   } else if (findName(attrs, "in")) {
     assertAllowedAttributes(tag, ["in", "by"]);
     if (!hasParams) {
       throw tag.buildCodeFrameError(
-        `Invalid 'for in' tag, missing |key, value| params.`,
+        "Invalid `for in` tag, missing `|key, value|` params.",
       );
     }
   } else if (findName(attrs, "to")) {
     assertAllowedAttributes(tag, ["from", "to", "step", "by"]);
   } else {
     throw tag.buildCodeFrameError(
-      "Invalid 'for' tag, missing an 'of', 'in' or 'to' attribute.",
+      "Invalid `for` tag, missing an `of=`, `in=` or `to=` attribute.",
     );
   }
 }

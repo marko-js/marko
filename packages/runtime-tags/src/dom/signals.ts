@@ -38,6 +38,34 @@ export function initValue<T>(
   };
 }
 
+export function changeHandler<T>(
+  valueAccessor: Accessor,
+  fn: ValueSignal<T>,
+): ValueSignal<T> {
+  const markAccessor = valueAccessor + AccessorChar.Mark;
+  return (scope, valueOrOp) => {
+    if (valueOrOp !== MARK && valueOrOp !== CLEAN && valueOrOp !== DIRTY) {
+      if (valueOrOp != null && typeof valueOrOp !== "function") {
+        throw new Error(
+          `Invalid value ${valueOrOp} for change handler '${valueAccessor}'`,
+        );
+      } else if (scope[markAccessor] !== undefined) {
+        const prevValue = scope[valueAccessor];
+        if (prevValue && !valueOrOp) {
+          throw new Error(
+            `Change handler '${valueAccessor}' cannot change from a function to ${valueOrOp}`,
+          );
+        } else if (!prevValue && valueOrOp) {
+          throw new Error(
+            `Change handler '${valueAccessor}' cannot change from a nullish to a function`,
+          );
+        }
+      }
+    }
+    fn(scope, valueOrOp);
+  };
+}
+
 export function value<T>(
   valueAccessor: Accessor,
   fn?: SignalFn<T>,
@@ -101,7 +129,7 @@ export function intersection(
   };
 }
 
-const defaultGetOwnerScope = (scope: Scope) => scope._!;
+const defaultGetOwnerScope = (scope: Scope) => scope._ as Scope;
 
 export function closure<T>(
   ownerValueAccessor: Accessor | ((scope: Scope) => Accessor),
@@ -261,9 +289,11 @@ export const inMany = (
   }
 };
 
-let tagId = 0;
-export function nextTagId() {
-  return "c" + tagId++;
+const tagIdsByGlobal = new WeakMap<Scope["___global"], number>();
+export function nextTagId({ $global }: Scope) {
+  const id = tagIdsByGlobal.get($global) || 0;
+  tagIdsByGlobal.set($global, id + 1);
+  return "c" + $global.runtimeId + $global.renderId + id.toString(36);
 }
 
 export function inChild(childAccessor: Accessor, signal: ValueSignal) {

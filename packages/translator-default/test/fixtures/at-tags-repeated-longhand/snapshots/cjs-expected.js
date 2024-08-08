@@ -4,6 +4,7 @@ exports.__esModule = true;
 exports.default = void 0;
 var _index = require("marko/src/runtime/html/index.js");
 var _attrTag = require("marko/src/runtime/helpers/attr-tag.js");
+var _ofFallback = _interopRequireDefault(require("marko/src/runtime/helpers/of-fallback.js"));
 var _escapeXml = require("marko/src/runtime/html/helpers/escape-xml.js");
 var _index2 = _interopRequireDefault(require("./components/hello/index.marko"));
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
@@ -16,7 +17,7 @@ const _marko_component = {};
 _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
   (0, _renderTag.default)(_index2.default, (0, _attrTag.i)(() => {
     (0, _attrTag.a)("list", (0, _attrTag.i)(() => {
-      for (const color of input.colors || []) {
+      for (const color of (0, _ofFallback.default)(input.colors)) {
         if (x) {
           (0, _attrTag.r)("items", {
             "renderBody": out => {

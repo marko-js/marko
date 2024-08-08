@@ -1,0 +1,5 @@
+
+    at packages/translator-tags/src/__tests__/fixtures/error-return-spread-attr/template.marko:1:9
+    > 1 | <return ...{ value: 2 }/>
+        |         ^^^^^^^^^^^^^^^ The `return` tag does not support `...spread` attributes.
+      2 |

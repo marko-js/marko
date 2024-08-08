@@ -1,10 +1,10 @@
 # Write
-  <!M[1><div>Hello <!>Ryan<!M*1 #text/0> <!>1<!M*1 #text/1></div><button>1<!M*1 #text/3></button><!M*1 #button/2><!M]0 #text/0><script>(M$h=[]).push(_=>(_.b={0:{"#text/0!":_.a={y:1},"#text/0(":{renderBody:_._["packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_renderer"]}},1:_.a}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])</script>
+  <!--M_[1--><div>Hello <!>Ryan<!--M_*1 #text/0--> <!>1<!--M_*1 #text/1--></div><button>1<!--M_*1 #text/3--></button><!--M_*1 #button/2--><!--M_]0 #text/0--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.b={0:{"#text/0!":_.a={y:1},"#text/0(":{renderBody:_._["packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_renderer"]}},1:_.a})];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
 ```html
-<!--M[1-->
+<!--M_[1-->
 <html>
   <head />
   <body>
@@ -12,20 +12,20 @@
       Hello 
       <!---->
       Ryan
-      <!--M*1 #text/0-->
+      <!--M_*1 #text/0-->
        
       <!---->
       1
-      <!--M*1 #text/1-->
+      <!--M_*1 #text/1-->
     </div>
     <button>
       1
-      <!--M*1 #text/3-->
+      <!--M_*1 #text/3-->
     </button>
-    <!--M*1 #button/2-->
-    <!--M]0 #text/0-->
+    <!--M_*1 #button/2-->
+    <!--M_]0 #text/0-->
     <script>
-      (M$h=[]).push(_=&gt;(_.b={0:{"#text/0!":_.a={y:1},"#text/0(":{renderBody:_._["packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_renderer"]}},1:_.a}),[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{"#text/0!":_.a={y:1},"#text/0(":{renderBody:_._["packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_renderer"]}},1:_.a})];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

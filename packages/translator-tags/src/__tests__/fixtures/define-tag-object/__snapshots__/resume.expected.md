@@ -5,15 +5,15 @@
   <body>
     <div>
       {"foo":1,"bar":2}
-      <!--M*0 #text/0-->
+      <!--M_*0 #text/0-->
     </div>
     <button>
       1
-      <!--M*0 #text/2-->
+      <!--M_*0 #text/2-->
     </button>
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-object/template.marko_0_x",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{x:1}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-object/template.marko_0_x"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -34,15 +34,15 @@ container.querySelector("button").click()
   <body>
     <div>
       {"foo":1,"bar":3}
-      <!--M*0 #text/0-->
+      <!--M_*0 #text/0-->
     </div>
     <button>
       2
-      <!--M*0 #text/2-->
+      <!--M_*0 #text/2-->
     </button>
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-object/template.marko_0_x",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{x:1}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-object/template.marko_0_x"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -64,15 +64,15 @@ container.querySelector("button").click()
   <body>
     <div>
       {"foo":1,"bar":4}
-      <!--M*0 #text/0-->
+      <!--M_*0 #text/0-->
     </div>
     <button>
       3
-      <!--M*0 #text/2-->
+      <!--M_*0 #text/2-->
     </button>
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-object/template.marko_0_x",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{x:1}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-object/template.marko_0_x"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -94,15 +94,15 @@ container.querySelector("button").click()
   <body>
     <div>
       {"foo":1,"bar":5}
-      <!--M*0 #text/0-->
+      <!--M_*0 #text/0-->
     </div>
     <button>
       4
-      <!--M*0 #text/2-->
+      <!--M_*0 #text/2-->
     </button>
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-object/template.marko_0_x",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{x:1}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-object/template.marko_0_x"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

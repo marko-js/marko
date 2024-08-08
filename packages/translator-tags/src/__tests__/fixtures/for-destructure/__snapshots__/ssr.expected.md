@@ -1,5 +1,5 @@
 # Write
-  <div><div>Marko<!M*1 #text/0>: <!>HTML Reimagined<!M*1 #text/1></div><!M|0 #text/0 1><button id=add>Add</button><!M*0 #button/1><button id=remove>Remove</button><!M*0 #button/2></div><script>(M$h=[]).push(_=>(_.c={0:{items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map(_.a=[[0,_.b={}]])},1:_.b}),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])</script>
+  <div><div>Marko<!--M_*1 #text/0-->: <!>HTML Reimagined<!--M_*1 #text/1--></div><!--M_|0 #text/0 1--><button id=add>Add</button><!--M_*0 #button/1--><button id=remove>Remove</button><!--M_*0 #button/2--></div><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.c={0:{items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map(_.a=[[0,_.b={}]])},1:_.b})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -10,28 +10,28 @@
     <div>
       <div>
         Marko
-        <!--M*1 #text/0-->
+        <!--M_*1 #text/0-->
         : 
         <!---->
         HTML Reimagined
-        <!--M*1 #text/1-->
+        <!--M_*1 #text/1-->
       </div>
-      <!--M|0 #text/0 1-->
+      <!--M_|0 #text/0 1-->
       <button
         id="add"
       >
         Add
       </button>
-      <!--M*0 #button/1-->
+      <!--M_*0 #button/1-->
       <button
         id="remove"
       >
         Remove
       </button>
-      <!--M*0 #button/2-->
+      <!--M_*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.c={0:{items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map(_.a=[[0,_.b={}]])},1:_.b}),[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.c={0:{items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map(_.a=[[0,_.b={}]])},1:_.b})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_0_items"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 # Write
-  <div><button class=a>0<!M*0 #text/1></button><!M*0 #button/0> + <button class=b>0<!M*0 #text/3></button><!M*0 #button/2> = <!>0<!M*0 #text/4></div><script>(M$h=[]).push(_=>(_.a={0:{a:0,b:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0",])</script>
+  <div><button class=a>0<!--M_*0 #text/1--></button><!--M_*0 #button/0--> + <button class=b>0<!--M_*0 #text/3--></button><!--M_*0 #button/2--> = <!>0<!--M_*0 #text/4--></div><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.a={0:{a:0,b:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -12,24 +12,24 @@
         class="a"
       >
         0
-        <!--M*0 #text/1-->
+        <!--M_*0 #text/1-->
       </button>
-      <!--M*0 #button/0-->
+      <!--M_*0 #button/0-->
        + 
       <button
         class="b"
       >
         0
-        <!--M*0 #text/3-->
+        <!--M_*0 #text/3-->
       </button>
-      <!--M*0 #button/2-->
+      <!--M_*0 #button/2-->
        = 
       <!---->
       0
-      <!--M*0 #text/4-->
+      <!--M_*0 #text/4-->
     </div>
     <script>
-      (M$h=[]).push(_=&gt;(_.a={0:{a:0,b:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0",])
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{a:0,b:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

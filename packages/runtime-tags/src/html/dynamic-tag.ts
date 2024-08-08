@@ -99,7 +99,10 @@ export function dynamicTagArgs(
 
 let getDynamicRenderer = (
   tag: unknown | string | Renderer | RenderBodyObject | Template,
-) => (tag as Template)._ || (tag as RenderBodyObject).renderBody || tag;
+) =>
+  (tag as { _?: Renderer })._ ||
+  (tag as { renderBody?: Renderer }).renderBody ||
+  (tag as Renderer);
 export let createRenderer = (fn: Renderer) => fn;
 
 export function patchDynamicTag(

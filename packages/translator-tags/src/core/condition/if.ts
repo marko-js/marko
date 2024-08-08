@@ -1,4 +1,9 @@
-import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
+import {
+  type Tag,
+  assertNoParams,
+  assertNoVar,
+  assertNoArgs,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
 import { isCoreTagName } from "../../util/is-core-tag";
@@ -46,6 +51,41 @@ declare module "@marko/compiler/dist/types" {
 
 export default {
   analyze(tag) {
+    const { node } = tag;
+    const [testAttr] = node.attributes;
+
+    assertNoArgs(tag);
+    assertNoVar(tag);
+    assertNoParams(tag);
+
+    if (!t.isMarkoAttribute(testAttr) || !testAttr.default) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError("The `if` tag requires a value.");
+    }
+
+    if (node.body.body.length === 0) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError("The `if` tag requires body content.");
+    }
+
+    if (node.attributes.length > 1) {
+      const start = node.attributes[1].loc?.start;
+      const end = node.attributes[node.attributes.length - 1].loc?.end;
+      const msg = "The `if` tag only supports the `value` attribute.";
+
+      if (start == null || end == null) {
+        throw tag.get("name").buildCodeFrameError(msg);
+      } else {
+        throw tag.hub.buildError(
+          { loc: { start, end } } as unknown as t.Node,
+          msg,
+          Error,
+        );
+      }
+    }
+
     const tagBody = tag.get("body");
     const section = getOrCreateSection(tag);
     const tagExtra = (tag.node.extra ??= {});
@@ -61,36 +101,6 @@ export default {
   },
   translate: {
     enter(tag) {
-      const { node } = tag;
-      const [testAttr] = node.attributes;
-
-      assertNoVar(tag);
-      assertNoParams(tag);
-
-      if (!t.isMarkoAttribute(testAttr) || !testAttr.default) {
-        throw tag
-          .get("name")
-          .buildCodeFrameError(
-            `The '<if>' tag requires a default attribute like '<if=condition>'.`,
-          );
-      }
-
-      if (node.attributes.length > 1) {
-        const start = node.attributes[1].loc?.start;
-        const end = node.attributes[node.attributes.length - 1].loc?.end;
-        const msg = `The '<if>' tag only supports a default attribute.`;
-
-        if (start == null || end == null) {
-          throw tag.get("name").buildCodeFrameError(msg);
-        } else {
-          throw tag.hub.buildError(
-            { loc: { start, end } } as unknown as t.Node,
-            msg,
-            Error,
-          );
-        }
-      }
-
       walks.visit(tag, WalkCode.Replace);
       walks.enterShallow(tag);
       if (isOutputHTML()) {

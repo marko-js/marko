@@ -1,4 +1,4 @@
-import { attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, maybeFlush as _maybeFlush, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const selected = 0;
@@ -14,7 +14,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       "_": _ensureScopeWithId(_scope0_id)
     });
     _scope1_.set(_i, _getScopeById(_scope1_id));
-    _maybeFlush();
   }
   _writeScope(_scope0_id, {
     "#text/0(": _scope1_.size ? _scope1_ : undefined

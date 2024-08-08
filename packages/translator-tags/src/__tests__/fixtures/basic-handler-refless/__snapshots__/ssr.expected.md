@@ -1,5 +1,5 @@
 # Write
-  <button>0<!M*0 #text/1></button><!M*0 #button/0><script>(M$h=[]).push(_=>(null),[0,"packages/translator-tags/src/__tests__/fixtures/basic-handler-refless/template.marko_0",])</script>
+  <button>0<!--M_*0 #text/1--></button><!--M_*0 #button/0--><script>WALKER_RUNTIME("M")("_");M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-handler-refless/template.marko_0"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -9,11 +9,11 @@
   <body>
     <button>
       0
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <script>
-      (M$h=[]).push(_=&gt;(null),[0,"packages/translator-tags/src/__tests__/fixtures/basic-handler-refless/template.marko_0",])
+      WALKER_RUNTIME("M")("_");M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-handler-refless/template.marko_0"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
