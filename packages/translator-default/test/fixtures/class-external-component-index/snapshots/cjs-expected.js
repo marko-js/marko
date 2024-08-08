@@ -5,7 +5,7 @@ exports.default = void 0;
 var _index = require("marko/src/runtime/html/index.js");
 var _component2 = _interopRequireDefault(require("./component.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 const _marko_componentType = "packages/translator-default/test/fixtures/class-external-component-index/index.marko",
   _marko_template = (0, _index.t)(_marko_componentType);
 var _default = exports.default = _marko_template;
