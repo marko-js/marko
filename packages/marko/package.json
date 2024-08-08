@@ -1,6 +1,6 @@
 {
   "name": "marko",
-  "version": "5.35.7",
+  "version": "5.35.8",
   "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
   "keywords": [
     "front-end",
