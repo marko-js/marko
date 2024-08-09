@@ -34,7 +34,7 @@ const visitors = {
 };
 
 const getVisitorOfType = (
-  typename: "migrate" | "analyze" | "translate",
+  typename: "migrate" | "transform" | "analyze" | "translate",
 ): t.Visitor =>
   Object.entries(visitors).reduce((visitor, [name, value]) => {
     if (typename in value) {
@@ -45,6 +45,7 @@ const getVisitorOfType = (
 
 export { default as internalEntryBuilder } from "./util/entry-builder";
 
+export const transform = getVisitorOfType("transform");
 export const analyze = getVisitorOfType("analyze");
 export const translate = getVisitorOfType("translate");
 export const taglibs = [
