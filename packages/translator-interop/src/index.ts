@@ -5,6 +5,7 @@ import {
   analyze as analyze5,
   getRuntimeEntryFiles as getRuntimeEntryFiles5,
   internalEntryBuilder as internalEntryBuilder5,
+  transform as transform5,
   optionalTaglibs as optionalTaglibs5,
   taglibs as taglibs5,
   translate as translate5,
@@ -13,6 +14,7 @@ import {
   analyze as analyze6,
   getRuntimeEntryFiles as getRuntimeEntryFiles6,
   internalEntryBuilder as internalEntryBuilder6,
+  transform as transform6,
   taglibs as taglibs6,
   translate as translate6,
 } from "@marko/translator-tags";
@@ -38,6 +40,7 @@ export const taglibs = mergeTaglibs(
   taglib.resolveOptionalTaglibs(optionalTaglibs5).concat(taglibs5),
   taglibs6,
 );
+export const transform = mergeVisitors(transform5, transform6);
 export const analyze = mergeVisitors(analyze5, analyze6);
 export const translate = patchTranslateProgram(
   mergeVisitors(translate5, translate6),
@@ -310,7 +313,5 @@ function normalizeTagDefVisitors(visitor: any): t.Visitor {
 }
 
 function normalizeTagDefVisitor(visitor: any): t.VisitNode<any, t.Node> {
-  return typeof visitor === "function"
-    ? visitor
-    : (visitor?.default ?? visitor);
+  return typeof visitor === "function" ? visitor : visitor?.default ?? visitor;
 }

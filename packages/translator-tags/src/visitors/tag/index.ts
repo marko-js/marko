@@ -11,6 +11,32 @@ import DynamicTag from "./dynamic-tag";
 import NativeTag from "./native-tag";
 
 export default {
+  transform: {
+    enter(tag: t.NodePath<t.MarkoTag>) {
+      const attrs = tag.get("attributes");
+
+      for (let i = 0; i < attrs.length; i++) {
+        const attr = attrs[i];
+        if (t.isMarkoAttribute(attr.node) && attr.node.bound) {
+          attr.node.bound = false;
+          const changeValue = getChangeHandler(tag, attr);
+          if (changeValue === null) {
+            throw attr.buildCodeFrameError(
+              "Attributes may only be bound to identifiers or member expressions",
+            );
+          }
+
+          tag.node.attributes.splice(
+            ++i,
+            0,
+            t.markoAttribute(attr.node.name + "Change", changeValue),
+          );
+
+          tag.scope.crawl();
+        }
+      }
+    },
+  },
   analyze: {
     enter(tag: t.NodePath<t.MarkoTag>) {
       const tagDef = getTagDef(tag);
@@ -156,3 +182,38 @@ export default {
     },
   },
 };
+
+function getChangeHandler(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.NodePath<t.MarkoAttribute | t.MarkoSpreadAttribute>,
+) {
+  if (t.isIdentifier(attr.node.value)) {
+    const valueId = tag.scope.generateUidIdentifier(attr.node.value.name);
+    return t.functionExpression(
+      null,
+      [valueId],
+      t.blockStatement([
+        t.expressionStatement(
+          t.assignmentExpression("=", attr.node.value, valueId),
+        ),
+      ]),
+    );
+  } else {
+    return getMemberExpressionChangeHandler(attr.node.value);
+  }
+}
+
+function getMemberExpressionChangeHandler(
+  attr: t.Expression,
+): t.MemberExpression | t.Identifier | null {
+  if (t.isIdentifier(attr)) {
+    return t.identifier(attr.name + "Change");
+  } else if (t.isMemberExpression(attr) && !t.isPrivateName(attr.property)) {
+    const handler = getMemberExpressionChangeHandler(attr.property);
+    if (handler) {
+      return t.memberExpression(attr.object, handler);
+    }
+  }
+
+  return null;
+}
