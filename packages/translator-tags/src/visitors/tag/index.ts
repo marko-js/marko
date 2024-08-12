@@ -205,13 +205,13 @@ function getChangeHandler(
     if (t.isPrivateName(prop)) return null;
     if (t.isIdentifier(prop)) {
       return t.memberExpression(
-        t.cloneDeep(attr.node.value.object),
+        t.cloneNode(attr.node.value.object),
         t.identifier(prop.name + "Change"),
       );
     } else {
       return t.memberExpression(
-        t.cloneDeep(attr.node.value.object),
-        t.binaryExpression("+", t.cloneDeep(prop), t.stringLiteral("Change")),
+        t.cloneNode(attr.node.value.object),
+        t.binaryExpression("+", t.cloneNode(prop), t.stringLiteral("Change")),
         true,
       );
     }
