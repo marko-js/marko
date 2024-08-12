@@ -6,8 +6,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _childScope = _peekNextScope();
   _child._({
     value: source,
-    valueChange: _register(function (_source) {
-      source = _source;
+    valueChange: _register(function (_new_source) {
+      source = _new_source;
     }, "packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/template.marko_0/valueChange", _scope0_id)
   });
   _write(`source=<!>${_escapeXML(source)}${_markResumeNode(_scope0_id, "#text/1")}`);

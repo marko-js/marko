@@ -188,7 +188,9 @@ function getChangeHandler(
   attr: t.NodePath<t.MarkoAttribute | t.MarkoSpreadAttribute>,
 ) {
   if (t.isIdentifier(attr.node.value)) {
-    const valueId = tag.scope.generateUidIdentifier(attr.node.value.name);
+    const valueId = tag.scope.generateUidIdentifier(
+      "new_" + attr.node.value.name,
+    );
     return t.functionExpression(
       null,
       [valueId],
