@@ -2,3 +2,8 @@
 <button onClick() { state++; }>
   ${input.value}|${state}
 </button>
+
+<let/otherState=input["value"]/>
+<button onClick() { otherState++; }>
+  ${input.value}|${otherState}
+</button>

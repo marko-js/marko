@@ -200,22 +200,21 @@ function getChangeHandler(
         ),
       ]),
     );
-  } else {
-    return getMemberExpressionChangeHandler(attr.node.value);
-  }
-}
-
-function getMemberExpressionChangeHandler(
-  attr: t.Expression,
-): t.MemberExpression | t.Identifier | null {
-  if (t.isIdentifier(attr)) {
-    return t.identifier(attr.name + "Change");
-  } else if (t.isMemberExpression(attr) && !t.isPrivateName(attr.property)) {
-    const handler = getMemberExpressionChangeHandler(attr.property);
-    if (handler) {
-      return t.memberExpression(attr.object, handler);
+  } else if (t.isMemberExpression(attr.node.value)) {
+    const prop = attr.node.value.property;
+    if (t.isPrivateName(prop)) return null;
+    if (t.isIdentifier(prop)) {
+      return t.memberExpression(
+        t.cloneDeep(attr.node.value.object),
+        t.identifier(prop.name + "Change"),
+      );
+    } else {
+      return t.memberExpression(
+        t.cloneDeep(attr.node.value.object),
+        t.binaryExpression("+", t.cloneDeep(prop), t.stringLiteral("Change")),
+        true,
+      );
     }
   }
-
   return null;
 }

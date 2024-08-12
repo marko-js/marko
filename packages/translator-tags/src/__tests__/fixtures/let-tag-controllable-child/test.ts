@@ -1,7 +1,7 @@
 export const steps = [{}, click, click, click];
 
 function click(container: Element) {
-  container.querySelector("button")!.click();
+  container.querySelectorAll("button")!.forEach((item) => item.click());
 }
 
 export const skip_resume = true;

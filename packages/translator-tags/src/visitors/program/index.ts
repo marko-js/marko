@@ -58,7 +58,6 @@ export default {
   },
   analyze: {
     enter(program: t.NodePath<t.Program>) {
-      program.scope.crawl();
       previousProgramPath.set(program, currentProgramPath);
       currentProgramPath = program;
       startSection(program);
