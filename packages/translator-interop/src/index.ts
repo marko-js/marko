@@ -5,17 +5,17 @@ import {
   analyze as analyze5,
   getRuntimeEntryFiles as getRuntimeEntryFiles5,
   internalEntryBuilder as internalEntryBuilder5,
-  transform as transform5,
   optionalTaglibs as optionalTaglibs5,
   taglibs as taglibs5,
+  transform as transform5,
   translate as translate5,
 } from "@marko/translator-default";
 import {
   analyze as analyze6,
   getRuntimeEntryFiles as getRuntimeEntryFiles6,
   internalEntryBuilder as internalEntryBuilder6,
-  transform as transform6,
   taglibs as taglibs6,
+  transform as transform6,
   translate as translate6,
 } from "@marko/translator-tags";
 import path from "path";
@@ -313,5 +313,7 @@ function normalizeTagDefVisitors(visitor: any): t.Visitor {
 }
 
 function normalizeTagDefVisitor(visitor: any): t.VisitNode<any, t.Node> {
-  return typeof visitor === "function" ? visitor : visitor?.default ?? visitor;
+  return typeof visitor === "function"
+    ? visitor
+    : (visitor?.default ?? visitor);
 }
