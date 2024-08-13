@@ -7,6 +7,7 @@ import {
   internalEntryBuilder as internalEntryBuilder5,
   optionalTaglibs as optionalTaglibs5,
   taglibs as taglibs5,
+  transform as transform5,
   translate as translate5,
 } from "@marko/translator-default";
 import {
@@ -14,6 +15,7 @@ import {
   getRuntimeEntryFiles as getRuntimeEntryFiles6,
   internalEntryBuilder as internalEntryBuilder6,
   taglibs as taglibs6,
+  transform as transform6,
   translate as translate6,
 } from "@marko/translator-tags";
 import path from "path";
@@ -38,6 +40,7 @@ export const taglibs = mergeTaglibs(
   taglib.resolveOptionalTaglibs(optionalTaglibs5).concat(taglibs5),
   taglibs6,
 );
+export const transform = mergeVisitors(transform5, transform6);
 export const analyze = mergeVisitors(analyze5, analyze6);
 export const translate = patchTranslateProgram(
   mergeVisitors(translate5, translate6),

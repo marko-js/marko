@@ -280,6 +280,9 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
   }
 
   rootTransformers.push(transform);
+  if (translator.transform) {
+    rootTransformers.push(translator.transform);
+  }
   file.___compileStage = "transform";
   traverseAll(file, rootTransformers);
 
