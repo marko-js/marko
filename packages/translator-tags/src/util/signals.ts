@@ -666,6 +666,17 @@ export function getResumeRegisterId(
   );
 }
 
+export function renameReferences() {
+  t.traverseFast(currentProgramPath.node, (node) => {
+    if (t.isIdentifier(node)) {
+      const source = node.extra?.source;
+      if (source && source.name !== node.name) {
+        node.name = source.name;
+      }
+    }
+  });
+}
+
 export function replaceAssignments() {
   if (currentProgramPath.node.extra.assignments) {
     for (const [valueSection, assignment] of currentProgramPath.node.extra
@@ -923,7 +934,7 @@ export function writeHTMLResumeStatements(
   const accessors = new Set<string | number>();
   const additionalProperties = getSerializedScopeProperties(section);
   const serializedProperties: t.ObjectProperty[] = [];
-  section.bindings.forEach((binding) => {
+  for (const binding of section.bindings) {
     if (binding.serialize && binding.type !== BindingType.dom) {
       const accessor = getScopeAccessorLiteral(binding);
       serializedProperties.push(
@@ -931,8 +942,7 @@ export function writeHTMLResumeStatements(
       );
       accessors.add(accessor.value);
     }
-  });
-
+  }
   if (tagVarIdentifier && returnId(section) !== undefined) {
     serializedProperties.push(
       t.objectProperty(

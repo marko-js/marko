@@ -14,8 +14,6 @@ export default function translateVar(
   }
 
   tag.insertBefore(
-    t.variableDeclaration(kind, [
-      t.variableDeclarator(t.cloneDeep(tagVar), initialValue),
-    ]),
+    t.variableDeclaration(kind, [t.variableDeclarator(tagVar, initialValue)]),
   );
 }

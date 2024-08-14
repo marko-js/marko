@@ -12,6 +12,7 @@ import {
   getClosures,
   getResumeRegisterId,
   initValue,
+  renameReferences,
   replaceAssignments,
   writeSignals,
 } from "../../util/signals";
@@ -80,6 +81,8 @@ export default {
       const closures = getClosures(section);
 
       writeSignals(section);
+
+      renameReferences();
 
       program.node.body.push(
         t.exportNamedDeclaration(

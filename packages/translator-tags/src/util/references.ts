@@ -178,6 +178,8 @@ export function trackReferencesForBinding(
   const { identifier, referencePaths, constantViolations } = babelBinding;
   const binding = identifier.extra!.binding!;
 
+  assignBinding(identifier, binding);
+
   for (const referencePath of referencePaths) {
     trackReference(referencePath as t.NodePath<t.Identifier>, binding);
   }
@@ -397,6 +399,7 @@ function trackReference(
   const reference = binding;
   const exprExtra = (exprRoot.node.extra ??= {});
   addReferenceToExpression(exprRoot, binding);
+  assignBinding(referencePath.node, binding);
 
   // TODO: remove
   if (fnRoot) {
@@ -520,7 +523,15 @@ export function finalizeReferences() {
   const intersections = new Set<Intersection>();
 
   for (const binding of bindings) {
-    const { section } = binding;
+    const { name, section } = binding;
+    if (binding.type !== BindingType.dom) {
+      let shadowCount = 1;
+      for (const existingBinding of section.bindings) {
+        if (existingBinding.name === binding.name) {
+          binding.name = name + ++shadowCount;
+        }
+      }
+    }
     section.bindings.add(binding);
     for (const {
       referencedBindings,
