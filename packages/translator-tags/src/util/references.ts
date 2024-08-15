@@ -421,7 +421,7 @@ function trackReference(
     }
 
     if (!name) {
-      if (markoRoot.isMarkoAttribute()) {
+      if (markoRoot!.isMarkoAttribute()) {
         name = markoRoot.node.default
           ? t.toIdentifier(
               (markoRoot.parentPath.parentPath as t.NodePath<t.MarkoTag>).get(

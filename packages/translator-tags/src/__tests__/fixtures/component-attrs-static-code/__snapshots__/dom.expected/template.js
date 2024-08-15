@@ -1,8 +1,8 @@
-const formatNumber = n => {
+const formatNumber = _register("packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/anonymous", n => {
   return "$" + n.toFixed(2);
-};
+});
+import { register as _register, inChild as _inChild, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _counter, _input_ as _counter_input, _template_ as _counter_template, _walks_ as _counter_walks } from "./components/counter.marko";
-import { inChild as _inChild, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _setup = _scope => {
   _counter(_scope["#childScope/0"]);
   _counter_input(_scope["#childScope/0"], {

@@ -18,7 +18,7 @@ const r = e(2, (t) => {
   } = t;
   i(t[0], "data-selected", n === o), i(t[0], "data-multiple", o % n == 0);
 });
-t("a1", (t) =>
+t("a0", (t) =>
   n(
     t[0],
     "click",

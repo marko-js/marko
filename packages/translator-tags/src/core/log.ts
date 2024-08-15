@@ -37,26 +37,28 @@ export default {
         );
     }
   },
-  translate(tag) {
-    const section = getSection(tag);
-    const [valueAttr] = tag.node.attributes;
-    const { value } = valueAttr;
-    const referencedBindings = value.extra?.referencedBindings;
+  translate: {
+    exit(tag) {
+      const section = getSection(tag);
+      const [valueAttr] = tag.node.attributes;
+      const { value } = valueAttr;
+      const referencedBindings = value.extra?.referencedBindings;
 
-    const statement = t.expressionStatement(
-      t.callExpression(
-        t.memberExpression(t.identifier("console"), t.identifier("log")),
-        [value],
-      ),
-    );
+      const statement = t.expressionStatement(
+        t.callExpression(
+          t.memberExpression(t.identifier("console"), t.identifier("log")),
+          [value],
+        ),
+      );
 
-    if (isOutputHTML()) {
-      tag.insertBefore(statement);
-    } else {
-      addStatement("render", section, referencedBindings, statement);
-    }
+      if (isOutputHTML()) {
+        tag.insertBefore(statement);
+      } else {
+        addStatement("render", section, referencedBindings, statement);
+      }
 
-    tag.remove();
+      tag.remove();
+    },
   },
   attributes: {},
   autocomplete: [

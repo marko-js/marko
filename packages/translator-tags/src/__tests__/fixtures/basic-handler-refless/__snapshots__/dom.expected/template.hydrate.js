@@ -9,7 +9,7 @@ import {
   init as n,
 } from "@marko/runtime-tags/dom";
 const r = c(2, (o, m) => i(o[1], m));
-o("a1", (o) =>
+o("a0", (o) =>
   m(
     o[0],
     "click",

@@ -1,5 +1,5 @@
 # Write
-  <button>$0.00<!--M_*1 #text/1--></button><!--M_*1 #button/0--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.b={0:{"#childScope/0":_.a={input:{},count:0}},1:_.a})];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/components/counter.marko_0_count"];M._.d=1;M._.w()</script>
+  <button>$0.00<!--M_*1 #text/1--></button><!--M_*1 #button/0--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.b={0:{"#childScope/0":_.a={input:{format:_._["packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/anonymous"]},count:0}},1:_.a})];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/components/counter.marko_0_count"];M._.d=1;M._.w()</script>
 
 
 # Render "End"
@@ -13,7 +13,7 @@
     </button>
     <!--M_*1 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{"#childScope/0":_.a={input:{},count:0}},1:_.a})];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/components/counter.marko_0_count"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{"#childScope/0":_.a={input:{format:_._["packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/anonymous"]},count:0}},1:_.a})];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/components/counter.marko_0_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

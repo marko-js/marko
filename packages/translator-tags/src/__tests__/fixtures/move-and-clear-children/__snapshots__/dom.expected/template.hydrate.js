@@ -1,12 +1,19 @@
-// size: 193 (min) 130 (brotli)
+// size: 231 (min) 159 (brotli)
 
 import {
   register as o,
   createRenderer as t,
   value as i,
-  data as m,
+  data as r,
 } from "@marko/runtime-tags/dom";
-const d = i(2, (o, t) => m(o[0], t.text));
+o(
+  "a0",
+  (o) =>
+    function (o) {
+      return o.id;
+    },
+);
+const d = i(2, (o, t) => r(o[0], t.text));
 o(
   "a1",
   t(

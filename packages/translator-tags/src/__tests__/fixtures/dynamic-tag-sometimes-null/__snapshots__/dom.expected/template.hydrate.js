@@ -11,10 +11,10 @@ import {
   conditional as a,
   init as u,
 } from "@marko/runtime-tags/dom";
-const d = n("a1", o("Body Content", "")),
+const d = n("a0", o("Body Content", "")),
   e = t(0, d),
   l = a(0, (n) => e(n, () => ({})), e),
-  s = n("a2", (n) =>
+  s = n("a1", (n) =>
     r(
       n[1],
       "click",

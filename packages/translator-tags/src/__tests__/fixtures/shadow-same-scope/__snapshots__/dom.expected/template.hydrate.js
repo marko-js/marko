@@ -9,7 +9,7 @@ import {
   queueEffect as i,
   init as u,
 } from "@marko/runtime-tags/dom";
-const a = n("a2", (n) =>
+const a = n("a0", (n) =>
     c(
       n[6],
       "click",
@@ -24,7 +24,7 @@ const a = n("a2", (n) =>
   s = o(11, (n, c) => {
     r(n[7], c), i(n, a);
   }),
-  e = n("a3", (n) =>
+  e = n("a1", (n) =>
     c(
       n[4],
       "click",
@@ -39,7 +39,7 @@ const a = n("a2", (n) =>
   f = o(10, (n, c) => {
     r(n[5], c), i(n, e);
   }),
-  k = n("a4", (n) =>
+  k = n("a2", (n) =>
     c(
       n[2],
       "click",
@@ -54,7 +54,7 @@ const a = n("a2", (n) =>
   m = o(9, (n, c) => {
     r(n[3], c), i(n, k);
   }),
-  l = n("a5", (n) =>
+  l = n("a3", (n) =>
     c(
       n[0],
       "click",

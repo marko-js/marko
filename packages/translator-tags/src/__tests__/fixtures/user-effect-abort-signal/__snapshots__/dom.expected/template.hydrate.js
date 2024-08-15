@@ -1,21 +1,20 @@
-// size: 274 (min) 181 (brotli)
+// size: 264 (min) 177 (brotli)
 
 import {
   register as o,
-  queueSource as a,
-  getAbortSignal as r,
-  value as t,
-  data as m,
-  init as e,
+  queueSource as t,
+  getAbortSignal as a,
+  value as m,
+  data as n,
+  init as r,
 } from "@marko/runtime-tags/dom";
-const n = t(5, (o, a) => m(o[1], a)),
-  s = t(4, (o, a) => m(o[0], a));
-o("a2", (o) => {
-  const { 3: t } = o;
-  a(o, s, t.value + 1),
-    (r(o, 0).onabort = (
-      (o) => () =>
-        a(o, n, previousValue)
-    )(o));
+const s = m(5, (o, t) => n(o[1], t)),
+  c = m(4, (o, t) => n(o[0], t));
+o("a0", (o) => {
+  const { 3: m } = o;
+  {
+    const n = t(o, c, m.value + 1);
+    a(o, 0).onabort = () => t(o, s, n);
+  }
 }),
-  e();
+  r();

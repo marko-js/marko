@@ -1,4 +1,7 @@
-import { on as _on, data as _data, queueSource as _queueSource, queueControllableSource as _queueControllableSource, register as _register, queueEffect as _queueEffect, intersection as _intersection, value as _value, changeHandler as _changeHandler, initValue as _initValue, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { register as _register, on as _on, data as _data, queueSource as _queueSource, queueControllableSource as _queueControllableSource, queueEffect as _queueEffect, intersection as _intersection, value as _value, changeHandler as _changeHandler, initValue as _initValue, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _ = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0/_", _scope => function (newValue) {
+  _queueSource(_scope, _x, newValue + 1);
+});
 const _onClick = _scope => {
   const {
     _y_change,
@@ -24,13 +27,10 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   (_scope["_y_change"] ? _y : _y_init)(_scope, x);
 }, _y);
-const _onClick2 = _scope => function () {
+const _temp = _scope => function () {
   _queueSource(_scope, _yChange, null);
 };
-const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0", _scope => _on(_scope["#button/3"], "click", _onClick2(_scope)));
-const _ = _scope => function (newValue) {
-  _queueSource(_scope, _x, newValue + 1);
-};
+const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0", _scope => _on(_scope["#button/3"], "click", _temp(_scope)));
 const _setup = _scope => {
   _queueEffect(_scope, _setup_effect);
   _x(_scope, 1);

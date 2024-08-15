@@ -1,4 +1,4 @@
-// size: 881 (min) 402 (brotli)
+// size: 881 (min) 401 (brotli)
 
 import {
   register as n,
@@ -17,7 +17,7 @@ import {
   conditional as m,
   init as s,
 } from "@marko/runtime-tags/dom";
-const f = n("a3", (n) =>
+const f = n("a0", (n) =>
     t(
       n[0],
       "click",
@@ -34,10 +34,10 @@ const f = n("a3", (n) =>
     ),
   ),
   k = l(
-    "a5",
+    "a2",
     r("<button id=count> </button>", " D ", void 0, [
       o(
-        "a4",
+        "a1",
         u(
           4,
           (n, t) => {
@@ -49,7 +49,7 @@ const f = n("a3", (n) =>
     ]),
   ),
   v = m(1),
-  D = n("a6", (n) =>
+  D = n("a3", (n) =>
     t(
       n[0],
       "click",
@@ -71,11 +71,11 @@ const f = n("a3", (n) =>
     void 0,
     v,
   ),
-  p = l("a7", r("<button id=inner></button><!><!>", " b%D", void 0, [g])),
+  p = l("a4", r("<button id=inner></button><!><!>", " b%D", void 0, [g])),
   h = m(1),
   j = a(4, null, _(4)),
   q = a(3, null, d(g, 1)),
-  w = n("a8", (n) =>
+  w = n("a5", (n) =>
     t(
       n[0],
       "click",

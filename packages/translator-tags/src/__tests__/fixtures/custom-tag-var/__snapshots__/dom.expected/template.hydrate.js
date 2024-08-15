@@ -11,7 +11,7 @@ import {
   registerBoundSignal as a,
   init as s,
 } from "@marko/runtime-tags/dom";
-const u = o("a1", (o) =>
+const u = o("a0", (o) =>
     t(
       o[0],
       "click",

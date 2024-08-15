@@ -10,7 +10,7 @@ import {
   init as m,
 } from "@marko/runtime-tags/dom";
 const a = n(4, (o, r) => i(o[0], JSON.stringify(r))),
-  f = o("a1", (o) =>
+  f = o("a0", (o) =>
     r(
       o[1],
       "click",

@@ -12,7 +12,7 @@ import {
   conditional as a,
   init as m,
 } from "@marko/runtime-tags/dom";
-const b = n("a1", (n) =>
+const b = n("a0", (n) =>
     t(
       n[0],
       "click",
@@ -31,14 +31,14 @@ const b = n("a1", (n) =>
     d(n, 0);
   },
   f = n(
-    "b1",
+    "b0",
     u("<button id=count> </button>", "/ D l&", (n) => {
       e(n[0]);
     }),
   ),
   k = s(0, f),
   l = a(0, (n) => k(n, () => ({})), k),
-  p = n("b2", (n) =>
+  p = n("b1", (n) =>
     t(
       n[1],
       "click",

@@ -1,11 +1,11 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { register as _register, escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const _forScopeIds = [],
     _scope1_ = new Map();
-  const _by = function (c) {
+  const _by = _register(function (c) {
     return c.id;
-  };
+  }, "packages/translator-tags/src/__tests__/fixtures/move-and-clear-top-level/template.marko_0/by", _scope0_id);
   let _i2 = 0;
   for (const child of input.children) {
     const _scope1_id = _nextScopeId();

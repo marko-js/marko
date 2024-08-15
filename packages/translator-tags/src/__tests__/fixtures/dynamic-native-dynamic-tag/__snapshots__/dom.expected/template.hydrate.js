@@ -12,7 +12,7 @@ import {
   intersection as m,
   init as l,
 } from "@marko/runtime-tags/dom";
-const u = n("a1", o("body content", "")),
+const u = n("a0", o("body content", "")),
   d = t(0, u),
   e = i(
     0,
@@ -22,7 +22,7 @@ const u = n("a1", o("body content", "")),
       d(n, () => ({ class: o }));
     }),
   ),
-  p = n("a2", (n) =>
+  p = n("a1", (n) =>
     c(
       n[1],
       "click",

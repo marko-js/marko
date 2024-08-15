@@ -27,20 +27,20 @@ div0/#text0: "0" => "1"
 # Render {"value":1}
 ```html
 <div>
-  1 0
+  1 1
 </div>
 ```
 
 # Mutations
 ```
-
+div0/#text2: "0" => "1"
 ```
 
 
 # Render "ASYNC"
 ```html
 <div>
-  2 0
+  2 1
 </div>
 ```
 

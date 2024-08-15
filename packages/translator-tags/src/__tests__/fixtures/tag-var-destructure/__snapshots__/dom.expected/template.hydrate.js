@@ -13,7 +13,7 @@ const l = o(10, (r, a) => t(r[5], JSON.stringify(a))),
   m = o(8, (r, a) => t(r[3], JSON.stringify(a))),
   b = o(7, (r, a) => t(r[2], a)),
   f = o(6, (r, a) => t(r[1], a));
-r("a2", (r) =>
+r("a0", (r) =>
   a(
     r[0],
     "click",

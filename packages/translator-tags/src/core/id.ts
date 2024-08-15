@@ -14,39 +14,41 @@ import { addValue, initValue } from "../util/signals";
 import { scopeIdentifier } from "../visitors/program";
 
 export default {
-  translate(tag) {
-    const { node } = tag;
-    const { var: tagVar } = node;
-    const id = isOutputHTML()
-      ? callRuntime("nextTagId")
-      : callRuntime("nextTagId", scopeIdentifier);
+  translate: {
+    exit(tag) {
+      const { node } = tag;
+      const { var: tagVar } = node;
+      const id = isOutputHTML()
+        ? callRuntime("nextTagId")
+        : callRuntime("nextTagId", scopeIdentifier);
 
-    assertNoArgs(tag);
-    assertNoAttributes(tag);
-    assertNoBodyContent(tag);
-    assertNoParams(tag);
+      assertNoArgs(tag);
+      assertNoAttributes(tag);
+      assertNoBodyContent(tag);
+      assertNoParams(tag);
 
-    if (!node.var) {
-      throw tag
-        .get("name")
-        .buildCodeFrameError("The `id` tag requires a tag variable.");
-    }
+      if (!node.var) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError("The `id` tag requires a tag variable.");
+      }
 
-    if (!t.isIdentifier(tagVar)) {
-      throw tag
-        .get("var")
-        .buildCodeFrameError("The `id` tag cannot be destructured");
-    }
+      if (!t.isIdentifier(tagVar)) {
+        throw tag
+          .get("var")
+          .buildCodeFrameError("The `id` tag cannot be destructured");
+      }
 
-    if (isOutputHTML()) {
-      tag.replaceWith(
-        t.variableDeclaration("const", [t.variableDeclarator(node.var, id)]),
-      );
-    } else {
-      const source = initValue(tagVar.extra!.binding!);
-      addValue(getSection(tag), undefined, source, id);
-      tag.remove();
-    }
+      if (isOutputHTML()) {
+        tag.replaceWith(
+          t.variableDeclaration("const", [t.variableDeclarator(node.var, id)]),
+        );
+      } else {
+        const source = initValue(tagVar.extra!.binding!);
+        addValue(getSection(tag), undefined, source, id);
+        tag.remove();
+      }
+    },
   },
   attributes: {},
   autocomplete: [

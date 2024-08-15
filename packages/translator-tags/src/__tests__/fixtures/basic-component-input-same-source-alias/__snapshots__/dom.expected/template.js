@@ -1,5 +1,4 @@
-import { _setup_ as _myButton, _text_ as _myButton__text_, _onClick_ as _myButton__onClick_, _template_ as _myButton_template, _walks_ as _myButton_walks } from "./components/my-button.marko";
-import { inChild as _inChild, register as _register, queueSource as _queueSource, intersections as _intersections, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { register as _register, inChild as _inChild, queueSource as _queueSource, intersections as _intersections, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onClick = _register("packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias/template.marko_0/onClick", _scope => {
   const {
     clickCount
@@ -8,6 +7,7 @@ const _onClick = _register("packages/translator-tags/src/__tests__/fixtures/basi
     _queueSource(_scope, _clickCount, clickCount + 1);
   };
 });
+import { _setup_ as _myButton, _text_ as _myButton__text_, _onClick_ as _myButton__onClick_, _template_ as _myButton_template, _walks_ as _myButton_walks } from "./components/my-button.marko";
 const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => {
   _myButton__text_(_scope["#childScope/0"], clickCount);
   _myButton__onClick_(_scope["#childScope/0"], _onClick(_scope));

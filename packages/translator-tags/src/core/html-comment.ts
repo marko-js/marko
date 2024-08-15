@@ -76,134 +76,132 @@ export default {
     }
     tag.skip();
   },
-  translate: {
-    enter(tag) {
-      const tagExtra = tag.node.extra!;
-      const commentBinding = tagExtra[kCommentTagBinding];
-      if (tag.has("var")) {
-        if (isOutputHTML()) {
-          translateVar(
-            tag,
-            t.arrowFunctionExpression(
-              [],
-              t.blockStatement([
-                t.throwStatement(
-                  t.newExpression(t.identifier("Error"), [
-                    t.stringLiteral(
-                      "Cannot reference a DOM node from the server",
-                    ),
-                  ]),
-                ),
-              ]),
-            ),
-          );
-        } else {
-          const varName = (tag.node.var as t.Identifier).name;
-          const references = tag.scope.getBinding(varName)!.referencePaths;
-          let createElFunction = undefined;
-          for (const reference of references) {
-            const referenceSection = getSection(reference);
-            if (reference.parentPath?.isCallExpression()) {
-              reference.parentPath.replaceWith(
-                t.expressionStatement(
-                  createScopeReadExpression(referenceSection, commentBinding!),
-                ),
-              );
-            } else {
-              createElFunction ??= t.identifier(varName + "_getter");
-              reference.replaceWith(
-                callRuntime(
-                  "bindFunction",
-                  getScopeExpression(referenceSection, getSection(tag)),
-                  createElFunction,
-                ),
-              );
-            }
-          }
-          if (createElFunction) {
-            currentProgramPath.pushContainer(
-              "body",
-              t.variableDeclaration("const", [
-                t.variableDeclarator(
-                  createElFunction,
-                  t.arrowFunctionExpression(
-                    [scopeIdentifier],
-                    t.memberExpression(
-                      scopeIdentifier,
-                      getScopeAccessorLiteral(commentBinding!),
-                      true,
-                    ),
+  translate(tag) {
+    const tagExtra = tag.node.extra!;
+    const commentBinding = tagExtra[kCommentTagBinding];
+    if (tag.has("var")) {
+      if (isOutputHTML()) {
+        translateVar(
+          tag,
+          t.arrowFunctionExpression(
+            [],
+            t.blockStatement([
+              t.throwStatement(
+                t.newExpression(t.identifier("Error"), [
+                  t.stringLiteral(
+                    "Cannot reference a DOM node from the server",
                   ),
-                ),
-              ]),
+                ]),
+              ),
+            ]),
+          ),
+        );
+      } else {
+        const varName = (tag.node.var as t.Identifier).name;
+        const references = tag.scope.getBinding(varName)!.referencePaths;
+        let createElFunction = undefined;
+        for (const reference of references) {
+          const referenceSection = getSection(reference);
+          if (reference.parentPath?.isCallExpression()) {
+            reference.parentPath.replaceWith(
+              t.expressionStatement(
+                createScopeReadExpression(referenceSection, commentBinding!),
+              ),
+            );
+          } else {
+            createElFunction ??= t.identifier(varName + "_getter");
+            reference.replaceWith(
+              callRuntime(
+                "bindFunction",
+                getScopeExpression(referenceSection, getSection(tag)),
+                createElFunction,
+              ),
             );
           }
         }
-      }
-
-      if (tagExtra[kCommentTagBinding]) {
-        walks.visit(tag, WalkCode.Get);
-      }
-      const write = writer.writeTo(tag);
-
-      walks.enter(tag);
-      write`<!--`;
-
-      // TODO: If the tag is completely empty, make the marker node the same as the comment node.
-      if (isOutputHTML()) {
-        for (const child of tag.node.body.body) {
-          if (t.isMarkoText(child)) {
-            write`${child.value}`;
-          } else if (t.isMarkoPlaceholder(child)) {
-            write`${callRuntime("escapeXML", child.value)}`;
-          }
-        }
-      } else {
-        const templateQuasis: t.TemplateElement[] = [];
-        const templateExpressions: t.Expression[] = [];
-        let currentQuasi = "";
-        for (const child of tag.node.body.body) {
-          if (t.isMarkoText(child)) {
-            currentQuasi += child.value;
-          } else if (t.isMarkoPlaceholder(child)) {
-            templateQuasis.push(t.templateElement({ raw: currentQuasi }));
-            templateExpressions.push(child.value);
-            currentQuasi = "";
-          }
-        }
-
-        if (templateExpressions.length === 0) {
-          write`${currentQuasi}`;
-        } else {
-          templateQuasis.push(t.templateElement({ raw: currentQuasi }));
-          addStatement(
-            "render",
-            getSection(tag),
-            tagExtra.referencedBindings,
-            t.expressionStatement(
-              callRuntime(
-                "data",
-                t.memberExpression(
-                  scopeIdentifier,
-                  getScopeAccessorLiteral(commentBinding!),
-                  true,
+        if (createElFunction) {
+          currentProgramPath.pushContainer(
+            "body",
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                createElFunction,
+                t.arrowFunctionExpression(
+                  [scopeIdentifier],
+                  t.memberExpression(
+                    scopeIdentifier,
+                    getScopeAccessorLiteral(commentBinding!),
+                    true,
+                  ),
                 ),
-                t.templateLiteral(templateQuasis, templateExpressions),
               ),
-            ),
+            ]),
           );
         }
       }
+    }
 
-      walks.exit(tag);
-      write`-->`;
+    if (tagExtra[kCommentTagBinding]) {
+      walks.visit(tag, WalkCode.Get);
+    }
+    const write = writer.writeTo(tag);
 
-      if (commentBinding) {
-        writer.markNode(tag, commentBinding);
+    walks.enter(tag);
+    write`<!--`;
+
+    // TODO: If the tag is completely empty, make the marker node the same as the comment node.
+    if (isOutputHTML()) {
+      for (const child of tag.node.body.body) {
+        if (t.isMarkoText(child)) {
+          write`${child.value}`;
+        } else if (t.isMarkoPlaceholder(child)) {
+          write`${callRuntime("escapeXML", child.value)}`;
+        }
+      }
+    } else {
+      const templateQuasis: t.TemplateElement[] = [];
+      const templateExpressions: t.Expression[] = [];
+      let currentQuasi = "";
+      for (const child of tag.node.body.body) {
+        if (t.isMarkoText(child)) {
+          currentQuasi += child.value;
+        } else if (t.isMarkoPlaceholder(child)) {
+          templateQuasis.push(t.templateElement({ raw: currentQuasi }));
+          templateExpressions.push(child.value);
+          currentQuasi = "";
+        }
       }
 
-      tag.remove();
-    },
+      if (templateExpressions.length === 0) {
+        write`${currentQuasi}`;
+      } else {
+        templateQuasis.push(t.templateElement({ raw: currentQuasi }));
+        addStatement(
+          "render",
+          getSection(tag),
+          tagExtra.referencedBindings,
+          t.expressionStatement(
+            callRuntime(
+              "data",
+              t.memberExpression(
+                scopeIdentifier,
+                getScopeAccessorLiteral(commentBinding!),
+                true,
+              ),
+              t.templateLiteral(templateQuasis, templateExpressions),
+            ),
+          ),
+        );
+      }
+    }
+
+    walks.exit(tag);
+    write`-->`;
+
+    if (commentBinding) {
+      writer.markNode(tag, commentBinding);
+    }
+
+    tag.remove();
   },
   parseOptions: {
     // TODO: fix the types for Tag or parseOptions or something

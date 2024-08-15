@@ -8,10 +8,10 @@ type MarkoExprRootPath = t.NodePath<
 >;
 
 export function getMarkoRoot(path: t.NodePath<t.Node>) {
-  let curPath = path;
-  do curPath = curPath.parentPath!;
-  while (!isMarko(curPath));
-  return curPath as MarkoExprRootPath;
+  let curPath: typeof path | null = path;
+  do curPath = curPath.parentPath;
+  while (curPath && !isMarko(curPath));
+  return curPath;
 }
 
 export function getExprRoot(path: t.NodePath<t.Node>) {
@@ -42,7 +42,7 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
   return curPath;
 }
 
-function isMarko(path: t.NodePath<any>): path is MarkoExprRootPath {
+export function isMarko(path: t.NodePath<any>): path is MarkoExprRootPath {
   switch (path.type) {
     case "MarkoTag":
     case "MarkoTagBody":

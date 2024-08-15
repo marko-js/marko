@@ -49,7 +49,7 @@ const C = t(0),
       C(i, () => ({ value: o }));
     }),
   ),
-  g = c("c1", (i) =>
+  g = c("c0", (i) =>
     d(
       i[1],
       "click",

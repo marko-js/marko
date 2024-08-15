@@ -16,7 +16,7 @@ const i = r(5, (o, t) => {
       })(o, t);
   }),
   s = r(4, (o, t) => i(o, t.a)),
-  u = o("a2", (o) =>
+  u = o("a0", (o) =>
     t(
       o[0],
       "click",

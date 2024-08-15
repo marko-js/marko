@@ -32,20 +32,22 @@ export default {
         );
     }
   },
-  translate(tag) {
-    const section = getSection(tag);
-    const [valueAttr] = tag.node.attributes;
-    const referencedBindings = valueAttr?.value.extra?.referencedBindings;
+  translate: {
+    exit(tag) {
+      const section = getSection(tag);
+      const [valueAttr] = tag.node.attributes;
+      const referencedBindings = valueAttr?.value.extra?.referencedBindings;
 
-    const statement = t.debuggerStatement();
+      const statement = t.debuggerStatement();
 
-    if (isOutputHTML()) {
-      tag.insertBefore(statement);
-    } else {
-      addStatement("render", section, referencedBindings, statement);
-    }
+      if (isOutputHTML()) {
+        tag.insertBefore(statement);
+      } else {
+        addStatement("render", section, referencedBindings, statement);
+      }
 
-    tag.remove();
+      tag.remove();
+    },
   },
   attributes: {},
   autocomplete: [

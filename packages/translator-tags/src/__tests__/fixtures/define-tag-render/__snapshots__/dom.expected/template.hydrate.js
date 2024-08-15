@@ -11,7 +11,7 @@ import {
   queueEffect as a,
   init as d,
 } from "@marko/runtime-tags/dom";
-const u = o("a1", (o) =>
+const u = o("a0", (o) =>
     t(
       o[2],
       "click",
@@ -29,7 +29,7 @@ const u = o("a1", (o) =>
   l = m(6, (o, t) => r(o[0], t)),
   v = m(5, (o, t) => l(o, t.name));
 o(
-  "a2",
+  "a1",
   n(
     "<div>Hello <!> <!></div><button> </button>",
     "Db%c%l D ",

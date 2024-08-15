@@ -15,9 +15,9 @@ import {
   init as l,
 } from "@marko/runtime-tags/dom";
 const f = a(4, (n, o) => m(n[0], o)),
-  k = n("a2", o("The count is <!>", "b%", void 0, [f])),
+  k = n("a0", o("The count is <!>", "b%", void 0, [f])),
   d = e(2),
-  b = t("a3", (n) =>
+  b = t("a1", (n) =>
     c(
       n[0],
       "click",
@@ -30,7 +30,7 @@ const f = a(4, (n, o) => m(n[0], o)),
     ),
   ),
   g = i(4, (n, o) => r(n, b), u(f, 2)),
-  h = t("a4", (n) =>
+  h = t("a2", (n) =>
     c(
       n[1],
       "click",

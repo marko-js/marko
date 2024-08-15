@@ -28,7 +28,7 @@ var b = i(
 );
 const e = t(1),
   k = a(1, (i) => e(i, () => ({ id: "dynamic" })), e),
-  l = c("b1", (i) =>
+  l = c("b0", (i) =>
     r(
       i[0],
       "click",
