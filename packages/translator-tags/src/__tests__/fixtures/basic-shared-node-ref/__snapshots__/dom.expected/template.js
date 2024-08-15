@@ -1,7 +1,4 @@
-import { attr as _attr, register as _register, data as _data, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, value as _value, loopOf as _loopOf, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _by = _register("packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0/by", _scope => function (x) {
-  return x;
-});
+import { attr as _attr, data as _data, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, value as _value, register as _register, loopOf as _loopOf, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _x$forBody = /* @__PURE__ */_value("x", (_scope, x) => _data(_scope["#text/0"], x));
 const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _x$forBody(_scope, _params_2[0]));
 const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<li> </li>", /* next(1), get */"D ", void 0, void 0, void 0, _params_2$forBody));
@@ -17,7 +14,9 @@ const _onClick = _scope => {
 const _list_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list", _scope => _on(_scope["#button/2"], "click", _onClick(_scope)));
 const _list = /* @__PURE__ */_value("list", (_scope, list) => {
   _queueEffect(_scope, _list_effect);
-  _for(_scope, [list, _by(_scope)]);
+  _for(_scope, [list, function (x) {
+    return x;
+  }]);
 });
 const _onClick2 = _scope => {
   const {

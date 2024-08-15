@@ -1,4 +1,4 @@
-import { attr as _attr, write as _write, register as _register, escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { attr as _attr, write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const open = true;
@@ -6,9 +6,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _write(`<ul${_attr("hidden", !open)}>`);
   const _forScopeIds = [],
     _scope1_ = new Map();
-  const _by = _register(function (x) {
+  const _by = function (x) {
     return x;
-  }, "packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0/by", _scope0_id);
+  };
   let _i2 = 0;
   for (const x of list) {
     const _scope1_id = _nextScopeId();
