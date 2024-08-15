@@ -212,12 +212,21 @@ export function trackReferencesForBinding(
       );
     }
     if (changeBinding) {
-      trackReference(
-        (referencePath as t.NodePath<t.AssignmentExpression>).get(
-          "left",
-        ) as t.NodePath<t.Identifier>,
-        changeBinding,
-      );
+      if (t.isUpdateExpression(referencePath)) {
+        trackReference(
+          (referencePath as t.NodePath<t.UpdateExpression>).get(
+            "argument",
+          ) as t.NodePath<t.Identifier>,
+          changeBinding,
+        );
+      } else if (t.isAssignmentExpression(referencePath)) {
+        trackReference(
+          (referencePath as t.NodePath<t.AssignmentExpression>).get(
+            "left",
+          ) as t.NodePath<t.Identifier>,
+          changeBinding,
+        );
+      }
     }
   }
 }
