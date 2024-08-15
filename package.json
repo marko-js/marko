@@ -14,6 +14,7 @@
     "build:sizes": "node -r ~ts scripts/sizes",
     "change": "changeset add",
     "format": "eslint --format unix --fix .; prettier . --write --with-node-modules --log-level=warn",
+    "inspect:compiled": "node -r ~ts scripts/inspect-compiled-output.ts",
     "lint": "eslint --format unix . && prettier . --check --with-node-modules --log-level=warn",
     "prepare": "husky",
     "report": "open ./coverage/lcov-report/index.html",

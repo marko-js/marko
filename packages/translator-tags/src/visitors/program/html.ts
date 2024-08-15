@@ -4,7 +4,7 @@ import { returnId } from "../../core/return";
 import isStatic from "../../util/is-static";
 import { callRuntime } from "../../util/runtime";
 import { getSection } from "../../util/sections";
-import { writeHTMLResumeStatements } from "../../util/signals";
+import { renameBindings, writeHTMLResumeStatements } from "../../util/signals";
 import { flushInto } from "../../util/writer";
 
 export default {
@@ -15,6 +15,7 @@ export default {
 
       flushInto(program);
       writeHTMLResumeStatements(program, tagVarIdentifier);
+      renameBindings();
 
       const returnIdentifier = returnId(section);
       if (returnIdentifier !== undefined) {

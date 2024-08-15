@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 
+import { currentProgramPath } from "../visitors/program";
 import { getExprRoot, getFnRoot, getMarkoRoot } from "./get-root";
 import { isStatefulReferences } from "./is-stateful";
 import { isOptimize } from "./marko-config";
@@ -209,13 +210,19 @@ export function trackReferencesForBinding(
         binding,
       );
     }
+
     if (changeBinding) {
-      trackReference(
-        (referencePath as t.NodePath<t.AssignmentExpression>).get(
-          "left",
-        ) as t.NodePath<t.Identifier>,
-        changeBinding,
-      );
+      if (referencePath.isUpdateExpression()) {
+        trackReference(
+          referencePath.get("argument") as t.NodePath<t.Identifier>,
+          changeBinding,
+        );
+      } else if (referencePath.isAssignmentExpression()) {
+        trackReference(
+          referencePath.get("left") as t.NodePath<t.Identifier>,
+          changeBinding,
+        );
+      }
     }
   }
 }
@@ -397,6 +404,7 @@ function trackReference(
   const reference = binding;
   const exprExtra = (exprRoot.node.extra ??= {});
   addReferenceToExpression(exprRoot, binding);
+  assignBinding(referencePath.node, binding);
 
   // TODO: remove
   if (fnRoot) {
@@ -520,7 +528,26 @@ export function finalizeReferences() {
   const intersections = new Set<Intersection>();
 
   for (const binding of bindings) {
-    const { section } = binding;
+    const { name, section } = binding;
+    if (binding.type !== BindingType.dom) {
+      for (const existingBinding of section.bindings) {
+        if (existingBinding.name === binding.name) {
+          /*
+            TODO: this will break if parent sections use the generated UID.
+            ```
+            let/_count
+            my-tag
+              let/count
+              div
+                let/count
+                -- ${_count}
+            ```
+          */
+          binding.name = currentProgramPath.scope.generateUid(name);
+          break;
+        }
+      }
+    }
     section.bindings.add(binding);
     for (const {
       referencedBindings,

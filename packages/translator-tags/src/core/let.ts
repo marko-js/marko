@@ -75,7 +75,7 @@ export default {
     if (!t.isIdentifier(tagVar)) {
       throw tag
         .get("var")
-        .buildCodeFrameError("The `let` cannot be destructured.");
+        .buildCodeFrameError("The `let` tag variable cannot be destructured.");
     }
 
     if (valueChangeAttr && computeNode(valueChangeAttr.value)) {
@@ -84,7 +84,7 @@ export default {
         .find((attr) => attr.node === valueChangeAttr)!
         .get("value")
         .buildCodeFrameError(
-          "The 'let' tag 'valueChange' attribute must be a function.",
+          "The `let` tag `valueChange` attribute must be a function.",
         );
     }
 
