@@ -32,7 +32,7 @@
       <!--M_*0 #button/6-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{count:0,count2:0,count3:0,count4:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count4",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count3",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count2",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{count:0,_count:0,_count2:0,_count3:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count3",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count2",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -80,7 +80,7 @@ container.querySelectorAll("button")[buttonNum++].click()
       <!--M_*0 #button/6-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{count:0,count2:0,count3:0,count4:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count4",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count3",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count2",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{count:0,_count:0,_count2:0,_count3:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count3",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count2",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -128,7 +128,7 @@ container.querySelectorAll("button")[buttonNum++].click()
       <!--M_*0 #button/6-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{count:0,count2:0,count3:0,count4:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count4",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count3",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count2",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{count:0,_count:0,_count2:0,_count3:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count3",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count2",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -176,7 +176,7 @@ container.querySelectorAll("button")[buttonNum++].click()
       <!--M_*0 #button/6-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{count:0,count2:0,count3:0,count4:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count4",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count3",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count2",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{count:0,_count:0,_count2:0,_count3:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count3",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count2",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -224,7 +224,7 @@ container.querySelectorAll("button")[buttonNum++].click()
       <!--M_*0 #button/6-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{count:0,count2:0,count3:0,count4:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count4",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count3",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count2",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{count:0,_count:0,_count2:0,_count3:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count3",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count2",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>
@@ -272,7 +272,7 @@ buttonNum = 0
       <!--M_*0 #button/6-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{count:0,count2:0,count3:0,count4:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count4",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count3",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count2",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{count:0,_count:0,_count2:0,_count3:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count3",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count2",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0__count",0,"packages/translator-tags/src/__tests__/fixtures/shadow-same-scope/template.marko_0_count"];M._.d=1;M._.w()
     </script>
   </body>
 </html>

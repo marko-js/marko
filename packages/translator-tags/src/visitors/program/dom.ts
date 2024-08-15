@@ -12,7 +12,7 @@ import {
   getClosures,
   getResumeRegisterId,
   initValue,
-  renameReferences,
+  renameBindings,
   replaceAssignments,
   writeSignals,
 } from "../../util/signals";
@@ -82,7 +82,7 @@ export default {
 
       writeSignals(section);
 
-      renameReferences();
+      renameBindings();
 
       program.node.body.push(
         t.exportNamedDeclaration(

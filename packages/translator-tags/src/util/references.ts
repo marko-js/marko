@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 
+import { currentProgramPath } from "../visitors/program";
 import { getExprRoot, getFnRoot, getMarkoRoot } from "./get-root";
 import { isStatefulReferences } from "./is-stateful";
 import { isOptimize } from "./marko-config";
@@ -178,8 +179,6 @@ export function trackReferencesForBinding(
   const { identifier, referencePaths, constantViolations } = babelBinding;
   const binding = identifier.extra!.binding!;
 
-  assignBinding(identifier, binding);
-
   for (const referencePath of referencePaths) {
     trackReference(referencePath as t.NodePath<t.Identifier>, binding);
   }
@@ -211,19 +210,16 @@ export function trackReferencesForBinding(
         binding,
       );
     }
+
     if (changeBinding) {
-      if (t.isUpdateExpression(referencePath)) {
+      if (referencePath.isUpdateExpression()) {
         trackReference(
-          (referencePath as t.NodePath<t.UpdateExpression>).get(
-            "argument",
-          ) as t.NodePath<t.Identifier>,
+          referencePath.get("argument") as t.NodePath<t.Identifier>,
           changeBinding,
         );
-      } else if (t.isAssignmentExpression(referencePath)) {
+      } else if (referencePath.isAssignmentExpression()) {
         trackReference(
-          (referencePath as t.NodePath<t.AssignmentExpression>).get(
-            "left",
-          ) as t.NodePath<t.Identifier>,
+          referencePath.get("left") as t.NodePath<t.Identifier>,
           changeBinding,
         );
       }
@@ -534,10 +530,21 @@ export function finalizeReferences() {
   for (const binding of bindings) {
     const { name, section } = binding;
     if (binding.type !== BindingType.dom) {
-      let shadowCount = 1;
       for (const existingBinding of section.bindings) {
         if (existingBinding.name === binding.name) {
-          binding.name = name + ++shadowCount;
+          /*
+            TODO: this will break if parent sections use the generated UID.
+            ```
+            let/_count
+            my-tag
+              let/count
+              div
+                let/count
+                -- ${_count}
+            ```
+          */
+          binding.name = currentProgramPath.scope.generateUid(name);
+          break;
         }
       }
     }

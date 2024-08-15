@@ -666,12 +666,12 @@ export function getResumeRegisterId(
   );
 }
 
-export function renameReferences() {
+export function renameBindings() {
   t.traverseFast(currentProgramPath.node, (node) => {
     if (t.isIdentifier(node)) {
-      const source = node.extra?.source;
-      if (source && source.name !== node.name) {
-        node.name = source.name;
+      const binding = node.extra && (node.extra.source || node.extra.binding);
+      if (binding && binding.name !== node.name) {
+        node.name = binding.name;
       }
     }
   });
