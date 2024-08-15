@@ -1,4 +1,4 @@
-import { write as _write, register as _register, escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const {
@@ -7,9 +7,9 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _write("<div>");
   const _forScopeIds = [],
     _scope1_ = new Map();
-  const _by = _register(function (c) {
+  const _by = function (c) {
     return c.id;
-  }, "packages/translator-tags/src/__tests__/fixtures/remove-and-add-rows/template.marko_0/by", _scope0_id);
+  };
   let _i2 = 0;
   for (const child of children) {
     const _scope1_id = _nextScopeId();

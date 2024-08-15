@@ -39,7 +39,8 @@ export default {
         (isNativeTag(markoRoot.parentPath as t.NodePath<t.MarkoTag>) ||
           isCoreTagName(markoRoot.parentPath, "effect") ||
           isCoreTagName(markoRoot.parentPath, "lifecycle") ||
-          isCoreTagName(markoRoot.parentPath, "for"))) ||
+          isCoreTagName(markoRoot.parentPath, "for") ||
+          isCoreTagName(markoRoot.parentPath, "do"))) ||
         markoRoot.isMarkoPlaceholder() ||
         markoRoot.isMarkoScriptlet({ target: "server" }))
     ) {
