@@ -1,9 +1,7 @@
 import * as babelParser from "@babel/parser";
 import { types as t } from "@marko/compiler";
 
-import { getLocRange } from "./loc";
-
-const CODE_AS_WHITE_SPACE_KEY = Symbol();
+import { getLoc, getLocRange } from "./loc";
 
 export function parseStatements(
   file,
@@ -122,17 +120,9 @@ function tryParse(
   let code = str;
 
   if (typeof sourceStart === "number") {
-    const whitespace =
-      file.metadata.marko[CODE_AS_WHITE_SPACE_KEY] ||
-      (file.metadata.marko[CODE_AS_WHITE_SPACE_KEY] = file.code.replace(
-        /[^\s]/g,
-        " ",
-      ));
-    code =
-      whitespace.slice(
-        0,
-        sourceOffset ? sourceStart - sourceOffset : sourceStart,
-      ) + str;
+    const startLoc = getLoc(file, sourceStart - (sourceOffset || 0));
+    parserOpts.startLine = startLoc.line;
+    parserOpts.startColumn = startLoc.column;
 
     try {
       return isExpression
@@ -152,6 +142,9 @@ function tryParse(
       } else {
         return [parseError];
       }
+    } finally {
+      parserOpts.startLine = 1;
+      parserOpts.startColumn = 0;
     }
   } else {
     return isExpression
@@ -186,15 +179,19 @@ function createParseError(file, sourceStart, sourceEnd, label, errorLoc) {
   };
 }
 
-function getBoundedRange(sourceRange, start) {
-  if (start && typeof start.index === "number") {
+function getBoundedRange(range, loc) {
+  if (loc && typeof loc.line === "number") {
+    const { start, end } = range;
+    // If start is out of bounds return the source.
     if (
-      start.index < sourceRange.start.index ||
-      start.index >= sourceRange.end.index
+      loc.line < start.line ||
+      (loc.line === start.line && loc.column < start.column) ||
+      loc.line > end.line ||
+      (loc.line === end.line && loc.column > end.column)
     ) {
-      return sourceRange;
+      return range;
     }
 
-    return { start, end: start };
+    return { start: loc, end: loc };
   }
 }
