@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.37.5
+
+### Patch Changes
+
+- [#2274](https://github.com/marko-js/marko/pull/2274) [`5cea7d6`](https://github.com/marko-js/marko/commit/5cea7d65ead9b58d7d7d244078d279d561fd3ea7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize javascript parsing helpers to pass in start line / column information to babel rather than faking it with whitespace.
+
+  For large templates this can have a significant impact on parsing performance.
+
+- Updated dependencies [[`5cea7d6`](https://github.com/marko-js/marko/commit/5cea7d65ead9b58d7d7d244078d279d561fd3ea7)]:
+  - @marko/babel-utils@6.5.2
+
 ## 5.37.4
 
 ### Patch Changes
