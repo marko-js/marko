@@ -1,5 +1,14 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.21
+
+### Patch Changes
+
+- [#2279](https://github.com/marko-js/marko/pull/2279) [`9411c9d`](https://github.com/marko-js/marko/commit/9411c9dc2c72f39f3c37563bfbe21942effee251) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where MARKO_DEBUG was not being processed when bundling @marko/translator-tags and @marko/translator-interop.
+
+- Updated dependencies [[`9411c9d`](https://github.com/marko-js/marko/commit/9411c9dc2c72f39f3c37563bfbe21942effee251)]:
+  - @marko/translator-tags@0.2.5
+
 ## 0.1.20
 
 ### Patch Changes
