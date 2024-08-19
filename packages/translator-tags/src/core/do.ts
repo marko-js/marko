@@ -38,45 +38,47 @@ export default {
         );
     }
   },
-  translate(tag) {
-    const section = getSection(tag);
-    const [valueAttr] = tag.node.attributes;
-    const { value } = valueAttr;
-    const referencedBindings = value.extra?.referencedBindings;
-    let statement: t.Statement | t.Statement[] | null = null;
-    if (t.isFunctionExpression(value) || t.isArrowFunctionExpression(value)) {
-      if (t.isBlockStatement(value.body)) {
-        let hasDeclaration = false;
-        for (const child of value.body.body) {
-          if (t.isDeclaration(child)) {
-            hasDeclaration = true;
-            break;
+  translate: {
+    exit(tag) {
+      const section = getSection(tag);
+      const [valueAttr] = tag.node.attributes;
+      const { value } = valueAttr;
+      const referencedBindings = value.extra?.referencedBindings;
+      let statement: t.Statement | t.Statement[] | null = null;
+      if (t.isFunctionExpression(value) || t.isArrowFunctionExpression(value)) {
+        if (t.isBlockStatement(value.body)) {
+          let hasDeclaration = false;
+          for (const child of value.body.body) {
+            if (t.isDeclaration(child)) {
+              hasDeclaration = true;
+              break;
+            }
           }
+
+          statement = hasDeclaration ? value.body : value.body.body;
+        } else {
+          statement = t.expressionStatement(value.body);
         }
-
-        statement = hasDeclaration ? value.body : value.body.body;
-      } else {
-        statement = t.expressionStatement(value.body);
       }
-    }
 
-    if (isOutputHTML()) {
-      if (statement) {
-        tag.insertBefore(statement);
+      if (isOutputHTML()) {
+        if (statement) {
+          tag.insertBefore(statement);
+        } else {
+          tag.insertBefore(t.expressionStatement(t.callExpression(value, [])));
+        }
       } else {
-        tag.insertBefore(t.expressionStatement(t.callExpression(value, [])));
+        addStatement(
+          "render",
+          section,
+          referencedBindings,
+          statement ??
+            t.expressionStatement(t.callExpression(value, [scopeIdentifier])),
+        );
       }
-    } else {
-      addStatement(
-        "render",
-        section,
-        referencedBindings,
-        statement ??
-          t.expressionStatement(t.callExpression(value, [scopeIdentifier])),
-      );
-    }
 
-    tag.remove();
+      tag.remove();
+    },
   },
   attributes: {},
   autocomplete: [

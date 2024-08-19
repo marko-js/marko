@@ -1,4 +1,4 @@
-// size: 570 (min) 291 (brotli)
+// size: 570 (min) 290 (brotli)
 
 import {
   register as n,
@@ -16,7 +16,7 @@ const m = t(2, (n, o) => u(n[0], o)),
   s = a(
     0,
     n(
-      "a3",
+      "a0",
       o(
         "<li> </li>",
         "D ",
@@ -27,7 +27,7 @@ const m = t(2, (n, o) => u(n[0], o)),
       ),
     ),
   ),
-  f = n("a4", (n) =>
+  f = n("a1", (n) =>
     i(
       n[2],
       "click",
@@ -48,7 +48,7 @@ const m = t(2, (n, o) => u(n[0], o)),
         },
       ]);
   }),
-  v = n("a5", (n) =>
+  v = n("a2", (n) =>
     i(
       n[1],
       "click",

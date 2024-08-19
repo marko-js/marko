@@ -12,12 +12,11 @@ const _onClick = _scope => {
   };
 };
 const _list_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list", _scope => _on(_scope["#button/2"], "click", _onClick(_scope)));
-const _by = _scope => function (x) {
-  return x;
-};
 const _list = /* @__PURE__ */_value("list", (_scope, list) => {
   _queueEffect(_scope, _list_effect);
-  _for(_scope, [list, _by(_scope)]);
+  _for(_scope, [list, function (x) {
+    return x;
+  }]);
 });
 const _onClick2 = _scope => {
   const {

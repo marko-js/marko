@@ -11,7 +11,7 @@ import {
 } from "@marko/runtime-tags/dom";
 const s = c(6, (o, t) => r(o[3], t)),
   a = c(5, (o, t) => r(o[2], t)),
-  u = o("a1", (o) =>
+  u = o("a0", (o) =>
     t(
       o[0],
       "click",

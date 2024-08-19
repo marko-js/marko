@@ -18,7 +18,7 @@ const e = a(2, (o) => {
   k = r(8, (o, t) => c(o[4], t)),
   u = r(7, (o, t) => c(o[3], t), e),
   d = r(6, (o, t) => c(o[2], t), e),
-  f = o("a1", (o) =>
+  f = o("a0", (o) =>
     t(
       o[0],
       "click",

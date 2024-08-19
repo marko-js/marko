@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { currentProgramPath } from "../visitors/program";
-import { getExprRoot, getFnRoot, getMarkoRoot } from "./get-root";
+import { getExprRoot, getFnRoot } from "./get-root";
 import { isStatefulReferences } from "./is-stateful";
 import { isOptimize } from "./marko-config";
 import {
@@ -51,16 +51,6 @@ declare module "@marko/compiler/dist/types" {
     binding?: Binding;
     source?: Binding;
     isEffect?: true;
-  }
-
-  // TODO: remove
-  export interface FunctionExpressionExtra {
-    name?: string;
-  }
-
-  // TODO: remove
-  export interface ArrowFunctionExpressionExtra {
-    name?: string;
   }
 }
 
@@ -399,16 +389,13 @@ function trackReference(
 ) {
   const fnRoot = getFnRoot(referencePath.scope.path);
   const exprRoot = getExprRoot(fnRoot || referencePath);
-  const markoRoot = getMarkoRoot(exprRoot);
   const section = getOrCreateSection(exprRoot);
   const reference = binding;
   const exprExtra = (exprRoot.node.extra ??= {});
   addReferenceToExpression(exprRoot, binding);
   assignBinding(referencePath.node, binding);
 
-  // TODO: remove
   if (fnRoot) {
-    let name = (fnRoot.node as t.FunctionExpression).id?.name;
     let fnExtra = exprExtra;
 
     if (fnRoot !== exprRoot) {
@@ -419,22 +406,6 @@ function trackReference(
         reference,
       );
     }
-
-    if (!name) {
-      if (markoRoot.isMarkoAttribute()) {
-        name = markoRoot.node.default
-          ? t.toIdentifier(
-              (markoRoot.parentPath.parentPath as t.NodePath<t.MarkoTag>).get(
-                "name",
-              ),
-            )
-          : markoRoot.node.name;
-      } else {
-        name = "anonymous";
-      }
-    }
-
-    fnExtra.name = name;
   }
 }
 

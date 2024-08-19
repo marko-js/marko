@@ -12,13 +12,13 @@ import {
   init as s,
 } from "@marko/runtime-tags/dom";
 const i = n(
-    "a1",
+    "a0",
     o("<span> </span>", "D ", (n) => {
       t(n[0], n.$global.x);
     }),
   ),
   u = m(0),
-  p = n("a2", (n) =>
+  p = n("a1", (n) =>
     a(
       n[1],
       "click",

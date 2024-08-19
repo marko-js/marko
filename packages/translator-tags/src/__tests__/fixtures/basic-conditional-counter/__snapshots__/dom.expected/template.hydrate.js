@@ -15,9 +15,9 @@ import {
   init as e,
 } from "@marko/runtime-tags/dom";
 const f = s(4, (n, o) => u(n[0], o)),
-  k = n("a2", o("<span> </span>", "D ", void 0, [f])),
+  k = n("a0", o("<span> </span>", "D ", void 0, [f])),
   p = l(2),
-  d = t("a3", (n) =>
+  d = t("a1", (n) =>
     c(
       n[0],
       "click",
@@ -30,7 +30,7 @@ const f = s(4, (n, o) => u(n[0], o)),
     ),
   ),
   g = r(4, (n, o) => a(n, d), i(f, 2)),
-  v = t("a4", (n) =>
+  v = t("a2", (n) =>
     c(
       n[1],
       "click",

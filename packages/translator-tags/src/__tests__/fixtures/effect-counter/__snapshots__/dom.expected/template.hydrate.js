@@ -8,7 +8,7 @@ import {
   queueEffect as c,
   init as m,
 } from "@marko/runtime-tags/dom";
-const r = t("a2", (t) => {
+const r = t("a0", (t) => {
     const { 1: e } = t;
     (document.getElementById("button").textContent = e),
       n(

@@ -22,14 +22,12 @@ export { returnId };
 const usedTag = new WeakSet<t.Hub>();
 
 export default {
-  translate(tag) {
+  analyze(tag) {
     assertNoArgs(tag);
     assertNoVar(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
     assertNoSpreadAttrs(tag);
-
-    const section = getSection(tag);
 
     if (usedTag.has(tag.hub)) {
       throw tag
@@ -40,10 +38,7 @@ export default {
     }
     usedTag.add(tag.hub);
 
-    const {
-      node,
-      hub: { file },
-    } = tag;
+    const { node } = tag;
     const [valueAttr] = node.attributes;
 
     if (!t.isMarkoAttribute(valueAttr) || !valueAttr.default) {
@@ -70,34 +65,43 @@ export default {
         );
       }
     }
-
-    const { value } = valueAttr;
-
-    if (isOutputHTML()) {
-      writer.flushBefore(tag);
-      const returnId = file.path.scope.generateUidIdentifier("return");
-      _setReturnId(section, returnId);
-
-      tag
-        .replaceWith(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(returnId, value),
-          ]),
-        )[0]
-        .skip();
-    } else {
-      addValue(
-        section,
-        value.extra?.referencedBindings,
-        {
-          identifier: importRuntime("tagVarSignal"),
-          hasDownstreamIntersections: () => true,
+  },
+  translate: {
+    exit(tag) {
+      const section = getSection(tag);
+      const {
+        node: {
+          attributes: [{ value }],
         },
-        value,
-      );
+        hub: { file },
+      } = tag;
 
-      tag.remove();
-    }
+      if (isOutputHTML()) {
+        writer.flushBefore(tag);
+        const returnId = file.path.scope.generateUidIdentifier("return");
+        _setReturnId(section, returnId);
+
+        tag
+          .replaceWith(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(returnId, value),
+            ]),
+          )[0]
+          .skip();
+      } else {
+        addValue(
+          section,
+          value.extra?.referencedBindings,
+          {
+            identifier: importRuntime("tagVarSignal"),
+            hasDownstreamIntersections: () => true,
+          },
+          value,
+        );
+
+        tag.remove();
+      }
+    },
   },
   autocomplete: [
     {

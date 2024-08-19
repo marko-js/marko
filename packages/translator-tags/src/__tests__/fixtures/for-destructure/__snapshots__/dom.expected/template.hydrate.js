@@ -1,4 +1,4 @@
-// size: 615 (min) 307 (brotli)
+// size: 615 (min) 306 (brotli)
 
 import {
   register as i,
@@ -19,7 +19,7 @@ const s = n(5, (i, c) => e(i[1], c)),
   u = a(
     0,
     i(
-      "a2",
+      "a0",
       c(
         "<div><!>: <!></div>",
         "D%c%",
@@ -30,7 +30,7 @@ const s = n(5, (i, c) => e(i[1], c)),
       ),
     ),
   ),
-  p = i("a3", (i) => {
+  p = i("a1", (i) => {
     t(
       i[1],
       "click",

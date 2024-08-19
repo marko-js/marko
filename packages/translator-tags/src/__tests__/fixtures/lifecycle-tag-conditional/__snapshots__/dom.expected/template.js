@@ -1,5 +1,5 @@
-import { register as _register, lifecycle as _lifecycle, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, queueEffect as _queueEffect, closure as _closure, registerRenderer as _registerRenderer, conditional as _conditional, value as _value, inConditionalScope as _inConditionalScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _onMount = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1/onMount", _scope => {
+import { lifecycle as _lifecycle, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, closure as _closure, registerRenderer as _registerRenderer, conditional as _conditional, value as _value, inConditionalScope as _inConditionalScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _onMount = _scope => {
   const {
     _: {
       x
@@ -8,8 +8,8 @@ const _onMount = _register("packages/translator-tags/src/__tests__/fixtures/life
   return function () {
     document.getElementById("ref").textContent = "Mount " + x;
   };
-});
-const _onUpdate = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1/onUpdate", _scope => {
+};
+const _onUpdate = _scope => {
   const {
     _: {
       x
@@ -18,14 +18,13 @@ const _onUpdate = _register("packages/translator-tags/src/__tests__/fixtures/lif
   return function () {
     document.getElementById("ref").textContent = "Update " + x;
   };
-});
-const _onDestroy = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1/onDestroy", _scope => function () {
-  document.getElementById("ref").textContent = "Destroy";
-});
+};
 const _x$ifBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_x", _scope => _lifecycle(_scope, "_lifecycle", {
   onMount: _onMount(_scope),
   onUpdate: _onUpdate(_scope),
-  onDestroy: _onDestroy(_scope)
+  onDestroy: function () {
+    document.getElementById("ref").textContent = "Destroy";
+  }
 }));
 const _x$ifBody = /* @__PURE__ */_closure("x", (_scope, x) => _queueEffect(_scope, _x$ifBody_effect));
 const _ifBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_renderer", /* @__PURE__ */_createRenderer("", "", void 0, [_x$ifBody]));

@@ -17,7 +17,7 @@ import {
 } from "@marko/runtime-tags/dom";
 const f = r(3, (o, t) => b(o[1], t)),
   k = r(2, (o, t) => f(o, t[0])),
-  v = o("a1", (o) =>
+  v = o("a0", (o) =>
     t(
       o[0],
       "click",
@@ -32,6 +32,6 @@ const f = r(3, (o, t) => b(o[1], t)),
     ),
   ),
   _ = a(1, (o, t) => d(o, v)),
-  g = s(0, n("a2", i("<button> </button>", " D ", void 0, [_], void 0, k))),
+  g = s(0, n("a1", i("<button> </button>", " D ", void 0, [_], void 0, k))),
   l = r(1, (o, t) => g(o, [t, 0, 1]), c([g, m(_, 0)]));
 e();

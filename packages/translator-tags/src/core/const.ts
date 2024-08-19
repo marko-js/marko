@@ -51,24 +51,26 @@ export default {
       (valueAttr.value.extra ??= {}),
     );
   },
-  translate(tag) {
-    const { node } = tag;
-    const [valueAttr] = node.attributes;
-    const { value } = valueAttr;
+  translate: {
+    exit(tag) {
+      const { node } = tag;
+      const [valueAttr] = node.attributes;
+      const { value } = valueAttr;
 
-    if (isOutputDOM()) {
-      const section = getSection(tag);
-      const varBinding = node.var!.extra?.binding;
+      if (isOutputDOM()) {
+        const section = getSection(tag);
+        const varBinding = node.var!.extra?.binding;
 
-      if (varBinding && !varBinding.upstreamAlias) {
-        const derivation = initValue(varBinding)!;
-        addValue(section, value.extra?.referencedBindings, derivation, value);
+        if (varBinding && !varBinding.upstreamAlias) {
+          const derivation = initValue(varBinding)!;
+          addValue(section, value.extra?.referencedBindings, derivation, value);
+        }
+      } else {
+        translateVar(tag, value);
       }
-    } else {
-      translateVar(tag, value);
-    }
 
-    tag.remove();
+      tag.remove();
+    },
   },
   attributes: {},
   autocomplete: [

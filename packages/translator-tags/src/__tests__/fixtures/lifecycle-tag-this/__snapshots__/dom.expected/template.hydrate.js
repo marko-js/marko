@@ -1,4 +1,4 @@
-// size: 456 (min) 240 (brotli)
+// size: 426 (min) 230 (brotli)
 
 import {
   register as t,
@@ -9,22 +9,20 @@ import {
   queueEffect as r,
   init as u,
 } from "@marko/runtime-tags/dom";
-const i = t(
-    "a0",
-    (t) =>
-      function () {
-        this.onUpdate();
-      },
-  ),
-  a = t("a1", (t) => {
+const i = (t) => {
     const { 1: n } = t;
     return function () {
       (document.getElementById("ref").textContent = `x=${n}, was=${this.cur}`),
         (this.cur = n);
     };
-  }),
-  s = t("a3", (t) => {
-    n(t, 3, { onMount: i(t), onUpdate: a(t) }),
+  },
+  s = t("a0", (t) => {
+    n(t, 3, {
+      onMount: function () {
+        this.onUpdate();
+      },
+      onUpdate: i(t),
+    }),
       o(
         t[0],
         "click",

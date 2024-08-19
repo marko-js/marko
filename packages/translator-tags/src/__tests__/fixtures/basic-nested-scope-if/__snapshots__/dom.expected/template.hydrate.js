@@ -17,10 +17,10 @@ import {
 } from "@marko/runtime-tags/dom";
 const k = m(1, (t, o) => r(t[0], o)),
   p = t(
-    "a1",
+    "a0",
     o("<span>The button was clicked <!> times.</span>", "Db%", void 0, [k]),
   ),
-  f = n("a2", (t) =>
+  f = n("a1", (t) =>
     a(
       t[0],
       "click",
@@ -37,7 +37,7 @@ const k = m(1, (t, o) => r(t[0], o)),
   l = m(1, (t, o) => {
     r(t[1], o), e(t, f);
   }),
-  v = t("a3", o("<button> </button>", " D ", void 0, [l])),
+  v = t("a2", o("<button> </button>", " D ", void 0, [l])),
   D = b(0),
   _ = i(1, (t, o) => D(t, o < 3 ? v : p), c([D, s(l, 0), s(k, 0)]));
 d();

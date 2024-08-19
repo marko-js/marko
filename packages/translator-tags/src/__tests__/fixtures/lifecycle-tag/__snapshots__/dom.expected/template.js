@@ -1,20 +1,20 @@
-import { register as _register, lifecycle as _lifecycle, on as _on, queueSource as _queueSource, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _onMount = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag/template.marko_0/onMount", _scope => {
+import { lifecycle as _lifecycle, on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _onMount = _scope => {
   const {
     x
   } = _scope;
   return function () {
     document.getElementById("ref").textContent = "Mount " + x;
   };
-});
-const _onUpdate = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag/template.marko_0/onUpdate", _scope => {
+};
+const _onUpdate = _scope => {
   const {
     x
   } = _scope;
   return function () {
     document.getElementById("ref").textContent = "Update " + x;
   };
-});
+};
 const _onClick = _scope => {
   const {
     x

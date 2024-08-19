@@ -8,4 +8,4 @@ import {
   init as r,
 } from "@marko/runtime-tags/dom";
 const a = t(1, (m, o) => n(m[0], o));
-m("a1", (m) => o(m, a, "Client Only")), r();
+m("a0", (m) => o(m, a, "Client Only")), r();

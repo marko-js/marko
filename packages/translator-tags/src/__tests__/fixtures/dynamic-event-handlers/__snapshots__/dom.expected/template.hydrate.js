@@ -9,7 +9,7 @@ import {
   queueEffect as n,
   init as s,
 } from "@marko/runtime-tags/dom";
-const a = o("a1", (o) => {
+const a = o("a0", (o) => {
     const { 2: c } = o;
     t(
       o[0],

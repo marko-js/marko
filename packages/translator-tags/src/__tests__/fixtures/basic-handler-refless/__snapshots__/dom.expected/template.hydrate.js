@@ -1,4 +1,4 @@
-// size: 201 (min) 134 (brotli)
+// size: 195 (min) 132 (brotli)
 
 import {
   register as o,
@@ -9,14 +9,9 @@ import {
   init as n,
 } from "@marko/runtime-tags/dom";
 const r = c(2, (o, m) => i(o[1], m));
-o("a1", (o) =>
-  m(
-    o[0],
-    "click",
-    ((o) =>
-      function () {
-        t(o, r, 1);
-      })(o),
-  ),
+o("a0", (o) =>
+  m(o[0], "click", function () {
+    t(o, r, 1);
+  }),
 ),
   n();

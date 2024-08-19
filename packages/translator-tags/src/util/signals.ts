@@ -1076,7 +1076,7 @@ function bindFunction(
 ) {
   const { node } = fn;
   const { extra } = node;
-  if (!extra) return;
+  if (!extra?.referencedBindings) return;
   const { name, referencedBindings } = extra;
   const fnId = fn.hub.file.path.scope.generateUidIdentifier(name);
 

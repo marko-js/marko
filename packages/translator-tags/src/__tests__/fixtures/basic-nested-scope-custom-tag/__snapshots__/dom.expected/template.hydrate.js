@@ -1,4 +1,4 @@
-// size: 445 (min) 252 (brotli)
+// size: 445 (min) 251 (brotli)
 
 import {
   register as t,
@@ -14,7 +14,7 @@ import {
   queueSource as l,
   init as a,
 } from "@marko/runtime-tags/dom";
-const d = t("b1", (t) =>
+const d = t("b0", (t) =>
   o(
     t[0],
     "click",
@@ -29,10 +29,10 @@ const d = t("b1", (t) =>
   ),
 );
 b(
-  "b3",
+  "b2",
   i("<button> </button>", " D ", void 0, [
     n(
-      "b2",
+      "b1",
       c(1, (t, o) => {
         r(t[1], o), u(t, d);
       }),

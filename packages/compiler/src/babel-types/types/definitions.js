@@ -2,6 +2,7 @@ import {
   arrayOfType,
   assertEach,
   assertNodeType,
+  assertOneOf,
   assertValueType,
   chain,
 } from "@babel/types/lib/definitions/utils";
@@ -87,7 +88,7 @@ const MarkoDefinitions = {
         default: false,
       },
       target: {
-        validate: assertValueType("string"),
+        validate: assertOneOf("server", "client"),
         optional: true,
       },
     },

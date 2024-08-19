@@ -16,7 +16,7 @@ const l = o(2, (n) => {
     t(n[0], o);
   }),
   a = n(3, null, l),
-  e = c("b1", (n) =>
+  e = c("b0", (n) =>
     r(
       n[1],
       "click",

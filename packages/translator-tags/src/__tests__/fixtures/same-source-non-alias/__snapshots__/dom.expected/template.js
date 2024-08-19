@@ -1,9 +1,10 @@
+_register("packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0/createWrapper", createWrapper);
 function createWrapper(a) {
   return {
     a
   };
 }
-import { on as _on, data as _data, queueSource as _queueSource, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { register as _register, on as _on, data as _data, queueSource as _queueSource, value as _value, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _b = (_scope, b) => {
   _data(_scope["#text/2"], b);
 };

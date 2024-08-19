@@ -1,42 +1,42 @@
-// size: 468 (min) 231 (brotli)
+// size: 448 (min) 229 (brotli)
 
 import {
   register as t,
-  queueSource as n,
-  value as o,
-  data as r,
-  lifecycle as c,
-  on as u,
+  lifecycle as n,
+  on as o,
+  queueSource as r,
+  value as c,
+  data as u,
   queueEffect as i,
   init as s,
 } from "@marko/runtime-tags/dom";
-const a = t("a0", (t) => {
+const e = c(4, (t, n) => u(t[1], n)),
+  m = (t) => {
     const { 3: n } = t;
     return function () {
       this.cur = n;
     };
-  }),
-  e = t("a1", (t) => {
-    const { 3: o } = t;
+  },
+  a = (t) => {
+    const { 3: n } = t;
     return function () {
-      n(t, m, this.cur), (this.cur = o);
+      r(t, e, this.cur), (this.cur = n);
     };
-  }),
-  m = o(4, (t, n) => r(t[1], n)),
-  f = t("a3", (t) => {
-    c(t, 4, { onMount: a(t), onUpdate: e(t) }),
-      u(
+  },
+  f = t("a0", (t) => {
+    n(t, 4, { onMount: m(t), onUpdate: a(t) }),
+      o(
         t[2],
         "click",
         ((t) => {
-          const { 3: o } = t;
+          const { 3: n } = t;
           return function () {
-            n(t, h, o + 1);
+            r(t, h, n + 1);
           };
         })(t),
       );
   }),
-  h = o(3, (t, n) => {
-    r(t[0], n), i(t, f);
+  h = c(3, (t, n) => {
+    u(t[0], n), i(t, f);
   });
 s();

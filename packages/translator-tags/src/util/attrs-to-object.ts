@@ -1,95 +1,12 @@
 import { types as t } from "@marko/compiler";
 
-import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 import { isOutputHTML } from "./marko-config";
-import { forEach } from "./optional";
-import { getScopeAccessorLiteral } from "./references";
 import { callRuntime } from "./runtime";
-import { createScopeReadPattern } from "./scope-read";
-import { getScopeIdIdentifier, getSection, type Section } from "./sections";
-import { getResumeRegisterId, getSerializedScopeProperties } from "./signals";
+import { getScopeIdIdentifier, getSection } from "./sections";
+import { getResumeRegisterId } from "./signals";
 import toPropertyName from "./to-property-name";
 
 const renderBodyProps = new WeakMap<t.Expression, t.ArrowFunctionExpression>();
-const htmlHoistFunctionVisitor: t.Visitor<{ section: Section }> = {
-  FunctionExpression: { exit: htmlFunctionVisit },
-  ArrowFunctionExpression: { exit: htmlFunctionVisit },
-};
-
-export const domHoistFunctionVisitor: t.Visitor<{ section: Section }> = {
-  FunctionExpression: { exit: domFunctionVisit },
-  ArrowFunctionExpression: { exit: domFunctionVisit },
-};
-
-function htmlFunctionVisit(
-  fn: t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression>,
-  state: { section: Section },
-) {
-  const extra = fn.node.extra;
-  if (!extra) return;
-
-  const serializedScopeProperties = getSerializedScopeProperties(state.section);
-  forEach(extra.referencedBindings, (ref) => {
-    serializedScopeProperties.set(
-      getScopeAccessorLiteral(ref),
-      t.identifier(ref.name),
-    );
-  });
-  fn.replaceWith(
-    callRuntime(
-      "register",
-      fn.node,
-      t.stringLiteral(extra.registerId!),
-      getScopeIdIdentifier(state.section),
-    ),
-  )[0].skip();
-}
-
-function domFunctionVisit(
-  fn: t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression>,
-  state: { section: Section },
-) {
-  const { node } = fn;
-  const extra = node.extra;
-  if (!extra) return;
-
-  const { referencedBindings } = extra;
-  const fnId = currentProgramPath.scope.generateUidIdentifier(extra.name);
-
-  currentProgramPath
-    .pushContainer(
-      "body",
-      t.variableDeclaration("const", [
-        t.variableDeclarator(
-          fnId,
-          callRuntime(
-            "register",
-            t.stringLiteral(extra.registerId!),
-            t.arrowFunctionExpression(
-              [scopeIdentifier],
-              referencedBindings
-                ? t.blockStatement([
-                    t.variableDeclaration("const", [
-                      t.variableDeclarator(
-                        createScopeReadPattern(
-                          state.section,
-                          referencedBindings,
-                        ),
-                        scopeIdentifier,
-                      ),
-                    ]),
-                    t.returnStatement(node),
-                  ])
-                : node,
-            ),
-          ),
-        ),
-      ]),
-    )[0]
-    .skip();
-
-  fn.replaceWith(t.callExpression(fnId, [scopeIdentifier]))[0].skip();
-}
 
 export default function attrsToObject(
   tag: t.NodePath<t.MarkoTag>,
@@ -98,13 +15,8 @@ export default function attrsToObject(
   const { node } = tag;
   let result: t.Expression = t.objectExpression([]);
   const resultExtra = (result.extra = {});
-  const section = getSection(tag);
-  const hoistVisitor = isOutputHTML()
-    ? htmlHoistFunctionVisitor
-    : domHoistFunctionVisitor;
 
   for (const attr of tag.get("attributes")) {
-    attr.traverse(hoistVisitor, { section });
     const value = attr.node.value!;
 
     if (attr.isMarkoSpreadAttribute()) {

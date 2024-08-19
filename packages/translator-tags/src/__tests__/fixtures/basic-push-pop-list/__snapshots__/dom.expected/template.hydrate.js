@@ -14,7 +14,7 @@ import {
 } from "@marko/runtime-tags/dom";
 const m = t(2, (o, n) => s(o[0], n)),
   d = o(
-    "a2",
+    "a0",
     n(
       " ",
       " ",
@@ -24,7 +24,7 @@ const m = t(2, (o, n) => s(o[0], n)),
       t(1, (o, n) => m(o, n[0])),
     ),
   ),
-  e = o("a3", (o) =>
+  e = o("a1", (o) =>
     c(
       o[1],
       "click",
@@ -41,7 +41,7 @@ const m = t(2, (o, n) => s(o[0], n)),
     r(o, e);
   }),
   k = a(0, d),
-  v = o("a4", (o) =>
+  v = o("a2", (o) =>
     c(
       o[2],
       "click",

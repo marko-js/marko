@@ -10,9 +10,9 @@ import {
   conditional as m,
   init as a,
 } from "@marko/runtime-tags/dom";
-const i = o("a1", n("Hello!", "")),
+const i = o("a0", n("Hello!", "")),
   u = m(0),
-  e = o("a2", (o) =>
+  e = o("a1", (o) =>
     t(
       o[1],
       "click",

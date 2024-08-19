@@ -15,10 +15,10 @@ import {
   init as e,
 } from "@marko/runtime-tags/dom";
 const p = i(3, (n, o) => l(n[0], o)),
-  d = n("a1", o("<span> </span>", "D ", void 0, [p])),
+  d = n("a0", o("<span> </span>", "D ", void 0, [p])),
   f = u(1),
   k = t(3, null, a(p, 1)),
-  b = r("a2", (n) =>
+  b = r("a1", (n) =>
     c(
       n[0],
       "click",

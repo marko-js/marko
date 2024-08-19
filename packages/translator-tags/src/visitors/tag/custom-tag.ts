@@ -8,10 +8,7 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 
-import attrsToObject, {
-  domHoistFunctionVisitor,
-  getRenderBodyProp,
-} from "../../util/attrs-to-object";
+import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
 import { isOutputHTML } from "../../util/marko-config";
 import {
   type Binding,
@@ -322,7 +319,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
             `${tagName}_${attrExport.id}`,
           );
           const attrReferences = attr.value.extra?.referencedBindings;
-          attrPath.traverse(domHoistFunctionVisitor, { section: tagSection });
           addValue(
             tagSection,
             attrReferences,
