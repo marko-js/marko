@@ -12,6 +12,9 @@ build({
   platform: "node",
   packages: "external",
   entryPoints: [`src/index.ts`],
+  define: {
+    MARKO_DEBUG: "false",
+  },
 }).catch((err) => {
   console.error(err);
   process.exit(1);
