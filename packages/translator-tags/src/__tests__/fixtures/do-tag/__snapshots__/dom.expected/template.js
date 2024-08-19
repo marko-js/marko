@@ -1,3 +1,4 @@
+_register("packages/translator-tags/src/__tests__/fixtures/do-tag/template.marko_0/fromStatic", fromStatic);
 import log from "./test-log";
 function fromStatic() {
   log.static += "rendered";

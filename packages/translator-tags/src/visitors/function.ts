@@ -16,39 +16,67 @@ import {
 import { getSerializedScopeProperties } from "../util/signals";
 import { currentProgramPath, scopeIdentifier } from "./program";
 const functionIdsBySection = new WeakMap<Section, Map<string, number>>();
-const registeredFunctions = new WeakSet<
-  t.FunctionExpression | t.ArrowFunctionExpression
->();
+const registeredFunctions = new WeakSet<t.Function>();
 
 declare module "@marko/compiler/dist/types" {
-  export interface NodeExtra {
+  export interface FunctionDeclarationExtra {
     registerId?: string;
+    name?: string;
+  }
+
+  export interface FunctionExpressionExtra {
+    registerId?: string;
+    name?: string;
+  }
+
+  export interface ArrowFunctionExpressionExtra {
+    registerId?: string;
+    name?: string;
   }
 }
 
 export default {
   analyze(fn: t.NodePath<t.Function>) {
-    if (!(fn.isFunctionExpression() || fn.isArrowFunctionExpression())) {
-      return;
-    }
-
     const markoRoot = getMarkoRoot(fn);
+    const isStatic = !markoRoot || markoRoot.isMarkoScriptlet({ static: true });
+    if (!isFunction(fn, isStatic)) return;
+
     if (
       markoRoot &&
-      ((markoRoot.isMarkoAttribute() &&
-        (isNativeTag(markoRoot.parentPath as t.NodePath<t.MarkoTag>) ||
-          isCoreTagName(markoRoot.parentPath, "effect") ||
-          isCoreTagName(markoRoot.parentPath, "lifecycle") ||
-          isCoreTagName(markoRoot.parentPath, "for") ||
-          isCoreTagName(markoRoot.parentPath, "do"))) ||
-        markoRoot.isMarkoPlaceholder() ||
+      (markoRoot.isMarkoPlaceholder() ||
         markoRoot.isMarkoScriptlet({ target: "server" }))
     ) {
+      // Server only or render only functions never need to be registered.
       return;
     }
 
     const { node } = fn;
     const extra = (node.extra ??= {});
+    const name = (extra.name =
+      (fn.node as t.FunctionExpression).id?.name ||
+      (markoRoot?.isMarkoAttribute()
+        ? markoRoot.node.default
+          ? t.toIdentifier(
+              (markoRoot.parentPath.parentPath as t.NodePath<t.MarkoTag>).get(
+                "name",
+              ),
+            )
+          : markoRoot.node.name
+        : "anonymous"));
+
+    if (
+      markoRoot &&
+      markoRoot.isMarkoAttribute() &&
+      (isNativeTag(markoRoot.parentPath as t.NodePath<t.MarkoTag>) ||
+        isCoreTagName(markoRoot.parentPath, "effect") ||
+        isCoreTagName(markoRoot.parentPath, "lifecycle") ||
+        isCoreTagName(markoRoot.parentPath, "for") ||
+        isCoreTagName(markoRoot.parentPath, "do"))
+    ) {
+      // Native tags, effects, lifecycles, and for loops aren't registered here since handle pulling in the function themselves.
+      return;
+    }
+
     const {
       markoOpts,
       opts: { filename },
@@ -59,24 +87,6 @@ export default {
     if (!functionNameCounts) {
       functionNameCounts = new Map();
       functionIdsBySection.set(section, functionNameCounts);
-    }
-
-    let name = extra.name as string | undefined;
-    if (name === undefined) {
-      const markoRoot = fn.parentPath;
-      if (markoRoot.isMarkoAttribute()) {
-        name = markoRoot.node.default
-          ? t.toIdentifier(
-              (markoRoot.parentPath.parentPath as t.NodePath<t.MarkoTag>).get(
-                "name",
-              ),
-            )
-          : markoRoot.node.name;
-      } else {
-        name = "anonymous";
-      }
-
-      extra.name = name;
     }
     const index = functionNameCounts.get(name);
     let id = "";
@@ -94,13 +104,10 @@ export default {
   },
   translate: {
     exit(fn: t.NodePath<t.Function>) {
-      if (!(fn.isFunctionExpression() || fn.isArrowFunctionExpression())) {
-        return;
-      }
-
       const markoRoot = getMarkoRoot(fn);
       const isStatic =
         !markoRoot || markoRoot.isMarkoScriptlet({ static: true });
+      if (!isFunction(fn, isStatic)) return;
 
       const { node } = fn;
       const { extra } = node;
@@ -111,8 +118,6 @@ export default {
 
       registeredFunctions.add(node);
 
-      let replacement: t.Expression;
-
       if (isOutputHTML()) {
         const serializedScopeProperties = getSerializedScopeProperties(section);
         forEach(extra.referencedBindings, (ref) => {
@@ -122,23 +127,68 @@ export default {
           );
         });
 
-        replacement = callRuntime(
-          "register",
-          node,
-          t.stringLiteral(extra.registerId),
-          isStatic ? undefined : getScopeIdIdentifier(section),
-        );
+        if (t.isFunctionDeclaration(node)) {
+          currentProgramPath
+            .unshiftContainer(
+              "body",
+              t.expressionStatement(
+                callRuntime(
+                  "register",
+                  node.id,
+                  t.stringLiteral(extra.registerId),
+                  isStatic ? undefined : getScopeIdIdentifier(section),
+                ),
+              ),
+            )[0]
+            .skip();
+        } else {
+          const replacement = callRuntime(
+            "register",
+            node,
+            t.stringLiteral(extra.registerId),
+            isStatic ? undefined : getScopeIdIdentifier(section),
+          );
+
+          if (isMarko(fn.parentPath)) {
+            replacement.extra = node.extra;
+          }
+
+          fn.replaceWith(replacement)[0].skip();
+        }
       } else {
         const { referencedBindings } = extra;
         const fnId = currentProgramPath.scope.generateUidIdentifier(extra.name);
 
-        if (isStatic) {
-          replacement = callRuntime(
+        if (t.isFunctionDeclaration(node)) {
+          currentProgramPath
+            .unshiftContainer(
+              "body",
+              t.expressionStatement(
+                callRuntime(
+                  "register",
+                  t.stringLiteral(extra.registerId),
+                  node.id,
+                ),
+              ),
+            )[0]
+            .skip();
+        } else if (isStatic) {
+          const replacement = callRuntime(
             "register",
             t.stringLiteral(extra.registerId),
             node,
           );
+          if (isMarko(fn.parentPath)) {
+            replacement.extra = node.extra;
+          }
+
+          fn.replaceWith(replacement)[0].skip();
         } else {
+          const replacement = t.callExpression(fnId, [scopeIdentifier]);
+          if (isMarko(fn.parentPath)) {
+            replacement.extra = node.extra;
+          }
+
           currentProgramPath
             .pushContainer(
               "body",
@@ -170,15 +220,28 @@ export default {
               ]),
             )[0]
             .skip();
-          replacement = t.callExpression(fnId, [scopeIdentifier]);
+
+          fn.replaceWith(replacement)[0].skip();
         }
       }
-
-      if (isMarko(fn.parentPath)) {
-        replacement.extra = node.extra;
-      }
-
-      fn.replaceWith(replacement)[0].skip();
     },
   },
 };
+
+function isFunction(
+  fn: t.NodePath<t.Node>,
+  isStatic: boolean,
+): fn is
+  | t.NodePath<t.FunctionDeclaration>
+  | t.NodePath<t.FunctionExpression>
+  | t.NodePath<t.ArrowFunctionExpression> {
+  switch (fn.node.type) {
+    case "FunctionDeclaration":
+      return isStatic;
+    case "FunctionExpression":
+    case "ArrowFunctionExpression":
+      return true;
+    default:
+      return false;
+  }
+}

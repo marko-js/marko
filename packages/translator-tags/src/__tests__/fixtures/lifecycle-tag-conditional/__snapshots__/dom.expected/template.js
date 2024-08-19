@@ -19,13 +19,12 @@ const _onUpdate = _scope => {
     document.getElementById("ref").textContent = "Update " + x;
   };
 };
-const _temp = _scope => function () {
-  document.getElementById("ref").textContent = "Destroy";
-};
 const _x$ifBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_x", _scope => _lifecycle(_scope, "_lifecycle", {
   onMount: _onMount(_scope),
   onUpdate: _onUpdate(_scope),
-  onDestroy: _temp(_scope)
+  onDestroy: function () {
+    document.getElementById("ref").textContent = "Destroy";
+  }
 }));
 const _x$ifBody = /* @__PURE__ */_closure("x", (_scope, x) => _queueEffect(_scope, _x$ifBody_effect));
 const _ifBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_renderer", /* @__PURE__ */_createRenderer("", "", void 0, [_x$ifBody]));

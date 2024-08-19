@@ -27,10 +27,9 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   (_scope["_y_change"] ? _y : _y_init)(_scope, x);
 }, _y);
-const _temp = _scope => function () {
+const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0", _scope => _on(_scope["#button/3"], "click", function () {
   _queueSource(_scope, _yChange, null);
-};
-const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0", _scope => _on(_scope["#button/3"], "click", _temp(_scope)));
+}));
 const _setup = _scope => {
   _queueEffect(_scope, _setup_effect);
   _x(_scope, 1);

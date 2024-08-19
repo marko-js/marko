@@ -1,4 +1,4 @@
-// size: 340 (min) 193 (brotli)
+// size: 328 (min) 189 (brotli)
 
 import {
   register as c,
@@ -16,21 +16,11 @@ const a = m(2, (c) => {
   f = t(6, (c, o) => i(c[3], o), a),
   k = t(5, (c, o) => i(c[1], o), a);
 c("a0", (c) => {
-  o(
-    c[0],
-    "click",
-    ((c) =>
-      function () {
-        n(c, k, 10);
-      })(c),
-  ),
-    o(
-      c[2],
-      "click",
-      ((c) =>
-        function () {
-          n(c, f, 5);
-        })(c),
-    );
+  o(c[0], "click", function () {
+    n(c, k, 10);
+  }),
+    o(c[2], "click", function () {
+      n(c, f, 5);
+    });
 }),
   r();

@@ -1,4 +1,4 @@
-// size: 468 (min) 247 (brotli)
+// size: 462 (min) 244 (brotli)
 
 import {
   registerSubscriber as c,
@@ -37,15 +37,10 @@ t(
   ),
 );
 const f = b(4, null, i(4));
-i(3);
-r("b3", (c) =>
-  l(
-    c[0],
-    "click",
-    ((c) =>
-      function () {
-        s(c, f, 4);
-      })(c),
+i(3),
+  r("b3", (c) =>
+    l(c[0], "click", function () {
+      s(c, f, 4);
+    }),
   ),
-),
   u();

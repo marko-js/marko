@@ -1,4 +1,9 @@
 static const formatNumber = (n: number) => {
   return "$" + n.toFixed(2);
 }
+
+static function formatNumber2(n: number) {
+  return "$" + n.toFixed(2);
+}
 <counter format=formatNumber/>
+<counter format=formatNumber2/>

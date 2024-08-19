@@ -82,6 +82,10 @@ declare module "@marko/compiler/dist/types" {
     extra: ProgramExtra & NodeExtra;
   }
 
+  export interface FunctionDeclaration {
+    extra?: FunctionDeclarationExtra & NodeExtra;
+  }
+
   export interface FunctionExpression {
     extra?: FunctionExpressionExtra & NodeExtra;
   }

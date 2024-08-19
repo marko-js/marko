@@ -1,11 +1,12 @@
+_register("packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0/noop", noop);
 function noop(_) {}
-import { on as _on, data as _data, queueSource as _queueSource, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { register as _register, on as _on, data as _data, queueSource as _queueSource, value as _value, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _e = /* @__PURE__ */_value("e", (_scope, e) => _data(_scope["#text/5"], JSON.stringify(e)));
 const _d = /* @__PURE__ */_value("d", (_scope, d) => _data(_scope["#text/4"], d));
 const _c = /* @__PURE__ */_value("c", (_scope, c) => _data(_scope["#text/3"], JSON.stringify(c)));
 const _b = /* @__PURE__ */_value("b", (_scope, b) => _data(_scope["#text/2"], b));
 const _a = /* @__PURE__ */_value("a", (_scope, a) => _data(_scope["#text/1"], a));
-const _temp = _scope => function () {
+const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0", _scope => _on(_scope["#button/0"], "click", function () {
   let local;
   let _a2;
   let _b2;
@@ -37,8 +38,7 @@ const _temp = _scope => function () {
   }]);
   _queueSource(_scope, _d, _d2);
   _queueSource(_scope, _e, _e2);
-};
-const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0", _scope => _on(_scope["#button/0"], "click", _temp(_scope)));
+}));
 const _setup = _scope => {
   _queueEffect(_scope, _setup_effect);
   _a(_scope, 0);

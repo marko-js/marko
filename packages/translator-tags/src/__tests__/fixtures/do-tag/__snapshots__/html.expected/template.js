@@ -5,6 +5,7 @@ function fromStatic() {
 import { register as _register, escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
+  _register(fromStatic, "packages/translator-tags/src/__tests__/fixtures/do-tag/template.marko_0/fromStatic");
   log.block += "rendered";
   const fromConst = _register(function () {
     log.const += "rendered";

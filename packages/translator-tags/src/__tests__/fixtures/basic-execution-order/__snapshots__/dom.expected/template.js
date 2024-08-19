@@ -4,11 +4,10 @@ const _ifBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtur
 const _if = /* @__PURE__ */_conditional("#text/1");
 const _show = /* @__PURE__ */_value("show", (_scope, show) => _if(_scope, show ? _ifBody : null), _if);
 const _message = /* @__PURE__ */_value("message", null, _inConditionalScope(_message$ifBody, "#text/1"));
-const _temp = _scope => function () {
+const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_0", _scope => _on(_scope["#button/0"], "click", function () {
   _queueSource(_scope, _message, null);
   _queueSource(_scope, _show, false);
-};
-const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-execution-order/template.marko_0", _scope => _on(_scope["#button/0"], "click", _temp(_scope)));
+}));
 const _setup = _scope => {
   _queueEffect(_scope, _setup_effect);
   _message(_scope, {
