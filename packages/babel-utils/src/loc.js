@@ -30,7 +30,7 @@ function getLineIndexes(file) {
   let lineIndexes = file.metadata.marko[LINE_INDEX_KEY];
 
   if (!lineIndexes) {
-    lineIndexes = [0];
+    lineIndexes = [-1];
     for (let i = 0; i < file.code.length; i++) {
       if (file.code[i] === "\n") {
         lineIndexes.push(i);
@@ -58,13 +58,19 @@ function findLoc(lineIndexes, startLine, index) {
   }
 
   let lineIndex = lineIndexes[line];
-  if (lineIndex > index) {
+  if (lineIndex >= index) {
     lineIndex = lineIndexes[--line];
   }
 
+  if (line === 0) {
+    return {
+      line: 1,
+      column: index,
+    };
+  }
+
   return {
-    index,
     line: line + 1,
-    column: index === lineIndex ? 0 : index - lineIndex - (line === 0 ? 0 : 1),
+    column: index - lineIndex - 1,
   };
 }
