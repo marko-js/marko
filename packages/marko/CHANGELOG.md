@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.35.10
+
+### Patch Changes
+
+- [#2277](https://github.com/marko-js/marko/pull/2277) [`ce88d81`](https://github.com/marko-js/marko/commit/ce88d8194f98b4010032634f5427021810f6acdb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix "off by one" issue with source location information when the index was at the start of the line.
+
+- Updated dependencies [[`ce88d81`](https://github.com/marko-js/marko/commit/ce88d8194f98b4010032634f5427021810f6acdb)]:
+  - @marko/compiler@5.37.6
+  - @marko/translator-default@6.0.8
+
 ## 5.35.9
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @marko/translator-tags
 
+## 0.2.4
+
+### Patch Changes
+
+- [#2277](https://github.com/marko-js/marko/pull/2277) [`ce88d81`](https://github.com/marko-js/marko/commit/ce88d8194f98b4010032634f5427021810f6acdb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix "off by one" issue with source location information when the index was at the start of the line.
+
+- Updated dependencies [[`ce88d81`](https://github.com/marko-js/marko/commit/ce88d8194f98b4010032634f5427021810f6acdb)]:
+  - @marko/babel-utils@6.5.3
+  - @marko/runtime-tags@0.1.9
+
 ## 0.2.3
 
 ### Patch Changes
