@@ -1,5 +1,5 @@
 # Write
-  <button class=inc>1<!--M_*1 #text/1-->,<!>10<!--M_*1 #text/2--></button><!--M_*1 #button/0--><!--M_[2--><div>Counts: <!>1<!--M_*2 #text/0-->,<!>10<!--M_*2 #text/1--></div><!--M_]1 #text/3--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.c={0:{"#childScope/0":_.a={x:1,y:10,"#text/3!":_.b={},"#text/3(":_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/template.marko_1_renderer"]}},1:_.a,2:_.b})];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y"];M._.d=1;M._.w()</script>
+  <button class=inc>1<!--M_*1 #text/1-->,<!>10<!--M_*1 #text/2--></button><!--M_*1 #button/0--><!--M_[2--><div>Counts: <!>1<!--M_*2 #text/0-->,<!>10<!--M_*2 #text/1--></div><!--M_]1 #text/3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:{"#childScope/0":_.a={x:1,y:10,"#text/3!":_.b={},"#text/3(":_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/template.marko_1_renderer"]}},1:_.a,2:_.b}),1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y",0];M._.w()</script>
 
 
 # Render "End"
@@ -31,7 +31,7 @@
     </div>
     <!--M_]1 #text/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.c={0:{"#childScope/0":_.a={x:1,y:10,"#text/3!":_.b={},"#text/3(":_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/template.marko_1_renderer"]}},1:_.a,2:_.b})];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{"#childScope/0":_.a={x:1,y:10,"#text/3!":_.b={},"#text/3(":_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/template.marko_1_renderer"]}},1:_.a,2:_.b}),1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y",0];M._.w()
     </script>
   </body>
 </html>

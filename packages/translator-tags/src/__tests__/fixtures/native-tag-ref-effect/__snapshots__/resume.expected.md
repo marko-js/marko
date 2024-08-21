@@ -8,7 +8,7 @@
     </div>
     <!--M_*0 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect/template.marko_0"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[0,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 # Write
-  <em>Testing</em> <!>Hello <strong>World</strong><!--M_*0 #text/0--><script>WALKER_RUNTIME("M")("_");M._.d=1</script>
+  <em>Testing</em> <!>Hello <strong>World</strong><!--M_*0 #text/0--><script>WALKER_RUNTIME("M")("_")</script>
 
 
 # Render "End"
@@ -18,7 +18,7 @@
     </strong>
     <!--M_*0 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.d=1
+      WALKER_RUNTIME("M")("_")
     </script>
   </body>
 </html>

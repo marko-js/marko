@@ -3,7 +3,7 @@
 
 
 # Write
-  <!--M_!a-->efg<style M_>t{display:none}</style><t c M_=a>ERROR!</t><script>WALKER_RUNTIME("M")("_");REORDER_RUNTIME(M._);M._.d=1;M._.w()</script>
+  <!--M_!a-->efg<style M_>t{display:none}</style><t c M_=a>ERROR!</t><script>WALKER_RUNTIME("M")("_");REORDER_RUNTIME(M._);M._.w()</script>
 
 
 # Render "End"
@@ -19,7 +19,7 @@
   <body>
     aERROR!efg
     <script>
-      WALKER_RUNTIME("M")("_");REORDER_RUNTIME(M._);M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");REORDER_RUNTIME(M._);M._.w()
     </script>
   </body>
 </html>

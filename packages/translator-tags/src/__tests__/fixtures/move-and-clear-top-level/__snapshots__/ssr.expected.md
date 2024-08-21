@@ -1,5 +1,5 @@
 # Write
-  a<!--M_*1 #text/0-->b<!--M_*2 #text/0-->c<!--M_*3 #text/0--><!--M_|0 #text/0 1,2,3--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.e={0:{"#text/0(":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},1:_.b,2:_.c,3:_.d})];M._.d=1</script>
+  a<!--M_*1 #text/0-->b<!--M_*2 #text/0-->c<!--M_*3 #text/0--><!--M_|0 #text/0 1,2,3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.e={0:{"#text/0(":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},1:_.b,2:_.c,3:_.d}),0]</script>
 
 
 # Render "End"
@@ -15,7 +15,7 @@
     <!--M_*3 #text/0-->
     <!--M_|0 #text/0 1,2,3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.e={0:{"#text/0(":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},1:_.b,2:_.c,3:_.d})];M._.d=1
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={0:{"#text/0(":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},1:_.b,2:_.c,3:_.d}),0]
     </script>
   </body>
 </html>

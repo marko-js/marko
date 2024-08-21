@@ -1,5 +1,5 @@
 # Write
-  <!--M_[1--><div>baz</div><!--M_]0 #text/0--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.b={0:{"#text/0!":_.a={},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/import-tag-ternary/components/baz.marko"]},1:_.a})];M._.d=1</script>
+  <!--M_[1--><div>baz</div><!--M_]0 #text/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{"#text/0!":_.a={},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/import-tag-ternary/components/baz.marko"]},1:_.a}),0]</script>
 
 
 # Render "End"
@@ -13,7 +13,7 @@
     </div>
     <!--M_]0 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{"#text/0!":_.a={},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/import-tag-ternary/components/baz.marko"]},1:_.a})];M._.d=1
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{"#text/0!":_.a={},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/import-tag-ternary/components/baz.marko"]},1:_.a}),0]
     </script>
   </body>
 </html>

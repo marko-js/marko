@@ -291,6 +291,9 @@ class Reference {
 
 export class Serializer {
   #state = new State();
+  get flushed() {
+    return this.#state.flushed;
+  }
   stringify(val: unknown, boundary: Boundary) {
     try {
       this.#state.flushed = false;
@@ -300,11 +303,14 @@ export class Serializer {
       this.#flush();
     }
   }
-
-  get flushed() {
-    return this.#state.flushed;
+  nextId() {
+    return nextId(this.#state);
   }
-
+  symbol(id: string) {
+    const symbol = Symbol();
+    this.#state.refs.set(symbol, new Reference(null, null, 0, null, id));
+    return symbol;
+  }
   #flush() {
     this.#state.flush++;
     this.#state.buf = [];
@@ -1327,13 +1333,17 @@ function assignId(state: State, ref: Reference) {
 }
 
 function nextRefAccess(state: State) {
+  return "_." + nextId(state);
+}
+
+function nextId(state: State) {
   const encodeChars =
     "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
   const encodeLen = encodeChars.length;
   const encodeStartLen = encodeLen - 11; // Avoids chars that cannot start a property name and _ (reserved).
   let index = state.ids++;
   let mod = index % encodeStartLen;
-  let id = "_." + encodeChars[mod];
+  let id = encodeChars[mod];
   index = (index - mod) / encodeStartLen;
 
   while (index > 0) {
