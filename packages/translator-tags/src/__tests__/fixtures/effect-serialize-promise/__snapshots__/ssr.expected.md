@@ -1,5 +1,5 @@
 # Write
-  <div id=ref>0</div><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.b={0:{promise:new Promise((f,r)=>_.a={f,r})}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/effect-serialize-promise/template.marko_0_promise"];M._.w();M._.s.push(_=>(_.a.f("hello"),_.c={}));M._.d=1</script>
+  <div id=ref>0</div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{promise:new Promise((f,r)=>_.a={f,r})}}),0,"packages/translator-tags/src/__tests__/fixtures/effect-serialize-promise/template.marko_0_promise"];M._.w();M._.r.push(_=>(_.a.f("hello"),_.c={}),0)</script>
 
 
 # Render "End"
@@ -13,7 +13,7 @@
       0
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{promise:new Promise((f,r)=&gt;_.a={f,r})}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/effect-serialize-promise/template.marko_0_promise"];M._.w();M._.s.push(_=&gt;(_.a.f("hello"),_.c={}));M._.d=1
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{promise:new Promise((f,r)=&gt;_.a={f,r})}}),0,"packages/translator-tags/src/__tests__/fixtures/effect-serialize-promise/template.marko_0_promise"];M._.w();M._.r.push(_=&gt;(_.a.f("hello"),_.c={}),0)
     </script>
   </body>
 </html>

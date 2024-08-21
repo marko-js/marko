@@ -1,7 +1,7 @@
 # Write
   <!>replaced<!--M_*0 #text/0--><span>replaced<!--M_*0 #text/1--><div></div></span><div><div>a</div>replaced<!--M_*0 #text/2-->Hello Text &lt;a/><!>replaced<!--M_*0 #text/3-->Hello HTML <a/><script>
       Hello &lt;b> &lt;/script>
-    </script></div><script>WALKER_RUNTIME("M")("_");M._.d=1</script>
+    </script></div><script>WALKER_RUNTIME("M")("_")</script>
 
 
 # Render "End"
@@ -37,7 +37,7 @@
       </a>
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.d=1
+      WALKER_RUNTIME("M")("_")
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 # Write
-  <!--M_[1--><div>1<!--M_*1 #text/0-->|<!>Hello<!--M_*1 #text/1-->|<!>1<!--M_*1 #text/2--></div><!--M_]0 #text/0--><button>1<!--M_*0 #text/2--></button><!--M_*0 #button/1--><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.b={0:{x:1,"#text/0!":_.a={},"#text/0(":{renderBody:_._["packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_1_renderer"]}},1:_.a})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_0_x"];M._.d=1;M._.w()</script>
+  <!--M_[1--><div>1<!--M_*1 #text/0-->|<!>Hello<!--M_*1 #text/1-->|<!>1<!--M_*1 #text/2--></div><!--M_]0 #text/0--><button>1<!--M_*0 #text/2--></button><!--M_*0 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{x:1,"#text/0!":_.a={},"#text/0(":{renderBody:_._["packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_1_renderer"]}},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_0_x",0];M._.w()</script>
 
 
 # Render "End"
@@ -27,7 +27,7 @@
     </button>
     <!--M_*0 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{x:1,"#text/0!":_.a={},"#text/0(":{renderBody:_._["packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_1_renderer"]}},1:_.a})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_0_x"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{x:1,"#text/0!":_.a={},"#text/0(":{renderBody:_._["packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_1_renderer"]}},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

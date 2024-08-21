@@ -20,7 +20,7 @@
       <!--M_*4 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.e={0:_.a={b:2,c:3,"#childScope/1":_.c={"#text/0!":_.b={}}},1:_.c,2:_.b,3:_.d={_:_.a},4:{_:_.d}},_.b._=_.a,_.c["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_renderer"](_.a),_.e)];M._.e=[2,"packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_c/subscriber",4,"packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_3_c/subscriber",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_0"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={0:_.a={b:2,c:3,"#childScope/1":_.c={"#text/0!":_.b={}}},1:_.c,2:_.b,3:_.d={_:_.a},4:{_:_.d}},_.b._=_.a,_.c["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_renderer"](_.a),_.e),2,"packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_c/subscriber",4,"packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_3_c/subscriber",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -56,7 +56,7 @@ container.querySelector("button").click()
       <!--M_*4 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.e={0:_.a={b:2,c:3,"#childScope/1":_.c={"#text/0!":_.b={}}},1:_.c,2:_.b,3:_.d={_:_.a},4:{_:_.d}},_.b._=_.a,_.c["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_renderer"](_.a),_.e)];M._.e=[2,"packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_c/subscriber",4,"packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_3_c/subscriber",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_0"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={0:_.a={b:2,c:3,"#childScope/1":_.c={"#text/0!":_.b={}}},1:_.c,2:_.b,3:_.d={_:_.a},4:{_:_.d}},_.b._=_.a,_.c["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_renderer"](_.a),_.e),2,"packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_c/subscriber",4,"packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_3_c/subscriber",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

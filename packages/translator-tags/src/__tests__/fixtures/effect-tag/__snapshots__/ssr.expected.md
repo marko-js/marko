@@ -1,5 +1,5 @@
 # Write
-  <div id=ref>0</div><script>WALKER_RUNTIME("M")("_");M._.s=[_=>(_.a={0:{x:1}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/effect-tag/template.marko_0_x"];M._.d=1;M._.w()</script>
+  <div id=ref>0</div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{x:1}}),0,"packages/translator-tags/src/__tests__/fixtures/effect-tag/template.marko_0_x",0];M._.w()</script>
 
 
 # Render "End"
@@ -13,7 +13,7 @@
       0
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{x:1}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/effect-tag/template.marko_0_x"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{x:1}}),0,"packages/translator-tags/src/__tests__/fixtures/effect-tag/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

@@ -25,21 +25,15 @@ export type Scope<
 // TODO: SectionSiblings that is both a SectionStart and a SectionEnd (<for> siblings)
 //       NODE that doesn't have a sectionId and uses the previous sectionId
 export enum ResumeSymbol {
-  DefaultRuntimeId = "M",
   SectionStart = "[",
   SectionEnd = "]",
   SectionSingleNodesEnd = "|",
   Node = "*",
-  PlaceholderStart = "",
-  PlaceholderEnd = "",
-  ReplacementId = "",
-  VarReorderRuntime = "$r",
 }
 
 export enum AccessorChar {
   Dynamic = "?",
   Mark = "#",
-  Stale = "&",
   Subscribers = "*",
   LifecycleAbortController = "-",
   DynamicPlaceholderLastChild = "-",
@@ -48,7 +42,6 @@ export enum AccessorChar {
   ConditionalRenderer = "(",
   LoopScopeArray = "!",
   LoopScopeMap = "(",
-  LoopValue = ")",
   EventAttributes = "~",
 }
 

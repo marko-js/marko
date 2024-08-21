@@ -7,7 +7,7 @@
 
 
 # Write
-  <t c M_=b>cd</t><script>M._.d=1;M._.w()</script>
+  <t c M_=b>cd</t><script>M._.w()</script>
 
 
 # Render "End"
@@ -35,7 +35,7 @@
       cd
     </t>
     <script>
-      M._.d=1;M._.w()
+      M._.w()
     </script>
   </body>
 </html>

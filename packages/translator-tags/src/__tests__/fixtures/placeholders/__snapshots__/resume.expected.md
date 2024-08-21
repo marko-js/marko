@@ -31,7 +31,7 @@
       </a>
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.d=1
+      WALKER_RUNTIME("M")("_")
     </script>
   </body>
 </html>

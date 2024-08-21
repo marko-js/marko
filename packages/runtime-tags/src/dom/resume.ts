@@ -1,3 +1,4 @@
+import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import { ResumeSymbol, type Scope } from "../common/types";
 import type { Renderer } from "./renderer";
 import { bindRenderer } from "./scope";
@@ -12,12 +13,8 @@ interface RenderData {
   i: string;
   // Marked nodes to visit
   v: Comment[];
-  // Effect calls.
-  e?: (string | number)[];
-  // Scopes
-  s?: ((ctx: object) => Record<number | string, Scope>)[];
-  // Indicates that the render is done.
-  d?: 1;
+  // Resumes
+  r?: (string | number | ((ctx: object) => Record<number | string, Scope>))[];
   w(): void;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
@@ -25,10 +22,9 @@ type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 const registeredValues: Record<string, unknown> = {};
 
 class Render implements RenderData {
-  declare i: string;
-  declare v: Comment[];
-  declare e?: (string | number)[];
-  declare s?: ((ctx: object) => Record<number | string, Scope>)[];
+  declare i: RenderData["i"];
+  declare v: RenderData["v"];
+  declare r?: RenderData["r"];
   private declare ___currentScopeId: number;
   private declare ___data: RenderData;
   private declare ___renders: Renders;
@@ -111,45 +107,41 @@ class Render implements RenderData {
       }
     }
 
-    const serializedScopes = data.s;
-    if (serializedScopes) {
-      data.s = [];
+    const resumes = data.r;
+    if (resumes) {
+      data.r = [];
+      const len = resumes.length;
+      let i = 0;
+      while (i < len) {
+        const resumeData = resumes[i++];
+        if (typeof resumeData === "function") {
+          const scopes = resumeData(serializeContext);
+          let { $global } = scopeLookup;
 
-      for (const deserializeScopes of serializedScopes) {
-        const scopes = deserializeScopes(serializeContext);
-        let { $global } = scopeLookup;
+          if (!$global) {
+            scopeLookup.$global = $global = scopes.$ || {};
+            $global.runtimeId = this.___runtimeId;
+            $global.renderId = this.___renderId;
+          }
 
-        if (!$global) {
-          scopeLookup.$global = $global = scopes.$ || {};
-          $global.runtimeId = this.___runtimeId;
-          $global.renderId = this.___renderId;
-        }
-
-        for (const scopeId in scopes) {
-          if (scopeId !== "$") {
-            const scope = scopes[scopeId];
-            const prevScope = scopeLookup[scopeId];
-            scope.$global = $global;
-            if (prevScope !== scope) {
-              scopeLookup[scopeId] = Object.assign(scope, prevScope) as Scope;
+          for (const scopeId in scopes) {
+            if (scopeId !== "$") {
+              const scope = scopes[scopeId];
+              const prevScope = scopeLookup[scopeId];
+              scope.$global = $global;
+              if (prevScope !== scope) {
+                scopeLookup[scopeId] = Object.assign(scope, prevScope) as Scope;
+              }
             }
           }
+        } else if (i === len || typeof resumes[i] !== "string") {
+          delete this.___renders[this.___renderId];
+        } else {
+          (registeredValues[resumes[i++] as string] as RegisteredFn)(
+            scopeLookup[resumeData],
+          );
         }
       }
-    }
-
-    const effects = data.e;
-    if (effects) {
-      data.e = [];
-      for (let i = 0; i < effects.length; i += 2) {
-        (registeredValues[effects[i + 1] as string] as RegisteredFn)(
-          scopeLookup[effects[i] as number],
-        );
-      }
-    }
-
-    if (data.d) {
-      delete this.___renders[this.___renderId];
     }
   }
 }
@@ -188,7 +180,7 @@ export function getRegisteredWithScope(id: string, scope?: Scope) {
   return val;
 }
 
-export function init(runtimeId = ResumeSymbol.DefaultRuntimeId) {
+export function init(runtimeId = DEFAULT_RUNTIME_ID) {
   if (MARKO_DEBUG) {
     if (!runtimeId.match(/^[_$a-z][_$a-z0-9]*$/i)) {
       throw new Error(

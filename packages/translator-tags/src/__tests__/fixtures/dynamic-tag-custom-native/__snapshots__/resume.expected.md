@@ -14,7 +14,7 @@
     </div>
     <!--M_]0 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"],"#text/1!":_.a={},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"]},1:_.a})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"],"#text/1!":_.a={},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"]},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>
@@ -40,7 +40,7 @@ container.querySelector("button").click()
     />
     <!--M_]0 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"],"#text/1!":_.a={},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"]},1:_.a})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"],"#text/1!":_.a={},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"]},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>
@@ -69,7 +69,7 @@ container.querySelector("button").click()
     </div>
     <!--M_]0 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"],"#text/1!":_.a={},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"]},1:_.a})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"],"#text/1!":_.a={},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"]},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>

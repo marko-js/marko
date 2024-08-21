@@ -15,7 +15,7 @@
       <!--M_*0 #text/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.c={0:_.a={"#childScope/0":_.b={x:1}},1:_.b},_.b["/"]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-var/template.marko_0_data"](_.a),_.c)];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#childScope/0":_.b={x:1}},1:_.b},_.b["/"]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-var/template.marko_0_data"](_.a),_.c),1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -46,7 +46,7 @@ container.querySelector("button.inc").click()
       <!--M_*0 #text/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.c={0:_.a={"#childScope/0":_.b={x:1}},1:_.b},_.b["/"]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-var/template.marko_0_data"](_.a),_.c)];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#childScope/0":_.b={x:1}},1:_.b},_.b["/"]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-var/template.marko_0_data"](_.a),_.c),1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -78,7 +78,7 @@ container.querySelector("button.inc").click()
       <!--M_*0 #text/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.c={0:_.a={"#childScope/0":_.b={x:1}},1:_.b},_.b["/"]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-var/template.marko_0_data"](_.a),_.c)];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#childScope/0":_.b={x:1}},1:_.b},_.b["/"]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-var/template.marko_0_data"](_.a),_.c),1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -110,7 +110,7 @@ container.querySelector("button.inc").click()
       <!--M_*0 #text/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.c={0:_.a={"#childScope/0":_.b={x:1}},1:_.b},_.b["/"]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-var/template.marko_0_data"](_.a),_.c)];M._.e=[1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#childScope/0":_.b={x:1}},1:_.b},_.b["/"]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-var/template.marko_0_data"](_.a),_.c),1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

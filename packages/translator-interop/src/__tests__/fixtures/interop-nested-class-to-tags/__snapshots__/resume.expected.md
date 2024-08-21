@@ -19,7 +19,7 @@
       <!--M_]0 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a})];M._.e=[0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count"];M._.d=1;M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a}),0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
     </script>
   </body>
 </html>
@@ -73,7 +73,7 @@ container.querySelector("#tags").click()
       <!--M_]0 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a})];M._.e=[0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count"];M._.d=1;M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a}),0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
     </script>
   </body>
 </html>
@@ -108,7 +108,7 @@ container.querySelector("#class").click()
       <!--M_]0 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a})];M._.e=[0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count"];M._.d=1;M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a}),0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
     </script>
   </body>
 </html>
@@ -153,7 +153,7 @@ container.querySelector("#tags").click()
       <!--M_]0 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a})];M._.e=[0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count"];M._.d=1;M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a}),0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
     </script>
   </body>
 </html>
@@ -188,7 +188,7 @@ container.querySelector("#class").click()
       <!--M_]0 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a})];M._.e=[0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count"];M._.d=1;M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a}),0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
     </script>
   </body>
 </html>
@@ -233,7 +233,7 @@ container.querySelector("#tags").click()
       <!--M_]0 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a})];M._.e=[0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count"];M._.d=1;M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a}),0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/template.marko"]})
     </script>
   </body>
 </html>

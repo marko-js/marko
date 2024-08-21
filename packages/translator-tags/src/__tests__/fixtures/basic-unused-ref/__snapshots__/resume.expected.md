@@ -11,7 +11,7 @@
       <!--M_*0 #button/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{clickCount:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>
@@ -38,7 +38,7 @@ container.querySelector("button").click()
       <!--M_*0 #button/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{clickCount:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>
@@ -65,7 +65,7 @@ container.querySelector("button").click()
       <!--M_*0 #button/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{clickCount:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>
@@ -92,7 +92,7 @@ container.querySelector("button").click()
       <!--M_*0 #button/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.a={0:{clickCount:0}})];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>

@@ -806,7 +806,7 @@
     <!--M_*69 #div/2-->
     HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello
     <script>
-      WALKER_RUNTIME("M")("_");M._.d=1
+      WALKER_RUNTIME("M")("_")
     </script>
   </body>
 </html>

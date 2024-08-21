@@ -9,7 +9,7 @@
     </button>
     <!--M_*0 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:_.a={clickCount:0}},_.a.increment=_._["packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0/_"](_.a),_.b)];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0_increment"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={clickCount:0}},_.a.increment=_._["packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0/_"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0_increment",0];M._.w()
     </script>
   </body>
 </html>
@@ -34,7 +34,7 @@ container.querySelector("button").click()
     </button>
     <!--M_*0 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:_.a={clickCount:0}},_.a.increment=_._["packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0/_"](_.a),_.b)];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0_increment"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={clickCount:0}},_.a.increment=_._["packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0/_"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0_increment",0];M._.w()
     </script>
   </body>
 </html>
@@ -59,7 +59,7 @@ container.querySelector("button").click()
     </button>
     <!--M_*0 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:_.a={clickCount:0}},_.a.increment=_._["packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0/_"](_.a),_.b)];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0_increment"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={clickCount:0}},_.a.increment=_._["packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0/_"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0_increment",0];M._.w()
     </script>
   </body>
 </html>
@@ -84,7 +84,7 @@ container.querySelector("button").click()
     </button>
     <!--M_*0 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.s=[_=&gt;(_.b={0:_.a={clickCount:0}},_.a.increment=_._["packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0/_"](_.a),_.b)];M._.e=[0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0_increment"];M._.d=1;M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={clickCount:0}},_.a.increment=_._["packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0/_"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0_increment",0];M._.w()
     </script>
   </body>
 </html>

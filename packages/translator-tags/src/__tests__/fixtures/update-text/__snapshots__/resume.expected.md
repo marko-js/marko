@@ -8,7 +8,7 @@
     Dynamic 1
     <!--M_*0 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.d=1
+      WALKER_RUNTIME("M")("_")
     </script>
   </body>
 </html>

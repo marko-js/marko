@@ -25,8 +25,7 @@ enum Mark {
 
 enum RuntimeKey {
   Walk = ".w",
-  Scopes = ".s",
-  Effects = ".e",
+  Resume = ".r",
   Scripts = ".j",
   Done = ".d",
 }
@@ -285,8 +284,7 @@ export class State {
   public needsMainRuntime = false;
   public hasMainRuntime = false;
   public hasReorderRuntime = false;
-  public hasWrittenScopes = false;
-  public hasWrittenEffects = false;
+  public hasWrittenResume = false;
   public serializer = new Serializer();
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, PartialScope>();
@@ -523,35 +521,35 @@ export function prepareChunk(chunk: Chunk) {
     );
   }
 
-  if (state.writeScopes || serializer.flushed) {
-    const serialized = state.serializer.stringify(
-      state.writeScopes || {},
-      boundary,
-    );
-    let script = runtimePrefix + RuntimeKey.Scopes;
-    state.writeScopes = null;
-    if (state.hasWrittenScopes) {
-      script += ".push(" + serialized + ")";
-    } else {
-      state.hasWrittenScopes = true;
-      script += "=[" + serialized + "]";
-    }
+  let resumes = "";
 
-    scripts = concatScripts(scripts, script);
+  if (state.writeScopes || serializer.flushed) {
+    resumes = state.serializer.stringify(state.writeScopes || {}, boundary);
+    state.writeScopes = null;
   }
 
   if (effects) {
-    let script = runtimePrefix + RuntimeKey.Effects;
     hasWalk = true;
+    resumes = resumes ? resumes + "," + effects : effects;
+  }
 
-    if (state.hasWrittenEffects) {
-      script += ".push(" + effects + ")";
+  if (boundary.done && (resumes || state.hasWrittenResume)) {
+    resumes = resumes ? resumes + ",0" : "0";
+  }
+
+  if (resumes) {
+    if (state.hasWrittenResume) {
+      scripts = concatScripts(
+        scripts,
+        runtimePrefix + RuntimeKey.Resume + ".push(" + resumes + ")",
+      );
     } else {
-      state.hasWrittenEffects = true;
-      script += "=[" + effects + "]";
+      state.hasWrittenResume = true;
+      scripts = concatScripts(
+        scripts,
+        runtimePrefix + RuntimeKey.Resume + "=[" + resumes + "]",
+      );
     }
-
-    scripts = concatScripts(scripts, script);
   }
 
   if (state.writeReorders) {
@@ -602,17 +600,17 @@ export function prepareChunk(chunk: Chunk) {
       }
 
       if (reorderEffects) {
-        if (!state.hasWrittenEffects) {
-          state.hasWrittenEffects = true;
+        if (!state.hasWrittenResume) {
+          state.hasWrittenResume = true;
           scripts = concatScripts(
             scripts,
-            runtimePrefix + RuntimeKey.Effects + "=[]",
+            runtimePrefix + RuntimeKey.Resume + "=[]",
           );
         }
 
         reorderScripts = concatScripts(
           reorderScripts,
-          runtimePrefix + RuntimeKey.Effects + ".push(" + reorderEffects + ")",
+          "_.push(" + reorderEffects + ")",
         );
       }
 
@@ -623,7 +621,7 @@ export function prepareChunk(chunk: Chunk) {
             RuntimeKey.Scripts +
             "." +
             reorderId +
-            "=()=>{" +
+            "=_=>{" +
             reorderScripts +
             "}",
       );
@@ -640,10 +638,6 @@ export function prepareChunk(chunk: Chunk) {
     }
 
     state.writeReorders = null;
-  }
-
-  if (state.needsMainRuntime && boundary.done) {
-    scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Done + "=1");
   }
 
   if (hasWalk) {
