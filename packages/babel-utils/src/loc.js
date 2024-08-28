@@ -26,6 +26,35 @@ export function withLoc(file, node, start, end) {
   return node;
 }
 
+export function getStart(file, node) {
+  if (node.start != null) {
+    return node.start;
+  }
+
+  if (node.loc) {
+    return locToIndex(file, node.loc.start);
+  }
+
+  return null;
+}
+
+export function getEnd(file, node) {
+  if (node.end != null) {
+    return node.end;
+  }
+
+  if (node.loc) {
+    return locToIndex(file, node.loc.end);
+  }
+
+  return null;
+}
+
+function locToIndex(file, loc) {
+  const { line, column } = loc;
+  return line === 1 ? column : getLineIndexes(file)[line - 1] + column + 1;
+}
+
 function getLineIndexes(file) {
   let lineIndexes = file.metadata.marko[LINE_INDEX_KEY];
 

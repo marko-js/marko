@@ -64,7 +64,7 @@ var result = data
     path: NodePath<t.Program>,
     hub: HubInterface,
     code: string,
-    opts: Record<string, unknown>,
+    opts: Record<string, unknown> & { filename: string },
     metadata: Record<string, unknown> & {
       marko: import("@marko/compiler").MarkoMeta
     },

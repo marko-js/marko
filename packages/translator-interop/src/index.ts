@@ -94,7 +94,7 @@ function patchTranslateProgram(visitor: t.Visitor) {
                   code: generate(t.program(statements) as any, generatorOpts)
                     .code,
                   virtualPath: `${baseName}.hydrate-${name}.js`,
-                }),
+                })!,
               ),
             );
           };

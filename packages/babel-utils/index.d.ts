@@ -220,6 +220,8 @@ export function normalizeTemplateString(
 type Loc = { line: number; column: number; index?: number };
 type LocRange = { start: Loc; end: Loc };
 
+export function getStart(file: t.BabelFile, node: t.Node): number | null;
+export function getEnd(file: t.BabelFile, node: t.Node): number | null;
 export function getLoc(file: t.BabelFile, pos: number): Loc;
 export function getLocRange(
   file: t.BabelFile,

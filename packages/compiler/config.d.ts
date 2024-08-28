@@ -19,7 +19,7 @@ declare const Config: {
     | ((
         filename: string,
         dep: { virtualPath: string; code: string; map?: any },
-      ) => string)
+      ) => string | undefined | null)
     | null;
   hydrateIncludeImports?: RegExp | ((request: string) => boolean);
   hydrateInit?: boolean;
