@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.35.11
+
+### Patch Changes
+
+- [#2282](https://github.com/marko-js/marko/pull/2282) [`32e2eff`](https://github.com/marko-js/marko/commit/32e2eff5c3ecdcb36f7b6ed98ea2a1e705538a29) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve handling of sourcemaps for inline style blocks and tags.
+
+- Updated dependencies [[`32e2eff`](https://github.com/marko-js/marko/commit/32e2eff5c3ecdcb36f7b6ed98ea2a1e705538a29)]:
+  - @marko/translator-default@6.0.9
+  - @marko/compiler@5.37.7
+
 ## 5.35.10
 
 ### Patch Changes
