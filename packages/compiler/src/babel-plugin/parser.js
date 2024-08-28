@@ -251,7 +251,8 @@ export function parseMarko(file) {
       const tagName = parseTemplateString(part);
       const node = t.markoTag(tagName, [], t.markoTagBody());
       let parseType = TagType.html;
-      node.start = part.start - (part.concise ? 0 : 1); // Account for leading `<`.
+      node.start =
+        part.start - (part.start && code[part.start - 1] === "<" ? 1 : 0); // Account for leading `<` in html mode.
       node.end = part.end;
 
       if (t.isStringLiteral(tagName)) {
