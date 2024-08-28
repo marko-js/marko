@@ -178,7 +178,7 @@ function addBrowserImports(seenImports, body, file, entryFile) {
       let map;
 
       if (sourceMaps && dep.startPos !== undefined) {
-        s = s || new MagicString(file.code, { source: filename });
+        s = s || new MagicString(file.code, { filename });
         map = s.snip(dep.startPos, dep.endPos).generateMap({
           source: filename,
           includeContent: true,

@@ -17,7 +17,7 @@ export {
   diagnosticWarn,
 } from "./diagnostics";
 export { importDefault, importNamed, resolveRelativePath } from "./imports";
-export { getLoc, getLocRange, withLoc } from "./loc";
+export { getEnd, getLoc, getLocRange, getStart, withLoc } from "./loc";
 export {
   parseArgs,
   parseExpression,

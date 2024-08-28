@@ -1,5 +1,12 @@
-import { assertNoParams, importDefault, type Tag } from "@marko/babel-utils";
+import {
+  assertNoParams,
+  getEnd,
+  getStart,
+  importDefault,
+  type Tag,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import MagicString, { type SourceMap } from "magic-string";
 import path from "path";
 
 import { assertNoSpreadAttrs } from "../util/assert";
@@ -11,6 +18,7 @@ export default {
     const {
       hub: { file },
     } = tag;
+    const { filename, sourceMaps } = file.opts;
 
     assertNoParams(tag);
     assertNoSpreadAttrs(tag);
@@ -18,7 +26,7 @@ export default {
     let type = "text/css";
     const attrs = tag.get("attributes");
 
-    const base = path.basename(file.opts.sourceFileName as string);
+    const base = path.basename(filename);
 
     const typeAttr = attrs.find(
       (attr) => attr.isMarkoAttribute() && attr.node.name === "type",
@@ -69,20 +77,41 @@ export default {
     }
 
     const { resolveVirtualDependency } = getMarkoOpts();
+    const start = getStart(file, markoText.node);
+    const end = getEnd(file, markoText.node);
+    let code = markoText.node.value;
+    let map: SourceMap | undefined;
 
-    if (resolveVirtualDependency) {
-      const importPath = resolveVirtualDependency(
-        file.opts.filename as string,
-        {
-          type,
-          code: markoText.node.value,
-          startPos: markoText.node.start!,
-          endPos: markoText.node.end!,
-          path: `./${base}`,
-          virtualPath: `./${base}.${type}`,
-        } as any,
-      );
+    if (
+      resolveVirtualDependency &&
+      sourceMaps &&
+      start !== null &&
+      end !== null
+    ) {
+      const magicString = new MagicString(file.code, { filename });
+      magicString.remove(0, start);
+      magicString.remove(end, file.code.length);
+      map = magicString.generateMap({
+        source: filename,
+        includeContent: true,
+      });
 
+      if (sourceMaps === "inline" || sourceMaps === "both") {
+        code += `\n/*# sourceMappingURL=${map.toUrl()}*/`;
+
+        if (sourceMaps === "inline") {
+          map = undefined;
+        }
+      }
+    }
+
+    const importPath = resolveVirtualDependency?.(filename, {
+      virtualPath: `./${base}.${type}`,
+      code,
+      map,
+    });
+
+    if (importPath) {
       if (!tag.node.var) {
         currentProgramPath.pushContainer(
           "body",
@@ -111,7 +140,5 @@ export default {
 
     tag.remove();
   },
-  attributes: {
-    type: { enum: ["css", "less", "scss", "text/css"] },
-  },
+  attributes: {},
 } as Tag;
