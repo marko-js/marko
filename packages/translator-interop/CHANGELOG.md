@@ -1,5 +1,16 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.23
+
+### Patch Changes
+
+- [#2284](https://github.com/marko-js/marko/pull/2284) [`d0723d3`](https://github.com/marko-js/marko/commit/d0723d398338d86b48524e230fe24d93d62ee19a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix off by one issue for static statement sourcemaps (eg import) and for concise mode tags.
+
+- Updated dependencies [[`d0723d3`](https://github.com/marko-js/marko/commit/d0723d398338d86b48524e230fe24d93d62ee19a)]:
+  - @marko/babel-utils@6.5.5
+  - @marko/translator-default@6.0.10
+  - @marko/translator-tags@0.2.7
+
 ## 0.1.22
 
 ### Patch Changes
