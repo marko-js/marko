@@ -1,5 +1,11 @@
 # Change Log
 
+## 6.0.11
+
+### Patch Changes
+
+- [#2286](https://github.com/marko-js/marko/pull/2286) [`55338b5`](https://github.com/marko-js/marko/commit/55338b52969817b63c90ea84f30246ad0b94b6f9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize template literal printing in html output.
+
 ## 6.0.10
 
 ### Patch Changes
