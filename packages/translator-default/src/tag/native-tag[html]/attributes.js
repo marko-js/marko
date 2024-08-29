@@ -1,6 +1,11 @@
-import { importDefault, normalizeTemplateString } from "@marko/babel-utils";
+import {
+  importDefault,
+  importNamed,
+  normalizeTemplateString,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import attrHelper from "marko/src/runtime/html/helpers/attr";
+import { d as escapeDoubleQuotes } from "marko/src/runtime/html/helpers/escape-quotes";
 
 import { evaluateAttr } from "../util";
 
@@ -94,6 +99,32 @@ export default function (path, attrs) {
       }
 
       curString += attrHelper(name, computed);
+    } else if (value.type === "TemplateLiteral") {
+      curString += " " + name + '="';
+
+      for (let i = 0; i < value.expressions.length; i++) {
+        const quasi = value.quasis[i];
+        const expression = value.expressions[i];
+        curString += escapeDoubleQuotes(quasi.value.cooked);
+        quasis.push(curString);
+        curString = "";
+        expressions.push(
+          t.callExpression(
+            importNamed(
+              file,
+              "marko/src/runtime/html/helpers/escape-quotes.js",
+              "d",
+              "marko_escape_double_quotes",
+            ),
+            [expression],
+          ),
+        );
+      }
+
+      curString +=
+        escapeDoubleQuotes(
+          value.quasis[value.expressions.length].value.cooked,
+        ) + '"';
     } else {
       quasis.push(curString);
       curString = "";
