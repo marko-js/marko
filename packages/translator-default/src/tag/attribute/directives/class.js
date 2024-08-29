@@ -19,7 +19,7 @@ export default {
       } else {
         value.parentPath.remove();
       }
-    } else {
+    } else if (!value.isTemplateLiteral()) {
       value.replaceWith(
         withPreviousLocation(
           t.callExpression(
