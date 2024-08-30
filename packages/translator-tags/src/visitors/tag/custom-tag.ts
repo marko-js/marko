@@ -212,10 +212,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         attrsObject,
         callRuntime(
           "register",
-          callRuntime(
-            "createRenderer",
-            t.arrowFunctionExpression([], t.blockStatement([])),
-          ),
+          t.arrowFunctionExpression([], t.blockStatement([])),
           t.stringLiteral(
             getResumeRegisterId(
               section,

@@ -8,7 +8,7 @@
   Child: 1
 </div>
 <div>
-  Parent: 
+  Parent: 1
 </div>
 ```
 
@@ -30,7 +30,7 @@ container.querySelector("button").click()
   Child: 2
 </div>
 <div>
-  Parent: 
+  Parent: 2
 </div>
 ```
 
@@ -38,6 +38,7 @@ container.querySelector("button").click()
 ```
 button1/#text1: "1" => "2"
 div2/#text1: "1" => "2"
+div3/#text1: "1" => "2"
 ```
 
 
@@ -53,7 +54,7 @@ container.querySelector("button").click()
   Child: 3
 </div>
 <div>
-  Parent: 
+  Parent: 3
 </div>
 ```
 
@@ -61,6 +62,7 @@ container.querySelector("button").click()
 ```
 button1/#text1: "2" => "3"
 div2/#text1: "2" => "3"
+div3/#text1: "2" => "3"
 ```
 
 
@@ -76,7 +78,7 @@ container.querySelector("button").click()
   Child: 4
 </div>
 <div>
-  Parent: 
+  Parent: 4
 </div>
 ```
 
@@ -84,4 +86,5 @@ container.querySelector("button").click()
 ```
 button1/#text1: "3" => "4"
 div2/#text1: "3" => "4"
+div3/#text1: "3" => "4"
 ```

@@ -25,7 +25,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _customTag._({
     style: "color: green"
   });
-  const _dynamicScope = _dynamicTagInput(test, {
+  const _dynamicScope = _peekNextScope();
+  _dynamicTagInput(_dynamicScope, test, {
     style: {
       color: "green"
     },

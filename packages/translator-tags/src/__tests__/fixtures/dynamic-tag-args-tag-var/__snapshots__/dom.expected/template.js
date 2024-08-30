@@ -1,6 +1,6 @@
 import customTag from './components/custom-tag.marko';
 const tags = [customTag];
-import { on as _on, data as _data, queueSource as _queueSource, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, data as _data, setTagVar as _setTagVar, queueSource as _queueSource, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, registerBoundSignal as _registerBoundSignal, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _tags0_input = _dynamicTagAttrs("#text/2");
 const _expr_Text_x = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -8,8 +8,8 @@ const _expr_Text_x = /* @__PURE__ */_intersection(2, _scope => {
   } = _scope;
   _tags0_input(_scope, () => x);
 });
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", null, _expr_Text_x);
-const _y = "SIGNAL NOT INITIALIZED";
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", _scope => _setTagVar(_scope, "#text/2!", _y), _expr_Text_x);
+const _y = _registerBoundSignal("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args-tag-var/template.marko_0_y", /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/3"], y)));
 const _onClick = _scope => {
   const {
     x

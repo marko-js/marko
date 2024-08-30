@@ -1,10 +1,11 @@
 const div = "span";
 const baz = "div";
-import { write as _write, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, dynamicTagInput as _dynamicTagInput, peekNextScope as _peekNextScope, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   _write("<div></div>");
-  const _dynamicScope = _dynamicTagInput(baz, {});
+  const _dynamicScope = _peekNextScope();
+  _dynamicTagInput(_dynamicScope, baz, {});
   _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}`);
   _writeScope(_scope0_id, {
     "#text/0!": _dynamicScope,

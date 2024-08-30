@@ -4,7 +4,7 @@ import { escapeAttrValue } from "./attrs";
 import { REORDER_RUNTIME_CODE, WALKER_RUNTIME_CODE } from "./inlined-runtimes";
 import { register as serializerRegister, Serializer } from "./serializer";
 
-type PartialScope = Record<Accessor, unknown>;
+export type PartialScope = Record<Accessor, unknown>;
 type ScopeInternals = PartialScope & {
   [K_SCOPE_ID]?: number;
 };

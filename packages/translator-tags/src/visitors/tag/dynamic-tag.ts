@@ -5,7 +5,7 @@ import {
   loadFileForTag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import { WalkCode } from "@marko/runtime-tags/common/types";
+import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
 
 import attrsToObject, { getRenderBodyProp } from "../../util/attrs-to-object";
 import { isOutputHTML } from "../../util/marko-config";
@@ -27,12 +27,14 @@ import {
   startSection,
 } from "../../util/sections";
 import {
+  addStatement,
   addValue,
   buildSignalIntersections,
   getResumeRegisterId,
   getSerializedScopeProperties,
   getSignal,
   getSignalFn,
+  initValue,
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import toFirstExpressionOrBlock from "../../util/to-first-expression-or-block";
@@ -147,9 +149,14 @@ export default {
       if (isOutputHTML()) {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
+        const section = getSection(tag);
+        const write = writer.writeTo(tag);
         const attrsObject = attrsToObject(tag, true);
         const renderBodyProp = getRenderBodyProp(attrsObject);
+        const dynamicScopeIdentifier =
+          currentProgramPath.scope.generateUidIdentifier("dynamicScope");
         const args: (t.Expression | t.SpreadElement)[] = [
+          dynamicScopeIdentifier,
           tagExpression,
           attrsObject,
         ];
@@ -177,37 +184,64 @@ export default {
           );
         }
 
-        const dynamicScopeIdentifier =
-          currentProgramPath.scope.generateUidIdentifier("dynamicScope");
+        if (node.var) {
+          if (args.length === 3) {
+            args.push(t.unaryExpression("void", t.numericLiteral(0)));
+          }
+
+          args.push(
+            callRuntime(
+              "register",
+              t.arrowFunctionExpression([], t.blockStatement([])),
+              t.stringLiteral(
+                getResumeRegisterId(
+                  section,
+                  (node.var as t.Identifier).extra?.binding, // TODO: node.var is not always an identifier.
+                ),
+              ),
+              getScopeIdIdentifier(section),
+            ),
+          );
+        }
+
         const dynamicTagExpr = t.isArrayExpression(attrsObject)
           ? callRuntime("dynamicTagArgs", ...args)
           : callRuntime("dynamicTagInput", ...args);
+
+        tag
+          .insertBefore(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                dynamicScopeIdentifier,
+                callRuntime("peekNextScope"),
+              ),
+            ]),
+          )[0]
+          .skip();
         if (node.var) {
           // TODO: This breaks now that _dynamicTag returns a scope
           translateVar(tag, dynamicTagExpr);
-          tag.remove();
         } else {
-          tag
-            .replaceWith(
-              t.variableDeclaration("const", [
-                t.variableDeclarator(dynamicScopeIdentifier, dynamicTagExpr),
-              ]),
-            )[0]
-            .skip();
+          tag.insertBefore(t.expressionStatement(dynamicTagExpr));
         }
-        const section = getSection(tag);
-        writer.writeTo(tag)`${callRuntime(
+        tag.remove();
+        write`${callRuntime(
           "markResumeControlEnd",
           getScopeIdIdentifier(section),
           getScopeAccessorLiteral(nodeRef),
         )}`;
 
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(getScopeAccessorLiteral(nodeRef).value + "!"),
+          t.stringLiteral(
+            getScopeAccessorLiteral(nodeRef).value +
+              AccessorChar.ConditionalScope,
+          ),
           dynamicScopeIdentifier,
         );
         getSerializedScopeProperties(section).set(
-          t.stringLiteral(getScopeAccessorLiteral(nodeRef).value + "("),
+          t.stringLiteral(
+            getScopeAccessorLiteral(nodeRef).value + AccessorChar.LoopScopeMap,
+          ),
           t.isIdentifier(tagExpression)
             ? t.identifier(tagExpression.name)
             : tagExpression,
@@ -218,6 +252,7 @@ export default {
         const hasBody = section !== bodySection;
         const renderBodyIdentifier = hasBody && t.identifier(bodySection.name);
         const signal = getSignal(section, nodeRef, "dynamicTagName");
+
         signal.build = () => {
           return callRuntime(
             "conditional",
@@ -235,6 +270,31 @@ export default {
             ? t.logicalExpression("||", tagExpression, renderBodyIdentifier)
             : tagExpression,
         );
+
+        if (tag.node.var) {
+          const source = initValue(
+            // TODO: support destructuring
+            tag.node.var.extra!.binding!,
+          );
+          source.register = true;
+
+          addStatement(
+            "render",
+            section,
+            nodeRef,
+            t.expressionStatement(
+              callRuntime(
+                "setTagVar",
+                scopeIdentifier,
+                t.stringLiteral(
+                  getScopeAccessorLiteral(extra[kDOMBinding]!).value +
+                    AccessorChar.ConditionalScope,
+                ),
+                source.identifier,
+              ),
+            ),
+          );
+        }
 
         const attrsObject = attrsToObject(tag, true);
         const emptyAttrs =

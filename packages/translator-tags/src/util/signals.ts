@@ -829,6 +829,10 @@ export function writeSignals(section: Section) {
 }
 
 function sortSignals(a: Signal, b: Signal) {
+  // if (a.register !== b.register) {
+  //   return a.register ? -1 : 1;
+  // }
+
   const aReferencedBindings = getReferencedBindings(a);
   const bReferencedBindings = getReferencedBindings(b);
 
