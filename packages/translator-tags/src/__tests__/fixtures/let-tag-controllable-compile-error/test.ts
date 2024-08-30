@@ -5,5 +5,4 @@ function click(container: Element) {
 }
 
 export const skip_resume = true;
-
 export const error_compiler = true;
