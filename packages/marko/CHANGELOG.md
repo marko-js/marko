@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.35.14
+
+### Patch Changes
+
+- [#2289](https://github.com/marko-js/marko/pull/2289) [`e20e9af`](https://github.com/marko-js/marko/commit/e20e9af702415fd65b435908d973a2242b346e2a) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add Marko to window when required
+
 ## 5.35.13
 
 ### Patch Changes
