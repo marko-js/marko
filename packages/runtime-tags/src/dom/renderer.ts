@@ -116,7 +116,7 @@ export function dynamicTagAttrs(
       setConditionalRendererOnlyChild(
         childScope,
         elementAccessor,
-        renderBody ? bindRenderer(scope, renderBody) : null,
+        renderBody && bindRenderer(scope, renderBody),
       );
     } else {
       renderer = renderer.default ? renderer.default._ : renderer._ || renderer;

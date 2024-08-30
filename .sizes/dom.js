@@ -434,7 +434,7 @@ function le(e, t, n) {
     if (!l || l === t || i === q) return;
     let f = r[e + "!"];
     if (i === j || i === O) return l.d?.(f, i);
-    if ("string" == typeof l) k(f, 0, i()), ge(f, 0, t ? o(r, t) : null);
+    if ("string" == typeof l) k(f, 0, i()), ge(f, 0, t && o(r, t));
     else if (((l = l.default ? l.default._ : l._ || l), l.d)) {
       let e = i();
       l.d(f, n ? e : [t ? { ...e, renderBody: o(r, t) } : e]);
@@ -480,10 +480,10 @@ var se = function (e, t, r) {
     i = e + "!";
   return (l, f) => {
     if (f === q) return;
-    let c = l[o] || null,
+    let c = l[o],
       s = f;
     if (f !== j && f !== O) {
-      let r = f ? f._ || f.renderBody || f : null;
+      let r = f ? f._ || f.renderBody || f : void 0;
       r !== c
         ? ((c = l[o] = r),
           (function (e, t, r) {
@@ -518,10 +518,10 @@ var he = function (e, t, n) {
     o = e + "!";
   return (i, l) => {
     if (l === q) return;
-    let f = i[r] || null,
+    let f = i[r],
       u = l;
     if (l !== j && l !== O) {
-      let n = l ? l._ || l.renderBody || l : null;
+      let n = l ? l._ || l.renderBody || l : void 0;
       n !== f ? ((f = i[r] = n), ge(i, e, n), t?.(i), (u = q)) : (u = O);
     }
     n?.(i, u), K(f, i[o], u);

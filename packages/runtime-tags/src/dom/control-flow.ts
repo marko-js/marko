@@ -40,14 +40,15 @@ export let conditional = function conditional(
   nodeAccessor: Accessor,
   fn?: (scope: Scope) => void,
   intersection?: IntersectionSignal,
-): ValueSignal<RendererOrElementName | null> {
+): ValueSignal<RendererOrElementName | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
   return (scope, newRendererOrOp) => {
     if (newRendererOrOp === DIRTY) return;
 
-    let currentRenderer = (scope[rendererAccessor] ||
-      null) as RendererOrElementName | null;
+    let currentRenderer = scope[rendererAccessor] as
+      | RendererOrElementName
+      | undefined;
     let op = newRendererOrOp as SignalOp;
 
     if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
@@ -55,7 +56,7 @@ export let conditional = function conditional(
         ? (newRendererOrOp as any as Template)._ ||
           (newRendererOrOp as any).renderBody ||
           newRendererOrOp
-        : null;
+        : undefined;
       if (normalizedRenderer !== currentRenderer) {
         currentRenderer = scope[rendererAccessor] = normalizedRenderer;
         setConditionalRenderer(scope, nodeAccessor, normalizedRenderer);
@@ -94,7 +95,7 @@ export function inConditionalScope<S extends Scope>(
 export function setConditionalRenderer<ChildScope extends Scope>(
   scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: RendererOrElementName | null,
+  newRenderer: RendererOrElementName | undefined,
 ) {
   let newScope: ChildScope;
   let prevScope = scope[
@@ -122,14 +123,15 @@ export let conditionalOnlyChild = function conditional(
   nodeAccessor: Accessor,
   fn?: (scope: Scope) => void,
   intersection?: IntersectionSignal,
-): ValueSignal<RendererOrElementName | null> {
+): ValueSignal<RendererOrElementName | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
   return (scope, newRendererOrOp) => {
     if (newRendererOrOp === DIRTY) return;
 
-    let currentRenderer = (scope[rendererAccessor] ||
-      null) as RendererOrElementName | null;
+    let currentRenderer = scope[rendererAccessor] as
+      | RendererOrElementName
+      | undefined;
     let op = newRendererOrOp as SignalOp;
 
     if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
@@ -137,7 +139,7 @@ export let conditionalOnlyChild = function conditional(
         ? (newRendererOrOp as any as Template)._ ||
           (newRendererOrOp as any).renderBody ||
           newRendererOrOp
-        : null;
+        : undefined;
       if (normalizedRenderer !== currentRenderer) {
         currentRenderer = scope[rendererAccessor] = normalizedRenderer;
         setConditionalRendererOnlyChild(
@@ -159,7 +161,7 @@ export let conditionalOnlyChild = function conditional(
 export function setConditionalRendererOnlyChild(
   scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: RendererOrElementName | null,
+  newRenderer: RendererOrElementName | undefined,
 ) {
   const prevScope = scope[
     nodeAccessor + AccessorChar.ConditionalScope
