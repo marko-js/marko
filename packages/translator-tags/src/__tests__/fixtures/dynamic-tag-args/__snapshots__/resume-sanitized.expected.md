@@ -4,10 +4,7 @@
   Count: 1
 </button>
 <div>
-  Child: 1
-</div>
-<div>
-  Parent: 1
+  1
 </div>
 ```
 
@@ -20,10 +17,7 @@ container.querySelector("button").click()
   Count: 2
 </button>
 <div>
-  Child: 2
-</div>
-<div>
-  Parent: 2
+  2
 </div>
 ```
 
@@ -36,10 +30,7 @@ container.querySelector("button").click()
   Count: 3
 </button>
 <div>
-  Child: 3
-</div>
-<div>
-  Parent: 3
+  3
 </div>
 ```
 
@@ -52,9 +43,6 @@ container.querySelector("button").click()
   Count: 4
 </button>
 <div>
-  Child: 4
-</div>
-<div>
-  Parent: 4
+  4
 </div>
 ```

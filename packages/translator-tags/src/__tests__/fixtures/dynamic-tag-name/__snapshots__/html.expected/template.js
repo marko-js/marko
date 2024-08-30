@@ -1,6 +1,6 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, peekNextScope as _peekNextScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { dynamicTagInput as _dynamicTagInput, peekNextScope as _peekNextScope, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const {
@@ -13,12 +13,14 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     level,
     other
   } = input;
-  const _dynamicScope = _dynamicTagInput(renderBody, {
+  const _dynamicScope = _peekNextScope();
+  _dynamicTagInput(_dynamicScope, renderBody, {
     class: ["a", "b"],
     other: other
   });
   _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}`);
-  const _dynamicScope2 = _dynamicTagInput(x, {
+  const _dynamicScope2 = _peekNextScope();
+  _dynamicTagInput(_dynamicScope2, x, {
     class: ["a", "b"],
     other: other
   });
@@ -31,12 +33,14 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   if (_tagName2) _write(`<${_tagName2} class="a b"${_attr("other", other)}>`);
   if (_tagName2) _write(`</${_tagName2}>`);
   _write(`${_markResumeNode(_scope0_id, "#showDiv/3")}`);
-  const _dynamicScope3 = _dynamicTagInput(isLarge ? "h1" : "h2", {
+  const _dynamicScope3 = _peekNextScope();
+  _dynamicTagInput(_dynamicScope3, isLarge ? "h1" : "h2", {
     class: ["a", "b"],
     other: other
   });
   _write(`${_markResumeControlEnd(_scope0_id, "#text/4")}`);
-  const _dynamicScope4 = _dynamicTagInput(showTagA ? tagA : tagB, {
+  const _dynamicScope4 = _peekNextScope();
+  _dynamicTagInput(_dynamicScope4, showTagA ? tagA : tagB, {
     class: ["a", "b"],
     other: other,
     class: ["a", "b"],
@@ -59,14 +63,16 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     class: ["a", "b"],
     other: other
   });else _renderBody();
-  const _dynamicScope5 = _dynamicTagInput(tag || tagA, {
+  const _dynamicScope5 = _peekNextScope();
+  _dynamicTagInput(_dynamicScope5, tag || tagA, {
     class: ["a", "b"],
     other: other
   });
   const largeHeading = isLarge && "h1";
   const _tagName5 = largeHeading || "h2";
   _write(`${_markResumeControlEnd(_scope0_id, "#text/8")}`);
-  const _dynamicScope6 = _dynamicTagInput(_tagName5, {
+  const _dynamicScope6 = _peekNextScope();
+  _dynamicTagInput(_dynamicScope6, _tagName5, {
     class: ["a", "b"],
     other: other
   });

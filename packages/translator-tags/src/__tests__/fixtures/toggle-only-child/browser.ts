@@ -56,7 +56,7 @@ const _if = conditionalOnlyChild(INDEX.conditional);
 const _value = value(
   INDEX.value,
   (scope, value) => {
-    _if(scope, value ? _ifBody : undefined);
+    _if(scope, value ? _ifBody : null);
   },
   intersections([inConditionalScope(value$if, INDEX.conditional), _if]),
 );

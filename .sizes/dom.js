@@ -158,13 +158,13 @@ function M(e, t) {
     })(t) || void 0,
   );
 }
-function k(e, t) {
+function _(e, t) {
   let n = (function (e) {
     return e || 0 === e ? e + "" : "‍";
   })(t);
   e.data !== n && (e.data = n);
 }
-function A(e, t, n) {
+function k(e, t, n) {
   let r,
     o = e[t];
   for (let { name: e } of o.attributes) (n && e in n) || o.removeAttribute(e);
@@ -188,7 +188,7 @@ function A(e, t, n) {
   }
   e[t + "~"] = r;
 }
-function _(e, t) {
+function A(e, t) {
   let n = e[t],
     r = e[t + "~"];
   for (let e in r) m(n, e, r[e]);
@@ -434,8 +434,8 @@ function le(e, t, n) {
     if (!l || l === t || i === q) return;
     let f = r[e + "!"];
     if (i === j || i === O) return l.d?.(f, i);
-    if ("string" == typeof l) A(f, 0, i()), ge(f, 0, t && o(r, t));
-    else if (l.d) {
+    if ("string" == typeof l) k(f, 0, i()), ge(f, 0, t ? o(r, t) : null);
+    else if (((l = l.default ? l.default._ : l._ || l), l.d)) {
       let e = i();
       l.d(f, n ? e : [t ? { ...e, renderBody: o(r, t) } : e]);
     }
@@ -480,10 +480,10 @@ var se = function (e, t, r) {
     i = e + "!";
   return (l, f) => {
     if (f === q) return;
-    let c = l[o],
+    let c = l[o] || null,
       s = f;
     if (f !== j && f !== O) {
-      let r = f ? f._ || f.renderBody || f : void 0;
+      let r = f ? f._ || f.renderBody || f : null;
       r !== c
         ? ((c = l[o] = r),
           (function (e, t, r) {
@@ -518,10 +518,10 @@ var he = function (e, t, n) {
     o = e + "!";
   return (i, l) => {
     if (l === q) return;
-    let f = i[r],
+    let f = i[r] || null,
       u = l;
     if (l !== j && l !== O) {
-      let n = l ? l._ || l.renderBody || l : void 0;
+      let n = l ? l._ || l.renderBody || l : null;
       n !== f ? ((f = i[r] = n), ge(i, e, n), t?.(i), (u = q)) : (u = O);
     }
     n?.(i, u), K(f, i[o], u);
@@ -726,7 +726,7 @@ function Ne(e) {
   return e;
 }
 var Me,
-  ke = (() => {
+  _e = (() => {
     let { port1: e, port2: t } = new MessageChannel();
     return (
       (e.onmessage = () => {
@@ -735,11 +735,11 @@ var Me,
       t
     );
   })();
-function Ae() {
-  Oe(), requestAnimationFrame(_e);
+function ke() {
+  Oe(), requestAnimationFrame(Ae);
 }
-function _e() {
-  ke.postMessage(0);
+function Ae() {
+  _e.postMessage(0);
 }
 var Ee = [],
   Be = [];
@@ -747,7 +747,7 @@ function Ie(e, t, n, r) {
   return n ? (n(r), r) : Te(e, t, r);
 }
 function Te(e, t, n) {
-  return Me || ((Me = !0), queueMicrotask(Ae)), t(e, j), Ee.push(e, t, n), n;
+  return Me || ((Me = !0), queueMicrotask(ke)), t(e, j), Ee.push(e, t, n), n;
 }
 function je(e, t) {
   Be.push(e, t);
@@ -1001,8 +1001,8 @@ var Ke = (e, t) => ze(t, new Qe(e)),
   };
 export {
   $ as attr,
-  A as attrs,
-  _ as attrsEvents,
+  k as attrs,
+  A as attrsEvents,
   i as bindFunction,
   o as bindRenderer,
   D as changeHandler,
@@ -1016,7 +1016,7 @@ export {
   e as createScope,
   oe as createScopeWithRenderer,
   Ke as createTemplate,
-  k as data,
+  _ as data,
   H as dynamicClosure,
   U as dynamicSubscribers,
   le as dynamicTagAttrs,

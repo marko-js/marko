@@ -2,10 +2,10 @@ import type { Renderer } from "../common/types";
 import { attrs } from "./attrs";
 import type { ServerTemplate as Template } from "./template";
 import {
+  getScopeId,
   markResumeScopeStart,
   nextScopeId,
-  peekNextScope,
-  peekNextScopeId,
+  type PartialScope,
   write,
   writeScope,
 } from "./writer";
@@ -18,21 +18,20 @@ interface RenderBodyObject {
 }
 
 export function dynamicTagInput(
+  scope: PartialScope,
   tag: unknown | string | Renderer | RenderBodyObject | Template,
   input: Record<string, unknown>,
   renderBody?: () => void,
+  tagVar?: unknown,
 ) {
   if (!tag && !renderBody) return undefined;
 
-  const futureScopeId = peekNextScopeId();
-  const futureScope = peekNextScope();
-  write(`${markResumeScopeStart(futureScopeId)}`);
-  writeScope(futureScopeId, futureScope);
+  const scopeId = getScopeId(scope)!;
+  write(`${markResumeScopeStart(scopeId)}`);
+  writeScope(scopeId, scope);
 
   if (!tag) {
-    renderBody!();
-
-    return futureScope;
+    return renderBody!();
   }
 
   if (typeof tag === "string") {
@@ -47,8 +46,8 @@ export function dynamicTagInput(
         `A renderBody was provided for a "${tag}" tag, which cannot have children.`,
       );
     }
-
-    return futureScope;
+    // TODO: this needs to return the element getter
+    return null;
   }
 
   const renderer = getDynamicRenderer(tag);
@@ -59,20 +58,19 @@ export function dynamicTagInput(
     }
   }
 
-  renderer(renderBody ? { ...input, renderBody } : input);
-  return futureScope;
+  return renderer(renderBody ? { ...input, renderBody } : input, tagVar);
 }
 
 export function dynamicTagArgs(
+  scope: PartialScope,
   tag: unknown | string | Renderer | RenderBodyObject | Template,
   args: unknown[],
 ) {
   if (!tag) return undefined;
 
-  const futureScopeId = peekNextScopeId();
-  const futureScope = peekNextScope();
-  write(`${markResumeScopeStart(futureScopeId)}`);
-  writeScope(futureScopeId, futureScope);
+  const scopeId = getScopeId(scope)!;
+  write(`${markResumeScopeStart(scopeId)}`);
+  writeScope(scopeId, scope);
 
   if (typeof tag === "string") {
     nextScopeId();
@@ -82,7 +80,8 @@ export function dynamicTagArgs(
       write(`</${tag}>`);
     }
 
-    return futureScope;
+    // TODO: this needs to return the element getter
+    return undefined;
   }
 
   const renderer = getDynamicRenderer(tag);
@@ -93,8 +92,7 @@ export function dynamicTagArgs(
     }
   }
 
-  renderer(...args);
-  return futureScope;
+  return renderer(...args);
 }
 
 let getDynamicRenderer = (

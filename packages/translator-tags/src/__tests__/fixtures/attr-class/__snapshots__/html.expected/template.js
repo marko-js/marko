@@ -21,7 +21,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _customTag._({
     class: ["a", false, "b"]
   });
-  const _dynamicScope = _dynamicTagInput(input.test, {
+  const _dynamicScope = _peekNextScope();
+  _dynamicTagInput(_dynamicScope, input.test, {
     class: ["a", {
       b: c,
       d

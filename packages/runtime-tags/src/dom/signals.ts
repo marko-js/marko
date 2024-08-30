@@ -267,7 +267,7 @@ export const tagVarSignal = (scope: Scope, valueOrOp: unknown | SignalOp) =>
   scope[AccessorChar.TagVariable]?.(valueOrOp);
 
 export const renderBodyClosures = (
-  renderBody: RendererOrElementName | undefined,
+  renderBody: RendererOrElementName | null,
   childScope: Scope,
   op: SignalOp,
 ) => {

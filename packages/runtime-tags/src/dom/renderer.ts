@@ -86,9 +86,18 @@ export function dynamicTagAttrs(
     scope: Scope,
     attrsOrOp: (() => Record<string, unknown>) | SignalOp,
   ) => {
-    const renderer = scope[
-      nodeAccessor + AccessorChar.ConditionalRenderer
-    ] as Renderer;
+    type WithOptional<T, Keys extends string> = T extends T
+      ? T & { [K in Exclude<Keys, keyof T>]?: never }
+      : never;
+
+    let renderer:
+      | WithOptional<
+          Renderer | { default: { _: Renderer } } | { _: Renderer },
+          "default" | "_"
+        >
+      | string
+      | undefined
+      | null = scope[nodeAccessor + AccessorChar.ConditionalRenderer];
 
     if (!renderer || renderer === renderBody || attrsOrOp === DIRTY) {
       return;
@@ -97,7 +106,7 @@ export function dynamicTagAttrs(
     const childScope = scope[nodeAccessor + AccessorChar.ConditionalScope];
 
     if (attrsOrOp === MARK || attrsOrOp === CLEAN) {
-      return renderer.___args?.(childScope, attrsOrOp);
+      return (renderer as Renderer).___args?.(childScope, attrsOrOp);
     }
 
     if (typeof renderer === "string") {
@@ -107,23 +116,26 @@ export function dynamicTagAttrs(
       setConditionalRendererOnlyChild(
         childScope,
         elementAccessor,
-        renderBody && bindRenderer(scope, renderBody),
+        renderBody ? bindRenderer(scope, renderBody) : null,
       );
-    } else if (renderer.___args) {
-      const attributes = attrsOrOp();
-      renderer.___args(
-        childScope,
-        inputIsArgs
-          ? attributes
-          : [
-              renderBody
-                ? {
-                    ...attributes,
-                    renderBody: bindRenderer(scope, renderBody),
-                  }
-                : attributes,
-            ],
-      );
+    } else {
+      renderer = renderer.default ? renderer.default._ : renderer._ || renderer;
+      if (renderer.___args) {
+        const attributes = attrsOrOp();
+        renderer.___args(
+          childScope,
+          inputIsArgs
+            ? attributes
+            : [
+                renderBody
+                  ? {
+                      ...attributes,
+                      renderBody: bindRenderer(scope, renderBody),
+                    }
+                  : attributes,
+              ],
+        );
+      }
     }
   };
 }
