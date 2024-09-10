@@ -96,32 +96,32 @@ export function visit(
   let walkString = "";
 
   if (steps.length) {
-    const walks: WalkCode[] = [];
+    const walkCodes: WalkCode[] = [];
     let depth = 0;
 
     for (const step of steps) {
       if (step === Step.Enter) {
         depth++;
-        walks.push(WalkCode.Next);
+        walkCodes.push(WalkCode.Next);
       } else {
         depth--;
         if (depth >= 0) {
           // delete back to and including previous NEXT
-          walks.length = walks.lastIndexOf(WalkCode.Next);
-          walks.push(WalkCode.Over);
+          walkCodes.length = walkCodes.lastIndexOf(WalkCode.Next);
+          walkCodes.push(WalkCode.Over);
         } else {
           // delete back to previous OUT
-          walks.length = walks.lastIndexOf(WalkCode.Out) + 1;
-          walks.push(WalkCode.Out);
+          walkCodes.length = walkCodes.lastIndexOf(WalkCode.Out) + 1;
+          walkCodes.push(WalkCode.Out);
           depth = 0;
         }
       }
     }
 
-    let current = walks[0];
+    let current = walkCodes[0];
     let count = 0;
 
-    for (const walk of walks) {
+    for (const walk of walkCodes) {
       if (walk !== current) {
         walkComment.push(`${walkCodeToName[current]}(${count})`);
         walkString += nCodeString(current, count);

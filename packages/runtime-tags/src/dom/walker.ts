@@ -56,7 +56,7 @@ function walkInternal(
     } else if (value >= WalkCode.Over) {
       value = WalkRangeSize.Over * currentMultiplier + value - WalkCode.Over;
       while (value--) {
-        !walker.nextSibling() && !walker.nextNode();
+        walker.nextSibling();
       }
     } else if (value >= WalkCode.Next) {
       value = WalkRangeSize.Next * currentMultiplier + value - WalkCode.Next;
