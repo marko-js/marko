@@ -1,3 +1,5 @@
+export const _template_ = "<!><!><!>";
+export const _walks_ = /* replace, over(1) */"D%bD";
 import { on as _on, attr as _attr, data as _data, queueSource as _queueSource, createRenderer as _createRenderer, intersection as _intersection, register as _register, queueEffect as _queueEffect, value as _value, closure as _closure, loopOf as _loopOf, inLoopScope as _inLoopScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _expr_selected_num$forBody = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -27,11 +29,8 @@ const _selected$forBody = /* @__PURE__ */_closure("selected", null, void 0, _exp
 const _forBody = /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, [_selected$forBody], void 0, _params_2$forBody);
 const _for = /* @__PURE__ */_loopOf("#text/0", _forBody);
 const _selected = /* @__PURE__ */_value("selected", null, _inLoopScope(_selected$forBody, "#text/0"));
-const _setup = _scope => {
+export function _setup_(_scope) {
   _selected(_scope, 0);
   _for(_scope, [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]);
-};
-export const _template_ = "<!><!><!>";
-export const _walks_ = /* replace, over(1) */"D%bD";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko");

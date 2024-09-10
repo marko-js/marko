@@ -1,3 +1,5 @@
+export const _template_ = "<!><!><!>";
+export const _walks_ = /* replace, over(1) */"D%bD";
 import { data as _data, on as _on, bindRenderer as _bindRenderer, queueSource as _queueSource, createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, value as _value, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onClick = _scope => {
   const {
@@ -25,12 +27,9 @@ const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _myTag_
   name: "Ryan"
 })), _myTag_input);
 const _myTag = /* @__PURE__ */_value("myTag", (_scope, myTag) => _dynamicTagName(_scope, myTag), _dynamicTagName);
-const _setup = _scope => {
+export function _setup_(_scope) {
   _myTag(_scope, {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _defineBody)
   });
-};
-export const _template_ = "<!><!><!>";
-export const _walks_ = /* replace, over(1) */"D%bD";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko");

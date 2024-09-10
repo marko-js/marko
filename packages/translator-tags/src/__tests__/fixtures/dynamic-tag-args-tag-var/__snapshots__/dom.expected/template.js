@@ -1,3 +1,5 @@
+export const _template_ = "<!><button>Count: <!></button><!><div>Parent: <!></div>";
+export const _walks_ = /* get, next(1), over(1), replace, out(1), replace, over(1), next(1), over(1), replace, out(1) */"D Db%l%bDb%l";
 import customTag from './components/custom-tag.marko';
 const tags = [customTag];
 import { on as _on, data as _data, setTagVar as _setTagVar, queueSource as _queueSource, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, registerBoundSignal as _registerBoundSignal, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
@@ -23,11 +25,8 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   _queueEffect(_scope, _x_effect);
 }, _expr_Text_x);
-const _setup = _scope => {
+export function _setup_(_scope) {
   _x(_scope, 1);
   _dynamicTagName(_scope, tags[0]);
-};
-export const _template_ = "<!><button>Count: <!></button><!><div>Parent: <!></div>";
-export const _walks_ = /* get, next(1), over(1), replace, out(1), replace, over(1), next(1), over(1), replace, out(1) */"D Db%l%bDb%l";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args-tag-var/template.marko");

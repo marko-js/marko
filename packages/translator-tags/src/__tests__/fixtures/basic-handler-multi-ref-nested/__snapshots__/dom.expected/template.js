@@ -1,3 +1,5 @@
+export const _template_ = "<button> </button>";
+export const _walks_ = /* get, next(1), get, out(1) */" D l";
 import { on as _on, data as _data, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, intersection as _intersection, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onClick = _scope => {
   const {
@@ -24,11 +26,8 @@ const _expr_a_b = /* @__PURE__ */_intersection(2, _scope => {
 });
 const _b = /* @__PURE__ */_value("b", null, _expr_a_b);
 const _a = /* @__PURE__ */_value("a", (_scope, a) => _data(_scope["#text/1"], a.join("")), _expr_a_b);
-const _setup = _scope => {
+export function _setup_(_scope) {
   _a(_scope, [0]);
   _b(_scope, 1);
-};
-export const _template_ = "<button> </button>";
-export const _walks_ = /* get, next(1), get, out(1) */" D l";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-handler-multi-ref-nested/template.marko");

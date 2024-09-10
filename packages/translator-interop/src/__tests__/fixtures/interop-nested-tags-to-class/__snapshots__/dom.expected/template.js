@@ -1,3 +1,5 @@
+export const _template_ = "<!><!><!>";
+export const _walks_ = /* replace, over(1) */"D%bD";
 import { on as _on, data as _data, register as _register, queueSource as _queueSource, createRenderer as _createRenderer, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, registerRenderer as _registerRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import _classLayout from "./components/class-layout.marko";
 import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
@@ -21,11 +23,8 @@ const _classLayoutBody = _registerRenderer("packages/translator-interop/src/__te
 const _classLayout_input = _dynamicTagAttrs("#text/0", _classLayoutBody);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _classLayout_input(_scope, () => ({})), _classLayout_input);
 const _count = /* @__PURE__ */_value("count", null, _dynamicSubscribers("count"));
-const _setup = _scope => {
+export function _setup_(_scope) {
   _count(_scope, 0);
   _dynamicTagName(_scope, _classLayout || _classLayoutBody);
-};
-export const _template_ = "<!><!><!>";
-export const _walks_ = /* replace, over(1) */"D%bD";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko");

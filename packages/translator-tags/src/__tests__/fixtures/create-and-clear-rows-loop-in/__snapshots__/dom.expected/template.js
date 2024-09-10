@@ -1,3 +1,6 @@
+export const _template_ = "<div><!><!></div>";
+export const _walks_ = /* next(1), replace, over(1), replace, out(1) */"D%b%l";
+export const _setup_ = () => {};
 import { data as _data, createRenderer as _createRenderer, value as _value, register as _register, loopIn as _loopIn, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _key$forBody2 = /* @__PURE__ */_value("key", (_scope, key) => _data(_scope["#text/0"], key));
 const _params_3$forBody = /* @__PURE__ */_value("_params_3", (_scope, _params_3) => _key$forBody2(_scope, _params_3[0]));
@@ -16,7 +19,4 @@ export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _for2(_scope, [input.children]);
 });
 export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
-export const _template_ = "<div><!><!></div>";
-export const _walks_ = /* next(1), replace, over(1), replace, out(1) */"D%b%l";
-export const _setup_ = function () {};
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/create-and-clear-rows-loop-in/template.marko");

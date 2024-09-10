@@ -180,11 +180,11 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
 
 export function getWalkString(section: Section) {
   const prefix =
-    section.startNodeContentType === ContentType.Dynamic
+    section.content?.startType === ContentType.Dynamic
       ? String.fromCharCode(WalkCode.Next + 1)
       : "";
   const postfix =
-    section.endNodeContentType === ContentType.Dynamic
+    section.content?.endType === ContentType.Dynamic
       ? String.fromCharCode(WalkCode.Next + 1)
       : "";
   const walks = getWalks(section);

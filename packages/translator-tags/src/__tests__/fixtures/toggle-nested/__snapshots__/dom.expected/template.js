@@ -1,3 +1,6 @@
+export const _template_ = "<div><!></div>";
+export const _walks_ = /* next(1), replace, out(1) */"D%l";
+export const _setup_ = () => {};
 import { data as _data, createRenderer as _createRenderer, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, registerRenderer as _registerRenderer, conditional as _conditional, closure as _closure, inConditionalScope as _inConditionalScope, dynamicSubscribers as _dynamicSubscribers, intersections as _intersections, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _value2$ifBody = _registerSubscriber("packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_3_value2/subscriber", /* @__PURE__ */_dynamicClosure("value2", (_scope, value2) => _data(_scope["#text/0"], value2), _scope => _scope._._));
 const _ifBody3 = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_3_renderer", /* @__PURE__ */_createRenderer("<span> </span>", /* next(1), get */"D ", void 0, [_value2$ifBody]));
@@ -18,7 +21,4 @@ export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _value2_(_scope, input.value2);
 }, _intersections([_show_, _value1_, _value2_]));
 export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
-export const _template_ = "<div><!></div>";
-export const _walks_ = /* next(1), replace, out(1) */"D%l";
-export const _setup_ = function () {};
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko");

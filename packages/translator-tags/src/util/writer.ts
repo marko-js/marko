@@ -81,9 +81,9 @@ export function flushInto(
 
 export function getSectionMeta(section: Section) {
   const writePrefix =
-    section.startNodeContentType === ContentType.Dynamic ? "<!>" : "";
+    section.content?.startType === ContentType.Dynamic ? "<!>" : "";
   const writePostfix =
-    section.endNodeContentType === ContentType.Dynamic ? "<!>" : "";
+    section.content?.endType === ContentType.Dynamic ? "<!>" : "";
   const writes = getWrites(section);
   return {
     setup: getSetup(section),

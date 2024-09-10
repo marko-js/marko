@@ -1,3 +1,5 @@
+export const _template_ = "<button><!> <!></button>";
+export const _walks_ = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l";
 _register("packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0/createWrapper", createWrapper);
 function createWrapper(a) {
   return {
@@ -26,10 +28,7 @@ const _count = /* @__PURE__ */_value("count", (_scope, count) => {
   _queueEffect(_scope, _count_effect);
   _pattern_(_scope, createWrapper(count));
 });
-const _setup = _scope => {
+export function _setup_(_scope) {
   _count(_scope, 0);
-};
-export const _template_ = "<button><!> <!></button>";
-export const _walks_ = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko");

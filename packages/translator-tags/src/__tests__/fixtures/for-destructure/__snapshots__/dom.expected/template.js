@@ -1,3 +1,5 @@
+export const _template_ = "<div><!><button id=add>Add</button><button id=remove>Remove</button></div>";
+export const _walks_ = /* next(1), replace, over(1), get, over(1), get, out(1) */"D%b b l";
 import { data as _data, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, value as _value, register as _register, loopOf as _loopOf, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _description$forBody = /* @__PURE__ */_value("description", (_scope, description) => _data(_scope["#text/1"], description));
 const _name$forBody = /* @__PURE__ */_value("name", (_scope, name) => _data(_scope["#text/0"], name));
@@ -36,14 +38,11 @@ const _items = /* @__PURE__ */_value("items", (_scope, items) => {
   _for(_scope, [items]);
 });
 const _id = (_scope, id) => {};
-const _setup = _scope => {
+export function _setup_(_scope) {
   _id(_scope, 0);
   _items(_scope, [{
     name: "Marko",
     description: "HTML Reimagined"
   }]);
-};
-export const _template_ = "<div><!><button id=add>Add</button><button id=remove>Remove</button></div>";
-export const _walks_ = /* next(1), replace, over(1), get, over(1), get, out(1) */"D%b b l";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko");

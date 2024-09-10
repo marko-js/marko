@@ -84,14 +84,13 @@ export default {
       tag.node.attributes.map((attr) => attr.value),
     );
     bodySection.upstreamExpression = tagExtra;
-    tagExtra.singleNodeOptimization = tag.node.body.body.length === 1;
   },
   translate: {
     enter(tag) {
       const tagBody = tag.get("body");
       const bodySection = getSection(tagBody);
       const tagExtra = tag.node.extra!;
-      const { singleNodeOptimization, isOnlyChild } = tagExtra;
+      const { isOnlyChild } = tagExtra;
       const isStateful = isStatefulReferences(tagExtra.referencedBindings);
       const hasNestedAttributeTags =
         tagExtra.nestedAttributeTags &&
@@ -102,7 +101,11 @@ export default {
       }
       if (isOutputHTML()) {
         writer.flushBefore(tag);
-        if (isStateful && !singleNodeOptimization && !hasNestedAttributeTags) {
+        if (
+          isStateful &&
+          !bodySection.content?.singleChild &&
+          !hasNestedAttributeTags
+        ) {
           writer.writeTo(tagBody)`${callRuntime(
             "markResumeScopeStart",
             getScopeIdIdentifier(bodySection),
@@ -289,7 +292,7 @@ const translateHTML = {
       body: { body, params },
     } = node;
     const tagExtra = node.extra!;
-    const { singleNodeOptimization, isOnlyChild } = tagExtra;
+    const { isOnlyChild } = tagExtra;
     const isStateful = isStatefulReferences(tagExtra.referencedBindings);
     const hasNestedAttributeTags =
       tagExtra.nestedAttributeTags &&
@@ -471,6 +474,8 @@ const translateHTML = {
     }
 
     if ((isStateful || hasStatefulClosures) && !hasNestedAttributeTags) {
+      const singleNodeOptimization =
+        bodySection.content === null || bodySection.content.singleChild;
       const forScopeIdsIdentifier =
         tag.scope.generateUidIdentifier("forScopeIds");
       const forScopesIdentifier = getScopeIdentifier(bodySection);

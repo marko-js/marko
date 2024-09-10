@@ -1,3 +1,6 @@
+export const _template_ = "<button><!> <!></button>";
+export const _walks_ = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l";
+export const _setup_ = () => {};
 import { on as _on, data as _data, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _textAlias = (_scope, textAlias) => {
   _data(_scope["#text/2"], textAlias);
@@ -19,7 +22,4 @@ export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _pattern__(_scope, input.value);
 });
 export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
-export const _template_ = "<button><!> <!></button>";
-export const _walks_ = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l";
-export const _setup_ = function () {};
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/components/my-button.marko");

@@ -1,3 +1,5 @@
+export const _template_ = "<button> </button>";
+export const _walks_ = /* get, next(1), get, out(1) */" D l";
 import { on as _on, data as _data, queueSource as _queueSource, intersection as _intersection, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _expr_input_count = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -18,10 +20,7 @@ const _count_effect = _register("packages/translator-tags/src/__tests__/fixtures
 const _count = /* @__PURE__ */_value("count", (_scope, count) => _queueEffect(_scope, _count_effect), _expr_input_count);
 export const _input_ = /* @__PURE__ */_value("input", null, _expr_input_count);
 export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
-const _setup = _scope => {
+export function _setup_(_scope) {
   _count(_scope, 0);
-};
-export const _template_ = "<button> </button>";
-export const _walks_ = /* get, next(1), get, out(1) */" D l";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/components/counter.marko");

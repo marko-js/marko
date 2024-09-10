@@ -1,3 +1,5 @@
+export const _template_ = "<ul></ul><button id=toggle>Toggle</button><button id=reverse>Reverse</button>";
+export const _walks_ = /* get, over(1), get, over(1), get, over(1) */" b b b";
 import { attr as _attr, data as _data, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, value as _value, register as _register, loopOf as _loopOf, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _x$forBody = /* @__PURE__ */_value("x", (_scope, x) => _data(_scope["#text/0"], x));
 const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _x$forBody(_scope, _params_2[0]));
@@ -31,11 +33,8 @@ const _open = /* @__PURE__ */_value("open", (_scope, open) => {
   _attr(_scope["#ul/0"], "hidden", !open);
   _queueEffect(_scope, _open_effect);
 });
-const _setup = _scope => {
+export function _setup_(_scope) {
   _open(_scope, true);
   _list(_scope, [1, 2, 3]);
-};
-export const _template_ = "<ul></ul><button id=toggle>Toggle</button><button id=reverse>Reverse</button>";
-export const _walks_ = /* get, over(1), get, over(1), get, over(1) */" b b b";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko");

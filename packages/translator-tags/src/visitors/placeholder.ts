@@ -149,9 +149,9 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   while (prev.node) {
     const contentType = getNodeContentType(
       prev as t.NodePath<t.Statement>,
-      "endNodeContentType",
+      "endType",
     );
-    if (contentType === ContentType.Empty) {
+    if (contentType === null) {
       prev = prev.getPrevSibling();
     } else if (
       contentType === ContentType.Text ||
@@ -170,9 +170,9 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   while (next.node) {
     const contentType = getNodeContentType(
       next as t.NodePath<t.Statement>,
-      "startNodeContentType",
+      "startType",
     );
-    if (contentType === ContentType.Empty) {
+    if (contentType === null) {
       next = next.getNextSibling();
     } else if (
       contentType === ContentType.Text ||

@@ -1,3 +1,5 @@
+export const _template_ = "<!><!><!><!><!><!><!><!><!><!><!><!>";
+export const _walks_ = /* replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1) */"D%b%b%b%b%b%b%b%b%b%bD";
 import { data as _data, attr as _attr, createRenderer as _createRenderer, value as _value, loopTo as _loopTo, loopIn as _loopIn, loopOf as _loopOf, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _forBody11 = /* @__PURE__ */_createRenderer("Hello", "");
 const _forBody10 = /* @__PURE__ */_createRenderer("Hello", "");
@@ -93,7 +95,7 @@ const _arr = /* @__PURE__ */_value("arr", (_scope, arr) => {
   _for4(_scope, [arr]);
   _for5(_scope, [arr]);
 });
-const _setup = _scope => {
+export function _setup_(_scope) {
   _arr(_scope, [1, 2, 3]);
   _obj(_scope, {
     a: 1,
@@ -105,8 +107,5 @@ const _setup = _scope => {
   _for8(_scope, [0, 10, -2]);
   _for9(_scope, [10, 0, 1]);
   _for10(_scope, [10, 0, 1]);
-};
-export const _template_ = "<!><!><!><!><!><!><!><!><!><!><!><!>";
-export const _walks_ = /* replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1) */"D%b%b%b%b%b%b%b%b%b%bD";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/for-tag/template.marko");
