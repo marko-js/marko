@@ -58,45 +58,46 @@ function isXML(path) {
 }
 
 function _compile(src, filename, userOptions, callback) {
-  registerCoreTaglibs();
-
-  ok(filename, '"filename" argument is required');
-  ok(typeof filename === "string", '"filename" argument should be a string');
-
-  var options = {};
-
-  extend(options, globalConfig);
-
-  if (userOptions) {
-    extend(options, userOptions);
-  }
-
-  var compiler = defaultCompiler;
-
-  if (isXML(filename)) {
-    require("complain")("Using Marko to build XML is deprecated");
-    options.ignoreUnrecognizedTags = true;
-  }
-
-  const context = new CompileContext(src, filename, compiler.builder, options);
-
-  let result;
-
   try {
+    registerCoreTaglibs();
+
+    ok(filename, '"filename" argument is required');
+    ok(typeof filename === "string", '"filename" argument should be a string');
+
+    var options = {};
+
+    extend(options, globalConfig);
+
+    if (userOptions) {
+      extend(options, userOptions);
+    }
+
+    var compiler = defaultCompiler;
+
+    if (isXML(filename)) {
+      require("complain")("Using Marko to build XML is deprecated");
+      options.ignoreUnrecognizedTags = true;
+    }
+
+    const context = new CompileContext(
+      src,
+      filename,
+      compiler.builder,
+      options
+    );
     const compiled = compiler.compile(src, context);
-    result = userOptions.sourceOnly ? compiled.code : compiled;
+    const result = userOptions.sourceOnly ? compiled.code : compiled;
+    if (callback) {
+      callback(null, result);
+    } else {
+      return result;
+    }
   } catch (e) {
     if (callback) {
       return callback(e);
     } else {
       throw e;
     }
-  }
-
-  if (callback) {
-    callback(null, result);
-  } else {
-    return result;
   }
 }
 
