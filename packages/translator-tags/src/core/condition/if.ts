@@ -168,8 +168,8 @@ export function analyze(tag: t.NodePath<t.MarkoTag>) {
       rootTag,
       branches.map(({ tag }) => tag.node.attributes[0]?.value),
     );
-    rootExtra.singleNodeOptimization = branches.every(({ tag }) => {
-      return tag.node.body.body.length === 1;
+    rootExtra.singleNodeOptimization = branches.every(({ section }) => {
+      return section.content === null || section.content.singleChild;
     });
     branches.forEach(({ section }) => {
       section.upstreamExpression = rootExtra;

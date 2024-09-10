@@ -14,7 +14,6 @@ import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 export enum ContentType {
   Comment,
   Dynamic,
-  Empty,
   Placeholder,
   Tag,
   Text,
@@ -27,9 +26,12 @@ export type Section = {
   parent?: Section;
   closures: Set<Binding>;
   bindings: Set<Binding>;
-  startNodeContentType: ContentType;
-  endNodeContentType: ContentType;
   upstreamExpression: t.NodeExtra | undefined;
+  content: null | {
+    startType: ContentType;
+    endType: ContentType;
+    singleChild: boolean;
+  };
 };
 
 declare module "@marko/compiler/dist/types" {
@@ -76,8 +78,7 @@ export function startSection(
       parent: parentSection,
       closures: new Set(),
       bindings: new Set(),
-      startNodeContentType: getStartNodeContentType(path),
-      endNodeContentType: getEndNodeContentType(path),
+      content: getContentInfo(path),
       upstreamExpression: undefined,
     };
     sections.push(section);
@@ -164,30 +165,39 @@ export function forEachSectionReverse(fn: (section: Section) => void) {
   }
 }
 
-function getStartNodeContentType(path: t.NodePath<t.Program | t.MarkoTagBody>) {
-  for (const child of path.get("body")) {
-    const contentType = getNodeContentType(child, "startNodeContentType");
-    if (contentType !== ContentType.Empty) {
-      return contentType;
-    }
-  }
-  return ContentType.Empty;
-}
-
-function getEndNodeContentType(path: t.NodePath<t.Program | t.MarkoTagBody>) {
+function getContentInfo(path: t.NodePath<t.Program | t.MarkoTagBody>) {
   const body = path.get("body");
-  for (let i = body.length; i--; ) {
-    const contentType = getNodeContentType(body[i], "endNodeContentType");
-    if (contentType !== ContentType.Empty) {
-      return contentType;
+  const contentInfo: Section["content"] = {
+    startType: null!,
+    endType: null!,
+    singleChild: true,
+  };
+  for (let endIndex = body.length; endIndex--; ) {
+    const endType = getNodeContentType(body[endIndex], "endType", contentInfo);
+    if (endType !== null) {
+      contentInfo.endType = endType;
+
+      for (let startIndex = 0; startIndex < endIndex; startIndex++) {
+        const startType = getNodeContentType(body[startIndex], "startType");
+        if (startType !== null) {
+          contentInfo.startType = startType;
+          contentInfo.singleChild = false;
+          return contentInfo;
+        }
+      }
+
+      contentInfo.startType = getNodeContentType(body[endIndex], "startType")!;
+      return contentInfo;
     }
   }
-  return ContentType.Empty;
+
+  return null;
 }
 
 export function getNodeContentType(
   path: t.NodePath<t.Statement>,
-  extraMember: "startNodeContentType" | "endNodeContentType",
+  extraMember: "startType" | "endType",
+  contentInfo?: Section["content"],
 ) {
   if (t.isMarkoText(path)) {
     return ContentType.Text;
@@ -196,7 +206,7 @@ export function getNodeContentType(
     return ContentType.Placeholder;
   }
   if (t.isMarkoScriptlet(path) || t.isMarkoComment(path)) {
-    return ContentType.Empty;
+    return null;
   }
   if (t.isMarkoTag(path.node)) {
     const tag = path as t.NodePath<t.MarkoTag>;
@@ -204,7 +214,7 @@ export function getNodeContentType(
       return ContentType.Tag;
     }
     if (isAttributeTag(tag)) {
-      return ContentType.Empty;
+      return null;
     }
     if (t.isStringLiteral(path.node.name)) {
       switch (path.node.name.value) {
@@ -218,11 +228,22 @@ export function getNodeContentType(
         case "return":
         case "id":
         case "define":
-          return ContentType.Empty;
+          return null;
       }
       const tagSection = loadFileForTag(tag)?.ast.program.extra.section;
       if (tagSection) {
-        return tagSection[extraMember] ?? ContentType.Empty;
+        if (tagSection.content) {
+          if (contentInfo && !tagSection.content.singleChild) {
+            if (extraMember === "endType") {
+              contentInfo.startType = tagSection.content.startType;
+              contentInfo.singleChild = false;
+            }
+          }
+
+          return tagSection.content[extraMember];
+        } else {
+          return null;
+        }
       }
     }
   }
