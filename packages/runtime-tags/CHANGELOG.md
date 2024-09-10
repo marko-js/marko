@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.1.12
+
+### Patch Changes
+
+- [#2293](https://github.com/marko-js/marko/pull/2293) [`3464f38`](https://github.com/marko-js/marko/commit/3464f389036047a19845ab1a74e11d82ff9ca946) Thanks [@rturnq](https://github.com/rturnq)! - Fix walker incorrectly getting next node when using OVER with a single node
+
 ## 0.1.11
 
 ### Patch Changes
