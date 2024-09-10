@@ -1,31 +1,29 @@
 import {
-  r as s,
-  c as t,
-  o as a,
-  a as n,
+  r as t,
+  c as s,
+  o as n,
+  a,
   q as o,
   v as c,
   d as i,
-  b as r,
+  b as u,
 } from "./runtime-Do5U4Hds.js";
-const u = s("XBSGKvBc", (s) =>
-    a(
-      s[0],
+const r = t("XBSGKvBc", (t) =>
+    n(
+      t[0],
       "click",
-      ((s) => {
-        const { 2: t } = s;
+      ((t) => {
+        const { 2: s } = t;
         return function () {
-          o(s, m, t + 1);
+          o(t, m, s + 1);
         };
-      })(s),
+      })(t),
     ),
   ),
-  m = c(2, (s, t) => {
-    i(s[1], t), r(s, u);
+  m = c(2, (t, s) => {
+    i(t[1], s), u(t, r);
   });
-t(
-  n("<div><button> </button></div>", "D D m", (s) => {
-    m(s, 0);
-  }),
-  "tPaZsVqd",
-).mount();
+function d(t) {
+  m(t, 0);
+}
+s(a("<div><button> </button></div>", "D D m", d), "tPaZsVqd").mount();

@@ -1,3 +1,5 @@
+export const _template_ = "<!><!><!>";
+export const _walks_ = /* replace, over(1) */"D%bD";
 import Child from "./components/child.marko";
 import { on as _on, data as _data, queueSource as _queueSource, createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, registerRenderer as _registerRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onClick = _scope => {
@@ -19,11 +21,8 @@ const _falseChildBody = _registerRenderer("packages/translator-tags/src/__tests_
 const _falseChild_input = _dynamicTagAttrs("#text/0", _falseChildBody);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _falseChild_input(_scope, () => ({})), _falseChild_input);
 const _count = /* @__PURE__ */_value("count", null, _dynamicSubscribers("count"));
-const _setup = _scope => {
+export function _setup_(_scope) {
   _count(_scope, 0);
   _dynamicTagName(_scope, false || Child || _falseChildBody);
-};
-export const _template_ = "<!><!><!>";
-export const _walks_ = /* replace, over(1) */"D%bD";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko");

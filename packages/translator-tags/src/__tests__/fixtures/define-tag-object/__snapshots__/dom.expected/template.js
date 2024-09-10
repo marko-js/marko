@@ -1,3 +1,5 @@
+export const _template_ = "<div> </div><button> </button>";
+export const _walks_ = /* next(1), get, out(1), get, next(1), get, out(1) */"D l D l";
 import { data as _data, on as _on, queueSource as _queueSource, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _myObj = /* @__PURE__ */_value("myObj", (_scope, myObj) => _data(_scope["#text/0"], JSON.stringify(myObj)));
 const _onClick = _scope => {
@@ -17,10 +19,7 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
     bar: x + 1
   });
 });
-const _setup = _scope => {
+export function _setup_(_scope) {
   _x(_scope, 1);
-};
-export const _template_ = "<div> </div><button> </button>";
-export const _walks_ = /* next(1), get, out(1), get, next(1), get, out(1) */"D l D l";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/define-tag-object/template.marko");

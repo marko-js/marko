@@ -117,11 +117,11 @@ export function getSignal(
   const signals = getSignals(section);
   let signal = signals.get(referencedBindings)!;
   if (!signal) {
-    const exportName =
-      referencedBindings &&
-      !Array.isArray(referencedBindings) &&
-      referencedBindings.section === section &&
-      referencedBindings.export;
+    const exportName = referencedBindings
+      ? !Array.isArray(referencedBindings) &&
+        referencedBindings.section === section &&
+        referencedBindings.export
+      : !section.parent && currentProgramPath.node.extra.domExports?.setup;
 
     signals.set(
       referencedBindings,
@@ -806,9 +806,18 @@ export function writeSignals(section: Section) {
     }
 
     const signalDeclarator = t.variableDeclarator(signal.identifier, value);
-    let signalDeclaration: t.Statement = t.variableDeclaration("const", [
-      signalDeclarator,
-    ]);
+    let signalDeclaration: t.Statement =
+      !section.parent &&
+      !signal.referencedBindings &&
+      (t.isFunctionExpression(value) || t.isArrowFunctionExpression(value))
+        ? t.functionDeclaration(
+            signal.identifier,
+            value.params,
+            t.isExpression(value.body)
+              ? t.blockStatement([t.expressionStatement(value.body)])
+              : value.body,
+          )
+        : t.variableDeclaration("const", [signalDeclarator]);
     if (signal.export) {
       signalDeclaration = t.exportNamedDeclaration(signalDeclaration);
     }
@@ -829,10 +838,6 @@ export function writeSignals(section: Section) {
 }
 
 function sortSignals(a: Signal, b: Signal) {
-  // if (a.register !== b.register) {
-  //   return a.register ? -1 : 1;
-  // }
-
   const aReferencedBindings = getReferencedBindings(a);
   const bReferencedBindings = getReferencedBindings(b);
 

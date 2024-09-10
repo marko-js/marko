@@ -1,71 +1,73 @@
-// size: 753 (min) 345 (brotli)
+// size: 745 (min) 354 (brotli)
 
 import {
   createTemplate as i,
   createRenderer as o,
-  value as n,
-  data as v,
-  dynamicTagAttrs as t,
-  register as c,
-  on as d,
-  queueSource as a,
-  queueEffect as l,
-  conditional as u,
-  intersection as r,
-  init as s,
+  value as v,
+  data as d,
+  dynamicTagAttrs as a,
+  register as l,
+  on as n,
+  queueSource as t,
+  queueEffect as c,
+  conditional as r,
+  intersection as s,
+  init as u,
 } from "@marko/runtime-tags/dom";
-const e = n(3, (i, o) => v(i[0], o)),
-  m = n(2, (i, o) => e(i, o.value));
-var f = i(
+const e = () => {},
+  m = v(3, (i, o) => d(i[0], o)),
+  h = v(2, (i, o) => m(i, o.value));
+var b = i(
   o(
     "<div>Child 1 has <!></div>",
     "Db%l",
-    function () {},
+    e,
     void 0,
     void 0,
-    n(1, (i, o) => m(i, o[0])),
+    v(1, (i, o) => h(i, o[0])),
   ),
   "a",
 );
-const h = n(3, (i, o) => v(i[0], o)),
-  b = n(2, (i, o) => h(i, o.value));
-var k = i(
+const f = () => {},
+  k = v(3, (i, o) => d(i[0], o)),
+  C = v(2, (i, o) => k(i, o.value));
+var D = i(
   o(
     "<div>Child 2 has <!></div>",
     "Db%l",
-    function () {},
+    f,
     void 0,
     void 0,
-    n(1, (i, o) => b(i, o[0])),
+    v(1, (i, o) => C(i, o[0])),
   ),
   "b",
 );
-const C = t(0),
-  D = u(
+const g = a(0),
+  p = r(
     0,
     null,
-    r(2, (i) => {
+    s(2, (i) => {
       const { 3: o } = i;
-      C(i, () => ({ value: o }));
+      g(i, () => ({ value: o }));
     }),
   ),
-  g = c("c0", (i) =>
-    d(
+  j = l("c0", (i) =>
+    n(
       i[1],
       "click",
       ((i) => {
         const { 2: o } = i;
         return function () {
-          a(i, p, o === f ? k : f);
+          t(i, q, o === b ? D : b);
         };
       })(i),
     ),
   ),
-  p = n(
+  q = v(
     2,
     (i, o) => {
-      l(i, g), D(i, o);
+      c(i, j), p(i, o);
     },
-    D,
+    p,
   );
-s();
+u();

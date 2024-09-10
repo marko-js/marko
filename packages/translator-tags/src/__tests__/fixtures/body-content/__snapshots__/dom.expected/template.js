@@ -1,3 +1,5 @@
+export const _template_ = `${_FancyButton_template}`;
+export const _walks_ = /* beginChild, _FancyButton_walks, endChild */`/${_FancyButton_walks}&`;
 import { register as _register, data as _data, bindRenderer as _bindRenderer, inChild as _inChild, queueSource as _queueSource, createRenderer as _createRenderer, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, registerRenderer as _registerRenderer, dynamicSubscribers as _dynamicSubscribers, intersections as _intersections, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onClick = _register("packages/translator-tags/src/__tests__/fixtures/body-content/template.marko_0/onClick", _scope => {
   const {
@@ -14,11 +16,8 @@ const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => 
   onClick: _onClick(_scope),
   renderBody: /* @__PURE__ */_bindRenderer(_scope, _FancyButtonBody)
 }), _intersections([_inChild("#childScope/0", _FancyButton_input), _dynamicSubscribers("clickCount")]));
-const _setup = _scope => {
+export function _setup_(_scope) {
   _FancyButton(_scope["#childScope/0"]);
   _clickCount(_scope, 0);
-};
-export const _template_ = `${_FancyButton_template}`;
-export const _walks_ = /* beginChild, _FancyButton_walks, endChild */`/${_FancyButton_walks}&`;
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/body-content/template.marko");

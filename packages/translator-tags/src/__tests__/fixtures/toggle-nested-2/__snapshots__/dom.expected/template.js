@@ -1,3 +1,5 @@
+export const _template_ = "<div><button id=outer></button><!></div>";
+export const _walks_ = /* next(1), get, over(1), replace, out(1) */"D b%l";
 import { on as _on, data as _data, queueSource as _queueSource, createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, registerRenderer as _registerRenderer, conditional as _conditional, closure as _closure, dynamicSubscribers as _dynamicSubscribers, value as _value, inConditionalScope as _inConditionalScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onClick = _scope => {
   const {
@@ -50,12 +52,9 @@ const _outer = /* @__PURE__ */_value("outer", (_scope, outer) => {
   _queueEffect(_scope, _outer_effect);
   _if(_scope, outer ? _ifBody : null);
 }, _if);
-const _setup = _scope => {
+export function _setup_(_scope) {
   _outer(_scope, true);
   _inner(_scope, true);
   _count(_scope, 0);
-};
-export const _template_ = "<div><button id=outer></button><!></div>";
-export const _walks_ = /* next(1), get, over(1), replace, out(1) */"D b%l";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko");

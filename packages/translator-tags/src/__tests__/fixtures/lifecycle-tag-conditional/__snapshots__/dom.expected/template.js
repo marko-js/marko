@@ -1,3 +1,5 @@
+export const _template_ = "<!><!><div id=ref></div><button id=increment>Increment</button><button id=toggle>Toggle</button>";
+export const _walks_ = /* replace, over(2), get, over(1), get, over(1) */"D%c b b";
 import { lifecycle as _lifecycle, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, closure as _closure, registerRenderer as _registerRenderer, conditional as _conditional, value as _value, inConditionalScope as _inConditionalScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onMount = _scope => {
   const {
@@ -52,11 +54,8 @@ const _onClick2 = _scope => {
 };
 const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_0_x", _scope => _on(_scope["#button/1"], "click", _onClick2(_scope)));
 const _x = /* @__PURE__ */_value("x", (_scope, x) => _queueEffect(_scope, _x_effect), _inConditionalScope(_x$ifBody, "#text/0"));
-const _setup = _scope => {
+export function _setup_(_scope) {
   _x(_scope, 0);
   _show(_scope, true);
-};
-export const _template_ = "<!><!><div id=ref></div><button id=increment>Increment</button><button id=toggle>Toggle</button>";
-export const _walks_ = /* replace, over(2), get, over(1), get, over(1) */"D%c b b";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko");

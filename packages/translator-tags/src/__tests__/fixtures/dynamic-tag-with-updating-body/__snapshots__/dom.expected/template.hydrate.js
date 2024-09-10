@@ -1,4 +1,4 @@
-// size: 572 (min) 302 (brotli)
+// size: 583 (min) 306 (brotli)
 
 import {
   register as n,
@@ -6,8 +6,8 @@ import {
   queueSource as o,
   value as c,
   data as i,
-  queueEffect as r,
-  createRenderer as u,
+  queueEffect as u,
+  createRenderer as r,
   dynamicTagAttrs as s,
   conditional as a,
   init as m,
@@ -19,42 +19,41 @@ const b = n("a0", (n) =>
       ((n) => {
         const { 2: t } = n;
         return function () {
-          o(n, d, t + 1);
+          o(n, f, t + 1);
         };
       })(n),
     ),
   ),
-  d = c(2, (n, t) => {
-    i(n[1], t), r(n, b);
-  }),
-  e = (n) => {
-    d(n, 0);
-  },
-  f = n(
+  f = c(2, (n, t) => {
+    i(n[1], t), u(n, b);
+  });
+const d = n(
     "b0",
-    u("<button id=count> </button>", "/ D l&", (n) => {
-      e(n[0]);
+    r("<button id=count> </button>", "/ D l&", (n) => {
+      !(function (n) {
+        f(n, 0);
+      })(n[0]);
     }),
   ),
-  k = s(0, f),
-  l = a(0, (n) => k(n, () => ({})), k),
-  p = n("b1", (n) =>
+  e = s(0, d),
+  k = a(0, (n) => e(n, () => ({})), e),
+  l = n("b1", (n) =>
     t(
       n[1],
       "click",
       ((n) => {
         const { 2: t } = n;
         return function () {
-          o(n, g, "span" === t ? "div" : "span");
+          o(n, p, "span" === t ? "div" : "span");
         };
       })(n),
     ),
   ),
-  g = c(
+  p = c(
     2,
     (n, t) => {
-      r(n, p), l(n, t || f);
+      u(n, l), k(n, t || d);
     },
-    l,
+    k,
   );
 m();

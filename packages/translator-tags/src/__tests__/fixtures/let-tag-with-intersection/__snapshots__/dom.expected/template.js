@@ -1,3 +1,5 @@
+export const _template_ = "<button> </button><!> <!> <!>";
+export const _walks_ = /* get, next(1), get, out(1), replace, over(2), replace, over(2), replace, over(1) */" D l%c%c%b";
 import { on as _on, data as _data, queueSource as _queueSource, intersection as _intersection, value as _value, register as _register, queueEffect as _queueEffect, intersections as _intersections, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _expr_y_z = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -22,10 +24,7 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _y(_scope, x + 1);
   _z(_scope, x + 2);
 }, _intersections([_y, _z]));
-const _setup = _scope => {
+export function _setup_(_scope) {
   _x(_scope, 1);
-};
-export const _template_ = "<button> </button><!> <!> <!>";
-export const _walks_ = /* get, next(1), get, out(1), replace, over(2), replace, over(2), replace, over(1) */" D l%c%c%b";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko");

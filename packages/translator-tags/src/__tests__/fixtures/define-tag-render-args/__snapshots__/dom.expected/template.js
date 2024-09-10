@@ -1,3 +1,5 @@
+export const _template_ = "<!><!><button> </button>";
+export const _walks_ = /* replace, over(1), get, next(1), get, out(1) */"D%b D l";
 import { data as _data, bindRenderer as _bindRenderer, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, value as _value, register as _register, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _c$defineBody = /* @__PURE__ */_value("c", (_scope, c) => _data(_scope["#text/2"], c));
 const _b$defineBody = /* @__PURE__ */_value("b", (_scope, b) => _data(_scope["#text/1"], b));
@@ -30,13 +32,10 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _queueEffect(_scope, _x_effect);
 }, _expr_Text_x);
 const _myTag = /* @__PURE__ */_value("myTag", (_scope, myTag) => _dynamicTagName(_scope, myTag), _dynamicTagName);
-const _setup = _scope => {
+export function _setup_(_scope) {
   _x(_scope, 1);
   _myTag(_scope, {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _defineBody)
   });
-};
-export const _template_ = "<!><!><button> </button>";
-export const _walks_ = /* replace, over(1), get, next(1), get, out(1) */"D%b D l";
-export const _setup_ = _setup;
+}
 export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko");

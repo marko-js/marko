@@ -84,11 +84,24 @@ export default {
 
       renameBindings();
 
-      program.node.body.push(
+      if (!setup) {
+        program.node.body.unshift(
+          t.exportNamedDeclaration(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                setupIdentifier,
+                t.arrowFunctionExpression([], t.blockStatement([])),
+              ),
+            ]),
+          ),
+        );
+      }
+
+      program.node.body.unshift(
         t.exportNamedDeclaration(
           t.variableDeclaration("const", [
             t.variableDeclarator(
-              t.identifier(domExports.template),
+              templateIdentifier,
               writes || t.stringLiteral(""),
             ),
           ]),
@@ -98,17 +111,8 @@ export default {
             t.variableDeclarator(walksIdentifier, walks || t.stringLiteral("")),
           ]),
         ),
-        t.exportNamedDeclaration(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              setupIdentifier,
-              t.isNullLiteral(setup) || !setup
-                ? t.functionExpression(null, [], t.blockStatement([]))
-                : setup,
-            ),
-          ]),
-        ),
       );
+
       if (closures.length) {
         program.node.body.push(
           t.exportNamedDeclaration(
