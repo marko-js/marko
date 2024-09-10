@@ -394,8 +394,7 @@ function re(t, n, r) {
     else if (o >= 107) {
       for (o = 10 * l + o - 107; o--; ) ee.parentNode();
       ee.nextSibling();
-    } else if (o >= 97)
-      for (o = 10 * l + o - 97; o--; ) !ee.nextSibling() && ee.nextNode();
+    } else if (o >= 97) for (o = 10 * l + o - 97; o--; ) ee.nextSibling();
     else if (o >= 67) for (o = 20 * l + o - 67; o--; ) ee.nextNode();
     else if (47 === o) r = re(t, (n[f++] = e(n.$global)), r);
     else {
