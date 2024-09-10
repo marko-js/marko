@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.28.6](https://github.com/marko-js/marko/compare/v4.28.4...v4.28.6) (2024-09-10)
+
+
+### Bug Fixes
+
+* forward taglib errors to compile cb ([3a9983e](https://github.com/marko-js/marko/commit/3a9983e708d1bebb2627c9bf029db7fd3442e11c))
+* prefer .marko.js precompiled files when using load api ([bc9dbab](https://github.com/marko-js/marko/commit/bc9dbabc4d345069e25760911ee122ecf6c69b68))
+
 ### [4.28.5](https://github.com/marko-js/marko/compare/v4.28.4...v4.28.5) (2024-08-05)
 
 
