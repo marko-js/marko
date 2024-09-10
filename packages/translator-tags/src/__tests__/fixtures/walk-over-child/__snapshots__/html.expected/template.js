@@ -11,4 +11,4 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     "#childScope/0": _childScope
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-broken-walks/template.marko");
+export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/walk-over-child/template.marko");
