@@ -16,7 +16,7 @@
 'use strict';
 var createError = require('raptor-util').createError;
 var expressionParser = require('./expression-parser');
-var stringify = require('raptor-json/stringify');
+var stringify = require('./util/stringify');
 var Expression = require('./Expression');
 function TypeConverter() {
 }

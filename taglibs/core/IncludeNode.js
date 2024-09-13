@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 'use strict';
-var stringify = require('raptor-json/stringify');
+var stringify = require('../../compiler/util/stringify');
 var nodePath = require('path');
 var req = require;
 var fs;

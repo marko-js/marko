@@ -17,7 +17,7 @@
 var createError = require('raptor-util').createError;
 var Expression = require('./Expression');
 var strings = require('raptor-strings');
-var stringify = require('raptor-json/stringify');
+var stringify = require('./util/stringify');
 var regexp = require('raptor-regexp');
 var ok = require('assert').ok;
 

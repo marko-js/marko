@@ -16,7 +16,7 @@
 'use strict';
 var createError = require('raptor-util').createError;
 var nodePath = require('path');
-var stringify = require('raptor-json/stringify');
+var stringify = require('./util/stringify');
 var StringBuilder = require('raptor-strings/StringBuilder');
 var Expression = require('./Expression');
 var arrayFromArguments = require('raptor-util').arrayFromArguments;

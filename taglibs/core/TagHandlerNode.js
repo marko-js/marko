@@ -16,7 +16,7 @@
 'use strict';
 var extend = require('raptor-util').extend;
 var forEachEntry = require('raptor-util').forEachEntry;
-var stringify = require('raptor-json/stringify');
+var stringify = require('../../compiler/util/stringify');
 var isObjectEmpty = require('raptor-util/isObjectEmpty');
 var requireVarName = require('./requireVarName');
 

@@ -35,7 +35,7 @@ function convertNumber(str) {
     }
 }
 
-var stringify = require('raptor-json/stringify').stringify;
+var stringify = require('../../compiler/util/stringify');
 function parseForEach(value) {
     var match = value.match(forEachRegEx);
     if (match) {
