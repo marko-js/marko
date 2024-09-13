@@ -41,12 +41,9 @@ inserted div0, div1, div2
 # Mutations
 ```
 div0: attr(a) "1" => null
-div0: attr(b) "2" => "2"
 div0: attr(c) null => "3"
-div2: attr(b) "2" => "2"
 div2: attr(c) null => "3"
 div1: attr(a) "1" => "0"
-div1: attr(b) "2" => "2"
 div1: attr(c) null => "3"
 ```
 
@@ -71,7 +68,6 @@ div1: attr(c) null => "3"
 div0: attr(b) "2" => null
 div2: attr(b) "2" => null
 div1: attr(b) "2" => null
-div1: attr(a) "0" => "0"
 ```
 
 
@@ -91,7 +87,6 @@ div1: attr(a) "0" => "0"
 div0: attr(c) "3" => null
 div2: attr(c) "3" => null
 div1: attr(c) "3" => null
-div1: attr(a) "0" => "0"
 ```
 
 

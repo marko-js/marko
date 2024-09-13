@@ -558,7 +558,7 @@ export function addStatement(
   targetSection: Section,
   referencedBindings: ReferencedBindings,
   statement: t.Statement | t.Statement[],
-  originalNodes: t.Expression | t.Expression[],
+  originalNodes?: t.Expression | t.Expression[],
   isInlined?: boolean,
 ): void;
 export function addStatement(
@@ -591,10 +591,8 @@ export function addStatement(
           addEffectReferences(signal, node);
         }
       }
-    } else {
-      if (isInlined || !t.isFunction(originalNodes)) {
-        addEffectReferences(signal, originalNodes!);
-      }
+    } else if (originalNodes && (isInlined || !t.isFunction(originalNodes))) {
+      addEffectReferences(signal, originalNodes!);
     }
   }
 }

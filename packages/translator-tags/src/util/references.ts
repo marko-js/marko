@@ -414,13 +414,14 @@ function trackReference(
 }
 
 const [getMergedReferences] = createProgramState(
-  () => new Map<t.NodePath, (t.Node | undefined)[]>(),
+  () => new Map<t.Node, { section: Section; nodes: (t.Node | undefined)[] }>(),
 );
 export function mergeReferences(
-  target: t.NodePath,
+  section: Section,
+  target: t.Node,
   nodes: (t.Node | undefined)[],
 ) {
-  getMergedReferences().set(target, nodes);
+  getMergedReferences().set(target, { section, nodes });
 }
 
 /**
@@ -462,8 +463,8 @@ export function finalizeReferences() {
 
   const mergedReferences = getMergedReferences();
   if (mergedReferences.size) {
-    for (const [target, nodes] of mergedReferences) {
-      const targetExtra = (target.node.extra ??= {});
+    for (const [target, { section, nodes }] of mergedReferences) {
+      const targetExtra = (target.extra ??= {});
       let { referencedBindings, isEffect } = targetExtra;
       for (const node of nodes) {
         const extra = node?.extra;
@@ -483,10 +484,7 @@ export function finalizeReferences() {
         }
       }
 
-      referencedBindings = findReferences(
-        getOrCreateSection(target),
-        referencedBindings,
-      );
+      referencedBindings = findReferences(section, referencedBindings);
       targetExtra.referencedBindings = referencedBindings;
       targetExtra.isEffect = isEffect;
     }

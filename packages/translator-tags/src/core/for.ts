@@ -121,7 +121,7 @@ export default {
     }
 
     trackParamsReferences(tagBody, BindingType.param, undefined, tagExtra);
-    mergeReferences(tag, getAllTagReferenceNodes(tag.node));
+    mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
     bodySection.upstreamExpression = tagExtra;
   },
   translate: translateByTarget({

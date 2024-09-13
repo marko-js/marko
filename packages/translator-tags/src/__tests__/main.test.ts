@@ -277,6 +277,7 @@ describe("translator-tags", () => {
           if (isWait(update)) {
             await update();
           } else if (typeof update === "function") {
+            tracker.beginUpdate();
             await update(document.documentElement);
             if (isThrows(update)) {
               try {
@@ -334,6 +335,7 @@ describe("translator-tags", () => {
           if (isWait(update)) {
             await update();
           } else if (typeof update === "function") {
+            tracker.beginUpdate();
             await update(document.documentElement);
             run();
             tracker.logUpdate(update);

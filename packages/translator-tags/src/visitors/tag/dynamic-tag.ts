@@ -77,7 +77,7 @@ export default {
       startSection(tagBody);
       trackVarReferences(tag, BindingType.derived);
       trackParamsReferences(tagBody, BindingType.param);
-      mergeReferences(tag, getAllTagReferenceNodes(tag.node));
+      mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
       addReferenceToExpression(tag, domBinding);
     },
   },

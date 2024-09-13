@@ -43,6 +43,9 @@ export enum AccessorChar {
   LoopScopeArray = "!",
   LoopScopeMap = "(",
   EventAttributes = "~",
+  ControlledValue = ":",
+  ControlledHandler = ";",
+  ControlledType = "=",
 }
 
 export enum NodeType {
@@ -119,3 +122,13 @@ export type RenderResult = PromiseLike<string> &
   AsyncIterable<string> & {
     toReadable(): ReadableStream;
   };
+
+export enum ControlledType {
+  InputChecked,
+  InputCheckedValue,
+  InputCheckedValues,
+  InputValue,
+  SelectValue,
+  DetailsOpen,
+  DialogOpen,
+}

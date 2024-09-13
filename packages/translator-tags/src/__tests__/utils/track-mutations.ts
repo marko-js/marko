@@ -99,24 +99,50 @@ function cloneAndSanitize(window: JSDOM["window"], container: ParentNode) {
   if (!(container as any).TEST_ROOT) {
     container = window.document.body || window.document.createElement("body");
   }
+
   const clone = container.cloneNode(true);
-  const treeWalker = window.document.createTreeWalker(clone);
-  const nodesToRemove: ChildNode[] = [];
-
-  while (treeWalker.nextNode()) {
-    const node = treeWalker.currentNode;
-    if (node.nodeType === 8 || isSanitizedTag(node as Element)) {
-      nodesToRemove.push(node as ChildNode);
-    } else if ((node as Element).tagName === "TEXTAREA") {
-      node.textContent = (node as HTMLTextAreaElement).value;
-    }
+  for (const removeNode of normalizeTree(container, clone)) {
+    removeNode.remove();
   }
-
-  nodesToRemove.forEach((n) => n.remove());
-
   clone.normalize();
 
   return clone;
+}
+
+function normalizeTree(
+  source: Node,
+  target: Node,
+  nodesToRemove: ChildNode[] = [],
+) {
+  if (target.nodeType === 8 || isSanitizedTag(target as Element)) {
+    nodesToRemove.push(target as ChildNode);
+  } else if (isElement(target)) {
+    if (target.tagName === "INPUT") {
+      if ((source as HTMLInputElement).value) {
+        target.setAttribute("value", (source as HTMLInputElement).value);
+      }
+      if ((source as HTMLInputElement).checked) {
+        target.setAttribute("checked", "");
+      } else {
+        target.removeAttribute("checked");
+      }
+    } else if (target.tagName === "TEXTAREA") {
+      target.textContent = (source as HTMLTextAreaElement).value;
+    } else if (target.tagName === "OPTION") {
+      if ((source as HTMLOptionElement).selected) {
+        target.setAttribute("selected", "");
+      } else {
+        target.removeAttribute("selected");
+      }
+    }
+  }
+
+  // Recursively handle child nodes
+  for (let i = 0; i < source.childNodes.length; i++) {
+    normalizeTree(source.childNodes[i], target.childNodes[i], nodesToRemove);
+  }
+
+  return nodesToRemove;
 }
 
 function getUpdateString(update: unknown) {
@@ -244,4 +270,8 @@ function isSanitizedTag(node: Element) {
     default:
       return false;
   }
+}
+
+function isElement(node: Node): node is Element {
+  return node.nodeType === 1;
 }
