@@ -175,11 +175,9 @@ button2: attr(data-multiple) "" => null
 button3: attr(data-selected) null => ""
 button3: attr(data-multiple) null => ""
 button4: attr(data-multiple) "" => null
-button6: attr(data-multiple) "" => ""
 button8: attr(data-multiple) "" => null
 button9: attr(data-multiple) null => ""
 button10: attr(data-multiple) "" => null
-button12: attr(data-multiple) "" => ""
 ```
 
 

@@ -9,7 +9,7 @@ import {
   trackParamsReferences,
   trackVarReferences,
 } from "../util/references";
-import { getSection, startSection } from "../util/sections";
+import { getOrCreateSection, getSection, startSection } from "../util/sections";
 import {
   addStatement,
   addValue,
@@ -33,7 +33,11 @@ export default {
     startSection(tagBody);
     trackVarReferences(tag, BindingType.derived);
     trackParamsReferences(tagBody, BindingType.param);
-    mergeReferences(tag, getAllTagReferenceNodes(tag.node));
+    mergeReferences(
+      getOrCreateSection(tag),
+      tag.node,
+      getAllTagReferenceNodes(tag.node),
+    );
   },
   translate: {
     enter(tag) {

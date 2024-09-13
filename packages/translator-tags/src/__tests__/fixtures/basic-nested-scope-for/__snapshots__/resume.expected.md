@@ -265,11 +265,9 @@ c => click(c, 3)
 #document/html0/body1/button4: attr(data-selected) null => ""
 #document/html0/body1/button4: attr(data-multiple) null => ""
 #document/html0/body1/button6: attr(data-multiple) "" => null
-#document/html0/body1/button10: attr(data-multiple) "" => ""
 #document/html0/body1/button14: attr(data-multiple) "" => null
 #document/html0/body1/button16: attr(data-multiple) null => ""
 #document/html0/body1/button18: attr(data-multiple) "" => null
-#document/html0/body1/button22: attr(data-multiple) "" => ""
 ```
 
 

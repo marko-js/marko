@@ -29,7 +29,6 @@ inserted #document/html0/body1/#text0
 inserted #document/html0/body1/#text8
 removed #comment before #document/html0/body1/#text0
 removed #comment after #document/html0/body1/#text8
-#document/html0/body1/button4: attr(data-parent) "0" => "0"
 inserted #document/html0/body1/#text2
 inserted #document/html0/body1/#text7
 inserted #document/html0/body1/#text3

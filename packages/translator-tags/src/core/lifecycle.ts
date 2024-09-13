@@ -40,10 +40,11 @@ export default {
 
     const { node } = tag;
     const tagExtra = (node.extra ??= {});
+    const section = getOrCreateSection(tag);
     tagExtra[kRef] = createBinding(
       tag.scope.generateUid("lifecycle"),
       BindingType.derived,
-      getOrCreateSection(tag),
+      section,
       undefined,
       tagExtra,
     );
@@ -74,7 +75,7 @@ export default {
     }
 
     (currentProgramPath.node.extra ??= {}).isInteractive = true;
-    mergeReferences(tag, getAllTagReferenceNodes(tag.node));
+    mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
   },
   translate: {
     exit(tag) {

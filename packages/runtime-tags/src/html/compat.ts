@@ -75,7 +75,11 @@ export const compat = {
     }
 
     const boundary = new Boundary(state);
-    let head = new Chunk(boundary, null);
+    let head = new Chunk(
+      boundary,
+      null,
+      null /* TODO: this should grab the context from the previous chunk */,
+    );
     head.render(() => {
       if (willRerender) {
         const scopeId = peekNextScopeId();

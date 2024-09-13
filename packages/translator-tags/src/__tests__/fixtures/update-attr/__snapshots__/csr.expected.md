@@ -22,7 +22,7 @@ inserted div0
 
 # Mutations
 ```
-div0: attr(b) "1" => "1"
+
 ```
 
 

@@ -2,10 +2,27 @@ import { classValue, styleValue } from "../common/helpers";
 import {
   type Accessor,
   AccessorChar,
+  ControlledType,
   NodeType,
   type Scope,
 } from "../common/types";
 import { getAbortSignal } from "./abort-signal";
+import {
+  controllable_details_open,
+  controllable_details_open_effect,
+  controllable_dialog_open,
+  controllable_dialog_open_effect,
+  controllable_input_checked,
+  controllable_input_checked_effect,
+  controllable_input_checkedValue,
+  controllable_input_checkedValue_effect,
+  controllable_input_checkedValues,
+  controllable_input_checkedValues_effect,
+  controllable_input_value,
+  controllable_input_value_effect,
+  controllable_select_value,
+  controllable_select_value_effect,
+} from "./controllable";
 import { on } from "./event";
 import { parseHTML } from "./parse-html";
 
@@ -19,15 +36,18 @@ export function attr(element: Element, name: string, value: unknown) {
   setAttribute(element, name, normalizeAttrValue(value));
 }
 
-function setAttribute(
+export function setAttribute(
   element: Element,
   name: string,
   value: string | undefined,
 ) {
-  if (value === undefined) {
-    element.removeAttribute(name);
-  } else {
-    element.setAttribute(name, value);
+  // TODO: benchmark if it is actually faster to check first
+  if (element.getAttribute(name) != value) {
+    if (value === undefined) {
+      element.removeAttribute(name);
+    } else {
+      element.setAttribute(name, value);
+    }
   }
 }
 
@@ -49,31 +69,43 @@ export function data(node: Text | Comment, value: unknown) {
 
 export function attrs(
   scope: Scope,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
-  const element = scope[elementAccessor] as Element;
-  for (const { name } of element.attributes) {
-    if (!(nextAttrs && name in nextAttrs)) {
-      element.removeAttribute(name);
+  const el = scope[nodeAccessor] as Element;
+  for (const { name } of el.attributes) {
+    if (
+      !(nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs)))
+    ) {
+      el.removeAttribute(name);
     }
   }
 
-  attrsInternal(scope, elementAccessor, nextAttrs);
+  attrsInternal(scope, nodeAccessor, nextAttrs);
+}
+
+function hasAttrAlias(
+  element: Element,
+  attr: string,
+  nextAttrs: Record<string, unknown>,
+) {
+  if (attr === "checked" && element.tagName === "INPUT") {
+    return "checkedValue" in nextAttrs || "checkedValues" in nextAttrs;
+  }
 }
 
 export function partialAttrs(
   scope: Scope,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
   skip: Record<string, 1>,
 ) {
-  const element = scope[elementAccessor] as Element;
+  const el = scope[nodeAccessor] as Element;
   const partial: Partial<typeof nextAttrs> = {};
 
-  for (const { name } of element.attributes) {
+  for (const { name } of el.attributes) {
     if (!skip[name] && !(nextAttrs && name in nextAttrs)) {
-      element.removeAttribute(name);
+      el.removeAttribute(name);
     }
   }
 
@@ -81,48 +113,146 @@ export function partialAttrs(
     if (!skip[key]) partial[key] = nextAttrs[key];
   }
 
-  attrsInternal(scope, elementAccessor, partial);
+  attrsInternal(scope, nodeAccessor, partial);
 }
 
 function attrsInternal(
   scope: Scope,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
+  const el = scope[nodeAccessor] as Element;
   let events: undefined | Record<string, unknown>;
-  const element = scope[elementAccessor] as Element;
+  let skip: RegExp | undefined;
+  switch (el.tagName) {
+    case "INPUT":
+      if (nextAttrs.checkedChange) {
+        controllable_input_checked(
+          scope,
+          nodeAccessor,
+          nextAttrs.checked,
+          nextAttrs.checkedChange,
+        );
+      } else if (nextAttrs.checkedValue || nextAttrs.checkedValueChange) {
+        controllable_input_checkedValue(
+          scope,
+          nodeAccessor,
+          nextAttrs.checkedValue,
+          nextAttrs.checkedValueChange,
+          nextAttrs.value,
+        );
+      } else if (nextAttrs.checkedValues || nextAttrs.checkedValuesChange) {
+        controllable_input_checkedValues(
+          scope,
+          nodeAccessor,
+          nextAttrs.checkedValues,
+          nextAttrs.checkedValuesChange,
+          nextAttrs.value,
+        );
+      } else if (nextAttrs.valueChange) {
+        controllable_input_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        );
+      } else {
+        break;
+      }
+      skip = /^(?:value|checked(?:Values?)?)(?:Change)?$/;
+      break;
+    case "SELECT":
+      if (nextAttrs.value || nextAttrs.valueChange) {
+        controllable_select_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        );
+        skip = /^value(?:Change)?$/;
+      }
+      break;
+    case "DETAILS":
+      if (nextAttrs.openChange) {
+        controllable_details_open(
+          scope,
+          nodeAccessor,
+          nextAttrs.open,
+          nextAttrs.openChange,
+        );
+        skip = /^open(?:Change)?$/;
+      }
+      break;
+    case "DIALOG":
+      if (nextAttrs.openChange) {
+        controllable_dialog_open(
+          scope,
+          nodeAccessor,
+          nextAttrs.open,
+          nextAttrs.openChange,
+        );
+        skip = /^open(?:Change)?$/;
+      }
+      break;
+  }
+
   // https://jsperf.com/object-keys-vs-for-in-with-closure/194
   for (const name in nextAttrs) {
     const value = nextAttrs[name];
     switch (name) {
       case "class":
-        classAttr(element, value);
+        classAttr(el, value);
         break;
       case "style":
-        styleAttr(element, value);
+        styleAttr(el, value);
         break;
       case "renderBody":
         break;
       default:
         if (eventHandlerReg.test(name)) {
-          (events ||= {})[
+          (events ||= scope[nodeAccessor + AccessorChar.EventAttributes] = {})[
             name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()
           ] = value;
-        } else {
-          attr(element, name, value);
+        } else if (!skip?.test(name)) {
+          attr(el, name, value);
         }
-        break;
     }
   }
-
-  scope[elementAccessor + AccessorChar.EventAttributes] = events;
 }
 
-export function attrsEvents(scope: Scope, elementAccessor: Accessor) {
-  const element = scope[elementAccessor] as Element;
-  const events = scope[elementAccessor + AccessorChar.EventAttributes];
+export function attrsEvents(scope: Scope, nodeAccessor: Accessor) {
+  const el = scope[nodeAccessor] as Element;
+  const events = scope[nodeAccessor + AccessorChar.EventAttributes] as Record<
+    string,
+    any
+  >;
+
+  switch (scope[nodeAccessor + AccessorChar.ControlledType]) {
+    case ControlledType.InputChecked:
+      controllable_input_checked_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.InputCheckedValue:
+      controllable_input_checkedValue_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.InputCheckedValues:
+      controllable_input_checkedValues_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.InputValue:
+      controllable_input_value_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.SelectValue:
+      controllable_select_value_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.DetailsOpen:
+      controllable_details_open_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.DialogOpen:
+      controllable_dialog_open_effect(scope, nodeAccessor);
+      break;
+  }
+
   for (const name in events) {
-    on(element, name as any, events[name] as any);
+    on(el, name as any, events[name] as any);
   }
 }
 
@@ -166,7 +296,7 @@ export function props(scope: Scope, nodeIndex: number, index: number) {
   scope[index + "-"] = nextProps;
 }
 
-function normalizeAttrValue(value: unknown) {
+export function normalizeAttrValue(value: unknown) {
   if (value || value === 0) {
     return value === true ? "" : value + "";
   }

@@ -2,13 +2,17 @@ import type { types as t } from "@marko/compiler";
 
 import { isOutputHTML } from "../util/marko-config";
 import { mergeReferences } from "../util/references";
-import { getSection } from "../util/sections";
+import { getOrCreateSection, getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
 import type { TemplateVisitor } from "../util/visitors";
 
 export default {
   analyze(scriptlet) {
-    mergeReferences(scriptlet, scriptlet.node.body);
+    mergeReferences(
+      getOrCreateSection(scriptlet),
+      scriptlet.node,
+      scriptlet.node.body,
+    );
   },
   translate: {
     exit(scriptlet) {

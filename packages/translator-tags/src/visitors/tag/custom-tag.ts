@@ -111,10 +111,14 @@ export default {
 
       const childFile = loadFileForTag(tag)!;
       if (childFile.opts.filename === tag.hub.file.opts.filename) {
-        mergeReferences(tag, getAllTagReferenceNodes(tag.node));
+        mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
       } else {
         const childProgramExtra = childFile?.ast.program.extra;
-        analyzeAttrs(tag, childProgramExtra?.domExports!.params?.props?.[0]);
+        analyzeAttrs(
+          section,
+          tag,
+          childProgramExtra?.domExports!.params?.props?.[0],
+        );
         // TODO: should check individual inputs to see if they are intersecting with state
         currentProgramPath.node.extra!.hasInteractiveChild =
           childProgramExtra?.isInteractive ||
@@ -351,6 +355,7 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
 }
 
 function analyzeAttrs(
+  section: Section,
   tag: t.NodePath<t.MarkoTag>,
   templateExport: TemplateExport | undefined,
 ) {
@@ -360,7 +365,7 @@ function analyzeAttrs(
   }
 
   if (!templateExport.props || tag.node.arguments?.length) {
-    mergeReferences(tag, getAllTagReferenceNodes(tag.node));
+    mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
     return;
   }
 
@@ -400,7 +405,7 @@ function analyzeAttrs(
           const childAttrExports = templateExport.props[attrTagMeta.name];
           if (childAttrExports) {
             if (childAttrExports.props && !attrTagMeta.dynamic) {
-              analyzeAttrs(child, childAttrExports);
+              analyzeAttrs(section, child, childAttrExports);
             } else {
               analyzeDynamicChildGroup(attrTagMeta.group, child);
             }
@@ -427,7 +432,7 @@ function analyzeAttrs(
     }
 
     for (const { firstTag, referenceNodes } of nodeReferencesByGroup.values()) {
-      mergeReferences(firstTag, referenceNodes);
+      mergeReferences(section, firstTag.node, referenceNodes);
     }
   }
 
@@ -453,7 +458,7 @@ function analyzeAttrs(
   }
 
   if (spreadReferenceNodes) {
-    mergeReferences(tag, spreadReferenceNodes);
+    mergeReferences(section, tag.node, spreadReferenceNodes);
   }
 }
 

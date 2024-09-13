@@ -88,15 +88,16 @@ export const IfTag = {
         }
       }
 
+      const section = getOrCreateSection(tag);
       rootExtra[kBinding] = createBinding(
         "#text",
         BindingType.dom,
-        getOrCreateSection(tag),
+        section,
         undefined,
         rootExtra,
       );
       rootExtra.singleNodeOptimization = singleNodeOptimization;
-      mergeReferences(rootTag, mergeReferenceNodes);
+      mergeReferences(section, rootTag.node, mergeReferenceNodes);
     }
   },
   translate: translateByTarget({

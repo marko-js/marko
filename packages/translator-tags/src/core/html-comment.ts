@@ -91,7 +91,7 @@ export default {
         BindingType.dom,
         section,
       );
-      mergeReferences(tag, referenceNodes);
+      mergeReferences(section, tag.node, referenceNodes);
     }
     tag.skip();
   },
