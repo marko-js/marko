@@ -112,39 +112,49 @@ class Render implements RenderData {
       data.r = [];
       const len = resumes.length;
       let i = 0;
-      while (i < len) {
-        const resumeData = resumes[i++];
-        if (typeof resumeData === "function") {
-          const scopes = resumeData(serializeContext);
-          let { $global } = scopeLookup;
+      try {
+        isResuming = true;
+        while (i < len) {
+          const resumeData = resumes[i++];
+          if (typeof resumeData === "function") {
+            const scopes = resumeData(serializeContext);
+            let { $global } = scopeLookup;
 
-          if (!$global) {
-            scopeLookup.$global = $global = scopes.$ || {};
-            $global.runtimeId = this.___runtimeId;
-            $global.renderId = this.___renderId;
-          }
+            if (!$global) {
+              scopeLookup.$global = $global = scopes.$ || {};
+              $global.runtimeId = this.___runtimeId;
+              $global.renderId = this.___renderId;
+            }
 
-          for (const scopeId in scopes) {
-            if (scopeId !== "$") {
-              const scope = scopes[scopeId];
-              const prevScope = scopeLookup[scopeId];
-              scope.$global = $global;
-              if (prevScope !== scope) {
-                scopeLookup[scopeId] = Object.assign(scope, prevScope) as Scope;
+            for (const scopeId in scopes) {
+              if (scopeId !== "$") {
+                const scope = scopes[scopeId];
+                const prevScope = scopeLookup[scopeId];
+                scope.$global = $global;
+                if (prevScope !== scope) {
+                  scopeLookup[scopeId] = Object.assign(
+                    scope,
+                    prevScope,
+                  ) as Scope;
+                }
               }
             }
+          } else if (i === len || typeof resumes[i] !== "string") {
+            delete this.___renders[this.___renderId];
+          } else {
+            (registeredValues[resumes[i++] as string] as RegisteredFn)(
+              scopeLookup[resumeData],
+            );
           }
-        } else if (i === len || typeof resumes[i] !== "string") {
-          delete this.___renders[this.___renderId];
-        } else {
-          (registeredValues[resumes[i++] as string] as RegisteredFn)(
-            scopeLookup[resumeData],
-          );
         }
+      } finally {
+        isResuming = false;
       }
     }
   }
 }
+
+export let isResuming = false;
 
 export function register<T>(id: string, obj: T): T {
   registeredValues[id] = obj;
