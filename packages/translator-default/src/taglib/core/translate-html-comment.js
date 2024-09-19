@@ -3,8 +3,11 @@ import {
   assertNoAttributes,
   assertNoParams,
 } from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
 
-import write from "../../util/html-out-write";
+import writeHTML from "../../util/html-out-write";
+import writeVDOM from "../../util/vdom-out-write";
+import withPreviousLocation from "../../util/with-previous-location";
 
 export function enter(path) {
   assertNoArgs(path);
@@ -12,8 +15,38 @@ export function enter(path) {
   assertNoAttributes(path);
 
   if (path.hub.file.markoOpts.output === "html") {
-    path.replaceWithMultiple([write`<!--`, ...path.node.body.body, write`-->`]);
+    path.replaceWithMultiple([
+      writeHTML`<!--`,
+      ...path.node.body.body,
+      writeHTML`-->`,
+    ]);
   } else {
-    path.remove();
+    const templateQuasis = [];
+    const templateExpressions = [];
+    let currentQuasi = "";
+    for (const child of path.node.body.body) {
+      if (t.isMarkoText(child)) {
+        currentQuasi += child.value;
+      } else if (t.isMarkoPlaceholder(child)) {
+        templateQuasis.push(t.templateElement({ raw: currentQuasi }));
+        templateExpressions.push(child.value);
+        currentQuasi = "";
+      }
+    }
+
+    let value;
+    if (templateExpressions.length === 0) {
+      value = t.stringLiteral(currentQuasi);
+    } else {
+      templateQuasis.push(t.templateElement({ raw: currentQuasi }));
+      value = t.templateLiteral(templateQuasis, templateExpressions);
+    }
+
+    path.replaceWith(
+      withPreviousLocation(
+        writeVDOM("comment", value, path.hub.file._componentInstanceIdentifier),
+        path.node,
+      ),
+    );
   }
 }

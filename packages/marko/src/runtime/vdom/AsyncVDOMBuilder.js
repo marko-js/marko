@@ -4,6 +4,7 @@ var attrsHelper = require("./helpers/attrs");
 var morphdom = require("./morphdom");
 var vdom = require("./vdom");
 var VElement = vdom.___VElement;
+var VComment = vdom.___VComment;
 var VDocumentFragment = vdom.___VDocumentFragment;
 var VText = vdom.___VText;
 var VComponent = vdom.___VComponent;
@@ -131,6 +132,10 @@ var proto = (AsyncVDOMBuilder.prototype = {
 
     this.___parent.___appendChild(new VText(text, ownerComponent));
     return this;
+  },
+
+  comment: function (comment, ownerComponent) {
+    return this.node(new VComment(comment, ownerComponent));
   },
 
   html: function (html, ownerComponent) {
