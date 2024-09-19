@@ -1,5 +1,11 @@
 # Change Log
 
+## 6.0.12
+
+### Patch Changes
+
+- [#2294](https://github.com/marko-js/marko/pull/2294) [`c600610`](https://github.com/marko-js/marko/commit/c6006102479d8d10ffd1f18d13b8c607fbabd177) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with comment nodes in unescaped html by bringing back virtual comment nodes.
+
 ## 6.0.11
 
 ### Patch Changes
