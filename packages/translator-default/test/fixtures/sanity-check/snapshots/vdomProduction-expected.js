@@ -134,6 +134,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     "id": "a"
   }), "18", _component, null, 4);
   out.t(a, _component);
+  out.comment("abc", _component);
   out.n(_marko_node7, _component);
   out.n(_marko_node8, _component);
   if (x === a) {
