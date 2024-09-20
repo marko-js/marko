@@ -796,7 +796,16 @@ function hasHTML(node, context) {
   let hasHTML = false;
   const walker = context.createWalker({
     enter(node) {
-      if (node.type === "Html" || node.type === "TextVDOM" || node._isTagCall) {
+      if (
+        node.type === "Html" ||
+        node.type === "StartTag" ||
+        node.type === "TextVDOM" ||
+        node.type === "HtmlElement" ||
+        node.type === "HtmlComment" ||
+        node.type === "EndElementVDOM" ||
+        node.type === "HtmlElementVDOM" ||
+        node._isTagCall
+      ) {
         hasHTML = true;
         walker.stop();
       } else if (node._isNestedTagCall) {
