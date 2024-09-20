@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.1.13
+
+### Patch Changes
+
+- [#2296](https://github.com/marko-js/marko/pull/2296) [`81c5c0e`](https://github.com/marko-js/marko/commit/81c5c0e0436dc694f09c722f2103bfdc9cb3844f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve support for @marko/compat.
+
 ## 0.1.12
 
 ### Patch Changes
