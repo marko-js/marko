@@ -61,18 +61,20 @@ export const analyze = {
         meta.deps.unshift(styleFile);
       }
 
-      if (meta.hasComponentBrowser) {
-        meta.component = componentBrowserFile;
-      } else if (
-        meta.hasComponent ||
-        meta.hasStatefulTagParams ||
-        meta.hasFunctionEventHandlers
-      ) {
-        meta.component = file.opts.filename;
-      } else if (meta.hasStringEventHandlers) {
-        meta.component = componentFiles.componentBrowserFile =
-          "marko/src/runtime/helpers/empty-component.js";
-        meta.hasComponentBrowser = true;
+      if (!meta.widgetBind) {
+        if (meta.hasComponentBrowser) {
+          meta.component = componentBrowserFile;
+        } else if (
+          meta.hasComponent ||
+          meta.hasStatefulTagParams ||
+          meta.hasFunctionEventHandlers
+        ) {
+          meta.component = file.opts.filename;
+        } else if (meta.hasStringEventHandlers) {
+          meta.component = componentFiles.componentBrowserFile =
+            "marko/src/runtime/helpers/empty-component.js";
+          meta.hasComponentBrowser = true;
+        }
       }
 
       meta.component =
@@ -123,7 +125,7 @@ export const analyze = {
       }
     }
 
-    if (!meta.hasFunctionEventHandlers || !meta.hasStringEventHandlers) {
+    if (!(meta.hasFunctionEventHandlers || meta.hasStringEventHandlers)) {
       for (const attr of tag.node.attributes) {
         if (
           t.isMarkoAttribute(attr) &&
