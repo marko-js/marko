@@ -17,6 +17,7 @@ export type Scope<
   ___bound: Map<unknown, unknown> | undefined;
   ___renderer: ClientRenderer | undefined;
   ___abortControllers: Map<string | number, AbortController> | undefined;
+  ___cleanupOwner: Scope | undefined;
   $global: Record<string, unknown>;
   _: Scope | undefined;
   [x: string | number]: any;
@@ -29,6 +30,7 @@ export enum ResumeSymbol {
   SectionEnd = "]",
   SectionSingleNodesEnd = "|",
   Node = "*",
+  Cleanup = "$",
 }
 
 export enum AccessorChar {

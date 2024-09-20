@@ -238,11 +238,16 @@ function loop(
   ) => {
     if (valueOrOp === DIRTY) return;
     if (valueOrOp === MARK || valueOrOp === CLEAN) {
-      for (const childScope of scope[loopScopeAccessor] ??
-        scope[nodeAccessor + AccessorChar.LoopScopeMap].values()) {
-        params?.(childScope, valueOrOp);
-        for (const signal of closureSignals) {
-          signal(childScope, valueOrOp);
+      const loopScopes =
+        scope[loopScopeAccessor] ??
+        scope[nodeAccessor + AccessorChar.LoopScopeMap]?.values() ??
+        [];
+      if (loopScopes !== emptyMarkerArray) {
+        for (const childScope of loopScopes) {
+          params?.(childScope, valueOrOp);
+          for (const signal of closureSignals) {
+            signal(childScope, valueOrOp);
+          }
         }
       }
 
@@ -349,8 +354,10 @@ export function inLoopScope(
       scope[loopScopeAccessor] ??
       scope[loopNodeAccessor + AccessorChar.LoopScopeMap]?.values() ??
       [];
-    for (const scope of loopScopes) {
-      signal(scope, op);
+    if (loopScopes !== emptyMarkerArray) {
+      for (const scope of loopScopes) {
+        signal(scope, op);
+      }
     }
   };
 }

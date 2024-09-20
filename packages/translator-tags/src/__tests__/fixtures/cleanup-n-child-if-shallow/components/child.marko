@@ -1,0 +1,9 @@
+<div>a</div>
+<span>b</span>
+<p>c</p>
+<effect() {
+  input.write('mounted');
+  $signal.onabort = () => {
+    input.write('destroyed')
+  };
+}/>

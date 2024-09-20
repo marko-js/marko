@@ -23,10 +23,11 @@ export type Section = {
   id: number;
   name: string;
   depth: number;
-  parent?: Section;
+  parent: Section | undefined;
   closures: Set<Binding>;
   bindings: Set<Binding>;
   upstreamExpression: t.NodeExtra | undefined;
+  hasCleanup: boolean;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -80,6 +81,7 @@ export function startSection(
       bindings: new Set(),
       content: getContentInfo(path),
       upstreamExpression: undefined,
+      hasCleanup: false,
     };
     sections.push(section);
   }

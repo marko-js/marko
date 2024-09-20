@@ -1,0 +1,23 @@
+<let/showOuter=true/>
+<let/showMiddle=true/>
+<let/showInner=true/>
+<button#outer onClick() { showOuter = !showOuter }>Toggle Outer</button>
+<button#middle onClick() { showMiddle = !showMiddle }>Toggle Middle</button>
+<button#inner onClick() { showInner = !showInner }>Toggle Inner</button>
+
+<pre/el/>
+<const/write(msg) { el().innerHTML += '\n' + msg } />
+
+<if=showOuter>
+  <div>
+    <child write=write name="Outer"/>
+    <if=showMiddle>
+      <div>
+        <child write=write name="Middle"/>
+        <if=showInner>
+          <child write=write name="Inner" />
+        </if>
+      </div>
+    </if>
+  </div>
+</if>

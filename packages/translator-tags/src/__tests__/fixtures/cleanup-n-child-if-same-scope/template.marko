@@ -1,0 +1,17 @@
+<let/show=true/>
+<button onClick() { show = !show }>Toggle</button>
+
+<pre/el/>
+
+<if=show>
+  <div>a</div>
+  <span>b</span>
+  <p>c</p>
+  <effect() {
+    el().innerHTML += '\nmounted';
+    $signal.onabort = () => {
+      debugger;
+      el().innerHTML += '\ndestroyed';
+    };
+  }/>
+</if>

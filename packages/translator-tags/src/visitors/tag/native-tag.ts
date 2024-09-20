@@ -23,7 +23,11 @@ import {
   getScopeIdIdentifier,
   getSection,
 } from "../../util/sections";
-import { addHTMLEffectCall, addStatement } from "../../util/signals";
+import {
+  addHTMLEffectCall,
+  addStatement,
+  getSerializedScopeProperties,
+} from "../../util/signals";
 import translateVar from "../../util/translate-var";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
@@ -107,6 +111,23 @@ export default {
 
       if (tag.has("var")) {
         if (isHTML) {
+          const varName = (tag.node.var as t.Identifier).name;
+          const references = tag.scope.getBinding(varName)!.referencePaths;
+          for (const reference of references) {
+            let currentSection = getSection(reference);
+            while (currentSection !== section && currentSection.parent) {
+              getSerializedScopeProperties(currentSection).set(
+                t.stringLiteral("_"),
+                callRuntime(
+                  "ensureScopeWithId",
+                  getScopeIdIdentifier(
+                    (currentSection = currentSection.parent!),
+                  ),
+                ),
+              );
+            }
+          }
+
           translateVar(
             tag,
             t.arrowFunctionExpression(

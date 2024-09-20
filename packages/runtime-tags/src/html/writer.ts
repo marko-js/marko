@@ -21,6 +21,7 @@ enum Mark {
   SectionEnd = "]",
   SectionSingleNodesEnd = "|",
   Node = "*",
+  Cleanup = "$",
 }
 
 enum RuntimeKey {
@@ -93,10 +94,10 @@ export function markResumeNode(scopeId: number, accessor: Accessor) {
   return state.mark(Mark.Node, scopeId + " " + accessor);
 }
 
-export function markResumeScopeStart(scopeId: number, accessor?: Accessor) {
+export function markResumeScopeStart(scopeId: number, index?: number) {
   return $chunk.boundary.state.mark(
     Mark.SectionStart,
-    scopeId + (accessor ? " " + accessor : ""),
+    scopeId + (index ? " " + index : ""),
   );
 }
 
@@ -113,6 +114,10 @@ export function markResumeControlSingleNodeEnd(
     Mark.SectionSingleNodesEnd,
     scopeId + " " + accessor + " " + (childScopeIds ?? ""),
   );
+}
+
+export function markResumeCleanup(scopeId: number) {
+  return $chunk.boundary.state.mark(Mark.Cleanup, "" + scopeId);
 }
 
 export function writeScope(scopeId: number, partialScope: PartialScope) {
@@ -138,6 +143,12 @@ export function writeScope(scopeId: number, partialScope: PartialScope) {
       $: getFilteredGlobals(state.$global),
       [scopeId]: scope,
     };
+  }
+
+  for (const entry of Object.values(partialScope)) {
+    if (entry && typeof entry === "object" && K_SCOPE_ID in entry) {
+      state.writeScopes[entry[K_SCOPE_ID] as number] = entry;
+    }
   }
 }
 

@@ -48,6 +48,7 @@ const kForMarkerBinding = Symbol("for marker binding");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kForMarkerBinding]?: Binding;
+    scopeStartIndex?: t.Identifier;
   }
 }
 
@@ -106,9 +107,11 @@ export default {
           !bodySection.content?.singleChild &&
           !hasNestedAttributeTags
         ) {
+          tagExtra.scopeStartIndex = tag.scope.generateUidIdentifier("k");
           writer.writeTo(tagBody)`${callRuntime(
             "markResumeScopeStart",
             getScopeIdIdentifier(bodySection),
+            t.updateExpression("++", tagExtra.scopeStartIndex),
           )}`;
         }
       }
@@ -470,6 +473,14 @@ const translateHTML = {
           t.updateExpression("++", indexName),
           block,
         ),
+      );
+    }
+
+    if (tagExtra.scopeStartIndex) {
+      replacement.unshift(
+        t.variableDeclaration("let", [
+          t.variableDeclarator(tagExtra.scopeStartIndex, t.numericLiteral(0)),
+        ]),
       );
     }
 

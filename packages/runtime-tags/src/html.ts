@@ -12,6 +12,7 @@ export {
   fork,
   getScopeById,
   getStreamData,
+  markResumeCleanup,
   markResumeControlEnd,
   markResumeControlSingleNodeEnd,
   markResumeNode,

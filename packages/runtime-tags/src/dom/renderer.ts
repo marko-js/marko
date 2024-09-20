@@ -42,7 +42,7 @@ export function createScopeWithRenderer(
   ownerScope?: Scope,
 ) {
   const newScope = createScope($global);
-  newScope._ = renderer.___owner || ownerScope;
+  newScope._ = newScope.___cleanupOwner = renderer.___owner || ownerScope;
   newScope.___renderer = renderer as Renderer;
   initRenderer(renderer, newScope);
   if (renderer.___closureSignals) {
