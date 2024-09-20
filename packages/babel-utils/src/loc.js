@@ -27,9 +27,10 @@ export function withLoc(file, node, start, end) {
 }
 
 export function getStart(file, node) {
-  if (node.start != null) {
-    return node.start;
-  }
+  // Restore if merged: https://github.com/babel/babel/pull/16849
+  // if (node.start != null) {
+  //   return node.start;
+  // }
 
   if (node.loc) {
     return locToIndex(file, node.loc.start);
@@ -39,9 +40,10 @@ export function getStart(file, node) {
 }
 
 export function getEnd(file, node) {
-  if (node.end != null) {
-    return node.end;
-  }
+  // Restore if merged: https://github.com/babel/babel/pull/16849
+  // if (node.end != null) {
+  //   return node.end;
+  // }
 
   if (node.loc) {
     return locToIndex(file, node.loc.end);

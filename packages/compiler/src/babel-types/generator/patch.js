@@ -39,7 +39,7 @@ Object.assign(Printer.prototype, {
     }
 
     this.token(node.escape ? "${" : "$!{");
-    this.print(node.value, node);
+    this.print(node.value);
     this.token("}");
   },
   MarkoScriptlet(node, parent) {
@@ -56,12 +56,12 @@ Object.assign(Printer.prototype, {
       !statementCouldHaveUnenclosedNewline(node.body[0])
     ) {
       // TODO should determine if node has unenclosed newlines.
-      this.print(node.body[0], node);
+      this.print(node.body[0]);
     } else {
       this.token("{");
       this.newline();
       this.indent();
-      this.printSequence(node.body, node);
+      this.printSequence(node.body);
       this.dedent();
       this.token("}");
     }
@@ -69,7 +69,7 @@ Object.assign(Printer.prototype, {
   MarkoClass(node) {
     this.token("class");
     this.token(" ");
-    this.print(node.body, node);
+    this.print(node.body);
   },
   MarkoAttribute(node) {
     const value = node.value;
@@ -84,7 +84,7 @@ Object.assign(Printer.prototype, {
 
       if (node.arguments && node.arguments.length) {
         this.token("(");
-        this.printList(node.arguments, node);
+        this.printList(node.arguments);
         this.token(")");
       }
     }
@@ -95,18 +95,18 @@ Object.assign(Printer.prototype, {
         !(value.id || value.async || value.generator)
       ) {
         this.token("(");
-        this.printList(value.params, value);
+        this.printList(value.params);
         this.token(") ");
-        this.print(value.body, value);
+        this.print(value.body);
       } else {
         this.token(node.bound ? ":=" : "=");
-        printWithParansIfNeeded.call(this, value, node);
+        printWithParansIfNeeded.call(this, value);
       }
     }
   },
   MarkoSpreadAttribute(node) {
     this.token("...");
-    printWithParansIfNeeded.call(this, node.value, node);
+    printWithParansIfNeeded.call(this, node.value);
   },
   MarkoText(node, parent) {
     const parentBody = parent.body;
@@ -136,7 +136,7 @@ Object.assign(Printer.prototype, {
     }
   },
   MarkoTagBody(node) {
-    this.printSequence(node.body, node, { indent: true });
+    this.printSequence(node.body, { indent: true });
   },
   MarkoTag(node) {
     const isDynamicTag = !t.isStringLiteral(node.name);
@@ -158,7 +158,7 @@ Object.assign(Printer.prototype, {
     } else {
       if (isDynamicTag) {
         this.token("${");
-        this.print(node.name, node);
+        this.print(node.name);
         this.token("}");
       } else {
         this.token(tagName);
@@ -166,22 +166,22 @@ Object.assign(Printer.prototype, {
 
       if (node.typeArguments) {
         this.token("<");
-        this.printList(node.typeArguments.params, node);
+        this.printList(node.typeArguments.params);
         this.token(">");
       }
 
       if (node.var) {
         this.token("/");
-        this.print(node.var, node);
+        this.print(node.var);
 
         if (node.var.typeAnnotation) {
-          this.print(node.var.typeAnnotation, node.var);
+          this.print(node.var.typeAnnotation);
         }
       }
 
       if (node.arguments && node.arguments.length) {
         this.token("(");
-        this.printList(node.arguments, node);
+        this.printList(node.arguments);
         this.token(")");
       }
 
@@ -191,11 +191,11 @@ Object.assign(Printer.prototype, {
             this.token(" ");
           }
           this.token("<");
-          this.printList(node.body.typeParameters.params, node);
+          this.printList(node.body.typeParameters.params);
           this.token(">");
         }
         this.token("|");
-        this.printList(node.body.params, node);
+        this.printList(node.body.params);
         this.token("|");
       }
 
@@ -206,7 +206,7 @@ Object.assign(Printer.prototype, {
           this.token(" ");
         }
 
-        this.printJoin(node.attributes, node, { separator: spaceSeparator });
+        this.printJoin(node.attributes, { separator: spaceSeparator });
       }
     }
 
@@ -220,7 +220,7 @@ Object.assign(Printer.prototype, {
     } else {
       this.token(">");
       this.newline();
-      this.print(node.body, node);
+      this.print(node.body);
       this.token("</");
       if (!isDynamicTag) {
         this.token(tagName);
@@ -234,14 +234,14 @@ function spaceSeparator() {
   this.token(" ");
 }
 
-function printWithParansIfNeeded(value, parent) {
+function printWithParansIfNeeded(value) {
   const needsParans = expressionCouldHaveUnenclosedWhitespace(value);
 
   if (needsParans) {
     this.token("(");
   }
 
-  this.print(value, parent);
+  this.print(value);
 
   if (needsParans) {
     this.token(")");
