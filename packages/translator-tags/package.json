@@ -1,6 +1,6 @@
 {
   "name": "@marko/translator-tags",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Translates Marko templates to the experimental fast, lean, unified, update & render target.",
   "keywords": [
     "babel",
@@ -30,8 +30,8 @@
     "build": "node -r ~ts ./scripts/bundle.ts"
   },
   "dependencies": {
-    "@marko/babel-utils": "^6.5.5",
-    "@marko/runtime-tags": "^0.1.12"
+    "@marko/babel-utils": "^6.5.6",
+    "@marko/runtime-tags": "^0.1.13"
   },
   "peerDependencies": {
     "@marko/compiler": "^5.23.0"
