@@ -1,5 +1,17 @@
 # Change Log
 
+## 5.35.17
+
+### Patch Changes
+
+- [#2298](https://github.com/marko-js/marko/pull/2298) [`c01d83f`](https://github.com/marko-js/marko/commit/c01d83fb2617443a7dc03eb3b43a2f7752754a45) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with the "ignoreUnrecognizedTags" compiler option being used with dynamic tags that have attribute tags.
+
+- [#2298](https://github.com/marko-js/marko/pull/2298) [`cfff311`](https://github.com/marko-js/marko/commit/cfff3111148a43f58c7d2b78f679c09c04d429b5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Removes the debug mode dom manipulation warning since chrome dropped the api's that allowed us to get useful stack traces.
+
+- Updated dependencies [[`c01d83f`](https://github.com/marko-js/marko/commit/c01d83fb2617443a7dc03eb3b43a2f7752754a45), [`cfff311`](https://github.com/marko-js/marko/commit/cfff3111148a43f58c7d2b78f679c09c04d429b5)]:
+  - @marko/translator-default@6.0.14
+  - @marko/compiler@5.37.12
+
 ## 5.35.16
 
 ### Patch Changes
