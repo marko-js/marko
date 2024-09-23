@@ -46,7 +46,11 @@ export default {
     }
 
     if (!isAttributeTag(path)) {
-      if (path.hub.file.markoOpts.ignoreUnrecognizedTags && !tagDef) {
+      if (
+        path.hub.file.markoOpts.ignoreUnrecognizedTags &&
+        !tagDef &&
+        !isDynamicTag(path)
+      ) {
         findAttributeTags(path).forEach(function replaceAttrTagName(child) {
           child.set(
             "name",
