@@ -10,6 +10,20 @@ export function styleAttr(val: unknown) {
   return stringAttr("style", styleValue(val));
 }
 
+// @ts-expect-error the following function is not yet implemented
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export function valueAttr_select(val: unknown, multiple: boolean) {
+  // TODO: need to cause all child options to render with correct selected attribute
+}
+
+export function checkedValueAttr(checkedValue: unknown, value: unknown) {
+  return checkedValue === value ? ` checked` : "";
+}
+
+export function checkedValuesAttr(checkedValues: unknown[], value: unknown) {
+  return checkedValues?.includes(value) ? ` checked` : "";
+}
+
 export function attr(name: string, val: unknown) {
   return isVoid(val) ? "" : nonVoidAttr(name, val);
 }
@@ -32,12 +46,25 @@ export function attrs(
       case "style":
         result += styleAttr(val);
         break;
+      case "value":
+        // TODO: need to somehow know what type of element this is
+        if (name /* el.tagName === "INPUT"*/) {
+          result += stringAttr("value", val as string);
+        } /*if (el.tagName === "SELECT")*/ else {
+          result += valueAttr_select(val, !!data.multiple);
+        }
+        break;
+      case "checkedValue":
+        result += checkedValueAttr(val, data.value);
+        break;
+      case "checkedValues":
+        result += checkedValuesAttr(val as unknown[], data.value);
+        break;
       default:
-        // https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
-        // Avoids outputting attribute names that would be invalid or
-        // be an event handler / renderBody.
         if (!isVoid(val)) {
-          if (/^on[A-Z-]/.test(name)) {
+          if (controllableChangeAttrs.has(name)) {
+            (events ??= {})[name] = val;
+          } else if (/^on[A-Z-]/.test(name)) {
             (events ??= {})[
               name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()
             ] = val;
@@ -57,6 +84,14 @@ export function attrs(
 
   return result;
 }
+
+const controllableChangeAttrs = new Set([
+  "valueChange",
+  "checkedChange",
+  "checkedValueChange",
+  "checkedValuesChange",
+  "openChange",
+]);
 
 function stringAttr(name: string, val: string) {
   return val && ` ${name}=${escapeAttrValue(val)}`;
