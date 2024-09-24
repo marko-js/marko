@@ -14,6 +14,7 @@ import write from "./vdom-out-write";
 
 const skipDirectives = new Set([
   "key",
+  "w-bind",
   "no-update",
   "no-update-if",
   "no-update-body",
