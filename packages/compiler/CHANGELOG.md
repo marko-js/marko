@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.13
+
+### Patch Changes
+
+- [#2300](https://github.com/marko-js/marko/pull/2300) [`d45f91a`](https://github.com/marko-js/marko/commit/d45f91a5e0fff686cac7b7daf29deb60a6a1ffd7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where legacy compat `w-bind` directives were being incorrectly optimized as static vdom.
+
 ## 5.37.12
 
 ### Patch Changes
