@@ -34,6 +34,12 @@ class CompileError extends Error {
         writable: true,
         configurable: true,
       },
+      frame: {
+        value: prettyMessage,
+        enumerable: false,
+        writable: true,
+        configurable: true,
+      },
       // Ignore some mutations from Babel.
       code: {
         enumerable: false,
