@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.14
+
+### Patch Changes
+
+- [#2303](https://github.com/marko-js/marko/pull/2303) [`e6d117b`](https://github.com/marko-js/marko/commit/e6d117b67a3099ab0a29248d189de7b37b9d3d8a) Thanks [@rturnq](https://github.com/rturnq)! - Add frame property to compile errors
+
 ## 5.37.13
 
 ### Patch Changes
