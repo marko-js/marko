@@ -1,4 +1,4 @@
-import { write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, dynamicTagInput as _dynamicTagInput, peekNextScope as _peekNextScope, markResumeControlEnd as _markResumeControlEnd, markResumeNode as _markResumeNode, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, dynamicTagInput as _dynamicTagInput, peekNextScope as _peekNextScope, markResumeControlEnd as _markResumeControlEnd, writeExistingScope as _writeExistingScope, markResumeNode as _markResumeNode, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const tagName = "span";
@@ -15,7 +15,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _writeScope(_scope0_id, {
     "tagName": tagName,
     "className": className,
-    "#text/0!": _dynamicScope,
+    "#text/0!": _writeExistingScope(_dynamicScope),
     "#text/0(": tagName
   });
 });

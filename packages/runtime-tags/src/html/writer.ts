@@ -130,7 +130,8 @@ export function writeScope(scopeId: number, partialScope: PartialScope) {
     Object.assign(scope, partialScope);
   } else {
     scope = partialScope;
-    state.scopes.set(scopeId, partialScope);
+    scope[K_SCOPE_ID] = scopeId;
+    state.scopes.set(scopeId, scope);
   }
 
   if (state.writeScopes) {
@@ -145,11 +146,11 @@ export function writeScope(scopeId: number, partialScope: PartialScope) {
     };
   }
 
-  for (const entry of Object.values(partialScope)) {
-    if (entry && typeof entry === "object" && K_SCOPE_ID in entry) {
-      state.writeScopes[entry[K_SCOPE_ID] as number] = entry;
-    }
-  }
+  return scope;
+}
+
+export function writeExistingScope(scope: ScopeInternals) {
+  return writeScope(scope[K_SCOPE_ID]!, scope);
 }
 
 export function ensureScopeWithId(scopeId: number) {

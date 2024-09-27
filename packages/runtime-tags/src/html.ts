@@ -25,5 +25,6 @@ export {
   tryPlaceholder,
   write,
   writeEffect,
+  writeExistingScope,
   writeScope,
 } from "./html/writer";

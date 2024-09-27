@@ -1,4 +1,4 @@
-import { markResumeNode as _markResumeNode, ensureScopeWithId as _ensureScopeWithId, write as _write, register as _register, peekNextScope as _peekNextScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { markResumeNode as _markResumeNode, ensureScopeWithId as _ensureScopeWithId, write as _write, register as _register, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _child from "./components/child.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -18,7 +18,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     });
     _writeScope(_scope1_id, {
       "_": _ensureScopeWithId(_scope0_id),
-      "#childScope/0": _childScope
+      "#childScope/0": _writeExistingScope(_childScope)
     });
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-shallow/template.marko_1_renderer");
     _ifScopeId = _scope1_id;

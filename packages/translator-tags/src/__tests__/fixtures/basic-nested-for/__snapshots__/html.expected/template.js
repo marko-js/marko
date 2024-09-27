@@ -1,4 +1,4 @@
-import { markResumeNode as _markResumeNode, write as _write, peekNextScope as _peekNextScope, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, ensureScopeWithId as _ensureScopeWithId, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { markResumeNode as _markResumeNode, write as _write, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, ensureScopeWithId as _ensureScopeWithId, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _child from "./components/child.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -22,7 +22,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       });
       _forScopeIds.push(_scope2_id);
       _writeScope(_scope2_id, {
-        "#childScope/0": _childScope,
+        "#childScope/0": _writeExistingScope(_childScope),
         "_": _ensureScopeWithId(_scope1_id)
       });
       _scope2_.set(_i, _getScopeById(_scope2_id));

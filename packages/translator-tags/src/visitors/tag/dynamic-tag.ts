@@ -236,7 +236,7 @@ export default {
             getScopeAccessorLiteral(nodeRef).value +
               AccessorChar.ConditionalScope,
           ),
-          dynamicScopeIdentifier,
+          callRuntime("writeExistingScope", dynamicScopeIdentifier),
         );
         getSerializedScopeProperties(section).set(
           t.stringLiteral(

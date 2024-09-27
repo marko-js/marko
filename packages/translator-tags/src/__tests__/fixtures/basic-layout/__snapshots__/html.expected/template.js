@@ -1,4 +1,4 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, peekNextScope as _peekNextScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _layout from "./components/layout.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -18,7 +18,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   });
   _writeScope(_scope0_id, {
     "name": name,
-    "#childScope/0": _childScope
+    "#childScope/0": _writeExistingScope(_childScope)
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko");

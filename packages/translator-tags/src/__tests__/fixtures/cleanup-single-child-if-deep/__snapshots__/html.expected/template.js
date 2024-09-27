@@ -1,4 +1,4 @@
-import { markResumeNode as _markResumeNode, register as _register, write as _write, peekNextScope as _peekNextScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { markResumeNode as _markResumeNode, register as _register, write as _write, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _child from "./components/child.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -39,7 +39,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
           name: "Inner"
         });
         _writeScope(_scope3_id, {
-          "#childScope/0": _childScope3
+          "#childScope/0": _writeExistingScope(_childScope3)
         });
         _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_3_renderer", _scope2_id);
         _ifScopeId = _scope3_id;
@@ -47,7 +47,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       _write(`${_markResumeControlSingleNodeEnd(_scope2_id, "#text/1", _ifScopeId)}</div>`);
       _writeEffect(_scope2_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_2_showInner/subscriber");
       _writeScope(_scope2_id, {
-        "#childScope/0": _childScope2,
+        "#childScope/0": _writeExistingScope(_childScope2),
         "#text/1(": _ifRenderer,
         "#text/1!": _getScopeById(_ifScopeId),
         "_": _ensureScopeWithId(_scope1_id)
@@ -57,7 +57,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     }
     _write(`${_markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId2)}</div>`);
     _writeScope(_scope1_id, {
-      "#childScope/0": _childScope,
+      "#childScope/0": _writeExistingScope(_childScope),
       "_": _ensureScopeWithId(_scope0_id),
       "#text/1(": _ifRenderer2,
       "#text/1!": _getScopeById(_ifScopeId2)

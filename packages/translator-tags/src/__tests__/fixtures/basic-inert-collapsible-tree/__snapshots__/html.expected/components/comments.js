@@ -1,4 +1,4 @@
-import { write as _write, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, peekNextScope as _peekNextScope, ensureScopeWithId as _ensureScopeWithId, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, ensureScopeWithId as _ensureScopeWithId, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _comments from "./comments.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -21,7 +21,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         path: id
       });
       _writeScope(_scope2_id, {
-        "#childScope/0": _childScope,
+        "#childScope/0": _writeExistingScope(_childScope),
         "_": _ensureScopeWithId(_scope1_id)
       });
       _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer", _scope1_id);
