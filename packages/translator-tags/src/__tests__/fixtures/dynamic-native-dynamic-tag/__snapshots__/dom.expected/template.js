@@ -30,4 +30,4 @@ export function _setup_(_scope) {
   _tagName(_scope, "span");
   _className(_scope, "A");
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko");

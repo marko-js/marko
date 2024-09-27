@@ -18,4 +18,4 @@ export function _setup_(_scope) {
   _data(_scope["#text/1"], doubleCount);
   _clickCount(_scope, 0);
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-scriptlet/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-scriptlet/template.marko");

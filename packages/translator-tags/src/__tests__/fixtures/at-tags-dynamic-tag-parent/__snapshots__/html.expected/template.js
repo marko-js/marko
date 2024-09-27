@@ -8,17 +8,17 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _dynamicTagInput(_dynamicScope, x, {
     header: {
       class: "my-header",
-      renderBody: _register( /* @__PURE__ */_createRenderer(() => {
+      renderBody: _register(/* @__PURE__ */_createRenderer(() => {
         _write("Header content");
       }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic-tag-parent/template.marko_2_renderer")
     },
     footer: {
       class: "my-footer",
-      renderBody: _register( /* @__PURE__ */_createRenderer(() => {
+      renderBody: _register(/* @__PURE__ */_createRenderer(() => {
         _write("Footer content");
       }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic-tag-parent/template.marko_3_renderer")
     }
-  }, _register( /* @__PURE__ */_createRenderer(() => {
+  }, _register(/* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _write("Body content");
   }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic-tag-parent/template.marko_1_renderer"));

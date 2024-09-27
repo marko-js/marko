@@ -12,7 +12,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     const _scope2_id = _nextScopeId();
     _thing = {
       x: 1,
-      renderBody: _register( /* @__PURE__ */_createRenderer(() => {
+      renderBody: _register(/* @__PURE__ */_createRenderer(() => {
         _write("Hello");
       }), "packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_3_renderer")
     };

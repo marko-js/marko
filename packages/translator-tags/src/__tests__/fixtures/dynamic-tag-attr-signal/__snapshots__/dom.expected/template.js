@@ -17,4 +17,4 @@ const _className = /* @__PURE__ */_value("className", (_scope, className) => {
 export function _setup_(_scope) {
   _className(_scope, "A");
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko");

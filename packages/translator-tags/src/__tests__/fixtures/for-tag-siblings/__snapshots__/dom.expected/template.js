@@ -16,4 +16,4 @@ const _arrA = /* @__PURE__ */_value("arrA", (_scope, arrA) => {
 export function _setup_(_scope) {
   _arrA(_scope, [1, 2, 3]);
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/for-tag-siblings/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/for-tag-siblings/template.marko");

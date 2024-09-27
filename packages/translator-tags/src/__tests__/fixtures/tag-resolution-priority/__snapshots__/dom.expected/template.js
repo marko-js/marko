@@ -7,4 +7,4 @@ const _dynamicTagName = /* @__PURE__ */_conditional("#text/0");
 export function _setup_(_scope) {
   _dynamicTagName(_scope, baz);
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/tag-resolution-priority/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/tag-resolution-priority/template.marko");
