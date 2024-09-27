@@ -3,7 +3,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const x = 1;
   const myTag = {
-    renderBody: _register( /* @__PURE__ */_createRenderer(({
+    renderBody: _register(/* @__PURE__ */_createRenderer(({
       number
     }) => {
       const _scope1_id = _nextScopeId();

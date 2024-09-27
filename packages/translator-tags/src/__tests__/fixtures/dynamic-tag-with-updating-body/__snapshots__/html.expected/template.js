@@ -4,7 +4,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const tagName = "div";
   const _dynamicScope = _peekNextScope();
-  _dynamicTagInput(_dynamicScope, tagName, {}, _register( /* @__PURE__ */_createRenderer(() => {
+  _dynamicTagInput(_dynamicScope, tagName, {}, _register(/* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     const _childScope = _peekNextScope();
     _counter._({});

@@ -42,4 +42,4 @@ export function _setup_(_scope) {
   _multiplier(_scope, 1);
   _dynamicTagName(_scope, _classLayout || _classLayoutBody);
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko");

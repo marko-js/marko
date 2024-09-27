@@ -6,7 +6,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _dynamicScope = _peekNextScope();
   _dynamicTagInput(_dynamicScope, tagName, {
     class: className
-  }, _register( /* @__PURE__ */_createRenderer(() => {
+  }, _register(/* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _write("body content");
   }), "packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_1_renderer"));

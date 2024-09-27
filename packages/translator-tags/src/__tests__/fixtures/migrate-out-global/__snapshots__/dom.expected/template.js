@@ -4,4 +4,4 @@ import { data as _data, createRenderer as _createRenderer, createTemplate as _cr
 export function _setup_(_scope) {
   _data(_scope["#text/0"], _scope.$global.x);
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/migrate-out-global/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/migrate-out-global/template.marko");

@@ -9,4 +9,4 @@ export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _attr(_scope["#div/0"], "nested", `a ${input.foo + ` nested ${input.bar}`} b`);
 });
 export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/attr-escape/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/attr-escape/template.marko");

@@ -21,4 +21,4 @@ export function _setup_(_scope) {
   _unused_2(_scope, 456);
   _clickCount(_scope, 0);
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko");

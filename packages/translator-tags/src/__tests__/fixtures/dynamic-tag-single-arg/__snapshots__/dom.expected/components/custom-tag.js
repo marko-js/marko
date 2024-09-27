@@ -6,4 +6,4 @@ export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) =>
 export function _setup_(_scope) {
   _tagVarSignal(_scope, "hello from other");
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-single-arg/components/custom-tag.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-single-arg/components/custom-tag.marko");

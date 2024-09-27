@@ -54,7 +54,7 @@
     "express": "^4.19.2",
     "globals": "^15.9.0",
     "husky": "^9.1.4",
-    "it-fails": "^1.0.7",
+    "it-fails": "^1.0.8",
     "jsdom": "^24.1.1",
     "jsdom-context-require": "^5.2.3",
     "kleur": "^4.1.5",

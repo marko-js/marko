@@ -3,7 +3,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const x = null;
   const _dynamicScope = _peekNextScope();
-  _dynamicTagInput(_dynamicScope, x, {}, _register( /* @__PURE__ */_createRenderer(() => {
+  _dynamicTagInput(_dynamicScope, x, {}, _register(/* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _write("Body Content");
   }), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_1_renderer"));

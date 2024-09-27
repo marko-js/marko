@@ -22,4 +22,4 @@ export function _setup_(_scope) {
   _lastCount(_scope, 0);
   _lastCount2(_scope, 0);
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/nested-assignment-expression/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/nested-assignment-expression/template.marko");

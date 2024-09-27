@@ -18,4 +18,4 @@ export function _setup_(_scope) {
   _clickCount(_scope, 0);
   _myButton_renderBody(_scope["#childScope/0"], /* @__PURE__ */_bindRenderer(_scope, _myButtonBody));
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko");

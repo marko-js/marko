@@ -7,7 +7,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _dynamicScope = _peekNextScope();
   _dynamicTagInput(_dynamicScope, tagName, {
     class: ["a", "b"]
-  }, _register( /* @__PURE__ */_createRenderer(() => {
+  }, _register(/* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _write("Hello World");
   }), "packages/translator-tags/src/__tests__/fixtures/basic-dynamic-native-tag/template.marko_1_renderer"));

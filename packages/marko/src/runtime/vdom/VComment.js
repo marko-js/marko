@@ -9,9 +9,9 @@ function VComment(value, ownerComponent) {
 VComment.prototype = {
   ___nodeType: 8,
 
-  ___actualize: function (doc) {
+  ___actualize: function (host) {
     var nodeValue = this.___nodeValue;
-    return doc.createComment(nodeValue);
+    return (host.ownerDocument || host).createComment(nodeValue);
   },
 
   ___cloneNode: function () {
