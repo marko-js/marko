@@ -1,0 +1,5 @@
+---
+"marko": patch
+---
+
+Update documentation
