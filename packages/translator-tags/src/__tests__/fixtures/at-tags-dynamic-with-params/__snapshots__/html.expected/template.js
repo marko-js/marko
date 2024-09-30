@@ -11,7 +11,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   if (x) {
     const _scope2_id = _nextScopeId();
     _item = {
-      renderBody: _register( /* @__PURE__ */_createRenderer(y => {
+      renderBody: _register(/* @__PURE__ */_createRenderer(y => {
         _write(`${_escapeXML(y)}`);
       }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic-with-params/template.marko_3_renderer")
     };

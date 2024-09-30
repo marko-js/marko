@@ -5,4 +5,4 @@ const _setup__effect = _register("packages/translator-tags/src/__tests__/fixture
 export function _setup_(_scope) {
   _queueEffect(_scope, _setup__effect);
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect/template.marko");

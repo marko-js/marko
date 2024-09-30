@@ -19,4 +19,4 @@ const _show = /* @__PURE__ */_value("show", (_scope, show) => {
 export function _setup_(_scope) {
   _show(_scope, true);
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-toggle-show/template.marko");

@@ -34,7 +34,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       style: {
         color: "green"
       },
-      renderBody: _register( /* @__PURE__ */_createRenderer(() => {
+      renderBody: _register(/* @__PURE__ */_createRenderer(() => {
         _write("Hello");
       }), "packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko_2_renderer")
     }

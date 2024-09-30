@@ -25,4 +25,4 @@ export function _setup_(_scope) {
   _count(_scope, 0);
   _dynamicTagName(_scope, false || Child || _falseChildBody);
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko");

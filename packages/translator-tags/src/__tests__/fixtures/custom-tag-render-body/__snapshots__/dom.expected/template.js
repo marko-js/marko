@@ -7,4 +7,4 @@ export function _setup_(_scope) {
   _child(_scope["#childScope/0"]);
   _child_renderBody(_scope["#childScope/0"], /* @__PURE__ */_bindRenderer(_scope, _childBody));
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/custom-tag-render-body/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/custom-tag-render-body/template.marko");

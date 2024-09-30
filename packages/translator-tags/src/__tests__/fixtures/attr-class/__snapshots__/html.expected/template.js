@@ -32,11 +32,11 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         b: c,
         d
       }],
-      renderBody: _register( /* @__PURE__ */_createRenderer(() => {
+      renderBody: _register(/* @__PURE__ */_createRenderer(() => {
         _write("Hello");
       }), "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_2_renderer")
     }
-  }, _register( /* @__PURE__ */_createRenderer(() => {
+  }, _register(/* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_1_c/subscriber");
     _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_1_d/subscriber");

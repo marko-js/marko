@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _write(`<button></button>${_markResumeNode(_scope0_id, "#button/0")}`);
   const _childScope = _peekNextScope();
   _customTag._({
-    renderBody: _register( /* @__PURE__ */_createRenderer(() => {
+    renderBody: _register(/* @__PURE__ */_createRenderer(() => {
       const _scope1_id = _nextScopeId();
       _write(`${_escapeXML(a)} ${_escapeXML(b)} <!>${_escapeXML(c)}${_markResumeNode(_scope1_id, "#text/2")}`);
       _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_c/subscriber");

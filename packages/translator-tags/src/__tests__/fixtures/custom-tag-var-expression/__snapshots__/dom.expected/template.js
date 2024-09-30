@@ -7,4 +7,4 @@ export function _setup_(_scope) {
   _setTagVar(_scope, "#childScope/0", _data);
   _child(_scope["#childScope/0"]);
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/custom-tag-var-expression/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/custom-tag-var-expression/template.marko");

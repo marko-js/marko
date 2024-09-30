@@ -55,7 +55,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   });
   const _tagName4 = showTagA && tagA;
   const _childScope2 = _peekNextScope();
-  const _renderBody = _register( /* @__PURE__ */_createRenderer(() => {
+  const _renderBody = _register(/* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _write("Body content");
   }), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer");

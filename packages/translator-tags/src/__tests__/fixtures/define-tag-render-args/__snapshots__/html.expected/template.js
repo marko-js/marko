@@ -3,7 +3,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const x = 1;
   const myTag = {
-    renderBody: _register( /* @__PURE__ */_createRenderer((a, b, c) => {
+    renderBody: _register(/* @__PURE__ */_createRenderer((a, b, c) => {
       const _scope1_id = _nextScopeId();
       _write(`<div>${_escapeXML(a)}${_markResumeNode(_scope1_id, "#text/0")}|<!>${_escapeXML(b)}${_markResumeNode(_scope1_id, "#text/1")}|<!>${_escapeXML(c)}${_markResumeNode(_scope1_id, "#text/2")}</div>`);
     }), "packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_1_renderer")

@@ -7,4 +7,4 @@ export function _setup_(_scope) {
   _helloSetter(_scope["#childScope/1"]);
   _helloSetter__el_(_scope["#childScope/1"], /* @__PURE__ */_bindFunction(_scope, el_getter));
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/template.marko");

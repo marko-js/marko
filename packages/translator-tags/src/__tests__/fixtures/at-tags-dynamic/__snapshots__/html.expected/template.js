@@ -14,7 +14,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         style: {
           color
         },
-        renderBody: _register( /* @__PURE__ */_createRenderer(() => {
+        renderBody: _register(/* @__PURE__ */_createRenderer(() => {
           _write("foo");
         }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_6_renderer")
       });
@@ -29,7 +29,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         style: {
           color
         },
-        renderBody: _register( /* @__PURE__ */_createRenderer(() => {
+        renderBody: _register(/* @__PURE__ */_createRenderer(() => {
           _write("bar");
         }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_7_renderer")
       });
@@ -57,7 +57,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       let _i = _i2++;
       _row.push({
         row: row,
-        renderBody: _register( /* @__PURE__ */_createRenderer(() => {
+        renderBody: _register(/* @__PURE__ */_createRenderer(() => {
           _write(`${_escapeXML(row)}${_markResumeNode(_scope11_id, "#text/0")}`);
         }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_11_renderer", _scope10_id)
       });
@@ -78,7 +78,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     outside: true,
     row: {
       row: -1,
-      renderBody: _register( /* @__PURE__ */_createRenderer(() => {
+      renderBody: _register(/* @__PURE__ */_createRenderer(() => {
         _write("Outside");
       }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_13_renderer")
     }
