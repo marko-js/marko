@@ -45,10 +45,12 @@ import {
 } from "../visitors/tag/native-tag";
 
 const kForMarkerBinding = Symbol("for marker binding");
+const kForScopeStartIndex = Symbol("for scope start index");
+
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kForMarkerBinding]?: Binding;
-    scopeStartIndex?: t.Identifier;
+    [kForScopeStartIndex]?: t.Identifier;
   }
 }
 
@@ -107,11 +109,11 @@ export default {
           !bodySection.content?.singleChild &&
           !hasNestedAttributeTags
         ) {
-          tagExtra.scopeStartIndex = tag.scope.generateUidIdentifier("k");
+          tagExtra[kForScopeStartIndex] = tag.scope.generateUidIdentifier("k");
           writer.writeTo(tagBody)`${callRuntime(
             "markResumeScopeStart",
             getScopeIdIdentifier(bodySection),
-            t.updateExpression("++", tagExtra.scopeStartIndex),
+            t.updateExpression("++", tagExtra[kForScopeStartIndex]),
           )}`;
         }
       }
@@ -476,10 +478,13 @@ const translateHTML = {
       );
     }
 
-    if (tagExtra.scopeStartIndex) {
+    if (tagExtra[kForScopeStartIndex]) {
       replacement.unshift(
         t.variableDeclaration("let", [
-          t.variableDeclarator(tagExtra.scopeStartIndex, t.numericLiteral(0)),
+          t.variableDeclarator(
+            tagExtra[kForScopeStartIndex],
+            t.numericLiteral(0),
+          ),
         ]),
       );
     }
