@@ -1,4 +1,4 @@
-// size: 441 (min) 261 (brotli)
+// size: 443 (min) 279 (brotli)
 
 import {
   register as n,
@@ -17,10 +17,14 @@ const u = n("a0", o("body content", "")),
   e = i(
     0,
     null,
-    m(2, (n) => {
-      const { 3: o } = n;
-      d(n, () => ({ class: o }));
-    }),
+    m(
+      2,
+      (n) => {
+        const { 3: o } = n;
+        d(n, () => ({ class: o }));
+      },
+      d,
+    ),
   ),
   p = n("a1", (n) =>
     c(

@@ -1,4 +1,4 @@
-// size: 341 (min) 218 (brotli)
+// size: 343 (min) 214 (brotli)
 
 import {
   dynamicTagAttrs as o,
@@ -12,10 +12,14 @@ import {
   init as u,
 } from "@marko/runtime-tags/dom";
 const a = o(2),
-  e = s(2, (o) => {
-    const { 3: t } = o;
-    a(o, () => t);
-  }),
+  e = s(
+    2,
+    (o) => {
+      const { 3: t } = o;
+      a(o, () => t);
+    },
+    a,
+  ),
   f = t("b0", (o) =>
     n(
       o[0],

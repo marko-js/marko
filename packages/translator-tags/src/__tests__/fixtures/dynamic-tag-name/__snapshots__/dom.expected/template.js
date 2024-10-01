@@ -14,7 +14,7 @@ const _expr_Text_other6 = /* @__PURE__ */_intersection(2, _scope => {
     class: ["a", "b"],
     other: other
   }));
-});
+}, _largeHeadingH2_input);
 const _tagTagA_input = _dynamicTagAttrs("#text/8");
 const _expr_Text_other5 = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -24,7 +24,7 @@ const _expr_Text_other5 = /* @__PURE__ */_intersection(2, _scope => {
     class: ["a", "b"],
     other: other
   }));
-});
+}, _tagTagA_input);
 const _showTagATagATagB_input = _dynamicTagAttrs("#text/5");
 const _expr_Text_other4 = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -36,7 +36,7 @@ const _expr_Text_other4 = /* @__PURE__ */_intersection(2, _scope => {
     class: ["a", "b"],
     other: other
   }));
-});
+}, _showTagATagATagB_input);
 const _isLargeH1H2_input = _dynamicTagAttrs("#text/4");
 const _expr_Text_other3 = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -46,7 +46,7 @@ const _expr_Text_other3 = /* @__PURE__ */_intersection(2, _scope => {
     class: ["a", "b"],
     other: other
   }));
-});
+}, _isLargeH1H2_input);
 const _x_input = _dynamicTagAttrs("#text/1");
 const _expr_Text_other2 = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -56,7 +56,7 @@ const _expr_Text_other2 = /* @__PURE__ */_intersection(2, _scope => {
     class: ["a", "b"],
     other: other
   }));
-});
+}, _x_input);
 const _renderBody_input = _dynamicTagAttrs("#text/0");
 const _expr_Text_other = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -66,7 +66,7 @@ const _expr_Text_other = /* @__PURE__ */_intersection(2, _scope => {
     class: ["a", "b"],
     other: other
   }));
-});
+}, _renderBody_input);
 const _dynamicTagName6 = /* @__PURE__ */_conditional("#text/9", null, _expr_Text_other6);
 const _dynamicTagName5 = /* @__PURE__ */_conditional("#text/8", null, _expr_Text_other5);
 const _dynamicTagName4 = /* @__PURE__ */_conditional("#text/5", null, _expr_Text_other4);

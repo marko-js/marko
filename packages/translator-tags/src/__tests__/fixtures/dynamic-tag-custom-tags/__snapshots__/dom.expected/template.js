@@ -11,7 +11,7 @@ const _expr_Text_val = /* @__PURE__ */_intersection(2, _scope => {
   _tagName_input(_scope, () => ({
     value: val
   }));
-});
+}, _tagName_input);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, _expr_Text_val);
 const _val = /* @__PURE__ */_value("val", null, _expr_Text_val);
 const _onClick = _scope => {

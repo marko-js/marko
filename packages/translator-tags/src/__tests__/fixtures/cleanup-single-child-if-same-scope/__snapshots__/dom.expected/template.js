@@ -4,7 +4,6 @@ import { on as _on, resetAbortSignal as _resetAbortSignal, getAbortSignal as _ge
 const _setup$ifBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_1", _scope => {
   _scope._["#pre/1"].innerHTML += '\nmounted';
   _getAbortSignal(_scope, 0).onabort = () => {
-    debugger;
     _scope._["#pre/1"].innerHTML += '\ndestroyed';
   };
 });

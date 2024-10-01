@@ -14,7 +14,7 @@ const _expr_comment_id$ifBody = /* @__PURE__ */_intersection(2, _scope => {
     comments: comment.comments,
     path: id
   });
-});
+}, _inChild("#childScope/0", _comments_input));
 const _id$ifBody = /* @__PURE__ */_closure("id", null, void 0, _expr_comment_id$ifBody);
 const _comment$ifBody = /* @__PURE__ */_closure("comment", null, void 0, _expr_comment_id$ifBody);
 const _setup$ifBody = _scope => {
@@ -29,7 +29,7 @@ const _expr_input_i$forBody = /* @__PURE__ */_intersection(2, _scope => {
     i
   } = _scope;
   _id$forBody(_scope, `${input.path || "c"}-${i}`);
-});
+}, _id$forBody);
 const _if$forBody = /* @__PURE__ */_conditional("#text/4");
 const _onClick = _scope => {
   const {

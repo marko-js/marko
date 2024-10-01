@@ -1,80 +1,85 @@
-// size: 738 (min) 401 (brotli)
+// size: 758 (min) 417 (brotli)
 
 import {
   value as o,
   data as i,
-  registerRenderer as n,
-  createRenderer as l,
-  inLoopScope as t,
-  register as d,
-  on as v,
-  queueEffect as c,
-  intersections as r,
-  closure as u,
-  loopOf as m,
-  queueSource as s,
-  intersection as b,
-  init as e,
+  intersection as n,
+  inChild as l,
+  registerRenderer as t,
+  createRenderer as d,
+  inLoopScope as v,
+  register as c,
+  on as r,
+  queueEffect as u,
+  intersections as m,
+  closure as s,
+  loopOf as b,
+  queueSource as e,
+  init as D,
 } from "@marko/runtime-tags/dom";
-const D = o(3, (o, n) => i(o[0], n)),
-  a = b(2, (o) => {
-    const {
-      _: { 2: i },
-      2: n,
-    } = o;
-    D(o[0], `${i}.${n}`);
-  }),
-  f = u(2, null, void 0, a),
-  g = o(2, null, a),
-  k = m(
+const a = o(3, (o, n) => i(o[0], n)),
+  f = n(
+    2,
+    (o) => {
+      const {
+        _: { 2: i },
+        2: n,
+      } = o;
+      a(o[0], `${i}.${n}`);
+    },
+    l(0, a),
+  ),
+  g = s(2, null, void 0, f),
+  k = o(2, null, f),
+  $ = b(
     0,
-    n(
+    t(
       "b0",
-      l(
+      d(
         "<div> </div>",
         "/D l&",
         (o) => {
           o[0];
         },
-        [f],
+        [g],
         void 0,
-        o(1, (o, i) => g(o, i[0]), g),
+        o(1, (o, i) => k(o, i[0]), k),
       ),
     ),
   ),
-  $ = o(2, null, t(f, 0)),
-  h = u(2, (o, i) => k(o, [i]), void 0, k),
-  p = m(
+  h = o(2, null, v(g, 0)),
+  p = s(2, (o, i) => $(o, [i]), void 0, $),
+  _ = b(
     1,
-    n(
+    t(
       "b1",
-      l(
+      d(
         "<!><!><!>",
         "D%D",
         void 0,
-        [h],
+        [p],
         void 0,
-        o(1, (o, i) => $(o, i[0]), $),
+        o(1, (o, i) => h(o, i[0]), h),
       ),
     ),
   ),
-  _ = d("b2", (o) =>
-    v(
+  j = c("b2", (o) =>
+    r(
       o[0],
       "click",
       ((o) => {
         const { 2: i } = o;
         return function () {
-          s(o, j, [...i, i.length]);
+          e(o, q, [...i, i.length]);
         };
       })(o),
     ),
   ),
-  j = o(
+  q = o(
     2,
     (o, i) => {
-      c(o, _), p(o, [i]);
+      u(o, j), _(o, [i]);
     },
-    r([p, t(h, 1)]),
+    m([_, v(p, 1)]),
   );
-e();
+D();

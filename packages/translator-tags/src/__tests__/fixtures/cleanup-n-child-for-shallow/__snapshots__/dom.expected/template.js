@@ -19,7 +19,6 @@ const _onClick = _scope => {
     items
   } = _scope;
   return function () {
-    debugger;
     _queueSource(_scope, _items, items.length ? items.slice(0, -1) : [1, 2, 3]);
   };
 };

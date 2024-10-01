@@ -1,4 +1,4 @@
-// size: 745 (min) 354 (brotli)
+// size: 747 (min) 353 (brotli)
 
 import {
   createTemplate as i,
@@ -46,10 +46,14 @@ const g = a(0),
   p = r(
     0,
     null,
-    s(2, (i) => {
-      const { 3: o } = i;
-      g(i, () => ({ value: o }));
-    }),
+    s(
+      2,
+      (i) => {
+        const { 3: o } = i;
+        g(i, () => ({ value: o }));
+      },
+      g,
+    ),
   ),
   j = l("c0", (i) =>
     n(

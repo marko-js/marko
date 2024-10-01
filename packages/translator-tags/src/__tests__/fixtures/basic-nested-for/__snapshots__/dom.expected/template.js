@@ -10,7 +10,7 @@ const _expr_outer_inner$forBody = /* @__PURE__ */_intersection(2, _scope => {
     inner
   } = _scope;
   _child__name_(_scope["#childScope/0"], `${outer}.${inner}`);
-});
+}, _inChild("#childScope/0", _child__name_));
 const _outer$forBody = /* @__PURE__ */_closure("outer", null, void 0, _expr_outer_inner$forBody);
 const _inner$forBody = /* @__PURE__ */_value("inner", null, _expr_outer_inner$forBody);
 const _params_3$forBody = /* @__PURE__ */_value("_params_3", (_scope, _params_3) => _inner$forBody(_scope, _params_3[0]), _inner$forBody);

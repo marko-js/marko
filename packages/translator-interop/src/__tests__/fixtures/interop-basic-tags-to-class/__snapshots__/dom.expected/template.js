@@ -12,7 +12,7 @@ const _expr_Text_count = /* @__PURE__ */_intersection(2, _scope => {
   _classCounter_input(_scope, () => ({
     count: count
   }));
-});
+}, _classCounter_input);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", null, _expr_Text_count);
 const _onClick = _scope => {
   const {

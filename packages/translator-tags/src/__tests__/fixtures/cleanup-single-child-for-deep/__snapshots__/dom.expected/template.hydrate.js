@@ -1,4 +1,4 @@
-// size: 1232 (min) 606 (brotli)
+// size: 1239 (min) 604 (brotli)
 
 import {
   register as n,
@@ -9,8 +9,8 @@ import {
   intersection as c,
   resetAbortSignal as l,
   queueEffect as r,
-  dynamicClosure as v,
-  inChild as s,
+  inChild as v,
+  dynamicClosure as s,
   registerRenderer as e,
   createRenderer as u,
   closure as $,
@@ -43,18 +43,22 @@ t([y, p]),
         n[1].innerHTML += "\n" + o;
       },
   );
-const H = c(2, (n) => {
-    const {
-      _: { 3: o },
-      2: i,
-    } = n;
-    y(n[0], `${o}.${i}`);
-  }),
-  L = v(
+const H = c(
+    2,
+    (n) => {
+      const {
+        _: { 3: o },
+        2: i,
+      } = n;
+      y(n[0], `${o}.${i}`);
+    },
+    v(0, y),
+  ),
+  L = s(
     4,
     (n, o) => p(n[0], o),
     (n) => n._._,
-    s(0, p),
+    v(0, p),
   ),
   M = $(3, null, void 0, H),
   T = i(2, null, H),
@@ -74,8 +78,8 @@ const H = c(2, (n) => {
       ),
     ),
   ),
-  q = $(4, (n, o) => p(n[0], o), void 0, s(0, p)),
-  w = i(3, (n, o) => y(n[0], `${o}`), t([s(0, y), b(M, 1)])),
+  q = $(4, (n, o) => p(n[0], o), void 0, v(0, p)),
+  w = i(3, (n, o) => y(n[0], `${o}`), t([v(0, y), b(M, 1)])),
   x = $(3, (n, o) => j(n, [o]), void 0, j),
   z = D(
     2,

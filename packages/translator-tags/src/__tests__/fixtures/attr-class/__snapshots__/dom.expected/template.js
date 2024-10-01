@@ -23,7 +23,7 @@ const _expr_Text_c_d = /* @__PURE__ */_intersection(3, _scope => {
       renderBody: /* @__PURE__ */_bindRenderer(_scope, _testBody)
     }
   }));
-});
+}, _inputTest_input);
 const _expr_c_d = /* @__PURE__ */_intersection(2, _scope => {
   const {
     c,

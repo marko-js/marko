@@ -189,6 +189,7 @@ export function getSignal(
           "intersection",
           t.numericLiteral(referencedBindings.length),
           getSignalFn(signal, [scopeIdentifier], referencedBindings),
+          buildSignalIntersections(signal),
         );
       };
     } else if (referencedBindings.section !== section) {

@@ -13,7 +13,7 @@ const _expr_Text_x = /* @__PURE__ */_intersection(2, _scope => {
   _myTag_input(_scope, () => ({
     number: x
   }));
-});
+}, _myTag_input);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, _expr_Text_x);
 const _onClick = _scope => {
   const {

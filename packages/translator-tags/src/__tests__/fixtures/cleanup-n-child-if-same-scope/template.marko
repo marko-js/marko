@@ -10,7 +10,6 @@
   <effect() {
     el().innerHTML += '\nmounted';
     $signal.onabort = () => {
-      debugger;
       el().innerHTML += '\ndestroyed';
     };
   }/>

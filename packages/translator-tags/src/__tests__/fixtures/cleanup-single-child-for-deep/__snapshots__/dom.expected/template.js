@@ -13,7 +13,7 @@ const _expr_outerItem_middleItem$forBody = /* @__PURE__ */_intersection(2, _scop
     middleItem
   } = _scope;
   _child__name_(_scope["#childScope/0"], `${outerItem}.${middleItem}`);
-});
+}, _inChild("#childScope/0", _child__name_));
 const _write$forBody2 = /* @__PURE__ */_dynamicClosure("write", (_scope, write) => _child__write_(_scope["#childScope/0"], write), _scope => _scope._._, _inChild("#childScope/0", _child__write_));
 const _outerItem$forBody2 = /* @__PURE__ */_closure("outerItem", null, void 0, _expr_outerItem_middleItem$forBody);
 const _middleItem$forBody = /* @__PURE__ */_value("middleItem", null, _expr_outerItem_middleItem$forBody);
@@ -38,7 +38,6 @@ const _onClick = _scope => {
     items
   } = _scope;
   return function () {
-    debugger;
     _queueSource(_scope, _items, items.length ? items.slice(0, -1) : [1, 2, 3]);
   };
 };

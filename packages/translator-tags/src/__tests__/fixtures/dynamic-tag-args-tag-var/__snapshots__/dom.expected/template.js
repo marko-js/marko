@@ -9,7 +9,7 @@ const _expr_Text_x = /* @__PURE__ */_intersection(2, _scope => {
     x
   } = _scope;
   _tags0_input(_scope, () => x);
-});
+}, _tags0_input);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", _scope => _setTagVar(_scope, "#text/2!", _y), _expr_Text_x);
 const _y = _registerBoundSignal("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args-tag-var/template.marko_0_y", /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/3"], y)));
 const _onClick = _scope => {

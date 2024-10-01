@@ -7,7 +7,7 @@ const _expr_x_y = /* @__PURE__ */_intersection(2, _scope => {
     y
   } = _scope;
   _tagVarSignal(_scope, x + y);
-});
+}, _tagVarSignal);
 const _y = /* @__PURE__ */_value("y", null, _expr_x_y);
 const _x = /* @__PURE__ */_value("x", null, _expr_x_y);
 export function _setup_(_scope) {

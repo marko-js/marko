@@ -8,7 +8,7 @@ const _expr_Text_x_y = /* @__PURE__ */_intersection(3, _scope => {
     y
   } = _scope;
   _inputRenderBody_input(_scope, () => [x, y]);
-});
+}, _inputRenderBody_input);
 const _onClick = _scope => {
   const {
     x,

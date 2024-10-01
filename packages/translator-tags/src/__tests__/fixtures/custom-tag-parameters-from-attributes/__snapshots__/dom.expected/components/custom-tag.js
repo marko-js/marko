@@ -11,7 +11,7 @@ const _expr_Text_input_x = /* @__PURE__ */_intersection(3, _scope => {
     count: x,
     name: input.name
   }));
-});
+}, _inputRenderBody_input);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", null, _expr_Text_input_x);
 const _onClick = _scope => {
   const {
