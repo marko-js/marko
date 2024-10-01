@@ -3,7 +3,7 @@ export const _walks_ = /* next(1), replace, over(1), get, over(1), get, out(1) *
 import { data as _data, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, value as _value, register as _register, queueEffect as _queueEffect, intersection as _intersection, loopOf as _loopOf, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _item$forBody = /* @__PURE__ */_value("item", (_scope, item) => _data(_scope["#text/0"], item));
 const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _item$forBody(_scope, _params_2[0]));
-const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_1_renderer", /* @__PURE__ */_createRenderer(" ", /* get */" ", void 0, void 0, void 0, _params_2$forBody));
+const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_1_renderer", /* @__PURE__ */_createRenderer(" ", /* get */" ", void 0, void 0, void 0, () => _params_2$forBody));
 const _onClick = _scope => {
   const {
     id,
@@ -37,8 +37,8 @@ const _items_effect = _register("packages/translator-tags/src/__tests__/fixtures
 const _items = /* @__PURE__ */_value("items", (_scope, items) => {
   _queueEffect(_scope, _items_effect);
   _for(_scope, [items]);
-}, _expr_id_items);
-const _id = /* @__PURE__ */_value("id", null, _expr_id_items);
+}, () => _expr_id_items);
+const _id = /* @__PURE__ */_value("id", null, () => _expr_id_items);
 export function _setup_(_scope) {
   _id(_scope, 0);
   _items(_scope, []);

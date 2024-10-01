@@ -14,7 +14,7 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   _queueEffect(_scope, _x_effect);
   _tagVarSignal(_scope, x);
-}, _tagVarSignal);
+}, () => _tagVarSignal);
 export function _setup_(_scope) {
   _x(_scope, 1);
 }

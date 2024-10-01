@@ -5,15 +5,15 @@ const _ = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-n-c
   _scope["#div/1"].innerHTML += '\n' + msg;
 });
 import { _setup_ as _child, _write_ as _child__write_, _name_ as _child__name_, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
-const _write$forBody = /* @__PURE__ */_closure("write", (_scope, write) => _child__write_(_scope["#childScope/0"], write), void 0, _inChild("#childScope/0", _child__write_));
-const _item$forBody = /* @__PURE__ */_value("item", (_scope, item) => _child__name_(_scope["#childScope/0"], item), _inChild("#childScope/0", _child__name_));
-const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _item$forBody(_scope, _params_2[0]), _item$forBody);
+const _write$forBody = /* @__PURE__ */_closure("write", (_scope, write) => _child__write_(_scope["#childScope/0"], write), void 0, () => _inChild("#childScope/0", _child__write_));
+const _item$forBody = /* @__PURE__ */_value("item", (_scope, item) => _child__name_(_scope["#childScope/0"], item), () => _inChild("#childScope/0", _child__name_));
+const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _item$forBody(_scope, _params_2[0]), () => _item$forBody);
 const _setup$forBody = _scope => {
   _child(_scope["#childScope/0"]);
 };
-const _forBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_1_renderer", /* @__PURE__ */_createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, [_write$forBody], void 0, _params_2$forBody));
+const _forBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_1_renderer", /* @__PURE__ */_createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_write$forBody], void 0, () => _params_2$forBody));
 const _for = /* @__PURE__ */_loopOf("#text/2", _forBody);
-const _write = /* @__PURE__ */_value("write", null, _inLoopScope(_write$forBody, "#text/2"));
+const _write = /* @__PURE__ */_value("write", null, () => _inLoopScope(_write$forBody, "#text/2"));
 const _onClick = _scope => {
   const {
     items
@@ -26,7 +26,7 @@ const _items_effect = _register("packages/translator-tags/src/__tests__/fixtures
 const _items = /* @__PURE__ */_value("items", (_scope, items) => {
   _queueEffect(_scope, _items_effect);
   _for(_scope, [items]);
-}, _for);
+}, () => _for);
 export function _setup_(_scope) {
   _items(_scope, [1, 2, 3]);
   _write(_scope, _(_scope));

@@ -11,4 +11,4 @@ export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) =>
 export function _setup_(_scope) {
   _html(_scope, "Hello HTML <a/>", "#text/4");
 }
-export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/placeholders/template.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/placeholders/template.marko");

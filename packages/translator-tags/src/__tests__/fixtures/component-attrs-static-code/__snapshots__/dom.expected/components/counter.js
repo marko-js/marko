@@ -17,10 +17,10 @@ const _onClick = _scope => {
   };
 };
 const _count_effect = _register("packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/components/counter.marko_0_count", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
-const _count = /* @__PURE__ */_value("count", (_scope, count) => _queueEffect(_scope, _count_effect), _expr_input_count);
-export const _input_ = /* @__PURE__ */_value("input", null, _expr_input_count);
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
+const _count = /* @__PURE__ */_value("count", (_scope, count) => _queueEffect(_scope, _count_effect), () => _expr_input_count);
+export const _input_ = /* @__PURE__ */_value("input", null, () => _expr_input_count);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
 export function _setup_(_scope) {
   _count(_scope, 0);
 }
-export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/components/counter.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/components/counter.marko");

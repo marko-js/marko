@@ -1,27 +1,25 @@
-// size: 893 (min) 478 (brotli)
+// size: 887 (min) 458 (brotli)
 
 import {
   register as n,
   getAbortSignal as o,
   value as t,
-  intersections as c,
-  data as i,
-  intersection as r,
-  resetAbortSignal as e,
-  queueEffect as s,
-  closure as d,
-  inChild as u,
-  registerRenderer as l,
-  createRenderer as m,
-  inLoopScope as a,
-  on as b,
-  queueSource as v,
-  loopOf as f,
-  init as g,
+  intersection as i,
+  resetAbortSignal as r,
+  queueEffect as c,
+  data as e,
+  registerRenderer as d,
+  createRenderer as s,
+  on as u,
+  closure as l,
+  inChild as m,
+  queueSource as a,
+  loopOf as b,
+  init as v,
 } from "@marko/runtime-tags/dom";
-const k = n("a0", (n) => {
-    const { 3: t, 4: c } = n;
-    c(`mounted ${t}`),
+const f = n("a0", (n) => {
+    const { 3: t, 4: i } = n;
+    i(`mounted ${t}`),
       (o(n, 0).onabort = ((n) => {
         const { 3: o, 4: t } = n;
         return () => {
@@ -29,55 +27,71 @@ const k = n("a0", (n) => {
         };
       })(n));
   }),
-  $ = r(2, (n) => {
-    e(n, 0), s(n, k);
+  g = i(2, (n) => {
+    r(n, 0), c(n, f);
   }),
-  h = t(4, null, $),
-  p = t(3, (n, o) => i(n[0], o), $);
-c([p, h]),
-  n(
-    "b0",
-    (n) =>
-      function (o) {
-        n[1].innerHTML += "\n" + o;
-      },
+  k = t(4, null, () => g),
+  $ = t(
+    3,
+    (n, o) => e(n[0], o),
+    () => g,
   );
-const y = d(4, (n, o) => h(n[0], o), void 0, u(0, h)),
-  D = t(2, (n, o) => p(n[0], o), u(0, p)),
-  H = f(
+n(
+  "b0",
+  (n) =>
+    function (o) {
+      n[1].innerHTML += "\n" + o;
+    },
+);
+const h = l(
+    4,
+    (n, o) => k(n[0], o),
+    void 0,
+    () => m(0, k),
+  ),
+  p = t(
     2,
-    l(
+    (n, o) => $(n[0], o),
+    () => m(0, $),
+  ),
+  y = t(
+    1,
+    (n, o) => p(n, o[0]),
+    () => p,
+  ),
+  D = b(
+    2,
+    d(
       "b1",
-      m(
+      s(
         "<div> </div>",
         "/D l&",
         (n) => {
           n[0];
         },
-        [y],
+        () => [h],
         void 0,
-        t(1, (n, o) => D(n, o[0]), D),
+        () => y,
       ),
     ),
-  );
-a(y, 2);
-const L = n("b2", (n) =>
-    b(
+  ),
+  H = n("b2", (n) =>
+    u(
       n[0],
       "click",
       ((n) => {
         const { 3: o } = n;
         return function () {
-          v(n, M, o.length ? o.slice(0, -1) : [1, 2, 3]);
+          a(n, L, o.length ? o.slice(0, -1) : [1, 2, 3]);
         };
       })(n),
     ),
   ),
-  M = t(
+  L = t(
     3,
     (n, o) => {
-      s(n, L), H(n, [o]);
+      c(n, H), D(n, [o]);
     },
-    H,
+    () => D,
   );
-g();
+v();

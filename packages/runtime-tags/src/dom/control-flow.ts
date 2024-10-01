@@ -39,10 +39,14 @@ export function patchConditionals(
 export let conditional = function conditional(
   nodeAccessor: Accessor,
   fn?: (scope: Scope) => void,
-  intersection?: IntersectionSignal,
+  getIntersection?: () => IntersectionSignal,
 ): ValueSignal<RendererOrElementName | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
+  let intersection: IntersectionSignal | undefined =
+    getIntersection &&
+    ((scope, op) => (intersection = getIntersection!())(scope, op));
+
   return (scope, newRendererOrOp) => {
     if (newRendererOrOp === DIRTY) return;
 
@@ -122,10 +126,14 @@ export function setConditionalRenderer<ChildScope extends Scope>(
 export let conditionalOnlyChild = function conditional(
   nodeAccessor: Accessor,
   fn?: (scope: Scope) => void,
-  intersection?: IntersectionSignal,
+  getIntersection?: () => IntersectionSignal,
 ): ValueSignal<RendererOrElementName | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
+  let intersection: IntersectionSignal | undefined =
+    getIntersection &&
+    ((scope, op) => (intersection = getIntersection!())(scope, op));
+
   return (scope, newRendererOrOp) => {
     if (newRendererOrOp === DIRTY) return;
 

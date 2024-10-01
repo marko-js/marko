@@ -1,30 +1,29 @@
-// size: 1557 (min) 655 (brotli)
+// size: 1596 (min) 661 (brotli)
 
 import {
   register as n,
   getAbortSignal as t,
   value as o,
-  intersections as i,
-  data as c,
-  intersection as r,
-  resetAbortSignal as l,
-  queueEffect as u,
-  dynamicClosure as d,
-  inChild as e,
-  registerRenderer as s,
-  createRenderer as a,
-  registerSubscriber as b,
-  closure as v,
-  inConditionalScope as $,
-  dynamicSubscribers as _,
-  on as m,
-  conditional as f,
-  queueSource as p,
-  init as D,
+  data as i,
+  intersection as c,
+  resetAbortSignal as r,
+  queueEffect as l,
+  registerRenderer as u,
+  createRenderer as d,
+  registerSubscriber as e,
+  dynamicClosure as s,
+  on as a,
+  inChild as b,
+  conditional as v,
+  closure as $,
+  queueSource as _,
+  dynamicSubscribers as m,
+  inConditionalScope as f,
+  init as p,
 } from "@marko/runtime-tags/dom";
-const k = "<div><!> a</div><span><!> a</span><p><!> a</p>",
-  M = "D%lD%lD%l",
-  g = n("a0", (n) => {
+const D = "<div><!> a</div><span><!> a</span><p><!> a</p>",
+  k = "D%lD%lD%l",
+  M = n("a0", (n) => {
     const { 5: o, 6: i } = n;
     i(`${o} mounted`),
       (t(n, 0).onabort = ((n) => {
@@ -34,130 +33,144 @@ const k = "<div><!> a</div><span><!> a</span><p><!> a</p>",
         };
       })(n));
   }),
-  y = r(2, (n) => {
-    l(n, 0), u(n, g);
+  g = c(2, (n) => {
+    r(n, 0), l(n, M);
   }),
-  H = o(6, null, y),
-  I = o(
+  y = o(6, null, () => g),
+  H = o(
     5,
     (n, t) => {
-      c(n[0], t), c(n[1], t), c(n[2], t);
+      i(n[0], t), i(n[1], t), i(n[2], t);
     },
-    y,
+    () => g,
   );
-i([I, H]),
-  n(
-    "b0",
-    (n) =>
-      function (t) {
-        n[3].innerHTML += "\n" + t;
-      },
-  );
-const L = s(
+n(
+  "b0",
+  (n) =>
+    function (t) {
+      n[3].innerHTML += "\n" + t;
+    },
+);
+const I = s(
+    8,
+    (n, t) => y(n[0], t),
+    (n) => n._._._,
+    () => b(0, y),
+  ),
+  L = u(
     "b1",
-    a(
-      `${k}`,
-      `/${M}&`,
+    d(
+      `${D}`,
+      `/${k}&`,
       (n) => {
-        n[0], I(n[0], "Inner");
+        n[0], H(n[0], "Inner");
       },
-      [
-        d(
-          8,
-          (n, t) => H(n[0], t),
-          (n) => n._._._,
-          e(0, H),
-        ),
-      ],
+      () => [I],
     ),
   ),
-  O = f(1),
+  O = v(1),
   T = s(
+    8,
+    (n, t) => y(n[0], t),
+    (n) => n._._,
+    () => b(0, y),
+  ),
+  h = e(
+    "b2",
+    s(
+      7,
+      (n, t) => O(n, t ? L : null),
+      (n) => n._._,
+      () => O,
+    ),
+  ),
+  j = u(
     "b3",
-    a(
-      `<div>${k}<!></div>`,
-      `D/${M}&%`,
+    d(
+      `<div>${D}<!></div>`,
+      `D/${k}&%`,
       (n) => {
-        n[0], I(n[0], "Middle");
+        n[0], H(n[0], "Middle");
       },
-      [
-        d(
-          8,
-          (n, t) => H(n[0], t),
-          (n) => n._._,
-          e(0, H),
-        ),
-        b(
-          "b2",
-          d(
-            7,
-            (n, t) => O(n, t ? L : null),
-            (n) => n._._,
-            O,
-          ),
-        ),
-      ],
+      () => [T, h],
     ),
   ),
-  h = f(1),
-  j = v(8, (n, t) => H(n[0], t), void 0, e(0, H)),
-  q = v(6, (n, t) => h(n, t ? T : null), void 0, h),
-  w = s(
+  q = v(1),
+  w = $(
+    8,
+    (n, t) => y(n[0], t),
+    void 0,
+    () => b(0, y),
+  ),
+  x = $(
+    6,
+    (n, t) => q(n, t ? j : null),
+    void 0,
+    () => q,
+  ),
+  z = u(
     "b4",
-    a(
-      `<div>${k}<!></div>`,
-      `D/${M}&%`,
+    d(
+      `<div>${D}<!></div>`,
+      `D/${k}&%`,
       (n) => {
-        n[0], I(n[0], "Outer");
+        n[0], H(n[0], "Outer");
       },
-      [j, q],
+      () => [w, x],
     ),
   ),
-  x = f(4);
-i([$(j, 4), _(8)]);
-const z = n("b5", (n) =>
-    m(
+  A = v(4),
+  B = n("b5", (n) =>
+    a(
       n[2],
       "click",
       ((n) => {
         const { 7: t } = n;
         return function () {
-          p(n, A, !t);
+          _(n, C, !t);
         };
       })(n),
     ),
   ),
-  A = o(7, (n, t) => u(n, z), _(7)),
-  B = n("b6", (n) =>
-    m(
+  C = o(
+    7,
+    (n, t) => l(n, B),
+    () => m(7),
+  ),
+  E = n("b6", (n) =>
+    a(
       n[1],
       "click",
       ((n) => {
         const { 6: t } = n;
         return function () {
-          p(n, C, !t);
-        };
-      })(n),
-    ),
-  ),
-  C = o(6, (n, t) => u(n, B), $(q, 4)),
-  E = n("b7", (n) =>
-    m(
-      n[0],
-      "click",
-      ((n) => {
-        const { 5: t } = n;
-        return function () {
-          p(n, F, !t);
+          _(n, F, !t);
         };
       })(n),
     ),
   ),
   F = o(
+    6,
+    (n, t) => l(n, E),
+    () => f(x, 4),
+  ),
+  G = n("b7", (n) =>
+    a(
+      n[0],
+      "click",
+      ((n) => {
+        const { 5: t } = n;
+        return function () {
+          _(n, J, !t);
+        };
+      })(n),
+    ),
+  ),
+  J = o(
     5,
     (n, t) => {
-      u(n, E), x(n, t ? w : null);
+      l(n, G), A(n, t ? z : null);
     },
-    x,
+    () => A,
   );
-D();
+p();

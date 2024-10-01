@@ -1,4 +1,4 @@
-// size: 564 (min) 305 (brotli)
+// size: 586 (min) 325 (brotli)
 
 import {
   register as o,
@@ -13,18 +13,12 @@ import {
   init as l,
 } from "@marko/runtime-tags/dom";
 const m = t(2, (o, n) => s(o[0], n)),
-  d = o(
+  d = t(1, (o, n) => m(o, n[0])),
+  e = o(
     "a0",
-    n(
-      " ",
-      " ",
-      void 0,
-      void 0,
-      void 0,
-      t(1, (o, n) => m(o, n[0])),
-    ),
+    n(" ", " ", void 0, void 0, void 0, () => d),
   ),
-  e = o("a1", (o) =>
+  f = o("a1", (o) =>
     c(
       o[1],
       "click",
@@ -32,33 +26,33 @@ const m = t(2, (o, n) => s(o[0], n)),
         const { 3: n, 4: c } = o;
         return function () {
           const t = n + 1;
-          i(o, p, t), i(o, g, [...c, t]);
+          i(o, b, t), i(o, p, [...c, t]);
         };
       })(o),
     ),
   ),
-  f = u(2, (o) => {
-    r(o, e);
+  k = u(2, (o) => {
+    r(o, f);
   }),
-  k = a(0, d),
-  v = o("a2", (o) =>
+  v = a(0, e),
+  g = o("a2", (o) =>
     c(
       o[2],
       "click",
       ((o) => {
         const { 4: n } = o;
         return function () {
-          i(o, g, n.slice(0, -1));
+          i(o, p, n.slice(0, -1));
         };
       })(o),
     ),
   ),
-  g = t(
+  p = t(
     4,
     (o, n) => {
-      r(o, v), k(o, [n]);
+      r(o, g), v(o, [n]);
     },
-    f,
+    () => k,
   ),
-  p = t(3, null, f);
+  b = t(3, null, () => k);
 l();

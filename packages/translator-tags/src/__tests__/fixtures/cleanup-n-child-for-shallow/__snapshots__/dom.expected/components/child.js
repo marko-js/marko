@@ -27,15 +27,15 @@ const _expr_name_write = /* @__PURE__ */_intersection(2, _scope => {
   _resetAbortSignal(_scope, 0);
   _queueEffect(_scope, _expr_name_write_effect);
 });
-export const _write_ = /* @__PURE__ */_value("write", null, _expr_name_write);
+export const _write_ = /* @__PURE__ */_value("write", null, () => _expr_name_write);
 export const _name_ = /* @__PURE__ */_value("name", (_scope, name) => {
   _data(_scope["#text/0"], name);
   _data(_scope["#text/1"], name);
   _data(_scope["#text/2"], name);
-}, _expr_name_write);
+}, () => _expr_name_write);
 export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _name_(_scope, input.name);
   _write_(_scope, input.write);
-}, _intersections([_name_, _write_]));
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/components/child.marko");
+}, () => _intersections([_name_, _write_]));
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/components/child.marko");

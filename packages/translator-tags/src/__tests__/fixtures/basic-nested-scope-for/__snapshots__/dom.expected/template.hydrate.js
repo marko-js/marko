@@ -1,11 +1,11 @@
-// size: 385 (min) 226 (brotli)
+// size: 401 (min) 231 (brotli)
 
 import {
   register as t,
   on as n,
-  value as o,
-  inLoopScope as c,
-  queueSource as l,
+  queueSource as o,
+  value as c,
+  inLoopScope as l,
   closure as a,
   intersection as e,
   attr as i,
@@ -25,10 +25,11 @@ t("a0", (t) =>
     ((t) => {
       const { 3: n } = t;
       return function () {
-        l(t._, s, n);
+        o(t._, u, n);
       };
     })(t),
   ),
 );
-const s = o(1, null, c(a(1, null, void 0, r), 0));
+const s = a(1, null, void 0, () => r),
+  u = c(1, null, () => l(s, 0));
 m();

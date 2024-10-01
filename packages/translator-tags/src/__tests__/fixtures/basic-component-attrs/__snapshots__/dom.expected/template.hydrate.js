@@ -1,4 +1,4 @@
-// size: 383 (min) 220 (brotli)
+// size: 389 (min) 228 (brotli)
 
 import {
   register as o,
@@ -28,6 +28,6 @@ const u = n(5, (o, t) => c(o[1], t)),
     (o, t) => {
       u(o[0], t), f(o[0], k(o));
     },
-    i([s(0, u), s(0, f)]),
+    () => i([s(0, u), s(0, f)]),
   );
 a();

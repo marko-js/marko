@@ -1,4 +1,4 @@
-// size: 462 (min) 244 (brotli)
+// size: 473 (min) 256 (brotli)
 
 import {
   registerSubscriber as c,
@@ -6,11 +6,11 @@ import {
   data as n,
   registerRenderer as t,
   createRenderer as m,
-  value as b,
-  dynamicSubscribers as i,
-  register as r,
-  on as l,
-  queueSource as s,
+  register as b,
+  on as i,
+  queueSource as r,
+  value as l,
+  dynamicSubscribers as s,
   init as u,
 } from "@marko/runtime-tags/dom";
 c(
@@ -22,9 +22,10 @@ c(
   ),
 );
 const a = c(
-  "b1",
-  o(4, (c, o) => n(c[2], o)),
-);
+    "b1",
+    o(4, (c, o) => n(c[2], o)),
+  ),
+  f = o(3, (c, o) => n(c[1], o));
 t(
   "b2",
   m(
@@ -33,14 +34,13 @@ t(
     (c) => {
       n(c[0], 1);
     },
-    [o(3, (c, o) => n(c[1], o)), a],
+    () => [f, a],
   ),
 );
-const f = b(4, null, i(4));
-i(3),
-  r("b3", (c) =>
-    l(c[0], "click", function () {
-      s(c, f, 4);
-    }),
-  ),
+const k = l(4, null, () => s(4));
+b("b3", (c) =>
+  i(c[0], "click", function () {
+    r(c, k, 4);
+  }),
+),
   u();

@@ -11,9 +11,9 @@ const _expr_Text_val = /* @__PURE__ */_intersection(2, _scope => {
   _tagName_input(_scope, () => ({
     value: val
   }));
-}, _tagName_input);
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, _expr_Text_val);
-const _val = /* @__PURE__ */_value("val", null, _expr_Text_val);
+}, () => _tagName_input);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, () => _expr_Text_val);
+const _val = /* @__PURE__ */_value("val", null, () => _expr_Text_val);
 const _onClick = _scope => {
   const {
     tagName
@@ -26,7 +26,7 @@ const _tagName_effect = _register("packages/translator-tags/src/__tests__/fixtur
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName) => {
   _queueEffect(_scope, _tagName_effect);
   _dynamicTagName(_scope, tagName);
-}, _dynamicTagName);
+}, () => _dynamicTagName);
 export function _setup_(_scope) {
   _tagName(_scope, child1);
   _val(_scope, 3);

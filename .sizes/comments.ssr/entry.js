@@ -1,24 +1,24 @@
 import {
-  i as s,
+  r as s,
   a,
-  r as n,
-  b as t,
-  v as l,
-  c as o,
-  o as c,
+  c as n,
+  o as t,
+  q as l,
+  b as o,
+  v as c,
   d as i,
   e as m,
   f as u,
-  l as e,
+  i as e,
   g as d,
   h as r,
-  q as p,
-  j as v,
-  k as b,
+  j as p,
+  k as v,
+  l as b,
   m as f,
   n as h,
-} from "./runtime-DgAALy3g.js";
-const k = s(
+} from "./runtime-BQV7GZmV.js";
+const k = e(
     2,
     (s) => {
       const {
@@ -26,22 +26,22 @@ const k = s(
       } = s;
       J(s[0], { comments: a.comments, path: n });
     },
-    a(0, J),
+    () => b(0, J),
   ),
-  K = r(8, null, void 0, k),
-  $ = r(6, null, void 0, k),
-  _ = n(
+  K = o(8, null, void 0, () => k),
+  $ = o(6, null, void 0, () => k),
+  _ = s(
     "QURHKITf",
-    o(
+    n(
       "<ul></ul>",
       "/ b&",
       (s) => {
         s[0];
       },
-      [$, K],
+      () => [$, K],
     ),
   ),
-  j = s(
+  j = e(
     2,
     (s) => {
       const {
@@ -50,56 +50,64 @@ const k = s(
       } = s;
       g(s, `${a.path || "c"}-${n}`);
     },
-    g,
+    () => g,
   ),
-  E = b(4),
-  F = t("ZcKJNKFe", (s) =>
-    c(
+  E = r(4),
+  F = a("ZcKJNKFe", (s) =>
+    t(
       s[2],
       "click",
       ((s) => {
         const { 9: a } = s;
         return function () {
-          p(s, Z, !a);
+          l(s, Z, !a);
         };
       })(s),
     ),
   ),
-  Z = l(9, (s, a) => {
-    m(s[0], "hidden", !a), v(s[3], a ? "[-]" : "[+]"), f(s, F);
+  Z = c(9, (s, a) => {
+    i(s[0], "hidden", !a), m(s[3], a ? "[-]" : "[+]"), u(s, F);
   }),
-  g = l(8, (s, a) => m(s[0], "id", a), i(K, 4)),
-  q = l(7, null, j),
-  x = l(
+  g = c(
+    8,
+    (s, a) => i(s[0], "id", a),
+    () => p(K, 4),
+  ),
+  q = c(7, null, () => j),
+  x = c(
     6,
     (s, a) => {
-      v(s[1], a.text), E(s, a.comments ? _ : null);
+      m(s[1], a.text), E(s, a.comments ? _ : null);
     },
-    u([E, i($, 4)]),
+    () => d([E, p($, 4)]),
   ),
-  D = l(
+  D = c(
     5,
     (s, a) => {
       x(s, a[0]), q(s, a[1]);
     },
-    u([x, q]),
+    () => d([x, q]),
   ),
-  H = r(2, null, void 0, j),
-  I = e(
+  H = o(2, null, void 0, () => j),
+  I = f(
     0,
-    n(
+    s(
       "$F_EaYZk",
-      o(
+      n(
         "<li><span> </span><button> </button><!></li>",
         " E l D l%",
         (s) => {
           Z(s, !0);
         },
-        [H],
+        () => [H],
         void 0,
-        D,
+        () => D,
       ),
     ),
   ),
-  J = l(2, (s, a) => I(s, [a.comments]), u([I, d(H, 0)]));
+  J = c(
+    2,
+    (s, a) => I(s, [a.comments]),
+    () => d([I, v(H, 0)]),
+  );
 h();

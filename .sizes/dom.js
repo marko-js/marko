@@ -251,75 +251,76 @@ function P(e, t) {
   };
 }
 function R(e, t, n) {
-  let r = e + "#";
-  return (o, i) => {
-    if (i === O) 1 === (o[r] = (o[r] ?? 0) + 1) && n?.(o, O);
+  let r = e + "#",
+    o = n && ((e, t) => (o = n())(e, t));
+  return (n, i) => {
+    if (i === O) 1 === (n[r] = (n[r] ?? 0) + 1) && o?.(n, O);
     else if (i !== D) {
-      let l = void 0 !== o[r];
-      1 === (o[r] ||= 1) &&
-        (i === q || (l && o[e] === i)
-          ? n?.(o, q)
-          : ((o[e] = i), t?.(o, i), n?.(o, D))),
-        o[r]--;
+      let l = void 0 !== n[r];
+      1 === (n[r] ||= 1) &&
+        (i === q || (l && n[e] === i)
+          ? o?.(n, q)
+          : ((n[e] = i), t?.(n, i), o?.(n, D))),
+        n[r]--;
     }
   };
 }
 var F = 0;
 function L(e, t, n) {
   let r = "?" + F++,
-    o = r + "#";
-  return (i, l) => {
+    o = r + "#",
+    i = n && ((e, t) => (i = n())(e, t));
+  return (n, l) => {
     l === O
-      ? 1 === (i[o] = (i[o] ?? 0) + 1) && n?.(i, O)
-      : void 0 === i[o]
-        ? ((i[o] = e - 1), (i[r] = !0))
-        : 0 == --i[o]
-          ? l === D || i[r]
-            ? ((i[r] = !1), t(i, 0), n?.(i, D))
-            : n?.(i, q)
-          : (i[r] ||= l === D);
+      ? 1 === (n[o] = (n[o] ?? 0) + 1) && i?.(n, O)
+      : void 0 === n[o]
+        ? ((n[o] = e - 1), (n[r] = !0))
+        : 0 == --n[o]
+          ? l === D || n[r]
+            ? ((n[r] = !1), t(n, 0), i?.(n, D))
+            : i?.(n, q)
+          : (n[r] ||= l === D);
   };
 }
 var W = (e) => e._;
-function H(e, t, n, r) {
+function H(e, t, n = W, r) {
   let o = "?" + F++,
     i = o + 1,
-    l = n || W,
-    f = "function" == typeof e ? e : () => e;
-  return (e, n) => {
-    if (n === O) 1 === (e[i] = (e[i] ?? 0) + 1) && r?.(e, O);
+    l = "function" == typeof e ? e : () => e,
+    f = r && ((e, t) => (f = r())(e, t));
+  return (e, r) => {
+    if (r === O) 1 === (e[i] = (e[i] ?? 0) + 1) && f?.(e, O);
     else {
       let u, a;
       if (void 0 === e[i]) {
-        (u = l(e)), (a = f(e));
+        (u = n(e)), (a = l(e));
         let t = u[a + "#"],
-          r = void 0 === t ? !u.A : 0 === t;
-        (e[i] = r ? 1 : 2), (n = D);
+          o = void 0 === t ? !u.A : 0 === t;
+        (e[i] = o ? 1 : 2), (r = D);
       }
       0 == --e[i]
-        ? n === D || e[o]
-          ? ((e[o] = !1), (u ??= l(e)), (a ??= f(e)), t?.(e, u[a]), r?.(e, D))
-          : r?.(e, q)
-        : (e[o] ||= n === D);
+        ? r === D || e[o]
+          ? ((e[o] = !1), (u ??= n(e)), (a ??= l(e)), t?.(e, u[a]), f?.(e, D))
+          : f?.(e, q)
+        : (e[o] ||= r === D);
     }
   };
 }
-function J(e, t, n, r) {
-  let o = n || W,
-    l = "function" == typeof e ? e : () => e,
-    f = H(l, t, o, r);
+function J(e, t, n = W, r) {
+  let o = "function" == typeof e ? e : () => e,
+    l = H(o, t, n, r);
   return (
-    (f.g = (e) => {
-      let t = o(e),
-        n = l(e) + "*";
-      (t[n] ??= new Set()), t[n].add(i(e, f));
+    (l.g = (e) => {
+      let t = n(e),
+        r = o(e) + "*";
+      (t[r] ??= new Set()), t[r].add(i(e, l));
     }),
-    (f.j = (e) => {
-      let t = o(e),
-        n = l(e) + "*";
-      t[n]?.delete(i(e, f));
+    (l.j = (e) => {
+      let t = n(e),
+        r = o(e) + "*";
+      t[r]?.delete(i(e, l));
     }),
-    f
+    l
   );
 }
 function U(e, t) {
@@ -438,17 +439,21 @@ function fe(e, t, n) {
   };
 }
 function ue(e, t, n, r, o = 0, i) {
-  return {
-    q: e,
-    o: t && ne(t),
-    p: n,
-    k: ae,
-    c: new Set(r),
-    C: o,
-    s: void 0,
-    d: i,
-    m: void 0,
-  };
+  let l,
+    f = {
+      q: e,
+      o: t && ne(t),
+      p: n,
+      k: ae,
+      C: o,
+      s: void 0,
+      m: void 0,
+      d: i && ((e, t) => (f.d = i())(e, t)),
+      get c() {
+        return (l ??= new Set(r?.()));
+      },
+    };
+  return f;
 }
 function ae() {
   let e = this.s;
@@ -473,15 +478,16 @@ var ce = document,
   se = ce.createElement("template");
 var de = function (e, t, r) {
   let o = e + "(",
-    i = e + "!";
-  return (l, f) => {
+    i = e + "!",
+    l = r && ((e, t) => (l = r())(e, t));
+  return (r, f) => {
     if (f === D) return;
-    let u = l[o],
+    let u = r[o],
       s = f;
     if (f !== O && f !== q) {
-      let r = f ? f._ || f.renderBody || f : void 0;
-      r !== u
-        ? ((u = l[o] = r),
+      let i = f ? f._ || f.renderBody || f : void 0;
+      i !== u
+        ? ((u = r[o] = i),
           (function (e, t, r) {
             let o,
               i = e[t + "!"];
@@ -490,12 +496,12 @@ var de = function (e, t, r) {
               : ((o = n(e[t])), (e[t + "!"] = void 0)),
               c(o, i.a.parentNode, i.a),
               a(i);
-          })(l, e, r),
-          t?.(l),
+          })(r, e, i),
+          t?.(r),
           (s = D))
         : (s = q);
     }
-    r?.(l, s), Q(u, l[i], s);
+    l?.(r, s), Q(u, r[i], s);
   };
 };
 function he(e, t) {
@@ -511,16 +517,17 @@ function he(e, t) {
 }
 var ge = function (e, t, n) {
   let r = e + "(",
-    o = e + "!";
-  return (i, l) => {
+    o = e + "!",
+    i = n && ((e, t) => (i = n())(e, t));
+  return (n, l) => {
     if (l === D) return;
-    let f = i[r],
+    let f = n[r],
       u = l;
     if (l !== O && l !== q) {
-      let n = l ? l._ || l.renderBody || l : void 0;
-      n !== f ? ((f = i[r] = n), pe(i, e, n), t?.(i), (u = D)) : (u = q);
+      let o = l ? l._ || l.renderBody || l : void 0;
+      o !== f ? ((f = n[r] = o), pe(n, e, o), t?.(n), (u = D)) : (u = q);
     }
-    n?.(i, u), Q(f, i[o], u);
+    i?.(n, u), Q(f, n[o], u);
   };
 };
 function pe(e, t, n) {
@@ -933,7 +940,7 @@ var Ze = new Map(),
           })(e[0], 2 === e.length && window[t]?.["s" === n ? "_" : n]?.u[e[1]])
         : e,
     createRenderer(e, t, n) {
-      let r = ue("", void 0, e, void 0, 1, n);
+      let r = ue("", void 0, e, void 0, 1, n && (() => n));
       return (r.k = t), r;
     },
     render(e, t, n, r) {

@@ -1,4 +1,4 @@
-// size: 651 (min) 366 (brotli)
+// size: 679 (min) 376 (brotli)
 
 import {
   register as o,
@@ -21,7 +21,11 @@ import {
 } from "@marko/runtime-tags/dom";
 const g = e(1),
   l = o("a0", (o) => r(o, 0)),
-  p = n(4, (o, r) => g(o, r), g),
+  p = n(
+    4,
+    (o, r) => g(o, r),
+    () => g,
+  ),
   v = n(
     3,
     (o, r) => {
@@ -30,26 +34,25 @@ const g = e(1),
       })(o, r),
         p(o, r.renderBody);
     },
-    p,
+    () => p,
   ),
   C = o("b0", (o) => {
     const { 1: r } = o;
     return function () {
-      i(o, j, r + 1);
+      i(o, q, r + 1);
     };
   }),
-  h = b(
-    "b2",
-    s(" ", " ", void 0, [
-      m(
-        "b1",
-        c(1, (o, r) => a(o[0], r)),
-      ),
-    ]),
+  h = m(
+    "b1",
+    c(1, (o, r) => a(o[0], r)),
   ),
-  j = n(
+  j = b(
+    "b2",
+    s(" ", " ", void 0, () => [h]),
+  ),
+  q = n(
     1,
-    (o, r) => v(o[0], { onClick: C(o), renderBody: u(o, h) }),
-    f([k(0, v), y(1)]),
+    (o, r) => v(o[0], { onClick: C(o), renderBody: u(o, j) }),
+    () => f([k(0, v), y(1)]),
   );
 B();

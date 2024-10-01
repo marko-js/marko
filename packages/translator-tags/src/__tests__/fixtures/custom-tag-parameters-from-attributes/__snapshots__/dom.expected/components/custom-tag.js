@@ -11,8 +11,8 @@ const _expr_Text_input_x = /* @__PURE__ */_intersection(3, _scope => {
     count: x,
     name: input.name
   }));
-}, _inputRenderBody_input);
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", null, _expr_Text_input_x);
+}, () => _inputRenderBody_input);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", null, () => _expr_Text_input_x);
 const _onClick = _scope => {
   const {
     x
@@ -25,10 +25,10 @@ const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/cus
 const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   _queueEffect(_scope, _x_effect);
-}, _expr_Text_input_x);
-export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _dynamicTagName(_scope, input.renderBody), _intersections([_expr_Text_input_x, _dynamicTagName]));
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
+}, () => _expr_Text_input_x);
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _dynamicTagName(_scope, input.renderBody), () => _intersections([_expr_Text_input_x, _dynamicTagName]));
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
 export function _setup_(_scope) {
   _x(_scope, 1);
 }
-export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/components/custom-tag.marko");
+export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/components/custom-tag.marko");

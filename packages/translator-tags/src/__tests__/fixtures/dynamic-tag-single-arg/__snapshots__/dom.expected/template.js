@@ -9,8 +9,8 @@ const _expr_Text_x = /* @__PURE__ */_intersection(2, _scope => {
     x
   } = _scope;
   _tags0_input(_scope, () => x);
-}, _tags0_input);
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", null, _expr_Text_x);
+}, () => _tags0_input);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", null, () => _expr_Text_x);
 const _onClick = _scope => {
   const {
     x
@@ -23,7 +23,7 @@ const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/dyn
 const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   _queueEffect(_scope, _x_effect);
-}, _expr_Text_x);
+}, () => _expr_Text_x);
 export function _setup_(_scope) {
   _x(_scope, 1);
   _dynamicTagName(_scope, tags[0]);

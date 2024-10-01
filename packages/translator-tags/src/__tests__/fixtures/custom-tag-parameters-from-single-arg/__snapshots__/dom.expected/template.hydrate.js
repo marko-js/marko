@@ -1,4 +1,4 @@
-// size: 475 (min) 300 (brotli)
+// size: 497 (min) 306 (brotli)
 
 import {
   dynamicTagAttrs as o,
@@ -19,7 +19,7 @@ const u = o(2),
       const { 5: i } = o;
       u(o, () => i);
     },
-    u,
+    () => u,
   ),
   b = i("a0", (o) =>
     t(
@@ -38,18 +38,12 @@ const u = o(2),
     (o, i) => {
       d(o[1], i), r(o, b);
     },
-    a,
+    () => a,
   ),
-  f = c(2, (o, i) => d(o[0], i));
+  f = c(2, (o, i) => d(o[0], i)),
+  k = c(1, (o, i) => f(o, i[0]));
 i(
   "b0",
-  v(
-    "<div>Count: <!></div>",
-    "Db%",
-    void 0,
-    void 0,
-    void 0,
-    c(1, (o, i) => f(o, i[0])),
-  ),
+  v("<div>Count: <!></div>", "Db%", void 0, void 0, void 0, () => k),
 ),
   s();

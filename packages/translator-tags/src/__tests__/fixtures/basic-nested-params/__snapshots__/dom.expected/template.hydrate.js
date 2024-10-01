@@ -1,91 +1,102 @@
-// size: 908 (min) 438 (brotli)
+// size: 953 (min) 448 (brotli)
 
 import {
   dynamicTagAttrs as o,
   value as i,
-  intersections as n,
-  intersection as t,
-  conditional as c,
-  registerSubscriber as d,
-  dynamicClosure as l,
-  data as v,
-  registerRenderer as r,
-  createRenderer as s,
+  intersection as n,
+  conditional as d,
+  registerSubscriber as t,
+  dynamicClosure as c,
+  data as l,
+  registerRenderer as v,
+  createRenderer as r,
   inChild as u,
-  dynamicSubscribers as b,
-  register as m,
-  on as a,
+  register as b,
+  on as m,
+  bindRenderer as s,
+  queueSource as a,
   queueEffect as e,
-  bindRenderer as f,
-  queueSource as k,
-  init as D,
+  dynamicSubscribers as f,
+  init as k,
 } from "@marko/runtime-tags/dom";
-const g = o(0),
-  p = t(
+const D = o(0),
+  g = n(
     2,
     (o) => {
       const { 4: i } = o;
-      g(o, () => i);
+      D(o, () => i);
     },
-    g,
+    () => D,
   ),
-  h = c(0, null, p),
-  j = i(4, null, p),
-  q = i(3, (o, i) => h(o, i), h);
-n([q, j]);
-const w = i(3, (o, i) => v(o[1], i)),
-  x = r(
+  p = d(0, null, () => g),
+  h = i(4, null, () => g),
+  j = i(
+    3,
+    (o, i) => p(o, i),
+    () => p,
+  ),
+  q = i(3, (o, i) => l(o[1], i)),
+  w = t(
+    "b0",
+    c(2, (o, i) => l(o[0], i)),
+  ),
+  x = i(2, (o, i) => q(o, i[0])),
+  y = v(
     "b1",
-    s(
+    r(
       "<div><!>.<!></div>",
       "D%c%",
       void 0,
-      [
-        d(
-          "b0",
-          l(2, (o, i) => v(o[0], i)),
-        ),
-      ],
+      () => [w],
       void 0,
-      i(2, (o, i) => w(o, i[0])),
+      () => x,
     ),
   ),
-  y = d(
+  z = t(
     "b2",
-    l(3, (o, i) => j(o[0], i), void 0, u(0, j)),
+    c(
+      3,
+      (o, i) => h(o[0], i),
+      void 0,
+      () => u(0, h),
+    ),
   ),
-  z = i(2, null, b(2));
-r(
+  A = i(2, null, () => f(2)),
+  B = i(
+    1,
+    (o, i) => A(o, i[0]),
+    () => A,
+  );
+v(
   "b3",
-  s(
+  r(
     "<div><!></div>",
     "/D%l&",
     (o) => {
-      o[0], q(o[0], f(o, x));
+      o[0], j(o[0], s(o, y));
     },
-    [y],
+    () => [z],
     void 0,
-    i(1, (o, i) => z(o, i[0]), z),
+    () => B,
   ),
-),
-  b(3);
-const A = m("b4", (o) =>
-    a(
+);
+const C = b("b4", (o) =>
+    m(
       o[0],
       "click",
       ((o) => {
         const { 2: i } = o;
         return function () {
-          k(o, B, i + 1);
+          a(o, E, i + 1);
         };
       })(o),
     ),
   ),
-  B = i(
+  E = i(
     2,
     (o, i) => {
-      e(o, A), j(o[1], i);
+      e(o, C), h(o[1], i);
     },
-    u(1, j),
+    () => u(1, h),
   );
-D();
+k();

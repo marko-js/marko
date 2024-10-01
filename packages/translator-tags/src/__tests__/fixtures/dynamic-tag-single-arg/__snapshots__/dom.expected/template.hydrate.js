@@ -1,4 +1,4 @@
-// size: 343 (min) 214 (brotli)
+// size: 355 (min) 219 (brotli)
 
 import {
   dynamicTagAttrs as o,
@@ -18,7 +18,7 @@ const a = o(2),
       const { 3: t } = o;
       a(o, () => t);
     },
-    a,
+    () => a,
   ),
   f = t("b0", (o) =>
     n(
@@ -37,6 +37,6 @@ const a = o(2),
     (o, t) => {
       m(o[1], t), i(o, f);
     },
-    e,
+    () => e,
   );
 u();

@@ -21,7 +21,7 @@ const _multiplier_effect = _register("packages/translator-tags/src/__tests__/fix
 const _multiplier = /* @__PURE__ */_value("multiplier", (_scope, multiplier) => {
   _data(_scope["#text/1"], multiplier);
   _queueEffect(_scope, _multiplier_effect);
-}, _expr_count_multiplier);
+}, () => _expr_count_multiplier);
 const _onClick2 = _scope => {
   const {
     count
@@ -31,7 +31,7 @@ const _onClick2 = _scope => {
   };
 };
 const _count_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count", _scope => _on(_scope["#button/2"], "click", _onClick2(_scope)));
-const _count = /* @__PURE__ */_value("count", (_scope, count) => _queueEffect(_scope, _count_effect), _expr_count_multiplier);
+const _count = /* @__PURE__ */_value("count", (_scope, count) => _queueEffect(_scope, _count_effect), () => _expr_count_multiplier);
 export function _setup_(_scope) {
   _count(_scope, 0);
   _multiplier(_scope, 1);

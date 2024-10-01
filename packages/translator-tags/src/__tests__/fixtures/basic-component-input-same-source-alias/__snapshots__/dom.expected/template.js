@@ -13,7 +13,7 @@ import { _setup_ as _myButton, _text_ as _myButton__text_, _onClick_ as _myButto
 const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => {
   _myButton__text_(_scope["#childScope/0"], clickCount);
   _myButton__onClick_(_scope["#childScope/0"], _onClick(_scope));
-}, _intersections([_inChild("#childScope/0", _myButton__text_), _inChild("#childScope/0", _myButton__onClick_)]));
+}, () => _intersections([_inChild("#childScope/0", _myButton__text_), _inChild("#childScope/0", _myButton__onClick_)]));
 export function _setup_(_scope) {
   _myButton(_scope["#childScope/0"]);
   _clickCount(_scope, 0);

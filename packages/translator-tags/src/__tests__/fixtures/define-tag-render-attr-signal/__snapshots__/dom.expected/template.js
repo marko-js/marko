@@ -4,7 +4,7 @@ import { data as _data, bindRenderer as _bindRenderer, on as _on, queueSource as
 const _number$defineBody = /* @__PURE__ */_value("number", (_scope, number) => _data(_scope["#text/0"], number));
 const _pattern_$defineBody = /* @__PURE__ */_value("_pattern_", (_scope, _pattern_) => _number$defineBody(_scope, _pattern_.number));
 const _params_2$defineBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _pattern_$defineBody(_scope, _params_2[0]));
-const _defineBody = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-render-attr-signal/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<div> </div>", /* next(1), get */"D ", void 0, void 0, void 0, _params_2$defineBody));
+const _defineBody = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-render-attr-signal/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<div> </div>", /* next(1), get */"D ", void 0, void 0, void 0, () => _params_2$defineBody));
 const _myTag_input = _dynamicTagAttrs("#text/0");
 const _expr_Text_x = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -13,8 +13,8 @@ const _expr_Text_x = /* @__PURE__ */_intersection(2, _scope => {
   _myTag_input(_scope, () => ({
     number: x
   }));
-}, _myTag_input);
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, _expr_Text_x);
+}, () => _myTag_input);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, () => _expr_Text_x);
 const _onClick = _scope => {
   const {
     x
@@ -27,8 +27,8 @@ const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/def
 const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/2"], x);
   _queueEffect(_scope, _x_effect);
-}, _expr_Text_x);
-const _myTag = /* @__PURE__ */_value("myTag", (_scope, myTag) => _dynamicTagName(_scope, myTag), _dynamicTagName);
+}, () => _expr_Text_x);
+const _myTag = /* @__PURE__ */_value("myTag", (_scope, myTag) => _dynamicTagName(_scope, myTag), () => _dynamicTagName);
 export function _setup_(_scope) {
   _x(_scope, 1);
   _myTag(_scope, {

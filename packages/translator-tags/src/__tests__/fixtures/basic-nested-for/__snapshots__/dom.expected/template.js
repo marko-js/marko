@@ -10,19 +10,19 @@ const _expr_outer_inner$forBody = /* @__PURE__ */_intersection(2, _scope => {
     inner
   } = _scope;
   _child__name_(_scope["#childScope/0"], `${outer}.${inner}`);
-}, _inChild("#childScope/0", _child__name_));
-const _outer$forBody = /* @__PURE__ */_closure("outer", null, void 0, _expr_outer_inner$forBody);
-const _inner$forBody = /* @__PURE__ */_value("inner", null, _expr_outer_inner$forBody);
-const _params_3$forBody = /* @__PURE__ */_value("_params_3", (_scope, _params_3) => _inner$forBody(_scope, _params_3[0]), _inner$forBody);
+}, () => _inChild("#childScope/0", _child__name_));
+const _outer$forBody = /* @__PURE__ */_closure("outer", null, void 0, () => _expr_outer_inner$forBody);
+const _inner$forBody = /* @__PURE__ */_value("inner", null, () => _expr_outer_inner$forBody);
+const _params_3$forBody = /* @__PURE__ */_value("_params_3", (_scope, _params_3) => _inner$forBody(_scope, _params_3[0]), () => _inner$forBody);
 const _setup$forBody = _scope => {
   _child(_scope["#childScope/0"]);
 };
-const _forBody2 = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_2_renderer", /* @__PURE__ */_createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, [_outer$forBody], void 0, _params_3$forBody));
+const _forBody2 = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_2_renderer", /* @__PURE__ */_createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_outer$forBody], void 0, () => _params_3$forBody));
 const _for$forBody = /* @__PURE__ */_loopOf("#text/0", _forBody2);
-const _outer$forBody2 = /* @__PURE__ */_value("outer", null, _inLoopScope(_outer$forBody, "#text/0"));
-const _items$forBody = /* @__PURE__ */_closure("items", (_scope, items) => _for$forBody(_scope, [items]), void 0, _for$forBody);
-const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _outer$forBody2(_scope, _params_2[0]), _outer$forBody2);
-const _forBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<!><!><!>", /* replace */"D%D", void 0, [_items$forBody], void 0, _params_2$forBody));
+const _outer$forBody2 = /* @__PURE__ */_value("outer", null, () => _inLoopScope(_outer$forBody, "#text/0"));
+const _items$forBody = /* @__PURE__ */_closure("items", (_scope, items) => _for$forBody(_scope, [items]), void 0, () => _for$forBody);
+const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _outer$forBody2(_scope, _params_2[0]), () => _outer$forBody2);
+const _forBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<!><!><!>", /* replace */"D%D", void 0, () => [_items$forBody], void 0, () => _params_2$forBody));
 const _for = /* @__PURE__ */_loopOf("#text/1", _forBody);
 const _onClick = _scope => {
   const {
@@ -36,7 +36,7 @@ const _items_effect = _register("packages/translator-tags/src/__tests__/fixtures
 const _items = /* @__PURE__ */_value("items", (_scope, items) => {
   _queueEffect(_scope, _items_effect);
   _for(_scope, [items]);
-}, _intersections([_for, _inLoopScope(_items$forBody, "#text/1")]));
+}, () => _intersections([_for, _inLoopScope(_items$forBody, "#text/1")]));
 export function _setup_(_scope) {
   _items(_scope, [0, 1]);
 }
