@@ -31,4 +31,4 @@ export function _setup_(_scope) {
   _items(_scope, [1, 2, 3]);
   _write(_scope, _(_scope));
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-shallow/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-shallow/template.marko");

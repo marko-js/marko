@@ -8,12 +8,12 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _childScope2 = _peekNextScope();
   _child._({
     value: x,
-    renderBody: _register( /* @__PURE__ */_createRenderer(outer => {
+    renderBody: _register(/* @__PURE__ */_createRenderer(outer => {
       const _scope1_id = _nextScopeId();
       const _childScope = _peekNextScope();
       _child._({
         value: y,
-        renderBody: _register( /* @__PURE__ */_createRenderer(inner => {
+        renderBody: _register(/* @__PURE__ */_createRenderer(inner => {
           const _scope2_id = _nextScopeId();
           _write(`<div>${_escapeXML(outer)}${_markResumeNode(_scope2_id, "#text/0")}.<!>${_escapeXML(inner)}${_markResumeNode(_scope2_id, "#text/1")}</div>`);
           _writeEffect(_scope2_id, "packages/translator-tags/src/__tests__/fixtures/basic-nested-params/template.marko_2_outer/subscriber");

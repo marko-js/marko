@@ -11,4 +11,4 @@ export const _children_ = /* @__PURE__ */_value("children", (_scope, children) =
 }]));
 export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _children_(_scope, input.children));
 export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/remove-and-add-rows/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/remove-and-add-rows/template.marko");

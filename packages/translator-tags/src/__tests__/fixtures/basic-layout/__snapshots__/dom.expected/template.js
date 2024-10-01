@@ -11,4 +11,4 @@ export function _setup_(_scope) {
   _layout(_scope["#childScope/0"]);
   _layout_renderBody(_scope["#childScope/0"], /* @__PURE__ */_bindRenderer(_scope, _layoutBody));
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko");

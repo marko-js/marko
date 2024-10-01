@@ -38,4 +38,4 @@ export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _write_(_scope, input.write);
 }, () => _intersections([_name_, _write_]));
 export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/components/child.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/components/child.marko");

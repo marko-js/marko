@@ -40,4 +40,4 @@ const _items = /* @__PURE__ */_value("items", (_scope, items) => {
 export function _setup_(_scope) {
   _items(_scope, [0, 1]);
 }
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko");

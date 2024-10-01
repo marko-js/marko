@@ -8,4 +8,4 @@ const _if = /* @__PURE__ */_conditional("#text/0");
 export const _value_ = /* @__PURE__ */_value("value", (_scope, value) => _if(_scope, value ? _ifBody : null), () => _intersections([_if, _inConditionalScope(_value$ifBody, "#text/0")]));
 export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _value_(_scope, input.value), () => _value_);
 export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/toggle-first-child/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/toggle-first-child/template.marko");
