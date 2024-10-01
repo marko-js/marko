@@ -15,7 +15,7 @@ const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => 
     text: clickCount
   });
   _myButton__onClick_(_scope["#childScope/0"], _onClick(_scope));
-}, _intersections([_inChild("#childScope/0", _myButton__pattern__), _inChild("#childScope/0", _myButton__onClick_)]));
+}, () => _intersections([_inChild("#childScope/0", _myButton__pattern__), _inChild("#childScope/0", _myButton__onClick_)]));
 export function _setup_(_scope) {
   _myButton(_scope["#childScope/0"]);
   _clickCount(_scope, 0);

@@ -21,6 +21,7 @@ enum Mark {
   SectionEnd = "]",
   SectionSingleNodesEnd = "|",
   Node = "*",
+  Cleanup = "$",
 }
 
 enum RuntimeKey {
@@ -93,10 +94,10 @@ export function markResumeNode(scopeId: number, accessor: Accessor) {
   return state.mark(Mark.Node, scopeId + " " + accessor);
 }
 
-export function markResumeScopeStart(scopeId: number, accessor?: Accessor) {
+export function markResumeScopeStart(scopeId: number, index?: number) {
   return $chunk.boundary.state.mark(
     Mark.SectionStart,
-    scopeId + (accessor ? " " + accessor : ""),
+    scopeId + (index ? " " + index : ""),
   );
 }
 
@@ -115,6 +116,10 @@ export function markResumeControlSingleNodeEnd(
   );
 }
 
+export function markResumeCleanup(scopeId: number) {
+  return $chunk.boundary.state.mark(Mark.Cleanup, "" + scopeId);
+}
+
 export function writeScope(scopeId: number, partialScope: PartialScope) {
   const { state } = $chunk.boundary;
   const { scopes } = state;
@@ -125,7 +130,8 @@ export function writeScope(scopeId: number, partialScope: PartialScope) {
     Object.assign(scope, partialScope);
   } else {
     scope = partialScope;
-    state.scopes.set(scopeId, partialScope);
+    scope[K_SCOPE_ID] = scopeId;
+    state.scopes.set(scopeId, scope);
   }
 
   if (state.writeScopes) {
@@ -139,6 +145,12 @@ export function writeScope(scopeId: number, partialScope: PartialScope) {
       [scopeId]: scope,
     };
   }
+
+  return scope;
+}
+
+export function writeExistingScope(scope: ScopeInternals) {
+  return writeScope(scope[K_SCOPE_ID]!, scope);
 }
 
 export function ensureScopeWithId(scopeId: number) {

@@ -1,6 +1,6 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { dynamicTagInput as _dynamicTagInput, peekNextScope as _peekNextScope, markResumeControlEnd as _markResumeControlEnd, write as _write, attr as _attr, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { dynamicTagInput as _dynamicTagInput, peekNextScope as _peekNextScope, markResumeControlEnd as _markResumeControlEnd, writeExistingScope as _writeExistingScope, write as _write, attr as _attr, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const {
@@ -84,19 +84,19 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _write(`${_markResumeNode(_scope0_id, "#tagConstB/14")}`);
   _writeScope(_scope0_id, {
     "other": other,
-    "#text/0!": _dynamicScope,
+    "#text/0!": _writeExistingScope(_dynamicScope),
     "#text/0(": renderBody,
-    "#text/1!": _dynamicScope2,
+    "#text/1!": _writeExistingScope(_dynamicScope2),
     "#text/1(": x,
-    "#text/4!": _dynamicScope3,
+    "#text/4!": _writeExistingScope(_dynamicScope3),
     "#text/4(": isLarge ? "h1" : "h2",
-    "#text/5!": _dynamicScope4,
+    "#text/5!": _writeExistingScope(_dynamicScope4),
     "#text/5(": showTagA ? tagA : tagB,
-    "#childScope/6": _childScope,
-    "#childScope/7": _childScope2,
-    "#text/8!": _dynamicScope5,
+    "#childScope/6": _writeExistingScope(_childScope),
+    "#childScope/7": _writeExistingScope(_childScope2),
+    "#text/8!": _writeExistingScope(_dynamicScope5),
     "#text/8(": tag || tagA,
-    "#text/9!": _dynamicScope6,
+    "#text/9!": _writeExistingScope(_dynamicScope6),
     "#text/9(": _tagName5
   });
 });

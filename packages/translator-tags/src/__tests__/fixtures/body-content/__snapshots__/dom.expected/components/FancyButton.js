@@ -8,10 +8,10 @@ export const _attrs_ = (_scope, attrs) => {
   _attrs(_scope, "#button/0", attrs);
   _queueEffect(_scope, _attrs__effect);
 };
-export const _renderBody_ = /* @__PURE__ */_value("renderBody", (_scope, renderBody) => _dynamicTagName(_scope, renderBody), _dynamicTagName);
+export const _renderBody_ = /* @__PURE__ */_value("renderBody", (_scope, renderBody) => _dynamicTagName(_scope, renderBody), () => _dynamicTagName);
 export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _attrs_(_scope, input);
   _renderBody_(_scope, input.renderBody);
-}, _renderBody_);
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
-export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/body-content/components/FancyButton.marko");
+}, () => _renderBody_);
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/body-content/components/FancyButton.marko");

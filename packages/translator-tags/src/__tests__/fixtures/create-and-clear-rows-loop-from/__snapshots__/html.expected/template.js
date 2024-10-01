@@ -3,10 +3,11 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   _write("<div>");
   const _scope1_ = new Map();
+  let _k = 0;
   for (let _from = input.from ?? 0, _step = input.step ?? 1, _steps = (input.to - _from) / _step, _i = 0; _i <= _steps; _i++) {
     const _scope1_id = _nextScopeId();
     const n = _from + _i * _step;
-    _write(`${_markResumeScopeStart(_scope1_id)}${_escapeXML(n)}${_markResumeNode(_scope1_id, "#text/0")}, `);
+    _write(`${_markResumeScopeStart(_scope1_id, _k++)}${_escapeXML(n)}${_markResumeNode(_scope1_id, "#text/0")}, `);
     _writeScope(_scope1_id, {});
     _scope1_.set(n, _getScopeById(_scope1_id));
   }

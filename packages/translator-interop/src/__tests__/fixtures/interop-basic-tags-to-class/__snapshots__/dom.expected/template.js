@@ -12,8 +12,8 @@ const _expr_Text_count = /* @__PURE__ */_intersection(2, _scope => {
   _classCounter_input(_scope, () => ({
     count: count
   }));
-});
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", null, _expr_Text_count);
+}, () => _classCounter_input);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", null, () => _expr_Text_count);
 const _onClick = _scope => {
   const {
     count
@@ -26,7 +26,7 @@ const _count_effect = _register("packages/translator-interop/src/__tests__/fixtu
 const _count = /* @__PURE__ */_value("count", (_scope, count) => {
   _data(_scope["#text/1"], count);
   _queueEffect(_scope, _count_effect);
-}, _expr_Text_count);
+}, () => _expr_Text_count);
 export function _setup_(_scope) {
   _count(_scope, 0);
   _dynamicTagName(_scope, _classCounter);

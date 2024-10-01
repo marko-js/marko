@@ -12,6 +12,7 @@ export {
   fork,
   getScopeById,
   getStreamData,
+  markResumeCleanup,
   markResumeControlEnd,
   markResumeControlSingleNodeEnd,
   markResumeNode,
@@ -24,5 +25,6 @@ export {
   tryPlaceholder,
   write,
   writeEffect,
+  writeExistingScope,
   writeScope,
 } from "./html/writer";

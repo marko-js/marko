@@ -11,7 +11,7 @@ const _source = /* @__PURE__ */_value("source", (_scope, source) => {
     value: source,
     valueChange: _valueChange(_scope)
   });
-}, _inChild("#childScope/0", _child_input));
+}, () => _inChild("#childScope/0", _child_input));
 export function _setup_(_scope) {
   _child(_scope["#childScope/0"]);
   _source(_scope, 1);

@@ -9,6 +9,7 @@ import {
   type Scope,
   value,
 } from "@marko/runtime-tags/dom";
+import type { ValueSignal } from "@marko/runtime-tags/dom/signals";
 
 import { get, next, over } from "../../utils/walks";
 import type { steps } from "./test";
@@ -58,7 +59,7 @@ const _value = value(
   (scope, value) => {
     _if(scope, value ? _ifBody : undefined);
   },
-  intersections([inConditionalScope(value$if, INDEX.conditional), _if]),
+  () => intersections([inConditionalScope(value$if, INDEX.conditional), _if]),
 );
 
 export const args = (
@@ -82,7 +83,7 @@ export default createTemplate(
     undefined,
     undefined,
     undefined,
-    args as any,
+    () => args as ValueSignal,
   ),
 );
 
@@ -90,5 +91,5 @@ const _ifBody = createRenderer(
   "<span> </span>",
   next(1) + get + next(1),
   undefined, // optimization (value will always be set in _apply_value),
-  [value$if],
+  () => [value$if],
 );

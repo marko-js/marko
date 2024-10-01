@@ -189,6 +189,7 @@ export function getSignal(
           "intersection",
           t.numericLiteral(referencedBindings.length),
           getSignalFn(signal, [scopeIdentifier], referencedBindings),
+          buildSignalIntersections(signal),
         );
       };
     } else if (referencedBindings.section !== section) {
@@ -398,9 +399,15 @@ export function buildSignalIntersections(signal: Signal) {
     );
   }
 
-  return Array.isArray(intersections)
-    ? callRuntime("intersections", t.arrayExpression(intersections))
-    : intersections;
+  return (
+    intersections &&
+    t.arrowFunctionExpression(
+      [],
+      Array.isArray(intersections)
+        ? callRuntime("intersections", t.arrayExpression(intersections))
+        : (intersections as t.Expression),
+    )
+  );
 }
 
 export function getDestructureSignal(

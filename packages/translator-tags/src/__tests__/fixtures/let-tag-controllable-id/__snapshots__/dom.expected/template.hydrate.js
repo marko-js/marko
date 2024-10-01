@@ -1,4 +1,4 @@
-// size: 423 (min) 245 (brotli)
+// size: 439 (min) 265 (brotli)
 
 import {
   register as n,
@@ -16,7 +16,7 @@ n(
   "a0",
   (n) =>
     function (t) {
-      o(n, d, t + 1);
+      o(n, g, t + 1);
     },
 );
 const s = n("a1", (n) =>
@@ -26,24 +26,25 @@ const s = n("a1", (n) =>
       ((n) => {
         const { 4: o, 5: t } = n;
         return function () {
-          m(n, e, o, t + 1);
+          m(n, k, o, t + 1);
         };
       })(n),
     ),
   ),
-  e = r(
+  e = a(2, (n) => {
+    u(n, s);
+  }),
+  k = r(
     5,
     (n, o) => i(n[2], o),
-    a(2, (n) => {
-      u(n, s);
-    }),
+    () => e,
   ),
-  k = c(5, e),
-  d = r(
+  d = c(5, k),
+  g = r(
     3,
     (n, o) => {
-      i(n[1], o), (n[4] ? e : k)(n, o);
+      i(n[1], o), (n[4] ? k : d)(n, o);
     },
-    e,
+    () => k,
   );
 f();

@@ -1,0 +1,10 @@
+<const/{name, write}=input/>
+<div>${name}</div>
+<span>${name}</span>
+<p>${name}</p>
+<effect() {
+  write(`mounted ${name}`);
+  $signal.onabort = () => {
+    write(`destroyed ${name}`)
+  };
+}/>

@@ -146,7 +146,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 
   getSerializedScopeProperties(section).set(
     getScopeAccessorLiteral(childScopeBinding),
-    peekScopeId,
+    callRuntime("writeExistingScope", peekScopeId),
   );
 
   if (node.extra!.tagNameNullable) {

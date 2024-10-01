@@ -29,7 +29,7 @@ const _x$ifBody_effect = _register("packages/translator-tags/src/__tests__/fixtu
   }
 }));
 const _x$ifBody = /* @__PURE__ */_closure("x", (_scope, x) => _queueEffect(_scope, _x$ifBody_effect));
-const _ifBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_renderer", /* @__PURE__ */_createRenderer("", "", void 0, [_x$ifBody]));
+const _ifBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_renderer", /* @__PURE__ */_createRenderer("", "", void 0, () => [_x$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/0");
 const _onClick = _scope => {
   const {
@@ -43,7 +43,7 @@ const _show_effect = _register("packages/translator-tags/src/__tests__/fixtures/
 const _show = /* @__PURE__ */_value("show", (_scope, show) => {
   _queueEffect(_scope, _show_effect);
   _if(_scope, show ? _ifBody : null);
-}, _if);
+}, () => _if);
 const _onClick2 = _scope => {
   const {
     x
@@ -53,7 +53,7 @@ const _onClick2 = _scope => {
   };
 };
 const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_0_x", _scope => _on(_scope["#button/1"], "click", _onClick2(_scope)));
-const _x = /* @__PURE__ */_value("x", (_scope, x) => _queueEffect(_scope, _x_effect), _inConditionalScope(_x$ifBody, "#text/0"));
+const _x = /* @__PURE__ */_value("x", (_scope, x) => _queueEffect(_scope, _x_effect), () => _inConditionalScope(_x$ifBody, "#text/0"));
 export function _setup_(_scope) {
   _x(_scope, 0);
   _show(_scope, true);

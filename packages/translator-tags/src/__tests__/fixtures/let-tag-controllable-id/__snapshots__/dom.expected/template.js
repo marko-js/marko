@@ -21,14 +21,14 @@ const _expr__y_change_y = /* @__PURE__ */_intersection(2, _scope => {
   } = _scope;
   _queueEffect(_scope, _expr__y_change_y_effect);
 });
-const _y = /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/2"], y), _expr__y_change_y);
-const _y_change = _changeHandler("_y_change", /* @__PURE__ */_value("_y_change", (_scope, _y_change) => {}, _expr__y_change_y));
-const _handler = /* @__PURE__ */_value("handler", (_scope, handler) => _y_change(_scope, handler), _y_change);
+const _y = /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/2"], y), () => _expr__y_change_y);
+const _y_change = _changeHandler("_y_change", /* @__PURE__ */_value("_y_change", (_scope, _y_change) => {}, () => _expr__y_change_y));
+const _handler = /* @__PURE__ */_value("handler", (_scope, handler) => _y_change(_scope, handler), () => _y_change);
 const _y_init = _initValue("y", _y);
 const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   (_scope["_y_change"] ? _y : _y_init)(_scope, x);
-}, _y);
+}, () => _y);
 export function _setup_(_scope) {
   _x(_scope, 1);
   _handler(_scope, _(_scope));

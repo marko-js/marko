@@ -11,8 +11,8 @@ const _onClick = _register("packages/translator-tags/src/__tests__/fixtures/basi
 });
 import { _setup_ as _myButton, _onClick_ as _myButton__onClick_, _renderBody_ as _myButton_renderBody, _template_ as _myButton_template, _walks_ as _myButton_walks } from "./components/my-button.marko";
 const _clickCount$myButtonBody = _registerSubscriber("packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_1_clickCount/subscriber", /* @__PURE__ */_dynamicClosure("clickCount", (_scope, clickCount) => _data(_scope["#text/0"], clickCount)));
-const _myButtonBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_1_renderer", /* @__PURE__ */_createRenderer(" ", /* get */" ", void 0, [_clickCount$myButtonBody]));
-const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => _myButton__onClick_(_scope["#childScope/0"], _onClick(_scope)), _intersections([_inChild("#childScope/0", _myButton__onClick_), _dynamicSubscribers("clickCount")]));
+const _myButtonBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_1_renderer", /* @__PURE__ */_createRenderer(" ", /* get */" ", void 0, () => [_clickCount$myButtonBody]));
+const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => _myButton__onClick_(_scope["#childScope/0"], _onClick(_scope)), () => _intersections([_inChild("#childScope/0", _myButton__onClick_), _dynamicSubscribers("clickCount")]));
 export function _setup_(_scope) {
   _myButton(_scope["#childScope/0"]);
   _clickCount(_scope, 0);

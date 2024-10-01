@@ -1,4 +1,4 @@
-import { write as _write, createRenderer as _createRenderer, register as _register, ensureScopeWithId as _ensureScopeWithId, writeScope as _writeScope, nextScopeId as _nextScopeId, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, escapeXML as _escapeXML, markResumeNode as _markResumeNode, peekNextScope as _peekNextScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, createRenderer as _createRenderer, register as _register, ensureScopeWithId as _ensureScopeWithId, writeScope as _writeScope, nextScopeId as _nextScopeId, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, escapeXML as _escapeXML, markResumeNode as _markResumeNode, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _hello from "./components/hello/index.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -91,7 +91,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     col: _col
   });
   _writeScope(_scope0_id, {
-    "#childScope/0": _childScope
+    "#childScope/0": _writeExistingScope(_childScope)
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko");

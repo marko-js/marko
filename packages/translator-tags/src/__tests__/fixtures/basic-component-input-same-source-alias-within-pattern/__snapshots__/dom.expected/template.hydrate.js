@@ -1,4 +1,4 @@
-// size: 446 (min) 245 (brotli)
+// size: 452 (min) 248 (brotli)
 
 import {
   register as t,
@@ -34,6 +34,6 @@ const a = n(7, (t, o) => {
     (t, o) => {
       u(t[0], { text: o }), k(t[0], x(t));
     },
-    e([i(0, u), i(0, k)]),
+    () => e([i(0, u), i(0, k)]),
   );
 s();

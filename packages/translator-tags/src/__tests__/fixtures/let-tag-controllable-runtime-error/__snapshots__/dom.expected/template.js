@@ -21,14 +21,14 @@ const _expr__y_change_y = /* @__PURE__ */_intersection(2, _scope => {
   } = _scope;
   _queueEffect(_scope, _expr__y_change_y_effect);
 });
-const _y = /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/2"], y), _expr__y_change_y);
-const _y_change = _changeHandler("_y_change", /* @__PURE__ */_value("_y_change", (_scope, _y_change) => {}, _expr__y_change_y));
-const _yChange = /* @__PURE__ */_value("yChange", (_scope, yChange) => _y_change(_scope, yChange), _y_change);
+const _y = /* @__PURE__ */_value("y", (_scope, y) => _data(_scope["#text/2"], y), () => _expr__y_change_y);
+const _y_change = _changeHandler("_y_change", /* @__PURE__ */_value("_y_change", (_scope, _y_change) => {}, () => _expr__y_change_y));
+const _yChange = /* @__PURE__ */_value("yChange", (_scope, yChange) => _y_change(_scope, yChange), () => _y_change);
 const _y_init = _initValue("y", _y);
 const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   (_scope["_y_change"] ? _y : _y_init)(_scope, x);
-}, _y);
+}, () => _y);
 const _setup__effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0", _scope => _on(_scope["#button/3"], "click", function () {
   _queueSource(_scope, _yChange, null);
 }));

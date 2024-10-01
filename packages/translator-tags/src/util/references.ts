@@ -636,7 +636,7 @@ export const bindingUtil = new Sorted(function compareBindings(
   return a.section.id - b.section.id ||
     (a.type !== b.type &&
       (a.type === BindingType.dom || b.type === BindingType.dom))
-    ? a.type - b.type
+    ? a.type - b.type || a.id - b.id
     : a.id - b.id;
 });
 

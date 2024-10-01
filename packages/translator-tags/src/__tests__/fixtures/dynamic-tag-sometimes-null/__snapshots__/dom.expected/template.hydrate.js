@@ -1,4 +1,4 @@
-// size: 382 (min) 234 (brotli)
+// size: 394 (min) 240 (brotli)
 
 import {
   register as n,
@@ -13,7 +13,11 @@ import {
 } from "@marko/runtime-tags/dom";
 const d = n("a0", o("Body Content", "")),
   e = t(0, d),
-  l = a(0, (n) => e(n, () => ({})), e),
+  l = a(
+    0,
+    (n) => e(n, () => ({})),
+    () => e,
+  ),
   s = n("a1", (n) =>
     r(
       n[1],
@@ -31,6 +35,6 @@ const d = n("a0", o("Body Content", "")),
     (n, o) => {
       m(n, s), l(n, o || d);
     },
-    l,
+    () => l,
   );
 u();

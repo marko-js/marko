@@ -42,7 +42,7 @@ export function createScopeWithRenderer(
   ownerScope?: Scope,
 ) {
   const newScope = createScope($global);
-  newScope._ = renderer.___owner || ownerScope;
+  newScope._ = newScope.___cleanupOwner = renderer.___owner || ownerScope;
   newScope.___renderer = renderer as Renderer;
   initRenderer(renderer, newScope);
   if (renderer.___closureSignals) {
@@ -144,21 +144,27 @@ export function createRenderer(
   template: string,
   walks?: string,
   setup?: SetupFn,
-  closureSignals?: IntersectionSignal[],
+  getClosureSignals?: () => IntersectionSignal[],
   hasUserEffects: 0 | 1 = 0,
-  args?: ValueSignal,
+  getArgs?: () => ValueSignal,
 ): Renderer {
-  return {
+  let closureSignals: Set<IntersectionSignal> | undefined;
+  const renderer: Renderer = {
     ___template: template,
     ___walks: walks && /* @__PURE__ */ trimWalkString(walks),
     ___setup: setup,
     ___clone: _clone,
-    ___closureSignals: new Set(closureSignals),
     ___hasUserEffects: hasUserEffects,
     ___sourceNode: undefined,
-    ___args: args,
     ___owner: undefined,
+    ___args:
+      getArgs &&
+      ((scope, value) => (renderer.___args = getArgs())(scope, value)),
+    get ___closureSignals() {
+      return (closureSignals ??= new Set(getClosureSignals?.()));
+    },
   };
+  return renderer;
 }
 
 function _clone(this: Renderer) {

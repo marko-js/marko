@@ -15,9 +15,9 @@ const _onClick = _scope => {
 };
 const _num$forBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/for-event-handler/template.marko_1_num", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _num$forBody = /* @__PURE__ */_closure("num", (_scope, num) => _queueEffect(_scope, _num$forBody_effect));
-const _forBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/for-event-handler/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, [_num$forBody], void 0, _params_2$forBody));
+const _forBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/for-event-handler/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, () => [_num$forBody], void 0, () => _params_2$forBody));
 const _for = /* @__PURE__ */_loopTo("#text/0", _forBody);
-const _num = /* @__PURE__ */_value("num", (_scope, num) => _for(_scope, [num, 0, 1]), _intersections([_for, _inLoopScope(_num$forBody, "#text/0")]));
+const _num = /* @__PURE__ */_value("num", (_scope, num) => _for(_scope, [num, 0, 1]), () => _intersections([_for, _inLoopScope(_num$forBody, "#text/0")]));
 export function _setup_(_scope) {
   _num(_scope, 0);
 }

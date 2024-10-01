@@ -1,4 +1,4 @@
-import { write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, peekNextScope as _peekNextScope, markResumeNode as _markResumeNode, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, markResumeNode as _markResumeNode, writeEffect as _writeEffect, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _child from "./components/child.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -18,7 +18,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_0_selected");
   _writeScope(_scope0_id, {
     "selected": selected,
-    "#childScope/0": _childScope
+    "#childScope/0": _writeExistingScope(_childScope)
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko");
