@@ -1,23 +1,20 @@
-// size: 261 (min) 184 (brotli)
+// size: 245 (min) 180 (brotli)
 
 import {
-  register as n,
-  checkedChangeEffect as o,
-  queueSource as t,
-  value as i,
-  checkedAttr as m,
-  data as r,
+  register as o,
+  checkedChangeEffect as t,
+  queueSource as m,
+  value as n,
+  checkedAttr as r,
+  data as i,
   init as a,
 } from "@marko/runtime-tags/dom";
-const c = i(2, (n, o) => {
-  m(n[0], o, function (n) {
-    o = n;
-  }),
-    r(n[1], String(o));
+const c = n(2, (o, t) => {
+  r(o[0], t, !0), i(o[1], String(t));
 });
-n("a0", (n) =>
-  o(n[0], function (o) {
-    t(n, c, o);
+o("a0", (o) =>
+  t(o[0], function (t) {
+    m(o, c, t);
   }),
 ),
   a();

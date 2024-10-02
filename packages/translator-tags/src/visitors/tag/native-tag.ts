@@ -82,8 +82,13 @@ export default {
       if (!hasSpread) {
         for (const attr of attrs) {
           const name = (attr.node as t.MarkoAttribute).name;
-          const changeHandlerAttr = changeHandlers.get(name + "Change");
-          const extraAttrArguments = [changeHandlerAttr?.value];
+          const changeHandlerValue = changeHandlers.get(name + "Change")?.value;
+          const extraAttrArguments: Array<t.Expression | undefined> = [
+            changeHandlerValue?.type === "FunctionExpression" ||
+            changeHandlerValue?.type === "ArrowFunctionExpression"
+              ? t.booleanLiteral(true)
+              : changeHandlerValue,
+          ];
           if (name === "value" && tagName === "select") {
             extraAttrArguments.push(
               attrs.find(
