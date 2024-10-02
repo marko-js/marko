@@ -1,6 +1,8 @@
 # Render {}
 ```html
-<input />
+<input
+  type="checkbox"
+/>
 <span>
   false
 </span>
@@ -11,7 +13,22 @@
 container.querySelector("input").click()
 
 ```html
-<input />
+<input
+  type="checkbox"
+/>
+<span>
+  true
+</span>
+```
+
+
+# Render 
+container.querySelector("input").click()
+
+```html
+<input
+  type="checkbox"
+/>
 <span>
   false
 </span>
@@ -22,19 +39,10 @@ container.querySelector("input").click()
 container.querySelector("input").click()
 
 ```html
-<input />
+<input
+  type="checkbox"
+/>
 <span>
-  false
-</span>
-```
-
-
-# Render 
-container.querySelector("input").click()
-
-```html
-<input />
-<span>
-  false
+  true
 </span>
 ```

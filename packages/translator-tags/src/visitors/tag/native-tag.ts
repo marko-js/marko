@@ -42,9 +42,12 @@ export default {
   analyze: {
     enter(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
+      const tagName = (node.name as t.StringLiteral).value?.toLowerCase();
       const attrs = tag.get("attributes");
+      const changeHandlers = new Map<string, t.MarkoAttribute>();
       let hasEventHandlers = false;
       let hasDynamicAttributes = false;
+      let hasSpread = false;
 
       /**
        * The reason this seems like it does more work than it needs to
@@ -56,6 +59,7 @@ export default {
           (attr.node.value.extra ??= {}).isEffect = true;
           hasEventHandlers = true;
           hasDynamicAttributes = true;
+          hasSpread = true;
           mergeReferences(
             tag,
             attrs.map((attr) => attr.node.value),
@@ -63,8 +67,42 @@ export default {
         } else if (isEventHandler((attr.node as t.MarkoAttribute).name)) {
           (attr.node.value.extra ??= {}).isEffect = true;
           hasEventHandlers = true;
+        } else if (isChangeHandler((attr.node as t.MarkoAttribute).name)) {
+          (attr.node.value.extra ??= {}).isEffect = true;
+          hasEventHandlers = true;
+          changeHandlers.set(
+            (attr.node as t.MarkoAttribute).name,
+            attr.node as t.MarkoAttribute,
+          );
         } else if (!evaluate(attr).confident) {
           hasDynamicAttributes = true;
+        }
+      }
+
+      if (!hasSpread) {
+        for (const attr of attrs) {
+          const name = (attr.node as t.MarkoAttribute).name;
+          const changeHandlerAttr = changeHandlers.get(name + "Change");
+          const extraAttrArguments = [changeHandlerAttr?.value];
+          if (name === "value" && tagName === "select") {
+            extraAttrArguments.push(
+              attrs.find(
+                (attr) => (attr.node as t.MarkoAttribute).name === "multiple",
+              )?.node.value,
+            );
+          } else if (name === "checkedValue" || name === "checkedValues") {
+            extraAttrArguments.push(
+              attrs.find(
+                (attr) => (attr.node as t.MarkoAttribute).name === "value",
+              )?.node.value,
+            );
+          }
+
+          if (extraAttrArguments.filter(Boolean).length) {
+            attr.node.value.extra ??= {};
+            attr.node.value.extra.extraAttrArguments = extraAttrArguments;
+            mergeReferences(attr.get("value"), extraAttrArguments);
+          }
         }
       }
 
@@ -88,7 +126,7 @@ export default {
   translate: {
     enter(tag: t.NodePath<t.MarkoTag>) {
       assertNoArgs(tag);
-
+      const tagName = (tag.node.name as t.StringLiteral).value?.toLowerCase();
       const extra = tag.node.extra!;
       const nodeRef = extra[kNativeTagBinding];
       const isHTML = isOutputHTML();
@@ -205,13 +243,36 @@ export default {
           const valueReferences = value.node.extra?.referencedBindings;
 
           switch (name) {
+            case "value": {
+              if (tagName !== "input") {
+                // TODO: handle <select> & unknown tag type
+              } else {
+                // handle <input>
+              }
+              break;
+            }
             case "class":
-            case "style": {
+            case "style":
+            case "checked":
+            case "open":
+            case "checkedValue":
+            case "checkedValues": {
               const helper = `${name}Attr` as const;
-              if (confident) {
-                write`${getHTMLRuntime()[helper](computed)}`;
+              const helperFn = getHTMLRuntime()[
+                helper as keyof ReturnType<typeof getHTMLRuntime>
+              ] as any;
+              if (confident && !value.node.extra?.extraAttrArguments) {
+                write`${helperFn ? helperFn(computed) : getHTMLRuntime().attr(name, computed)}`;
               } else if (isHTML) {
-                write`${callRuntime(helper, value.node)}`;
+                if (helperFn) {
+                  write`${callRuntime(helper, value.node)}`;
+                } else {
+                  write`${callRuntime(
+                    "attr",
+                    t.stringLiteral(name),
+                    value.node,
+                  )}`;
+                }
               } else {
                 addStatement(
                   "render",
@@ -222,8 +283,52 @@ export default {
                       helper,
                       t.memberExpression(scopeIdentifier, visitAccessor!, true),
                       value.node,
+                      ...((value.node.extra?.extraAttrArguments as any) ?? []),
                     ),
                   ),
+                );
+              }
+              break;
+            }
+            case "valueChange":
+            case "openChange": {
+              if (isHTML) {
+                addHTMLEffectCall(section, valueReferences);
+              } else {
+                addStatement(
+                  "effect",
+                  section,
+                  valueReferences,
+                  t.expressionStatement(
+                    callRuntime(
+                      `${name}Effect_${tagName}` as any,
+                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                      value.node,
+                    ),
+                  ),
+                  value.node,
+                );
+              }
+              break;
+            }
+            case "checkedChange":
+            case "checkedValueChange":
+            case "checkedValuesChange": {
+              if (isHTML) {
+                addHTMLEffectCall(section, valueReferences);
+              } else {
+                addStatement(
+                  "effect",
+                  section,
+                  valueReferences,
+                  t.expressionStatement(
+                    callRuntime(
+                      `${name}Effect`,
+                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                      value.node,
+                    ),
+                  ),
+                  value.node,
                 );
               }
               break;
@@ -348,6 +453,9 @@ function isSpreadAttr(
 
 function isEventHandler(propName: string) {
   return /^on[A-Z-]/.test(propName);
+}
+function isChangeHandler(propName: string) {
+  return /^(value|checked(Values?)?|open)Change/.test(propName);
 }
 
 function getEventHandlerName(propName: string) {

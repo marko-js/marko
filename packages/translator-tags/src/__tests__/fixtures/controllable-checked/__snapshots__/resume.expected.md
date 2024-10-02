@@ -4,9 +4,7 @@
   <head />
   <body>
     <input
-      checkedchange="function (_new_checked) {
-    checked = _new_checked;
-  }"
+      type="checkbox"
     />
     <!--M_*0 #input/0-->
     <span>
@@ -14,7 +12,7 @@
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_")
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{checked:!1}}),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -34,17 +32,15 @@ container.querySelector("input").click()
   <head />
   <body>
     <input
-      checkedchange="function (_new_checked) {
-    checked = _new_checked;
-  }"
+      type="checkbox"
     />
     <!--M_*0 #input/0-->
     <span>
-      false
+      true
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_")
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{checked:!1}}),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -52,7 +48,7 @@ container.querySelector("input").click()
 
 # Mutations
 ```
-
+#document/html0/body1/span2/#text0: "false" => "true"
 ```
 
 
@@ -64,9 +60,7 @@ container.querySelector("input").click()
   <head />
   <body>
     <input
-      checkedchange="function (_new_checked) {
-    checked = _new_checked;
-  }"
+      type="checkbox"
     />
     <!--M_*0 #input/0-->
     <span>
@@ -74,7 +68,7 @@ container.querySelector("input").click()
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_")
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{checked:!1}}),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -82,7 +76,7 @@ container.querySelector("input").click()
 
 # Mutations
 ```
-
+#document/html0/body1/span2/#text0: "true" => "false"
 ```
 
 
@@ -94,17 +88,15 @@ container.querySelector("input").click()
   <head />
   <body>
     <input
-      checkedchange="function (_new_checked) {
-    checked = _new_checked;
-  }"
+      type="checkbox"
     />
     <!--M_*0 #input/0-->
     <span>
-      false
+      true
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_")
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{checked:!1}}),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -112,5 +104,5 @@ container.querySelector("input").click()
 
 # Mutations
 ```
-
+#document/html0/body1/span2/#text0: "false" => "true"
 ```

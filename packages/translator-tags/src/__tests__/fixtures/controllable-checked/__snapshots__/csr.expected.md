@@ -1,6 +1,8 @@
 # Render {}
 ```html
-<input />
+<input
+  type="checkbox"
+/>
 <span>
   false
 </span>
@@ -16,15 +18,17 @@ inserted input0, span1
 container.querySelector("input").click()
 
 ```html
-<input />
+<input
+  type="checkbox"
+/>
 <span>
-  false
+  true
 </span>
 ```
 
 # Mutations
 ```
-
+span1/#text0: "false" => "true"
 ```
 
 
@@ -32,7 +36,9 @@ container.querySelector("input").click()
 container.querySelector("input").click()
 
 ```html
-<input />
+<input
+  type="checkbox"
+/>
 <span>
   false
 </span>
@@ -40,7 +46,7 @@ container.querySelector("input").click()
 
 # Mutations
 ```
-
+span1/#text0: "true" => "false"
 ```
 
 
@@ -48,13 +54,15 @@ container.querySelector("input").click()
 container.querySelector("input").click()
 
 ```html
-<input />
+<input
+  type="checkbox"
+/>
 <span>
-  false
+  true
 </span>
 ```
 
 # Mutations
 ```
-
+span1/#text0: "false" => "true"
 ```
