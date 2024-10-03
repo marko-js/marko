@@ -1,5 +1,17 @@
 # Change Log
 
+## 5.35.20
+
+### Patch Changes
+
+- [#2306](https://github.com/marko-js/marko/pull/2306) [`4d8eb53`](https://github.com/marko-js/marko/commit/4d8eb53c7354837233d99077f3d68980b13da911) Thanks [@mlrawlings](https://github.com/mlrawlings)! - fix: upgrade babel/it-fails, fix VComment
+
+- [#2310](https://github.com/marko-js/marko/pull/2310) [`f06d4b0`](https://github.com/marko-js/marko/commit/f06d4b0559c3fbb3af67773c70b3aab25278b0ca) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid babel compiler assert api to fix a regression.
+
+- Updated dependencies [[`f06d4b0`](https://github.com/marko-js/marko/commit/f06d4b0559c3fbb3af67773c70b3aab25278b0ca)]:
+  - @marko/translator-default@6.0.16
+  - @marko/compiler@5.37.15
+
 ## 5.35.19
 
 ### Patch Changes

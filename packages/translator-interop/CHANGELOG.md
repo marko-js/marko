@@ -1,5 +1,18 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.25
+
+### Patch Changes
+
+- [#2309](https://github.com/marko-js/marko/pull/2309) [`2a971ce`](https://github.com/marko-js/marko/commit/2a971ce6617bf98f79c0b0840467c15ce413b0c9) Thanks [@rturnq](https://github.com/rturnq)! - Fix scope cleanup, make signals order independant and various fixes
+
+- [#2310](https://github.com/marko-js/marko/pull/2310) [`f06d4b0`](https://github.com/marko-js/marko/commit/f06d4b0559c3fbb3af67773c70b3aab25278b0ca) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid babel compiler assert api to fix a regression.
+
+- Updated dependencies [[`2a971ce`](https://github.com/marko-js/marko/commit/2a971ce6617bf98f79c0b0840467c15ce413b0c9), [`f06d4b0`](https://github.com/marko-js/marko/commit/f06d4b0559c3fbb3af67773c70b3aab25278b0ca)]:
+  - @marko/translator-tags@0.2.10
+  - @marko/translator-default@6.0.16
+  - @marko/babel-utils@6.5.7
+
 ## 0.1.24
 
 ### Patch Changes

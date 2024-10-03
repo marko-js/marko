@@ -1,5 +1,14 @@
 # Change Log
 
+## 6.0.16
+
+### Patch Changes
+
+- [#2310](https://github.com/marko-js/marko/pull/2310) [`f06d4b0`](https://github.com/marko-js/marko/commit/f06d4b0559c3fbb3af67773c70b3aab25278b0ca) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid babel compiler assert api to fix a regression.
+
+- Updated dependencies [[`f06d4b0`](https://github.com/marko-js/marko/commit/f06d4b0559c3fbb3af67773c70b3aab25278b0ca)]:
+  - @marko/babel-utils@6.5.7
+
 ## 6.0.15
 
 ### Patch Changes
