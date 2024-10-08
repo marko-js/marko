@@ -1,5 +1,4 @@
 import {
-  arrayOfType,
   assertEach,
   assertNodeType,
   assertOneOf,
@@ -231,3 +230,9 @@ export const MARKO_ALIAS_TYPES = Array.from(
     MARKO_TYPES.reduce((all, t) => all.concat(MarkoDefinitions[t].aliases), []),
   ),
 );
+
+// Note this is inline because a change in babel caused a regression with this api.
+// TODO: we should not rely on babels validators or builders.
+function arrayOfType(types) {
+  return chain(assertValueType("array"), assertEach(assertNodeType(...types)));
+}

@@ -4,7 +4,7 @@ import { _setup_ as _child, _input_ as _child_input, _template_ as _child_templa
 import { inChild as _inChild, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _x = /* @__PURE__ */_value("x", (_scope, x) => _child_input(_scope["#childScope/1"], {
   value: x
-}), _inChild("#childScope/1", _child_input));
+}), () => _inChild("#childScope/1", _child_input));
 export function _setup_(_scope) {
   _child(_scope["#childScope/0"]);
   _child(_scope["#childScope/1"]);

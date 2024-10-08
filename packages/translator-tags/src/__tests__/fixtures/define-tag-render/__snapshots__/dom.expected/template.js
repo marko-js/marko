@@ -21,12 +21,12 @@ const _params_2$defineBody = /* @__PURE__ */_value("_params_2", (_scope, _params
 const _setup$defineBody = _scope => {
   _y$defineBody(_scope, 1);
 };
-const _defineBody = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<div>Hello <!> <!></div><button> </button>", /* next(1), over(1), replace, over(2), replace, out(1), get, next(1), get */"Db%c%l D ", _setup$defineBody, void 0, void 0, _params_2$defineBody));
+const _defineBody = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<div>Hello <!> <!></div><button> </button>", /* next(1), over(1), replace, over(2), replace, out(1), get, next(1), get */"Db%c%l D ", _setup$defineBody, void 0, void 0, () => _params_2$defineBody));
 const _myTag_input = _dynamicTagAttrs("#text/0");
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _myTag_input(_scope, () => ({
   name: "Ryan"
-})), _myTag_input);
-const _myTag = /* @__PURE__ */_value("myTag", (_scope, myTag) => _dynamicTagName(_scope, myTag), _dynamicTagName);
+})), () => _myTag_input);
+const _myTag = /* @__PURE__ */_value("myTag", (_scope, myTag) => _dynamicTagName(_scope, myTag), () => _dynamicTagName);
 export function _setup_(_scope) {
   _myTag(_scope, {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _defineBody)

@@ -1,4 +1,4 @@
-// size: 522 (min) 294 (brotli)
+// size: 540 (min) 308 (brotli)
 
 import {
   value as e,
@@ -6,11 +6,11 @@ import {
   conditional as t,
   register as r,
   createRenderer as o,
-  inChild as c,
-  on as d,
-  queueSource as i,
-  queueEffect as s,
-  bindRenderer as g,
+  on as c,
+  queueSource as d,
+  queueEffect as i,
+  bindRenderer as s,
+  inChild as g,
   init as h,
 } from "@marko/runtime-tags/dom";
 const m = t(1),
@@ -19,18 +19,22 @@ const m = t(1),
     (e, t) => {
       n(e[0], { selected: t.thing.selected }), m(e, t.thing.renderBody);
     },
-    m,
+    () => m,
   ),
   l = r("b0", o("<span>The thing</span>", "")),
-  p = e(3, (e, n) => a(e[0], { thing: n }), c(0, a)),
+  p = e(
+    3,
+    (e, n) => a(e[0], { thing: n }),
+    () => g(0, a),
+  ),
   u = r("b1", (e) =>
-    d(
+    c(
       e[1],
       "click",
       ((e) => {
         const { 2: n } = e;
         return function () {
-          i(e, b, !n);
+          d(e, b, !n);
         };
       })(e),
     ),
@@ -38,8 +42,8 @@ const m = t(1),
   b = e(
     2,
     (e, n) => {
-      s(e, u), p(e, { selected: n, renderBody: g(e, l) });
+      i(e, u), p(e, { selected: n, renderBody: s(e, l) });
     },
-    p,
+    () => p,
   );
 h();

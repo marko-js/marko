@@ -10,12 +10,12 @@ const _expr_a_b$ifBody = /* @__PURE__ */_intersection(2, _scope => {
   } = _scope;
   _data(_scope["#text/0"], a + b);
 });
-const _b$ifBody = /* @__PURE__ */_closure("b", null, void 0, _expr_a_b$ifBody);
-const _a$ifBody = /* @__PURE__ */_closure("a", null, void 0, _expr_a_b$ifBody);
-const _ifBody = /* @__PURE__ */_createRenderer(" ", /* get */" ", void 0, [_a$ifBody, _b$ifBody]);
+const _b$ifBody = /* @__PURE__ */_closure("b", null, void 0, () => _expr_a_b$ifBody);
+const _a$ifBody = /* @__PURE__ */_closure("a", null, void 0, () => _expr_a_b$ifBody);
+const _ifBody = /* @__PURE__ */_createRenderer(" ", /* get */" ", void 0, () => [_a$ifBody, _b$ifBody]);
 const _if = /* @__PURE__ */_conditional("#text/0");
-const _b = /* @__PURE__ */_value("b", null, _inConditionalScope(_b$ifBody, "#text/0"));
-const _a = /* @__PURE__ */_value("a", null, _inConditionalScope(_a$ifBody, "#text/0"));
+const _b = /* @__PURE__ */_value("b", null, () => _inConditionalScope(_b$ifBody, "#text/0"));
+const _a = /* @__PURE__ */_value("a", null, () => _inConditionalScope(_a$ifBody, "#text/0"));
 export function _setup_(_scope) {
   _a(_scope, 0);
   _b(_scope, 0);

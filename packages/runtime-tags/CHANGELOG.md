@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.1.14
+
+### Patch Changes
+
+- [#2309](https://github.com/marko-js/marko/pull/2309) [`2a971ce`](https://github.com/marko-js/marko/commit/2a971ce6617bf98f79c0b0840467c15ce413b0c9) Thanks [@rturnq](https://github.com/rturnq)! - Fix scope cleanup, make signals order independant and various fixes
+
 ## 0.1.13
 
 ### Patch Changes

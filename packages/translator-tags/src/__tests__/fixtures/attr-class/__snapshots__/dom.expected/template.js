@@ -23,7 +23,7 @@ const _expr_Text_c_d = /* @__PURE__ */_intersection(3, _scope => {
       renderBody: /* @__PURE__ */_bindRenderer(_scope, _testBody)
     }
   }));
-});
+}, () => _inputTest_input);
 const _expr_c_d = /* @__PURE__ */_intersection(2, _scope => {
   const {
     c,
@@ -34,17 +34,17 @@ const _expr_c_d = /* @__PURE__ */_intersection(2, _scope => {
     d
   }]);
 });
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/3", null, _expr_Text_c_d);
-const _d = /* @__PURE__ */_value("d", null, _intersections([_expr_c_d, _expr_Text_c_d]));
-const _c = /* @__PURE__ */_value("c", null, _intersections([_expr_c_d, _expr_Text_c_d]));
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/3", null, () => _expr_Text_c_d);
+const _d = /* @__PURE__ */_value("d", null, () => _intersections([_expr_c_d, _expr_Text_c_d]));
+const _c = /* @__PURE__ */_value("c", null, () => _intersections([_expr_c_d, _expr_Text_c_d]));
 export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _c(_scope, input.c);
   _d(_scope, input.d);
   _dynamicTagName(_scope, input.test || _inputTestBody);
-}, _intersections([_c, _d, _dynamicTagName]));
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
+}, () => _intersections([_c, _d, _dynamicTagName]));
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
 export function _setup_(_scope) {
   _customTag(_scope["#childScope/1"]);
   _customTag(_scope["#childScope/2"]);
 }
-export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko");
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko");

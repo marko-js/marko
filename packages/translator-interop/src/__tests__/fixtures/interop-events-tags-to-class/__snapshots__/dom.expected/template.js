@@ -10,7 +10,7 @@ _register("packages/translator-interop/src/__tests__/fixtures/interop-events-tag
 const _classCounter_input = _dynamicTagAttrs("#text/0");
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _classCounter_input(_scope, () => ({
   onCount: _onCount(_scope)
-})), _classCounter_input);
+})), () => _classCounter_input);
 const _count = /* @__PURE__ */_value("count", (_scope, count) => _data(_scope["#text/1"], count));
 export function _setup_(_scope) {
   _count(_scope, 0);

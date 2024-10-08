@@ -1,4 +1,4 @@
-// size: 615 (min) 306 (brotli)
+// size: 625 (min) 330 (brotli)
 
 import {
   register as i,
@@ -16,28 +16,22 @@ const s = n(5, (i, c) => e(i[1], c)),
   v = n(3, (i, c) => {
     m(i, c.name), s(i, c.description);
   }),
-  u = a(
+  u = n(2, (i, c) => v(i, c[0])),
+  p = a(
     0,
     i(
       "a0",
-      c(
-        "<div><!>: <!></div>",
-        "D%c%",
-        void 0,
-        void 0,
-        void 0,
-        n(2, (i, c) => v(i, c[0])),
-      ),
+      c("<div><!>: <!></div>", "D%c%", void 0, void 0, void 0, () => u),
     ),
   ),
-  p = i("a1", (i) => {
+  f = i("a1", (i) => {
     t(
       i[1],
       "click",
       ((i) => {
         const { 3: c } = i;
         return function () {
-          o(i, f, [
+          o(i, k, [
             ...c,
             { name: "JavaScript", description: "Java, but scriptier" },
           ]);
@@ -50,12 +44,12 @@ const s = n(5, (i, c) => e(i[1], c)),
         ((i) => {
           const { 3: c } = i;
           return function () {
-            o(i, f, c.slice(0, -1));
+            o(i, k, c.slice(0, -1));
           };
         })(i),
       );
   }),
-  f = n(3, (i, c) => {
-    r(i, p), u(i, [c]);
+  k = n(3, (i, c) => {
+    r(i, f), p(i, [c]);
   });
 d();

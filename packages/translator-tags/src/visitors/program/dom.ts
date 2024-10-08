@@ -52,9 +52,11 @@ export default {
             writes,
             walks,
             setup,
-            closures.length && t.arrayExpression(closures),
+            closures.length &&
+              t.arrowFunctionExpression([], t.arrayExpression(closures)),
             undefined,
-            tagParamsSignal?.identifier,
+            tagParamsSignal?.identifier &&
+              t.arrowFunctionExpression([], tagParamsSignal.identifier),
           );
           writeSignals(childSection);
           program.node.body.push(
@@ -135,9 +137,11 @@ export default {
               templateIdentifier,
               walksIdentifier,
               setupIdentifier,
-              closures.length && closuresIdentifier,
+              closures.length &&
+                t.arrowFunctionExpression([], closuresIdentifier),
               undefined,
-              programParamsSignal?.identifier,
+              programParamsSignal?.identifier &&
+                t.arrowFunctionExpression([], programParamsSignal.identifier),
             ),
             t.stringLiteral(program.hub.file.metadata.marko.id),
           ),

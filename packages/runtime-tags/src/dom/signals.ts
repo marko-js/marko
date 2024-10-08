@@ -69,9 +69,13 @@ export function changeHandler<T>(
 export function value<T>(
   valueAccessor: Accessor,
   fn?: SignalFn<T>,
-  intersection?: IntersectionSignal,
+  getIntersection?: () => IntersectionSignal,
 ): ValueSignal<T> {
   const markAccessor = valueAccessor + AccessorChar.Mark;
+  let intersection: IntersectionSignal | undefined =
+    getIntersection &&
+    ((scope, op) => (intersection = getIntersection!())(scope, op));
+
   return (scope, valueOrOp) => {
     if (valueOrOp === MARK) {
       if ((scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) === 1) {
@@ -103,10 +107,14 @@ let accessorId = 0;
 export function intersection(
   count: number,
   fn: SignalFn<never>,
-  intersection?: IntersectionSignal,
+  getIntersection?: () => IntersectionSignal,
 ): IntersectionSignal {
   const dirtyAccessor = AccessorChar.Dynamic + accessorId++;
   const markAccessor = dirtyAccessor + AccessorChar.Mark;
+  let intersection: IntersectionSignal | undefined =
+    getIntersection &&
+    ((scope, op) => (intersection = getIntersection!())(scope, op));
+
   return (scope, op) => {
     if (op === MARK) {
       if ((scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) === 1) {
@@ -134,16 +142,19 @@ const defaultGetOwnerScope = (scope: Scope) => scope._ as Scope;
 export function closure<T>(
   ownerValueAccessor: Accessor | ((scope: Scope) => Accessor),
   fn?: SignalFn<T>,
-  _getOwnerScope?: (scope: Scope) => Scope,
-  intersection?: IntersectionSignal,
+  getOwnerScope: (scope: Scope) => Scope = defaultGetOwnerScope,
+  getIntersection?: () => IntersectionSignal,
 ): IntersectionSignal {
   const dirtyAccessor = AccessorChar.Dynamic + accessorId++;
   const markAccessor = dirtyAccessor + 1;
-  const getOwnerScope = _getOwnerScope || defaultGetOwnerScope;
+  //const getOwnerScope = _getOwnerScope || defaultGetOwnerScope;
   const getOwnerValueAccessor =
     typeof ownerValueAccessor === "function"
       ? ownerValueAccessor
       : () => ownerValueAccessor as Accessor;
+  let intersection: IntersectionSignal | undefined =
+    getIntersection &&
+    ((scope, op) => (intersection = getIntersection!())(scope, op));
   return (scope, op) => {
     if (op === MARK) {
       if ((scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) === 1) {
@@ -180,10 +191,10 @@ export function closure<T>(
 export function dynamicClosure<T>(
   ownerValueAccessor: Accessor | ((scope: Scope) => Accessor),
   fn: ValueSignal<T>,
-  _getOwnerScope?: (scope: Scope) => Scope,
-  intersection?: IntersectionSignal,
+  getOwnerScope: (scope: Scope) => Scope = defaultGetOwnerScope,
+  getIntersection?: () => IntersectionSignal,
 ): IntersectionSignal {
-  const getOwnerScope = _getOwnerScope || defaultGetOwnerScope;
+  //const getOwnerScope = _getOwnerScope || defaultGetOwnerScope;
   const getOwnerValueAccessor =
     typeof ownerValueAccessor === "function"
       ? ownerValueAccessor
@@ -192,7 +203,7 @@ export function dynamicClosure<T>(
     getOwnerValueAccessor,
     fn,
     getOwnerScope,
-    intersection,
+    getIntersection,
   );
   signalFn.___subscribe = (scope: Scope) => {
     const ownerScope = getOwnerScope(scope);

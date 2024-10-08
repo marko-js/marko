@@ -1,4 +1,4 @@
-// size: 448 (min) 227 (brotli)
+// size: 460 (min) 233 (brotli)
 
 import {
   register as n,
@@ -32,7 +32,7 @@ const u = m(2, (n) => {
     (n, t) => {
       r(n[1], t), i(n, e);
     },
-    u,
+    () => u,
   ),
   k = n("a1", (n) =>
     t(
@@ -46,5 +46,9 @@ const u = m(2, (n) => {
       })(n),
     ),
   ),
-  l = o(4, (n, t) => i(n, k), u);
+  l = o(
+    4,
+    (n, t) => i(n, k),
+    () => u,
+  );
 s();

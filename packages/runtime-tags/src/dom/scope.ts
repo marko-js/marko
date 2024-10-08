@@ -60,7 +60,7 @@ export const bindFunction = binder(
 export function destroyScope(scope: Scope) {
   _destroyScope(scope);
 
-  scope._?.___cleanup?.delete(scope);
+  scope.___cleanupOwner?.___cleanup?.delete(scope);
 
   const closureSignals = scope.___renderer?.___closureSignals;
   if (closureSignals) {
@@ -88,11 +88,11 @@ function _destroyScope(scope: Scope) {
 }
 
 export function onDestroy(scope: Scope) {
-  let parentScope = scope._;
+  let parentScope = scope.___cleanupOwner;
   while (parentScope && !parentScope.___cleanup?.has(scope)) {
     (parentScope.___cleanup ||= new Set()).add(scope);
     scope = parentScope;
-    parentScope = scope._;
+    parentScope = scope.___cleanupOwner;
   }
 }
 

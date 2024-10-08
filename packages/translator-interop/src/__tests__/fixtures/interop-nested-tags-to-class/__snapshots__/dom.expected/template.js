@@ -19,10 +19,10 @@ const _count$classLayoutBody = _registerSubscriber("packages/translator-interop/
   _data(_scope["#text/1"], count);
   _queueEffect(_scope, _count$classLayoutBody_effect);
 }));
-const _classLayoutBody = _registerRenderer("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<button id=tags> </button>", /* get, next(1), get */" D ", void 0, [_count$classLayoutBody]));
+const _classLayoutBody = _registerRenderer("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<button id=tags> </button>", /* get, next(1), get */" D ", void 0, () => [_count$classLayoutBody]));
 const _classLayout_input = _dynamicTagAttrs("#text/0", _classLayoutBody);
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _classLayout_input(_scope, () => ({})), _classLayout_input);
-const _count = /* @__PURE__ */_value("count", null, _dynamicSubscribers("count"));
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _classLayout_input(_scope, () => ({})), () => _classLayout_input);
+const _count = /* @__PURE__ */_value("count", null, () => _dynamicSubscribers("count"));
 export function _setup_(_scope) {
   _count(_scope, 0);
   _dynamicTagName(_scope, _classLayout || _classLayoutBody);

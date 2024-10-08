@@ -1,4 +1,4 @@
-// size: 483 (min) 285 (brotli)
+// size: 493 (min) 288 (brotli)
 
 import {
   register as o,
@@ -27,7 +27,8 @@ const u = o("a0", (o) =>
     r(o[1], t), r(o[3], t), a(o, u);
   }),
   l = m(6, (o, t) => r(o[0], t)),
-  v = m(5, (o, t) => l(o, t.name));
+  v = m(5, (o, t) => l(o, t.name)),
+  b = m(4, (o, t) => v(o, t[0]));
 o(
   "a1",
   n(
@@ -38,7 +39,7 @@ o(
     },
     void 0,
     void 0,
-    m(4, (o, t) => v(o, t[0])),
+    () => b,
   ),
 ),
   i(0),

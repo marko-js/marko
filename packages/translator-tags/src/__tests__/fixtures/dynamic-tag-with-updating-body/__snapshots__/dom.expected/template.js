@@ -7,7 +7,7 @@ const _setup$tagNameBody = _scope => {
 };
 const _tagNameBody = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_1_renderer", /* @__PURE__ */_createRenderer(`${_counter_template}`, /* beginChild, _counter_walks, endChild */`/${_counter_walks}&`, _setup$tagNameBody));
 const _tagName_input = _dynamicTagAttrs("#text/0", _tagNameBody);
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _tagName_input(_scope, () => ({})), _tagName_input);
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _tagName_input(_scope, () => ({})), () => _tagName_input);
 const _onClick = _scope => {
   const {
     tagName
@@ -20,7 +20,7 @@ const _tagName_effect = _register("packages/translator-tags/src/__tests__/fixtur
 const _tagName = /* @__PURE__ */_value("tagName", (_scope, tagName) => {
   _queueEffect(_scope, _tagName_effect);
   _dynamicTagName(_scope, tagName || _tagNameBody);
-}, _dynamicTagName);
+}, () => _dynamicTagName);
 export function _setup_(_scope) {
   _tagName(_scope, "div");
 }

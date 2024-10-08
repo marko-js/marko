@@ -14,13 +14,13 @@ const _expr_comment_id$ifBody = /* @__PURE__ */_intersection(2, _scope => {
     comments: comment.comments,
     path: id
   });
-});
-const _id$ifBody = /* @__PURE__ */_closure("id", null, void 0, _expr_comment_id$ifBody);
-const _comment$ifBody = /* @__PURE__ */_closure("comment", null, void 0, _expr_comment_id$ifBody);
+}, () => _inChild("#childScope/0", _comments_input));
+const _id$ifBody = /* @__PURE__ */_closure("id", null, void 0, () => _expr_comment_id$ifBody);
+const _comment$ifBody = /* @__PURE__ */_closure("comment", null, void 0, () => _expr_comment_id$ifBody);
 const _setup$ifBody = _scope => {
   _comments(_scope["#childScope/0"]);
 };
-const _ifBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer", /* @__PURE__ */_createRenderer(`${_comments_template}`, /* beginChild, _comments_walks, endChild */`/${_comments_walks}&`, _setup$ifBody, [_comment$ifBody, _id$ifBody]));
+const _ifBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer", /* @__PURE__ */_createRenderer(`${_comments_template}`, /* beginChild, _comments_walks, endChild */`/${_comments_walks}&`, _setup$ifBody, () => [_comment$ifBody, _id$ifBody]));
 const _expr_input_i$forBody = /* @__PURE__ */_intersection(2, _scope => {
   const {
     _: {
@@ -29,7 +29,7 @@ const _expr_input_i$forBody = /* @__PURE__ */_intersection(2, _scope => {
     i
   } = _scope;
   _id$forBody(_scope, `${input.path || "c"}-${i}`);
-});
+}, () => _id$forBody);
 const _if$forBody = /* @__PURE__ */_conditional("#text/4");
 const _onClick = _scope => {
   const {
@@ -45,22 +45,22 @@ const _open$forBody = /* @__PURE__ */_value("open", (_scope, open) => {
   _data(_scope["#text/3"], open ? "[-]" : "[+]");
   _queueEffect(_scope, _open$forBody_effect);
 });
-const _id$forBody = /* @__PURE__ */_value("id", (_scope, id) => _attr(_scope["#li/0"], "id", id), _inConditionalScope(_id$ifBody, "#text/4"));
-const _i$forBody = /* @__PURE__ */_value("i", null, _expr_input_i$forBody);
+const _id$forBody = /* @__PURE__ */_value("id", (_scope, id) => _attr(_scope["#li/0"], "id", id), () => _inConditionalScope(_id$ifBody, "#text/4"));
+const _i$forBody = /* @__PURE__ */_value("i", null, () => _expr_input_i$forBody);
 const _comment$forBody = /* @__PURE__ */_value("comment", (_scope, comment) => {
   _data(_scope["#text/1"], comment.text);
   _if$forBody(_scope, comment.comments ? _ifBody : null);
-}, _intersections([_if$forBody, _inConditionalScope(_comment$ifBody, "#text/4")]));
+}, () => _intersections([_if$forBody, _inConditionalScope(_comment$ifBody, "#text/4")]));
 const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => {
   _comment$forBody(_scope, _params_2[0]);
   _i$forBody(_scope, _params_2[1]);
-}, _intersections([_comment$forBody, _i$forBody]));
-const _input$forBody = /* @__PURE__ */_closure("input", null, void 0, _expr_input_i$forBody);
+}, () => _intersections([_comment$forBody, _i$forBody]));
+const _input$forBody = /* @__PURE__ */_closure("input", null, void 0, () => _expr_input_i$forBody);
 const _setup$forBody = _scope => {
   _open$forBody(_scope, true);
 };
-const _forBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_renderer", /* @__PURE__ */_createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", _setup$forBody, [_input$forBody], void 0, _params_2$forBody));
+const _forBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_renderer", /* @__PURE__ */_createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", _setup$forBody, () => [_input$forBody], void 0, () => _params_2$forBody));
 const _for = /* @__PURE__ */_loopOf("#ul/0", _forBody);
-export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _for(_scope, [input.comments]), _intersections([_for, _inLoopScope(_input$forBody, "#ul/0")]));
-export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), _input_);
-export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, _params__), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko");
+export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _for(_scope, [input.comments]), () => _intersections([_for, _inLoopScope(_input$forBody, "#ul/0")]));
+export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
+export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko");

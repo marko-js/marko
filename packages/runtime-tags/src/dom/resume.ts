@@ -1,7 +1,7 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import { ResumeSymbol, type Scope } from "../common/types";
 import type { Renderer } from "./renderer";
-import { bindRenderer } from "./scope";
+import { bindRenderer, onDestroy } from "./scope";
 import type { IntersectionSignal, SignalOp, ValueSignal } from "./signals";
 
 interface Renders {
@@ -25,7 +25,7 @@ class Render implements RenderData {
   declare i: RenderData["i"];
   declare v: RenderData["v"];
   declare r?: RenderData["r"];
-  private declare ___currentScopeId: number;
+  private declare ___currentScopeId: number | undefined;
   private declare ___data: RenderData;
   private declare ___renders: Renders;
   private declare ___runtimeId: string;
@@ -51,36 +51,74 @@ class Render implements RenderData {
     const serializeContext = this.___serializeContext;
     const scopeLookup = this.___scopeLookup;
     const visits = data.v;
+    const cleanupOwners = new Map<string, number>();
 
     if (visits.length) {
       const commentPrefix = data.i;
       const commentPrefixLen = commentPrefix.length;
+      const cleanupMarkers = new Map<number, Comment>();
       data.v = [];
+
+      const sectionEnd = (
+        visit: Comment,
+        scopeId: number = this.___currentScopeId!,
+        curNode: ChildNode = visit,
+      ) => {
+        const scope = (scopeLookup[scopeId] ??= {} as Scope);
+        let endNode = curNode;
+        while (
+          (endNode = endNode.previousSibling!).nodeType ===
+          8 /* Node.COMMENT_NODE */
+        );
+        scope.___endNode = endNode;
+        const startNode = (scope.___startNode ??= endNode);
+
+        let len = cleanupMarkers.size;
+        for (const [markerScopeId, markerNode] of cleanupMarkers) {
+          if (!len--) break;
+          if (
+            markerScopeId !== scopeId &&
+            startNode.compareDocumentPosition(markerNode) & 4 /* FOLLOWING */ &&
+            curNode.compareDocumentPosition(markerNode) & 2 /* PRECEDING */
+          ) {
+            cleanupOwners.set("" + markerScopeId, scopeId);
+            cleanupMarkers.delete(markerScopeId);
+          }
+        }
+        cleanupMarkers.set(scopeId, visit);
+        return scope;
+      };
 
       for (const visit of visits) {
         const commentText = visit.data!;
         const token = commentText[commentPrefixLen];
         const scopeId = parseInt(commentText.slice(commentPrefixLen + 1));
         const scope = (scopeLookup[scopeId] ??= {} as Scope);
-        const data = commentText.slice(commentText.indexOf(" ") + 1);
+        const dataIndex = commentText.indexOf(" ") + 1;
+        const data = dataIndex ? commentText.slice(dataIndex) : "";
 
         if (token === ResumeSymbol.Node) {
           scope[data] = visit.previousSibling;
+        } else if (token === ResumeSymbol.Cleanup) {
+          cleanupMarkers.set(scopeId, visit);
         } else if (token === ResumeSymbol.SectionStart) {
-          this.___scopeStack.push(this.___currentScopeId);
+          if (this.___currentScopeId) {
+            if (data) {
+              sectionEnd(visit);
+            }
+            this.___scopeStack.push(this.___currentScopeId);
+          }
           this.___currentScopeId = scopeId;
           scope.___startNode = visit;
         } else if (token === ResumeSymbol.SectionEnd) {
           scope[data] = visit;
-          if (scopeId < this.___currentScopeId) {
-            const currScope = scopeLookup[this.___currentScopeId];
+          if (scopeId < this.___currentScopeId!) {
             const currParent = visit.parentNode!;
-            const startNode = currScope.___startNode as Node;
-            if (currParent !== startNode.parentNode) {
+            const startNode = sectionEnd(visit).___startNode;
+            if (currParent && currParent !== startNode.parentNode) {
               currParent.prepend(startNode);
             }
-            currScope.___endNode = visit.previousSibling!;
-            this.___currentScopeId = this.___scopeStack.pop()!;
+            this.___currentScopeId = this.___scopeStack.pop();
           }
         } else if (token === ResumeSymbol.SectionSingleNodesEnd) {
           scope[
@@ -92,16 +130,7 @@ class Render implements RenderData {
           );
           let curNode: ChildNode = visit;
           for (let i = childScopeIds.length - 1; i >= 0; i--) {
-            const childScope = (scopeLookup[childScopeIds[i]] ??= {} as Scope);
-            // TODO: consider whether the single node optimization
-            // should only apply to elements which means could
-            // use previousElementSibling instead of a while loop
-            while (
-              (curNode = curNode.previousSibling!).nodeType ===
-              8 /* Node.COMMENT_NODE */
-            );
-            // TODO: consider only setting ___startNode?
-            childScope.___startNode = childScope.___endNode = curNode;
+            curNode = sectionEnd(visit, childScopeIds[i], curNode).___endNode;
           }
         }
       }
@@ -131,6 +160,12 @@ class Render implements RenderData {
               scope.$global = $global;
               if (prevScope !== scope) {
                 scopeLookup[scopeId] = Object.assign(scope, prevScope) as Scope;
+              }
+
+              const cleanupOwnerId = cleanupOwners.get(scopeId);
+              if (cleanupOwnerId) {
+                scope.___cleanupOwner = scopes[cleanupOwnerId];
+                onDestroy(scope);
               }
             }
           }

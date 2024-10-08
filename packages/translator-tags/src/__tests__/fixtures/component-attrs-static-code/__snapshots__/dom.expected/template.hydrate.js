@@ -1,4 +1,4 @@
-// size: 388 (min) 225 (brotli)
+// size: 394 (min) 228 (brotli)
 
 import {
   register as t,
@@ -26,7 +26,11 @@ const u = i(2, (t) => {
       })(t),
     ),
   ),
-  f = r(4, (t, o) => c(t, a), u);
+  f = r(
+    4,
+    (t, o) => c(t, a),
+    () => u,
+  );
 t("b1", function (t) {
   return "$" + t.toFixed(2);
 }),

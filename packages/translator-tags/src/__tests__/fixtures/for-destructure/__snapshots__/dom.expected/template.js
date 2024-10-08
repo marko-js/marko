@@ -8,7 +8,7 @@ const _pattern_$forBody = /* @__PURE__ */_value("_pattern_", (_scope, _pattern_)
   _description$forBody(_scope, _pattern_.description);
 });
 const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _pattern_$forBody(_scope, _params_2[0]));
-const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, void 0, _params_2$forBody));
+const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, void 0, () => _params_2$forBody));
 const _for = /* @__PURE__ */_loopOf("#text/0", _forBody);
 const _onClick = _scope => {
   const {

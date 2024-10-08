@@ -1,0 +1,8 @@
+<let/show=true/>
+<button onClick() { show = !show }>Toggle</button>
+
+<div/el/>
+
+<if=show>
+  <child write(state) { el().innerHTML = state } />
+</if>
