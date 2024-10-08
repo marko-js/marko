@@ -263,4 +263,6 @@ app.get("/", (req, res) => {
 });
 ```
 
+> **Warning:** Ensure that you serialize only data which is necessary for the browser. Serialization is expensive for both server rendering performance and HTML output size.
+
 For details, check [#672: “Serialize only input and state on top-level server-rendered UI components”](https://github.com/marko-js/marko/pull/672).
