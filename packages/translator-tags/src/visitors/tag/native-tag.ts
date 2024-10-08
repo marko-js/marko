@@ -246,13 +246,57 @@ export default {
           const value = attr.get("value");
           const { confident, computed } = attr.node.extra ?? {};
           const valueReferences = value.node.extra?.referencedBindings;
+          const baseAttr = () => {
+            if (confident) {
+              write`${getHTMLRuntime().attr(name, computed)}`;
+            } else if (isHTML) {
+              if (isEventHandler(name)) {
+                addHTMLEffectCall(section, valueReferences);
+              } else {
+                write`${callRuntime(
+                  "attr",
+                  t.stringLiteral(name),
+                  value.node,
+                )}`;
+              }
+            } else if (isEventHandler(name)) {
+              addStatement(
+                "effect",
+                section,
+                valueReferences,
+                t.expressionStatement(
+                  callRuntime(
+                    "on",
+                    t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                    t.stringLiteral(getEventHandlerName(name)),
+                    value.node,
+                  ),
+                ),
+                value.node,
+              );
+            } else {
+              addStatement(
+                "render",
+                section,
+                valueReferences,
+                t.expressionStatement(
+                  callRuntime(
+                    "attr",
+                    t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                    t.stringLiteral(name),
+                    value.node,
+                  ),
+                ),
+              );
+            }
+          };
 
           switch (name) {
             case "value": {
               if (tagName !== "input") {
                 // TODO: handle <select> & unknown tag type
               } else {
-                // handle <input>
+                baseAttr();
               }
               break;
             }
@@ -263,21 +307,10 @@ export default {
             case "checkedValue":
             case "checkedValues": {
               const helper = `${name}Attr` as const;
-              const helperFn = getHTMLRuntime()[
-                helper as keyof ReturnType<typeof getHTMLRuntime>
-              ] as any;
               if (confident && !value.node.extra?.extraAttrArguments) {
-                write`${helperFn ? helperFn(computed) : getHTMLRuntime().attr(name, computed)}`;
+                write`${(getHTMLRuntime()[helper] as any)(computed)}`;
               } else if (isHTML) {
-                if (helperFn) {
-                  write`${callRuntime(helper, value.node)}`;
-                } else {
-                  write`${callRuntime(
-                    "attr",
-                    t.stringLiteral(name),
-                    value.node,
-                  )}`;
-                }
+                write`${callRuntime(helper, value.node, ...((value.node.extra?.extraAttrArguments as any) ?? []).slice(1))}`;
               } else {
                 addStatement(
                   "render",
@@ -338,51 +371,10 @@ export default {
               }
               break;
             }
-            default:
-              if (confident) {
-                write`${getHTMLRuntime().attr(name, computed)}`;
-              } else if (isHTML) {
-                if (isEventHandler(name)) {
-                  addHTMLEffectCall(section, valueReferences);
-                } else {
-                  write`${callRuntime(
-                    "attr",
-                    t.stringLiteral(name),
-                    value.node,
-                  )}`;
-                }
-              } else if (isEventHandler(name)) {
-                addStatement(
-                  "effect",
-                  section,
-                  valueReferences,
-                  t.expressionStatement(
-                    callRuntime(
-                      "on",
-                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
-                      t.stringLiteral(getEventHandlerName(name)),
-                      value.node,
-                    ),
-                  ),
-                  value.node,
-                );
-              } else {
-                addStatement(
-                  "render",
-                  section,
-                  valueReferences,
-                  t.expressionStatement(
-                    callRuntime(
-                      "attr",
-                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
-                      t.stringLiteral(name),
-                      value.node,
-                    ),
-                  ),
-                );
-              }
-
+            default: {
+              baseAttr();
               break;
+            }
           }
         }
       }

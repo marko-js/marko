@@ -2,10 +2,14 @@ import { importNamed } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import {
   attr,
+  checkedAttr,
+  checkedValueAttr,
+  checkedValuesAttr,
   classAttr,
   escapeScript,
   escapeStyle,
   escapeXML,
+  openAttr,
   styleAttr,
   toString,
 } from "@marko/runtime-tags/html";
@@ -72,7 +76,11 @@ export function getHTMLRuntime() {
     escapeXML,
     toString,
     attr,
+    checkedAttr,
+    checkedValueAttr,
+    checkedValuesAttr,
     classAttr,
+    openAttr,
     styleAttr,
     escapeScript,
     escapeStyle,

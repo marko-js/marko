@@ -107,8 +107,8 @@ function cloneAndSanitize(window: JSDOM["window"], container: ParentNode) {
     const node = treeWalker.currentNode;
     if (node.nodeType === 8 || isSanitizedTag(node as Element)) {
       nodesToRemove.push(node as ChildNode);
-    } else if ((node as Element).tagName === "TEXTAREA") {
-      node.textContent = (node as HTMLTextAreaElement).value;
+    } else if (node.nodeType === 1) {
+      reflectPropsToAttrs(node as Element);
     }
   }
 
@@ -243,5 +243,26 @@ function isSanitizedTag(node: Element) {
       return true;
     default:
       return false;
+  }
+}
+
+function reflectPropsToAttrs(element: Element) {
+  if (element.tagName === "INPUT") {
+    if ((element as HTMLInputElement).value) {
+      element.setAttribute("value", (element as HTMLInputElement).value);
+    }
+    if ((element as HTMLInputElement).checked) {
+      element.setAttribute("checked", "");
+    } else {
+      element.removeAttribute("checked");
+    }
+  } else if (element.tagName === "TEXTAREA") {
+    element.textContent = (element as HTMLTextAreaElement).value;
+  } else if (element.tagName === "OPTION") {
+    if ((element as HTMLOptionElement).selected) {
+      element.setAttribute("selected", "");
+    } else {
+      element.removeAttribute("selected");
+    }
   }
 }

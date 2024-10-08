@@ -11,9 +11,13 @@ export function styleAttr(val: unknown) {
 }
 
 // @ts-expect-error the following function is not yet implemented
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 export function valueAttr_select(val: unknown, multiple: boolean) {
   // TODO: need to cause all child options to render with correct selected attribute
+}
+
+export function checkedAttr(value: unknown) {
+  return attr("checked", value);
 }
 
 export function checkedValueAttr(checkedValue: unknown, value: unknown) {
@@ -22,6 +26,10 @@ export function checkedValueAttr(checkedValue: unknown, value: unknown) {
 
 export function checkedValuesAttr(checkedValues: unknown[], value: unknown) {
   return checkedValues?.includes(value) ? ` checked` : "";
+}
+
+export function openAttr(value: unknown) {
+  return attr("open", value);
 }
 
 export function attr(name: string, val: unknown) {
