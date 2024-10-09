@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.35.21
+
+### Patch Changes
+
+- [#2314](https://github.com/marko-js/marko/pull/2314) [`75d0ab8`](https://github.com/marko-js/marko/commit/75d0ab8301d068ac370f4ef8b0b1f18d1b559eef) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Downgrade minimatch module since latest version requires node 20.
+
+- [#2315](https://github.com/marko-js/marko/pull/2315) [`5b4ffa8`](https://github.com/marko-js/marko/commit/5b4ffa85d434e591fd56cdbfd5b5cc1b2f4927dd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add back the "legacy helpers" from Marko 3 to simplify the process of upgrading some older applications.
+
+- [#2308](https://github.com/marko-js/marko/pull/2308) [`a279d09`](https://github.com/marko-js/marko/commit/a279d0934968f34661d37bb29eb99ae7415fa5b6) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Update documentation
+
 ## 5.35.20
 
 ### Patch Changes
