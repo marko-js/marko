@@ -1,5 +1,0 @@
----
-"marko": patch
----
-
-Update documentation
