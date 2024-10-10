@@ -47,6 +47,7 @@
     "dist",
     "docs",
     "src",
+    "helpers",
     "browser-refresh.js",
     "compiler-browser.marko",
     "compiler.js",
