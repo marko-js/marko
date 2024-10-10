@@ -27,10 +27,10 @@ export default function (path, isNullable) {
   );
 
   if (isNullable) {
-    writeStartNode = t.ifStatement(
-      name,
-      writeStartNode,
-      t.expressionStatement(
+    writeStartNode = t.ifStatement(name, writeStartNode);
+
+    if (!isEmpty) {
+      writeStartNode.alternate = t.expressionStatement(
         t.callExpression(
           t.memberExpression(t.identifier("out"), t.identifier("bf")),
           [
@@ -38,8 +38,8 @@ export default function (path, isNullable) {
             path.hub.file._componentInstanceIdentifier,
           ],
         ),
-      ),
-    );
+      );
+    }
   }
 
   if (isEmpty) {

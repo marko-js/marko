@@ -24,9 +24,9 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
     "other": input.other
   }), null, null, null, _componentDef, "1");
   const _tagName = input.show ? "div" : null;
-  if (_tagName) out.w(`<${_tagName} class="a b"${(0, _attr.default)("other", input.other)}></${_tagName}>`);else out.bf("f_2", _component, 1);
+  if (_tagName) out.w(`<${_tagName} class="a b"${(0, _attr.default)("other", input.other)}></${_tagName}>`);
   const _tagName2 = input.show && "div";
-  if (_tagName2) out.w(`<${_tagName2} class="a b"${(0, _attr.default)("other", input.other)}></${_tagName2}>`);else out.bf("f_3", _component, 1);
+  if (_tagName2) out.w(`<${_tagName2} class="a b"${(0, _attr.default)("other", input.other)}></${_tagName2}>`);
   const _tagName3 = input.large ? "h1" : "h2";
   out.w(`<${_tagName3} class="a b"${(0, _attr.default)("other", input.other)}></${_tagName3}>`);
   const _tagName4 = input.showTagA ? _index2.default : _index3.default;
@@ -56,7 +56,7 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   }), null, null, null, _componentDef, "8");
   const largeHeading = input.isLarge && "h1";
   const _tagName7 = largeHeading || "h2";
-  if (_tagName7) out.w(`<${_tagName7} class="a b"${(0, _attr.default)("other", input.other)}></${_tagName7}>`);else out.bf("f_9", _component, 1);
+  if (_tagName7) out.w(`<${_tagName7} class="a b"${(0, _attr.default)("other", input.other)}></${_tagName7}>`);
   const _tagName8 = global.x = "a" + "b";
   out.w(`<${_tagName8} class="a b"${(0, _attr.default)("other", input.other)}></${_tagName8}>`);
   const _tagName9 = "h" + input.level;
@@ -66,12 +66,12 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   const tagConstA = "a";
   out.w(`<${tagConstA} class="a b"${(0, _attr.default)("other", input.other)}></${tagConstA}>`);
   const tagConstB = input.show ? "div" : null;
-  if (tagConstB) out.w(`<${tagConstB} class="a b"${(0, _attr.default)("other", input.other)}></${tagConstB}>`);else out.bf("f_14", _component, 1);
+  if (tagConstB) out.w(`<${tagConstB} class="a b"${(0, _attr.default)("other", input.other)}></${tagConstB}>`);
   let tagLazyAssign;
   tagLazyAssign = "a";
-  if (tagLazyAssign) out.w(`<${tagLazyAssign} class="a b"${(0, _attr.default)("other", input.other)}></${tagLazyAssign}>`);else out.bf("f_15", _component, 1);
+  if (tagLazyAssign) out.w(`<${tagLazyAssign} class="a b"${(0, _attr.default)("other", input.other)}></${tagLazyAssign}>`);
   tagLazyAssign = input.show ? "div" : null;
-  if (tagLazyAssign) out.w(`<${tagLazyAssign} class="a b"${(0, _attr.default)("other", input.other)}></${tagLazyAssign}>`);else out.bf("f_16", _component, 1);
+  if (tagLazyAssign) out.w(`<${tagLazyAssign} class="a b"${(0, _attr.default)("other", input.other)}></${tagLazyAssign}>`);
 }, {
   t: _marko_componentType,
   i: true,
