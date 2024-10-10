@@ -12,7 +12,7 @@ BEFORE-OUT-OF-ORDER
         AFTER-IN-ORDER
     </>
 </>
-<await(new Promise(r => setTimeout(r, 40))) name="d">
+<await(new Promise(r => setTimeout(r, 60))) name="d">
     <@then>BEFORE-AFTER-OUT-OF-ORDER</>
 </>
 AFTER-OUT-OF-ORDER
