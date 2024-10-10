@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.16
+
+### Patch Changes
+
+- [#2318](https://github.com/marko-js/marko/pull/2318) [`1dbb189`](https://github.com/marko-js/marko/commit/1dbb189976ef56a28252fbf7da95ac18a3eadaf6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where a null able native tag with no body content (eg `<${show && "div}/>`) was incorrectly outputting a fragment for the body content (which did not exist).
+
 ## 5.37.15
 
 ### Patch Changes
