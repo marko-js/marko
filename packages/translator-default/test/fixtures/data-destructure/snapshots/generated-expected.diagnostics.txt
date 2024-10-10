@@ -1,0 +1,1 @@
+deprecation[fixable](7:15-7:19): The 'data' variable is deprecated. Use 'input' instead.
