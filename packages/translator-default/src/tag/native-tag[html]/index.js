@@ -155,10 +155,10 @@ export default function (path, isNullable) {
   );
 
   if (isNullable) {
-    writeStartNode = t.ifStatement(
-      name,
-      writeStartNode,
-      t.expressionStatement(
+    writeStartNode = t.ifStatement(name, writeStartNode);
+
+    if (!isEmpty) {
+      writeStartNode.alterate = t.expressionStatement(
         t.callExpression(
           t.memberExpression(t.identifier("out"), t.identifier("bf")),
           [
@@ -167,8 +167,8 @@ export default function (path, isNullable) {
             t.numericLiteral(1),
           ],
         ),
-      ),
-    );
+      );
+    }
   }
 
   if (isEmpty) {
