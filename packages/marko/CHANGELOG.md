@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.35.22
+
+### Patch Changes
+
+- [#2316](https://github.com/marko-js/marko/pull/2316) [`e57e706`](https://github.com/marko-js/marko/commit/e57e706a901002763968e840b321f8c3eb7c55fb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose the v3 legacy helpers properly in the marko package.json
+
+- [#2316](https://github.com/marko-js/marko/pull/2316) [`1e2c903`](https://github.com/marko-js/marko/commit/1e2c903cb1da7e919d683d65f1bda4661abe931e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression where an out of order await resolves before the "<await-reorderer>" (automatically injected at the end of the body) would be flushed. In practice this means an in order await after all out of order awaits (that resolves after any of the out of order awaits) was causing some out of order awaits not to be reordered.
+
 ## 5.35.21
 
 ### Patch Changes
