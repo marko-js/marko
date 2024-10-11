@@ -5,6 +5,7 @@ var componentsUtil = require("@internal/components-util");
 var domData = require("../components/dom-data");
 var vElementByDOMNode = domData.___vElementByDOMNode;
 var VNode = require("./VNode");
+var isTextOnly = require("./is-text-only");
 var ATTR_XLINK_HREF = "xlink:href";
 var xmlnsRegExp = /^xmlns(:|$)/;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -89,7 +90,7 @@ function VElementClone(other) {
   this.___properties = other.___properties;
   this.___nodeName = other.___nodeName;
   this.___flags = other.___flags;
-  this.___valueInternal = other.___valueInternal;
+  this.___textContent = other.___textContent;
   this.___constId = other.___constId;
 }
 
@@ -115,7 +116,7 @@ function VElement(
   this.___attributes = attrs || EMPTY_OBJECT;
   this.___properties = props || EMPTY_OBJECT;
   this.___nodeName = tagName;
-  this.___valueInternal = "";
+  this.___textContent = "";
   this.___constId = constId;
   this.___preserve = false;
   this.___preserveBody = false;
@@ -194,8 +195,8 @@ VElement.prototype = {
         }
       }
 
-      if (tagName === "textarea") {
-        el.defaultValue = this.___valueInternal;
+      if (isTextOnly(tagName)) {
+        el.textContent = this.___textContent;
       }
     }
 
@@ -249,8 +250,8 @@ function virtualizeElement(node, virtualizeChildNodes, ownerComponent) {
     props,
   );
 
-  if (vdomEl.___nodeName === "textarea") {
-    vdomEl.___valueInternal = node.value;
+  if (isTextOnly(tagName)) {
+    vdomEl.___textContent = node.textContent;
   } else if (virtualizeChildNodes) {
     virtualizeChildNodes(node, vdomEl, ownerComponent);
   }

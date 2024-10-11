@@ -11,6 +11,7 @@ var KeySequence = require("../../components/KeySequence");
 var VElement = require("../vdom").___VElement;
 var fragment = require("./fragment");
 var helpers = require("./helpers");
+var isTextOnly = require("../is-text-only");
 var virtualizeElement = VElement.___virtualize;
 var morphAttrs = VElement.___morphAttrs;
 var keysByDOMNode = domData.___keyByDOMNode;
@@ -87,7 +88,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
         ] = realNode;
       }
 
-      if (vNode.___nodeName !== "textarea") {
+      if (!isTextOnly(vNode.___nodeName)) {
         morphChildren(realNode, vNode, parentComponent);
       }
 
@@ -699,9 +700,13 @@ function morphdom(fromNode, toNode, host, componentsContext) {
       return;
     }
 
-    if (nodeName === "textarea") {
-      if (toEl.___valueInternal !== vFromEl.___valueInternal) {
-        fromEl.value = toEl.___valueInternal;
+    if (isTextOnly(nodeName)) {
+      if (toEl.___textContent !== vFromEl.___textContent) {
+        if (nodeName === "textarea") {
+          fromEl.value = toEl.___textContent;
+        } else {
+          fromEl.textContent = toEl.___textContent;
+        }
       }
     } else {
       morphChildren(fromEl, toEl, parentComponent);
