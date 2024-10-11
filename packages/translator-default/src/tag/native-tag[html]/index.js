@@ -158,7 +158,7 @@ export default function (path, isNullable) {
     writeStartNode = t.ifStatement(name, writeStartNode);
 
     if (!isEmpty) {
-      writeStartNode.alterate = t.expressionStatement(
+      writeStartNode.alternate = t.expressionStatement(
         t.callExpression(
           t.memberExpression(t.identifier("out"), t.identifier("bf")),
           [
