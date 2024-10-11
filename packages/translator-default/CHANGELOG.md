@@ -1,5 +1,13 @@
 # Change Log
 
+## 6.0.18
+
+### Patch Changes
+
+- [#2320](https://github.com/marko-js/marko/pull/2320) [`13b3270`](https://github.com/marko-js/marko/commit/13b32707ed673dd3dabe6dfdb90fcf5a19448776) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize how style and script tags are diffed (similar to textarea) where the text nodes are concatenated and diffed as a whole.
+
+- [#2320](https://github.com/marko-js/marko/pull/2320) [`a9da4d6`](https://github.com/marko-js/marko/commit/a9da4d64cf8116867ea80150f10c4dc8a45a0c98) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression from #2138 which caused nullable native dynamic tags with body contents to not output the end tag. 😱
+
 ## 6.0.17
 
 ### Patch Changes
