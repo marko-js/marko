@@ -130,10 +130,6 @@ const config = {
   /**
    * Compiling a Marko template may require other (used) Marko templates to compile.
    * To prevent compiling templates more than once, most of the compilation is cached.
-   *
-   * The default cache strategy is to clear the cache on every macrotask.
-   * If the default cache is overwritten it is up to the user to determine when the
-   * cache is cleared.
    */
   cache: new Map(),
 

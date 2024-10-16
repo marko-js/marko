@@ -50,6 +50,7 @@ const baseConfig: compiler.Config = {
 
 const htmlConfig: compiler.Config = { ...baseConfig, output: "html" };
 const domConfig: compiler.Config = { ...baseConfig, output: "dom" };
+const snapCache = new Map<unknown, unknown>();
 
 describe("translator-tags", () => {
   before(() => {
@@ -107,6 +108,7 @@ describe("translator-tags", () => {
         });
         const finalConfig: compiler.Config = {
           ...compilerConfig,
+          cache: snapCache, // these need a different cache since they `resolveVirtualDependency` is relevant to the compile cache.
           resolveVirtualDependency(_filename, { code, virtualPath }) {
             return `virtual:${virtualPath} ${code}`;
           },

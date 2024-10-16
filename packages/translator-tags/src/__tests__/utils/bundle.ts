@@ -16,6 +16,7 @@ export async function bundle(
   entryTemplate: string,
   compilerConfig: compiler.Config,
 ) {
+  const cache = new Map<unknown, unknown>();
   const optimizeKnownTemplates: string[] = await glob(
     path.join(path.dirname(entryTemplate), "**/*.marko"),
     { absolute: true },
@@ -77,6 +78,7 @@ export async function bundle(
             return (
               await compiler.compile(code, id, {
                 ...compilerConfig,
+                cache,
                 optimize: true,
                 optimizeKnownTemplates,
                 output: isHydrate ? "hydrate" : "dom",
