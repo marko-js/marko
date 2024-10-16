@@ -1,5 +1,12 @@
 # @marko/translator-tags
 
+## 0.2.11
+
+### Patch Changes
+
+- [#2322](https://github.com/marko-js/marko/pull/2322) [`420405d`](https://github.com/marko-js/marko/commit/420405db952fcedafed0cb48d86620ca53bb2f1d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove the default cache auto clearing behavior.
+  Previously the default compiler "cache" was cleared every setImmediate. This was to support server hot reloading in apps using `Lasso` (and `browser-refresh`). Since we brought back support for `browser-refresh` in the Marko package we now clear this cache when browser-refresh triggers a change making the default cache clearing redundant.
+
 ## 0.2.10
 
 ### Patch Changes
