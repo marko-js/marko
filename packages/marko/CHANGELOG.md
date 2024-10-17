@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.35.26
+
+### Patch Changes
+
+- [#2324](https://github.com/marko-js/marko/pull/2324) [`4776e33`](https://github.com/marko-js/marko/commit/4776e334ed8f4f70559042d28007dfa447942693) Thanks [@rturnq](https://github.com/rturnq)! - Allow child template analysis on manually imported tags in translator-default and optimize direct reference of imported tag
+
+- Updated dependencies [[`4776e33`](https://github.com/marko-js/marko/commit/4776e334ed8f4f70559042d28007dfa447942693)]:
+  - @marko/translator-default@6.0.19
+  - @marko/compiler@5.37.19
+
 ## 5.35.25
 
 ### Patch Changes
