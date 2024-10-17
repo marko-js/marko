@@ -406,6 +406,10 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   tag.remove();
 }
 
+function toTitleCase(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
   const {
     node,
@@ -422,12 +426,20 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
   }
 
   if (!relativePath) {
+    const nodeName = nameIsString
+      ? (node.name as t.StringLiteral).value
+      : node.name;
+    if (nameIsString && tag.scope.getBinding(nodeName as string)) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError(
+          `Local variables must in a dynamic tag unless they are PascalCase. Use \`<\${${nodeName}}/>\` or rename to \`${toTitleCase(nodeName as string)}\`.`,
+        );
+    }
     throw tag
       .get("name")
       .buildCodeFrameError(
-        `Unable to find entry point for custom tag \`${
-          nameIsString ? (node.name as t.StringLiteral).value : node.name
-        }\`.`,
+        `Unable to find entry point for custom tag \`${nodeName}\`.`,
       );
   }
 
