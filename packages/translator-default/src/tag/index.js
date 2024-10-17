@@ -6,6 +6,7 @@ import {
   isDynamicTag,
   isMacroTag,
   isNativeTag,
+  resolveTagImport,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import nodePath from "path";
@@ -145,6 +146,7 @@ function findDynamicTagTypes(root) {
     empty: false,
     component: false,
   };
+  let tagNameImported;
 
   let path;
   while ((path = pending.pop())) {
@@ -199,11 +201,24 @@ function findDynamicTagTypes(root) {
           }
 
           if (binding.kind === "module") {
-            const importSourcePath = binding.path.parentPath.get("source");
+            const importSource = binding.path.parent.source;
             if (
-              importSourcePath.isStringLiteral() &&
-              isMarkoFile(importSourcePath.get("value").node)
+              t.isStringLiteral(importSource) &&
+              isMarkoFile(importSource.value)
             ) {
+              const resolvedImport =
+                resolveTagImport(root.parentPath, importSource.value) ||
+                importSource.value;
+
+              if (tagNameImported === undefined) {
+                tagNameImported = resolvedImport;
+              } else if (
+                tagNameImported &&
+                tagNameImported !== resolvedImport
+              ) {
+                tagNameImported = null;
+              }
+
               types.component = true;
             } else {
               return false;
@@ -236,6 +251,10 @@ function findDynamicTagTypes(root) {
       default:
         return false;
     }
+  }
+
+  if (tagNameImported && !types.string) {
+    (root.parent.extra ??= {}).tagNameImported = tagNameImported;
   }
 
   return types;

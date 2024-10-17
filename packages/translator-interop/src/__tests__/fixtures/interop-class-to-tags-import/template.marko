@@ -1,0 +1,15 @@
+import TagsCounter from "./components/tags-counter.marko";
+
+class {
+  onCreate() {
+    this.state = { count: 0 };
+  }
+  increment() {
+    this.state.count++;
+  }
+}
+<button id="class" onClick("increment")>
+  ${state.count}
+</button>
+<TagsCounter count=state.count/>
+<init-components/>
