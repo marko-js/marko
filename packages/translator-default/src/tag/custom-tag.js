@@ -4,6 +4,7 @@ import {
   importDefault,
   loadFileForTag,
   resolveRelativePath,
+  resolveTagImport,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 
@@ -38,8 +39,16 @@ export default function (path, isNullable) {
       }
     }
 
-    let binding = path.scope.getBinding(tagName);
+    let binding = !relativePath && path.scope.getBinding(tagName);
     if (binding && !binding.identifier.loc) binding = null;
+
+    if (binding && binding.kind === "module") {
+      const importSource = binding.path.parent.source;
+      relativePath =
+        resolveTagImport(path, importSource.value) || importSource.value;
+      (node.extra ??= {}).tagNameImported = relativePath;
+      binding = undefined;
+    }
 
     const childFile = loadFileForTag(path);
     const childProgram = childFile?.ast.program;
