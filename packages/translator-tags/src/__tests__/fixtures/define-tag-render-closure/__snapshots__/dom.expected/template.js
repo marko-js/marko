@@ -17,10 +17,10 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/2"], x);
   _queueEffect(_scope, _x_effect);
 }, () => _dynamicSubscribers("x"));
-const _myTag = /* @__PURE__ */_value("myTag", (_scope, myTag) => _dynamicTagName(_scope, myTag), () => _dynamicTagName);
+const _MyTag = /* @__PURE__ */_value("MyTag", (_scope, MyTag) => _dynamicTagName(_scope, MyTag), () => _dynamicTagName);
 export function _setup_(_scope) {
   _x(_scope, 1);
-  _myTag(_scope, {
+  _MyTag(_scope, {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _defineBody)
   });
 }

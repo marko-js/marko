@@ -25,6 +25,7 @@ export enum TagNameType {
 }
 
 const MARKO_FILE_REG = /^<.*>$|\.marko$/;
+const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
 
 export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
   const extra = (tag.node.extra ??= {});
@@ -43,7 +44,10 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
       if (extra.tagNameType === TagNameType.CustomTag) {
         const bindingName = name.node.value;
         const bindingIdentifier = tag.scope.getBinding(bindingName)?.identifier;
-        if (bindingIdentifier) {
+        if (
+          bindingIdentifier &&
+          TAG_NAME_IDENTIFIER_REG.test(bindingIdentifier.name)
+        ) {
           const tagIdentifier = withPreviousLocation(
             t.identifier(bindingName),
             name.node,

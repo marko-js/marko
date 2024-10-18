@@ -422,12 +422,21 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
   }
 
   if (!relativePath) {
+    const nodeName = nameIsString
+      ? (node.name as t.StringLiteral).value
+      : node.name;
+    if (nameIsString && tag.scope.getBinding(nodeName as string)) {
+      const str = nodeName as string;
+      throw tag
+        .get("name")
+        .buildCodeFrameError(
+          `Local variables must in a dynamic tag unless they are PascalCase. Use \`<\${${str}}/>\` or rename to \`${str.charAt(0).toUpperCase() + str.slice(1)}\`.`,
+        );
+    }
     throw tag
       .get("name")
       .buildCodeFrameError(
-        `Unable to find entry point for custom tag \`${
-          nameIsString ? (node.name as t.StringLiteral).value : node.name
-        }\`.`,
+        `Unable to find entry point for custom tag \`${nodeName}\`.`,
       );
   }
 

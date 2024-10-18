@@ -5,15 +5,15 @@ const _number$defineBody = /* @__PURE__ */_value("number", (_scope, number) => _
 const _pattern_$defineBody = /* @__PURE__ */_value("_pattern_", (_scope, _pattern_) => _number$defineBody(_scope, _pattern_.number));
 const _params_2$defineBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _pattern_$defineBody(_scope, _params_2[0]));
 const _defineBody = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-render-attr-signal/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<div> </div>", /* next(1), get */"D ", void 0, void 0, void 0, () => _params_2$defineBody));
-const _myTag_input = _dynamicTagAttrs("#text/0");
+const _MyTag_input = _dynamicTagAttrs("#text/0");
 const _expr_Text_x = /* @__PURE__ */_intersection(2, _scope => {
   const {
     x
   } = _scope;
-  _myTag_input(_scope, () => ({
+  _MyTag_input(_scope, () => ({
     number: x
   }));
-}, () => _myTag_input);
+}, () => _MyTag_input);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, () => _expr_Text_x);
 const _onClick = _scope => {
   const {
@@ -28,10 +28,10 @@ const _x = /* @__PURE__ */_value("x", (_scope, x) => {
   _data(_scope["#text/2"], x);
   _queueEffect(_scope, _x_effect);
 }, () => _expr_Text_x);
-const _myTag = /* @__PURE__ */_value("myTag", (_scope, myTag) => _dynamicTagName(_scope, myTag), () => _dynamicTagName);
+const _MyTag = /* @__PURE__ */_value("MyTag", (_scope, MyTag) => _dynamicTagName(_scope, MyTag), () => _dynamicTagName);
 export function _setup_(_scope) {
   _x(_scope, 1);
-  _myTag(_scope, {
+  _MyTag(_scope, {
     renderBody: /* @__PURE__ */_bindRenderer(_scope, _defineBody)
   });
 }
