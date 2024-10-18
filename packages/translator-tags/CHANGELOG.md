@@ -1,5 +1,11 @@
 # @marko/translator-tags
 
+## 0.2.12
+
+### Patch Changes
+
+- [#2328](https://github.com/marko-js/marko/pull/2328) [`13d039f`](https://github.com/marko-js/marko/commit/13d039f3075582796df81808b0d76d030a40920f) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Only allow PascalCase for local variables as tags
+
 ## 0.2.11
 
 ### Patch Changes
