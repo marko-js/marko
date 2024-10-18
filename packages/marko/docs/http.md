@@ -31,4 +31,4 @@ server.listen(port, () => {
 ### BYOB (Bring your own bundler)
 
 For the large portion of Marko's API a bundler is required. The example code above assumes that Marko templates can be loaded in your environment.
-Marko supports a number of bundlers, [take a look through our supported bundlers](#bundler-integrations) and pick what works best for you.
+Marko supports a number of bundlers, [take a look through our supported bundlers](https://markojs.com/docs/bundler-integrations-overview/) and pick what works best for you.
