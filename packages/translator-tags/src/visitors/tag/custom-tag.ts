@@ -406,10 +406,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   tag.remove();
 }
 
-function toTitleCase(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
 export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
   const {
     node,
@@ -430,10 +426,11 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
       ? (node.name as t.StringLiteral).value
       : node.name;
     if (nameIsString && tag.scope.getBinding(nodeName as string)) {
+      const str = nodeName as string;
       throw tag
         .get("name")
         .buildCodeFrameError(
-          `Local variables must in a dynamic tag unless they are PascalCase. Use \`<\${${nodeName}}/>\` or rename to \`${toTitleCase(nodeName as string)}\`.`,
+          `Local variables must in a dynamic tag unless they are PascalCase. Use \`<\${${str}}/>\` or rename to \`${str.charAt(0).toUpperCase() + str.slice(1)}\`.`,
         );
     }
     throw tag
