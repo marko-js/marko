@@ -124,12 +124,9 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     const tagName = node.name.value;
     const relativePath = getTagRelativePath(tag);
 
-    tagIdentifier = t.memberExpression(
-      importDefault(file, relativePath, tagName),
-      t.identifier("_"),
-    );
+    tagIdentifier = importDefault(file, relativePath, tagName);
   } else {
-    tagIdentifier = t.memberExpression(node.name, t.identifier("_"));
+    tagIdentifier = node.name;
   }
 
   const tagVar = node.var;

@@ -29,14 +29,10 @@ export type Renderer = {
   ___owner: Scope | undefined;
 };
 
-export type RendererOrElementName =
-  | Renderer
-  | (string & Record<keyof Renderer, undefined>);
-
 type SetupFn = (scope: Scope) => void;
 
 export function createScopeWithRenderer(
-  renderer: RendererOrElementName,
+  renderer: Renderer,
   $global: Scope["___global"],
   ownerScope?: Scope,
 ) {
@@ -52,11 +48,26 @@ export function createScopeWithRenderer(
   return newScope;
 }
 
-export function initRenderer(renderer: RendererOrElementName, scope: Scope) {
-  const dom =
-    typeof renderer === "string"
-      ? document.createElement(renderer)
-      : renderer.___clone();
+export function createScopeWithTagNameOrRenderer(
+  tagNameOrRenderer: Renderer | string,
+  $global: Scope["___global"],
+  ownerScope?: Scope,
+) {
+  if (typeof tagNameOrRenderer !== "string") {
+    return createScopeWithRenderer(tagNameOrRenderer, $global, ownerScope);
+  }
+
+  const newScope = createScope($global);
+  newScope._ = newScope.___cleanupOwner = ownerScope;
+  newScope[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : 0] =
+    newScope.___startNode =
+    newScope.___endNode =
+      document.createElement(tagNameOrRenderer);
+  return newScope;
+}
+
+export function initRenderer(renderer: Renderer, scope: Scope) {
+  const dom = renderer.___clone();
   walk(
     dom.nodeType === NodeType.DocumentFragment ? dom.firstChild! : dom,
     renderer.___walks ?? " ",
@@ -85,18 +96,8 @@ export function dynamicTagAttrs(
     scope: Scope,
     attrsOrOp: (() => Record<string, unknown>) | SignalOp,
   ) => {
-    type WithOptional<T, Keys extends string> = T extends T
-      ? T & { [K in Exclude<Keys, keyof T>]?: never }
-      : never;
-
-    let renderer:
-      | WithOptional<
-          Renderer | { default: { _: Renderer } } | { _: Renderer },
-          "default" | "_"
-        >
-      | string
-      | undefined
-      | null = scope[nodeAccessor + AccessorChar.ConditionalRenderer];
+    const renderer: Renderer | string | undefined =
+      scope[nodeAccessor + AccessorChar.ConditionalRenderer];
 
     if (!renderer || renderer === renderBody || attrsOrOp === DIRTY) {
       return;
@@ -117,24 +118,21 @@ export function dynamicTagAttrs(
         elementAccessor,
         renderBody && bindRenderer(scope, renderBody),
       );
-    } else {
-      renderer = renderer.default ? renderer.default._ : renderer._ || renderer;
-      if (renderer.___args) {
-        const attributes = attrsOrOp();
-        renderer.___args(
-          childScope,
-          inputIsArgs
-            ? attributes
-            : [
-                renderBody
-                  ? {
-                      ...attributes,
-                      renderBody: bindRenderer(scope, renderBody),
-                    }
-                  : attributes,
-              ],
-        );
-      }
+    } else if (renderer.___args) {
+      const attributes = attrsOrOp();
+      renderer.___args(
+        childScope,
+        inputIsArgs
+          ? attributes
+          : [
+              renderBody
+                ? {
+                    ...attributes,
+                    renderBody: bindRenderer(scope, renderBody),
+                  }
+                : attributes,
+            ],
+      );
     }
   };
 }

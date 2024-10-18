@@ -1,5 +1,5 @@
 import { type Accessor, AccessorChar, type Scope } from "../common/types";
-import type { RendererOrElementName } from "./renderer";
+import type { Renderer } from "./renderer";
 import { bindFunction } from "./scope";
 
 export type Signal = ValueSignal | IntersectionSignal;
@@ -280,11 +280,11 @@ export const tagVarSignal = (scope: Scope, valueOrOp: unknown | SignalOp) =>
   scope[AccessorChar.TagVariable]?.(valueOrOp);
 
 export const renderBodyClosures = (
-  renderBody: RendererOrElementName | undefined,
+  renderBody: Renderer | string | undefined,
   childScope: Scope,
   op: SignalOp,
 ) => {
-  const signals = renderBody?.___closureSignals;
+  const signals = (renderBody as unknown as Renderer)?.___closureSignals;
   if (signals) {
     for (const signal of signals) {
       signal(childScope, op);

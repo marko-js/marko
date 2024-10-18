@@ -85,6 +85,7 @@ export default createTemplate(
     undefined,
     () => args as ValueSignal,
   ),
+  ""
 );
 
 const _ifBody = createRenderer(

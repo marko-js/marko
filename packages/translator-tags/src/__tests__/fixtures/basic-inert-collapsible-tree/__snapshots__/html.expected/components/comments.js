@@ -16,7 +16,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     if (comment.comments) {
       const _scope2_id = _nextScopeId();
       const _childScope = _peekNextScope();
-      _comments._({
+      _comments({
         comments: comment.comments,
         path: id
       });

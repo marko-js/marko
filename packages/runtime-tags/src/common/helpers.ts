@@ -65,3 +65,9 @@ export function alphaEncode(num: number): string {
     ? String.fromCharCode(num < 26 ? num + 97 : num + (65 - 26))
     : alphaEncode((num / 52) | 0) + alphaEncode(num % 52);
 }
+
+export function normalizeDynamicRenderer<Renderer>(
+  value: any,
+): Renderer | string | undefined {
+  if (value) return value.renderBody || value.default || value;
+}

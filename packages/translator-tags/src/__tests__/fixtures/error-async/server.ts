@@ -8,4 +8,4 @@ const renderer = () => {
   write("b");
 };
 
-export default createTemplate(renderer);
+export default createTemplate(renderer, "");

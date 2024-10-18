@@ -10,11 +10,11 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   _register(formatNumber2, "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/formatNumber2");
   const _childScope = _peekNextScope();
-  _counter._({
+  _counter({
     format: formatNumber
   });
   const _childScope2 = _peekNextScope();
-  _counter._({
+  _counter({
     format: formatNumber2
   });
   _writeScope(_scope0_id, {

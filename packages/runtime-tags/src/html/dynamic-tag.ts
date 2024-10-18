@@ -1,6 +1,5 @@
-import type { Renderer } from "../common/types";
 import { attrs } from "./attrs";
-import type { ServerTemplate as Template } from "./template";
+import type { ServerRenderer } from "./template";
 import {
   getScopeId,
   markResumeScopeStart,
@@ -14,12 +13,12 @@ const voidElementsReg =
   /^(?:area|b(?:ase|r)|col|embed|hr|i(?:mg|nput)|link|meta|param|source|track|wbr)$/;
 interface RenderBodyObject {
   [x: PropertyKey]: unknown;
-  renderBody: Renderer;
+  renderBody: ServerRenderer;
 }
 
 export function dynamicTagInput(
   scope: PartialScope,
-  tag: unknown | string | Renderer | RenderBodyObject | Template,
+  tag: unknown | string | ServerRenderer | RenderBodyObject,
   input: Record<string, unknown>,
   renderBody?: () => void,
   tagVar?: unknown,
@@ -63,7 +62,7 @@ export function dynamicTagInput(
 
 export function dynamicTagArgs(
   scope: PartialScope,
-  tag: unknown | string | Renderer | RenderBodyObject | Template,
+  tag: unknown | string | ServerRenderer | RenderBodyObject,
   args: unknown[],
 ) {
   if (!tag) return undefined;
@@ -96,12 +95,11 @@ export function dynamicTagArgs(
 }
 
 let getDynamicRenderer = (
-  tag: unknown | string | Renderer | RenderBodyObject | Template,
+  tag: unknown | string | ServerRenderer | RenderBodyObject,
 ) =>
-  (tag as { _?: Renderer })._ ||
-  (tag as { renderBody?: Renderer }).renderBody ||
-  (tag as Renderer);
-export let createRenderer = (fn: Renderer) => fn;
+  (tag as { renderBody?: ServerRenderer }).renderBody ||
+  (tag as ServerRenderer);
+export let createRenderer = (fn: ServerRenderer) => fn;
 
 export function patchDynamicTag(
   newGetDynamicRenderer: typeof getDynamicRenderer,

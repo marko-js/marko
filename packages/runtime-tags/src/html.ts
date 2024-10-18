@@ -1,3 +1,4 @@
+export { normalizeDynamicRenderer } from "./common/helpers";
 export { attr, attrs, classAttr, styleAttr } from "./html/attrs";
 export { compat } from "./html/compat";
 export { escapeScript, escapeStyle, escapeXML, toString } from "./html/content";

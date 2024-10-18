@@ -6,7 +6,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     name
   } = input;
   const _childScope = _peekNextScope();
-  _layout._({
+  _layout({
     renderBody: _register(/* @__PURE__ */_createRenderer(() => {
       const _scope1_id = _nextScopeId();
       _write(`<h1>Hello <!>${_escapeXML(name)}${_markResumeNode(_scope1_id, "#text/0")}</h1>`);

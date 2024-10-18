@@ -3,7 +3,7 @@ import _child from "./components/child/index.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const _childScope = _peekNextScope();
-  _child._({
+  _child({
     name: "World",
     renderBody: _register(/* @__PURE__ */_createRenderer(() => {
       const _scope1_id = _nextScopeId();

@@ -4,7 +4,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   _write("<div>");
   const _childScope = _peekNextScope();
-  _counter._({});
+  _counter({});
   _write("</div>");
   _writeScope(_scope0_id, {
     "#childScope/0": _writeExistingScope(_childScope)

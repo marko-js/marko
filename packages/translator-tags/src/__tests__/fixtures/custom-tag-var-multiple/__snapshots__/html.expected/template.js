@@ -3,7 +3,7 @@ import { peekNextScope as _peekNextScope, writeExistingScope as _writeExistingSc
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const _childScope = _peekNextScope();
-  const data = _child._({}, _register(() => {}, "packages/translator-tags/src/__tests__/fixtures/custom-tag-var-multiple/template.marko_0_data", _scope0_id));
+  const data = _child({}, _register(() => {}, "packages/translator-tags/src/__tests__/fixtures/custom-tag-var-multiple/template.marko_0_data", _scope0_id));
   _write(`<div>${_escapeXML(data)}${_markResumeNode(_scope0_id, "#text/1")}</div>`);
   _writeScope(_scope0_id, {
     "#childScope/0": _writeExistingScope(_childScope)

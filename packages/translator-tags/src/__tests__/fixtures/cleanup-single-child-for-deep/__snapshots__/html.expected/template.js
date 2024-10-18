@@ -18,7 +18,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     let _i3 = _i4++;
     _write("<div>");
     const _childScope = _peekNextScope();
-    _child._({
+    _child({
       write: write,
       name: `${outerItem}`
     });
@@ -30,7 +30,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       let _i = _i2++;
       _write("<div>");
       const _childScope2 = _peekNextScope();
-      _child._({
+      _child({
         write: write,
         name: `${outerItem}.${middleItem}`
       });

@@ -12,7 +12,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     const _scope1_id = _nextScopeId();
     _write(`${_markResumeScopeStart(_scope1_id)}`);
     const _childScope = _peekNextScope();
-    _child._({
+    _child({
       write: _register(function (state) {
         el().innerHTML = state;
       }, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-shallow/template.marko_1/write", _scope1_id)

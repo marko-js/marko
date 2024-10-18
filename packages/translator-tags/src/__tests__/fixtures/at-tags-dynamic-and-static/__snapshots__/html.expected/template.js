@@ -12,7 +12,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _item.push({});
   }
   const _childScope = _peekNextScope();
-  _hello._({
+  _hello({
     item: _item,
     other: {}
   });

@@ -84,7 +84,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     }
   });
   const _childScope = _peekNextScope();
-  _hello._({
+  _hello({
     list: {
       item: _item
     },

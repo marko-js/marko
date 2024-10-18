@@ -1,7 +1,5 @@
 import type { Renderer as ClientRenderer } from "../dom/renderer";
 
-export type Renderer = (...args: unknown[]) => unknown;
-
 export type CommentWalker = TreeWalker & Record<string, Comment>;
 
 export type Scope<
@@ -104,7 +102,6 @@ export interface TemplateInput extends Input {
 }
 
 export interface Template {
-  _: unknown;
   mount(
     input: Input,
     reference: ParentNode & Node,

@@ -11,7 +11,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     }), "packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_1_renderer")
   };
   const _childScope = _peekNextScope();
-  _child._({
+  _child({
     thing: myThing
   });
   _write(`<button>Toggle</button>${_markResumeNode(_scope0_id, "#button/1")}`);

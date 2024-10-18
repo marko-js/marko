@@ -17,7 +17,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     const _scope1_id = _nextScopeId();
     _write("<div>");
     const _childScope = _peekNextScope();
-    _child._({
+    _child({
       write: write,
       name: "Outer"
     });
@@ -26,7 +26,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       const _scope2_id = _nextScopeId();
       _write("<div>");
       const _childScope2 = _peekNextScope();
-      _child._({
+      _child({
         write: write,
         name: "Middle"
       });
@@ -34,7 +34,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       if (showInner) {
         const _scope3_id = _nextScopeId();
         const _childScope3 = _peekNextScope();
-        _child._({
+        _child({
           write: write,
           name: "Inner"
         });

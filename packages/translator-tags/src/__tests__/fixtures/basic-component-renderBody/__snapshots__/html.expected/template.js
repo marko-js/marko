@@ -4,7 +4,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const clickCount = 0;
   const _childScope = _peekNextScope();
-  _myButton._({
+  _myButton({
     onClick: _register(function () {
       clickCount++;
     }, "packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_0/onClick", _scope0_id),

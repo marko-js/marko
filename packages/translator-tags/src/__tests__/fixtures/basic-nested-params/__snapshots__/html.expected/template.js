@@ -6,12 +6,12 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const y = 2;
   _write(`<button>Inc</button>${_markResumeNode(_scope0_id, "#button/0")}`);
   const _childScope2 = _peekNextScope();
-  _child._({
+  _child({
     value: x,
     renderBody: _register(/* @__PURE__ */_createRenderer(outer => {
       const _scope1_id = _nextScopeId();
       const _childScope = _peekNextScope();
-      _child._({
+      _child({
         value: y,
         renderBody: _register(/* @__PURE__ */_createRenderer(inner => {
           const _scope2_id = _nextScopeId();

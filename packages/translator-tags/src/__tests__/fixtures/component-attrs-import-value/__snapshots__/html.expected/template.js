@@ -4,7 +4,7 @@ import { peekNextScope as _peekNextScope, writeExistingScope as _writeExistingSc
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const _childScope = _peekNextScope();
-  _counter._({
+  _counter({
     format: formatNumber
   });
   _writeScope(_scope0_id, {
