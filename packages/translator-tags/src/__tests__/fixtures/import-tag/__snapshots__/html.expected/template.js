@@ -1,14 +1,14 @@
 import "./foo";
 import { b as c } from "./bar";
-import bazComp from "./components/baz.marko";
+import Baz from "./components/baz.marko";
 import { peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, escapeXML as _escapeXML, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _baz from "./components/baz.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const _childScope = _peekNextScope();
-  bazComp._({});
+  Baz._({});
   const _childScope2 = _peekNextScope();
-  bazComp._({});
+  Baz._({});
   const _childScope3 = _peekNextScope();
   _baz._({});
   _write(`${_escapeXML(c)}`);
