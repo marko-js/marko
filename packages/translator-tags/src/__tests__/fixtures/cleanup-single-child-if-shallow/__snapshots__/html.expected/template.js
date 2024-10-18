@@ -11,7 +11,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   if (show) {
     const _scope1_id = _nextScopeId();
     const _childScope = _peekNextScope();
-    _child._({
+    _child({
       write: _register(function (state) {
         el().innerHTML = state;
       }, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-shallow/template.marko_1/write", _scope1_id)

@@ -4,7 +4,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const count = 0;
   const _childScope = _peekNextScope();
-  _displayIntersection._({
+  _displayIntersection({
     value: count
   });
   _write(`<button></button>${_markResumeNode(_scope0_id, "#button/1")}`);

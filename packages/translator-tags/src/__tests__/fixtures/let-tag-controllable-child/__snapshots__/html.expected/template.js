@@ -4,7 +4,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const source = 1;
   const _childScope = _peekNextScope();
-  _child._({
+  _child({
     value: source,
     valueChange: _register(function (_new_source) {
       source = _new_source;

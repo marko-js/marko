@@ -7,7 +7,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const c = 3;
   _write(`<button></button>${_markResumeNode(_scope0_id, "#button/0")}`);
   const _childScope = _peekNextScope();
-  _customTag._({
+  _customTag({
     renderBody: _register(/* @__PURE__ */_createRenderer(() => {
       const _scope1_id = _nextScopeId();
       _write(`${_escapeXML(a)} ${_escapeXML(b)} <!>${_escapeXML(c)}${_markResumeNode(_scope1_id, "#text/2")}`);

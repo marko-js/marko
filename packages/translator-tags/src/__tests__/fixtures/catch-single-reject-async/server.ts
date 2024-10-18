@@ -24,4 +24,4 @@ const renderer = () => {
   write("g");
 };
 
-export default createTemplate(renderer);
+export default createTemplate(renderer, "");

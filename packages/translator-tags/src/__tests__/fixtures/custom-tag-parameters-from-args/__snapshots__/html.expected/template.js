@@ -3,7 +3,7 @@ import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const _childScope = _peekNextScope();
-  _customTag._({
+  _customTag({
     renderBody: _register(/* @__PURE__ */_createRenderer((count, count2) => {
       const _scope1_id = _nextScopeId();
       _write(`<div>Counts: <!>${_escapeXML(count)}${_markResumeNode(_scope1_id, "#text/0")},<!>${_escapeXML(count2)}${_markResumeNode(_scope1_id, "#text/1")}</div>`);

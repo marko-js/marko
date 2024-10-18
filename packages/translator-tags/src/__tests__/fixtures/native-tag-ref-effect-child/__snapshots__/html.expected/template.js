@@ -7,7 +7,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   };
   _write(`<div></div>${_markResumeNode(_scope0_id, "#div/0")}`);
   const _childScope = _peekNextScope();
-  _helloSetter._({
+  _helloSetter({
     el: el
   });
   _writeScope(_scope0_id, {

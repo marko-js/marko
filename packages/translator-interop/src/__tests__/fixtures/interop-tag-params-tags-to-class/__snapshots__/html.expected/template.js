@@ -1,4 +1,4 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, dynamicTagInput as _dynamicTagInput, peekNextScope as _peekNextScope, markResumeControlEnd as _markResumeControlEnd, writeExistingScope as _writeExistingScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, dynamicTagInput as _dynamicTagInput, peekNextScope as _peekNextScope, markResumeControlEnd as _markResumeControlEnd, writeExistingScope as _writeExistingScope, normalizeDynamicRenderer as _normalizeDynamicRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _classLayout from "./components/class-layout.marko";
 import { s as _s } from "marko/src/runtime/helpers/tags-compat/html-debug.mjs";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
@@ -20,7 +20,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _writeScope(_scope0_id, {
     "multiplier": multiplier,
     "#text/0!": _writeExistingScope(_dynamicScope),
-    "#text/0(": _classLayout
+    "#text/0(": _normalizeDynamicRenderer(_classLayout)
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko");

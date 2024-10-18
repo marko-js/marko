@@ -4,11 +4,11 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const x = "y";
   const _childScope = _peekNextScope();
-  _child._({
+  _child({
     value: 3
   });
   const _childScope2 = _peekNextScope();
-  _child._({
+  _child({
     value: x
   });
   _writeScope(_scope0_id, {

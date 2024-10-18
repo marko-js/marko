@@ -25,4 +25,4 @@ const renderer = () => {
   });
 };
 
-export default createTemplate(renderer);
+export default createTemplate(renderer, "");

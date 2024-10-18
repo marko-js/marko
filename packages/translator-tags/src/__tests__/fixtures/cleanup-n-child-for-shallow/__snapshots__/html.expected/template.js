@@ -18,7 +18,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     let _i = _i2++;
     _write(`${_markResumeScopeStart(_scope1_id, _k++)}`);
     const _childScope = _peekNextScope();
-    _child._({
+    _child({
       write: write,
       name: item
     });

@@ -34,4 +34,4 @@ const renderer = () => {
   write("l");
 };
 
-export default createTemplate(renderer);
+export default createTemplate(renderer, "");

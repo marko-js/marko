@@ -4,10 +4,10 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   _write("<div>");
   const _childScope = _peekNextScope();
-  const divName = _parentEl._({}, _register(() => {}, "packages/translator-tags/src/__tests__/fixtures/html-comment-var/template.marko_0_divName", _scope0_id));
+  const divName = _parentEl({}, _register(() => {}, "packages/translator-tags/src/__tests__/fixtures/html-comment-var/template.marko_0_divName", _scope0_id));
   _write(`${_escapeXML(divName)}${_markResumeNode(_scope0_id, "#text/1")}</div><span>`);
   const _childScope2 = _peekNextScope();
-  const spanName = _parentEl._({}, _register(() => {}, "packages/translator-tags/src/__tests__/fixtures/html-comment-var/template.marko_0_spanName", _scope0_id));
+  const spanName = _parentEl({}, _register(() => {}, "packages/translator-tags/src/__tests__/fixtures/html-comment-var/template.marko_0_spanName", _scope0_id));
   _write(`${_escapeXML(spanName)}${_markResumeNode(_scope0_id, "#text/3")}</span>`);
   _writeScope(_scope0_id, {
     "#childScope/0": _writeExistingScope(_childScope),

@@ -3,9 +3,9 @@ import { peekNextScope as _peekNextScope, writeExistingScope as _writeExistingSc
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const _childScope = _peekNextScope();
-  BazComp._({});
+  BazComp({});
   const _childScope2 = _peekNextScope();
-  BazComp._({});
+  BazComp({});
   _writeScope(_scope0_id, {
     "#childScope/0": _writeExistingScope(_childScope),
     "#childScope/1": _writeExistingScope(_childScope2)

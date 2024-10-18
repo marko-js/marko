@@ -5,7 +5,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const count = 0;
   _write("<section>");
   const _childScope = _peekNextScope();
-  _child._({});
+  _child({});
   _write(`</section><div>${_escapeXML(count)}${_markResumeNode(_scope0_id, "#text/1")}</div>`);
   _writeScope(_scope0_id, {
     "#childScope/0": _writeExistingScope(_childScope)

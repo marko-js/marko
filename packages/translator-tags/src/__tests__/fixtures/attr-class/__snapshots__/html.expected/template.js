@@ -1,4 +1,4 @@
-import { classAttr as _classAttr, markResumeNode as _markResumeNode, write as _write, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, createRenderer as _createRenderer, register as _register, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { classAttr as _classAttr, markResumeNode as _markResumeNode, write as _write, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, createRenderer as _createRenderer, register as _register, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, normalizeDynamicRenderer as _normalizeDynamicRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -11,14 +11,14 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     d
   }])}></div>${_markResumeNode(_scope0_id, "#div/0")}<div class="a b"></div><div class="a b c"></div>`);
   const _childScope = _peekNextScope();
-  _customTag._({
+  _customTag({
     class: ["a", {
       b: c,
       d
     }]
   });
   const _childScope2 = _peekNextScope();
-  _customTag._({
+  _customTag({
     class: ["a", false, "b"]
   });
   const _dynamicScope = _peekNextScope();
@@ -51,7 +51,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     "#childScope/1": _writeExistingScope(_childScope),
     "#childScope/2": _writeExistingScope(_childScope2),
     "#text/3!": _writeExistingScope(_dynamicScope),
-    "#text/3(": input.test
+    "#text/3(": _normalizeDynamicRenderer(input.test)
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko");

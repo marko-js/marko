@@ -1,4 +1,4 @@
-import { write as _write, createRenderer as _createRenderer, register as _register, nextScopeId as _nextScopeId, dynamicTagInput as _dynamicTagInput, peekNextScope as _peekNextScope, markResumeControlEnd as _markResumeControlEnd, writeExistingScope as _writeExistingScope, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { write as _write, createRenderer as _createRenderer, register as _register, nextScopeId as _nextScopeId, dynamicTagInput as _dynamicTagInput, peekNextScope as _peekNextScope, markResumeControlEnd as _markResumeControlEnd, writeExistingScope as _writeExistingScope, normalizeDynamicRenderer as _normalizeDynamicRenderer, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const {
@@ -25,7 +25,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}`);
   _writeScope(_scope0_id, {
     "#text/0!": _writeExistingScope(_dynamicScope),
-    "#text/0(": x
+    "#text/0(": _normalizeDynamicRenderer(x)
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic-tag-parent/template.marko");

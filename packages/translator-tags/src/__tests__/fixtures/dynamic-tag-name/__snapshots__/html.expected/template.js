@@ -1,6 +1,6 @@
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { dynamicTagInput as _dynamicTagInput, peekNextScope as _peekNextScope, markResumeControlEnd as _markResumeControlEnd, writeExistingScope as _writeExistingScope, write as _write, attr as _attr, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { dynamicTagInput as _dynamicTagInput, peekNextScope as _peekNextScope, markResumeControlEnd as _markResumeControlEnd, writeExistingScope as _writeExistingScope, normalizeDynamicRenderer as _normalizeDynamicRenderer, write as _write, attr as _attr, markResumeNode as _markResumeNode, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, writeScope as _writeScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const {
@@ -49,7 +49,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _tagName3 = showTagA && tagA;
   _write(`${_markResumeControlEnd(_scope0_id, "#text/5")}`);
   const _childScope = _peekNextScope();
-  if (_tagName3._) _tagName3._({
+  if (_tagName3) _tagName3({
     class: ["a", "b"],
     other: other
   });
@@ -59,7 +59,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     const _scope1_id = _nextScopeId();
     _write("Body content");
   }), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer");
-  if (_tagName4._) _tagName4._({
+  if (_tagName4) _tagName4({
     class: ["a", "b"],
     other: other
   });else _renderBody();
@@ -85,19 +85,19 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _writeScope(_scope0_id, {
     "other": other,
     "#text/0!": _writeExistingScope(_dynamicScope),
-    "#text/0(": renderBody,
+    "#text/0(": _normalizeDynamicRenderer(renderBody),
     "#text/1!": _writeExistingScope(_dynamicScope2),
-    "#text/1(": x,
+    "#text/1(": _normalizeDynamicRenderer(x),
     "#text/4!": _writeExistingScope(_dynamicScope3),
-    "#text/4(": isLarge ? "h1" : "h2",
+    "#text/4(": _normalizeDynamicRenderer(isLarge ? "h1" : "h2"),
     "#text/5!": _writeExistingScope(_dynamicScope4),
-    "#text/5(": showTagA ? tagA : tagB,
+    "#text/5(": _normalizeDynamicRenderer(showTagA ? tagA : tagB),
     "#childScope/6": _writeExistingScope(_childScope),
     "#childScope/7": _writeExistingScope(_childScope2),
     "#text/8!": _writeExistingScope(_dynamicScope5),
-    "#text/8(": tag || tagA,
+    "#text/8(": _normalizeDynamicRenderer(tag || tagA),
     "#text/9!": _writeExistingScope(_dynamicScope6),
-    "#text/9(": _tagName5
+    "#text/9(": _normalizeDynamicRenderer(_tagName5)
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko");

@@ -3,7 +3,7 @@ import _customTag from "./components/custom-tag.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const _childScope = _peekNextScope();
-  _customTag._({
+  _customTag({
     name: "hello",
     renderBody: _register(/* @__PURE__ */_createRenderer(({
       count,

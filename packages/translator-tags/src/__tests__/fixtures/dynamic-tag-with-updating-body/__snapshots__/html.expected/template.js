@@ -1,5 +1,5 @@
 import _counter from "./components/counter.marko";
-import { peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, normalizeDynamicRenderer as _normalizeDynamicRenderer, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const tagName = "div";
@@ -7,7 +7,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _dynamicTagInput(_dynamicScope, tagName, {}, _register(/* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     const _childScope = _peekNextScope();
-    _counter._({});
+    _counter({});
     _writeScope(_scope1_id, {
       "#childScope/0": _writeExistingScope(_childScope)
     });
@@ -17,7 +17,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _writeScope(_scope0_id, {
     "tagName": tagName,
     "#text/0!": _writeExistingScope(_dynamicScope),
-    "#text/0(": tagName
+    "#text/0(": _normalizeDynamicRenderer(tagName)
   });
 });
 export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko");

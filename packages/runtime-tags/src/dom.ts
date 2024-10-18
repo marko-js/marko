@@ -30,11 +30,7 @@ export {
   run,
   runEffects,
 } from "./dom/queue";
-export {
-  createRenderer,
-  createScopeWithRenderer,
-  dynamicTagAttrs,
-} from "./dom/renderer";
+export { createRenderer, dynamicTagAttrs } from "./dom/renderer";
 export {
   init,
   register,

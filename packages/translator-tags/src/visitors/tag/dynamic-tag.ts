@@ -240,11 +240,15 @@ export default {
         );
         getSerializedScopeProperties(section).set(
           t.stringLiteral(
-            getScopeAccessorLiteral(nodeRef).value + AccessorChar.LoopScopeMap,
+            getScopeAccessorLiteral(nodeRef).value +
+              AccessorChar.ConditionalRenderer,
           ),
-          t.isIdentifier(tagExpression)
-            ? t.identifier(tagExpression.name)
-            : tagExpression,
+          callRuntime(
+            "normalizeDynamicRenderer",
+            t.isIdentifier(tagExpression)
+              ? t.identifier(tagExpression.name)
+              : tagExpression,
+          ),
         );
       } else {
         const section = getSection(tag);

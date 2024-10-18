@@ -6,11 +6,11 @@ import _baz from "./components/baz.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const _childScope = _peekNextScope();
-  Baz._({});
+  Baz({});
   const _childScope2 = _peekNextScope();
-  Baz._({});
+  Baz({});
   const _childScope3 = _peekNextScope();
-  _baz._({});
+  _baz({});
   _write(`${_escapeXML(c)}`);
   _writeScope(_scope0_id, {
     "#childScope/0": _writeExistingScope(_childScope),

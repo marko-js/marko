@@ -17,7 +17,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     const _scope1_id = _nextScopeId();
     let _i = _i2++;
     const _childScope = _peekNextScope();
-    _child._({
+    _child({
       write: write,
       name: item
     });

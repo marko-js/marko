@@ -1,12 +1,5 @@
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
-import type {
-  Input,
-  Renderer,
-  RenderResult,
-  Template,
-  TemplateInput,
-  TemplateInstance,
-} from "../common/types";
+import type { RenderResult, Template, TemplateInput } from "../common/types";
 import {
   Boundary,
   Chunk,
@@ -18,44 +11,48 @@ import {
   State,
 } from "./writer";
 
-export const createTemplate = (renderer: Renderer, id = "") =>
-  register(new ServerTemplate(renderer), id);
+export type ServerRenderer = (...args: unknown[]) => unknown;
 
-export class ServerTemplate implements Template {
-  public _: (input: Input) => void;
-  constructor(renderer: (input: Input) => void) {
-    this._ = renderer;
+export const createTemplate = (
+  renderer: ServerRenderer,
+  templateId: string,
+) => {
+  (renderer as unknown as Template).render = render;
+  (renderer as unknown as any)._ = renderer; // This is added exclusively for the compat layer, maybe someday it can be removed.
+
+  if (MARKO_DEBUG) {
+    (renderer as unknown as Template).mount = () => {
+      throw new Error(
+        `mount() is not implemented for the HTML compilation of a Marko template`,
+      );
+    };
   }
 
-  render(input: TemplateInput = {}) {
-    let { $global } = input;
-    if ($global) {
-      ({ $global, ...input } = input);
-      $global = {
-        runtimeId: DEFAULT_RUNTIME_ID,
-        renderId: DEFAULT_RENDER_ID,
-        ...$global,
-      };
-    } else {
-      $global = {
-        runtimeId: DEFAULT_RUNTIME_ID,
-        renderId: DEFAULT_RENDER_ID,
-      };
-    }
+  return register(renderer as unknown as Template, templateId);
+};
 
-    const head = new Chunk(
-      new Boundary(new State($global as State["$global"]), $global.signal),
-      null,
-    );
-    head.render(this._, input);
-    return new ServerRenderResult(head);
+function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
+  let { $global } = input;
+  if ($global) {
+    ({ $global, ...input } = input);
+    $global = {
+      runtimeId: DEFAULT_RUNTIME_ID,
+      renderId: DEFAULT_RENDER_ID,
+      ...$global,
+    };
+  } else {
+    $global = {
+      runtimeId: DEFAULT_RUNTIME_ID,
+      renderId: DEFAULT_RENDER_ID,
+    };
   }
 
-  mount(): TemplateInstance {
-    throw new Error(
-      `mount() is not implemented for the HTML compilation of a Marko template`,
-    );
-  }
+  const head = new Chunk(
+    new Boundary(new State($global as State["$global"]), $global.signal),
+    null,
+  );
+  head.render(this, input);
+  return new ServerRenderResult(head);
 }
 
 class ServerRenderResult implements RenderResult {

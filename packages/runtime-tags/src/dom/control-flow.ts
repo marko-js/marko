@@ -1,9 +1,10 @@
+import { normalizeDynamicRenderer } from "../common/helpers";
 import { type Accessor, AccessorChar, type Scope } from "../common/types";
 import { reconcile } from "./reconcile";
 import {
   createScopeWithRenderer,
+  createScopeWithTagNameOrRenderer,
   type Renderer,
-  type RendererOrElementName,
 } from "./renderer";
 import {
   destroyScope,
@@ -20,7 +21,6 @@ import {
   type SignalOp,
   type ValueSignal,
 } from "./signals";
-import type { ClientTemplate as Template } from "./template";
 
 type LoopForEach = (
   value: unknown[],
@@ -40,7 +40,7 @@ export let conditional = function conditional(
   nodeAccessor: Accessor,
   fn?: (scope: Scope) => void,
   getIntersection?: () => IntersectionSignal,
-): ValueSignal<RendererOrElementName | undefined> {
+): ValueSignal<Renderer | string | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
   let intersection: IntersectionSignal | undefined =
@@ -51,16 +51,14 @@ export let conditional = function conditional(
     if (newRendererOrOp === DIRTY) return;
 
     let currentRenderer = scope[rendererAccessor] as
-      | RendererOrElementName
+      | Renderer
+      | string
       | undefined;
     let op = newRendererOrOp as SignalOp;
 
     if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
-      const normalizedRenderer = newRendererOrOp
-        ? (newRendererOrOp as any as Template)._ ||
-          (newRendererOrOp as any).renderBody ||
-          newRendererOrOp
-        : undefined;
+      const normalizedRenderer =
+        normalizeDynamicRenderer<Renderer>(newRendererOrOp);
       if (normalizedRenderer !== currentRenderer) {
         currentRenderer = scope[rendererAccessor] = normalizedRenderer;
         setConditionalRenderer(scope, nodeAccessor, normalizedRenderer);
@@ -99,7 +97,7 @@ export function inConditionalScope<S extends Scope>(
 export function setConditionalRenderer<ChildScope extends Scope>(
   scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: RendererOrElementName | undefined,
+  newRenderer: Renderer | string | undefined,
 ) {
   let newScope: ChildScope;
   let prevScope = scope[
@@ -108,7 +106,11 @@ export function setConditionalRenderer<ChildScope extends Scope>(
 
   if (newRenderer) {
     newScope = scope[nodeAccessor + AccessorChar.ConditionalScope] =
-      createScopeWithRenderer(newRenderer, scope.$global, scope) as ChildScope;
+      createScopeWithTagNameOrRenderer(
+        newRenderer,
+        scope.$global,
+        scope,
+      ) as ChildScope;
     prevScope = prevScope || getEmptyScope(scope[nodeAccessor] as Comment);
   } else {
     newScope = getEmptyScope(scope[nodeAccessor] as Comment) as ChildScope;
@@ -127,7 +129,7 @@ export let conditionalOnlyChild = function conditional(
   nodeAccessor: Accessor,
   fn?: (scope: Scope) => void,
   getIntersection?: () => IntersectionSignal,
-): ValueSignal<RendererOrElementName | undefined> {
+): ValueSignal<Renderer | string | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
   let intersection: IntersectionSignal | undefined =
@@ -138,16 +140,14 @@ export let conditionalOnlyChild = function conditional(
     if (newRendererOrOp === DIRTY) return;
 
     let currentRenderer = scope[rendererAccessor] as
-      | RendererOrElementName
+      | Renderer
+      | string
       | undefined;
     let op = newRendererOrOp as SignalOp;
 
     if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
-      const normalizedRenderer = newRendererOrOp
-        ? (newRendererOrOp as any as Template)._ ||
-          (newRendererOrOp as any).renderBody ||
-          newRendererOrOp
-        : undefined;
+      const normalizedRenderer =
+        normalizeDynamicRenderer<Renderer>(newRendererOrOp);
       if (normalizedRenderer !== currentRenderer) {
         currentRenderer = scope[rendererAccessor] = normalizedRenderer;
         setConditionalRendererOnlyChild(
@@ -169,7 +169,7 @@ export let conditionalOnlyChild = function conditional(
 export function setConditionalRendererOnlyChild(
   scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: RendererOrElementName | undefined,
+  newRenderer: Renderer | string | undefined,
 ) {
   const prevScope = scope[
     nodeAccessor + AccessorChar.ConditionalScope
@@ -179,7 +179,7 @@ export function setConditionalRendererOnlyChild(
 
   if (newRenderer) {
     const newScope = (scope[nodeAccessor + AccessorChar.ConditionalScope] =
-      createScopeWithRenderer(newRenderer, scope.$global, scope));
+      createScopeWithTagNameOrRenderer(newRenderer, scope.$global, scope));
     insertBefore(newScope, referenceNode, null);
   }
 
