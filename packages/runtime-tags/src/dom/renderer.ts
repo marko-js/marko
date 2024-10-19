@@ -3,7 +3,6 @@ import {
   AccessorChar,
   NodeType,
   type Scope,
-  WalkCode,
 } from "../common/types";
 import { setConditionalRendererOnlyChild } from "./control-flow";
 import { attrs } from "./dom";
@@ -168,47 +167,17 @@ export function createRenderer(
 }
 
 function _clone(this: Renderer) {
-  let sourceNode: Node | null | undefined = this.___sourceNode;
-  if (!sourceNode) {
-    if (MARKO_DEBUG && this.___template === undefined) {
-      throw new Error(
-        "The renderer does not have a template to clone: " +
-          JSON.stringify(this),
-      );
-    }
-    const walks = this.___walks;
-    // TODO: there's probably a better way to determine if nodes will be inserted before/after the parsed content
-    // and therefore we need to put it in a document fragment, even though only a single node results from the parse
-    const ensureFragment =
-      walks &&
-      walks.length < 4 &&
-      walks.charCodeAt(walks.length - 1) !== WalkCode.Get;
-    this.___sourceNode = sourceNode = parse(
-      this.___template,
-      ensureFragment as boolean,
-    );
-  }
-  return sourceNode.cloneNode(true);
+  return (this.___sourceNode ||= parse(this.___template)).cloneNode(true);
 }
 
-const doc = document;
-const parser = /* @__PURE__ */ doc.createElement("template");
+const fallback = document.createTextNode("");
+const parser = /* @__PURE__ */ new Range();
 
-function parse(template: string, ensureFragment?: boolean) {
-  let node: Node | null;
-  parser.innerHTML = template;
-  const content = parser.content;
-
-  if (
-    ensureFragment ||
-    (node = content.firstChild) !== content.lastChild ||
-    (node && node.nodeType === NodeType.Comment)
-  ) {
-    node = doc.createDocumentFragment();
-    node.appendChild(content);
-  } else if (!node) {
-    node = doc.createTextNode("");
-  }
-
-  return node as Node & { firstChild: ChildNode; lastChild: ChildNode };
+function parse(template: string) {
+  const content = parser.createContextualFragment(template);
+  return (
+    content.firstChild === content.lastChild
+      ? content.firstChild || fallback
+      : content
+  ) as Node & { firstChild?: ChildNode; lastChild?: ChildNode };
 }

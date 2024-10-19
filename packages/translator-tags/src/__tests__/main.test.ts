@@ -92,10 +92,11 @@ describe("translator-tags", () => {
         config.skip_csr ||
         config.error_compiler;
       const skipResume =
-        !(manualResume ? fs.existsSync(resumeFile) : hasTemplate) ||
-        config.skip_resume ||
-        skipSSR ||
-        skipCSR;
+        config.skip_resume !== false &&
+        (!(manualResume ? fs.existsSync(resumeFile) : hasTemplate) ||
+          config.skip_resume ||
+          skipSSR ||
+          skipCSR);
       const snapMD = (fn: () => unknown) =>
         (config.error_runtime ? snap.catch : snap)(fn, {
           ext: `.md`,
