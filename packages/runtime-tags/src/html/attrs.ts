@@ -38,7 +38,7 @@ export function attrs(
         // be an event handler / renderBody.
         if (!isVoid(val)) {
           if (/^on[A-Z-]/.test(name)) {
-            (events ??= {})[
+            (events ||= {})[
               name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()
             ] = val;
           } else if (!/^renderBody$|[\s/>"'=]/.test(name)) {

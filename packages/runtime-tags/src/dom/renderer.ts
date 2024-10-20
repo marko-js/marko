@@ -160,7 +160,7 @@ export function createRenderer(
       getArgs &&
       ((scope, value) => (renderer.___args = getArgs())(scope, value)),
     get ___closureSignals() {
-      return (closureSignals ??= new Set(getClosureSignals?.()));
+      return (closureSignals ||= new Set(getClosureSignals?.()));
     },
   };
   return renderer;

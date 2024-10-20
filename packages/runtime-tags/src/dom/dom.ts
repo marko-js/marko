@@ -74,7 +74,7 @@ export function attrs(
         break;
       default:
         if (eventHandlerReg.test(name)) {
-          (events ??= {})[
+          (events ||= {})[
             name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()
           ] = value;
         } else {

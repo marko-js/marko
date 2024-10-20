@@ -23,7 +23,7 @@ export function getEmptyScope(marker: Comment) {
 
 function binder<T, U = T>(bind: (scope: Scope, value: T) => U) {
   return (scope: Scope, value: T): U => {
-    scope.___bound ??= new Map();
+    scope.___bound ||= new Map();
     let bound = scope.___bound.get(value) as U;
     if (!bound) {
       bound = bind(scope, value);
