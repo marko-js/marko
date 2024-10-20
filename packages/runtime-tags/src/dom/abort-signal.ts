@@ -13,7 +13,7 @@ export function resetAbortSignal(scope: Scope, id: string | number) {
 }
 
 export function getAbortSignal(scope: Scope, id: string | number) {
-  const controllers = (scope.___abortControllers ??= new Map());
+  const controllers = (scope.___abortControllers ||= new Map());
   let controller = controllers.get(id);
   if (!controller) {
     onDestroy(scope);

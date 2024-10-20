@@ -174,8 +174,8 @@ export function closure<T>(
       if (--scope[markAccessor] === 0) {
         if (op === DIRTY || scope[dirtyAccessor]) {
           scope[dirtyAccessor] = false;
-          ownerScope ??= getOwnerScope(scope);
-          ownerValueAccessor ??= getOwnerValueAccessor(scope);
+          ownerScope ||= getOwnerScope(scope);
+          ownerValueAccessor ||= getOwnerValueAccessor(scope);
           fn?.(scope, ownerScope[ownerValueAccessor]);
           intersection?.(scope, DIRTY);
         } else {
@@ -209,7 +209,7 @@ export function dynamicClosure<T>(
     const ownerScope = getOwnerScope(scope);
     const providerSubscriptionsAccessor =
       getOwnerValueAccessor(scope) + AccessorChar.Subscribers;
-    ownerScope[providerSubscriptionsAccessor] ??= new Set();
+    ownerScope[providerSubscriptionsAccessor] ||= new Set();
     ownerScope[providerSubscriptionsAccessor].add(
       bindFunction(scope, signalFn as any),
     );

@@ -7,7 +7,7 @@ function n(e) {
 }
 function r(e) {
   return (t, n) => {
-    t.l ??= new Map();
+    t.l ||= new Map();
     let r = t.l.get(n);
     return r || ((r = e(t, n)), t.l.set(n, r)), r;
   };
@@ -63,7 +63,7 @@ function s(e, t) {
   }
 }
 function d(e, t) {
-  let n = (e.n ??= new Map()),
+  let n = (e.n ||= new Map()),
     r = n.get(t);
   return r || (u(e), n.set(t, (r = new AbortController()))), r.signal;
 }
@@ -177,7 +177,7 @@ function _(e, t, n) {
         break;
       default:
         $.test(e)
-          ? ((r ??= {})["-" === e[2] ? e.slice(3) : e.slice(2).toLowerCase()] =
+          ? ((r ||= {})["-" === e[2] ? e.slice(3) : e.slice(2).toLowerCase()] =
               t)
           : S(o, e, t);
     }
@@ -300,7 +300,7 @@ function H(e, t, n = L, r) {
       }
       0 == --e[i]
         ? r === R || e[o]
-          ? ((e[o] = !1), (u ??= n(e)), (a ??= l(e)), t?.(e, u[a]), f?.(e, R))
+          ? ((e[o] = !1), (u ||= n(e)), (a ||= l(e)), t?.(e, u[a]), f?.(e, R))
           : f?.(e, q)
         : (e[o] ||= r === R);
     }
@@ -313,7 +313,7 @@ function J(e, t, n = L, r) {
     (l.g = (e) => {
       let t = n(e),
         r = o(e) + "*";
-      (t[r] ??= new Set()), t[r].add(i(e, l));
+      (t[r] ||= new Set()), t[r].add(i(e, l));
     }),
     (l.j = (e) => {
       let t = n(e),
@@ -450,7 +450,7 @@ function ue(e, t, n, r, o = 0, i) {
       m: void 0,
       d: i && ((e, t) => (f.d = i())(e, t)),
       get c() {
-        return (l ??= new Set(r?.()));
+        return (l ||= new Set(r?.()));
       },
     };
   return f;
@@ -802,11 +802,11 @@ var ze = {},
           i = new Map();
         e.v = [];
         let l = (e, t = this.f, r = e) => {
-          let l = (n[t] ??= {}),
+          let l = (n[t] ||= {}),
             f = r;
           for (; 8 === (f = f.previousSibling).nodeType; );
           l.b = f;
-          let u = (l.a ??= f),
+          let u = (l.a ||= f),
             a = i.size;
           for (let [e, n] of i) {
             if (!a--) break;
@@ -821,7 +821,7 @@ var ze = {},
           let r = e.data,
             o = r[t],
             f = parseInt(r.slice(t + 1)),
-            u = (n[f] ??= {}),
+            u = (n[f] ||= {}),
             a = r.indexOf(" ") + 1,
             c = a ? r.slice(a) : "";
           if ("*" === o) u[c] = e.previousSibling;

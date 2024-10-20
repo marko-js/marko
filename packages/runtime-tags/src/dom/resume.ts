@@ -64,14 +64,14 @@ class Render implements RenderData {
         scopeId: number = this.___currentScopeId!,
         curNode: ChildNode = visit,
       ) => {
-        const scope = (scopeLookup[scopeId] ??= {} as Scope);
+        const scope = (scopeLookup[scopeId] ||= {} as Scope);
         let endNode = curNode;
         while (
           (endNode = endNode.previousSibling!).nodeType ===
           8 /* Node.COMMENT_NODE */
         );
         scope.___endNode = endNode;
-        const startNode = (scope.___startNode ??= endNode);
+        const startNode = (scope.___startNode ||= endNode);
 
         let len = cleanupMarkers.size;
         for (const [markerScopeId, markerNode] of cleanupMarkers) {
@@ -93,7 +93,7 @@ class Render implements RenderData {
         const commentText = visit.data!;
         const token = commentText[commentPrefixLen];
         const scopeId = parseInt(commentText.slice(commentPrefixLen + 1));
-        const scope = (scopeLookup[scopeId] ??= {} as Scope);
+        const scope = (scopeLookup[scopeId] ||= {} as Scope);
         const dataIndex = commentText.indexOf(" ") + 1;
         const data = dataIndex ? commentText.slice(dataIndex) : "";
 
@@ -277,7 +277,7 @@ export function registerSubscriber(
   //   const ownerScope = getOwnerScope(subscriberScope);
   //   const boundSignal = bindFunction(subscriberScope, signal);
   //   const ownerMark = ownerScope[ownerMarkAccessor];
-  //   (ownerScope[ownerSubscribersAccessor] ??= new Set()).add(boundSignal);
+  //   (ownerScope[ownerSubscribersAccessor] ||= new Set()).add(boundSignal);
 
   //   // TODO: if the mark is not undefined, it means the value was updated clientside
   //   // before this subscriber was flushed.
