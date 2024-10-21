@@ -2,9 +2,9 @@ export const _template_ = `<!><!><!><${show ? "div" : null} class="a b"></${show
 export const _walks_ = /* replace, over(1), replace, over(1), get, over(1), get, over(1), replace, over(1), replace, over(1), beginChild, _tag_walks, endChild, beginChild, _tag_walks, endChild, replace, over(1), replace, over(1), get, over(1), get, over(1), get, over(1), get, over(1), get, over(1) */`D%b%b b b%b%b/${_tag_walks}&/${_tag_walks}&%b%b b b b b bD`;
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { attr as _attr, createRenderer as _createRenderer, register as _register, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, intersections as _intersections, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { attr as _attr, createRendererWithOwner as _createRendererWithOwner, register as _register, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, intersections as _intersections, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _tag, _template_ as _tag_template, _walks_ as _tag_walks } from "./components/tag-a/index.marko";
-const _showTagATagABody = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer", /* @__PURE__ */_createRenderer("Body content", ""));
+const _showTagATagABody = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer", /* @__PURE__ */_createRendererWithOwner("Body content", ""));
 const _largeHeadingH2_input = _dynamicTagAttrs("#text/9");
 const _expr_Text_other6 = /* @__PURE__ */_intersection(2, _scope => {
   const {

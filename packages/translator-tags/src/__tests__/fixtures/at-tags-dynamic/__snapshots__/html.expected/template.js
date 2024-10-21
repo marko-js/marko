@@ -16,12 +16,12 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         },
         renderBody: _register(/* @__PURE__ */_createRenderer(() => {
           _write("foo");
-        }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_6_renderer")
+        }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_6_renderer", _scope0_id)
       });
       _writeScope(_scope4_id, {
         "_": _ensureScopeWithId(_scope3_id)
       });
-      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_4_renderer", _scope3_id);
+      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_4_renderer");
       _ifScopeId = _scope4_id;
     } else {
       const _scope5_id = _nextScopeId();
@@ -31,12 +31,12 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         },
         renderBody: _register(/* @__PURE__ */_createRenderer(() => {
           _write("bar");
-        }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_7_renderer")
+        }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_7_renderer", _scope0_id)
       });
       _writeScope(_scope5_id, {
         "_": _ensureScopeWithId(_scope3_id)
       });
-      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_5_renderer", _scope3_id);
+      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_5_renderer");
       _ifScopeId = _scope5_id;
     }
     _write(`${_markResumeControlSingleNodeEnd(_scope3_id, "#text/0", _ifScopeId)}`);
@@ -59,7 +59,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         row: row,
         renderBody: _register(/* @__PURE__ */_createRenderer(() => {
           _write(`${_escapeXML(row)}${_markResumeNode(_scope11_id, "#text/0")}`);
-        }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_11_renderer", _scope10_id)
+        }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_11_renderer", _scope0_id)
       });
       _writeScope(_scope10_id, {
         "row": row
@@ -80,7 +80,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       row: -1,
       renderBody: _register(/* @__PURE__ */_createRenderer(() => {
         _write("Outside");
-      }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_13_renderer")
+      }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic/template.marko_13_renderer", _scope0_id)
     }
   });
   const _childScope = _peekNextScope();

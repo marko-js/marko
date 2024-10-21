@@ -1,42 +1,41 @@
-// size: 838 (min) 424 (brotli)
+// size: 816 (min) 410 (brotli)
 
 import {
   value as o,
   data as i,
-  registerRenderer as n,
+  register as n,
   createRenderer as l,
-  register as t,
-  on as d,
-  closure as v,
-  queueSource as c,
-  queueEffect as r,
-  intersections as u,
-  inLoopScope as m,
-  intersection as s,
-  inChild as b,
-  loopOf as e,
-  init as D,
+  on as t,
+  closure as d,
+  queueSource as v,
+  queueEffect as c,
+  intersections as r,
+  inLoopScope as u,
+  intersection as m,
+  inChild as s,
+  loopOf as b,
+  init as e,
 } from "@marko/runtime-tags/dom";
-const a = o(3, (o, n) => i(o[0], n)),
-  f = s(
+const D = o(3, (o, n) => i(o[0], n)),
+  a = m(
     2,
     (o) => {
       const {
         _: { 2: i },
         2: n,
       } = o;
-      a(o[0], `${i}.${n}`);
+      D(o[0], `${i}.${n}`);
     },
-    () => b(0, a),
+    () => s(0, D),
   ),
-  g = v(2, null, void 0, () => f),
-  k = o(2, null, () => f),
-  $ = o(
+  f = d(2, null, void 0, () => a),
+  g = o(2, null, () => a),
+  k = o(
     1,
-    (o, i) => k(o, i[0]),
-    () => k,
+    (o, i) => g(o, i[0]),
+    () => g,
   ),
-  h = e(
+  $ = b(
     0,
     n(
       "b0",
@@ -46,25 +45,25 @@ const a = o(3, (o, n) => i(o[0], n)),
         (o) => {
           o[0];
         },
-        () => [g],
+        () => [f],
         void 0,
-        () => $,
+        () => k,
       ),
     ),
   ),
-  p = o(2, null, () => m(g, 0)),
-  _ = v(
+  h = o(2, null, () => u(f, 0)),
+  p = d(
     2,
-    (o, i) => h(o, [i]),
+    (o, i) => $(o, [i]),
     void 0,
+    () => $,
+  ),
+  _ = o(
+    1,
+    (o, i) => h(o, i[0]),
     () => h,
   ),
-  j = o(
-    1,
-    (o, i) => p(o, i[0]),
-    () => p,
-  ),
-  q = e(
+  j = b(
     1,
     n(
       "b1",
@@ -72,29 +71,29 @@ const a = o(3, (o, n) => i(o[0], n)),
         "<!><!><!>",
         "D%D",
         void 0,
-        () => [_],
+        () => [p],
         void 0,
-        () => j,
+        () => _,
       ),
     ),
   ),
-  w = t("b2", (o) =>
-    d(
+  q = n("b2", (o) =>
+    t(
       o[0],
       "click",
       ((o) => {
         const { 2: i } = o;
         return function () {
-          c(o, x, [...i, i.length]);
+          v(o, w, [...i, i.length]);
         };
       })(o),
     ),
   ),
-  x = o(
+  w = o(
     2,
     (o, i) => {
-      r(o, w), q(o, [i]);
+      c(o, q), j(o, [i]);
     },
-    () => u([q, m(_, 1)]),
+    () => r([j, u(p, 1)]),
   );
-D();
+e();

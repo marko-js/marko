@@ -1,5 +1,5 @@
 # Write
-  <!--M_[1--><div>Hello <!>Ryan<!--M_*1 #text/0--> <!>1<!--M_*1 #text/1--></div><button>1<!--M_*1 #text/3--></button><!--M_*1 #button/2--><!--M_]0 #text/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{"#text/0!":_.a={y:1},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_renderer"]},1:_.a}),1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",0];M._.w()</script>
+  <!--M_[1--><div>Hello <!>Ryan<!--M_*1 #text/0--> <!>1<!--M_*1 #text/1--></div><button>1<!--M_*1 #text/3--></button><!--M_*1 #button/2--><!--M_]0 #text/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:_.a={"#text/0!":_.b={y:1}},1:_.b},_.a["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_renderer"](_.a),_.c),1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",0];M._.w()</script>
 
 
 # Render "End"
@@ -25,7 +25,7 @@
     <!--M_*1 #button/2-->
     <!--M_]0 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{"#text/0!":_.a={y:1},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_renderer"]},1:_.a}),1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#text/0!":_.b={y:1}},1:_.b},_.a["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_renderer"](_.a),_.c),1,"packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y",0];M._.w()
     </script>
   </body>
 </html>

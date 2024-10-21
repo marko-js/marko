@@ -7,7 +7,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     renderBody: _register(/* @__PURE__ */_createRenderer(count => {
       const _scope1_id = _nextScopeId();
       _write(`<div>Count: <!>${_escapeXML(count)}${_markResumeNode(_scope1_id, "#text/0")}</div>`);
-    }), "packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-single-arg/template.marko_1_renderer")
+    }), "packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-single-arg/template.marko_1_renderer", _scope0_id)
   });
   _writeScope(_scope0_id, {
     "#childScope/0": _writeExistingScope(_childScope)

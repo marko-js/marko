@@ -1,10 +1,10 @@
-// size: 520 (min) 239 (brotli)
+// size: 512 (min) 239 (brotli)
 
 import {
   registerSubscriber as a,
   dynamicClosure as o,
   data as n,
-  registerRenderer as i,
+  register as i,
   createRenderer as d,
   closure as s,
   conditional as m,

@@ -1,4 +1,4 @@
-// size: 535 (min) 289 (brotli)
+// size: 522 (min) 285 (brotli)
 
 import {
   register as o,
@@ -9,35 +9,34 @@ import {
   registerSubscriber as i,
   dynamicClosure as m,
   data as s,
-  registerRenderer as a,
-  createRenderer as b,
-  intersections as u,
-  inChild as d,
-  dynamicSubscribers as e,
-  init as f,
+  createRendererWithOwner as a,
+  intersections as b,
+  inChild as u,
+  dynamicSubscribers as d,
+  init as e,
 } from "@marko/runtime-tags/dom";
-const k = o("a0", (o) => {
+const f = o("a0", (o) => {
     const { 4: n } = o;
     t(o[0], "click", n);
   }),
-  g = n(4, (o, t) => c(o, k)),
-  l = o("b0", (o) => {
+  k = n(4, (o, t) => c(o, f)),
+  g = o("b0", (o) => {
     const { 1: t } = o;
     return function () {
-      r(o, v, t + 1);
+      r(o, p, t + 1);
     };
   }),
-  p = i(
+  l = i(
     "b1",
     m(1, (o, t) => s(o[0], t)),
   );
-a(
+o(
   "b2",
-  b(" ", " ", void 0, () => [p]),
+  a(" ", " ", void 0, () => [l]),
 );
-const v = n(
+const p = n(
   1,
-  (o, t) => g(o[0], l(o)),
-  () => u([d(0, g), e(1)]),
+  (o, t) => k(o[0], g(o)),
+  () => b([u(0, k), d(1)]),
 );
-f();
+e();

@@ -1,5 +1,4 @@
 import type { Scope } from "../common/types";
-import type { Renderer } from "./renderer";
 
 let debugID = 0;
 
@@ -32,14 +31,6 @@ function binder<T, U = T>(bind: (scope: Scope, value: T) => U) {
     return bound;
   };
 }
-
-export const bindRenderer = binder(
-  (ownerScope, renderer: Renderer): Renderer =>
-    renderer && {
-      ...renderer,
-      ___owner: ownerScope,
-    },
-);
 
 type BindableFunction = (
   this: unknown,

@@ -24,7 +24,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         "#childScope/0": _writeExistingScope(_childScope),
         "_": _ensureScopeWithId(_scope1_id)
       });
-      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer", _scope1_id);
+      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer");
       _ifScopeId = _scope2_id;
     }
     _forScopeIds.push(_scope1_id);

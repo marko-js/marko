@@ -1,5 +1,5 @@
 # Write
-  <!--M_[2-->This is the body content<!--M_]1 #text/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:{"#childScope/0":_.a={"#text/0!":_.b={},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-render-body/template.marko_1_renderer"]}},1:_.a,2:_.b}),0]</script>
+  <!--M_[2-->This is the body content<!--M_]1 #text/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d={0:_.a={"#childScope/0":_.b={"#text/0!":_.c={}}},1:_.b,2:_.c},_.b["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-render-body/template.marko_1_renderer"](_.a),_.d),0]</script>
 
 
 # Render "End"
@@ -11,7 +11,7 @@
     This is the body content
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{"#childScope/0":_.a={"#text/0!":_.b={},"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-render-body/template.marko_1_renderer"]}},1:_.a,2:_.b}),0]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#text/0!":_.c={}}},1:_.b,2:_.c},_.b["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-render-body/template.marko_1_renderer"](_.a),_.d),0]
     </script>
   </body>
 </html>

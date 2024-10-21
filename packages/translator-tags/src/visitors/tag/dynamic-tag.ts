@@ -271,7 +271,11 @@ export default {
           node.name.extra?.referencedBindings,
           signal,
           renderBodyIdentifier
-            ? t.logicalExpression("||", tagExpression, renderBodyIdentifier)
+            ? t.logicalExpression(
+                "||",
+                tagExpression,
+                t.callExpression(renderBodyIdentifier, [scopeIdentifier]),
+              )
             : tagExpression,
         );
 

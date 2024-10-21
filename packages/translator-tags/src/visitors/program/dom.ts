@@ -5,6 +5,7 @@ import { callRuntime } from "../../util/runtime";
 import {
   forEachSectionReverse,
   getSection,
+  getSectionParentIsOwner,
   getSectionPath,
   isStatefulSection,
 } from "../../util/sections";
@@ -48,7 +49,9 @@ export default {
           const closures = getClosures(childSection);
           const identifier = t.identifier(childSection.name);
           const renderer = callRuntime(
-            "createRenderer",
+            getSectionParentIsOwner(childSection)
+              ? "createRenderer"
+              : "createRendererWithOwner",
             writes,
             walks,
             setup,
@@ -65,9 +68,7 @@ export default {
                 identifier,
                 isStatefulSection(childSection)
                   ? callRuntime(
-                      childSection.closures.size
-                        ? "registerRenderer"
-                        : "register",
+                      "register",
                       t.stringLiteral(
                         getResumeRegisterId(childSection, "renderer"),
                       ),

@@ -34,7 +34,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       }],
       renderBody: _register(/* @__PURE__ */_createRenderer(() => {
         _write("Hello");
-      }), "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_2_renderer")
+      }), "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_2_renderer", _scope0_id)
     }
   }, _register(/* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();

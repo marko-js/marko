@@ -59,7 +59,7 @@ export let conditional = function conditional(
     if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
       const normalizedRenderer =
         normalizeDynamicRenderer<Renderer>(newRendererOrOp);
-      if (normalizedRenderer !== currentRenderer) {
+      if (isDifferentRenderer(normalizedRenderer, currentRenderer)) {
         currentRenderer = scope[rendererAccessor] = normalizedRenderer;
         setConditionalRenderer(scope, nodeAccessor, normalizedRenderer);
         fn?.(scope);
@@ -148,7 +148,7 @@ export let conditionalOnlyChild = function conditional(
     if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
       const normalizedRenderer =
         normalizeDynamicRenderer<Renderer>(newRendererOrOp);
-      if (normalizedRenderer !== currentRenderer) {
+      if (isDifferentRenderer(normalizedRenderer, currentRenderer)) {
         currentRenderer = scope[rendererAccessor] = normalizedRenderer;
         setConditionalRendererOnlyChild(
           scope,
@@ -376,4 +376,15 @@ function bySecondArg(_item: unknown, index: unknown) {
 
 function byFirstArg(name: unknown) {
   return name;
+}
+
+function isDifferentRenderer(
+  a: Renderer | string | undefined,
+  b: Renderer | string | undefined,
+) {
+  return (
+    a !== b &&
+    ((a as Renderer | undefined)?.___id || 0) !==
+      (b as Renderer | undefined)?.___id
+  );
 }

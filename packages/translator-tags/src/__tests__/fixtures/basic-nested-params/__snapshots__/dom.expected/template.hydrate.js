@@ -1,4 +1,4 @@
-// size: 953 (min) 448 (brotli)
+// size: 920 (min) 444 (brotli)
 
 import {
   dynamicTagAttrs as o,
@@ -8,64 +8,62 @@ import {
   registerSubscriber as t,
   dynamicClosure as c,
   data as l,
-  registerRenderer as v,
-  createRenderer as r,
+  register as v,
+  createRendererWithOwner as r,
   inChild as u,
-  register as b,
-  on as m,
-  bindRenderer as s,
-  queueSource as a,
-  queueEffect as e,
-  dynamicSubscribers as f,
-  init as k,
+  on as b,
+  queueSource as m,
+  queueEffect as s,
+  dynamicSubscribers as a,
+  init as e,
 } from "@marko/runtime-tags/dom";
-const D = o(0),
-  g = n(
+const f = o(0),
+  k = n(
     2,
     (o) => {
       const { 4: i } = o;
-      D(o, () => i);
+      f(o, () => i);
     },
+    () => f,
+  ),
+  D = d(0, null, () => k),
+  g = i(4, null, () => k),
+  p = i(
+    3,
+    (o, i) => D(o, i),
     () => D,
   ),
-  p = d(0, null, () => g),
-  h = i(4, null, () => g),
-  j = i(
-    3,
-    (o, i) => p(o, i),
-    () => p,
-  ),
-  q = i(3, (o, i) => l(o[1], i)),
-  w = t(
+  h = i(3, (o, i) => l(o[1], i)),
+  j = t(
     "b0",
     c(2, (o, i) => l(o[0], i)),
   ),
-  x = i(2, (o, i) => q(o, i[0])),
-  y = v(
+  q = i(2, (o, i) => h(o, i[0])),
+  w = v(
     "b1",
     r(
       "<div><!>.<!></div>",
       "D%c%",
       void 0,
-      () => [w],
+      () => [j],
       void 0,
-      () => x,
+      () => q,
     ),
   ),
-  z = t(
+  x = t(
     "b2",
     c(
       3,
-      (o, i) => h(o[0], i),
+      (o, i) => g(o[0], i),
       void 0,
-      () => u(0, h),
+      () => u(0, g),
     ),
   ),
-  A = i(2, null, () => f(2)),
-  B = i(
+  y = i(2, null, () => a(2)),
+  z = i(
     1,
-    (o, i) => A(o, i[0]),
-    () => A,
+    (o, i) => y(o, i[0]),
+    () => y,
   );
 v(
   "b3",
@@ -73,30 +71,30 @@ v(
     "<div><!></div>",
     "/D%l&",
     (o) => {
-      o[0], j(o[0], s(o, y));
+      o[0], p(o[0], w(o));
     },
-    () => [z],
+    () => [x],
     void 0,
-    () => B,
+    () => z,
   ),
 );
-const C = b("b4", (o) =>
-    m(
+const A = v("b4", (o) =>
+    b(
       o[0],
       "click",
       ((o) => {
         const { 2: i } = o;
         return function () {
-          a(o, E, i + 1);
+          m(o, B, i + 1);
         };
       })(o),
     ),
   ),
-  E = i(
+  B = i(
     2,
     (o, i) => {
-      e(o, C), h(o[1], i);
+      s(o, A), g(o[1], i);
     },
-    () => u(1, h),
+    () => u(1, g),
   );
-k();
+e();

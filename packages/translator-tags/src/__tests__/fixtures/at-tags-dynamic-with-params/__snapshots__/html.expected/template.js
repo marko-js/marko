@@ -13,7 +13,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _item = {
       renderBody: _register(/* @__PURE__ */_createRenderer(y => {
         _write(`${_escapeXML(y)}`);
-      }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic-with-params/template.marko_3_renderer")
+      }), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic-with-params/template.marko_3_renderer", _scope0_id)
     };
     _writeScope(_scope2_id, {});
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tags-dynamic-with-params/template.marko_2_renderer");

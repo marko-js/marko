@@ -1,4 +1,4 @@
-// size: 937 (min) 483 (brotli)
+// size: 915 (min) 472 (brotli)
 
 import {
   register as n,
@@ -8,16 +8,15 @@ import {
   resetAbortSignal as r,
   queueEffect as c,
   data as s,
-  registerRenderer as e,
-  createRenderer as d,
-  on as l,
-  closure as u,
-  inChild as a,
-  queueSource as m,
-  loopOf as p,
-  init as b,
+  createRenderer as e,
+  on as d,
+  closure as l,
+  inChild as u,
+  queueSource as a,
+  loopOf as m,
+  init as p,
 } from "@marko/runtime-tags/dom";
-const v = n("a0", (n) => {
+const b = n("a0", (n) => {
     const { 5: t, 6: i } = n;
     i(`mounted ${t}`),
       (o(n, 0).onabort = ((n) => {
@@ -27,16 +26,16 @@ const v = n("a0", (n) => {
         };
       })(n));
   }),
-  f = i(2, (n) => {
-    r(n, 0), c(n, v);
+  v = i(2, (n) => {
+    r(n, 0), c(n, b);
   }),
-  D = t(6, null, () => f),
-  g = t(
+  f = t(6, null, () => v),
+  D = t(
     5,
     (n, o) => {
       s(n[0], o), s(n[1], o), s(n[2], o);
     },
-    () => f,
+    () => v,
   );
 n(
   "b0",
@@ -45,55 +44,55 @@ n(
       n[1].innerHTML += "\n" + o;
     },
 );
-const k = u(
+const g = l(
     4,
-    (n, o) => D(n[0], o),
+    (n, o) => f(n[0], o),
     void 0,
-    () => a(0, D),
+    () => u(0, f),
+  ),
+  k = t(
+    2,
+    (n, o) => D(n[0], o),
+    () => u(0, D),
   ),
   $ = t(
-    2,
-    (n, o) => g(n[0], o),
-    () => a(0, g),
-  ),
-  h = t(
     1,
-    (n, o) => $(n, o[0]),
-    () => $,
+    (n, o) => k(n, o[0]),
+    () => k,
   ),
-  y = p(
+  h = m(
     2,
-    e(
+    n(
       "b1",
-      d(
+      e(
         "<div> </div><span> </span><p> </p>",
         "/D lD lD l&",
         (n) => {
           n[0];
         },
-        () => [k],
+        () => [g],
         void 0,
-        () => h,
+        () => $,
       ),
     ),
   ),
-  H = n("b2", (n) =>
-    l(
+  y = n("b2", (n) =>
+    d(
       n[0],
       "click",
       ((n) => {
         const { 3: o } = n;
         return function () {
-          m(n, L, o.length ? o.slice(0, -1) : [1, 2, 3]);
+          a(n, H, o.length ? o.slice(0, -1) : [1, 2, 3]);
         };
       })(n),
     ),
   ),
-  L = t(
+  H = t(
     3,
     (n, o) => {
-      c(n, H), y(n, [o]);
+      c(n, y), h(n, [o]);
     },
-    () => y,
+    () => h,
   );
-b();
+p();

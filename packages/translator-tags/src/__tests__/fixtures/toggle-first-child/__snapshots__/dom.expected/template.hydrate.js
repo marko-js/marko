@@ -1,7 +1,7 @@
-// size: 184 (min) 129 (brotli)
+// size: 176 (min) 124 (brotli)
 
 import {
-  registerRenderer as o,
+  register as o,
   createRenderer as a,
   closure as m,
   data as n,

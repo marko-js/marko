@@ -58,7 +58,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _renderBody = _register(/* @__PURE__ */_createRenderer(() => {
     const _scope1_id = _nextScopeId();
     _write("Body content");
-  }), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer");
+  }), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer", _scope0_id);
   if (_tagName4) _tagName4({
     class: ["a", "b"],
     other: other

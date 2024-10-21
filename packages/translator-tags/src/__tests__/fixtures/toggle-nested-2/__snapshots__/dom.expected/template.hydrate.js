@@ -1,4 +1,4 @@
-// size: 921 (min) 409 (brotli)
+// size: 899 (min) 407 (brotli)
 
 import {
   register as n,
@@ -7,17 +7,16 @@ import {
   dynamicClosure as u,
   data as c,
   queueEffect as i,
-  registerRenderer as l,
-  createRenderer as r,
-  queueSource as a,
-  closure as _,
-  value as d,
-  dynamicSubscribers as b,
-  inConditionalScope as e,
-  conditional as m,
-  init as s,
+  createRenderer as l,
+  queueSource as r,
+  closure as a,
+  value as _,
+  dynamicSubscribers as d,
+  inConditionalScope as b,
+  conditional as e,
+  init as m,
 } from "@marko/runtime-tags/dom";
-const f = n("a0", (n) =>
+const s = n("a0", (n) =>
     t(
       n[0],
       "click",
@@ -28,27 +27,27 @@ const f = n("a0", (n) =>
           },
         } = n;
         return function () {
-          a(n._._, q, t + 1);
+          r(n._._, j, t + 1);
         };
       })(n),
     ),
   ),
-  k = o(
+  f = o(
     "a1",
     u(
       4,
       (n, t) => {
-        c(n[1], t), i(n, f);
+        c(n[1], t), i(n, s);
       },
       (n) => n._._,
     ),
   ),
-  v = l(
+  k = n(
     "a2",
-    r("<button id=count> </button>", " D ", void 0, () => [k]),
+    l("<button id=count> </button>", " D ", void 0, () => [f]),
   ),
-  D = m(1),
-  g = n("a3", (n) =>
+  v = e(1),
+  D = n("a3", (n) =>
     t(
       n[0],
       "click",
@@ -57,43 +56,43 @@ const f = n("a0", (n) =>
           _: { 3: t },
         } = n;
         return function () {
-          a(n._, w, !t);
+          r(n._, q, !t);
         };
       })(n),
     ),
   ),
-  p = _(
+  g = a(
     3,
     (n, t) => {
-      i(n, g), D(n, t ? v : null);
+      i(n, D), v(n, t ? k : null);
     },
     void 0,
-    () => D,
+    () => v,
   ),
-  h = l(
+  p = n(
     "a4",
-    r("<button id=inner></button><!><!>", " b%D", void 0, () => [p]),
+    l("<button id=inner></button><!><!>", " b%D", void 0, () => [g]),
   ),
-  j = m(1),
-  q = d(4, null, () => b(4)),
-  w = d(3, null, () => e(p, 1)),
-  x = n("a5", (n) =>
+  h = e(1),
+  j = _(4, null, () => d(4)),
+  q = _(3, null, () => b(g, 1)),
+  w = n("a5", (n) =>
     t(
       n[0],
       "click",
       ((n) => {
         const { 2: t } = n;
         return function () {
-          a(n, y, !t);
+          r(n, x, !t);
         };
       })(n),
     ),
   ),
-  y = d(
+  x = _(
     2,
     (n, t) => {
-      i(n, x), j(n, t ? h : null);
+      i(n, w), h(n, t ? p : null);
     },
-    () => j,
+    () => h,
   );
-s();
+m();

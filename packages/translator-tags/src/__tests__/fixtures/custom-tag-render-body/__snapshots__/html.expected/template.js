@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     renderBody: _register(/* @__PURE__ */_createRenderer(() => {
       const _scope1_id = _nextScopeId();
       _write("This is the body content");
-    }), "packages/translator-tags/src/__tests__/fixtures/custom-tag-render-body/template.marko_1_renderer")
+    }), "packages/translator-tags/src/__tests__/fixtures/custom-tag-render-body/template.marko_1_renderer", _scope0_id)
   });
   _writeScope(_scope0_id, {
     "#childScope/0": _writeExistingScope(_childScope)

@@ -1,4 +1,4 @@
-// size: 679 (min) 376 (brotli)
+// size: 646 (min) 363 (brotli)
 
 import {
   register as o,
@@ -11,48 +11,46 @@ import {
   registerSubscriber as m,
   dynamicClosure as c,
   data as a,
-  registerRenderer as b,
-  createRenderer as s,
-  bindRenderer as u,
-  intersections as f,
-  inChild as k,
-  dynamicSubscribers as y,
-  init as B,
+  createRendererWithOwner as b,
+  intersections as s,
+  inChild as u,
+  dynamicSubscribers as f,
+  init as k,
 } from "@marko/runtime-tags/dom";
-const g = e(1),
-  l = o("a0", (o) => r(o, 0)),
-  p = n(
+const y = e(1),
+  B = o("a0", (o) => r(o, 0)),
+  g = n(
     4,
-    (o, r) => g(o, r),
-    () => g,
+    (o, r) => y(o, r),
+    () => y,
   ),
-  v = n(
+  l = n(
     3,
     (o, r) => {
       ((o, r) => {
-        t(o, 0, r), d(o, l);
+        t(o, 0, r), d(o, B);
       })(o, r),
-        p(o, r.renderBody);
+        g(o, r.renderBody);
     },
-    () => p,
+    () => g,
   ),
-  C = o("b0", (o) => {
+  p = o("b0", (o) => {
     const { 1: r } = o;
     return function () {
-      i(o, q, r + 1);
+      i(o, h, r + 1);
     };
   }),
-  h = m(
+  v = m(
     "b1",
     c(1, (o, r) => a(o[0], r)),
   ),
-  j = b(
+  C = o(
     "b2",
-    s(" ", " ", void 0, () => [h]),
+    b(" ", " ", void 0, () => [v]),
   ),
-  q = n(
+  h = n(
     1,
-    (o, r) => v(o[0], { onClick: C(o), renderBody: u(o, j) }),
-    () => f([k(0, v), y(1)]),
+    (o, r) => l(o[0], { onClick: p(o), renderBody: C(o) }),
+    () => s([u(0, l), f(1)]),
   );
-B();
+k();

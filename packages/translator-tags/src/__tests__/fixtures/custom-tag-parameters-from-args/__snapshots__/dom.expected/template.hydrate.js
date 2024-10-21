@@ -1,4 +1,4 @@
-// size: 654 (min) 349 (brotli)
+// size: 663 (min) 356 (brotli)
 
 import {
   dynamicTagAttrs as o,
@@ -10,7 +10,7 @@ import {
   intersections as r,
   intersection as v,
   queueEffect as m,
-  createRenderer as s,
+  createRendererWithOwner as s,
   init as u,
 } from "@marko/runtime-tags/dom";
 const a = o(3, void 0, !0),

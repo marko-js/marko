@@ -12,7 +12,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       _writeScope(_scope1_id, {
         "y": y
       });
-    }), "packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_renderer")
+    }), "packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_renderer", _scope0_id)
   };
   const _dynamicScope = _peekNextScope();
   _dynamicTagInput(_dynamicScope, MyTag, {

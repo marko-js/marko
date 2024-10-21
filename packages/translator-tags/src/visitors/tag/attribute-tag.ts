@@ -3,7 +3,6 @@ import { types as t } from "@marko/compiler";
 
 import attrsToObject from "../../util/attrs-to-object";
 import { isOutputHTML } from "../../util/marko-config";
-import { callRuntime } from "../../util/runtime";
 import { getSection, startSection } from "../../util/sections";
 import { TagNameType } from "../../util/tag-name-type";
 import * as writer from "../../util/writer";
@@ -42,11 +41,9 @@ export default {
         tag.node.attributes.push(
           t.markoAttribute(
             "renderBody",
-            callRuntime(
-              "bindRenderer",
+            t.callExpression(t.identifier(getSection(tag.get("body")).name), [
               scopeIdentifier,
-              t.identifier(getSection(tag.get("body")).name),
-            ),
+            ]),
           ),
         );
       }
