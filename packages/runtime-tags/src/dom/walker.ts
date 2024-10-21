@@ -95,28 +95,12 @@ function walkInternal(
       ] = document.createTextNode(""));
       const current = walker.currentNode;
       const parentNode = current.parentNode!;
-
-      if (value === WalkCode.Before) {
-        parentNode.insertBefore(newNode, current);
-      } else {
-        if (value === WalkCode.After) {
-          parentNode.insertBefore(newNode, current.nextSibling);
-        } else {
-          if (MARKO_DEBUG && value !== WalkCode.Replace) {
-            throw new Error(`Unknown walk code: ${value}`);
-          }
-          parentNode.replaceChild(newNode, current);
-        }
-
-        walker.currentNode = newNode;
-      }
-    } /* else {
-      if (MARKO_DEBUG && value !== WalkCodes.Replace) {
+      if (MARKO_DEBUG && value !== WalkCode.Replace) {
         throw new Error(`Unknown walk code: ${value}`);
       }
-      const current = walker.currentNode;
-      current.parentNode!.replaceChild(walker.currentNode = scope[currentScopeIndex++] = document.createTextNode(""), current);
-    } */
+      parentNode.replaceChild(newNode, current);
+      walker.currentNode = newNode;
+    }
   }
 
   return currentWalkIndex;
