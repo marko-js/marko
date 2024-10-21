@@ -14,7 +14,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       x: 1,
       renderBody: _register(/* @__PURE__ */_createRenderer(() => {
         _write("Hello");
-      }), "packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_3_renderer")
+      }), "packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_3_renderer", _scope0_id)
     };
     _writeScope(_scope2_id, {});
     _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_2_renderer");

@@ -135,6 +135,9 @@ export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
     currentProgramPath.scope.generateUidIdentifier(`scope${section.id}_id`),
 );
 
+export const [getSectionParentIsOwner, setSectionParentIsOwner] =
+  createSectionState<boolean>("parentIsOwner", () => false);
+
 const [getSectionPath, _setSectionPath] =
   createSectionState<t.NodePath<t.MarkoTagBody | t.Program>>("sectionPath");
 export { getSectionPath };

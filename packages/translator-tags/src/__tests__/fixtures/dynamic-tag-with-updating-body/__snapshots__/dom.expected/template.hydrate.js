@@ -1,4 +1,4 @@
-// size: 595 (min) 311 (brotli)
+// size: 607 (min) 322 (brotli)
 
 import {
   register as n,
@@ -7,7 +7,7 @@ import {
   value as c,
   data as i,
   queueEffect as u,
-  createRenderer as r,
+  createRendererWithOwner as r,
   dynamicTagAttrs as s,
   conditional as a,
   init as m,
@@ -56,7 +56,7 @@ const d = n(
   p = c(
     2,
     (n, t) => {
-      u(n, l), k(n, t || d);
+      u(n, l), k(n, t || d(n));
     },
     () => k,
   );

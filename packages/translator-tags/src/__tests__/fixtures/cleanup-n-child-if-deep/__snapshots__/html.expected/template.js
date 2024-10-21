@@ -42,7 +42,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         _writeScope(_scope3_id, {
           "#childScope/0": _writeExistingScope(_childScope3)
         });
-        _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_3_renderer", _scope2_id);
+        _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_3_renderer");
         _ifScopeId = _scope3_id;
       }
       _write(`${_markResumeControlEnd(_scope2_id, "#text/1")}</div>`);
@@ -53,7 +53,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         "#text/1!": _getScopeById(_ifScopeId),
         "_": _ensureScopeWithId(_scope1_id)
       });
-      _register(_ifRenderer2 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_2_renderer", _scope1_id);
+      _register(_ifRenderer2 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_2_renderer");
       _ifScopeId2 = _scope2_id;
     }
     _write(`${_markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId2)}</div>`);
@@ -63,7 +63,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       "#text/1(": _ifRenderer2,
       "#text/1!": _getScopeById(_ifScopeId2)
     });
-    _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_1_renderer", _scope0_id);
+    _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_1_renderer");
     _ifScopeId3 = _scope1_id;
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/4", _ifScopeId3)}`);

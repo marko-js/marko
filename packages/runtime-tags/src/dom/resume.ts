@@ -1,7 +1,6 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import { ResumeSymbol, type Scope } from "../common/types";
-import type { Renderer } from "./renderer";
-import { bindRenderer, onDestroy } from "./scope";
+import { onDestroy } from "./scope";
 import type { IntersectionSignal, SignalOp, ValueSignal } from "./signals";
 
 interface Renders {
@@ -195,24 +194,9 @@ export function registerBoundSignal<T extends ValueSignal>(
   return signal;
 }
 
-export function registerRenderer(id: string, renderer: Renderer) {
-  registeredValues[id] = (scope: Scope) => bindRenderer(scope, renderer);
-  return renderer;
-}
-
 export function getRegisteredWithScope(id: string, scope?: Scope) {
   const val = registeredValues[id];
-  if (scope) {
-    if (val) {
-      if ((val as Renderer).___template) {
-        return bindRenderer(scope, val as Renderer);
-      }
-
-      return (val as RegisteredFn)(scope);
-    }
-  }
-
-  return val;
+  return scope ? (val as RegisteredFn)(scope) : val;
 }
 
 export function init(runtimeId = DEFAULT_RUNTIME_ID) {

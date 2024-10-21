@@ -1,4 +1,4 @@
-// size: 1287 (min) 602 (brotli)
+// size: 1265 (min) 600 (brotli)
 
 import {
   register as n,
@@ -8,20 +8,19 @@ import {
   resetAbortSignal as d,
   queueEffect as l,
   data as r,
-  registerRenderer as v,
-  createRenderer as c,
-  on as e,
-  dynamicClosure as s,
-  inChild as u,
-  closure as $,
-  queueSource as b,
-  intersections as m,
-  inLoopScope as a,
-  loopOf as D,
-  init as f,
+  createRenderer as v,
+  on as c,
+  dynamicClosure as e,
+  inChild as s,
+  closure as u,
+  queueSource as $,
+  intersections as b,
+  inLoopScope as m,
+  loopOf as a,
+  init as D,
 } from "@marko/runtime-tags/dom";
-const _ = "<div> </div>",
-  g = n("a0", (n) => {
+const f = "<div> </div>",
+  _ = n("a0", (n) => {
     o(n, 0).onabort = ((n) => {
       const { 3: o, 4: i } = n;
       return () => {
@@ -29,14 +28,14 @@ const _ = "<div> </div>",
       };
     })(n);
   }),
-  k = t(2, (n) => {
-    d(n, 0), l(n, g);
+  g = t(2, (n) => {
+    d(n, 0), l(n, _);
   }),
-  h = i(4, null, () => k),
-  p = i(
+  k = i(4, null, () => g),
+  h = i(
     3,
     (n, o) => r(n[0], o),
-    () => k,
+    () => g,
   );
 n(
   "b0",
@@ -45,101 +44,101 @@ n(
       n[1].innerHTML += "\n" + o;
     },
 );
-const y = t(
+const p = t(
     2,
     (n) => {
       const {
         _: { 3: o },
         2: i,
       } = n;
-      p(n[0], `${o}.${i}`);
+      h(n[0], `${o}.${i}`);
     },
-    () => u(0, p),
+    () => s(0, h),
   ),
-  H = s(
+  y = e(
     4,
-    (n, o) => h(n[0], o),
+    (n, o) => k(n[0], o),
     (n) => n._._,
-    () => u(0, h),
+    () => s(0, k),
   ),
-  L = $(3, null, void 0, () => y),
-  M = i(2, null, () => y),
-  T = i(
+  H = u(3, null, void 0, () => p),
+  L = i(2, null, () => p),
+  M = i(
     1,
-    (n, o) => M(n, o[0]),
-    () => M,
+    (n, o) => L(n, o[0]),
+    () => L,
   ),
-  j = D(
+  T = a(
     1,
-    v(
+    n(
       "b1",
-      c(
-        `<div>${_}</div>`,
+      v(
+        `<div>${f}</div>`,
         "D/D l&",
         (n) => {
           n[0];
         },
-        () => [H, L],
+        () => [y, H],
         void 0,
-        () => T,
+        () => M,
       ),
     ),
   ),
-  q = $(
+  j = u(
     4,
-    (n, o) => h(n[0], o),
+    (n, o) => k(n[0], o),
     void 0,
-    () => u(0, h),
+    () => s(0, k),
   ),
-  w = i(
+  q = i(
     3,
-    (n, o) => p(n[0], `${o}`),
-    () => m([u(0, p), a(L, 1)]),
+    (n, o) => h(n[0], `${o}`),
+    () => b([s(0, h), m(H, 1)]),
   ),
-  x = $(
+  w = u(
     3,
-    (n, o) => j(n, [o]),
+    (n, o) => T(n, [o]),
     void 0,
-    () => j,
+    () => T,
   ),
-  z = i(
+  x = i(
     2,
-    (n, o) => w(n, o[0]),
-    () => w,
+    (n, o) => q(n, o[0]),
+    () => q,
   ),
-  A = D(
+  z = a(
     2,
-    v(
+    n(
       "b2",
-      c(
-        `<div>${_}<!></div>`,
+      v(
+        `<div>${f}<!></div>`,
         "D/D l&%",
         (n) => {
           n[0];
         },
-        () => [q, x],
+        () => [j, w],
         void 0,
-        () => z,
+        () => x,
       ),
     ),
   ),
-  B = n("b3", (n) =>
-    e(
+  A = n("b3", (n) =>
+    c(
       n[0],
       "click",
       ((n) => {
         const { 3: o } = n;
         return function () {
-          b(n, C, o.length ? o.slice(0, -1) : [1, 2, 3]);
+          $(n, B, o.length ? o.slice(0, -1) : [1, 2, 3]);
         };
       })(n),
     ),
   ),
-  C = i(
+  B = i(
     3,
     (n, o) => {
-      l(n, B), A(n, [o]);
+      l(n, A), z(n, [o]);
     },
-    () => m([A, a(x, 2)]),
+    () => b([z, m(w, 2)]),
   );
-f();
+D();

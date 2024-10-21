@@ -1,6 +1,6 @@
 export const _template_ = "<button>Toggle</button><div></div><!><!>";
 export const _walks_ = /* get, over(1), get, over(1), replace, over(1) */" b b%bD";
-import { on as _on, register as _register, inChild as _inChild, queueSource as _queueSource, createRenderer as _createRenderer, closure as _closure, value as _value, registerRenderer as _registerRenderer, loopOf as _loopOf, inLoopScope as _inLoopScope, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, register as _register, inChild as _inChild, queueSource as _queueSource, createRenderer as _createRenderer, closure as _closure, value as _value, loopOf as _loopOf, inLoopScope as _inLoopScope, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _ = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_0/_", _scope => function (msg) {
   _scope["#div/1"].innerHTML += '\n' + msg;
 });
@@ -11,7 +11,7 @@ const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2)
 const _setup$forBody = _scope => {
   _child(_scope["#childScope/0"]);
 };
-const _forBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_1_renderer", /* @__PURE__ */_createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_write$forBody], void 0, () => _params_2$forBody));
+const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_1_renderer", /* @__PURE__ */_createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_write$forBody], void 0, () => _params_2$forBody));
 const _for = /* @__PURE__ */_loopOf("#text/2", _forBody);
 const _write = /* @__PURE__ */_value("write", null, () => _inLoopScope(_write$forBody, "#text/2"));
 const _onClick = _scope => {

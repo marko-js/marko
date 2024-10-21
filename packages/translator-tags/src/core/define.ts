@@ -9,7 +9,6 @@ import {
   trackParamsReferences,
   trackVarReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
 import { getSection, startSection } from "../util/sections";
 import {
   addValue,
@@ -65,11 +64,9 @@ export default {
           (attrsObject as t.ObjectExpression).properties.push(
             t.objectProperty(
               t.identifier("renderBody"),
-              callRuntime(
-                "bindRenderer",
+              t.callExpression(t.identifier(tagBodySection.name), [
                 scopeIdentifier,
-                t.identifier(tagBodySection.name),
-              ),
+              ]),
             ),
           );
         }

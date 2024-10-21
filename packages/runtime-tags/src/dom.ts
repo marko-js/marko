@@ -30,15 +30,18 @@ export {
   run,
   runEffects,
 } from "./dom/queue";
-export { createRenderer, dynamicTagAttrs } from "./dom/renderer";
+export {
+  createRenderer,
+  createRendererWithOwner,
+  dynamicTagAttrs,
+} from "./dom/renderer";
 export {
   init,
   register,
   registerBoundSignal,
-  registerRenderer,
   registerSubscriber,
 } from "./dom/resume";
-export { bindFunction, bindRenderer, createScope } from "./dom/scope";
+export { bindFunction, createScope } from "./dom/scope";
 export {
   changeHandler,
   childClosures,

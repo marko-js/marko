@@ -1,9 +1,9 @@
-// size: 493 (min) 288 (brotli)
+// size: 502 (min) 306 (brotli)
 
 import {
   register as o,
   on as t,
-  createRenderer as n,
+  createRendererWithOwner as n,
   dynamicTagAttrs as i,
   queueSource as c,
   value as m,

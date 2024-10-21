@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     }) => {
       const _scope1_id = _nextScopeId();
       _write(`<div>${_escapeXML(number)}${_markResumeNode(_scope1_id, "#text/0")}</div>`);
-    }), "packages/translator-tags/src/__tests__/fixtures/define-tag-render-attr-signal/template.marko_1_renderer")
+    }), "packages/translator-tags/src/__tests__/fixtures/define-tag-render-attr-signal/template.marko_1_renderer", _scope0_id)
   };
   const _dynamicScope = _peekNextScope();
   _dynamicTagInput(_dynamicScope, MyTag, {

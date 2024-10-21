@@ -24,6 +24,7 @@ import {
   getScopeIdIdentifier,
   getSection,
   type Section,
+  setSectionParentIsOwner,
   startSection,
 } from "../../util/sections";
 import {
@@ -202,6 +203,7 @@ export const translate = {
     const isStateful = isStatefulReferences(rootExtra.referencedBindings);
     const singleNodeOptimization = rootExtra.singleNodeOptimization;
     const hasStatefulClosures = checkStatefulClosures(bodySection, true);
+    setSectionParentIsOwner(bodySection, true);
 
     if (isOutputHTML()) {
       if (isStateful || hasStatefulClosures) {
@@ -283,8 +285,6 @@ export const translate = {
                     ),
                   ),
                   t.stringLiteral(getResumeRegisterId(section, "renderer")),
-                  section.closures.size &&
-                    getScopeIdIdentifier(section.parent!),
                 ),
               ) as any,
             );

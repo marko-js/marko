@@ -25,6 +25,7 @@ import {
   getScopeIdentifier,
   getScopeIdIdentifier,
   getSection,
+  setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
 import {
@@ -98,6 +99,7 @@ export default {
       const hasNestedAttributeTags =
         tagExtra.nestedAttributeTags &&
         Object.keys(tagExtra.nestedAttributeTags).length > 0;
+      setSectionParentIsOwner(bodySection, true);
       if (!isOnlyChild) {
         walks.visit(tag, WalkCode.Replace);
         walks.enterShallow(tag);

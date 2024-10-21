@@ -1,8 +1,8 @@
-// size: 465 (min) 275 (brotli)
+// size: 477 (min) 291 (brotli)
 
 import {
   register as n,
-  createRenderer as o,
+  createRendererWithOwner as o,
   dynamicTagAttrs as t,
   on as c,
   queueSource as s,
@@ -38,7 +38,7 @@ const u = n("a0", o("body content", "")),
   k = a(
     2,
     (n, o) => {
-      r(n, f), p(n, o || u);
+      r(n, f), p(n, o || u(n));
     },
     () => p,
   );

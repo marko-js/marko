@@ -1,7 +1,7 @@
 export const _template_ = "<ul></ul>";
 export const _walks_ = /* get, over(1) */" b";
 export const _setup_ = () => {};
-import { attr as _attr, data as _data, on as _on, inChild as _inChild, queueSource as _queueSource, createRenderer as _createRenderer, intersection as _intersection, closure as _closure, registerRenderer as _registerRenderer, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, inConditionalScope as _inConditionalScope, intersections as _intersections, loopOf as _loopOf, inLoopScope as _inLoopScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { attr as _attr, data as _data, on as _on, inChild as _inChild, queueSource as _queueSource, createRenderer as _createRenderer, intersection as _intersection, closure as _closure, register as _register, conditional as _conditional, queueEffect as _queueEffect, value as _value, inConditionalScope as _inConditionalScope, intersections as _intersections, loopOf as _loopOf, inLoopScope as _inLoopScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _comments, _input_ as _comments_input, _template_ as _comments_template, _walks_ as _comments_walks } from "./comments.marko";
 const _expr_comment_id$ifBody = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -20,7 +20,7 @@ const _comment$ifBody = /* @__PURE__ */_closure("comment", null, void 0, () => _
 const _setup$ifBody = _scope => {
   _comments(_scope["#childScope/0"]);
 };
-const _ifBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer", /* @__PURE__ */_createRenderer(`${_comments_template}`, /* beginChild, _comments_walks, endChild */`/${_comments_walks}&`, _setup$ifBody, () => [_comment$ifBody, _id$ifBody]));
+const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer", /* @__PURE__ */_createRenderer(`${_comments_template}`, /* beginChild, _comments_walks, endChild */`/${_comments_walks}&`, _setup$ifBody, () => [_comment$ifBody, _id$ifBody]));
 const _expr_input_i$forBody = /* @__PURE__ */_intersection(2, _scope => {
   const {
     _: {
@@ -59,7 +59,7 @@ const _input$forBody = /* @__PURE__ */_closure("input", null, void 0, () => _exp
 const _setup$forBody = _scope => {
   _open$forBody(_scope, true);
 };
-const _forBody = _registerRenderer("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_renderer", /* @__PURE__ */_createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", _setup$forBody, () => [_input$forBody], void 0, () => _params_2$forBody));
+const _forBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_renderer", /* @__PURE__ */_createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", _setup$forBody, () => [_input$forBody], void 0, () => _params_2$forBody));
 const _for = /* @__PURE__ */_loopOf("#ul/0", _forBody);
 export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => _for(_scope, [input.comments]), () => _intersections([_for, _inLoopScope(_input$forBody, "#ul/0")]));
 export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);

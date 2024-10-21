@@ -1,38 +1,37 @@
-// size: 1132 (min) 582 (brotli)
+// size: 1110 (min) 576 (brotli)
 
 import {
-  registerRenderer as n,
+  register as n,
   createRenderer as t,
-  register as o,
-  on as l,
-  closure as m,
-  queueSource as c,
-  value as i,
-  attr as u,
-  data as s,
-  queueEffect as a,
-  intersections as d,
-  intersection as e,
-  inChild as r,
-  inConditionalScope as p,
-  inLoopScope as v,
-  conditional as b,
-  loopOf as h,
-  init as f,
+  on as o,
+  closure as l,
+  queueSource as m,
+  value as c,
+  attr as i,
+  data as u,
+  queueEffect as s,
+  intersections as a,
+  intersection as d,
+  inChild as e,
+  inConditionalScope as r,
+  inLoopScope as p,
+  conditional as v,
+  loopOf as b,
+  init as h,
 } from "@marko/runtime-tags/dom";
-const k = e(
+const f = d(
     2,
     (n) => {
       const {
         _: { 6: t, 8: o },
       } = n;
-      C(n[0], { comments: t.comments, path: o });
+      B(n[0], { comments: t.comments, path: o });
     },
-    () => r(0, C),
+    () => e(0, B),
   ),
-  $ = m(8, null, void 0, () => k),
-  _ = m(6, null, void 0, () => k),
-  g = n(
+  k = l(8, null, void 0, () => f),
+  $ = l(6, null, void 0, () => f),
+  _ = n(
     "a0",
     t(
       "<ul></ul>",
@@ -40,58 +39,58 @@ const k = e(
       (n) => {
         n[0];
       },
-      () => [_, $],
+      () => [$, k],
     ),
   ),
-  x = e(
+  g = d(
     2,
     (n) => {
       const {
         _: { 2: t },
         7: o,
       } = n;
-      q(n, `${t.path || "c"}-${o}`);
+      j(n, `${t.path || "c"}-${o}`);
     },
-    () => q,
+    () => j,
   ),
-  D = b(4),
-  E = o("a1", (n) =>
-    l(
+  x = v(4),
+  D = n("a1", (n) =>
+    o(
       n[2],
       "click",
       ((n) => {
         const { 9: t } = n;
         return function () {
-          c(n, j, !t);
+          m(n, E, !t);
         };
       })(n),
     ),
   ),
-  j = i(9, (n, t) => {
-    u(n[0], "hidden", !t), s(n[3], t ? "[-]" : "[+]"), a(n, E);
+  E = c(9, (n, t) => {
+    i(n[0], "hidden", !t), u(n[3], t ? "[-]" : "[+]"), s(n, D);
   }),
-  q = i(
+  j = c(
     8,
-    (n, t) => u(n[0], "id", t),
-    () => p($, 4),
+    (n, t) => i(n[0], "id", t),
+    () => r(k, 4),
   ),
-  w = i(7, null, () => x),
-  y = i(
+  q = c(7, null, () => g),
+  w = c(
     6,
     (n, t) => {
-      s(n[1], t.text), D(n, t.comments ? g : null);
+      u(n[1], t.text), x(n, t.comments ? _ : null);
     },
-    () => d([D, p(_, 4)]),
+    () => a([x, r($, 4)]),
   ),
-  z = i(
+  y = c(
     5,
     (n, t) => {
-      y(n, t[0]), w(n, t[1]);
+      w(n, t[0]), q(n, t[1]);
     },
-    () => d([y, w]),
+    () => a([w, q]),
   ),
-  A = m(2, null, void 0, () => x),
-  B = h(
+  z = l(2, null, void 0, () => g),
+  A = b(
     0,
     n(
       "a2",
@@ -99,17 +98,17 @@ const k = e(
         "<li><span> </span><button> </button><!></li>",
         " E l D l%",
         (n) => {
-          j(n, !0);
+          E(n, !0);
         },
-        () => [A],
+        () => [z],
         void 0,
-        () => z,
+        () => y,
       ),
     ),
   ),
-  C = i(
+  B = c(
     2,
-    (n, t) => B(n, [t.comments]),
-    () => d([B, v(A, 0)]),
+    (n, t) => A(n, [t.comments]),
+    () => a([A, p(z, 0)]),
   );
-f();
+h();

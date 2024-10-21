@@ -1,3 +1,4 @@
+import { isAttributeTag, isTransparentTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 
 import { isOutputHTML } from "./marko-config";
@@ -67,8 +68,7 @@ export default function attrsToObject(
               t.stringLiteral(
                 getResumeRegisterId(renderBodySection, "renderer"),
               ),
-              renderBodySection.closures.size &&
-                getScopeIdIdentifier(renderBodySection.parent!),
+              getScopeIdIdentifier(getSection(getNonAttributeTagParent(tag))),
             ),
           ),
         );
@@ -121,4 +121,15 @@ export function getRenderBodyProp(
       };
     }
   }
+}
+
+function getNonAttributeTagParent(
+  tag: t.NodePath<t.MarkoTag>,
+): t.NodePath<t.MarkoTag> {
+  let cur = tag;
+  while ((cur.node && isAttributeTag(cur)) || isTransparentTag(cur)) {
+    cur = cur.parentPath.parentPath as t.NodePath<t.MarkoTag>;
+  }
+
+  return cur;
 }

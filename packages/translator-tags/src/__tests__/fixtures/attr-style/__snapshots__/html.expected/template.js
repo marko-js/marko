@@ -36,7 +36,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       },
       renderBody: _register(/* @__PURE__ */_createRenderer(() => {
         _write("Hello");
-      }), "packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko_2_renderer")
+      }), "packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko_2_renderer", _scope0_id)
     }
   });
   _write(`${_markResumeControlEnd(_scope0_id, "#text/4")}`);

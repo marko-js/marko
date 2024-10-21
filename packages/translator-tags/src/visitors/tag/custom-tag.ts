@@ -173,8 +173,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
               t.stringLiteral(
                 getResumeRegisterId(renderBodySection, "renderer"),
               ),
-              renderBodySection.closures.size &&
-                getScopeIdIdentifier(renderBodySection.parent!),
+              getScopeIdIdentifier(renderBodySection.parent!),
             ),
           ),
         ]),
@@ -265,11 +264,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
         (attrsObject as t.ObjectExpression).properties.push(
           t.objectProperty(
             t.identifier("renderBody"),
-            callRuntime(
-              "bindRenderer",
+            t.callExpression(t.identifier(tagBodySection.name), [
               scopeIdentifier,
-              t.identifier(tagBodySection.name),
-            ),
+            ]),
           ),
         );
       }
@@ -344,11 +341,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
             identifier: renderBodyExportIdentifier,
             hasDownstreamIntersections: () => true,
           },
-          callRuntime(
-            "bindRenderer",
+          t.callExpression(t.identifier(tagBodySection.name), [
             scopeIdentifier,
-            t.identifier(tagBodySection.name),
-          ),
+          ]),
           createScopeReadExpression(tagSection, childScopeBinding),
           callRuntime(
             "inChild",

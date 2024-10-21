@@ -6,7 +6,7 @@ import {
 } from "../common/types";
 import { setConditionalRendererOnlyChild } from "./control-flow";
 import { attrs } from "./dom";
-import { bindRenderer, createScope } from "./scope";
+import { createScope } from "./scope";
 import {
   CLEAN,
   DIRTY,
@@ -18,8 +18,9 @@ import {
 import { trimWalkString, walk } from "./walker";
 
 export type Renderer = {
+  ___id: symbol;
   ___template: string;
-  ___walks: string | undefined;
+  ___walks: string;
   ___setup: SetupFn | undefined;
   ___closureSignals: Set<IntersectionSignal>;
   ___clone: () => Node;
@@ -34,11 +35,11 @@ type SetupFn = (scope: Scope) => void;
 export function createScopeWithRenderer(
   renderer: Renderer,
   $global: Scope["___global"],
-  ownerScope?: Scope,
+  ownerScope?: Scope, // This is only needed when creating a renderer without an owner (template and control flow)
 ) {
   const newScope = createScope($global);
   newScope._ = newScope.___cleanupOwner = renderer.___owner || ownerScope;
-  newScope.___renderer = renderer as Renderer;
+  newScope.___renderer = renderer;
   initRenderer(renderer, newScope);
   if (renderer.___closureSignals) {
     for (const signal of renderer.___closureSignals) {
@@ -70,7 +71,7 @@ export function initRenderer(renderer: Renderer, scope: Scope) {
   const dom = renderer.___clone();
   walk(
     dom.nodeType === NodeType.DocumentFragment ? dom.firstChild! : dom,
-    renderer.___walks ?? " ",
+    renderer.___walks,
     scope,
   );
   scope.___startNode =
@@ -89,7 +90,7 @@ export function initRenderer(renderer: Renderer, scope: Scope) {
 
 export function dynamicTagAttrs(
   nodeAccessor: Accessor,
-  renderBody?: Renderer,
+  getRenderBody?: (scope: Scope) => Renderer,
   inputIsArgs?: boolean,
 ) {
   return (
@@ -99,7 +100,7 @@ export function dynamicTagAttrs(
     const renderer: Renderer | string | undefined =
       scope[nodeAccessor + AccessorChar.ConditionalRenderer];
 
-    if (!renderer || renderer === renderBody || attrsOrOp === DIRTY) {
+    if (!renderer || attrsOrOp === DIRTY) {
       return;
     }
 
@@ -109,15 +110,12 @@ export function dynamicTagAttrs(
       return (renderer as Renderer).___args?.(childScope, attrsOrOp);
     }
 
+    const renderBody = getRenderBody?.(scope);
     if (typeof renderer === "string") {
       // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
       const elementAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
       attrs(childScope, elementAccessor, attrsOrOp());
-      setConditionalRendererOnlyChild(
-        childScope,
-        elementAccessor,
-        renderBody && bindRenderer(scope, renderBody),
-      );
+      setConditionalRendererOnlyChild(childScope, elementAccessor, renderBody);
     } else if (renderer.___args) {
       const attributes = attrsOrOp();
       renderer.___args(
@@ -128,7 +126,7 @@ export function dynamicTagAttrs(
               renderBody
                 ? {
                     ...attributes,
-                    renderBody: bindRenderer(scope, renderBody),
+                    renderBody,
                   }
                 : attributes,
             ],
@@ -137,31 +135,54 @@ export function dynamicTagAttrs(
   };
 }
 
+export function createRendererWithOwner(
+  template: string,
+  rawWalks?: string,
+  setup?: SetupFn,
+  getClosureSignals?: () => IntersectionSignal[],
+  hasUserEffects: 0 | 1 = 0,
+  getArgs?: () => ValueSignal,
+) {
+  let args: ValueSignal | undefined;
+  let closureSignals: Set<IntersectionSignal> | undefined;
+  const id = MARKO_DEBUG ? Symbol("Marko Renderer") : ({} as any as symbol);
+  const walks = rawWalks ? /* @__PURE__ */ trimWalkString(rawWalks) : " ";
+  return (owner?: Scope): Renderer => {
+    return {
+      ___id: id,
+      ___template: template,
+      ___walks: walks,
+      ___setup: setup,
+      ___clone: _clone,
+      ___owner: owner,
+      ___hasUserEffects: hasUserEffects,
+      ___sourceNode: undefined,
+      get ___args() {
+        return (args ||= getArgs?.());
+      },
+      get ___closureSignals() {
+        return (closureSignals ||= new Set(getClosureSignals?.()));
+      },
+    };
+  };
+}
+
 export function createRenderer(
   template: string,
   walks?: string,
   setup?: SetupFn,
   getClosureSignals?: () => IntersectionSignal[],
-  hasUserEffects: 0 | 1 = 0,
+  hasUserEffects?: 0 | 1,
   getArgs?: () => ValueSignal,
-): Renderer {
-  let closureSignals: Set<IntersectionSignal> | undefined;
-  const renderer: Renderer = {
-    ___template: template,
-    ___walks: walks && /* @__PURE__ */ trimWalkString(walks),
-    ___setup: setup,
-    ___clone: _clone,
-    ___hasUserEffects: hasUserEffects,
-    ___sourceNode: undefined,
-    ___owner: undefined,
-    ___args:
-      getArgs &&
-      ((scope, value) => (renderer.___args = getArgs())(scope, value)),
-    get ___closureSignals() {
-      return (closureSignals ||= new Set(getClosureSignals?.()));
-    },
-  };
-  return renderer;
+) {
+  return createRendererWithOwner(
+    template,
+    walks,
+    setup,
+    getClosureSignals,
+    hasUserEffects,
+    getArgs,
+  )();
 }
 
 function _clone(this: Renderer) {

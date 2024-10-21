@@ -21,6 +21,7 @@ type Falsy = false | 0 | "" | null | undefined;
 const pureFunctions: Array<keyof typeof import("@marko/runtime-tags/dom")> = [
   "createTemplate",
   "createRenderer",
+  "createRendererWithOwner",
   "value",
   "intersection",
   "closure",
@@ -30,7 +31,6 @@ const pureFunctions: Array<keyof typeof import("@marko/runtime-tags/dom")> = [
   "loopTo",
   "conditional",
   "bindFunction",
-  "bindRenderer",
 ];
 
 export function importRuntime(

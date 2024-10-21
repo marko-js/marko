@@ -11,7 +11,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _writeScope(_scope1_id, {
       "_": _ensureScopeWithId(_scope0_id)
     });
-    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_1_renderer", _scope0_id);
+    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/1", _ifScopeId)}`);

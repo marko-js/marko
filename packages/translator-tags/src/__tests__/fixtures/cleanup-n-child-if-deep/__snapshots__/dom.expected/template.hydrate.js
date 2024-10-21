@@ -1,4 +1,4 @@
-// size: 1596 (min) 661 (brotli)
+// size: 1574 (min) 636 (brotli)
 
 import {
   register as n,
@@ -8,22 +8,21 @@ import {
   intersection as c,
   resetAbortSignal as r,
   queueEffect as l,
-  registerRenderer as u,
-  createRenderer as d,
-  registerSubscriber as e,
-  dynamicClosure as s,
-  on as a,
-  inChild as b,
-  conditional as v,
-  closure as $,
-  queueSource as _,
-  dynamicSubscribers as m,
-  inConditionalScope as f,
-  init as p,
+  createRenderer as u,
+  registerSubscriber as d,
+  dynamicClosure as e,
+  on as s,
+  inChild as a,
+  conditional as b,
+  closure as v,
+  queueSource as $,
+  dynamicSubscribers as _,
+  inConditionalScope as m,
+  init as f,
 } from "@marko/runtime-tags/dom";
-const D = "<div><!> a</div><span><!> a</span><p><!> a</p>",
-  k = "D%lD%lD%l",
-  M = n("a0", (n) => {
+const p = "<div><!> a</div><span><!> a</span><p><!> a</p>",
+  D = "D%lD%lD%l",
+  k = n("a0", (n) => {
     const { 5: o, 6: i } = n;
     i(`${o} mounted`),
       (t(n, 0).onabort = ((n) => {
@@ -33,16 +32,16 @@ const D = "<div><!> a</div><span><!> a</span><p><!> a</p>",
         };
       })(n));
   }),
-  g = c(2, (n) => {
-    r(n, 0), l(n, M);
+  M = c(2, (n) => {
+    r(n, 0), l(n, k);
   }),
-  y = o(6, null, () => g),
-  H = o(
+  g = o(6, null, () => M),
+  y = o(
     5,
     (n, t) => {
       i(n[0], t), i(n[1], t), i(n[2], t);
     },
-    () => g,
+    () => M,
   );
 n(
   "b0",
@@ -51,126 +50,126 @@ n(
       n[3].innerHTML += "\n" + t;
     },
 );
-const I = s(
+const H = e(
     8,
-    (n, t) => y(n[0], t),
+    (n, t) => g(n[0], t),
     (n) => n._._._,
-    () => b(0, y),
+    () => a(0, g),
   ),
-  L = u(
+  I = n(
     "b1",
-    d(
-      `${D}`,
-      `/${k}&`,
+    u(
+      `${p}`,
+      `/${D}&`,
       (n) => {
-        n[0], H(n[0], "Inner");
+        n[0], y(n[0], "Inner");
       },
-      () => [I],
+      () => [H],
     ),
   ),
-  O = v(1),
-  T = s(
+  L = b(1),
+  O = e(
     8,
-    (n, t) => y(n[0], t),
+    (n, t) => g(n[0], t),
     (n) => n._._,
-    () => b(0, y),
+    () => a(0, g),
   ),
-  h = e(
+  T = d(
     "b2",
-    s(
+    e(
       7,
-      (n, t) => O(n, t ? L : null),
+      (n, t) => L(n, t ? I : null),
       (n) => n._._,
-      () => O,
+      () => L,
     ),
   ),
-  j = u(
+  h = n(
     "b3",
-    d(
-      `<div>${D}<!></div>`,
-      `D/${k}&%`,
+    u(
+      `<div>${p}<!></div>`,
+      `D/${D}&%`,
       (n) => {
-        n[0], H(n[0], "Middle");
+        n[0], y(n[0], "Middle");
       },
-      () => [T, h],
+      () => [O, T],
     ),
   ),
-  q = v(1),
-  w = $(
+  j = b(1),
+  q = v(
     8,
-    (n, t) => y(n[0], t),
+    (n, t) => g(n[0], t),
     void 0,
-    () => b(0, y),
+    () => a(0, g),
   ),
-  x = $(
+  w = v(
     6,
-    (n, t) => q(n, t ? j : null),
+    (n, t) => j(n, t ? h : null),
     void 0,
-    () => q,
+    () => j,
   ),
-  z = u(
+  x = n(
     "b4",
-    d(
-      `<div>${D}<!></div>`,
-      `D/${k}&%`,
+    u(
+      `<div>${p}<!></div>`,
+      `D/${D}&%`,
       (n) => {
-        n[0], H(n[0], "Outer");
+        n[0], y(n[0], "Outer");
       },
-      () => [w, x],
+      () => [q, w],
     ),
   ),
-  A = v(4),
-  B = n("b5", (n) =>
-    a(
+  z = b(4),
+  A = n("b5", (n) =>
+    s(
       n[2],
       "click",
       ((n) => {
         const { 7: t } = n;
         return function () {
-          _(n, C, !t);
+          $(n, B, !t);
         };
       })(n),
     ),
   ),
-  C = o(
+  B = o(
     7,
-    (n, t) => l(n, B),
-    () => m(7),
+    (n, t) => l(n, A),
+    () => _(7),
   ),
-  E = n("b6", (n) =>
-    a(
+  C = n("b6", (n) =>
+    s(
       n[1],
       "click",
       ((n) => {
         const { 6: t } = n;
         return function () {
-          _(n, F, !t);
+          $(n, E, !t);
         };
       })(n),
     ),
   ),
-  F = o(
+  E = o(
     6,
-    (n, t) => l(n, E),
-    () => f(x, 4),
+    (n, t) => l(n, C),
+    () => m(w, 4),
   ),
-  G = n("b7", (n) =>
-    a(
+  F = n("b7", (n) =>
+    s(
       n[0],
       "click",
       ((n) => {
         const { 5: t } = n;
         return function () {
-          _(n, J, !t);
+          $(n, G, !t);
         };
       })(n),
     ),
   ),
-  J = o(
+  G = o(
     5,
     (n, t) => {
-      l(n, G), A(n, t ? z : null);
+      l(n, F), z(n, t ? x : null);
     },
-    () => A,
+    () => z,
   );
-p();
+f();

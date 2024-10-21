@@ -1,4 +1,4 @@
-// size: 887 (min) 458 (brotli)
+// size: 865 (min) 447 (brotli)
 
 import {
   register as n,
@@ -8,16 +8,15 @@ import {
   resetAbortSignal as r,
   queueEffect as c,
   data as e,
-  registerRenderer as d,
-  createRenderer as s,
-  on as u,
-  closure as l,
-  inChild as m,
-  queueSource as a,
-  loopOf as b,
-  init as v,
+  createRenderer as d,
+  on as s,
+  closure as u,
+  inChild as l,
+  queueSource as m,
+  loopOf as a,
+  init as b,
 } from "@marko/runtime-tags/dom";
-const f = n("a0", (n) => {
+const v = n("a0", (n) => {
     const { 3: t, 4: i } = n;
     i(`mounted ${t}`),
       (o(n, 0).onabort = ((n) => {
@@ -27,14 +26,14 @@ const f = n("a0", (n) => {
         };
       })(n));
   }),
-  g = i(2, (n) => {
-    r(n, 0), c(n, f);
+  f = i(2, (n) => {
+    r(n, 0), c(n, v);
   }),
-  k = t(4, null, () => g),
-  $ = t(
+  g = t(4, null, () => f),
+  k = t(
     3,
     (n, o) => e(n[0], o),
-    () => g,
+    () => f,
   );
 n(
   "b0",
@@ -43,55 +42,55 @@ n(
       n[1].innerHTML += "\n" + o;
     },
 );
-const h = l(
+const $ = u(
     4,
-    (n, o) => k(n[0], o),
+    (n, o) => g(n[0], o),
     void 0,
-    () => m(0, k),
+    () => l(0, g),
+  ),
+  h = t(
+    2,
+    (n, o) => k(n[0], o),
+    () => l(0, k),
   ),
   p = t(
-    2,
-    (n, o) => $(n[0], o),
-    () => m(0, $),
-  ),
-  y = t(
     1,
-    (n, o) => p(n, o[0]),
-    () => p,
+    (n, o) => h(n, o[0]),
+    () => h,
   ),
-  D = b(
+  y = a(
     2,
-    d(
+    n(
       "b1",
-      s(
+      d(
         "<div> </div>",
         "/D l&",
         (n) => {
           n[0];
         },
-        () => [h],
+        () => [$],
         void 0,
-        () => y,
+        () => p,
       ),
     ),
   ),
-  H = n("b2", (n) =>
-    u(
+  D = n("b2", (n) =>
+    s(
       n[0],
       "click",
       ((n) => {
         const { 3: o } = n;
         return function () {
-          a(n, L, o.length ? o.slice(0, -1) : [1, 2, 3]);
+          m(n, H, o.length ? o.slice(0, -1) : [1, 2, 3]);
         };
       })(n),
     ),
   ),
-  L = t(
+  H = t(
     3,
     (n, o) => {
-      c(n, H), D(n, [o]);
+      c(n, D), y(n, [o]);
     },
-    () => D,
+    () => y,
   );
-v();
+b();
