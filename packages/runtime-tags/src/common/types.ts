@@ -62,8 +62,6 @@ export enum NodeType {
 // 96 ` [backtick]
 export enum WalkCode {
   Get = 32,
-  Before = 33,
-  After = 35,
   Inside = 36,
   Replace = 37,
   EndChild = 38,

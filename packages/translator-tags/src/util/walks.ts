@@ -26,8 +26,6 @@ export enum Step {
 
 const walkCodeToName = {
   [WalkCode.Get]: "get",
-  [WalkCode.Before]: "before",
-  [WalkCode.After]: "after",
   [WalkCode.Inside]: "inside",
   [WalkCode.Replace]: "replace",
   [WalkCode.EndChild]: "endChild",
@@ -42,12 +40,7 @@ const walkCodeToName = {
   [WalkCode.MultiplierEnd]: "multiplierEnd",
 };
 
-type VisitCodes =
-  | WalkCode.Get
-  | WalkCode.Before
-  | WalkCode.After
-  | WalkCode.Inside
-  | WalkCode.Replace;
+type VisitCodes = WalkCode.Get | WalkCode.Inside | WalkCode.Replace;
 
 export function enter(path: t.NodePath<any>) {
   getSteps(getSection(path)).push(Step.Enter);
