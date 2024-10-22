@@ -26,6 +26,7 @@ import {
 import {
   addHTMLEffectCall,
   addStatement,
+  getRegisterUID,
   getSerializedScopeProperties,
 } from "../../util/signals";
 import translateVar from "../../util/translate-var";
@@ -35,10 +36,13 @@ import { currentProgramPath, scopeIdentifier } from "../program";
 
 export const kNativeTagBinding = Symbol("native tag binding");
 export const kSerializeMarker = Symbol("serialize marker");
+const kGetterId = Symbol("node getter id");
+
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kNativeTagBinding]?: Binding;
     [kSerializeMarker]?: boolean;
+    [kGetterId]?: string;
   }
 }
 
@@ -47,6 +51,7 @@ export default {
     enter(tag: t.NodePath<t.MarkoTag>) {
       const { node } = tag;
       const attrs = tag.get("attributes");
+      const tagVar = tag.node.var;
       let hasEventHandlers = false;
       let hasDynamicAttributes = false;
 
@@ -72,7 +77,7 @@ export default {
         }
       }
 
-      if (tag.has("var") || hasEventHandlers || hasDynamicAttributes) {
+      if (tagVar || hasEventHandlers || hasDynamicAttributes) {
         currentProgramPath.node.extra.isInteractive ||= hasEventHandlers;
         const section = getOrCreateSection(tag);
         const tagName =
@@ -80,12 +85,25 @@ export default {
             ? node.name.value
             : t.toIdentifier(tag.get("name"));
         const tagExtra = (node.extra ??= {});
-        tagExtra[kSerializeMarker] = tag.has("var") || hasEventHandlers;
+        const bindingName = "#" + tagName;
+        tagExtra[kSerializeMarker] = !!tagVar || hasEventHandlers;
         tagExtra[kNativeTagBinding] = createBinding(
-          "#" + tagName,
+          bindingName,
           BindingType.dom,
           section,
         );
+
+        if (tagVar) {
+          if (t.isIdentifier(tagVar)) {
+            for (const ref of tag.scope.getBinding(tagVar.name)!
+              .referencePaths) {
+              if (!ref.parentPath?.isCallExpression()) {
+                tagExtra[kGetterId] = getRegisterUID(section, bindingName);
+                break;
+              }
+            }
+          }
+        }
       }
     },
   },
@@ -110,6 +128,7 @@ export default {
       }
 
       if (tag.has("var")) {
+        const getterId = extra[kGetterId];
         if (isHTML) {
           const varName = (tag.node.var as t.Identifier).name;
           const references = tag.scope.getBinding(varName)!.referencePaths;
@@ -130,21 +149,35 @@ export default {
 
           translateVar(
             tag,
-            t.arrowFunctionExpression(
-              [],
-              t.blockStatement([
-                t.throwStatement(
-                  t.newExpression(t.identifier("Error"), [
-                    t.stringLiteral("Cannot reference DOM node from server"),
-                  ]),
-                ),
-              ]),
+            callRuntime(
+              "nodeRef",
+              getterId && getScopeIdIdentifier(section),
+              getterId && t.stringLiteral(getterId),
             ),
           );
         } else {
           const varName = (tag.node.var as t.Identifier).name;
           const references = tag.scope.getBinding(varName)!.referencePaths;
-          let createElFunction = undefined;
+          let getterFnIdentifier: t.Identifier | undefined;
+          if (getterId) {
+            getterFnIdentifier = currentProgramPath.scope.generateUidIdentifier(
+              `get_${varName}`,
+            );
+            currentProgramPath.pushContainer(
+              "body",
+              t.variableDeclaration("const", [
+                t.variableDeclarator(
+                  getterFnIdentifier,
+                  callRuntime(
+                    "nodeRef",
+                    t.stringLiteral(getterId),
+                    getScopeAccessorLiteral(nodeRef!),
+                  ),
+                ),
+              ]),
+            );
+          }
+
           for (const reference of references) {
             const referenceSection = getSection(reference);
             if (reference.parentPath?.isCallExpression()) {
@@ -153,34 +186,13 @@ export default {
                   createScopeReadExpression(referenceSection, nodeRef!),
                 ),
               );
-            } else {
-              createElFunction ??= t.identifier(varName + "_getter");
+            } else if (getterFnIdentifier) {
               reference.replaceWith(
-                callRuntime(
-                  "bindFunction",
-                  getScopeExpression(referenceSection, section),
-                  createElFunction,
-                ),
+                t.callExpression(getterFnIdentifier, [
+                  getScopeExpression(referenceSection, getSection(tag)),
+                ]),
               );
             }
-          }
-          if (createElFunction) {
-            currentProgramPath.pushContainer(
-              "body",
-              t.variableDeclaration("const", [
-                t.variableDeclarator(
-                  createElFunction,
-                  t.arrowFunctionExpression(
-                    [scopeIdentifier],
-                    t.memberExpression(
-                      scopeIdentifier,
-                      getScopeAccessorLiteral(nodeRef!),
-                      true,
-                    ),
-                  ),
-                ),
-              ]),
-            );
           }
         }
       }

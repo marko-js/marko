@@ -20,34 +20,6 @@ export function getEmptyScope(marker: Comment) {
   return emptyScope;
 }
 
-function binder<T, U = T>(bind: (scope: Scope, value: T) => U) {
-  return (scope: Scope, value: T): U => {
-    scope.___bound ||= new Map();
-    let bound = scope.___bound.get(value) as U;
-    if (!bound) {
-      bound = bind(scope, value);
-      scope.___bound.set(value, bound);
-    }
-    return bound;
-  };
-}
-
-type BindableFunction = (
-  this: unknown,
-  scope: Scope,
-  ...args: any[]
-) => unknown;
-export const bindFunction = binder(
-  <T extends BindableFunction>(boundScope: Scope, fn: T) =>
-    fn.length
-      ? function bound(this: unknown, ...args: any[]) {
-          return fn.call(this, boundScope, ...args);
-        }
-      : function bound(this: unknown) {
-          return fn.call(this, boundScope);
-        },
-);
-
 export function destroyScope(scope: Scope) {
   _destroyScope(scope);
 

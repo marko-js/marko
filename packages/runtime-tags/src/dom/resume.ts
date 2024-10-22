@@ -274,3 +274,7 @@ export function registerSubscriber(
   //   }
   // });
 }
+
+export function nodeRef(id: string, key: string) {
+  return register(id, (scope: Scope) => () => scope[key]);
+}

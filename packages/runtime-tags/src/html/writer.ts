@@ -94,6 +94,16 @@ export function markResumeNode(scopeId: number, accessor: Accessor) {
   return state.mark(Mark.Node, scopeId + " " + accessor);
 }
 
+export function nodeRef(scopeId: number, id?: string) {
+  const getter = () => {
+    if (MARKO_DEBUG) {
+      throw new Error("Cannot read a node reference on the server.");
+    }
+  };
+
+  return id ? register(getter, id, scopeId) : getter;
+}
+
 export function markResumeScopeStart(scopeId: number, index?: number) {
   return $chunk.boundary.state.mark(
     Mark.SectionStart,
