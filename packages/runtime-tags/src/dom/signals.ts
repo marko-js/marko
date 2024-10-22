@@ -1,6 +1,5 @@
 import { type Accessor, AccessorChar, type Scope } from "../common/types";
 import type { Renderer } from "./renderer";
-import { bindFunction } from "./scope";
 
 export type Signal = ValueSignal | IntersectionSignal;
 
@@ -207,22 +206,22 @@ export function dynamicClosure<T>(
     getOwnerScope,
     getIntersection,
   );
+  const subscribeFns = new WeakMap<Scope, (value: SignalOp) => void>();
   signalFn.___subscribe = (scope: Scope) => {
+    const subscribeFn = (value: SignalOp) => signalFn(scope, value);
     const ownerScope = getOwnerScope(scope);
     const providerSubscriptionsAccessor =
       getOwnerValueAccessor(scope) + AccessorChar.Subscribers;
-    ownerScope[providerSubscriptionsAccessor] ||= new Set();
-    ownerScope[providerSubscriptionsAccessor].add(
-      bindFunction(scope, signalFn as any),
-    );
+
+    subscribeFns.set(scope, subscribeFn);
+    (ownerScope[providerSubscriptionsAccessor] ||= new Set()).add(subscribeFn);
   };
   signalFn.___unsubscribe = (scope: Scope) => {
     const ownerScope = getOwnerScope(scope);
     const providerSubscriptionsAccessor =
       getOwnerValueAccessor(scope) + AccessorChar.Subscribers;
-    ownerScope[providerSubscriptionsAccessor]?.delete(
-      bindFunction(scope, signalFn as any),
-    );
+    ownerScope[providerSubscriptionsAccessor]?.delete(subscribeFns.get(scope));
+    subscribeFns.delete(scope);
   };
   return signalFn;
 }

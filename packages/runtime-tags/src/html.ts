@@ -20,6 +20,7 @@ export {
   markResumeScopeStart,
   nextScopeId,
   nextTagId,
+  nodeRef,
   peekNextScope,
   register,
   tryCatch,

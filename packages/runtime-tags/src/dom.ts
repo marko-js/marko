@@ -37,11 +37,12 @@ export {
 } from "./dom/renderer";
 export {
   init,
+  nodeRef,
   register,
   registerBoundSignal,
   registerSubscriber,
 } from "./dom/resume";
-export { bindFunction, createScope } from "./dom/scope";
+export { createScope } from "./dom/scope";
 export {
   changeHandler,
   childClosures,

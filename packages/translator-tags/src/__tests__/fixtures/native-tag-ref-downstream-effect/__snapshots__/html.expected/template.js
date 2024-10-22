@@ -1,9 +1,7 @@
-import { ensureScopeWithId as _ensureScopeWithId, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { ensureScopeWithId as _ensureScopeWithId, nodeRef as _nodeRef, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
-  const el = () => {
-    throw new Error("Cannot reference DOM node from server");
-  };
+  const el = _nodeRef();
   _write(`<div></div>${_markResumeNode(_scope0_id, "#div/0")}`);
   if (true) {
     const _scope1_id = _nextScopeId();

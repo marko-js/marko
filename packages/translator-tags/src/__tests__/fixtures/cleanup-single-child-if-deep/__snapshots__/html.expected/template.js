@@ -1,13 +1,11 @@
-import { markResumeNode as _markResumeNode, register as _register, write as _write, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { markResumeNode as _markResumeNode, nodeRef as _nodeRef, register as _register, write as _write, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _child from "./components/child.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const showOuter = true;
   const showMiddle = true;
   const showInner = true;
-  const el = () => {
-    throw new Error("Cannot reference DOM node from server");
-  };
+  const el = _nodeRef();
   const write = _register(function (msg) {
     el().innerHTML += '\n' + msg;
   }, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0/_", _scope0_id);

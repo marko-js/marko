@@ -673,6 +673,32 @@ export function getResumeRegisterId(
   );
 }
 
+const usedRegisterIdsBySection = new WeakMap<Section, Set<string>>();
+export function getRegisterUID(section: Section, name: string) {
+  const {
+    markoOpts,
+    opts: { filename },
+  } = currentProgramPath.hub.file;
+
+  let used = usedRegisterIdsBySection.get(section);
+  if (!used) usedRegisterIdsBySection.set(section, (used = new Set()));
+
+  const baseId = getTemplateId(
+    markoOpts,
+    filename as string,
+    `${section.id}/${name}`,
+  );
+  let count = 0;
+  let id = baseId;
+
+  while (used.has(id)) {
+    id = baseId + "_" + ++count;
+  }
+
+  used.add(id);
+  return id;
+}
+
 export function renameBindings() {
   t.traverseFast(currentProgramPath.node, (node) => {
     if (t.isIdentifier(node)) {

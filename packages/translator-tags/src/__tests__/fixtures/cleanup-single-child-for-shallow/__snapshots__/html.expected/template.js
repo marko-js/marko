@@ -1,11 +1,9 @@
-import { markResumeNode as _markResumeNode, register as _register, write as _write, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { markResumeNode as _markResumeNode, nodeRef as _nodeRef, register as _register, write as _write, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _child from "./components/child.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const items = [1, 2, 3];
-  const el = () => {
-    throw new Error("Cannot reference DOM node from server");
-  };
+  const el = _nodeRef();
   const write = _register(function (msg) {
     el().innerHTML += '\n' + msg;
   }, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-shallow/template.marko_0/_", _scope0_id);

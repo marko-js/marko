@@ -30,7 +30,6 @@ const pureFunctions: Array<keyof typeof import("@marko/runtime-tags/dom")> = [
   "loopIn",
   "loopTo",
   "conditional",
-  "bindFunction",
 ];
 
 export function importRuntime(
