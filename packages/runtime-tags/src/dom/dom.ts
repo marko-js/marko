@@ -7,6 +7,7 @@ import {
 } from "../common/types";
 import { getAbortSignal } from "./abort-signal";
 import { on } from "./event";
+import { parseHTML } from "./parse-html";
 
 const eventHandlerReg = /^on[A-Z-]/;
 
@@ -95,17 +96,13 @@ export function attrsEvents(scope: Scope, elementAccessor: Accessor) {
   }
 }
 
-const doc = document;
-const parser = /* @__PURE__ */ doc.createElement("template");
-
 export function html(scope: Scope, value: unknown, index: Accessor) {
   const firstChild = scope[index] as Node & ChildNode;
   const lastChild = (scope[index + "-"] || firstChild) as Node & ChildNode;
   const parentNode = firstChild.parentNode!;
   const afterReference = lastChild.nextSibling;
+  const newContent = parseHTML(value || value === 0 ? value + "" : "<!>");
 
-  parser.innerHTML = value || value === 0 ? `${value}` : "<!>";
-  const newContent = parser.content;
   scope[index] = newContent.firstChild;
   scope[index + AccessorChar.DynamicPlaceholderLastChild] =
     newContent.lastChild;
