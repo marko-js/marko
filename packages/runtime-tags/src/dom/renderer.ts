@@ -6,6 +6,7 @@ import {
 } from "../common/types";
 import { setConditionalRendererOnlyChild } from "./control-flow";
 import { attrs } from "./dom";
+import { parseHTMLOrSingleNode as parseHTMLFragmentOrFirstNode } from "./parse-html";
 import { createScope } from "./scope";
 import {
   CLEAN,
@@ -186,17 +187,7 @@ export function createRenderer(
 }
 
 function _clone(this: Renderer) {
-  return (this.___sourceNode ||= parse(this.___template)).cloneNode(true);
-}
-
-const fallback = document.createTextNode("");
-const parser = /* @__PURE__ */ new Range();
-
-function parse(template: string) {
-  const content = parser.createContextualFragment(template);
-  return (
-    content.firstChild === content.lastChild
-      ? content.firstChild || fallback
-      : content
-  ) as Node & { firstChild?: ChildNode; lastChild?: ChildNode };
+  return (this.___sourceNode ||= parseHTMLFragmentOrFirstNode(
+    this.___template,
+  )).cloneNode(true);
 }
