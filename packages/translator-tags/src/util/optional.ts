@@ -28,7 +28,7 @@ export class Sorted<T> {
 
       if (b) {
         if (Array.isArray(b)) {
-          return addSorted(this.compare, b, a) as Many<T>;
+          return addSorted(this.compare, [...b], a) as Many<T>;
         }
 
         return joinRepeatable(this.compare, b, a);
@@ -199,14 +199,23 @@ function unionSortedRepeatable<T>(
   let aIndex = 0;
   let bIndex = 0;
 
-  // Since both sides are Repeated<T> we can safely assume that the first 2 elements are present in either array.
-  const result: Many<T> = [
-    compare(a[aIndex], b[bIndex]) <= 0 ? a[aIndex++] : b[bIndex++],
-    compare(a[aIndex], b[bIndex]) <= 0 ? a[aIndex++] : b[bIndex++],
-  ];
+  const result = [] as unknown as Many<T>;
 
   while (aIndex < aLen && bIndex < bLen) {
-    result.push(compare(a[aIndex], b[bIndex]) <= 0 ? a[aIndex++] : b[bIndex++]);
+    const aValue = a[aIndex];
+    const bValue = b[bIndex];
+    const delta = compare(aValue, bValue);
+    if (delta === 0) {
+      aIndex++;
+      bIndex++;
+      result.push(aValue);
+    } else if (delta < 0) {
+      aIndex++;
+      result.push(aValue);
+    } else {
+      bIndex++;
+      result.push(bValue);
+    }
   }
 
   if (aLen === bLen && aIndex === aLen) {
