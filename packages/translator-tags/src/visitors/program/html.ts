@@ -5,11 +5,12 @@ import isStatic from "../../util/is-static";
 import { callRuntime } from "../../util/runtime";
 import { getSection } from "../../util/sections";
 import { renameBindings, writeHTMLResumeStatements } from "../../util/signals";
+import type { TemplateVisitor } from "../../util/visitors";
 import { flushInto } from "../../util/writer";
 
 export default {
   translate: {
-    exit(program: t.NodePath<t.Program>) {
+    exit(program) {
       const section = getSection(program);
       const tagVarIdentifier = program.scope.generateUidIdentifier("tagVar");
 
@@ -62,4 +63,4 @@ export default {
       ]);
     },
   },
-};
+} satisfies TemplateVisitor<t.Program>;

@@ -16,6 +16,7 @@ import {
   trackParamsReferences,
 } from "../../util/references";
 import { startSection } from "../../util/sections";
+import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
 
@@ -46,7 +47,7 @@ declare module "@marko/compiler/dist/types" {
 
 export default {
   migrate: {
-    enter(program: t.NodePath<t.Program>) {
+    enter(program) {
       previousProgramPath.set(program, currentProgramPath);
       program.node.params = [t.identifier("input")];
       currentProgramPath = program;
@@ -57,7 +58,7 @@ export default {
     },
   },
   analyze: {
-    enter(program: t.NodePath<t.Program>) {
+    enter(program) {
       previousProgramPath.set(program, currentProgramPath);
       currentProgramPath = program;
       startSection(program);
@@ -73,7 +74,7 @@ export default {
       };
     },
 
-    exit(program: t.NodePath<t.Program>) {
+    exit(program) {
       finalizeReferences();
       const {
         scope,
@@ -90,7 +91,7 @@ export default {
     },
   },
   translate: {
-    enter(program: t.NodePath<t.Program>) {
+    enter(program) {
       previousProgramPath.set(program, currentProgramPath);
       currentProgramPath = program;
       scopeIdentifier = isOutputDOM()
@@ -121,7 +122,7 @@ export default {
         return;
       }
     },
-    exit(program: t.NodePath<t.Program>) {
+    exit(program) {
       if (isOutputHTML()) {
         programHTML.translate.exit(program);
       } else {
@@ -130,7 +131,7 @@ export default {
       currentProgramPath = previousProgramPath.get(currentProgramPath)!;
     },
   },
-};
+} satisfies TemplateVisitor<t.Program>;
 
 function resolveRelativeToEntry(
   entryFile: t.BabelFile,

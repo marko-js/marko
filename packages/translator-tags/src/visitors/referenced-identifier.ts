@@ -9,6 +9,7 @@ import {
   type Section,
 } from "../util/sections";
 import { addStatement } from "../util/signals";
+import type { TemplateVisitor } from "../util/visitors";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "./program";
 
@@ -18,7 +19,7 @@ const abortIdsByExpressionForSection = new WeakMap<
 >();
 
 export default {
-  migrate(identifier: t.NodePath<t.Identifier>) {
+  migrate(identifier) {
     const { name } = identifier.node;
     if (identifier.scope.hasBinding(name)) return;
     switch (name) {
@@ -37,7 +38,7 @@ export default {
         break;
     }
   },
-  translate(identifier: t.NodePath<t.Identifier>) {
+  translate(identifier) {
     const { name } = identifier.node;
     if (identifier.scope.hasBinding(name)) return;
     switch (name) {
@@ -119,4 +120,4 @@ export default {
         }
     }
   },
-};
+} satisfies TemplateVisitor<t.Identifier>;

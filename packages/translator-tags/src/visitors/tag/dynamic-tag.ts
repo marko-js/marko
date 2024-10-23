@@ -39,6 +39,7 @@ import {
 } from "../../util/signals";
 import toFirstExpressionOrBlock from "../../util/to-first-expression-or-block";
 import translateVar from "../../util/translate-var";
+import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
@@ -54,7 +55,7 @@ declare module "@marko/compiler/dist/types" {
 
 export default {
   analyze: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
+    enter(tag) {
       const section = getOrCreateSection(tag);
       const tagExtra = (tag.node.extra ??= {});
       const tagBody = tag.get("body");
@@ -86,7 +87,7 @@ export default {
     },
   },
   translate: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
+    enter(tag) {
       walks.visit(tag, WalkCode.Replace);
       assertAttributesOrArgs(tag);
 
@@ -96,7 +97,7 @@ export default {
         writer.flushBefore(tag);
       }
     },
-    exit(tag: t.NodePath<t.MarkoTag>) {
+    exit(tag) {
       const { node } = tag;
       const extra = node.extra!;
       const nodeRef = extra[kDOMBinding]!;
@@ -349,4 +350,4 @@ export default {
       }
     },
   },
-};
+} satisfies TemplateVisitor<t.MarkoTag>;

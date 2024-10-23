@@ -5,12 +5,13 @@ import attrsToObject from "../../util/attrs-to-object";
 import { isOutputHTML } from "../../util/marko-config";
 import { getSection, startSection } from "../../util/sections";
 import { TagNameType } from "../../util/tag-name-type";
+import type { TemplateVisitor } from "../../util/visitors";
 import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../program";
 
 export default {
   analyze: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
+    enter(tag) {
       assertNoVar(tag);
       assertNoArgs(tag);
 
@@ -18,7 +19,7 @@ export default {
     },
   },
   translate: {
-    exit(tag: t.NodePath<t.MarkoTag>) {
+    exit(tag) {
       const parentTag = findParentTag(tag);
 
       if (!parentTag) {
@@ -107,4 +108,4 @@ export default {
       }
     },
   },
-};
+} satisfies TemplateVisitor<t.MarkoTag>;

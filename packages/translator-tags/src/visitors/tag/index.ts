@@ -5,6 +5,7 @@ import { isOutputHTML } from "../../util/marko-config";
 import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import * as hooks from "../../util/plugin-hooks";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
+import type { TemplateVisitor } from "../../util/visitors";
 import AttributeTag from "./attribute-tag";
 import CustomTag from "./custom-tag";
 import DynamicTag from "./dynamic-tag";
@@ -12,7 +13,7 @@ import NativeTag from "./native-tag";
 
 export default {
   transform: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
+    enter(tag) {
       const attrs = tag.get("attributes");
 
       for (let i = 0; i < attrs.length; i++) {
@@ -38,7 +39,7 @@ export default {
     },
   },
   analyze: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
+    enter(tag) {
       const tagDef = getTagDef(tag);
       const type = analyzeTagNameType(tag);
       const hook = tagDef?.analyzer?.hook as Plugin;
@@ -67,7 +68,7 @@ export default {
           break;
       }
     },
-    exit(tag: t.NodePath<t.MarkoTag>) {
+    exit(tag) {
       const hook = getTagDef(tag)?.analyzer?.hook as Plugin;
 
       if (hook) {
@@ -92,7 +93,7 @@ export default {
     },
   },
   translate: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
+    enter(tag) {
       const tagDef = getTagDef(tag);
       const extra = tag.node.extra!;
 
@@ -157,7 +158,7 @@ export default {
       }
     },
 
-    exit(tag: t.NodePath<t.MarkoTag>) {
+    exit(tag) {
       const translator = getTagDef(tag)?.translator;
 
       if (translator) {
@@ -181,7 +182,7 @@ export default {
       }
     },
   },
-};
+} satisfies TemplateVisitor<t.MarkoTag>;
 
 function getChangeHandler(
   tag: t.NodePath<t.MarkoTag>,
