@@ -311,7 +311,7 @@ declare global {
     }
 
     export type AttrTag<T> = T & {
-      [Symbol.iterator](): T;
+      [Symbol.iterator](): Iterator<T>;
     };
 
     /**
