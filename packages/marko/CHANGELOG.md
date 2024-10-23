@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.35.28
+
+### Patch Changes
+
+- [#2332](https://github.com/marko-js/marko/pull/2332) [`b920f86`](https://github.com/marko-js/marko/commit/b920f8632894bfbd97bb642829390daee0e949fd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix incorrect AttrTag tag type definition.
+
+- [#2332](https://github.com/marko-js/marko/pull/2332) [`6e87653`](https://github.com/marko-js/marko/commit/6e8765300dabc1d370058dca76f17d87b80aea3a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove extraneous runtime helper.
+
+- Updated dependencies [[`6e87653`](https://github.com/marko-js/marko/commit/6e8765300dabc1d370058dca76f17d87b80aea3a)]:
+  - @marko/translator-default@6.0.20
+
 ## 5.35.27
 
 ### Patch Changes

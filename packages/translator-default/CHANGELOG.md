@@ -1,5 +1,11 @@
 # Change Log
 
+## 6.0.20
+
+### Patch Changes
+
+- [#2332](https://github.com/marko-js/marko/pull/2332) [`6e87653`](https://github.com/marko-js/marko/commit/6e8765300dabc1d370058dca76f17d87b80aea3a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove extraneous runtime helper.
+
 ## 6.0.19
 
 ### Patch Changes
