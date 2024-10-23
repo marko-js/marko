@@ -67,7 +67,8 @@ export default {
     if (
       markoRoot &&
       markoRoot.isMarkoAttribute() &&
-      (isNativeTag(markoRoot.parentPath as t.NodePath<t.MarkoTag>) ||
+      ((isNativeTag(markoRoot.parentPath as t.NodePath<t.MarkoTag>) &&
+        /^on[A-Z-]/.test(markoRoot.node.name)) ||
         isCoreTagName(markoRoot.parentPath, "effect") ||
         isCoreTagName(markoRoot.parentPath, "lifecycle") ||
         isCoreTagName(markoRoot.parentPath, "for") ||

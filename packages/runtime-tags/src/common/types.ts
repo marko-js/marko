@@ -43,6 +43,9 @@ export enum AccessorChar {
   LoopScopeArray = "!",
   LoopScopeMap = "(",
   EventAttributes = "~",
+  ControlledValue = ":",
+  ControlledHandler = ";",
+  ControlledType = "=",
 }
 
 export enum NodeType {

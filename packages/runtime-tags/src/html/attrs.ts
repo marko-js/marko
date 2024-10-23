@@ -10,26 +10,93 @@ export function styleAttr(val: unknown) {
   return stringAttr("style", styleValue(val));
 }
 
-// @ts-expect-error the following function is not yet implemented
-
-export function valueAttr_select(val: unknown, multiple: boolean) {
+export function valueAttr_select(
+  // @ts-expect-error the following function is not yet implemented
+  value: unknown,
+  // @ts-expect-error the following function is not yet implemented
+  valueChange: unknown,
+  // @ts-expect-error the following function is not yet implemented
+  multiple: boolean,
+  // @ts-expect-error the following function is not yet implemented
+  scopeId: number,
+  // @ts-expect-error the following function is not yet implemented
+  elementAccessor: Accessor,
+) {
   // TODO: need to cause all child options to render with correct selected attribute
 }
 
-export function checkedAttr(value: unknown) {
-  return attr("checked", value);
+export function valueAttr_input(
+  value: unknown,
+  valueChange: unknown,
+  scopeId: number,
+  elementAccessor: Accessor,
+) {
+  if (valueChange) {
+    const scope = ensureScopeWithId(scopeId!);
+    // scope[elementAccessor + AccessorChar.ControlledValue] = value;
+    scope[elementAccessor + AccessorChar.ControlledHandler] = valueChange;
+  }
+  return attr("value", value);
 }
 
-export function checkedValueAttr(checkedValue: unknown, value: unknown) {
+export function checkedAttr(
+  checked: unknown,
+  checkedChange: unknown,
+  scopeId: number,
+  elementAccessor: Accessor,
+) {
+  if (checkedChange) {
+    const scope = ensureScopeWithId(scopeId!);
+    // scope[elementAccessor + AccessorChar.ControlledValue] = checked;
+    scope[elementAccessor + AccessorChar.ControlledHandler] = checkedChange;
+  }
+  return attr("checked", checked);
+}
+
+export function checkedValueAttr(
+  checkedValue: unknown,
+  checkedValueChange: unknown,
+  value: unknown,
+  scopeId: number,
+  elementAccessor: Accessor,
+) {
+  if (checkedValueChange) {
+    const scope = ensureScopeWithId(scopeId!);
+    // scope[elementAccessor + AccessorChar.ControlledValue] = checkedValue;
+    scope[elementAccessor + AccessorChar.ControlledHandler] =
+      checkedValueChange;
+  }
   return checkedValue === value ? ` checked` : "";
 }
 
-export function checkedValuesAttr(checkedValues: unknown[], value: unknown) {
+export function checkedValuesAttr(
+  checkedValues: unknown[],
+  checkedValuesChange: unknown,
+  value: unknown,
+  scopeId: number,
+  elementAccessor: Accessor,
+) {
+  if (checkedValuesChange) {
+    const scope = ensureScopeWithId(scopeId!);
+    scope[elementAccessor + AccessorChar.ControlledValue] = checkedValues;
+    scope[elementAccessor + AccessorChar.ControlledHandler] =
+      checkedValuesChange;
+  }
   return checkedValues?.includes(value) ? ` checked` : "";
 }
 
-export function openAttr(value: unknown) {
-  return attr("open", value);
+export function openAttr(
+  open: unknown,
+  openChange: unknown,
+  scopeId: number,
+  elementAccessor: Accessor,
+) {
+  if (openChange) {
+    const scope = ensureScopeWithId(scopeId!);
+    scope[elementAccessor + AccessorChar.ControlledValue] = open;
+    scope[elementAccessor + AccessorChar.ControlledHandler] = openChange;
+  }
+  return attr("open", open);
 }
 
 export function attr(name: string, val: unknown) {
@@ -38,11 +105,12 @@ export function attr(name: string, val: unknown) {
 
 export function attrs(
   data: Record<string, unknown>,
-  elementAccessor?: Accessor,
-  scopeId?: number,
+  elementAccessor: Accessor = 0,
+  scopeId: number = 0,
 ) {
   let result = "";
-  let events: undefined | Record<string, unknown>;
+  let scope: Record<string, unknown> | undefined;
+  let events: Record<string, unknown> | undefined;
 
   for (const name in data) {
     const val = data[name];
@@ -59,21 +127,52 @@ export function attrs(
         if (name /* el.tagName === "INPUT"*/) {
           result += stringAttr("value", val as string);
         } /*if (el.tagName === "SELECT")*/ else {
-          result += valueAttr_select(val, !!data.multiple);
+          result += valueAttr_select(
+            val,
+            data.valueChange,
+            data.multiple as boolean,
+            scopeId,
+            elementAccessor,
+          );
         }
         break;
       case "checkedValue":
-        result += checkedValueAttr(val, data.value);
+        result += checkedValueAttr(
+          val,
+          data.checkedValue,
+          data.value,
+          scopeId,
+          elementAccessor,
+        );
         break;
       case "checkedValues":
-        result += checkedValuesAttr(val as unknown[], data.value);
+        result += checkedValuesAttr(
+          val as unknown[],
+          data.checkedValues,
+          data.value,
+          scopeId,
+          elementAccessor,
+        );
+        break;
+      case "open":
+        result += openAttr(val, data.openChange, scopeId, elementAccessor);
         break;
       default:
         if (!isVoid(val)) {
-          if (controllableChangeAttrs.has(name)) {
-            (events ??= {})[name] = val;
+          const controllableAttr =
+            controllableChangeAttrs[
+              name as keyof typeof controllableChangeAttrs
+            ];
+          if (controllableAttr) {
+            scope ??= ensureScopeWithId(scopeId!);
+            scope[elementAccessor + AccessorChar.ControlledHandler] = val;
+            scope[elementAccessor + AccessorChar.ControlledType] =
+              controllableAttr;
           } else if (/^on[A-Z-]/.test(name)) {
-            (events ??= {})[
+            events ??= (scope ??= ensureScopeWithId(scopeId!))[
+              (elementAccessor + AccessorChar.EventAttributes) as any
+            ] ??= {} as any;
+            events![
               name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()
             ] = val;
           } else if (!/^renderBody$|[\s/>"'=]/.test(name)) {
@@ -83,23 +182,16 @@ export function attrs(
         break;
     }
   }
-
-  if (events && elementAccessor) {
-    ensureScopeWithId(scopeId!)[
-      (elementAccessor + AccessorChar.EventAttributes) as any
-    ] = events;
-  }
-
   return result;
 }
 
-const controllableChangeAttrs = new Set([
-  "valueChange",
-  "checkedChange",
-  "checkedValueChange",
-  "checkedValuesChange",
-  "openChange",
-]);
+const controllableChangeAttrs = {
+  valueChange: "value",
+  checkedChange: "checked",
+  checkedValueChange: "checkedValue",
+  checkedValuesChange: "checkedValues",
+  openChange: "open",
+};
 
 function stringAttr(name: string, val: string) {
   return val && ` ${name}=${escapeAttrValue(val)}`;

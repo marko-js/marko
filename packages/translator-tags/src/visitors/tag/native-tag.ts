@@ -27,7 +27,10 @@ import { addHTMLEffectCall, addStatement } from "../../util/signals";
 import translateVar from "../../util/translate-var";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
+import AssignmentExpressionVisitor from "../assignment-expression";
+import FunctionVisitor from "../function";
 import { currentProgramPath, scopeIdentifier } from "../program";
+import UpdateExpressionVisitor from "../update-expression";
 
 export const kNativeTagBinding = Symbol("native tag binding");
 export const kSerializeMarker = Symbol("serialize marker");
@@ -84,10 +87,7 @@ export default {
           const name = (attr.node as t.MarkoAttribute).name;
           const changeHandlerValue = changeHandlers.get(name + "Change")?.value;
           const extraAttrArguments: Array<t.Expression | undefined> = [
-            changeHandlerValue?.type === "FunctionExpression" ||
-            changeHandlerValue?.type === "ArrowFunctionExpression"
-              ? t.booleanLiteral(true)
-              : changeHandlerValue,
+            changeHandlerValue,
           ];
           if (name === "value" && tagName === "select") {
             extraAttrArguments.push(
@@ -104,8 +104,8 @@ export default {
           }
 
           if (extraAttrArguments.filter(Boolean).length) {
-            attr.node.value.extra ??= {};
-            attr.node.value.extra.extraAttrArguments = extraAttrArguments;
+            // attr.node.value.extra ??= {};
+            // attr.node.value.extra.extraAttrArguments = extraAttrArguments;
             mergeReferences(attr.get("value"), extraAttrArguments);
           }
         }
@@ -301,16 +301,12 @@ export default {
               break;
             }
             case "class":
-            case "style":
-            case "checked":
-            case "open":
-            case "checkedValue":
-            case "checkedValues": {
+            case "style": {
               const helper = `${name}Attr` as const;
-              if (confident && !value.node.extra?.extraAttrArguments) {
+              if (confident) {
                 write`${(getHTMLRuntime()[helper] as any)(computed)}`;
               } else if (isHTML) {
-                write`${callRuntime(helper, value.node, ...((value.node.extra?.extraAttrArguments as any) ?? []).slice(1))}`;
+                write`${callRuntime(helper, value.node)}`;
               } else {
                 addStatement(
                   "render",
@@ -321,7 +317,97 @@ export default {
                       helper,
                       t.memberExpression(scopeIdentifier, visitAccessor!, true),
                       value.node,
-                      ...((value.node.extra?.extraAttrArguments as any) ?? []),
+                    ),
+                  ),
+                );
+              }
+              break;
+            }
+            case "checked":
+            case "open": {
+              const helper = `${name}Attr` as const;
+              const changeHandler = attrs.find(
+                (attr) =>
+                  (attr.node as t.MarkoAttribute).name === `${name}Change`,
+              );
+
+              changeHandler?.traverse({
+                Function: FunctionVisitor.translate,
+                UpdateExpression: UpdateExpressionVisitor.translate,
+                AssignmentExpression: AssignmentExpressionVisitor.translate,
+              });
+
+              if (confident && !value.node.extra?.extraAttrArguments) {
+                write`${(getHTMLRuntime()[helper] as any)(computed)}`;
+              } else if (isHTML) {
+                write`${callRuntime(
+                  helper,
+                  value.node,
+                  changeHandler?.node.value,
+                  getScopeIdIdentifier(section),
+                  visitAccessor,
+                )}`;
+              } else {
+                addStatement(
+                  "render",
+                  section,
+                  valueReferences,
+                  t.expressionStatement(
+                    callRuntime(
+                      helper,
+                      scopeIdentifier,
+                      visitAccessor!,
+                      value.node,
+                      changeHandler?.node.value,
+                    ),
+                  ),
+                );
+              }
+              break;
+            }
+            case "checkedValue":
+            case "checkedValues": {
+              const helper = `${name}Attr` as const;
+              const changeHandler = attrs.find(
+                (attr) =>
+                  (attr.node as t.MarkoAttribute).name === `${name}Change`,
+              );
+
+              changeHandler?.traverse({
+                Function: FunctionVisitor.translate,
+                UpdateExpression: UpdateExpressionVisitor.translate,
+                AssignmentExpression: AssignmentExpressionVisitor.translate,
+              });
+
+              const extraArgs = [
+                changeHandler?.node.value,
+                attrs.find(
+                  (attr) => (attr.node as t.MarkoAttribute).name === "value",
+                )?.node.value,
+              ];
+
+              if (confident && !value.node.extra?.extraAttrArguments) {
+                write`${(getHTMLRuntime()[helper] as any)(computed)}`;
+              } else if (isHTML) {
+                write`${callRuntime(
+                  helper,
+                  value.node,
+                  ...extraArgs,
+                  getScopeIdIdentifier(section),
+                  visitAccessor,
+                )}`;
+              } else {
+                addStatement(
+                  "render",
+                  section,
+                  valueReferences,
+                  t.expressionStatement(
+                    callRuntime(
+                      helper,
+                      scopeIdentifier,
+                      visitAccessor!,
+                      value.node,
+                      ...extraArgs,
                     ),
                   ),
                 );
@@ -340,8 +426,8 @@ export default {
                   t.expressionStatement(
                     callRuntime(
                       `${name}Effect_${tagName}` as any,
-                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
-                      value.node,
+                      scopeIdentifier,
+                      visitAccessor!,
                     ),
                   ),
                   value.node,
@@ -362,8 +448,8 @@ export default {
                   t.expressionStatement(
                     callRuntime(
                       `${name}Effect`,
-                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
-                      value.node,
+                      scopeIdentifier,
+                      visitAccessor!,
                     ),
                   ),
                   value.node,
