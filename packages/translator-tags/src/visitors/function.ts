@@ -14,6 +14,7 @@ import {
   type Section,
 } from "../util/sections";
 import { getSerializedScopeProperties } from "../util/signals";
+import type { TemplateVisitor } from "../util/visitors";
 import { currentProgramPath, scopeIdentifier } from "./program";
 const functionIdsBySection = new WeakMap<Section, Map<string, number>>();
 const registeredFunctions = new WeakSet<t.Function>();
@@ -36,7 +37,7 @@ declare module "@marko/compiler/dist/types" {
 }
 
 export default {
-  analyze(fn: t.NodePath<t.Function>) {
+  analyze(fn) {
     const markoRoot = getMarkoRoot(fn);
     const isStatic = !markoRoot || markoRoot.isMarkoScriptlet({ static: true });
     if (!isFunction(fn, isStatic)) return;
@@ -103,7 +104,7 @@ export default {
     );
   },
   translate: {
-    exit(fn: t.NodePath<t.Function>) {
+    exit(fn) {
       const markoRoot = getMarkoRoot(fn);
       const isStatic =
         !markoRoot || markoRoot.isMarkoScriptlet({ static: true });
@@ -226,7 +227,7 @@ export default {
       }
     },
   },
-};
+} satisfies TemplateVisitor<t.Function>;
 
 function isFunction(
   fn: t.NodePath<t.Node>,

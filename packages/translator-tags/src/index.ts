@@ -1,6 +1,7 @@
-import type { Config, types as t } from "@marko/compiler";
+import type { Config } from "@marko/compiler";
 
 import coreTagLib from "./core";
+import { extractVisitors } from "./util/visitors";
 import AssignmentExpression from "./visitors/assignment-expression";
 import MarkoCDATA from "./visitors/cdata";
 import MarkoComment from "./visitors/comment";
@@ -16,7 +17,7 @@ import MarkoTag from "./visitors/tag";
 import MarkoText from "./visitors/text";
 import UpdateExpression from "./visitors/update-expression";
 
-const visitors = {
+const visitors = extractVisitors({
   Program,
   Function,
   AssignmentExpression,
@@ -31,29 +32,16 @@ const visitors = {
   MarkoPlaceholder,
   MarkoScriptlet,
   MarkoComment,
-};
-
-const getVisitorOfType = (
-  typename: "migrate" | "transform" | "analyze" | "translate",
-): t.Visitor =>
-  Object.entries(visitors).reduce((visitor, [name, value]) => {
-    if (typename in value) {
-      visitor[name as any] = (value as any)[typename];
-    }
-    return visitor;
-  }, {} as t.Visitor);
+});
 
 export { default as internalEntryBuilder } from "./util/entry-builder";
-
-export const transform = getVisitorOfType("transform");
-export const analyze = getVisitorOfType("analyze");
-export const translate = getVisitorOfType("translate");
+export const { transform, analyze, translate } = visitors;
 export const taglibs = [
   [
     __dirname,
     {
       ...coreTagLib,
-      migrate: getVisitorOfType("migrate"),
+      migrate: visitors.migrate,
     },
   ],
 ];

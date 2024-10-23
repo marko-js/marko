@@ -1,16 +1,13 @@
 import type { types as t } from "@marko/compiler";
 
-import { isOutputHTML } from "../util/marko-config";
-import * as writer from "../util/writer";
+import type { TemplateVisitor } from "../util/visitors";
 
 export default {
   translate: {
-    exit(declaration: t.NodePath<t.MarkoDeclaration>) {
-      if (isOutputHTML()) {
-        writer.writeTo(declaration)`<?${declaration.node.value}?>`;
-      }
-
-      declaration.remove();
+    enter(decl) {
+      throw decl.buildCodeFrameError(
+        "XML declarations sections are not supported in Marko.",
+      );
     },
   },
-};
+} satisfies TemplateVisitor<t.MarkoDeclaration>;

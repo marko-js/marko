@@ -19,6 +19,7 @@ import {
   getSection,
 } from "../util/sections";
 import { addStatement } from "../util/signals";
+import type { TemplateVisitor } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "./program";
@@ -46,7 +47,7 @@ type HTMLMethod = "escapeScript" | "escapeStyle" | "escapeXML" | "toString";
 type DOMMethod = "html" | "data";
 
 export default {
-  analyze(placeholder: t.NodePath<t.MarkoPlaceholder>) {
+  analyze(placeholder) {
     const { node } = placeholder;
     const { confident, computed } = evaluate(placeholder);
 
@@ -62,7 +63,7 @@ export default {
     }
   },
   translate: {
-    exit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
+    exit(placeholder) {
       const isHTML = isOutputHTML();
       const write = writer.writeTo(placeholder);
       const { node } = placeholder;
@@ -132,7 +133,7 @@ export default {
       placeholder.remove();
     },
   },
-};
+} satisfies TemplateVisitor<t.MarkoPlaceholder>;
 
 function getParentTagName({ parentPath }: t.NodePath<t.MarkoPlaceholder>) {
   return (

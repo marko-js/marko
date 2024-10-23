@@ -30,6 +30,7 @@ import {
   getSerializedScopeProperties,
 } from "../../util/signals";
 import translateVar from "../../util/translate-var";
+import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
@@ -48,7 +49,7 @@ declare module "@marko/compiler/dist/types" {
 
 export default {
   analyze: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
+    enter(tag) {
       const { node } = tag;
       const attrs = tag.get("attributes");
       const tagVar = tag.node.var;
@@ -108,7 +109,7 @@ export default {
     },
   },
   translate: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
+    enter(tag) {
       assertNoArgs(tag);
 
       const extra = tag.node.extra!;
@@ -332,7 +333,7 @@ export default {
 
       walks.enter(tag);
     },
-    exit(tag: t.NodePath<t.MarkoTag>) {
+    exit(tag) {
       const extra = tag.node.extra!;
       const nodeRef = extra[kNativeTagBinding];
       const isHTML = isOutputHTML();
@@ -371,7 +372,7 @@ export default {
       tag.remove();
     },
   },
-};
+} satisfies TemplateVisitor<t.MarkoTag>;
 
 function isSpreadAttr(
   attr: t.NodePath<t.MarkoAttribute | t.MarkoSpreadAttribute>,

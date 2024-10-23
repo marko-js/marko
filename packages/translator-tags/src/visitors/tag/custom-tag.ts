@@ -37,6 +37,7 @@ import {
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import translateVar from "../../util/translate-var";
+import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../program";
@@ -51,7 +52,7 @@ declare module "@marko/compiler/dist/types" {
 
 export default {
   analyze: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
+    enter(tag) {
       const section = getOrCreateSection(tag);
       const tagBody = tag.get("body");
 
@@ -94,14 +95,14 @@ export default {
     },
   },
   translate: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
+    enter(tag) {
       assertAttributesOrSingleArg(tag);
       walks.visit(tag);
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }
     },
-    exit(tag: t.NodePath<t.MarkoTag>) {
+    exit(tag) {
       if (isOutputHTML()) {
         translateHTML(tag);
       } else {
@@ -109,7 +110,7 @@ export default {
       }
     },
   },
-};
+} satisfies TemplateVisitor<t.MarkoTag>;
 
 function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const tagBody = tag.get("body");

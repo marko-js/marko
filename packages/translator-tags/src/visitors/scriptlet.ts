@@ -4,13 +4,14 @@ import { isOutputHTML } from "../util/marko-config";
 import { mergeReferences } from "../util/references";
 import { getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
+import type { TemplateVisitor } from "../util/visitors";
 
 export default {
-  analyze(scriptlet: t.NodePath<t.MarkoScriptlet>) {
+  analyze(scriptlet) {
     mergeReferences(scriptlet, scriptlet.node.body);
   },
   translate: {
-    exit(scriptlet: t.NodePath<t.MarkoScriptlet>) {
+    exit(scriptlet) {
       const { node } = scriptlet;
       if (isOutputHTML()) {
         if (node.static) return; // handled in program exit for html currently.
@@ -32,4 +33,4 @@ export default {
       }
     },
   },
-};
+} satisfies TemplateVisitor<t.MarkoScriptlet>;

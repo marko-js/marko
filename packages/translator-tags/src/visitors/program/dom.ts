@@ -17,12 +17,13 @@ import {
   replaceAssignments,
   writeSignals,
 } from "../../util/signals";
+import type { TemplateVisitor } from "../../util/visitors";
 import { visit } from "../../util/walks";
 import * as writer from "../../util/writer";
 
 export default {
   translate: {
-    exit(program: t.NodePath<t.Program>) {
+    exit(program) {
       visit(program);
       const section = getSection(program);
       const { walks, writes, setup } = writer.getSectionMeta(section);
@@ -150,4 +151,4 @@ export default {
       );
     },
   },
-};
+} satisfies TemplateVisitor<t.Program>;
