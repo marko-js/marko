@@ -1,5 +1,11 @@
 # @marko/translator-tags
 
+## 0.2.13
+
+### Patch Changes
+
+- [#2332](https://github.com/marko-js/marko/pull/2332) [`719d8a1`](https://github.com/marko-js/marko/commit/719d8a10fd4952fa94c66ff5c7d11e38c8d0690c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - XML Declarations are now a compile error (like cdata).
+
 ## 0.2.12
 
 ### Patch Changes
