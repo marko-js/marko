@@ -1,3 +1,4 @@
+export { forIn, forOf, forTo } from "./common/for";
 export { normalizeDynamicRenderer } from "./common/helpers";
 export { attr, attrs, classAttr, styleAttr } from "./html/attrs";
 export { compat } from "./html/compat";
