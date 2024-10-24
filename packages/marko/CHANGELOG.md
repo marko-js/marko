@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.35.29
+
+### Patch Changes
+
+- [#2334](https://github.com/marko-js/marko/pull/2334) [`212fbd0`](https://github.com/marko-js/marko/commit/212fbd063d046d865bb3e8f996db91060b6651b2) Thanks [@LuLaValva](https://github.com/LuLaValva)! - TypeScript dependency fix
+
+- Updated dependencies [[`212fbd0`](https://github.com/marko-js/marko/commit/212fbd063d046d865bb3e8f996db91060b6651b2)]:
+  - @marko/compiler@5.37.20
+
 ## 5.35.28
 
 ### Patch Changes
