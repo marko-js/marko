@@ -1,3 +1,4 @@
+import { forIn, forOf, forTo } from "../common/for";
 import { normalizeDynamicRenderer } from "../common/helpers";
 import { type Accessor, AccessorChar, type Scope } from "../common/types";
 import { reconcile } from "./reconcile";
@@ -21,11 +22,6 @@ import {
   type SignalOp,
   type ValueSignal,
 } from "./signals";
-
-type LoopForEach = (
-  value: unknown[],
-  cb: (key: unknown, args: unknown[]) => void,
-) => void;
 
 export function patchConditionals(
   fn: <T extends typeof conditional | typeof conditionalOnlyChild>(
@@ -194,56 +190,47 @@ const emptyMap = new Map();
 const emptyArray = [] as Scope[];
 
 export function loopOf(nodeAccessor: Accessor, renderer: Renderer) {
-  return loop(nodeAccessor, renderer, (value, cb) => {
-    const [all, by = bySecondArg] = value as typeof value &
-      [all: unknown[], by?: (item: unknown, index: number) => unknown];
-    let i = 0;
-    for (const item of all) {
-      cb(by(item, i), [item, i, all]);
-      i++;
-    }
-  });
+  return loop<[all: unknown[], by?: (item: unknown, index: number) => unknown]>(
+    nodeAccessor,
+    renderer,
+    ([all, by = bySecondArg], cb) => {
+      if (typeof by === "string") {
+        forOf(all, (item, i) =>
+          cb((item as Record<string, unknown>)[by], [item, i]),
+        );
+      } else {
+        forOf(all, (item, i) => cb(by(item, i), [item, i]));
+      }
+    },
+  );
 }
 
 export function loopIn(nodeAccessor: Accessor, renderer: Renderer) {
-  return loop(nodeAccessor, renderer, (value, cb) => {
-    const [all, by = byFirstArg] = value as typeof value &
-      [all: Record<string, unknown>, by?: (key: string, v: unknown) => unknown];
-    for (const key in all) {
-      const v = all[key];
-      cb(by(key, v), [key, v, all]);
-    }
-  });
+  return loop<[obj: {}, by?: (key: string, v: unknown) => unknown]>(
+    nodeAccessor,
+    renderer,
+    ([obj, by = byFirstArg], cb) =>
+      forIn(obj, (key, value) => cb(by(key, value), [key, value])),
+  );
 }
 
 export function loopTo(nodeAccessor: Accessor, renderer: Renderer) {
-  return loop(nodeAccessor, renderer, (value, cb) => {
-    const [to, from = 0, step = 1, by = byFirstArg] = value as [
-      to: number,
-      from: number,
-      step: number,
-      by?: (v: number) => unknown,
-    ];
-    const steps = (to - from) / step;
-    for (let i = 0; i <= steps; i++) {
-      const v = from + i * step;
-      cb(by(v), [v]);
-    }
-  });
+  return loop<
+    [to: number, from: number, step: number, by?: (v: number) => unknown]
+  >(nodeAccessor, renderer, ([to, from, step, by = byFirstArg], cb) =>
+    forTo(to, from, step, (v) => cb(by(v), [v])),
+  );
 }
 
-function loop(
+function loop<T extends unknown[] = unknown[]>(
   nodeAccessor: Accessor,
   renderer: Renderer,
-  forEach: LoopForEach,
+  forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
 ) {
   const loopScopeAccessor = nodeAccessor + AccessorChar.LoopScopeArray;
   const closureSignals = renderer.___closureSignals;
   const params = renderer.___args;
-  return (
-    scope: Scope,
-    valueOrOp: [unknown, (...args: unknown[]) => unknown] | SignalOp,
-  ) => {
+  return (scope: Scope, valueOrOp: T | SignalOp) => {
     if (valueOrOp === DIRTY) return;
     if (valueOrOp === MARK || valueOrOp === CLEAN) {
       const loopScopes =

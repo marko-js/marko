@@ -88,21 +88,6 @@
   key="other-2"
 />
 <div
-  key="0"
->
-  3: 1
-</div>
-<div
-  key="1"
->
-  3: 2
-</div>
-<div
-  key="2"
->
-  3: 3
-</div>
-<div
   key="a"
 >
   a: 1

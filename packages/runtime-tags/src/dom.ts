@@ -1,3 +1,4 @@
+export { forIn, forOf, forTo } from "./common/for";
 export type { Scope } from "./common/types";
 export { getAbortSignal, resetAbortSignal } from "./dom/abort-signal";
 export { compat } from "./dom/compat";

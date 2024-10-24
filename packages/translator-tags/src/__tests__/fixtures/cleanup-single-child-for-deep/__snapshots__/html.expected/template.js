@@ -1,4 +1,4 @@
-import { markResumeNode as _markResumeNode, nodeRef as _nodeRef, register as _register, write as _write, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, ensureScopeWithId as _ensureScopeWithId, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import { markResumeNode as _markResumeNode, nodeRef as _nodeRef, register as _register, write as _write, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, ensureScopeWithId as _ensureScopeWithId, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, forOf as _forOf, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
 import _child from "./components/child.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
@@ -10,10 +10,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   _write(`<button>Toggle</button>${_markResumeNode(_scope0_id, "#button/0")}<div></div>${_markResumeNode(_scope0_id, "#div/1")}`);
   const _forScopeIds2 = [],
     _scope1_ = new Map();
-  let _i4 = 0;
-  for (const outerItem of items) {
+  _forOf(items, (outerItem, _index2) => {
     const _scope1_id = _nextScopeId();
-    let _i3 = _i4++;
     _write("<div>");
     const _childScope = _peekNextScope();
     _child({
@@ -22,10 +20,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     });
     const _forScopeIds = [],
       _scope2_ = new Map();
-    let _i2 = 0;
-    for (const middleItem of items) {
+    _forOf(items, (middleItem, _index) => {
       const _scope2_id = _nextScopeId();
-      let _i = _i2++;
       _write("<div>");
       const _childScope2 = _peekNextScope();
       _child({
@@ -38,8 +34,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
         "#childScope/0": _writeExistingScope(_childScope2),
         "_": _ensureScopeWithId(_scope1_id)
       });
-      _scope2_.set(_i, _getScopeById(_scope2_id));
-    }
+      _scope2_.set(_index, _getScopeById(_scope2_id));
+    });
     _forScopeIds2.push(_scope1_id);
     _write(`${_markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _forScopeIds)}</div>`);
     _writeScope(_scope1_id, {
@@ -48,8 +44,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       "#text/1(": _scope2_.size ? _scope2_ : undefined,
       "_": _ensureScopeWithId(_scope0_id)
     });
-    _scope1_.set(_i3, _getScopeById(_scope1_id));
-  }
+    _scope1_.set(_index2, _getScopeById(_scope1_id));
+  });
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/2", _forScopeIds2)}`);
   _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/template.marko_0_items");
   _writeScope(_scope0_id, {
