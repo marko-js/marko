@@ -61,8 +61,37 @@ declare module "@marko/compiler/dist/types" {
 
 export default {
   analyze(tag) {
-    validateFor(tag);
     const tagExtra = (tag.node.extra ??= {});
+    const isAttrTag =
+      tagExtra.nestedAttributeTags &&
+      Object.keys(tagExtra.nestedAttributeTags).length > 0;
+
+    let allowAttrs: string[];
+    assertNoVar(tag);
+    assertNoArgs(tag);
+
+    switch (getForType(tag.node)) {
+      case "of":
+        allowAttrs = ["of"];
+        break;
+      case "in":
+        allowAttrs = ["in"];
+        break;
+      case "to":
+        allowAttrs = ["to", "from", "step"];
+        break;
+      default:
+        throw tag.buildCodeFrameError(
+          "Invalid `for` tag, missing an `of=`, `in=`, `to=` attribute.",
+        );
+    }
+
+    if (!isAttrTag) {
+      allowAttrs.push("by");
+    }
+
+    assertAllowedAttributes(tag, allowAttrs);
+
     const tagBody = tag.get("body");
     const section = getOrCreateSection(tag);
     const bodySection = startSection(tagBody)!;
@@ -122,7 +151,191 @@ export default {
         }
       },
       exit(tag) {
-        translateHTMLExit(tag);
+        const tagBody = tag.get("body");
+        const tagSection = getSection(tag);
+        const bodySection = getSection(tagBody);
+        const { node } = tag;
+        const tagExtra = node.extra!;
+        const isStateful = isStatefulReferences(tagExtra.referencedBindings);
+        const nodeRef = isOnlyChildInParent(tag)
+          ? tag.parentPath.parent.extra![kNativeTagBinding]!
+          : tag.node.extra![kForMarkerBinding]!;
+        const forAttrs = getKnownAttrValues(node);
+        const forType = getForType(node)!;
+        const params = node.body.params;
+        const statements: t.Statement[] = [];
+        const bodyStatements = node.body.body as t.Statement[];
+        const hasStatefulClosures = checkStatefulClosures(bodySection, true);
+        const hasNestedAttributeTags =
+          tagExtra.nestedAttributeTags &&
+          Object.keys(tagExtra.nestedAttributeTags).length > 0;
+        let keyExpression: t.Expression | undefined;
+
+        if (isStateful && isOnlyChildInParent(tag)) {
+          tag.parentPath.parent.extra![kSerializeMarker] = true;
+        }
+
+        if (isStateful || hasStatefulClosures) {
+          setForceResumeScope(bodySection);
+        }
+
+        if (tagExtra[kForScopeStartIndex]) {
+          statements.push(
+            t.variableDeclaration("let", [
+              t.variableDeclarator(
+                tagExtra[kForScopeStartIndex],
+                t.numericLiteral(0),
+              ),
+            ]),
+          );
+        }
+
+        if ((isStateful || hasStatefulClosures) && !hasNestedAttributeTags) {
+          const singleNodeOptimization =
+            bodySection.content === null || bodySection.content.singleChild;
+          const defaultParamNames = (
+            {
+              of: ["list", "index"],
+              in: ["key", "value"],
+              to: ["value"],
+            } as const
+          )[forType];
+          const defaultByParamIndex = forType === "of" ? 1 : 0;
+          const requiredParamsIndex = forAttrs.by
+            ? defaultParamNames.length - 1
+            : defaultByParamIndex;
+
+          for (let i = 0; i <= requiredParamsIndex; i++) {
+            const existingParam = params[i];
+            if (!existingParam || !t.isIdentifier(existingParam)) {
+              const id = (params[i] =
+                currentProgramPath.scope.generateUidIdentifier(
+                  defaultParamNames[i],
+                ));
+
+              if (existingParam) {
+                bodyStatements.unshift(
+                  t.variableDeclaration("let", [
+                    t.variableDeclarator(existingParam, id),
+                  ]),
+                );
+              }
+            }
+          }
+
+          if (forAttrs.by) {
+            // TODO: handle `by` being undefined or a string.
+            const byIdentifier =
+              currentProgramPath.scope.generateUidIdentifier("by");
+            statements.push(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(byIdentifier, forAttrs.by),
+              ]),
+            );
+            keyExpression = t.callExpression(
+              byIdentifier,
+              params as t.Identifier[],
+            );
+          } else {
+            keyExpression = params[defaultByParamIndex] as t.Identifier;
+          }
+
+          const write = writer.writeTo(tag);
+          const forScopeIdsIdentifier =
+            tag.scope.generateUidIdentifier("forScopeIds");
+          const forScopesIdentifier = getScopeIdentifier(bodySection);
+
+          statements.push(
+            t.variableDeclaration(
+              "const",
+              [
+                isStateful &&
+                  singleNodeOptimization &&
+                  t.variableDeclarator(
+                    forScopeIdsIdentifier,
+                    t.arrayExpression([]),
+                  ),
+                t.variableDeclarator(
+                  forScopesIdentifier,
+                  t.newExpression(t.identifier("Map"), []),
+                ),
+              ].filter(Boolean) as t.VariableDeclarator[],
+            ),
+          );
+
+          if (isStateful) {
+            if (singleNodeOptimization) {
+              bodyStatements.push(
+                t.expressionStatement(
+                  t.callExpression(
+                    t.memberExpression(
+                      forScopeIdsIdentifier,
+                      t.identifier("push"),
+                    ),
+                    [getScopeIdIdentifier(bodySection)],
+                  ),
+                ),
+              );
+              write`${callRuntime(
+                "markResumeControlSingleNodeEnd",
+                getScopeIdIdentifier(tagSection),
+                getScopeAccessorLiteral(nodeRef),
+                forScopeIdsIdentifier,
+              )}`;
+            } else {
+              write`${callRuntime(
+                "markResumeControlEnd",
+                getScopeIdIdentifier(tagSection),
+                getScopeAccessorLiteral(nodeRef),
+              )}`;
+            }
+          }
+          getSerializedScopeProperties(tagSection).set(
+            t.stringLiteral(
+              getScopeAccessorLiteral(nodeRef).value +
+                AccessorChar.LoopScopeMap,
+            ),
+            t.conditionalExpression(
+              t.memberExpression(forScopesIdentifier, t.identifier("size")),
+              forScopesIdentifier,
+              t.identifier("undefined"),
+            ),
+          );
+        }
+
+        writer.flushInto(tag);
+        // TODO: this is a hack to get around the fact that we don't have a way to
+        // know if a scope requires dynamic subscriptions
+        setSubscriberBuilder(tag, (() => {}) as any);
+        writeHTMLResumeStatements(tagBody);
+
+        if (keyExpression && (isStateful || hasStatefulClosures)) {
+          bodyStatements.push(
+            t.expressionStatement(
+              t.callExpression(
+                t.memberExpression(
+                  getScopeIdentifier(bodySection),
+                  t.identifier("set"),
+                ),
+                [
+                  keyExpression!,
+                  callRuntime(
+                    "getScopeById",
+                    getScopeIdIdentifier(bodySection),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        statements.push(
+          buildForRuntimeCall(forType, forAttrs, params, bodyStatements),
+        );
+
+        for (const replacement of tag.replaceWithMultiple(statements)) {
+          replacement.skip();
+        }
       },
     },
     dom: {
@@ -134,7 +347,76 @@ export default {
         }
       },
       exit(tag) {
-        translateDOMExit(tag);
+        const tagBody = tag.get("body");
+        const tagSection = getSection(tag);
+        const bodySection = getSection(tagBody);
+        const { node } = tag;
+        const tagExtra = node.extra!;
+        const { referencedBindings } = tagExtra;
+        const nodeRef = isOnlyChildInParent(tag)
+          ? tag.parentPath.parent.extra![kNativeTagBinding]!
+          : tag.node.extra![kForMarkerBinding]!;
+        setSubscriberBuilder(tag, (signal: t.Expression) => {
+          return callRuntime(
+            "inLoopScope",
+            signal,
+            getScopeAccessorLiteral(nodeRef),
+          );
+        });
+
+        const rendererId = t.identifier(bodySection.name);
+        const forType = getForType(node)!;
+        const signal = getSignal(tagSection, nodeRef, "for");
+        signal.build = () => {
+          return callRuntime(
+            forTypeToDOMRuntime(forType),
+            getScopeAccessorLiteral(nodeRef),
+            rendererId,
+          );
+        };
+
+        const paramIdentifiers = Object.values(
+          tagBody.getBindingIdentifiers(),
+        ) as t.Identifier[];
+
+        signal.hasDownstreamIntersections = () => {
+          if (getClosures(bodySection).length > 0) {
+            return true;
+          }
+
+          if (paramIdentifiers.length) {
+            const binding = paramIdentifiers[0].extra!.binding!;
+            for (const {
+              referencedBindings,
+            } of binding.downstreamExpressions) {
+              if (
+                getSignal(
+                  bodySection,
+                  referencedBindings,
+                ).hasDownstreamIntersections()
+              ) {
+                return true;
+              }
+            }
+          }
+
+          return false;
+        };
+
+        const forAttrs = getKnownAttrValues(node);
+        const loopArgs = getBaseArgsInForTag(forType, forAttrs);
+        if (forAttrs.by) {
+          loopArgs.push(forAttrs.by);
+        }
+
+        addValue(
+          tagSection,
+          referencedBindings,
+          signal,
+          t.arrayExpression(loopArgs),
+        );
+
+        tag.remove();
       },
     },
   }),
@@ -201,274 +483,6 @@ export default {
     },
   ],
 } satisfies Tag;
-
-function translateDOMExit(tag: t.NodePath<t.MarkoTag>) {
-  const tagBody = tag.get("body");
-  const tagSection = getSection(tag);
-  const bodySection = getSection(tagBody);
-  const { node } = tag;
-  const tagExtra = node.extra!;
-  const { referencedBindings } = tagExtra;
-  const nodeRef = isOnlyChildInParent(tag)
-    ? tag.parentPath.parent.extra![kNativeTagBinding]!
-    : tag.node.extra![kForMarkerBinding]!;
-  setSubscriberBuilder(tag, (signal: t.Expression) => {
-    return callRuntime("inLoopScope", signal, getScopeAccessorLiteral(nodeRef));
-  });
-
-  const rendererId = t.identifier(bodySection.name);
-  const forType = getForType(node)!;
-  const signal = getSignal(tagSection, nodeRef, "for");
-  signal.build = () => {
-    return callRuntime(
-      forTypeToDOMRuntime(forType),
-      getScopeAccessorLiteral(nodeRef),
-      rendererId,
-    );
-  };
-
-  const paramIdentifiers = Object.values(
-    tagBody.getBindingIdentifiers(),
-  ) as t.Identifier[];
-
-  signal.hasDownstreamIntersections = () => {
-    if (getClosures(bodySection).length > 0) {
-      return true;
-    }
-
-    if (paramIdentifiers.length) {
-      const binding = paramIdentifiers[0].extra!.binding!;
-      for (const { referencedBindings } of binding.downstreamExpressions) {
-        if (
-          getSignal(
-            bodySection,
-            referencedBindings,
-          ).hasDownstreamIntersections()
-        ) {
-          return true;
-        }
-      }
-    }
-
-    return false;
-  };
-
-  const forAttrs = getKnownAttrValues(node);
-  const loopArgs = getBaseArgsInForTag(forType, forAttrs);
-  if (forAttrs.by) {
-    loopArgs.push(forAttrs.by);
-  }
-
-  addValue(tagSection, referencedBindings, signal, t.arrayExpression(loopArgs));
-
-  tag.remove();
-}
-
-function translateHTMLExit(tag: t.NodePath<t.MarkoTag>) {
-  const tagBody = tag.get("body");
-  const tagSection = getSection(tag);
-  const bodySection = getSection(tagBody);
-  const { node } = tag;
-  const tagExtra = node.extra!;
-  const isStateful = isStatefulReferences(tagExtra.referencedBindings);
-  const nodeRef = isOnlyChildInParent(tag)
-    ? tag.parentPath.parent.extra![kNativeTagBinding]!
-    : tag.node.extra![kForMarkerBinding]!;
-  const forAttrs = getKnownAttrValues(node);
-  const forType = getForType(node)!;
-  const params = node.body.params;
-  const statements: t.Statement[] = [];
-  const bodyStatements = node.body.body as t.Statement[];
-  const hasStatefulClosures = checkStatefulClosures(bodySection, true);
-  const hasNestedAttributeTags =
-    tagExtra.nestedAttributeTags &&
-    Object.keys(tagExtra.nestedAttributeTags).length > 0;
-  let keyExpression: t.Expression | undefined;
-
-  if (isStateful && isOnlyChildInParent(tag)) {
-    tag.parentPath.parent.extra![kSerializeMarker] = true;
-  }
-
-  if (isStateful || hasStatefulClosures) {
-    setForceResumeScope(bodySection);
-  }
-
-  if (tagExtra[kForScopeStartIndex]) {
-    statements.push(
-      t.variableDeclaration("let", [
-        t.variableDeclarator(
-          tagExtra[kForScopeStartIndex],
-          t.numericLiteral(0),
-        ),
-      ]),
-    );
-  }
-
-  if ((isStateful || hasStatefulClosures) && !hasNestedAttributeTags) {
-    const singleNodeOptimization =
-      bodySection.content === null || bodySection.content.singleChild;
-    const defaultParamNames = (
-      {
-        of: ["list", "index"],
-        in: ["key", "value"],
-        to: ["value"],
-      } as const
-    )[forType];
-    const defaultByParamIndex = forType === "of" ? 1 : 0;
-    const requiredParamsIndex = forAttrs.by
-      ? defaultParamNames.length - 1
-      : defaultByParamIndex;
-
-    for (let i = 0; i <= requiredParamsIndex; i++) {
-      const existingParam = params[i];
-      if (!existingParam || !t.isIdentifier(existingParam)) {
-        const id = (params[i] = currentProgramPath.scope.generateUidIdentifier(
-          defaultParamNames[i],
-        ));
-
-        if (existingParam) {
-          bodyStatements.unshift(
-            t.variableDeclaration("let", [
-              t.variableDeclarator(existingParam, id),
-            ]),
-          );
-        }
-      }
-    }
-
-    if (forAttrs.by) {
-      // TODO: handle `by` being undefined or a string.
-      const byIdentifier = currentProgramPath.scope.generateUidIdentifier("by");
-      statements.push(
-        t.variableDeclaration("const", [
-          t.variableDeclarator(byIdentifier, forAttrs.by),
-        ]),
-      );
-      keyExpression = t.callExpression(byIdentifier, params as t.Identifier[]);
-    } else {
-      keyExpression = params[defaultByParamIndex] as t.Identifier;
-    }
-
-    const write = writer.writeTo(tag);
-    const forScopeIdsIdentifier =
-      tag.scope.generateUidIdentifier("forScopeIds");
-    const forScopesIdentifier = getScopeIdentifier(bodySection);
-
-    statements.push(
-      t.variableDeclaration(
-        "const",
-        [
-          isStateful &&
-            singleNodeOptimization &&
-            t.variableDeclarator(forScopeIdsIdentifier, t.arrayExpression([])),
-          t.variableDeclarator(
-            forScopesIdentifier,
-            t.newExpression(t.identifier("Map"), []),
-          ),
-        ].filter(Boolean) as t.VariableDeclarator[],
-      ),
-    );
-
-    if (isStateful) {
-      if (singleNodeOptimization) {
-        bodyStatements.push(
-          t.expressionStatement(
-            t.callExpression(
-              t.memberExpression(forScopeIdsIdentifier, t.identifier("push")),
-              [getScopeIdIdentifier(bodySection)],
-            ),
-          ),
-        );
-        write`${callRuntime(
-          "markResumeControlSingleNodeEnd",
-          getScopeIdIdentifier(tagSection),
-          getScopeAccessorLiteral(nodeRef),
-          forScopeIdsIdentifier,
-        )}`;
-      } else {
-        write`${callRuntime(
-          "markResumeControlEnd",
-          getScopeIdIdentifier(tagSection),
-          getScopeAccessorLiteral(nodeRef),
-        )}`;
-      }
-    }
-    getSerializedScopeProperties(tagSection).set(
-      t.stringLiteral(
-        getScopeAccessorLiteral(nodeRef).value + AccessorChar.LoopScopeMap,
-      ),
-      t.conditionalExpression(
-        t.memberExpression(forScopesIdentifier, t.identifier("size")),
-        forScopesIdentifier,
-        t.identifier("undefined"),
-      ),
-    );
-  }
-
-  writer.flushInto(tag);
-  // TODO: this is a hack to get around the fact that we don't have a way to
-  // know if a scope requires dynamic subscriptions
-  setSubscriberBuilder(tag, (() => {}) as any);
-  writeHTMLResumeStatements(tagBody);
-
-  if (keyExpression && (isStateful || hasStatefulClosures)) {
-    bodyStatements.push(
-      t.expressionStatement(
-        t.callExpression(
-          t.memberExpression(
-            getScopeIdentifier(bodySection),
-            t.identifier("set"),
-          ),
-          [
-            keyExpression!,
-            callRuntime("getScopeById", getScopeIdIdentifier(bodySection)),
-          ],
-        ),
-      ),
-    );
-  }
-
-  statements.push(
-    buildForRuntimeCall(forType, forAttrs, params, bodyStatements),
-  );
-
-  for (const replacement of tag.replaceWithMultiple(statements)) {
-    replacement.skip();
-  }
-}
-
-function validateFor(tag: t.NodePath<t.MarkoTag>) {
-  const tagExtra = (tag.node.extra ??= {});
-  const isAttrTag =
-    tagExtra.nestedAttributeTags &&
-    Object.keys(tagExtra.nestedAttributeTags).length > 0;
-
-  let allowAttrs: string[];
-  assertNoVar(tag);
-  assertNoArgs(tag);
-
-  switch (getForType(tag.node)) {
-    case "of":
-      allowAttrs = ["of"];
-      break;
-    case "in":
-      allowAttrs = ["in"];
-      break;
-    case "to":
-      allowAttrs = ["to", "from", "step"];
-      break;
-    default:
-      throw tag.buildCodeFrameError(
-        "Invalid `for` tag, missing an `of=`, `in=`, `to=` attribute.",
-      );
-  }
-
-  if (!isAttrTag) {
-    allowAttrs.push("by");
-  }
-
-  assertAllowedAttributes(tag, allowAttrs);
-}
 
 export function buildForRuntimeCall(
   type: ForType,
