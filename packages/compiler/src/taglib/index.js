@@ -133,5 +133,5 @@ function resolveTaglib(id) {
 
 function hasRootDependency(id) {
   const pkg = getRootPackage(process.cwd());
-  return !!((pkg && pkg.dependencies?.[id]) || pkg.devDependencies?.[id]);
+  return !!(pkg && (pkg.dependencies?.[id] || pkg.devDependencies?.[id]));
 }
