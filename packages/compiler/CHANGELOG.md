@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.37.20
+
+### Patch Changes
+
+- [#2334](https://github.com/marko-js/marko/pull/2334) [`212fbd0`](https://github.com/marko-js/marko/commit/212fbd063d046d865bb3e8f996db91060b6651b2) Thanks [@LuLaValva](https://github.com/LuLaValva)! - TypeScript dependency fix
+
+- [#2337](https://github.com/marko-js/marko/pull/2337) [`ea95de1`](https://github.com/marko-js/marko/commit/ea95de1deaaa03bf2bc57b2518954084dbc1442f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid babel `startColumn` api until https://github.com/babel/babel/pull/16936 is merged.
+
+- Updated dependencies [[`ea95de1`](https://github.com/marko-js/marko/commit/ea95de1deaaa03bf2bc57b2518954084dbc1442f)]:
+  - @marko/babel-utils@6.5.8
+
 ## 5.37.19
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.27
+
+### Patch Changes
+
+- [#2337](https://github.com/marko-js/marko/pull/2337) [`ea95de1`](https://github.com/marko-js/marko/commit/ea95de1deaaa03bf2bc57b2518954084dbc1442f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid babel `startColumn` api until https://github.com/babel/babel/pull/16936 is merged.
+
+- Updated dependencies [[`ea95de1`](https://github.com/marko-js/marko/commit/ea95de1deaaa03bf2bc57b2518954084dbc1442f), [`40b41da`](https://github.com/marko-js/marko/commit/40b41dadfa325af3ac1cf25f7a89e18a0e868153)]:
+  - @marko/translator-default@6.0.21
+  - @marko/translator-tags@0.2.14
+  - @marko/babel-utils@6.5.8
+
 ## 0.1.26
 
 ### Patch Changes
