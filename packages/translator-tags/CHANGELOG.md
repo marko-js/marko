@@ -1,5 +1,16 @@
 # @marko/translator-tags
 
+## 0.2.14
+
+### Patch Changes
+
+- [#2337](https://github.com/marko-js/marko/pull/2337) [`ea95de1`](https://github.com/marko-js/marko/commit/ea95de1deaaa03bf2bc57b2518954084dbc1442f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid babel `startColumn` api until https://github.com/babel/babel/pull/16936 is merged.
+
+- [#2337](https://github.com/marko-js/marko/pull/2337) [`40b41da`](https://github.com/marko-js/marko/commit/40b41dadfa325af3ac1cf25f7a89e18a0e868153) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where incorrect function registry name was being generated.
+
+- Updated dependencies [[`ea95de1`](https://github.com/marko-js/marko/commit/ea95de1deaaa03bf2bc57b2518954084dbc1442f)]:
+  - @marko/babel-utils@6.5.8
+
 ## 0.2.13
 
 ### Patch Changes
