@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const el = _nodeRef();
   const write = _register(function (msg) {
     el().innerHTML += '\n' + msg;
-  }, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0/_", _scope0_id);
+  }, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0/write", _scope0_id);
   _write(`<button id=outer>Toggle Outer</button>${_markResumeNode(_scope0_id, "#button/0")}<button id=middle>Toggle Middle</button>${_markResumeNode(_scope0_id, "#button/1")}<button id=inner>Toggle Inner</button>${_markResumeNode(_scope0_id, "#button/2")}<pre></pre>${_markResumeNode(_scope0_id, "#pre/3")}`);
   let _ifScopeId3, _ifRenderer3;
   if (showOuter) {

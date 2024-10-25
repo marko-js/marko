@@ -6,7 +6,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const el = _nodeRef();
   const write = _register(function (msg) {
     el().innerHTML += '\n' + msg;
-  }, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/template.marko_0/_", _scope0_id);
+  }, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/template.marko_0/write", _scope0_id);
   _write(`<button>Toggle</button>${_markResumeNode(_scope0_id, "#button/0")}<div></div>${_markResumeNode(_scope0_id, "#div/1")}`);
   const _forScopeIds2 = [],
     _scope1_ = new Map();

@@ -4,7 +4,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const x = 1;
   const handler = _register(function (newValue) {
     x = newValue + 1;
-  }, "packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0/_", _scope0_id);
+  }, "packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0/handler", _scope0_id);
   const y = x;
   const _y_change = handler;
   _write(`<button>${_escapeXML(x)}${_markResumeNode(_scope0_id, "#text/1")}|<!>${_escapeXML(y)}${_markResumeNode(_scope0_id, "#text/2")}</button>${_markResumeNode(_scope0_id, "#button/0")}`);

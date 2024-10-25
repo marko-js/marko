@@ -55,20 +55,19 @@ export default {
     const extra = (node.extra ??= {});
     const name = (extra.name =
       (fn.node as t.FunctionExpression).id?.name ||
-      (markoRoot?.isMarkoAttribute()
+      (isMarkoAttribute(markoRoot)
         ? markoRoot.node.default
           ? t.toIdentifier(
-              (markoRoot.parentPath.parentPath as t.NodePath<t.MarkoTag>).get(
-                "name",
-              ),
+              markoRoot.parentPath.has("var")
+                ? markoRoot.parentPath.get("var")
+                : markoRoot.parentPath.get("name"),
             )
           : markoRoot.node.name
         : "anonymous"));
 
     if (
-      markoRoot &&
-      markoRoot.isMarkoAttribute() &&
-      (isNativeTag(markoRoot.parentPath as t.NodePath<t.MarkoTag>) ||
+      isMarkoAttribute(markoRoot) &&
+      (isNativeTag(markoRoot.parentPath) ||
         isCoreTagName(markoRoot.parentPath, "effect") ||
         isCoreTagName(markoRoot.parentPath, "lifecycle") ||
         isCoreTagName(markoRoot.parentPath, "for") ||
@@ -245,4 +244,13 @@ function isFunction(
     default:
       return false;
   }
+}
+
+function isMarkoAttribute(
+  path: t.NodePath | undefined | null,
+): path is t.NodePath<t.MarkoAttribute> & {
+  parent: t.MarkoTag;
+  parentPath: t.NodePath<t.MarkoTag>;
+} {
+  return path ? path.isMarkoAttribute() : false;
 }
