@@ -2,7 +2,7 @@ export const _template_ = "<div> </div><span> </span><p> </p>";
 export const _walks_ = /* next(1), get, out(1), next(1), get, out(1), next(1), get, out(1) */"D lD lD l";
 export const _setup_ = () => {};
 import { data as _data, resetAbortSignal as _resetAbortSignal, getAbortSignal as _getAbortSignal, register as _register, queueEffect as _queueEffect, intersection as _intersection, value as _value, intersections as _intersections, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _ = _scope => {
+const _effect = _scope => {
   const {
     name,
     write
@@ -17,7 +17,7 @@ const _expr_name_write_effect = _register("packages/translator-tags/src/__tests_
     write
   } = _scope;
   write(`mounted ${name}`);
-  _getAbortSignal(_scope, 0).onabort = _(_scope);
+  _getAbortSignal(_scope, 0).onabort = _effect(_scope);
 });
 const _expr_name_write = /* @__PURE__ */_intersection(2, _scope => {
   const {

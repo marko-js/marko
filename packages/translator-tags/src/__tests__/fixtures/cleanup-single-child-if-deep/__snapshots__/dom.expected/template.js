@@ -1,7 +1,7 @@
 export const _template_ = "<button id=outer>Toggle Outer</button><button id=middle>Toggle Middle</button><button id=inner>Toggle Inner</button><pre></pre><!><!>";
 export const _walks_ = /* get, over(1), get, over(1), get, over(1), get, over(1), replace, over(1) */" b b b b%bD";
 import { on as _on, register as _register, inChild as _inChild, queueSource as _queueSource, createRenderer as _createRenderer, dynamicClosure as _dynamicClosure, conditional as _conditional, registerSubscriber as _registerSubscriber, closure as _closure, inConditionalScope as _inConditionalScope, dynamicSubscribers as _dynamicSubscribers, intersections as _intersections, value as _value, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _ = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0/_", _scope => function (msg) {
+const _write = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0/write", _scope => function (msg) {
   _scope["#pre/3"].innerHTML += '\n' + msg;
 });
 import { _setup_ as _child, _write_ as _child__write_, _name_ as _child__name_, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
@@ -28,7 +28,7 @@ const _setup$ifBody = _scope => {
 };
 const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_1_renderer", /* @__PURE__ */_createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$ifBody, () => [_write$ifBody, _showMiddle$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/4");
-const _write = /* @__PURE__ */_value("write", null, () => _intersections([_inConditionalScope(_write$ifBody, "#text/4"), _dynamicSubscribers("write")]));
+const _write2 = /* @__PURE__ */_value("write", null, () => _intersections([_inConditionalScope(_write$ifBody, "#text/4"), _dynamicSubscribers("write")]));
 const _onClick = _scope => {
   const {
     showInner
@@ -66,6 +66,6 @@ export function _setup_(_scope) {
   _showOuter(_scope, true);
   _showMiddle(_scope, true);
   _showInner(_scope, true);
-  _write(_scope, _(_scope));
+  _write2(_scope, _write(_scope));
 }
 export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko");

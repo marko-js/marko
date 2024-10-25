@@ -1,5 +1,5 @@
 # Write
-  <button id=inc>1<!--M_*0 #text/1-->|<!>1<!--M_*0 #text/2--></button><!--M_*0 #button/0--><button id=toggle>toggle</button><!--M_*0 #button/3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={y:1}},_.a._y_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0/_"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0",0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0__y_change_y",0];M._.w()</script>
+  <button id=inc>1<!--M_*0 #text/1-->|<!>1<!--M_*0 #text/2--></button><!--M_*0 #button/0--><button id=toggle>toggle</button><!--M_*0 #button/3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={y:1}},_.a._y_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0/yChange"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0",0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0__y_change_y",0];M._.w()</script>
 
 
 # Render "End"
@@ -25,7 +25,7 @@
     </button>
     <!--M_*0 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={y:1}},_.a._y_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0/_"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0",0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0__y_change_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={y:1}},_.a._y_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0/yChange"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0",0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko_0__y_change_y",0];M._.w()
     </script>
   </body>
 </html>

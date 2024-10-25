@@ -9,7 +9,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   log.block += "rendered";
   const fromConst = _register(function () {
     log.const += "rendered";
-  }, "packages/translator-tags/src/__tests__/fixtures/do-tag/template.marko_0/_", _scope0_id);
+  }, "packages/translator-tags/src/__tests__/fixtures/do-tag/template.marko_0/fromConst", _scope0_id);
   fromConst();
   const str = "rendered";
   log.let += str;
