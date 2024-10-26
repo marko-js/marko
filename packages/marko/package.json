@@ -1,6 +1,6 @@
 {
   "name": "marko",
-  "version": "5.35.29",
+  "version": "5.35.30",
   "description": "UI Components + streaming, async, high performance, HTML templating for Node.js and the browser.",
   "keywords": [
     "front-end",
@@ -66,7 +66,7 @@
     "build": "babel ./src --out-dir ./dist --extensions .js --copy-files --config-file ../../babel.config.js --env-name=production"
   },
   "dependencies": {
-    "@marko/compiler": "^5.37.20",
+    "@marko/compiler": "^5.37.21",
     "@marko/translator-default": "^6.0.21",
     "app-module-path": "^2.2.0",
     "argly": "^1.2.0",

@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.21
+
+### Patch Changes
+
+- [#2338](https://github.com/marko-js/marko/pull/2338) [`033adb9`](https://github.com/marko-js/marko/commit/033adb92de3e40f24614e0de9d438f6390843a84) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure that errors discovered while loading optional module level taglibs are forwarded through the onError api.
+
 ## 5.37.20
 
 ### Patch Changes
