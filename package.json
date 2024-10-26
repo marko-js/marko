@@ -40,7 +40,7 @@
     "@types/babel__traverse": "^7.20.6",
     "@types/jsdom": "^21.1.7",
     "@types/mocha": "^10.0.9",
-    "@types/node": "^22.8.0",
+    "@types/node": "^22.8.1",
     "babel-plugin-minprops": "^2.0.1",
     "bluebird": "^3.7.2",
     "c8": "^10.1.2",
