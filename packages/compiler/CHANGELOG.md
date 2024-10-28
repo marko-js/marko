@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.37.22
+
+### Patch Changes
+
+- [#2342](https://github.com/marko-js/marko/pull/2342) [`8e07673`](https://github.com/marko-js/marko/commit/8e07673ca07cc83d9910c68ff8359264015c28d1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Make attribute tags a property on the MarkoTag AST and refactor how attribute tags are translated.
+
+- Updated dependencies [[`8e07673`](https://github.com/marko-js/marko/commit/8e07673ca07cc83d9910c68ff8359264015c28d1)]:
+  - @marko/babel-utils@6.5.9
+
 ## 5.37.21
 
 ### Patch Changes
