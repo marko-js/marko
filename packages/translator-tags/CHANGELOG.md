@@ -1,5 +1,17 @@
 # @marko/translator-tags
 
+## 0.2.15
+
+### Patch Changes
+
+- [#2342](https://github.com/marko-js/marko/pull/2342) [`8e07673`](https://github.com/marko-js/marko/commit/8e07673ca07cc83d9910c68ff8359264015c28d1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Make attribute tags a property on the MarkoTag AST and refactor how attribute tags are translated.
+
+- [#2340](https://github.com/marko-js/marko/pull/2340) [`33a1ba6`](https://github.com/marko-js/marko/commit/33a1ba61cdc47e56441ba3c9e9173372c4b8b6fa) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Switch <for> tag output to use a shared runtime.
+
+- Updated dependencies [[`8e07673`](https://github.com/marko-js/marko/commit/8e07673ca07cc83d9910c68ff8359264015c28d1), [`33a1ba6`](https://github.com/marko-js/marko/commit/33a1ba61cdc47e56441ba3c9e9173372c4b8b6fa)]:
+  - @marko/babel-utils@6.5.9
+  - @marko/runtime-tags@0.1.16
+
 ## 0.2.14
 
 ### Patch Changes

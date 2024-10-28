@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.1.16
+
+### Patch Changes
+
+- [#2340](https://github.com/marko-js/marko/pull/2340) [`33a1ba6`](https://github.com/marko-js/marko/commit/33a1ba61cdc47e56441ba3c9e9173372c4b8b6fa) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Switch <for> tag output to use a shared runtime.
+
 ## 0.1.15
 
 ### Patch Changes
