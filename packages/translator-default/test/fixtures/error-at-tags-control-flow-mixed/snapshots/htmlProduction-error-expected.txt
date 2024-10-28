@@ -1,8 +1,9 @@
 CompileError: 
-    at packages/translator-default/test/fixtures/error-at-tags-control-flow-mixed/template.marko:2:5
-      1 | <${stuff}>
-    > 2 |     <if(x)>
-        |     ^ Cannot mix @tags with other content when under a control flow.
-      3 |         <@header class="my-header">
-      4 |             Header content
-      5 |         </@header>
+    at packages/translator-default/test/fixtures/error-at-tags-control-flow-mixed/template.marko:7:9
+       5 |         </@header>
+       6 |
+    >  7 |         Body content
+         |         ^ Cannot have attribute tags and body content under a control flow tag.
+       8 |     </>
+       9 | </>
+      10 |

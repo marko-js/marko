@@ -24,7 +24,11 @@ export function exit(path) {
     withPreviousLocation(
       t.whileStatement(
         getArgOrSequence(path),
-        t.blockStatement(path.node.body.body),
+        t.blockStatement(
+          path.node.attributeTags.length
+            ? path.node.attributeTags
+            : path.node.body.body,
+        ),
       ),
       path.node,
     ),

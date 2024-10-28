@@ -1,4 +1,8 @@
-import { assertNoArgs, getTagDef } from "@marko/babel-utils";
+import {
+  assertNoArgs,
+  assertNoAttributeTags,
+  getTagDef,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
 
@@ -50,6 +54,7 @@ declare module "@marko/compiler/dist/types" {
 export default {
   analyze: {
     enter(tag) {
+      assertNoAttributeTags(tag);
       const { node } = tag;
       const attrs = tag.get("attributes");
       const tagVar = tag.node.var;

@@ -5,8 +5,9 @@ export function exit(path) {
   const { node } = path;
   const {
     attributes,
-    body: { body, params },
+    body: { params },
   } = node;
+  const body = node.attributeTags.length ? node.attributeTags : node.body.body;
   const namePath = path.get("name");
   const ofAttr = findName(attributes, "of");
   const inAttr = findName(attributes, "in");

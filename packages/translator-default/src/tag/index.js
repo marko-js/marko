@@ -6,6 +6,7 @@ import {
   isDynamicTag,
   isMacroTag,
   isNativeTag,
+  isTransparentTag,
   resolveTagImport,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
@@ -48,17 +49,12 @@ export default {
 
     if (!isAttributeTag(path)) {
       if (
-        path.hub.file.markoOpts.ignoreUnrecognizedTags &&
         !tagDef &&
+        path.node.attributeTags.length &&
+        path.hub.file.markoOpts.ignoreUnrecognizedTags &&
         !isDynamicTag(path)
       ) {
-        findAttributeTags(path).forEach(function replaceAttrTagName(child) {
-          child.set(
-            "name",
-            t.stringLiteral(`at_${child.get("name.value").node.slice(1)}`),
-          );
-          findAttributeTags(child).forEach(replaceAttrTagName);
-        });
+        moveIgnoredAttrTags(path);
       }
 
       if (isDynamicTag(path) || !(isMacroTag(path) || isNativeTag(path))) {
@@ -262,4 +258,26 @@ function findDynamicTagTypes(root) {
 
 function isMarkoFile(request) {
   return nodePath.extname(request) === ".marko" || /^<.*>$/.test(request);
+}
+
+function moveIgnoredAttrTags(parentTag) {
+  if (!parentTag.node.attributeTags.length) return;
+
+  for (const attrTag of parentTag.get("attributeTags")) {
+    if (attrTag.isMarkoTag()) {
+      if (isAttributeTag(attrTag)) {
+        attrTag.set(
+          "name",
+          t.stringLiteral(`at_${attrTag.get("name.value").node.slice(1)}`),
+        );
+      }
+
+      moveIgnoredAttrTags(attrTag);
+    }
+  }
+
+  parentTag.node.body.body = parentTag.node.attributeTags.concat(
+    parentTag.node.body.body,
+  );
+  parentTag.node.attributeTags = [];
 }

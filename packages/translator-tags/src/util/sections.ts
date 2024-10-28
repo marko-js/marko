@@ -107,8 +107,10 @@ export function getOrCreateSection(path: t.NodePath<any>) {
   }
 }
 
-export function hasSection(path: t.NodePath) {
-  return path.node.extra?.section !== undefined;
+export function getSectionForBody(
+  body: t.NodePath<t.MarkoTagBody | t.Program>,
+) {
+  return body.node.extra?.section as Section | undefined;
 }
 
 export function getSection(path: t.NodePath) {

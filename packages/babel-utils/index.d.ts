@@ -133,6 +133,7 @@ export interface Tag {
     rootOnly?: boolean;
     rawOpenTag?: boolean;
     openTagOnly?: boolean;
+    controlFlow?: boolean;
     ignoreAttributes?: boolean;
     relaxRequireCommas?: boolean;
     state?: "html" | "static-text" | "parsed-text" | "cdata";
@@ -145,7 +146,7 @@ export type FunctionPlugin<T = any> = (
   path: t.NodePath<T>,
   types: typeof t,
 ) => void;
-type EnterExitPlugin<T = any> = {
+export type EnterExitPlugin<T = any> = {
   enter?(path: t.NodePath<T>, types: typeof t): void;
   exit?(path: t.NodePath<T>, types: typeof t): void;
 };
@@ -174,9 +175,15 @@ export function assertAttributesOrSingleArg(path: t.NodePath<t.MarkoTag>): void;
 export function isNativeTag(path: t.NodePath<t.MarkoTag>): boolean;
 export function isMacroTag(path: t.NodePath<t.MarkoTag>): boolean;
 export function isDynamicTag(path: t.NodePath<t.MarkoTag>): boolean;
-export function isAttributeTag(path: t.NodePath<t.MarkoTag>): boolean;
-export function isTransparentTag(path: t.NodePath<t.MarkoTag>): boolean;
-export function isLoopTag(path: t.NodePath<t.MarkoTag>): boolean;
+export function isAttributeTag(
+  path: t.NodePath<t.MarkoTag>,
+): path is t.NodePath<t.MarkoTag & { name: t.StringLiteral }>;
+export function isTransparentTag(
+  path: t.NodePath<t.MarkoTag>,
+): path is t.NodePath<t.MarkoTag & { name: t.StringLiteral }>;
+export function isLoopTag(
+  path: t.NodePath<t.MarkoTag>,
+): path is t.NodePath<t.MarkoTag & { name: t.StringLiteral }>;
 
 export function registerMacro(path: t.NodePath<any>, name: string): void;
 export function hasMacro(path: t.NodePath<any>, name: string): boolean;

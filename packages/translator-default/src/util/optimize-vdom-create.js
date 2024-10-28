@@ -71,6 +71,7 @@ const analyzeStaticVisitor = {
       // check name
       let isStatic =
         isNativeTag(path) &&
+        !path.node.attributeTags.length &&
         !path.node.body.params.length &&
         !path.node.arguments &&
         !hasUserKey(path);
