@@ -132,17 +132,18 @@ function getKeyScope(path) {
       keyValue = t.binaryExpression("+", keyValue, parentKeyScope);
     }
 
-    path
-      .get("body")
-      .unshiftContainer(
-        "body",
-        t.variableDeclaration("const", [
-          t.variableDeclarator(
-            keyScopeIdentifier,
-            normalizeTemplateString`[${keyValue}]`,
-          ),
-        ]),
-      );
+    const keyScopeDecl = t.variableDeclaration("const", [
+      t.variableDeclarator(
+        keyScopeIdentifier,
+        normalizeTemplateString`[${keyValue}]`,
+      ),
+    ]);
+
+    if (path.node.attributeTags.length) {
+      path.unshiftContainer("attributeTags", keyScopeDecl);
+    } else {
+      path.get("body").unshiftContainer("body", keyScopeDecl);
+    }
   }
 
   path.set("keyScope", keyScopeIdentifier);

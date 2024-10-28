@@ -180,14 +180,22 @@ const MarkoDefinitions = {
 
   MarkoTag: {
     aliases: ["Marko", "Statement"],
-    builder: ["name", "attributes", "body", "arguments", "var"],
-    visitor: [
+    builder: [
       "name",
-      "typeArguments",
       "attributes",
       "body",
       "arguments",
       "var",
+      "attributeTags",
+    ],
+    visitor: [
+      "name",
+      "typeArguments",
+      "arguments",
+      "attributes",
+      "attributeTags",
+      "var",
+      "body",
     ],
     fields: {
       name: {
@@ -218,6 +226,10 @@ const MarkoDefinitions = {
       var: {
         validate: assertNodeType("LVal"),
         optional: true,
+      },
+      attributeTags: {
+        validate: arrayOfType(["MarkoTag", "MarkoScriptlet", "MarkoComment"]),
+        default: [],
       },
     },
   },

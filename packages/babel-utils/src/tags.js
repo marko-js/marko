@@ -213,7 +213,7 @@ export function findParentTag(path) {
 }
 
 export function findAttributeTags(path, attributeTags = []) {
-  path.get("body.body").forEach((child) => {
+  path.get("attributeTags").forEach((child) => {
     if (isAttributeTag(child)) {
       attributeTags.push(child);
     } else if (isTransparentTag(child)) {

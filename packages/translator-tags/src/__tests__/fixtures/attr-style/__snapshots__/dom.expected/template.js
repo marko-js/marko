@@ -2,9 +2,8 @@ export const _template_ = `<div></div><div style=width:100px></div><div style="c
 export const _walks_ = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(1) */` d/${_customTag_walks}&/${_customTag_walks}&/${_customTag_walks}&%bD`;
 import { styleAttr as _styleAttr, createRendererWithOwner as _createRendererWithOwner, register as _register, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _customTag, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag.marko";
-const _testBody2 = _register("packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko_2_renderer", /* @__PURE__ */_createRendererWithOwner("Hello", ""));
-const _testBody = _register("packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko_1_renderer", /* @__PURE__ */_createRendererWithOwner("", ""));
-const _test_input = _dynamicTagAttrs("#text/4", _testBody);
+const _testBody = _register("packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko_1_renderer", /* @__PURE__ */_createRendererWithOwner("Hello", ""));
+const _test_input = _dynamicTagAttrs("#text/4");
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/4", _scope => _test_input(_scope, () => ({
   style: {
     color: "green"
@@ -13,10 +12,10 @@ const _dynamicTagName = /* @__PURE__ */_conditional("#text/4", _scope => _test_i
     style: {
       color: "green"
     },
-    renderBody: _testBody2(_scope)
+    renderBody: _testBody(_scope)
   }
 })), () => _test_input);
-export const _test_ = /* @__PURE__ */_value("test", (_scope, test) => _dynamicTagName(_scope, test || _testBody(_scope)), () => _dynamicTagName);
+export const _test_ = /* @__PURE__ */_value("test", (_scope, test) => _dynamicTagName(_scope, test), () => _dynamicTagName);
 export const _color_ = /* @__PURE__ */_value("color", (_scope, color) => _styleAttr(_scope["#div/0"], {
   color: color
 }));

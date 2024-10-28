@@ -27,7 +27,7 @@ export function analyzeAttributeTags(rootTag) {
 
   while (i < visit.length) {
     const tag = visit[i++];
-    for (const child of tag.get("body").get("body")) {
+    for (const child of tag.get("attributeTags")) {
       if (isAttributeTag(child)) {
         assertNoArgs(child);
         const tagDef = getTagDef(child) || {};
@@ -106,31 +106,6 @@ export function analyzeAttributeTags(rootTag) {
 
   if (attributeTags) {
     (rootTag.node.extra ??= {}).attributeTags = attributeTags;
-
-    for (const parentTag of parentTags) {
-      if (getContentType(parentTag) === ContentType.mixed) {
-        // move all non scriptlet / attribute tag children to the end of the renderbody
-        const renderBody = [
-          t.expressionStatement(t.stringLiteral("END_ATTRIBUTE_TAGS")),
-        ];
-        const body = parentTag.get("body");
-        for (const child of body.get("body")) {
-          if (
-            child.isMarkoScriptlet() ||
-            isAttributeTag(child) ||
-            (isTransparentTag(child) &&
-              getContentType(child) === ContentType.attribute)
-          ) {
-            continue;
-          }
-
-          renderBody.push(child.node);
-          child.remove();
-        }
-
-        body.node.body = body.node.body.concat(renderBody);
-      }
-    }
   }
 }
 

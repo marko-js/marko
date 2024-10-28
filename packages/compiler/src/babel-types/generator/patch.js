@@ -30,7 +30,7 @@ Object.assign(Printer.prototype, {
   },
   MarkoPlaceholder(node, parent) {
     if (parent) {
-      const parentBody = parent.body;
+      const parentBody = getBody(parent);
       const prev = parentBody[parentBody.indexOf(node) - 1];
 
       if (prev && (t.isMarkoText(prev) || t.isMarkoPlaceholder(prev))) {
@@ -45,7 +45,7 @@ Object.assign(Printer.prototype, {
   MarkoScriptlet(node, parent) {
     this.removeTrailingNewline();
 
-    if (!(t.isProgram(parent) && parent.body.indexOf(node) === 0)) {
+    if (!(t.isProgram(parent) && getBody(parent)[0] === node)) {
       this.token("\n");
     }
 
@@ -109,7 +109,7 @@ Object.assign(Printer.prototype, {
     printWithParansIfNeeded.call(this, node.value);
   },
   MarkoText(node, parent) {
-    const parentBody = parent.body;
+    const parentBody = getBody(parent);
     const prev = parentBody[parentBody.indexOf(node) - 1];
     const concatToPrev = prev && t.isMarkoPlaceholder(prev);
     let { value } = node;
@@ -213,14 +213,14 @@ Object.assign(Printer.prototype, {
     if (SELF_CLOSING.voidElements.includes(tagName)) {
       this.token(">");
     } else if (
-      !node.body.body.length ||
+      !(node.body.body.length || node.attributeTags.length) ||
       SELF_CLOSING.svgElements.includes(tagName)
     ) {
       this.token("/>");
     } else {
       this.token(">");
       this.newline();
-      this.print(node.body);
+      this.printSequence(zipAttributeTagsAndBody(node), { indent: true });
       this.token("</");
       if (!isDynamicTag) {
         this.token(tagName);
@@ -269,4 +269,66 @@ function statementCouldHaveUnenclosedNewline(node) {
     default:
       return false;
   }
+}
+
+function zipAttributeTagsAndBody(tag) {
+  const {
+    attributeTags,
+    body: { body },
+  } = tag;
+  const bodyLen = body.length;
+  const attributeTagsLen = attributeTags.length;
+  if (!attributeTagsLen) return body;
+  if (!bodyLen) return attributeTags;
+
+  const result = [];
+  let i = 0;
+  let j = 0;
+
+  while (i < bodyLen && j < attributeTagsLen) {
+    const bodyNode = body[i];
+    const attributeTag = attributeTags[j];
+
+    if (bodyNode.loc != null && attributeTag.loc != null) {
+      if (compareStartLoc(bodyNode, attributeTag) < 0) {
+        result.push(bodyNode);
+        i++;
+      } else {
+        result.push(attributeTag);
+        j++;
+      }
+    } else if (j < attributeTagsLen) {
+      result.push(attributeTag);
+      j++;
+    } else {
+      result.push(bodyNode);
+      i++;
+    }
+  }
+
+  while (j < attributeTagsLen) {
+    result.push(attributeTags[j++]);
+  }
+
+  while (i < bodyLen) {
+    result.push(body[i++]);
+  }
+
+  return result;
+}
+
+function getBody(parent) {
+  switch (parent.type) {
+    case "MarkoTag":
+      return parent.body.body;
+    default:
+      return parent.body;
+  }
+}
+
+function compareStartLoc(a, b) {
+  return (
+    a.loc.start.line - b.loc.start.line ||
+    a.loc.start.column - b.loc.start.column
+  );
 }

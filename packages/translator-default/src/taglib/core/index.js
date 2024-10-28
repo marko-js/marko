@@ -137,6 +137,7 @@ export default {
     ],
   },
   "<if>": {
+    "parse-options": { controlFlow: true },
     "code-generator": translateIf,
     attributes: {},
     autocomplete: [
@@ -149,6 +150,7 @@ export default {
     ],
   },
   "<else-if>": {
+    "parse-options": { controlFlow: true },
     "code-generator": translateElseIf,
     attributes: {},
     autocomplete: [
@@ -162,6 +164,7 @@ export default {
     ],
   },
   "<else>": {
+    "parse-options": { controlFlow: true },
     "code-generator": translateElse,
     attributes: {},
     autocomplete: [
@@ -174,6 +177,7 @@ export default {
     ],
   },
   "<for>": {
+    "parse-options": { controlFlow: true },
     "code-generator": translateFor,
     "@of": {
       type: "expression",
@@ -238,6 +242,7 @@ export default {
     ],
   },
   "<while>": {
+    "parse-options": { controlFlow: true },
     "code-generator": translateWhile,
     autocomplete: [
       {

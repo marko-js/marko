@@ -1,18 +1,32 @@
 export function assertAllowedAttributes(path, allowed) {
-  const { node } = path;
-  node.attributes.forEach((attr, i) => {
-    if (!allowed.includes(attr.name)) {
-      throw path
-        .get(`attributes.${i}`)
-        .buildCodeFrameError(
-          `Invalid "${node.name.value}" tag attribute: "${attr.name}".`,
-        );
+  let i = 0;
+  for (const attr of path.node.attributes) {
+    if (attr.type === "MarkoSpreadAttribute") {
+      throw path.hub.buildError(
+        attr,
+        `Tag does not support spread attributes.`,
+      );
+    } else if (!allowed.includes(attr.name)) {
+      throw path.hub.buildError(
+        attr,
+        `Tag does not support the \`${attr.name}\` attribute.`,
+      );
     }
-  });
+
+    i++;
+  }
 }
 
 export function assertNoAttributes(path) {
-  assertAllowedAttributes(path, []);
+  const { attributes } = path.node;
+  if (attributes.length) {
+    const start = attributes[0].loc.start;
+    const end = attributes[attributes.length - 1].loc.end;
+    throw path.hub.buildError(
+      { loc: { start, end } },
+      "Tag does not support attributes.",
+    );
+  }
 }
 
 export function assertNoParams(path) {
@@ -28,21 +42,20 @@ export function assertNoParams(path) {
 }
 
 export function assertNoAttributeTags(path) {
-  const exampleAttributeTag = path.get("exampleAttributeTag");
-  if (exampleAttributeTag.node) {
-    throw exampleAttributeTag
-      .get("name")
-      .buildCodeFrameError("@tags must be within a custom element.");
+  if (path.node.attributeTags.length) {
+    throw path.hub.buildError(
+      path.node.attributeTags[0],
+      "Tag not support nested attribute tags.",
+    );
   }
 }
 
 export function assertNoArgs(path) {
-  const { hub } = path;
-  const args = path.get("arguments");
-  if (args.length) {
-    const start = args[0].node.loc.start;
-    const end = args[args.length - 1].node.loc.end;
-    throw hub.buildError(
+  const args = path.node.arguments;
+  if (args && args.length) {
+    const start = args[0].loc.start;
+    const end = args[args.length - 1].loc.end;
+    throw path.hub.buildError(
       { loc: { start, end } },
       "Tag does not support arguments.",
     );
@@ -50,19 +63,21 @@ export function assertNoArgs(path) {
 }
 
 export function assertNoVar(path) {
-  const tagVar = path.get("var");
-  if (tagVar.node) {
-    throw tagVar.buildCodeFrameError("Tag does not support a variable.");
+  if (path.node.var) {
+    throw path.hub.buildError(
+      path.node.var,
+      "Tag does not support a variable.",
+    );
   }
 }
 
 export function assertAttributesOrArgs(path) {
-  const { hub, node } = path;
-  const args = path.get("arguments");
-  if (args.length && (node.attributes.length > 0 || node.body.length)) {
-    const start = args[0].node.loc.start;
-    const end = args[args.length - 1].node.loc.end;
-    throw hub.buildError(
+  const { node } = path;
+  const args = node.arguments;
+  if (args && args.length && (node.attributes.length > 0 || node.body.length)) {
+    const start = args[0].loc.start;
+    const end = args[args.length - 1].loc.end;
+    throw path.hub.buildError(
       { loc: { start, end } },
       "Tag does not support arguments when attributes or body present.",
     );
@@ -71,12 +86,11 @@ export function assertAttributesOrArgs(path) {
 
 export function assertAttributesOrSingleArg(path) {
   assertAttributesOrArgs(path);
-  const { hub } = path;
-  const args = path.get("arguments");
-  if (args.length > 1) {
-    const start = args[1].node.loc.start;
-    const end = args[args.length - 1].node.loc.end;
-    throw hub.buildError(
+  const args = path.node.arguments;
+  if (args && args.length > 1) {
+    const start = args[1].loc.start;
+    const end = args[args.length - 1].loc.end;
+    throw path.hub.buildError(
       { loc: { start, end } },
       "Tag does not support multiple arguments.",
     );

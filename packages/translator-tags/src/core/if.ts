@@ -23,8 +23,10 @@ import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
+  getSectionForBody,
   type Section,
   setSectionParentIsOwner,
+  startSection,
 } from "../util/sections";
 import {
   addValue,
@@ -46,7 +48,7 @@ import { scopeIdentifier } from "../visitors/program";
 const kBinding = Symbol("if node binding");
 const BRANCHES_LOOKUP = new WeakMap<
   t.NodePath<t.MarkoTag>,
-  [tag: t.NodePath<t.MarkoTag>, bodySection: Section][]
+  [tag: t.NodePath<t.MarkoTag>, bodySection: Section | undefined][]
 >();
 
 declare module "@marko/compiler/dist/types" {
@@ -70,10 +72,7 @@ export const IfTag = {
       );
     }
 
-    const [isLast, branches] = getBranches(
-      tag,
-      getOrCreateSection(tag.get("body")),
-    );
+    const [isLast, branches] = getBranches(tag, startSection(tag.get("body")));
     if (isLast) {
       const [rootTag] = branches[0];
       const rootExtra = rootTag.node.extra!;
@@ -81,15 +80,17 @@ export const IfTag = {
       let singleNodeOptimization = true;
 
       for (const [branchTag, branchBodySection] of branches) {
-        branchBodySection.upstreamExpression = rootExtra;
+        if (branchBodySection) {
+          branchBodySection.upstreamExpression = rootExtra;
 
-        if (
-          !(
-            branchBodySection.content === null ||
-            branchBodySection.content?.singleChild
-          )
-        ) {
-          singleNodeOptimization = false;
+          if (
+            !(
+              branchBodySection.content === null ||
+              branchBodySection.content?.singleChild
+            )
+          ) {
+            singleNodeOptimization = false;
+          }
         }
 
         if (branchTag.node.attributes.length) {
@@ -105,11 +106,10 @@ export const IfTag = {
     html: {
       enter(tag) {
         const tagBody = tag.get("body");
-        const bodySection = getSection(tagBody);
+        const bodySection = getSectionForBody(tagBody);
         const rootExtra = getRoot(tag).node.extra!;
         const isStateful = isStatefulReferences(rootExtra.referencedBindings);
         const singleNodeOptimization = rootExtra.singleNodeOptimization;
-        setSectionParentIsOwner(bodySection, true);
 
         if (isRoot(tag)) {
           walks.visit(tag, WalkCode.Replace);
@@ -118,32 +118,39 @@ export const IfTag = {
         walks.enterShallow(tag);
         writer.flushBefore(tag);
 
-        if (isStateful && !singleNodeOptimization) {
-          writer.writeTo(tagBody)`${callRuntime(
-            "markResumeScopeStart",
-            getScopeIdIdentifier(bodySection),
-          )}`;
+        if (bodySection) {
+          setSectionParentIsOwner(bodySection, true);
+
+          if (isStateful && !singleNodeOptimization) {
+            writer.writeTo(tagBody)`${callRuntime(
+              "markResumeScopeStart",
+              getScopeIdIdentifier(bodySection),
+            )}`;
+          }
         }
       },
       exit(tag) {
         const tagBody = tag.get("body");
         const section = getSection(tag);
-        const bodySection = getSection(tagBody);
+        const bodySection = getSectionForBody(tagBody);
         const [isLast, branches] = getBranches(tag, bodySection);
         const rootExtra = branches[0][0].node.extra!;
         const nodeRef = rootExtra[kBinding]!;
         const isStateful = isStatefulReferences(rootExtra.referencedBindings);
         const singleNodeOptimization = rootExtra.singleNodeOptimization;
-        const hasStatefulClosures = checkStatefulClosures(bodySection, true);
+        const hasStatefulClosures =
+          bodySection && checkStatefulClosures(bodySection, true);
 
-        if (isStateful || hasStatefulClosures) {
-          setForceResumeScope(bodySection);
+        if (bodySection) {
+          if (isStateful || hasStatefulClosures) {
+            setForceResumeScope(bodySection);
+          }
+          writer.flushInto(tag);
+          // TODO: this is a hack to get around the fact that we don't have a way to
+          // know if a scope requires dynamic subscriptions
+          setSubscriberBuilder(tag, (() => {}) as any);
+          writeHTMLResumeStatements(tagBody);
         }
-        writer.flushInto(tag);
-        // TODO: this is a hack to get around the fact that we don't have a way to
-        // know if a scope requires dynamic subscriptions
-        setSubscriberBuilder(tag, (() => {}) as any);
-        writeHTMLResumeStatements(tagBody);
 
         if (isLast) {
           const write = writer.writeTo(tag);
@@ -153,50 +160,60 @@ export const IfTag = {
           const ifRendererIdentifier =
             tag.scope.generateUidIdentifier("ifRenderer");
 
+          // TODO: here write out attr tags.
           let statement: t.Statement | undefined;
+          let isAttrTags = false;
           for (let i = branches.length; i--; ) {
             const [branchTag, branchBodySection] = branches[i];
-            const branchHasStatefulClosures = checkStatefulClosures(
-              branchBodySection,
-              true,
-            );
 
-            if (isStateful) {
-              branchTag.node.body.body.push(
-                t.expressionStatement(
-                  callRuntime(
-                    "register",
-                    t.assignmentExpression(
-                      "=",
-                      ifRendererIdentifier,
-                      callRuntime(
-                        "createRenderer",
-                        t.arrowFunctionExpression([], t.blockStatement([])),
+            if (isAttrTags || branchTag.node.attributeTags.length) {
+              isAttrTags = true;
+            }
+            const bodyStatements = isAttrTags
+              ? branchTag.node.attributeTags
+              : branchTag.node.body.body;
+
+            if (branchBodySection) {
+              const branchHasStatefulClosures = checkStatefulClosures(
+                branchBodySection,
+                true,
+              );
+
+              if (isStateful) {
+                bodyStatements.push(
+                  t.expressionStatement(
+                    callRuntime(
+                      "register",
+                      t.assignmentExpression(
+                        "=",
+                        ifRendererIdentifier,
+                        callRuntime(
+                          "createRenderer",
+                          t.arrowFunctionExpression([], t.blockStatement([])),
+                        ),
+                      ),
+                      t.stringLiteral(
+                        getResumeRegisterId(branchBodySection, "renderer"),
                       ),
                     ),
-                    t.stringLiteral(
-                      getResumeRegisterId(branchBodySection, "renderer"),
+                  ) as any,
+                );
+              }
+              if (isStateful || branchHasStatefulClosures) {
+                bodyStatements.push(
+                  t.expressionStatement(
+                    t.assignmentExpression(
+                      "=",
+                      ifScopeIdIdentifier,
+                      getScopeIdIdentifier(branchBodySection),
                     ),
-                  ),
-                ) as any,
-              );
-            }
-            if (isStateful || branchHasStatefulClosures) {
-              branchTag.node.body.body.push(
-                t.expressionStatement(
-                  t.assignmentExpression(
-                    "=",
-                    ifScopeIdIdentifier,
-                    getScopeIdIdentifier(branchBodySection),
-                  ),
-                ) as any,
-              );
+                  ) as any,
+                );
+              }
             }
 
             const [testAttr] = branchTag.node.attributes;
-            const curStatement = toFirstStatementOrBlock(
-              branchTag.node.body.body,
-            );
+            const curStatement = toFirstStatementOrBlock(bodyStatements);
 
             if (testAttr) {
               statement = t.ifStatement(
@@ -211,7 +228,7 @@ export const IfTag = {
             branchTag.remove();
           }
 
-          if (!(isStateful || hasStatefulClosures)) {
+          if (isAttrTags || !(isStateful || hasStatefulClosures)) {
             nextTag.insertBefore(statement!);
           } else {
             nextTag.insertBefore([
@@ -260,7 +277,12 @@ export const IfTag = {
     },
     dom: {
       enter(tag) {
-        setSectionParentIsOwner(getSection(tag.get("body")), true);
+        const tagBody = tag.get("body");
+        const bodySection = getSectionForBody(tagBody);
+
+        if (bodySection) {
+          setSectionParentIsOwner(bodySection, true);
+        }
 
         if (isRoot(tag)) {
           walks.visit(tag, WalkCode.Replace);
@@ -271,7 +293,7 @@ export const IfTag = {
       exit(tag) {
         const [isLast, branches] = getBranches(
           tag,
-          getSection(tag.get("body")),
+          getSectionForBody(tag.get("body")),
         );
 
         if (isLast) {
@@ -283,7 +305,9 @@ export const IfTag = {
           for (let i = branches.length; i--; ) {
             const [branchTag, branchBodySection] = branches[i];
             const [testAttr] = branchTag.node.attributes;
-            const id = t.identifier(branchBodySection.name);
+            const consequent = branchBodySection
+              ? t.identifier(branchBodySection.name)
+              : t.numericLiteral(0);
 
             setSubscriberBuilder(branchTag, (subscriber) => {
               return callRuntime(
@@ -296,8 +320,8 @@ export const IfTag = {
 
             branchTag.remove();
             expr = testAttr
-              ? t.conditionalExpression(testAttr.value, id, expr)
-              : id;
+              ? t.conditionalExpression(testAttr.value, consequent, expr)
+              : consequent;
           }
 
           const signal = getSignal(section, nodeRef, "if");
@@ -310,13 +334,15 @@ export const IfTag = {
           };
           signal.hasDownstreamIntersections = () =>
             branches.some(
-              ([, bodySection]) => getClosures(bodySection).length > 0,
+              ([, bodySection]) =>
+                bodySection && getClosures(bodySection).length > 0,
             );
           addValue(section, rootExtra.referencedBindings, signal, expr);
         }
       },
     },
   }),
+  parseOptions: { controlFlow: true },
   autocomplete: [
     {
       snippet: "if=${1:condition}",
@@ -385,7 +411,7 @@ function assertHasPrecedingCondition(tag: t.NodePath<t.MarkoTag>) {
 }
 
 function assertHasBody(tag: t.NodePath<t.MarkoTag>) {
-  if (!tag.node.body.body.length) {
+  if (!(tag.node.body.body.length || tag.node.attributeTags.length)) {
     throw tag
       .get("name")
       .buildCodeFrameError(
@@ -445,7 +471,10 @@ function assertOptionalIfAttribute(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function getBranches(tag: t.NodePath<t.MarkoTag>, bodySection: Section) {
+function getBranches(
+  tag: t.NodePath<t.MarkoTag>,
+  bodySection: Section | undefined,
+) {
   const branches = BRANCHES_LOOKUP.get(tag) ?? [];
   let nextTag = tag.getNextSibling();
   while (nextTag.isMarkoComment()) nextTag = nextTag.getNextSibling();

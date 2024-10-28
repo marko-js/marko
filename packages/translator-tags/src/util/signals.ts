@@ -23,7 +23,7 @@ import { createScopeReadPattern, getScopeExpression } from "./scope-read";
 import {
   getScopeIdIdentifier,
   getSection,
-  hasSection,
+  getSectionForBody,
   type Section,
 } from "./sections";
 import { createSectionState } from "./state";
@@ -915,9 +915,9 @@ export function writeHTMLResumeStatements(
   path: t.NodePath<t.MarkoTagBody | t.Program>,
   tagVarIdentifier?: t.Identifier,
 ) {
-  if (!hasSection(path)) return;
+  const section = getSectionForBody(path);
+  if (!section) return;
 
-  const section = getSection(path);
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
 

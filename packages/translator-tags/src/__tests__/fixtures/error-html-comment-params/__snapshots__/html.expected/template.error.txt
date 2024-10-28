@@ -1,5 +1,5 @@
 
     at packages/translator-tags/src/__tests__/fixtures/error-html-comment-params/template.marko:1:15
     > 1 | <html-comment y=2/>
-        |               ^^^ Invalid "html-comment" tag attribute: "y".
+        |               ^^^ Tag does not support attributes.
       2 |

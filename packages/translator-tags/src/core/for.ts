@@ -26,6 +26,7 @@ import {
   getScopeIdentifier,
   getScopeIdIdentifier,
   getSection,
+  getSectionForBody,
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
@@ -94,7 +95,7 @@ export default {
 
     const tagBody = tag.get("body");
     const section = getOrCreateSection(tag);
-    const bodySection = startSection(tagBody)!;
+    const bodySection = startSection(tagBody);
 
     if (isOnlyChildInParent(tag)) {
       const parentTag = tag.parentPath.parent as t.MarkoTag;
@@ -118,30 +119,30 @@ export default {
       tag,
       tag.node.attributes.map((attr) => attr.value),
     );
-    bodySection.upstreamExpression = tagExtra;
+
+    if (bodySection) {
+      bodySection.upstreamExpression = tagExtra;
+    }
   },
   translate: translateByTarget({
     html: {
       enter(tag) {
         const tagBody = tag.get("body");
-        const bodySection = getSection(tagBody);
+        const bodySection = getSectionForBody(tagBody);
         const tagExtra = tag.node.extra!;
         const isStateful = isStatefulReferences(tagExtra.referencedBindings);
-        const hasNestedAttributeTags =
-          tagExtra.nestedAttributeTags &&
-          Object.keys(tagExtra.nestedAttributeTags).length > 0;
-        setSectionParentIsOwner(bodySection, true);
+
+        if (bodySection) {
+          setSectionParentIsOwner(bodySection, true);
+        }
+
         if (!isOnlyChildInParent(tag)) {
           walks.visit(tag, WalkCode.Replace);
           walks.enterShallow(tag);
         }
 
         writer.flushBefore(tag);
-        if (
-          isStateful &&
-          !bodySection.content?.singleChild &&
-          !hasNestedAttributeTags
-        ) {
+        if (bodySection && isStateful && !bodySection.content?.singleChild) {
           tagExtra[kForScopeStartIndex] = tag.scope.generateUidIdentifier("k");
           writer.writeTo(tagBody)`${callRuntime(
             "markResumeScopeStart",
@@ -153,7 +154,7 @@ export default {
       exit(tag) {
         const tagBody = tag.get("body");
         const tagSection = getSection(tag);
-        const bodySection = getSection(tagBody);
+        const bodySection = getSectionForBody(tagBody);
         const { node } = tag;
         const tagExtra = node.extra!;
         const isStateful = isStatefulReferences(tagExtra.referencedBindings);
@@ -164,19 +165,15 @@ export default {
         const forType = getForType(node)!;
         const params = node.body.params;
         const statements: t.Statement[] = [];
-        const bodyStatements = node.body.body as t.Statement[];
-        const hasStatefulClosures = checkStatefulClosures(bodySection, true);
-        const hasNestedAttributeTags =
-          tagExtra.nestedAttributeTags &&
-          Object.keys(tagExtra.nestedAttributeTags).length > 0;
+        const bodyStatements = (
+          node.attributeTags.length ? node.attributeTags : node.body.body
+        ) as t.Statement[];
+        const hasStatefulClosures =
+          bodySection && checkStatefulClosures(bodySection, true);
         let keyExpression: t.Expression | undefined;
 
         if (isStateful && isOnlyChildInParent(tag)) {
           tag.parentPath.parent.extra![kSerializeMarker] = true;
-        }
-
-        if (isStateful || hasStatefulClosures) {
-          setForceResumeScope(bodySection);
         }
 
         if (tagExtra[kForScopeStartIndex]) {
@@ -190,7 +187,7 @@ export default {
           );
         }
 
-        if ((isStateful || hasStatefulClosures) && !hasNestedAttributeTags) {
+        if (bodySection && (isStateful || hasStatefulClosures)) {
           const singleNodeOptimization =
             bodySection.content === null || bodySection.content.singleChild;
           const defaultParamNames = (
@@ -204,6 +201,7 @@ export default {
           const requiredParamsIndex = forAttrs.by
             ? defaultParamNames.length - 1
             : defaultByParamIndex;
+          setForceResumeScope(bodySection);
 
           for (let i = 0; i <= requiredParamsIndex; i++) {
             const existingParam = params[i];
@@ -303,13 +301,19 @@ export default {
           );
         }
 
-        writer.flushInto(tag);
-        // TODO: this is a hack to get around the fact that we don't have a way to
-        // know if a scope requires dynamic subscriptions
-        setSubscriberBuilder(tag, (() => {}) as any);
-        writeHTMLResumeStatements(tagBody);
+        if (bodySection) {
+          writer.flushInto(tag);
+          // TODO: this is a hack to get around the fact that we don't have a way to
+          // know if a scope requires dynamic subscriptions
+          setSubscriberBuilder(tag, (() => {}) as any);
+          writeHTMLResumeStatements(tagBody);
+        }
 
-        if (keyExpression && (isStateful || hasStatefulClosures)) {
+        if (
+          keyExpression &&
+          bodySection &&
+          (isStateful || hasStatefulClosures)
+        ) {
           bodyStatements.push(
             t.expressionStatement(
               t.callExpression(
@@ -340,7 +344,13 @@ export default {
     },
     dom: {
       enter(tag) {
-        setSectionParentIsOwner(getSection(tag.get("body")), true);
+        const tagBody = tag.get("body");
+        const bodySection = getSectionForBody(tagBody);
+
+        if (bodySection) {
+          setSectionParentIsOwner(bodySection, true);
+        }
+
         if (!isOnlyChildInParent(tag)) {
           walks.visit(tag, WalkCode.Replace);
           walks.enterShallow(tag);
@@ -349,7 +359,7 @@ export default {
       exit(tag) {
         const tagBody = tag.get("body");
         const tagSection = getSection(tag);
-        const bodySection = getSection(tagBody);
+        const bodySection = getSectionForBody(tagBody);
         const { node } = tag;
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
@@ -364,14 +374,18 @@ export default {
           );
         });
 
-        const rendererId = t.identifier(bodySection.name);
         const forType = getForType(node)!;
         const signal = getSignal(tagSection, nodeRef, "for");
         signal.build = () => {
           return callRuntime(
             forTypeToDOMRuntime(forType),
             getScopeAccessorLiteral(nodeRef),
-            rendererId,
+            bodySection
+              ? t.identifier(bodySection.name)
+              : t.arrowFunctionExpression(
+                  [],
+                  t.blockStatement(node.attributeTags),
+                ),
           );
         };
 
@@ -379,29 +393,31 @@ export default {
           tagBody.getBindingIdentifiers(),
         ) as t.Identifier[];
 
-        signal.hasDownstreamIntersections = () => {
-          if (getClosures(bodySection).length > 0) {
-            return true;
-          }
+        if (bodySection) {
+          signal.hasDownstreamIntersections = () => {
+            if (getClosures(bodySection).length > 0) {
+              return true;
+            }
 
-          if (paramIdentifiers.length) {
-            const binding = paramIdentifiers[0].extra!.binding!;
-            for (const {
-              referencedBindings,
-            } of binding.downstreamExpressions) {
-              if (
-                getSignal(
-                  bodySection,
-                  referencedBindings,
-                ).hasDownstreamIntersections()
-              ) {
-                return true;
+            if (paramIdentifiers.length) {
+              const binding = paramIdentifiers[0].extra!.binding!;
+              for (const {
+                referencedBindings,
+              } of binding.downstreamExpressions) {
+                if (
+                  getSignal(
+                    bodySection,
+                    referencedBindings,
+                  ).hasDownstreamIntersections()
+                ) {
+                  return true;
+                }
               }
             }
-          }
 
-          return false;
-        };
+            return false;
+          };
+        }
 
         const forAttrs = getKnownAttrValues(node);
         const loopArgs = getBaseArgsInForTag(forType, forAttrs);
@@ -420,6 +436,7 @@ export default {
       },
     },
   }),
+  parseOptions: { controlFlow: true },
   attributes: {
     of: {
       type: "expression",
