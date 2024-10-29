@@ -127,15 +127,17 @@ class ServerRenderResult implements RenderResult {
         stream.write(html);
       },
       (err) => {
-        const socket = ("socket" in stream && stream.socket) as Record<
-          PropertyKey,
-          unknown
-        >;
-        if (typeof socket.destroySoon === "function") {
+        const socket = ("socket" in stream && stream.socket) as
+          | Record<PropertyKey, unknown>
+          | undefined
+          | false;
+        if (socket && typeof socket.destroySoon === "function") {
           socket.destroySoon();
         }
 
-        stream.emit?.("error", err);
+        if (!stream.emit?.("error", err)) {
+          throw err;
+        }
       },
       () => {
         stream.end();
