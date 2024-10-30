@@ -1,7 +1,8 @@
 export const _template_ = "<button id=tags> </button><div><!></div>";
 export const _walks_ = /* get, next(1), get, out(1), next(1), replace, out(1) */" D lD%l";
-import { on as _on, data as _data, queueSource as _queueSource, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/2");
+import { on as _on, data as _data, queueSource as _queueSource, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _inputRenderBody_input = _dynamicTagAttrs("#text/2");
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/2", _scope => _inputRenderBody_input(_scope, () => ({})), () => _inputRenderBody_input);
 const _onClick = _scope => {
   const {
     count

@@ -1,8 +1,9 @@
 export const _template_ = "<div><!></div>";
 export const _walks_ = /* get, next(1), replace, out(1) */" D%l";
 export const _setup_ = () => {};
-import { classAttr as _classAttr, conditional as _conditional, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/1");
+import { classAttr as _classAttr, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _inputThingRenderBody_input = _dynamicTagAttrs("#text/1");
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/1", _scope => _inputThingRenderBody_input(_scope, () => ({})), () => _inputThingRenderBody_input);
 export const _input_ = /* @__PURE__ */_value("input", (_scope, input) => {
   _classAttr(_scope["#div/0"], {
     "selected": input.thing.selected

@@ -2,8 +2,8 @@ export const _template_ = `<!><!><!><${show ? "div" : null} class="a b"></${show
 export const _walks_ = /* replace, over(1), replace, over(1), get, over(1), get, over(1), replace, over(1), replace, over(1), beginChild, _tag_walks, endChild, beginChild, _tag_walks, endChild, replace, over(1), replace, over(1), get, over(1), get, over(1), get, over(1), get, over(1), get, over(1) */`D%b%b b b%b%b/${_tag_walks}&/${_tag_walks}&%b%b b b b b bD`;
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
-import { attr as _attr, createRendererWithOwner as _createRendererWithOwner, register as _register, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, intersections as _intersections, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _tag, _template_ as _tag_template, _walks_ as _tag_walks } from "./components/tag-a/index.marko";
+import { attr as _attr, inChild as _inChild, createRendererWithOwner as _createRendererWithOwner, register as _register, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, intersections as _intersections, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { _setup_ as _tag, _className_ as _tag_input_class, _other_ as _tag_input_other, _renderBody_ as _tag_input_renderBody, _template_ as _tag_template, _walks_ as _tag_walks } from "./components/tag-a/index.marko";
 const _showTagATagABody = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer", /* @__PURE__ */_createRendererWithOwner("Body content", ""));
 const _largeHeadingH2_input = _dynamicTagAttrs("#text/9");
 const _expr_Text_other6 = /* @__PURE__ */_intersection(2, _scope => {
@@ -31,8 +31,6 @@ const _expr_Text_other4 = /* @__PURE__ */_intersection(2, _scope => {
     other
   } = _scope;
   _showTagATagATagB_input(_scope, () => ({
-    class: ["a", "b"],
-    other: other,
     class: ["a", "b"],
     other: other
   }));
@@ -84,7 +82,9 @@ export const _other_ = /* @__PURE__ */_value("other", (_scope, other) => {
   _attr(_scope["#h$Level/12"], "other", other);
   _attr(_scope["#tagConstA/13"], "other", other);
   _attr(_scope["#tagConstB/14"], "other", other);
-}, () => _intersections([_expr_Text_other, _expr_Text_other2, _expr_Text_other3, _expr_Text_other4, _expr_Text_other5, _expr_Text_other6]));
+  _tag_input_other(_scope["#childScope/6"], other);
+  _tag_input_other(_scope["#childScope/7"], other);
+}, () => _intersections([_expr_Text_other, _expr_Text_other2, _expr_Text_other3, _expr_Text_other4, _expr_Text_other5, _expr_Text_other6, _inChild("#childScope/6", _tag_input_other), _inChild("#childScope/7", _tag_input_other)]));
 export const _level_ = /* @__PURE__ */_value("level");
 export const _tag_ = /* @__PURE__ */_value("tag", (_scope, tag) => _dynamicTagName5(_scope, tag || tagA), () => _dynamicTagName5);
 export const _isLarge_ = /* @__PURE__ */_value("isLarge", (_scope, isLarge) => {
@@ -109,6 +109,10 @@ export const _params__ = /* @__PURE__ */_value("_params_", (_scope, _params_) =>
 export function _setup_(_scope) {
   _tag(_scope["#childScope/6"]);
   _tag(_scope["#childScope/7"]);
+  _tag_input_class(_scope["#childScope/6"], ["a", "b"]);
+  _tag_input_renderBody(_scope["#childScope/6"], void 0);
+  _tag_input_renderBody(_scope["#childScope/7"], _showTagATagABody(_scope));
+  _tag_input_class(_scope["#childScope/7"], ["a", "b"]);
   _tagConstA(_scope, "a");
 }
 export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko");

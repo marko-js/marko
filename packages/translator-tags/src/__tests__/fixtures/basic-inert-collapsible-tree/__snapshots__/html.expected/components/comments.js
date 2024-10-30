@@ -1,5 +1,4 @@
 import { write as _write, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, ensureScopeWithId as _ensureScopeWithId, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, writeEffect as _writeEffect, forOf as _forOf, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-import _comments from "./comments.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   _write("<ul>");
@@ -14,7 +13,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     if (comment.comments) {
       const _scope2_id = _nextScopeId();
       const _childScope = _peekNextScope();
-      _comments({
+      _renderer({
         comments: comment.comments,
         path: id
       });

@@ -10,7 +10,7 @@ const _params_2$defineBody = /* @__PURE__ */_value("_params_2", (_scope, _params
   _c$defineBody(_scope, _params_2[2]);
 });
 const _defineBody = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_1_renderer", /* @__PURE__ */_createRendererWithOwner("<div><!>|<!>|<!></div>", /* next(1), replace, over(2), replace, over(2), replace */"D%c%c%", void 0, void 0, void 0, () => _params_2$defineBody));
-const _MyTag_input = _dynamicTagAttrs("#text/0", void 0, true);
+const _MyTag_input = _dynamicTagAttrs("#text/0", void 0, 1);
 const _expr_Text_x = /* @__PURE__ */_intersection(2, _scope => {
   const {
     x
