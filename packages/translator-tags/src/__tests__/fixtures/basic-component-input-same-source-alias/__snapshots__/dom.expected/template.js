@@ -9,11 +9,11 @@ const _onClick = _register("packages/translator-tags/src/__tests__/fixtures/basi
     _queueSource(_scope, _clickCount, clickCount + 1);
   };
 });
-import { _setup_ as _myButton, _text_ as _myButton__text_, _onClick_ as _myButton__onClick_, _template_ as _myButton_template, _walks_ as _myButton_walks } from "./components/my-button.marko";
+import { _setup_ as _myButton, _text_ as _myButton_input_text, _onClick_ as _myButton_input_onClick, _template_ as _myButton_template, _walks_ as _myButton_walks } from "./components/my-button.marko";
 const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => {
-  _myButton__text_(_scope["#childScope/0"], clickCount);
-  _myButton__onClick_(_scope["#childScope/0"], _onClick(_scope));
-}, () => _intersections([_inChild("#childScope/0", _myButton__text_), _inChild("#childScope/0", _myButton__onClick_)]));
+  _myButton_input_text(_scope["#childScope/0"], clickCount);
+  _myButton_input_onClick(_scope["#childScope/0"], _onClick(_scope));
+}, () => _intersections([_inChild("#childScope/0", _myButton_input_text), _inChild("#childScope/0", _myButton_input_onClick)]));
 export function _setup_(_scope) {
   _myButton(_scope["#childScope/0"]);
   _clickCount(_scope, 0);

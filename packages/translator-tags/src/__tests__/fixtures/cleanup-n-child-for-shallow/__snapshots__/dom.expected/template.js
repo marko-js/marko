@@ -4,9 +4,9 @@ import { on as _on, register as _register, inChild as _inChild, queueSource as _
 const _write = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_0/write", _scope => function (msg) {
   _scope["#div/1"].innerHTML += '\n' + msg;
 });
-import { _setup_ as _child, _write_ as _child__write_, _name_ as _child__name_, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
-const _write$forBody = /* @__PURE__ */_closure("write", (_scope, write) => _child__write_(_scope["#childScope/0"], write), void 0, () => _inChild("#childScope/0", _child__write_));
-const _item$forBody = /* @__PURE__ */_value("item", (_scope, item) => _child__name_(_scope["#childScope/0"], item), () => _inChild("#childScope/0", _child__name_));
+import { _setup_ as _child, _write_ as _child_input_write, _name_ as _child_input_name, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
+const _write$forBody = /* @__PURE__ */_closure("write", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), void 0, () => _inChild("#childScope/0", _child_input_write));
+const _item$forBody = /* @__PURE__ */_value("item", (_scope, item) => _child_input_name(_scope["#childScope/0"], item), () => _inChild("#childScope/0", _child_input_name));
 const _params_2$forBody = /* @__PURE__ */_value("_params_2", (_scope, _params_2) => _item$forBody(_scope, _params_2[0]), () => _item$forBody);
 const _setup$forBody = _scope => {
   _child(_scope["#childScope/0"]);

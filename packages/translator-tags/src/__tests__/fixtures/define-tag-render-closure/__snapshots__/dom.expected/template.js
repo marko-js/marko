@@ -1,9 +1,10 @@
 export const _template_ = "<!><!><button> </button>";
 export const _walks_ = /* replace, over(1), get, next(1), get, out(1) */"D%b D l";
-import { data as _data, on as _on, queueSource as _queueSource, createRendererWithOwner as _createRendererWithOwner, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, register as _register, conditional as _conditional, queueEffect as _queueEffect, dynamicSubscribers as _dynamicSubscribers, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { data as _data, on as _on, queueSource as _queueSource, createRendererWithOwner as _createRendererWithOwner, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, register as _register, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, queueEffect as _queueEffect, dynamicSubscribers as _dynamicSubscribers, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _x$defineBody = _registerSubscriber("packages/translator-tags/src/__tests__/fixtures/define-tag-render-closure/template.marko_1_x/subscriber", /* @__PURE__ */_dynamicClosure("x", (_scope, x) => _data(_scope["#text/0"], x)));
 const _defineBody = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-render-closure/template.marko_1_renderer", /* @__PURE__ */_createRendererWithOwner("<div> </div>", /* next(1), get */"D ", void 0, () => [_x$defineBody]));
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/0");
+const _MyTag_input = _dynamicTagAttrs("#text/0");
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _MyTag_input(_scope, () => ({})), () => _MyTag_input);
 const _onClick = _scope => {
   const {
     x

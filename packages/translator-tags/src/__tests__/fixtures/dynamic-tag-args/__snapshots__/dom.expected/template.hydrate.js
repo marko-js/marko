@@ -1,4 +1,4 @@
-// size: 373 (min) 232 (brotli)
+// size: 372 (min) 230 (brotli)
 
 import {
   dynamicTagAttrs as o,
@@ -11,7 +11,7 @@ import {
   intersection as s,
   init as f,
 } from "@marko/runtime-tags/dom";
-const u = o(2, void 0, !0),
+const u = o(2, void 0, 1),
   a = s(
     2,
     (o) => {

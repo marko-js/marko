@@ -1,7 +1,7 @@
 export const _template_ = "<button>Push</button><!><!>";
 export const _walks_ = /* get, over(1), replace, over(1) */" b%bD";
 import { on as _on, inChild as _inChild, queueSource as _queueSource, createRenderer as _createRenderer, intersection as _intersection, closure as _closure, value as _value, register as _register, loopOf as _loopOf, inLoopScope as _inLoopScope, queueEffect as _queueEffect, intersections as _intersections, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _child, _name_ as _child__name_, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
+import { _setup_ as _child, _name_ as _child_input_name, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
 const _expr_outer_inner$forBody = /* @__PURE__ */_intersection(2, _scope => {
   const {
     _: {
@@ -9,8 +9,8 @@ const _expr_outer_inner$forBody = /* @__PURE__ */_intersection(2, _scope => {
     },
     inner
   } = _scope;
-  _child__name_(_scope["#childScope/0"], `${outer}.${inner}`);
-}, () => _inChild("#childScope/0", _child__name_));
+  _child_input_name(_scope["#childScope/0"], `${outer}.${inner}`);
+}, () => _inChild("#childScope/0", _child_input_name));
 const _outer$forBody = /* @__PURE__ */_closure("outer", null, void 0, () => _expr_outer_inner$forBody);
 const _inner$forBody = /* @__PURE__ */_value("inner", null, () => _expr_outer_inner$forBody);
 const _params_3$forBody = /* @__PURE__ */_value("_params_3", (_scope, _params_3) => _inner$forBody(_scope, _params_3[0]), () => _inner$forBody);

@@ -1,4 +1,4 @@
-// size: 663 (min) 356 (brotli)
+// size: 662 (min) 354 (brotli)
 
 import {
   dynamicTagAttrs as o,
@@ -13,7 +13,7 @@ import {
   createRendererWithOwner as s,
   init as u,
 } from "@marko/runtime-tags/dom";
-const a = o(3, void 0, !0),
+const a = o(3, void 0, 1),
   b = v(
     3,
     (o) => {

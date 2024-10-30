@@ -1,7 +1,8 @@
-// size: 101 (min) 92 (brotli)
+// size: 127 (min) 101 (brotli)
 
 import {
-  register as o,
-  createRendererWithOwner as m,
+  dynamicTagAttrs as o,
+  register as m,
+  createRendererWithOwner as r,
 } from "@marko/runtime-tags/dom";
-o("b0", m("Foo!", ""));
+o(0), m("b0", r("Foo!", ""));

@@ -42,8 +42,6 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _dynamicScope4 = _peekNextScope();
   _dynamicTagInput(_dynamicScope4, showTagA ? tagA : tagB, {
     class: ["a", "b"],
-    other: other,
-    class: ["a", "b"],
     other: other
   });
   const _tagName3 = showTagA && tagA;
@@ -61,7 +59,8 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   }), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer", _scope0_id);
   if (_tagName4) _tagName4({
     class: ["a", "b"],
-    other: other
+    other: other,
+    renderBody: _renderBody
   });else _renderBody();
   const _dynamicScope5 = _peekNextScope();
   _dynamicTagInput(_dynamicScope5, tag || tagA, {

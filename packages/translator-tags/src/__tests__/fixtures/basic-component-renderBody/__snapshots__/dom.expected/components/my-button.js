@@ -1,8 +1,9 @@
 export const _template_ = "<button><!></button>";
 export const _walks_ = /* get, next(1), replace, out(1) */" D%l";
 export const _setup_ = () => {};
-import { on as _on, conditional as _conditional, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/1");
+import { on as _on, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _renderBody_input = _dynamicTagAttrs("#text/1");
+const _dynamicTagName = /* @__PURE__ */_conditional("#text/1", _scope => _renderBody_input(_scope, () => ({})), () => _renderBody_input);
 export const _renderBody_ = /* @__PURE__ */_value("renderBody", (_scope, renderBody) => _dynamicTagName(_scope, renderBody), () => _dynamicTagName);
 const _onClick__effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onClick", _scope => {
   const {

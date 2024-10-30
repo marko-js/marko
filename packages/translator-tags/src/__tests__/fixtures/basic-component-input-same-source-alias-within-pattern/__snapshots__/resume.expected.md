@@ -12,8 +12,17 @@
       <!--M_*1 #text/2-->
     </button>
     <!--M_*1 #button/0-->
+    <button>
+      0
+      <!--M_*2 #text/1-->
+       
+      <!---->
+      0
+      <!--M_*2 #text/2-->
+    </button>
+    <!--M_*2 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#childScope/0":_.b={}},1:_.b},_.b.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/template.marko_0/onClick"](_.a),_.c),1,"packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/components/my-button.marko_0_onClick",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={clickCount:0,"#childScope/0":_.b={},"#childScope/1":_.c={}},1:_.b,2:_.c},_.b.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/template.marko_0/onClick"](_.a),_.c.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/template.marko_0/onClick_0"](_.a),_.d),1,"packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/components/my-button.marko_0_onClick",2,"packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/components/my-button.marko_0_onClick",0];M._.w()
     </script>
   </body>
 </html>
@@ -41,8 +50,17 @@ container.querySelector("button").click()
       <!--M_*1 #text/2-->
     </button>
     <!--M_*1 #button/0-->
+    <button>
+      1
+      <!--M_*2 #text/1-->
+       
+      <!---->
+      1
+      <!--M_*2 #text/2-->
+    </button>
+    <!--M_*2 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#childScope/0":_.b={}},1:_.b},_.b.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/template.marko_0/onClick"](_.a),_.c),1,"packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/components/my-button.marko_0_onClick",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={clickCount:0,"#childScope/0":_.b={},"#childScope/1":_.c={}},1:_.b,2:_.c},_.b.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/template.marko_0/onClick"](_.a),_.c.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/template.marko_0/onClick_0"](_.a),_.d),1,"packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/components/my-button.marko_0_onClick",2,"packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/components/my-button.marko_0_onClick",0];M._.w()
     </script>
   </body>
 </html>
@@ -52,6 +70,8 @@ container.querySelector("button").click()
 ```
 #document/html0/body1/button0/#text0: "0" => "1"
 #document/html0/body1/button0/#text4: "0" => "1"
+#document/html0/body1/button2/#text0: "0" => "1"
+#document/html0/body1/button2/#text4: "0" => "1"
 ```
 
 
@@ -71,8 +91,17 @@ container.querySelector("button").click()
       <!--M_*1 #text/2-->
     </button>
     <!--M_*1 #button/0-->
+    <button>
+      2
+      <!--M_*2 #text/1-->
+       
+      <!---->
+      2
+      <!--M_*2 #text/2-->
+    </button>
+    <!--M_*2 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#childScope/0":_.b={}},1:_.b},_.b.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/template.marko_0/onClick"](_.a),_.c),1,"packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/components/my-button.marko_0_onClick",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={clickCount:0,"#childScope/0":_.b={},"#childScope/1":_.c={}},1:_.b,2:_.c},_.b.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/template.marko_0/onClick"](_.a),_.c.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/template.marko_0/onClick_0"](_.a),_.d),1,"packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/components/my-button.marko_0_onClick",2,"packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/components/my-button.marko_0_onClick",0];M._.w()
     </script>
   </body>
 </html>
@@ -82,4 +111,6 @@ container.querySelector("button").click()
 ```
 #document/html0/body1/button0/#text0: "1" => "2"
 #document/html0/body1/button0/#text4: "1" => "2"
+#document/html0/body1/button2/#text0: "1" => "2"
+#document/html0/body1/button2/#text4: "1" => "2"
 ```
