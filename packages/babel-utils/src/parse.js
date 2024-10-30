@@ -2,7 +2,6 @@ import * as babelParser from "@babel/parser";
 import { types as t } from "@marko/compiler";
 
 import { getLoc, getLocRange } from "./loc";
-const CODE_AS_WHITE_SPACE_KEY = Symbol();
 
 export function parseStatements(
   file,
@@ -112,22 +111,19 @@ export function parseTypeParams(file, str, sourceStart, sourceEnd) {
 function tryParse(
   file,
   isExpression,
-  str,
+  code,
   sourceStart,
   sourceEnd,
   sourceOffset,
 ) {
   const { parserOpts } = file.opts;
-  let code = str;
 
   if (typeof sourceStart === "number") {
-    const whitespace =
-      file.metadata.marko[CODE_AS_WHITE_SPACE_KEY] ||
-      (file.metadata.marko[CODE_AS_WHITE_SPACE_KEY] = file.code.replace(
-        /[^\s]/g,
-        " ",
-      ));
-    code = whitespace.slice(0, sourceStart - (sourceOffset || 0)) + str;
+    const startIndex = sourceStart - (sourceOffset || 0);
+    const startLoc = getLoc(file, startIndex);
+    parserOpts.startIndex = startIndex;
+    parserOpts.startColumn = startLoc.column;
+    parserOpts.startLine = startLoc.line;
 
     try {
       return isExpression
@@ -147,6 +143,10 @@ function tryParse(
       } else {
         return [parseError];
       }
+    } finally {
+      parserOpts.startIndex = 0;
+      parserOpts.startColumn = 0;
+      parserOpts.startLine = 1;
     }
   } else {
     return isExpression

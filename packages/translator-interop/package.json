@@ -28,10 +28,10 @@
     "build": "node -r ~ts ./scripts/bundle.ts"
   },
   "dependencies": {
-    "@babel/code-frame": "^7.26.0",
-    "@marko/babel-utils": "^6.5.8",
-    "@marko/translator-default": "^6.0.21",
-    "@marko/translator-tags": "^0.2.14"
+    "@babel/code-frame": "^7.26.2",
+    "@marko/babel-utils": "^6.5.9",
+    "@marko/translator-default": "^6.0.22",
+    "@marko/translator-tags": "^0.2.15"
   },
   "peerDependencies": {
     "@marko/compiler": "^5.23.0"
