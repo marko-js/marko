@@ -1,6 +1,7 @@
 import {
   assertNoArgs,
   assertNoAttributes,
+  assertNoAttributeTags,
   assertNoParams,
   type Tag,
 } from "@marko/babel-utils";
@@ -8,43 +9,48 @@ import { types as t } from "@marko/compiler";
 
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
+import { BindingType, trackVarReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getSection } from "../util/sections";
 import { addValue, initValue } from "../util/signals";
 import { scopeIdentifier } from "../visitors/program";
 
 export default {
+  analyze(tag) {
+    assertNoArgs(tag);
+    assertNoParams(tag);
+    assertNoAttributes(tag);
+    assertNoBodyContent(tag);
+    assertNoAttributeTags(tag);
+
+    const { node } = tag;
+    if (!node.var) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError("The `id` tag requires a tag variable.");
+    }
+
+    if (!t.isIdentifier(node.var)) {
+      throw tag
+        .get("var")
+        .buildCodeFrameError("The `id` tag cannot be destructured");
+    }
+
+    trackVarReferences(tag, BindingType.derived);
+  },
   translate: {
     exit(tag) {
       const { node } = tag;
-      const { var: tagVar } = node;
       const id = isOutputHTML()
         ? callRuntime("nextTagId")
         : callRuntime("nextTagId", scopeIdentifier);
 
-      assertNoArgs(tag);
-      assertNoAttributes(tag);
-      assertNoBodyContent(tag);
-      assertNoParams(tag);
-
-      if (!node.var) {
-        throw tag
-          .get("name")
-          .buildCodeFrameError("The `id` tag requires a tag variable.");
-      }
-
-      if (!t.isIdentifier(tagVar)) {
-        throw tag
-          .get("var")
-          .buildCodeFrameError("The `id` tag cannot be destructured");
-      }
-
       if (isOutputHTML()) {
         tag.replaceWith(
-          t.variableDeclaration("const", [t.variableDeclarator(node.var, id)]),
+          t.variableDeclaration("const", [t.variableDeclarator(node.var!, id)]),
         );
       } else {
-        const source = initValue(tagVar.extra!.binding!);
+        const source = initValue(node.var!.extra!.binding!);
         addValue(getSection(tag), undefined, source, id);
         tag.remove();
       }

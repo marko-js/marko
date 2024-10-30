@@ -7,6 +7,7 @@ import { getSection } from "../../util/sections";
 import { renameBindings, writeHTMLResumeStatements } from "../../util/signals";
 import type { TemplateVisitor } from "../../util/visitors";
 import { flushInto } from "../../util/writer";
+import { htmlRendererIdentifier } from ".";
 
 export default {
   translate: {
@@ -38,11 +39,10 @@ export default {
         }
       }
 
-      const rendererId = program.scope.generateUidIdentifier("renderer");
       program.pushContainer("body", [
         t.variableDeclaration("const", [
           t.variableDeclarator(
-            rendererId,
+            htmlRendererIdentifier,
             callRuntime(
               "createRenderer",
               t.arrowFunctionExpression(
@@ -56,7 +56,7 @@ export default {
         t.exportDefaultDeclaration(
           callRuntime(
             "createTemplate",
-            rendererId,
+            htmlRendererIdentifier,
             t.stringLiteral(program.hub.file.metadata.marko.id),
           ),
         ),

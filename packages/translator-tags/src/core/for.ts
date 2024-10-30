@@ -8,13 +8,15 @@ import {
 import { types as t } from "@marko/compiler";
 import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
 
+import { assertNoSpreadAttrs } from "../util/assert";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { isStatefulReferences } from "../util/is-stateful";
-import analyzeAttributeTags from "../util/nested-attribute-tags";
 import {
   type Binding,
   BindingType,
   createBinding,
+  dropReferences,
+  getAllTagReferenceNodes,
   getScopeAccessorLiteral,
   mergeReferences,
   trackParamsReferences,
@@ -63,13 +65,11 @@ declare module "@marko/compiler/dist/types" {
 export default {
   analyze(tag) {
     const tagExtra = (tag.node.extra ??= {});
-    const isAttrTag =
-      tagExtra.nestedAttributeTags &&
-      Object.keys(tagExtra.nestedAttributeTags).length > 0;
-
+    const isAttrTag = !!tag.node.attributeTags.length;
     let allowAttrs: string[];
     assertNoVar(tag);
     assertNoArgs(tag);
+    assertNoSpreadAttrs(tag);
 
     switch (getForType(tag.node)) {
       case "of":
@@ -93,9 +93,17 @@ export default {
 
     assertAllowedAttributes(tag, allowAttrs);
 
+    if (isAttrTag) return;
+
     const tagBody = tag.get("body");
-    const section = getOrCreateSection(tag);
     const bodySection = startSection(tagBody);
+
+    if (!bodySection) {
+      dropReferences(getAllTagReferenceNodes(tag.node));
+      return;
+    }
+
+    const section = getOrCreateSection(tag);
 
     if (isOnlyChildInParent(tag)) {
       const parentTag = tag.parentPath.parent as t.MarkoTag;
@@ -114,27 +122,25 @@ export default {
     }
 
     trackParamsReferences(tagBody, BindingType.param, undefined, tagExtra);
-    analyzeAttributeTags(tag);
-    mergeReferences(
-      tag,
-      tag.node.attributes.map((attr) => attr.value),
-    );
-
-    if (bodySection) {
-      bodySection.upstreamExpression = tagExtra;
-    }
+    mergeReferences(tag, getAllTagReferenceNodes(tag.node));
+    bodySection.upstreamExpression = tagExtra;
   },
   translate: translateByTarget({
     html: {
       enter(tag) {
+        if (tag.node.attributeTags.length) return;
+
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody);
+
+        if (!bodySection) {
+          tag.remove();
+          return;
+        }
+
         const tagExtra = tag.node.extra!;
         const isStateful = isStatefulReferences(tagExtra.referencedBindings);
-
-        if (bodySection) {
-          setSectionParentIsOwner(bodySection, true);
-        }
+        setSectionParentIsOwner(bodySection, true);
 
         if (!isOnlyChildInParent(tag)) {
           walks.visit(tag, WalkCode.Replace);
@@ -142,7 +148,7 @@ export default {
         }
 
         writer.flushBefore(tag);
-        if (bodySection && isStateful && !bodySection.content?.singleChild) {
+        if (isStateful && !bodySection.content?.singleChild) {
           tagExtra[kForScopeStartIndex] = tag.scope.generateUidIdentifier("k");
           writer.writeTo(tagBody)`${callRuntime(
             "markResumeScopeStart",
@@ -152,9 +158,11 @@ export default {
         }
       },
       exit(tag) {
+        if (tag.node.attributeTags.length) return;
+
         const tagBody = tag.get("body");
         const tagSection = getSection(tag);
-        const bodySection = getSectionForBody(tagBody);
+        const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
         const tagExtra = node.extra!;
         const isStateful = isStatefulReferences(tagExtra.referencedBindings);
@@ -165,11 +173,8 @@ export default {
         const forType = getForType(node)!;
         const params = node.body.params;
         const statements: t.Statement[] = [];
-        const bodyStatements = (
-          node.attributeTags.length ? node.attributeTags : node.body.body
-        ) as t.Statement[];
-        const hasStatefulClosures =
-          bodySection && checkStatefulClosures(bodySection, true);
+        const bodyStatements = node.body.body as t.Statement[];
+        const hasStatefulClosures = checkStatefulClosures(bodySection, true);
         let keyExpression: t.Expression | undefined;
 
         if (isStateful && isOnlyChildInParent(tag)) {
@@ -187,7 +192,7 @@ export default {
           );
         }
 
-        if (bodySection && (isStateful || hasStatefulClosures)) {
+        if (isStateful || hasStatefulClosures) {
           const singleNodeOptimization =
             bodySection.content === null || bodySection.content.singleChild;
           const defaultParamNames = (
@@ -301,19 +306,13 @@ export default {
           );
         }
 
-        if (bodySection) {
-          writer.flushInto(tag);
-          // TODO: this is a hack to get around the fact that we don't have a way to
-          // know if a scope requires dynamic subscriptions
-          setSubscriberBuilder(tag, (() => {}) as any);
-          writeHTMLResumeStatements(tagBody);
-        }
+        writer.flushInto(tag);
+        // TODO: this is a hack to get around the fact that we don't have a way to
+        // know if a scope requires dynamic subscriptions
+        setSubscriberBuilder(tag, (() => {}) as any);
+        writeHTMLResumeStatements(tagBody);
 
-        if (
-          keyExpression &&
-          bodySection &&
-          (isStateful || hasStatefulClosures)
-        ) {
+        if (keyExpression && (isStateful || hasStatefulClosures)) {
           bodyStatements.push(
             t.expressionStatement(
               t.callExpression(
@@ -322,7 +321,7 @@ export default {
                   t.identifier("set"),
                 ),
                 [
-                  keyExpression!,
+                  keyExpression,
                   callRuntime(
                     "getScopeById",
                     getScopeIdIdentifier(bodySection),
@@ -344,12 +343,17 @@ export default {
     },
     dom: {
       enter(tag) {
+        if (tag.node.attributeTags.length) return;
+
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody);
 
-        if (bodySection) {
-          setSectionParentIsOwner(bodySection, true);
+        if (!bodySection) {
+          tag.remove();
+          return;
         }
+
+        setSectionParentIsOwner(bodySection, true);
 
         if (!isOnlyChildInParent(tag)) {
           walks.visit(tag, WalkCode.Replace);
@@ -357,9 +361,11 @@ export default {
         }
       },
       exit(tag) {
+        if (tag.node.attributeTags.length) return;
+
         const tagBody = tag.get("body");
         const tagSection = getSection(tag);
-        const bodySection = getSectionForBody(tagBody);
+        const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
@@ -380,27 +386,19 @@ export default {
           return callRuntime(
             forTypeToDOMRuntime(forType),
             getScopeAccessorLiteral(nodeRef),
-            bodySection
-              ? t.identifier(bodySection.name)
-              : t.arrowFunctionExpression(
-                  [],
-                  t.blockStatement(node.attributeTags),
-                ),
+            t.identifier(bodySection.name),
           );
         };
 
-        const paramIdentifiers = Object.values(
-          tagBody.getBindingIdentifiers(),
-        ) as t.Identifier[];
+        const params = node.body.params;
+        signal.hasDownstreamIntersections = () => {
+          if (getClosures(bodySection).length > 0) {
+            return true;
+          }
 
-        if (bodySection) {
-          signal.hasDownstreamIntersections = () => {
-            if (getClosures(bodySection).length > 0) {
-              return true;
-            }
-
-            if (paramIdentifiers.length) {
-              const binding = paramIdentifiers[0].extra!.binding!;
+          for (const param of params) {
+            const binding = param.extra?.binding;
+            if (binding) {
               for (const {
                 referencedBindings,
               } of binding.downstreamExpressions) {
@@ -414,10 +412,10 @@ export default {
                 }
               }
             }
+          }
 
-            return false;
-          };
-        }
+          return false;
+        };
 
         const forAttrs = getKnownAttrValues(node);
         const loopArgs = getBaseArgsInForTag(forType, forAttrs);

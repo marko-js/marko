@@ -2,7 +2,6 @@ import { getTagDef, isNativeTag, type Plugin } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 
 import { isOutputHTML } from "../../util/marko-config";
-import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import * as hooks from "../../util/plugin-hooks";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -53,8 +52,6 @@ export default {
         NativeTag.analyze.enter(tag);
         return;
       }
-
-      analyzeAttributeTags(tag);
 
       switch (type) {
         case TagNameType.CustomTag:
@@ -152,9 +149,9 @@ export default {
         case TagNameType.DynamicTag:
           DynamicTag.translate.enter(tag);
           break;
-        // case TagNameType.AttributeTag:
-        //   AttributeTag.translate.enter(tag);
-        //   break;
+        case TagNameType.AttributeTag:
+          AttributeTag.translate.enter(tag);
+          break;
       }
     },
 

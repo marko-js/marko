@@ -1,3 +1,4 @@
+import { normalizeDynamicRenderer } from "../html";
 import { attrs } from "./attrs";
 import type { ServerRenderer } from "./template";
 import {
@@ -49,7 +50,7 @@ export function dynamicTagInput(
     return null;
   }
 
-  const renderer = getDynamicRenderer(tag);
+  const renderer = getDynamicRenderer(tag) as ServerRenderer;
 
   if (MARKO_DEBUG) {
     if (typeof renderer !== "function") {
@@ -83,7 +84,7 @@ export function dynamicTagArgs(
     return undefined;
   }
 
-  const renderer = getDynamicRenderer(tag);
+  const renderer = getDynamicRenderer(tag) as ServerRenderer;
 
   if (MARKO_DEBUG) {
     if (typeof renderer !== "function") {
@@ -94,11 +95,7 @@ export function dynamicTagArgs(
   return renderer(...args);
 }
 
-let getDynamicRenderer = (
-  tag: unknown | string | ServerRenderer | RenderBodyObject,
-) =>
-  (tag as { renderBody?: ServerRenderer }).renderBody ||
-  (tag as ServerRenderer);
+let getDynamicRenderer = normalizeDynamicRenderer<ServerRenderer>;
 export let createRenderer = (fn: ServerRenderer) => fn;
 
 export function patchDynamicTag(

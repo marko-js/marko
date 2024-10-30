@@ -268,11 +268,7 @@ export function loadFileForTag(tag) {
       markoMeta.analyzedTags = new Set([relativeFileName]);
     }
 
-    return file.___getMarkoFile(
-      fs.readFileSync(filename).toString("utf-8"),
-      createNewFileOpts(file.opts, filename),
-      file.markoOpts,
-    );
+    return resolveMarkoFile(file, filename);
   }
 }
 
@@ -293,12 +289,24 @@ export function loadFileForImport(file, request) {
       markoMeta.analyzedTags = new Set([relativeRequest]);
     }
 
-    return file.___getMarkoFile(
-      fs.readFileSync(filename).toString("utf-8"),
-      createNewFileOpts(file.opts, filename),
-      file.markoOpts,
-    );
+    return resolveMarkoFile(file, filename);
   }
+}
+
+function resolveMarkoFile(file, filename) {
+  if (filename === file.opts.filename) {
+    if (file.___compileStage === "analyze") {
+      return file;
+    }
+
+    return file.___getMarkoFile(file.code, file.opts, file.markoOpts);
+  }
+
+  return file.___getMarkoFile(
+    file.markoOpts.fileSystem.readFileSync(filename).toString("utf-8"),
+    createNewFileOpts(file.opts, filename),
+    file.markoOpts,
+  );
 }
 
 const idCache = new WeakMap();

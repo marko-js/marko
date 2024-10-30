@@ -1,12 +1,12 @@
 import {
   assertNoArgs,
   assertNoAttributeTags,
+  assertNoParams,
   getTagDef,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
 
-import attrsToObject from "../../util/attrs-to-object";
 import evaluate from "../../util/evaluate";
 import { isStatefulReferences } from "../../util/is-stateful";
 import { isOutputHTML } from "../../util/marko-config";
@@ -14,6 +14,7 @@ import {
   type Binding,
   BindingType,
   createBinding,
+  dropReferences,
   getScopeAccessorLiteral,
   mergeReferences,
 } from "../../util/references";
@@ -33,6 +34,8 @@ import {
   getRegisterUID,
   getSerializedScopeProperties,
 } from "../../util/signals";
+import toPropertyName from "../../util/to-property-name";
+import { propsToExpression } from "../../util/translate-attrs";
 import translateVar from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
@@ -54,36 +57,60 @@ declare module "@marko/compiler/dist/types" {
 export default {
   analyze: {
     enter(tag) {
+      assertNoArgs(tag);
+      assertNoParams(tag);
       assertNoAttributeTags(tag);
+
       const { node } = tag;
-      const attrs = tag.get("attributes");
-      const tagVar = tag.node.var;
+      if (node.var && !t.isIdentifier(node.var)) {
+        throw tag
+          .get("var")
+          .buildCodeFrameError(
+            "Tag variables on native elements cannot be destructured.",
+          );
+      }
+
       let hasEventHandlers = false;
       let hasDynamicAttributes = false;
 
-      /**
-       * The reason this seems like it does more work than it needs to
-       * is because `evaluate` has side effects so it needs to be run
-       * for every attribute that isn't an event handler or a spread
-       */
-      for (const attr of attrs) {
-        if (isSpreadAttr(attr)) {
-          (attr.node.value.extra ??= {}).isEffect = true;
+      const seen = new Set<string>();
+      const { attributes } = tag.node;
+      let spreadReferenceNodes: t.Node[] | undefined;
+      for (let i = attributes.length; i--; ) {
+        const attr = attributes[i];
+        if (t.isMarkoAttribute(attr)) {
+          if (seen.has(attr.name)) {
+            // drop references for duplicated attributes.
+            dropReferences(attr.value);
+            continue;
+          }
+
+          seen.add(attr.name);
+
+          if (isEventHandler(attr.name)) {
+            (attr.value.extra ??= {}).isEffect = true;
+            hasEventHandlers = true;
+          } else if (!evaluate(tag.get("attributes")[i]).confident) {
+            hasDynamicAttributes = true;
+          }
+        } else if (t.isMarkoSpreadAttribute(attr)) {
           hasEventHandlers = true;
           hasDynamicAttributes = true;
-          mergeReferences(
-            tag,
-            attrs.map((attr) => attr.node.value),
-          );
-        } else if (isEventHandler((attr.node as t.MarkoAttribute).name)) {
-          (attr.node.value.extra ??= {}).isEffect = true;
-          hasEventHandlers = true;
-        } else if (!evaluate(attr).confident) {
-          hasDynamicAttributes = true;
+          (attr.value.extra ??= {}).isEffect = true;
+        }
+
+        if (spreadReferenceNodes) {
+          spreadReferenceNodes.push(attr.value);
+        } else if (t.isMarkoSpreadAttribute(attr)) {
+          spreadReferenceNodes = [attr.value];
         }
       }
 
-      if (tagVar || hasEventHandlers || hasDynamicAttributes) {
+      if (spreadReferenceNodes) {
+        mergeReferences(tag, spreadReferenceNodes);
+      }
+
+      if (node.var || hasEventHandlers || hasDynamicAttributes) {
         currentProgramPath.node.extra.isInteractive ||= hasEventHandlers;
         const section = getOrCreateSection(tag);
         const tagName =
@@ -92,21 +119,19 @@ export default {
             : t.toIdentifier(tag.get("name"));
         const tagExtra = (node.extra ??= {});
         const bindingName = "#" + tagName;
-        tagExtra[kSerializeMarker] = !!tagVar || hasEventHandlers;
+        tagExtra[kSerializeMarker] = hasEventHandlers || !!node.var;
         tagExtra[kNativeTagBinding] = createBinding(
           bindingName,
           BindingType.dom,
           section,
         );
 
-        if (tagVar) {
-          if (t.isIdentifier(tagVar)) {
-            for (const ref of tag.scope.getBinding(tagVar.name)!
-              .referencePaths) {
-              if (!ref.parentPath?.isCallExpression()) {
-                tagExtra[kGetterId] = getRegisterUID(section, bindingName);
-                break;
-              }
+        if (node.var) {
+          for (const ref of tag.scope.getBinding(node.var.name)!
+            .referencePaths) {
+            if (!ref.parentPath?.isCallExpression()) {
+              tagExtra[kGetterId] = getRegisterUID(section, bindingName);
+              break;
             }
           }
         }
@@ -115,19 +140,13 @@ export default {
   },
   translate: {
     enter(tag) {
-      assertNoArgs(tag);
-
       const extra = tag.node.extra!;
       const nodeRef = extra[kNativeTagBinding];
       const isHTML = isOutputHTML();
       const name = tag.get("name");
-      const attrs = tag.get("attributes");
       const tagDef = getTagDef(tag);
-      const hasSpread = attrs.some((attr) => attr.isMarkoSpreadAttribute());
       const write = writer.writeTo(tag);
       const section = getSection(tag);
-
-      // TODO: throw error if var is not an identifier (like let)
 
       if (isHTML && extra.tagNameNullable) {
         writer.flushBefore(tag);
@@ -211,20 +230,124 @@ export default {
 
       write`<${name.node}`;
 
-      if (hasSpread) {
-        const attrsObj = attrsToObject(tag)!;
+      const { staticAttrs, spreadExpression, skipExpression } = getUsedAttrs(
+        tag.node,
+      );
+
+      for (const attr of staticAttrs) {
+        const { name, value } = attr;
+        const { confident, computed } = attr.extra ?? {};
+        const valueReferences = value.extra?.referencedBindings;
+
+        switch (name) {
+          case "class":
+          case "style": {
+            const helper = `${name}Attr` as const;
+            if (confident) {
+              write`${getHTMLRuntime()[helper](computed)}`;
+            } else if (isHTML) {
+              write`${callRuntime(helper, value)}`;
+            } else {
+              addStatement(
+                "render",
+                section,
+                valueReferences,
+                t.expressionStatement(
+                  callRuntime(
+                    helper,
+                    t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                    value,
+                  ),
+                ),
+              );
+            }
+            break;
+          }
+          default:
+            if (confident) {
+              write`${getHTMLRuntime().attr(name, computed)}`;
+            } else if (isHTML) {
+              if (isEventHandler(name)) {
+                addHTMLEffectCall(section, valueReferences);
+              } else {
+                write`${callRuntime("attr", t.stringLiteral(name), value)}`;
+              }
+            } else if (isEventHandler(name)) {
+              addStatement(
+                "effect",
+                section,
+                valueReferences,
+                t.expressionStatement(
+                  callRuntime(
+                    "on",
+                    t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                    t.stringLiteral(getEventHandlerName(name)),
+                    value,
+                  ),
+                ),
+                value,
+              );
+            } else {
+              addStatement(
+                "render",
+                section,
+                valueReferences,
+                t.expressionStatement(
+                  callRuntime(
+                    "attr",
+                    t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                    t.stringLiteral(name),
+                    value,
+                  ),
+                ),
+              );
+            }
+
+            break;
+        }
+      }
+
+      if (spreadExpression) {
         if (isHTML) {
           addHTMLEffectCall(section, extra.referencedBindings);
-          write`${callRuntime("attrs", attrsObj, visitAccessor, getScopeIdIdentifier(section))}`;
+
+          if (skipExpression) {
+            write`${callRuntime("partialAttrs", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(section))}`;
+          } else {
+            write`${callRuntime("attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(section))}`;
+          }
         } else {
-          addStatement(
-            "render",
-            section,
-            extra.referencedBindings,
-            t.expressionStatement(
-              callRuntime("attrs", scopeIdentifier, visitAccessor, attrsObj),
-            ),
-          );
+          if (skipExpression) {
+            addStatement(
+              "render",
+              section,
+              extra.referencedBindings,
+              t.expressionStatement(
+                callRuntime(
+                  "partialAttrs",
+                  scopeIdentifier,
+                  visitAccessor,
+                  spreadExpression,
+                  skipExpression,
+                ),
+              ),
+            );
+          } else {
+            addStatement(
+              "render",
+              section,
+              extra.referencedBindings,
+              t.expressionStatement(
+                callRuntime(
+                  "attrs",
+                  scopeIdentifier,
+                  visitAccessor,
+                  spreadExpression,
+                ),
+              ),
+            );
+          }
+
           addStatement(
             "effect",
             section,
@@ -232,87 +355,8 @@ export default {
             t.expressionStatement(
               callRuntime("attrsEvents", scopeIdentifier, visitAccessor),
             ),
-            attrsObj,
+            spreadExpression,
           );
-        }
-      } else {
-        // TODO: #129 this should iterate backward and filter out duplicated attrs.
-        for (const attr of attrs as t.NodePath<t.MarkoAttribute>[]) {
-          const name = attr.node.name;
-          const value = attr.get("value");
-          const { confident, computed } = attr.node.extra ?? {};
-          const valueReferences = value.node.extra?.referencedBindings;
-
-          switch (name) {
-            case "class":
-            case "style": {
-              const helper = `${name}Attr` as const;
-              if (confident) {
-                write`${getHTMLRuntime()[helper](computed)}`;
-              } else if (isHTML) {
-                write`${callRuntime(helper, value.node)}`;
-              } else {
-                addStatement(
-                  "render",
-                  section,
-                  valueReferences,
-                  t.expressionStatement(
-                    callRuntime(
-                      helper,
-                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
-                      value.node,
-                    ),
-                  ),
-                );
-              }
-              break;
-            }
-            default:
-              if (confident) {
-                write`${getHTMLRuntime().attr(name, computed)}`;
-              } else if (isHTML) {
-                if (isEventHandler(name)) {
-                  addHTMLEffectCall(section, valueReferences);
-                } else {
-                  write`${callRuntime(
-                    "attr",
-                    t.stringLiteral(name),
-                    value.node,
-                  )}`;
-                }
-              } else if (isEventHandler(name)) {
-                addStatement(
-                  "effect",
-                  section,
-                  valueReferences,
-                  t.expressionStatement(
-                    callRuntime(
-                      "on",
-                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
-                      t.stringLiteral(getEventHandlerName(name)),
-                      value.node,
-                    ),
-                  ),
-                  value.node,
-                );
-              } else {
-                addStatement(
-                  "render",
-                  section,
-                  valueReferences,
-                  t.expressionStatement(
-                    callRuntime(
-                      "attr",
-                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
-                      t.stringLiteral(name),
-                      value.node,
-                    ),
-                  ),
-                );
-              }
-
-              break;
-          }
         }
       }
 
@@ -379,10 +423,52 @@ export default {
   },
 } satisfies TemplateVisitor<t.MarkoTag>;
 
-function isSpreadAttr(
-  attr: t.NodePath<t.MarkoAttribute | t.MarkoSpreadAttribute>,
-): attr is t.NodePath<t.MarkoSpreadAttribute> {
-  return attr.type === "MarkoSpreadAttribute";
+function getUsedAttrs(tag: t.MarkoTag) {
+  const seen = new Set<string>();
+  const { attributes } = tag;
+  const staticAttrs: t.MarkoAttribute[] = [];
+  let spreadExpression: undefined | t.Expression;
+  let skipExpression: undefined | t.Expression;
+  let spreadProps: undefined | t.ObjectExpression["properties"];
+  let skipProps: undefined | t.ObjectExpression["properties"];
+  for (let i = attributes.length; i--; ) {
+    const attr = attributes[i];
+    const { value } = attr;
+    if (t.isMarkoSpreadAttribute(attr)) {
+      (spreadProps ||= []).push(t.spreadElement(value));
+    } else if (!seen.has(attr.name)) {
+      seen.add(attr.name);
+      if (spreadProps) {
+        spreadProps.push(t.objectProperty(toPropertyName(attr.name), value));
+      } else {
+        staticAttrs.push(attr);
+      }
+    }
+  }
+
+  staticAttrs.reverse();
+
+  if (spreadProps) {
+    spreadProps.reverse();
+
+    for (const { name } of staticAttrs) {
+      (skipProps ||= []).push(
+        t.objectProperty(toPropertyName(name), t.numericLiteral(1)),
+      );
+    }
+
+    if (skipProps) {
+      skipExpression = t.objectExpression(skipProps);
+    }
+
+    spreadExpression = propsToExpression(spreadProps);
+  }
+
+  return {
+    staticAttrs,
+    spreadExpression,
+    skipExpression,
+  };
 }
 
 function isEventHandler(propName: string) {

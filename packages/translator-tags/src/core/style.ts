@@ -1,4 +1,6 @@
 import {
+  assertNoArgs,
+  assertNoAttributeTags,
   assertNoParams,
   getEnd,
   getStart,
@@ -14,6 +16,14 @@ import { getMarkoOpts } from "../util/marko-config";
 import { currentProgramPath } from "../visitors/program";
 
 export default {
+  analyze(tag) {
+    assertNoArgs(tag);
+    assertNoParams(tag);
+    assertNoAttributeTags(tag);
+
+    // TODO: if any attributes present (besides shorthand class)
+    // recommend `html-style` tag (which we still need to add).
+  },
   translate(tag) {
     const {
       hub: { file },
