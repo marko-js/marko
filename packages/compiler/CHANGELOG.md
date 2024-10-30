@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.37.23
+
+### Patch Changes
+
+- [#2346](https://github.com/marko-js/marko/pull/2346) [`8ec88ff`](https://github.com/marko-js/marko/commit/8ec88fff87ef40ce19aba8992e075a839a61683e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Switch back to using babels startIndex api since the regression has been fixed.
+
+- [#2344](https://github.com/marko-js/marko/pull/2344) [`bafeac1`](https://github.com/marko-js/marko/commit/bafeac1db6acc73e5c38ade2a078485df28670b8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize circular reference child template analysis.
+
+- Updated dependencies [[`8ec88ff`](https://github.com/marko-js/marko/commit/8ec88fff87ef40ce19aba8992e075a839a61683e), [`bafeac1`](https://github.com/marko-js/marko/commit/bafeac1db6acc73e5c38ade2a078485df28670b8)]:
+  - @marko/babel-utils@6.5.10
+
 ## 5.37.22
 
 ### Patch Changes
