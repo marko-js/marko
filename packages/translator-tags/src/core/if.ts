@@ -7,6 +7,7 @@ import {
 import { types as t } from "@marko/compiler";
 import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
 
+import { assertNoSpreadAttrs } from "../util/assert";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
 import { isStatefulReferences } from "../util/is-stateful";
@@ -60,22 +61,12 @@ declare module "@marko/compiler/dist/types" {
 export const IfTag = {
   analyze(tag) {
     assertValidCondition(tag);
-
-    if (isRoot(tag)) {
-      const tagExtra = (tag.node.extra ??= {});
-      tagExtra[kBinding] = createBinding(
-        "#text",
-        BindingType.dom,
-        getOrCreateSection(tag),
-        undefined,
-        tagExtra,
-      );
-    }
+    if (tag.node.attributeTags.length) return;
 
     const [isLast, branches] = getBranches(tag, startSection(tag.get("body")));
     if (isLast) {
       const [rootTag] = branches[0];
-      const rootExtra = rootTag.node.extra!;
+      const rootExtra = (rootTag.node.extra ??= {});
       const mergeReferenceNodes: t.Node[] = [];
       let singleNodeOptimization = true;
 
@@ -98,6 +89,13 @@ export const IfTag = {
         }
       }
 
+      rootExtra[kBinding] = createBinding(
+        "#text",
+        BindingType.dom,
+        getOrCreateSection(tag),
+        undefined,
+        rootExtra,
+      );
       rootExtra.singleNodeOptimization = singleNodeOptimization;
       mergeReferences(rootTag, mergeReferenceNodes);
     }
@@ -105,6 +103,8 @@ export const IfTag = {
   translate: translateByTarget({
     html: {
       enter(tag) {
+        if (tag.node.attributeTags.length) return;
+
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody);
         const rootExtra = getRoot(tag).node.extra!;
@@ -130,6 +130,8 @@ export const IfTag = {
         }
       },
       exit(tag) {
+        if (tag.node.attributeTags.length) return;
+
         const tagBody = tag.get("body");
         const section = getSection(tag);
         const bodySection = getSectionForBody(tagBody);
@@ -160,18 +162,10 @@ export const IfTag = {
           const ifRendererIdentifier =
             tag.scope.generateUidIdentifier("ifRenderer");
 
-          // TODO: here write out attr tags.
           let statement: t.Statement | undefined;
-          let isAttrTags = false;
           for (let i = branches.length; i--; ) {
             const [branchTag, branchBodySection] = branches[i];
-
-            if (isAttrTags || branchTag.node.attributeTags.length) {
-              isAttrTags = true;
-            }
-            const bodyStatements = isAttrTags
-              ? branchTag.node.attributeTags
-              : branchTag.node.body.body;
+            const bodyStatements = branchTag.node.body.body;
 
             if (branchBodySection) {
               const branchHasStatefulClosures = checkStatefulClosures(
@@ -228,7 +222,7 @@ export const IfTag = {
             branchTag.remove();
           }
 
-          if (isAttrTags || !(isStateful || hasStatefulClosures)) {
+          if (!(isStateful || hasStatefulClosures)) {
             nextTag.insertBefore(statement!);
           } else {
             nextTag.insertBefore([
@@ -277,6 +271,8 @@ export const IfTag = {
     },
     dom: {
       enter(tag) {
+        if (tag.node.attributeTags.length) return;
+
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody);
 
@@ -291,6 +287,8 @@ export const IfTag = {
         walks.enterShallow(tag);
       },
       exit(tag) {
+        if (tag.node.attributeTags.length) return;
+
         const [isLast, branches] = getBranches(
           tag,
           getSectionForBody(tag.get("body")),
@@ -380,6 +378,7 @@ function assertValidCondition(tag: t.NodePath<t.MarkoTag>) {
   assertNoArgs(tag);
   assertNoParams(tag);
   assertHasBody(tag);
+  assertNoSpreadAttrs(tag);
 
   switch (getTagName(tag)) {
     case "if":

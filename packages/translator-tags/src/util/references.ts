@@ -132,7 +132,7 @@ export function trackParamsReferences(
   upstreamExpression?: Binding["upstreamExpression"],
 ) {
   const params = body.node.params;
-  if (body.get("body").length && params.length) {
+  if (body.node.body.length && params.length) {
     upstreamAlias?.downstreamExpressions.delete(upstreamExpression!);
     const section = getOrCreateSection(body);
     const canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
@@ -417,6 +417,7 @@ export function mergeReferences(
   nodes: (t.Node | undefined)[],
 ) {
   getMergedReferences().set(target, nodes);
+  return (target.node.extra ??= {});
 }
 
 /**
@@ -441,10 +442,25 @@ function compareIntersections(a: Intersection, b: Intersection) {
 }
 
 export function finalizeReferences() {
+  const droppedReferences = getDroppedReferences();
+  if (droppedReferences.size) {
+    for (const expr of droppedReferences) {
+      const { extra } = expr;
+      if (extra && extra.referencedBindings) {
+        forEach(extra.referencedBindings, ({ downstreamExpressions }) => {
+          downstreamExpressions.delete(extra);
+        });
+
+        extra.referencedBindings = undefined;
+      }
+    }
+    droppedReferences.clear();
+  }
+
   const mergedReferences = getMergedReferences();
   if (mergedReferences.size) {
     for (const [target, nodes] of mergedReferences) {
-      const targetExtra = (target.node.extra ??= {});
+      const targetExtra = target.node.extra!;
       let { referencedBindings, isEffect } = targetExtra;
       for (const node of nodes) {
         const extra = node?.extra;
@@ -655,10 +671,52 @@ export function addReferenceToExpression(path: t.NodePath, binding: Binding) {
   binding.downstreamExpressions.add(exprExtra);
 }
 
+const [getDroppedReferences] = createProgramState(() => new Set<t.Node>());
+export function dropReferences(node: t.Node | t.Node[]) {
+  const droppedReferences = getDroppedReferences();
+  if (Array.isArray(node)) {
+    for (const item of node) {
+      droppedReferences.add(item);
+    }
+  } else {
+    droppedReferences.add(node);
+  }
+}
+
 export function getCanonicalBinding(binding?: Binding) {
   return (
     binding && (binding.property ? binding : binding.upstreamAlias || binding)
   );
+}
+
+export function getAllTagReferenceNodes(
+  tag: t.MarkoTag,
+  referenceNodes: t.Node[] = [],
+) {
+  if (tag.arguments) {
+    for (const arg of tag.arguments) {
+      referenceNodes.push(arg);
+    }
+  }
+
+  for (const attr of tag.attributes) {
+    referenceNodes.push(attr.value);
+  }
+
+  for (const child of tag.attributeTags) {
+    switch (child.type) {
+      case "MarkoTag":
+        getAllTagReferenceNodes(child, referenceNodes);
+        break;
+      case "MarkoScriptlet":
+        for (const statement of child.body) {
+          referenceNodes.push(statement);
+        }
+        break;
+    }
+  }
+
+  return referenceNodes;
 }
 
 function addReference(

@@ -1,23 +1,24 @@
 import { assertNoArgs, type Tag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 
-import attrsToObject from "../util/attrs-to-object";
 import { isOutputHTML } from "../util/marko-config";
 import {
   BindingType,
+  getAllTagReferenceNodes,
   mergeReferences,
   trackParamsReferences,
   trackVarReferences,
 } from "../util/references";
 import { getSection, startSection } from "../util/sections";
 import {
+  addStatement,
   addValue,
   initValue,
   writeHTMLResumeStatements,
 } from "../util/signals";
+import { propsToExpression, translateAttrs } from "../util/translate-attrs";
 import translateVar from "../util/translate-var";
 import * as writer from "../util/writer";
-import { scopeIdentifier } from "../visitors/program";
 
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
@@ -32,10 +33,7 @@ export default {
     startSection(tagBody);
     trackVarReferences(tag, BindingType.derived);
     trackParamsReferences(tagBody, BindingType.param);
-    mergeReferences(
-      tag,
-      tag.node.attributes.map((attr) => attr.value),
-    );
+    mergeReferences(tag, getAllTagReferenceNodes(tag.node));
   },
   translate: {
     enter(tag) {
@@ -45,33 +43,32 @@ export default {
     },
     exit(tag) {
       const { node } = tag;
+      const translatedAttrs = translateAttrs(tag);
 
       if (isOutputHTML()) {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
-        const attrs = attrsToObject(tag, true);
-        translateVar(tag, attrs);
+        tag.insertBefore(translatedAttrs.statements);
+        translateVar(tag, propsToExpression(translatedAttrs.properties));
       } else {
         const section = getSection(tag);
-        const tagBody = tag.get("body");
-        const tagBodySection = getSection(tagBody);
         const referencedBindings = node.extra?.referencedBindings;
         const derivation = initValue(tag.get("var").node!.extra!.binding!)!;
-
-        let attrsObject = attrsToObject(tag);
-        if (tagBodySection !== section) {
-          attrsObject ??= t.objectExpression([]);
-          (attrsObject as t.ObjectExpression).properties.push(
-            t.objectProperty(
-              t.identifier("renderBody"),
-              t.callExpression(t.identifier(tagBodySection.name), [
-                scopeIdentifier,
-              ]),
-            ),
+        if (translatedAttrs.statements.length) {
+          addStatement(
+            "render",
+            section,
+            referencedBindings,
+            translatedAttrs.statements,
           );
         }
 
-        addValue(section, referencedBindings, derivation, attrsObject);
+        addValue(
+          section,
+          referencedBindings,
+          derivation,
+          propsToExpression(translatedAttrs.properties),
+        );
       }
 
       tag.remove();

@@ -58,6 +58,20 @@ export function attrs(
   return result;
 }
 
+export function partialAttrs(
+  data: Record<string, unknown>,
+  skip: Record<string, 1>,
+  elementAccessor?: Accessor,
+  scopeId?: number,
+) {
+  const partial: Partial<typeof data> = {};
+  for (const key in data) {
+    if (!skip[key]) partial[key] = data[key];
+  }
+
+  return attrs(partial, elementAccessor, scopeId);
+}
+
 function stringAttr(name: string, val: string) {
   return val && ` ${name}=${escapeAttrValue(val)}`;
 }
