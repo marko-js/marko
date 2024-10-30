@@ -2,13 +2,13 @@ import { attrs as _attrs, markResumeNode as _markResumeNode, write as _write, wr
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
   const a = 0;
-  _write(`<div${_attrs(input.value, "#div/0", _scope0_id)}></div>${_markResumeNode(_scope0_id, "#div/0")}<div${_attrs({
+  _write(`<div${_attrs(input.value, "#div/0", _scope0_id, "div")}></div>${_markResumeNode(_scope0_id, "#div/0")}<div${_attrs({
     a: a,
     ...input.value
-  }, "#div/1", _scope0_id)}></div>${_markResumeNode(_scope0_id, "#div/1")}<div${_attrs({
+  }, "#div/1", _scope0_id, "div")}></div>${_markResumeNode(_scope0_id, "#div/1")}<div${_attrs({
     ...input.value,
     a: a
-  }, "#div/2", _scope0_id)}></div>${_markResumeNode(_scope0_id, "#div/2")}`);
+  }, "#div/2", _scope0_id, "div")}></div>${_markResumeNode(_scope0_id, "#div/2")}`);
   _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko_0_input_a");
   _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko_0_input");
   _writeScope(_scope0_id, {

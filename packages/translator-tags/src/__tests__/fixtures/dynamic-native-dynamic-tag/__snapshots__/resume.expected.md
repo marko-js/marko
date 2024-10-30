@@ -53,8 +53,8 @@ container.querySelector("button").click()
 inserted #document/html0/body1/div0
 removed #comment after #document/html0/body1/div0
 removed span after #document/html0/body1/div0
-#document/html0/body1/div0: attr(class) null => "A"
 inserted #document/html0/body1/div0/#text0
+#document/html0/body1/div0: attr(class) null => "A"
 ```
 
 
@@ -84,6 +84,6 @@ container.querySelector("button").click()
 ```
 inserted #document/html0/body1/span0
 removed div after #document/html0/body1/span0
-#document/html0/body1/span0: attr(class) null => "A"
 inserted #document/html0/body1/span0/#text0
+#document/html0/body1/span0: attr(class) null => "A"
 ```

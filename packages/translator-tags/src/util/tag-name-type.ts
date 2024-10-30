@@ -65,6 +65,9 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
       extra.tagNameNullable = extra.tagNameNullable = false;
     } else {
       analyzeExpressionTagName(name, extra);
+      // if (extra.tagNameType === TagNameType.NativeTag) {
+      //   extra.tagNameType = TagNameType.DynamicTag;
+      // }
     }
 
     if (extra.tagNameType === undefined) {

@@ -1,6 +1,6 @@
 import { classValue, isVoid, styleValue } from "../common/helpers";
 import { type Accessor, AccessorChar } from "../common/types";
-import { ensureScopeWithId } from "./writer";
+import { ensureScopeWithId, getChunk, withContext } from "./writer";
 
 export function classAttr(val: unknown) {
   return stringAttr("class", classValue(val));
@@ -10,19 +10,40 @@ export function styleAttr(val: unknown) {
   return stringAttr("style", styleValue(val));
 }
 
+// TODO: use symbols
+const kSelectedValue = Symbol("selectedValue");
+export function withSelectedValue(value: unknown, renderBody: () => void) {
+  withContext(kSelectedValue, value, renderBody);
+}
+
 export function valueAttr_select(
-  // @ts-expect-error the following function is not yet implemented
   value: unknown,
-  // @ts-expect-error the following function is not yet implemented
   valueChange: unknown,
-  // @ts-expect-error the following function is not yet implemented
-  multiple: boolean,
-  // @ts-expect-error the following function is not yet implemented
+  _multiple: boolean,
   scopeId: number,
-  // @ts-expect-error the following function is not yet implemented
   elementAccessor: Accessor,
 ) {
-  // TODO: need to cause all child options to render with correct selected attribute
+  if (valueChange) {
+    const scope = ensureScopeWithId(scopeId!);
+    scope[elementAccessor + AccessorChar.ControlledValue] = value;
+    scope[elementAccessor + AccessorChar.ControlledHandler] = valueChange;
+  }
+  return "";
+}
+
+export function valueAttr_option(value: unknown) {
+  const { [kSelectedValue]: selectedValue } =
+    getChunk()?.context || ({} as any);
+
+  return (
+    attr("value", value) +
+    (!isVoid(value) &&
+    (Array.isArray(value)
+      ? selectedValue.includes(value)
+      : selectedValue === value)
+      ? ` selected`
+      : "")
+  );
 }
 
 export function valueAttr_input(
@@ -107,6 +128,7 @@ export function attrs(
   data: Record<string, unknown>,
   elementAccessor: Accessor = 0,
   scopeId: number = 0,
+  type: string = "",
 ) {
   let result = "";
   let scope: Record<string, unknown> | undefined;
@@ -124,9 +146,14 @@ export function attrs(
         break;
       case "value":
         // TODO: need to somehow know what type of element this is
-        if (name /* el.tagName === "INPUT"*/) {
-          result += stringAttr("value", val as string);
-        } /*if (el.tagName === "SELECT")*/ else {
+        if (type === "input") {
+          result += valueAttr_input(
+            val,
+            data.valueChange,
+            scopeId,
+            elementAccessor,
+          );
+        } else if (type === "select") {
           result += valueAttr_select(
             val,
             data.valueChange,
@@ -134,6 +161,10 @@ export function attrs(
             scopeId,
             elementAccessor,
           );
+        } else if (type === "option") {
+          result += valueAttr_option(val);
+        } else {
+          result += attr("value", val);
         }
         break;
       case "checkedValue":

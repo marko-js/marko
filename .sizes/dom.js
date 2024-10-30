@@ -536,7 +536,9 @@ function ye(e, t, n) {
       case "value":
         "INPUT" === l.tagName
           ? je(e, t, o, n.valueChange)
-          : "SELECT" === l.tagName && ze(e, t, o, n.valueChange, !!n.multiple);
+          : "SELECT" === l.tagName
+            ? ze(e, t, o, n.valueChange, !!n.multiple)
+            : pe(l, i, o);
         break;
       case "checked":
         Le(e, t, o, n.checkedChange);
@@ -802,7 +804,7 @@ function nt(e, t, n) {
     if (!o || o === t || i === I) return;
     let f = r[e + "!"];
     if (i === _ || i === T) return o.d?.(f, i);
-    if ("string" == typeof o) ye(f, 0, i()), ct(f, 0, t && l(r, t));
+    if ("string" == typeof o) ct(f, 0, t && l(r, t)), ye(f, 0, i());
     else if (((o = o.default ? o.default._ : o._ || o), o.d)) {
       let e = i();
       o.d(f, n ? e : [t ? { ...e, renderBody: l(r, t) } : e]);

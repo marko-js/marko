@@ -112,12 +112,12 @@ export function dynamicTagAttrs(
     if (typeof renderer === "string") {
       // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
       const elementAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
-      attrs(childScope, elementAccessor, attrsOrOp());
       setConditionalRendererOnlyChild(
         childScope,
         elementAccessor,
         renderBody && bindRenderer(scope, renderBody),
       );
+      attrs(childScope, elementAccessor, attrsOrOp());
     } else {
       renderer = renderer.default ? renderer.default._ : renderer._ || renderer;
       if (renderer.___args) {

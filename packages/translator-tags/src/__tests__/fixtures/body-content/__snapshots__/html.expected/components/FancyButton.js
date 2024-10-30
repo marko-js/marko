@@ -5,7 +5,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     renderBody,
     ...attrs
   } = input;
-  _write(`<button${_attrs(attrs, "#button/0", _scope0_id)}>`);
+  _write(`<button${_attrs(attrs, "#button/0", _scope0_id, "button")}>`);
   const _dynamicScope = _peekNextScope();
   _dynamicTagInput(_dynamicScope, renderBody, {});
   _write(`${_markResumeControlEnd(_scope0_id, "#text/1")}</button>${_markResumeNode(_scope0_id, "#button/0")}`);

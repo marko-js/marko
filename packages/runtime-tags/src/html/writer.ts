@@ -51,6 +51,20 @@ export function writeEffect(scopeId: number, registryId: string) {
   $chunk.writeEffect(scopeId, registryId);
 }
 
+const kPendingContexts = Symbol("Pending Contexts");
+export function withContext(key: PropertyKey, value: unknown, cb: () => void) {
+  const ctx = ($chunk.context ||= { [kPendingContexts]: 0 } as any);
+  const prev = ctx[key];
+  ctx[kPendingContexts]++;
+  ctx[key] = value;
+  try {
+    cb();
+  } finally {
+    ctx[kPendingContexts]--;
+    ctx[key] = prev;
+  }
+}
+
 export function register<T extends WeakKey>(
   val: T,
   id: string,
@@ -167,8 +181,11 @@ export function fork<T>(
 
   const chunk = $chunk;
   const { boundary } = chunk;
-  chunk.next = $chunk = new Chunk(boundary, chunk.next);
+  chunk.next = $chunk = new Chunk(boundary, chunk.next, chunk.context);
   chunk.async = true;
+  if (chunk.context?.[kPendingContexts]) {
+    chunk.context = { ...chunk.context, [kPendingContexts]: 0 };
+  }
   boundary.startAsync();
   promise.then(
     (value) => {
@@ -194,14 +211,14 @@ export function tryPlaceholder(
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
-  const body = new Chunk(boundary, null);
+  const body = new Chunk(boundary, null, chunk.context);
 
   if (body === body.render(renderBody)) {
     chunk.append(body);
     return;
   }
 
-  chunk.next = $chunk = new Chunk(boundary, chunk.next);
+  chunk.next = $chunk = new Chunk(boundary, chunk.next, body.context);
   chunk.placeholderBody = body;
   chunk.placeholderRender = renderPlaceholder;
 }
@@ -214,7 +231,7 @@ export function tryCatch(
   const { boundary } = chunk;
   const { state } = boundary;
   const catchBoundary = new Boundary(state);
-  const body = new Chunk(catchBoundary, null);
+  const body = new Chunk(catchBoundary, null, chunk.context);
   const bodyEnd = body.render(renderBody);
 
   if (catchBoundary.signal.aborted) {
@@ -231,7 +248,10 @@ export function tryCatch(
 
   const reorderId = state.nextReorderId();
   const endMarker = state.mark(Mark.PlaceholderEnd, reorderId);
-  const bodyNext = (bodyEnd.next = $chunk = new Chunk(boundary, chunk.next));
+  const bodyNext =
+    (bodyEnd.next =
+    $chunk =
+      new Chunk(boundary, chunk.next, body.context));
   chunk.next = body;
   chunk.writeHTML(state.mark(Mark.Placeholder, reorderId));
   bodyEnd.writeHTML(endMarker);
@@ -263,7 +283,7 @@ export function tryCatch(
         } while (cur !== bodyNext);
       }
 
-      const catchChunk = new Chunk(boundary, null);
+      const catchChunk = new Chunk(boundary, null, chunk.context);
       catchChunk.reorderId = reorderId;
       catchChunk.render(renderCatch, catchBoundary.signal.reason);
       state.reorder(catchChunk);
@@ -403,9 +423,11 @@ export class Chunk {
   constructor(
     public boundary: Boundary,
     public next: Chunk | null,
+    public context: Record<string | symbol, unknown> | null,
   ) {
     this.boundary = boundary;
     this.next = next;
+    this.context = context;
   }
 
   writeHTML(html: string) {

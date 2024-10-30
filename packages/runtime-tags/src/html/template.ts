@@ -46,6 +46,7 @@ export class ServerTemplate implements Template {
     const head = new Chunk(
       new Boundary(new State($global as State["$global"]), $global.signal),
       null,
+      null,
     );
     head.render(this._, input);
     return new ServerRenderResult(head);

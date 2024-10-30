@@ -1,5 +1,5 @@
 import type { Renderer } from "../common/types";
-import { attrs } from "./attrs";
+import { attrs, withSelectedValue } from "./attrs";
 import type { ServerTemplate as Template } from "./template";
 import {
   getScopeId,
@@ -36,10 +36,16 @@ export function dynamicTagInput(
 
   if (typeof tag === "string") {
     nextScopeId();
-    write(`<${tag}${attrs(input)}>`);
+    write(
+      `<${tag}${attrs(input, MARKO_DEBUG ? `#${tag}/0` : 0, scopeId, tag)}>`,
+    );
 
     if (!voidElementsReg.test(tag)) {
-      renderBody?.();
+      if (tag === "select" && "value" in input && renderBody) {
+        withSelectedValue(input.value, renderBody);
+      } else {
+        renderBody?.();
+      }
       write(`</${tag}>`);
     } else if (MARKO_DEBUG && renderBody) {
       throw new Error(

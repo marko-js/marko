@@ -102,6 +102,8 @@ export function attrs(
             nextAttrs.valueChange as any,
             !!nextAttrs.multiple,
           );
+        } else {
+          attr(element, name, value);
         }
         break;
       case "checked":

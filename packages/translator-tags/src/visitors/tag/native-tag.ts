@@ -219,7 +219,7 @@ export default {
         const attrsObj = attrsToObject(tag)!;
         if (isHTML) {
           addHTMLEffectCall(section, extra.referencedBindings);
-          write`${callRuntime("attrs", attrsObj, visitAccessor, getScopeIdIdentifier(section))}`;
+          write`${callRuntime("attrs", attrsObj, visitAccessor, getScopeIdIdentifier(section), name.node)}`;
         } else {
           addStatement(
             "render",

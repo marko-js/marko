@@ -32,8 +32,8 @@ container.querySelector("button").click()
 ```
 inserted div1
 removed span after div1
-div1: attr(class) null => "A"
 inserted div1/#text0
+div1: attr(class) null => "A"
 ```
 
 
@@ -54,6 +54,6 @@ container.querySelector("button").click()
 ```
 inserted span1
 removed div after span1
-span1: attr(class) null => "A"
 inserted span1/#text0
+span1: attr(class) null => "A"
 ```
