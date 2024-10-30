@@ -1,6 +1,6 @@
 export const _template_ = `<!>${_customTag_template}`;
 export const _walks_ = /* beginChild, _customTag_walks, endChild */`D/${_customTag_walks}&`;
-import { _setup_ as _customTag, _thing_ as _customTag_input_thing, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag/index.marko";
+import { _setup_ as _customTag, _pattern__ as _customTag_input_thing, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag/index.marko";
 import { attrTag as _attrTag, inChild as _inChild, createRendererWithOwner as _createRendererWithOwner, register as _register, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _thingBody2 = _register("packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_2_renderer", /* @__PURE__ */_createRendererWithOwner("Goodbye", ""));
 const _thingBody = _register("packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_1_renderer", /* @__PURE__ */_createRendererWithOwner("Hello", ""));

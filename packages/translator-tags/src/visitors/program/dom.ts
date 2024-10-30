@@ -6,7 +6,6 @@ import {
   forEachSectionReverse,
   getSection,
   getSectionParentIsOwner,
-  getSectionPath,
   isStatefulSection,
 } from "../../util/sections";
 import {
@@ -42,10 +41,8 @@ export default {
 
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
-          const sectionPath = getSectionPath(childSection);
-          const sectionParamsBinding = sectionPath.node.extra?.binding;
           const tagParamsSignal =
-            sectionParamsBinding && initValue(sectionParamsBinding);
+            childSection.params && initValue(childSection.params);
           const { walks, writes, setup } = writer.getSectionMeta(childSection);
           const closures = getClosures(childSection);
           const identifier = t.identifier(childSection.name);
