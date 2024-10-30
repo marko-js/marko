@@ -147,6 +147,8 @@ export function trackParamsReferences(
         undefined,
       ));
 
+    section.params = paramsBinding;
+
     for (let i = 0; i < params.length; i++) {
       // TODO: need to support spread here.
       createBindingsAndTrackReferences(
@@ -417,7 +419,6 @@ export function mergeReferences(
   nodes: (t.Node | undefined)[],
 ) {
   getMergedReferences().set(target, nodes);
-  return (target.node.extra ??= {});
 }
 
 /**
@@ -460,7 +461,7 @@ export function finalizeReferences() {
   const mergedReferences = getMergedReferences();
   if (mergedReferences.size) {
     for (const [target, nodes] of mergedReferences) {
-      const targetExtra = target.node.extra!;
+      const targetExtra = (target.node.extra ??= {});
       let { referencedBindings, isEffect } = targetExtra;
       for (const node of nodes) {
         const extra = node?.extra;

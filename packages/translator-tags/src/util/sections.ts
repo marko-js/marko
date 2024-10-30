@@ -24,6 +24,7 @@ export type Section = {
   name: string;
   depth: number;
   parent: Section | undefined;
+  params: undefined | Binding;
   closures: Set<Binding>;
   bindings: Set<Binding>;
   upstreamExpression: t.NodeExtra | undefined;
@@ -77,6 +78,7 @@ export function startSection(
       name: sectionName,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
+      params: undefined,
       closures: new Set(),
       bindings: new Set(),
       content: getContentInfo(path),
@@ -110,7 +112,7 @@ export function getOrCreateSection(path: t.NodePath<any>) {
 export function getSectionForBody(
   body: t.NodePath<t.MarkoTagBody | t.Program>,
 ) {
-  return body.node.extra?.section as Section | undefined;
+  return body.node.extra?.section;
 }
 
 export function getSection(path: t.NodePath) {
@@ -120,10 +122,6 @@ export function getSection(path: t.NodePath) {
     currentPath = currentPath.parentPath!;
   }
 
-  _setSectionPath(
-    section,
-    currentPath as t.NodePath<t.MarkoTagBody | t.Program>,
-  );
   return section;
 }
 
@@ -139,10 +137,6 @@ export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
 
 export const [getSectionParentIsOwner, setSectionParentIsOwner] =
   createSectionState<boolean>("parentIsOwner", () => false);
-
-const [getSectionPath, _setSectionPath] =
-  createSectionState<t.NodePath<t.MarkoTagBody | t.Program>>("sectionPath");
-export { getSectionPath };
 
 const [_getScopeIdentifier] = createSectionState<t.Identifier>(
   "scopeIdentifier",
