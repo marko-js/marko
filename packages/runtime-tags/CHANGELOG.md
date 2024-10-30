@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.1.17
+
+### Patch Changes
+
+- [#2344](https://github.com/marko-js/marko/pull/2344) [`bafeac1`](https://github.com/marko-js/marko/commit/bafeac1db6acc73e5c38ade2a078485df28670b8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor attribute tag analysis and attribute translation to improve dead code removal.
+
 ## 0.1.16
 
 ### Patch Changes
