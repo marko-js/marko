@@ -7,7 +7,7 @@ import { types as t } from "@marko/compiler";
 
 import { currentProgramPath } from "../visitors/program";
 import { isStatefulReferences } from "./is-stateful";
-import type { Binding } from "./references";
+import type { Binding, ReferencedBindings } from "./references";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
@@ -25,7 +25,7 @@ export type Section = {
   depth: number;
   parent: Section | undefined;
   params: undefined | Binding;
-  closures: Set<Binding>;
+  closures: ReferencedBindings;
   bindings: Set<Binding>;
   upstreamExpression: t.NodeExtra | undefined;
   hasCleanup: boolean;
@@ -79,7 +79,7 @@ export function startSection(
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
       params: undefined,
-      closures: new Set(),
+      closures: undefined,
       bindings: new Set(),
       content: getContentInfo(path),
       upstreamExpression: undefined,
@@ -263,12 +263,29 @@ export const checkStatefulClosures = (
   section: Section,
   immediateOnly: boolean,
 ) => {
-  for (const binding of section.closures) {
-    if (
-      (!immediateOnly || section.parent === binding.section) &&
-      isStatefulReferences(binding)
-    ) {
+  const { closures } = section;
+  if (closures) {
+    if (Array.isArray(closures)) {
+      for (const binding of closures) {
+        if (isStatefulClosure(section, binding, immediateOnly)) {
+          return true;
+        }
+      }
+    } else if (isStatefulClosure(section, closures, immediateOnly)) {
       return true;
     }
   }
+
+  return false;
 };
+
+function isStatefulClosure(
+  section: Section,
+  closure: Binding,
+  immediateOnly: boolean,
+) {
+  return (
+    (!immediateOnly || section.parent === closure.section) &&
+    isStatefulReferences(closure)
+  );
+}

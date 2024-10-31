@@ -330,7 +330,7 @@ export const IfTag = {
             );
           };
           signal.hasDownstreamIntersections = () =>
-            branches.some(([, bodySection]) => bodySection?.closures.size);
+            branches.some(([, bodySection]) => bodySection?.closures);
           addValue(section, rootExtra.referencedBindings, signal, expr);
         }
       },

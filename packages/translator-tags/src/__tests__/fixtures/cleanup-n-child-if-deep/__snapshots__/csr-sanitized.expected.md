@@ -267,9 +267,9 @@ Inner mounted
 Inner destroyed
 Middle destroyed
 Outer destroyed
-Outer mounted
-Middle mounted
 Inner mounted
+Middle mounted
+Outer mounted
 </pre>
 <div>
   <div>
@@ -332,11 +332,11 @@ Inner mounted
 Inner destroyed
 Middle destroyed
 Outer destroyed
-Outer mounted
-Middle mounted
 Inner mounted
-Outer destroyed
-Middle destroyed
+Middle mounted
+Outer mounted
 Inner destroyed
+Middle destroyed
+Outer destroyed
 </pre>
 ```

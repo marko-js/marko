@@ -141,6 +141,13 @@ export function forEach<T>(data: Opt<T>, cb: (item: T) => void): void {
   }
 }
 
+export function map<T, R>(
+  data: Opt<T>,
+  cb: (item: T, index: number) => R,
+): R[] {
+  return data ? (Array.isArray(data) ? data.map(cb) : [cb(data, 0)]) : [];
+}
+
 export function findSorted<T>(
   compare: Compare<T>,
   data: T[],

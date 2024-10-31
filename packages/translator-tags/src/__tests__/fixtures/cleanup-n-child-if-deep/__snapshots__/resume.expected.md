@@ -449,9 +449,9 @@ Inner mounted
 Inner destroyed
 Middle destroyed
 Outer destroyed
-Outer mounted
-Middle mounted
 Inner mounted
+Middle mounted
+Outer mounted
     </pre>
     <!--M_*0 #pre/3-->
     <div>
@@ -544,12 +544,12 @@ Inner mounted
 Inner destroyed
 Middle destroyed
 Outer destroyed
-Outer mounted
-Middle mounted
 Inner mounted
-Outer destroyed
-Middle destroyed
+Middle mounted
+Outer mounted
 Inner destroyed
+Middle destroyed
+Outer destroyed
     </pre>
     <!--M_*0 #pre/3-->
     <!--M_|0 #text/4 1-->

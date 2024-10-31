@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
-import type { Binding } from "../../util/references";
+import { map } from "../../util/optional";
 import { callRuntime } from "../../util/runtime";
 import {
   forEachSectionReverse,
@@ -148,17 +148,12 @@ export default {
 } satisfies TemplateVisitor<t.Program>;
 
 function getSectionClosuresExpr(section: Section) {
-  if (section.closures.size) {
+  if (section.closures) {
     return t.arrayExpression(
-      Array.from(section.closures)
-        .sort(sortClosures)
-        .map((binding) => getSignal(section, binding).identifier),
+      map(
+        section.closures,
+        (closure) => getSignal(section, closure).identifier,
+      ),
     );
   }
-}
-
-function sortClosures(a: Binding, b: Binding) {
-  // In order to ensure correct topological ordering, closures must be called last
-  // with closures higher in the tree called before calling closures lower in the tree
-  return b.section.id - a.section.id || b.id - a.id;
 }

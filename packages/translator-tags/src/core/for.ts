@@ -391,7 +391,7 @@ export default {
 
         const params = node.body.params;
         signal.hasDownstreamIntersections = () => {
-          if (bodySection.closures.size) {
+          if (bodySection.closures) {
             return true;
           }
 

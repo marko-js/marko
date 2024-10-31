@@ -10,7 +10,7 @@ import {
 } from "../visitors/program";
 import { isStatefulReferences } from "./is-stateful";
 import { isOutputHTML } from "./marko-config";
-import { type Opt, push } from "./optional";
+import { forEach, type Opt, push } from "./optional";
 import {
   type Binding,
   BindingType,
@@ -898,7 +898,7 @@ export function writeHTMLResumeStatements(
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
 
-  for (const closure of section.closures) {
+  forEach(section.closures, (closure) => {
     if (isStatefulReferences(closure)) {
       let currentSection = section;
       while (currentSection !== closure.section) {
@@ -932,7 +932,7 @@ export function writeHTMLResumeStatements(
         );
       }
     }
-  }
+  });
 
   for (let i = allSignals.length; i--; ) {
     if (allSignals[i].effect.length) {

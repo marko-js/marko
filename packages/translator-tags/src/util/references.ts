@@ -576,7 +576,7 @@ export function finalizeReferences() {
 
   // mark bindings that need to be serialized due to being closed over by stateful sections
   forEachSection((section) => {
-    for (const binding of section.closures) {
+    forEach(section.closures, (binding) => {
       if (!binding.serialize) {
         let serialize = false;
         const sourceSection = binding.section;
@@ -593,7 +593,7 @@ export function finalizeReferences() {
         }
         binding.serialize = serialize;
       }
-    }
+    });
   });
 
   forEachSection(({ id, bindings }) => {
@@ -726,7 +726,7 @@ function addReference(
   binding: Binding,
 ) {
   if (section !== binding.section) {
-    section.closures.add(binding);
+    section.closures = bindingUtil.add(section.closures, binding);
   }
   const newIntersection = bindingUtil.add(referencedBindings, binding);
   return findReferences(section, newIntersection);

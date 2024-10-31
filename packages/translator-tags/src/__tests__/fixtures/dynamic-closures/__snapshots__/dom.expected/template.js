@@ -8,7 +8,7 @@ const _b$ifBody = /* @__PURE__ */_dynamicClosure("b", (_scope, b) => _data(_scop
 const _setup$ifBody = _scope => {
   _data(_scope["#text/0"], a);
 };
-const _ifBody2 = /* @__PURE__ */_createRenderer("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$ifBody, () => [_c$ifBody, _b$ifBody]);
+const _ifBody2 = /* @__PURE__ */_createRenderer("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$ifBody, () => [_b$ifBody, _c$ifBody]);
 const _if$ifBody = /* @__PURE__ */_conditional("#text/0");
 const _setup$ifBody2 = _scope => {
   _if$ifBody(_scope, Math.random() ? _ifBody2 : null);
@@ -19,7 +19,7 @@ const _b$customTagBody = /* @__PURE__ */_dynamicClosure("b", (_scope, b) => _dat
 const _setup$customTagBody = _scope => {
   _data(_scope["#text/0"], a);
 };
-const _customTagBody = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_renderer", /* @__PURE__ */_createRendererWithOwner("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$customTagBody, () => [_c$customTagBody, _b$customTagBody]));
+const _customTagBody = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_renderer", /* @__PURE__ */_createRendererWithOwner("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$customTagBody, () => [_b$customTagBody, _c$customTagBody]));
 const _if = /* @__PURE__ */_conditional("#text/2");
 const _c = /* @__PURE__ */_value("c", null, () => _dynamicSubscribers("c"));
 const _b = /* @__PURE__ */_value("b", null, () => _dynamicSubscribers("b"));
