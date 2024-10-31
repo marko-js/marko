@@ -7,6 +7,7 @@ import { types as t } from "@marko/compiler";
 
 import { currentProgramPath } from "../visitors/program";
 import { isStatefulReferences } from "./is-stateful";
+import { find } from "./optional";
 import type { Binding, ReferencedBindings } from "./references";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
@@ -263,29 +264,10 @@ export const checkStatefulClosures = (
   section: Section,
   immediateOnly: boolean,
 ) => {
-  const { closures } = section;
-  if (closures) {
-    if (Array.isArray(closures)) {
-      for (const binding of closures) {
-        if (isStatefulClosure(section, binding, immediateOnly)) {
-          return true;
-        }
-      }
-    } else if (isStatefulClosure(section, closures, immediateOnly)) {
-      return true;
-    }
-  }
-
-  return false;
-};
-
-function isStatefulClosure(
-  section: Section,
-  closure: Binding,
-  immediateOnly: boolean,
-) {
-  return (
-    (!immediateOnly || section.parent === closure.section) &&
-    isStatefulReferences(closure)
+  return !!find(
+    section.closures,
+    (closure) =>
+      (!immediateOnly || section.parent === closure.section) &&
+      isStatefulReferences(closure),
   );
-}
+};
