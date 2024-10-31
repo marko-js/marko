@@ -34,7 +34,6 @@ import {
 } from "../util/sections";
 import {
   addValue,
-  getClosures,
   getSerializedScopeProperties,
   getSignal,
   setForceResumeScope,
@@ -392,7 +391,7 @@ export default {
 
         const params = node.body.params;
         signal.hasDownstreamIntersections = () => {
-          if (getClosures(bodySection).length > 0) {
+          if (bodySection.closures.size) {
             return true;
           }
 
