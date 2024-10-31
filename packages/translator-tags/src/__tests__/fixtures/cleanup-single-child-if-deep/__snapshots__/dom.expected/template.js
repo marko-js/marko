@@ -18,7 +18,7 @@ const _setup$ifBody2 = _scope => {
   _child(_scope["#childScope/0"]);
   _child_input_name(_scope["#childScope/0"], "Middle");
 };
-const _ifBody2 = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_2_renderer", /* @__PURE__ */_createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$ifBody2, () => [_showInner$ifBody, _write$ifBody2]));
+const _ifBody2 = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_2_renderer", /* @__PURE__ */_createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$ifBody2, () => [_write$ifBody2, _showInner$ifBody]));
 const _if$ifBody2 = /* @__PURE__ */_conditional("#text/1");
 const _write$ifBody = /* @__PURE__ */_closure("write", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), void 0, () => _inChild("#childScope/0", _child_input_write));
 const _showMiddle$ifBody = /* @__PURE__ */_closure("showMiddle", (_scope, showMiddle) => _if$ifBody2(_scope, showMiddle ? _ifBody2 : null), void 0, () => _if$ifBody2);
@@ -26,7 +26,7 @@ const _setup$ifBody = _scope => {
   _child(_scope["#childScope/0"]);
   _child_input_name(_scope["#childScope/0"], "Outer");
 };
-const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_1_renderer", /* @__PURE__ */_createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$ifBody, () => [_showMiddle$ifBody, _write$ifBody]));
+const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_1_renderer", /* @__PURE__ */_createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$ifBody, () => [_write$ifBody, _showMiddle$ifBody]));
 const _if = /* @__PURE__ */_conditional("#text/4");
 const _write2 = /* @__PURE__ */_value("write", null, () => _intersections([_inConditionalScope(_write$ifBody, "#text/4"), _dynamicSubscribers("write")]));
 const _onClick = _scope => {

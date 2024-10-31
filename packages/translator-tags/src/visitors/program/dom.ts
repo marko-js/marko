@@ -153,7 +153,7 @@ function getSectionClosuresExpr(section: Section) {
       map(
         section.closures,
         (closure) => getSignal(section, closure).identifier,
-      ),
+      ).reverse(),
     );
   }
 }
