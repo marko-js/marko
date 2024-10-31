@@ -3,7 +3,7 @@ import { types as t } from "@marko/compiler";
 import { returnId } from "../../core/return";
 import isStatic from "../../util/is-static";
 import { callRuntime } from "../../util/runtime";
-import { getSection } from "../../util/sections";
+import { getSectionForBody } from "../../util/sections";
 import { renameBindings, writeHTMLResumeStatements } from "../../util/signals";
 import type { TemplateVisitor } from "../../util/visitors";
 import { flushInto } from "../../util/writer";
@@ -12,7 +12,7 @@ import { htmlRendererIdentifier } from ".";
 export default {
   translate: {
     exit(program) {
-      const section = getSection(program);
+      const section = getSectionForBody(program)!;
       const tagVarIdentifier = program.scope.generateUidIdentifier("tagVar");
 
       flushInto(program);

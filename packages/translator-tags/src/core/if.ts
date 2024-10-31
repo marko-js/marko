@@ -31,7 +31,6 @@ import {
 } from "../util/sections";
 import {
   addValue,
-  getClosures,
   getResumeRegisterId,
   getSerializedScopeProperties,
   getSignal,
@@ -331,10 +330,7 @@ export const IfTag = {
             );
           };
           signal.hasDownstreamIntersections = () =>
-            branches.some(
-              ([, bodySection]) =>
-                bodySection && getClosures(bodySection).length > 0,
-            );
+            branches.some(([, bodySection]) => bodySection?.closures);
           addValue(section, rootExtra.referencedBindings, signal, expr);
         }
       },

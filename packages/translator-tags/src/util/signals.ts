@@ -10,7 +10,7 @@ import {
 } from "../visitors/program";
 import { isStatefulReferences } from "./is-stateful";
 import { isOutputHTML } from "./marko-config";
-import { type Opt, push } from "./optional";
+import { forEach, type Opt, push } from "./optional";
 import {
   type Binding,
   BindingType,
@@ -22,7 +22,6 @@ import { callRuntime } from "./runtime";
 import { createScopeReadPattern, getScopeExpression } from "./scope-read";
 import {
   getScopeIdIdentifier,
-  getSection,
   getSectionForBody,
   type Section,
 } from "./sections";
@@ -76,24 +75,8 @@ export function setSubscriberBuilder(
   tag: t.NodePath<t.MarkoTag>,
   builder: subscribeBuilder,
 ) {
-  _setSubscribeBuilder(getSection(tag.get("body")), builder);
+  _setSubscribeBuilder(getSectionForBody(tag.get("body"))!, builder);
 }
-
-export const [getClosures] = createSectionState<t.ArrayExpression["elements"]>(
-  "closures",
-  () => [],
-);
-export const addClosure = (
-  fromSection: Section,
-  toSection: Section,
-  closure: t.Expression,
-) => {
-  let currentSection: Section | undefined = fromSection;
-  while (currentSection !== undefined && currentSection !== toSection) {
-    getClosures(currentSection).push(closure);
-    currentSection = currentSection.parent;
-  }
-};
 
 const [forceResumeScope, _setForceResumeScope] = createSectionState<
   undefined | true
@@ -193,16 +176,10 @@ export function getSignal(
         );
       };
     } else if (referencedBindings.section !== section) {
-      const provider = getSignal(
-        referencedBindings.section,
-        referencedBindings,
-      );
-      addClosure(
+      getSignal(referencedBindings.section, referencedBindings).closures.set(
         section,
-        section.parent! /*binding.section*/,
-        signal.identifier,
+        signal,
       );
-      provider.closures.set(section, signal);
       signal.build = () => {
         const builder = getSubscribeBuilder(section);
         const ownerScope = getScopeExpression(
@@ -921,7 +898,7 @@ export function writeHTMLResumeStatements(
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
 
-  for (const closure of section.closures) {
+  forEach(section.closures, (closure) => {
     if (isStatefulReferences(closure)) {
       let currentSection = section;
       while (currentSection !== closure.section) {
@@ -955,7 +932,7 @@ export function writeHTMLResumeStatements(
         );
       }
     }
-  }
+  });
 
   for (let i = allSignals.length; i--; ) {
     if (allSignals[i].effect.length) {
@@ -976,7 +953,7 @@ export function writeHTMLResumeStatements(
   const accessors = new Set<string | number>();
   const additionalProperties = getSerializedScopeProperties(section);
   const serializedProperties: t.ObjectProperty[] = [];
-  for (const binding of section.bindings) {
+  forEach(section.bindings, (binding) => {
     if (binding.serialize && binding.type !== BindingType.dom) {
       const accessor = getScopeAccessorLiteral(binding);
       serializedProperties.push(
@@ -984,7 +961,7 @@ export function writeHTMLResumeStatements(
       );
       accessors.add(accessor.value);
     }
-  }
+  });
   if (tagVarIdentifier && returnId(section) !== undefined) {
     serializedProperties.push(
       t.objectProperty(

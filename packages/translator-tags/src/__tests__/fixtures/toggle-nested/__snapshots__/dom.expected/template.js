@@ -10,7 +10,7 @@ const _if$ifBody2 = /* @__PURE__ */_conditional("#text/1");
 const _if$ifBody = /* @__PURE__ */_conditional("#text/0");
 const _value2$ifBody2 = /* @__PURE__ */_closure("value2", (_scope, value2) => _if$ifBody2(_scope, value2 ? _ifBody3 : null), void 0, () => _if$ifBody2);
 const _value1$ifBody2 = /* @__PURE__ */_closure("value1", (_scope, value1) => _if$ifBody(_scope, value1 ? _ifBody2 : null), void 0, () => _if$ifBody);
-const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<!><!><!><!>", /* replace, over(1), replace */"D%b%D", void 0, () => [_value1$ifBody2, _value2$ifBody2]));
+const _ifBody = _register("packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<!><!><!><!>", /* replace, over(1), replace */"D%b%D", void 0, () => [_value2$ifBody2, _value1$ifBody2]));
 const _if = /* @__PURE__ */_conditional("#text/0");
 export const _value2_ = /* @__PURE__ */_value("value2", null, () => _intersections([_inConditionalScope(_value2$ifBody2, "#text/0"), _dynamicSubscribers("value2")]));
 export const _value1_ = /* @__PURE__ */_value("value1", null, () => _intersections([_inConditionalScope(_value1$ifBody2, "#text/0"), _dynamicSubscribers("value1")]));

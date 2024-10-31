@@ -7,7 +7,8 @@ import { types as t } from "@marko/compiler";
 
 import { currentProgramPath } from "../visitors/program";
 import { isStatefulReferences } from "./is-stateful";
-import type { Binding } from "./references";
+import { find } from "./optional";
+import type { Binding, ReferencedBindings } from "./references";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
@@ -19,14 +20,14 @@ export enum ContentType {
   Text,
 }
 
-export type Section = {
+export interface Section {
   id: number;
   name: string;
   depth: number;
   parent: Section | undefined;
   params: undefined | Binding;
-  closures: Set<Binding>;
-  bindings: Set<Binding>;
+  closures: ReferencedBindings;
+  bindings: ReferencedBindings;
   upstreamExpression: t.NodeExtra | undefined;
   hasCleanup: boolean;
   content: null | {
@@ -34,7 +35,7 @@ export type Section = {
     endType: ContentType;
     singleChild: boolean;
   };
-};
+}
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -79,8 +80,8 @@ export function startSection(
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
       params: undefined,
-      closures: new Set(),
-      bindings: new Set(),
+      closures: undefined,
+      bindings: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
       hasCleanup: false,
@@ -263,12 +264,10 @@ export const checkStatefulClosures = (
   section: Section,
   immediateOnly: boolean,
 ) => {
-  for (const binding of section.closures) {
-    if (
-      (!immediateOnly || section.parent === binding.section) &&
-      isStatefulReferences(binding)
-    ) {
-      return true;
-    }
-  }
+  return !!find(
+    section.closures,
+    (closure) =>
+      (!immediateOnly || section.parent === closure.section) &&
+      isStatefulReferences(closure),
+  );
 };
