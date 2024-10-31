@@ -10,28 +10,13 @@ export function styleAttr(val: unknown) {
   return stringAttr("style", styleValue(val));
 }
 
-// TODO: use symbols
 const kSelectedValue = Symbol("selectedValue");
 export function withSelectedValue(value: unknown, renderBody: () => void) {
   withContext(kSelectedValue, value, renderBody);
 }
 
-export function valueAttr_select(
-  value: unknown,
-  valueChange: unknown,
-  _multiple: boolean,
-  scopeId: number,
-  elementAccessor: Accessor,
-) {
-  if (valueChange) {
-    const scope = ensureScopeWithId(scopeId!);
-    scope[elementAccessor + AccessorChar.ControlledValue] = value;
-    scope[elementAccessor + AccessorChar.ControlledHandler] = valueChange;
-  }
-  return "";
-}
-
-export function valueAttr_option(value: unknown) {
+// TODO: use this in the translator
+export function optionValueAttr(value: unknown) {
   const { [kSelectedValue]: selectedValue } =
     getChunk()?.context || ({} as any);
 
@@ -46,11 +31,25 @@ export function valueAttr_option(value: unknown) {
   );
 }
 
-export function valueAttr_input(
-  value: unknown,
-  valueChange: unknown,
+export function controllable_select_value(
   scopeId: number,
   elementAccessor: Accessor,
+  value: unknown,
+  valueChange: unknown,
+) {
+  if (valueChange) {
+    const scope = ensureScopeWithId(scopeId!);
+    scope[elementAccessor + AccessorChar.ControlledValue] = value;
+    scope[elementAccessor + AccessorChar.ControlledHandler] = valueChange;
+  }
+  return "";
+}
+
+export function controllable_input_value(
+  scopeId: number,
+  elementAccessor: Accessor,
+  value: unknown,
+  valueChange: unknown,
 ) {
   if (valueChange) {
     const scope = ensureScopeWithId(scopeId!);
@@ -60,11 +59,11 @@ export function valueAttr_input(
   return attr("value", value);
 }
 
-export function checkedAttr(
-  checked: unknown,
-  checkedChange: unknown,
+export function controllable_input_checked(
   scopeId: number,
   elementAccessor: Accessor,
+  checked: unknown,
+  checkedChange: unknown,
 ) {
   if (checkedChange) {
     const scope = ensureScopeWithId(scopeId!);
@@ -74,12 +73,12 @@ export function checkedAttr(
   return attr("checked", checked);
 }
 
-export function checkedValueAttr(
+export function controllable_input_checkedValue(
+  scopeId: number,
+  elementAccessor: Accessor,
   checkedValue: unknown,
   checkedValueChange: unknown,
   value: unknown,
-  scopeId: number,
-  elementAccessor: Accessor,
 ) {
   if (checkedValueChange) {
     const scope = ensureScopeWithId(scopeId!);
@@ -87,15 +86,15 @@ export function checkedValueAttr(
     scope[elementAccessor + AccessorChar.ControlledHandler] =
       checkedValueChange;
   }
-  return checkedValue === value ? ` checked` : "";
+  return (checkedValue === value ? ` checked` : "") + attr("value", value);
 }
 
-export function checkedValuesAttr(
+export function controllable_input_checkedValues(
+  scopeId: number,
+  elementAccessor: Accessor,
   checkedValues: unknown[],
   checkedValuesChange: unknown,
   value: unknown,
-  scopeId: number,
-  elementAccessor: Accessor,
 ) {
   if (checkedValuesChange) {
     const scope = ensureScopeWithId(scopeId!);
@@ -103,14 +102,16 @@ export function checkedValuesAttr(
     scope[elementAccessor + AccessorChar.ControlledHandler] =
       checkedValuesChange;
   }
-  return checkedValues?.includes(value) ? ` checked` : "";
+  return (
+    (checkedValues?.includes(value) ? ` checked` : "") + attr("value", value)
+  );
 }
 
-export function openAttr(
-  open: unknown,
-  openChange: unknown,
+export function controllable_dialog_open(
   scopeId: number,
   elementAccessor: Accessor,
+  open: unknown,
+  openChange: unknown,
 ) {
   if (openChange) {
     const scope = ensureScopeWithId(scopeId!);
@@ -119,6 +120,8 @@ export function openAttr(
   }
   return attr("open", open);
 }
+
+export { controllable_dialog_open as controllable_details_open };
 
 export function attr(name: string, val: unknown) {
   return isVoid(val) ? "" : nonVoidAttr(name, val);
@@ -147,46 +150,50 @@ export function attrs(
       case "value":
         // TODO: need to somehow know what type of element this is
         if (tagName === "input") {
-          result += valueAttr_input(
-            val,
-            data.valueChange,
+          result += controllable_input_value(
             scopeId,
             elementAccessor,
+            val,
+            data.valueChange,
           );
         } else if (tagName === "select") {
-          result += valueAttr_select(
-            val,
-            data.valueChange,
-            data.multiple as boolean,
+          result += controllable_select_value(
             scopeId,
             elementAccessor,
+            val,
+            data.valueChange,
           );
         } else if (tagName === "option") {
-          result += valueAttr_option(val);
+          result += optionValueAttr(val);
         } else {
           result += attr("value", val);
         }
         break;
       case "checkedValue":
-        result += checkedValueAttr(
+        result += controllable_input_checkedValue(
+          scopeId,
+          elementAccessor,
           val,
           data.checkedValue,
           data.value,
-          scopeId,
-          elementAccessor,
         );
         break;
       case "checkedValues":
-        result += checkedValuesAttr(
+        result += controllable_input_checkedValues(
+          scopeId,
+          elementAccessor,
           val as unknown[],
           data.checkedValues,
           data.value,
-          scopeId,
-          elementAccessor,
         );
         break;
       case "open":
-        result += openAttr(val, data.openChange, scopeId, elementAccessor);
+        result += controllable_dialog_open(
+          scopeId,
+          elementAccessor,
+          val,
+          data.openChange,
+        );
         break;
       default:
         if (!isVoid(val)) {

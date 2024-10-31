@@ -80,34 +80,71 @@ function assertExclusiveControllableGroups(
       );
   }
 }
-function getRelatedControllableAttributes(
+
+type RelatedControllable = ReturnType<typeof getRelatedControllable>;
+function getRelatedControllable(
   tagName: string,
-  attrs: Record<string, t.MarkoAttribute>,
+  attrs: Record<string, t.MarkoAttribute | undefined>,
 ) {
   switch (tagName) {
     case "dialog":
+      if (attrs.open || attrs.openChange) {
+        return {
+          special: false,
+          helper: "controllable_dialog_open",
+          attrs: [attrs.open, attrs.openChange],
+        } as const;
+      }
+      break;
     case "details":
       if (attrs.open || attrs.openChange) {
-        return [attrs.open, attrs.openChange];
+        return {
+          special: false,
+          helper: "controllable_details_open",
+          attrs: [attrs.open, attrs.openChange],
+        } as const;
       }
       break;
     case "input":
       if (attrs.checked || attrs.checkedChange) {
-        return [attrs.checked, attrs.checkedChange];
-      }
-
-      if (attrs.checkedValues || attrs.checkedValuesChange) {
-        return [attrs.checkedValues, attrs.checkedValuesChange, attrs.value];
+        return {
+          special: false,
+          helper: "controllable_input_checked",
+          attrs: [attrs.checked, attrs.checkedChange],
+        } as const;
       }
 
       if (attrs.checkedValue || attrs.checkedValueChange) {
-        return [attrs.checkedValue, attrs.checkedValueChange, attrs.value];
+        return {
+          special: true,
+          helper: "controllable_input_checkedValue",
+          attrs: [attrs.checkedValue, attrs.checkedValueChange, attrs.value],
+        } as const;
       }
-    // eslint-disable-next-line no-fallthrough
-    case "select":
-    case "textarea":
+
+      if (attrs.checkedValues || attrs.checkedValuesChange) {
+        return {
+          special: true,
+          helper: "controllable_input_checkedValues",
+          attrs: [attrs.checkedValues, attrs.checkedValuesChange, attrs.value],
+        } as const;
+      }
+
       if (attrs.value || attrs.valueChange) {
-        return [attrs.value, attrs.valueChange];
+        return {
+          special: false,
+          helper: "controllable_input_value",
+          attrs: [attrs.value, attrs.valueChange],
+        } as const;
+      }
+      break;
+    case "select":
+      if (attrs.value || attrs.valueChange) {
+        return {
+          special: true,
+          helper: "controllable_select_value",
+          attrs: [attrs.value, attrs.valueChange],
+        } as const;
       }
       break;
   }
@@ -136,7 +173,7 @@ export default {
 
       const seen: Record<string, t.MarkoAttribute> = {};
       const { attributes } = tag.node;
-      let groupedControllableAttrs: t.MarkoAttribute[] | undefined;
+      let relatedControllable: RelatedControllable;
       let spreadReferenceNodes: t.Node[] | undefined;
       for (let i = attributes.length; i--; ) {
         const attr = attributes[i];
@@ -165,40 +202,31 @@ export default {
           spreadReferenceNodes.push(attr.value);
         } else if (t.isMarkoSpreadAttribute(attr)) {
           spreadReferenceNodes = [attr.value];
-          groupedControllableAttrs = getRelatedControllableAttributes(
-            tagName,
-            seen,
-          );
+          relatedControllable = getRelatedControllable(tagName, seen);
         }
       }
 
       assertExclusiveControllableGroups(tag, seen);
 
       if (spreadReferenceNodes) {
-        if (
-          groupedControllableAttrs &&
-          !groupedControllableAttrs.every(Boolean)
-        ) {
-          for (const attr of groupedControllableAttrs) {
+        if (relatedControllable && !relatedControllable.attrs.every(Boolean)) {
+          for (const attr of relatedControllable.attrs) {
             if (attr) {
               spreadReferenceNodes.push(attr.value);
             }
           }
-          groupedControllableAttrs = undefined;
+          relatedControllable = undefined;
         }
         mergeReferences(section, tag.node, spreadReferenceNodes);
       } else {
-        groupedControllableAttrs = getRelatedControllableAttributes(
-          tagName,
-          seen,
-        );
+        relatedControllable = getRelatedControllable(tagName, seen);
       }
 
-      if (groupedControllableAttrs) {
+      if (relatedControllable) {
         mergeReferences(
           section,
-          groupedControllableAttrs.find(Boolean)!,
-          groupedControllableAttrs.map((it) => it?.value),
+          relatedControllable.attrs.find(Boolean)!,
+          relatedControllable.attrs.map((it) => it?.value),
         );
       }
 
@@ -324,61 +352,46 @@ export default {
 
       const {
         staticAttrs,
-        staticControllableAttrs,
+        staticControllable,
         spreadExpression,
         skipExpression,
       } = getUsedAttrs(tagName, tag.node);
 
-      if (staticControllableAttrs) {
-        const [valueAttr, valueChangeAttr] = staticControllableAttrs;
-        const relevantNode = valueAttr || valueChangeAttr;
-        // TODO: there's probaby a better way to get the name.
-        const name =
-          valueAttr?.name ||
-          valueChangeAttr?.name.slice(0, -6 /* "Change".length */);
-        // TODO: rename helpers to always include tagName?
-        const helper =
-          name === "value"
-            ? (`valueAttr_${tagName}` as const)
-            : (`${name}Attr` as const);
-        const values = staticControllableAttrs.map((attr) => attr.value);
-        const referencedBindings = relevantNode.value.extra?.referencedBindings;
+      if (staticControllable) {
+        const { helper, attrs } = staticControllable;
+        const changeAttr = attrs[1];
+        const firstAttr = attrs.find(Boolean)!;
+        const referencedBindings = firstAttr.value.extra?.referencedBindings;
+
+        if (changeAttr) {
+          tag
+            .get("attributes")
+            .find((it) => it.node === changeAttr)!
+            .traverse(HoistVisitors);
+        }
+
+        const values = attrs.map((attr) => attr?.value);
+
         if (isHTML) {
-          write`${callRuntime(helper, ...values)}`;
+          write`${callRuntime(helper, getScopeIdIdentifier(section), visitAccessor!, ...values)}`;
+          addHTMLEffectCall(section, undefined);
         } else {
           addStatement(
             "render",
             section,
             referencedBindings,
-            t.expressionStatement(callRuntime(helper, ...values)),
+            t.expressionStatement(
+              callRuntime(helper, scopeIdentifier, visitAccessor!, ...values),
+            ),
           );
-        }
-        if (valueChangeAttr) {
-          // TODO: walk the change handler so it will be hoisted/registered/referenced (why is this necessary?)
-          tag
-            .get("attributes")
-            .find((it) => it.node === valueChangeAttr)!
-            .traverse(HoistVisitors);
-
-          // TODO: tag-specific change handlers.
-          const effectHelper =
-            name === "value" || name === "open"
-              ? `${name}ChangeEffect_${tagName}`
-              : (`${name}ChangeEffect` as const);
-          if (isHTML) {
-            addHTMLEffectCall(section, referencedBindings);
-          } else {
-            addStatement(
-              "effect",
-              section,
-              referencedBindings,
-              t.expressionStatement(
-                callRuntime(effectHelper, scopeIdentifier, visitAccessor!),
-              ),
-              // TODO: maybe can pass undefined, the actual runtime code doesn't use any references
-              relevantNode.value,
-            );
-          }
+          addStatement(
+            "effect",
+            section,
+            undefined,
+            t.expressionStatement(
+              callRuntime(`${helper}_setup`, scopeIdentifier, visitAccessor!),
+            ),
+          );
         }
       }
 
@@ -579,29 +592,23 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
   let skipExpression: undefined | t.Expression;
   let spreadProps: undefined | t.ObjectExpression["properties"];
   let skipProps: undefined | t.ObjectExpression["properties"];
-  let staticControllableAttrs: t.MarkoAttribute[] | undefined;
+  let staticControllable: RelatedControllable;
   for (let i = attributes.length; i--; ) {
     const attr = attributes[i];
     const { value } = attr;
     if (t.isMarkoSpreadAttribute(attr)) {
       if (!spreadProps) {
         spreadProps = [];
-        staticControllableAttrs = getRelatedControllableAttributes(
-          tagName,
-          seen,
-        );
-        if (
-          staticControllableAttrs &&
-          !staticControllableAttrs.every(Boolean)
-        ) {
-          for (const attr of staticControllableAttrs) {
+        staticControllable = getRelatedControllable(tagName, seen);
+        if (staticControllable && !staticControllable.attrs.every(Boolean)) {
+          for (const attr of staticControllable.attrs) {
             if (attr) {
               spreadProps.push(attrToObjectProperty(attr));
               maybeStaticAttrs.delete(attr);
             }
           }
 
-          staticControllableAttrs = undefined;
+          staticControllable = undefined;
         }
       }
       spreadProps.push(t.spreadElement(value));
@@ -616,11 +623,17 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
   }
 
   if (!spreadProps) {
-    staticControllableAttrs = getRelatedControllableAttributes(tagName, seen);
+    staticControllable = getRelatedControllable(tagName, seen);
+
+    if (staticControllable?.special === false && !staticControllable.attrs[1]) {
+      // If there's no change handler and this controllable is not a special attribute then we can just write it
+      // as a normal attribute.
+      staticControllable = undefined;
+    }
   }
 
-  if (staticControllableAttrs) {
-    for (const attr of staticControllableAttrs) {
+  if (staticControllable) {
+    for (const attr of staticControllable.attrs) {
       if (attr) {
         maybeStaticAttrs.delete(attr);
       }
@@ -632,11 +645,13 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
   if (spreadProps) {
     spreadProps.reverse();
 
-    if (staticControllableAttrs) {
-      for (const { name } of staticControllableAttrs) {
-        (skipProps ||= []).push(
-          t.objectProperty(toPropertyName(name), t.numericLiteral(1)),
-        );
+    if (staticControllable) {
+      for (const attr of staticControllable.attrs) {
+        if (attr) {
+          (skipProps ||= []).push(
+            t.objectProperty(toPropertyName(attr.name), t.numericLiteral(1)),
+          );
+        }
       }
     }
 
@@ -655,7 +670,7 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
 
   return {
     staticAttrs,
-    staticControllableAttrs,
+    staticControllable,
     spreadExpression,
     skipExpression,
   };
@@ -666,7 +681,7 @@ function isEventHandler(propName: string) {
 }
 
 function isChangeHandler(propName: string) {
-  return /^(value|checked(Values?)?|open)Change/.test(propName);
+  return /^(?:value|checked(?:Values?)?|open)Change/.test(propName);
 }
 
 function getEventHandlerName(propName: string) {

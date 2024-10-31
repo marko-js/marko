@@ -80,7 +80,9 @@ export function dynamicTagArgs(
 
   if (typeof tag === "string") {
     nextScopeId();
-    write(`<${tag}${attrs(args[0] as Record<string, unknown>)}>`);
+    write(
+      `<${tag}${attrs(args[0] as Record<string, unknown>, MARKO_DEBUG ? `#${tag}/0` : 0, scopeId, tag)}>`,
+    );
 
     if (!voidElementsReg.test(tag)) {
       write(`</${tag}>`);

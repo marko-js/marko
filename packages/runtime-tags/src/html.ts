@@ -4,11 +4,14 @@ export { normalizeDynamicRenderer } from "./common/helpers";
 export {
   attr,
   attrs,
-  checkedAttr,
-  checkedValueAttr,
-  checkedValuesAttr,
   classAttr,
-  openAttr,
+  controllable_details_open,
+  controllable_dialog_open,
+  controllable_input_checked,
+  controllable_input_checkedValue,
+  controllable_input_checkedValues,
+  controllable_input_value,
+  controllable_select_value,
   partialAttrs,
   styleAttr,
 } from "./html/attrs";

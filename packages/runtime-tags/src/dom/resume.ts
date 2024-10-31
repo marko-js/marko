@@ -165,12 +165,12 @@ class Render implements RenderData {
                     prevScope,
                   ) as Scope;
                 }
-              }
 
-              const cleanupOwnerId = cleanupOwners.get(scopeId);
-              if (cleanupOwnerId) {
-                scope.___cleanupOwner = scopes[cleanupOwnerId];
-                onDestroy(scope);
+                const cleanupOwnerId = cleanupOwners.get(scopeId);
+                if (cleanupOwnerId) {
+                  scope.___cleanupOwner = scopes[cleanupOwnerId];
+                  onDestroy(scope);
+                }
               }
             }
           } else if (i === len || typeof resumes[i] !== "string") {

@@ -42,6 +42,7 @@ export const resolveCursorPosition = (
   inputType: InputType = "",
 ) => {
   if (
+    // TODO should we just do `/B/.test(inputType)
     /delete.*Backwards/.test(inputType) ||
     initialPosition !== initialValue.length
   ) {

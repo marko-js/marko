@@ -119,14 +119,14 @@ function attrsInternal(
         break;
       case "value":
         if (element.tagName === "INPUT") {
-          valueAttr_input(
+          controllable_input_value(
             scope,
             elementAccessor,
             value,
             nextAttrs.valueChange as any,
           );
         } else if (element.tagName === "SELECT") {
-          valueAttr_select(
+          controllable_select_value(
             scope,
             elementAccessor,
             value,
@@ -138,7 +138,7 @@ function attrsInternal(
         }
         break;
       case "checked":
-        checkedAttr(
+        controllable_input_checked(
           scope,
           elementAccessor,
           value as boolean,
@@ -146,7 +146,7 @@ function attrsInternal(
         );
         break;
       case "checkedValue":
-        checkedValueAttr(
+        controllable_input_checkedValue(
           scope,
           elementAccessor,
           value,
@@ -155,7 +155,7 @@ function attrsInternal(
         );
         break;
       case "checkedValues":
-        checkedValuesAttr(
+        controllable_input_checkedValues(
           scope,
           elementAccessor,
           value as unknown[],
@@ -164,7 +164,7 @@ function attrsInternal(
         );
         break;
       case "open":
-        openAttr(
+        controllable_dialog_open(
           scope,
           elementAccessor,
           value as boolean,
@@ -312,7 +312,7 @@ function setControllableState(
   }
 }
 
-function changeEffect(
+function setupControllable(
   eventName: keyof GlobalEventHandlersEventMap,
   attr: string,
   defaultAttr: string,
@@ -324,21 +324,24 @@ function changeEffect(
 ) {
   return (scope: Scope, nodeAccessor: Accessor) => {
     const el = scope[nodeAccessor] as Element;
-    const attrChange = scope[nodeAccessor + AccessorChar.ControlledHandler];
     const handler = (event?: Event) => {
-      updateWrapper(
-        el,
-        () => {
-          const clock = controlledClock.get(el);
-          runSync(() => attrChange(getValue(el)));
-          if (controlledClock.get(el) === clock) {
-            (el as any)[attr] =
-              scope[nodeAccessor + AccessorChar.ControlledValue];
-            return true;
-          }
-        },
-        event,
-      );
+      const changeHandler =
+        scope[nodeAccessor + AccessorChar.ControlledHandler];
+      if (changeHandler) {
+        updateWrapper(
+          el,
+          () => {
+            const clock = controlledClock.get(el);
+            runSync(() => changeHandler(getValue(el)));
+            if (controlledClock.get(el) === clock) {
+              (el as any)[attr] =
+                scope[nodeAccessor + AccessorChar.ControlledValue];
+              return true;
+            }
+          },
+          event,
+        );
+      }
     };
     // TODO: consider not using the delegation here which only supports one handler per event
     // which means the user can't add their own handler (or will override this one)
@@ -417,7 +420,7 @@ function changeEffectMultiple<T extends Element = Element>(
 ////////////
 
 // input[value]
-export function valueAttr_input(
+export function controllable_input_value(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
@@ -425,12 +428,11 @@ export function valueAttr_input(
 ) {
   const el = scope[nodeAccessor] as Element;
   preserveCursorPosition(el, () => {
-    setControllableAttr(scope[nodeAccessor], "value", value, valueChange);
+    setControllableAttr(el, "value", value, valueChange);
     setControllableState(scope, nodeAccessor, value, valueChange);
   });
 }
-
-export const valueChangeEffect_input = changeEffect(
+export const controllable_input_value_setup = setupControllable(
   "input",
   "value",
   "defaultValue",
@@ -439,7 +441,7 @@ export const valueChangeEffect_input = changeEffect(
 );
 
 // checked
-export function checkedAttr(
+export function controllable_input_checked(
   scope: Scope,
   nodeAccessor: Accessor,
   checked: boolean,
@@ -448,39 +450,39 @@ export function checkedAttr(
   setControllableAttr(scope[nodeAccessor], "checked", checked, checkedChange);
   setControllableState(scope, nodeAccessor, checked, checkedChange);
 }
-
-export const checkedChangeEffect = changeEffect(
+export const controllable_input_checked_setup = setupControllable(
   "change",
   "checked",
   "defaultChecked",
 );
 
 // checkedValue
-export function checkedValueAttr(
+export function controllable_input_checkedValue(
   scope: Scope,
   nodeAccessor: Accessor,
   checkedValue: unknown,
   checkedValueChange: (value: unknown) => void,
   value: unknown,
 ) {
+  const el = scope[nodeAccessor] as Element;
+  attr(el, "value", value);
   setControllableAttr(
-    scope[nodeAccessor],
+    el,
     "checked",
     checkedValue === value,
     checkedValueChange,
   );
   setControllableState(scope, nodeAccessor, checkedValue, checkedValueChange);
 }
-
-export const checkedValueChangeEffect = changeEffect(
+export const controllable_input_checkedValue_setup = setupControllable(
   "change",
   "checked",
   "defaultChecked",
-  (el) => (el as any).value,
+  (el) => (el as HTMLInputElement).value,
 );
 
 // checkedValues
-export function checkedValuesAttr(
+export function controllable_input_checkedValues(
   scope: Scope,
   nodeAccessor: Accessor,
   checkedValues: unknown[],
@@ -488,6 +490,7 @@ export function checkedValuesAttr(
   value: unknown,
 ) {
   const el = scope[nodeAccessor] as Element;
+  attr(el, "value", value);
   elsByValue.get(checkedValues)!.add(el);
   scope[nodeAccessor + AccessorChar.ControlledValue] = checkedValues;
   setControllableAttr(
@@ -498,8 +501,7 @@ export function checkedValuesAttr(
   );
   setControllableState(scope, nodeAccessor, checkedValues, checkedValuesChange);
 }
-
-export const checkedValuesChangeEffect = changeEffectMultiple(
+export const controllable_input_checkedValues_setup = changeEffectMultiple(
   "change",
   "checked",
   "defaultChecked",
@@ -515,7 +517,7 @@ export const checkedValuesChangeEffect = changeEffectMultiple(
 );
 
 // select[value]
-export function valueAttr_select(
+export function controllable_select_value(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
@@ -536,34 +538,34 @@ export function valueAttr_select(
   }
   setControllableState(scope, nodeAccessor, value, valueChange);
 }
-
-export const valueChangeEffect_select = changeEffectMultiple<HTMLSelectElement>(
-  "change",
-  "selected",
-  "defaultSelected",
-  (selectEl) => selectEl.options,
-  (selectEl, optionEls, previousValue) => {
-    if (selectEl.multiple) {
-      const next = new Set(previousValue);
-      for (const optionEl of optionEls as HTMLOptionElement[]) {
-        if (optionEl.selected) next.add(optionEl.value);
-        else next.delete(optionEl.value);
+export const controllable_select_value_setup =
+  changeEffectMultiple<HTMLSelectElement>(
+    "change",
+    "selected",
+    "defaultSelected",
+    (selectEl) => selectEl.options,
+    (selectEl, optionEls, previousValue) => {
+      if (selectEl.multiple) {
+        const next = new Set(previousValue);
+        for (const optionEl of optionEls as HTMLOptionElement[]) {
+          if (optionEl.selected) next.add(optionEl.value);
+          else next.delete(optionEl.value);
+        }
+        return Array.from(next);
+      } else {
+        return selectEl.value;
       }
-      return Array.from(next);
-    } else {
-      return selectEl.value;
-    }
-  },
-  (selectEl, optionEl, currentValue) =>
-    selectEl.multiple
-      ? (currentValue as unknown[]).includes(
-          (optionEl as HTMLOptionElement).value,
-        )
-      : currentValue === (optionEl as HTMLOptionElement).value,
-);
+    },
+    (selectEl, optionEl, currentValue) =>
+      selectEl.multiple
+        ? (currentValue as unknown[]).includes(
+            (optionEl as HTMLOptionElement).value,
+          )
+        : currentValue === (optionEl as HTMLOptionElement).value,
+  );
 
 // open
-export function openAttr(
+export function controllable_dialog_open(
   scope: Scope,
   nodeAccessor: Accessor,
   open: boolean,
@@ -572,14 +574,14 @@ export function openAttr(
   setControllableAttr(scope[nodeAccessor], "open", open, openChange);
   setControllableState(scope, nodeAccessor, open, openChange);
 }
-
-export const openChangeEffect_dialog = changeEffect(
+export const controllable_dialog_open_setup = setupControllable(
   "close",
   "open",
   "open", // There is no `defaultOpen` attribute, so we can't check if it's out of sync on resume
 );
 
-export const openChangeEffect_details = changeEffect(
+export { controllable_dialog_open as controllable_details_open };
+export const controllable_details_open_setup = setupControllable(
   "toggle",
   "open",
   "open", // There is no `defaultOpen` attribute, so we can't check if it's out of sync on resume
@@ -589,22 +591,26 @@ export const openChangeEffect_details = changeEffect(
 
 const controllableEffects = {
   value: (scope: Scope, nodeAccessor: Accessor) => {
-    const el = scope[nodeAccessor] as Element;
-    if (el.tagName === "INPUT") {
-      valueChangeEffect_input(scope, nodeAccessor);
-    } else if (el.tagName === "SELECT") {
-      valueChangeEffect_select(scope, nodeAccessor);
+    switch ((scope[nodeAccessor] as Element).tagName) {
+      case "INPUT":
+        controllable_input_value_setup(scope, nodeAccessor);
+        break;
+      case "SELECT":
+        controllable_select_value_setup(scope, nodeAccessor);
+        break;
     }
   },
-  checked: checkedChangeEffect,
-  checkedValue: checkedValueChangeEffect,
-  checkedValues: checkedValuesChangeEffect,
+  checked: controllable_input_checked_setup,
+  checkedValue: controllable_input_checkedValue_setup,
+  checkedValues: controllable_input_checkedValues_setup,
   open: (scope: Scope, nodeAccessor: Accessor) => {
-    const el = scope[nodeAccessor] as Element;
-    if (el.tagName === "DIALOG") {
-      openChangeEffect_dialog(scope, nodeAccessor);
-    } else if (el.tagName === "DETAILS") {
-      openChangeEffect_details(scope, nodeAccessor);
+    switch ((scope[nodeAccessor] as Element).tagName) {
+      case "DIALOG":
+        controllable_dialog_open_setup(scope, nodeAccessor);
+        break;
+      case "DETAILS":
+        controllable_details_open_setup(scope, nodeAccessor);
+        break;
     }
   },
 };

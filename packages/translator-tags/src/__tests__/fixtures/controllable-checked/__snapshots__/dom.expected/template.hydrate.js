@@ -4,9 +4,9 @@ import {
   register as o,
   queueSource as t,
   value as m,
-  checkedAttr as n,
+  controllable_input_checked as n,
   data as r,
-  checkedChangeEffect as a,
+  controllable_input_checked_setup as a,
   init as i,
 } from "@marko/runtime-tags/dom";
 const c = o(

@@ -1,6 +1,6 @@
 export const _template_ = "<input type=radio value=a><input type=radio value=b><input type=radio value=c><span> </span>";
 export const _walks_ = /* get, over(1), get, over(1), get, over(1), next(1), get, out(1) */" b b bD l";
-import { register as _register, checkedValueAttr as _checkedValueAttr, checkedValueChangeEffect as _checkedValueChangeEffect, data as _data, queueSource as _queueSource, value as _value, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { register as _register, controllable_input_checkedValue as _checkedValueAttr, controllable_input_checkedValue_setup as _checkedValueChangeEffect, data as _data, queueSource as _queueSource, value as _value, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _checkedValueChange = _register("packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0/checkedValueChange", _scope => function (_new_checkedValue) {
   _queueSource(_scope, _checkedValue, _new_checkedValue);
 });
