@@ -19,14 +19,14 @@ export enum ContentType {
   Text,
 }
 
-export type Section = {
+export interface Section {
   id: number;
   name: string;
   depth: number;
   parent: Section | undefined;
   params: undefined | Binding;
   closures: ReferencedBindings;
-  bindings: Set<Binding>;
+  bindings: ReferencedBindings;
   upstreamExpression: t.NodeExtra | undefined;
   hasCleanup: boolean;
   content: null | {
@@ -34,7 +34,7 @@ export type Section = {
     endType: ContentType;
     singleChild: boolean;
   };
-};
+}
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -80,7 +80,7 @@ export function startSection(
       parent: parentSection,
       params: undefined,
       closures: undefined,
-      bindings: new Set(),
+      bindings: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
       hasCleanup: false,

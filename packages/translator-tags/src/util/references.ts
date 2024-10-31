@@ -6,6 +6,8 @@ import { isStatefulReferences } from "./is-stateful";
 import { isOptimize } from "./marko-config";
 import {
   addSorted,
+  filter,
+  find,
   findSorted,
   forEach,
   type Many,
@@ -518,25 +520,23 @@ export function finalizeReferences() {
   for (const binding of bindings) {
     const { name, section } = binding;
     if (binding.type !== BindingType.dom) {
-      for (const existingBinding of section.bindings) {
-        if (existingBinding.name === binding.name) {
-          /*
-            TODO: this will break if parent sections use the generated UID.
-            ```
-            let/_count
-            my-tag
+      if (find(section.bindings, ({ name }) => name === binding.name)) {
+        /*
+          TODO: this will break if parent sections use the generated UID.
+          ```
+          let/_count
+          my-tag
+            let/count
+            div
               let/count
-              div
-                let/count
-                -- ${_count}
-            ```
-          */
-          binding.name = currentProgramPath.scope.generateUid(name);
-          break;
-        }
+              -- ${_count}
+          ```
+        */
+        binding.name = currentProgramPath.scope.generateUid(name);
       }
     }
-    section.bindings.add(binding);
+
+    section.bindings = bindingUtil.add(section.bindings, binding);
     for (const {
       referencedBindings,
       isEffect,
@@ -597,13 +597,12 @@ export function finalizeReferences() {
   });
 
   forEachSection(({ id, bindings }) => {
-    const sortedBindings = [...bindings]
-      .filter((b) => b.section.id === id)
-      .sort(bindingUtil.compare);
-    for (let i = sortedBindings.length; i--; ) {
-      const binding = sortedBindings[i];
-      binding.id = i;
-    }
+    forEach(
+      filter(bindings, ({ section }) => section.id === id),
+      (binding, i) => {
+        binding.id = i;
+      },
+    );
   });
 }
 
