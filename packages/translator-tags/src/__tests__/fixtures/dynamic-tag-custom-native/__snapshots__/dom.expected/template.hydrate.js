@@ -1,4 +1,4 @@
-// size: 542 (min) 318 (brotli)
+// size: 564 (min) 320 (brotli)
 
 import {
   createTemplate as i,
@@ -15,37 +15,35 @@ import {
 } from "@marko/runtime-tags/dom";
 const u = () => {},
   b = o(3, (i, d) => n(i[0], d)),
-  e = o(2, (i, d) => b(i, d.id));
-var f = i(
-  d(
-    "<div>Id is <!></div>",
-    "Db%l",
-    u,
-    void 0,
-    void 0,
-    o(1, (i, d) => e(i, d[0])),
-  ),
+  e = o(2, (i, d) => b(i, d.id)),
+  f = o(1, (i, d) => e(i, d[0]));
+var k = i(
+  d("<div>Id is <!></div>", "Db%l", u, void 0, void 0, () => f),
   "a",
 );
-const k = t(1),
-  l = a(1, (i) => k(i, () => ({ id: "dynamic" })), k),
-  g = c("b0", (i) =>
+const l = t(1),
+  g = a(
+    1,
+    (i) => l(i, () => ({ id: "dynamic" })),
+    () => l,
+  ),
+  p = c("b0", (i) =>
     r(
       i[0],
       "click",
       ((i) => {
         const { 2: d } = i;
         return function () {
-          m(i, p, d === f ? "div" : f);
+          m(i, y, d === k ? "div" : k);
         };
       })(i),
     ),
   ),
-  p = o(
+  y = o(
     2,
     (i, d) => {
-      v(i, g), l(i, d);
+      v(i, p), g(i, d);
     },
-    l,
+    () => g,
   );
 s();

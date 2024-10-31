@@ -20,17 +20,23 @@ import {
   createScopeReadExpression,
   getScopeExpression,
 } from "../util/scope-read";
-import { getOrCreateSection, getSection } from "../util/sections";
-import { addStatement } from "../util/signals";
+import {
+  getOrCreateSection,
+  getScopeIdIdentifier,
+  getSection,
+} from "../util/sections";
+import { addStatement, getRegisterUID } from "../util/signals";
 import translateVar from "../util/translate-var";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 
 export const kCommentTagBinding = Symbol("comment tag binding");
+const kGetterId = Symbol("node getter id");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kCommentTagBinding]?: Binding;
+    [kGetterId]?: string;
   }
 }
 
@@ -40,16 +46,25 @@ export default {
     assertNoParams(tag);
     assertNoAttributes(tag);
 
+    const tagVar = tag.node.var;
     let needsBinding = false;
-    if (tag.has("var")) {
-      if (!t.isIdentifier(tag.node.var)) {
+    let needsGetter = false;
+    if (tagVar) {
+      if (!t.isIdentifier(tagVar)) {
         throw tag
           .get("var")
           .buildCodeFrameError(
-            "The `html-comment` tag cannot be destructured.",
+            "The `html-comment` tag variable cannot be destructured.",
           );
       }
       needsBinding = true;
+
+      for (const ref of tag.scope.getBinding(tagVar.name)!.referencePaths) {
+        if (!ref.parentPath?.isCallExpression()) {
+          needsGetter = true;
+          break;
+        }
+      }
     }
 
     const referenceNodes: t.Node[] = [];
@@ -67,39 +82,56 @@ export default {
       const section = getOrCreateSection(tag);
       const tagExtra = (tag.node.extra ??= {});
 
+      if (needsGetter) {
+        tagExtra[kGetterId] = getRegisterUID(section, "comment");
+      }
+
       tagExtra[kCommentTagBinding] = createBinding(
         "#comment",
         BindingType.dom,
         section,
       );
-      mergeReferences(tag, referenceNodes);
+      mergeReferences(section, tag.node, referenceNodes);
     }
     tag.skip();
   },
   translate(tag) {
     const tagExtra = tag.node.extra!;
     const commentBinding = tagExtra[kCommentTagBinding];
-    if (tag.has("var")) {
+    const hasVar = !!tag.node.var;
+    if (hasVar) {
+      const getterId = tagExtra[kGetterId];
       if (isOutputHTML()) {
         translateVar(
           tag,
-          t.arrowFunctionExpression(
-            [],
-            t.blockStatement([
-              t.throwStatement(
-                t.newExpression(t.identifier("Error"), [
-                  t.stringLiteral(
-                    "Cannot reference a DOM node from the server",
-                  ),
-                ]),
-              ),
-            ]),
+          callRuntime(
+            "nodeRef",
+            getterId && getScopeIdIdentifier(getSection(tag)),
+            getterId && t.stringLiteral(getterId),
           ),
         );
       } else {
         const varName = (tag.node.var as t.Identifier).name;
         const references = tag.scope.getBinding(varName)!.referencePaths;
-        let createElFunction = undefined;
+        let getterFnIdentifier: t.Identifier | undefined;
+        if (getterId) {
+          getterFnIdentifier = currentProgramPath.scope.generateUidIdentifier(
+            `get_${varName}`,
+          );
+          currentProgramPath.pushContainer(
+            "body",
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                getterFnIdentifier,
+                callRuntime(
+                  "nodeRef",
+                  t.stringLiteral(getterId),
+                  getScopeAccessorLiteral(commentBinding!),
+                ),
+              ),
+            ]),
+          );
+        }
         for (const reference of references) {
           const referenceSection = getSection(reference);
           if (reference.parentPath?.isCallExpression()) {
@@ -108,34 +140,13 @@ export default {
                 createScopeReadExpression(referenceSection, commentBinding!),
               ),
             );
-          } else {
-            createElFunction ??= t.identifier(varName + "_getter");
+          } else if (getterFnIdentifier) {
             reference.replaceWith(
-              callRuntime(
-                "bindFunction",
+              t.callExpression(getterFnIdentifier, [
                 getScopeExpression(referenceSection, getSection(tag)),
-                createElFunction,
-              ),
+              ]),
             );
           }
-        }
-        if (createElFunction) {
-          currentProgramPath.pushContainer(
-            "body",
-            t.variableDeclaration("const", [
-              t.variableDeclarator(
-                createElFunction,
-                t.arrowFunctionExpression(
-                  [scopeIdentifier],
-                  t.memberExpression(
-                    scopeIdentifier,
-                    getScopeAccessorLiteral(commentBinding!),
-                    true,
-                  ),
-                ),
-              ),
-            ]),
-          );
         }
       }
     }

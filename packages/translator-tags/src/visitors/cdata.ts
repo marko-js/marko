@@ -1,15 +1,13 @@
 import type { types as t } from "@marko/compiler";
 
-import { isOutputHTML } from "../util/marko-config";
-import * as writer from "../util/writer";
+import type { TemplateVisitor } from "../util/visitors";
 
 export default {
   translate: {
-    exit(cdata: t.NodePath<t.MarkoCDATA>) {
-      if (isOutputHTML()) {
-        writer.writeTo(cdata)`<![CDATA[${cdata.node.value}]]>`;
-      }
-      cdata.remove();
+    enter(cdata) {
+      throw cdata.buildCodeFrameError(
+        "CDATA sections are not supported in Marko.",
+      );
     },
   },
-};
+} satisfies TemplateVisitor<t.MarkoCDATA>;

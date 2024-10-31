@@ -1,5 +1,138 @@
 # Change Log
 
+## 5.35.32
+
+### Patch Changes
+
+- [#2346](https://github.com/marko-js/marko/pull/2346) [`8ec88ff`](https://github.com/marko-js/marko/commit/8ec88fff87ef40ce19aba8992e075a839a61683e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Switch back to using babels startIndex api since the regression has been fixed.
+
+- [#2344](https://github.com/marko-js/marko/pull/2344) [`bafeac1`](https://github.com/marko-js/marko/commit/bafeac1db6acc73e5c38ade2a078485df28670b8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize circular reference child template analysis.
+
+- Updated dependencies [[`8ec88ff`](https://github.com/marko-js/marko/commit/8ec88fff87ef40ce19aba8992e075a839a61683e), [`bafeac1`](https://github.com/marko-js/marko/commit/bafeac1db6acc73e5c38ade2a078485df28670b8)]:
+  - @marko/compiler@5.37.23
+  - @marko/translator-default@6.0.23
+
+## 5.35.31
+
+### Patch Changes
+
+- [#2342](https://github.com/marko-js/marko/pull/2342) [`8e07673`](https://github.com/marko-js/marko/commit/8e07673ca07cc83d9910c68ff8359264015c28d1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Make attribute tags a property on the MarkoTag AST and refactor how attribute tags are translated.
+
+- Updated dependencies [[`8e07673`](https://github.com/marko-js/marko/commit/8e07673ca07cc83d9910c68ff8359264015c28d1)]:
+  - @marko/translator-default@6.0.22
+  - @marko/compiler@5.37.22
+
+## 5.35.30
+
+### Patch Changes
+
+- [#2338](https://github.com/marko-js/marko/pull/2338) [`033adb9`](https://github.com/marko-js/marko/commit/033adb92de3e40f24614e0de9d438f6390843a84) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure that errors discovered while loading optional module level taglibs are forwarded through the onError api.
+
+- Updated dependencies [[`033adb9`](https://github.com/marko-js/marko/commit/033adb92de3e40f24614e0de9d438f6390843a84)]:
+  - @marko/compiler@5.37.21
+
+## 5.35.29
+
+### Patch Changes
+
+- [#2334](https://github.com/marko-js/marko/pull/2334) [`212fbd0`](https://github.com/marko-js/marko/commit/212fbd063d046d865bb3e8f996db91060b6651b2) Thanks [@LuLaValva](https://github.com/LuLaValva)! - TypeScript dependency fix
+
+- [#2337](https://github.com/marko-js/marko/pull/2337) [`ea95de1`](https://github.com/marko-js/marko/commit/ea95de1deaaa03bf2bc57b2518954084dbc1442f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid babel `startColumn` api until https://github.com/babel/babel/pull/16936 is merged.
+
+- Updated dependencies [[`212fbd0`](https://github.com/marko-js/marko/commit/212fbd063d046d865bb3e8f996db91060b6651b2), [`ea95de1`](https://github.com/marko-js/marko/commit/ea95de1deaaa03bf2bc57b2518954084dbc1442f)]:
+  - @marko/compiler@5.37.20
+  - @marko/translator-default@6.0.21
+
+## 5.35.28
+
+### Patch Changes
+
+- [#2332](https://github.com/marko-js/marko/pull/2332) [`b920f86`](https://github.com/marko-js/marko/commit/b920f8632894bfbd97bb642829390daee0e949fd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix incorrect AttrTag tag type definition.
+
+- [#2332](https://github.com/marko-js/marko/pull/2332) [`6e87653`](https://github.com/marko-js/marko/commit/6e8765300dabc1d370058dca76f17d87b80aea3a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove extraneous runtime helper.
+
+- Updated dependencies [[`6e87653`](https://github.com/marko-js/marko/commit/6e8765300dabc1d370058dca76f17d87b80aea3a)]:
+  - @marko/translator-default@6.0.20
+
+## 5.35.27
+
+### Patch Changes
+
+- [#2326](https://github.com/marko-js/marko/pull/2326) [`807b725`](https://github.com/marko-js/marko/commit/807b7255eb0855701abc54fb6748f2f0b84c6082) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Deprecated the Marko.RepeatableAttrTag type (which is now an alias of Marko.AttrTag). This type was overcomplicating things and leading people to incorrectly handle the single item case. Update docs to avoid recommending relying on the array case since this behavior changes in Marko 6 to always be a single (iterable) item.
+
+  Updates the `Marko.Input` type to handle changes to the `Marko.Body` type from `@marko/language-tools`.
+
+## 5.35.26
+
+### Patch Changes
+
+- [#2324](https://github.com/marko-js/marko/pull/2324) [`4776e33`](https://github.com/marko-js/marko/commit/4776e334ed8f4f70559042d28007dfa447942693) Thanks [@rturnq](https://github.com/rturnq)! - Allow child template analysis on manually imported tags in translator-default and optimize direct reference of imported tag
+
+- Updated dependencies [[`4776e33`](https://github.com/marko-js/marko/commit/4776e334ed8f4f70559042d28007dfa447942693)]:
+  - @marko/translator-default@6.0.19
+  - @marko/compiler@5.37.19
+
+## 5.35.25
+
+### Patch Changes
+
+- [#2322](https://github.com/marko-js/marko/pull/2322) [`420405d`](https://github.com/marko-js/marko/commit/420405db952fcedafed0cb48d86620ca53bb2f1d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove the default cache auto clearing behavior.
+  Previously the default compiler "cache" was cleared every setImmediate. This was to support server hot reloading in apps using `Lasso` (and `browser-refresh`). Since we brought back support for `browser-refresh` in the Marko package we now clear this cache when browser-refresh triggers a change making the default cache clearing redundant.
+- Updated dependencies [[`420405d`](https://github.com/marko-js/marko/commit/420405db952fcedafed0cb48d86620ca53bb2f1d)]:
+  - @marko/compiler@5.37.18
+
+## 5.35.24
+
+### Patch Changes
+
+- [#2320](https://github.com/marko-js/marko/pull/2320) [`13b3270`](https://github.com/marko-js/marko/commit/13b32707ed673dd3dabe6dfdb90fcf5a19448776) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize how style and script tags are diffed (similar to textarea) where the text nodes are concatenated and diffed as a whole.
+
+- [#2320](https://github.com/marko-js/marko/pull/2320) [`a9da4d6`](https://github.com/marko-js/marko/commit/a9da4d64cf8116867ea80150f10c4dc8a45a0c98) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression from #2138 which caused nullable native dynamic tags with body contents to not output the end tag. 😱
+
+- Updated dependencies [[`13b3270`](https://github.com/marko-js/marko/commit/13b32707ed673dd3dabe6dfdb90fcf5a19448776), [`a9da4d6`](https://github.com/marko-js/marko/commit/a9da4d64cf8116867ea80150f10c4dc8a45a0c98)]:
+  - @marko/translator-default@6.0.18
+  - @marko/compiler@5.37.17
+
+## 5.35.23
+
+### Patch Changes
+
+- [#2318](https://github.com/marko-js/marko/pull/2318) [`1dbb189`](https://github.com/marko-js/marko/commit/1dbb189976ef56a28252fbf7da95ac18a3eadaf6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where a null able native tag with no body content (eg `<${show && "div}/>`) was incorrectly outputting a fragment for the body content (which did not exist).
+
+- Updated dependencies [[`1dbb189`](https://github.com/marko-js/marko/commit/1dbb189976ef56a28252fbf7da95ac18a3eadaf6)]:
+  - @marko/translator-default@6.0.17
+  - @marko/compiler@5.37.16
+
+## 5.35.22
+
+### Patch Changes
+
+- [#2316](https://github.com/marko-js/marko/pull/2316) [`e57e706`](https://github.com/marko-js/marko/commit/e57e706a901002763968e840b321f8c3eb7c55fb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose the v3 legacy helpers properly in the marko package.json
+
+- [#2316](https://github.com/marko-js/marko/pull/2316) [`1e2c903`](https://github.com/marko-js/marko/commit/1e2c903cb1da7e919d683d65f1bda4661abe931e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression where an out of order await resolves before the "<await-reorderer>" (automatically injected at the end of the body) would be flushed. In practice this means an in order await after all out of order awaits (that resolves after any of the out of order awaits) was causing some out of order awaits not to be reordered.
+
+## 5.35.21
+
+### Patch Changes
+
+- [#2314](https://github.com/marko-js/marko/pull/2314) [`75d0ab8`](https://github.com/marko-js/marko/commit/75d0ab8301d068ac370f4ef8b0b1f18d1b559eef) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Downgrade minimatch module since latest version requires node 20.
+
+- [#2315](https://github.com/marko-js/marko/pull/2315) [`5b4ffa8`](https://github.com/marko-js/marko/commit/5b4ffa85d434e591fd56cdbfd5b5cc1b2f4927dd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add back the "legacy helpers" from Marko 3 to simplify the process of upgrading some older applications.
+
+- [#2308](https://github.com/marko-js/marko/pull/2308) [`a279d09`](https://github.com/marko-js/marko/commit/a279d0934968f34661d37bb29eb99ae7415fa5b6) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Update documentation
+
+## 5.35.20
+
+### Patch Changes
+
+- [#2306](https://github.com/marko-js/marko/pull/2306) [`4d8eb53`](https://github.com/marko-js/marko/commit/4d8eb53c7354837233d99077f3d68980b13da911) Thanks [@mlrawlings](https://github.com/mlrawlings)! - fix: upgrade babel/it-fails, fix VComment
+
+- [#2310](https://github.com/marko-js/marko/pull/2310) [`f06d4b0`](https://github.com/marko-js/marko/commit/f06d4b0559c3fbb3af67773c70b3aab25278b0ca) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid babel compiler assert api to fix a regression.
+
+- Updated dependencies [[`f06d4b0`](https://github.com/marko-js/marko/commit/f06d4b0559c3fbb3af67773c70b3aab25278b0ca)]:
+  - @marko/translator-default@6.0.16
+  - @marko/compiler@5.37.15
+
 ## 5.35.19
 
 ### Patch Changes

@@ -2,9 +2,15 @@ import { types as t } from "@marko/compiler";
 
 import { getExprRoot } from "../util/get-root";
 import { isOutputHTML } from "../util/marko-config";
-import { importRuntime } from "../util/runtime";
-import { getSection, type Section } from "../util/sections";
+import { callRuntime, importRuntime } from "../util/runtime";
+import {
+  getScopeIdIdentifier,
+  getSection,
+  type Section,
+} from "../util/sections";
 import { addStatement } from "../util/signals";
+import type { TemplateVisitor } from "../util/visitors";
+import * as writer from "../util/writer";
 import { scopeIdentifier } from "./program";
 
 const abortIdsByExpressionForSection = new WeakMap<
@@ -13,7 +19,7 @@ const abortIdsByExpressionForSection = new WeakMap<
 >();
 
 export default {
-  migrate(identifier: t.NodePath<t.Identifier>) {
+  migrate(identifier) {
     const { name } = identifier.node;
     if (identifier.scope.hasBinding(name)) return;
     switch (name) {
@@ -32,7 +38,7 @@ export default {
         break;
     }
   },
-  translate(identifier: t.NodePath<t.Identifier>) {
+  translate(identifier) {
     const { name } = identifier.node;
     if (identifier.scope.hasBinding(name)) return;
     switch (name) {
@@ -52,6 +58,14 @@ export default {
         break;
       case "$signal":
         if (isOutputHTML()) {
+          const section = getSection(identifier);
+          if (!section.hasCleanup) {
+            section.hasCleanup = true;
+            const exprRoot = getExprRoot(identifier);
+            const write = writer.writeTo(exprRoot);
+            write`${callRuntime("markResumeCleanup", getScopeIdIdentifier(section))}`;
+          }
+
           identifier.replaceWith(
             t.callExpression(
               t.arrowFunctionExpression(
@@ -106,4 +120,4 @@ export default {
         }
     }
   },
-};
+} satisfies TemplateVisitor<t.Identifier>;

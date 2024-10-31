@@ -1,40 +1,44 @@
-// size: 519 (min) 274 (brotli)
+// size: 548 (min) 311 (brotli)
 
 import {
-  register as o,
-  on as t,
-  value as n,
-  queueEffect as c,
-  queueSource as r,
-  registerSubscriber as i,
-  dynamicClosure as m,
-  data as s,
-  registerRenderer as a,
-  createRenderer as b,
+  dynamicTagAttrs as o,
+  register as t,
+  on as n,
+  value as c,
+  queueEffect as r,
+  queueSource as i,
+  registerSubscriber as m,
+  dynamicClosure as s,
+  data as a,
+  createRendererWithOwner as b,
   intersections as u,
   inChild as d,
   dynamicSubscribers as e,
   init as f,
 } from "@marko/runtime-tags/dom";
-const k = o("a0", (o) => {
-    const { 4: n } = o;
-    t(o[0], "click", n);
+o(1);
+const k = t("a0", (o) => {
+    const { 4: t } = o;
+    n(o[0], "click", t);
   }),
-  g = n(4, (o, t) => c(o, k)),
-  l = o("b0", (o) => {
+  g = c(4, (o, t) => r(o, k)),
+  l = t("b0", (o) => {
     const { 1: t } = o;
     return function () {
-      r(o, p, t + 1);
+      i(o, v, t + 1);
     };
-  });
-a(
+  }),
+  p = m(
+    "b1",
+    s(1, (o, t) => a(o[0], t)),
+  );
+t(
   "b2",
-  b(" ", " ", void 0, [
-    i(
-      "b1",
-      m(1, (o, t) => s(o[0], t)),
-    ),
-  ]),
+  b(" ", " ", void 0, () => [p]),
 );
-const p = n(1, (o, t) => g(o[0], l(o)), u([d(0, g), e(1)]));
+const v = c(
+  1,
+  (o, t) => g(o[0], l(o)),
+  () => u([d(0, g), e(1)]),
+);
 f();

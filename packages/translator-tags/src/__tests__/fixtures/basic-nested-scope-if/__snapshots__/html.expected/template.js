@@ -11,7 +11,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _writeScope(_scope1_id, {
       "_": _ensureScopeWithId(_scope0_id)
     });
-    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer", _scope0_id);
+    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   } else {
     const _scope2_id = _nextScopeId();
@@ -19,7 +19,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
     _writeScope(_scope2_id, {
       "_": _ensureScopeWithId(_scope0_id)
     });
-    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_2_renderer", _scope0_id);
+    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_2_renderer");
     _ifScopeId = _scope2_id;
   }
   _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _ifScopeId)}</div>`);

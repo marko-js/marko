@@ -1,5 +1,5 @@
 # Write
-  <button class=inc>1<!--M_*1 #text/1--></button><!--M_*1 #button/0--><!--M_[2--><div>Count (<!>hello<!--M_*2 #text/0-->): <!>1<!--M_*2 #text/1--></div><!--M_]1 #text/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:{"#childScope/0":_.a={input:{name:"hello",renderBody:_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/template.marko_1_renderer"]},x:1,"#text/2!":_.b={},"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/template.marko_1_renderer"]}},1:_.a,2:_.b}),1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/components/custom-tag.marko_0_x",0];M._.w()</script>
+  <button class=inc>1<!--M_*1 #text/1--></button><!--M_*1 #button/0--><!--M_[2--><div>Count (<!>hello<!--M_*2 #text/0-->): <!>1<!--M_*2 #text/1--></div><!--M_]1 #text/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.e={0:_.a={"#childScope/0":_.c={input:_.b={name:"hello"},x:1,"#text/2!":_.d={}}},1:_.c,2:_.d},_.b.renderBody=_.c["#text/2("]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/template.marko_1_renderer"](_.a),_.e),1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/components/custom-tag.marko_0_x",0];M._.w()</script>
 
 
 # Render "End"
@@ -27,7 +27,7 @@
     </div>
     <!--M_]1 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{"#childScope/0":_.a={input:{name:"hello",renderBody:_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/template.marko_1_renderer"]},x:1,"#text/2!":_.b={},"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/template.marko_1_renderer"]}},1:_.a,2:_.b}),1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/components/custom-tag.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={0:_.a={"#childScope/0":_.c={input:_.b={name:"hello"},x:1,"#text/2!":_.d={}}},1:_.c,2:_.d},_.b.renderBody=_.c["#text/2("]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/template.marko_1_renderer"](_.a),_.e),1,"packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/components/custom-tag.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

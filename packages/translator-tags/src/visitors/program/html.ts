@@ -3,14 +3,16 @@ import { types as t } from "@marko/compiler";
 import { returnId } from "../../core/return";
 import isStatic from "../../util/is-static";
 import { callRuntime } from "../../util/runtime";
-import { getSection } from "../../util/sections";
+import { getSectionForBody } from "../../util/sections";
 import { renameBindings, writeHTMLResumeStatements } from "../../util/signals";
+import type { TemplateVisitor } from "../../util/visitors";
 import { flushInto } from "../../util/writer";
+import { htmlRendererIdentifier } from ".";
 
 export default {
   translate: {
-    exit(program: t.NodePath<t.Program>) {
-      const section = getSection(program);
+    exit(program) {
+      const section = getSectionForBody(program)!;
       const tagVarIdentifier = program.scope.generateUidIdentifier("tagVar");
 
       flushInto(program);
@@ -37,11 +39,10 @@ export default {
         }
       }
 
-      const rendererId = program.scope.generateUidIdentifier("renderer");
       program.pushContainer("body", [
         t.variableDeclaration("const", [
           t.variableDeclarator(
-            rendererId,
+            htmlRendererIdentifier,
             callRuntime(
               "createRenderer",
               t.arrowFunctionExpression(
@@ -55,11 +56,11 @@ export default {
         t.exportDefaultDeclaration(
           callRuntime(
             "createTemplate",
-            rendererId,
+            htmlRendererIdentifier,
             t.stringLiteral(program.hub.file.metadata.marko.id),
           ),
         ),
       ]);
     },
   },
-};
+} satisfies TemplateVisitor<t.Program>;

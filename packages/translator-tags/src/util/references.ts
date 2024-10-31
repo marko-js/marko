@@ -6,6 +6,8 @@ import { isStatefulReferences } from "./is-stateful";
 import { isOptimize } from "./marko-config";
 import {
   addSorted,
+  filter,
+  find,
   findSorted,
   forEach,
   type Many,
@@ -132,7 +134,7 @@ export function trackParamsReferences(
   upstreamExpression?: Binding["upstreamExpression"],
 ) {
   const params = body.node.params;
-  if (body.get("body").length && params.length) {
+  if (body.node.body.length && params.length) {
     upstreamAlias?.downstreamExpressions.delete(upstreamExpression!);
     const section = getOrCreateSection(body);
     const canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
@@ -146,6 +148,8 @@ export function trackParamsReferences(
         upstreamExpression,
         undefined,
       ));
+
+    section.params = paramsBinding;
 
     for (let i = 0; i < params.length; i++) {
       // TODO: need to support spread here.
@@ -410,13 +414,14 @@ function trackReference(
 }
 
 const [getMergedReferences] = createProgramState(
-  () => new Map<t.NodePath, (t.Node | undefined)[]>(),
+  () => new Map<t.Node, { section: Section; nodes: (t.Node | undefined)[] }>(),
 );
 export function mergeReferences(
-  target: t.NodePath,
+  section: Section,
+  target: t.Node,
   nodes: (t.Node | undefined)[],
 ) {
-  getMergedReferences().set(target, nodes);
+  getMergedReferences().set(target, { section, nodes });
 }
 
 /**
@@ -441,10 +446,25 @@ function compareIntersections(a: Intersection, b: Intersection) {
 }
 
 export function finalizeReferences() {
+  const droppedReferences = getDroppedReferences();
+  if (droppedReferences.size) {
+    for (const expr of droppedReferences) {
+      const { extra } = expr;
+      if (extra && extra.referencedBindings) {
+        forEach(extra.referencedBindings, ({ downstreamExpressions }) => {
+          downstreamExpressions.delete(extra);
+        });
+
+        extra.referencedBindings = undefined;
+      }
+    }
+    droppedReferences.clear();
+  }
+
   const mergedReferences = getMergedReferences();
   if (mergedReferences.size) {
-    for (const [target, nodes] of mergedReferences) {
-      const targetExtra = (target.node.extra ??= {});
+    for (const [target, { section, nodes }] of mergedReferences) {
+      const targetExtra = (target.extra ??= {});
       let { referencedBindings, isEffect } = targetExtra;
       for (const node of nodes) {
         const extra = node?.extra;
@@ -464,10 +484,7 @@ export function finalizeReferences() {
         }
       }
 
-      referencedBindings = findReferences(
-        getOrCreateSection(target),
-        referencedBindings,
-      );
+      referencedBindings = findReferences(section, referencedBindings);
       targetExtra.referencedBindings = referencedBindings;
       targetExtra.isEffect = isEffect;
     }
@@ -501,25 +518,23 @@ export function finalizeReferences() {
   for (const binding of bindings) {
     const { name, section } = binding;
     if (binding.type !== BindingType.dom) {
-      for (const existingBinding of section.bindings) {
-        if (existingBinding.name === binding.name) {
-          /*
-            TODO: this will break if parent sections use the generated UID.
-            ```
-            let/_count
-            my-tag
+      if (find(section.bindings, ({ name }) => name === binding.name)) {
+        /*
+          TODO: this will break if parent sections use the generated UID.
+          ```
+          let/_count
+          my-tag
+            let/count
+            div
               let/count
-              div
-                let/count
-                -- ${_count}
-            ```
-          */
-          binding.name = currentProgramPath.scope.generateUid(name);
-          break;
-        }
+              -- ${_count}
+          ```
+        */
+        binding.name = currentProgramPath.scope.generateUid(name);
       }
     }
-    section.bindings.add(binding);
+
+    section.bindings = bindingUtil.add(section.bindings, binding);
     for (const {
       referencedBindings,
       isEffect,
@@ -559,7 +574,7 @@ export function finalizeReferences() {
 
   // mark bindings that need to be serialized due to being closed over by stateful sections
   forEachSection((section) => {
-    for (const binding of section.closures) {
+    forEach(section.closures, (binding) => {
       if (!binding.serialize) {
         let serialize = false;
         const sourceSection = binding.section;
@@ -576,17 +591,16 @@ export function finalizeReferences() {
         }
         binding.serialize = serialize;
       }
-    }
+    });
   });
 
   forEachSection(({ id, bindings }) => {
-    const sortedBindings = [...bindings]
-      .filter((b) => b.section.id === id)
-      .sort(bindingUtil.compare);
-    for (let i = sortedBindings.length; i--; ) {
-      const binding = sortedBindings[i];
-      binding.id = i;
-    }
+    forEach(
+      filter(bindings, ({ section }) => section.id === id),
+      (binding, i) => {
+        binding.id = i;
+      },
+    );
   });
 }
 
@@ -636,7 +650,7 @@ export const bindingUtil = new Sorted(function compareBindings(
   return a.section.id - b.section.id ||
     (a.type !== b.type &&
       (a.type === BindingType.dom || b.type === BindingType.dom))
-    ? a.type - b.type
+    ? a.type - b.type || a.id - b.id
     : a.id - b.id;
 });
 
@@ -655,10 +669,52 @@ export function addReferenceToExpression(path: t.NodePath, binding: Binding) {
   binding.downstreamExpressions.add(exprExtra);
 }
 
+const [getDroppedReferences] = createProgramState(() => new Set<t.Node>());
+export function dropReferences(node: t.Node | t.Node[]) {
+  const droppedReferences = getDroppedReferences();
+  if (Array.isArray(node)) {
+    for (const item of node) {
+      droppedReferences.add(item);
+    }
+  } else {
+    droppedReferences.add(node);
+  }
+}
+
 export function getCanonicalBinding(binding?: Binding) {
   return (
     binding && (binding.property ? binding : binding.upstreamAlias || binding)
   );
+}
+
+export function getAllTagReferenceNodes(
+  tag: t.MarkoTag,
+  referenceNodes: t.Node[] = [],
+) {
+  if (tag.arguments) {
+    for (const arg of tag.arguments) {
+      referenceNodes.push(arg);
+    }
+  }
+
+  for (const attr of tag.attributes) {
+    referenceNodes.push(attr.value);
+  }
+
+  for (const child of tag.attributeTags) {
+    switch (child.type) {
+      case "MarkoTag":
+        getAllTagReferenceNodes(child, referenceNodes);
+        break;
+      case "MarkoScriptlet":
+        for (const statement of child.body) {
+          referenceNodes.push(statement);
+        }
+        break;
+    }
+  }
+
+  return referenceNodes;
 }
 
 function addReference(
@@ -667,7 +723,7 @@ function addReference(
   binding: Binding,
 ) {
   if (section !== binding.section) {
-    section.closures.add(binding);
+    section.closures = bindingUtil.add(section.closures, binding);
   }
   const newIntersection = bindingUtil.add(referencedBindings, binding);
   return findReferences(section, newIntersection);

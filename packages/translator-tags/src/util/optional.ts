@@ -28,7 +28,7 @@ export class Sorted<T> {
 
       if (b) {
         if (Array.isArray(b)) {
-          return addSorted(this.compare, b, a) as Many<T>;
+          return addSorted(this.compare, [...b], a) as Many<T>;
         }
 
         return joinRepeatable(this.compare, b, a);
@@ -129,16 +129,42 @@ export function filter<T>(data: Opt<T>, cb: (item: T) => boolean): Opt<T> {
   return undefined;
 }
 
-export function forEach<T>(data: Opt<T>, cb: (item: T) => void): void {
+export function forEach<T>(
+  data: Opt<T>,
+  cb: (item: T, index: number) => void,
+): void {
   if (data) {
     if (Array.isArray(data)) {
+      let i = 0;
       for (const item of data) {
-        cb(item);
+        cb(item, i++);
       }
     } else {
-      cb(data);
+      cb(data, 0);
     }
   }
+}
+
+export function find<T>(
+  data: Opt<T>,
+  cb: (item: T, index: number) => boolean,
+): Opt<T> {
+  if (data) {
+    if (Array.isArray(data)) {
+      return data.find(cb);
+    }
+
+    if (cb(data, 0)) {
+      return data;
+    }
+  }
+}
+
+export function map<T, R>(
+  data: Opt<T>,
+  cb: (item: T, index: number) => R,
+): R[] {
+  return data ? (Array.isArray(data) ? data.map(cb) : [cb(data, 0)]) : [];
 }
 
 export function findSorted<T>(
@@ -199,14 +225,23 @@ function unionSortedRepeatable<T>(
   let aIndex = 0;
   let bIndex = 0;
 
-  // Since both sides are Repeated<T> we can safely assume that the first 2 elements are present in either array.
-  const result: Many<T> = [
-    compare(a[aIndex], b[bIndex]) <= 0 ? a[aIndex++] : b[bIndex++],
-    compare(a[aIndex], b[bIndex]) <= 0 ? a[aIndex++] : b[bIndex++],
-  ];
+  const result = [] as unknown as Many<T>;
 
   while (aIndex < aLen && bIndex < bLen) {
-    result.push(compare(a[aIndex], b[bIndex]) <= 0 ? a[aIndex++] : b[bIndex++]);
+    const aValue = a[aIndex];
+    const bValue = b[bIndex];
+    const delta = compare(aValue, bValue);
+    if (delta === 0) {
+      aIndex++;
+      bIndex++;
+      result.push(aValue);
+    } else if (delta < 0) {
+      aIndex++;
+      result.push(aValue);
+    } else {
+      bIndex++;
+      result.push(bValue);
+    }
   }
 
   if (aLen === bLen && aIndex === aLen) {
@@ -229,15 +264,4 @@ function unionSortedRepeatable<T>(
 function joinRepeatable<T>(compare: Compare<T>, a: T, b: T): OneMany<T> {
   const compareResult = compare(a, b);
   return compareResult === 0 ? a : compareResult < 0 ? [a, b] : [b, a];
-}
-
-export function pop<T>(data: Opt<T>): [Opt<T>, T] {
-  if (Array.isArray(data)) {
-    const len = data.length;
-    if (len === 2) {
-      return [data[0], data[1]];
-    }
-    return [data.slice(0, len - 1) as Many<T>, data[len - 1]];
-  }
-  return [undefined, data as T];
 }

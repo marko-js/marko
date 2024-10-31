@@ -7,18 +7,19 @@ import {
 import { types as t } from "@marko/compiler";
 
 import { assertNoBodyContent } from "../util/assert";
-import attrsToObject from "../util/attrs-to-object";
 import { isOutputDOM } from "../util/marko-config";
 import {
   type Binding,
   BindingType,
   createBinding,
+  getAllTagReferenceNodes,
   getScopeAccessorLiteral,
   mergeReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
+import { propsToExpression, translateAttrs } from "../util/translate-attrs";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 
 const kRef = Symbol("lifecycle attrs reference");
@@ -39,10 +40,11 @@ export default {
 
     const { node } = tag;
     const tagExtra = (node.extra ??= {});
+    const section = getOrCreateSection(tag);
     tagExtra[kRef] = createBinding(
       tag.scope.generateUid("lifecycle"),
       BindingType.derived,
-      getOrCreateSection(tag),
+      section,
       undefined,
       tagExtra,
     );
@@ -73,10 +75,7 @@ export default {
     }
 
     (currentProgramPath.node.extra ??= {}).isInteractive = true;
-    mergeReferences(
-      tag,
-      tag.node.attributes.map((attr) => attr.value),
-    );
+    mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
   },
   translate: {
     exit(tag) {
@@ -88,19 +87,22 @@ export default {
       const lifecycleAttrsRef = tagExtra[kRef]!;
 
       if (isOutputDOM()) {
-        const attrsObject = attrsToObject(tag);
-        addStatement(
-          "effect",
-          section,
-          referencedBindings,
+        const translatedAttrs = translateAttrs(tag);
+        translatedAttrs.statements.push(
           t.expressionStatement(
             callRuntime(
               "lifecycle",
               scopeIdentifier,
               getScopeAccessorLiteral(lifecycleAttrsRef),
-              attrsObject,
+              propsToExpression(translatedAttrs.properties),
             ),
           ),
+        );
+        addStatement(
+          "effect",
+          section,
+          referencedBindings,
+          translatedAttrs.statements,
           node.attributes.map((a) => a.value),
         );
       } else {

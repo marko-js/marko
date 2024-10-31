@@ -1,7 +1,5 @@
 import type { Renderer as ClientRenderer } from "../dom/renderer";
 
-export type Renderer = (...args: unknown[]) => unknown;
-
 export type CommentWalker = TreeWalker & Record<string, Comment>;
 
 export type Scope<
@@ -17,6 +15,7 @@ export type Scope<
   ___bound: Map<unknown, unknown> | undefined;
   ___renderer: ClientRenderer | undefined;
   ___abortControllers: Map<string | number, AbortController> | undefined;
+  ___cleanupOwner: Scope | undefined;
   $global: Record<string, unknown>;
   _: Scope | undefined;
   [x: string | number]: any;
@@ -29,6 +28,7 @@ export enum ResumeSymbol {
   SectionEnd = "]",
   SectionSingleNodesEnd = "|",
   Node = "*",
+  Cleanup = "$",
 }
 
 export enum AccessorChar {
@@ -63,8 +63,6 @@ export enum NodeType {
 // 96 ` [backtick]
 export enum WalkCode {
   Get = 32,
-  Before = 33,
-  After = 35,
   Inside = 36,
   Replace = 37,
   EndChild = 38,
@@ -107,7 +105,6 @@ export interface TemplateInput extends Input {
 }
 
 export interface Template {
-  _: unknown;
   mount(
     input: Input,
     reference: ParentNode & Node,

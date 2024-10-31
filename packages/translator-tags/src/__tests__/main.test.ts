@@ -50,6 +50,7 @@ const baseConfig: compiler.Config = {
 
 const htmlConfig: compiler.Config = { ...baseConfig, output: "html" };
 const domConfig: compiler.Config = { ...baseConfig, output: "dom" };
+const snapCache = new Map<unknown, unknown>();
 
 describe("translator-tags", () => {
   before(() => {
@@ -91,10 +92,11 @@ describe("translator-tags", () => {
         config.skip_csr ||
         config.error_compiler;
       const skipResume =
-        !(manualResume ? fs.existsSync(resumeFile) : hasTemplate) ||
-        config.skip_resume ||
-        skipSSR ||
-        skipCSR;
+        config.skip_resume !== false &&
+        (!(manualResume ? fs.existsSync(resumeFile) : hasTemplate) ||
+          config.skip_resume ||
+          skipSSR ||
+          skipCSR);
       const snapMD = (fn: () => unknown) =>
         (config.error_runtime ? snap.catch : snap)(fn, {
           ext: `.md`,
@@ -107,6 +109,7 @@ describe("translator-tags", () => {
         });
         const finalConfig: compiler.Config = {
           ...compilerConfig,
+          cache: snapCache, // these need a different cache since they `resolveVirtualDependency` is relevant to the compile cache.
           resolveVirtualDependency(_filename, { code, virtualPath }) {
             return `virtual:${virtualPath} ${code}`;
           },

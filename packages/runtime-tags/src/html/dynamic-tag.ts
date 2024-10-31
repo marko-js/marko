@@ -1,6 +1,6 @@
-import type { Renderer } from "../common/types";
+import { normalizeDynamicRenderer } from "../html";
 import { attrs, withSelectedValue } from "./attrs";
-import type { ServerTemplate as Template } from "./template";
+import type { ServerRenderer } from "./template";
 import {
   getScopeId,
   markResumeScopeStart,
@@ -14,12 +14,12 @@ const voidElementsReg =
   /^(?:area|b(?:ase|r)|col|embed|hr|i(?:mg|nput)|link|meta|param|source|track|wbr)$/;
 interface RenderBodyObject {
   [x: PropertyKey]: unknown;
-  renderBody: Renderer;
+  renderBody: ServerRenderer;
 }
 
 export function dynamicTagInput(
   scope: PartialScope,
-  tag: unknown | string | Renderer | RenderBodyObject | Template,
+  tag: unknown | string | ServerRenderer | RenderBodyObject,
   input: Record<string, unknown>,
   renderBody?: () => void,
   tagVar?: unknown,
@@ -56,7 +56,7 @@ export function dynamicTagInput(
     return null;
   }
 
-  const renderer = getDynamicRenderer(tag);
+  const renderer = getDynamicRenderer(tag) as ServerRenderer;
 
   if (MARKO_DEBUG) {
     if (typeof renderer !== "function") {
@@ -69,7 +69,7 @@ export function dynamicTagInput(
 
 export function dynamicTagArgs(
   scope: PartialScope,
-  tag: unknown | string | Renderer | RenderBodyObject | Template,
+  tag: unknown | string | ServerRenderer | RenderBodyObject,
   args: unknown[],
 ) {
   if (!tag) return undefined;
@@ -90,7 +90,7 @@ export function dynamicTagArgs(
     return undefined;
   }
 
-  const renderer = getDynamicRenderer(tag);
+  const renderer = getDynamicRenderer(tag) as ServerRenderer;
 
   if (MARKO_DEBUG) {
     if (typeof renderer !== "function") {
@@ -101,13 +101,8 @@ export function dynamicTagArgs(
   return renderer(...args);
 }
 
-let getDynamicRenderer = (
-  tag: unknown | string | Renderer | RenderBodyObject | Template,
-) =>
-  (tag as { _?: Renderer })._ ||
-  (tag as { renderBody?: Renderer }).renderBody ||
-  (tag as Renderer);
-export let createRenderer = (fn: Renderer) => fn;
+let getDynamicRenderer = normalizeDynamicRenderer<ServerRenderer>;
+export let createRenderer = (fn: ServerRenderer) => fn;
 
 export function patchDynamicTag(
   newGetDynamicRenderer: typeof getDynamicRenderer,

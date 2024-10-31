@@ -53,13 +53,6 @@ export function consumeHTML(path: t.NodePath<any>) {
   }
 }
 
-export function hasPendingHTML(
-  path: t.NodePath<t.MarkoTag> | t.NodePath<t.Program>,
-) {
-  const writes = getWrites(getSection(path));
-  return Boolean(writes.length > 1 || writes[0]);
-}
-
 export function flushBefore(path: t.NodePath<any>) {
   const expr = consumeHTML(path);
   if (expr) {

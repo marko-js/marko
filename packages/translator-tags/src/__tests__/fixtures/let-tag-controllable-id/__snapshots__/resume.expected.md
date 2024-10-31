@@ -13,7 +13,7 @@
     </button>
     <!--M_*0 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={y:1}},_.a._y_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0/_"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0__y_change_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={y:1}},_.a._y_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0/handler"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0__y_change_y",0];M._.w()
     </script>
   </body>
 </html>
@@ -42,7 +42,7 @@ container.querySelector("button").click()
     </button>
     <!--M_*0 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={y:1}},_.a._y_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0/_"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0__y_change_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={y:1}},_.a._y_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0/handler"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0__y_change_y",0];M._.w()
     </script>
   </body>
 </html>
@@ -72,7 +72,7 @@ container.querySelector("button").click()
     </button>
     <!--M_*0 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={y:1}},_.a._y_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0/_"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0__y_change_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={y:1}},_.a._y_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0/handler"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0__y_change_y",0];M._.w()
     </script>
   </body>
 </html>
@@ -102,7 +102,7 @@ container.querySelector("button").click()
     </button>
     <!--M_*0 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={y:1}},_.a._y_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0/_"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0__y_change_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={y:1}},_.a._y_change=_._["packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0/handler"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0__y_change_y",0];M._.w()
     </script>
   </body>
 </html>

@@ -1,13 +1,11 @@
 # Render undefined
 ```html
-<!---->
-<!---->
-This is the body content
+WorldThis is the body content
 <!---->
 <!---->
 ```
 
 # Mutations
 ```
-inserted #comment0, #comment1, #text2, #comment3, #comment4
+inserted #text0, #text1, #comment2, #comment3
 ```

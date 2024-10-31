@@ -10,6 +10,7 @@ import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
 import { getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
+import withPreviousLocation from "../util/with-previous-location";
 
 export default {
   analyze(tag) {
@@ -38,7 +39,7 @@ export default {
       const [valueAttr] = tag.node.attributes;
       const referencedBindings = valueAttr?.value.extra?.referencedBindings;
 
-      const statement = t.debuggerStatement();
+      const statement = withPreviousLocation(t.debuggerStatement(), tag.node);
 
       if (isOutputHTML()) {
         tag.insertBefore(statement);

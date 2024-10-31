@@ -3,9 +3,10 @@ import {
   SET_SCOPE_REGISTER_ID,
 } from "../common/compat-meta";
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
-import type { Renderer, Scope } from "../common/types";
+import type { Scope } from "../common/types";
 import { patchDynamicTag } from "./dynamic-tag";
 import { getRegistered, register } from "./serializer";
+import type { ServerRenderer } from "./template";
 import {
   Boundary,
   Chunk,
@@ -58,7 +59,7 @@ export const compat = {
     return compatRegistered;
   },
   render(
-    renderer: Renderer,
+    renderer: ServerRenderer,
     willRerender: boolean,
     classAPIOut: any,
     component: any,

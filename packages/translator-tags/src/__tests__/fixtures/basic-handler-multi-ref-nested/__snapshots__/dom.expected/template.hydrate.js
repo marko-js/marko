@@ -1,4 +1,4 @@
-// size: 332 (min) 206 (brotli)
+// size: 342 (min) 216 (brotli)
 
 import {
   register as n,
@@ -19,7 +19,7 @@ const s = n("a0", (n) =>
         return function () {
           t(
             n,
-            u,
+            e,
             o.map(
               ((n) => {
                 const { 3: o } = n;
@@ -31,11 +31,12 @@ const s = n("a0", (n) =>
       })(n),
     ),
   ),
-  u = r(
+  u = m(2, (n) => {
+    i(n, s);
+  }),
+  e = r(
     2,
     (n, o) => c(n[1], o.join("")),
-    m(2, (n) => {
-      i(n, s);
-    }),
+    () => u,
   );
 a();

@@ -1,21 +1,19 @@
-// size: 252 (min) 165 (brotli)
+// size: 255 (min) 182 (brotli)
 
 import {
-  registerSubscriber as o,
-  dynamicClosure as m,
-  data as r,
-  registerRenderer as b,
-  createRenderer as i,
-  value as t,
-  dynamicSubscribers as a,
+  dynamicTagAttrs as o,
+  registerSubscriber as m,
+  dynamicClosure as r,
+  data as t,
+  register as b,
+  createRendererWithOwner as i,
 } from "@marko/runtime-tags/dom";
+o(0);
+const a = m(
+  "b0",
+  r(3, (o, m) => t(o[0], m)),
+);
 b(
   "b1",
-  i("<h1>Hello <!></h1>", "Db%", void 0, [
-    o(
-      "b0",
-      m(3, (o, m) => r(o[0], m)),
-    ),
-  ]),
-),
-  a(3);
+  i("<h1>Hello <!></h1>", "Db%", void 0, () => [a]),
+);

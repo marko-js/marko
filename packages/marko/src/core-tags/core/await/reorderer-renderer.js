@@ -52,59 +52,16 @@ module.exports = function (input, out) {
     function handleAwait(awaitInfo) {
       let flushedScript = false;
       let flushedContent = false;
-      let flushedPlaceholder = false;
-      awaitInfo.parent.on("___toString", () => {
-        flushedPlaceholder = true;
-        if (!flushedScript && flushedContent) {
-          flushedScript = true;
-          asyncOut.script(
-            `$${reorderFunctionId}(` +
-              (typeof awaitInfo.id === "number"
-                ? awaitInfo.id
-                : '"' + awaitInfo.id + '"') +
-              (awaitInfo.after ? ',"' + awaitInfo.after + '"' : "") +
-              ")",
-          );
+      let flushedPlaceholder = awaitInfo.parent._state.finished;
+      if (flushedPlaceholder) {
+        if (awaitInfo.out._state.finished) {
+          writeResult(awaitInfo.out.___getResult());
+          return;
         }
-      });
-      awaitInfo.out
-        .on("___toString", out.emit.bind(out, "___toString"))
-        .on("finish", function (result) {
-          flushedContent = true;
-          if (!global._afRuntime) {
-            // Minified version of ./client-reorder-runtime.js
-            asyncOut.script(
-              `function $${reorderFunctionId}(d,a,e,l,g,h,k,b,f,c){c=$${reorderFunctionId};if(a&&!c[a])(c[a+="$"]||(c[a]=[])).push(d);else{e=document;l=e.getElementById("${reorderFunctionId}"+d);g=e.getElementById("${reorderFunctionId}ph"+d);h=e.createDocumentFragment();k=l.childNodes;b=0;for(f=k.length;b<f;b++)h.appendChild(k.item(0));g&&g.parentNode.replaceChild(h,g);c[d]=1;if(a=c[d+"$"])for(b=0,f=a.length;b<f;b++)c(a[b])}}`,
-            );
-            global._afRuntime = true;
-          }
-
-          if (global.cspNonce) {
-            asyncOut.write(
-              '<style nonce="' +
-                escapeDoubleQuotes(global.cspNonce) +
-                '">' +
-                `#${reorderFunctionId}` +
-                awaitInfo.id +
-                "{display:none;}" +
-                "</style>" +
-                `<div id="${reorderFunctionId}` +
-                awaitInfo.id +
-                '">' +
-                result.toString() +
-                "</div>",
-            );
-          } else {
-            asyncOut.write(
-              `<div id="${reorderFunctionId}` +
-                awaitInfo.id +
-                '" style="display:none">' +
-                result.toString() +
-                "</div>",
-            );
-          }
-
-          if (!flushedScript && flushedPlaceholder) {
+      } else {
+        awaitInfo.parent.on("___toString", () => {
+          flushedPlaceholder = true;
+          if (!flushedScript && flushedContent) {
             flushedScript = true;
             asyncOut.script(
               `$${reorderFunctionId}(` +
@@ -115,21 +72,74 @@ module.exports = function (input, out) {
                 ")",
             );
           }
+        });
+      }
 
-          awaitInfo.out.writer = asyncOut.writer;
-
-          out.emit("await:finish", awaitInfo);
-
-          out.flush();
-
-          if (--remaining === 0) {
-            asyncOut.end();
-            next();
-          }
-        })
+      awaitInfo.out
+        .on("___toString", out.emit.bind(out, "___toString"))
+        .on("finish", writeResult)
         .on("error", function (err) {
           asyncOut.error(err);
         });
+
+      function writeResult(result) {
+        flushedContent = true;
+        if (!global._afRuntime) {
+          // Minified version of ./client-reorder-runtime.js
+          asyncOut.script(
+            `function $${reorderFunctionId}(d,a,e,l,g,h,k,b,f,c){c=$${reorderFunctionId};if(a&&!c[a])(c[a+="$"]||(c[a]=[])).push(d);else{e=document;l=e.getElementById("${reorderFunctionId}"+d);g=e.getElementById("${reorderFunctionId}ph"+d);h=e.createDocumentFragment();k=l.childNodes;b=0;for(f=k.length;b<f;b++)h.appendChild(k.item(0));g&&g.parentNode.replaceChild(h,g);c[d]=1;if(a=c[d+"$"])for(b=0,f=a.length;b<f;b++)c(a[b])}}`,
+          );
+          global._afRuntime = true;
+        }
+
+        if (global.cspNonce) {
+          asyncOut.write(
+            '<style nonce="' +
+              escapeDoubleQuotes(global.cspNonce) +
+              '">' +
+              `#${reorderFunctionId}` +
+              awaitInfo.id +
+              "{display:none;}" +
+              "</style>" +
+              `<div id="${reorderFunctionId}` +
+              awaitInfo.id +
+              '">' +
+              result.toString() +
+              "</div>",
+          );
+        } else {
+          asyncOut.write(
+            `<div id="${reorderFunctionId}` +
+              awaitInfo.id +
+              '" style="display:none">' +
+              result.toString() +
+              "</div>",
+          );
+        }
+
+        if (!flushedScript && flushedPlaceholder) {
+          flushedScript = true;
+          asyncOut.script(
+            `$${reorderFunctionId}(` +
+              (typeof awaitInfo.id === "number"
+                ? awaitInfo.id
+                : '"' + awaitInfo.id + '"') +
+              (awaitInfo.after ? ',"' + awaitInfo.after + '"' : "") +
+              ")",
+          );
+        }
+
+        awaitInfo.out.writer = asyncOut.writer;
+
+        out.emit("await:finish", awaitInfo);
+
+        out.flush();
+
+        if (--remaining === 0) {
+          asyncOut.end();
+          next();
+        }
+      }
     }
 
     awaitContext.instances.forEach(handleAwait);

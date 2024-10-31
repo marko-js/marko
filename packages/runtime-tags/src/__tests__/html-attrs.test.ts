@@ -49,38 +49,41 @@ describe("runtime-tags/html/attrs", () => {
 
   describe("attrs", () => {
     it("should remove falseish values", () => {
-      assert.equal(helpers.attrs({}), "");
+      assert.equal(helpers.attrs({}, 0, 0, ""), "");
       for (const value of falseishValues) {
-        assert.equal(helpers.attrs({ foo: value }), "");
-        assert.equal(helpers.attrs({ foo: "bar", baz: value }), " foo=bar");
+        assert.equal(helpers.attrs({ foo: value }, 0, 0, ""), "");
+        assert.equal(
+          helpers.attrs({ foo: "bar", baz: value }, 0, 0, ""),
+          " foo=bar",
+        );
       }
     });
 
     it("should return a single attribute for a single key-value pair", () => {
-      assert.equal(helpers.attrs({ foo: "bar" }), " foo=bar");
+      assert.equal(helpers.attrs({ foo: "bar" }, 0, 0, ""), " foo=bar");
     });
 
     it("should return multiple attributes for multiple key-value pairs", () => {
       assert.equal(
-        helpers.attrs({ foo: "bar", baz: "qux" }),
+        helpers.attrs({ foo: "bar", baz: "qux" }, 0, 0, ""),
         " foo=bar baz=qux",
       );
     });
 
     it("should strip event handlers, invalid attribute names and renderBody", () => {
-      // assert.equal(helpers.attrs({ onClick() {} }), "");
-      // assert.equal(helpers.attrs({ "on-click"() {} }), "");
-      assert.equal(helpers.attrs({ renderBody() {} }), "");
-      assert.equal(helpers.attrs({ "foo bar": "baz" }), "");
-      assert.equal(helpers.attrs({ "foo\tbar": "baz" }), "");
-      assert.equal(helpers.attrs({ "foo\nbar": "baz" }), "");
-      assert.equal(helpers.attrs({ "foo\rbar": "baz" }), "");
-      assert.equal(helpers.attrs({ "foo\fbar": "baz" }), "");
-      assert.equal(helpers.attrs({ "=foo": "bar" }), "");
-      assert.equal(helpers.attrs({ "'foo": "bar" }), "");
-      assert.equal(helpers.attrs({ '"foo': "bar" }), "");
-      assert.equal(helpers.attrs({ "/foo": "bar" }), "");
-      assert.equal(helpers.attrs({ ">foo": "bar" }), "");
+      // assert.equal(helpers.attrs({ onClick() {} }, 0, 0, ""), "");
+      // assert.equal(helpers.attrs({ "on-click"() {}, 0, 0, "" }), "");
+      assert.equal(helpers.attrs({ renderBody() {} }, 0, 0, ""), "");
+      assert.equal(helpers.attrs({ "foo bar": "baz" }, 0, 0, ""), "");
+      assert.equal(helpers.attrs({ "foo\tbar": "baz" }, 0, 0, ""), "");
+      assert.equal(helpers.attrs({ "foo\nbar": "baz" }, 0, 0, ""), "");
+      assert.equal(helpers.attrs({ "foo\rbar": "baz" }, 0, 0, ""), "");
+      assert.equal(helpers.attrs({ "foo\fbar": "baz" }, 0, 0, ""), "");
+      assert.equal(helpers.attrs({ "=foo": "bar" }, 0, 0, ""), "");
+      assert.equal(helpers.attrs({ "'foo": "bar" }, 0, 0, ""), "");
+      assert.equal(helpers.attrs({ '"foo': "bar" }, 0, 0, ""), "");
+      assert.equal(helpers.attrs({ "/foo": "bar" }, 0, 0, ""), "");
+      assert.equal(helpers.attrs({ ">foo": "bar" }, 0, 0, ""), "");
     });
   });
 

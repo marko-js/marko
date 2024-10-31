@@ -25,19 +25,24 @@ export function trimWalkString(walkString: string): string {
 
 export function walk(startNode: Node, walkCodes: string, scope: Scope) {
   walker.currentNode = startNode;
-  walkInternal(walkCodes, scope, 0);
+  walkInternal(walkCodes, scope, scope, 0);
   walker.currentNode = document.documentElement;
 }
 
 function walkInternal(
   walkCodes: string,
   scope: Scope,
+  cleanupOwnerScope: Scope,
   currentWalkIndex: number,
 ) {
   let value: number;
   let storedMultiplier = 0;
   let currentMultiplier = 0;
   let currentScopeIndex = 0;
+
+  if (cleanupOwnerScope !== scope) {
+    scope.___cleanupOwner = cleanupOwnerScope;
+  }
 
   while ((value = walkCodes.charCodeAt(currentWalkIndex++))) {
     currentMultiplier = storedMultiplier;
@@ -71,6 +76,7 @@ function walkInternal(
             ? getDebugKey(currentScopeIndex++, "#childScope")
             : currentScopeIndex++
         ] = createScope(scope.$global)),
+        cleanupOwnerScope,
         currentWalkIndex,
       )!;
     } else if (value === WalkCode.EndChild) {
@@ -89,28 +95,12 @@ function walkInternal(
       ] = document.createTextNode(""));
       const current = walker.currentNode;
       const parentNode = current.parentNode!;
-
-      if (value === WalkCode.Before) {
-        parentNode.insertBefore(newNode, current);
-      } else {
-        if (value === WalkCode.After) {
-          parentNode.insertBefore(newNode, current.nextSibling);
-        } else {
-          if (MARKO_DEBUG && value !== WalkCode.Replace) {
-            throw new Error(`Unknown walk code: ${value}`);
-          }
-          parentNode.replaceChild(newNode, current);
-        }
-
-        walker.currentNode = newNode;
-      }
-    } /* else {
-      if (MARKO_DEBUG && value !== WalkCodes.Replace) {
+      if (MARKO_DEBUG && value !== WalkCode.Replace) {
         throw new Error(`Unknown walk code: ${value}`);
       }
-      const current = walker.currentNode;
-      current.parentNode!.replaceChild(walker.currentNode = scope[currentScopeIndex++] = document.createTextNode(""), current);
-    } */
+      parentNode.replaceChild(newNode, current);
+      walker.currentNode = newNode;
+    }
   }
 
   return currentWalkIndex;

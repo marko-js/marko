@@ -1,4 +1,4 @@
-// size: 329 (min) 201 (brotli)
+// size: 341 (min) 205 (brotli)
 
 import {
   register as n,
@@ -26,6 +26,6 @@ const i = n("a0", (n) =>
     const { 2: o, 3: t } = n;
     l(n[1], o + t), m(n, i);
   }),
-  a = c(3, null, s),
-  e = c(2, null, s);
+  a = c(3, null, () => s),
+  e = c(2, null, () => s);
 u();

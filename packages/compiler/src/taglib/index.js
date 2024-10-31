@@ -37,26 +37,16 @@ export function buildLookup(dirname, requestedTranslator, onError) {
     loadedTranslatorsTaglibs.set(
       translator,
       (taglibsForDir = registeredTaglibs.concat(
-        resolveOptionalTaglibs(translator.optionalTaglibs || [])
+        resolveOptionalTaglibs(translator.optionalTaglibs || [], onError)
           .concat(translator.taglibs)
           .map(([id, props]) => loadTaglib(id, props)),
       )),
     );
   }
 
-  if (onError) {
-    const prevOnError = taglibConfig.onError;
-    taglibConfig.onError = onError;
-    try {
-      taglibsForDir = finder.find(dirname, taglibsForDir);
-    } catch (err) {
-      taglibConfig.onError(err);
-    } finally {
-      taglibConfig.onError = prevOnError;
-    }
-  } else {
+  runAndCatchErrors(() => {
     taglibsForDir = finder.find(dirname, taglibsForDir);
-  }
+  }, onError);
 
   const cacheKey = taglibsForDir
     .map((it) => it.id)
@@ -95,11 +85,13 @@ export function clearCaches() {
   lookupCache = Object.create(null);
 }
 
-export function resolveOptionalTaglibs(taglibIds) {
+export function resolveOptionalTaglibs(taglibIds, onError) {
   const resolvedTaglibs = [];
   for (const id of taglibIds) {
     if (hasRootDependency(id)) {
-      resolvedTaglibs.push(resolveTaglib(id));
+      runAndCatchErrors(() => {
+        resolvedTaglibs.push(resolveTaglib(id));
+      }, onError);
     }
   }
 
@@ -109,6 +101,22 @@ export function resolveOptionalTaglibs(taglibIds) {
 // Used by legacy compiler api.
 export const _loader = loader;
 export const _finder = finder;
+
+function runAndCatchErrors(fn, onError) {
+  if (onError) {
+    const prevOnError = taglibConfig.onError;
+    taglibConfig.onError = onError;
+    try {
+      fn();
+    } catch (err) {
+      taglibConfig.onError(err);
+    } finally {
+      taglibConfig.onError = prevOnError;
+    }
+  } else {
+    fn();
+  }
+}
 
 function loadTaglib(id, props) {
   return loader.loadTaglibFromProps(loader.createTaglib(id), props);
@@ -133,5 +141,5 @@ function resolveTaglib(id) {
 
 function hasRootDependency(id) {
   const pkg = getRootPackage(process.cwd());
-  return !!((pkg && pkg.dependencies?.[id]) || pkg.devDependencies?.[id]);
+  return !!(pkg && (pkg.dependencies?.[id] || pkg.devDependencies?.[id]));
 }

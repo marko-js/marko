@@ -14,6 +14,7 @@ import {
   type Section,
 } from "../util/sections";
 import { getSerializedScopeProperties } from "../util/signals";
+import type { TemplateVisitor } from "../util/visitors";
 import { currentProgramPath, scopeIdentifier } from "./program";
 const functionIdsBySection = new WeakMap<Section, Map<string, number>>();
 const registeredFunctions = new WeakSet<t.Function>();
@@ -36,7 +37,7 @@ declare module "@marko/compiler/dist/types" {
 }
 
 export default {
-  analyze(fn: t.NodePath<t.Function>) {
+  analyze(fn) {
     const markoRoot = getMarkoRoot(fn);
     const isStatic = !markoRoot || markoRoot.isMarkoScriptlet({ static: true });
     if (!isFunction(fn, isStatic)) return;
@@ -54,20 +55,19 @@ export default {
     const extra = (node.extra ??= {});
     const name = (extra.name =
       (fn.node as t.FunctionExpression).id?.name ||
-      (markoRoot?.isMarkoAttribute()
+      (isMarkoAttribute(markoRoot)
         ? markoRoot.node.default
           ? t.toIdentifier(
-              (markoRoot.parentPath.parentPath as t.NodePath<t.MarkoTag>).get(
-                "name",
-              ),
+              markoRoot.parentPath.has("var")
+                ? markoRoot.parentPath.get("var")
+                : markoRoot.parentPath.get("name"),
             )
           : markoRoot.node.name
         : "anonymous"));
 
     if (
-      markoRoot &&
-      markoRoot.isMarkoAttribute() &&
-      ((isNativeTag(markoRoot.parentPath as t.NodePath<t.MarkoTag>) &&
+      isMarkoAttribute(markoRoot) &&
+      ((isNativeTag(markoRoot.parentPath) &&
         /^on[A-Z-]/.test(markoRoot.node.name)) ||
         isCoreTagName(markoRoot.parentPath, "effect") ||
         isCoreTagName(markoRoot.parentPath, "lifecycle") ||
@@ -104,7 +104,7 @@ export default {
     );
   },
   translate: {
-    exit(fn: t.NodePath<t.Function>) {
+    exit(fn) {
       const markoRoot = getMarkoRoot(fn);
       const isStatic =
         !markoRoot || markoRoot.isMarkoScriptlet({ static: true });
@@ -227,7 +227,7 @@ export default {
       }
     },
   },
-};
+} satisfies TemplateVisitor<t.Function>;
 
 function isFunction(
   fn: t.NodePath<t.Node>,
@@ -245,4 +245,13 @@ function isFunction(
     default:
       return false;
   }
+}
+
+function isMarkoAttribute(
+  path: t.NodePath | undefined | null,
+): path is t.NodePath<t.MarkoAttribute> & {
+  parent: t.MarkoTag;
+  parentPath: t.NodePath<t.MarkoTag>;
+} {
+  return path ? path.isMarkoAttribute() : false;
 }

@@ -18,7 +18,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       _writeScope(_scope2_id, {
         "_": _ensureScopeWithId(_scope1_id)
       });
-      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer", _scope1_id);
+      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer");
       _ifScopeId = _scope2_id;
     }
     _write(`${_markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId)}`);
@@ -28,7 +28,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
       "#text/1(": _ifRenderer,
       "#text/1!": _getScopeById(_ifScopeId)
     });
-    _register(_ifRenderer2 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer", _scope0_id);
+    _register(_ifRenderer2 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_renderer");
     _ifScopeId2 = _scope1_id;
   }
   _write(`${_markResumeControlEnd(_scope0_id, "#text/1")}</div>`);

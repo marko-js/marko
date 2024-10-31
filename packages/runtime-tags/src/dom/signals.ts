@@ -1,6 +1,5 @@
 import { type Accessor, AccessorChar, type Scope } from "../common/types";
-import type { RendererOrElementName } from "./renderer";
-import { bindFunction } from "./scope";
+import type { Renderer } from "./renderer";
 
 export type Signal = ValueSignal | IntersectionSignal;
 
@@ -44,21 +43,23 @@ export function changeHandler<T>(
 ): ValueSignal<T> {
   const markAccessor = valueAccessor + AccessorChar.Mark;
   return (scope, valueOrOp) => {
-    if (valueOrOp !== MARK && valueOrOp !== CLEAN && valueOrOp !== DIRTY) {
-      if (valueOrOp != null && typeof valueOrOp !== "function") {
-        throw new Error(
-          `Invalid value ${valueOrOp} for change handler '${valueAccessor}'`,
-        );
-      } else if (scope[markAccessor] !== undefined) {
-        const prevValue = scope[valueAccessor];
-        if (prevValue && !valueOrOp) {
+    if (MARKO_DEBUG) {
+      if (valueOrOp !== MARK && valueOrOp !== CLEAN && valueOrOp !== DIRTY) {
+        if (valueOrOp != null && typeof valueOrOp !== "function") {
           throw new Error(
-            `Change handler '${valueAccessor}' cannot change from a function to ${valueOrOp}`,
+            `Invalid value ${valueOrOp} for change handler '${valueAccessor}'`,
           );
-        } else if (!prevValue && valueOrOp) {
-          throw new Error(
-            `Change handler '${valueAccessor}' cannot change from a nullish to a function`,
-          );
+        } else if (scope[markAccessor] !== undefined) {
+          const prevValue = scope[valueAccessor];
+          if (prevValue && !valueOrOp) {
+            throw new Error(
+              `Change handler '${valueAccessor}' cannot change from a function to ${valueOrOp}`,
+            );
+          } else if (!prevValue && valueOrOp) {
+            throw new Error(
+              `Change handler '${valueAccessor}' cannot change from a nullish to a function`,
+            );
+          }
         }
       }
     }
@@ -69,9 +70,13 @@ export function changeHandler<T>(
 export function value<T>(
   valueAccessor: Accessor,
   fn?: SignalFn<T>,
-  intersection?: IntersectionSignal,
+  getIntersection?: () => IntersectionSignal,
 ): ValueSignal<T> {
   const markAccessor = valueAccessor + AccessorChar.Mark;
+  let intersection: IntersectionSignal | undefined =
+    getIntersection &&
+    ((scope, op) => (intersection = getIntersection!())(scope, op));
+
   return (scope, valueOrOp) => {
     if (valueOrOp === MARK) {
       if ((scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) === 1) {
@@ -103,10 +108,14 @@ let accessorId = 0;
 export function intersection(
   count: number,
   fn: SignalFn<never>,
-  intersection?: IntersectionSignal,
+  getIntersection?: () => IntersectionSignal,
 ): IntersectionSignal {
   const dirtyAccessor = AccessorChar.Dynamic + accessorId++;
   const markAccessor = dirtyAccessor + AccessorChar.Mark;
+  let intersection: IntersectionSignal | undefined =
+    getIntersection &&
+    ((scope, op) => (intersection = getIntersection!())(scope, op));
+
   return (scope, op) => {
     if (op === MARK) {
       if ((scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) === 1) {
@@ -134,16 +143,19 @@ const defaultGetOwnerScope = (scope: Scope) => scope._ as Scope;
 export function closure<T>(
   ownerValueAccessor: Accessor | ((scope: Scope) => Accessor),
   fn?: SignalFn<T>,
-  _getOwnerScope?: (scope: Scope) => Scope,
-  intersection?: IntersectionSignal,
+  getOwnerScope: (scope: Scope) => Scope = defaultGetOwnerScope,
+  getIntersection?: () => IntersectionSignal,
 ): IntersectionSignal {
   const dirtyAccessor = AccessorChar.Dynamic + accessorId++;
   const markAccessor = dirtyAccessor + 1;
-  const getOwnerScope = _getOwnerScope || defaultGetOwnerScope;
+  //const getOwnerScope = _getOwnerScope || defaultGetOwnerScope;
   const getOwnerValueAccessor =
     typeof ownerValueAccessor === "function"
       ? ownerValueAccessor
       : () => ownerValueAccessor as Accessor;
+  let intersection: IntersectionSignal | undefined =
+    getIntersection &&
+    ((scope, op) => (intersection = getIntersection!())(scope, op));
   return (scope, op) => {
     if (op === MARK) {
       if ((scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) === 1) {
@@ -163,8 +175,8 @@ export function closure<T>(
       if (--scope[markAccessor] === 0) {
         if (op === DIRTY || scope[dirtyAccessor]) {
           scope[dirtyAccessor] = false;
-          ownerScope ??= getOwnerScope(scope);
-          ownerValueAccessor ??= getOwnerValueAccessor(scope);
+          ownerScope ||= getOwnerScope(scope);
+          ownerValueAccessor ||= getOwnerValueAccessor(scope);
           fn?.(scope, ownerScope[ownerValueAccessor]);
           intersection?.(scope, DIRTY);
         } else {
@@ -180,10 +192,10 @@ export function closure<T>(
 export function dynamicClosure<T>(
   ownerValueAccessor: Accessor | ((scope: Scope) => Accessor),
   fn: ValueSignal<T>,
-  _getOwnerScope?: (scope: Scope) => Scope,
-  intersection?: IntersectionSignal,
+  getOwnerScope: (scope: Scope) => Scope = defaultGetOwnerScope,
+  getIntersection?: () => IntersectionSignal,
 ): IntersectionSignal {
-  const getOwnerScope = _getOwnerScope || defaultGetOwnerScope;
+  //const getOwnerScope = _getOwnerScope || defaultGetOwnerScope;
   const getOwnerValueAccessor =
     typeof ownerValueAccessor === "function"
       ? ownerValueAccessor
@@ -192,24 +204,24 @@ export function dynamicClosure<T>(
     getOwnerValueAccessor,
     fn,
     getOwnerScope,
-    intersection,
+    getIntersection,
   );
+  const subscribeFns = new WeakMap<Scope, (value: SignalOp) => void>();
   signalFn.___subscribe = (scope: Scope) => {
+    const subscribeFn = (value: SignalOp) => signalFn(scope, value);
     const ownerScope = getOwnerScope(scope);
     const providerSubscriptionsAccessor =
       getOwnerValueAccessor(scope) + AccessorChar.Subscribers;
-    ownerScope[providerSubscriptionsAccessor] ??= new Set();
-    ownerScope[providerSubscriptionsAccessor].add(
-      bindFunction(scope, signalFn as any),
-    );
+
+    subscribeFns.set(scope, subscribeFn);
+    (ownerScope[providerSubscriptionsAccessor] ||= new Set()).add(subscribeFn);
   };
   signalFn.___unsubscribe = (scope: Scope) => {
     const ownerScope = getOwnerScope(scope);
     const providerSubscriptionsAccessor =
       getOwnerValueAccessor(scope) + AccessorChar.Subscribers;
-    ownerScope[providerSubscriptionsAccessor]?.delete(
-      bindFunction(scope, signalFn as any),
-    );
+    ownerScope[providerSubscriptionsAccessor]?.delete(subscribeFns.get(scope));
+    subscribeFns.delete(scope);
   };
   return signalFn;
 }
@@ -267,11 +279,11 @@ export const tagVarSignal = (scope: Scope, valueOrOp: unknown | SignalOp) =>
   scope[AccessorChar.TagVariable]?.(valueOrOp);
 
 export const renderBodyClosures = (
-  renderBody: RendererOrElementName | undefined,
+  renderBody: Renderer | string | undefined,
   childScope: Scope,
   op: SignalOp,
 ) => {
-  const signals = renderBody?.___closureSignals;
+  const signals = (renderBody as unknown as Renderer)?.___closureSignals;
   if (signals) {
     for (const signal of signals) {
       signal(childScope, op);

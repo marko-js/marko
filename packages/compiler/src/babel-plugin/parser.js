@@ -49,7 +49,28 @@ export function parseMarko(file) {
     return node;
   };
   const enterTag = (node) => {
-    currentTag = currentBody.pushContainer("body", node)[0];
+    if (isAttrTag(node)) {
+      if (currentTag === file.path) {
+        throw file.buildCodeFrameError(
+          node.name,
+          "@tags must be nested within another element.",
+        );
+      }
+
+      let previousSiblingIndex = currentBody.length;
+      while (previousSiblingIndex) {
+        let previousSibling = currentBody[--previousSiblingIndex];
+        if (!t.isMarkoComment(previousSibling)) {
+          break;
+        }
+        currentTag.pushContainer("attributeTags", previousSibling.node);
+        currentBody.get("body").get(previousSiblingIndex).remove();
+      }
+
+      currentTag = currentTag.pushContainer("attributeTags", node)[0];
+    } else {
+      currentTag = currentBody.pushContainer("body", node)[0];
+    }
     currentBody = currentTag.get("body");
     onNext(node);
   };
@@ -496,7 +517,8 @@ export function parseMarko(file) {
     },
     onCloseTagEnd(part) {
       const { node } = currentTag;
-      const parserPlugin = node.tagDef?.parser;
+      const tagDef = node.tagDef;
+      const parserPlugin = tagDef?.parser;
       if (preservingWhitespaceUntil === node) {
         preservingWhitespaceUntil = undefined;
       }
@@ -510,9 +532,54 @@ export function parseMarko(file) {
         (hook.default || hook)(currentTag, t);
       }
 
-      currentTag = currentTag.parentPath.parentPath;
+      const parentTag = isAttrTag(node)
+        ? currentTag.parentPath
+        : currentTag.parentPath.parentPath;
+      const { attributeTags } = node;
 
-      if (currentTag) {
+      if (attributeTags.length) {
+        const isControlFlow = tagDef?.parseOptions?.controlFlow;
+
+        if (node.body.body.length) {
+          const body = [];
+          for (const child of node.body.body) {
+            if (
+              t.isMarkoScriptlet(child) ||
+              (isControlFlow &&
+                (t.isMarkoComment(child) ||
+                  (child.tagDef?.controlFlow && !child.body.body.length)))
+            ) {
+              // When we have a control flow with mixed body and attribute tag content
+              // we move any scriptlets, comments or empty nested control flow.
+              // This is because they initially ambiguous as to whether
+              // they are part of the body or the attributeTags.
+              attributeTags.push(child);
+            } else {
+              body.push(child);
+            }
+          }
+
+          if (isControlFlow && body.length) {
+            onNext();
+            throw file.buildCodeFrameError(
+              body[0],
+              "Cannot have attribute tags and body content under a control flow tag.",
+            );
+          } else {
+            node.body.body = body;
+          }
+
+          attributeTags.sort(sortByStart);
+        }
+
+        if (isControlFlow) {
+          currentTag.remove();
+          parentTag.pushContainer("attributeTags", node);
+        }
+      }
+
+      if (parentTag) {
+        currentTag = parentTag;
         currentBody = currentTag.get("body");
       } else {
         currentTag = currentBody = file.path;
@@ -533,4 +600,8 @@ export function parseMarko(file) {
     start: { line: 1, column: 0 },
     end: positionAt(ast.end),
   };
+}
+
+function sortByStart(a, b) {
+  return a.start - b.start;
 }

@@ -1,45 +1,54 @@
-// size: 522 (min) 294 (brotli)
+// size: 586 (min) 322 (brotli)
 
 import {
-  value as e,
-  classAttr as n,
-  conditional as t,
-  register as r,
-  createRenderer as o,
-  inChild as c,
+  dynamicTagAttrs as e,
+  value as n,
+  classAttr as t,
+  conditional as r,
+  register as o,
+  createRendererWithOwner as c,
   on as d,
   queueSource as i,
   queueEffect as s,
-  bindRenderer as g,
+  inChild as g,
   init as h,
 } from "@marko/runtime-tags/dom";
-const m = t(1),
-  a = e(
-    3,
-    (e, t) => {
-      n(e[0], { selected: t.thing.selected }), m(e, t.thing.renderBody);
-    },
-    m,
+const m = e(1),
+  a = r(
+    1,
+    (e) => m(e, () => ({})),
+    () => m,
   ),
-  l = r("b0", o("<span>The thing</span>", "")),
-  p = e(3, (e, n) => a(e[0], { thing: n }), c(0, a)),
-  u = r("b1", (e) =>
+  l = n(
+    3,
+    (e, n) => {
+      t(e[0], { selected: n.thing.selected }), a(e, n.thing.renderBody);
+    },
+    () => a,
+  ),
+  p = o("b0", c("<span>The thing</span>", "")),
+  u = n(
+    3,
+    (e, n) => l(e[0], { thing: n }),
+    () => g(0, l),
+  ),
+  b = o("b1", (e) =>
     d(
       e[1],
       "click",
       ((e) => {
         const { 2: n } = e;
         return function () {
-          i(e, b, !n);
+          i(e, f, !n);
         };
       })(e),
     ),
   ),
-  b = e(
+  f = n(
     2,
     (e, n) => {
-      s(e, u), p(e, { selected: n, renderBody: g(e, l) });
+      s(e, b), u(e, { selected: n, renderBody: p(e) });
     },
-    p,
+    () => u,
   );
 h();

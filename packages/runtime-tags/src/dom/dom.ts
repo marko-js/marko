@@ -7,6 +7,7 @@ import {
 } from "../common/types";
 import { getAbortSignal } from "./abort-signal";
 import { on } from "./event";
+import { parseHTML } from "./parse-html";
 import { preserveCursorPosition } from "./preserve-cursor";
 import { runSync } from "./queue";
 import { isResuming } from "./resume";
@@ -62,8 +63,6 @@ export function attrs(
   nextAttrs: Record<string, unknown>,
 ) {
   const element = scope[elementAccessor] as Element;
-  let events: undefined | Record<string, unknown>;
-
   for (const { name } of element.attributes) {
     if (
       !(nextAttrs && name in nextAttrs) &&
@@ -73,6 +72,38 @@ export function attrs(
     }
   }
 
+  attrsInternal(scope, elementAccessor, nextAttrs);
+}
+
+export function partialAttrs(
+  scope: Scope,
+  elementAccessor: Accessor,
+  nextAttrs: Record<string, unknown>,
+  skip: Record<string, 1>,
+) {
+  const element = scope[elementAccessor] as Element;
+  const partial: Partial<typeof nextAttrs> = {};
+
+  for (const { name } of element.attributes) {
+    if (!skip[name] && !(nextAttrs && name in nextAttrs)) {
+      element.removeAttribute(name);
+    }
+  }
+
+  for (const key in nextAttrs) {
+    if (!skip[key]) partial[key] = nextAttrs[key];
+  }
+
+  attrsInternal(scope, elementAccessor, partial);
+}
+
+function attrsInternal(
+  scope: Scope,
+  elementAccessor: Accessor,
+  nextAttrs: Record<string, unknown>,
+) {
+  let events: undefined | Record<string, unknown>;
+  const element = scope[elementAccessor] as Element;
   // https://jsperf.com/object-keys-vs-for-in-with-closure/194
   for (const name in nextAttrs) {
     const value = nextAttrs[name];
@@ -148,7 +179,7 @@ export function attrs(
           scope[elementAccessor + AccessorChar.ControlledType] =
             controllableAttr;
         } else if (eventHandlerReg.test(name)) {
-          (events ??= scope[elementAccessor + AccessorChar.EventAttributes] =
+          (events ||= scope[elementAccessor + AccessorChar.EventAttributes] =
             {})[name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()] =
             value;
         } else {
@@ -177,17 +208,13 @@ export function attrsEvents(scope: Scope, elementAccessor: Accessor) {
   }
 }
 
-const doc = document;
-const parser = /* @__PURE__ */ doc.createElement("template");
-
 export function html(scope: Scope, value: unknown, index: Accessor) {
   const firstChild = scope[index] as Node & ChildNode;
   const lastChild = (scope[index + "-"] || firstChild) as Node & ChildNode;
   const parentNode = firstChild.parentNode!;
   const afterReference = lastChild.nextSibling;
+  const newContent = parseHTML(value || value === 0 ? value + "" : "<!>");
 
-  parser.innerHTML = value || value === 0 ? `${value}` : "<!>";
-  const newContent = parser.content;
   scope[index] = newContent.firstChild;
   scope[index + AccessorChar.DynamicPlaceholderLastChild] =
     newContent.lastChild;

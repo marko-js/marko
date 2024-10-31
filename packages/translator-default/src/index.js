@@ -504,7 +504,6 @@ export function getRuntimeEntryFiles(output, optimize) {
     `${base}runtime/helpers/dynamic-tag.js`,
     `${base}runtime/helpers/attr-tag.js`,
     `${base}runtime/helpers/merge.js`,
-    `${base}runtime/helpers/repeatable.js`,
     `${base}runtime/helpers/render-tag.js`,
     `${base}runtime/helpers/style-value.js`,
     `${base}runtime/helpers/to-string.js`,

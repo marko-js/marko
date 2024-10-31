@@ -3,6 +3,9 @@ import tagB from "./components/tag-b/index.marko";
 <${input} class=["a", "b"] other=input.other/>
 <${input.x} class=["a", "b"] other=input.other/>
 <${input.show ? "div" : null} class=["a", "b"] other=input.other/>
+<${input.show ? "div" : null} class=["a", "b"] other=input.other>
+  Body Content
+</>
 <${input.show && "div"} class=["a", "b"] other=input.other/>
 <${input.large ? "h1" : "h2"} class=["a", "b"] other=input.other/>
 <${input.showTagA ? tagA : tagB} class=["a", "b"] other=input.other class=["a", "b"] other=input.other/>

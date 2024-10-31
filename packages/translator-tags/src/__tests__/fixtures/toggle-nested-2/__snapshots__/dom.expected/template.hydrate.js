@@ -1,4 +1,4 @@
-// size: 881 (min) 401 (brotli)
+// size: 899 (min) 407 (brotli)
 
 import {
   register as n,
@@ -7,17 +7,16 @@ import {
   dynamicClosure as u,
   data as c,
   queueEffect as i,
-  registerRenderer as l,
-  createRenderer as r,
-  value as a,
-  dynamicSubscribers as _,
-  inConditionalScope as d,
-  queueSource as b,
-  closure as e,
-  conditional as m,
-  init as s,
+  createRenderer as l,
+  queueSource as r,
+  closure as a,
+  value as _,
+  dynamicSubscribers as d,
+  inConditionalScope as b,
+  conditional as e,
+  init as m,
 } from "@marko/runtime-tags/dom";
-const f = n("a0", (n) =>
+const s = n("a0", (n) =>
     t(
       n[0],
       "click",
@@ -28,27 +27,26 @@ const f = n("a0", (n) =>
           },
         } = n;
         return function () {
-          b(n._._, j, t + 1);
+          r(n._._, j, t + 1);
         };
       })(n),
     ),
   ),
-  k = l(
-    "a2",
-    r("<button id=count> </button>", " D ", void 0, [
-      o(
-        "a1",
-        u(
-          4,
-          (n, t) => {
-            c(n[1], t), i(n, f);
-          },
-          (n) => n._._,
-        ),
-      ),
-    ]),
+  f = o(
+    "a1",
+    u(
+      4,
+      (n, t) => {
+        c(n[1], t), i(n, s);
+      },
+      (n) => n._._,
+    ),
   ),
-  v = m(1),
+  k = n(
+    "a2",
+    l("<button id=count> </button>", " D ", void 0, () => [f]),
+  ),
+  v = e(1),
   D = n("a3", (n) =>
     t(
       n[0],
@@ -58,23 +56,26 @@ const f = n("a0", (n) =>
           _: { 3: t },
         } = n;
         return function () {
-          b(n._, q, !t);
+          r(n._, q, !t);
         };
       })(n),
     ),
   ),
-  g = e(
+  g = a(
     3,
     (n, t) => {
       i(n, D), v(n, t ? k : null);
     },
     void 0,
-    v,
+    () => v,
   ),
-  p = l("a4", r("<button id=inner></button><!><!>", " b%D", void 0, [g])),
-  h = m(1),
-  j = a(4, null, _(4)),
-  q = a(3, null, d(g, 1)),
+  p = n(
+    "a4",
+    l("<button id=inner></button><!><!>", " b%D", void 0, () => [g]),
+  ),
+  h = e(1),
+  j = _(4, null, () => d(4)),
+  q = _(3, null, () => b(g, 1)),
   w = n("a5", (n) =>
     t(
       n[0],
@@ -82,16 +83,16 @@ const f = n("a0", (n) =>
       ((n) => {
         const { 2: t } = n;
         return function () {
-          b(n, x, !t);
+          r(n, x, !t);
         };
       })(n),
     ),
   ),
-  x = a(
+  x = _(
     2,
     (n, t) => {
       i(n, w), h(n, t ? p : null);
     },
-    h,
+    () => h,
   );
-s();
+m();

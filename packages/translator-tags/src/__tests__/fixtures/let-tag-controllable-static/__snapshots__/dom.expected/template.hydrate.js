@@ -1,4 +1,4 @@
-// size: 355 (min) 209 (brotli)
+// size: 371 (min) 216 (brotli)
 
 import {
   register as n,
@@ -14,7 +14,7 @@ n(
   "a0",
   (n) =>
     function (t) {
-      o(n, s, t + 1);
+      o(n, e, t + 1);
     },
 );
 const u = n("a1", (n) =>
@@ -29,18 +29,19 @@ const u = n("a1", (n) =>
       })(n),
     ),
   ),
-  f = c(
+  f = i(2, (n) => {
+    m(n, u);
+  }),
+  s = c(
     5,
     (n, o) => r(n[2], o),
-    i(2, (n) => {
-      m(n, u);
-    }),
+    () => f,
   ),
-  s = c(
+  e = c(
     3,
     (n, o) => {
-      r(n[1], o), f(n, o);
+      r(n[1], o), s(n, o);
     },
-    f,
+    () => s,
   );
 a();

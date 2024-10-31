@@ -65,7 +65,14 @@ export const compat = {
     clone: Renderer["___clone"],
     args: Renderer["___args"],
   ) {
-    const renderer = createRenderer("", undefined, setup, undefined, 1, args);
+    const renderer = createRenderer(
+      "",
+      undefined,
+      setup,
+      undefined,
+      1,
+      args && (() => args),
+    );
     renderer.___clone = clone;
     return renderer;
   },

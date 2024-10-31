@@ -3,6 +3,9 @@
 <button>
   0 0
 </button>
+<button>
+  0 0
+</button>
 ```
 
 
@@ -13,6 +16,9 @@ container.querySelector("button").click()
 <button>
   1 1
 </button>
+<button>
+  1 1
+</button>
 ```
 
 
@@ -20,6 +26,9 @@ container.querySelector("button").click()
 container.querySelector("button").click()
 
 ```html
+<button>
+  2 2
+</button>
 <button>
   2 2
 </button>

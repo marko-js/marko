@@ -3,11 +3,11 @@ import {
   AccessorChar,
   NodeType,
   type Scope,
-  WalkCode,
 } from "../common/types";
 import { setConditionalRendererOnlyChild } from "./control-flow";
 import { attrs } from "./dom";
-import { bindRenderer, createScope } from "./scope";
+import { parseHTMLOrSingleNode as parseHTMLFragmentOrFirstNode } from "./parse-html";
+import { createScope } from "./scope";
 import {
   CLEAN,
   DIRTY,
@@ -19,8 +19,9 @@ import {
 import { trimWalkString, walk } from "./walker";
 
 export type Renderer = {
+  ___id: symbol;
   ___template: string;
-  ___walks: string | undefined;
+  ___walks: string;
   ___setup: SetupFn | undefined;
   ___closureSignals: Set<IntersectionSignal>;
   ___clone: () => Node;
@@ -30,20 +31,16 @@ export type Renderer = {
   ___owner: Scope | undefined;
 };
 
-export type RendererOrElementName =
-  | Renderer
-  | (string & Record<keyof Renderer, undefined>);
-
 type SetupFn = (scope: Scope) => void;
 
 export function createScopeWithRenderer(
-  renderer: RendererOrElementName,
+  renderer: Renderer,
   $global: Scope["___global"],
-  ownerScope?: Scope,
+  ownerScope?: Scope, // This is only needed when creating a renderer without an owner (template and control flow)
 ) {
   const newScope = createScope($global);
-  newScope._ = renderer.___owner || ownerScope;
-  newScope.___renderer = renderer as Renderer;
+  newScope._ = newScope.___cleanupOwner = renderer.___owner || ownerScope;
+  newScope.___renderer = renderer;
   initRenderer(renderer, newScope);
   if (renderer.___closureSignals) {
     for (const signal of renderer.___closureSignals) {
@@ -53,14 +50,29 @@ export function createScopeWithRenderer(
   return newScope;
 }
 
-export function initRenderer(renderer: RendererOrElementName, scope: Scope) {
-  const dom =
-    typeof renderer === "string"
-      ? document.createElement(renderer)
-      : renderer.___clone();
+export function createScopeWithTagNameOrRenderer(
+  tagNameOrRenderer: Renderer | string,
+  $global: Scope["___global"],
+  ownerScope?: Scope,
+) {
+  if (typeof tagNameOrRenderer !== "string") {
+    return createScopeWithRenderer(tagNameOrRenderer, $global, ownerScope);
+  }
+
+  const newScope = createScope($global);
+  newScope._ = newScope.___cleanupOwner = ownerScope;
+  newScope[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : 0] =
+    newScope.___startNode =
+    newScope.___endNode =
+      document.createElement(tagNameOrRenderer);
+  return newScope;
+}
+
+export function initRenderer(renderer: Renderer, scope: Scope) {
+  const dom = renderer.___clone();
   walk(
     dom.nodeType === NodeType.DocumentFragment ? dom.firstChild! : dom,
-    renderer.___walks ?? " ",
+    renderer.___walks,
     scope,
   );
   scope.___startNode =
@@ -79,27 +91,17 @@ export function initRenderer(renderer: RendererOrElementName, scope: Scope) {
 
 export function dynamicTagAttrs(
   nodeAccessor: Accessor,
-  renderBody?: Renderer,
+  getRenderBody?: (scope: Scope) => Renderer,
   inputIsArgs?: boolean,
 ) {
   return (
     scope: Scope,
     attrsOrOp: (() => Record<string, unknown>) | SignalOp,
   ) => {
-    type WithOptional<T, Keys extends string> = T extends T
-      ? T & { [K in Exclude<Keys, keyof T>]?: never }
-      : never;
+    const renderer: Renderer | string | undefined =
+      scope[nodeAccessor + AccessorChar.ConditionalRenderer];
 
-    let renderer:
-      | WithOptional<
-          Renderer | { default: { _: Renderer } } | { _: Renderer },
-          "default" | "_"
-        >
-      | string
-      | undefined
-      | null = scope[nodeAccessor + AccessorChar.ConditionalRenderer];
-
-    if (!renderer || renderer === renderBody || attrsOrOp === DIRTY) {
+    if (!renderer || attrsOrOp === DIRTY) {
       return;
     }
 
@@ -109,34 +111,60 @@ export function dynamicTagAttrs(
       return (renderer as Renderer).___args?.(childScope, attrsOrOp);
     }
 
+    const renderBody = getRenderBody?.(scope);
     if (typeof renderer === "string") {
       // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
       const elementAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
-      setConditionalRendererOnlyChild(
-        childScope,
-        elementAccessor,
-        renderBody && bindRenderer(scope, renderBody),
-      );
+      setConditionalRendererOnlyChild(childScope, elementAccessor, renderBody);
       attrs(childScope, elementAccessor, attrsOrOp());
-    } else {
-      renderer = renderer.default ? renderer.default._ : renderer._ || renderer;
-      if (renderer.___args) {
-        const attributes = attrsOrOp();
-        renderer.___args(
-          childScope,
-          inputIsArgs
-            ? attributes
-            : [
-                renderBody
-                  ? {
-                      ...attributes,
-                      renderBody: bindRenderer(scope, renderBody),
-                    }
-                  : attributes,
-              ],
-        );
-      }
+    } else if (renderer.___args) {
+      const attributes = attrsOrOp();
+      renderer.___args(
+        childScope,
+        inputIsArgs
+          ? attributes
+          : [
+              renderBody
+                ? {
+                    ...attributes,
+                    renderBody,
+                  }
+                : attributes,
+            ],
+      );
     }
+  };
+}
+
+export function createRendererWithOwner(
+  template: string,
+  rawWalks?: string,
+  setup?: SetupFn,
+  getClosureSignals?: () => IntersectionSignal[],
+  hasUserEffects: 0 | 1 = 0,
+  getArgs?: () => ValueSignal,
+) {
+  let args: ValueSignal | undefined;
+  let closureSignals: Set<IntersectionSignal> | undefined;
+  const id = MARKO_DEBUG ? Symbol("Marko Renderer") : ({} as any as symbol);
+  const walks = rawWalks ? /* @__PURE__ */ trimWalkString(rawWalks) : " ";
+  return (owner?: Scope): Renderer => {
+    return {
+      ___id: id,
+      ___template: template,
+      ___walks: walks,
+      ___setup: setup,
+      ___clone: _clone,
+      ___owner: owner,
+      ___hasUserEffects: hasUserEffects,
+      ___sourceNode: undefined,
+      get ___args() {
+        return (args ||= getArgs?.());
+      },
+      get ___closureSignals() {
+        return (closureSignals ||= new Set(getClosureSignals?.()));
+      },
+    };
   };
 }
 
@@ -144,65 +172,22 @@ export function createRenderer(
   template: string,
   walks?: string,
   setup?: SetupFn,
-  closureSignals?: IntersectionSignal[],
-  hasUserEffects: 0 | 1 = 0,
-  args?: ValueSignal,
-): Renderer {
-  return {
-    ___template: template,
-    ___walks: walks && /* @__PURE__ */ trimWalkString(walks),
-    ___setup: setup,
-    ___clone: _clone,
-    ___closureSignals: new Set(closureSignals),
-    ___hasUserEffects: hasUserEffects,
-    ___sourceNode: undefined,
-    ___args: args,
-    ___owner: undefined,
-  };
+  getClosureSignals?: () => IntersectionSignal[],
+  hasUserEffects?: 0 | 1,
+  getArgs?: () => ValueSignal,
+) {
+  return createRendererWithOwner(
+    template,
+    walks,
+    setup,
+    getClosureSignals,
+    hasUserEffects,
+    getArgs,
+  )();
 }
 
 function _clone(this: Renderer) {
-  let sourceNode: Node | null | undefined = this.___sourceNode;
-  if (!sourceNode) {
-    if (MARKO_DEBUG && this.___template === undefined) {
-      throw new Error(
-        "The renderer does not have a template to clone: " +
-          JSON.stringify(this),
-      );
-    }
-    const walks = this.___walks;
-    // TODO: there's probably a better way to determine if nodes will be inserted before/after the parsed content
-    // and therefore we need to put it in a document fragment, even though only a single node results from the parse
-    const ensureFragment =
-      walks &&
-      walks.length < 4 &&
-      walks.charCodeAt(walks.length - 1) !== WalkCode.Get;
-    this.___sourceNode = sourceNode = parse(
-      this.___template,
-      ensureFragment as boolean,
-    );
-  }
-  return sourceNode.cloneNode(true);
-}
-
-const doc = document;
-const parser = /* @__PURE__ */ doc.createElement("template");
-
-function parse(template: string, ensureFragment?: boolean) {
-  let node: Node | null;
-  parser.innerHTML = template;
-  const content = parser.content;
-
-  if (
-    ensureFragment ||
-    (node = content.firstChild) !== content.lastChild ||
-    (node && node.nodeType === NodeType.Comment)
-  ) {
-    node = doc.createDocumentFragment();
-    node.appendChild(content);
-  } else if (!node) {
-    node = doc.createTextNode("");
-  }
-
-  return node as Node & { firstChild: ChildNode; lastChild: ChildNode };
+  return (this.___sourceNode ||= parseHTMLFragmentOrFirstNode(
+    this.___template,
+  )).cloneNode(true);
 }

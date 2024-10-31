@@ -8,6 +8,7 @@ export function getAttrs(path, preserveNames) {
   const {
     extra,
     attributes,
+    attributeTags,
     body: { body, params },
   } = node;
   const attrsLen = attributes.length;
@@ -16,7 +17,7 @@ export function getAttrs(path, preserveNames) {
   const targetObjects = {};
   const tagDef = getTagDef(path);
   const foundProperties = {};
-  const hasAttributeTags = extra?.hasAttributeTags;
+  const hasAttributeTags = !!attributeTags.length;
 
   for (let i = 0; i < attrsLen; i++) {
     const { name, value } = attributes[i];
@@ -114,23 +115,14 @@ export function getAttrs(path, preserveNames) {
         : t.objectExpression(properties);
 
   if (hasAttributeTags) {
-    const endAttributeTagsIndex = findLastIndex(
-      body,
-      (node) =>
-        t.isExpressionStatement(node) &&
-        t.isStringLiteral(node.expression) &&
-        node.expression.value === "END_ATTRIBUTE_TAGS",
-    );
+    let attrTagBody = attributeTags;
 
-    let attrTagBody = body;
-
-    if (endAttributeTagsIndex !== -1) {
-      attrTagBody = body.slice(0, endAttributeTagsIndex);
-      attrTagBody.push(
+    if (body.length) {
+      attrTagBody = attrTagBody.concat(
         t.returnStatement(
           t.arrowFunctionExpression(
             [t.identifier("out"), ...params],
-            t.blockStatement(body.slice(endAttributeTagsIndex + 1)),
+            t.blockStatement(body),
           ),
         ),
       );

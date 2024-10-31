@@ -126,9 +126,9 @@ export function attr(name: string, val: unknown) {
 
 export function attrs(
   data: Record<string, unknown>,
-  elementAccessor: Accessor = 0,
-  scopeId: number = 0,
-  type: string = "",
+  elementAccessor: Accessor,
+  scopeId: number,
+  tagName: string,
 ) {
   let result = "";
   let scope: Record<string, unknown> | undefined;
@@ -146,14 +146,14 @@ export function attrs(
         break;
       case "value":
         // TODO: need to somehow know what type of element this is
-        if (type === "input") {
+        if (tagName === "input") {
           result += valueAttr_input(
             val,
             data.valueChange,
             scopeId,
             elementAccessor,
           );
-        } else if (type === "select") {
+        } else if (tagName === "select") {
           result += valueAttr_select(
             val,
             data.valueChange,
@@ -161,7 +161,7 @@ export function attrs(
             scopeId,
             elementAccessor,
           );
-        } else if (type === "option") {
+        } else if (tagName === "option") {
           result += valueAttr_option(val);
         } else {
           result += attr("value", val);
@@ -195,14 +195,14 @@ export function attrs(
               name as keyof typeof controllableChangeAttrs
             ];
           if (controllableAttr) {
-            scope ??= ensureScopeWithId(scopeId!);
+            scope ||= ensureScopeWithId(scopeId!);
             scope[elementAccessor + AccessorChar.ControlledHandler] = val;
             scope[elementAccessor + AccessorChar.ControlledType] =
               controllableAttr;
           } else if (/^on[A-Z-]/.test(name)) {
-            events ??= (scope ??= ensureScopeWithId(scopeId!))[
+            events ||= (scope ??= ensureScopeWithId(scopeId!))[
               (elementAccessor + AccessorChar.EventAttributes) as any
-            ] ??= {} as any;
+            ] ||= {} as any;
             events![
               name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()
             ] = val;
@@ -223,6 +223,20 @@ const controllableChangeAttrs = {
   checkedValuesChange: "checkedValues",
   openChange: "open",
 };
+export function partialAttrs(
+  data: Record<string, unknown>,
+  skip: Record<string, 1>,
+  elementAccessor: Accessor,
+  scopeId: number,
+  tagName: string,
+) {
+  const partial: Partial<typeof data> = {};
+  for (const key in data) {
+    if (!skip[key]) partial[key] = data[key];
+  }
+
+  return attrs(partial, elementAccessor, scopeId, tagName);
+}
 
 function stringAttr(name: string, val: string) {
   return val && ` ${name}=${escapeAttrValue(val)}`;

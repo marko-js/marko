@@ -26,7 +26,6 @@ export async function compile(src, filename, config) {
   const markoConfig = loadMarkoConfig(config);
   const babelConfig = await loadBabelConfig(filename, markoConfig);
   const babelResult = await babel.transformAsync(src, babelConfig);
-  scheduleDefaultClear(markoConfig);
   return buildResult(src, filename, markoConfig.errorRecovery, babelResult);
 }
 
@@ -34,7 +33,6 @@ export function compileSync(src, filename, config) {
   const markoConfig = loadMarkoConfig(config);
   const babelConfig = loadBabelConfigSync(filename, markoConfig);
   const babelResult = babel.transformSync(src, babelConfig);
-  scheduleDefaultClear(markoConfig);
   return buildResult(src, filename, markoConfig.errorRecovery, babelResult);
 }
 
@@ -154,23 +152,8 @@ function buildResult(src, filename, errorRecovery, babelResult) {
   return { ast, map, code, meta };
 }
 
-let clearingDefaultCache = false;
-function scheduleDefaultClear(config) {
-  if (
-    !clearingDefaultCache &&
-    (clearingDefaultCache = isDefaultCache(config))
-  ) {
-    setImmediate(_clearDefaults);
-  }
-}
-
 export function _clearDefaults() {
-  clearingDefaultCache = false;
   globalConfig.cache.clear();
-}
-
-function isDefaultCache(config) {
-  return !config.cache || config.cache === globalConfig.cache;
 }
 
 function getFs(config) {

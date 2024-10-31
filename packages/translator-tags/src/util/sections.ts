@@ -7,7 +7,8 @@ import { types as t } from "@marko/compiler";
 
 import { currentProgramPath } from "../visitors/program";
 import { isStatefulReferences } from "./is-stateful";
-import type { Binding } from "./references";
+import { find } from "./optional";
+import type { Binding, ReferencedBindings } from "./references";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
@@ -19,20 +20,22 @@ export enum ContentType {
   Text,
 }
 
-export type Section = {
+export interface Section {
   id: number;
   name: string;
   depth: number;
-  parent?: Section;
-  closures: Set<Binding>;
-  bindings: Set<Binding>;
+  parent: Section | undefined;
+  params: undefined | Binding;
+  closures: ReferencedBindings;
+  bindings: ReferencedBindings;
   upstreamExpression: t.NodeExtra | undefined;
+  hasCleanup: boolean;
   content: null | {
     startType: ContentType;
     endType: ContentType;
     singleChild: boolean;
   };
-};
+}
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
@@ -76,10 +79,12 @@ export function startSection(
       name: sectionName,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
-      closures: new Set(),
-      bindings: new Set(),
+      params: undefined,
+      closures: undefined,
+      bindings: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
+      hasCleanup: false,
     };
     sections.push(section);
   }
@@ -105,8 +110,10 @@ export function getOrCreateSection(path: t.NodePath<any>) {
   }
 }
 
-export function hasSection(path: t.NodePath) {
-  return path.node.extra?.section !== undefined;
+export function getSectionForBody(
+  body: t.NodePath<t.MarkoTagBody | t.Program>,
+) {
+  return body.node.extra?.section;
 }
 
 export function getSection(path: t.NodePath) {
@@ -116,10 +123,6 @@ export function getSection(path: t.NodePath) {
     currentPath = currentPath.parentPath!;
   }
 
-  _setSectionPath(
-    section,
-    currentPath as t.NodePath<t.MarkoTagBody | t.Program>,
-  );
   return section;
 }
 
@@ -133,9 +136,8 @@ export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
     currentProgramPath.scope.generateUidIdentifier(`scope${section.id}_id`),
 );
 
-const [getSectionPath, _setSectionPath] =
-  createSectionState<t.NodePath<t.MarkoTagBody | t.Program>>("sectionPath");
-export { getSectionPath };
+export const [getSectionParentIsOwner, setSectionParentIsOwner] =
+  createSectionState<boolean>("parentIsOwner", () => false);
 
 const [_getScopeIdentifier] = createSectionState<t.Identifier>(
   "scopeIdentifier",
@@ -262,12 +264,10 @@ export const checkStatefulClosures = (
   section: Section,
   immediateOnly: boolean,
 ) => {
-  for (const binding of section.closures) {
-    if (
-      (!immediateOnly || section.parent === binding.section) &&
-      isStatefulReferences(binding)
-    ) {
-      return true;
-    }
-  }
+  return !!find(
+    section.closures,
+    (closure) =>
+      (!immediateOnly || section.parent === closure.section) &&
+      isStatefulReferences(closure),
+  );
 };

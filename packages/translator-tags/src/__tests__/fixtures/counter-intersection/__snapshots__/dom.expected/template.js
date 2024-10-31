@@ -8,8 +8,8 @@ const _expr_a_b = /* @__PURE__ */_intersection(2, _scope => {
   } = _scope;
   _data(_scope["#text/4"], a + b);
 });
-const _b = /* @__PURE__ */_value("b", (_scope, b) => _data(_scope["#text/3"], b), _expr_a_b);
-const _a = /* @__PURE__ */_value("a", (_scope, a) => _data(_scope["#text/1"], a), _expr_a_b);
+const _b = /* @__PURE__ */_value("b", (_scope, b) => _data(_scope["#text/3"], b), () => _expr_a_b);
+const _a = /* @__PURE__ */_value("a", (_scope, a) => _data(_scope["#text/1"], a), () => _expr_a_b);
 const _setup__effect = _register("packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0", _scope => {
   _on(_scope["#button/0"], "click", function () {
     _queueSource(_scope, _a, 10);

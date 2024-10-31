@@ -1,4 +1,8 @@
-// size: 112 (min) 89 (brotli)
+// size: 147 (min) 107 (brotli)
 
-import { register as o, createRenderer as t } from "@marko/runtime-tags/dom";
-o("b0", t("This is the body content", ""));
+import {
+  dynamicTagAttrs as o,
+  register as t,
+  createRendererWithOwner as m,
+} from "@marko/runtime-tags/dom";
+o(1), t("b0", m("This is the body content", ""));

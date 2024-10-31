@@ -1,16 +1,14 @@
 import { types as t } from "@marko/compiler";
 export default function toFirstStatementOrBlock(
-  body: t.BlockStatement | t.MarkoTagBody,
+  body: t.BlockStatement | t.Statement[],
 ) {
-  const nodes = body.body;
+  if (Array.isArray(body)) {
+    if (body.length === 1) {
+      return body[0];
+    }
 
-  if (nodes.length === 1) {
-    return nodes[0];
+    return t.blockStatement(body);
   }
 
-  if (t.isBlockStatement(body)) {
-    return body;
-  }
-
-  return t.blockStatement(nodes);
+  return body;
 }

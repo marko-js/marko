@@ -1,52 +1,58 @@
-// size: 547 (min) 292 (brotli)
+// size: 543 (min) 284 (brotli)
 
 import {
-  registerRenderer as n,
+  register as n,
   createRenderer as o,
-  register as t,
-  on as c,
-  value as r,
-  queueEffect as a,
-  inConditionalScope as i,
-  closure as s,
-  data as u,
-  queueSource as m,
-  conditional as l,
-  init as e,
+  on as t,
+  closure as c,
+  data as r,
+  queueSource as a,
+  value as i,
+  queueEffect as s,
+  inConditionalScope as u,
+  conditional as m,
+  init as l,
 } from "@marko/runtime-tags/dom";
-const f = s(4, (n, o) => u(n[0], o)),
-  k = n("a0", o("<span> </span>", "D ", void 0, [f])),
-  p = l(2),
-  d = t("a1", (n) =>
-    c(
+const e = c(4, (n, o) => r(n[0], o)),
+  f = n(
+    "a0",
+    o("<span> </span>", "D ", void 0, () => [e]),
+  ),
+  k = m(2),
+  p = n("a1", (n) =>
+    t(
       n[0],
       "click",
       ((n) => {
         const { 4: o } = n;
         return function () {
-          m(n, g, o + 1);
+          a(n, d, o + 1);
         };
       })(n),
     ),
   ),
-  g = r(4, (n, o) => a(n, d), i(f, 2)),
-  v = t("a2", (n) =>
-    c(
+  d = i(
+    4,
+    (n, o) => s(n, p),
+    () => u(e, 2),
+  ),
+  g = n("a2", (n) =>
+    t(
       n[1],
       "click",
       ((n) => {
         const { 3: o } = n;
         return function () {
-          m(n, D, !o);
+          a(n, v, !o);
         };
       })(n),
     ),
   ),
-  D = r(
+  v = i(
     3,
     (n, o) => {
-      a(n, v), p(n, o ? k : null);
+      s(n, g), k(n, o ? f : null);
     },
-    p,
+    () => k,
   );
-e();
+l();

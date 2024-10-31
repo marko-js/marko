@@ -1,3 +1,5 @@
+export { attrTag, attrTags } from "./common/attr-tag";
+export { forIn, forOf, forTo } from "./common/for";
 export type { Scope } from "./common/types";
 export { getAbortSignal, resetAbortSignal } from "./dom/abort-signal";
 export { compat } from "./dom/compat";
@@ -27,6 +29,7 @@ export {
   openAttr,
   openChangeEffect_details,
   openChangeEffect_dialog,
+  partialAttrs,
   props,
   styleAttr,
   valueAttr_input,
@@ -45,17 +48,17 @@ export {
 } from "./dom/queue";
 export {
   createRenderer,
-  createScopeWithRenderer,
+  createRendererWithOwner,
   dynamicTagAttrs,
 } from "./dom/renderer";
 export {
   init,
+  nodeRef,
   register,
   registerBoundSignal,
-  registerRenderer,
   registerSubscriber,
 } from "./dom/resume";
-export { bindFunction, bindRenderer, createScope } from "./dom/scope";
+export { createScope } from "./dom/scope";
 export {
   changeHandler,
   childClosures,

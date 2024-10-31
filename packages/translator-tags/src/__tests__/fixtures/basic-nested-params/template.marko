@@ -1,0 +1,10 @@
+<let/x=1/>
+<let/y=2/>
+
+<button onClick() { x++; }>Inc</button>
+
+<child|outer|=x>
+    <child|inner|=y>
+        <div>${outer}.${inner}</div>
+    </>
+</>

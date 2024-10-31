@@ -20,8 +20,8 @@ const _expr_a_b = /* @__PURE__ */_intersection(2, _scope => {
   _data(_scope["#text/1"], a + b);
   _queueEffect(_scope, _expr_a_b_effect);
 });
-const _b = /* @__PURE__ */_value("b", null, _expr_a_b);
-const _a = /* @__PURE__ */_value("a", null, _expr_a_b);
+const _b = /* @__PURE__ */_value("b", null, () => _expr_a_b);
+const _a = /* @__PURE__ */_value("a", null, () => _expr_a_b);
 export function _setup_(_scope) {
   _a(_scope, 0);
   _b(_scope, 0);

@@ -1,29 +1,32 @@
 import { types as t } from "@marko/compiler";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
+import { map } from "../../util/optional";
 import { callRuntime } from "../../util/runtime";
 import {
   forEachSectionReverse,
-  getSection,
-  getSectionPath,
+  getSectionForBody,
+  getSectionParentIsOwner,
   isStatefulSection,
+  type Section,
 } from "../../util/sections";
 import {
-  getClosures,
   getResumeRegisterId,
+  getSignal,
   initValue,
   renameBindings,
   replaceAssignments,
   writeSignals,
 } from "../../util/signals";
+import type { TemplateVisitor } from "../../util/visitors";
 import { visit } from "../../util/walks";
 import * as writer from "../../util/writer";
 
 export default {
   translate: {
-    exit(program: t.NodePath<t.Program>) {
+    exit(program) {
       visit(program);
-      const section = getSection(program);
+      const section = getSectionForBody(program)!;
       const { walks, writes, setup } = writer.getSectionMeta(section);
       const domExports = program.node.extra.domExports!;
       const templateIdentifier = t.identifier(domExports.template);
@@ -40,21 +43,22 @@ export default {
 
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
-          const sectionPath = getSectionPath(childSection);
-          const sectionParamsBinding = sectionPath.node.extra?.binding;
           const tagParamsSignal =
-            sectionParamsBinding && initValue(sectionParamsBinding);
+            childSection.params && initValue(childSection.params);
           const { walks, writes, setup } = writer.getSectionMeta(childSection);
-          const closures = getClosures(childSection);
+          const closures = getSectionClosuresExpr(childSection);
           const identifier = t.identifier(childSection.name);
           const renderer = callRuntime(
-            "createRenderer",
+            getSectionParentIsOwner(childSection)
+              ? "createRenderer"
+              : "createRendererWithOwner",
             writes,
             walks,
             setup,
-            closures.length && t.arrayExpression(closures),
+            closures && t.arrowFunctionExpression([], closures),
             undefined,
-            tagParamsSignal?.identifier,
+            tagParamsSignal?.identifier &&
+              t.arrowFunctionExpression([], tagParamsSignal.identifier),
           );
           writeSignals(childSection);
           program.node.body.push(
@@ -63,9 +67,7 @@ export default {
                 identifier,
                 isStatefulSection(childSection)
                   ? callRuntime(
-                      childSection.closures.size
-                        ? "registerRenderer"
-                        : "register",
+                      "register",
                       t.stringLiteral(
                         getResumeRegisterId(childSection, "renderer"),
                       ),
@@ -78,7 +80,7 @@ export default {
         }
       });
 
-      const closures = getClosures(section);
+      const closures = getSectionClosuresExpr(section);
 
       writeSignals(section);
 
@@ -113,14 +115,11 @@ export default {
         ),
       );
 
-      if (closures.length) {
+      if (closures) {
         program.node.body.push(
           t.exportNamedDeclaration(
             t.variableDeclaration("const", [
-              t.variableDeclarator(
-                closuresIdentifier,
-                t.arrayExpression(closures),
-              ),
+              t.variableDeclarator(closuresIdentifier, closures),
             ]),
           ),
         );
@@ -135,9 +134,10 @@ export default {
               templateIdentifier,
               walksIdentifier,
               setupIdentifier,
-              closures.length && closuresIdentifier,
+              closures && t.arrowFunctionExpression([], closuresIdentifier),
               undefined,
-              programParamsSignal?.identifier,
+              programParamsSignal?.identifier &&
+                t.arrowFunctionExpression([], programParamsSignal.identifier),
             ),
             t.stringLiteral(program.hub.file.metadata.marko.id),
           ),
@@ -145,4 +145,15 @@ export default {
       );
     },
   },
-};
+} satisfies TemplateVisitor<t.Program>;
+
+function getSectionClosuresExpr(section: Section) {
+  if (section.closures) {
+    return t.arrayExpression(
+      map(
+        section.closures,
+        (closure) => getSignal(section, closure).identifier,
+      ).reverse(),
+    );
+  }
+}

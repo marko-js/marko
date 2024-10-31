@@ -1,8 +1,10 @@
 import { resolveTagImport } from "@marko/babel-utils";
 import type { types as t } from "@marko/compiler";
 
+import type { TemplateVisitor } from "../util/visitors";
+
 export default {
-  analyze(importDecl: t.NodePath<t.ImportDeclaration>) {
+  analyze(importDecl) {
     const { node } = importDecl;
     const { source } = node;
     const { value } = source;
@@ -18,7 +20,7 @@ export default {
     }
   },
   translate: {
-    exit(importDecl: t.NodePath<t.ImportDeclaration>) {
+    exit(importDecl) {
       const { node } = importDecl;
       const { extra } = node;
       const tagImport = extra?.tagImport as string | undefined;
@@ -27,4 +29,4 @@ export default {
       }
     },
   },
-};
+} satisfies TemplateVisitor<t.ImportDeclaration>;

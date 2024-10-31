@@ -1,3 +1,6 @@
+export { attrTag, attrTags } from "./common/attr-tag";
+export { forIn, forOf, forTo } from "./common/for";
+export { normalizeDynamicRenderer } from "./common/helpers";
 export {
   attr,
   attrs,
@@ -6,6 +9,7 @@ export {
   checkedValuesAttr,
   classAttr,
   openAttr,
+  partialAttrs,
   styleAttr,
 } from "./html/attrs";
 export { compat } from "./html/compat";
@@ -21,17 +25,20 @@ export {
   fork,
   getScopeById,
   getStreamData,
+  markResumeCleanup,
   markResumeControlEnd,
   markResumeControlSingleNodeEnd,
   markResumeNode,
   markResumeScopeStart,
   nextScopeId,
   nextTagId,
+  nodeRef,
   peekNextScope,
   register,
   tryCatch,
   tryPlaceholder,
   write,
   writeEffect,
+  writeExistingScope,
   writeScope,
 } from "./html/writer";

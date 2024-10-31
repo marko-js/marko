@@ -4,7 +4,7 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const clickCount = 0;
   const increment = _register(function () {
     clickCount++;
-  }, "packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0/_", _scope0_id);
+  }, "packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0/increment", _scope0_id);
   _write(`<button>${_escapeXML(clickCount)}${_markResumeNode(_scope0_id, "#text/1")}</button>${_markResumeNode(_scope0_id, "#button/0")}`);
   _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0_increment");
   _writeScope(_scope0_id, {

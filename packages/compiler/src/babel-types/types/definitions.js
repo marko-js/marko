@@ -1,5 +1,4 @@
 import {
-  arrayOfType,
   assertEach,
   assertNodeType,
   assertOneOf,
@@ -181,14 +180,22 @@ const MarkoDefinitions = {
 
   MarkoTag: {
     aliases: ["Marko", "Statement"],
-    builder: ["name", "attributes", "body", "arguments", "var"],
-    visitor: [
+    builder: [
       "name",
-      "typeArguments",
       "attributes",
       "body",
       "arguments",
       "var",
+      "attributeTags",
+    ],
+    visitor: [
+      "name",
+      "typeArguments",
+      "arguments",
+      "attributes",
+      "attributeTags",
+      "var",
+      "body",
     ],
     fields: {
       name: {
@@ -220,6 +227,10 @@ const MarkoDefinitions = {
         validate: assertNodeType("LVal"),
         optional: true,
       },
+      attributeTags: {
+        validate: arrayOfType(["MarkoTag", "MarkoScriptlet", "MarkoComment"]),
+        default: [],
+      },
     },
   },
 };
@@ -231,3 +242,9 @@ export const MARKO_ALIAS_TYPES = Array.from(
     MARKO_TYPES.reduce((all, t) => all.concat(MarkoDefinitions[t].aliases), []),
   ),
 );
+
+// Note this is inline because a change in babel caused a regression with this api.
+// TODO: we should not rely on babels validators or builders.
+function arrayOfType(types) {
+  return chain(assertValueType("array"), assertEach(assertNodeType(...types)));
+}

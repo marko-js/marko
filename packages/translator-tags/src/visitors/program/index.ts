@@ -16,29 +16,33 @@ import {
   trackParamsReferences,
 } from "../../util/references";
 import { startSection } from "../../util/sections";
+import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
 
 export let currentProgramPath: t.NodePath<t.Program>;
 export let scopeIdentifier: t.Identifier;
 export let cleanIdentifier: t.Identifier;
+export let htmlRendererIdentifier: t.Identifier;
 
 const previousProgramPath: WeakMap<
   t.NodePath<t.Program>,
   t.NodePath<t.Program> | undefined
 > = new WeakMap();
 
-type ParamsExports = {
+export type TemplateExport = {
   id: string;
-  props: { [prop: string]: ParamsExports } | undefined;
+  props: { [prop: string]: TemplateExport } | undefined;
 };
+export type TemplateExports = TemplateExport["props"];
+
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     domExports?: {
       template: string;
       walks: string;
       setup: string;
-      params: ParamsExports | undefined;
+      params: TemplateExport | undefined;
       closures: string;
     };
   }
@@ -46,7 +50,7 @@ declare module "@marko/compiler/dist/types" {
 
 export default {
   migrate: {
-    enter(program: t.NodePath<t.Program>) {
+    enter(program) {
       previousProgramPath.set(program, currentProgramPath);
       program.node.params = [t.identifier("input")];
       currentProgramPath = program;
@@ -57,7 +61,7 @@ export default {
     },
   },
   analyze: {
-    enter(program: t.NodePath<t.Program>) {
+    enter(program) {
       previousProgramPath.set(program, currentProgramPath);
       currentProgramPath = program;
       startSection(program);
@@ -73,7 +77,7 @@ export default {
       };
     },
 
-    exit(program: t.NodePath<t.Program>) {
+    exit(program) {
       finalizeReferences();
       const {
         scope,
@@ -81,16 +85,13 @@ export default {
       } = program;
 
       if (extra.binding && bindingHasDownstreamExpressions(extra.binding)) {
-        extra.domExports!.params = recurseAndBuildExportTree(
-          extra.binding!,
-          scope,
-        );
+        extra.domExports!.params = buildTemplateExports(extra.binding, scope);
       }
       currentProgramPath = previousProgramPath.get(currentProgramPath)!;
     },
   },
   translate: {
-    enter(program: t.NodePath<t.Program>) {
+    enter(program) {
       previousProgramPath.set(program, currentProgramPath);
       currentProgramPath = program;
       scopeIdentifier = isOutputDOM()
@@ -98,6 +99,9 @@ export default {
         : (null as any as t.Identifier);
       cleanIdentifier = isOutputDOM()
         ? program.scope.generateUidIdentifier("clean")
+        : (null as any as t.Identifier);
+      htmlRendererIdentifier = isOutputHTML()
+        ? program.scope.generateUidIdentifier("renderer")
         : (null as any as t.Identifier);
       if (getMarkoOpts().output === "hydrate") {
         const entryFile = program.hub.file;
@@ -121,7 +125,7 @@ export default {
         return;
       }
     },
-    exit(program: t.NodePath<t.Program>) {
+    exit(program) {
       if (isOutputHTML()) {
         programHTML.translate.exit(program);
       } else {
@@ -130,7 +134,7 @@ export default {
       currentProgramPath = previousProgramPath.get(currentProgramPath)!;
     },
   },
-};
+} satisfies TemplateVisitor<t.Program>;
 
 function resolveRelativeToEntry(
   entryFile: t.BabelFile,
@@ -147,31 +151,31 @@ function resolveRelativeToEntry(
       );
 }
 
-function recurseAndBuildExportTree(binding: Binding, scope: t.Scope) {
-  const exportTree: ParamsExports = {
+function buildTemplateExports(binding: Binding, scope: t.Scope) {
+  const templateExport: TemplateExport = {
     id: (binding.export ??= scope.generateUid(binding.name + "_")),
     props: undefined,
   };
   const { aliases, propertyAliases, downstreamExpressions } = binding;
 
   if (!downstreamExpressions.size) {
-    exportTree.props = {};
+    templateExport.props = {};
     for (const [property, alias] of propertyAliases) {
-      exportTree.props[property] = recurseAndBuildExportTree(alias, scope);
+      templateExport.props[property] = buildTemplateExports(alias, scope);
     }
 
     for (const alias of aliases) {
       // TODO: handle spreads
-      const exports = recurseAndBuildExportTree(alias, scope);
+      const exports = buildTemplateExports(alias, scope);
       if (exports.props) {
         // TODO: this allows one alias to overwrite another
-        exportTree.props = { ...exportTree.props, ...exports.props };
+        templateExport.props = { ...templateExport.props, ...exports.props };
       } else {
-        exportTree.props = undefined;
-        return exportTree;
+        templateExport.props = undefined;
+        return templateExport;
       }
     }
   }
 
-  return exportTree;
+  return templateExport;
 }

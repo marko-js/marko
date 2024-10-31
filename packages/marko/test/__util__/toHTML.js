@@ -88,7 +88,7 @@ function toHTML(node) {
       html +=
         indent +
         "  VALUE: " +
-        JSON.stringify(el.value || el.___valueInternal) +
+        JSON.stringify(el.value || el.___textContent) +
         "\n";
     } else {
       var curChild = getFirstChild(el);

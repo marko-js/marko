@@ -22,4 +22,4 @@ const renderer = () => {
   write("f");
 };
 
-export default createTemplate(renderer);
+export default createTemplate(renderer, "");

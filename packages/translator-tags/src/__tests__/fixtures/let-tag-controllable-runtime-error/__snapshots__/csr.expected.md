@@ -70,14 +70,20 @@ container.querySelector("#toggle").click()
 # Error
 ```
 Error: Change handler '_y_change' cannot change from a function to null
-    at _y_change (/packages/runtime-tags/src/dom/signals.ts:55:17)
+    at _y_change (/packages/runtime-tags/src/dom/signals.ts:55:19)
     at /packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko:5:11
-    at signal (/packages/runtime-tags/src/dom/signals.ts:90:13)
+    at signal (/packages/runtime-tags/src/dom/signals.ts:95:13)
     at runBatch (/packages/runtime-tags/src/dom/queue.ts:107:5)
     at run (/packages/runtime-tags/src/dom/queue.ts:52:5)
+<<<<<<< HEAD
     at csr (/packages/translator-tags/src/__tests__/main.test.ts:281:17)
     at processTicksAndRejections (node:internal/process/task_queues:95:5)
     at /packages/translator-tags/src/__tests__/main.test.ts:369:37
+=======
+    at csr (/packages/translator-tags/src/__tests__/main.test.ts:283:17)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at /packages/translator-tags/src/__tests__/main.test.ts:370:37
+>>>>>>> main
     at resolveFixture (/node_modules/mocha-snap/dist/util/resolve-fixture.js:64:16)
     at snap (/node_modules/mocha-snap/dist/snap.js:46:20)
 ```
