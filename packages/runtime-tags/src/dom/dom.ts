@@ -103,90 +103,103 @@ function attrsInternal(
   nextAttrs: Record<string, unknown>,
 ) {
   let events: undefined | Record<string, unknown>;
-  const element = scope[elementAccessor] as Element;
+  const el = scope[elementAccessor] as Element;
+  const skipControllable = controllableAttrs(
+    scope,
+    elementAccessor,
+    nextAttrs,
+    el.tagName,
+  );
+
   // https://jsperf.com/object-keys-vs-for-in-with-closure/194
   for (const name in nextAttrs) {
     const value = nextAttrs[name];
-
     switch (name) {
       case "class":
-        classAttr(element, value);
+        classAttr(el, value);
         break;
       case "style":
-        styleAttr(element, value);
+        styleAttr(el, value);
         break;
       case "renderBody":
         break;
-      case "value":
-        if (element.tagName === "INPUT") {
-          controllable_input_value(
-            scope,
-            elementAccessor,
-            value,
-            nextAttrs.valueChange as any,
-          );
-        } else if (element.tagName === "SELECT") {
-          controllable_select_value(
-            scope,
-            elementAccessor,
-            value,
-            nextAttrs.valueChange as any,
-            !!nextAttrs.multiple,
-          );
-        } else {
-          attr(element, name, value);
-        }
-        break;
-      case "checked":
-        controllable_input_checked(
-          scope,
-          elementAccessor,
-          value as boolean,
-          nextAttrs.checkedChange as any,
-        );
-        break;
-      case "checkedValue":
-        controllable_input_checkedValue(
-          scope,
-          elementAccessor,
-          value,
-          nextAttrs.checkedValueChange as any,
-          nextAttrs.value,
-        );
-        break;
-      case "checkedValues":
-        controllable_input_checkedValues(
-          scope,
-          elementAccessor,
-          value as unknown[],
-          nextAttrs.checkedValuesChange as any,
-          nextAttrs.value,
-        );
-        break;
-      case "open":
-        controllable_dialog_open(
-          scope,
-          elementAccessor,
-          value as boolean,
-          nextAttrs.openChange as any,
-        );
-        break;
-      default: {
-        const controllableAttr =
-          controllableChangeAttrs[name as keyof typeof controllableChangeAttrs];
-        if (controllableAttr) {
-          scope[elementAccessor + AccessorChar.ControlledHandler] = value;
-          scope[elementAccessor + AccessorChar.ControlledType] =
-            controllableAttr;
-        } else if (eventHandlerReg.test(name)) {
+      default:
+        if (eventHandlerReg.test(name)) {
           (events ||= scope[elementAccessor + AccessorChar.EventAttributes] =
             {})[name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()] =
             value;
-        } else {
-          attr(element, name, value);
+        } else if (!skipControllable?.test(name)) {
+          attr(el, name, value);
         }
-      }
     }
+  }
+}
+
+function controllableAttrs(
+  scope: Scope,
+  elementAccessor: Accessor,
+  nextAttrs: Record<string, unknown>,
+  tagName: string,
+) {
+  switch (tagName) {
+    case "INPUT":
+      if (nextAttrs.checkedChange) {
+        controllable_input_checked(
+          scope,
+          elementAccessor,
+          nextAttrs.checked,
+          nextAttrs.checkedChange,
+        );
+      } else if (nextAttrs.checkedValue || nextAttrs.checkedValueChange) {
+        controllable_input_checkedValue(
+          scope,
+          elementAccessor,
+          nextAttrs.checkedValue,
+          nextAttrs.checkedValueChange,
+          nextAttrs.value,
+        );
+      } else if (nextAttrs.checkedValues || nextAttrs.checkedValuesChange) {
+        controllable_input_checkedValues(
+          scope,
+          elementAccessor,
+          nextAttrs.checkedValues,
+          nextAttrs.checkedValuesChange,
+          nextAttrs.value,
+        );
+      } else if (nextAttrs.valueChange) {
+        controllable_input_value(
+          scope,
+          elementAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        );
+      } else {
+        break;
+      }
+      return /^(?:value|checked)(?:Values?)?(?:Change)?$/;
+    case "SELECT":
+      if (nextAttrs.value || nextAttrs.valueChange) {
+        controllable_select_value(
+          scope,
+          elementAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        );
+        return /^value(?:Change)?$/;
+      }
+      break;
+    case "DETAILS":
+    case "DIALOG":
+      if (nextAttrs.openChange) {
+        controllable_dialog_open(
+          scope,
+          elementAccessor,
+          nextAttrs.open,
+          nextAttrs.openChange,
+        );
+        return /^open(?:Change)?$/;
+      }
+      break;
   }
 }
 
@@ -303,13 +316,8 @@ function setControllableState(
   value: unknown,
   valueChange: unknown,
 ) {
-  if (valueChange) {
-    // TODO: need to handle the case where valueChange becomes falsy
-    // but also not have value overwrite checked/checkedValue/checkedValues
-    // maybe use unique accessor chars per controllable type?
-    scope[nodeAccessor + AccessorChar.ControlledValue] = value;
-    scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
-  }
+  scope[nodeAccessor + AccessorChar.ControlledValue] = value;
+  scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
 }
 
 function setupControllable(
@@ -424,9 +432,10 @@ export function controllable_input_value(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
-  valueChange: (value: unknown) => void,
+  valueChange: unknown,
 ) {
   const el = scope[nodeAccessor] as Element;
+  // TODO: avoid preserve pos when no change handler.
   preserveCursorPosition(el, () => {
     setControllableAttr(el, "value", value, valueChange);
     setControllableState(scope, nodeAccessor, value, valueChange);
@@ -444,8 +453,8 @@ export const controllable_input_value_setup = setupControllable(
 export function controllable_input_checked(
   scope: Scope,
   nodeAccessor: Accessor,
-  checked: boolean,
-  checkedChange: (value: unknown) => void,
+  checked: unknown,
+  checkedChange: unknown,
 ) {
   setControllableAttr(scope[nodeAccessor], "checked", checked, checkedChange);
   setControllableState(scope, nodeAccessor, checked, checkedChange);
@@ -461,7 +470,7 @@ export function controllable_input_checkedValue(
   scope: Scope,
   nodeAccessor: Accessor,
   checkedValue: unknown,
-  checkedValueChange: (value: unknown) => void,
+  checkedValueChange: unknown,
   value: unknown,
 ) {
   const el = scope[nodeAccessor] as Element;
@@ -485,18 +494,18 @@ export const controllable_input_checkedValue_setup = setupControllable(
 export function controllable_input_checkedValues(
   scope: Scope,
   nodeAccessor: Accessor,
-  checkedValues: unknown[],
-  checkedValuesChange: (values: unknown[]) => void,
+  checkedValues: unknown,
+  checkedValuesChange: unknown,
   value: unknown,
 ) {
   const el = scope[nodeAccessor] as Element;
   attr(el, "value", value);
-  elsByValue.get(checkedValues)!.add(el);
+  elsByValue.get(checkedValues as unknown[])!.add(el);
   scope[nodeAccessor + AccessorChar.ControlledValue] = checkedValues;
   setControllableAttr(
     el,
     "checked",
-    checkedValues.includes(value),
+    (checkedValues as unknown[]).includes(value),
     checkedValuesChange,
   );
   setControllableState(scope, nodeAccessor, checkedValues, checkedValuesChange);
@@ -521,8 +530,7 @@ export function controllable_select_value(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
-  valueChange: undefined | ((value: unknown) => void),
-  multiple: boolean,
+  valueChange: unknown,
 ) {
   const el = scope[nodeAccessor] as HTMLSelectElement;
   const options = el.options;
@@ -530,8 +538,8 @@ export function controllable_select_value(
     setControllableAttr(
       options[i],
       "selected",
-      multiple
-        ? (value as unknown[]).includes(options[i].value)
+      Array.isArray(value)
+        ? value.includes(options[i].value)
         : value === options[i].value,
       valueChange,
     );
@@ -556,8 +564,8 @@ export const controllable_select_value_setup =
         return selectEl.value;
       }
     },
-    (selectEl, optionEl, currentValue) =>
-      selectEl.multiple
+    (_el, optionEl, currentValue) =>
+      Array.isArray(currentValue)
         ? (currentValue as unknown[]).includes(
             (optionEl as HTMLOptionElement).value,
           )
@@ -568,8 +576,8 @@ export const controllable_select_value_setup =
 export function controllable_dialog_open(
   scope: Scope,
   nodeAccessor: Accessor,
-  open: boolean,
-  openChange: (value: unknown) => void,
+  open: unknown,
+  openChange: unknown,
 ) {
   setControllableAttr(scope[nodeAccessor], "open", open, openChange);
   setControllableState(scope, nodeAccessor, open, openChange);
@@ -613,14 +621,6 @@ const controllableEffects = {
         break;
     }
   },
-};
-
-const controllableChangeAttrs = {
-  valueChange: "value",
-  checkedChange: "checked",
-  checkedValueChange: "checkedValue",
-  checkedValuesChange: "checkedValues",
-  openChange: "open",
 };
 
 function LazyWeakMap<T>(
