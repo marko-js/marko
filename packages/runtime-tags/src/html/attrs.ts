@@ -92,7 +92,7 @@ export function controllable_input_checkedValue(
 export function controllable_input_checkedValues(
   scopeId: number,
   elementAccessor: Accessor,
-  checkedValues: unknown[],
+  checkedValues: unknown,
   checkedValuesChange: unknown,
   value: unknown,
 ) {
@@ -103,7 +103,9 @@ export function controllable_input_checkedValues(
       checkedValuesChange;
   }
   return (
-    (checkedValues?.includes(value) ? ` checked` : "") + attr("value", value)
+    (Array.isArray(checkedValues) && checkedValues.includes(value)
+      ? ` checked`
+      : "") + attr("value", value)
   );
 }
 
@@ -134,8 +136,70 @@ export function attrs(
   tagName: string,
 ) {
   let result = "";
+  let skip = /[\s/>"'=]/;
   let scope: Record<string, unknown> | undefined;
   let events: Record<string, unknown> | undefined;
+  switch (tagName) {
+    case "input":
+      if (data.checkedChange) {
+        result += controllable_input_checked(
+          scopeId,
+          elementAccessor,
+          data.checked,
+          data.checkedChange,
+        );
+      } else if (data.checkedValue || data.checkedValueChange) {
+        result += controllable_input_checkedValue(
+          scopeId,
+          elementAccessor,
+          data.checkedValue,
+          data.checkedValueChange,
+          data.value,
+        );
+      } else if (data.checkedValues || data.checkedValuesChange) {
+        result += controllable_input_checkedValues(
+          scopeId,
+          elementAccessor,
+          data.checkedValues,
+          data.checkedValuesChange,
+          data.value,
+        );
+      } else if (data.valueChange) {
+        result += controllable_input_value(
+          scopeId,
+          elementAccessor,
+          data.value,
+          data.valueChange,
+        );
+      } else {
+        break;
+      }
+      skip = /^(?:value|checked)(?:Values?)?(?:Change)?$|[\s/>"'=]/;
+      break;
+    case "select":
+      if (data.value || data.valueChange) {
+        result += controllable_select_value(
+          scopeId,
+          elementAccessor,
+          data.value,
+          data.valueChange,
+        );
+        skip = /^value(?:Change)?$|[\s/>"'=]/;
+      }
+      break;
+    case "details":
+    case "dialog":
+      if (data.openChange) {
+        result += controllable_dialog_open(
+          scopeId,
+          elementAccessor,
+          data.open,
+          data.openChange,
+        );
+        skip = /^open(?:Change)?$|[\s/>"'=]/;
+      }
+      break;
+  }
 
   for (const name in data) {
     const val = data[name];
@@ -147,73 +211,19 @@ export function attrs(
       case "style":
         result += styleAttr(val);
         break;
-      case "value":
-        // TODO: need to somehow know what type of element this is
-        if (tagName === "input") {
-          result += controllable_input_value(
-            scopeId,
-            elementAccessor,
-            val,
-            data.valueChange,
-          );
-        } else if (tagName === "select") {
-          result += controllable_select_value(
-            scopeId,
-            elementAccessor,
-            val,
-            data.valueChange,
-          );
-        } else if (tagName === "option") {
-          result += optionValueAttr(val);
-        } else {
-          result += attr("value", val);
-        }
-        break;
-      case "checkedValue":
-        result += controllable_input_checkedValue(
-          scopeId,
-          elementAccessor,
-          val,
-          data.checkedValue,
-          data.value,
-        );
-        break;
-      case "checkedValues":
-        result += controllable_input_checkedValues(
-          scopeId,
-          elementAccessor,
-          val as unknown[],
-          data.checkedValues,
-          data.value,
-        );
-        break;
-      case "open":
-        result += controllable_dialog_open(
-          scopeId,
-          elementAccessor,
-          val,
-          data.openChange,
-        );
+      case "":
+      case "renderBody":
         break;
       default:
         if (!isVoid(val)) {
-          const controllableAttr =
-            controllableChangeAttrs[
-              name as keyof typeof controllableChangeAttrs
-            ];
-          if (controllableAttr) {
-            scope ||= ensureScopeWithId(scopeId!);
-            scope[elementAccessor + AccessorChar.ControlledHandler] = val;
-            scope[elementAccessor + AccessorChar.ControlledType] =
-              controllableAttr;
-          } else if (/^on[A-Z-]/.test(name)) {
+          if (/^on[A-Z-]/.test(name)) {
             events ||= (scope ??= ensureScopeWithId(scopeId!))[
               (elementAccessor + AccessorChar.EventAttributes) as any
             ] ||= {} as any;
             events![
               name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()
             ] = val;
-          } else if (!/^renderBody$|[\s/>"'=]/.test(name)) {
+          } else if (!skip.test(name)) {
             result += nonVoidAttr(name, val);
           }
         }
@@ -223,13 +233,6 @@ export function attrs(
   return result;
 }
 
-const controllableChangeAttrs = {
-  valueChange: "value",
-  checkedChange: "checked",
-  checkedValueChange: "checkedValue",
-  checkedValuesChange: "checkedValues",
-  openChange: "open",
-};
 export function partialAttrs(
   data: Record<string, unknown>,
   skip: Record<string, 1>,

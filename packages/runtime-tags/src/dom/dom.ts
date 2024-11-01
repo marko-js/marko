@@ -102,46 +102,10 @@ function attrsInternal(
   elementAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
-  let events: undefined | Record<string, unknown>;
   const el = scope[elementAccessor] as Element;
-  const skipControllable = controllableAttrs(
-    scope,
-    elementAccessor,
-    nextAttrs,
-    el.tagName,
-  );
-
-  // https://jsperf.com/object-keys-vs-for-in-with-closure/194
-  for (const name in nextAttrs) {
-    const value = nextAttrs[name];
-    switch (name) {
-      case "class":
-        classAttr(el, value);
-        break;
-      case "style":
-        styleAttr(el, value);
-        break;
-      case "renderBody":
-        break;
-      default:
-        if (eventHandlerReg.test(name)) {
-          (events ||= scope[elementAccessor + AccessorChar.EventAttributes] =
-            {})[name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()] =
-            value;
-        } else if (!skipControllable?.test(name)) {
-          attr(el, name, value);
-        }
-    }
-  }
-}
-
-function controllableAttrs(
-  scope: Scope,
-  elementAccessor: Accessor,
-  nextAttrs: Record<string, unknown>,
-  tagName: string,
-) {
-  switch (tagName) {
+  let events: undefined | Record<string, unknown>;
+  let skip: RegExp | undefined;
+  switch (el.tagName) {
     case "INPUT":
       if (nextAttrs.checkedChange) {
         controllable_input_checked(
@@ -176,7 +140,8 @@ function controllableAttrs(
       } else {
         break;
       }
-      return /^(?:value|checked)(?:Values?)?(?:Change)?$/;
+      skip = /^(?:value|checked)(?:Values?)?(?:Change)?$/;
+      break;
     case "SELECT":
       if (nextAttrs.value || nextAttrs.valueChange) {
         controllable_select_value(
@@ -185,7 +150,7 @@ function controllableAttrs(
           nextAttrs.value,
           nextAttrs.valueChange,
         );
-        return /^value(?:Change)?$/;
+        skip = /^value(?:Change)?$/;
       }
       break;
     case "DETAILS":
@@ -197,9 +162,32 @@ function controllableAttrs(
           nextAttrs.open,
           nextAttrs.openChange,
         );
-        return /^open(?:Change)?$/;
+        skip = /^open(?:Change)?$/;
       }
       break;
+  }
+
+  // https://jsperf.com/object-keys-vs-for-in-with-closure/194
+  for (const name in nextAttrs) {
+    const value = nextAttrs[name];
+    switch (name) {
+      case "class":
+        classAttr(el, value);
+        break;
+      case "style":
+        styleAttr(el, value);
+        break;
+      case "renderBody":
+        break;
+      default:
+        if (eventHandlerReg.test(name)) {
+          (events ||= scope[elementAccessor + AccessorChar.EventAttributes] =
+            {})[name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()] =
+            value;
+        } else if (!skip?.test(name)) {
+          attr(el, name, value);
+        }
+    }
   }
 }
 
