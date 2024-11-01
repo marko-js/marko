@@ -7,53 +7,53 @@
     {
       "name": "*",
       "total": {
-        "min": 19077,
-        "brotli": 6880
+        "min": 19074,
+        "brotli": 6876
       }
     },
     {
       "name": "counter",
       "user": {
         "min": 305,
-        "brotli": 231
+        "brotli": 221
       },
       "runtime": {
         "min": 3612,
-        "brotli": 1521
+        "brotli": 1517
       },
       "total": {
         "min": 3917,
-        "brotli": 1752
+        "brotli": 1738
       }
     },
     {
       "name": "counter 💧",
       "user": {
         "min": 219,
-        "brotli": 168
+        "brotli": 161
       },
       "runtime": {
         "min": 2997,
-        "brotli": 1379
+        "brotli": 1378
       },
       "total": {
         "min": 3216,
-        "brotli": 1547
+        "brotli": 1539
       }
     },
     {
       "name": "comments",
       "user": {
         "min": 1159,
-        "brotli": 608
+        "brotli": 605
       },
       "runtime": {
         "min": 7699,
-        "brotli": 3158
+        "brotli": 3152
       },
       "total": {
         "min": 8858,
-        "brotli": 3766
+        "brotli": 3757
       }
     },
     {
@@ -64,11 +64,11 @@
       },
       "runtime": {
         "min": 8701,
-        "brotli": 3575
+        "brotli": 3572
       },
       "total": {
         "min": 9696,
-        "brotli": 4115
+        "brotli": 4112
       }
     }
   ]

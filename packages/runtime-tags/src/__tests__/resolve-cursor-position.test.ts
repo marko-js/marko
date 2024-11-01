@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
-import { resolveCursorPosition } from "../dom/preserve-cursor";
+
+import { resolveCursorPosition } from "../dom/resolve-cursor-position";
 
 describe("resolveCursorPosition", () => {
   [

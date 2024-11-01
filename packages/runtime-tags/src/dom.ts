@@ -13,10 +13,6 @@ export {
   loopTo,
 } from "./dom/control-flow";
 export {
-  attr,
-  attrs,
-  attrsEvents,
-  classAttr,
   controllable_details_open,
   controllable_details_open_effect,
   controllable_dialog_open,
@@ -31,6 +27,12 @@ export {
   controllable_input_value_effect,
   controllable_select_value,
   controllable_select_value_effect,
+} from "./dom/controllable";
+export {
+  attr,
+  attrs,
+  attrsEvents,
+  classAttr,
   data,
   html,
   lifecycle,
