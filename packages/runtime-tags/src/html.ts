@@ -12,8 +12,10 @@ export {
   controllable_input_checkedValues,
   controllable_input_value,
   controllable_select_value,
+  optionValueAttr,
   partialAttrs,
   styleAttr,
+  withSelectedValue,
 } from "./html/attrs";
 export { compat } from "./html/compat";
 export { escapeScript, escapeStyle, escapeXML, toString } from "./html/content";

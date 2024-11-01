@@ -28,7 +28,7 @@ const _checkedValues = /* @__PURE__ */_value("checkedValues", (_scope, checkedVa
     checkedValuesChange: _checkedValuesChange3(_scope),
     value: "c"
   });
-}, _intersections([_inChild("#childScope/0", _checkbox_input), _inChild("#childScope/1", _checkbox_input), _inChild("#childScope/2", _checkbox_input)]));
+}, () => _intersections([_inChild("#childScope/0", _checkbox_input), _inChild("#childScope/1", _checkbox_input), _inChild("#childScope/2", _checkbox_input)]));
 export function _setup_(_scope) {
   _checkbox(_scope["#childScope/0"]);
   _checkbox(_scope["#childScope/1"]);

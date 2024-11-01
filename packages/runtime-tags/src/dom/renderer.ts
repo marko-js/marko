@@ -114,9 +114,9 @@ export function dynamicTagAttrs(
     const renderBody = getRenderBody?.(scope);
     if (typeof renderer === "string") {
       // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
-      const elementAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
-      setConditionalRendererOnlyChild(childScope, elementAccessor, renderBody);
-      attrs(childScope, elementAccessor, attrsOrOp());
+      const nodeAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
+      setConditionalRendererOnlyChild(childScope, nodeAccessor, renderBody);
+      attrs(childScope, nodeAccessor, attrsOrOp());
     } else if (renderer.___args) {
       const attributes = attrsOrOp();
       renderer.___args(

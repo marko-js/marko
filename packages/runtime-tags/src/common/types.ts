@@ -122,3 +122,13 @@ export type RenderResult = PromiseLike<string> &
   AsyncIterable<string> & {
     toReadable(): ReadableStream;
   };
+
+export enum ControlledType {
+  InputChecked,
+  InputCheckedValue,
+  InputCheckedValues,
+  InputValue,
+  SelectValue,
+  DetailsOpen,
+  DialogOpen,
+}

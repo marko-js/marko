@@ -3,35 +3,31 @@
 <html>
   <head />
   <body>
-    <!--M_[1-->
     <select>
       <option
         value="a"
       >
         A
       </option>
-      <!--M_*2 #option/0-->
       <option
         selected=""
         value="b"
       >
         B
       </option>
-      <!--M_*2 #option/1-->
       <option
         value="c"
       >
         C
       </option>
-      <!--M_*2 #option/2-->
     </select>
-    <!--M_]0 #text/0-->
+    <!--M_*0 #select/0-->
     <span>
       b
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{value:"b","#text/0!":_.a={"#select/0:":"b","#select/0=":4},"#text/0(":"select"},1:_.a}),2,"packages/translator-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_1",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#select/0:":"b","#select/0=":4,value:"b"}},_.a["#select/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-select/template.marko_0/valueChange"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/controllable-select/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -39,8 +35,7 @@
 
 # Mutations
 ```
-removed #document/html0/body1/#comment0 before #document/html0
-inserted #document/html0/body1/#comment0
+
 ```
 
 
@@ -56,35 +51,31 @@ bubbles: true
 <html>
   <head />
   <body>
-    <!--M_[1-->
     <select>
       <option
         value="a"
       >
         A
       </option>
-      <!--M_*2 #option/0-->
       <option
         selected=""
         value="b"
       >
         B
       </option>
-      <!--M_*2 #option/1-->
       <option
         value="c"
       >
         C
       </option>
-      <!--M_*2 #option/2-->
     </select>
-    <!--M_]0 #text/0-->
+    <!--M_*0 #select/0-->
     <span>
-      b
+      c
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{value:"b","#text/0!":_.a={"#select/0:":"b","#select/0=":4},"#text/0(":"select"},1:_.a}),2,"packages/translator-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_1",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#select/0:":"b","#select/0=":4,value:"b"}},_.a["#select/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-select/template.marko_0/valueChange"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/controllable-select/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -92,5 +83,5 @@ bubbles: true
 
 # Mutations
 ```
-
+#document/html0/body1/span2/#text0: "b" => "c"
 ```

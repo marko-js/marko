@@ -11,7 +11,7 @@ const _checked = /* @__PURE__ */_value("checked", (_scope, checked) => {
     checked: checked,
     checkedChange: _checkedChange(_scope)
   });
-}, _inChild("#childScope/0", _checkbox_input));
+}, () => _inChild("#childScope/0", _checkbox_input));
 export function _setup_(_scope) {
   _checkbox(_scope["#childScope/0"]);
   _checked(_scope, false);

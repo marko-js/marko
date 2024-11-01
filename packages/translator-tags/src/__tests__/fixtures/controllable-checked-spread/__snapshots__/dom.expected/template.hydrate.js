@@ -1,4 +1,4 @@
-// size: 363 (min) 215 (brotli)
+// size: 369 (min) 217 (brotli)
 
 import {
   register as c,
@@ -27,6 +27,6 @@ const i = c("a0", (c) => e(c, 0)),
     (c, e) => {
       r(c[1], String(e)), k(c[0], { checked: e, checkedChange: d(c) });
     },
-    a(0, k),
+    () => a(0, k),
   );
 h();

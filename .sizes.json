@@ -7,120 +7,68 @@
     {
       "name": "*",
       "total": {
-<<<<<<< HEAD
-        "min": 18313,
-        "brotli": 6760
-=======
-        "min": 14954,
-        "brotli": 5697
->>>>>>> main
+        "min": 19077,
+        "brotli": 6880
       }
     },
     {
       "name": "counter",
       "user": {
         "min": 305,
-<<<<<<< HEAD
-        "brotli": 233
-      },
-      "runtime": {
-        "min": 3888,
-        "brotli": 1617
-      },
-      "total": {
-        "min": 4193,
-        "brotli": 1850
-=======
-        "brotli": 238
+        "brotli": 231
       },
       "runtime": {
         "min": 3612,
-        "brotli": 1515
+        "brotli": 1521
       },
       "total": {
         "min": 3917,
-        "brotli": 1753
->>>>>>> main
+        "brotli": 1752
       }
     },
     {
       "name": "counter 💧",
       "user": {
         "min": 219,
-        "brotli": 164
+        "brotli": 168
       },
       "runtime": {
-<<<<<<< HEAD
-        "min": 2727,
-        "brotli": 1235
+        "min": 2997,
+        "brotli": 1379
       },
       "total": {
-        "min": 2946,
-        "brotli": 1399
-=======
-        "min": 2985,
-        "brotli": 1372
-      },
-      "total": {
-        "min": 3204,
-        "brotli": 1532
->>>>>>> main
+        "min": 3216,
+        "brotli": 1547
       }
     },
     {
       "name": "comments",
       "user": {
-<<<<<<< HEAD
-        "min": 1052,
-        "brotli": 584
-      },
-      "runtime": {
-        "min": 7746,
-        "brotli": 3187
-      },
-      "total": {
-        "min": 8798,
-        "brotli": 3771
-=======
         "min": 1159,
-        "brotli": 609
+        "brotli": 608
       },
       "runtime": {
-        "min": 7680,
-        "brotli": 3142
+        "min": 7699,
+        "brotli": 3158
       },
       "total": {
-        "min": 8839,
-        "brotli": 3751
->>>>>>> main
+        "min": 8858,
+        "brotli": 3766
       }
     },
     {
       "name": "comments 💧",
       "user": {
-<<<<<<< HEAD
-        "min": 903,
-        "brotli": 521
-      },
-      "runtime": {
-        "min": 8301,
-        "brotli": 3414
-      },
-      "total": {
-        "min": 9204,
-        "brotli": 3935
-=======
         "min": 995,
-        "brotli": 542
+        "brotli": 540
       },
       "runtime": {
-        "min": 8662,
-        "brotli": 3558
+        "min": 8701,
+        "brotli": 3575
       },
       "total": {
-        "min": 9657,
-        "brotli": 4100
->>>>>>> main
+        "min": 9696,
+        "brotli": 4115
       }
     }
   ]

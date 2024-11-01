@@ -16,18 +16,7 @@ import {
   k as v,
   l as b,
   m as f,
-<<<<<<< HEAD
-} from "./runtime-DsrRJSOQ.js";
-const h = e(2, (s) => {
-    const {
-      _: { 6: a, 8: n },
-    } = s;
-    I(s[0], { comments: a.comments, path: n });
-  }),
-  k = l(8, null, void 0, h),
-  K = l(6, null, void 0, h),
-=======
-} from "./runtime--OdgW4PD.js";
+} from "./runtime-CSG-yPDC.js";
 const h = e(
     2,
     (s) => {
@@ -40,7 +29,6 @@ const h = e(
   ),
   k = l(8, null, void 0, () => h),
   K = l(6, null, void 0, () => h),
->>>>>>> main
   $ = s(
     "QURHKITf",
     a(

@@ -29,7 +29,6 @@ container.querySelector("input").click()
 # Mutations
 ```
 span1/#text0: "false" => "true"
-input0: attr(type) "checkbox" => "checkbox"
 ```
 
 
@@ -48,7 +47,6 @@ container.querySelector("input").click()
 # Mutations
 ```
 span1/#text0: "true" => "false"
-input0: attr(type) "checkbox" => "checkbox"
 ```
 
 
@@ -67,5 +65,4 @@ container.querySelector("input").click()
 # Mutations
 ```
 span1/#text0: "false" => "true"
-input0: attr(type) "checkbox" => "checkbox"
 ```

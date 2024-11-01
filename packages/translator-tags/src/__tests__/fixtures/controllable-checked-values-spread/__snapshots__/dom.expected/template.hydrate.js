@@ -1,4 +1,4 @@
-// size: 611 (min) 262 (brotli)
+// size: 617 (min) 265 (brotli)
 
 import {
   register as e,
@@ -45,6 +45,6 @@ const t = e("a0", (e) => c(e, 0)),
         d(e[1], { checkedValues: c, checkedValuesChange: b(e), value: "b" }),
         d(e[2], { checkedValues: c, checkedValuesChange: i(e), value: "c" });
     },
-    o([k(0, d), k(1, d), k(2, d)]),
+    () => o([k(0, d), k(1, d), k(2, d)]),
   );
 s();

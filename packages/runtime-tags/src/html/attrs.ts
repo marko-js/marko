@@ -1,5 +1,5 @@
 import { classValue, isVoid, styleValue } from "../common/helpers";
-import { type Accessor, AccessorChar } from "../common/types";
+import { type Accessor, AccessorChar, ControlledType } from "../common/types";
 import { ensureScopeWithId, getChunk, withContext } from "./writer";
 
 export function classAttr(val: unknown) {
@@ -15,7 +15,6 @@ export function withSelectedValue(value: unknown, renderBody: () => void) {
   withContext(kSelectedValue, value, renderBody);
 }
 
-// TODO: use this in the translator
 export function optionValueAttr(value: unknown) {
   const { [kSelectedValue]: selectedValue } =
     getChunk()?.context || ({} as any);
@@ -33,74 +32,81 @@ export function optionValueAttr(value: unknown) {
 
 export function controllable_select_value(
   scopeId: number,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
 ) {
   if (valueChange) {
     const scope = ensureScopeWithId(scopeId!);
-    scope[elementAccessor + AccessorChar.ControlledValue] = value;
-    scope[elementAccessor + AccessorChar.ControlledHandler] = valueChange;
+    scope[nodeAccessor + AccessorChar.ControlledValue] = value;
+    scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
+    scope[nodeAccessor + AccessorChar.ControlledType] =
+      ControlledType.SelectValue;
   }
   return "";
 }
 
 export function controllable_input_value(
   scopeId: number,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
 ) {
   if (valueChange) {
     const scope = ensureScopeWithId(scopeId!);
-    // scope[elementAccessor + AccessorChar.ControlledValue] = value;
-    scope[elementAccessor + AccessorChar.ControlledHandler] = valueChange;
+    // scope[nodeAccessor + AccessorChar.ControlledValue] = value;
+    scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
+    scope[nodeAccessor + AccessorChar.ControlledType] =
+      ControlledType.InputValue;
   }
   return attr("value", value);
 }
 
 export function controllable_input_checked(
   scopeId: number,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   checked: unknown,
   checkedChange: unknown,
 ) {
   if (checkedChange) {
     const scope = ensureScopeWithId(scopeId!);
-    // scope[elementAccessor + AccessorChar.ControlledValue] = checked;
-    scope[elementAccessor + AccessorChar.ControlledHandler] = checkedChange;
+    // scope[nodeAccessor + AccessorChar.ControlledValue] = checked;
+    scope[nodeAccessor + AccessorChar.ControlledHandler] = checkedChange;
+    scope[nodeAccessor + AccessorChar.ControlledType] =
+      ControlledType.InputChecked;
   }
   return attr("checked", checked);
 }
 
 export function controllable_input_checkedValue(
   scopeId: number,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   checkedValue: unknown,
   checkedValueChange: unknown,
   value: unknown,
 ) {
   if (checkedValueChange) {
     const scope = ensureScopeWithId(scopeId!);
-    // scope[elementAccessor + AccessorChar.ControlledValue] = checkedValue;
-    scope[elementAccessor + AccessorChar.ControlledHandler] =
-      checkedValueChange;
+    scope[nodeAccessor + AccessorChar.ControlledHandler] = checkedValueChange;
+    scope[nodeAccessor + AccessorChar.ControlledType] =
+      ControlledType.InputCheckedValue;
   }
   return (checkedValue === value ? ` checked` : "") + attr("value", value);
 }
 
 export function controllable_input_checkedValues(
   scopeId: number,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   checkedValues: unknown,
   checkedValuesChange: unknown,
   value: unknown,
 ) {
   if (checkedValuesChange) {
     const scope = ensureScopeWithId(scopeId!);
-    scope[elementAccessor + AccessorChar.ControlledValue] = checkedValues;
-    scope[elementAccessor + AccessorChar.ControlledHandler] =
-      checkedValuesChange;
+    scope[nodeAccessor + AccessorChar.ControlledValue] = checkedValues;
+    scope[nodeAccessor + AccessorChar.ControlledHandler] = checkedValuesChange;
+    scope[nodeAccessor + AccessorChar.ControlledType] =
+      ControlledType.InputCheckedValues;
   }
   return (
     (Array.isArray(checkedValues) && checkedValues.includes(value)
@@ -111,19 +117,35 @@ export function controllable_input_checkedValues(
 
 export function controllable_dialog_open(
   scopeId: number,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   open: unknown,
   openChange: unknown,
 ) {
   if (openChange) {
     const scope = ensureScopeWithId(scopeId!);
-    scope[elementAccessor + AccessorChar.ControlledValue] = open;
-    scope[elementAccessor + AccessorChar.ControlledHandler] = openChange;
+    scope[nodeAccessor + AccessorChar.ControlledValue] = open;
+    scope[nodeAccessor + AccessorChar.ControlledHandler] = openChange;
+    scope[nodeAccessor + AccessorChar.ControlledType] =
+      ControlledType.DialogOpen;
   }
   return attr("open", open);
 }
 
-export { controllable_dialog_open as controllable_details_open };
+export function controllable_details_open(
+  scopeId: number,
+  nodeAccessor: Accessor,
+  open: unknown,
+  openChange: unknown,
+) {
+  if (openChange) {
+    const scope = ensureScopeWithId(scopeId!);
+    scope[nodeAccessor + AccessorChar.ControlledValue] = open;
+    scope[nodeAccessor + AccessorChar.ControlledHandler] = openChange;
+    scope[nodeAccessor + AccessorChar.ControlledType] =
+      ControlledType.DetailsOpen;
+  }
+  return attr("open", open);
+}
 
 export function attr(name: string, val: unknown) {
   return isVoid(val) ? "" : nonVoidAttr(name, val);
@@ -131,7 +153,7 @@ export function attr(name: string, val: unknown) {
 
 export function attrs(
   data: Record<string, unknown>,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   scopeId: number,
   tagName: string,
 ) {
@@ -144,14 +166,14 @@ export function attrs(
       if (data.checkedChange) {
         result += controllable_input_checked(
           scopeId,
-          elementAccessor,
+          nodeAccessor,
           data.checked,
           data.checkedChange,
         );
       } else if (data.checkedValue || data.checkedValueChange) {
         result += controllable_input_checkedValue(
           scopeId,
-          elementAccessor,
+          nodeAccessor,
           data.checkedValue,
           data.checkedValueChange,
           data.value,
@@ -159,7 +181,7 @@ export function attrs(
       } else if (data.checkedValues || data.checkedValuesChange) {
         result += controllable_input_checkedValues(
           scopeId,
-          elementAccessor,
+          nodeAccessor,
           data.checkedValues,
           data.checkedValuesChange,
           data.value,
@@ -167,24 +189,30 @@ export function attrs(
       } else if (data.valueChange) {
         result += controllable_input_value(
           scopeId,
-          elementAccessor,
+          nodeAccessor,
           data.value,
           data.valueChange,
         );
       } else {
         break;
       }
-      skip = /^(?:value|checked)(?:Values?)?(?:Change)?$|[\s/>"'=]/;
+      skip = /^(?:value|checked(?:Values?)?)(?:Change)?$|[\s/>"'=]/;
       break;
     case "select":
       if (data.value || data.valueChange) {
         result += controllable_select_value(
           scopeId,
-          elementAccessor,
+          nodeAccessor,
           data.value,
           data.valueChange,
         );
         skip = /^value(?:Change)?$|[\s/>"'=]/;
+      }
+      break;
+    case "option":
+      if (data.value) {
+        result += optionValueAttr(data.value);
+        skip = /^value$|[\s/>"'=]/;
       }
       break;
     case "details":
@@ -192,7 +220,7 @@ export function attrs(
       if (data.openChange) {
         result += controllable_dialog_open(
           scopeId,
-          elementAccessor,
+          nodeAccessor,
           data.open,
           data.openChange,
         );
@@ -218,7 +246,7 @@ export function attrs(
         if (!isVoid(val)) {
           if (/^on[A-Z-]/.test(name)) {
             events ||= (scope ??= ensureScopeWithId(scopeId!))[
-              (elementAccessor + AccessorChar.EventAttributes) as any
+              (nodeAccessor + AccessorChar.EventAttributes) as any
             ] ||= {} as any;
             events![
               name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()
@@ -236,7 +264,7 @@ export function attrs(
 export function partialAttrs(
   data: Record<string, unknown>,
   skip: Record<string, 1>,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   scopeId: number,
   tagName: string,
 ) {
@@ -245,7 +273,7 @@ export function partialAttrs(
     if (!skip[key]) partial[key] = data[key];
   }
 
-  return attrs(partial, elementAccessor, scopeId, tagName);
+  return attrs(partial, nodeAccessor, scopeId, tagName);
 }
 
 function stringAttr(name: string, val: string) {

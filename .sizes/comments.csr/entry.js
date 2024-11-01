@@ -16,21 +16,7 @@ import {
   l as b,
   k as f,
   m as p,
-<<<<<<< HEAD
-  n as $,
-} from "./runtime-B9FIZhLN.js";
-const h = "<ul></ul>",
-  k = e(2, (s) => {
-    const {
-      _: { 6: n, 8: a },
-    } = s;
-    I(s[0], { comments: n.comments, path: a });
-  }),
-  K = t(8, null, void 0, k),
-  T = t(6, null, void 0, k),
-  _ = s(
-=======
-} from "./runtime-BVcnvrLh.js";
+} from "./runtime-BYPa0Ca3.js";
 const $ = "<ul></ul>",
   h = d(
     2,
@@ -45,7 +31,6 @@ const $ = "<ul></ul>",
   k = t(8, null, void 0, () => h),
   K = t(6, null, void 0, () => h),
   T = s(
->>>>>>> main
     "QURHKITf",
     n(
       `${$}`,

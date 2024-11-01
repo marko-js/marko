@@ -50,6 +50,11 @@ export const kNativeTagBinding = Symbol("native tag binding");
 export const kSerializeMarker = Symbol("serialize marker");
 const kGetterId = Symbol("node getter id");
 
+const selectAttributeGroups = new WeakMap<
+  t.NodePath<t.MarkoTag>,
+  ReturnType<typeof getUsedAttrs>
+>();
+
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kNativeTagBinding]?: Binding;
@@ -87,24 +92,6 @@ function getRelatedControllable(
   attrs: Record<string, t.MarkoAttribute | undefined>,
 ) {
   switch (tagName) {
-    case "dialog":
-      if (attrs.open || attrs.openChange) {
-        return {
-          special: false,
-          helper: "controllable_dialog_open",
-          attrs: [attrs.open, attrs.openChange],
-        } as const;
-      }
-      break;
-    case "details":
-      if (attrs.open || attrs.openChange) {
-        return {
-          special: false,
-          helper: "controllable_details_open",
-          attrs: [attrs.open, attrs.openChange],
-        } as const;
-      }
-      break;
     case "input":
       if (attrs.checked || attrs.checkedChange) {
         return {
@@ -144,6 +131,24 @@ function getRelatedControllable(
           special: true,
           helper: "controllable_select_value",
           attrs: [attrs.value, attrs.valueChange],
+        } as const;
+      }
+      break;
+    case "details":
+      if (attrs.open || attrs.openChange) {
+        return {
+          special: false,
+          helper: "controllable_details_open",
+          attrs: [attrs.open, attrs.openChange],
+        } as const;
+      }
+      break;
+    case "dialog":
+      if (attrs.open || attrs.openChange) {
+        return {
+          special: false,
+          helper: "controllable_dialog_open",
+          attrs: [attrs.open, attrs.openChange],
         } as const;
       }
       break;
@@ -389,7 +394,7 @@ export default {
             section,
             undefined,
             t.expressionStatement(
-              callRuntime(`${helper}_setup`, scopeIdentifier, visitAccessor!),
+              callRuntime(`${helper}_effect`, scopeIdentifier, visitAccessor!),
             ),
           );
         }
@@ -399,6 +404,11 @@ export default {
         const { name, value } = attr;
         const { confident, computed } = attr.extra ?? {};
         const valueReferences = value.extra?.referencedBindings;
+
+        if (isHTML && tagName === "option" && name === "value") {
+          write`${callRuntime("optionValueAttr", value)}`;
+          continue;
+        }
 
         switch (name) {
           case "class":
@@ -541,19 +551,62 @@ export default {
           .skip();
       }
 
+      if (
+        isHTML &&
+        tagName === "select" &&
+        (staticControllable || spreadExpression)
+      ) {
+        writer.flushBefore(tag);
+        selectAttributeGroups.set(tag, {
+          staticControllable,
+          spreadExpression,
+          skipExpression,
+          staticAttrs,
+        });
+      }
+
       walks.enter(tag);
     },
     exit(tag) {
+      const tagName = getTagName(tag)!;
       const extra = tag.node.extra!;
       const nodeRef = extra[kNativeTagBinding];
       const isHTML = isOutputHTML();
       const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
+      const { staticControllable, spreadExpression } =
+        selectAttributeGroups.get(tag) || {};
 
       if (isHTML && extra.tagNameNullable) {
         writer.flushInto(tag);
       }
 
-      tag.insertBefore(tag.node.body.body).forEach((child) => child.skip());
+      if (
+        isHTML &&
+        tagName === "select" &&
+        (staticControllable || spreadExpression)
+      ) {
+        writer.flushInto(tag);
+        tag.insertBefore(
+          t.expressionStatement(
+            callRuntime(
+              "withSelectedValue",
+              // TODO: we should not duplicate these expressions - we should hoist them.
+              staticControllable?.attrs[0]?.value ||
+                t.memberExpression(
+                  spreadExpression!,
+                  t.stringLiteral("value"),
+                  true,
+                ),
+              t.arrowFunctionExpression(
+                [],
+                t.blockStatement(tag.node.body.body),
+              ),
+            ),
+          ),
+        );
+      } else {
+        tag.insertBefore(tag.node.body.body).forEach((child) => child.skip());
+      }
 
       if (!openTagOnly) {
         writer.writeTo(tag)`</${tag.node.name}>`;

@@ -2,6 +2,7 @@ import { classValue, styleValue } from "../common/helpers";
 import {
   type Accessor,
   AccessorChar,
+  ControlledType,
   NodeType,
   type Scope,
 } from "../common/types";
@@ -27,10 +28,13 @@ function setAttribute(
   name: string,
   value: string | undefined,
 ) {
-  if (value === undefined) {
-    element.removeAttribute(name);
-  } else {
-    element.setAttribute(name, value);
+  // TODO: benchmark if it is actually faster to check first
+  if (element.getAttribute(name) != value) {
+    if (value === undefined) {
+      element.removeAttribute(name);
+    } else {
+      element.setAttribute(name, value);
+    }
   }
 }
 
@@ -50,43 +54,45 @@ export function data(node: Text | Comment, value: unknown) {
   }
 }
 
-const hasAlias = {
-  selected: (attrs: Record<string, unknown>) =>
-    "selectedValue" in attrs || "selectedValues" in attrs,
-  checked: (attrs: Record<string, unknown>) =>
-    "checkedValue" in attrs || "checkedValues" in attrs,
-};
-
 export function attrs(
   scope: Scope,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
-  const element = scope[elementAccessor] as Element;
-  for (const { name } of element.attributes) {
+  const el = scope[nodeAccessor] as Element;
+  for (const { name } of el.attributes) {
     if (
-      !(nextAttrs && name in nextAttrs) &&
-      !hasAlias[name as keyof typeof hasAlias]?.(nextAttrs)
+      !(nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs)))
     ) {
-      element.removeAttribute(name);
+      el.removeAttribute(name);
     }
   }
 
-  attrsInternal(scope, elementAccessor, nextAttrs);
+  attrsInternal(scope, nodeAccessor, nextAttrs);
+}
+
+function hasAttrAlias(
+  element: Element,
+  attr: string,
+  nextAttrs: Record<string, unknown>,
+) {
+  if (attr === "checked" && element.tagName === "INPUT") {
+    return "checkedValue" in nextAttrs || "checkedValues" in nextAttrs;
+  }
 }
 
 export function partialAttrs(
   scope: Scope,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
   skip: Record<string, 1>,
 ) {
-  const element = scope[elementAccessor] as Element;
+  const el = scope[nodeAccessor] as Element;
   const partial: Partial<typeof nextAttrs> = {};
 
-  for (const { name } of element.attributes) {
+  for (const { name } of el.attributes) {
     if (!skip[name] && !(nextAttrs && name in nextAttrs)) {
-      element.removeAttribute(name);
+      el.removeAttribute(name);
     }
   }
 
@@ -94,15 +100,15 @@ export function partialAttrs(
     if (!skip[key]) partial[key] = nextAttrs[key];
   }
 
-  attrsInternal(scope, elementAccessor, partial);
+  attrsInternal(scope, nodeAccessor, partial);
 }
 
 function attrsInternal(
   scope: Scope,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
-  const el = scope[elementAccessor] as Element;
+  const el = scope[nodeAccessor] as Element;
   let events: undefined | Record<string, unknown>;
   let skip: RegExp | undefined;
   switch (el.tagName) {
@@ -110,14 +116,14 @@ function attrsInternal(
       if (nextAttrs.checkedChange) {
         controllable_input_checked(
           scope,
-          elementAccessor,
+          nodeAccessor,
           nextAttrs.checked,
           nextAttrs.checkedChange,
         );
       } else if (nextAttrs.checkedValue || nextAttrs.checkedValueChange) {
         controllable_input_checkedValue(
           scope,
-          elementAccessor,
+          nodeAccessor,
           nextAttrs.checkedValue,
           nextAttrs.checkedValueChange,
           nextAttrs.value,
@@ -125,7 +131,7 @@ function attrsInternal(
       } else if (nextAttrs.checkedValues || nextAttrs.checkedValuesChange) {
         controllable_input_checkedValues(
           scope,
-          elementAccessor,
+          nodeAccessor,
           nextAttrs.checkedValues,
           nextAttrs.checkedValuesChange,
           nextAttrs.value,
@@ -133,20 +139,20 @@ function attrsInternal(
       } else if (nextAttrs.valueChange) {
         controllable_input_value(
           scope,
-          elementAccessor,
+          nodeAccessor,
           nextAttrs.value,
           nextAttrs.valueChange,
         );
       } else {
         break;
       }
-      skip = /^(?:value|checked)(?:Values?)?(?:Change)?$/;
+      skip = /^(?:value|checked(?:Values?)?)(?:Change)?$/;
       break;
     case "SELECT":
       if (nextAttrs.value || nextAttrs.valueChange) {
         controllable_select_value(
           scope,
-          elementAccessor,
+          nodeAccessor,
           nextAttrs.value,
           nextAttrs.valueChange,
         );
@@ -154,11 +160,21 @@ function attrsInternal(
       }
       break;
     case "DETAILS":
+      if (nextAttrs.openChange) {
+        controllable_details_open(
+          scope,
+          nodeAccessor,
+          nextAttrs.open,
+          nextAttrs.openChange,
+        );
+        skip = /^open(?:Change)?$/;
+      }
+      break;
     case "DIALOG":
       if (nextAttrs.openChange) {
         controllable_dialog_open(
           scope,
-          elementAccessor,
+          nodeAccessor,
           nextAttrs.open,
           nextAttrs.openChange,
         );
@@ -181,9 +197,9 @@ function attrsInternal(
         break;
       default:
         if (eventHandlerReg.test(name)) {
-          (events ||= scope[elementAccessor + AccessorChar.EventAttributes] =
-            {})[name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()] =
-            value;
+          (events ||= scope[nodeAccessor + AccessorChar.EventAttributes] = {})[
+            name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()
+          ] = value;
         } else if (!skip?.test(name)) {
           attr(el, name, value);
         }
@@ -191,21 +207,39 @@ function attrsInternal(
   }
 }
 
-export function attrsEvents(scope: Scope, elementAccessor: Accessor) {
-  const element = scope[elementAccessor] as Element;
-  const events = scope[
-    elementAccessor + AccessorChar.EventAttributes
-  ] as Record<string, any>;
-  const controlledType = scope[
-    elementAccessor + AccessorChar.ControlledType
-  ] as keyof typeof controllableEffects;
+export function attrsEvents(scope: Scope, nodeAccessor: Accessor) {
+  const el = scope[nodeAccessor] as Element;
+  const events = scope[nodeAccessor + AccessorChar.EventAttributes] as Record<
+    string,
+    any
+  >;
 
-  if (controlledType) {
-    controllableEffects[controlledType](scope, elementAccessor);
+  switch (scope[nodeAccessor + AccessorChar.ControlledType]) {
+    case ControlledType.InputChecked:
+      controllable_input_checked_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.InputCheckedValue:
+      controllable_input_checkedValue_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.InputCheckedValues:
+      controllable_input_checkedValues_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.InputValue:
+      controllable_input_value_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.SelectValue:
+      controllable_select_value_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.DetailsOpen:
+      controllable_details_open_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.DialogOpen:
+      controllable_dialog_open_effect(scope, nodeAccessor);
+      break;
   }
 
   for (const name in events) {
-    on(element, name as any, events[name] as any);
+    on(el, name as any, events[name] as any);
   }
 }
 
@@ -301,11 +335,13 @@ function setControllableAttr(
 function setControllableState(
   scope: Scope,
   nodeAccessor: Accessor,
+  type: ControlledType,
   value: unknown,
   valueChange: unknown,
 ) {
   scope[nodeAccessor + AccessorChar.ControlledValue] = value;
   scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
+  scope[nodeAccessor + AccessorChar.ControlledType] = type;
 }
 
 function setupControllable(
@@ -349,7 +385,16 @@ function setupControllable(
   };
 }
 
-const elsByValue = LazyWeakMap(() => new Set<Element>());
+const elsByValue = new WeakMap<unknown[], Set<Element>>();
+function addElsByValue(value: unknown, el: Element) {
+  if (Array.isArray(value)) {
+    let els = elsByValue.get(value);
+    if (!els) {
+      elsByValue.set(value, (els = new Set()));
+    }
+    els.add(el);
+  }
+}
 const queuedValues = new WeakSet<unknown[]>();
 function changeEffectMultiple<T extends Element = Element>(
   eventName: keyof GlobalEventHandlersEventMap,
@@ -395,7 +440,8 @@ function changeEffectMultiple<T extends Element = Element>(
         // we need to make sure currentValue is always serialized
         return;
       }
-      elsByValue.get(currentValue)!.add(el);
+
+      addElsByValue(currentValue, el);
       if (!queuedValues.has(currentValue)) {
         let outOfSync = false;
         const els = getEls(el, currentValue);
@@ -413,31 +459,7 @@ function changeEffectMultiple<T extends Element = Element>(
     }
   };
 }
-////////////
 
-// input[value]
-export function controllable_input_value(
-  scope: Scope,
-  nodeAccessor: Accessor,
-  value: unknown,
-  valueChange: unknown,
-) {
-  const el = scope[nodeAccessor] as Element;
-  // TODO: avoid preserve pos when no change handler.
-  preserveCursorPosition(el, () => {
-    setControllableAttr(el, "value", value, valueChange);
-    setControllableState(scope, nodeAccessor, value, valueChange);
-  });
-}
-export const controllable_input_value_setup = setupControllable(
-  "input",
-  "value",
-  "defaultValue",
-  undefined,
-  preserveCursorPosition,
-);
-
-// checked
 export function controllable_input_checked(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -445,15 +467,20 @@ export function controllable_input_checked(
   checkedChange: unknown,
 ) {
   setControllableAttr(scope[nodeAccessor], "checked", checked, checkedChange);
-  setControllableState(scope, nodeAccessor, checked, checkedChange);
+  setControllableState(
+    scope,
+    nodeAccessor,
+    ControlledType.InputChecked,
+    checked,
+    checkedChange,
+  );
 }
-export const controllable_input_checked_setup = setupControllable(
+export const controllable_input_checked_effect = setupControllable(
   "change",
   "checked",
   "defaultChecked",
 );
 
-// checkedValue
 export function controllable_input_checkedValue(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -469,16 +496,21 @@ export function controllable_input_checkedValue(
     checkedValue === value,
     checkedValueChange,
   );
-  setControllableState(scope, nodeAccessor, checkedValue, checkedValueChange);
+  setControllableState(
+    scope,
+    nodeAccessor,
+    ControlledType.InputCheckedValue,
+    checkedValue,
+    checkedValueChange,
+  );
 }
-export const controllable_input_checkedValue_setup = setupControllable(
+export const controllable_input_checkedValue_effect = setupControllable(
   "change",
   "checked",
   "defaultChecked",
   (el) => (el as HTMLInputElement).value,
 );
 
-// checkedValues
 export function controllable_input_checkedValues(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -488,21 +520,26 @@ export function controllable_input_checkedValues(
 ) {
   const el = scope[nodeAccessor] as Element;
   attr(el, "value", value);
-  elsByValue.get(checkedValues as unknown[])!.add(el);
-  scope[nodeAccessor + AccessorChar.ControlledValue] = checkedValues;
+  addElsByValue(checkedValues, el);
   setControllableAttr(
     el,
     "checked",
-    (checkedValues as unknown[]).includes(value),
+    Array.isArray(checkedValues) && checkedValues.includes(value),
     checkedValuesChange,
   );
-  setControllableState(scope, nodeAccessor, checkedValues, checkedValuesChange);
+  setControllableState(
+    scope,
+    nodeAccessor,
+    ControlledType.InputCheckedValues,
+    checkedValues,
+    checkedValuesChange,
+  );
 }
-export const controllable_input_checkedValues_setup = changeEffectMultiple(
+export const controllable_input_checkedValues_effect = changeEffectMultiple(
   "change",
   "checked",
   "defaultChecked",
-  (_el, checkedValues) => Array.from(elsByValue.get(checkedValues)!),
+  (el, checkedValues) => [...(elsByValue.get(checkedValues) || [el])],
   (_el, els, checkedValues) => {
     const next = new Set(checkedValues);
     for (const checkboxEl of els as HTMLInputElement[]) {
@@ -513,7 +550,33 @@ export const controllable_input_checkedValues_setup = changeEffectMultiple(
   },
 );
 
-// select[value]
+export function controllable_input_value(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  value: unknown,
+  valueChange: unknown,
+) {
+  const el = scope[nodeAccessor] as Element;
+  // TODO: avoid preserve pos when no change handler.
+  preserveCursorPosition(el, () => {
+    setControllableAttr(el, "value", value, valueChange);
+    setControllableState(
+      scope,
+      nodeAccessor,
+      ControlledType.InputValue,
+      value,
+      valueChange,
+    );
+  });
+}
+export const controllable_input_value_effect = setupControllable(
+  "input",
+  "value",
+  "defaultValue",
+  undefined,
+  preserveCursorPosition,
+);
+
 export function controllable_select_value(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -532,9 +595,15 @@ export function controllable_select_value(
       valueChange,
     );
   }
-  setControllableState(scope, nodeAccessor, value, valueChange);
+  setControllableState(
+    scope,
+    nodeAccessor,
+    ControlledType.SelectValue,
+    value,
+    valueChange,
+  );
 }
-export const controllable_select_value_setup =
+export const controllable_select_value_effect =
   changeEffectMultiple<HTMLSelectElement>(
     "change",
     "selected",
@@ -554,13 +623,31 @@ export const controllable_select_value_setup =
     },
     (_el, optionEl, currentValue) =>
       Array.isArray(currentValue)
-        ? (currentValue as unknown[]).includes(
-            (optionEl as HTMLOptionElement).value,
-          )
+        ? currentValue.includes((optionEl as HTMLOptionElement).value)
         : currentValue === (optionEl as HTMLOptionElement).value,
   );
 
-// open
+export function controllable_details_open(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  open: unknown,
+  openChange: unknown,
+) {
+  setControllableAttr(scope[nodeAccessor], "open", open, openChange);
+  setControllableState(
+    scope,
+    nodeAccessor,
+    ControlledType.DetailsOpen,
+    open,
+    openChange,
+  );
+}
+export const controllable_details_open_effect = setupControllable(
+  "toggle",
+  "open",
+  "open", // There is no `defaultOpen` attribute, so we can't check if it's out of sync on resume
+);
+
 export function controllable_dialog_open(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -568,61 +655,16 @@ export function controllable_dialog_open(
   openChange: unknown,
 ) {
   setControllableAttr(scope[nodeAccessor], "open", open, openChange);
-  setControllableState(scope, nodeAccessor, open, openChange);
+  setControllableState(
+    scope,
+    nodeAccessor,
+    ControlledType.DialogOpen,
+    open,
+    openChange,
+  );
 }
-export const controllable_dialog_open_setup = setupControllable(
+export const controllable_dialog_open_effect = setupControllable(
   "close",
   "open",
   "open", // There is no `defaultOpen` attribute, so we can't check if it's out of sync on resume
 );
-
-export { controllable_dialog_open as controllable_details_open };
-export const controllable_details_open_setup = setupControllable(
-  "toggle",
-  "open",
-  "open", // There is no `defaultOpen` attribute, so we can't check if it's out of sync on resume
-);
-
-/////////
-
-const controllableEffects = {
-  value: (scope: Scope, nodeAccessor: Accessor) => {
-    switch ((scope[nodeAccessor] as Element).tagName) {
-      case "INPUT":
-        controllable_input_value_setup(scope, nodeAccessor);
-        break;
-      case "SELECT":
-        controllable_select_value_setup(scope, nodeAccessor);
-        break;
-    }
-  },
-  checked: controllable_input_checked_setup,
-  checkedValue: controllable_input_checkedValue_setup,
-  checkedValues: controllable_input_checkedValues_setup,
-  open: (scope: Scope, nodeAccessor: Accessor) => {
-    switch ((scope[nodeAccessor] as Element).tagName) {
-      case "DIALOG":
-        controllable_dialog_open_setup(scope, nodeAccessor);
-        break;
-      case "DETAILS":
-        controllable_details_open_setup(scope, nodeAccessor);
-        break;
-    }
-  },
-};
-
-function LazyWeakMap<T>(
-  construct: () => T,
-): WeakMap<object, T> & { get: () => T } {
-  const map = new WeakMap();
-  const originalGet = map.get;
-  return Object.assign(map, {
-    get(key: object) {
-      let value = originalGet.call(map, key);
-      if (!value) {
-        map.set(key, (value = construct()));
-      }
-      return value;
-    },
-  }) as WeakMap<object, T> & { get: () => T };
-}
