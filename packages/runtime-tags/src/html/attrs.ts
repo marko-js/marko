@@ -10,11 +10,6 @@ export function styleAttr(val: unknown) {
   return stringAttr("style", styleValue(val));
 }
 
-const kSelectedValue = Symbol("selectedValue");
-export function withSelectedValue(value: unknown, renderBody: () => void) {
-  withContext(kSelectedValue, value, renderBody);
-}
-
 export function optionValueAttr(value: unknown) {
   const { [kSelectedValue]: selectedValue } =
     getChunk()?.context || ({} as any);
@@ -30,11 +25,13 @@ export function optionValueAttr(value: unknown) {
   );
 }
 
+const kSelectedValue = Symbol("selectedValue");
 export function controllable_select_value(
   scopeId: number,
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
+  renderBody?: () => void,
 ) {
   if (valueChange) {
     const scope = ensureScopeWithId(scopeId!);
@@ -43,7 +40,10 @@ export function controllable_select_value(
     scope[nodeAccessor + AccessorChar.ControlledType] =
       ControlledType.SelectValue;
   }
-  return "";
+
+  if (renderBody) {
+    withContext(kSelectedValue, value, renderBody);
+  }
 }
 
 export function controllable_input_value(
@@ -54,7 +54,6 @@ export function controllable_input_value(
 ) {
   if (valueChange) {
     const scope = ensureScopeWithId(scopeId!);
-    // scope[nodeAccessor + AccessorChar.ControlledValue] = value;
     scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
     scope[nodeAccessor + AccessorChar.ControlledType] =
       ControlledType.InputValue;
@@ -85,37 +84,24 @@ export function controllable_input_checkedValue(
   checkedValueChange: unknown,
   value: unknown,
 ) {
+  const multiple = Array.isArray(checkedValue);
+  const valueAttr = attr("value", value);
   if (checkedValueChange) {
     const scope = ensureScopeWithId(scopeId!);
     scope[nodeAccessor + AccessorChar.ControlledHandler] = checkedValueChange;
     scope[nodeAccessor + AccessorChar.ControlledType] =
       ControlledType.InputCheckedValue;
+    if (multiple) {
+      scope[nodeAccessor + AccessorChar.ControlledValue] = checkedValue;
+    }
   }
-  return (checkedValue === value ? ` checked` : "") + attr("value", value);
+
+  return (multiple ? checkedValue.includes(value) : checkedValue === value)
+    ? valueAttr + " checked"
+    : valueAttr;
 }
 
-export function controllable_input_checkedValues(
-  scopeId: number,
-  nodeAccessor: Accessor,
-  checkedValues: unknown,
-  checkedValuesChange: unknown,
-  value: unknown,
-) {
-  if (checkedValuesChange) {
-    const scope = ensureScopeWithId(scopeId!);
-    scope[nodeAccessor + AccessorChar.ControlledValue] = checkedValues;
-    scope[nodeAccessor + AccessorChar.ControlledHandler] = checkedValuesChange;
-    scope[nodeAccessor + AccessorChar.ControlledType] =
-      ControlledType.InputCheckedValues;
-  }
-  return (
-    (Array.isArray(checkedValues) && checkedValues.includes(value)
-      ? ` checked`
-      : "") + attr("value", value)
-  );
-}
-
-export function controllable_dialog_open(
+export function controllable_detailsOrDialog_open(
   scopeId: number,
   nodeAccessor: Accessor,
   open: unknown,
@@ -126,23 +112,7 @@ export function controllable_dialog_open(
     scope[nodeAccessor + AccessorChar.ControlledValue] = open;
     scope[nodeAccessor + AccessorChar.ControlledHandler] = openChange;
     scope[nodeAccessor + AccessorChar.ControlledType] =
-      ControlledType.DialogOpen;
-  }
-  return attr("open", open);
-}
-
-export function controllable_details_open(
-  scopeId: number,
-  nodeAccessor: Accessor,
-  open: unknown,
-  openChange: unknown,
-) {
-  if (openChange) {
-    const scope = ensureScopeWithId(scopeId!);
-    scope[nodeAccessor + AccessorChar.ControlledValue] = open;
-    scope[nodeAccessor + AccessorChar.ControlledHandler] = openChange;
-    scope[nodeAccessor + AccessorChar.ControlledType] =
-      ControlledType.DetailsOpen;
+      ControlledType.DetailsOrDialogOpen;
   }
   return attr("open", open);
 }
@@ -178,14 +148,6 @@ export function attrs(
           data.checkedValueChange,
           data.value,
         );
-      } else if (data.checkedValues || data.checkedValuesChange) {
-        result += controllable_input_checkedValues(
-          scopeId,
-          nodeAccessor,
-          data.checkedValues,
-          data.checkedValuesChange,
-          data.value,
-        );
       } else if (data.valueChange) {
         result += controllable_input_value(
           scopeId,
@@ -196,16 +158,10 @@ export function attrs(
       } else {
         break;
       }
-      skip = /^(?:value|checked(?:Values?)?)(?:Change)?$|[\s/>"'=]/;
+      skip = /^(?:value|checked(?:Value)?)(?:Change)?$|[\s/>"'=]/;
       break;
     case "select":
       if (data.value || data.valueChange) {
-        result += controllable_select_value(
-          scopeId,
-          nodeAccessor,
-          data.value,
-          data.valueChange,
-        );
         skip = /^value(?:Change)?$|[\s/>"'=]/;
       }
       break;
@@ -218,7 +174,7 @@ export function attrs(
     case "details":
     case "dialog":
       if (data.openChange) {
-        result += controllable_dialog_open(
+        result += controllable_detailsOrDialog_open(
           scopeId,
           nodeAccessor,
           data.open,

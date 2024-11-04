@@ -59,14 +59,18 @@ export function run() {
     currentEffects = [];
   }
 }
-
-export function runSync(fn: () => void) {
+export function runSync<T>(fn: () => void): void;
+export function runSync<T>(fn: (v: T) => void, v: T): void;
+export function runSync<T>(
+  fn: (() => void) | ((v: T) => void),
+  v?: typeof fn extends (v: T) => void ? T : never,
+): void {
   const prevBatch = currentBatch;
   const prevEffects = currentEffects;
   currentBatch = [];
   currentEffects = [];
   try {
-    fn();
+    fn(v as any);
     runBatch();
     currentBatch = prevBatch;
     runEffects();

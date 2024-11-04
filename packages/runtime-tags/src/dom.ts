@@ -13,16 +13,12 @@ export {
   loopTo,
 } from "./dom/control-flow";
 export {
-  controllable_details_open,
-  controllable_details_open_effect,
-  controllable_dialog_open,
-  controllable_dialog_open_effect,
+  controllable_detailsOrDialog_open,
+  controllable_detailsOrDialog_open_effect,
   controllable_input_checked,
   controllable_input_checked_effect,
   controllable_input_checkedValue,
   controllable_input_checkedValue_effect,
-  controllable_input_checkedValues,
-  controllable_input_checkedValues_effect,
   controllable_input_value,
   controllable_input_value_effect,
   controllable_select_value,

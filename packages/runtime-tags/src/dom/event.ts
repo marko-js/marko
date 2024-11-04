@@ -4,8 +4,8 @@ const elementHandlersByEvent = new Map<
   string,
   WeakMap<Element, undefined | ((...args: any[]) => void)>
 >();
-const delegatedEventsByRoot = new WeakMap<Node, Set<string>>();
-const eventOpts: AddEventListenerOptions = { capture: true };
+
+const defaultDelegator = createDelegator();
 
 export function on<
   T extends EventNames,
@@ -22,24 +22,31 @@ export function on<
   }
 
   if (!handlersByElement.has(element)) {
-    ensureDelegated(element, type);
+    defaultDelegator(element, type, handleDelegated);
   }
 
   handlersByElement.set(element, handler || undefined);
 }
 
-function ensureDelegated(node: Node, type: string) {
-  const root = node.getRootNode();
-  let delegatedEvents = delegatedEventsByRoot.get(root);
+export function createDelegator() {
+  const delegatedEventsByRoot = new WeakMap<Node, Set<string>>();
+  return function ensureDelegated(
+    node: Node,
+    type: string,
+    handler: EventListener,
+  ) {
+    const root = node.getRootNode();
+    let delegatedEvents = delegatedEventsByRoot.get(root);
 
-  if (!delegatedEvents) {
-    delegatedEventsByRoot.set(root, (delegatedEvents = new Set()));
-  }
+    if (!delegatedEvents) {
+      delegatedEventsByRoot.set(root, (delegatedEvents = new Set()));
+    }
 
-  if (!delegatedEvents.has(type)) {
-    delegatedEvents.add(type);
-    root.addEventListener(type, handleDelegated, eventOpts);
-  }
+    if (!delegatedEvents.has(type)) {
+      delegatedEvents.add(type);
+      root.addEventListener(type, handler, true);
+    }
+  };
 }
 
 function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {

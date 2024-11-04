@@ -50,9 +50,12 @@ export const kNativeTagBinding = Symbol("native tag binding");
 export const kSerializeMarker = Symbol("serialize marker");
 const kGetterId = Symbol("node getter id");
 
-const selectAttributeGroups = new WeakMap<
-  t.NodePath<t.MarkoTag>,
-  ReturnType<typeof getUsedAttrs>
+const htmlSelectArgs = new WeakMap<
+  t.MarkoTag,
+  {
+    value: t.Expression;
+    valueChange: t.Expression;
+  }
 >();
 
 declare module "@marko/compiler/dist/types" {
@@ -70,7 +73,6 @@ function assertExclusiveControllableGroups(
   const exclusiveGroups = [
     attrs.open || attrs.openChange,
     attrs.checked || attrs.checkedChange,
-    attrs.checkedValues || attrs.checkedValuesChange,
     attrs.checkedValue || attrs.checkedValueChange,
     attrs.valueChange,
   ].filter(Boolean);
@@ -109,14 +111,6 @@ function getRelatedControllable(
         } as const;
       }
 
-      if (attrs.checkedValues || attrs.checkedValuesChange) {
-        return {
-          special: true,
-          helper: "controllable_input_checkedValues",
-          attrs: [attrs.checkedValues, attrs.checkedValuesChange, attrs.value],
-        } as const;
-      }
-
       if (attrs.value || attrs.valueChange) {
         return {
           special: false,
@@ -135,19 +129,11 @@ function getRelatedControllable(
       }
       break;
     case "details":
-      if (attrs.open || attrs.openChange) {
-        return {
-          special: false,
-          helper: "controllable_details_open",
-          attrs: [attrs.open, attrs.openChange],
-        } as const;
-      }
-      break;
     case "dialog":
       if (attrs.open || attrs.openChange) {
         return {
           special: false,
-          helper: "controllable_dialog_open",
+          helper: "controllable_detailsOrDialog_open",
           attrs: [attrs.open, attrs.openChange],
         } as const;
       }
@@ -355,12 +341,9 @@ export default {
 
       write`<${name.node}`;
 
-      const {
-        staticAttrs,
-        staticControllable,
-        spreadExpression,
-        skipExpression,
-      } = getUsedAttrs(tagName, tag.node);
+      const usedAttrs = getUsedAttrs(tagName, tag.node);
+      const { staticAttrs, staticControllable, skipExpression } = usedAttrs;
+      let { spreadExpression } = usedAttrs;
 
       if (staticControllable) {
         const { helper, attrs } = staticControllable;
@@ -378,7 +361,9 @@ export default {
         const values = attrs.map((attr) => attr?.value);
 
         if (isHTML) {
-          write`${callRuntime(helper, getScopeIdIdentifier(section), visitAccessor!, ...values)}`;
+          if (tagName !== "select") {
+            write`${callRuntime(helper, getScopeIdIdentifier(section), visitAccessor!, ...values)}`;
+          }
           addHTMLEffectCall(section, undefined);
         } else {
           addStatement(
@@ -397,6 +382,31 @@ export default {
               callRuntime(`${helper}_effect`, scopeIdentifier, visitAccessor!),
             ),
           );
+        }
+      }
+
+      if (isHTML && tagName === "select") {
+        if (staticControllable) {
+          htmlSelectArgs.set(tag.node, {
+            value: staticControllable.attrs[0]?.value || buildUndefined(),
+            valueChange: staticControllable.attrs[1]?.value || buildUndefined(),
+          });
+        } else if (spreadExpression) {
+          const spreadIdentifier =
+            tag.scope.generateUidIdentifier("select_input");
+          tag.insertBefore(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(spreadIdentifier, spreadExpression),
+            ]),
+          );
+          htmlSelectArgs.set(tag.node, {
+            value: t.memberExpression(spreadIdentifier, t.identifier("value")),
+            valueChange: t.memberExpression(
+              spreadIdentifier,
+              t.identifier("valueChange"),
+            ),
+          });
+          spreadExpression = spreadIdentifier;
         }
       }
 
@@ -545,58 +555,37 @@ export default {
         write`>`;
       }
 
+      // TODO: this is broken for DOM (and select in ssr) and so is currently disabled and always becomes a dynamic tag.
       if (isHTML && extra.tagNameNullable) {
         tag
           .insertBefore(t.ifStatement(name.node, writer.consumeHTML(tag)!))[0]
           .skip();
       }
 
-      if (
-        isHTML &&
-        tagName === "select" &&
-        (staticControllable || spreadExpression)
-      ) {
-        writer.flushBefore(tag);
-        selectAttributeGroups.set(tag, {
-          staticControllable,
-          spreadExpression,
-          skipExpression,
-          staticAttrs,
-        });
-      }
-
       walks.enter(tag);
     },
     exit(tag) {
-      const tagName = getTagName(tag)!;
       const extra = tag.node.extra!;
       const nodeRef = extra[kNativeTagBinding];
       const isHTML = isOutputHTML();
       const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
-      const { staticControllable, spreadExpression } =
-        selectAttributeGroups.get(tag) || {};
+      const selectArgs = isHTML && htmlSelectArgs.get(tag.node);
 
       if (isHTML && extra.tagNameNullable) {
         writer.flushInto(tag);
       }
 
-      if (
-        isHTML &&
-        tagName === "select" &&
-        (staticControllable || spreadExpression)
-      ) {
+      if (selectArgs) {
+        writer.writeTo(tag)`</${tag.node.name}>`;
         writer.flushInto(tag);
         tag.insertBefore(
           t.expressionStatement(
             callRuntime(
-              "withSelectedValue",
-              // TODO: we should not duplicate these expressions - we should hoist them.
-              staticControllable?.attrs[0]?.value ||
-                t.memberExpression(
-                  spreadExpression!,
-                  t.stringLiteral("value"),
-                  true,
-                ),
+              "controllable_select_value",
+              getScopeIdIdentifier(getSection(tag)),
+              getScopeAccessorLiteral(nodeRef!),
+              selectArgs.value,
+              selectArgs.valueChange,
               t.arrowFunctionExpression(
                 [],
                 t.blockStatement(tag.node.body.body),
@@ -608,7 +597,7 @@ export default {
         tag.insertBefore(tag.node.body.body).forEach((child) => child.skip());
       }
 
-      if (!openTagOnly) {
+      if (!openTagOnly && !selectArgs) {
         writer.writeTo(tag)`</${tag.node.name}>`;
       }
 
@@ -752,3 +741,7 @@ const HoistVisitors = {
   UpdateExpression: UpdateExpressionVisitor.translate,
   AssignmentExpression: AssignmentExpressionVisitor.translate,
 };
+
+function buildUndefined() {
+  return t.unaryExpression("void", t.numericLiteral(0));
+}

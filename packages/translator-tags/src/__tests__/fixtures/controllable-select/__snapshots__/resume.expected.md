@@ -27,7 +27,7 @@
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#select/0:":"b","#select/0=":4,value:"b"}},_.a["#select/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-select/template.marko_0/valueChange"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/controllable-select/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#select/0:":"b","#select/0=":3,value:"b"}},_.a["#select/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-select/template.marko_0/valueChange"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/controllable-select/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -43,7 +43,7 @@
 const select = container.querySelector(`select`);
   const window = select.ownerDocument.defaultView;
   select.value = "c";
-  select.dispatchEvent(new window.Event("change", {
+  select.dispatchEvent(new window.Event("input", {
 bubbles: true
   }))
 
@@ -75,7 +75,7 @@ bubbles: true
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#select/0:":"b","#select/0=":4,value:"b"}},_.a["#select/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-select/template.marko_0/valueChange"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/controllable-select/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#select/0:":"b","#select/0=":3,value:"b"}},_.a["#select/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-select/template.marko_0/valueChange"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/controllable-select/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

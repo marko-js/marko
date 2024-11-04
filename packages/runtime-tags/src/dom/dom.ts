@@ -8,16 +8,12 @@ import {
 } from "../common/types";
 import { getAbortSignal } from "./abort-signal";
 import {
-  controllable_details_open,
-  controllable_details_open_effect,
-  controllable_dialog_open,
-  controllable_dialog_open_effect,
+  controllable_detailsOrDialog_open,
+  controllable_detailsOrDialog_open_effect,
   controllable_input_checked,
   controllable_input_checked_effect,
   controllable_input_checkedValue,
   controllable_input_checkedValue_effect,
-  controllable_input_checkedValues,
-  controllable_input_checkedValues_effect,
   controllable_input_value,
   controllable_input_value_effect,
   controllable_select_value,
@@ -89,9 +85,11 @@ function hasAttrAlias(
   attr: string,
   nextAttrs: Record<string, unknown>,
 ) {
-  if (attr === "checked" && element.tagName === "INPUT") {
-    return "checkedValue" in nextAttrs || "checkedValues" in nextAttrs;
-  }
+  return (
+    attr === "checked" &&
+    element.tagName === "INPUT" &&
+    "checkedValue" in nextAttrs
+  );
 }
 
 export function partialAttrs(
@@ -141,14 +139,6 @@ function attrsInternal(
           nextAttrs.checkedValueChange,
           nextAttrs.value,
         );
-      } else if (nextAttrs.checkedValues || nextAttrs.checkedValuesChange) {
-        controllable_input_checkedValues(
-          scope,
-          nodeAccessor,
-          nextAttrs.checkedValues,
-          nextAttrs.checkedValuesChange,
-          nextAttrs.value,
-        );
       } else if (nextAttrs.valueChange) {
         controllable_input_value(
           scope,
@@ -159,7 +149,7 @@ function attrsInternal(
       } else {
         break;
       }
-      skip = /^(?:value|checked(?:Values?)?)(?:Change)?$/;
+      skip = /^(?:value|checked(?:Value)?)(?:Change)?$/;
       break;
     case "SELECT":
       if (nextAttrs.value || nextAttrs.valueChange) {
@@ -173,19 +163,9 @@ function attrsInternal(
       }
       break;
     case "DETAILS":
-      if (nextAttrs.openChange) {
-        controllable_details_open(
-          scope,
-          nodeAccessor,
-          nextAttrs.open,
-          nextAttrs.openChange,
-        );
-        skip = /^open(?:Change)?$/;
-      }
-      break;
     case "DIALOG":
       if (nextAttrs.openChange) {
-        controllable_dialog_open(
+        controllable_detailsOrDialog_open(
           scope,
           nodeAccessor,
           nextAttrs.open,
@@ -234,20 +214,14 @@ export function attrsEvents(scope: Scope, nodeAccessor: Accessor) {
     case ControlledType.InputCheckedValue:
       controllable_input_checkedValue_effect(scope, nodeAccessor);
       break;
-    case ControlledType.InputCheckedValues:
-      controllable_input_checkedValues_effect(scope, nodeAccessor);
-      break;
     case ControlledType.InputValue:
       controllable_input_value_effect(scope, nodeAccessor);
       break;
     case ControlledType.SelectValue:
       controllable_select_value_effect(scope, nodeAccessor);
       break;
-    case ControlledType.DetailsOpen:
-      controllable_details_open_effect(scope, nodeAccessor);
-      break;
-    case ControlledType.DialogOpen:
-      controllable_dialog_open_effect(scope, nodeAccessor);
+    case ControlledType.DetailsOrDialogOpen:
+      controllable_detailsOrDialog_open_effect(scope, nodeAccessor);
       break;
   }
 

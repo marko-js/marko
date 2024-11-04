@@ -1,12 +1,12 @@
-// size: 421 (min) 194 (brotli)
+// size: 419 (min) 191 (brotli)
 
 import {
   register as n,
   queueSource as o,
   value as a,
-  controllable_input_checkedValues as t,
+  controllable_input_checkedValue as t,
   data as c,
-  controllable_input_checkedValues_effect as i,
+  controllable_input_checkedValue_effect as i,
   init as m,
 } from "@marko/runtime-tags/dom";
 const f = n(
