@@ -1,0 +1,14 @@
+class {
+  onCreate() {
+    this.state = { count: 0 };
+  }
+  handleCount(newCount) {
+    this.state.count = newCount;
+  }
+}
+
+<tags-counter onCount("handleCount")/>
+
+<div id="class-api">
+  ${state.count}
+</div>

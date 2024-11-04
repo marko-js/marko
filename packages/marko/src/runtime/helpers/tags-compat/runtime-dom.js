@@ -36,7 +36,25 @@ exports.p = function (domCompat) {
     function (_, out, componentDef, component) {
       const input = Array.isArray(_.i) ? _.i : [_.i];
       const tagsRenderer = domCompat.resolveRegistered(_.r, global);
-      const newNode = domCompat.render(out, component, tagsRenderer, input);
+      const events = out.___assignedCustomEvents;
+      let inputWithEvents = input;
+      if (events) {
+        const ownerComponent = out.___assignedComponentDef.___component;
+        inputWithEvents = [{ ...input[0] }, ...input.slice(1)];
+        for (const [eventName, methodName, _isOnce, extraArgs] of events) {
+          inputWithEvents[0][
+            "on" + eventName[0].toUpperCase() + eventName.slice(1)
+          ] = extraArgs
+            ? ownerComponent[methodName].bind(ownerComponent, extraArgs)
+            : ownerComponent[methodName].bind(ownerComponent);
+        }
+      }
+      const newNode = domCompat.render(
+        out,
+        component,
+        tagsRenderer,
+        inputWithEvents,
+      );
 
       out.bf(out.___assignedKey, component, !newNode);
       if (newNode) {
