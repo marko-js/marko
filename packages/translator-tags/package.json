@@ -1,6 +1,6 @@
 {
   "name": "@marko/translator-tags",
-  "version": "0.2.16",
+  "version": "0.2.17",
   "description": "Translates Marko templates to the experimental fast, lean, unified, update & render target.",
   "keywords": [
     "babel",
@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@marko/babel-utils": "^6.5.10",
-    "@marko/runtime-tags": "^0.1.17"
+    "@marko/runtime-tags": "^0.1.18"
   },
   "peerDependencies": {
     "@marko/compiler": "^5.23.0"

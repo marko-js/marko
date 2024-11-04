@@ -1,5 +1,14 @@
 # @marko/translator-tags
 
+## 0.2.17
+
+### Patch Changes
+
+- [#2350](https://github.com/marko-js/marko/pull/2350) [`6501821`](https://github.com/marko-js/marko/commit/6501821981f2c01008403dac4bb6f02a76e6ff51) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Misc improvements and refactoring to controllable inputs.
+
+- Updated dependencies [[`6501821`](https://github.com/marko-js/marko/commit/6501821981f2c01008403dac4bb6f02a76e6ff51)]:
+  - @marko/runtime-tags@0.1.18
+
 ## 0.2.16
 
 ### Patch Changes
