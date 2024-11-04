@@ -4,8 +4,8 @@ import {
   ControlledType,
   type Scope,
 } from "../common/types";
-import { attr, normalizeAttrValue, setAttribute } from "./dom";
-import { on } from "./event";
+import { attr, normalizeAttrValue } from "./dom";
+import { createDelegator } from "./event";
 import { runSync } from "./queue";
 import { resolveCursorPosition } from "./resolve-cursor-position";
 import { isResuming } from "./resume";
@@ -16,20 +16,37 @@ export function controllable_input_checked(
   checked: unknown,
   checkedChange: unknown,
 ) {
-  setControllableAttr(scope[nodeAccessor], "checked", checked, checkedChange);
-  setControllableState(
+  setCheckboxValue(
     scope,
     nodeAccessor,
     ControlledType.InputChecked,
-    checked,
+    normalizeBoolProp(checked),
     checkedChange,
   );
 }
-export const controllable_input_checked_effect = setupControllable(
-  "change",
-  "checked",
-  "defaultChecked",
-);
+
+export function controllable_input_checked_effect(
+  scope: Scope,
+  nodeAccessor: Accessor,
+) {
+  const el = scope[nodeAccessor] as HTMLInputElement;
+  syncControllable(el, "input", hasCheckboxChanged, () => {
+    const checkedChange = scope[
+      nodeAccessor + AccessorChar.ControlledHandler
+    ] as undefined | ((value: unknown) => unknown);
+    if (checkedChange) {
+      scope[nodeAccessor + AccessorChar.ControlledType] =
+        ControlledType.Pending;
+      runSync(checkedChange, el.checked);
+      if (
+        scope[nodeAccessor + AccessorChar.ControlledType] ===
+        ControlledType.Pending
+      ) {
+        el.checked = !el.checked;
+      }
+    }
+  });
+}
 
 export function controllable_input_checkedValue(
   scope: Scope,
@@ -38,67 +55,50 @@ export function controllable_input_checkedValue(
   checkedValueChange: unknown,
   value: unknown,
 ) {
-  const el = scope[nodeAccessor] as Element;
-  attr(el, "value", value);
-  setControllableAttr(
-    el,
-    "checked",
-    checkedValue === value,
-    checkedValueChange,
-  );
-  setControllableState(
+  scope[nodeAccessor + AccessorChar.ControlledValue] = checkedValue;
+  attr(scope[nodeAccessor] as HTMLInputElement, "value", value);
+  setCheckboxValue(
     scope,
     nodeAccessor,
     ControlledType.InputCheckedValue,
-    checkedValue,
+    Array.isArray(checkedValue)
+      ? checkedValue.includes(value)
+      : checkedValue === value,
     checkedValueChange,
   );
 }
-export const controllable_input_checkedValue_effect = setupControllable(
-  "change",
-  "checked",
-  "defaultChecked",
-  (el) => (el as HTMLInputElement).value,
-);
 
-export function controllable_input_checkedValues(
+export function controllable_input_checkedValue_effect(
   scope: Scope,
   nodeAccessor: Accessor,
-  checkedValues: unknown,
-  checkedValuesChange: unknown,
-  value: unknown,
 ) {
-  const el = scope[nodeAccessor] as Element;
-  attr(el, "value", value);
-  addElsByValue(checkedValues, el);
-  setControllableAttr(
-    el,
-    "checked",
-    Array.isArray(checkedValues) && checkedValues.includes(value),
-    checkedValuesChange,
-  );
-  setControllableState(
-    scope,
-    nodeAccessor,
-    ControlledType.InputCheckedValues,
-    checkedValues,
-    checkedValuesChange,
-  );
-}
-export const controllable_input_checkedValues_effect = changeEffectMultiple(
-  "change",
-  "checked",
-  "defaultChecked",
-  (el, checkedValues) => [...(elsByValue.get(checkedValues) || [el])],
-  (_el, els, checkedValues) => {
-    const next = new Set(checkedValues);
-    for (const checkboxEl of els as HTMLInputElement[]) {
-      if (checkboxEl.checked) next.add(checkboxEl.value);
-      else next.delete(checkboxEl.value);
+  const el = scope[nodeAccessor] as HTMLInputElement;
+  syncControllable(el, "input", hasCheckboxChanged, () => {
+    const checkedValueChange = scope[
+      nodeAccessor + AccessorChar.ControlledHandler
+    ] as undefined | ((value: unknown) => unknown);
+    if (checkedValueChange) {
+      const oldValue = scope[nodeAccessor + AccessorChar.ControlledValue];
+      scope[nodeAccessor + AccessorChar.ControlledType] =
+        ControlledType.Pending;
+      runSync(
+        checkedValueChange,
+        Array.isArray(oldValue)
+          ? updateList(oldValue, el.value, el.checked)
+          : el.checked
+            ? el.value
+            : undefined,
+      );
+
+      if (
+        scope[nodeAccessor + AccessorChar.ControlledType] ===
+        ControlledType.Pending
+      ) {
+        el.checked = !el.checked;
+      }
     }
-    return Array.from(next);
-  },
-);
+  });
+}
 
 export function controllable_input_value(
   scope: Scope,
@@ -106,26 +106,57 @@ export function controllable_input_value(
   value: unknown,
   valueChange: unknown,
 ) {
-  const el = scope[nodeAccessor] as Element;
-  // TODO: avoid preserve pos when no change handler.
-  preserveCursorPosition(el, () => {
-    setControllableAttr(el, "value", value, valueChange);
-    setControllableState(
-      scope,
-      nodeAccessor,
-      ControlledType.InputValue,
-      value,
-      valueChange,
-    );
+  const el = scope[nodeAccessor] as HTMLInputElement;
+  const normalizedValue = normalizeStrProp(value);
+  scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
+
+  if (valueChange) {
+    scope[nodeAccessor + AccessorChar.ControlledType] =
+      ControlledType.InputChecked;
+    scope[nodeAccessor + AccessorChar.ControlledValue] = value;
+
+    if (el.isConnected) {
+      setValueAndUpdateSelection(el, normalizedValue);
+    } else {
+      el.defaultValue = normalizedValue;
+    }
+  } else {
+    scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
+    el.defaultValue = normalizedValue;
+  }
+}
+export function controllable_input_value_effect(
+  scope: Scope,
+  nodeAccessor: Accessor,
+) {
+  const el = scope[nodeAccessor] as HTMLInputElement;
+  if (isResuming) {
+    scope[nodeAccessor + AccessorChar.ControlledValue] = el.defaultValue;
+  }
+  syncControllable(el, "input", hasValueChanged, (ev?: Event) => {
+    const valueChange = scope[nodeAccessor + AccessorChar.ControlledHandler] as
+      | undefined
+      | ((value: unknown) => unknown);
+    if (valueChange) {
+      scope[nodeAccessor + AccessorChar.ControlledType] =
+        ControlledType.Pending;
+      inputType = (ev as any).inputType || inputType;
+      runSync(valueChange, el.value);
+
+      if (
+        scope[nodeAccessor + AccessorChar.ControlledType] ===
+        ControlledType.Pending
+      ) {
+        setValueAndUpdateSelection(
+          el,
+          scope[nodeAccessor + AccessorChar.ControlledValue],
+        );
+      }
+
+      inputType = "";
+    }
   });
 }
-export const controllable_input_value_effect = setupControllable(
-  "input",
-  "value",
-  "defaultValue",
-  undefined,
-  preserveCursorPosition,
-);
 
 export function controllable_select_value(
   scope: Scope,
@@ -133,268 +164,257 @@ export function controllable_select_value(
   value: unknown,
   valueChange: unknown,
 ) {
-  const el = scope[nodeAccessor] as HTMLSelectElement;
-  const options = el.options;
-  for (let i = 0; i < options.length; i++) {
-    setControllableAttr(
-      options[i],
-      "selected",
-      Array.isArray(value)
-        ? value.includes(options[i].value)
-        : value === options[i].value,
-      valueChange,
-    );
+  scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
+
+  if (valueChange) {
+    scope[nodeAccessor + AccessorChar.ControlledType] =
+      ControlledType.SelectValue;
+    scope[nodeAccessor + AccessorChar.ControlledValue] = value;
+  } else {
+    scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
   }
-  setControllableState(
-    scope,
-    nodeAccessor,
-    ControlledType.SelectValue,
+
+  setSelectOptions(
+    scope[nodeAccessor] as HTMLSelectElement,
     value,
     valueChange,
   );
 }
-export const controllable_select_value_effect =
-  changeEffectMultiple<HTMLSelectElement>(
-    "change",
-    "selected",
-    "defaultSelected",
-    (selectEl) => selectEl.options,
-    (selectEl, optionEls, previousValue) => {
-      if (selectEl.multiple) {
-        const next = new Set(previousValue);
-        for (const optionEl of optionEls as HTMLOptionElement[]) {
-          if (optionEl.selected) next.add(optionEl.value);
-          else next.delete(optionEl.value);
-        }
-        return Array.from(next);
-      } else {
-        return selectEl.value;
+
+export function controllable_select_value_effect(
+  scope: Scope,
+  nodeAccessor: Accessor,
+) {
+  const el = scope[nodeAccessor] as HTMLSelectElement;
+  syncControllable(el, "input", hasSelectChanged, () => {
+    const valueChange = scope[nodeAccessor + AccessorChar.ControlledHandler] as
+      | undefined
+      | ((value: unknown) => unknown);
+    if (valueChange) {
+      scope[nodeAccessor + AccessorChar.ControlledType] =
+        ControlledType.Pending;
+      runSync(
+        valueChange,
+        Array.isArray(scope[nodeAccessor + AccessorChar.ControlledValue])
+          ? Array.from(el.selectedOptions, toValueProp)
+          : el.value,
+      );
+
+      if (
+        scope[nodeAccessor + AccessorChar.ControlledType] ===
+        ControlledType.Pending
+      ) {
+        setSelectOptions(
+          el,
+          scope[nodeAccessor + AccessorChar.ControlledValue],
+          valueChange,
+        );
       }
-    },
-    (_el, optionEl, currentValue) =>
-      Array.isArray(currentValue)
-        ? currentValue.includes((optionEl as HTMLOptionElement).value)
-        : currentValue === (optionEl as HTMLOptionElement).value,
-  );
-
-export function controllable_details_open(
-  scope: Scope,
-  nodeAccessor: Accessor,
-  open: unknown,
-  openChange: unknown,
-) {
-  setControllableAttr(scope[nodeAccessor], "open", open, openChange);
-  setControllableState(
-    scope,
-    nodeAccessor,
-    ControlledType.DetailsOpen,
-    open,
-    openChange,
-  );
+    }
+  });
 }
-export const controllable_details_open_effect = setupControllable(
-  "toggle",
-  "open",
-  "open", // There is no `defaultOpen` attribute, so we can't check if it's out of sync on resume
-);
 
-export function controllable_dialog_open(
-  scope: Scope,
-  nodeAccessor: Accessor,
-  open: unknown,
-  openChange: unknown,
-) {
-  setControllableAttr(scope[nodeAccessor], "open", open, openChange);
-  setControllableState(
-    scope,
-    nodeAccessor,
-    ControlledType.DialogOpen,
-    open,
-    openChange,
-  );
-}
-export const controllable_dialog_open_effect = setupControllable(
-  "close",
-  "open",
-  "open", // There is no `defaultOpen` attribute, so we can't check if it's out of sync on resume
-);
-
-const controlledClock = new WeakMap<Element, number>();
-function setControllableAttr(
-  el: Element,
-  attr: string,
+function setSelectOptions(
+  el: HTMLSelectElement,
   value: unknown,
-  valueChange: unknown,
+  valueChange?: unknown,
 ) {
-  if (valueChange) {
-    (el as any)[attr] = value;
-    controlledClock.set(el, (controlledClock.get(el) ?? 0) + 1);
+  if (Array.isArray(value)) {
+    for (const opt of el.options) {
+      const selected = value.includes(opt.value);
+      if (valueChange) {
+        opt.selected = selected;
+      } else {
+        opt.defaultSelected = selected;
+      }
+    }
   } else {
-    setAttribute(el, attr, normalizeAttrValue(value));
+    const normalizedValue = normalizeStrProp(value);
+    if (valueChange) {
+      el.value = normalizedValue;
+    } else {
+      for (const opt of el.options) {
+        opt.defaultSelected = opt.value === normalizedValue;
+      }
+    }
   }
 }
 
-function setControllableState(
+export function controllable_detailsOrDialog_open(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  open: unknown,
+  openChange: unknown,
+) {
+  scope[nodeAccessor + AccessorChar.ControlledHandler] = openChange;
+  if (openChange) {
+    scope[nodeAccessor + AccessorChar.ControlledType] =
+      ControlledType.DetailsOrDialogOpen;
+  } else {
+    scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
+  }
+
+  (scope[nodeAccessor] as HTMLDetailsElement).open = normalizeBoolProp(open);
+}
+export function controllable_detailsOrDialog_open_effect(
+  scope: Scope,
+  nodeAccessor: Accessor,
+) {
+  const el = scope[nodeAccessor] as HTMLDetailsElement;
+  syncControllable(
+    el,
+    el.tagName === "DIALOG" ? "close" : "toggle",
+    () => {
+      return (
+        scope[nodeAccessor + AccessorChar.ControlledHandler] &&
+        el.open !== scope[nodeAccessor + AccessorChar.ControlledValue]
+      );
+    },
+    () => {
+      const openChange = scope[
+        nodeAccessor + AccessorChar.ControlledHandler
+      ] as undefined | ((value: unknown) => unknown);
+      if (openChange) {
+        scope[nodeAccessor + AccessorChar.ControlledType] =
+          ControlledType.Pending;
+        runSync(openChange, el.open);
+        if (
+          scope[nodeAccessor + AccessorChar.ControlledType] ===
+          ControlledType.Pending
+        ) {
+          el.open = !el.open;
+        }
+      }
+    },
+  );
+}
+
+let inputType = "";
+function setValueAndUpdateSelection(el: HTMLInputElement, value: string) {
+  const initialValue = el.value;
+  if (initialValue !== value) {
+    if (document.activeElement === el) {
+      const initialPosition = el.selectionStart!;
+      el.value = value;
+      const updatedPosition = resolveCursorPosition(
+        el.value,
+        initialValue,
+        initialPosition,
+        inputType,
+      );
+      if (~updatedPosition) {
+        el.setSelectionRange(updatedPosition, updatedPosition);
+      }
+    } else {
+      el.value = value;
+    }
+  }
+}
+
+function setCheckboxValue(
   scope: Scope,
   nodeAccessor: Accessor,
   type: ControlledType,
-  value: unknown,
-  valueChange: unknown,
+  checked: boolean,
+  checkedChange: unknown,
 ) {
-  scope[nodeAccessor + AccessorChar.ControlledValue] = value;
-  scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
-  scope[nodeAccessor + AccessorChar.ControlledType] = type;
-}
+  scope[nodeAccessor + AccessorChar.ControlledHandler] = checkedChange;
 
-function setupControllable(
-  eventName: keyof GlobalEventHandlersEventMap,
-  attr: string,
-  defaultAttr: string,
-  getValue = (el: Element) => (el as any)[attr],
-  updateWrapper: (el: Element, fn: () => void, event?: any) => void = (
-    _el,
-    fn,
-  ) => fn(),
-) {
-  return (scope: Scope, nodeAccessor: Accessor) => {
-    const el = scope[nodeAccessor] as Element;
-    const handler = (event?: Event) => {
-      const changeHandler =
-        scope[nodeAccessor + AccessorChar.ControlledHandler];
-      if (changeHandler) {
-        updateWrapper(
-          el,
-          () => {
-            const clock = controlledClock.get(el);
-            runSync(() => changeHandler(getValue(el)));
-            if (controlledClock.get(el) === clock) {
-              (el as any)[attr] =
-                scope[nodeAccessor + AccessorChar.ControlledValue];
-              return true;
-            }
-          },
-          event,
-        );
-      }
-    };
-    // TODO: consider not using the delegation here which only supports one handler per event
-    // which means the user can't add their own handler (or will override this one)
-    on(el, eventName, handler);
-    if (isResuming) {
-      // scope[nodeAccessor + AccessorChar.ControlledValue](el as any)[defaultAttr]);
-      if ((el as any)[attr] !== (el as any)[defaultAttr]) handler();
-    }
-  };
-}
-
-const elsByValue = new WeakMap<unknown[], Set<Element>>();
-function addElsByValue(value: unknown, el: Element) {
-  if (Array.isArray(value)) {
-    let els = elsByValue.get(value);
-    if (!els) {
-      elsByValue.set(value, (els = new Set()));
-    }
-    els.add(el);
-  }
-}
-const queuedValues = new WeakSet<unknown[]>();
-function changeEffectMultiple<T extends Element = Element>(
-  eventName: keyof GlobalEventHandlersEventMap,
-  attr: string,
-  defaultAttr: string,
-  getEls: (
-    el: T,
-    prevValue: unknown[],
-  ) => Iterable<Element> & ArrayLike<Element>,
-  getValue: (
-    el: T,
-    els: Iterable<Element> & ArrayLike<Element>,
-    prevValue: unknown[],
-  ) => unknown,
-  getIndividualValue: (
-    el: T,
-    el2: Element,
-    currentValue: unknown,
-  ) => unknown = (x) => x,
-) {
-  return (scope: Scope, nodeAccessor: Accessor) => {
-    const el = scope[nodeAccessor] as T;
-    const currentValue = scope[
-      nodeAccessor + AccessorChar.ControlledValue
-    ] as unknown[];
-    const attrChange = scope[nodeAccessor + AccessorChar.ControlledHandler] as (
-      value: unknown,
-    ) => void;
-    const handler = () => {
-      const els = getEls(el, currentValue);
-      const clock = controlledClock.get(els[0]);
-      runSync(() => attrChange(getValue(el, els, currentValue)));
-      for (let i = 0; i < els.length; i++) {
-        if (controlledClock.get(els[i]) === clock) {
-          (els[i] as any)[attr] = getIndividualValue(el, els[i], currentValue);
-        }
-      }
-    };
-    on(el, eventName, handler);
-    if (isResuming) {
-      if (!currentValue) {
-        // TODO: this should not be necessary
-        // we need to make sure currentValue is always serialized
-        return;
-      }
-
-      addElsByValue(currentValue, el);
-      if (!queuedValues.has(currentValue)) {
-        let outOfSync = false;
-        const els = getEls(el, currentValue);
-        for (let i = 0; i < els.length; i++) {
-          const defaultValue = (els[i] as any)[defaultAttr];
-          if (defaultValue !== (els[i] as any)[attr]) {
-            outOfSync = true;
-          }
-        }
-        if (outOfSync) {
-          queueMicrotask(handler);
-          queuedValues.add(currentValue);
-        }
-      }
-    }
-  };
-}
-
-let preserving = false;
-
-type InputType =
-  | "deleteContentBackward"
-  | "deleteContentForward"
-  | "insertText"
-  | string;
-
-export function preserveCursorPosition(
-  el: Element,
-  update: () => void,
-  event?: InputEvent,
-) {
-  if (!preserving && document.activeElement === el) {
-    const initialValue = (el as HTMLInputElement).value;
-    const initialPosition = (el as HTMLInputElement).selectionStart!;
-    preserving = true;
-    update();
-    preserving = false;
-    const updatedValue = (el as HTMLInputElement).value;
-    const updatedPosition = resolveCursorPosition(
-      updatedValue,
-      initialValue,
-      initialPosition,
-      event?.inputType as InputType,
-    );
-    if (updatedPosition !== undefined) {
-      (el as HTMLInputElement).setSelectionRange(
-        updatedPosition,
-        updatedPosition,
-      );
-    }
+  if (checkedChange) {
+    scope[nodeAccessor + AccessorChar.ControlledType] = type;
+    (scope[nodeAccessor] as HTMLInputElement).checked = checked;
   } else {
-    update();
+    scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
+    (scope[nodeAccessor] as HTMLInputElement).defaultChecked = checked;
   }
+}
+
+const delegateFormControl = createDelegator();
+const formChangeHandlers = new WeakMap<Element, (ev?: Event) => void>();
+function syncControllable<T extends Element>(
+  el: T,
+  event: "input" | "close" | "toggle",
+  hasChanged: (el: T) => boolean | undefined,
+  onChange: (ev?: Event) => void,
+) {
+  formChangeHandlers.set(el, onChange);
+  delegateFormControl(el, event, onFormChange);
+  if ((el as any).form) {
+    delegateFormControl((el as any).form!, "reset", onFormReset);
+  }
+
+  if (isResuming && hasChanged(el)) {
+    queueMicrotask(onChange);
+  }
+}
+
+function onFormChange(ev: Event) {
+  formChangeHandlers.get(ev.target as Element)?.(ev);
+}
+
+function onFormReset(ev: Event) {
+  const handlers: (() => void)[] = [];
+  for (const el of (ev.target as HTMLFormElement).elements) {
+    const handler = formChangeHandlers.get(el);
+    if (handler && hasFormElementChanged(el)) {
+      handlers.push(handler);
+    }
+  }
+
+  requestAnimationFrame(() => {
+    if (!ev.defaultPrevented) {
+      for (const change of handlers) {
+        change();
+      }
+    }
+  });
+}
+
+function hasValueChanged(el: HTMLInputElement) {
+  return el.value !== el.defaultValue;
+}
+
+function hasCheckboxChanged(el: HTMLInputElement) {
+  return el.checked !== el.defaultChecked;
+}
+
+function hasSelectChanged(el: HTMLSelectElement) {
+  for (const opt of el.options) {
+    if (opt.selected !== opt.defaultSelected) {
+      return true;
+    }
+  }
+}
+
+function hasFormElementChanged(el: Element) {
+  switch (el.tagName) {
+    case "INPUT":
+      return (
+        hasValueChanged(el as HTMLInputElement) ||
+        hasCheckboxChanged(el as HTMLInputElement)
+      );
+    case "SELECT":
+      return hasSelectChanged(el as HTMLSelectElement);
+  }
+}
+
+function normalizeStrProp(value: unknown) {
+  return normalizeAttrValue(value) || "";
+}
+
+function normalizeBoolProp(value: unknown) {
+  return value != null && value !== false;
+}
+
+function updateList(arr: unknown[], val: unknown, push: boolean) {
+  const index = arr.indexOf(val);
+  return (
+    (push
+      ? !~index && [...arr, val]
+      : ~index && arr.slice(0, index).concat(arr.slice(index + 1))) || arr
+  );
+}
+
+function toValueProp(it: { value: string }) {
+  return it.value;
 }

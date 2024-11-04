@@ -72,13 +72,17 @@ describe("resolveCursorPosition", () => {
       const initialPosition = initial.indexOf("|");
       const expectedPosition = updated.indexOf("|");
       const updatedValue = updated.replace("|", "");
-      const actualPosition =
-        resolveCursorPosition(
-          updated.replace("|", ""),
-          initial.replace("|", ""),
-          initialPosition,
-          inputType,
-        ) ?? updatedValue.length;
+      let actualPosition = resolveCursorPosition(
+        updated.replace("|", ""),
+        initial.replace("|", ""),
+        initialPosition,
+        inputType || "",
+      );
+
+      if (actualPosition === -1) {
+        actualPosition = updatedValue.length;
+      }
+
       if (actualPosition !== expectedPosition) {
         const before = updatedValue.slice(0, actualPosition);
         const after = updatedValue.slice(actualPosition);

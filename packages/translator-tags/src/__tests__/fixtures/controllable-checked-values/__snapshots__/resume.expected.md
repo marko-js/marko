@@ -25,7 +25,7 @@
       <!--M_*0 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#input/0:":_.b=["a","b"],"#input/0=":2,"#input/1:":_.b,"#input/1=":2,"#input/2:":_.b,"#input/2=":2,checkedValues:_.b}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValuesChange"](_.a),_.a["#input/1;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValuesChange_0"](_.a),_.a["#input/2;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValuesChange_0"](_.a),_.c),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#input/0=":1,"#input/0:":_.b=["a","b"],"#input/1=":1,"#input/1:":_.b,"#input/2=":1,"#input/2:":_.b,checkedValue:_.b}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange_0"](_.a),_.c),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -66,7 +66,7 @@ container.querySelectorAll(`input`)[1].click()
       <!--M_*0 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#input/0:":_.b=["a","b"],"#input/0=":2,"#input/1:":_.b,"#input/1=":2,"#input/2:":_.b,"#input/2=":2,checkedValues:_.b}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValuesChange"](_.a),_.a["#input/1;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValuesChange_0"](_.a),_.a["#input/2;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValuesChange_0"](_.a),_.c),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#input/0=":1,"#input/0:":_.b=["a","b"],"#input/1=":1,"#input/1:":_.b,"#input/2=":1,"#input/2:":_.b,checkedValue:_.b}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange_0"](_.a),_.c),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -107,7 +107,7 @@ container.querySelectorAll(`input`)[2].click()
       <!--M_*0 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#input/0:":_.b=["a","b"],"#input/0=":2,"#input/1:":_.b,"#input/1=":2,"#input/2:":_.b,"#input/2=":2,checkedValues:_.b}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValuesChange"](_.a),_.a["#input/1;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValuesChange_0"](_.a),_.a["#input/2;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValuesChange_0"](_.a),_.c),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#input/0=":1,"#input/0:":_.b=["a","b"],"#input/1=":1,"#input/1:":_.b,"#input/2=":1,"#input/2:":_.b,checkedValue:_.b}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange_0"](_.a),_.c),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -148,7 +148,7 @@ container.querySelectorAll(`input`)[0].click()
       <!--M_*0 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#input/0:":_.b=["a","b"],"#input/0=":2,"#input/1:":_.b,"#input/1=":2,"#input/2:":_.b,"#input/2=":2,checkedValues:_.b}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValuesChange"](_.a),_.a["#input/1;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValuesChange_0"](_.a),_.a["#input/2;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValuesChange_0"](_.a),_.c),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#input/0=":1,"#input/0:":_.b=["a","b"],"#input/1=":1,"#input/1:":_.b,"#input/2=":1,"#input/2:":_.b,checkedValue:_.b}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange_0"](_.a),_.c),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

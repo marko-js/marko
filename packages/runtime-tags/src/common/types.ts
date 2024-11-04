@@ -126,9 +126,9 @@ export type RenderResult = PromiseLike<string> &
 export enum ControlledType {
   InputChecked,
   InputCheckedValue,
-  InputCheckedValues,
   InputValue,
   SelectValue,
-  DetailsOpen,
-  DialogOpen,
+  DetailsOrDialogOpen,
+  None,
+  Pending,
 }

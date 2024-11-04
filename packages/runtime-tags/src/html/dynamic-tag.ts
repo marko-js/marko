@@ -1,5 +1,5 @@
 import { normalizeDynamicRenderer } from "../html";
-import { attrs, withSelectedValue } from "./attrs";
+import { attrs, controllable_select_value } from "./attrs";
 import type { ServerRenderer } from "./template";
 import {
   getScopeId,
@@ -41,10 +41,18 @@ export function dynamicTagInput(
     );
 
     if (!voidElementsReg.test(tag)) {
-      if (tag === "select" && "value" in input && renderBody) {
-        withSelectedValue(input.value, renderBody);
-      } else {
-        renderBody?.();
+      if (renderBody) {
+        if (tag === "select" && ("value" in input || "valueChange" in input)) {
+          controllable_select_value(
+            scopeId,
+            MARKO_DEBUG ? `#${tag}/0` : 0,
+            input.value,
+            input.valueChange,
+            renderBody,
+          );
+        } else {
+          renderBody();
+        }
       }
       write(`</${tag}>`);
     } else if (MARKO_DEBUG && renderBody) {

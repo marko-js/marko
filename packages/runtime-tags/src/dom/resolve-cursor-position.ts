@@ -2,12 +2,12 @@ export function resolveCursorPosition(
   updatedValue: string,
   initialValue: string,
   initialPosition: number,
-  inputType?: string,
+  inputType: string,
 ) {
   if (
+    initialPosition !== initialValue.length ||
     // short regex to match input types that delete backwards
-    (inputType && /kw/.test(inputType)) ||
-    initialPosition !== initialValue.length
+    /kw/.test(inputType)
   ) {
     const before = initialValue.slice(0, initialPosition);
     const after = initialValue.slice(initialPosition);
@@ -16,16 +16,17 @@ export function resolveCursorPosition(
     } else if (updatedValue.endsWith(after)) {
       return updatedValue.length - after.length;
     } else {
-      const relevantChars = stripSpacesAndPunctuation(before);
+      const relevantChars = stripSpacesAndPunctuation(before).length;
       let pos = 0;
       let relevantIndex = 0;
-      while (relevantIndex < relevantChars.length) {
+      while (relevantIndex < relevantChars) {
         if (stripSpacesAndPunctuation(updatedValue[pos])) relevantIndex++;
         pos++;
       }
       return pos;
     }
   }
+  return -1;
 }
 
 function stripSpacesAndPunctuation(str: string) {

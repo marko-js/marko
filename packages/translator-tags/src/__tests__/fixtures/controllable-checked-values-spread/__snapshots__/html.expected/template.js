@@ -2,32 +2,32 @@ import { register as _register, peekNextScope as _peekNextScope, writeExistingSc
 import _checkbox from "./components/checkbox.marko";
 const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const _scope0_id = _nextScopeId();
-  const checkedValues = ["a", "b"];
+  const checkedValue = ["a", "b"];
   const _childScope = _peekNextScope();
   _checkbox({
-    checkedValues: checkedValues,
-    checkedValuesChange: _register(function (_new_checkedValues) {
-      checkedValues = _new_checkedValues;
-    }, "packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValuesChange", _scope0_id),
+    checkedValue: checkedValue,
+    checkedValueChange: _register(function (_new_checkedValue) {
+      checkedValue = _new_checkedValue;
+    }, "packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange", _scope0_id),
     value: "a"
   });
   const _childScope2 = _peekNextScope();
   _checkbox({
-    checkedValues: checkedValues,
-    checkedValuesChange: _register(function (_new_checkedValues2) {
-      checkedValues = _new_checkedValues2;
-    }, "packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValuesChange_0", _scope0_id),
+    checkedValue: checkedValue,
+    checkedValueChange: _register(function (_new_checkedValue2) {
+      checkedValue = _new_checkedValue2;
+    }, "packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange_0", _scope0_id),
     value: "b"
   });
   const _childScope3 = _peekNextScope();
   _checkbox({
-    checkedValues: checkedValues,
-    checkedValuesChange: _register(function (_new_checkedValues3) {
-      checkedValues = _new_checkedValues3;
-    }, "packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValuesChange_0", _scope0_id),
+    checkedValue: checkedValue,
+    checkedValueChange: _register(function (_new_checkedValue3) {
+      checkedValue = _new_checkedValue3;
+    }, "packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange_0", _scope0_id),
     value: "c"
   });
-  _write(`<span>${_escapeXML(checkedValues)}${_markResumeNode(_scope0_id, "#text/3")}</span>`);
+  _write(`<span>${_escapeXML(checkedValue)}${_markResumeNode(_scope0_id, "#text/3")}</span>`);
   _writeScope(_scope0_id, {
     "#childScope/0": _writeExistingScope(_childScope),
     "#childScope/1": _writeExistingScope(_childScope2),
