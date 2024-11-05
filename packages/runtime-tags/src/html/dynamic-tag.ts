@@ -1,5 +1,9 @@
 import { normalizeDynamicRenderer } from "../html";
-import { attrs, controllable_select_value } from "./attrs";
+import {
+  attrs,
+  controllable_select_value,
+  controllable_textarea_value,
+} from "./attrs";
 import type { ServerRenderer } from "./template";
 import {
   getScopeId,
@@ -41,7 +45,21 @@ export function dynamicTagInput(
     );
 
     if (!voidElementsReg.test(tag)) {
-      if (renderBody) {
+      if (tag === "textarea") {
+        if (MARKO_DEBUG && renderBody) {
+          throw new Error(
+            "A dynamic tag rendering a `<textarea>` cannot have a `renderBody` and must use the `value` attribute instead.",
+          );
+        }
+        write(
+          controllable_textarea_value(
+            scopeId,
+            MARKO_DEBUG ? `#${tag}/0` : 0,
+            input.value,
+            input.valueChange,
+          ),
+        );
+      } else if (renderBody) {
         if (tag === "select" && ("value" in input || "valueChange" in input)) {
           controllable_select_value(
             scopeId,

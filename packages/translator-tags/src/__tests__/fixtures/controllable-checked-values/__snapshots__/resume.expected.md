@@ -51,7 +51,6 @@ container.querySelectorAll(`input`)[1].click()
     />
     <!--M_*0 #input/0-->
     <input
-      checked=""
       type="checkbox"
       value="b"
     />
@@ -92,12 +91,12 @@ container.querySelectorAll(`input`)[2].click()
     />
     <!--M_*0 #input/0-->
     <input
-      checked=""
       type="checkbox"
       value="b"
     />
     <!--M_*0 #input/1-->
     <input
+      checked=""
       type="checkbox"
       value="c"
     />
@@ -127,18 +126,17 @@ container.querySelectorAll(`input`)[0].click()
   <head />
   <body>
     <input
-      checked=""
       type="checkbox"
       value="a"
     />
     <!--M_*0 #input/0-->
     <input
-      checked=""
       type="checkbox"
       value="b"
     />
     <!--M_*0 #input/1-->
     <input
+      checked=""
       type="checkbox"
       value="c"
     />

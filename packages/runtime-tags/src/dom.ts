@@ -23,6 +23,8 @@ export {
   controllable_input_value_effect,
   controllable_select_value,
   controllable_select_value_effect,
+  controllable_textarea_value,
+  controllable_textarea_value_effect,
 } from "./dom/controllable";
 export {
   attr,

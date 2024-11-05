@@ -1,9 +1,10 @@
 # Render "End"
 ```html
 <input
-  type="checkbox"
+  type="text"
+  value="hello"
 />
 <span>
-  false
+  hello
 </span>
 ```

@@ -1,6 +1,7 @@
 # Render {}
 ```html
 <input
+  checked=""
   type="radio"
   value="a"
 />
@@ -32,6 +33,7 @@ container.querySelectorAll(`input`)[1].click()
   value="a"
 />
 <input
+  checked=""
   type="radio"
   value="b"
 />
@@ -63,6 +65,7 @@ container.querySelectorAll(`input`)[2].click()
   value="b"
 />
 <input
+  checked=""
   type="radio"
   value="c"
 />
@@ -82,6 +85,7 @@ container.querySelectorAll(`input`)[0].click()
 
 ```html
 <input
+  checked=""
   type="radio"
   value="a"
 />

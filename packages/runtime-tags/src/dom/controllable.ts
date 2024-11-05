@@ -24,7 +24,6 @@ export function controllable_input_checked(
     checkedChange,
   );
 }
-
 export function controllable_input_checked_effect(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -67,7 +66,6 @@ export function controllable_input_checkedValue(
     checkedValueChange,
   );
 }
-
 export function controllable_input_checkedValue_effect(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -158,6 +156,11 @@ export function controllable_input_value_effect(
   });
 }
 
+export {
+  controllable_input_value as controllable_textarea_value,
+  controllable_input_value_effect as controllable_textarea_value_effect,
+};
+
 export function controllable_select_value(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -180,7 +183,6 @@ export function controllable_select_value(
     valueChange,
   );
 }
-
 export function controllable_select_value_effect(
   scope: Scope,
   nodeAccessor: Accessor,
@@ -387,15 +389,10 @@ function hasSelectChanged(el: HTMLSelectElement) {
 }
 
 function hasFormElementChanged(el: Element) {
-  switch (el.tagName) {
-    case "INPUT":
-      return (
-        hasValueChanged(el as HTMLInputElement) ||
-        hasCheckboxChanged(el as HTMLInputElement)
-      );
-    case "SELECT":
-      return hasSelectChanged(el as HTMLSelectElement);
-  }
+  return (el as HTMLSelectElement).options
+    ? hasSelectChanged(el as HTMLSelectElement)
+    : hasValueChanged(el as HTMLInputElement) ||
+        hasCheckboxChanged(el as HTMLInputElement);
 }
 
 function normalizeStrProp(value: unknown) {

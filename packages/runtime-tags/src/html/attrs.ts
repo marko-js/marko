@@ -1,5 +1,6 @@
 import { classValue, isVoid, styleValue } from "../common/helpers";
 import { type Accessor, AccessorChar, ControlledType } from "../common/types";
+import { escapeTextAreaValue } from "./content";
 import { ensureScopeWithId, getChunk, withContext } from "./writer";
 
 export function classAttr(val: unknown) {
@@ -44,6 +45,22 @@ export function controllable_select_value(
   if (renderBody) {
     withContext(kSelectedValue, value, renderBody);
   }
+}
+
+export function controllable_textarea_value(
+  scopeId: number,
+  nodeAccessor: Accessor,
+  value: unknown,
+  valueChange: unknown,
+) {
+  if (valueChange) {
+    const scope = ensureScopeWithId(scopeId!);
+    scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
+    scope[nodeAccessor + AccessorChar.ControlledType] =
+      ControlledType.InputValue;
+  }
+
+  return escapeTextAreaValue(value);
 }
 
 export function controllable_input_value(
@@ -161,6 +178,7 @@ export function attrs(
       skip = /^(?:value|checked(?:Value)?)(?:Change)?$|[\s/>"'=]/;
       break;
     case "select":
+    case "textarea":
       if (data.value || data.valueChange) {
         skip = /^value(?:Change)?$|[\s/>"'=]/;
       }
