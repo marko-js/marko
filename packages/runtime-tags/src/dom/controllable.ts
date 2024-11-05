@@ -140,7 +140,7 @@ export function controllable_input_value_effect(
     if (valueChange) {
       scope[nodeAccessor + AccessorChar.ControlledType] =
         ControlledType.Pending;
-      inputType = (ev as any).inputType || inputType;
+      if (ev) inputType = (ev as InputEvent).inputType;
       runSync(valueChange, el.value);
 
       if (
@@ -293,7 +293,7 @@ let inputType = "";
 function setValueAndUpdateSelection(el: HTMLInputElement, value: string) {
   const initialValue = el.value;
   if (initialValue !== value) {
-    if (document.activeElement === el) {
+    if ((el.getRootNode() as Document | ShadowRoot).activeElement === el) {
       const initialPosition = el.selectionStart!;
       el.value = value;
       const updatedPosition = resolveCursorPosition(
