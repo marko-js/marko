@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.1.20
+
+### Patch Changes
+
+- [#2354](https://github.com/marko-js/marko/pull/2354) [`a4069c2`](https://github.com/marko-js/marko/commit/a4069c2054f3168dd8f88a2be92faa510388e80c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add "value" attribute support to textarea and support controllable textarea's.
+
 ## 0.1.19
 
 ### Patch Changes
