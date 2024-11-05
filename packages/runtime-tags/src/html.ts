@@ -10,6 +10,7 @@ export {
   controllable_input_checkedValue,
   controllable_input_value,
   controllable_select_value,
+  controllable_textarea_value,
   optionValueAttr,
   partialAttrs,
   styleAttr,

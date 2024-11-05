@@ -2,7 +2,6 @@
 ```html
 <input
   type="checkbox"
-  value="on"
 />
 <span>
   false
@@ -17,7 +16,6 @@ container.querySelector("input").click()
 <input
   checked=""
   type="checkbox"
-  value="on"
 />
 <span>
   true
@@ -31,7 +29,6 @@ container.querySelector("input").click()
 ```html
 <input
   type="checkbox"
-  value="on"
 />
 <span>
   false
@@ -46,7 +43,6 @@ container.querySelector("input").click()
 <input
   checked=""
   type="checkbox"
-  value="on"
 />
 <span>
   true

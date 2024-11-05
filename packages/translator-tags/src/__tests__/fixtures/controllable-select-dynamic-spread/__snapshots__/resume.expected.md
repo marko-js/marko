@@ -65,13 +65,13 @@ bubbles: true
       </option>
       <!--M_*2 #option/0-->
       <option
-        selected=""
         value="b"
       >
         B
       </option>
       <!--M_*2 #option/1-->
       <option
+        selected=""
         value="c"
       >
         C

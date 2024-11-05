@@ -19,6 +19,7 @@ container.querySelector("input").click()
 
 ```html
 <input
+  checked=""
   type="checkbox"
 />
 <span>
@@ -55,6 +56,7 @@ container.querySelector("input").click()
 
 ```html
 <input
+  checked=""
   type="checkbox"
 />
 <span>

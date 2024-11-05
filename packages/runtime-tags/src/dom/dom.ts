@@ -18,6 +18,7 @@ import {
   controllable_input_value_effect,
   controllable_select_value,
   controllable_select_value_effect,
+  controllable_textarea_value,
 } from "./controllable";
 import { on } from "./event";
 import { parseHTML } from "./parse-html";
@@ -124,14 +125,17 @@ function attrsInternal(
   let skip: RegExp | undefined;
   switch (el.tagName) {
     case "INPUT":
-      if (nextAttrs.checkedChange) {
+      if ("checked" in nextAttrs || "checkedChange" in nextAttrs) {
         controllable_input_checked(
           scope,
           nodeAccessor,
           nextAttrs.checked,
           nextAttrs.checkedChange,
         );
-      } else if (nextAttrs.checkedValue || nextAttrs.checkedValueChange) {
+      } else if (
+        "checkedValue" in nextAttrs ||
+        "checkedValueChange" in nextAttrs
+      ) {
         controllable_input_checkedValue(
           scope,
           nodeAccessor,
@@ -139,7 +143,7 @@ function attrsInternal(
           nextAttrs.checkedValueChange,
           nextAttrs.value,
         );
-      } else if (nextAttrs.valueChange) {
+      } else if ("value" in nextAttrs || "valueChange" in nextAttrs) {
         controllable_input_value(
           scope,
           nodeAccessor,
@@ -152,8 +156,19 @@ function attrsInternal(
       skip = /^(?:value|checked(?:Value)?)(?:Change)?$/;
       break;
     case "SELECT":
-      if (nextAttrs.value || nextAttrs.valueChange) {
+      if ("value" in nextAttrs || "valueChange" in nextAttrs) {
         controllable_select_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        );
+        skip = /^value(?:Change)?$/;
+      }
+      break;
+    case "TEXTAREA":
+      if ("value" in nextAttrs || "valueChange" in nextAttrs) {
+        controllable_textarea_value(
           scope,
           nodeAccessor,
           nextAttrs.value,
@@ -164,7 +179,7 @@ function attrsInternal(
       break;
     case "DETAILS":
     case "DIALOG":
-      if (nextAttrs.openChange) {
+      if ("open" in nextAttrs || "openChange" in nextAttrs) {
         controllable_detailsOrDialog_open(
           scope,
           nodeAccessor,

@@ -8,6 +8,7 @@
     A
   </option>
   <option
+    selected=""
     value="b"
   >
     B
@@ -51,6 +52,7 @@ bubbles: true
     B
   </option>
   <option
+    selected=""
     value="c"
   >
     C

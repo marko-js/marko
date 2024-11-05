@@ -58,12 +58,12 @@ bubbles: true
         A
       </option>
       <option
-        selected=""
         value="b"
       >
         B
       </option>
       <option
+        selected=""
         value="c"
       >
         C

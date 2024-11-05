@@ -36,6 +36,7 @@ import {
   getSerializedScopeProperties,
 } from "../../util/signals";
 import toPropertyName from "../../util/to-property-name";
+import toTemplateOrStringLiteral from "../../util/to-template-string-or-literal";
 import { propsToExpression } from "../../util/translate-attrs";
 import translateVar from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -128,6 +129,15 @@ function getRelatedControllable(
         } as const;
       }
       break;
+    case "textarea":
+      if (attrs.value || attrs.valueChange) {
+        return {
+          special: true,
+          helper: "controllable_textarea_value",
+          attrs: [attrs.value, attrs.valueChange],
+        } as const;
+      }
+      break;
     case "details":
     case "dialog":
       if (attrs.open || attrs.openChange) {
@@ -142,6 +152,37 @@ function getRelatedControllable(
 }
 
 export default {
+  transform: {
+    enter(tag) {
+      const tagName = getTagName(tag);
+      if (tagName === "textarea" && tag.node.body.body.length) {
+        // convert textarea body into a static value attribute.
+        const parts: (string | t.Expression)[] = [];
+        for (const child of tag.node.body.body) {
+          if (
+            child.type === "MarkoText" ||
+            (child.type === "MarkoPlaceholder" && child.escape)
+          ) {
+            parts.push(child.value);
+          } else {
+            throw tag.hub.file.hub.buildError(
+              child,
+              "Unexpected content in textarea, only text and placeholders are supported.",
+              SyntaxError,
+            );
+          }
+        }
+        tag.node.attributes.push(
+          t.markoAttribute(
+            "value",
+            toTemplateOrStringLiteral(parts) || buildUndefined(),
+          ),
+        );
+
+        tag.node.body.body = [];
+      }
+    },
+  },
   analyze: {
     enter(tag) {
       assertNoArgs(tag);
@@ -361,7 +402,7 @@ export default {
         const values = attrs.map((attr) => attr?.value);
 
         if (isHTML) {
-          if (tagName !== "select") {
+          if (tagName !== "select" && tagName !== "textarea") {
             write`${callRuntime(helper, getScopeIdIdentifier(section), visitAccessor!, ...values)}`;
           }
           addHTMLEffectCall(section, undefined);
@@ -385,28 +426,67 @@ export default {
         }
       }
 
-      if (isHTML && tagName === "select") {
-        if (staticControllable) {
-          htmlSelectArgs.set(tag.node, {
-            value: staticControllable.attrs[0]?.value || buildUndefined(),
-            valueChange: staticControllable.attrs[1]?.value || buildUndefined(),
-          });
-        } else if (spreadExpression) {
-          const spreadIdentifier =
-            tag.scope.generateUidIdentifier("select_input");
-          tag.insertBefore(
-            t.variableDeclaration("const", [
-              t.variableDeclarator(spreadIdentifier, spreadExpression),
-            ]),
-          );
-          htmlSelectArgs.set(tag.node, {
-            value: t.memberExpression(spreadIdentifier, t.identifier("value")),
-            valueChange: t.memberExpression(
+      let writeAtStartOfBody: t.Expression | undefined;
+
+      if (isHTML) {
+        if (tagName === "select") {
+          if (staticControllable) {
+            htmlSelectArgs.set(tag.node, {
+              value: staticControllable.attrs[0]?.value || buildUndefined(),
+              valueChange:
+                staticControllable.attrs[1]?.value || buildUndefined(),
+            });
+          } else if (spreadExpression) {
+            const spreadIdentifier =
+              tag.scope.generateUidIdentifier("select_input");
+            tag.insertBefore(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(spreadIdentifier, spreadExpression),
+              ]),
+            );
+            htmlSelectArgs.set(tag.node, {
+              value: t.memberExpression(
+                spreadIdentifier,
+                t.identifier("value"),
+              ),
+              valueChange: t.memberExpression(
+                spreadIdentifier,
+                t.identifier("valueChange"),
+              ),
+            });
+            spreadExpression = spreadIdentifier;
+          }
+        } else if (tagName === "textarea") {
+          let value: undefined | t.Expression;
+          let valueChange: undefined | t.Expression;
+          if (staticControllable) {
+            value = staticControllable.attrs[0]?.value;
+            valueChange = staticControllable.attrs[1]?.value;
+          } else if (spreadExpression) {
+            const spreadIdentifier =
+              tag.scope.generateUidIdentifier("textarea_input");
+            tag.insertBefore(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(spreadIdentifier, spreadExpression),
+              ]),
+            );
+            value = t.memberExpression(spreadIdentifier, t.identifier("value"));
+            valueChange = t.memberExpression(
               spreadIdentifier,
               t.identifier("valueChange"),
-            ),
-          });
-          spreadExpression = spreadIdentifier;
+            );
+            spreadExpression = spreadIdentifier;
+          }
+
+          if (value || valueChange) {
+            writeAtStartOfBody = callRuntime(
+              "controllable_textarea_value",
+              getScopeIdIdentifier(getSection(tag)),
+              getScopeAccessorLiteral(nodeRef!),
+              value,
+              valueChange,
+            );
+          }
         }
       }
 
@@ -560,6 +640,10 @@ export default {
         tag
           .insertBefore(t.ifStatement(name.node, writer.consumeHTML(tag)!))[0]
           .skip();
+      }
+
+      if (writeAtStartOfBody) {
+        write`${writeAtStartOfBody}`;
       }
 
       walks.enter(tag);

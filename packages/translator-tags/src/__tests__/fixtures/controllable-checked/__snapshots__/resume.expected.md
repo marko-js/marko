@@ -32,6 +32,7 @@ container.querySelector("input").click()
   <head />
   <body>
     <input
+      checked=""
       type="checkbox"
     />
     <!--M_*0 #input/0-->
@@ -88,6 +89,7 @@ container.querySelector("input").click()
   <head />
   <body>
     <input
+      checked=""
       type="checkbox"
     />
     <!--M_*0 #input/0-->

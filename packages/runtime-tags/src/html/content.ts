@@ -10,6 +10,10 @@ export function escapeXML(val: unknown) {
   return val ? escapeXMLStr(val + "") : val === 0 ? "0" : "&zwj;";
 }
 
+export function escapeTextAreaValue(val: unknown) {
+  return val ? escapeXMLStr(val + "") : val === 0 ? "0" : "";
+}
+
 const unsafeScriptReg = /<\/script/g;
 const escapeScriptStr = (str: string) =>
   unsafeScriptReg.test(str)

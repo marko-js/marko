@@ -91,6 +91,7 @@ export default function createMutationTracker(
 
 function cloneAndNormalize(container: ParentNode) {
   const clone = container.cloneNode(true);
+  normalizeTree(container, clone);
   clone.normalize();
   return clone;
 }
@@ -99,37 +100,49 @@ function cloneAndSanitize(window: JSDOM["window"], container: ParentNode) {
   if (!(container as any).TEST_ROOT) {
     container = window.document.body || window.document.createElement("body");
   }
-
   const clone = container.cloneNode(true);
-  for (const removeNode of normalizeTree(container, clone)) {
-    removeNode.remove();
+  const ignoredNodes: ChildNode[] = [];
+  normalizeTree(container, clone, shouldIgnore);
+  for (const ignoredNode of ignoredNodes) {
+    ignoredNode.remove();
   }
   clone.normalize();
 
   return clone;
+
+  function shouldIgnore(node: Node) {
+    if (isComment(node) || isIgnoredTag(node)) {
+      ignoredNodes.push(node);
+      return true;
+    }
+
+    return false;
+  }
 }
 
 function normalizeTree(
   source: Node,
   target: Node,
-  nodesToRemove: ChildNode[] = [],
+  shouldIgnore?: (node: Node) => boolean,
 ) {
-  if (target.nodeType === 8 || isSanitizedTag(target as Element)) {
-    nodesToRemove.push(target as ChildNode);
-  } else if (isElement(target)) {
-    if (target.tagName === "INPUT") {
-      if ((source as HTMLInputElement).value) {
-        target.setAttribute("value", (source as HTMLInputElement).value);
-      }
-      if ((source as HTMLInputElement).checked) {
-        target.setAttribute("checked", "");
+  if (shouldIgnore?.(target)) return;
+  if (isElement(target) && isElement(source)) {
+    if (isInputElement(target) && isInputElement(source)) {
+      if (target.type === "checkbox" || target.type === "radio") {
+        if (source.checked) {
+          target.setAttribute("checked", "");
+        } else {
+          target.removeAttribute("checked");
+        }
+      } else if (source.value) {
+        target.setAttribute("value", source.value);
       } else {
-        target.removeAttribute("checked");
+        target.removeAttribute("value");
       }
-    } else if (target.tagName === "TEXTAREA") {
-      target.textContent = (source as HTMLTextAreaElement).value;
-    } else if (target.tagName === "OPTION") {
-      if ((source as HTMLOptionElement).selected) {
+    } else if (isTextAreaElement(target) && isTextAreaElement(source)) {
+      target.textContent = source.value;
+    } else if (isOptionElement(target) && isOptionElement(source)) {
+      if (source.selected) {
         target.setAttribute("selected", "");
       } else {
         target.removeAttribute("selected");
@@ -139,10 +152,8 @@ function normalizeTree(
 
   // Recursively handle child nodes
   for (let i = 0; i < source.childNodes.length; i++) {
-    normalizeTree(source.childNodes[i], target.childNodes[i], nodesToRemove);
+    normalizeTree(source.childNodes[i], target.childNodes[i], shouldIgnore);
   }
-
-  return nodesToRemove;
 }
 
 function getUpdateString(update: unknown) {
@@ -260,8 +271,8 @@ function formatMutationRecord(record: MutationRecord) {
   }
 }
 
-function isSanitizedTag(node: Element) {
-  switch (node.tagName) {
+function isIgnoredTag(node: Node): node is Element {
+  switch (isElement(node) && node.tagName) {
     case "LINK":
     case "TITLE":
     case "STYLE":
@@ -274,4 +285,20 @@ function isSanitizedTag(node: Element) {
 
 function isElement(node: Node): node is Element {
   return node.nodeType === 1;
+}
+
+function isComment(node: Node): node is Comment {
+  return node.nodeType === 8;
+}
+
+function isInputElement(node: Element): node is HTMLInputElement {
+  return node.tagName === "INPUT";
+}
+
+function isOptionElement(node: Element): node is HTMLOptionElement {
+  return node.tagName === "OPTION";
+}
+
+function isTextAreaElement(node: Element): node is HTMLTextAreaElement {
+  return node.tagName === "TEXTAREA";
 }

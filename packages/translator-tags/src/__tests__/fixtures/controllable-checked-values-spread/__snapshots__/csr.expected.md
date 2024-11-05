@@ -1,10 +1,12 @@
 # Render {}
 ```html
 <input
+  checked=""
   type="checkbox"
   value="a"
 />
 <input
+  checked=""
   type="checkbox"
   value="b"
 />
@@ -32,6 +34,7 @@ container.querySelector("input").click()
   value="a"
 />
 <input
+  checked=""
   type="checkbox"
   value="b"
 />
@@ -55,10 +58,12 @@ container.querySelector("input").click()
 
 ```html
 <input
+  checked=""
   type="checkbox"
   value="a"
 />
 <input
+  checked=""
   type="checkbox"
   value="b"
 />
@@ -86,6 +91,7 @@ container.querySelector("input").click()
   value="a"
 />
 <input
+  checked=""
   type="checkbox"
   value="b"
 />

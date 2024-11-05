@@ -44,12 +44,12 @@ container.querySelectorAll(`input`)[1].click()
   <head />
   <body>
     <input
-      checked=""
       type="radio"
       value="a"
     />
     <!--M_*0 #input/0-->
     <input
+      checked=""
       type="radio"
       value="b"
     />
@@ -84,7 +84,6 @@ container.querySelectorAll(`input`)[2].click()
   <head />
   <body>
     <input
-      checked=""
       type="radio"
       value="a"
     />
@@ -95,6 +94,7 @@ container.querySelectorAll(`input`)[2].click()
     />
     <!--M_*0 #input/1-->
     <input
+      checked=""
       type="radio"
       value="c"
     />
