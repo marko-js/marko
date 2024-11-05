@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.1.19
+
+### Patch Changes
+
+- [#2352](https://github.com/marko-js/marko/pull/2352) [`b32b01f`](https://github.com/marko-js/marko/commit/b32b01f66170ad551a25ac43567237a5f40faafb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with controllable elements inside a shadowroot.
+
 ## 0.1.18
 
 ### Patch Changes
