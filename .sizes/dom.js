@@ -198,8 +198,8 @@ function L(e, t, n) {
           : (n[r] ||= o === _);
   };
 }
-var W = (e) => e._;
-function R(e, t, n = W, r) {
+var R = (e) => e._;
+function W(e, t, n = R, r) {
   let i = "?" + D++,
     l = i + 1,
     o = "function" == typeof e ? e : () => e,
@@ -222,9 +222,9 @@ function R(e, t, n = W, r) {
     }
   };
 }
-function F(e, t, n = W, r) {
+function F(e, t, n = R, r) {
   let i = "function" == typeof e ? e : () => e,
-    l = R(i, t, n, r),
+    l = W(i, t, n, r),
     o = new WeakMap();
   return (
     (l.g = (e) => {
@@ -470,7 +470,7 @@ function be(e, t) {
   return he(e, (e) => () => e[t]);
 }
 function ye(e, t, n, r) {
-  Te(e, t, 0, Re(n), r);
+  Te(e, t, 0, We(n), r);
 }
 function me(e, t) {
   let n = e[t];
@@ -515,7 +515,7 @@ function we(e, t) {
 }
 function Ce(e, t, n, r) {
   let i = e[t],
-    l = We(n);
+    l = Re(n);
   (e[t + ";"] = r),
     r
       ? ((e[t + "="] = 0),
@@ -530,7 +530,7 @@ function Ae(e, t) {
       let i = e[t + ";"];
       i &&
         ((e[t + "="] = 6),
-        (Ie = r.inputType || Ie),
+        r && (Ie = r.inputType),
         le(i, n.value),
         6 === e[t + "="] && Ee(n, e[t + ":"]),
         (Ie = ""));
@@ -561,13 +561,13 @@ function xe(e, t, n) {
       n ? (r.selected = e) : (r.defaultSelected = e);
     }
   else {
-    let r = We(t);
+    let r = Re(t);
     if (n) e.value = r;
     else for (let t of e.options) t.defaultSelected = t.value === r;
   }
 }
 function Me(e, t, n, r) {
-  (e[t + ";"] = r), (e[t + "="] = r ? 4 : 5), (e[t].open = Re(n));
+  (e[t + ";"] = r), (e[t + "="] = r ? 4 : 5), (e[t].open = We(n));
 }
 function $e(e, t) {
   let n = e[t];
@@ -588,7 +588,7 @@ var Ie = "";
 function Ee(e, t) {
   let n = e.value;
   if (n !== t)
-    if (document.activeElement === e) {
+    if (e.getRootNode().activeElement === e) {
       let r = e.selectionStart;
       e.value = t;
       let i = (function (e, t, n, r) {
@@ -654,10 +654,10 @@ function Le(e) {
       return De(e);
   }
 }
-function We(e) {
+function Re(e) {
   return ot(e) || "";
 }
-function Re(e) {
+function We(e) {
   return null != e && !1 !== e;
 }
 function Fe(e) {
@@ -1267,7 +1267,7 @@ export {
   P as changeHandler,
   z as childClosures,
   Ke as classAttr,
-  R as closure,
+  W as closure,
   jt as compat,
   mt as conditional,
   wt as conditionalOnlyChild,
