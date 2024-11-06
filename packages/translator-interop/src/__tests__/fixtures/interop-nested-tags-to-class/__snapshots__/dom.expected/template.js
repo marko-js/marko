@@ -22,7 +22,7 @@ const _count$classLayoutBody = _$.registerSubscriber("packages/translator-intero
 const _classLayoutBody = _$.register("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<button id=tags> </button>", /* get, next(1), get */" D ", void 0, () => [_count$classLayoutBody]));
 const _classLayout_input = _$.dynamicTagAttrs("#text/0", _classLayoutBody);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _classLayout_input(_scope, () => ({})), () => _classLayout_input);
-const _count = /* @__PURE__ */_$.state("count", null, () => _$.dynamicSubscribers("count"));
+const _count = /* @__PURE__ */_$.state("count", 0, () => _$.dynamicSubscribers("count"));
 export function _setup_(_scope) {
   _count(_scope, 0);
   _dynamicTagName(_scope, _classLayout || _classLayoutBody(_scope));

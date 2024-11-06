@@ -1,76 +1,76 @@
-// size: 1199 (min) 545 (brotli)
+// size: 1189 (min) 542 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as e } from "@marko/runtime-tags/dom";
-const n = t.intersection(
+const o = t.intersection(
     2,
     (t) => {
       const {
-        _: { 6: e, 8: n },
+        _: { 6: e, 8: o },
       } = t;
-      k(t[0], { comments: e.comments, path: n });
+      k(t[0], { comments: e.comments, path: o });
     },
     () => t.inChild(0, k),
   ),
-  o = t.closure(8, null, void 0, () => n),
-  i = t.closure(6, null, void 0, () => n),
-  l = (t) => {
+  n = t.closure(8, 0, void 0, () => o),
+  i = t.closure(6, 0, void 0, () => o),
+  r = (t) => {
     t[0];
   },
-  r = t.register(
+  a = t.register(
     "a0",
-    t.createRenderer("<ul></ul>", "/ b&", l, () => [o, i]),
+    t.createRenderer("<ul></ul>", "/ b&", r, () => [n, i]),
   ),
-  a = t.intersection(
+  c = t.intersection(
     2,
     (t) => {
       const {
         _: { 2: e },
-        7: n,
+        7: o,
       } = t;
-      m(t, `${e.path || "c"}-${n}`);
+      d(t, `${e.path || "c"}-${o}`);
     },
-    () => m,
+    () => d,
   ),
-  c = t.conditional(4),
-  s = t.effect("a1", (e) =>
+  s = t.conditional(4, 0),
+  l = t.effect("a1", (e) =>
     t.on(
       e[2],
       "click",
       ((t) => {
         const { 9: e } = t;
         return function () {
-          u(t, !e);
+          m(t, !e);
         };
       })(e),
     ),
   ),
-  u = t.state(9, (e, n) => {
-    t.attr(e[0], "hidden", !n), t.data(e[3], n ? "[-]" : "[+]"), s(e);
+  m = t.state(9, (e, o) => {
+    t.attr(e[0], "hidden", !o), t.data(e[3], o ? "[-]" : "[+]"), l(e);
   }),
-  m = t.value(
+  d = t.value(
     8,
-    (e, n) => t.attr(e[0], "id", n),
-    () => t.inConditionalScope(o, 4),
+    (e, o) => t.attr(e[0], "id", o),
+    () => t.inConditionalScope(n, 4),
   ),
-  d = t.value(7, null, () => a),
+  u = t.value(7, 0, () => c),
   p = t.value(
     6,
-    (e, n) => {
-      t.data(e[1], n.text), c(e, n.comments ? r : null);
+    (e, o) => {
+      t.data(e[1], o.text), s(e, o.comments ? a : null);
     },
-    () => t.intersections([c, t.inConditionalScope(i, 4)]),
+    () => t.intersections([s, t.inConditionalScope(i, 4)]),
   ),
   v = t.value(
     5,
     (t, e) => {
-      p(t, e[0]), d(t, e[1]);
+      p(t, e[0]), u(t, e[1]);
     },
-    () => t.intersections([p, d]),
+    () => t.intersections([p, u]),
   ),
-  f = t.closure(2, null, void 0, () => a),
+  f = t.closure(2, 0, void 0, () => c),
   g = (t) => {
-    u(t, !0);
+    m(t, !0);
   },
   h = t.register(
     "a2",

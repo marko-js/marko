@@ -12,7 +12,7 @@ const _expr_Text_input_x = /* @__PURE__ */_$.intersection(3, _scope => {
     name: input.name
   }));
 }, () => _inputRenderBody_input);
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", null, () => _expr_Text_input_x);
+const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", 0, () => _expr_Text_input_x);
 const _onClick = _scope => {
   const {
     x

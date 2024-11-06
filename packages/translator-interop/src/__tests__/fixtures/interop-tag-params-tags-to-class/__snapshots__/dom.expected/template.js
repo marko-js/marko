@@ -37,7 +37,7 @@ const _multiplier$classLayoutBody = _$.registerSubscriber("packages/translator-i
 const _classLayoutBody = _$.register("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<h1> </h1><button id=tags><!> * <!> = <!></button>", /* next(1), get, out(1), get, next(1), replace, over(2), replace, over(2), replace */"D l D%c%c%", void 0, () => [_multiplier$classLayoutBody], void 0, () => _params_2$classLayoutBody));
 const _classLayout_input = _$.dynamicTagAttrs("#text/0", _classLayoutBody);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _classLayout_input(_scope, () => ({})), () => _classLayout_input);
-const _multiplier = /* @__PURE__ */_$.state("multiplier", null, () => _$.dynamicSubscribers("multiplier"));
+const _multiplier = /* @__PURE__ */_$.state("multiplier", 0, () => _$.dynamicSubscribers("multiplier"));
 export function _setup_(_scope) {
   _multiplier(_scope, 1);
   _dynamicTagName(_scope, _classLayout || _classLayoutBody(_scope));

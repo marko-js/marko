@@ -27,7 +27,7 @@ const _expr_x_y = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _expr_x_y_effect(_scope);
 });
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/3", null, () => _expr_Text_x_y);
+const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/3", 0, () => _expr_Text_x_y);
 const _y = /* @__PURE__ */_$.state("y", (_scope, y) => _$.data(_scope["#text/2"], y), () => _$.intersections([_expr_x_y, _expr_Text_x_y]));
 const _x = /* @__PURE__ */_$.state("x", (_scope, x) => _$.data(_scope["#text/1"], x), () => _$.intersections([_expr_x_y, _expr_Text_x_y]));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _dynamicTagName(_scope, input.renderBody), () => _dynamicTagName);

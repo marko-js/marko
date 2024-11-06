@@ -6,14 +6,14 @@ const _value2$ifBody = _$.registerSubscriber("packages/translator-tags/src/__tes
 const _ifBody3 = _$.register("packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_3_renderer", /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", void 0, () => [_value2$ifBody]));
 const _value1$ifBody = _$.registerSubscriber("packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_2_value1/subscriber", /* @__PURE__ */_$.dynamicClosure("value1", (_scope, value1) => _$.data(_scope["#text/0"], value1), _scope => _scope._._));
 const _ifBody2 = _$.register("packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", void 0, () => [_value1$ifBody]));
-const _if$ifBody2 = /* @__PURE__ */_$.conditional("#text/1");
-const _if$ifBody = /* @__PURE__ */_$.conditional("#text/0");
+const _if$ifBody2 = /* @__PURE__ */_$.conditional("#text/1", 0);
+const _if$ifBody = /* @__PURE__ */_$.conditional("#text/0", 0);
 const _value2$ifBody2 = /* @__PURE__ */_$.closure("value2", (_scope, value2) => _if$ifBody2(_scope, value2 ? _ifBody3 : null), void 0, () => _if$ifBody2);
 const _value1$ifBody2 = /* @__PURE__ */_$.closure("value1", (_scope, value1) => _if$ifBody(_scope, value1 ? _ifBody2 : null), void 0, () => _if$ifBody);
 const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<!><!><!><!>", /* replace, over(1), replace */"D%b%D", void 0, () => [_value2$ifBody2, _value1$ifBody2]));
-const _if = /* @__PURE__ */_$.conditional("#text/0");
-export const _value2_ = /* @__PURE__ */_$.value("value2", null, () => _$.intersections([_$.inConditionalScope(_value2$ifBody2, "#text/0"), _$.dynamicSubscribers("value2")]));
-export const _value1_ = /* @__PURE__ */_$.value("value1", null, () => _$.intersections([_$.inConditionalScope(_value1$ifBody2, "#text/0"), _$.dynamicSubscribers("value1")]));
+const _if = /* @__PURE__ */_$.conditional("#text/0", 0);
+export const _value2_ = /* @__PURE__ */_$.value("value2", 0, () => _$.intersections([_$.inConditionalScope(_value2$ifBody2, "#text/0"), _$.dynamicSubscribers("value2")]));
+export const _value1_ = /* @__PURE__ */_$.value("value1", 0, () => _$.intersections([_$.inConditionalScope(_value1$ifBody2, "#text/0"), _$.dynamicSubscribers("value1")]));
 export const _show_ = /* @__PURE__ */_$.value("show", (_scope, show) => _if(_scope, show ? _ifBody : null), () => _if);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _show_(_scope, input.show);

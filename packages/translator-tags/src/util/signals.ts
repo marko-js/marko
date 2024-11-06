@@ -521,7 +521,7 @@ export function finalizeSignalArgs(args: t.Expression[]) {
       const body = (arg.body as t.BlockStatement).body;
       if (body) {
         if (body.length === 0) {
-          args[i] = t.nullLiteral();
+          args[i] = t.numericLiteral(0);
         } else if (body.length === 1 && t.isExpressionStatement(body[0])) {
           arg.body = body[0].expression;
         }

@@ -1,4 +1,4 @@
-// size: 1626 (min) 596 (brotli)
+// size: 1629 (min) 594 (brotli)
 
 import * as e from "@marko/runtime-tags/dom";
 import { init as n } from "@marko/runtime-tags/dom";
@@ -17,8 +17,8 @@ const t = "<p> </p>",
   o = e.intersection(2, (n) => {
     e.resetAbortSignal(n, 0), i(n);
   }),
-  c = e.value(4, null, () => o),
-  l = e.value(
+  c = e.value(4, 0, () => o),
+  s = e.value(
     3,
     (n, t) => e.data(n[0], t),
     () => o,
@@ -30,20 +30,20 @@ e.register(
       e[3].innerHTML += "\n" + n;
     },
 );
-const s = e.dynamicClosure(
+const d = e.dynamicClosure(
     8,
     (e, n) => c(e[0], n),
     (e) => e._._._,
     () => e.inChild(0, c),
   ),
-  d = (e) => {
-    e[0], l(e[0], "Inner");
+  a = (e) => {
+    e[0], s(e[0], "Inner");
   },
-  a = e.register(
+  l = e.register(
     "b1",
-    e.createRenderer(`${t}`, `/${r}&`, d, () => [s]),
+    e.createRenderer(`${t}`, `/${r}&`, a, () => [d]),
   ),
-  u = e.conditional(1),
+  u = e.conditional(1, 0),
   b = e.dynamicClosure(
     8,
     (e, n) => c(e[0], n),
@@ -54,19 +54,19 @@ const s = e.dynamicClosure(
     "b2",
     e.dynamicClosure(
       7,
-      (e, n) => u(e, n ? a : null),
+      (e, n) => u(e, n ? l : null),
       (e) => e._._,
       () => u,
     ),
   ),
   f = (e) => {
-    e[0], l(e[0], "Middle");
+    e[0], s(e[0], "Middle");
   },
   g = e.register(
     "b3",
     e.createRenderer(`<div>${t}<!></div>`, `D/${r}&%`, f, () => [b, m]),
   ),
-  v = e.conditional(1),
+  v = e.conditional(1, 0),
   $ = e.closure(
     8,
     (e, n) => c(e[0], n),
@@ -80,13 +80,13 @@ const s = e.dynamicClosure(
     () => v,
   ),
   _ = (e) => {
-    e[0], l(e[0], "Outer");
+    e[0], s(e[0], "Outer");
   },
   k = e.register(
     "b4",
     e.createRenderer(`<div>${t}<!></div>`, `D/${r}&%`, _, () => [$, C]),
   ),
-  p = e.conditional(4),
+  p = e.conditional(4, 0),
   y = e.effect("b5", (n) =>
     e.on(
       n[2],

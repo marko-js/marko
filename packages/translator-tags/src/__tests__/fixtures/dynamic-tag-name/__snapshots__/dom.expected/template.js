@@ -65,14 +65,14 @@ const _expr_Text_other = /* @__PURE__ */_$.intersection(2, _scope => {
     other: other
   }));
 }, () => _renderBody_input);
-const _dynamicTagName6 = /* @__PURE__ */_$.conditional("#text/9", null, () => _expr_Text_other6);
-const _dynamicTagName5 = /* @__PURE__ */_$.conditional("#text/8", null, () => _expr_Text_other5);
-const _dynamicTagName4 = /* @__PURE__ */_$.conditional("#text/5", null, () => _expr_Text_other4);
-const _dynamicTagName3 = /* @__PURE__ */_$.conditional("#text/4", null, () => _expr_Text_other3);
-const _dynamicTagName2 = /* @__PURE__ */_$.conditional("#text/1", null, () => _expr_Text_other2);
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", null, () => _expr_Text_other);
-const _tagConstB = /* @__PURE__ */_$.value("tagConstB");
-const _tagConstA = /* @__PURE__ */_$.value("tagConstA");
+const _dynamicTagName6 = /* @__PURE__ */_$.conditional("#text/9", 0, () => _expr_Text_other6);
+const _dynamicTagName5 = /* @__PURE__ */_$.conditional("#text/8", 0, () => _expr_Text_other5);
+const _dynamicTagName4 = /* @__PURE__ */_$.conditional("#text/5", 0, () => _expr_Text_other4);
+const _dynamicTagName3 = /* @__PURE__ */_$.conditional("#text/4", 0, () => _expr_Text_other3);
+const _dynamicTagName2 = /* @__PURE__ */_$.conditional("#text/1", 0, () => _expr_Text_other2);
+const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", 0, () => _expr_Text_other);
+const _tagConstB = /* @__PURE__ */_$.value("tagConstB", 0);
+const _tagConstA = /* @__PURE__ */_$.value("tagConstA", 0);
 const _largeHeading = /* @__PURE__ */_$.value("largeHeading", (_scope, largeHeading) => _dynamicTagName6(_scope, largeHeading || "h2"), () => _dynamicTagName6);
 export const _other_ = /* @__PURE__ */_$.value("other", (_scope, other) => {
   _$.attr(_scope["#showDivNull/2"], "other", other);
@@ -85,7 +85,7 @@ export const _other_ = /* @__PURE__ */_$.value("other", (_scope, other) => {
   _tag_input_other(_scope["#childScope/6"], other);
   _tag_input_other(_scope["#childScope/7"], other);
 }, () => _$.intersections([_expr_Text_other, _expr_Text_other2, _expr_Text_other3, _expr_Text_other4, _expr_Text_other5, _expr_Text_other6, _$.inChild("#childScope/6", _tag_input_other), _$.inChild("#childScope/7", _tag_input_other)]));
-export const _level_ = /* @__PURE__ */_$.value("level");
+export const _level_ = /* @__PURE__ */_$.value("level", 0);
 export const _tag_ = /* @__PURE__ */_$.value("tag", (_scope, tag) => _dynamicTagName5(_scope, tag || tagA), () => _dynamicTagName5);
 export const _isLarge_ = /* @__PURE__ */_$.value("isLarge", (_scope, isLarge) => {
   _dynamicTagName3(_scope, isLarge ? "h1" : "h2");

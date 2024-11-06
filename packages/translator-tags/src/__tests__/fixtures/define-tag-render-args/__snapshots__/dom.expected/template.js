@@ -17,7 +17,7 @@ const _expr_Text_x = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _MyTag_input(_scope, () => [1, "Hello", x]);
 }, () => _MyTag_input);
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", null, () => _expr_Text_x);
+const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", 0, () => _expr_Text_x);
 const _onClick = _scope => {
   const {
     x

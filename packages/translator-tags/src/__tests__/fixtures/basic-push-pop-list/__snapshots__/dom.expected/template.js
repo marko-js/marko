@@ -38,7 +38,7 @@ const _items = /* @__PURE__ */_$.state("items", (_scope, items) => {
   _items_effect(_scope);
   _for(_scope, [items]);
 }, () => _expr_id_items);
-const _id = /* @__PURE__ */_$.state("id", null, () => _expr_id_items);
+const _id = /* @__PURE__ */_$.state("id", 0, () => _expr_id_items);
 export function _setup_(_scope) {
   _id(_scope, 0);
   _items(_scope, []);

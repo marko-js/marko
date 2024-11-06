@@ -1,4 +1,4 @@
-// size: 440 (min) 253 (brotli)
+// size: 437 (min) 251 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as r } from "@marko/runtime-tags/dom";
@@ -12,20 +12,20 @@ const e = t.effect("b0", (r) =>
           _: { 1: r },
         } = t;
         return function () {
-          o(t._, r + 1);
+          n(t._, r + 1);
         };
       })(r),
     ),
   ),
-  n = t.registerSubscriber(
+  o = t.registerSubscriber(
     "b1",
-    t.dynamicClosure(1, (r, n) => {
-      t.data(r[1], n), e(r);
+    t.dynamicClosure(1, (r, o) => {
+      t.data(r[1], o), e(r);
     }),
   );
 t.register(
   "b2",
-  t.createRendererWithOwner("<button> </button>", " D ", void 0, () => [n]),
+  t.createRendererWithOwner("<button> </button>", " D ", void 0, () => [o]),
 );
-const o = t.state(1, null, () => t.dynamicSubscribers(1));
+const n = t.state(1, 0, () => t.dynamicSubscribers(1));
 r();

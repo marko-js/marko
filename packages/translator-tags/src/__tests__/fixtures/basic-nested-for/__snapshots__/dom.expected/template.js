@@ -11,15 +11,15 @@ const _expr_outer_inner$forBody = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _child_input_name(_scope["#childScope/0"], `${outer}.${inner}`);
 }, () => _$.inChild("#childScope/0", _child_input_name));
-const _outer$forBody = /* @__PURE__ */_$.closure("outer", null, void 0, () => _expr_outer_inner$forBody);
-const _inner$forBody = /* @__PURE__ */_$.value("inner", null, () => _expr_outer_inner$forBody);
+const _outer$forBody = /* @__PURE__ */_$.closure("outer", 0, void 0, () => _expr_outer_inner$forBody);
+const _inner$forBody = /* @__PURE__ */_$.value("inner", 0, () => _expr_outer_inner$forBody);
 const _params_3$forBody = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _inner$forBody(_scope, _params_3[0]), () => _inner$forBody);
 const _setup$forBody = _scope => {
   _child(_scope["#childScope/0"]);
 };
 const _forBody2 = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_outer$forBody], void 0, () => _params_3$forBody));
 const _for$forBody = /* @__PURE__ */_$.loopOf("#text/0", _forBody2);
-const _outer$forBody2 = /* @__PURE__ */_$.value("outer", null, () => _$.inLoopScope(_outer$forBody, "#text/0"));
+const _outer$forBody2 = /* @__PURE__ */_$.value("outer", 0, () => _$.inLoopScope(_outer$forBody, "#text/0"));
 const _items$forBody = /* @__PURE__ */_$.closure("items", (_scope, items) => _for$forBody(_scope, [items]), void 0, () => _for$forBody);
 const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outer$forBody2(_scope, _params_2[0]), () => _outer$forBody2);
 const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", void 0, () => [_items$forBody], void 0, () => _params_2$forBody));

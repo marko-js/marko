@@ -1,4 +1,4 @@
-// size: 818 (min) 326 (brotli)
+// size: 812 (min) 325 (brotli)
 
 import * as a from "@marko/runtime-tags/dom";
 import { init as t } from "@marko/runtime-tags/dom";
@@ -9,7 +9,7 @@ const e = a.effect("a0", (t) =>
       ((a) => {
         const { 10: t, 11: e } = a;
         return function () {
-          i(a, e + 1, t);
+          u(a, e + 1, t);
         };
       })(t),
     ),
@@ -17,44 +17,44 @@ const e = a.effect("a0", (t) =>
   n = a.intersection(2, (a) => {
     e(a);
   }),
-  u = a.effect("a1", (t) =>
+  o = a.effect("a1", (t) =>
     a.on(
       t[0],
       "click",
       ((a) => {
         const { 8: t, 9: e } = a;
         return function () {
-          r(a, e + 1, t);
+          c(a, e + 1, t);
         };
       })(t),
     ),
   ),
-  o = a.intersection(2, (a) => {
-    u(a);
+  i = a.intersection(2, (a) => {
+    o(a);
   }),
-  i = a.state(
+  u = a.state(
     11,
     (t, e) => a.data(t[5], e),
     () => n,
   ),
-  l = a.value(10, null, () => n),
-  r = a.state(
+  r = a.value(10, 0, () => n),
+  c = a.state(
     9,
     (t, e) => a.data(t[2], e),
-    () => o,
+    () => i,
   ),
-  c = a.value(8, null, () => o),
+  l = a.value(8, 0, () => i),
   s = a.value(
     7,
     (t, e) => {
       a.data(t[1], e.value),
         a.data(t[4], e.value),
-        c(t, e.valueChange),
-        r(t, e.value, t[8]),
         l(t, e.valueChange),
-        i(t, e.value, t[10]);
+        c(t, e.value, t[8]),
+        r(t, e.valueChange),
+        u(t, e.value, t[10]);
     },
-    () => a.intersections([c, r, l, i]),
+    () => a.intersections([l, c, r, u]),
   ),
   v = a.register(
     "b0",

@@ -1,4 +1,4 @@
-// size: 989 (min) 423 (brotli)
+// size: 980 (min) 419 (brotli)
 
 import * as e from "@marko/runtime-tags/dom";
 import { init as r } from "@marko/runtime-tags/dom";
@@ -11,12 +11,12 @@ const i = e.dynamicTagAttrs(0),
     },
     () => i,
   ),
-  n = e.conditional(0, null, () => t),
-  a = e.value(4, null, () => t),
+  a = e.conditional(0, 0, () => t),
+  n = e.value(4, 0, () => t),
   o = e.value(
     3,
-    (e, r) => n(e, r),
-    () => n,
+    (e, r) => a(e, r),
+    () => a,
   ),
   d = e.value(3, (r, i) => e.data(r[1], i)),
   c = e.registerSubscriber(
@@ -24,7 +24,7 @@ const i = e.dynamicTagAttrs(0),
     e.dynamicClosure(2, (r, i) => e.data(r[0], i)),
   ),
   s = e.value(2, (e, r) => d(e, r[0])),
-  l = e.register(
+  u = e.register(
     "b1",
     e.createRendererWithOwner(
       "<div><!>.<!></div>",
@@ -35,23 +35,23 @@ const i = e.dynamicTagAttrs(0),
       () => s,
     ),
   ),
-  u = e.registerSubscriber(
+  m = e.registerSubscriber(
     "b2",
     e.dynamicClosure(
       3,
-      (e, r) => a(e[0], r),
+      (e, r) => n(e[0], r),
       void 0,
-      () => e.inChild(0, a),
+      () => e.inChild(0, n),
     ),
   ),
-  m = e.value(2, null, () => e.dynamicSubscribers(2)),
-  v = e.value(
+  v = e.value(2, 0, () => e.dynamicSubscribers(2)),
+  l = e.value(
     1,
-    (e, r) => m(e, r[0]),
-    () => m,
+    (e, r) => v(e, r[0]),
+    () => v,
   ),
   b = (e) => {
-    e[0], o(e[0], l(e));
+    e[0], o(e[0], u(e));
   };
 e.register(
   "b3",
@@ -59,9 +59,9 @@ e.register(
     "<div><!></div>",
     "/D%l&",
     b,
-    () => [u],
+    () => [m],
     void 0,
-    () => v,
+    () => l,
   ),
 );
 const g = e.effect("b4", (r) =>
@@ -79,8 +79,8 @@ const g = e.effect("b4", (r) =>
   f = e.state(
     2,
     (e, r) => {
-      g(e), a(e[1], r);
+      g(e), n(e[1], r);
     },
-    () => e.inChild(1, a),
+    () => e.inChild(1, n),
   );
 r();

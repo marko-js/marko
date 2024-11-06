@@ -2,7 +2,7 @@ export const _template_ = "<button></button><!><!>";
 export const _walks_ = /* get, over(1), replace, over(1) */" b%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/if-default-false/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("hi", ""));
-const _if = /* @__PURE__ */_$.conditional("#text/1");
+const _if = /* @__PURE__ */_$.conditional("#text/1", 0);
 const _onClick = _scope => {
   const {
     show

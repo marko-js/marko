@@ -20,7 +20,7 @@ const _count$falseChildBody = _$.registerSubscriber("packages/translator-tags/sr
 const _falseChildBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<button> </button>", /* get, next(1), get */" D ", void 0, () => [_count$falseChildBody]));
 const _falseChild_input = _$.dynamicTagAttrs("#text/0", _falseChildBody);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _falseChild_input(_scope, () => ({})), () => _falseChild_input);
-const _count = /* @__PURE__ */_$.state("count", null, () => _$.dynamicSubscribers("count"));
+const _count = /* @__PURE__ */_$.state("count", 0, () => _$.dynamicSubscribers("count"));
 export function _setup_(_scope) {
   _count(_scope, 0);
   _dynamicTagName(_scope, false || Child || _falseChildBody(_scope));

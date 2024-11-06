@@ -1,4 +1,4 @@
-// size: 528 (min) 265 (brotli)
+// size: 530 (min) 263 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as o } from "@marko/runtime-tags/dom";
@@ -7,7 +7,7 @@ const n = t.closure(4, (o, n) => t.data(o[0], n)),
     "a0",
     t.createRenderer("The count is <!>", "b%", void 0, () => [n]),
   ),
-  r = t.conditional(2),
+  r = t.conditional(2, 0),
   c = t.effect("a1", (o) =>
     t.on(
       o[0],

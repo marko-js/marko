@@ -1,4 +1,4 @@
-// size: 863 (min) 412 (brotli)
+// size: 854 (min) 409 (brotli)
 
 import * as e from "@marko/runtime-tags/dom";
 import { init as o } from "@marko/runtime-tags/dom";
@@ -14,39 +14,39 @@ const r = e.value(3, (o, r) => e.data(o[0], r)),
     },
     () => e.inChild(0, r),
   ),
-  i = e.closure(2, null, void 0, () => t),
-  n = e.value(2, null, () => t),
-  l = e.value(
+  i = e.closure(2, 0, void 0, () => t),
+  n = e.value(2, 0, () => t),
+  a = e.value(
     1,
     (e, o) => n(e, o[0]),
     () => n,
   ),
-  a = (e) => {
+  c = (e) => {
     e[0];
   },
-  c = e.register(
+  s = e.register(
     "b0",
     e.createRenderer(
       "<div> </div>",
       "/D l&",
-      a,
+      c,
       () => [i],
       void 0,
-      () => l,
+      () => a,
     ),
   ),
-  s = e.loopOf(0, c),
-  u = e.value(2, null, () => e.inLoopScope(i, 0)),
-  d = e.closure(
+  d = e.loopOf(0, s),
+  l = e.value(2, 0, () => e.inLoopScope(i, 0)),
+  v = e.closure(
     2,
-    (e, o) => s(e, [o]),
+    (e, o) => d(e, [o]),
     void 0,
-    () => s,
+    () => d,
   ),
-  v = e.value(
+  u = e.value(
     1,
-    (e, o) => u(e, o[0]),
-    () => u,
+    (e, o) => l(e, o[0]),
+    () => l,
   ),
   m = e.register(
     "b1",
@@ -54,9 +54,9 @@ const r = e.value(3, (o, r) => e.data(o[0], r)),
       "<!><!><!>",
       "D%D",
       void 0,
-      () => [d],
+      () => [v],
       void 0,
-      () => v,
+      () => u,
     ),
   ),
   p = e.loopOf(1, m),
@@ -77,6 +77,6 @@ const r = e.value(3, (o, r) => e.data(o[0], r)),
     (e, o) => {
       f(e), p(e, [o]);
     },
-    () => e.intersections([p, e.inLoopScope(d, 1)]),
+    () => e.intersections([p, e.inLoopScope(v, 1)]),
   );
 o();

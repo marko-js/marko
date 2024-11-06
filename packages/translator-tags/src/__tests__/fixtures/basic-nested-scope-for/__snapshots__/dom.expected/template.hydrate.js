@@ -1,14 +1,14 @@
-// size: 392 (min) 219 (brotli)
+// size: 386 (min) 221 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as o } from "@marko/runtime-tags/dom";
-const n = t.intersection(2, (o) => {
+const e = t.intersection(2, (o) => {
   const {
-    _: { 1: n },
-    3: e,
+    _: { 1: e },
+    3: r,
   } = o;
-  t.attr(o[0], "data-selected", n === e),
-    t.attr(o[0], "data-multiple", e % n == 0);
+  t.attr(o[0], "data-selected", e === r),
+    t.attr(o[0], "data-multiple", r % e == 0);
 });
 t.effect("a0", (o) =>
   t.on(
@@ -17,11 +17,11 @@ t.effect("a0", (o) =>
     ((t) => {
       const { 3: o } = t;
       return function () {
-        r(t._, o);
+        a(t._, o);
       };
     })(o),
   ),
 );
-const e = t.closure(1, null, void 0, () => n),
-  r = t.state(1, null, () => t.inLoopScope(e, 0));
+const r = t.closure(1, 0, void 0, () => e),
+  a = t.state(1, 0, () => t.inLoopScope(r, 0));
 o();

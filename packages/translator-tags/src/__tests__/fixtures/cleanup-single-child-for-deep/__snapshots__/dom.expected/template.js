@@ -15,8 +15,8 @@ const _expr_outerItem_middleItem$forBody = /* @__PURE__ */_$.intersection(2, _sc
   _child_input_name(_scope["#childScope/0"], `${outerItem}.${middleItem}`);
 }, () => _$.inChild("#childScope/0", _child_input_name));
 const _write$forBody2 = /* @__PURE__ */_$.dynamicClosure("write", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._, () => _$.inChild("#childScope/0", _child_input_write));
-const _outerItem$forBody2 = /* @__PURE__ */_$.closure("outerItem", null, void 0, () => _expr_outerItem_middleItem$forBody);
-const _middleItem$forBody = /* @__PURE__ */_$.value("middleItem", null, () => _expr_outerItem_middleItem$forBody);
+const _outerItem$forBody2 = /* @__PURE__ */_$.closure("outerItem", 0, void 0, () => _expr_outerItem_middleItem$forBody);
+const _middleItem$forBody = /* @__PURE__ */_$.value("middleItem", 0, () => _expr_outerItem_middleItem$forBody);
 const _params_3$forBody = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _middleItem$forBody(_scope, _params_3[0]), () => _middleItem$forBody);
 const _setup$forBody2 = _scope => {
   _child(_scope["#childScope/0"]);
@@ -32,7 +32,7 @@ const _setup$forBody = _scope => {
 };
 const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$forBody, () => [_write$forBody, _items$forBody], void 0, () => _params_2$forBody));
 const _for = /* @__PURE__ */_$.loopOf("#text/2", _forBody);
-const _write2 = /* @__PURE__ */_$.value("write", null, () => _$.intersections([_$.inLoopScope(_write$forBody, "#text/2"), _$.dynamicSubscribers("write")]));
+const _write2 = /* @__PURE__ */_$.value("write", 0, () => _$.intersections([_$.inLoopScope(_write$forBody, "#text/2"), _$.dynamicSubscribers("write")]));
 const _onClick = _scope => {
   const {
     items

@@ -1,25 +1,25 @@
-// size: 873 (min) 432 (brotli)
+// size: 870 (min) 434 (brotli)
 
 import * as e from "@marko/runtime-tags/dom";
 import { init as t } from "@marko/runtime-tags/dom";
-const n = e.effect("a0", (t) => {
-    const { 3: n, 4: o } = t;
-    o(`mounted ${n}`),
+const o = e.effect("a0", (t) => {
+    const { 3: o, 4: n } = t;
+    n(`mounted ${o}`),
       (e.getAbortSignal(t, 0).onabort = ((e) => {
-        const { 3: t, 4: n } = e;
+        const { 3: t, 4: o } = e;
         return () => {
-          n(`destroyed ${t}`);
+          o(`destroyed ${t}`);
         };
       })(t));
   }),
-  o = e.intersection(2, (t) => {
-    e.resetAbortSignal(t, 0), n(t);
+  n = e.intersection(2, (t) => {
+    e.resetAbortSignal(t, 0), o(t);
   }),
-  r = e.value(4, null, () => o),
+  r = e.value(4, 0, () => n),
   i = e.value(
     3,
-    (t, n) => e.data(t[0], n),
-    () => o,
+    (t, o) => e.data(t[0], o),
+    () => n,
   );
 e.register(
   "b0",
@@ -34,17 +34,17 @@ const a = e.closure(
     void 0,
     () => e.inChild(0, r),
   ),
-  l = e.value(
+  s = e.value(
     2,
     (e, t) => i(e[0], t),
     () => e.inChild(0, i),
   ),
-  s = e.value(
+  c = e.value(
     1,
-    (e, t) => l(e, t[0]),
-    () => l,
+    (e, t) => s(e, t[0]),
+    () => s,
   ),
-  c = (e) => {
+  l = (e) => {
     e[0];
   },
   d = e.register(
@@ -52,10 +52,10 @@ const a = e.closure(
     e.createRenderer(
       "<div> </div>",
       "/D l&",
-      c,
+      l,
       () => [a],
       void 0,
-      () => s,
+      () => c,
     ),
   ),
   u = e.loopOf(2, d),

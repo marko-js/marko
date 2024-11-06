@@ -231,7 +231,7 @@ function _(e, t, n) {
       1 === (n[r] ||= 1) &&
         (l === I || (o && n[e] === l)
           ? i?.(n, I)
-          : ((n[e] = l), t?.(n, l), i?.(n, E))),
+          : ((n[e] = l), t && t(n, l), i?.(n, E))),
         n[r]--;
     }
   };
@@ -271,7 +271,11 @@ function j(e, t, n = V, r) {
       }
       0 == --e[l]
         ? r === E || e[i]
-          ? ((e[i] = !1), (u ||= n(e)), (a ||= o(e)), t?.(e, u[a]), f?.(e, E))
+          ? ((e[i] = !1),
+            (u ||= n(e)),
+            (a ||= o(e)),
+            t && t(e, u[a]),
+            f?.(e, E))
           : f?.(e, I)
         : (e[i] ||= r === E);
     }
@@ -885,7 +889,7 @@ function ht(e, t, n) {
     }
   };
 }
-function gt(e, t, n, r, i = 0, l) {
+function gt(e, t, n, r, i, l) {
   let o,
     f,
     u = {},
@@ -937,7 +941,7 @@ var bt = function (e, t, n) {
               y(r, i.a.parentNode, i.a),
               m(i);
           })(n, e, i),
-          t?.(n),
+          t && t(n),
           (u = E))
         : (u = I);
     }
@@ -965,7 +969,7 @@ var yt = function (e, t, n) {
       u = o;
     if (o !== M && o !== I) {
       let i = ue(o);
-      _t(i, f) ? ((f = n[r] = i), kt(n, e, i), t?.(n), (u = E)) : (u = I);
+      _t(i, f) ? ((f = n[r] = i), kt(n, e, i), t && t(n), (u = E)) : (u = I);
     }
     l?.(n, u), L(f, n[i], u);
   };

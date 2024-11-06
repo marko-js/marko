@@ -8,7 +8,7 @@ const _expr_Text_count = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _inputRenderBody_input(_scope, () => [count, "hello"]);
 }, () => _inputRenderBody_input);
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", null, () => _expr_Text_count);
+const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", 0, () => _expr_Text_count);
 const _onClick = _scope => {
   const {
     count

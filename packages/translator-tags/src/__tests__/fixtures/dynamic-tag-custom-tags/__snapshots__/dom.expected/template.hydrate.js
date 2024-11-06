@@ -1,4 +1,4 @@
-// size: 817 (min) 337 (brotli)
+// size: 814 (min) 336 (brotli)
 
 import * as e from "@marko/runtime-tags/dom";
 import { init as a } from "@marko/runtime-tags/dom";
@@ -6,7 +6,7 @@ const t = () => {},
   o = e.value(3, (a, t) => e.data(a[0], t)),
   r = e.value(2, (e, a) => o(e, a.value)),
   i = e.value(1, (e, a) => r(e, a[0]));
-var l = e.createTemplate(
+var v = e.createTemplate(
   e.createRenderer(
     "<div>Child 1 has <!></div>",
     "Db%l",
@@ -17,31 +17,31 @@ var l = e.createTemplate(
   ),
   "a",
 );
-const n = () => {},
-  v = e.value(3, (a, t) => e.data(a[0], t)),
-  d = e.value(2, (e, a) => v(e, a.value)),
-  c = e.value(1, (e, a) => d(e, a[0]));
-var u = e.createTemplate(
+const d = () => {},
+  n = e.value(3, (a, t) => e.data(a[0], t)),
+  c = e.value(2, (e, a) => n(e, a.value)),
+  l = e.value(1, (e, a) => c(e, a[0]));
+var m = e.createTemplate(
   e.createRenderer(
     "<div>Child 2 has <!></div>",
     "Db%l",
-    n,
+    d,
     void 0,
     void 0,
-    () => c,
+    () => l,
   ),
   "b",
 );
-const m = e.dynamicTagAttrs(0),
-  s = e.intersection(
+const s = e.dynamicTagAttrs(0),
+  u = e.intersection(
     2,
     (e) => {
       const { 3: a } = e;
-      m(e, () => ({ value: a }));
+      s(e, () => ({ value: a }));
     },
-    () => m,
+    () => s,
   ),
-  f = e.conditional(0, null, () => s),
+  f = e.conditional(0, 0, () => u),
   h = e.effect("c0", (a) =>
     e.on(
       a[1],
@@ -49,7 +49,7 @@ const m = e.dynamicTagAttrs(0),
       ((e) => {
         const { 2: a } = e;
         return function () {
-          p(e, a === l ? u : l);
+          p(e, a === v ? m : v);
         };
       })(a),
     ),

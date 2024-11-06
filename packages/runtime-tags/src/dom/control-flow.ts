@@ -34,7 +34,7 @@ export function patchConditionals(
 
 export let conditional = function conditional(
   nodeAccessor: Accessor,
-  fn?: (scope: Scope) => void,
+  fn?: ((scope: Scope) => void) | 0,
   getIntersection?: () => IntersectionSignal,
 ): ValueSignal<Renderer | string | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
@@ -58,7 +58,7 @@ export let conditional = function conditional(
       if (isDifferentRenderer(normalizedRenderer, currentRenderer)) {
         currentRenderer = scope[rendererAccessor] = normalizedRenderer;
         setConditionalRenderer(scope, nodeAccessor, normalizedRenderer);
-        fn?.(scope);
+        fn && fn(scope);
         op = DIRTY;
       } else {
         op = CLEAN;
@@ -123,7 +123,7 @@ export function setConditionalRenderer<ChildScope extends Scope>(
 
 export let conditionalOnlyChild = function conditional(
   nodeAccessor: Accessor,
-  fn?: (scope: Scope) => void,
+  fn?: ((scope: Scope) => void) | 0,
   getIntersection?: () => IntersectionSignal,
 ): ValueSignal<Renderer | string | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
@@ -151,7 +151,7 @@ export let conditionalOnlyChild = function conditional(
           nodeAccessor,
           normalizedRenderer,
         );
-        fn?.(scope);
+        fn && fn(scope);
         op = DIRTY;
       } else {
         op = CLEAN;

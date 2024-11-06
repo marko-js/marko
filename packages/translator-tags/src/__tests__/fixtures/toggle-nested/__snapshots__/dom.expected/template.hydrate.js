@@ -1,4 +1,4 @@
-// size: 589 (min) 224 (brotli)
+// size: 593 (min) 225 (brotli)
 
 import * as e from "@marko/runtime-tags/dom";
 const r = e.registerSubscriber(
@@ -25,8 +25,8 @@ const r = e.registerSubscriber(
     "a3",
     e.createRenderer("<span> </span>", "D ", void 0, () => [i]),
   ),
-  s = e.conditional(1),
-  n = e.conditional(0),
+  s = e.conditional(1, 0),
+  n = e.conditional(0, 0),
   t = e.closure(
     5,
     (e, r) => s(e, r ? a : null),

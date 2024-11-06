@@ -13,7 +13,7 @@ const _setup$forBody = _scope => {
 };
 const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_write$forBody], void 0, () => _params_2$forBody));
 const _for = /* @__PURE__ */_$.loopOf("#text/2", _forBody);
-const _write2 = /* @__PURE__ */_$.value("write", null, () => _$.inLoopScope(_write$forBody, "#text/2"));
+const _write2 = /* @__PURE__ */_$.value("write", 0, () => _$.inLoopScope(_write$forBody, "#text/2"));
 const _onClick = _scope => {
   const {
     items

@@ -7,9 +7,9 @@ const _elseIfBody = _$.register("packages/translator-tags/src/__tests__/fixtures
 const _ifBody3 = _$.register("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_3_renderer", /* @__PURE__ */_$.createRenderer("A", ""));
 const _ifBody2 = _$.register("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer("World", ""));
 const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("Hello", ""));
-const _if3 = /* @__PURE__ */_$.conditional("#text/2");
-const _if2 = /* @__PURE__ */_$.conditional("#text/1");
-const _if = /* @__PURE__ */_$.conditional("#text/0");
+const _if3 = /* @__PURE__ */_$.conditional("#text/2", 0);
+const _if2 = /* @__PURE__ */_$.conditional("#text/1", 0);
+const _if = /* @__PURE__ */_$.conditional("#text/0", 0);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _if(_scope, input.a + input.b ? _ifBody : null);
   _if2(_scope, (input.a, input.b) ? _ifBody2 : null);

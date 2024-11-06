@@ -31,7 +31,7 @@ const _expr_name_write = /* @__PURE__ */_$.intersection(2, _scope => {
   _$.resetAbortSignal(_scope, 0);
   _expr_name_write_effect(_scope);
 });
-export const _write_ = /* @__PURE__ */_$.value("write", null, () => _expr_name_write);
+export const _write_ = /* @__PURE__ */_$.value("write", 0, () => _expr_name_write);
 export const _name_ = /* @__PURE__ */_$.value("name", (_scope, name) => _$.data(_scope["#text/0"], name), () => _expr_name_write);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _name_(_scope, input.name);

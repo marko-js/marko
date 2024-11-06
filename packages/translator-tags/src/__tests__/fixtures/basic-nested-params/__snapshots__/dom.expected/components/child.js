@@ -9,8 +9,8 @@ const _expr_Text_value = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _renderBody_input(_scope, () => value);
 }, () => _renderBody_input);
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", null, () => _expr_Text_value);
-export const _value_ = /* @__PURE__ */_$.value("value", null, () => _expr_Text_value);
+const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", 0, () => _expr_Text_value);
+export const _value_ = /* @__PURE__ */_$.value("value", 0, () => _expr_Text_value);
 export const _renderBody_ = /* @__PURE__ */_$.value("renderBody", (_scope, renderBody) => _dynamicTagName(_scope, renderBody), () => _dynamicTagName);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _renderBody_(_scope, input.renderBody);

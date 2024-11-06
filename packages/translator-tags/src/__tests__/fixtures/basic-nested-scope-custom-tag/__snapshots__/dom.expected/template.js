@@ -18,7 +18,7 @@ const _count$childBody = _$.registerSubscriber("packages/translator-tags/src/__t
   _count$childBody_effect(_scope);
 }));
 const _childBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<button> </button>", /* get, next(1), get */" D ", void 0, () => [_count$childBody]));
-const _count = /* @__PURE__ */_$.state("count", null, () => _$.dynamicSubscribers("count"));
+const _count = /* @__PURE__ */_$.state("count", 0, () => _$.dynamicSubscribers("count"));
 export function _setup_(_scope) {
   _child(_scope["#childScope/0"]);
   _count(_scope, 0);

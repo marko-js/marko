@@ -22,7 +22,7 @@ const _expr__y_change_y = /* @__PURE__ */_$.intersection(2, _scope => {
   _expr__y_change_y_effect(_scope);
 });
 const _y = /* @__PURE__ */_$.state("y", (_scope, y) => _$.data(_scope["#text/2"], y), () => _expr__y_change_y);
-const _y_change = /* @__PURE__ */_$.value("_y_change", null, () => _expr__y_change_y);
+const _y_change = /* @__PURE__ */_$.value("_y_change", 0, () => _expr__y_change_y);
 const _handler2 = /* @__PURE__ */_$.state("handler", (_scope, handler) => _y_change(_scope, handler), () => _y_change);
 const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
   _$.data(_scope["#text/1"], x);

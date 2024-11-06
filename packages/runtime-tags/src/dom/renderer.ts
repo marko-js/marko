@@ -25,7 +25,7 @@ export type Renderer = {
   ___setup: SetupFn | undefined;
   ___closureSignals: Set<IntersectionSignal>;
   ___clone: () => Node;
-  ___hasUserEffects: 0 | 1;
+  ___hasUserEffects: 0 | 1 | undefined;
   ___sourceNode: Node | undefined;
   ___args: ValueSignal | undefined;
   ___owner: Scope | undefined;
@@ -148,7 +148,7 @@ export function createRendererWithOwner(
   rawWalks?: string,
   setup?: SetupFn,
   getClosureSignals?: () => IntersectionSignal[],
-  hasUserEffects: 0 | 1 = 0,
+  hasUserEffects?: 0 | 1,
   getArgs?: () => ValueSignal,
 ) {
   let args: ValueSignal | undefined;

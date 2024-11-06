@@ -3,7 +3,7 @@ export const _walks_ = /* get, over(1), get, over(1), replace, over(1) */" b b%b
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _count$ifBody = /* @__PURE__ */_$.closure("count", (_scope, count) => _$.data(_scope["#text/0"], count));
 const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter-multiple-nodes/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("The count is <!>", /* over(1), replace */"b%", void 0, () => [_count$ifBody]));
-const _if = /* @__PURE__ */_$.conditional("#text/2");
+const _if = /* @__PURE__ */_$.conditional("#text/2", 0);
 const _onClick = _scope => {
   const {
     count

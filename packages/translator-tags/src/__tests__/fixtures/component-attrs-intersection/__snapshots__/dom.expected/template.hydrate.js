@@ -1,4 +1,4 @@
-// size: 336 (min) 200 (brotli)
+// size: 333 (min) 198 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as o } from "@marko/runtime-tags/dom";
@@ -6,7 +6,7 @@ const n = t.intersection(2, (o) => {
     const { 3: n, 4: r } = o;
     t.data(o[0], n);
   }),
-  r = t.value(3, null, () => n),
+  r = t.value(3, 0, () => n),
   i = t.effect("b0", (o) =>
     t.on(
       o[1],

@@ -2,7 +2,7 @@ export const _template_ = "<p> </p>";
 export const _walks_ = /* next(1), get, out(1) */"D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _fullName = /* @__PURE__ */_$.value("fullName", (_scope, fullName) => _$.data(_scope["#text/0"], fullName));
-const _user = /* @__PURE__ */_$.value("user");
+const _user = /* @__PURE__ */_$.value("user", 0);
 export function _setup_(_scope) {
   _user(_scope, {
     firstName: "George",

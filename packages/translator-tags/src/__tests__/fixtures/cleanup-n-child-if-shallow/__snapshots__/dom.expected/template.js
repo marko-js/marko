@@ -12,7 +12,7 @@ const _setup$ifBody = _scope => {
   });
 };
 const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-shallow/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$ifBody));
-const _if = /* @__PURE__ */_$.conditional("#text/2");
+const _if = /* @__PURE__ */_$.conditional("#text/2", 0);
 const _onClick = _scope => {
   const {
     show

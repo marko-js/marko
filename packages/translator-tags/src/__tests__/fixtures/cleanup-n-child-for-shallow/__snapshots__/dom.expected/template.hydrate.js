@@ -1,4 +1,4 @@
-// size: 933 (min) 457 (brotli)
+// size: 930 (min) 455 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as e } from "@marko/runtime-tags/dom";
@@ -15,7 +15,7 @@ const n = t.effect("a0", (e) => {
   o = t.intersection(2, (e) => {
     t.resetAbortSignal(e, 0), n(e);
   }),
-  r = t.value(6, null, () => o),
+  r = t.value(6, 0, () => o),
   a = t.value(
     5,
     (e, n) => {
@@ -36,15 +36,15 @@ const i = t.closure(
     void 0,
     () => t.inChild(0, r),
   ),
-  l = t.value(
+  s = t.value(
     2,
     (t, e) => a(t[0], e),
     () => t.inChild(0, a),
   ),
-  s = t.value(
+  l = t.value(
     1,
-    (t, e) => l(t, e[0]),
-    () => l,
+    (t, e) => s(t, e[0]),
+    () => s,
   ),
   c = (t) => {
     t[0];
@@ -57,7 +57,7 @@ const i = t.closure(
       c,
       () => [i],
       void 0,
-      () => s,
+      () => l,
     ),
   ),
   u = t.loopOf(2, d),

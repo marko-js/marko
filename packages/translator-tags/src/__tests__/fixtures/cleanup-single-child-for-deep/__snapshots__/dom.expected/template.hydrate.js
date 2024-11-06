@@ -1,9 +1,9 @@
-// size: 1378 (min) 582 (brotli)
+// size: 1369 (min) 580 (brotli)
 
 import * as e from "@marko/runtime-tags/dom";
 import { init as i } from "@marko/runtime-tags/dom";
 const o = "<div> </div>",
-  n = e.effect("a0", (i) => {
+  t = e.effect("a0", (i) => {
     e.getAbortSignal(i, 0).onabort = ((e) => {
       const { 3: i, 4: o } = e;
       return () => {
@@ -11,14 +11,14 @@ const o = "<div> </div>",
       };
     })(i);
   }),
-  t = e.intersection(2, (i) => {
-    e.resetAbortSignal(i, 0), n(i);
+  n = e.intersection(2, (i) => {
+    e.resetAbortSignal(i, 0), t(i);
   }),
-  r = e.value(4, null, () => t),
-  l = e.value(
+  r = e.value(4, 0, () => n),
+  s = e.value(
     3,
     (i, o) => e.data(i[0], o),
-    () => t,
+    () => n,
   );
 e.register(
   "b0",
@@ -27,31 +27,31 @@ e.register(
       e[1].innerHTML += "\n" + i;
     },
 );
-const s = e.intersection(
+const c = e.intersection(
     2,
     (e) => {
       const {
         _: { 3: i },
         2: o,
       } = e;
-      l(e[0], `${i}.${o}`);
+      s(e[0], `${i}.${o}`);
     },
-    () => e.inChild(0, l),
+    () => e.inChild(0, s),
   ),
-  c = e.dynamicClosure(
+  d = e.dynamicClosure(
     4,
     (e, i) => r(e[0], i),
     (e) => e._._,
     () => e.inChild(0, r),
   ),
-  d = e.closure(3, null, void 0, () => s),
-  a = e.value(2, null, () => s),
-  u = e.value(
+  l = e.closure(3, 0, void 0, () => c),
+  a = e.value(2, 0, () => c),
+  v = e.value(
     1,
     (e, i) => a(e, i[0]),
     () => a,
   ),
-  v = (e) => {
+  u = (e) => {
     e[0];
   },
   m = e.register(
@@ -59,10 +59,10 @@ const s = e.intersection(
     e.createRenderer(
       `<div>${o}</div>`,
       "D/D l&",
-      v,
-      () => [c, d],
+      u,
+      () => [d, l],
       void 0,
-      () => u,
+      () => v,
     ),
   ),
   f = e.loopOf(1, m),
@@ -74,8 +74,8 @@ const s = e.intersection(
   ),
   p = e.value(
     3,
-    (e, i) => l(e[0], `${i}`),
-    () => e.intersections([e.inChild(0, l), e.inLoopScope(d, 1)]),
+    (e, i) => s(e[0], `${i}`),
+    () => e.intersections([e.inChild(0, s), e.inLoopScope(l, 1)]),
   ),
   b = e.closure(
     3,

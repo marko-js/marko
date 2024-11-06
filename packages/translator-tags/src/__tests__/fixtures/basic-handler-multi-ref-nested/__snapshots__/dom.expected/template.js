@@ -24,7 +24,7 @@ const _expr_a_b = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _expr_a_b_effect(_scope);
 });
-const _b = /* @__PURE__ */_$.state("b", null, () => _expr_a_b);
+const _b = /* @__PURE__ */_$.state("b", 0, () => _expr_a_b);
 const _a = /* @__PURE__ */_$.state("a", (_scope, a) => _$.data(_scope["#text/1"], a.join("")), () => _expr_a_b);
 export function _setup_(_scope) {
   _a(_scope, [0]);

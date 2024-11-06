@@ -1,4 +1,4 @@
-// size: 1702 (min) 612 (brotli)
+// size: 1705 (min) 611 (brotli)
 
 import * as e from "@marko/runtime-tags/dom";
 import { init as n } from "@marko/runtime-tags/dom";
@@ -17,7 +17,7 @@ const t = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   o = e.intersection(2, (n) => {
     e.resetAbortSignal(n, 0), i(n);
   }),
-  c = e.value(6, null, () => o),
+  c = e.value(6, 0, () => o),
   a = e.value(
     5,
     (n, t) => {
@@ -38,14 +38,14 @@ const d = e.dynamicClosure(
     (e) => e._._._,
     () => e.inChild(0, c),
   ),
-  l = (e) => {
+  s = (e) => {
     e[0], a(e[0], "Inner");
   },
-  s = e.register(
+  l = e.register(
     "b1",
-    e.createRenderer(`${t}`, `/${r}&`, l, () => [d]),
+    e.createRenderer(`${t}`, `/${r}&`, s, () => [d]),
   ),
-  u = e.conditional(1),
+  u = e.conditional(1, 0),
   b = e.dynamicClosure(
     8,
     (e, n) => c(e[0], n),
@@ -56,7 +56,7 @@ const d = e.dynamicClosure(
     "b2",
     e.dynamicClosure(
       7,
-      (e, n) => u(e, n ? s : null),
+      (e, n) => u(e, n ? l : null),
       (e) => e._._,
       () => u,
     ),
@@ -68,7 +68,7 @@ const d = e.dynamicClosure(
     "b3",
     e.createRenderer(`<div>${t}<!></div>`, `D/${r}&%`, f, () => [b, m]),
   ),
-  v = e.conditional(1),
+  v = e.conditional(1, 0),
   $ = e.closure(
     8,
     (e, n) => c(e[0], n),
@@ -88,7 +88,7 @@ const d = e.dynamicClosure(
     "b4",
     e.createRenderer(`<div>${t}<!></div>`, `D/${r}&%`, C, () => [$, p]),
   ),
-  k = e.conditional(4),
+  k = e.conditional(4, 0),
   y = e.effect("b5", (n) =>
     e.on(
       n[2],

@@ -5,7 +5,7 @@ const _setup$ifBody = _scope => {
   _$.data(_scope["#text/0"], _scope.$global.x);
 };
 const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", _setup$ifBody));
-const _if = /* @__PURE__ */_$.conditional("#text/0");
+const _if = /* @__PURE__ */_$.conditional("#text/0", 0);
 const _onClick = _scope => {
   const {
     show

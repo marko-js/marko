@@ -9,7 +9,7 @@ const _setup$ifBody = _scope => {
   _$.data(_scope["#text/0"], a);
 };
 const _ifBody2 = /* @__PURE__ */_$.createRenderer("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$ifBody, () => [_c$ifBody, _b$ifBody]);
-const _if$ifBody = /* @__PURE__ */_$.conditional("#text/0");
+const _if$ifBody = /* @__PURE__ */_$.conditional("#text/0", 0);
 const _setup$ifBody2 = _scope => {
   _if$ifBody(_scope, Math.random() ? _ifBody2 : null);
 };
@@ -20,9 +20,9 @@ const _setup$customTagBody = _scope => {
   _$.data(_scope["#text/0"], a);
 };
 const _customTagBody = _$.register("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$customTagBody, () => [_c$customTagBody, _b$customTagBody]));
-const _if = /* @__PURE__ */_$.conditional("#text/2");
-const _c = /* @__PURE__ */_$.state("c", null, () => _$.dynamicSubscribers("c"));
-const _b = /* @__PURE__ */_$.value("b", null, () => _$.dynamicSubscribers("b"));
+const _if = /* @__PURE__ */_$.conditional("#text/2", 0);
+const _c = /* @__PURE__ */_$.state("c", 0, () => _$.dynamicSubscribers("c"));
+const _b = /* @__PURE__ */_$.value("b", 0, () => _$.dynamicSubscribers("b"));
 const _setup__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_0", _scope => _$.on(_scope["#button/0"], "click", function () {
   _c(_scope, 4);
 }));

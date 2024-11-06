@@ -6,7 +6,7 @@ const _setup$ifBody = _scope => {
   _setup$ifBody_effect(_scope);
 };
 const _ifBody = /* @__PURE__ */_$.createRenderer("", "", _setup$ifBody);
-const _if = /* @__PURE__ */_$.conditional("#text/1");
+const _if = /* @__PURE__ */_$.conditional("#text/1", 0);
 export function _setup_(_scope) {
   _if(_scope, true ? _ifBody : null);
 }

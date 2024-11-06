@@ -1,4 +1,4 @@
-// size: 453 (min) 267 (brotli)
+// size: 450 (min) 267 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as n } from "@marko/runtime-tags/dom";
@@ -12,7 +12,7 @@ const o = t.register("a0", t.createRendererWithOwner("body content", "")),
     },
     () => r,
   ),
-  a = t.conditional(0, null, () => e),
+  a = t.conditional(0, 0, () => e),
   i = t.effect("a1", (n) =>
     t.on(
       n[1],

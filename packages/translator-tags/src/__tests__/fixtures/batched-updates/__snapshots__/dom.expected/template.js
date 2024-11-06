@@ -20,8 +20,8 @@ const _expr_a_b = /* @__PURE__ */_$.intersection(2, _scope => {
   _$.data(_scope["#text/1"], a + b);
   _expr_a_b_effect(_scope);
 });
-const _b = /* @__PURE__ */_$.state("b", null, () => _expr_a_b);
-const _a = /* @__PURE__ */_$.state("a", null, () => _expr_a_b);
+const _b = /* @__PURE__ */_$.state("b", 0, () => _expr_a_b);
+const _a = /* @__PURE__ */_$.state("a", 0, () => _expr_a_b);
 export function _setup_(_scope) {
   _a(_scope, 0);
   _b(_scope, 0);

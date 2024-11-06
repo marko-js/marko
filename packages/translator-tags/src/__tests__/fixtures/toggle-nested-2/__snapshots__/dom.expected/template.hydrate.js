@@ -1,4 +1,4 @@
-// size: 915 (min) 376 (brotli)
+// size: 913 (min) 392 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as n } from "@marko/runtime-tags/dom";
@@ -13,7 +13,7 @@ const e = t.effect("a0", (n) =>
           },
         } = t;
         return function () {
-          l(t._._, n + 1);
+          d(t._._, n + 1);
         };
       })(n),
     ),
@@ -32,7 +32,7 @@ const e = t.effect("a0", (n) =>
     "a2",
     t.createRenderer("<button id=count> </button>", " D ", void 0, () => [o]),
   ),
-  i = t.conditional(1),
+  i = t.conditional(1, 0),
   c = t.effect("a3", (n) =>
     t.on(
       n[0],
@@ -42,7 +42,7 @@ const e = t.effect("a0", (n) =>
           _: { 3: n },
         } = t;
         return function () {
-          d(t._, !n);
+          l(t._, !n);
         };
       })(n),
     ),
@@ -61,9 +61,9 @@ const e = t.effect("a0", (n) =>
       a,
     ]),
   ),
-  s = t.conditional(1),
-  l = t.state(4, null, () => t.dynamicSubscribers(4)),
-  d = t.state(3, null, () => t.inConditionalScope(a, 1)),
+  s = t.conditional(1, 0),
+  d = t.state(4, 0, () => t.dynamicSubscribers(4)),
+  l = t.state(3, 0, () => t.inConditionalScope(a, 1)),
   m = t.effect("a5", (n) =>
     t.on(
       n[0],

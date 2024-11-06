@@ -30,7 +30,7 @@ const _x$ifBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtu
 }));
 const _x$ifBody = /* @__PURE__ */_$.closure("x", (_scope, x) => _x$ifBody_effect(_scope));
 const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("", "", void 0, () => [_x$ifBody]));
-const _if = /* @__PURE__ */_$.conditional("#text/0");
+const _if = /* @__PURE__ */_$.conditional("#text/0", 0);
 const _onClick = _scope => {
   const {
     show

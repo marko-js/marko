@@ -1,4 +1,4 @@
-// size: 465 (min) 259 (brotli)
+// size: 462 (min) 257 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as r } from "@marko/runtime-tags/dom";
@@ -28,5 +28,5 @@ const e = t.effect("b0", (r) =>
     t.createRendererWithOwner("<button> </button>", " D ", void 0, () => [n]),
   );
 t.dynamicTagAttrs(0, o);
-const i = t.state(1, null, () => t.dynamicSubscribers(1));
+const i = t.state(1, 0, () => t.dynamicSubscribers(1));
 r();

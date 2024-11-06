@@ -1,4 +1,4 @@
-// size: 537 (min) 254 (brotli)
+// size: 534 (min) 248 (brotli)
 
 import * as r from "@marko/runtime-tags/dom";
 import { init as e } from "@marko/runtime-tags/dom";
@@ -23,7 +23,7 @@ r.register(
   "b2",
   r.createRendererWithOwner("<!> <!> <!>", "%c%c%", i, () => [t, a]),
 );
-const c = r.state(4, null, () => r.dynamicSubscribers(4));
+const c = r.state(4, 0, () => r.dynamicSubscribers(4));
 r.effect("b3", (e) =>
   r.on(e[0], "click", function () {
     c(e, 4);

@@ -12,7 +12,7 @@ const _setup$ifBody = _scope => {
   _setup$ifBody_effect(_scope);
 };
 const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-same-scope/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<div>a</div><span>b</span><p>c</p>", "", _setup$ifBody));
-const _if = /* @__PURE__ */_$.conditional("#text/2");
+const _if = /* @__PURE__ */_$.conditional("#text/2", 0);
 const _onClick = _scope => {
   const {
     show

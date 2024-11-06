@@ -11,8 +11,8 @@ const _expr_Text_className = /* @__PURE__ */_$.intersection(2, _scope => {
     class: className
   }));
 }, () => _tagName_input);
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", null, () => _expr_Text_className);
-const _className = /* @__PURE__ */_$.state("className", null, () => _expr_Text_className);
+const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", 0, () => _expr_Text_className);
+const _className = /* @__PURE__ */_$.state("className", 0, () => _expr_Text_className);
 const _onClick = _scope => {
   const {
     tagName

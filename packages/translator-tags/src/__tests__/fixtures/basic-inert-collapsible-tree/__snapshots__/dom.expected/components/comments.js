@@ -15,8 +15,8 @@ const _expr_comment_id$ifBody = /* @__PURE__ */_$.intersection(2, _scope => {
     path: id
   });
 }, () => _$.inChild("#childScope/0", _input_));
-const _id$ifBody = /* @__PURE__ */_$.closure("id", null, void 0, () => _expr_comment_id$ifBody);
-const _comment$ifBody = /* @__PURE__ */_$.closure("comment", null, void 0, () => _expr_comment_id$ifBody);
+const _id$ifBody = /* @__PURE__ */_$.closure("id", 0, void 0, () => _expr_comment_id$ifBody);
+const _comment$ifBody = /* @__PURE__ */_$.closure("comment", 0, void 0, () => _expr_comment_id$ifBody);
 const _setup$ifBody = _scope => {
   _setup_(_scope["#childScope/0"]);
 };
@@ -30,7 +30,7 @@ const _expr_input_i$forBody = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _id$forBody(_scope, `${input.path || "c"}-${i}`);
 }, () => _id$forBody);
-const _if$forBody = /* @__PURE__ */_$.conditional("#text/4");
+const _if$forBody = /* @__PURE__ */_$.conditional("#text/4", 0);
 const _onClick = _scope => {
   const {
     open
@@ -46,7 +46,7 @@ const _open$forBody = /* @__PURE__ */_$.state("open", (_scope, open) => {
   _open$forBody_effect(_scope);
 });
 const _id$forBody = /* @__PURE__ */_$.value("id", (_scope, id) => _$.attr(_scope["#li/0"], "id", id), () => _$.inConditionalScope(_id$ifBody, "#text/4"));
-const _i$forBody = /* @__PURE__ */_$.value("i", null, () => _expr_input_i$forBody);
+const _i$forBody = /* @__PURE__ */_$.value("i", 0, () => _expr_input_i$forBody);
 const _comment$forBody = /* @__PURE__ */_$.value("comment", (_scope, comment) => {
   _$.data(_scope["#text/1"], comment.text);
   _if$forBody(_scope, comment.comments ? _ifBody : null);
@@ -55,7 +55,7 @@ const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_
   _comment$forBody(_scope, _params_2[0]);
   _i$forBody(_scope, _params_2[1]);
 }, () => _$.intersections([_comment$forBody, _i$forBody]));
-const _input$forBody = /* @__PURE__ */_$.closure("input", null, void 0, () => _expr_input_i$forBody);
+const _input$forBody = /* @__PURE__ */_$.closure("input", 0, void 0, () => _expr_input_i$forBody);
 const _setup$forBody = _scope => {
   _open$forBody(_scope, true);
 };
