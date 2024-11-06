@@ -1,59 +1,55 @@
-// size: 645 (min) 346 (brotli)
+// size: 697 (min) 331 (brotli)
 
-import {
-  dynamicTagAttrs as o,
-  effect as i,
-  on as t,
-  state as n,
-  data as c,
-  intersections as d,
-  intersection as r,
-  register as v,
-  createRendererWithOwner as m,
-  value as s,
-  init as u,
-} from "@marko/runtime-tags/dom";
-const a = o(3, void 0, 1),
-  b = r(
+import * as t from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+const i = t.dynamicTagAttrs(3, void 0, 1),
+  a = t.intersection(
     3,
-    (o) => {
-      const { 6: i, 7: t } = o;
-      a(o, () => [i, t]);
+    (t) => {
+      const { 6: e, 7: a } = t;
+      i(t, () => [e, a]);
     },
-    () => a,
+    () => i,
   ),
-  e = i("a0", (o) =>
-    t(
-      o[0],
+  o = t.effect("a0", (e) =>
+    t.on(
+      e[0],
       "click",
-      ((o) => {
-        const { 6: i, 7: t } = o;
+      ((t) => {
+        const { 6: e, 7: i } = t;
         return function () {
-          g(o, i + 1), k(o, t + 1);
+          s(t, e + 1), r(t, i + 1);
         };
-      })(o),
+      })(e),
     ),
   ),
-  f = r(2, (o) => {
-    e(o);
+  n = t.intersection(2, (t) => {
+    o(t);
   }),
-  k = n(
+  r = t.state(
     7,
-    (o, i) => c(o[2], i),
-    () => d([f, b]),
+    (e, i) => t.data(e[2], i),
+    () => t.intersections([n, a]),
   ),
-  g = n(
+  s = t.state(
     6,
-    (o, i) => c(o[1], i),
-    () => d([f, b]),
+    (e, i) => t.data(e[1], i),
+    () => t.intersections([n, a]),
   ),
-  l = s(4, (o, i) => c(o[1], i)),
-  p = s(3, (o, i) => c(o[0], i)),
-  C = s(2, (o, i) => {
-    p(o, i[0]), l(o, i[1]);
+  c = t.value(4, (e, i) => t.data(e[1], i)),
+  d = t.value(3, (e, i) => t.data(e[0], i)),
+  m = t.value(2, (t, e) => {
+    d(t, e[0]), c(t, e[1]);
   });
-v(
+t.register(
   "b0",
-  m("<div>Counts: <!>,<!></div>", "Db%c%", void 0, void 0, void 0, () => C),
+  t.createRendererWithOwner(
+    "<div>Counts: <!>,<!></div>",
+    "Db%c%",
+    void 0,
+    void 0,
+    void 0,
+    () => m,
+  ),
 ),
-  u();
+  e();

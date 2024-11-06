@@ -1,4 +1,4 @@
-// size: 63 (min) 63 (brotli)
+// size: 63 (min) 65 (brotli)
 
-import { dynamicTagAttrs as m } from "@marko/runtime-tags/dom";
-m(0);
+import * as m from "@marko/runtime-tags/dom";
+m.dynamicTagAttrs(0);

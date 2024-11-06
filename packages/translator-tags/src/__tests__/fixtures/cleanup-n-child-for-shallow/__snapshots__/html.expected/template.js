@@ -1,34 +1,34 @@
-import { markResumeNode as _markResumeNode, nodeRef as _nodeRef, register as _register, write as _write, markResumeScopeStart as _markResumeScopeStart, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, markResumeControlEnd as _markResumeControlEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, getScopeById as _getScopeById, forOf as _forOf, writeEffect as _writeEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./components/child.marko";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
   const items = [1, 2, 3];
-  const el = _nodeRef();
-  const write = _register(function (msg) {
+  const el = _$.nodeRef();
+  const write = _$.register(function (msg) {
     el().innerHTML += '\n' + msg;
   }, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_0/write", _scope0_id);
-  _write(`<button>Toggle</button>${_markResumeNode(_scope0_id, "#button/0")}<div></div>${_markResumeNode(_scope0_id, "#div/1")}`);
+  _$.write(`<button>Toggle</button>${_$.markResumeNode(_scope0_id, "#button/0")}<div></div>${_$.markResumeNode(_scope0_id, "#div/1")}`);
   let _k = 0;
   const _scope1_ = new Map();
-  _forOf(items, (item, _index) => {
-    const _scope1_id = _nextScopeId();
-    _write(`${_markResumeScopeStart(_scope1_id, _k++)}`);
-    const _childScope = _peekNextScope();
+  _$.forOf(items, (item, _index) => {
+    const _scope1_id = _$.nextScopeId();
+    _$.write(`${_$.markResumeScopeStart(_scope1_id, _k++)}`);
+    const _childScope = _$.peekNextScope();
     _child({
       write: write,
       name: item
     });
-    _writeScope(_scope1_id, {
-      "#childScope/0": _writeExistingScope(_childScope)
+    _$.writeScope(_scope1_id, {
+      "#childScope/0": _$.writeExistingScope(_childScope)
     });
-    _scope1_.set(_index, _getScopeById(_scope1_id));
+    _scope1_.set(_index, _$.getScopeById(_scope1_id));
   });
-  _write(`${_markResumeControlEnd(_scope0_id, "#text/2")}`);
-  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_0_items");
-  _writeScope(_scope0_id, {
+  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/2")}`);
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_0_items");
+  _$.writeScope(_scope0_id, {
     "items": items,
     "write": write,
     "#text/2(": _scope1_.size ? _scope1_ : undefined
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko");
+export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko");

@@ -1,96 +1,81 @@
-// size: 848 (min) 437 (brotli)
+// size: 873 (min) 432 (brotli)
 
-import {
-  effect as n,
-  getAbortSignal as o,
-  value as t,
-  intersection as i,
-  resetAbortSignal as r,
-  data as c,
-  register as e,
-  createRenderer as d,
-  on as s,
-  closure as u,
-  inChild as l,
-  state as m,
-  loopOf as a,
-  init as b,
-} from "@marko/runtime-tags/dom";
-const v = n("a0", (n) => {
-    const { 3: t, 4: i } = n;
-    i(`mounted ${t}`),
-      (o(n, 0).onabort = ((n) => {
-        const { 3: o, 4: t } = n;
+import * as e from "@marko/runtime-tags/dom";
+import { init as t } from "@marko/runtime-tags/dom";
+const n = e.effect("a0", (t) => {
+    const { 3: n, 4: o } = t;
+    o(`mounted ${n}`),
+      (e.getAbortSignal(t, 0).onabort = ((e) => {
+        const { 3: t, 4: n } = e;
         return () => {
-          t(`destroyed ${o}`);
+          n(`destroyed ${t}`);
         };
-      })(n));
+      })(t));
   }),
-  f = i(2, (n) => {
-    r(n, 0), v(n);
+  o = e.intersection(2, (t) => {
+    e.resetAbortSignal(t, 0), n(t);
   }),
-  g = t(4, null, () => f),
-  k = t(
+  r = e.value(4, null, () => o),
+  i = e.value(
     3,
-    (n, o) => c(n[0], o),
-    () => f,
+    (t, n) => e.data(t[0], n),
+    () => o,
   );
-e(
+e.register(
   "b0",
-  (n) =>
-    function (o) {
-      n[1].innerHTML += "\n" + o;
+  (e) =>
+    function (t) {
+      e[1].innerHTML += "\n" + t;
     },
 );
-const $ = u(
+const a = e.closure(
     4,
-    (n, o) => g(n[0], o),
+    (e, t) => r(e[0], t),
     void 0,
-    () => l(0, g),
+    () => e.inChild(0, r),
   ),
-  h = t(
+  l = e.value(
     2,
-    (n, o) => k(n[0], o),
-    () => l(0, k),
+    (e, t) => i(e[0], t),
+    () => e.inChild(0, i),
   ),
-  p = t(
+  s = e.value(
     1,
-    (n, o) => h(n, o[0]),
-    () => h,
+    (e, t) => l(e, t[0]),
+    () => l,
   ),
-  y = a(
-    2,
-    e(
-      "b1",
-      d(
-        "<div> </div>",
-        "/D l&",
-        (n) => {
-          n[0];
-        },
-        () => [$],
-        void 0,
-        () => p,
-      ),
+  c = (e) => {
+    e[0];
+  },
+  d = e.register(
+    "b1",
+    e.createRenderer(
+      "<div> </div>",
+      "/D l&",
+      c,
+      () => [a],
+      void 0,
+      () => s,
     ),
   ),
-  D = n("b2", (n) =>
-    s(
-      n[0],
+  u = e.loopOf(2, d),
+  m = e.effect("b2", (t) =>
+    e.on(
+      t[0],
       "click",
-      ((n) => {
-        const { 3: o } = n;
+      ((e) => {
+        const { 3: t } = e;
         return function () {
-          H(n, o.length ? o.slice(0, -1) : [1, 2, 3]);
+          f(e, t.length ? t.slice(0, -1) : [1, 2, 3]);
         };
-      })(n),
+      })(t),
     ),
   ),
-  H = m(
+  f = e.state(
     3,
-    (n, o) => {
-      D(n), y(n, [o]);
+    (e, t) => {
+      m(e), u(e, [t]);
     },
-    () => y,
+    () => u,
   );
-b();
+t();

@@ -1,34 +1,28 @@
-// size: 285 (min) 183 (brotli)
+// size: 313 (min) 183 (brotli)
 
-import {
-  effect as o,
-  on as r,
-  state as t,
-  data as m,
-  intersection as c,
-  init as n,
-} from "@marko/runtime-tags/dom";
-const a = o("a0", (o) =>
-    r(
-      o[0],
+import * as t from "@marko/runtime-tags/dom";
+import { init as a } from "@marko/runtime-tags/dom";
+const o = t.effect("a0", (a) =>
+    t.on(
+      a[0],
       "click",
-      ((o) => {
-        const { 3: r, 4: t } = o;
-        return () => e(o, s(o, r + t));
-      })(o),
+      ((t) => {
+        const { 3: a, 4: o } = t;
+        return () => e(t, m(t, a + o));
+      })(a),
     ),
   ),
-  i = c(2, (o) => {
-    a(o);
+  r = t.intersection(2, (t) => {
+    o(t);
   }),
-  s = t(
+  m = t.state(
     4,
-    (o, r) => m(o[2], r),
-    () => i,
+    (a, o) => t.data(a[2], o),
+    () => r,
   ),
-  e = t(
+  e = t.state(
     3,
-    (o, r) => m(o[1], r),
-    () => i,
+    (a, o) => t.data(a[1], o),
+    () => r,
   );
-n();
+a();

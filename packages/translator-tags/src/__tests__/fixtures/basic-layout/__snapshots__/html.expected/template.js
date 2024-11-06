@@ -1,24 +1,24 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, createRenderer as _createRenderer, register as _register, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import * as _$ from "@marko/runtime-tags/debug/html";
 import _layout from "./components/layout.marko";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
   const {
     name
   } = input;
-  const _childScope = _peekNextScope();
+  const _childScope = _$.peekNextScope();
   _layout({
-    renderBody: _register(/* @__PURE__ */_createRenderer(() => {
-      const _scope1_id = _nextScopeId();
-      _write(`<h1>Hello <!>${_escapeXML(name)}${_markResumeNode(_scope1_id, "#text/0")}</h1>`);
-      _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko_1_name/subscriber");
-      _writeScope(_scope1_id, {
-        "_": _ensureScopeWithId(_scope0_id)
+    renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+      const _scope1_id = _$.nextScopeId();
+      _$.write(`<h1>Hello <!>${_$.escapeXML(name)}${_$.markResumeNode(_scope1_id, "#text/0")}</h1>`);
+      _$.writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko_1_name/subscriber");
+      _$.writeScope(_scope1_id, {
+        "_": _$.ensureScopeWithId(_scope0_id)
       });
     }), "packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko_1_renderer", _scope0_id)
   });
-  _writeScope(_scope0_id, {
+  _$.writeScope(_scope0_id, {
     "name": name,
-    "#childScope/0": _writeExistingScope(_childScope)
+    "#childScope/0": _$.writeExistingScope(_childScope)
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko");
+export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko");

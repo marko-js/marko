@@ -1,50 +1,47 @@
-// size: 557 (min) 322 (brotli)
+// size: 605 (min) 303 (brotli)
 
-import {
-  register as t,
-  createRenderer as o,
-  effect as n,
-  on as a,
-  closure as i,
-  data as c,
-  state as s,
-  intersections as m,
-  inConditionalScope as r,
-  conditional as u,
-  init as e,
-} from "@marko/runtime-tags/dom";
-const b = i(1, (t, o) => c(t[0], o)),
-  d = t(
+import * as t from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+const o = t.closure(1, (e, o) => t.data(e[0], o)),
+  n = t.register(
     "a0",
-    o("<span>The button was clicked <!> times.</span>", "Db%", void 0, () => [
-      b,
-    ]),
+    t.createRenderer(
+      "<span>The button was clicked <!> times.</span>",
+      "Db%",
+      void 0,
+      () => [o],
+    ),
   ),
-  k = n("a1", (t) =>
-    a(
-      t[0],
+  r = t.effect("a1", (e) =>
+    t.on(
+      e[0],
       "click",
       ((t) => {
         const {
-          _: { 1: o },
+          _: { 1: e },
         } = t;
         return function () {
-          v(t._, o + 1);
+          s(t._, e + 1);
         };
-      })(t),
+      })(e),
     ),
   ),
-  p = i(1, (t, o) => {
-    c(t[1], o), k(t);
+  i = t.closure(1, (e, o) => {
+    t.data(e[1], o), r(e);
   }),
-  f = t(
+  a = t.register(
     "a2",
-    o("<button> </button>", " D ", void 0, () => [p]),
+    t.createRenderer("<button> </button>", " D ", void 0, () => [i]),
   ),
-  l = u(0),
-  v = s(
+  c = t.conditional(0),
+  s = t.state(
     1,
-    (t, o) => l(t, o < 3 ? f : d),
-    () => m([l, r(p, 0), r(b, 0)]),
+    (t, e) => c(t, e < 3 ? a : n),
+    () =>
+      t.intersections([
+        c,
+        t.inConditionalScope(i, 0),
+        t.inConditionalScope(o, 0),
+      ]),
   );
 e();

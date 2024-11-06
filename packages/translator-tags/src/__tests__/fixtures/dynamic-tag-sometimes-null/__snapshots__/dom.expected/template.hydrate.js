@@ -1,39 +1,31 @@
-// size: 380 (min) 245 (brotli)
+// size: 387 (min) 241 (brotli)
 
-import {
-  register as n,
-  createRendererWithOwner as o,
-  dynamicTagAttrs as t,
-  effect as r,
-  on as c,
-  state as i,
-  conditional as m,
-  init as a,
-} from "@marko/runtime-tags/dom";
-const u = n("a0", o("Body Content", "")),
-  d = t(0, u),
-  e = m(
+import * as t from "@marko/runtime-tags/dom";
+import { init as r } from "@marko/runtime-tags/dom";
+const n = t.register("a0", t.createRendererWithOwner("Body Content", "")),
+  o = t.dynamicTagAttrs(0, n),
+  e = t.conditional(
     0,
-    (n) => d(n, () => ({})),
-    () => d,
+    (t) => o(t, () => ({})),
+    () => o,
   ),
-  l = r("a1", (n) =>
-    c(
-      n[1],
+  a = t.effect("a1", (r) =>
+    t.on(
+      r[1],
       "click",
-      ((n) => {
-        const { 2: o } = n;
+      ((t) => {
+        const { 2: r } = t;
         return function () {
-          s(n, o ? null : "div");
+          i(t, r ? null : "div");
         };
-      })(n),
+      })(r),
     ),
   ),
-  s = i(
+  i = t.state(
     2,
-    (n, o) => {
-      l(n), e(n, o || u(n));
+    (t, r) => {
+      a(t), e(t, r || n(t));
     },
     () => e,
   );
-a();
+r();

@@ -1,53 +1,45 @@
-// size: 512 (min) 239 (brotli)
+// size: 589 (min) 224 (brotli)
 
-import {
-  registerSubscriber as a,
-  dynamicClosure as o,
-  data as n,
-  register as i,
-  createRenderer as d,
-  closure as s,
-  conditional as m,
-} from "@marko/runtime-tags/dom";
-const p = a(
+import * as e from "@marko/runtime-tags/dom";
+const r = e.registerSubscriber(
     "a0",
-    o(
+    e.dynamicClosure(
       5,
-      (a, o) => n(a[0], o),
-      (a) => a._._,
+      (r, a) => e.data(r[0], a),
+      (e) => e._._,
     ),
   ),
-  v = i(
+  a = e.register(
     "a1",
-    d("<span> </span>", "D ", void 0, () => [p]),
+    e.createRenderer("<span> </span>", "D ", void 0, () => [r]),
   ),
-  l = a(
+  i = e.registerSubscriber(
     "a2",
-    o(
+    e.dynamicClosure(
       4,
-      (a, o) => n(a[0], o),
-      (a) => a._._,
+      (r, a) => e.data(r[0], a),
+      (e) => e._._,
     ),
   ),
-  r = i(
+  o = e.register(
     "a3",
-    d("<span> </span>", "D ", void 0, () => [l]),
+    e.createRenderer("<span> </span>", "D ", void 0, () => [i]),
   ),
-  t = m(1),
-  D = m(0),
-  _ = s(
+  s = e.conditional(1),
+  n = e.conditional(0),
+  t = e.closure(
     5,
-    (a, o) => t(a, o ? v : null),
+    (e, r) => s(e, r ? a : null),
     void 0,
-    () => t,
+    () => s,
   ),
-  u = s(
+  d = e.closure(
     4,
-    (a, o) => D(a, o ? r : null),
+    (e, r) => n(e, r ? o : null),
     void 0,
-    () => D,
+    () => n,
   );
-i(
+e.register(
   "a4",
-  d("<!><!><!><!>", "D%b%D", void 0, () => [_, u]),
+  e.createRenderer("<!><!><!><!>", "D%b%D", void 0, () => [t, d]),
 );

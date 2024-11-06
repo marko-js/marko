@@ -1,22 +1,15 @@
-// size: 270 (min) 162 (brotli)
+// size: 282 (min) 165 (brotli)
 
-import {
-  register as o,
-  state as m,
-  controllable_select_value as t,
-  data as a,
-  effect as n,
-  controllable_select_value_effect as r,
-  init as i,
-} from "@marko/runtime-tags/dom";
-const c = o(
+import * as t from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+const a = t.register(
     "a0",
-    (o) =>
-      function (m) {
-        f(o, m);
+    (t) =>
+      function (e) {
+        o(t, e);
       },
   ),
-  f = m(2, (o, m) => {
-    t(o, 0, m, c(o)), a(o[1], m);
+  o = t.state(2, (e, o) => {
+    t.controllable_select_value(e, 0, o, a(e)), t.data(e[1], o);
   });
-n("a1", (o) => r(o, 0)), i();
+t.effect("a1", (e) => t.controllable_select_value_effect(e, 0)), e();

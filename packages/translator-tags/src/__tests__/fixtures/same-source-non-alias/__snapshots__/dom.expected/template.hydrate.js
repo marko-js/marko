@@ -1,38 +1,31 @@
-// size: 353 (min) 202 (brotli)
+// size: 376 (min) 209 (brotli)
 
-import {
-  register as n,
-  effect as t,
-  on as o,
-  state as r,
-  value as a,
-  data as c,
-  init as i,
-} from "@marko/runtime-tags/dom";
-function m(n) {
-  return { a: n };
+import * as t from "@marko/runtime-tags/dom";
+import { init as a } from "@marko/runtime-tags/dom";
+function r(t) {
+  return { a: t };
 }
-n("a0", m);
-const u = a(5, (n, t) => {
-    c(n[1], t),
-      ((n, t) => {
-        c(n[2], t);
-      })(n, t);
+t.register("a0", r);
+const o = t.value(5, (a, r) => {
+    t.data(a[1], r),
+      ((a, r) => {
+        t.data(a[2], r);
+      })(a, r);
   }),
-  e = a(4, (n, t) => u(n, t.a)),
-  f = t("a1", (n) =>
-    o(
-      n[0],
+  e = t.value(4, (t, a) => o(t, a.a)),
+  n = t.effect("a1", (a) =>
+    t.on(
+      a[0],
       "click",
-      ((n) => {
-        const { 3: t } = n;
+      ((t) => {
+        const { 3: a } = t;
         return function () {
-          s(n, t + 1);
+          m(t, a + 1);
         };
-      })(n),
+      })(a),
     ),
   ),
-  s = r(3, (n, t) => {
-    f(n), e(n, m(t));
+  m = t.state(3, (t, a) => {
+    n(t), e(t, r(a));
   });
-i();
+a();

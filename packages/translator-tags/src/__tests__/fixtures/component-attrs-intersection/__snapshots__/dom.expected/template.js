@@ -1,7 +1,7 @@
 export const _template_ = `${_displayIntersection_template}<button></button>`;
 export const _walks_ = /* beginChild, _displayIntersection_walks, endChild, get, over(1) */`/${_displayIntersection_walks}& b`;
 import { _setup_ as _displayIntersection, _value_ as _displayIntersection_input_value, _template_ as _displayIntersection_template, _walks_ as _displayIntersection_walks } from "./components/display-intersection.marko";
-import { inChild as _inChild, on as _on, effect as _effect, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import * as _$ from "@marko/runtime-tags/debug/dom";
 const _onClick = _scope => {
   const {
     count
@@ -10,13 +10,13 @@ const _onClick = _scope => {
     _count(_scope, count + 1);
   };
 };
-const _count_effect = _effect("packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
-const _count = /* @__PURE__ */_state("count", (_scope, count) => {
+const _count_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count", _scope => _$.on(_scope["#button/1"], "click", _onClick(_scope)));
+const _count = /* @__PURE__ */_$.state("count", (_scope, count) => {
   _count_effect(_scope);
   _displayIntersection_input_value(_scope["#childScope/0"], count);
-}, () => _inChild("#childScope/0", _displayIntersection_input_value));
+}, () => _$.inChild("#childScope/0", _displayIntersection_input_value));
 export function _setup_(_scope) {
   _displayIntersection(_scope["#childScope/0"]);
   _count(_scope, 0);
 }
-export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko");
+export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko");

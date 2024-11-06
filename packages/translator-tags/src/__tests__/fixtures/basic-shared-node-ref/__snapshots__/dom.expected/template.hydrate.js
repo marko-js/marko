@@ -1,60 +1,48 @@
-// size: 561 (min) 322 (brotli)
+// size: 584 (min) 302 (brotli)
 
-import {
-  register as n,
-  createRenderer as o,
-  effect as i,
-  on as t,
-  value as c,
-  state as r,
-  attr as e,
-  data as u,
-  loopOf as a,
-  init as d,
-} from "@marko/runtime-tags/dom";
-const m = c(2, (n, o) => u(n[0], o)),
-  s = c(1, (n, o) => m(n, o[0])),
-  f = a(
-    0,
-    n(
-      "a0",
-      o("<li> </li>", "D ", void 0, void 0, void 0, () => s),
-    ),
+import * as t from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+const o = t.value(2, (e, o) => t.data(e[0], o)),
+  r = t.value(1, (t, e) => o(t, e[0])),
+  n = t.register(
+    "a0",
+    t.createRenderer("<li> </li>", "D ", void 0, void 0, void 0, () => r),
   ),
-  l = i("a1", (n) =>
-    t(
-      n[2],
+  a = t.loopOf(0, n),
+  i = t.effect("a1", (e) =>
+    t.on(
+      e[2],
       "click",
-      ((n) => {
-        const { 4: o } = n;
+      ((t) => {
+        const { 4: e } = t;
         return function () {
-          v(n, [].concat(o).reverse());
+          c(t, [].concat(e).reverse());
         };
-      })(n),
+      })(e),
     ),
   ),
-  v = r(4, (n, o) => {
-    l(n),
-      f(n, [
-        o,
-        function (n) {
-          return n;
+  c = t.state(4, (t, e) => {
+    i(t),
+      a(t, [
+        e,
+        function (t) {
+          return t;
         },
       ]);
   }),
-  k = i("a2", (n) =>
-    t(
-      n[1],
+  f = t.effect("a2", (e) =>
+    t.on(
+      e[1],
       "click",
-      ((n) => {
-        const { 3: o } = n;
+      ((t) => {
+        const { 3: e } = t;
         return function () {
-          g(n, !o);
+          m(t, !e);
         };
-      })(n),
+      })(e),
     ),
   ),
-  g = r(3, (n, o) => {
-    e(n[0], "hidden", !o), k(n);
+  m = t.state(3, (e, o) => {
+    t.attr(e[0], "hidden", !o), f(e);
   });
-d();
+e();

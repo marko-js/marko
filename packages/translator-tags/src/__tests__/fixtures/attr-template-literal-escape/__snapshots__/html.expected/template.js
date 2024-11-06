@@ -1,6 +1,6 @@
-import { attr as _attr, markResumeNode as _markResumeNode, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
-  _write(`<div${_attr("foo", `Hello ${input.name}`)}></div>${_markResumeNode(_scope0_id, "#div/0")}`);
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
+  _$.write(`<div${_$.attr("foo", `Hello ${input.name}`)}></div>${_$.markResumeNode(_scope0_id, "#div/0")}`);
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/attr-template-literal-escape/template.marko");
+export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/attr-template-literal-escape/template.marko");

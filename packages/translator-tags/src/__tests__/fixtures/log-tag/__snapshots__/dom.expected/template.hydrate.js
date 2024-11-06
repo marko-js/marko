@@ -1,11 +1,7 @@
-// size: 178 (min) 143 (brotli)
+// size: 205 (min) 135 (brotli)
 
-import {
-  effect as o,
-  state as t,
-  data as m,
-  init as r,
-} from "@marko/runtime-tags/dom";
-import i from "./test-log";
-const s = t(2, (o, t) => m(o[0], t));
-o("a0", (o) => s(o, JSON.stringify(i))), r();
+import * as t from "@marko/runtime-tags/dom";
+import { init as m } from "@marko/runtime-tags/dom";
+import o from "./test-log";
+const r = t.state(2, (m, o) => t.data(m[0], o));
+t.effect("a0", (t) => r(t, JSON.stringify(o))), m();

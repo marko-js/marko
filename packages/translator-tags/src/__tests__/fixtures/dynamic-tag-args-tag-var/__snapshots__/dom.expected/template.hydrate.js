@@ -1,46 +1,37 @@
-// size: 389 (min) 234 (brotli)
+// size: 396 (min) 219 (brotli)
 
-import {
-  dynamicTagAttrs as o,
-  registerBoundSignal as t,
-  value as n,
-  data as c,
-  effect as r,
-  on as m,
-  state as s,
-  intersection as i,
-  init as u,
-} from "@marko/runtime-tags/dom";
-const a = o(2),
-  b = i(
+import * as t from "@marko/runtime-tags/dom";
+import { init as o } from "@marko/runtime-tags/dom";
+const n = t.dynamicTagAttrs(2),
+  a = t.intersection(
     2,
-    (o) => {
-      const { 4: t } = o;
-      a(o, () => t);
+    (t) => {
+      const { 4: o } = t;
+      n(t, () => o);
     },
-    () => a,
+    () => n,
   );
-t(
+t.registerBoundSignal(
   "b0",
-  n(5, (o, t) => c(o[3], t)),
+  t.value(5, (o, n) => t.data(o[3], n)),
 );
-const e = r("b1", (o) =>
-    m(
+const r = t.effect("b1", (o) =>
+    t.on(
       o[0],
       "click",
-      ((o) => {
-        const { 4: t } = o;
+      ((t) => {
+        const { 4: o } = t;
         return function () {
-          f(o, t + 1);
+          e(t, o + 1);
         };
       })(o),
     ),
   ),
-  f = s(
+  e = t.state(
     4,
-    (o, t) => {
-      c(o[1], t), e(o);
+    (o, n) => {
+      t.data(o[1], n), r(o);
     },
-    () => b,
+    () => a,
   );
-u();
+o();

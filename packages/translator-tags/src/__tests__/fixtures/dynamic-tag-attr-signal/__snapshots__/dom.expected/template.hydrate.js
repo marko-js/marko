@@ -1,25 +1,20 @@
-// size: 230 (min) 157 (brotli)
+// size: 252 (min) 162 (brotli)
 
-import {
-  effect as o,
-  on as t,
-  state as n,
-  classAttr as r,
-  init as c,
-} from "@marko/runtime-tags/dom";
-const m = o("a0", (o) =>
-    t(
+import * as t from "@marko/runtime-tags/dom";
+import { init as o } from "@marko/runtime-tags/dom";
+const r = t.effect("a0", (o) =>
+    t.on(
       o[1],
       "click",
-      ((o) => {
-        const { 2: t } = o;
+      ((t) => {
+        const { 2: o } = t;
         return function () {
-          i(o, "A" === t ? "B" : "A");
+          m(t, "A" === o ? "B" : "A");
         };
       })(o),
     ),
   ),
-  i = n(2, (o, t) => {
-    r(o[0], t), m(o);
+  m = t.state(2, (o, m) => {
+    t.classAttr(o[0], m), r(o);
   });
-c();
+o();

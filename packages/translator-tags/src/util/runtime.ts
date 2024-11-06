@@ -1,4 +1,4 @@
-import { importNamed } from "@marko/babel-utils";
+import { importStar } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import {
   attr,
@@ -36,7 +36,10 @@ export function importRuntime(
     | keyof typeof import("@marko/runtime-tags/html"),
 ) {
   const { output } = getMarkoOpts();
-  return importNamed(currentProgramPath.hub.file, getRuntimePath(output), name);
+  return t.memberExpression(
+    importStar(currentProgramPath.hub.file, getRuntimePath(output), "$"),
+    t.identifier(name),
+  );
 }
 
 export function callRuntime(

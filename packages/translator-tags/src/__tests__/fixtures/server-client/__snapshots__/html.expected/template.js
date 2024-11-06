@@ -1,8 +1,8 @@
 const server_x = 1;
 const x = typeof server_x === "undefined" ? client_x : server_x;
-import { escapeXML as _escapeXML, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
-  _write(`<div><span>${_escapeXML(x)}</span></div>`);
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
+  _$.write(`<div><span>${_$.escapeXML(x)}</span></div>`);
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/server-client/template.marko");
+export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/server-client/template.marko");

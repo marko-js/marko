@@ -1,8 +1,8 @@
 export const _template_ = "<p> </p>";
 export const _walks_ = /* next(1), get, out(1) */"D l";
-import { data as _data, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _fullName = /* @__PURE__ */_value("fullName", (_scope, fullName) => _data(_scope["#text/0"], fullName));
-const _user = /* @__PURE__ */_value("user");
+import * as _$ from "@marko/runtime-tags/debug/dom";
+const _fullName = /* @__PURE__ */_$.value("fullName", (_scope, fullName) => _$.data(_scope["#text/0"], fullName));
+const _user = /* @__PURE__ */_$.value("user");
 export function _setup_(_scope) {
   _user(_scope, {
     firstName: "George",
@@ -11,4 +11,4 @@ export function _setup_(_scope) {
   });
   _fullName(_scope, user.fullName = `${user.firstName} ${user.middleName} ${user.lastName}`);
 }
-export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/error-const-mutation/template.marko");
+export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/error-const-mutation/template.marko");

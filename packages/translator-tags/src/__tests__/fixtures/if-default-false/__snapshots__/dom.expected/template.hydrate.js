@@ -1,29 +1,22 @@
-// size: 285 (min) 186 (brotli)
+// size: 297 (min) 183 (brotli)
 
-import {
-  register as n,
-  createRenderer as o,
-  effect as t,
-  on as r,
-  state as c,
-  conditional as i,
-  init as m,
-} from "@marko/runtime-tags/dom";
-const a = n("a0", o("hi", "")),
-  u = i(1),
-  l = t("a1", (n) =>
-    r(
-      n[0],
+import * as t from "@marko/runtime-tags/dom";
+import { init as r } from "@marko/runtime-tags/dom";
+const o = t.register("a0", t.createRenderer("hi", "")),
+  e = t.conditional(1),
+  n = t.effect("a1", (r) =>
+    t.on(
+      r[0],
       "click",
-      ((n) => {
-        const { 2: o } = n;
+      ((t) => {
+        const { 2: r } = t;
         return function () {
-          s(n, !o);
+          a(t, !r);
         };
-      })(n),
+      })(r),
     ),
   ),
-  s = c(2, (n, o) => {
-    l(n), u(n, o ? a : null);
+  a = t.state(2, (t, r) => {
+    n(t), e(t, r ? o : null);
   });
-m();
+r();

@@ -1,9 +1,10 @@
-// size: 138 (min) 109 (brotli)
+// size: 170 (min) 118 (brotli)
 
-import { effect as t, nodeRef as o, init as m } from "@marko/runtime-tags/dom";
-t("a0", (t) => {
-  const { 2: o } = t;
-  o().textContent = "hello";
+import * as o from "@marko/runtime-tags/dom";
+import { init as t } from "@marko/runtime-tags/dom";
+o.effect("a0", (o) => {
+  const { 2: t } = o;
+  t().textContent = "hello";
 }),
-  o("b0", 0),
-  m();
+  o.nodeRef("b0", 0),
+  t();

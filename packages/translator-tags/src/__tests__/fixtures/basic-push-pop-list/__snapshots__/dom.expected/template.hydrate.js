@@ -1,58 +1,48 @@
-// size: 565 (min) 317 (brotli)
+// size: 584 (min) 292 (brotli)
 
-import {
-  register as o,
-  createRenderer as n,
-  effect as c,
-  on as t,
-  value as i,
-  state as r,
-  data as s,
-  intersection as u,
-  loopOf as a,
-  init as l,
-} from "@marko/runtime-tags/dom";
-const m = i(2, (o, n) => s(o[0], n)),
-  d = i(1, (o, n) => m(o, n[0])),
-  e = o(
+import * as t from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+const o = t.value(2, (e, o) => t.data(e[0], o)),
+  n = t.value(1, (t, e) => o(t, e[0])),
+  r = t.register(
     "a0",
-    n(" ", " ", void 0, void 0, void 0, () => d),
+    t.createRenderer(" ", " ", void 0, void 0, void 0, () => n),
   ),
-  f = c("a1", (o) =>
-    t(
-      o[1],
+  a = t.effect("a1", (e) =>
+    t.on(
+      e[1],
       "click",
-      ((o) => {
-        const { 3: n, 4: c } = o;
+      ((t) => {
+        const { 3: e, 4: o } = t;
         return function () {
-          const t = n + 1;
-          b(o, t), p(o, [...c, t]);
+          const n = e + 1;
+          f(t, n), m(t, [...o, n]);
         };
-      })(o),
+      })(e),
     ),
   ),
-  k = u(2, (o) => {
-    f(o);
+  c = t.intersection(2, (t) => {
+    a(t);
   }),
-  v = a(0, e),
-  g = c("a2", (o) =>
-    t(
-      o[2],
+  i = t.loopOf(0, r),
+  s = t.effect("a2", (e) =>
+    t.on(
+      e[2],
       "click",
-      ((o) => {
-        const { 4: n } = o;
+      ((t) => {
+        const { 4: e } = t;
         return function () {
-          p(o, n.slice(0, -1));
+          m(t, e.slice(0, -1));
         };
-      })(o),
+      })(e),
     ),
   ),
-  p = r(
+  m = t.state(
     4,
-    (o, n) => {
-      g(o), v(o, [n]);
+    (t, e) => {
+      s(t), i(t, [e]);
     },
-    () => k,
+    () => c,
   ),
-  b = r(3, null, () => k);
-l();
+  f = t.state(3, null, () => c);
+e();

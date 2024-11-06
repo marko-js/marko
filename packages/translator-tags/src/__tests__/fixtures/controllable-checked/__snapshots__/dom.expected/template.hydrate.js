@@ -1,22 +1,15 @@
-// size: 280 (min) 165 (brotli)
+// size: 292 (min) 167 (brotli)
 
-import {
-  register as o,
-  state as t,
-  controllable_input_checked as m,
-  data as n,
-  effect as r,
-  controllable_input_checked_effect as a,
-  init as i,
-} from "@marko/runtime-tags/dom";
-const c = o(
+import * as t from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+const o = t.register(
     "a0",
-    (o) =>
-      function (t) {
-        f(o, t);
+    (t) =>
+      function (e) {
+        r(t, e);
       },
   ),
-  f = t(2, (o, t) => {
-    m(o, 0, t, c(o)), n(o[1], String(t));
+  r = t.state(2, (e, r) => {
+    t.controllable_input_checked(e, 0, r, o(e)), t.data(e[1], String(r));
   });
-r("a1", (o) => a(o, 0)), i();
+t.effect("a1", (e) => t.controllable_input_checked_effect(e, 0)), e();

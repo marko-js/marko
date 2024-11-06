@@ -1,7 +1,7 @@
 export const _template_ = `${_myButton_template}`;
 export const _walks_ = /* beginChild, _myButton_walks, endChild */`/${_myButton_walks}&`;
-import { register as _register, inChild as _inChild, intersections as _intersections, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _onClick = _register("packages/translator-tags/src/__tests__/fixtures/basic-component-input/template.marko_0/onClick", _scope => {
+import * as _$ from "@marko/runtime-tags/debug/dom";
+const _onClick = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-component-input/template.marko_0/onClick", _scope => {
   const {
     clickCount
   } = _scope;
@@ -10,12 +10,12 @@ const _onClick = _register("packages/translator-tags/src/__tests__/fixtures/basi
   };
 });
 import { _setup_ as _myButton, _text_ as _myButton_input_text, _onClick_ as _myButton_input_onClick, _template_ as _myButton_template, _walks_ as _myButton_walks } from "./components/my-button.marko";
-const _clickCount = /* @__PURE__ */_state("clickCount", (_scope, clickCount) => {
+const _clickCount = /* @__PURE__ */_$.state("clickCount", (_scope, clickCount) => {
   _myButton_input_text(_scope["#childScope/0"], clickCount);
   _myButton_input_onClick(_scope["#childScope/0"], _onClick(_scope));
-}, () => _intersections([_inChild("#childScope/0", _myButton_input_text), _inChild("#childScope/0", _myButton_input_onClick)]));
+}, () => _$.intersections([_$.inChild("#childScope/0", _myButton_input_text), _$.inChild("#childScope/0", _myButton_input_onClick)]));
 export function _setup_(_scope) {
   _myButton(_scope["#childScope/0"]);
   _clickCount(_scope, 0);
 }
-export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-component-input/template.marko");
+export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-component-input/template.marko");

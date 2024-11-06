@@ -1,25 +1,25 @@
-const formatNumber = _register(n => {
+const formatNumber = _$.register(n => {
   return "$" + n.toFixed(2);
 }, "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/anonymous");
 function formatNumber2(n) {
   return "$" + n.toFixed(2);
 }
-import { register as _register, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import * as _$ from "@marko/runtime-tags/debug/html";
 import _counter from "./components/counter.marko";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
-  _register(formatNumber2, "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/formatNumber2");
-  const _childScope = _peekNextScope();
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
+  _$.register(formatNumber2, "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/formatNumber2");
+  const _childScope = _$.peekNextScope();
   _counter({
     format: formatNumber
   });
-  const _childScope2 = _peekNextScope();
+  const _childScope2 = _$.peekNextScope();
   _counter({
     format: formatNumber2
   });
-  _writeScope(_scope0_id, {
-    "#childScope/0": _writeExistingScope(_childScope),
-    "#childScope/1": _writeExistingScope(_childScope2)
+  _$.writeScope(_scope0_id, {
+    "#childScope/0": _$.writeExistingScope(_childScope),
+    "#childScope/1": _$.writeExistingScope(_childScope2)
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko");
+export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko");

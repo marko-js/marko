@@ -4,5 +4,5 @@ import { _setup_ as _counter, _template_ as _counter_template, _walks_ as _count
 export function _setup_(_scope) {
   _counter(_scope["#childScope/0"]);
 }
-import { createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-export default /* @__PURE__ */_createTemplate(/* @__PURE__ */_createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-component/template.marko");
+import * as _$ from "@marko/runtime-tags/debug/dom";
+export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-component/template.marko");

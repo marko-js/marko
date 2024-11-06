@@ -1,36 +1,31 @@
-// size: 431 (min) 196 (brotli)
+// size: 453 (min) 201 (brotli)
 
-import {
-  effect as t,
-  lifecycle as n,
-  on as e,
-  state as o,
-  init as r,
-} from "@marko/runtime-tags/dom";
-const c = (t) => {
+import * as t from "@marko/runtime-tags/dom";
+import { init as n } from "@marko/runtime-tags/dom";
+const e = (t) => {
     const { 1: n } = t;
     return function () {
       document.getElementById("ref").textContent = "Mount " + n;
     };
   },
-  u = (t) => {
+  o = (t) => {
     const { 1: n } = t;
     return function () {
       document.getElementById("ref").textContent = "Update " + n;
     };
   },
-  m = t("a0", (t) => {
-    n(t, 3, { onMount: c(t), onUpdate: u(t) }),
-      e(
-        t[0],
+  r = t.effect("a0", (n) => {
+    t.lifecycle(n, 3, { onMount: e(n), onUpdate: o(n) }),
+      t.on(
+        n[0],
         "click",
         ((t) => {
           const { 1: n } = t;
           return function () {
-            d(t, n + 1);
+            c(t, n + 1);
           };
-        })(t),
+        })(n),
       );
   }),
-  d = o(1, (t, n) => m(t));
-r();
+  c = t.state(1, (t, n) => r(t));
+n();

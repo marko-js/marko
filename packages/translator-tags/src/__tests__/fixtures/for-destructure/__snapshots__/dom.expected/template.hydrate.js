@@ -1,55 +1,51 @@
-// size: 608 (min) 327 (brotli)
+// size: 640 (min) 306 (brotli)
 
-import {
-  register as i,
-  createRenderer as c,
-  effect as t,
-  on as n,
-  value as o,
-  state as r,
-  loopOf as a,
-  data as e,
-  init as d,
-} from "@marko/runtime-tags/dom";
-const s = o(5, (i, c) => e(i[1], c)),
-  m = o(4, (i, c) => e(i[0], c)),
-  v = o(3, (i, c) => {
-    m(i, c.name), s(i, c.description);
+import * as t from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+const a = t.value(5, (e, a) => t.data(e[1], a)),
+  i = t.value(4, (e, a) => t.data(e[0], a)),
+  o = t.value(3, (t, e) => {
+    i(t, e.name), a(t, e.description);
   }),
-  u = o(2, (i, c) => v(i, c[0])),
-  p = a(
-    0,
-    i(
-      "a0",
-      c("<div><!>: <!></div>", "D%c%", void 0, void 0, void 0, () => u),
+  r = t.value(2, (t, e) => o(t, e[0])),
+  n = t.register(
+    "a0",
+    t.createRenderer(
+      "<div><!>: <!></div>",
+      "D%c%",
+      void 0,
+      void 0,
+      void 0,
+      () => r,
     ),
   ),
-  f = t("a1", (i) => {
-    n(
-      i[1],
+  c = t.loopOf(0, n),
+  d = t.effect("a1", (e) => {
+    t.on(
+      e[1],
       "click",
-      ((i) => {
-        const { 3: c } = i;
+      ((t) => {
+        const { 3: e } = t;
         return function () {
-          k(i, [
-            ...c,
+          m(t, [
+            ...e,
             { name: "JavaScript", description: "Java, but scriptier" },
           ]);
         };
-      })(i),
+      })(e),
     ),
-      n(
-        i[2],
+      t.on(
+        e[2],
         "click",
-        ((i) => {
-          const { 3: c } = i;
+        ((t) => {
+          const { 3: e } = t;
           return function () {
-            k(i, c.slice(0, -1));
+            m(t, e.slice(0, -1));
           };
-        })(i),
+        })(e),
       );
   }),
-  k = r(3, (i, c) => {
-    f(i), p(i, [c]);
+  m = t.state(3, (t, e) => {
+    d(t), c(t, [e]);
   });
-d();
+e();

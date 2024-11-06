@@ -1,79 +1,79 @@
-import { markResumeNode as _markResumeNode, nodeRef as _nodeRef, register as _register, write as _write, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./components/child.marko";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
   const showOuter = true;
   const showMiddle = true;
   const showInner = true;
-  const el = _nodeRef();
-  const write = _register(function (msg) {
+  const el = _$.nodeRef();
+  const write = _$.register(function (msg) {
     el().innerHTML += '\n' + msg;
   }, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0/write", _scope0_id);
-  _write(`<button id=outer>Toggle Outer</button>${_markResumeNode(_scope0_id, "#button/0")}<button id=middle>Toggle Middle</button>${_markResumeNode(_scope0_id, "#button/1")}<button id=inner>Toggle Inner</button>${_markResumeNode(_scope0_id, "#button/2")}<pre></pre>${_markResumeNode(_scope0_id, "#pre/3")}`);
+  _$.write(`<button id=outer>Toggle Outer</button>${_$.markResumeNode(_scope0_id, "#button/0")}<button id=middle>Toggle Middle</button>${_$.markResumeNode(_scope0_id, "#button/1")}<button id=inner>Toggle Inner</button>${_$.markResumeNode(_scope0_id, "#button/2")}<pre></pre>${_$.markResumeNode(_scope0_id, "#pre/3")}`);
   let _ifScopeId3, _ifRenderer3;
   if (showOuter) {
-    const _scope1_id = _nextScopeId();
-    _write("<div>");
-    const _childScope = _peekNextScope();
+    const _scope1_id = _$.nextScopeId();
+    _$.write("<div>");
+    const _childScope = _$.peekNextScope();
     _child({
       write: write,
       name: "Outer"
     });
     let _ifScopeId2, _ifRenderer2;
     if (showMiddle) {
-      const _scope2_id = _nextScopeId();
-      _write("<div>");
-      const _childScope2 = _peekNextScope();
+      const _scope2_id = _$.nextScopeId();
+      _$.write("<div>");
+      const _childScope2 = _$.peekNextScope();
       _child({
         write: write,
         name: "Middle"
       });
       let _ifScopeId, _ifRenderer;
       if (showInner) {
-        const _scope3_id = _nextScopeId();
-        const _childScope3 = _peekNextScope();
+        const _scope3_id = _$.nextScopeId();
+        const _childScope3 = _$.peekNextScope();
         _child({
           write: write,
           name: "Inner"
         });
-        _writeScope(_scope3_id, {
-          "#childScope/0": _writeExistingScope(_childScope3)
+        _$.writeScope(_scope3_id, {
+          "#childScope/0": _$.writeExistingScope(_childScope3)
         });
-        _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_3_renderer");
+        _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_3_renderer");
         _ifScopeId = _scope3_id;
       }
-      _write(`${_markResumeControlSingleNodeEnd(_scope2_id, "#text/1", _ifScopeId)}</div>`);
-      _writeEffect(_scope2_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_2_showInner/subscriber");
-      _writeScope(_scope2_id, {
-        "#childScope/0": _writeExistingScope(_childScope2),
+      _$.write(`${_$.markResumeControlSingleNodeEnd(_scope2_id, "#text/1", _ifScopeId)}</div>`);
+      _$.writeEffect(_scope2_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_2_showInner/subscriber");
+      _$.writeScope(_scope2_id, {
+        "#childScope/0": _$.writeExistingScope(_childScope2),
         "#text/1(": _ifRenderer,
-        "#text/1!": _getScopeById(_ifScopeId),
-        "_": _ensureScopeWithId(_scope1_id)
+        "#text/1!": _$.getScopeById(_ifScopeId),
+        "_": _$.ensureScopeWithId(_scope1_id)
       });
-      _register(_ifRenderer2 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_2_renderer");
+      _$.register(_ifRenderer2 = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_2_renderer");
       _ifScopeId2 = _scope2_id;
     }
-    _write(`${_markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId2)}</div>`);
-    _writeScope(_scope1_id, {
-      "#childScope/0": _writeExistingScope(_childScope),
-      "_": _ensureScopeWithId(_scope0_id),
+    _$.write(`${_$.markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId2)}</div>`);
+    _$.writeScope(_scope1_id, {
+      "#childScope/0": _$.writeExistingScope(_childScope),
+      "_": _$.ensureScopeWithId(_scope0_id),
       "#text/1(": _ifRenderer2,
-      "#text/1!": _getScopeById(_ifScopeId2)
+      "#text/1!": _$.getScopeById(_ifScopeId2)
     });
-    _register(_ifRenderer3 = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_1_renderer");
+    _$.register(_ifRenderer3 = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_1_renderer");
     _ifScopeId3 = _scope1_id;
   }
-  _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/4", _ifScopeId3)}`);
-  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showInner");
-  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showMiddle");
-  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showOuter");
-  _writeScope(_scope0_id, {
+  _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/4", _ifScopeId3)}`);
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showInner");
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showMiddle");
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showOuter");
+  _$.writeScope(_scope0_id, {
     "showOuter": showOuter,
     "showMiddle": showMiddle,
     "showInner": showInner,
     "write": write,
     "#text/4(": _ifRenderer3,
-    "#text/4!": _getScopeById(_ifScopeId3)
+    "#text/4!": _$.getScopeById(_ifScopeId3)
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko");
+export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko");

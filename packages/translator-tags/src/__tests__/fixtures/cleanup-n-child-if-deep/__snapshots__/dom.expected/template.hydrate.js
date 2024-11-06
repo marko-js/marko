@@ -1,175 +1,145 @@
-// size: 1549 (min) 627 (brotli)
+// size: 1702 (min) 612 (brotli)
 
-import {
-  effect as n,
-  getAbortSignal as t,
-  value as o,
-  data as i,
-  intersection as c,
-  resetAbortSignal as r,
-  register as l,
-  createRenderer as u,
-  registerSubscriber as d,
-  dynamicClosure as e,
-  on as s,
-  inChild as a,
-  conditional as b,
-  closure as v,
-  state as $,
-  dynamicSubscribers as _,
-  inConditionalScope as m,
-  init as f,
-} from "@marko/runtime-tags/dom";
-const p = "<div><!> a</div><span><!> a</span><p><!> a</p>",
-  D = "D%lD%lD%l",
-  k = n("a0", (n) => {
-    const { 5: o, 6: i } = n;
-    i(`${o} mounted`),
-      (t(n, 0).onabort = ((n) => {
-        const { 5: t, 6: o } = n;
+import * as e from "@marko/runtime-tags/dom";
+import { init as n } from "@marko/runtime-tags/dom";
+const t = "<div><!> a</div><span><!> a</span><p><!> a</p>",
+  r = "D%lD%lD%l",
+  i = e.effect("a0", (n) => {
+    const { 5: t, 6: r } = n;
+    r(`${t} mounted`),
+      (e.getAbortSignal(n, 0).onabort = ((e) => {
+        const { 5: n, 6: t } = e;
         return () => {
-          o(`${t} destroyed`);
+          t(`${n} destroyed`);
         };
       })(n));
   }),
-  M = c(2, (n) => {
-    r(n, 0), k(n);
+  o = e.intersection(2, (n) => {
+    e.resetAbortSignal(n, 0), i(n);
   }),
-  g = o(6, null, () => M),
-  y = o(
+  c = e.value(6, null, () => o),
+  a = e.value(
     5,
     (n, t) => {
-      i(n[0], t), i(n[1], t), i(n[2], t);
+      e.data(n[0], t), e.data(n[1], t), e.data(n[2], t);
     },
-    () => M,
+    () => o,
   );
-l(
+e.register(
   "b0",
-  (n) =>
-    function (t) {
-      n[3].innerHTML += "\n" + t;
+  (e) =>
+    function (n) {
+      e[3].innerHTML += "\n" + n;
     },
 );
-const H = e(
+const d = e.dynamicClosure(
     8,
-    (n, t) => g(n[0], t),
-    (n) => n._._._,
-    () => a(0, g),
+    (e, n) => c(e[0], n),
+    (e) => e._._._,
+    () => e.inChild(0, c),
   ),
-  I = l(
+  l = (e) => {
+    e[0], a(e[0], "Inner");
+  },
+  s = e.register(
     "b1",
-    u(
-      `${p}`,
-      `/${D}&`,
-      (n) => {
-        n[0], y(n[0], "Inner");
-      },
-      () => [H],
-    ),
+    e.createRenderer(`${t}`, `/${r}&`, l, () => [d]),
   ),
-  L = b(1),
-  O = e(
+  u = e.conditional(1),
+  b = e.dynamicClosure(
     8,
-    (n, t) => g(n[0], t),
-    (n) => n._._,
-    () => a(0, g),
+    (e, n) => c(e[0], n),
+    (e) => e._._,
+    () => e.inChild(0, c),
   ),
-  T = d(
+  m = e.registerSubscriber(
     "b2",
-    e(
+    e.dynamicClosure(
       7,
-      (n, t) => L(n, t ? I : null),
-      (n) => n._._,
-      () => L,
+      (e, n) => u(e, n ? s : null),
+      (e) => e._._,
+      () => u,
     ),
   ),
-  h = l(
+  f = (e) => {
+    e[0], a(e[0], "Middle");
+  },
+  g = e.register(
     "b3",
-    u(
-      `<div>${p}<!></div>`,
-      `D/${D}&%`,
-      (n) => {
-        n[0], y(n[0], "Middle");
-      },
-      () => [O, T],
-    ),
+    e.createRenderer(`<div>${t}<!></div>`, `D/${r}&%`, f, () => [b, m]),
   ),
-  j = b(1),
-  q = v(
+  v = e.conditional(1),
+  $ = e.closure(
     8,
-    (n, t) => g(n[0], t),
+    (e, n) => c(e[0], n),
     void 0,
-    () => a(0, g),
+    () => e.inChild(0, c),
   ),
-  w = v(
+  p = e.closure(
     6,
-    (n, t) => j(n, t ? h : null),
+    (e, n) => v(e, n ? g : null),
     void 0,
-    () => j,
+    () => v,
   ),
-  x = l(
+  C = (e) => {
+    e[0], a(e[0], "Outer");
+  },
+  _ = e.register(
     "b4",
-    u(
-      `<div>${p}<!></div>`,
-      `D/${D}&%`,
-      (n) => {
-        n[0], y(n[0], "Outer");
-      },
-      () => [q, w],
-    ),
+    e.createRenderer(`<div>${t}<!></div>`, `D/${r}&%`, C, () => [$, p]),
   ),
-  z = b(4),
-  A = n("b5", (n) =>
-    s(
+  k = e.conditional(4),
+  y = e.effect("b5", (n) =>
+    e.on(
       n[2],
       "click",
-      ((n) => {
-        const { 7: t } = n;
+      ((e) => {
+        const { 7: n } = e;
         return function () {
-          B(n, !t);
+          D(e, !n);
         };
       })(n),
     ),
   ),
-  B = $(
+  D = e.state(
     7,
-    (n, t) => A(n),
-    () => _(7),
+    (e, n) => y(e),
+    () => e.dynamicSubscribers(7),
   ),
-  C = n("b6", (n) =>
-    s(
+  S = e.effect("b6", (n) =>
+    e.on(
       n[1],
       "click",
-      ((n) => {
-        const { 6: t } = n;
+      ((e) => {
+        const { 6: n } = e;
         return function () {
-          E(n, !t);
+          h(e, !n);
         };
       })(n),
     ),
   ),
-  E = $(
+  h = e.state(
     6,
-    (n, t) => C(n),
-    () => m(w, 4),
+    (e, n) => S(e),
+    () => e.inConditionalScope(p, 4),
   ),
-  F = n("b7", (n) =>
-    s(
+  R = e.effect("b7", (n) =>
+    e.on(
       n[0],
       "click",
-      ((n) => {
-        const { 5: t } = n;
+      ((e) => {
+        const { 5: n } = e;
         return function () {
-          G(n, !t);
+          A(e, !n);
         };
       })(n),
     ),
   ),
-  G = $(
+  A = e.state(
     5,
-    (n, t) => {
-      F(n), z(n, t ? x : null);
+    (e, n) => {
+      R(e), k(e, n ? _ : null);
     },
-    () => z,
+    () => k,
   );
-f();
+n();

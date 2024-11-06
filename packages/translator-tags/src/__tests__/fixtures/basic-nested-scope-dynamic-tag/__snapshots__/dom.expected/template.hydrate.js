@@ -1,45 +1,32 @@
-// size: 453 (min) 273 (brotli)
+// size: 465 (min) 259 (brotli)
 
-import {
-  dynamicTagAttrs as t,
-  effect as o,
-  on as n,
-  registerSubscriber as c,
-  dynamicClosure as r,
-  data as u,
-  register as b,
-  createRendererWithOwner as i,
-  state as m,
-  dynamicSubscribers as s,
-  init as l,
-} from "@marko/runtime-tags/dom";
-t(0);
-const a = o("b0", (t) =>
-    n(
-      t[0],
+import * as t from "@marko/runtime-tags/dom";
+import { init as r } from "@marko/runtime-tags/dom";
+t.dynamicTagAttrs(0);
+const e = t.effect("b0", (r) =>
+    t.on(
+      r[0],
       "click",
       ((t) => {
         const {
-          _: { 1: o },
+          _: { 1: r },
         } = t;
         return function () {
-          e(t._, o + 1);
+          i(t._, r + 1);
         };
-      })(t),
+      })(r),
     ),
   ),
-  d = c(
+  n = t.registerSubscriber(
     "b1",
-    r(1, (t, o) => {
-      u(t[1], o), a(t);
+    t.dynamicClosure(1, (r, n) => {
+      t.data(r[1], n), e(r);
     }),
-  );
-t(
-  0,
-  b(
-    "b2",
-    i("<button> </button>", " D ", void 0, () => [d]),
   ),
-);
-const e = m(1, null, () => s(1));
-l();
+  o = t.register(
+    "b2",
+    t.createRendererWithOwner("<button> </button>", " D ", void 0, () => [n]),
+  );
+t.dynamicTagAttrs(0, o);
+const i = t.state(1, null, () => t.dynamicSubscribers(1));
+r();

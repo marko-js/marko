@@ -1,7 +1,8 @@
-// size: 172 (min) 111 (brotli)
+// size: 209 (min) 118 (brotli)
 
-import { effect as t, init as e } from "@marko/runtime-tags/dom";
-t("a0", (t) => {
+import * as t from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+t.effect("a0", (t) => {
   ((t) => {
     const { 0: e } = t;
     return async () => {

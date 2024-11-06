@@ -1,44 +1,30 @@
-// size: 533 (min) 298 (brotli)
+// size: 519 (min) 281 (brotli)
 
-import {
-  dynamicTagAttrs as o,
-  effect as t,
-  on as n,
-  value as c,
-  register as r,
-  registerSubscriber as i,
-  dynamicClosure as m,
-  data as s,
-  createRendererWithOwner as a,
-  state as b,
-  intersections as u,
-  inChild as d,
-  dynamicSubscribers as e,
-  init as f,
-} from "@marko/runtime-tags/dom";
-o(1);
-const k = t("a0", (o) => {
-    const { 4: t } = o;
-    n(o[0], "click", t);
+import * as r from "@marko/runtime-tags/dom";
+import { init as t } from "@marko/runtime-tags/dom";
+r.dynamicTagAttrs(1);
+const e = r.effect("a0", (t) => {
+    const { 4: e } = t;
+    r.on(t[0], "click", e);
   }),
-  g = c(4, (o, t) => k(o)),
-  l = r("b0", (o) => {
-    const { 1: t } = o;
+  i = r.value(4, (r, t) => e(r)),
+  n = r.register("b0", (r) => {
+    const { 1: t } = r;
     return function () {
-      v(o, t + 1);
+      o(r, t + 1);
     };
   }),
-  p = i(
+  s = r.registerSubscriber(
     "b1",
-    m(1, (o, t) => s(o[0], t)),
+    r.dynamicClosure(1, (t, e) => r.data(t[0], e)),
   );
-r(
+r.register(
   "b2",
-  a(" ", " ", void 0, () => [p]),
+  r.createRendererWithOwner(" ", " ", void 0, () => [s]),
 );
-const v = b(
+const o = r.state(
   1,
-  (o, t) => g(o[0], l(o)),
-  () => u([d(0, g), e(1)]),
+  (r, t) => i(r[0], n(r)),
+  () => r.intersections([r.inChild(0, i), r.dynamicSubscribers(1)]),
 );
-f();
+t();

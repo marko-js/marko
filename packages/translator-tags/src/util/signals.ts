@@ -40,7 +40,7 @@ export type Signal = {
   isDynamicClosure?: boolean;
   values: Array<{
     signal: {
-      identifier: t.Identifier;
+      identifier: t.Identifier | t.MemberExpression;
       hasDownstreamIntersections: () => boolean;
       buildDeclaration?: () => t.VariableDeclaration;
       extraArgs?: t.Expression[];
@@ -354,7 +354,9 @@ export function buildSignalIntersections(signal: Signal) {
       intersections = push(
         intersections,
         value.intersectionExpression ??
-          t.identifier(value.signal.identifier.name),
+          (t.isMemberExpression(value.signal.identifier)
+            ? value.signal.identifier
+            : t.identifier(value.signal.identifier.name)),
       );
     }
   }

@@ -1,26 +1,26 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, createRenderer as _createRenderer, register as _register, write as _write, ensureScopeWithId as _ensureScopeWithId, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, dynamicTagInput as _dynamicTagInput, peekNextScope as _peekNextScope, markResumeControlEnd as _markResumeControlEnd, writeExistingScope as _writeExistingScope, normalizeDynamicRenderer as _normalizeDynamicRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import * as _$ from "@marko/runtime-tags/debug/html";
 import _classLayout from "./components/class-layout.marko";
 import { s as _s } from "marko/src/runtime/helpers/tags-compat/html-debug.mjs";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
   const multiplier = 1;
-  const _dynamicScope = _peekNextScope();
-  _dynamicTagInput(_dynamicScope, _classLayout, {}, _register(/* @__PURE__ */_createRenderer((baseCount, message) => {
-    const _scope1_id = _nextScopeId();
-    _write(`<h1>${_escapeXML(message)}${_markResumeNode(_scope1_id, "#text/0")}</h1><button id=tags>${_escapeXML(multiplier)}${_markResumeNode(_scope1_id, "#text/2")} * <!>${_escapeXML(baseCount)}${_markResumeNode(_scope1_id, "#text/3")} = <!>${_escapeXML(multiplier * baseCount)}${_markResumeNode(_scope1_id, "#text/4")}</button>${_markResumeNode(_scope1_id, "#button/1")}`);
-    _writeEffect(_scope1_id, "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber");
-    _writeEffect(_scope1_id, "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier");
-    _writeScope(_scope1_id, {
+  const _dynamicScope = _$.peekNextScope();
+  _$.dynamicTagInput(_dynamicScope, _classLayout, {}, _$.register(/* @__PURE__ */_$.createRenderer((baseCount, message) => {
+    const _scope1_id = _$.nextScopeId();
+    _$.write(`<h1>${_$.escapeXML(message)}${_$.markResumeNode(_scope1_id, "#text/0")}</h1><button id=tags>${_$.escapeXML(multiplier)}${_$.markResumeNode(_scope1_id, "#text/2")} * <!>${_$.escapeXML(baseCount)}${_$.markResumeNode(_scope1_id, "#text/3")} = <!>${_$.escapeXML(multiplier * baseCount)}${_$.markResumeNode(_scope1_id, "#text/4")}</button>${_$.markResumeNode(_scope1_id, "#button/1")}`);
+    _$.writeEffect(_scope1_id, "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber");
+    _$.writeEffect(_scope1_id, "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier");
+    _$.writeScope(_scope1_id, {
       "baseCount": baseCount,
-      "_": _ensureScopeWithId(_scope0_id)
+      "_": _$.ensureScopeWithId(_scope0_id)
     });
   }), "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer", _scope0_id));
   _s(_classLayout, "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko");
-  _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}`);
-  _writeScope(_scope0_id, {
+  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/0")}`);
+  _$.writeScope(_scope0_id, {
     "multiplier": multiplier,
-    "#text/0!": _writeExistingScope(_dynamicScope),
-    "#text/0(": _normalizeDynamicRenderer(_classLayout)
+    "#text/0!": _$.writeExistingScope(_dynamicScope),
+    "#text/0(": _$.normalizeDynamicRenderer(_classLayout)
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko");
+export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko");

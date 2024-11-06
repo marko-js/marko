@@ -1,22 +1,15 @@
-// size: 275 (min) 161 (brotli)
+// size: 280 (min) 168 (brotli)
 
-import {
-  register as o,
-  queueSource as m,
-  value as t,
-  controllable_input_value as a,
-  data as n,
-  controllable_input_value_effect as r,
-  init as i,
-} from "@marko/runtime-tags/dom";
-const c = o(
+import * as t from "@marko/runtime-tags/dom";
+import { init as a } from "@marko/runtime-tags/dom";
+const o = t.register(
     "a0",
-    (o) =>
-      function (t) {
-        m(o, f, t);
+    (t) =>
+      function (a) {
+        e(t, a);
       },
   ),
-  f = t(2, (o, m) => {
-    a(o, 0, m, c(o)), n(o[1], m);
+  e = t.state(2, (a, e) => {
+    t.controllable_input_value(a, 0, e, o(a)), t.data(a[1], e);
   });
-o("a1", (o) => r(o, 0)), i();
+t.effect("a1", (a) => t.controllable_input_value_effect(a, 0)), a();

@@ -1,14 +1,14 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
   const x = 1;
-  _write(`<button class=inc>${_escapeXML(x)}${_markResumeNode(_scope0_id, "#text/1")}</button>${_markResumeNode(_scope0_id, "#button/0")}`);
+  _$.write(`<button class=inc>${_$.escapeXML(x)}${_$.markResumeNode(_scope0_id, "#text/1")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   const _return = x;
-  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x");
-  _writeScope(_scope0_id, {
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/custom-tag-var/components/child.marko_0_x");
+  _$.writeScope(_scope0_id, {
     "x": x,
     "/": _tagVar
   });
   return _return;
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/custom-tag-var/components/child.marko");
+export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/custom-tag-var/components/child.marko");

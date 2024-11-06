@@ -1,6 +1,6 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
   const attrs = input;
   const {
     text
@@ -8,10 +8,10 @@ const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
   const {
     onClick
   } = attrs;
-  _write(`<button>${_escapeXML(text)}${_markResumeNode(_scope0_id, "#text/1")}</button>${_markResumeNode(_scope0_id, "#button/0")}`);
-  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/basic-component-input-alias/components/my-button.marko_0_onClick");
-  _writeScope(_scope0_id, {
+  _$.write(`<button>${_$.escapeXML(text)}${_$.markResumeNode(_scope0_id, "#text/1")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/basic-component-input-alias/components/my-button.marko_0_onClick");
+  _$.writeScope(_scope0_id, {
     "onClick": onClick
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-component-input-alias/components/my-button.marko");
+export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-component-input-alias/components/my-button.marko");

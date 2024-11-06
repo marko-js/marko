@@ -1,17 +1,19 @@
-// size: 257 (min) 186 (brotli)
+// size: 259 (min) 167 (brotli)
 
-import {
-  register as o,
-  createRenderer as i,
-  value as d,
-  data as m,
-} from "@marko/runtime-tags/dom";
-const v = d(4, (o, i) => m(o[0], i)),
-  r = d(3, (o, i) => m(o[1], i)),
-  t = d(2, (o, i) => {
-    r(o, i[0]), v(o, i[1]);
+import * as a from "@marko/runtime-tags/dom";
+const e = a.value(4, (e, d) => a.data(e[0], d)),
+  d = a.value(3, (e, d) => a.data(e[1], d)),
+  r = a.value(2, (a, r) => {
+    d(a, r[0]), e(a, r[1]);
   });
-o(
+a.register(
   "a0",
-  i("<div><!>: <!></div>", "D%c%", void 0, void 0, void 0, () => t),
+  a.createRenderer(
+    "<div><!>: <!></div>",
+    "D%c%",
+    void 0,
+    void 0,
+    void 0,
+    () => r,
+  ),
 );

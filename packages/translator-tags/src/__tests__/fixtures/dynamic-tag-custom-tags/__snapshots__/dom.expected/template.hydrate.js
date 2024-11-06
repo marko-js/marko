@@ -1,61 +1,64 @@
-// size: 760 (min) 357 (brotli)
+// size: 817 (min) 337 (brotli)
 
-import {
-  createTemplate as i,
-  createRenderer as o,
-  value as v,
-  data as d,
-  dynamicTagAttrs as a,
-  effect as l,
-  on as n,
-  state as t,
-  conditional as c,
-  intersection as r,
-  init as s,
-} from "@marko/runtime-tags/dom";
-const u = () => {},
-  e = v(3, (i, o) => d(i[0], o)),
-  m = v(2, (i, o) => e(i, o.value)),
-  h = v(1, (i, o) => m(i, o[0]));
-var b = i(
-  o("<div>Child 1 has <!></div>", "Db%l", u, void 0, void 0, () => h),
+import * as e from "@marko/runtime-tags/dom";
+import { init as a } from "@marko/runtime-tags/dom";
+const t = () => {},
+  o = e.value(3, (a, t) => e.data(a[0], t)),
+  r = e.value(2, (e, a) => o(e, a.value)),
+  i = e.value(1, (e, a) => r(e, a[0]));
+var l = e.createTemplate(
+  e.createRenderer(
+    "<div>Child 1 has <!></div>",
+    "Db%l",
+    t,
+    void 0,
+    void 0,
+    () => i,
+  ),
   "a",
 );
-const f = () => {},
-  k = v(3, (i, o) => d(i[0], o)),
-  C = v(2, (i, o) => k(i, o.value)),
-  D = v(1, (i, o) => C(i, o[0]));
-var g = i(
-  o("<div>Child 2 has <!></div>", "Db%l", f, void 0, void 0, () => D),
+const n = () => {},
+  v = e.value(3, (a, t) => e.data(a[0], t)),
+  d = e.value(2, (e, a) => v(e, a.value)),
+  c = e.value(1, (e, a) => d(e, a[0]));
+var u = e.createTemplate(
+  e.createRenderer(
+    "<div>Child 2 has <!></div>",
+    "Db%l",
+    n,
+    void 0,
+    void 0,
+    () => c,
+  ),
   "b",
 );
-const p = a(0),
-  j = r(
+const m = e.dynamicTagAttrs(0),
+  s = e.intersection(
     2,
-    (i) => {
-      const { 3: o } = i;
-      p(i, () => ({ value: o }));
+    (e) => {
+      const { 3: a } = e;
+      m(e, () => ({ value: a }));
     },
-    () => p,
+    () => m,
   ),
-  q = c(0, null, () => j),
-  w = l("c0", (i) =>
-    n(
-      i[1],
+  f = e.conditional(0, null, () => s),
+  h = e.effect("c0", (a) =>
+    e.on(
+      a[1],
       "click",
-      ((i) => {
-        const { 2: o } = i;
+      ((e) => {
+        const { 2: a } = e;
         return function () {
-          x(i, o === b ? g : b);
+          p(e, a === l ? u : l);
         };
-      })(i),
+      })(a),
     ),
   ),
-  x = t(
+  p = e.state(
     2,
-    (i, o) => {
-      w(i), q(i, o);
+    (e, a) => {
+      h(e), f(e, a);
     },
-    () => q,
+    () => f,
   );
-s();
+a();

@@ -1,70 +1,65 @@
-// size: 562 (min) 199 (brotli)
+// size: 647 (min) 210 (brotli)
 
-import {
-  effect as n,
-  on as c,
-  state as t,
-  data as o,
-  init as r,
-} from "@marko/runtime-tags/dom";
-const i = n("a0", (n) =>
-    c(
+import * as t from "@marko/runtime-tags/dom";
+import { init as n } from "@marko/runtime-tags/dom";
+const a = t.effect("a0", (n) =>
+    t.on(
       n[6],
       "click",
-      ((n) => {
-        const { 11: c } = n;
+      ((t) => {
+        const { 11: n } = t;
         return function () {
-          u(n, c + 1);
+          c(t, n + 1);
         };
       })(n),
     ),
   ),
-  u = t(11, (n, c) => {
-    o(n[7], c), i(n);
+  c = t.state(11, (n, c) => {
+    t.data(n[7], c), a(n);
   }),
-  a = n("a1", (n) =>
-    c(
+  o = t.effect("a1", (n) =>
+    t.on(
       n[4],
       "click",
-      ((n) => {
-        const { 10: c } = n;
+      ((t) => {
+        const { 10: n } = t;
         return function () {
-          s(n, c + 1);
+          e(t, n + 1);
         };
       })(n),
     ),
   ),
-  s = t(10, (n, c) => {
-    o(n[5], c), a(n);
+  e = t.state(10, (n, a) => {
+    t.data(n[5], a), o(n);
   }),
-  e = n("a2", (n) =>
-    c(
+  r = t.effect("a2", (n) =>
+    t.on(
       n[2],
       "click",
-      ((n) => {
-        const { 9: c } = n;
+      ((t) => {
+        const { 9: n } = t;
         return function () {
-          f(n, c + 1);
+          f(t, n + 1);
         };
       })(n),
     ),
   ),
-  f = t(9, (n, c) => {
-    o(n[3], c), e(n);
+  f = t.state(9, (n, a) => {
+    t.data(n[3], a), r(n);
   }),
-  k = n("a3", (n) =>
-    c(
+  i = t.effect("a3", (n) =>
+    t.on(
       n[0],
       "click",
-      ((n) => {
-        const { 8: c } = n;
+      ((t) => {
+        const { 8: n } = t;
         return function () {
-          m(n, c + 1);
+          s(t, n + 1);
         };
       })(n),
     ),
   ),
-  m = t(8, (n, c) => {
-    o(n[1], c), k(n);
+  s = t.state(8, (n, a) => {
+    t.data(n[1], a), i(n);
   });
-r();
+n();

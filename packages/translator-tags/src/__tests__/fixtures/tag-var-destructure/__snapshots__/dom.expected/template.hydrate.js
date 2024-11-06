@@ -1,39 +1,33 @@
-// size: 491 (min) 266 (brotli)
+// size: 552 (min) 286 (brotli)
 
-import {
-  register as a,
-  effect as r,
-  on as i,
-  state as o,
-  data as t,
-  init as c,
-} from "@marko/runtime-tags/dom";
-function n(a) {}
-a("a0", n);
-const l = o(10, (a, r) => t(a[5], JSON.stringify(r))),
-  f = o(9, (a, r) => t(a[4], r)),
-  m = o(8, (a, r) => t(a[3], JSON.stringify(r))),
-  b = o(7, (a, r) => t(a[2], r)),
-  s = o(6, (a, r) => t(a[1], r));
-r("a1", (a) =>
-  i(a[0], "click", function () {
-    let r, i, o, t, c, n;
+import * as t from "@marko/runtime-tags/dom";
+import { init as a } from "@marko/runtime-tags/dom";
+function r(t) {}
+t.register("a0", r);
+const o = t.state(10, (a, r) => t.data(a[5], JSON.stringify(r))),
+  e = t.state(9, (a, r) => t.data(a[4], r)),
+  i = t.state(8, (a, r) => t.data(a[3], JSON.stringify(r))),
+  s = t.state(7, (a, r) => t.data(a[2], r)),
+  m = t.state(6, (a, r) => t.data(a[1], r));
+t.effect("a1", (a) =>
+  t.on(a[0], "click", function () {
+    let t, r, n, c, f, d;
     ({
-      a: i,
-      _b: { _b: o },
-      local: r,
-      ...t
+      a: r,
+      _b: { _b: n },
+      local: t,
+      ...c
     } = { a: 1, _b: { _b: 2 }, local: 3, c: 4 }),
-      s(a, i),
-      b(a, o),
-      m(a, t),
+      m(a, r),
+      s(a, n),
+      i(a, c),
       ([
         {
-          arr: [r, c, , ...n],
+          arr: [t, f, , ...d],
         },
       ] = [{ arr: [6, 7, 8, 9] }]),
-      f(a, c),
-      l(a, n);
+      e(a, f),
+      o(a, d);
   }),
 ),
-  c();
+  a();

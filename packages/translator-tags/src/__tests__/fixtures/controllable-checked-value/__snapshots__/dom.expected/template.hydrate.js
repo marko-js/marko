@@ -1,42 +1,37 @@
-// size: 408 (min) 206 (brotli)
+// size: 580 (min) 193 (brotli)
 
-import {
-  register as n,
-  state as o,
-  controllable_input_checkedValue as a,
-  data as t,
-  effect as c,
-  controllable_input_checkedValue_effect as i,
-  init as m,
-} from "@marko/runtime-tags/dom";
-const f = n(
+import * as e from "@marko/runtime-tags/dom";
+import { init as t } from "@marko/runtime-tags/dom";
+const c = e.register(
     "a0",
-    (n) =>
-      function (o) {
-        s(n, o);
+    (e) =>
+      function (t) {
+        o(e, t);
       },
   ),
-  r = n(
+  a = e.register(
     "a1",
-    (n) =>
-      function (o) {
-        s(n, o);
+    (e) =>
+      function (t) {
+        o(e, t);
       },
   ),
-  u = n(
+  l = e.register(
     "a1",
-    (n) =>
-      function (o) {
-        s(n, o);
+    (e) =>
+      function (t) {
+        o(e, t);
       },
   ),
-  s = o(4, (n, o) => {
-    a(n, 0, o, f(n), "a"),
-      a(n, 1, o, r(n), "b"),
-      a(n, 2, o, u(n), "c"),
-      t(n[3], o);
+  o = e.state(4, (t, o) => {
+    e.controllable_input_checkedValue(t, 0, o, c(t), "a"),
+      e.controllable_input_checkedValue(t, 1, o, a(t), "b"),
+      e.controllable_input_checkedValue(t, 2, o, l(t), "c"),
+      e.data(t[3], o);
   });
-c("a2", (n) => {
-  i(n, 0), i(n, 1), i(n, 2);
+e.effect("a2", (t) => {
+  e.controllable_input_checkedValue_effect(t, 0),
+    e.controllable_input_checkedValue_effect(t, 1),
+    e.controllable_input_checkedValue_effect(t, 2);
 }),
-  m();
+  t();

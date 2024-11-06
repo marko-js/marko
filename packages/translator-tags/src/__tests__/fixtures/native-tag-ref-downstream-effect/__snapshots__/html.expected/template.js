@@ -1,14 +1,14 @@
-import { ensureScopeWithId as _ensureScopeWithId, nodeRef as _nodeRef, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
-  const el = _nodeRef();
-  _write(`<div></div>${_markResumeNode(_scope0_id, "#div/0")}`);
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
+  const el = _$.nodeRef();
+  _$.write(`<div></div>${_$.markResumeNode(_scope0_id, "#div/0")}`);
   if (true) {
-    const _scope1_id = _nextScopeId();
-    _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko_1");
-    _writeScope(_scope1_id, {
-      "_": _ensureScopeWithId(_scope0_id)
+    const _scope1_id = _$.nextScopeId();
+    _$.writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko_1");
+    _$.writeScope(_scope1_id, {
+      "_": _$.ensureScopeWithId(_scope0_id)
     });
   }
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko");
+export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko");

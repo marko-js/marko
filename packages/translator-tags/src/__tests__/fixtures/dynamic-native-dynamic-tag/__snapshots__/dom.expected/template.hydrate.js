@@ -1,44 +1,35 @@
-// size: 451 (min) 280 (brotli)
+// size: 453 (min) 267 (brotli)
 
-import {
-  register as n,
-  createRendererWithOwner as o,
-  dynamicTagAttrs as t,
-  effect as c,
-  on as s,
-  state as a,
-  conditional as r,
-  intersection as i,
-  init as m,
-} from "@marko/runtime-tags/dom";
-const l = n("a0", o("body content", "")),
-  u = t(0, l),
-  d = i(
+import * as t from "@marko/runtime-tags/dom";
+import { init as n } from "@marko/runtime-tags/dom";
+const o = t.register("a0", t.createRendererWithOwner("body content", "")),
+  r = t.dynamicTagAttrs(0, o),
+  e = t.intersection(
     2,
-    (n) => {
-      const { 3: o } = n;
-      u(n, () => ({ class: o }));
+    (t) => {
+      const { 3: n } = t;
+      r(t, () => ({ class: n }));
     },
-    () => u,
+    () => r,
   ),
-  e = r(0, null, () => d),
-  p = c("a1", (n) =>
-    s(
+  a = t.conditional(0, null, () => e),
+  i = t.effect("a1", (n) =>
+    t.on(
       n[1],
       "click",
-      ((n) => {
-        const { 2: o } = n;
+      ((t) => {
+        const { 2: n } = t;
         return function () {
-          f(n, "span" === o ? "div" : "span");
+          s(t, "span" === n ? "div" : "span");
         };
       })(n),
     ),
   ),
-  f = a(
+  s = t.state(
     2,
-    (n, o) => {
-      p(n), e(n, o || l(n));
+    (t, n) => {
+      i(t), a(t, n || o(t));
     },
-    () => e,
+    () => a,
   );
-m();
+n();

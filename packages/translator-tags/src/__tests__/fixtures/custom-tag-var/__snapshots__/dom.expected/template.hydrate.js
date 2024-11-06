@@ -1,36 +1,28 @@
-// size: 314 (min) 196 (brotli)
+// size: 339 (min) 195 (brotli)
 
-import {
-  effect as o,
-  on as t,
-  state as n,
-  data as r,
-  tagVarSignal as c,
-  registerBoundSignal as m,
-  value as i,
-  init as a,
-} from "@marko/runtime-tags/dom";
-const s = o("a0", (o) =>
-    t(
-      o[0],
+import * as a from "@marko/runtime-tags/dom";
+import { init as t } from "@marko/runtime-tags/dom";
+const r = a.effect("a0", (t) =>
+    a.on(
+      t[0],
       "click",
-      ((o) => {
-        const { 2: t } = o;
+      ((a) => {
+        const { 2: t } = a;
         return function () {
-          u(o, t + 1);
+          o(a, t + 1);
         };
-      })(o),
+      })(t),
     ),
   ),
-  u = n(
+  o = a.state(
     2,
-    (o, t) => {
-      r(o[1], t), s(o), c(o, t);
+    (t, o) => {
+      a.data(t[1], o), r(t), a.tagVarSignal(t, o);
     },
-    () => c,
+    () => a.tagVarSignal,
   );
-m(
+a.registerBoundSignal(
   "b0",
-  i(2, (o, t) => r(o[1], t)),
+  a.value(2, (t, r) => a.data(t[1], r)),
 ),
-  a();
+  t();

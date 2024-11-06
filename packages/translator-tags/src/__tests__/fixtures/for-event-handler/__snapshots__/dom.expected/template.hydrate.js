@@ -1,53 +1,39 @@
-// size: 491 (min) 292 (brotli)
+// size: 488 (min) 275 (brotli)
 
-import {
-  effect as o,
-  on as t,
-  register as n,
-  createRenderer as i,
-  value as r,
-  closure as c,
-  state as m,
-  intersections as u,
-  inLoopScope as a,
-  data as d,
-  loopTo as s,
-  init as b,
-} from "@marko/runtime-tags/dom";
-const e = r(3, (o, t) => d(o[1], t)),
-  f = r(2, (o, t) => e(o, t[0])),
-  k = o("a0", (o) =>
-    t(
-      o[0],
+import * as o from "@marko/runtime-tags/dom";
+import { init as t } from "@marko/runtime-tags/dom";
+const e = o.value(3, (t, e) => o.data(t[1], e)),
+  r = o.value(2, (o, t) => e(o, t[0])),
+  n = o.effect("a0", (t) =>
+    o.on(
+      t[0],
       "click",
       ((o) => {
         const {
           _: { 1: t },
         } = o;
         return function () {
-          g(o._, t + 1);
+          m(o._, t + 1);
         };
-      })(o),
+      })(t),
     ),
   ),
-  v = c(1, (o, t) => k(o)),
-  _ = s(
-    0,
-    n(
-      "a1",
-      i(
-        "<button> </button>",
-        " D ",
-        void 0,
-        () => [v],
-        void 0,
-        () => f,
-      ),
+  a = o.closure(1, (o, t) => n(o)),
+  i = o.register(
+    "a1",
+    o.createRenderer(
+      "<button> </button>",
+      " D ",
+      void 0,
+      () => [a],
+      void 0,
+      () => r,
     ),
   ),
-  g = m(
+  c = o.loopTo(0, i),
+  m = o.state(
     1,
-    (o, t) => _(o, [t, 0, 1]),
-    () => u([_, a(v, 0)]),
+    (o, t) => c(o, [t, 0, 1]),
+    () => o.intersections([c, o.inLoopScope(a, 0)]),
   );
-b();
+t();

@@ -1,46 +1,38 @@
-// size: 487 (min) 289 (brotli)
+// size: 513 (min) 293 (brotli)
 
-import {
-  effect as o,
-  on as t,
-  register as n,
-  createRendererWithOwner as i,
-  dynamicTagAttrs as c,
-  state as m,
-  data as r,
-  value as a,
-  init as d,
-} from "@marko/runtime-tags/dom";
-const u = o("a0", (o) =>
-    t(
-      o[2],
+import * as t from "@marko/runtime-tags/dom";
+import { init as a } from "@marko/runtime-tags/dom";
+const e = t.effect("a0", (a) =>
+    t.on(
+      a[2],
       "click",
-      ((o) => {
-        const { 7: t } = o;
+      ((t) => {
+        const { 7: a } = t;
         return function () {
-          e(o, t + 1);
+          o(t, a + 1);
         };
-      })(o),
+      })(a),
     ),
   ),
-  e = m(7, (o, t) => {
-    r(o[1], t), r(o[3], t), u(o);
+  o = t.state(7, (a, o) => {
+    t.data(a[1], o), t.data(a[3], o), e(a);
   }),
-  l = a(6, (o, t) => r(o[0], t)),
-  v = a(5, (o, t) => l(o, t.name)),
-  b = a(4, (o, t) => v(o, t[0]));
-n(
+  r = t.value(6, (a, e) => t.data(a[0], e)),
+  n = t.value(5, (t, a) => r(t, a.name)),
+  i = t.value(4, (t, a) => n(t, a[0])),
+  m = (t) => {
+    o(t, 1);
+  };
+t.register(
   "a1",
-  i(
+  t.createRendererWithOwner(
     "<div>Hello <!> <!></div><button> </button>",
     "Db%c%l D ",
-    (o) => {
-      e(o, 1);
-    },
+    m,
     void 0,
     void 0,
-    () => b,
+    () => i,
   ),
 ),
-  c(0),
-  d();
+  t.dynamicTagAttrs(0),
+  a();

@@ -3,19 +3,19 @@ function createWrapper(a) {
     a
   };
 }
-import { register as _register, escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
-  _register(createWrapper, "packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0/createWrapper");
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
+  _$.register(createWrapper, "packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0/createWrapper");
   const count = 0;
   const {
     a,
     a: b
   } = createWrapper(count);
-  _write(`<button>${_escapeXML(a)}${_markResumeNode(_scope0_id, "#text/1")} <!>${_escapeXML(b)}${_markResumeNode(_scope0_id, "#text/2")}</button>${_markResumeNode(_scope0_id, "#button/0")}`);
-  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0_count");
-  _writeScope(_scope0_id, {
+  _$.write(`<button>${_$.escapeXML(a)}${_$.markResumeNode(_scope0_id, "#text/1")} <!>${_$.escapeXML(b)}${_$.markResumeNode(_scope0_id, "#text/2")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0_count");
+  _$.writeScope(_scope0_id, {
     "count": count
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko");
+export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko");

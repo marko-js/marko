@@ -1,83 +1,73 @@
-// size: 754 (min) 346 (brotli)
+// size: 818 (min) 326 (brotli)
 
-import {
-  effect as n,
-  on as u,
-  state as a,
-  data as e,
-  value as l,
-  intersections as t,
-  intersection as c,
-  register as o,
-  inChild as r,
-  init as v,
-} from "@marko/runtime-tags/dom";
-const i = n("a0", (n) =>
-    u(
-      n[3],
+import * as a from "@marko/runtime-tags/dom";
+import { init as t } from "@marko/runtime-tags/dom";
+const e = a.effect("a0", (t) =>
+    a.on(
+      t[3],
       "click",
-      ((n) => {
-        const { 10: u, 11: a } = n;
+      ((a) => {
+        const { 10: t, 11: e } = a;
         return function () {
-          s(n, a + 1, u);
+          i(a, e + 1, t);
         };
-      })(n),
+      })(t),
     ),
   ),
-  m = c(2, (n) => {
-    i(n);
+  n = a.intersection(2, (a) => {
+    e(a);
   }),
-  f = n("a1", (n) =>
-    u(
-      n[0],
+  u = a.effect("a1", (t) =>
+    a.on(
+      t[0],
       "click",
-      ((n) => {
-        const { 8: u, 9: a } = n;
+      ((a) => {
+        const { 8: t, 9: e } = a;
         return function () {
-          k(n, a + 1, u);
+          r(a, e + 1, t);
         };
-      })(n),
+      })(t),
     ),
   ),
-  g = c(2, (n) => {
-    f(n);
+  o = a.intersection(2, (a) => {
+    u(a);
   }),
-  s = a(
+  i = a.state(
     11,
-    (n, u) => e(n[5], u),
-    () => m,
+    (t, e) => a.data(t[5], e),
+    () => n,
   ),
-  h = l(10, null, () => m),
-  k = a(
+  l = a.value(10, null, () => n),
+  r = a.state(
     9,
-    (n, u) => e(n[2], u),
-    () => g,
+    (t, e) => a.data(t[2], e),
+    () => o,
   ),
-  C = l(8, null, () => g),
-  b = l(
+  c = a.value(8, null, () => o),
+  s = a.value(
     7,
-    (n, u) => {
-      e(n[1], u.value),
-        e(n[4], u.value),
-        C(n, u.valueChange),
-        k(n, u.value, n[8]),
-        h(n, u.valueChange),
-        s(n, u.value, n[10]);
+    (t, e) => {
+      a.data(t[1], e.value),
+        a.data(t[4], e.value),
+        c(t, e.valueChange),
+        r(t, e.value, t[8]),
+        l(t, e.valueChange),
+        i(t, e.value, t[10]);
     },
-    () => t([C, k, h, s]),
+    () => a.intersections([c, r, l, i]),
   ),
-  d = o(
+  v = a.register(
     "b0",
-    (n) =>
-      function (u) {
-        p(n, u);
+    (a) =>
+      function (t) {
+        m(a, t);
       },
   ),
-  p = a(
+  m = a.state(
     2,
-    (n, u) => {
-      e(n[1], u), b(n[0], { value: u, valueChange: d(n) });
+    (t, e) => {
+      a.data(t[1], e), s(t[0], { value: e, valueChange: v(t) });
     },
-    () => r(0, b),
+    () => a.inChild(0, s),
   );
-v();
+t();
