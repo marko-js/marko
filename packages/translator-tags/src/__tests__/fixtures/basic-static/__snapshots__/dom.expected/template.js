@@ -5,4 +5,4 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 export function _setup_(_scope) {
   _$.data(_scope["#text/0"], x);
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-static/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-static/template.marko", _template_, _walks_, _setup_);

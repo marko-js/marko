@@ -11,4 +11,4 @@ export function _setup_(_scope) {
   _layout(_scope["#childScope/0"]);
   _layout_input_renderBody(_scope["#childScope/0"], _layoutBody(_scope));
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-layout/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);

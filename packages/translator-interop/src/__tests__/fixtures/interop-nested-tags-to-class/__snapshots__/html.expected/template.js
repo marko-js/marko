@@ -22,4 +22,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/0(": _$.normalizeDynamicRenderer(_classLayout)
   });
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko", _renderer);

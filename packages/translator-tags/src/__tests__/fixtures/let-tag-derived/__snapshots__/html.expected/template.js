@@ -11,4 +11,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "b": b
   });
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko", _renderer);

@@ -31,4 +31,4 @@ export function _setup_(_scope) {
   _tagName(_scope, child1);
   _val(_scope, 3);
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-tags/template.marko", _template_, _walks_, _setup_);

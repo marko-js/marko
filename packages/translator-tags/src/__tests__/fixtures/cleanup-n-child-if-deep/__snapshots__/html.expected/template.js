@@ -77,4 +77,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/4!": _$.getScopeById(_ifScopeId3)
   });
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko", _renderer);

@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _number$defineBody = /* @__PURE__ */_$.value("number", (_scope, number) => _$.data(_scope["#text/0"], number));
 const _pattern_$defineBody = /* @__PURE__ */_$.value("_pattern_", (_scope, _pattern_) => _number$defineBody(_scope, _pattern_.number));
 const _params_2$defineBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _pattern_$defineBody(_scope, _params_2[0]));
-const _defineBody = _$.register("packages/translator-tags/src/__tests__/fixtures/define-tag-render-attr-signal/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div> </div>", /* next(1), get */"D ", void 0, void 0, void 0, () => _params_2$defineBody));
+const _defineBody = _$.register("packages/translator-tags/src/__tests__/fixtures/define-tag-render-attr-signal/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div> </div>", /* next(1), get */"D ", void 0, void 0, () => _params_2$defineBody));
 const _MyTag_input = _$.dynamicTagAttrs("#text/0");
 const _expr_Text_x = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
@@ -35,4 +35,4 @@ export function _setup_(_scope) {
     renderBody: _defineBody(_scope)
   });
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/define-tag-render-attr-signal/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/define-tag-render-attr-signal/template.marko", _template_, _walks_, _setup_);

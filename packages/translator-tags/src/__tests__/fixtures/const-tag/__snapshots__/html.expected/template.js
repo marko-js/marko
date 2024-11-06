@@ -5,4 +5,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const y = 1;
   _$.write(`<div>${_$.escapeXML(x)}</div>${_$.escapeXML(y)}`);
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/const-tag/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/const-tag/template.marko", _renderer);

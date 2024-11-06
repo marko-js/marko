@@ -115,4 +115,4 @@ export function _setup_(_scope) {
   _tag_input_class(_scope["#childScope/7"], ["a", "b"]);
   _tagConstA(_scope, "a");
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);

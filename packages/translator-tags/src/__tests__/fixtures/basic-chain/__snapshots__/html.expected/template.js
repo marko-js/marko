@@ -6,4 +6,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const z = y * 3;
   _$.write(`<div>${_$.escapeXML(z)}${_$.markResumeNode(_scope0_id, "#text/0")}</div>`);
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-chain/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-chain/template.marko", _renderer);

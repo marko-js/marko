@@ -24,4 +24,4 @@ const _tagName = /* @__PURE__ */_$.state("tagName", (_scope, tagName) => {
 export function _setup_(_scope) {
   _tagName(_scope, "div");
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko", _template_, _walks_, _setup_);

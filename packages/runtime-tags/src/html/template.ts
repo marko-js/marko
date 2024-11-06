@@ -14,8 +14,8 @@ import {
 export type ServerRenderer = (...args: unknown[]) => unknown;
 
 export const createTemplate = (
-  renderer: ServerRenderer,
   templateId: string,
+  renderer: ServerRenderer,
 ) => {
   (renderer as unknown as Template).render = render;
   (renderer as unknown as any)._ = renderer; // This is added exclusively for the compat layer, maybe someday it can be removed.

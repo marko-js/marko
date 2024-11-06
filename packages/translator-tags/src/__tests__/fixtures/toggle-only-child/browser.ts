@@ -77,15 +77,12 @@ export const args = (
 };
 
 export default createTemplate(
-  createRenderer(
-    template,
-    walks,
-    undefined,
-    undefined,
-    undefined,
-    () => args as ValueSignal,
-  ),
-  ""
+  "",
+  template,
+  walks,
+  undefined,
+  undefined,
+  () => args as ValueSignal,
 );
 
 const _ifBody = createRenderer(

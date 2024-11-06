@@ -36,4 +36,4 @@ export function _setup_(_scope) {
   _x(_scope, 1);
   _y(_scope, 10);
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko", _template_, _walks_, _setup_, void 0, () => _params__);

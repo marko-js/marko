@@ -9,4 +9,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   });
   return _return;
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/return-tag-no-var/components/child.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/return-tag-no-var/components/child.marko", _renderer);

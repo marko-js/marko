@@ -59,8 +59,8 @@ const _input$forBody = /* @__PURE__ */_$.closure("input", 0, void 0, () => _expr
 const _setup$forBody = _scope => {
   _open$forBody(_scope, true);
 };
-const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", _setup$forBody, () => [_input$forBody], void 0, () => _params_2$forBody));
+const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", _setup$forBody, () => [_input$forBody], () => _params_2$forBody));
 const _for = /* @__PURE__ */_$.loopOf("#ul/0", _forBody);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _for(_scope, [input.comments]), () => _$.intersections([_for, _$.inLoopScope(_input$forBody, "#ul/0")]));
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko", _template_, _walks_, _setup_, void 0, () => _params__);

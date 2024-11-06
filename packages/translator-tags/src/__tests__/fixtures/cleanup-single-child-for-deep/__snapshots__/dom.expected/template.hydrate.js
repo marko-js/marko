@@ -1,4 +1,4 @@
-// size: 1369 (min) 580 (brotli)
+// size: 1355 (min) 574 (brotli)
 
 import * as e from "@marko/runtime-tags/dom";
 import { init as i } from "@marko/runtime-tags/dom";
@@ -38,20 +38,20 @@ const c = e.intersection(
     },
     () => e.inChild(0, s),
   ),
-  d = e.dynamicClosure(
+  l = e.dynamicClosure(
     4,
     (e, i) => r(e[0], i),
     (e) => e._._,
     () => e.inChild(0, r),
   ),
-  l = e.closure(3, 0, void 0, () => c),
-  a = e.value(2, 0, () => c),
-  v = e.value(
+  a = e.closure(3, 0, void 0, () => c),
+  d = e.value(2, 0, () => c),
+  u = e.value(
     1,
-    (e, i) => a(e, i[0]),
-    () => a,
+    (e, i) => d(e, i[0]),
+    () => d,
   ),
-  u = (e) => {
+  v = (e) => {
     e[0];
   },
   m = e.register(
@@ -59,10 +59,9 @@ const c = e.intersection(
     e.createRenderer(
       `<div>${o}</div>`,
       "D/D l&",
-      u,
-      () => [d, l],
-      void 0,
-      () => v,
+      v,
+      () => [l, a],
+      () => u,
     ),
   ),
   f = e.loopOf(1, m),
@@ -75,7 +74,7 @@ const c = e.intersection(
   p = e.value(
     3,
     (e, i) => s(e[0], `${i}`),
-    () => e.intersections([e.inChild(0, s), e.inLoopScope(l, 1)]),
+    () => e.intersections([e.inChild(0, s), e.inLoopScope(a, 1)]),
   ),
   b = e.closure(
     3,
@@ -98,7 +97,6 @@ const c = e.intersection(
       "D/D l&%",
       h,
       () => [g, b],
-      void 0,
       () => $,
     ),
   ),

@@ -3,7 +3,7 @@ export const _walks_ = /* get, over(1), get, over(1), get, over(1) */" b b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _x$forBody = /* @__PURE__ */_$.value("x", (_scope, x) => _$.data(_scope["#text/0"], x));
 const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _x$forBody(_scope, _params_2[0]));
-const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<li> </li>", /* next(1), get */"D ", void 0, void 0, void 0, () => _params_2$forBody));
+const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<li> </li>", /* next(1), get */"D ", void 0, void 0, () => _params_2$forBody));
 const _for = /* @__PURE__ */_$.loopOf("#ul/0", _forBody);
 const _onClick = _scope => {
   const {
@@ -37,4 +37,4 @@ export function _setup_(_scope) {
   _open(_scope, true);
   _list(_scope, [1, 2, 3]);
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko", _template_, _walks_, _setup_);

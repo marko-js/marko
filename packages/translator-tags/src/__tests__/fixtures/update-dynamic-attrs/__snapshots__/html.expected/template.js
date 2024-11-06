@@ -15,4 +15,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "a": a
   });
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko", _renderer);

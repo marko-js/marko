@@ -10,4 +10,4 @@ const renderer = () => {
   write("e");
 };
 
-export default createTemplate(renderer, "");
+export default createTemplate("", renderer);

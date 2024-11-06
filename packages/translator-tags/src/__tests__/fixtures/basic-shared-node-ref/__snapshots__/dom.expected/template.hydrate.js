@@ -1,28 +1,28 @@
-// size: 584 (min) 302 (brotli)
+// size: 577 (min) 303 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as e } from "@marko/runtime-tags/dom";
-const o = t.value(2, (e, o) => t.data(e[0], o)),
-  r = t.value(1, (t, e) => o(t, e[0])),
+const r = t.value(2, (e, r) => t.data(e[0], r)),
+  o = t.value(1, (t, e) => r(t, e[0])),
   n = t.register(
     "a0",
-    t.createRenderer("<li> </li>", "D ", void 0, void 0, void 0, () => r),
+    t.createRenderer("<li> </li>", "D ", void 0, void 0, () => o),
   ),
   a = t.loopOf(0, n),
-  i = t.effect("a1", (e) =>
+  c = t.effect("a1", (e) =>
     t.on(
       e[2],
       "click",
       ((t) => {
         const { 4: e } = t;
         return function () {
-          c(t, [].concat(e).reverse());
+          i(t, [].concat(e).reverse());
         };
       })(e),
     ),
   ),
-  c = t.state(4, (t, e) => {
-    i(t),
+  i = t.state(4, (t, e) => {
+    c(t),
       a(t, [
         e,
         function (t) {
@@ -42,7 +42,7 @@ const o = t.value(2, (e, o) => t.data(e[0], o)),
       })(e),
     ),
   ),
-  m = t.state(3, (e, o) => {
-    t.attr(e[0], "hidden", !o), f(e);
+  m = t.state(3, (e, r) => {
+    t.attr(e[0], "hidden", !r), f(e);
   });
 e();

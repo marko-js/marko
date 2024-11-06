@@ -10,4 +10,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "value": value
   });
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/controllable-textarea-value/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/controllable-textarea-value/template.marko", _renderer);

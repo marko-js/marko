@@ -9,4 +9,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "promise": promise
   });
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/effect-serialize-promise/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/effect-serialize-promise/template.marko", _renderer);

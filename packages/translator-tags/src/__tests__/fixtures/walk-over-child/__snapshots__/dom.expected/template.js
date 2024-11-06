@@ -7,4 +7,4 @@ export function _setup_(_scope) {
   _child(_scope["#childScope/0"]);
   _count(_scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/walk-over-child/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/walk-over-child/template.marko", _template_, _walks_, _setup_);

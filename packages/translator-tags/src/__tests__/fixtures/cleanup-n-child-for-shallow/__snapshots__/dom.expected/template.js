@@ -11,7 +11,7 @@ const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_
 const _setup$forBody = _scope => {
   _child(_scope["#childScope/0"]);
 };
-const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_write$forBody], void 0, () => _params_2$forBody));
+const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_write$forBody], () => _params_2$forBody));
 const _for = /* @__PURE__ */_$.loopOf("#text/2", _forBody);
 const _write2 = /* @__PURE__ */_$.value("write", 0, () => _$.inLoopScope(_write$forBody, "#text/2"));
 const _onClick = _scope => {
@@ -31,4 +31,4 @@ export function _setup_(_scope) {
   _items(_scope, [1, 2, 3]);
   _write2(_scope, _write(_scope));
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko", _template_, _walks_, _setup_);

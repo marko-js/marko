@@ -1,15 +1,15 @@
-// size: 499 (min) 288 (brotli)
+// size: 492 (min) 285 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as e } from "@marko/runtime-tags/dom";
-const o = t.dynamicTagAttrs(2),
-  r = t.intersection(
+const r = t.dynamicTagAttrs(2),
+  o = t.intersection(
     2,
     (t) => {
       const { 5: e } = t;
-      o(t, () => e);
+      r(t, () => e);
     },
-    () => o,
+    () => r,
   ),
   a = t.effect("a0", (e) =>
     t.on(
@@ -25,13 +25,13 @@ const o = t.dynamicTagAttrs(2),
   ),
   i = t.state(
     5,
-    (e, o) => {
-      t.data(e[1], o), a(e);
+    (e, r) => {
+      t.data(e[1], r), a(e);
     },
-    () => r,
+    () => o,
   ),
-  n = t.value(2, (e, o) => t.data(e[0], o)),
-  d = t.value(1, (t, e) => n(t, e[0]));
+  n = t.value(2, (e, r) => t.data(e[0], r)),
+  m = t.value(1, (t, e) => n(t, e[0]));
 t.register(
   "b0",
   t.createRendererWithOwner(
@@ -39,8 +39,7 @@ t.register(
     "Db%",
     void 0,
     void 0,
-    void 0,
-    () => d,
+    () => m,
   ),
 ),
   e();

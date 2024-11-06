@@ -5,4 +5,4 @@ const renderer = () => {
   throw new Error("ERROR!");
 };
 
-export default createTemplate(renderer, "");
+export default createTemplate("", renderer);

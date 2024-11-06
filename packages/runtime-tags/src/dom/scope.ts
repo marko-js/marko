@@ -35,12 +35,7 @@ export function destroyScope(scope: Scope) {
 }
 
 function _destroyScope(scope: Scope) {
-  const cleanup = scope.___cleanup;
-  if (cleanup) {
-    for (const instance of cleanup) {
-      _destroyScope(instance);
-    }
-  }
+  scope.___cleanup?.forEach(_destroyScope);
 
   const controllers = scope.___abortControllers;
   if (controllers) {

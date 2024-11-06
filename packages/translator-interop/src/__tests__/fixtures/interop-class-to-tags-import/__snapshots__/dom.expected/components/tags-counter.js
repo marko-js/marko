@@ -19,4 +19,4 @@ export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) 
 export function _setup_(_scope) {
   _count(_scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-interop/src/__tests__/fixtures/interop-class-to-tags-import/components/tags-counter.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-interop/src/__tests__/fixtures/interop-class-to-tags-import/components/tags-counter.marko", _template_, _walks_, _setup_, void 0, () => _params__);

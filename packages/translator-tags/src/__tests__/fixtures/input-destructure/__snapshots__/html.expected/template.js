@@ -7,4 +7,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   } = input;
   _$.write(`<!>${_$.escapeXML(a)}${_$.markResumeNode(_scope0_id, "#text/0")} <!>${_$.escapeXML(b)}${_$.markResumeNode(_scope0_id, "#text/1")}`);
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/input-destructure/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/input-destructure/template.marko", _renderer);

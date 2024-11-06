@@ -1,4 +1,4 @@
-// size: 1189 (min) 542 (brotli)
+// size: 1182 (min) 541 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as e } from "@marko/runtime-tags/dom";
@@ -28,9 +28,9 @@ const o = t.intersection(
         _: { 2: e },
         7: o,
       } = t;
-      d(t, `${e.path || "c"}-${o}`);
+      u(t, `${e.path || "c"}-${o}`);
     },
-    () => d,
+    () => u,
   ),
   s = t.conditional(4, 0),
   l = t.effect("a1", (e) =>
@@ -48,12 +48,12 @@ const o = t.intersection(
   m = t.state(9, (e, o) => {
     t.attr(e[0], "hidden", !o), t.data(e[3], o ? "[-]" : "[+]"), l(e);
   }),
-  d = t.value(
+  u = t.value(
     8,
     (e, o) => t.attr(e[0], "id", o),
     () => t.inConditionalScope(n, 4),
   ),
-  u = t.value(7, 0, () => c),
+  d = t.value(7, 0, () => c),
   p = t.value(
     6,
     (e, o) => {
@@ -64,9 +64,9 @@ const o = t.intersection(
   v = t.value(
     5,
     (t, e) => {
-      p(t, e[0]), u(t, e[1]);
+      p(t, e[0]), d(t, e[1]);
     },
-    () => t.intersections([p, u]),
+    () => t.intersections([p, d]),
   ),
   f = t.closure(2, 0, void 0, () => c),
   g = (t) => {
@@ -79,7 +79,6 @@ const o = t.intersection(
       " E l D l%",
       g,
       () => [f],
-      void 0,
       () => v,
     ),
   ),

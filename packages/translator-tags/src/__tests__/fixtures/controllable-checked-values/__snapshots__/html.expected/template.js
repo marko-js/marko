@@ -14,4 +14,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "checkedValue": checkedValue
   });
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko", _renderer);

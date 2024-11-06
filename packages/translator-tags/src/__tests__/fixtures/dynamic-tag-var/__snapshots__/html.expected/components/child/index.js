@@ -7,4 +7,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   });
   return _return;
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-var/components/child/index.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-var/components/child/index.marko", _renderer);

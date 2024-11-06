@@ -1,4 +1,4 @@
-// size: 854 (min) 409 (brotli)
+// size: 840 (min) 408 (brotli)
 
 import * as e from "@marko/runtime-tags/dom";
 import { init as o } from "@marko/runtime-tags/dom";
@@ -31,35 +31,33 @@ const r = e.value(3, (o, r) => e.data(o[0], r)),
       "/D l&",
       c,
       () => [i],
-      void 0,
       () => a,
     ),
   ),
-  d = e.loopOf(0, s),
-  l = e.value(2, 0, () => e.inLoopScope(i, 0)),
-  v = e.closure(
+  l = e.loopOf(0, s),
+  d = e.value(2, 0, () => e.inLoopScope(i, 0)),
+  u = e.closure(
     2,
-    (e, o) => d(e, [o]),
+    (e, o) => l(e, [o]),
     void 0,
-    () => d,
-  ),
-  u = e.value(
-    1,
-    (e, o) => l(e, o[0]),
     () => l,
   ),
-  m = e.register(
+  m = e.value(
+    1,
+    (e, o) => d(e, o[0]),
+    () => d,
+  ),
+  v = e.register(
     "b1",
     e.createRenderer(
       "<!><!><!>",
       "D%D",
       void 0,
-      () => [v],
-      void 0,
-      () => u,
+      () => [u],
+      () => m,
     ),
   ),
-  p = e.loopOf(1, m),
+  p = e.loopOf(1, v),
   f = e.effect("b2", (o) =>
     e.on(
       o[0],
@@ -77,6 +75,6 @@ const r = e.value(3, (o, r) => e.data(o[0], r)),
     (e, o) => {
       f(e), p(e, [o]);
     },
-    () => e.intersections([p, e.inLoopScope(v, 1)]),
+    () => e.intersections([p, e.inLoopScope(u, 1)]),
   );
 o();

@@ -1,11 +1,4 @@
-import {
-  e as t,
-  c as n,
-  a as s,
-  o,
-  s as a,
-  d as c,
-} from "./runtime-DSSetMjG.js";
+import { e as t, c as n, o, s, d as c } from "./runtime-iO38DTrJ.js";
 const i = t("XBSGKvBc", (t) =>
     o(
       t[0],
@@ -18,10 +11,10 @@ const i = t("XBSGKvBc", (t) =>
       })(t),
     ),
   ),
-  u = a(2, (t, n) => {
+  u = s(2, (t, n) => {
     c(t[1], n), i(t);
   });
-function m(t) {
+function a(t) {
   u(t, 0);
 }
-n(s("<div><button> </button></div>", "D D m", m), "tPaZsVqd").mount();
+n("tPaZsVqd", "<div><button> </button></div>", "D D m", a).mount();

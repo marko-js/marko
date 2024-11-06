@@ -56,7 +56,6 @@ export default {
             walks,
             setup,
             closures && t.arrowFunctionExpression([], closures),
-            undefined,
             tagParamsSignal?.identifier &&
               t.arrowFunctionExpression([], tagParamsSignal.identifier),
           );
@@ -129,17 +128,13 @@ export default {
         t.exportDefaultDeclaration(
           callRuntime(
             "createTemplate",
-            callRuntime(
-              "createRenderer",
-              templateIdentifier,
-              walksIdentifier,
-              setupIdentifier,
-              closures && t.arrowFunctionExpression([], closuresIdentifier),
-              undefined,
-              programParamsSignal?.identifier &&
-                t.arrowFunctionExpression([], programParamsSignal.identifier),
-            ),
             t.stringLiteral(program.hub.file.metadata.marko.id),
+            templateIdentifier,
+            walksIdentifier,
+            setupIdentifier,
+            closures && t.arrowFunctionExpression([], closuresIdentifier),
+            programParamsSignal?.identifier &&
+              t.arrowFunctionExpression([], programParamsSignal.identifier),
           ),
         ),
       );

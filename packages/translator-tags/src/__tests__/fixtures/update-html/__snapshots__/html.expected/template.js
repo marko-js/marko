@@ -6,4 +6,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   } = input;
   _$.write(`<em>Testing</em> <!>${_$.toString(value)}${_$.markResumeNode(_scope0_id, "#text/0")}`);
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/update-html/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/update-html/template.marko", _renderer);

@@ -56,8 +56,8 @@ export default {
         t.exportDefaultDeclaration(
           callRuntime(
             "createTemplate",
-            htmlRendererIdentifier,
             t.stringLiteral(program.hub.file.metadata.marko.id),
+            htmlRendererIdentifier,
           ),
         ),
       ]);

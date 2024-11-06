@@ -14,4 +14,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   } = a;
   _$.write(`<button>${_$.escapeXML(b)}${_$.markResumeNode(_scope0_id, "#text/0")} <!>${_$.escapeXML(c)}${_$.markResumeNode(_scope0_id, "#text/1")}</button>`);
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/same-source-alias-pattern-and-identifier/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/same-source-alias-pattern-and-identifier/template.marko", _renderer);

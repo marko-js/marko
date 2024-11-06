@@ -53,10 +53,9 @@ function p(e) {
   return e;
 }
 function v(e) {
-  let t = e.h;
-  if (t) for (let e of t) v(e);
-  let n = e.l;
-  if (n) for (let e of n.values()) e.abort();
+  e.h?.forEach(v);
+  let t = e.l;
+  if (t) for (let e of t.values()) e.abort();
 }
 function b(e) {
   let t = e.d;
@@ -201,14 +200,14 @@ function $(e, t) {
   return A(e, (e) => () => e[t]);
 }
 var M = {},
-  I = {},
-  E = {};
+  E = {},
+  I = {};
 function T(e, t, n) {
   let r = _(e, t, n),
     i = e + "#";
   return (e, t, n) => (
     H
-      ? r(e, t === M || t === I || t === E || n || void 0 === e[i] ? t : I)
+      ? r(e, t === M || t === E || t === I || n || void 0 === e[i] ? t : E)
       : n
         ? n(t)
         : (function (e, t, n) {
@@ -226,12 +225,12 @@ function _(e, t, n) {
     i = n && ((e, t) => (i = n())(e, t));
   return (n, l) => {
     if (l === M) 1 === (n[r] = (n[r] ?? 0) + 1) && i?.(n, M);
-    else if (l !== E) {
+    else if (l !== I) {
       let o = void 0 !== n[r];
       1 === (n[r] ||= 1) &&
-        (l === I || (o && n[e] === l)
-          ? i?.(n, I)
-          : ((n[e] = l), t && t(n, l), i?.(n, E))),
+        (l === E || (o && n[e] === l)
+          ? i?.(n, E)
+          : ((n[e] = l), t && t(n, l), i?.(n, I))),
         n[r]--;
     }
   };
@@ -247,10 +246,10 @@ function B(e, t, n) {
       : void 0 === n[i]
         ? ((n[i] = e - 1), (n[r] = !0))
         : 0 == --n[i]
-          ? o === E || n[r]
-            ? ((n[r] = !1), t(n, 0), l?.(n, E))
-            : l?.(n, I)
-          : (n[r] ||= o === E);
+          ? o === I || n[r]
+            ? ((n[r] = !1), t(n, 0), l?.(n, I))
+            : l?.(n, E)
+          : (n[r] ||= o === I);
   };
 }
 var V = (e) => e._;
@@ -267,17 +266,17 @@ function j(e, t, n = V, r) {
         (u = n(e)), (a = o(e));
         let t = u[a + "#"],
           i = void 0 === t ? !u.u : 0 === t;
-        (e[l] = i ? 1 : 2), (r = E);
+        (e[l] = i ? 1 : 2), (r = I);
       }
       0 == --e[l]
-        ? r === E || e[i]
+        ? r === I || e[i]
           ? ((e[i] = !1),
             (u ||= n(e)),
             (a ||= o(e)),
             t && t(e, u[a]),
-            f?.(e, E))
-          : f?.(e, I)
-        : (e[i] ||= r === E);
+            f?.(e, I))
+          : f?.(e, E)
+        : (e[i] ||= r === I);
     }
   };
 }
@@ -332,10 +331,10 @@ var W = (e, t) => e["/"]?.(t),
     let r = e?.c;
     if (r) for (let e of r) e(t, n);
   },
-  F = new WeakMap();
-function z({ $global: e }) {
-  let t = F.get(e) || 0;
-  return F.set(e, t + 1), "c" + e.runtimeId + e.renderId + t.toString(36);
+  z = new WeakMap();
+function F({ $global: e }) {
+  let t = z.get(e) || 0;
+  return z.set(e, t + 1), "c" + e.runtimeId + e.renderId + t.toString(36);
 }
 function U(e, t) {
   return (n, r) => {
@@ -472,7 +471,7 @@ function pe(e) {
   return e.replace(/[^\p{L}\p{N}]/gu, "");
 }
 function ve(e, t, n, r) {
-  Ie(e, t, 0, Pe(n), r);
+  Ee(e, t, 0, Pe(n), r);
 }
 function be(e, t) {
   let n = e[t];
@@ -488,7 +487,7 @@ function be(e, t) {
 function me(e, t, n, r, i) {
   (e[t + ":"] = n),
     Ge(e[t], "value", i),
-    Ie(e, t, 1, Array.isArray(n) ? n.includes(i) : n === i, r);
+    Ee(e, t, 1, Array.isArray(n) ? n.includes(i) : n === i, r);
 }
 function ye(e, t) {
   let n = e[t];
@@ -615,18 +614,18 @@ function Me(e, t) {
       ~i && e.setSelectionRange(i, i);
     } else e.value = t;
 }
-function Ie(e, t, n, r, i) {
+function Ee(e, t, n, r, i) {
   (e[t + ";"] = i),
     i
       ? ((e[t + "="] = n), (e[t].checked = r))
       : ((e[t + "="] = 5), (e[t].defaultChecked = r));
 }
-var Ee = he(),
+var Ie = he(),
   Te = new WeakMap();
 function _e(e, t, n, r) {
   Te.set(e, r),
-    Ee(e, t, Oe),
-    e.form && Ee(e.form, "reset", Be),
+    Ie(e, t, Oe),
+    e.form && Ie(e.form, "reset", Be),
     C && n(e) && queueMicrotask(r);
 }
 function Oe(e) {
@@ -664,9 +663,9 @@ function We(e) {
   return e.value;
 }
 var Le = document.createTextNode(""),
-  Fe = new Range();
-function ze(e) {
-  return Fe.createContextualFragment(e);
+  ze = new Range();
+function Fe(e) {
+  return ze.createContextualFragment(e);
 }
 var Ue = /^on[A-Z-]/;
 function Ge(e, t, n) {
@@ -792,7 +791,7 @@ function nt(e, t, n) {
     i = e[n + "-"] || r,
     l = r.parentNode,
     o = i.nextSibling,
-    f = ze(t || 0 === t ? t + "" : "<!>");
+    f = Fe(t || 0 === t ? t + "" : "<!>");
   (e[n] = f.firstChild), (e[n + "-"] = f.lastChild), l.insertBefore(f, r);
   let u = r;
   for (; u !== o; ) {
@@ -878,9 +877,9 @@ function dt(e, t) {
 function ht(e, t, n) {
   return (r, i) => {
     let l = r[e + "("];
-    if (!l || i === E) return;
+    if (!l || i === I) return;
     let o = r[e + "!"];
-    if (i === M || i === I) return l.e?.(o, i);
+    if (i === M || i === E) return l.e?.(o, i);
     let f = t?.(r);
     if ("string" == typeof l) kt(o, 0, f), Ke(o, 0, i());
     else if (l.e) {
@@ -889,34 +888,33 @@ function ht(e, t, n) {
     }
   };
 }
-function gt(e, t, n, r, i, l) {
-  let o,
-    f,
-    u = {},
-    a = t ? ft(t) : " ";
+function gt(e, t, n, r, i) {
+  let l,
+    o,
+    f = {},
+    u = t ? ft(t) : " ";
   return (t) => ({
-    t: u,
+    t: f,
     D: e,
-    C: a,
+    C: u,
     s: n,
     k: vt,
     B: t,
-    E: i,
-    F: void 0,
+    E: void 0,
     get e() {
-      return (o ||= l?.());
+      return (l ||= i?.());
     },
     get c() {
-      return (f ||= new Set(r?.()));
+      return (o ||= new Set(r?.()));
     },
   });
 }
-function pt(e, t, n, r, i, l) {
-  return gt(e, t, n, r, i, l)();
+function pt(e, t, n, r, i) {
+  return gt(e, t, n, r, i)();
 }
 function vt() {
-  return (this.F ||= (function (e) {
-    let t = ze(e);
+  return (this.E ||= (function (e) {
+    let t = Fe(e);
     return t.firstChild === t.lastChild ? t.firstChild || Le : t;
   })(this.D)).cloneNode(!0);
 }
@@ -925,10 +923,10 @@ var bt = function (e, t, n) {
     i = e + "!",
     l = n && ((e, t) => (l = n())(e, t));
   return (n, o) => {
-    if (o === E) return;
+    if (o === I) return;
     let f = n[r],
       u = o;
-    if (o !== M && o !== I) {
+    if (o !== M && o !== E) {
       let i = ue(o);
       _t(i, f)
         ? ((f = n[r] = i),
@@ -942,8 +940,8 @@ var bt = function (e, t, n) {
               m(i);
           })(n, e, i),
           t && t(n),
-          (u = E))
-        : (u = I);
+          (u = I))
+        : (u = E);
     }
     l?.(n, u), L(f, n[i], u);
   };
@@ -964,12 +962,12 @@ var yt = function (e, t, n) {
     i = e + "!",
     l = n && ((e, t) => (l = n())(e, t));
   return (n, o) => {
-    if (o === E) return;
+    if (o === I) return;
     let f = n[r],
       u = o;
-    if (o !== M && o !== I) {
+    if (o !== M && o !== E) {
       let i = ue(o);
-      _t(i, f) ? ((f = n[r] = i), kt(n, e, i), t && t(n), (u = E)) : (u = I);
+      _t(i, f) ? ((f = n[r] = i), kt(n, e, i), t && t(n), (u = I)) : (u = E);
     }
     l?.(n, u), L(f, n[i], u);
   };
@@ -987,7 +985,7 @@ var wt = new Map([[Symbol(), g(void 0)]]),
   At = new Map(),
   St = [];
 function Nt(e, t) {
-  return Mt(e, t, ([e, t = Et], n) => {
+  return Mt(e, t, ([e, t = It], n) => {
     o(
       e,
       "string" == typeof t
@@ -1007,8 +1005,8 @@ function Mt(e, t, n) {
     i = t.c,
     l = t.e;
   return (o, f) => {
-    if (f === E) return;
-    if (f === M || f === I) {
+    if (f === I) return;
+    if (f === M || f === E) {
       let t = o[r] ?? o[e + "("]?.values() ?? [];
       if (t !== Ct)
         for (let e of t) {
@@ -1029,19 +1027,17 @@ function Mt(e, t, n) {
     if (
       (n(f, (e, n) => {
         let r = v.get(e),
-          f = I;
-        if ((r || ((r = ct(t, o.$global, o)), (f = E)), l && l(r, n), i))
+          f = E;
+        if ((r || ((r = ct(t, o.$global, o)), (f = I)), l && l(r, n), i))
           for (let e of i) e(r, f);
         u ? (u.set(e, r), a.push(r)) : ((u = new Map([[e, r]])), (a = [r]));
       }),
-      !u)
-    )
-      if (h) (u = wt), (a = Ct), g(d);
-      else {
-        if (t.E) for (let e = 0; e < b.length; e++) p(b[e]);
-        (d.textContent = ""), (u = At), (a = St), (k = !1);
-      }
-    if (k) {
+      u ||
+        (h
+          ? ((u = wt), (a = Ct), g(d))
+          : (b.forEach(p), (d.textContent = ""), (u = At), (a = St), (k = !1))),
+      k)
+    ) {
       if (h) {
         v === wt && g(d);
         let e = b[b.length - 1];
@@ -1151,14 +1147,14 @@ function Mt(e, t, n) {
     (o[e + "("] = u), (o[e + "!"] = a);
   };
 }
-function It(e, t) {
+function Et(e, t) {
   let n = t + "!";
   return (r, i) => {
     let l = r[n] ?? r[t + "("]?.values() ?? [];
     if (l !== Ct) for (let t of l) e(t, i);
   };
 }
-function Et(e, t) {
+function It(e, t) {
   return t;
 }
 function Tt(e) {
@@ -1181,7 +1177,7 @@ var Ot = new Map(),
     registerRenderer(e) {
       A("$C_r", e);
     },
-    isOp: (e) => e === M || e === I || e === E,
+    isOp: (e) => e === M || e === E || e === I,
     isRenderer: (e) => void 0 !== e.k,
     getStartNode: (e) => e.a,
     setScopeNodes(e, t, n) {
@@ -1198,7 +1194,7 @@ var Ot = new Map(),
           })(e[0], 2 === e.length && window[t]?.["s" === n ? "_" : n]?.n[e[1]])
         : e,
     createRenderer(e, t, n) {
-      let r = pt("", void 0, e, void 0, 1, n && (() => n));
+      let r = pt("", void 0, e, void 0, n && (() => n));
       return (r.k = t), r;
     },
     render(e, t, n, r) {
@@ -1212,7 +1208,7 @@ var Ot = new Map(),
           else {
             i = t.scope = ct(n, e.global);
             let r = n.c;
-            if (r) for (let e of r) e(t.scope, I);
+            if (r) for (let e of r) e(t.scope, E);
           }
           l(i, r);
         })),
@@ -1222,7 +1218,10 @@ var Ot = new Map(),
     },
   };
 function Vt() {}
-var jt = (e, t) => ((e.mount = Rt), (e._ = e), A(t, e));
+var jt = (e, ...t) => {
+  let n = pt(...t);
+  return (n.mount = Rt), (n._ = n), A(e, n);
+};
 function Rt(e = {}, t, n) {
   let r,
     i,
@@ -1305,7 +1304,7 @@ export {
   nt as html,
   U as inChild,
   mt as inConditionalScope,
-  It as inLoopScope,
+  Et as inLoopScope,
   N as init,
   B as intersection,
   G as intersections,
@@ -1313,7 +1312,7 @@ export {
   xt as loopIn,
   Nt as loopOf,
   $t as loopTo,
-  z as nextTagId,
+  F as nextTagId,
   $ as nodeRef,
   de as on,
   Ye as partialAttrs,

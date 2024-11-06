@@ -17,4 +17,4 @@ export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _value_(_scope, input.value);
 }, () => _$.intersections([_renderBody_, _value_]));
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/basic-nested-params/components/child.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-nested-params/components/child.marko", _template_, _walks_, _setup_, void 0, () => _params__);

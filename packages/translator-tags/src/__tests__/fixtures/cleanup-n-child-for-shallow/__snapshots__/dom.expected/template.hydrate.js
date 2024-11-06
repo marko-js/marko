@@ -1,4 +1,4 @@
-// size: 930 (min) 455 (brotli)
+// size: 923 (min) 454 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as e } from "@marko/runtime-tags/dom";
@@ -56,7 +56,6 @@ const i = t.closure(
       "/D lD lD l&",
       c,
       () => [i],
-      void 0,
       () => l,
     ),
   ),

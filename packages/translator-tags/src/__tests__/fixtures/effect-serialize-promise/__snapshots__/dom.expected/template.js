@@ -20,4 +20,4 @@ const _promise = /* @__PURE__ */_$.value("promise", (_scope, promise) => _promis
 export function _setup_(_scope) {
   _promise(_scope, Promise.resolve("hello"));
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/effect-serialize-promise/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/effect-serialize-promise/template.marko", _template_, _walks_, _setup_);

@@ -44,4 +44,4 @@ const secondComponent = () => {
   write("z");
 };
 
-export default createTemplate(renderer, "");
+export default createTemplate("", renderer);

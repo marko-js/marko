@@ -11,4 +11,4 @@ export function _setup_(_scope) {
   });
   _fullName(_scope, user.fullName = `${user.firstName} ${user.middleName} ${user.lastName}`);
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/error-const-mutation/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/error-const-mutation/template.marko", _template_, _walks_, _setup_);

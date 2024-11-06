@@ -6,15 +6,16 @@ import type {
   TemplateInstance,
 } from "../common/types";
 import { prepareEffects, runEffects } from "./queue";
-import { initRenderer, type Renderer } from "./renderer";
+import { createRenderer, initRenderer, type Renderer } from "./renderer";
 import { register } from "./resume";
 import { createScope, removeAndDestroyScope } from "./scope";
 import { MARK } from "./signals";
 
 export const createTemplate = (
-  renderer: Renderer,
   templateId: string,
+  ...rendererArgs: Parameters<typeof createRenderer>
 ): Template => {
+  const renderer = createRenderer(...rendererArgs);
   (renderer as unknown as Template).mount = mount;
   (renderer as unknown as any)._ = renderer; // This is added exclusively for the compat layer, maybe someday it can be removed.
   if (MARKO_DEBUG) {

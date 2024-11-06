@@ -3,7 +3,7 @@ export const _walks_ = /* next(1), replace, over(1), get, over(1), get, out(1) *
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _item$forBody = /* @__PURE__ */_$.value("item", (_scope, item) => _$.data(_scope["#text/0"], item));
 const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _item$forBody(_scope, _params_2[0]));
-const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(" ", /* get */" ", void 0, void 0, void 0, () => _params_2$forBody));
+const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(" ", /* get */" ", void 0, void 0, () => _params_2$forBody));
 const _onClick = _scope => {
   const {
     id,
@@ -43,4 +43,4 @@ export function _setup_(_scope) {
   _id(_scope, 0);
   _items(_scope, []);
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko", _template_, _walks_, _setup_);

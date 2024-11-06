@@ -15,4 +15,4 @@ export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _text_(_scope, input.text);
 });
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-component-attrs/components/my-button.marko", _template_, _walks_, _setup_, void 0, () => _params__);

@@ -22,4 +22,4 @@ const _clickCount = /* @__PURE__ */_$.state("clickCount", (_scope, clickCount) =
 export function _setup_(_scope) {
   _clickCount(_scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko", _template_, _walks_, _setup_);

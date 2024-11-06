@@ -19,4 +19,4 @@ export function _setup_(_scope) {
   _$.setTagVar(_scope, "#childScope/1", _data2);
   _child(_scope["#childScope/1"]);
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_, void 0, void 0, () => _params__), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-var/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-var/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);

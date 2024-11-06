@@ -12,4 +12,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "write": write
   });
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-shallow/components/child.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-shallow/components/child.marko", _renderer);

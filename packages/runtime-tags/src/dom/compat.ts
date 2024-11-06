@@ -70,7 +70,6 @@ export const compat = {
       undefined,
       setup,
       undefined,
-      1,
       args && (() => args),
     );
     renderer.___clone = clone;

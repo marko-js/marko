@@ -27,4 +27,4 @@ export function _setup_(_scope) {
   _count(_scope, 0);
   _dynamicTagName(_scope, _classLayout || _classLayoutBody(_scope));
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko", _template_, _walks_, _setup_);

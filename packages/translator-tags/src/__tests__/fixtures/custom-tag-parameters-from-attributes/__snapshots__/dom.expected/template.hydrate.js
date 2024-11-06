@@ -1,4 +1,4 @@
-// size: 619 (min) 331 (brotli)
+// size: 612 (min) 331 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as a } from "@marko/runtime-tags/dom";
@@ -41,7 +41,6 @@ t.register(
   t.createRendererWithOwner(
     "<div>Count (<!>): <!></div>",
     "Db%c%",
-    void 0,
     void 0,
     void 0,
     () => d,

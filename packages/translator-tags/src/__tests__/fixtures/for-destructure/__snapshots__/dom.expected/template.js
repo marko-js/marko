@@ -8,7 +8,7 @@ const _pattern_$forBody = /* @__PURE__ */_$.value("_pattern_", (_scope, _pattern
   _description$forBody(_scope, _pattern_.description);
 });
 const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _pattern_$forBody(_scope, _params_2[0]));
-const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, void 0, () => _params_2$forBody));
+const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, () => _params_2$forBody));
 const _for = /* @__PURE__ */_$.loopOf("#text/0", _forBody);
 const _onClick = _scope => {
   const {
@@ -45,4 +45,4 @@ export function _setup_(_scope) {
     description: "HTML Reimagined"
   }]);
 }
-export default /* @__PURE__ */_$.createTemplate(/* @__PURE__ */_$.createRenderer(_template_, _walks_, _setup_), "packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/for-destructure/template.marko", _template_, _walks_, _setup_);

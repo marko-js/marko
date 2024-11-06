@@ -5,4 +5,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     throw new Error("Cannot use $signal in a server render.");
   })().onabort = () => {})}</div>`);
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/abort-signal-render-phase-error/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/abort-signal-render-phase-error/template.marko", _renderer);

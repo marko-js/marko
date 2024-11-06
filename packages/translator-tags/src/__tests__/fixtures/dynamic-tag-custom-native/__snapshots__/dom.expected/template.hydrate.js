@@ -1,17 +1,21 @@
-// size: 544 (min) 305 (brotli)
+// size: 519 (min) 297 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as a } from "@marko/runtime-tags/dom";
-const e = () => {},
-  i = t.value(3, (a, e) => t.data(a[0], e)),
-  o = t.value(2, (t, a) => i(t, a.id)),
-  r = t.value(1, (t, a) => o(t, a[0]));
-var d = t.createTemplate(
-  t.createRenderer("<div>Id is <!></div>", "Db%l", e, void 0, void 0, () => r),
+const i = () => {},
+  o = t.value(3, (a, i) => t.data(a[0], i)),
+  d = t.value(2, (t, a) => o(t, a.id)),
+  e = t.value(1, (t, a) => d(t, a[0]));
+var m = t.createTemplate(
   "a",
+  "<div>Id is <!></div>",
+  "Db%l",
+  i,
+  void 0,
+  () => e,
 );
 const n = t.dynamicTagAttrs(1),
-  m = t.conditional(
+  r = t.conditional(
     1,
     (t) => n(t, () => ({ id: "dynamic" })),
     () => n,
@@ -23,7 +27,7 @@ const n = t.dynamicTagAttrs(1),
       ((t) => {
         const { 2: a } = t;
         return function () {
-          s(t, a === d ? "div" : d);
+          s(t, a === m ? "div" : m);
         };
       })(a),
     ),
@@ -31,8 +35,8 @@ const n = t.dynamicTagAttrs(1),
   s = t.state(
     2,
     (t, a) => {
-      c(t), m(t, a);
+      c(t), r(t, a);
     },
-    () => m,
+    () => r,
   );
 a();

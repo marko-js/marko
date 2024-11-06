@@ -14,4 +14,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "onClick": onClick
   });
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias/components/my-button.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias/components/my-button.marko", _renderer);

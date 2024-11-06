@@ -48,4 +48,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.write("Hello");
   });
 });
-export default /* @__PURE__ */_$.createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/for-tag/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/for-tag/template.marko", _renderer);
