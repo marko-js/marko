@@ -1,5 +1,11 @@
 # Change Log
 
+## 6.5.11
+
+### Patch Changes
+
+- [#2356](https://github.com/marko-js/marko/pull/2356) [`7492eb8`](https://github.com/marko-js/marko/commit/7492eb819faf164fcbde34648dcfe72c406665f2) Thanks [@mlrawlings](https://github.com/mlrawlings)! - compiled output cleanup
+
 ## 6.5.10
 
 ### Patch Changes
