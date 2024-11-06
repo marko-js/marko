@@ -6,7 +6,7 @@ function createWrapper(a) {
     a
   };
 }
-import { register as _register, on as _on, data as _data, value as _value, queueEffect as _queueEffect, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { register as _register, on as _on, data as _data, value as _value, effect as _effect, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _b = (_scope, b) => {
   _data(_scope["#text/2"], b);
 };
@@ -23,9 +23,9 @@ const _onClick = _scope => {
     _count(_scope, count + 1);
   };
 };
-const _count_effect = _register("packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0_count", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
+const _count_effect = _effect("packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0_count", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _count = /* @__PURE__ */_state("count", (_scope, count) => {
-  _queueEffect(_scope, _count_effect);
+  _count_effect(_scope);
   _pattern_(_scope, createWrapper(count));
 });
 export function _setup_(_scope) {

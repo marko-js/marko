@@ -1,6 +1,6 @@
 export const _template_ = "<!><!><button></button>";
 export const _walks_ = /* replace, over(1), get, over(1) */"D%b b";
-import { on as _on, createRendererWithOwner as _createRendererWithOwner, register as _register, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, state as _state, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, createRendererWithOwner as _createRendererWithOwner, register as _register, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, state as _state, effect as _effect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _tagNameBody = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_1_renderer", /* @__PURE__ */_createRendererWithOwner("body content", ""));
 const _tagName_input = _dynamicTagAttrs("#text/0", _tagNameBody);
 const _expr_Text_className = /* @__PURE__ */_intersection(2, _scope => {
@@ -21,9 +21,9 @@ const _onClick = _scope => {
     _tagName(_scope, tagName === "span" ? "div" : "span");
   };
 };
-const _tagName_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
+const _tagName_effect = _effect("packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
 const _tagName = /* @__PURE__ */_state("tagName", (_scope, tagName) => {
-  _queueEffect(_scope, _tagName_effect);
+  _tagName_effect(_scope);
   _dynamicTagName(_scope, tagName || _tagNameBody(_scope));
 }, () => _dynamicTagName);
 export function _setup_(_scope) {

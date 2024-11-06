@@ -1,11 +1,11 @@
-// size: 361 (min) 219 (brotli)
+// size: 354 (min) 214 (brotli)
 
 import {
-  register as c,
+  effect as c,
   attrsEvents as e,
   value as o,
   attrs as t,
-  queueEffect as n,
+  register as n,
   state as m,
   data as r,
   inChild as a,
@@ -13,9 +13,9 @@ import {
 } from "@marko/runtime-tags/dom";
 const i = c("a0", (c) => e(c, 0)),
   k = o(2, (c, e) => {
-    t(c, 0, { type: "checkbox", ...e }), n(c, i);
+    t(c, 0, { type: "checkbox", ...e }), i(c);
   }),
-  d = c(
+  d = n(
     "b0",
     (c) =>
       function (e) {

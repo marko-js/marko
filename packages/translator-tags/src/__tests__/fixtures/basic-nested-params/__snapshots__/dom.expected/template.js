@@ -1,6 +1,6 @@
 export const _template_ = `<button>Inc</button>${_child_template}`;
 export const _walks_ = /* get, over(1), beginChild, _child_walks, endChild */` b/${_child_walks}&`;
-import { on as _on, data as _data, inChild as _inChild, createRendererWithOwner as _createRendererWithOwner, value as _value, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, register as _register, dynamicSubscribers as _dynamicSubscribers, state as _state, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, data as _data, inChild as _inChild, createRendererWithOwner as _createRendererWithOwner, value as _value, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, register as _register, dynamicSubscribers as _dynamicSubscribers, state as _state, effect as _effect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _child, _renderBody_ as _child_input_renderBody, _value_ as _child_input_value, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
 const _inner$childBody = /* @__PURE__ */_value("inner", (_scope, inner) => _data(_scope["#text/1"], inner));
 const _outer$childBody = _registerSubscriber("packages/translator-tags/src/__tests__/fixtures/basic-nested-params/template.marko_2_outer/subscriber", /* @__PURE__ */_dynamicClosure("outer", (_scope, outer) => _data(_scope["#text/0"], outer)));
@@ -23,9 +23,9 @@ const _onClick = _scope => {
     _x(_scope, x + 1);
   };
 };
-const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-params/template.marko_0_x", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
+const _x_effect = _effect("packages/translator-tags/src/__tests__/fixtures/basic-nested-params/template.marko_0_x", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _x = /* @__PURE__ */_state("x", (_scope, x) => {
-  _queueEffect(_scope, _x_effect);
+  _x_effect(_scope);
   _child_input_value(_scope["#childScope/1"], x);
 }, () => _inChild("#childScope/1", _child_input_value));
 export function _setup_(_scope) {

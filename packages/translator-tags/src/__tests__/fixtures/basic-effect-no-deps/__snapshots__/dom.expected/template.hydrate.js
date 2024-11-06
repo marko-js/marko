@@ -1,4 +1,4 @@
-// size: 112 (min) 83 (brotli)
+// size: 110 (min) 84 (brotli)
 
-import { register as m, init as o } from "@marko/runtime-tags/dom";
+import { effect as m, init as o } from "@marko/runtime-tags/dom";
 m("a0", (m) => (document.body.className = "no-deps")), o();

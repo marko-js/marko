@@ -1,13 +1,13 @@
-// size: 460 (min) 283 (brotli)
+// size: 453 (min) 273 (brotli)
 
 import {
   dynamicTagAttrs as t,
-  register as o,
+  effect as o,
   on as n,
   registerSubscriber as c,
   dynamicClosure as r,
   data as u,
-  queueEffect as b,
+  register as b,
   createRendererWithOwner as i,
   state as m,
   dynamicSubscribers as s,
@@ -31,12 +31,12 @@ const a = o("b0", (t) =>
   d = c(
     "b1",
     r(1, (t, o) => {
-      u(t[1], o), b(t, a);
+      u(t[1], o), a(t);
     }),
   );
 t(
   0,
-  o(
+  b(
     "b2",
     i("<button> </button>", " D ", void 0, () => [d]),
   ),

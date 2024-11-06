@@ -1,7 +1,7 @@
 export const _template_ = "<ul></ul>";
 export const _walks_ = /* get, over(1) */" b";
 export const _setup_ = () => {};
-import { attr as _attr, data as _data, on as _on, inChild as _inChild, createRenderer as _createRenderer, intersection as _intersection, closure as _closure, register as _register, conditional as _conditional, queueEffect as _queueEffect, state as _state, inConditionalScope as _inConditionalScope, value as _value, intersections as _intersections, loopOf as _loopOf, inLoopScope as _inLoopScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { attr as _attr, data as _data, on as _on, inChild as _inChild, createRenderer as _createRenderer, intersection as _intersection, closure as _closure, register as _register, conditional as _conditional, effect as _effect, state as _state, inConditionalScope as _inConditionalScope, value as _value, intersections as _intersections, loopOf as _loopOf, inLoopScope as _inLoopScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _template_ as _comments_template, _walks_ as _comments_walks } from "./comments.marko";
 const _expr_comment_id$ifBody = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -39,11 +39,11 @@ const _onClick = _scope => {
     _open$forBody(_scope, !open);
   };
 };
-const _open$forBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _scope => _on(_scope["#button/2"], "click", _onClick(_scope)));
+const _open$forBody_effect = _effect("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _scope => _on(_scope["#button/2"], "click", _onClick(_scope)));
 const _open$forBody = /* @__PURE__ */_state("open", (_scope, open) => {
   _attr(_scope["#li/0"], "hidden", !open);
   _data(_scope["#text/3"], open ? "[-]" : "[+]");
-  _queueEffect(_scope, _open$forBody_effect);
+  _open$forBody_effect(_scope);
 });
 const _id$forBody = /* @__PURE__ */_value("id", (_scope, id) => _attr(_scope["#li/0"], "id", id), () => _inConditionalScope(_id$ifBody, "#text/4"));
 const _i$forBody = /* @__PURE__ */_value("i", null, () => _expr_input_i$forBody);

@@ -1,71 +1,70 @@
-// size: 589 (min) 211 (brotli)
+// size: 562 (min) 199 (brotli)
 
 import {
-  register as n,
+  effect as n,
   on as c,
   state as t,
   data as o,
-  queueEffect as r,
-  init as i,
+  init as r,
 } from "@marko/runtime-tags/dom";
-const u = n("a0", (n) =>
+const i = n("a0", (n) =>
     c(
       n[6],
       "click",
       ((n) => {
         const { 11: c } = n;
         return function () {
-          a(n, c + 1);
+          u(n, c + 1);
         };
       })(n),
     ),
   ),
-  a = t(11, (n, c) => {
-    o(n[7], c), r(n, u);
+  u = t(11, (n, c) => {
+    o(n[7], c), i(n);
   }),
-  s = n("a1", (n) =>
+  a = n("a1", (n) =>
     c(
       n[4],
       "click",
       ((n) => {
         const { 10: c } = n;
         return function () {
-          e(n, c + 1);
+          s(n, c + 1);
         };
       })(n),
     ),
   ),
-  e = t(10, (n, c) => {
-    o(n[5], c), r(n, s);
+  s = t(10, (n, c) => {
+    o(n[5], c), a(n);
   }),
-  f = n("a2", (n) =>
+  e = n("a2", (n) =>
     c(
       n[2],
       "click",
       ((n) => {
         const { 9: c } = n;
         return function () {
-          k(n, c + 1);
+          f(n, c + 1);
         };
       })(n),
     ),
   ),
-  k = t(9, (n, c) => {
-    o(n[3], c), r(n, f);
+  f = t(9, (n, c) => {
+    o(n[3], c), e(n);
   }),
-  m = n("a3", (n) =>
+  k = n("a3", (n) =>
     c(
       n[0],
       "click",
       ((n) => {
         const { 8: c } = n;
         return function () {
-          l(n, c + 1);
+          m(n, c + 1);
         };
       })(n),
     ),
   ),
-  l = t(8, (n, c) => {
-    o(n[1], c), r(n, m);
+  m = t(8, (n, c) => {
+    o(n[1], c), k(n);
   });
-i();
+r();

@@ -1,11 +1,11 @@
-// size: 594 (min) 331 (brotli)
+// size: 585 (min) 319 (brotli)
 
 import {
-  register as t,
+  effect as t,
   getAbortSignal as n,
   value as o,
   resetAbortSignal as r,
-  queueEffect as i,
+  register as i,
   createRenderer as e,
   on as c,
   state as d,
@@ -23,16 +23,16 @@ const s = t("a0", (t) => {
       })(t));
   }),
   b = o(1, (t, n) => {
-    r(t, 0), i(t, s);
+    r(t, 0), s(t);
   }),
-  a = t(
+  a = i(
     "b0",
     (t) =>
       function (n) {
         t._[1].innerHTML = n;
       },
   ),
-  l = t(
+  l = i(
     "b1",
     e("<div>child</div>", "/b&", (t) => {
       t[0], b(t[0], { write: a(t) });
@@ -52,6 +52,6 @@ const s = t("a0", (t) => {
     ),
   ),
   k = d(3, (t, n) => {
-    i(t, w), f(t, n ? l : null);
+    w(t), f(t, n ? l : null);
   });
 m();

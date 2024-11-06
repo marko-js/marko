@@ -1,7 +1,7 @@
-// size: 131 (min) 99 (brotli)
+// size: 129 (min) 100 (brotli)
 
 import {
-  register as m,
+  effect as m,
   attrsEvents as a,
   init as o,
 } from "@marko/runtime-tags/dom";

@@ -1,6 +1,6 @@
 export const _template_ = "<div><button> </button></div>";
 export const _walks_ = /* next(1), get, next(1), get, out(2) */"D D m";
-import { on as _on, data as _data, register as _register, queueEffect as _queueEffect, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, data as _data, effect as _effect, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _unused_2 = (_scope, unused_2) => {};
 const _unused_ = (_scope, unused_1) => {};
 const _onClick = _scope => {
@@ -11,10 +11,10 @@ const _onClick = _scope => {
     _clickCount(_scope, clickCount + 1);
   };
 };
-const _clickCount_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
+const _clickCount_effect = _effect("packages/translator-tags/src/__tests__/fixtures/basic-unused-ref/template.marko_0_clickCount", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _clickCount = /* @__PURE__ */_state("clickCount", (_scope, clickCount) => {
   _data(_scope["#text/1"], clickCount);
-  _queueEffect(_scope, _clickCount_effect);
+  _clickCount_effect(_scope);
 });
 export function _setup_(_scope) {
   _unused_(_scope, 123);

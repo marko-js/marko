@@ -742,7 +742,7 @@ export function writeSignals(section: Section) {
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
         callRuntime(
-          "register",
+          "effect",
           t.stringLiteral(
             getResumeRegisterId(section, signal.referencedBindings),
           ),
@@ -757,7 +757,7 @@ export function writeSignals(section: Section) {
       );
       signal.render.push(
         t.expressionStatement(
-          callRuntime("queueEffect", scopeIdentifier, effectIdentifier),
+          t.callExpression(effectIdentifier, [scopeIdentifier]),
         ),
       );
     }

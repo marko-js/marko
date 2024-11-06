@@ -1,13 +1,13 @@
-// size: 1257 (min) 593 (brotli)
+// size: 1248 (min) 584 (brotli)
 
 import {
-  register as n,
+  effect as n,
   getAbortSignal as o,
   value as i,
   intersection as t,
   resetAbortSignal as d,
-  queueEffect as l,
-  data as r,
+  data as l,
+  register as r,
   createRenderer as v,
   on as c,
   dynamicClosure as e,
@@ -29,15 +29,15 @@ const f = "<div> </div>",
     })(n);
   }),
   g = t(2, (n) => {
-    d(n, 0), l(n, _);
+    d(n, 0), _(n);
   }),
   k = i(4, null, () => g),
   h = i(
     3,
-    (n, o) => r(n[0], o),
+    (n, o) => l(n[0], o),
     () => g,
   );
-n(
+r(
   "b0",
   (n) =>
     function (o) {
@@ -70,7 +70,7 @@ const p = t(
   ),
   T = a(
     1,
-    n(
+    r(
       "b1",
       v(
         `<div>${f}</div>`,
@@ -108,7 +108,7 @@ const p = t(
   ),
   z = a(
     2,
-    n(
+    r(
       "b2",
       v(
         `<div>${f}<!></div>`,
@@ -137,7 +137,7 @@ const p = t(
   B = $(
     3,
     (n, o) => {
-      l(n, A), z(n, [o]);
+      A(n), z(n, [o]);
     },
     () => b([z, m(w, 2)]),
   );

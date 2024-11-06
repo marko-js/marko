@@ -1,7 +1,7 @@
 export const _template_ = "<!><!><button id=changeTag></button>";
 export const _walks_ = /* replace, over(1), get, over(1) */"D%b b";
 import { _setup_ as _counter, _template_ as _counter_template, _walks_ as _counter_walks } from "./components/counter.marko";
-import { on as _on, createRendererWithOwner as _createRendererWithOwner, register as _register, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, queueEffect as _queueEffect, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, createRendererWithOwner as _createRendererWithOwner, register as _register, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, effect as _effect, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _setup$tagNameBody = _scope => {
   _counter(_scope["#childScope/0"]);
 };
@@ -16,9 +16,9 @@ const _onClick = _scope => {
     _tagName(_scope, tagName === "span" ? "div" : "span");
   };
 };
-const _tagName_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
+const _tagName_effect = _effect("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
 const _tagName = /* @__PURE__ */_state("tagName", (_scope, tagName) => {
-  _queueEffect(_scope, _tagName_effect);
+  _tagName_effect(_scope);
   _dynamicTagName(_scope, tagName || _tagNameBody(_scope));
 }, () => _dynamicTagName);
 export function _setup_(_scope) {

@@ -1,18 +1,17 @@
-// size: 214 (min) 147 (brotli)
+// size: 193 (min) 141 (brotli)
 
 import {
-  register as o,
+  effect as o,
   state as m,
   data as t,
-  queueEffect as r,
-  init as a,
+  init as r,
 } from "@marko/runtime-tags/dom";
-const n = m(3, (o, m) => t(o[1], m)),
-  s = o("a0", (o) => {
+const a = m(3, (o, m) => t(o[1], m)),
+  n = o("a0", (o) => {
     const { 2: m } = o;
-    n(o, m), c(o, 2);
+    a(o, m), s(o, 2);
   }),
-  c = m(2, (o, m) => {
-    t(o[0], m), r(o, s);
+  s = m(2, (o, m) => {
+    t(o[0], m), n(o);
   });
-a();
+r();

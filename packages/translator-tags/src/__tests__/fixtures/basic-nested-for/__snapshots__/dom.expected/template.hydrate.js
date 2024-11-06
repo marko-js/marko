@@ -1,14 +1,14 @@
-// size: 808 (min) 410 (brotli)
+// size: 801 (min) 407 (brotli)
 
 import {
   value as o,
   data as i,
   register as n,
   createRenderer as l,
-  on as t,
-  closure as d,
-  state as v,
-  queueEffect as c,
+  effect as t,
+  on as d,
+  closure as v,
+  state as c,
   intersections as r,
   inLoopScope as u,
   intersection as m,
@@ -28,7 +28,7 @@ const D = o(3, (o, n) => i(o[0], n)),
     },
     () => s(0, D),
   ),
-  f = d(2, null, void 0, () => a),
+  f = v(2, null, void 0, () => a),
   g = o(2, null, () => a),
   k = o(
     1,
@@ -52,7 +52,7 @@ const D = o(3, (o, n) => i(o[0], n)),
     ),
   ),
   h = o(2, null, () => u(f, 0)),
-  p = d(
+  p = v(
     2,
     (o, i) => $(o, [i]),
     void 0,
@@ -77,8 +77,8 @@ const D = o(3, (o, n) => i(o[0], n)),
       ),
     ),
   ),
-  q = n("b2", (o) =>
-    t(
+  q = t("b2", (o) =>
+    d(
       o[0],
       "click",
       ((o) => {
@@ -89,10 +89,10 @@ const D = o(3, (o, n) => i(o[0], n)),
       })(o),
     ),
   ),
-  w = v(
+  w = c(
     2,
     (o, i) => {
-      c(o, q), j(o, [i]);
+      q(o), j(o, [i]);
     },
     () => r([j, u(p, 1)]),
   );

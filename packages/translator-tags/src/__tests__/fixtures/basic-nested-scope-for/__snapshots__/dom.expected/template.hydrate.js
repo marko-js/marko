@@ -1,7 +1,7 @@
-// size: 382 (min) 223 (brotli)
+// size: 380 (min) 225 (brotli)
 
 import {
-  register as t,
+  effect as t,
   on as n,
   state as o,
   inLoopScope as c,

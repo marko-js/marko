@@ -1,8 +1,8 @@
 export const _template_ = "<div> </div>";
 export const _walks_ = /* next(1), get, out(1) */"D l";
 export const _setup_ = () => {};
-import { data as _data, resetAbortSignal as _resetAbortSignal, getAbortSignal as _getAbortSignal, register as _register, queueEffect as _queueEffect, intersection as _intersection, value as _value, intersections as _intersections, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _effect = _scope => {
+import { data as _data, resetAbortSignal as _resetAbortSignal, getAbortSignal as _getAbortSignal, effect as _effect, intersection as _intersection, value as _value, intersections as _intersections, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _effect2 = _scope => {
   const {
     name,
     write
@@ -11,7 +11,7 @@ const _effect = _scope => {
     write(`destroyed ${name}`);
   };
 };
-const _expr_name_write_effect = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/components/child.marko_0_name_write", _scope => {
+const _expr_name_write_effect = _effect("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/components/child.marko_0_name_write", _scope => {
   const {
     name,
     write
@@ -21,7 +21,7 @@ const _expr_name_write_effect = _register("packages/translator-tags/src/__tests_
   // care and then restore the `write` call below.
 
   // write(`mounted ${name}`);
-  _getAbortSignal(_scope, 0).onabort = _effect(_scope);
+  _getAbortSignal(_scope, 0).onabort = _effect2(_scope);
 });
 const _expr_name_write = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -29,7 +29,7 @@ const _expr_name_write = /* @__PURE__ */_intersection(2, _scope => {
     write
   } = _scope;
   _resetAbortSignal(_scope, 0);
-  _queueEffect(_scope, _expr_name_write_effect);
+  _expr_name_write_effect(_scope);
 });
 export const _write_ = /* @__PURE__ */_value("write", null, () => _expr_name_write);
 export const _name_ = /* @__PURE__ */_value("name", (_scope, name) => _data(_scope["#text/0"], name), () => _expr_name_write);

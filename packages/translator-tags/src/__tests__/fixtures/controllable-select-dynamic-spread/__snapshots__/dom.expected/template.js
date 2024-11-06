@@ -1,7 +1,7 @@
 export const _template_ = "<!><!><span> </span>";
 export const _walks_ = /* replace, over(1), next(1), get, out(1) */"D%bD l";
-import { attrs as _attrs, attrsEvents as _attrsEvents, data as _data, createRendererWithOwner as _createRendererWithOwner, register as _register, queueEffect as _queueEffect, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value2, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _setup$tagSelectBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_1", _scope => {
+import { attrs as _attrs, attrsEvents as _attrsEvents, data as _data, createRendererWithOwner as _createRendererWithOwner, effect as _effect, register as _register, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value2, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _setup$tagSelectBody_effect = _effect("packages/translator-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_1", _scope => {
   _attrsEvents(_scope, "#option/0");
   _attrsEvents(_scope, "#option/1");
   _attrsEvents(_scope, "#option/2");
@@ -16,7 +16,7 @@ const _setup$tagSelectBody = _scope => {
   _attrs(_scope, "#option/2", {
     value: "c"
   });
-  _queueEffect(_scope, _setup$tagSelectBody_effect);
+  _setup$tagSelectBody_effect(_scope);
 };
 const _tagSelectBody = _register("packages/translator-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_1_renderer", /* @__PURE__ */_createRendererWithOwner("<option>A</option><option>B</option><option>C</option>", /* get, over(1), get, over(1), get */" b b ", _setup$tagSelectBody));
 const _tagSelect_input = _dynamicTagAttrs("#text/0", _tagSelectBody);

@@ -70,9 +70,9 @@ container.querySelector("#toggle").click()
 # Error
 ```
 Error: Change handler '_y_change' cannot change from a function to null
-    at _y_change (/packages/runtime-tags/src/dom/signals.ts:44:19)
+    at _y_change (/packages/runtime-tags/src/dom/signals.ts:45:19)
     at /packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko:5:11
-    at signal (/packages/runtime-tags/src/dom/signals.ts:115:13)
+    at signal (/packages/runtime-tags/src/dom/signals.ts:116:13)
     at runSignals (/packages/runtime-tags/src/dom/queue.ts:91:5)
     at run (/packages/runtime-tags/src/dom/queue.ts:52:5)
     at csr (/packages/translator-tags/src/__tests__/main.test.ts:284:17)

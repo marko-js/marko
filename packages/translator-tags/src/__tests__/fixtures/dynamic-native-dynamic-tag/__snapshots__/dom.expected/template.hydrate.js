@@ -1,12 +1,12 @@
-// size: 458 (min) 272 (brotli)
+// size: 451 (min) 280 (brotli)
 
 import {
   register as n,
   createRendererWithOwner as o,
   dynamicTagAttrs as t,
-  on as c,
-  state as s,
-  queueEffect as a,
+  effect as c,
+  on as s,
+  state as a,
   conditional as r,
   intersection as i,
   init as m,
@@ -22,8 +22,8 @@ const l = n("a0", o("body content", "")),
     () => u,
   ),
   e = r(0, null, () => d),
-  p = n("a1", (n) =>
-    c(
+  p = c("a1", (n) =>
+    s(
       n[1],
       "click",
       ((n) => {
@@ -34,10 +34,10 @@ const l = n("a0", o("body content", "")),
       })(n),
     ),
   ),
-  f = s(
+  f = a(
     2,
     (n, o) => {
-      a(n, p), e(n, o || l(n));
+      p(n), e(n, o || l(n));
     },
     () => e,
   );

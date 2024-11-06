@@ -1,11 +1,11 @@
-// size: 381 (min) 223 (brotli)
+// size: 374 (min) 224 (brotli)
 
 import {
-  register as o,
+  effect as o,
   on as t,
   value as n,
-  queueEffect as c,
-  data as r,
+  data as c,
+  register as r,
   state as m,
   intersections as i,
   inChild as s,
@@ -15,9 +15,9 @@ const u = o("a0", (o) => {
     const { 5: n } = o;
     t(o[0], "click", n);
   }),
-  e = n(5, (o, t) => c(o, u)),
-  f = n(4, (o, t) => r(o[1], t)),
-  k = o("b0", (o) => {
+  e = n(5, (o, t) => u(o)),
+  f = n(4, (o, t) => c(o[1], t)),
+  k = r("b0", (o) => {
     const { 1: t } = o;
     return function () {
       b(o, t + 1);

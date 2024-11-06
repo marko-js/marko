@@ -1,6 +1,6 @@
 export const _template_ = "<button>Toggle</button><div></div><!><!>";
 export const _walks_ = /* get, over(1), get, over(1), replace, over(1) */" b b%bD";
-import { on as _on, register as _register, inChild as _inChild, createRenderer as _createRenderer, conditional as _conditional, queueEffect as _queueEffect, state as _state, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, register as _register, inChild as _inChild, createRenderer as _createRenderer, conditional as _conditional, effect as _effect, state as _state, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _write = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-shallow/template.marko_1/write", _scope => function (state) {
   _scope._["#div/1"].innerHTML = state;
 });
@@ -21,9 +21,9 @@ const _onClick = _scope => {
     _show(_scope, !show);
   };
 };
-const _show_effect = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-shallow/template.marko_0_show", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
+const _show_effect = _effect("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-shallow/template.marko_0_show", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _show = /* @__PURE__ */_state("show", (_scope, show) => {
-  _queueEffect(_scope, _show_effect);
+  _show_effect(_scope);
   _if(_scope, show ? _ifBody : null);
 });
 export function _setup_(_scope) {

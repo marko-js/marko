@@ -1,11 +1,11 @@
-// size: 586 (min) 308 (brotli)
+// size: 577 (min) 302 (brotli)
 
 import {
-  register as n,
+  effect as n,
   on as t,
   state as o,
   data as c,
-  queueEffect as i,
+  register as i,
   createRendererWithOwner as u,
   dynamicTagAttrs as r,
   conditional as s,
@@ -24,9 +24,9 @@ const m = n("a0", (n) =>
     ),
   ),
   b = o(2, (n, t) => {
-    c(n[1], t), i(n, m);
+    c(n[1], t), m(n);
   });
-const f = n(
+const f = i(
     "b0",
     u("<button id=count> </button>", "/ D l&", (n) => {
       !(function (n) {
@@ -55,7 +55,7 @@ const f = n(
   l = o(
     2,
     (n, t) => {
-      i(n, k), e(n, t || f(n));
+      k(n), e(n, t || f(n));
     },
     () => e,
   );

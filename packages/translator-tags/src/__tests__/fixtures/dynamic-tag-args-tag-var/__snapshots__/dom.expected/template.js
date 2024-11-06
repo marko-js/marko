@@ -2,7 +2,7 @@ export const _template_ = "<!><button>Count: <!></button><!><div>Parent: <!></di
 export const _walks_ = /* get, next(1), over(1), replace, out(1), replace, over(1), next(1), over(1), replace, out(1) */"D Db%l%bDb%l";
 import customTag from './components/custom-tag.marko';
 const tags = [customTag];
-import { on as _on, data as _data, setTagVar as _setTagVar, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, registerBoundSignal as _registerBoundSignal, register as _register, queueEffect as _queueEffect, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, data as _data, setTagVar as _setTagVar, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value, registerBoundSignal as _registerBoundSignal, effect as _effect, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _tags0_input = _dynamicTagAttrs("#text/2");
 const _expr_Text_x = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -20,10 +20,10 @@ const _onClick = _scope => {
     _x(_scope, x + 1);
   };
 };
-const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args-tag-var/template.marko_0_x", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
+const _x_effect = _effect("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args-tag-var/template.marko_0_x", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _x = /* @__PURE__ */_state("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
-  _queueEffect(_scope, _x_effect);
+  _x_effect(_scope);
 }, () => _expr_Text_x);
 export function _setup_(_scope) {
   _x(_scope, 1);

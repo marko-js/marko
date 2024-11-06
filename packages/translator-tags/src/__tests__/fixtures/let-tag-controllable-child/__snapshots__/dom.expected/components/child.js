@@ -1,7 +1,7 @@
 export const _template_ = "<button><!>|<!></button><button><!>|<!></button>";
 export const _walks_ = /* get, next(1), replace, over(2), replace, out(1), get, next(1), replace, over(2), replace, out(1) */" D%c%l D%c%l";
 export const _setup_ = () => {};
-import { on as _on, data as _data, register as _register, queueEffect as _queueEffect, intersection as _intersection, state as _state2, value as _value, changeHandler as _changeHandler, intersections as _intersections, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, data as _data, effect as _effect, intersection as _intersection, state as _state2, value as _value, changeHandler as _changeHandler, intersections as _intersections, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onClick = _scope => {
   const {
     _otherState_change,
@@ -11,13 +11,13 @@ const _onClick = _scope => {
     _otherState(_scope, otherState + 1, _otherState_change);
   };
 };
-const _expr__otherState_change_otherState_effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0__otherState_change_otherState", _scope => _on(_scope["#button/3"], "click", _onClick(_scope)));
+const _expr__otherState_change_otherState_effect = _effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0__otherState_change_otherState", _scope => _on(_scope["#button/3"], "click", _onClick(_scope)));
 const _expr__otherState_change_otherState = /* @__PURE__ */_intersection(2, _scope => {
   const {
     _otherState_change,
     otherState
   } = _scope;
-  _queueEffect(_scope, _expr__otherState_change_otherState_effect);
+  _expr__otherState_change_otherState_effect(_scope);
 });
 const _onClick2 = _scope => {
   const {
@@ -28,13 +28,13 @@ const _onClick2 = _scope => {
     _state(_scope, state + 1, _state_change);
   };
 };
-const _expr__state_change_state_effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0__state_change_state", _scope => _on(_scope["#button/0"], "click", _onClick2(_scope)));
+const _expr__state_change_state_effect = _effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0__state_change_state", _scope => _on(_scope["#button/0"], "click", _onClick2(_scope)));
 const _expr__state_change_state = /* @__PURE__ */_intersection(2, _scope => {
   const {
     _state_change,
     state
   } = _scope;
-  _queueEffect(_scope, _expr__state_change_state_effect);
+  _expr__state_change_state_effect(_scope);
 });
 const _otherState = /* @__PURE__ */_state2("otherState", (_scope, otherState) => _data(_scope["#text/5"], otherState), () => _expr__otherState_change_otherState);
 const _otherState_change = _changeHandler("_otherState_change", /* @__PURE__ */_value("_otherState_change", (_scope, _otherState_change) => {}, () => _expr__otherState_change_otherState));

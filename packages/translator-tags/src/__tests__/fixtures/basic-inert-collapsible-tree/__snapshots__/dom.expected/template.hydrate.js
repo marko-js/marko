@@ -1,14 +1,14 @@
-// size: 1102 (min) 566 (brotli)
+// size: 1095 (min) 562 (brotli)
 
 import {
   register as n,
   createRenderer as t,
-  on as o,
-  closure as l,
-  state as m,
-  attr as c,
-  data as i,
-  queueEffect as u,
+  effect as o,
+  on as l,
+  closure as m,
+  state as c,
+  attr as i,
+  data as u,
   value as s,
   intersections as a,
   intersection as d,
@@ -29,8 +29,8 @@ const f = d(
     },
     () => e(0, B),
   ),
-  k = l(8, null, void 0, () => f),
-  $ = l(6, null, void 0, () => f),
+  k = m(8, null, void 0, () => f),
+  $ = m(6, null, void 0, () => f),
   _ = n(
     "a0",
     t(
@@ -54,8 +54,8 @@ const f = d(
     () => j,
   ),
   x = v(4),
-  D = n("a1", (n) =>
-    o(
+  D = o("a1", (n) =>
+    l(
       n[2],
       "click",
       ((n) => {
@@ -66,19 +66,19 @@ const f = d(
       })(n),
     ),
   ),
-  E = m(9, (n, t) => {
-    c(n[0], "hidden", !t), i(n[3], t ? "[-]" : "[+]"), u(n, D);
+  E = c(9, (n, t) => {
+    i(n[0], "hidden", !t), u(n[3], t ? "[-]" : "[+]"), D(n);
   }),
   j = s(
     8,
-    (n, t) => c(n[0], "id", t),
+    (n, t) => i(n[0], "id", t),
     () => r(k, 4),
   ),
   q = s(7, null, () => g),
   w = s(
     6,
     (n, t) => {
-      i(n[1], t.text), x(n, t.comments ? _ : null);
+      u(n[1], t.text), x(n, t.comments ? _ : null);
     },
     () => a([x, r($, 4)]),
   ),
@@ -89,7 +89,7 @@ const f = d(
     },
     () => a([w, q]),
   ),
-  z = l(2, null, void 0, () => g),
+  z = m(2, null, void 0, () => g),
   A = b(
     0,
     n(

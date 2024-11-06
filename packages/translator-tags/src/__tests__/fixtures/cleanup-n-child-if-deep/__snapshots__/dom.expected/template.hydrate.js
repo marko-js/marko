@@ -1,13 +1,13 @@
-// size: 1562 (min) 633 (brotli)
+// size: 1549 (min) 627 (brotli)
 
 import {
-  register as n,
+  effect as n,
   getAbortSignal as t,
   value as o,
   data as i,
   intersection as c,
   resetAbortSignal as r,
-  queueEffect as l,
+  register as l,
   createRenderer as u,
   registerSubscriber as d,
   dynamicClosure as e,
@@ -33,7 +33,7 @@ const p = "<div><!> a</div><span><!> a</span><p><!> a</p>",
       })(n));
   }),
   M = c(2, (n) => {
-    r(n, 0), l(n, k);
+    r(n, 0), k(n);
   }),
   g = o(6, null, () => M),
   y = o(
@@ -43,7 +43,7 @@ const p = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     },
     () => M,
   );
-n(
+l(
   "b0",
   (n) =>
     function (t) {
@@ -56,7 +56,7 @@ const H = e(
     (n) => n._._._,
     () => a(0, g),
   ),
-  I = n(
+  I = l(
     "b1",
     u(
       `${p}`,
@@ -83,7 +83,7 @@ const H = e(
       () => L,
     ),
   ),
-  h = n(
+  h = l(
     "b3",
     u(
       `<div>${p}<!></div>`,
@@ -107,7 +107,7 @@ const H = e(
     void 0,
     () => j,
   ),
-  x = n(
+  x = l(
     "b4",
     u(
       `<div>${p}<!></div>`,
@@ -133,7 +133,7 @@ const H = e(
   ),
   B = $(
     7,
-    (n, t) => l(n, A),
+    (n, t) => A(n),
     () => _(7),
   ),
   C = n("b6", (n) =>
@@ -150,7 +150,7 @@ const H = e(
   ),
   E = $(
     6,
-    (n, t) => l(n, C),
+    (n, t) => C(n),
     () => m(w, 4),
   ),
   F = n("b7", (n) =>
@@ -168,7 +168,7 @@ const H = e(
   G = $(
     5,
     (n, t) => {
-      l(n, F), z(n, t ? x : null);
+      F(n), z(n, t ? x : null);
     },
     () => z,
   );

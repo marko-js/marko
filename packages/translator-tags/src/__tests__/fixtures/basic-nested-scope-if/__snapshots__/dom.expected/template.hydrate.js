@@ -1,27 +1,27 @@
-// size: 564 (min) 315 (brotli)
+// size: 557 (min) 322 (brotli)
 
 import {
   register as t,
   createRenderer as o,
-  on as n,
-  closure as a,
-  data as i,
-  queueEffect as c,
+  effect as n,
+  on as a,
+  closure as i,
+  data as c,
   state as s,
   intersections as m,
   inConditionalScope as r,
   conditional as u,
   init as e,
 } from "@marko/runtime-tags/dom";
-const b = a(1, (t, o) => i(t[0], o)),
+const b = i(1, (t, o) => c(t[0], o)),
   d = t(
     "a0",
     o("<span>The button was clicked <!> times.</span>", "Db%", void 0, () => [
       b,
     ]),
   ),
-  k = t("a1", (t) =>
-    n(
+  k = n("a1", (t) =>
+    a(
       t[0],
       "click",
       ((t) => {
@@ -34,8 +34,8 @@ const b = a(1, (t, o) => i(t[0], o)),
       })(t),
     ),
   ),
-  p = a(1, (t, o) => {
-    i(t[1], o), c(t, k);
+  p = i(1, (t, o) => {
+    c(t[1], o), k(t);
   }),
   f = t(
     "a2",

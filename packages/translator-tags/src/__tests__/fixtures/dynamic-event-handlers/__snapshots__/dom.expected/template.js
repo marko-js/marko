@@ -1,6 +1,6 @@
 export const _template_ = "<button> </button>";
 export const _walks_ = /* get, next(1), get, out(1) */" D l";
-import { on as _on, data as _data, register as _register, queueEffect as _queueEffect, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, data as _data, effect as _effect, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onClick = _scope => {
   const {
     clickCount
@@ -9,7 +9,7 @@ const _onClick = _scope => {
     _clickCount(_scope, clickCount + 1);
   };
 };
-const _clickCount_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount", _scope => {
+const _clickCount_effect = _effect("packages/translator-tags/src/__tests__/fixtures/dynamic-event-handlers/template.marko_0_clickCount", _scope => {
   const {
     clickCount
   } = _scope;
@@ -17,7 +17,7 @@ const _clickCount_effect = _register("packages/translator-tags/src/__tests__/fix
 });
 const _clickCount = /* @__PURE__ */_state("clickCount", (_scope, clickCount) => {
   _data(_scope["#text/1"], clickCount);
-  _queueEffect(_scope, _clickCount_effect);
+  _clickCount_effect(_scope);
 });
 export function _setup_(_scope) {
   _clickCount(_scope, 0);

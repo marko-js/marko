@@ -1,6 +1,6 @@
 export const _template_ = "<div><!><button>Toggle</button></div>";
 export const _walks_ = /* next(1), replace, over(1), get, out(1) */"D%b l";
-import { data as _data, on as _on, createRenderer as _createRenderer, register as _register, conditional as _conditional, queueEffect as _queueEffect, state as _state, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { data as _data, on as _on, createRenderer as _createRenderer, register as _register, conditional as _conditional, effect as _effect, state as _state, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _setup$ifBody = _scope => {
   _data(_scope["#text/0"], _scope.$global.x);
 };
@@ -14,9 +14,9 @@ const _onClick = _scope => {
     _show(_scope, !show);
   };
 };
-const _show_effect = _register("packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
+const _show_effect = _effect("packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
 const _show = /* @__PURE__ */_state("show", (_scope, show) => {
-  _queueEffect(_scope, _show_effect);
+  _show_effect(_scope);
   _if(_scope, show ? _ifBody : null);
 });
 export function _setup_(_scope) {

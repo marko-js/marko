@@ -1,7 +1,7 @@
-// size: 180 (min) 142 (brotli)
+// size: 178 (min) 143 (brotli)
 
 import {
-  register as o,
+  effect as o,
   state as t,
   data as m,
   init as r,

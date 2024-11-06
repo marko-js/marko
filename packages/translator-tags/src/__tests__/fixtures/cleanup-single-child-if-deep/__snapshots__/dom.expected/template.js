@@ -1,6 +1,6 @@
 export const _template_ = "<button id=outer>Toggle Outer</button><button id=middle>Toggle Middle</button><button id=inner>Toggle Inner</button><pre></pre><!><!>";
 export const _walks_ = /* get, over(1), get, over(1), get, over(1), get, over(1), replace, over(1) */" b b b b%bD";
-import { on as _on, register as _register, inChild as _inChild, createRenderer as _createRenderer, dynamicClosure as _dynamicClosure, conditional as _conditional, registerSubscriber as _registerSubscriber, closure as _closure, inConditionalScope as _inConditionalScope, dynamicSubscribers as _dynamicSubscribers, intersections as _intersections, value as _value, queueEffect as _queueEffect, state as _state, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, register as _register, inChild as _inChild, createRenderer as _createRenderer, dynamicClosure as _dynamicClosure, conditional as _conditional, registerSubscriber as _registerSubscriber, closure as _closure, inConditionalScope as _inConditionalScope, dynamicSubscribers as _dynamicSubscribers, intersections as _intersections, value as _value, effect as _effect, state as _state, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _write = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0/write", _scope => function (msg) {
   _scope["#pre/3"].innerHTML += '\n' + msg;
 });
@@ -37,8 +37,8 @@ const _onClick = _scope => {
     _showInner(_scope, !showInner);
   };
 };
-const _showInner_effect = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showInner", _scope => _on(_scope["#button/2"], "click", _onClick(_scope)));
-const _showInner = /* @__PURE__ */_state("showInner", (_scope, showInner) => _queueEffect(_scope, _showInner_effect), () => _dynamicSubscribers("showInner"));
+const _showInner_effect = _effect("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showInner", _scope => _on(_scope["#button/2"], "click", _onClick(_scope)));
+const _showInner = /* @__PURE__ */_state("showInner", (_scope, showInner) => _showInner_effect(_scope), () => _dynamicSubscribers("showInner"));
 const _onClick2 = _scope => {
   const {
     showMiddle
@@ -47,8 +47,8 @@ const _onClick2 = _scope => {
     _showMiddle(_scope, !showMiddle);
   };
 };
-const _showMiddle_effect = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showMiddle", _scope => _on(_scope["#button/1"], "click", _onClick2(_scope)));
-const _showMiddle = /* @__PURE__ */_state("showMiddle", (_scope, showMiddle) => _queueEffect(_scope, _showMiddle_effect), () => _inConditionalScope(_showMiddle$ifBody, "#text/4"));
+const _showMiddle_effect = _effect("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showMiddle", _scope => _on(_scope["#button/1"], "click", _onClick2(_scope)));
+const _showMiddle = /* @__PURE__ */_state("showMiddle", (_scope, showMiddle) => _showMiddle_effect(_scope), () => _inConditionalScope(_showMiddle$ifBody, "#text/4"));
 const _onClick3 = _scope => {
   const {
     showOuter
@@ -57,9 +57,9 @@ const _onClick3 = _scope => {
     _showOuter(_scope, !showOuter);
   };
 };
-const _showOuter_effect = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showOuter", _scope => _on(_scope["#button/0"], "click", _onClick3(_scope)));
+const _showOuter_effect = _effect("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showOuter", _scope => _on(_scope["#button/0"], "click", _onClick3(_scope)));
 const _showOuter = /* @__PURE__ */_state("showOuter", (_scope, showOuter) => {
-  _queueEffect(_scope, _showOuter_effect);
+  _showOuter_effect(_scope);
   _if(_scope, showOuter ? _ifBody : null);
 }, () => _if);
 export function _setup_(_scope) {

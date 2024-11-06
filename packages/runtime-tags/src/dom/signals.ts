@@ -1,6 +1,7 @@
 import { type Accessor, AccessorChar, type Scope } from "../common/types";
-import { queueSource, rendering } from "./queue";
+import { queueEffect, queueSource, rendering } from "./queue";
 import type { Renderer } from "./renderer";
+import { register } from "./resume";
 
 export type Signal = ValueSignal | IntersectionSignal;
 
@@ -341,5 +342,12 @@ export function intersections(
     for (const signal of signals) {
       signal(scope, op);
     }
+  };
+}
+
+export function effect(id: string, fn: (scope: Scope) => void) {
+  register(id, fn);
+  return (scope: Scope) => {
+    queueEffect(scope, fn);
   };
 }

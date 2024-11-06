@@ -1,12 +1,12 @@
-// size: 469 (min) 261 (brotli)
+// size: 460 (min) 279 (brotli)
 
 import {
-  register as n,
+  effect as n,
   getAbortSignal as o,
-  createRenderer as r,
-  on as t,
-  resetAbortSignal as i,
-  queueEffect as d,
+  register as r,
+  createRenderer as t,
+  on as i,
+  resetAbortSignal as d,
   state as e,
   conditional as a,
   init as c,
@@ -17,15 +17,15 @@ const m = n("a0", (n) => {
         n._[1].innerHTML += "\ndestroyed";
       });
   }),
-  u = n(
+  u = r(
     "a1",
-    r("<div>child</div>", "", (n) => {
-      i(n, 0), d(n, m);
+    t("<div>child</div>", "", (n) => {
+      d(n, 0), m(n);
     }),
   ),
   l = a(2),
   s = n("a2", (n) =>
-    t(
+    i(
       n[0],
       "click",
       ((n) => {
@@ -37,6 +37,6 @@ const m = n("a0", (n) => {
     ),
   ),
   f = e(3, (n, o) => {
-    d(n, s), l(n, o ? u : null);
+    s(n), l(n, o ? u : null);
   });
 c();

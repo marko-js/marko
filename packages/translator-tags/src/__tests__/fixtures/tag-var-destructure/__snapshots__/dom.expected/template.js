@@ -2,13 +2,13 @@ export const _template_ = "<button><pre>a    1    <!></pre><pre>b    2    <!></p
 export const _walks_ = /* get, next(2), over(1), replace, out(1), next(1), over(1), replace, out(1), next(1), over(1), replace, out(1), next(1), over(1), replace, out(1), next(1), over(1), replace, out(2) */" Eb%lDb%lDb%lDb%lDb%m";
 _register("packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0/noop", noop);
 function noop(_) {}
-import { register as _register, on as _on, data as _data, state as _state, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { register as _register, on as _on, data as _data, state as _state, effect as _effect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _e = /* @__PURE__ */_state("e", (_scope, e) => _data(_scope["#text/5"], JSON.stringify(e)));
 const _d = /* @__PURE__ */_state("d", (_scope, d) => _data(_scope["#text/4"], d));
 const _c = /* @__PURE__ */_state("c", (_scope, c) => _data(_scope["#text/3"], JSON.stringify(c)));
 const _b = /* @__PURE__ */_state("b", (_scope, b) => _data(_scope["#text/2"], b));
 const _a = /* @__PURE__ */_state("a", (_scope, a) => _data(_scope["#text/1"], a));
-const _setup__effect = _register("packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0", _scope => _on(_scope["#button/0"], "click", function () {
+const _setup__effect = _effect("packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0", _scope => _on(_scope["#button/0"], "click", function () {
   let local;
   let _a2;
   let _b2;
@@ -42,7 +42,7 @@ const _setup__effect = _register("packages/translator-tags/src/__tests__/fixture
   _e(_scope, _e2);
 }));
 export function _setup_(_scope) {
-  _queueEffect(_scope, _setup__effect);
+  _setup__effect(_scope);
   _a(_scope, 0);
   _b(_scope, 0);
   _c(_scope, {});

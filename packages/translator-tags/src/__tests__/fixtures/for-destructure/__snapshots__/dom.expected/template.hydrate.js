@@ -1,22 +1,22 @@
-// size: 615 (min) 339 (brotli)
+// size: 608 (min) 327 (brotli)
 
 import {
   register as i,
   createRenderer as c,
-  on as t,
-  value as n,
-  state as o,
-  queueEffect as r,
+  effect as t,
+  on as n,
+  value as o,
+  state as r,
   loopOf as a,
   data as e,
   init as d,
 } from "@marko/runtime-tags/dom";
-const s = n(5, (i, c) => e(i[1], c)),
-  m = n(4, (i, c) => e(i[0], c)),
-  v = n(3, (i, c) => {
+const s = o(5, (i, c) => e(i[1], c)),
+  m = o(4, (i, c) => e(i[0], c)),
+  v = o(3, (i, c) => {
     m(i, c.name), s(i, c.description);
   }),
-  u = n(2, (i, c) => v(i, c[0])),
+  u = o(2, (i, c) => v(i, c[0])),
   p = a(
     0,
     i(
@@ -24,8 +24,8 @@ const s = n(5, (i, c) => e(i[1], c)),
       c("<div><!>: <!></div>", "D%c%", void 0, void 0, void 0, () => u),
     ),
   ),
-  f = i("a1", (i) => {
-    t(
+  f = t("a1", (i) => {
+    n(
       i[1],
       "click",
       ((i) => {
@@ -38,7 +38,7 @@ const s = n(5, (i, c) => e(i[1], c)),
         };
       })(i),
     ),
-      t(
+      n(
         i[2],
         "click",
         ((i) => {
@@ -49,7 +49,7 @@ const s = n(5, (i, c) => e(i[1], c)),
         })(i),
       );
   }),
-  k = o(3, (i, c) => {
-    r(i, f), p(i, [c]);
+  k = r(3, (i, c) => {
+    f(i), p(i, [c]);
   });
 d();

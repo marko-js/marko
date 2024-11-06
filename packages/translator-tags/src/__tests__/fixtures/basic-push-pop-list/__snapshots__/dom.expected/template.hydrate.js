@@ -1,25 +1,25 @@
-// size: 574 (min) 324 (brotli)
+// size: 565 (min) 317 (brotli)
 
 import {
   register as o,
   createRenderer as n,
-  on as c,
-  value as t,
-  state as i,
-  queueEffect as r,
+  effect as c,
+  on as t,
+  value as i,
+  state as r,
   data as s,
   intersection as u,
   loopOf as a,
   init as l,
 } from "@marko/runtime-tags/dom";
-const m = t(2, (o, n) => s(o[0], n)),
-  d = t(1, (o, n) => m(o, n[0])),
+const m = i(2, (o, n) => s(o[0], n)),
+  d = i(1, (o, n) => m(o, n[0])),
   e = o(
     "a0",
     n(" ", " ", void 0, void 0, void 0, () => d),
   ),
-  f = o("a1", (o) =>
-    c(
+  f = c("a1", (o) =>
+    t(
       o[1],
       "click",
       ((o) => {
@@ -32,11 +32,11 @@ const m = t(2, (o, n) => s(o[0], n)),
     ),
   ),
   k = u(2, (o) => {
-    r(o, f);
+    f(o);
   }),
   v = a(0, e),
-  g = o("a2", (o) =>
-    c(
+  g = c("a2", (o) =>
+    t(
       o[2],
       "click",
       ((o) => {
@@ -47,12 +47,12 @@ const m = t(2, (o, n) => s(o[0], n)),
       })(o),
     ),
   ),
-  p = i(
+  p = r(
     4,
     (o, n) => {
-      r(o, g), v(o, [n]);
+      g(o), v(o, [n]);
     },
     () => k,
   ),
-  b = i(3, null, () => k);
+  b = r(3, null, () => k);
 l();

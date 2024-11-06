@@ -39,7 +39,7 @@ export {
   styleAttr,
 } from "./dom/dom";
 export { on } from "./dom/event";
-export { queueEffect, run } from "./dom/queue";
+export { run } from "./dom/queue";
 export {
   createRenderer,
   createRendererWithOwner,
@@ -59,6 +59,7 @@ export {
   closure,
   dynamicClosure,
   dynamicSubscribers,
+  effect,
   inChild,
   intersection,
   intersections,

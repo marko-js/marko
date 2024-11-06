@@ -1,12 +1,12 @@
-// size: 498 (min) 294 (brotli)
+// size: 491 (min) 292 (brotli)
 
 import {
-  register as o,
+  effect as o,
   on as t,
-  createRenderer as n,
-  value as i,
-  closure as r,
-  queueEffect as c,
+  register as n,
+  createRenderer as i,
+  value as r,
+  closure as c,
   state as m,
   intersections as u,
   inLoopScope as a,
@@ -14,8 +14,8 @@ import {
   loopTo as s,
   init as b,
 } from "@marko/runtime-tags/dom";
-const e = i(3, (o, t) => d(o[1], t)),
-  f = i(2, (o, t) => e(o, t[0])),
+const e = r(3, (o, t) => d(o[1], t)),
+  f = r(2, (o, t) => e(o, t[0])),
   k = o("a0", (o) =>
     t(
       o[0],
@@ -30,12 +30,12 @@ const e = i(3, (o, t) => d(o[1], t)),
       })(o),
     ),
   ),
-  v = r(1, (o, t) => c(o, k)),
+  v = c(1, (o, t) => k(o)),
   _ = s(
     0,
-    o(
+    n(
       "a1",
-      n(
+      i(
         "<button> </button>",
         " D ",
         void 0,

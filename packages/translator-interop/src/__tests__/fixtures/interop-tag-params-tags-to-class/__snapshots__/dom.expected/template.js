@@ -1,6 +1,6 @@
 export const _template_ = "<!><!><!>";
 export const _walks_ = /* replace, over(1) */"D%bD";
-import { data as _data, on as _on, register as _register, createRendererWithOwner as _createRendererWithOwner, intersection as _intersection, value as _value, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { data as _data, on as _on, register as _register, createRendererWithOwner as _createRendererWithOwner, intersection as _intersection, value as _value, effect as _effect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import _classLayout from "./components/class-layout.marko";
 import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 _register("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko", _classLayout);
@@ -29,10 +29,10 @@ const _onClick = _scope => {
     _multiplier(_scope._, multiplier + 1);
   };
 };
-const _multiplier$classLayoutBody_effect = _register("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
+const _multiplier$classLayoutBody_effect = _effect("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier", _scope => _on(_scope["#button/1"], "click", _onClick(_scope)));
 const _multiplier$classLayoutBody = _registerSubscriber("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber", /* @__PURE__ */_dynamicClosure("multiplier", (_scope, multiplier) => {
   _data(_scope["#text/2"], multiplier);
-  _queueEffect(_scope, _multiplier$classLayoutBody_effect);
+  _multiplier$classLayoutBody_effect(_scope);
 }, void 0, () => _expr_multiplier_baseCount$classLayoutBody));
 const _classLayoutBody = _register("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer", /* @__PURE__ */_createRendererWithOwner("<h1> </h1><button id=tags><!> * <!> = <!></button>", /* next(1), get, out(1), get, next(1), replace, over(2), replace, over(2), replace */"D l D%c%c%", void 0, () => [_multiplier$classLayoutBody], void 0, () => _params_2$classLayoutBody));
 const _classLayout_input = _dynamicTagAttrs("#text/0", _classLayoutBody);

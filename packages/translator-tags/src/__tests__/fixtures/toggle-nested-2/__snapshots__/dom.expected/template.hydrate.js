@@ -1,12 +1,12 @@
-// size: 876 (min) 405 (brotli)
+// size: 865 (min) 418 (brotli)
 
 import {
-  register as n,
+  effect as n,
   on as t,
   registerSubscriber as o,
   dynamicClosure as u,
   data as c,
-  queueEffect as i,
+  register as i,
   createRenderer as l,
   closure as r,
   state as a,
@@ -36,12 +36,12 @@ const m = n("a0", (n) =>
     u(
       4,
       (n, t) => {
-        c(n[1], t), i(n, m);
+        c(n[1], t), m(n);
       },
       (n) => n._._,
     ),
   ),
-  f = n(
+  f = i(
     "a2",
     l("<button id=count> </button>", " D ", void 0, () => [s]),
   ),
@@ -63,12 +63,12 @@ const m = n("a0", (n) =>
   D = r(
     3,
     (n, t) => {
-      i(n, v), k(n, t ? f : null);
+      v(n), k(n, t ? f : null);
     },
     void 0,
     () => k,
   ),
-  g = n(
+  g = i(
     "a4",
     l("<button id=inner></button><!><!>", " b%D", void 0, () => [D]),
   ),
@@ -90,7 +90,7 @@ const m = n("a0", (n) =>
   w = a(
     2,
     (n, t) => {
-      i(n, q), p(n, t ? g : null);
+      q(n), p(n, t ? g : null);
     },
     () => p,
   );

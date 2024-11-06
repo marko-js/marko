@@ -1,13 +1,13 @@
-// size: 697 (min) 395 (brotli)
+// size: 690 (min) 387 (brotli)
 
 import {
   dynamicTagAttrs as o,
-  register as r,
+  effect as r,
   attrsEvents as n,
   value as t,
   attrs as d,
-  queueEffect as e,
-  conditional as i,
+  conditional as e,
+  register as i,
   registerSubscriber as m,
   dynamicClosure as c,
   data as a,
@@ -19,7 +19,7 @@ import {
   init as y,
 } from "@marko/runtime-tags/dom";
 const B = o(1),
-  g = i(
+  g = e(
     1,
     (o) => B(o, () => ({})),
     () => B,
@@ -36,13 +36,13 @@ const B = o(1),
     3,
     (o, r) => {
       ((o, r) => {
-        d(o, 0, r), e(o, l);
+        d(o, 0, r), l(o);
       })(o, r),
         p(o, r.renderBody);
     },
     () => p,
   ),
-  C = r("b0", (o) => {
+  C = i("b0", (o) => {
     const { 1: r } = o;
     return function () {
       q(o, r + 1);
@@ -52,7 +52,7 @@ const B = o(1),
     "b1",
     c(1, (o, r) => a(o[0], r)),
   ),
-  j = r(
+  j = i(
     "b2",
     b(" ", " ", void 0, () => [h]),
   ),

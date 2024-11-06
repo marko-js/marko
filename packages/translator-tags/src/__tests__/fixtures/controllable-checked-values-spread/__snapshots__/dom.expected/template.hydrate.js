@@ -1,11 +1,11 @@
-// size: 599 (min) 262 (brotli)
+// size: 592 (min) 258 (brotli)
 
 import {
-  register as e,
+  effect as e,
   attrsEvents as c,
   value as a,
   attrs as u,
-  queueEffect as n,
+  register as n,
   state as h,
   data as l,
   intersections as o,
@@ -14,23 +14,23 @@ import {
 } from "@marko/runtime-tags/dom";
 const d = e("a0", (e) => c(e, 0)),
   V = a(2, (e, c) => {
-    u(e, 0, { type: "checkbox", ...c }), n(e, d);
+    u(e, 0, { type: "checkbox", ...c }), d(e);
   }),
-  b = e(
+  b = n(
     "b0",
     (e) =>
       function (c) {
         f(e, c);
       },
   ),
-  i = e(
+  i = n(
     "b1",
     (e) =>
       function (c) {
         f(e, c);
       },
   ),
-  m = e(
+  m = n(
     "b1",
     (e) =>
       function (c) {

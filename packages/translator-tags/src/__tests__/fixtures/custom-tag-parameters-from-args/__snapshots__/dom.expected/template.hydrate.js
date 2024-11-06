@@ -1,14 +1,14 @@
-// size: 652 (min) 355 (brotli)
+// size: 645 (min) 346 (brotli)
 
 import {
   dynamicTagAttrs as o,
-  register as i,
+  effect as i,
   on as t,
   state as n,
   data as c,
   intersections as d,
   intersection as r,
-  queueEffect as v,
+  register as v,
   createRendererWithOwner as m,
   value as s,
   init as u,
@@ -35,7 +35,7 @@ const a = o(3, void 0, 1),
     ),
   ),
   f = r(2, (o) => {
-    v(o, e);
+    e(o);
   }),
   k = n(
     7,
@@ -52,7 +52,7 @@ const a = o(3, void 0, 1),
   C = s(2, (o, i) => {
     p(o, i[0]), l(o, i[1]);
   });
-i(
+v(
   "b0",
   m("<div>Counts: <!>,<!></div>", "Db%c%", void 0, void 0, void 0, () => C),
 ),

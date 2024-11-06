@@ -1,7 +1,7 @@
-// size: 286 (min) 180 (brotli)
+// size: 284 (min) 182 (brotli)
 
 import {
-  register as m,
+  effect as m,
   state as t,
   tagVarSignal as a,
   registerBoundSignal as e,

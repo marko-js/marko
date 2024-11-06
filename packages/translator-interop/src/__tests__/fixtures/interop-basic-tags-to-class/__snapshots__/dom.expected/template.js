@@ -1,6 +1,6 @@
 export const _template_ = "<button id=tags> </button><!><!>";
 export const _walks_ = /* get, next(1), get, out(1), replace, over(1) */" D l%bD";
-import { on as _on, data as _data, register as _register, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, queueEffect as _queueEffect, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, data as _data, register as _register, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, effect as _effect, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import _classCounter from "./components/class-counter.marko";
 import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 _register("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko", _classCounter);
@@ -22,10 +22,10 @@ const _onClick = _scope => {
     _count(_scope, count + 1);
   };
 };
-const _count_effect = _register("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
+const _count_effect = _effect("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
 const _count = /* @__PURE__ */_state("count", (_scope, count) => {
   _data(_scope["#text/1"], count);
-  _queueEffect(_scope, _count_effect);
+  _count_effect(_scope);
 }, () => _expr_Text_count);
 export function _setup_(_scope) {
   _count(_scope, 0);

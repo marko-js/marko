@@ -1,6 +1,6 @@
-// size: 174 (min) 110 (brotli)
+// size: 172 (min) 111 (brotli)
 
-import { register as t, init as e } from "@marko/runtime-tags/dom";
+import { effect as t, init as e } from "@marko/runtime-tags/dom";
 t("a0", (t) => {
   ((t) => {
     const { 0: e } = t;

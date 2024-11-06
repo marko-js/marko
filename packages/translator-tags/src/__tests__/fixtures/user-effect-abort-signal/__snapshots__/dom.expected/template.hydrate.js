@@ -1,7 +1,7 @@
-// size: 243 (min) 165 (brotli)
+// size: 241 (min) 166 (brotli)
 
 import {
-  register as o,
+  effect as o,
   getAbortSignal as t,
   state as a,
   data as m,
