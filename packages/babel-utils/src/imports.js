@@ -89,6 +89,42 @@ export function importNamed(file, request, name, nameHint = name) {
   return t.identifier(specifier.node.local.name);
 }
 
+export function importStar(file, request, nameHint) {
+  const imports = getImports(file);
+  request = resolveRelativePath(file, request);
+  let importDeclaration = imports.get(request);
+
+  if (!importDeclaration) {
+    imports.set(
+      request,
+      (importDeclaration = file.path.pushContainer(
+        "body",
+        t.importDeclaration([], t.stringLiteral(request)),
+      )[0]),
+    );
+  }
+
+  if (!nameHint) {
+    return;
+  }
+
+  const specifiers = importDeclaration.get("specifiers");
+  const specifier = specifiers.find((specifier) =>
+    specifier.isImportNamespaceSpecifier(),
+  );
+
+  if (!specifier) {
+    const identifier = file.scope.generateUidIdentifier(nameHint);
+    importDeclaration.pushContainer(
+      "specifiers",
+      t.importNamespaceSpecifier(identifier),
+    );
+    return identifier;
+  }
+
+  return t.identifier(specifier.node.local.name);
+}
+
 function getImports(file) {
   let imports = file.metadata.marko[IMPORTS_KEY];
 

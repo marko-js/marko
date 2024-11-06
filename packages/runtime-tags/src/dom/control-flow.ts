@@ -34,7 +34,7 @@ export function patchConditionals(
 
 export let conditional = function conditional(
   nodeAccessor: Accessor,
-  fn?: (scope: Scope) => void,
+  fn?: ((scope: Scope) => void) | 0,
   getIntersection?: () => IntersectionSignal,
 ): ValueSignal<Renderer | string | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
@@ -58,7 +58,7 @@ export let conditional = function conditional(
       if (isDifferentRenderer(normalizedRenderer, currentRenderer)) {
         currentRenderer = scope[rendererAccessor] = normalizedRenderer;
         setConditionalRenderer(scope, nodeAccessor, normalizedRenderer);
-        fn?.(scope);
+        fn && fn(scope);
         op = DIRTY;
       } else {
         op = CLEAN;
@@ -123,7 +123,7 @@ export function setConditionalRenderer<ChildScope extends Scope>(
 
 export let conditionalOnlyChild = function conditional(
   nodeAccessor: Accessor,
-  fn?: (scope: Scope) => void,
+  fn?: ((scope: Scope) => void) | 0,
   getIntersection?: () => IntersectionSignal,
 ): ValueSignal<Renderer | string | undefined> {
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
@@ -151,7 +151,7 @@ export let conditionalOnlyChild = function conditional(
           nodeAccessor,
           normalizedRenderer,
         );
-        fn?.(scope);
+        fn && fn(scope);
         op = DIRTY;
       } else {
         op = CLEAN;
@@ -305,12 +305,8 @@ function loop<T extends unknown[] = unknown[]>(
         newArray = emptyMarkerArray;
         getEmptyScope(referenceNode as Comment);
       } else {
-        // Fast path when loop is only child of parent
-        if (renderer.___hasUserEffects) {
-          for (let i = 0; i < oldArray.length; i++) {
-            destroyScope(oldArray[i]);
-          }
-        }
+        // TODO: we should be able to use child template analysis (or runtime analysis?) to know if its unnecessary to destroy these scopes
+        oldArray.forEach(destroyScope);
         referenceNode.textContent = "";
         newMap = emptyMap;
         newArray = emptyArray;

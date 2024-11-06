@@ -39,14 +39,7 @@ export {
   styleAttr,
 } from "./dom/dom";
 export { on } from "./dom/event";
-export {
-  prepare,
-  queueControllableSource,
-  queueEffect,
-  queueSource,
-  run,
-  runEffects,
-} from "./dom/queue";
+export { run } from "./dom/queue";
 export {
   createRenderer,
   createRendererWithOwner,
@@ -61,17 +54,17 @@ export {
 } from "./dom/resume";
 export { createScope } from "./dom/scope";
 export {
-  changeHandler,
   childClosures,
   closure,
   dynamicClosure,
   dynamicSubscribers,
+  effect,
   inChild,
-  initValue,
   intersection,
   intersections,
   nextTagId,
   setTagVar,
+  state,
   tagVarSignal,
   value,
 } from "./dom/signals";

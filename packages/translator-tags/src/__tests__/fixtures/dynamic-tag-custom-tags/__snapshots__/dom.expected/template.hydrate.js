@@ -1,62 +1,58 @@
-// size: 789 (min) 367 (brotli)
+// size: 764 (min) 333 (brotli)
 
-import {
-  createTemplate as i,
-  createRenderer as o,
-  value as v,
-  data as d,
-  dynamicTagAttrs as a,
-  register as l,
-  on as n,
-  queueSource as t,
-  queueEffect as c,
-  conditional as r,
-  intersection as s,
-  init as u,
-} from "@marko/runtime-tags/dom";
+import * as a from "@marko/runtime-tags/dom";
+import { init as t } from "@marko/runtime-tags/dom";
 const e = () => {},
-  m = v(3, (i, o) => d(i[0], o)),
-  h = v(2, (i, o) => m(i, o.value)),
-  b = v(1, (i, o) => h(i, o[0]));
-var f = i(
-  o("<div>Child 1 has <!></div>", "Db%l", e, void 0, void 0, () => b),
+  o = a.value(3, (t, e) => a.data(t[0], e)),
+  i = a.value(2, (a, t) => o(a, t.value)),
+  l = a.value(1, (a, t) => i(a, t[0]));
+var v = a.createTemplate(
   "a",
+  "<div>Child 1 has <!></div>",
+  "Db%l",
+  e,
+  void 0,
+  () => l,
 );
-const k = () => {},
-  C = v(3, (i, o) => d(i[0], o)),
-  D = v(2, (i, o) => C(i, o.value)),
-  g = v(1, (i, o) => D(i, o[0]));
-var p = i(
-  o("<div>Child 2 has <!></div>", "Db%l", k, void 0, void 0, () => g),
+const n = () => {},
+  r = a.value(3, (t, e) => a.data(t[0], e)),
+  c = a.value(2, (a, t) => r(a, t.value)),
+  d = a.value(1, (a, t) => c(a, t[0]));
+var m = a.createTemplate(
   "b",
+  "<div>Child 2 has <!></div>",
+  "Db%l",
+  n,
+  void 0,
+  () => d,
 );
-const j = a(0),
-  q = s(
+const s = a.dynamicTagAttrs(0),
+  u = a.intersection(
     2,
-    (i) => {
-      const { 3: o } = i;
-      j(i, () => ({ value: o }));
+    (a) => {
+      const { 3: t } = a;
+      s(a, () => ({ value: t }));
     },
-    () => j,
+    () => s,
   ),
-  w = r(0, null, () => q),
-  x = l("c0", (i) =>
-    n(
-      i[1],
+  f = a.conditional(0, 0, () => u),
+  h = a.effect("c0", (t) =>
+    a.on(
+      t[1],
       "click",
-      ((i) => {
-        const { 2: o } = i;
+      ((a) => {
+        const { 2: t } = a;
         return function () {
-          t(i, y, o === f ? p : f);
+          p(a, t === v ? m : v);
         };
-      })(i),
+      })(t),
     ),
   ),
-  y = v(
+  p = a.state(
     2,
-    (i, o) => {
-      c(i, x), w(i, o);
+    (a, t) => {
+      h(a), f(a, t);
     },
-    () => w,
+    () => f,
   );
-u();
+t();

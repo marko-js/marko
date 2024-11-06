@@ -1,53 +1,49 @@
-// size: 609 (min) 341 (brotli)
+// size: 612 (min) 331 (brotli)
 
-import {
-  dynamicTagAttrs as o,
-  register as n,
-  on as t,
-  queueSource as c,
-  value as i,
-  data as m,
-  queueEffect as a,
-  intersection as d,
-  createRendererWithOwner as r,
-  init as u,
-} from "@marko/runtime-tags/dom";
-const e = o(2),
-  v = d(
+import * as t from "@marko/runtime-tags/dom";
+import { init as a } from "@marko/runtime-tags/dom";
+const e = t.dynamicTagAttrs(2),
+  n = t.intersection(
     3,
-    (o) => {
-      const { 4: n, 5: t } = o;
-      e(o, () => ({ count: t, name: n.name }));
+    (t) => {
+      const { 4: a, 5: n } = t;
+      e(t, () => ({ count: n, name: a.name }));
     },
     () => e,
   ),
-  s = n("a0", (o) =>
-    t(
-      o[0],
+  o = t.effect("a0", (a) =>
+    t.on(
+      a[0],
       "click",
-      ((o) => {
-        const { 5: n } = o;
+      ((t) => {
+        const { 5: a } = t;
         return function () {
-          c(o, b, n + 1);
+          r(t, a + 1);
         };
-      })(o),
+      })(a),
     ),
   ),
-  b = i(
+  r = t.state(
     5,
-    (o, n) => {
-      m(o[1], n), a(o, s);
+    (a, e) => {
+      t.data(a[1], e), o(a);
     },
-    () => v,
+    () => n,
   ),
-  f = i(5, (o, n) => m(o[0], n)),
-  k = i(4, (o, n) => m(o[1], n)),
-  g = i(3, (o, n) => {
-    k(o, n.count), f(o, n.name);
+  i = t.value(5, (a, e) => t.data(a[0], e)),
+  m = t.value(4, (a, e) => t.data(a[1], e)),
+  c = t.value(3, (t, a) => {
+    m(t, a.count), i(t, a.name);
   }),
-  l = i(2, (o, n) => g(o, n[0]));
-n(
+  d = t.value(2, (t, a) => c(t, a[0]));
+t.register(
   "b0",
-  r("<div>Count (<!>): <!></div>", "Db%c%", void 0, void 0, void 0, () => l),
+  t.createRendererWithOwner(
+    "<div>Count (<!>): <!></div>",
+    "Db%c%",
+    void 0,
+    void 0,
+    () => d,
+  ),
 ),
-  u();
+  a();

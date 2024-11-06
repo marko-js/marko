@@ -1,63 +1,54 @@
-// size: 607 (min) 322 (brotli)
+// size: 597 (min) 314 (brotli)
 
-import {
-  register as n,
-  on as t,
-  queueSource as o,
-  value as c,
-  data as i,
-  queueEffect as u,
-  createRendererWithOwner as r,
-  dynamicTagAttrs as s,
-  conditional as a,
-  init as m,
-} from "@marko/runtime-tags/dom";
-const b = n("a0", (n) =>
-    t(
+import * as t from "@marko/runtime-tags/dom";
+import { init as n } from "@marko/runtime-tags/dom";
+const o = t.effect("a0", (n) =>
+    t.on(
       n[0],
       "click",
-      ((n) => {
-        const { 2: t } = n;
+      ((t) => {
+        const { 2: n } = t;
         return function () {
-          o(n, f, t + 1);
+          r(t, n + 1);
         };
       })(n),
     ),
   ),
-  f = c(2, (n, t) => {
-    i(n[1], t), u(n, b);
+  r = t.state(2, (n, r) => {
+    t.data(n[1], r), o(n);
   });
-const d = n(
+const e = (t) => {
+    !(function (t) {
+      r(t, 0);
+    })(t[0]);
+  },
+  c = t.register(
     "b0",
-    r("<button id=count> </button>", "/ D l&", (n) => {
-      !(function (n) {
-        f(n, 0);
-      })(n[0]);
-    }),
+    t.createRendererWithOwner("<button id=count> </button>", "/ D l&", e),
   ),
-  e = s(0, d),
-  k = a(
+  a = t.dynamicTagAttrs(0, c),
+  i = t.conditional(
     0,
-    (n) => e(n, () => ({})),
-    () => e,
+    (t) => a(t, () => ({})),
+    () => a,
   ),
-  l = n("b1", (n) =>
-    t(
+  s = t.effect("b1", (n) =>
+    t.on(
       n[1],
       "click",
-      ((n) => {
-        const { 2: t } = n;
+      ((t) => {
+        const { 2: n } = t;
         return function () {
-          o(n, p, "span" === t ? "div" : "span");
+          m(t, "span" === n ? "div" : "span");
         };
       })(n),
     ),
   ),
-  p = c(
+  m = t.state(
     2,
-    (n, t) => {
-      u(n, l), k(n, t || d(n));
+    (t, n) => {
+      s(t), i(t, n || c(t));
     },
-    () => k,
+    () => i,
   );
-m();
+n();

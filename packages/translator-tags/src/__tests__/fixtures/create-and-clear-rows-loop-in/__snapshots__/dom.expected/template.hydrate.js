@@ -1,23 +1,18 @@
-// size: 367 (min) 202 (brotli)
+// size: 396 (min) 185 (brotli)
 
-import {
-  register as o,
-  createRenderer as i,
-  value as d,
-  data as v,
-} from "@marko/runtime-tags/dom";
-const m = d(2, (o, i) => v(o[0], i)),
-  p = d(1, (o, i) => m(o, i[0]));
-o(
+import * as e from "@marko/runtime-tags/dom";
+const a = e.value(2, (a, r) => e.data(a[0], r)),
+  r = e.value(1, (e, r) => a(e, r[0]));
+e.register(
   "a0",
-  i("<p> </p>", "D ", void 0, void 0, void 0, () => p),
+  e.createRenderer("<p> </p>", "D ", void 0, void 0, () => r),
 );
-const t = d(4, (o, i) => v(o[1], i)),
-  a = d(3, (o, i) => v(o[0], i)),
-  r = d(2, (o, i) => {
-    a(o, i[0]), t(o, i[1]);
+const t = e.value(4, (a, r) => e.data(a[1], r)),
+  d = e.value(3, (a, r) => e.data(a[0], r)),
+  o = e.value(2, (e, a) => {
+    d(e, a[0]), t(e, a[1]);
   });
-o(
+e.register(
   "a1",
-  i("<p><!>: <!></p>", "D%c%", void 0, void 0, void 0, () => r),
+  e.createRenderer("<p><!>: <!></p>", "D%c%", void 0, void 0, () => o),
 );

@@ -1,144 +1,123 @@
-// size: 1265 (min) 600 (brotli)
+// size: 1355 (min) 574 (brotli)
 
-import {
-  register as n,
-  getAbortSignal as o,
-  value as i,
-  intersection as t,
-  resetAbortSignal as d,
-  queueEffect as l,
-  data as r,
-  createRenderer as v,
-  on as c,
-  dynamicClosure as e,
-  inChild as s,
-  closure as u,
-  queueSource as $,
-  intersections as b,
-  inLoopScope as m,
-  loopOf as a,
-  init as D,
-} from "@marko/runtime-tags/dom";
-const f = "<div> </div>",
-  _ = n("a0", (n) => {
-    o(n, 0).onabort = ((n) => {
-      const { 3: o, 4: i } = n;
+import * as e from "@marko/runtime-tags/dom";
+import { init as i } from "@marko/runtime-tags/dom";
+const o = "<div> </div>",
+  t = e.effect("a0", (i) => {
+    e.getAbortSignal(i, 0).onabort = ((e) => {
+      const { 3: i, 4: o } = e;
       return () => {
-        i(`destroyed ${o}`);
+        o(`destroyed ${i}`);
       };
-    })(n);
+    })(i);
   }),
-  g = t(2, (n) => {
-    d(n, 0), l(n, _);
+  n = e.intersection(2, (i) => {
+    e.resetAbortSignal(i, 0), t(i);
   }),
-  k = i(4, null, () => g),
-  h = i(
+  r = e.value(4, 0, () => n),
+  s = e.value(
     3,
-    (n, o) => r(n[0], o),
-    () => g,
+    (i, o) => e.data(i[0], o),
+    () => n,
   );
-n(
+e.register(
   "b0",
-  (n) =>
-    function (o) {
-      n[1].innerHTML += "\n" + o;
+  (e) =>
+    function (i) {
+      e[1].innerHTML += "\n" + i;
     },
 );
-const p = t(
+const c = e.intersection(
     2,
-    (n) => {
+    (e) => {
       const {
-        _: { 3: o },
-        2: i,
-      } = n;
-      h(n[0], `${o}.${i}`);
+        _: { 3: i },
+        2: o,
+      } = e;
+      s(e[0], `${i}.${o}`);
     },
-    () => s(0, h),
+    () => e.inChild(0, s),
   ),
-  y = e(
+  l = e.dynamicClosure(
     4,
-    (n, o) => k(n[0], o),
-    (n) => n._._,
-    () => s(0, k),
+    (e, i) => r(e[0], i),
+    (e) => e._._,
+    () => e.inChild(0, r),
   ),
-  H = u(3, null, void 0, () => p),
-  L = i(2, null, () => p),
-  M = i(
+  a = e.closure(3, 0, void 0, () => c),
+  d = e.value(2, 0, () => c),
+  u = e.value(
     1,
-    (n, o) => L(n, o[0]),
-    () => L,
+    (e, i) => d(e, i[0]),
+    () => d,
   ),
-  T = a(
-    1,
-    n(
-      "b1",
-      v(
-        `<div>${f}</div>`,
-        "D/D l&",
-        (n) => {
-          n[0];
-        },
-        () => [y, H],
-        void 0,
-        () => M,
-      ),
+  v = (e) => {
+    e[0];
+  },
+  m = e.register(
+    "b1",
+    e.createRenderer(
+      `<div>${o}</div>`,
+      "D/D l&",
+      v,
+      () => [l, a],
+      () => u,
     ),
   ),
-  j = u(
+  f = e.loopOf(1, m),
+  g = e.closure(
     4,
-    (n, o) => k(n[0], o),
+    (e, i) => r(e[0], i),
     void 0,
-    () => s(0, k),
+    () => e.inChild(0, r),
   ),
-  q = i(
+  p = e.value(
     3,
-    (n, o) => h(n[0], `${o}`),
-    () => b([s(0, h), m(H, 1)]),
+    (e, i) => s(e[0], `${i}`),
+    () => e.intersections([e.inChild(0, s), e.inLoopScope(a, 1)]),
   ),
-  w = u(
+  b = e.closure(
     3,
-    (n, o) => T(n, [o]),
+    (e, i) => f(e, [i]),
     void 0,
-    () => T,
+    () => f,
   ),
-  x = i(
+  $ = e.value(
     2,
-    (n, o) => q(n, o[0]),
-    () => q,
+    (e, i) => p(e, i[0]),
+    () => p,
   ),
-  z = a(
-    2,
-    n(
-      "b2",
-      v(
-        `<div>${f}<!></div>`,
-        "D/D l&%",
-        (n) => {
-          n[0];
-        },
-        () => [j, w],
-        void 0,
-        () => x,
-      ),
+  h = (e) => {
+    e[0];
+  },
+  C = e.register(
+    "b2",
+    e.createRenderer(
+      `<div>${o}<!></div>`,
+      "D/D l&%",
+      h,
+      () => [g, b],
+      () => $,
     ),
   ),
-  A = n("b3", (n) =>
-    c(
-      n[0],
+  D = e.loopOf(2, C),
+  S = e.effect("b3", (i) =>
+    e.on(
+      i[0],
       "click",
-      ((n) => {
-        const { 3: o } = n;
+      ((e) => {
+        const { 3: i } = e;
         return function () {
-          $(n, B, o.length ? o.slice(0, -1) : [1, 2, 3]);
+          k(e, i.length ? i.slice(0, -1) : [1, 2, 3]);
         };
-      })(n),
+      })(i),
     ),
   ),
-  B = i(
+  k = e.state(
     3,
-    (n, o) => {
-      l(n, A), z(n, [o]);
+    (e, i) => {
+      S(e), D(e, [i]);
     },
-    () => b([z, m(w, 2)]),
+    () => e.intersections([D, e.inLoopScope(b, 2)]),
   );
-D();
+i();

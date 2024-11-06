@@ -1,114 +1,91 @@
-// size: 1110 (min) 576 (brotli)
+// size: 1182 (min) 541 (brotli)
 
-import {
-  register as n,
-  createRenderer as t,
-  on as o,
-  closure as l,
-  queueSource as m,
-  value as c,
-  attr as i,
-  data as u,
-  queueEffect as s,
-  intersections as a,
-  intersection as d,
-  inChild as e,
-  inConditionalScope as r,
-  inLoopScope as p,
-  conditional as v,
-  loopOf as b,
-  init as h,
-} from "@marko/runtime-tags/dom";
-const f = d(
+import * as t from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+const o = t.intersection(
     2,
-    (n) => {
+    (t) => {
       const {
-        _: { 6: t, 8: o },
-      } = n;
-      B(n[0], { comments: t.comments, path: o });
+        _: { 6: e, 8: o },
+      } = t;
+      k(t[0], { comments: e.comments, path: o });
     },
-    () => e(0, B),
+    () => t.inChild(0, k),
   ),
-  k = l(8, null, void 0, () => f),
-  $ = l(6, null, void 0, () => f),
-  _ = n(
+  n = t.closure(8, 0, void 0, () => o),
+  i = t.closure(6, 0, void 0, () => o),
+  r = (t) => {
+    t[0];
+  },
+  a = t.register(
     "a0",
-    t(
-      "<ul></ul>",
-      "/ b&",
-      (n) => {
-        n[0];
-      },
-      () => [k, $],
-    ),
+    t.createRenderer("<ul></ul>", "/ b&", r, () => [n, i]),
   ),
-  g = d(
+  c = t.intersection(
     2,
-    (n) => {
+    (t) => {
       const {
-        _: { 2: t },
+        _: { 2: e },
         7: o,
-      } = n;
-      j(n, `${t.path || "c"}-${o}`);
+      } = t;
+      u(t, `${e.path || "c"}-${o}`);
     },
-    () => j,
+    () => u,
   ),
-  x = v(4),
-  D = n("a1", (n) =>
-    o(
-      n[2],
+  s = t.conditional(4, 0),
+  l = t.effect("a1", (e) =>
+    t.on(
+      e[2],
       "click",
-      ((n) => {
-        const { 9: t } = n;
+      ((t) => {
+        const { 9: e } = t;
         return function () {
-          m(n, E, !t);
+          m(t, !e);
         };
-      })(n),
+      })(e),
     ),
   ),
-  E = c(9, (n, t) => {
-    i(n[0], "hidden", !t), u(n[3], t ? "[-]" : "[+]"), s(n, D);
+  m = t.state(9, (e, o) => {
+    t.attr(e[0], "hidden", !o), t.data(e[3], o ? "[-]" : "[+]"), l(e);
   }),
-  j = c(
+  u = t.value(
     8,
-    (n, t) => i(n[0], "id", t),
-    () => r(k, 4),
+    (e, o) => t.attr(e[0], "id", o),
+    () => t.inConditionalScope(n, 4),
   ),
-  q = c(7, null, () => g),
-  w = c(
+  d = t.value(7, 0, () => c),
+  p = t.value(
     6,
-    (n, t) => {
-      u(n[1], t.text), x(n, t.comments ? _ : null);
+    (e, o) => {
+      t.data(e[1], o.text), s(e, o.comments ? a : null);
     },
-    () => a([x, r($, 4)]),
+    () => t.intersections([s, t.inConditionalScope(i, 4)]),
   ),
-  y = c(
+  v = t.value(
     5,
-    (n, t) => {
-      w(n, t[0]), q(n, t[1]);
+    (t, e) => {
+      p(t, e[0]), d(t, e[1]);
     },
-    () => a([w, q]),
+    () => t.intersections([p, d]),
   ),
-  z = l(2, null, void 0, () => g),
-  A = b(
-    0,
-    n(
-      "a2",
-      t(
-        "<li><span> </span><button> </button><!></li>",
-        " E l D l%",
-        (n) => {
-          E(n, !0);
-        },
-        () => [z],
-        void 0,
-        () => y,
-      ),
+  f = t.closure(2, 0, void 0, () => c),
+  g = (t) => {
+    m(t, !0);
+  },
+  h = t.register(
+    "a2",
+    t.createRenderer(
+      "<li><span> </span><button> </button><!></li>",
+      " E l D l%",
+      g,
+      () => [f],
+      () => v,
     ),
   ),
-  B = c(
+  b = t.loopOf(0, h),
+  k = t.value(
     2,
-    (n, t) => A(n, [t.comments]),
-    () => a([A, p(z, 0)]),
+    (t, e) => b(t, [e.comments]),
+    () => t.intersections([b, t.inLoopScope(f, 0)]),
   );
-h();
+e();

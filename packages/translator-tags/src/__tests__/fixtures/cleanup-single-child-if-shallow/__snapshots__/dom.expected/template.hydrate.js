@@ -1,57 +1,45 @@
-// size: 602 (min) 345 (brotli)
+// size: 602 (min) 320 (brotli)
 
-import {
-  register as t,
-  getAbortSignal as n,
-  value as o,
-  resetAbortSignal as r,
-  queueEffect as i,
-  createRenderer as e,
-  on as c,
-  queueSource as d,
-  conditional as u,
-  init as m,
-} from "@marko/runtime-tags/dom";
-const s = t("a0", (t) => {
-    const { 1: o } = t;
-    o.write("mounted"),
-      (n(t, 0).onabort = ((t) => {
-        const { 1: n } = t;
+import * as t from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+const r = t.effect("a0", (e) => {
+    const { 1: r } = e;
+    r.write("mounted"),
+      (t.getAbortSignal(e, 0).onabort = ((t) => {
+        const { 1: e } = t;
         return () => {
-          n.write("destroyed");
+          e.write("destroyed");
         };
-      })(t));
+      })(e));
   }),
-  b = o(1, (t, n) => {
-    r(t, 0), i(t, s);
+  n = t.value(1, (e, n) => {
+    t.resetAbortSignal(e, 0), r(e);
   }),
-  a = t(
+  o = t.register(
     "b0",
     (t) =>
-      function (n) {
-        t._[1].innerHTML = n;
+      function (e) {
+        t._[1].innerHTML = e;
       },
   ),
-  l = t(
-    "b1",
-    e("<div>child</div>", "/b&", (t) => {
-      t[0], b(t[0], { write: a(t) });
-    }),
-  ),
-  f = u(2),
-  w = t("b2", (t) =>
-    c(
-      t[0],
+  i = (t) => {
+    t[0], n(t[0], { write: o(t) });
+  },
+  a = t.register("b1", t.createRenderer("<div>child</div>", "/b&", i)),
+  c = t.conditional(2, 0),
+  s = t.effect("b2", (e) =>
+    t.on(
+      e[0],
       "click",
       ((t) => {
-        const { 3: n } = t;
+        const { 3: e } = t;
         return function () {
-          d(t, k, !n);
+          m(t, !e);
         };
-      })(t),
+      })(e),
     ),
   ),
-  k = o(3, (t, n) => {
-    i(t, w), f(t, n ? l : null);
+  m = t.state(3, (t, e) => {
+    s(t), c(t, e ? a : null);
   });
-m();
+e();

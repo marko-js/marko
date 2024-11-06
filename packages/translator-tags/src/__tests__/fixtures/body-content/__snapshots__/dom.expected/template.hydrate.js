@@ -1,64 +1,48 @@
-// size: 705 (min) 405 (brotli)
+// size: 672 (min) 358 (brotli)
 
-import {
-  dynamicTagAttrs as o,
-  register as r,
-  attrsEvents as n,
-  value as t,
-  attrs as d,
-  queueEffect as e,
-  conditional as i,
-  queueSource as m,
-  registerSubscriber as c,
-  dynamicClosure as a,
-  data as b,
-  createRendererWithOwner as s,
-  intersections as u,
-  inChild as f,
-  dynamicSubscribers as k,
-  init as y,
-} from "@marko/runtime-tags/dom";
-const B = o(1),
-  g = i(
+import * as r from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+const t = r.dynamicTagAttrs(1),
+  i = r.conditional(
     1,
-    (o) => B(o, () => ({})),
-    () => B,
+    (r) => t(r, () => ({})),
+    () => t,
   ),
-  l = r("a0", (o) => {
-    n(o, 0);
+  n = r.effect("a0", (e) => {
+    r.attrsEvents(e, 0);
   }),
-  p = t(
+  a = r.value(
     4,
-    (o, r) => g(o, r),
-    () => g,
+    (r, e) => i(r, e),
+    () => i,
   ),
-  v = t(
+  o = r.value(
     3,
-    (o, r) => {
-      ((o, r) => {
-        d(o, 0, r), e(o, l);
-      })(o, r),
-        p(o, r.renderBody);
+    (e, t) => {
+      ((e, t) => {
+        r.attrs(e, 0, t), n(e);
+      })(e, t),
+        a(e, t.renderBody);
     },
-    () => p,
+    () => a,
   ),
-  C = r("b0", (o) => {
-    const { 1: r } = o;
+  s = r.register("b0", (r) => {
+    const { 1: e } = r;
     return function () {
-      m(o, q, r + 1);
+      m(r, e + 1);
     };
   }),
-  h = c(
+  d = r.registerSubscriber(
     "b1",
-    a(1, (o, r) => b(o[0], r)),
+    r.dynamicClosure(1, (e, t) => r.data(e[0], t)),
   ),
-  j = r(
+  c = r.register(
     "b2",
-    s(" ", " ", void 0, () => [h]),
+    r.createRendererWithOwner(" ", " ", void 0, () => [d]),
   ),
-  q = t(
+  m = r.state(
     1,
-    (o, r) => v(o[0], { onClick: C(o), renderBody: j(o) }),
-    () => u([f(0, v), k(1)]),
+    (r, e) => o(r[0], { onClick: s(r), renderBody: c(r) }),
+    () => r.intersections([r.inChild(0, o), r.dynamicSubscribers(1)]),
   );
-y();
+e();

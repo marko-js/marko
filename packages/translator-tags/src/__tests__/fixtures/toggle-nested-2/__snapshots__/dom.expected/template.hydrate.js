@@ -1,98 +1,86 @@
-// size: 899 (min) 407 (brotli)
+// size: 913 (min) 392 (brotli)
 
-import {
-  register as n,
-  on as t,
-  registerSubscriber as o,
-  dynamicClosure as u,
-  data as c,
-  queueEffect as i,
-  createRenderer as l,
-  queueSource as r,
-  closure as a,
-  value as _,
-  dynamicSubscribers as d,
-  inConditionalScope as b,
-  conditional as e,
-  init as m,
-} from "@marko/runtime-tags/dom";
-const s = n("a0", (n) =>
-    t(
+import * as t from "@marko/runtime-tags/dom";
+import { init as n } from "@marko/runtime-tags/dom";
+const e = t.effect("a0", (n) =>
+    t.on(
       n[0],
       "click",
-      ((n) => {
+      ((t) => {
         const {
           _: {
-            _: { 4: t },
+            _: { 4: n },
           },
-        } = n;
+        } = t;
         return function () {
-          r(n._._, j, t + 1);
+          d(t._._, n + 1);
         };
       })(n),
     ),
   ),
-  f = o(
+  o = t.registerSubscriber(
     "a1",
-    u(
+    t.dynamicClosure(
       4,
-      (n, t) => {
-        c(n[1], t), i(n, s);
+      (n, o) => {
+        t.data(n[1], o), e(n);
       },
-      (n) => n._._,
+      (t) => t._._,
     ),
   ),
-  k = n(
+  r = t.register(
     "a2",
-    l("<button id=count> </button>", " D ", void 0, () => [f]),
+    t.createRenderer("<button id=count> </button>", " D ", void 0, () => [o]),
   ),
-  v = e(1),
-  D = n("a3", (n) =>
-    t(
+  i = t.conditional(1, 0),
+  c = t.effect("a3", (n) =>
+    t.on(
       n[0],
       "click",
-      ((n) => {
+      ((t) => {
         const {
-          _: { 3: t },
-        } = n;
+          _: { 3: n },
+        } = t;
         return function () {
-          r(n._, q, !t);
+          l(t._, !n);
         };
       })(n),
     ),
   ),
-  g = a(
+  a = t.closure(
     3,
-    (n, t) => {
-      i(n, D), v(n, t ? k : null);
+    (t, n) => {
+      c(t), i(t, n ? r : null);
     },
     void 0,
-    () => v,
+    () => i,
   ),
-  p = n(
+  u = t.register(
     "a4",
-    l("<button id=inner></button><!><!>", " b%D", void 0, () => [g]),
+    t.createRenderer("<button id=inner></button><!><!>", " b%D", void 0, () => [
+      a,
+    ]),
   ),
-  h = e(1),
-  j = _(4, null, () => d(4)),
-  q = _(3, null, () => b(g, 1)),
-  w = n("a5", (n) =>
-    t(
+  s = t.conditional(1, 0),
+  d = t.state(4, 0, () => t.dynamicSubscribers(4)),
+  l = t.state(3, 0, () => t.inConditionalScope(a, 1)),
+  m = t.effect("a5", (n) =>
+    t.on(
       n[0],
       "click",
-      ((n) => {
-        const { 2: t } = n;
+      ((t) => {
+        const { 2: n } = t;
         return function () {
-          r(n, x, !t);
+          f(t, !n);
         };
       })(n),
     ),
   ),
-  x = _(
+  f = t.state(
     2,
-    (n, t) => {
-      i(n, w), h(n, t ? p : null);
+    (t, n) => {
+      m(t), s(t, n ? u : null);
     },
-    () => h,
+    () => s,
   );
-m();
+n();

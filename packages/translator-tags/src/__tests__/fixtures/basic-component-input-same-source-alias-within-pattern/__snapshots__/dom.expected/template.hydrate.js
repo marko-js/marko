@@ -1,45 +1,42 @@
-// size: 549 (min) 269 (brotli)
+// size: 584 (min) 265 (brotli)
 
-import {
-  register as t,
-  on as n,
-  value as o,
-  data as c,
-  queueEffect as r,
-  queueSource as e,
-  intersections as i,
-  inChild as m,
-  init as s,
-} from "@marko/runtime-tags/dom";
-const u = o(7, (t, n) => {
-    c(t[1], n),
-      ((t, n) => {
-        c(t[2], n);
-      })(t, n);
+import * as t from "@marko/runtime-tags/dom";
+import { init as i } from "@marko/runtime-tags/dom";
+const n = t.value(7, (i, n) => {
+    t.data(i[1], n),
+      ((i, n) => {
+        t.data(i[2], n);
+      })(i, n);
   }),
-  a = o(6, (t, n) => u(t, n.text)),
-  f = t("a0", (t) => {
-    const { 5: o } = t;
-    n(t[0], "click", o);
+  e = t.value(6, (t, i) => n(t, i.text)),
+  r = t.effect("a0", (i) => {
+    const { 5: n } = i;
+    t.on(i[0], "click", n);
   }),
-  b = o(5, (t, n) => r(t, f)),
-  k = t("b0", (t) => {
-    const { 2: n } = t;
+  o = t.value(5, (t, i) => r(t)),
+  a = t.register("b0", (t) => {
+    const { 2: i } = t;
     return function () {
-      e(t, d, n + 1);
+      c(t, i + 1);
     };
   }),
-  x = t("b1", (t) => {
-    const { 2: n } = t;
+  s = t.register("b1", (t) => {
+    const { 2: i } = t;
     return function () {
-      e(t, d, n + 1);
+      c(t, i + 1);
     };
   }),
-  d = o(
+  c = t.state(
     2,
-    (t, n) => {
-      a(t[0], { text: n }), b(t[0], k(t)), u(t[1], n), b(t[1], x(t));
+    (t, i) => {
+      e(t[0], { text: i }), o(t[0], a(t)), n(t[1], i), o(t[1], s(t));
     },
-    () => i([m(0, a), m(0, b), m(1, u), m(1, b)]),
+    () =>
+      t.intersections([
+        t.inChild(0, e),
+        t.inChild(0, o),
+        t.inChild(1, n),
+        t.inChild(1, o),
+      ]),
   );
-s();
+i();

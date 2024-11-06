@@ -1,32 +1,23 @@
-// size: 369 (min) 217 (brotli)
+// size: 356 (min) 204 (brotli)
 
-import {
-  register as c,
-  attrsEvents as e,
-  value as o,
-  attrs as t,
-  queueEffect as n,
-  queueSource as m,
-  data as r,
-  inChild as a,
-  init as h,
-} from "@marko/runtime-tags/dom";
-const i = c("a0", (c) => e(c, 0)),
-  k = o(2, (c, e) => {
-    t(c, 0, { type: "checkbox", ...e }), n(c, i);
+import * as t from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+const a = t.effect("a0", (e) => t.attrsEvents(e, 0)),
+  r = t.value(2, (e, r) => {
+    t.attrs(e, 0, { type: "checkbox", ...r }), a(e);
   }),
-  d = c(
+  o = t.register(
     "b0",
-    (c) =>
+    (t) =>
       function (e) {
-        m(c, g, e);
+        m(t, e);
       },
   ),
-  g = o(
+  m = t.state(
     2,
-    (c, e) => {
-      r(c[1], String(e)), k(c[0], { checked: e, checkedChange: d(c) });
+    (e, a) => {
+      t.data(e[1], String(a)), r(e[0], { checked: a, checkedChange: o(e) });
     },
-    () => a(0, k),
+    () => t.inChild(0, r),
   );
-h();
+e();

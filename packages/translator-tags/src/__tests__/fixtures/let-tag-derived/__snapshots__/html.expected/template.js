@@ -1,14 +1,14 @@
-import { markResumeNode as _markResumeNode, escapeXML as _escapeXML, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
   const {
     a
   } = input;
   const b = a * 2;
-  _write(`<button>Increment</button>${_markResumeNode(_scope0_id, "#button/0")}${_escapeXML(a)}${_markResumeNode(_scope0_id, "#text/1")} <!>${_escapeXML(b)}${_markResumeNode(_scope0_id, "#text/2")}`);
-  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko_0_b");
-  _writeScope(_scope0_id, {
+  _$.write(`<button>Increment</button>${_$.markResumeNode(_scope0_id, "#button/0")}${_$.escapeXML(a)}${_$.markResumeNode(_scope0_id, "#text/1")} <!>${_$.escapeXML(b)}${_$.markResumeNode(_scope0_id, "#text/2")}`);
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko_0_b");
+  _$.writeScope(_scope0_id, {
     "b": b
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko", _renderer);

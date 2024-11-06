@@ -40,10 +40,10 @@ export type Signal = {
   isDynamicClosure?: boolean;
   values: Array<{
     signal: {
-      identifier: t.Identifier;
+      identifier: t.Identifier | t.MemberExpression;
       hasDownstreamIntersections: () => boolean;
       buildDeclaration?: () => t.VariableDeclaration;
-      callee?: t.Expression;
+      extraArgs?: t.Expression[];
     };
     value: t.Expression;
     scope: t.Expression;
@@ -57,7 +57,7 @@ export type Signal = {
   hasDownstreamIntersections: () => boolean;
   hasDynamicSubscribers?: true;
   export: boolean;
-  callee?: t.Expression;
+  extraArgs?: t.Expression[];
   buildAssignment?: (
     valueSection: Section,
     value: t.Expression,
@@ -209,7 +209,10 @@ export function getSignal(
   return signal;
 }
 
-export function initValue(binding: Binding) {
+export function initValue(
+  binding: Binding,
+  runtimeHelper: "value" | "state" = "value",
+) {
   const valueAccessor = getScopeAccessorLiteral(binding);
   const section = binding.section;
   const signal = getSignal(section, binding);
@@ -231,7 +234,7 @@ export function initValue(binding: Binding) {
     const needsCache = needsGuard || intersections;
     const needsMarks = isParamBinding || intersections;
     if (needsCache || needsMarks) {
-      return callRuntime("value", valueAccessor, fn, intersections);
+      return callRuntime(runtimeHelper, valueAccessor, fn, intersections);
     } else {
       return fn;
     }
@@ -266,9 +269,10 @@ export function getSignalFn(
       const aliasSignal = getSignal(alias.section, alias);
       signal.render.push(
         t.expressionStatement(
-          t.callExpression(aliasSignal.callee || aliasSignal.identifier, [
+          t.callExpression(aliasSignal.identifier, [
             scopeIdentifier,
             valueIdentifier,
+            ...(aliasSignal.extraArgs || []),
           ]),
         ),
       );
@@ -278,9 +282,10 @@ export function getSignalFn(
       const aliasSignal = getSignal(alias.section, alias);
       signal.render.push(
         t.expressionStatement(
-          t.callExpression(aliasSignal.callee || aliasSignal.identifier, [
+          t.callExpression(aliasSignal.identifier, [
             scopeIdentifier,
             toMemberExpression(valueIdentifier, key),
+            ...(aliasSignal.extraArgs || []),
           ]),
         ),
       );
@@ -290,9 +295,10 @@ export function getSignalFn(
   for (const value of signal.values) {
     signal.render.push(
       t.expressionStatement(
-        t.callExpression(value.signal.callee || value.signal.identifier, [
+        t.callExpression(value.signal.identifier, [
           value.scope,
           value.value,
+          ...(value.signal.extraArgs || []),
         ]),
       ),
     );
@@ -348,7 +354,9 @@ export function buildSignalIntersections(signal: Signal) {
       intersections = push(
         intersections,
         value.intersectionExpression ??
-          t.identifier(value.signal.identifier.name),
+          (t.isMemberExpression(value.signal.identifier)
+            ? value.signal.identifier
+            : t.identifier(value.signal.identifier.name)),
       );
     }
   }
@@ -429,9 +437,10 @@ export function getDestructureSignal(
             t.blockStatement(
               bindingSignals.map((signal, i) =>
                 t.expressionStatement(
-                  t.callExpression(signal.callee || signal.identifier, [
+                  t.callExpression(signal.identifier, [
                     scopeIdentifier,
                     bindingIdentifiers[i],
+                    ...(signal.extraArgs || []),
                   ]),
                 ),
               ),
@@ -454,10 +463,10 @@ export function getDestructureSignal(
             ),
             ...bindingSignals.map((signal, i) =>
               t.expressionStatement(
-                t.callExpression(signal.callee || signal.identifier, [
+                t.callExpression(signal.identifier, [
                   scopeIdentifier,
                   bindingIdentifiers[i],
-                  cleanIdentifier,
+                  ...(signal.extraArgs || []),
                 ]),
               ),
             ),
@@ -505,35 +514,6 @@ function generateSignalName(referencedBindings?: ReferencedBindings) {
   return name;
 }
 
-export function queueSource(
-  source: Signal,
-  value: t.Expression,
-  targetSection: Section,
-  changeBinding?: Binding,
-): t.Expression {
-  if (!changeBinding) {
-    return callRuntime(
-      "queueSource",
-      getScopeExpression(targetSection, source.section),
-      source.identifier,
-      value,
-    );
-  }
-
-  const changeBindingId = t.identifier(changeBinding.name);
-
-  if (changeBinding.upstreamExpression?.static) {
-    return t.callExpression(changeBindingId, [value]);
-  }
-  return callRuntime(
-    "queueControllableSource",
-    getScopeExpression(targetSection, source.section),
-    source.identifier,
-    changeBindingId,
-    value,
-  );
-}
-
 export function finalizeSignalArgs(args: t.Expression[]) {
   for (let i = args.length - 1; i >= 0; i--) {
     const arg = args[i];
@@ -541,7 +521,7 @@ export function finalizeSignalArgs(args: t.Expression[]) {
       const body = (arg.body as t.BlockStatement).body;
       if (body) {
         if (body.length === 0) {
-          args[i] = t.nullLiteral();
+          args[i] = t.numericLiteral(0);
         } else if (body.length === 1 && t.isExpressionStatement(body[0])) {
           arg.body = body[0].expression;
         }
@@ -764,7 +744,7 @@ export function writeSignals(section: Section) {
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
         callRuntime(
-          "register",
+          "effect",
           t.stringLiteral(
             getResumeRegisterId(section, signal.referencedBindings),
           ),
@@ -779,7 +759,7 @@ export function writeSignals(section: Section) {
       );
       signal.render.push(
         t.expressionStatement(
-          callRuntime("queueEffect", scopeIdentifier, effectIdentifier),
+          t.callExpression(effectIdentifier, [scopeIdentifier]),
         ),
       );
     }

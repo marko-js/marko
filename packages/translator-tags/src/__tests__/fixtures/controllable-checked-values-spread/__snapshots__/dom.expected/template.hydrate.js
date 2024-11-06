@@ -1,50 +1,40 @@
-// size: 611 (min) 263 (brotli)
+// size: 623 (min) 255 (brotli)
 
-import {
-  register as e,
-  attrsEvents as c,
-  value as a,
-  attrs as u,
-  queueEffect as n,
-  queueSource as h,
-  data as l,
-  intersections as o,
-  inChild as k,
-  init as t,
-} from "@marko/runtime-tags/dom";
-const d = e("a0", (e) => c(e, 0)),
-  V = a(2, (e, c) => {
-    u(e, 0, { type: "checkbox", ...c }), n(e, d);
+import * as e from "@marko/runtime-tags/dom";
+import { init as a } from "@marko/runtime-tags/dom";
+const t = e.effect("a0", (a) => e.attrsEvents(a, 0)),
+  c = e.value(2, (a, c) => {
+    e.attrs(a, 0, { type: "checkbox", ...c }), t(a);
   }),
-  b = e(
+  i = e.register(
     "b0",
     (e) =>
-      function (c) {
-        h(e, f, c);
+      function (a) {
+        u(e, a);
       },
   ),
-  i = e(
+  n = e.register(
     "b1",
     (e) =>
-      function (c) {
-        h(e, f, c);
+      function (a) {
+        u(e, a);
       },
   ),
-  m = e(
+  r = e.register(
     "b1",
     (e) =>
-      function (c) {
-        h(e, f, c);
+      function (a) {
+        u(e, a);
       },
   ),
-  f = a(
+  u = e.state(
     4,
-    (e, c) => {
-      l(e[3], c),
-        V(e[0], { checkedValue: c, checkedValueChange: b(e), value: "a" }),
-        V(e[1], { checkedValue: c, checkedValueChange: i(e), value: "b" }),
-        V(e[2], { checkedValue: c, checkedValueChange: m(e), value: "c" });
+    (a, t) => {
+      e.data(a[3], t),
+        c(a[0], { checkedValue: t, checkedValueChange: i(a), value: "a" }),
+        c(a[1], { checkedValue: t, checkedValueChange: n(a), value: "b" }),
+        c(a[2], { checkedValue: t, checkedValueChange: r(a), value: "c" });
     },
-    () => o([k(0, V), k(1, V), k(2, V)]),
+    () => e.intersections([e.inChild(0, c), e.inChild(1, c), e.inChild(2, c)]),
   );
-t();
+a();

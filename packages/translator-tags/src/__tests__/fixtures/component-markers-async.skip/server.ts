@@ -19,4 +19,4 @@ const secondComponent = () => {
   fork(resolveAfter("c", 2), write);
 };
 
-export default createTemplate(renderer, "");
+export default createTemplate("", renderer);

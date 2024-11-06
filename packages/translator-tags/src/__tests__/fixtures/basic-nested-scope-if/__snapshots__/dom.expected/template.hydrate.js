@@ -1,51 +1,47 @@
-// size: 583 (min) 324 (brotli)
+// size: 607 (min) 305 (brotli)
 
-import {
-  register as t,
-  createRenderer as o,
-  on as n,
-  closure as a,
-  data as i,
-  queueSource as c,
-  queueEffect as s,
-  value as m,
-  intersections as r,
-  inConditionalScope as u,
-  conditional as e,
-  init as b,
-} from "@marko/runtime-tags/dom";
-const d = a(1, (t, o) => i(t[0], o)),
-  k = t(
+import * as t from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+const o = t.closure(1, (e, o) => t.data(e[0], o)),
+  n = t.register(
     "a0",
-    o("<span>The button was clicked <!> times.</span>", "Db%", void 0, () => [
-      d,
-    ]),
+    t.createRenderer(
+      "<span>The button was clicked <!> times.</span>",
+      "Db%",
+      void 0,
+      () => [o],
+    ),
   ),
-  p = t("a1", (t) =>
-    n(
-      t[0],
+  r = t.effect("a1", (e) =>
+    t.on(
+      e[0],
       "click",
       ((t) => {
         const {
-          _: { 1: o },
+          _: { 1: e },
         } = t;
         return function () {
-          c(t._, D, o + 1);
+          s(t._, e + 1);
         };
-      })(t),
+      })(e),
     ),
   ),
-  f = a(1, (t, o) => {
-    i(t[1], o), s(t, p);
+  i = t.closure(1, (e, o) => {
+    t.data(e[1], o), r(e);
   }),
-  l = t(
+  a = t.register(
     "a2",
-    o("<button> </button>", " D ", void 0, () => [f]),
+    t.createRenderer("<button> </button>", " D ", void 0, () => [i]),
   ),
-  v = e(0),
-  D = m(
+  c = t.conditional(0, 0),
+  s = t.state(
     1,
-    (t, o) => v(t, o < 3 ? l : k),
-    () => r([v, u(f, 0), u(d, 0)]),
+    (t, e) => c(t, e < 3 ? a : n),
+    () =>
+      t.intersections([
+        c,
+        t.inConditionalScope(i, 0),
+        t.inConditionalScope(o, 0),
+      ]),
   );
-b();
+e();

@@ -1,59 +1,54 @@
-// size: 662 (min) 354 (brotli)
+// size: 690 (min) 338 (brotli)
 
-import {
-  dynamicTagAttrs as o,
-  register as i,
-  on as t,
-  queueSource as n,
-  value as c,
-  data as d,
-  intersections as r,
-  intersection as v,
-  queueEffect as m,
-  createRendererWithOwner as s,
-  init as u,
-} from "@marko/runtime-tags/dom";
-const a = o(3, void 0, 1),
-  b = v(
+import * as t from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+const a = t.dynamicTagAttrs(3, void 0, 1),
+  i = t.intersection(
     3,
-    (o) => {
-      const { 6: i, 7: t } = o;
-      a(o, () => [i, t]);
+    (t) => {
+      const { 6: e, 7: i } = t;
+      a(t, () => [e, i]);
     },
     () => a,
   ),
-  e = i("a0", (o) =>
-    t(
-      o[0],
+  n = t.effect("a0", (e) =>
+    t.on(
+      e[0],
       "click",
-      ((o) => {
-        const { 6: i, 7: t } = o;
+      ((t) => {
+        const { 6: e, 7: a } = t;
         return function () {
-          n(o, g, i + 1), n(o, k, t + 1);
+          s(t, e + 1), r(t, a + 1);
         };
-      })(o),
+      })(e),
     ),
   ),
-  f = v(2, (o) => {
-    m(o, e);
+  o = t.intersection(2, (t) => {
+    n(t);
   }),
-  k = c(
+  r = t.state(
     7,
-    (o, i) => d(o[2], i),
-    () => r([f, b]),
+    (e, a) => t.data(e[2], a),
+    () => t.intersections([o, i]),
   ),
-  g = c(
+  s = t.state(
     6,
-    (o, i) => d(o[1], i),
-    () => r([f, b]),
+    (e, a) => t.data(e[1], a),
+    () => t.intersections([o, i]),
   ),
-  l = c(4, (o, i) => d(o[1], i)),
-  p = c(3, (o, i) => d(o[0], i)),
-  C = c(2, (o, i) => {
-    p(o, i[0]), l(o, i[1]);
+  c = t.value(4, (e, a) => t.data(e[1], a)),
+  d = t.value(3, (e, a) => t.data(e[0], a)),
+  m = t.value(2, (t, e) => {
+    d(t, e[0]), c(t, e[1]);
   });
-i(
+t.register(
   "b0",
-  s("<div>Counts: <!>,<!></div>", "Db%c%", void 0, void 0, void 0, () => C),
+  t.createRendererWithOwner(
+    "<div>Counts: <!>,<!></div>",
+    "Db%c%",
+    void 0,
+    void 0,
+    () => m,
+  ),
 ),
-  u();
+  e();

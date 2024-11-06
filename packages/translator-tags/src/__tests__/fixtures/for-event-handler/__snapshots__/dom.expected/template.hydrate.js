@@ -1,53 +1,38 @@
-// size: 506 (min) 298 (brotli)
+// size: 481 (min) 272 (brotli)
 
-import {
-  register as o,
-  on as t,
-  createRenderer as n,
-  value as i,
-  queueSource as r,
-  closure as c,
-  queueEffect as m,
-  intersections as u,
-  inLoopScope as a,
-  data as d,
-  loopTo as s,
-  init as b,
-} from "@marko/runtime-tags/dom";
-const e = i(3, (o, t) => d(o[1], t)),
-  f = i(2, (o, t) => e(o, t[0])),
-  k = o("a0", (o) =>
-    t(
-      o[0],
+import * as o from "@marko/runtime-tags/dom";
+import { init as t } from "@marko/runtime-tags/dom";
+const e = o.value(3, (t, e) => o.data(t[1], e)),
+  r = o.value(2, (o, t) => e(o, t[0])),
+  n = o.effect("a0", (t) =>
+    o.on(
+      t[0],
       "click",
       ((o) => {
         const {
           _: { 1: t },
         } = o;
         return function () {
-          r(o._, g, t + 1);
+          m(o._, t + 1);
         };
-      })(o),
+      })(t),
     ),
   ),
-  v = c(1, (o, t) => m(o, k)),
-  _ = s(
-    0,
-    o(
-      "a1",
-      n(
-        "<button> </button>",
-        " D ",
-        void 0,
-        () => [v],
-        void 0,
-        () => f,
-      ),
+  a = o.closure(1, (o, t) => n(o)),
+  i = o.register(
+    "a1",
+    o.createRenderer(
+      "<button> </button>",
+      " D ",
+      void 0,
+      () => [a],
+      () => r,
     ),
   ),
-  g = i(
+  c = o.loopTo(0, i),
+  m = o.state(
     1,
-    (o, t) => _(o, [t, 0, 1]),
-    () => u([_, a(v, 0)]),
+    (o, t) => c(o, [t, 0, 1]),
+    () => o.intersections([c, o.inLoopScope(a, 0)]),
   );
-b();
+t();

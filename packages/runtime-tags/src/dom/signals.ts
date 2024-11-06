@@ -1,5 +1,7 @@
 import { type Accessor, AccessorChar, type Scope } from "../common/types";
+import { queueEffect, queueSource, rendering } from "./queue";
 import type { Renderer } from "./renderer";
+import { register } from "./resume";
 
 export type Signal = ValueSignal | IntersectionSignal;
 
@@ -25,51 +27,40 @@ export type BoundIntersectionSignal = ((op?: SignalOp) => void) & {
   ___unsubscribe?(scope: Scope): void;
 };
 
-export function initValue<T>(
-  valueAccessor: Accessor,
-  valueSignal: ValueSignal<T>,
-): ValueSignal<T> {
-  const markAccessor = valueAccessor + AccessorChar.Mark;
-  return (scope, valueOrOp) => {
-    if (valueOrOp !== MARK && scope[markAccessor] === undefined) {
-      valueSignal(scope, valueOrOp);
-    }
-  };
-}
-
-export function changeHandler<T>(
+export function state<T>(
   valueAccessor: Accessor,
   fn: ValueSignal<T>,
-): ValueSignal<T> {
+  getIntersection?: () => IntersectionSignal,
+) {
+  const valueSignal = value<T>(valueAccessor, fn, getIntersection);
   const markAccessor = valueAccessor + AccessorChar.Mark;
-  return (scope, valueOrOp) => {
-    if (MARKO_DEBUG) {
-      if (valueOrOp !== MARK && valueOrOp !== CLEAN && valueOrOp !== DIRTY) {
-        if (valueOrOp != null && typeof valueOrOp !== "function") {
-          throw new Error(
-            `Invalid value ${valueOrOp} for change handler '${valueAccessor}'`,
-          );
-        } else if (scope[markAccessor] !== undefined) {
-          const prevValue = scope[valueAccessor];
-          if (prevValue && !valueOrOp) {
-            throw new Error(
-              `Change handler '${valueAccessor}' cannot change from a function to ${valueOrOp}`,
-            );
-          } else if (!prevValue && valueOrOp) {
-            throw new Error(
-              `Change handler '${valueAccessor}' cannot change from a nullish to a function`,
-            );
-          }
-        }
-      }
+
+  return (
+    scope: Scope,
+    valueOrOp: T | SignalOp,
+    valueChange?: (v: T) => void,
+  ) => {
+    if (rendering) {
+      const valueIsOp =
+        valueOrOp === MARK || valueOrOp === CLEAN || valueOrOp === DIRTY;
+      valueSignal(
+        scope,
+        valueIsOp || valueChange || scope[markAccessor] === undefined
+          ? valueOrOp
+          : CLEAN,
+      );
+    } else if (valueChange) {
+      valueChange(valueOrOp as T);
+    } else {
+      queueSource(scope, valueSignal as ValueSignal, valueOrOp);
     }
-    fn(scope, valueOrOp);
+    return valueOrOp;
   };
 }
 
 export function value<T>(
   valueAccessor: Accessor,
-  fn?: SignalFn<T>,
+  fn: SignalFn<T> | 0,
   getIntersection?: () => IntersectionSignal,
 ): ValueSignal<T> {
   const markAccessor = valueAccessor + AccessorChar.Mark;
@@ -92,7 +83,7 @@ export function value<T>(
           intersection?.(scope, CLEAN);
         } else {
           scope[valueAccessor] = valueOrOp;
-          fn?.(scope, valueOrOp);
+          fn && fn(scope, valueOrOp);
           intersection?.(scope, DIRTY);
         }
       }
@@ -142,7 +133,7 @@ const defaultGetOwnerScope = (scope: Scope) => scope._ as Scope;
 
 export function closure<T>(
   ownerValueAccessor: Accessor | ((scope: Scope) => Accessor),
-  fn?: SignalFn<T>,
+  fn: SignalFn<T> | 0,
   getOwnerScope: (scope: Scope) => Scope = defaultGetOwnerScope,
   getIntersection?: () => IntersectionSignal,
 ): IntersectionSignal {
@@ -177,7 +168,7 @@ export function closure<T>(
           scope[dirtyAccessor] = false;
           ownerScope ||= getOwnerScope(scope);
           ownerValueAccessor ||= getOwnerValueAccessor(scope);
-          fn?.(scope, ownerScope[ownerValueAccessor]);
+          fn && fn(scope, ownerScope[ownerValueAccessor]);
           intersection?.(scope, DIRTY);
         } else {
           intersection?.(scope, CLEAN);
@@ -191,7 +182,7 @@ export function closure<T>(
 
 export function dynamicClosure<T>(
   ownerValueAccessor: Accessor | ((scope: Scope) => Accessor),
-  fn: ValueSignal<T>,
+  fn: ValueSignal<T> | 0,
   getOwnerScope: (scope: Scope) => Scope = defaultGetOwnerScope,
   getIntersection?: () => IntersectionSignal,
 ): IntersectionSignal {
@@ -321,5 +312,12 @@ export function intersections(
     for (const signal of signals) {
       signal(scope, op);
     }
+  };
+}
+
+export function effect(id: string, fn: (scope: Scope) => void) {
+  register(id, fn);
+  return (scope: Scope) => {
+    queueEffect(scope, fn);
   };
 }

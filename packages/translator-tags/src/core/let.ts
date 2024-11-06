@@ -13,15 +13,15 @@ import {
   type Binding,
   BindingType,
   createBinding,
-  getScopeAccessorLiteral,
   trackVarReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
-import { createScopeReadExpression } from "../util/scope-read";
+import {
+  createScopeReadExpression,
+  getScopeExpression,
+} from "../util/scope-read";
 import { getSection } from "../util/sections";
-import { addValue, initValue, queueSource } from "../util/signals";
+import { addValue, initValue } from "../util/signals";
 import translateVar from "../util/translate-var";
-import { currentProgramPath } from "../visitors/program";
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
@@ -141,7 +141,7 @@ export default {
       if (isOutputDOM()) {
         const section = getSection(tag);
         const binding = tagVar.extra!.binding!;
-        const signal = initValue(binding);
+        const signal = initValue(binding, "state");
         const referencedBindings = valueAttr.value.extra?.referencedBindings;
         const isSetup = !referencedBindings;
 
@@ -149,66 +149,45 @@ export default {
           valueChangeBinding &&
           (!optimize || !t.isIdentifier(valueChangeAttr.value))
         ) {
-          const valueChangeSource = initValue(valueChangeBinding);
-          if (!optimize && !t.isFunction(valueChangeAttr.value)) {
-            const build = valueChangeSource.build;
-            valueChangeSource.build = () => {
-              const fn = build();
-              return callRuntime(
-                "changeHandler",
-                getScopeAccessorLiteral(valueChangeBinding),
-                fn,
-              );
-            };
-          }
-
           addValue(
             section,
             valueChangeAttr.value.extra?.referencedBindings,
-            valueChangeSource,
+            initValue(valueChangeBinding),
             valueChangeAttr.value,
           );
         }
 
         addValue(section, referencedBindings, signal, valueAttr.value);
-        if (!isSetup && !valueChangeAttr?.value.extra?.static) {
-          let calleeExpression: t.Expression | undefined;
-          Object.defineProperty(signal, "callee", {
+        if (!isSetup) {
+          let extraArgsExpression: t.Expression[] | undefined;
+          Object.defineProperty(signal, "extraArgs", {
             get() {
-              if (!calleeExpression) {
-                const initValueId = tag.scope.generateUidIdentifier(
-                  signal.identifier.name + "_init",
-                );
-
-                calleeExpression = valueChangeBinding
-                  ? t.conditionalExpression(
-                      createScopeReadExpression(section, valueChangeBinding),
-                      signal.identifier,
-                      initValueId,
-                    )
-                  : initValueId;
-
-                currentProgramPath.pushContainer(
-                  "body",
-                  t.variableDeclaration("const", [
-                    t.variableDeclarator(
-                      initValueId,
-                      callRuntime(
-                        "initValue",
-                        getScopeAccessorLiteral(binding),
-                        signal.identifier,
-                      ),
-                    ),
-                  ]),
-                );
+              if (!extraArgsExpression) {
+                extraArgsExpression = valueChangeBinding
+                  ? valueChangeAttr?.value.extra?.static
+                    ? [t.numericLiteral(1)]
+                    : [createScopeReadExpression(section, valueChangeBinding)]
+                  : [];
               }
-              return calleeExpression;
+              return extraArgsExpression;
             },
           });
         }
 
         signal.buildAssignment = (valueSection, value) => {
-          return queueSource(signal, value, valueSection, valueChangeBinding);
+          const changeBindingId =
+            valueChangeBinding && t.identifier(valueChangeBinding.name);
+
+          if (valueChangeBinding?.upstreamExpression?.static) {
+            return t.callExpression(changeBindingId!, [value]);
+          }
+
+          const scope = getScopeExpression(valueSection, signal.section);
+
+          return t.callExpression(
+            signal.identifier,
+            changeBindingId ? [scope, value, changeBindingId] : [scope, value],
+          );
         };
       } else {
         translateVar(tag, valueAttr.value);

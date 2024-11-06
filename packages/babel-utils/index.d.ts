@@ -310,6 +310,11 @@ export function importDefault(
   request: string,
   nameHint?: string,
 ): t.Identifier;
+export function importStar(
+  file: t.BabelFile,
+  request: string,
+  nameHint?: string,
+): t.Identifier;
 export function importNamed(
   file: t.BabelFile,
   request: string,

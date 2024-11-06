@@ -1,46 +1,37 @@
-// size: 502 (min) 306 (brotli)
+// size: 506 (min) 293 (brotli)
 
-import {
-  register as o,
-  on as t,
-  createRendererWithOwner as n,
-  dynamicTagAttrs as i,
-  queueSource as c,
-  value as m,
-  data as r,
-  queueEffect as a,
-  init as d,
-} from "@marko/runtime-tags/dom";
-const u = o("a0", (o) =>
-    t(
-      o[2],
+import * as t from "@marko/runtime-tags/dom";
+import { init as a } from "@marko/runtime-tags/dom";
+const e = t.effect("a0", (a) =>
+    t.on(
+      a[2],
       "click",
-      ((o) => {
-        const { 7: t } = o;
+      ((t) => {
+        const { 7: a } = t;
         return function () {
-          c(o, e, t + 1);
+          r(t, a + 1);
         };
-      })(o),
+      })(a),
     ),
   ),
-  e = m(7, (o, t) => {
-    r(o[1], t), r(o[3], t), a(o, u);
+  r = t.state(7, (a, r) => {
+    t.data(a[1], r), t.data(a[3], r), e(a);
   }),
-  l = m(6, (o, t) => r(o[0], t)),
-  v = m(5, (o, t) => l(o, t.name)),
-  b = m(4, (o, t) => v(o, t[0]));
-o(
+  o = t.value(6, (a, e) => t.data(a[0], e)),
+  n = t.value(5, (t, a) => o(t, a.name)),
+  i = t.value(4, (t, a) => n(t, a[0])),
+  m = (t) => {
+    r(t, 1);
+  };
+t.register(
   "a1",
-  n(
+  t.createRendererWithOwner(
     "<div>Hello <!> <!></div><button> </button>",
     "Db%c%l D ",
-    (o) => {
-      e(o, 1);
-    },
+    m,
     void 0,
-    void 0,
-    () => b,
+    () => i,
   ),
 ),
-  i(0),
-  d();
+  t.dynamicTagAttrs(0),
+  a();

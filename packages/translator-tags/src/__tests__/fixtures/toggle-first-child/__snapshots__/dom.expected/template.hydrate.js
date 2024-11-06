@@ -1,13 +1,8 @@
-// size: 176 (min) 124 (brotli)
+// size: 161 (min) 122 (brotli)
 
-import {
-  register as o,
-  createRenderer as a,
-  closure as m,
-  data as n,
-} from "@marko/runtime-tags/dom";
-const r = m(3, (o, a) => n(o[0], a));
-o(
+import * as r from "@marko/runtime-tags/dom";
+const a = r.closure(3, (a, e) => r.data(a[0], e));
+r.register(
   "a0",
-  a("<span> </span>", "D ", void 0, () => [r]),
+  r.createRenderer("<span> </span>", "D ", void 0, () => [a]),
 );

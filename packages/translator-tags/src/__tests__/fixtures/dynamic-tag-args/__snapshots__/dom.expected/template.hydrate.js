@@ -1,42 +1,33 @@
-// size: 372 (min) 230 (brotli)
+// size: 344 (min) 210 (brotli)
 
-import {
-  dynamicTagAttrs as o,
-  register as t,
-  on as n,
-  queueSource as c,
-  value as r,
-  data as i,
-  queueEffect as m,
-  intersection as s,
-  init as f,
-} from "@marko/runtime-tags/dom";
-const u = o(2, void 0, 1),
-  a = s(
+import * as t from "@marko/runtime-tags/dom";
+import { init as o } from "@marko/runtime-tags/dom";
+const n = t.dynamicTagAttrs(2, void 0, 1),
+  r = t.intersection(
     2,
-    (o) => {
-      const { 3: t } = o;
-      u(o, () => [t, "foo"]);
+    (t) => {
+      const { 3: o } = t;
+      n(t, () => [o, "foo"]);
     },
-    () => u,
+    () => n,
   ),
-  d = t("b0", (o) =>
-    n(
+  m = t.effect("b0", (o) =>
+    t.on(
       o[0],
       "click",
-      ((o) => {
-        const { 3: t } = o;
+      ((t) => {
+        const { 3: o } = t;
         return function () {
-          c(o, e, t + 1);
+          a(t, o + 1);
         };
       })(o),
     ),
   ),
-  e = r(
+  a = t.state(
     3,
-    (o, t) => {
-      i(o[1], t), m(o, d);
+    (o, n) => {
+      t.data(o[1], n), m(o);
     },
-    () => a,
+    () => r,
   );
-f();
+o();

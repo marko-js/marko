@@ -1,8 +1,9 @@
-// size: 138 (min) 96 (brotli)
+// size: 173 (min) 103 (brotli)
 
-import { register as t, init as e } from "@marko/runtime-tags/dom";
-t("a0", (t) => {
-  const { 0: e } = t;
-  document.getElementById("ref").textContent = e;
+import * as t from "@marko/runtime-tags/dom";
+import { init as m } from "@marko/runtime-tags/dom";
+t.effect("a0", (t) => {
+  const { 0: m } = t;
+  document.getElementById("ref").textContent = m;
 }),
-  e();
+  m();

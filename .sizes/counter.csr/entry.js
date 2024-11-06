@@ -1,29 +1,20 @@
-import {
-  r as t,
-  c as s,
-  o as n,
-  a,
-  q as o,
-  v as c,
-  d as i,
-  b as u,
-} from "./runtime-CaTeSv5w.js";
-const r = t("XBSGKvBc", (t) =>
-    n(
+import { e as t, c as n, o, s, d as c } from "./runtime-iO38DTrJ.js";
+const i = t("XBSGKvBc", (t) =>
+    o(
       t[0],
       "click",
       ((t) => {
-        const { 2: s } = t;
+        const { 2: n } = t;
         return function () {
-          o(t, m, s + 1);
+          u(t, n + 1);
         };
       })(t),
     ),
   ),
-  m = c(2, (t, s) => {
-    i(t[1], s), u(t, r);
+  u = s(2, (t, n) => {
+    c(t[1], n), i(t);
   });
-function d(t) {
-  m(t, 0);
+function a(t) {
+  u(t, 0);
 }
-s(a("<div><button> </button></div>", "D D m", d), "tPaZsVqd").mount();
+n("tPaZsVqd", "<div><button> </button></div>", "D D m", a).mount();

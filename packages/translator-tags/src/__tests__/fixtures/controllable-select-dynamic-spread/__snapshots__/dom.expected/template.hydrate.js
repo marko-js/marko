@@ -1,31 +1,22 @@
-// size: 356 (min) 196 (brotli)
+// size: 403 (min) 193 (brotli)
 
-import {
-  register as o,
-  attrsEvents as t,
-  createRendererWithOwner as a,
-  dynamicTagAttrs as i,
-  attrs as n,
-  queueEffect as p,
-  init as m,
-} from "@marko/runtime-tags/dom";
-const e = o("a0", (o) => {
-  t(o, 0), t(o, 1), t(o, 2);
-});
-i(
-  0,
-  o(
+import * as t from "@marko/runtime-tags/dom";
+import { init as o } from "@marko/runtime-tags/dom";
+const r = t.effect("a0", (o) => {
+    t.attrsEvents(o, 0), t.attrsEvents(o, 1), t.attrsEvents(o, 2);
+  }),
+  a = (o) => {
+    t.attrs(o, 0, { value: "a" }),
+      t.attrs(o, 1, { value: "b" }),
+      t.attrs(o, 2, { value: "c" }),
+      r(o);
+  },
+  e = t.register(
     "a1",
-    a(
+    t.createRendererWithOwner(
       "<option>A</option><option>B</option><option>C</option>",
       " b b ",
-      (o) => {
-        n(o, 0, { value: "a" }),
-          n(o, 1, { value: "b" }),
-          n(o, 2, { value: "c" }),
-          p(o, e);
-      },
+      a,
     ),
-  ),
-),
-  m();
+  );
+t.dynamicTagAttrs(0, e), o();

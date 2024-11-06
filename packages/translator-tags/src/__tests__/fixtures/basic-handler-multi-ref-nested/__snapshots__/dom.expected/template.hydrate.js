@@ -1,42 +1,33 @@
-// size: 342 (min) 216 (brotli)
+// size: 319 (min) 191 (brotli)
 
-import {
-  register as n,
-  on as o,
-  queueSource as t,
-  value as r,
-  data as c,
-  intersection as m,
-  queueEffect as i,
-  init as a,
-} from "@marko/runtime-tags/dom";
-const s = n("a0", (n) =>
-    o(
-      n[0],
+import * as t from "@marko/runtime-tags/dom";
+import { init as o } from "@marko/runtime-tags/dom";
+const n = t.effect("a0", (o) =>
+    t.on(
+      o[0],
       "click",
-      ((n) => {
-        const { 2: o, 3: r } = n;
+      ((t) => {
+        const { 2: o, 3: n } = t;
         return function () {
-          t(
-            n,
-            e,
+          m(
+            t,
             o.map(
-              ((n) => {
-                const { 3: o } = n;
-                return (n) => o;
-              })(n),
+              ((t) => {
+                const { 3: o } = t;
+                return (t) => o;
+              })(t),
             ),
           );
         };
-      })(n),
+      })(o),
     ),
   ),
-  u = m(2, (n) => {
-    i(n, s);
+  r = t.intersection(2, (t) => {
+    n(t);
   }),
-  e = r(
+  m = t.state(
     2,
-    (n, o) => c(n[1], o.join("")),
-    () => u,
+    (o, n) => t.data(o[1], n.join("")),
+    () => r,
   );
-a();
+o();

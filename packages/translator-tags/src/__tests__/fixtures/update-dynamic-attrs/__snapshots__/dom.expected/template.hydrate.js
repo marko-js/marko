@@ -1,12 +1,9 @@
-// size: 131 (min) 99 (brotli)
+// size: 192 (min) 107 (brotli)
 
-import {
-  register as m,
-  attrsEvents as a,
-  init as o,
-} from "@marko/runtime-tags/dom";
-m("a0", (m) => a(m, 1)),
-  m("a1", (m) => {
-    a(m, 0), a(m, 2);
+import * as t from "@marko/runtime-tags/dom";
+import { init as r } from "@marko/runtime-tags/dom";
+t.effect("a0", (r) => t.attrsEvents(r, 1)),
+  t.effect("a1", (r) => {
+    t.attrsEvents(r, 0), t.attrsEvents(r, 2);
   }),
-  o();
+  r();

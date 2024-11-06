@@ -1,46 +1,46 @@
-import { write as _write, attr as _attr, escapeXML as _escapeXML, markResumeNode as _markResumeNode, peekNextScope as _peekNextScope, writeExistingScope as _writeExistingScope, ensureScopeWithId as _ensureScopeWithId, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, getScopeById as _getScopeById, writeEffect as _writeEffect, forOf as _forOf, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
-  _write("<ul>");
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
+  _$.write("<ul>");
   const _forScopeIds = [],
     _scope1_ = new Map();
-  _forOf(input.comments, (comment, i) => {
-    const _scope1_id = _nextScopeId();
+  _$.forOf(input.comments, (comment, i) => {
+    const _scope1_id = _$.nextScopeId();
     const id = `${input.path || "c"}-${i}`;
     const open = true;
-    _write(`<li${_attr("id", id)}${_attr("hidden", !open)}><span>${_escapeXML(comment.text)}${_markResumeNode(_scope1_id, "#text/1")}</span><button>${_escapeXML(open ? "[-]" : "[+]")}${_markResumeNode(_scope1_id, "#text/3")}</button>${_markResumeNode(_scope1_id, "#button/2")}`);
+    _$.write(`<li${_$.attr("id", id)}${_$.attr("hidden", !open)}><span>${_$.escapeXML(comment.text)}${_$.markResumeNode(_scope1_id, "#text/1")}</span><button>${_$.escapeXML(open ? "[-]" : "[+]")}${_$.markResumeNode(_scope1_id, "#text/3")}</button>${_$.markResumeNode(_scope1_id, "#button/2")}`);
     let _ifScopeId, _ifRenderer;
     if (comment.comments) {
-      const _scope2_id = _nextScopeId();
-      const _childScope = _peekNextScope();
+      const _scope2_id = _$.nextScopeId();
+      const _childScope = _$.peekNextScope();
       _renderer({
         comments: comment.comments,
         path: id
       });
-      _writeScope(_scope2_id, {
-        "#childScope/0": _writeExistingScope(_childScope),
-        "_": _ensureScopeWithId(_scope1_id)
+      _$.writeScope(_scope2_id, {
+        "#childScope/0": _$.writeExistingScope(_childScope),
+        "_": _$.ensureScopeWithId(_scope1_id)
       });
-      _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer");
+      _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer");
       _ifScopeId = _scope2_id;
     }
     _forScopeIds.push(_scope1_id);
-    _write(`${_markResumeControlSingleNodeEnd(_scope1_id, "#text/4", _ifScopeId)}</li>${_markResumeNode(_scope1_id, "#li/0")}`);
-    _writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open");
-    _writeScope(_scope1_id, {
+    _$.write(`${_$.markResumeControlSingleNodeEnd(_scope1_id, "#text/4", _ifScopeId)}</li>${_$.markResumeNode(_scope1_id, "#li/0")}`);
+    _$.writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open");
+    _$.writeScope(_scope1_id, {
       "comment": comment,
       "id": id,
       "open": open,
       "#text/4(": _ifRenderer,
-      "#text/4!": _getScopeById(_ifScopeId),
-      "_": _ensureScopeWithId(_scope0_id)
+      "#text/4!": _$.getScopeById(_ifScopeId),
+      "_": _$.ensureScopeWithId(_scope0_id)
     });
-    _scope1_.set(i, _getScopeById(_scope1_id));
+    _scope1_.set(i, _$.getScopeById(_scope1_id));
   });
-  _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#ul/0", _forScopeIds)}</ul>${_markResumeNode(_scope0_id, "#ul/0")}`);
-  _writeScope(_scope0_id, {
+  _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#ul/0", _forScopeIds)}</ul>${_$.markResumeNode(_scope0_id, "#ul/0")}`);
+  _$.writeScope(_scope0_id, {
     "input": input,
     "#ul/0(": _scope1_.size ? _scope1_ : undefined
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko", _renderer);

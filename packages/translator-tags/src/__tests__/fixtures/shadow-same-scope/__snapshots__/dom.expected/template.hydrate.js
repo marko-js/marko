@@ -1,72 +1,65 @@
-// size: 614 (min) 217 (brotli)
+// size: 647 (min) 210 (brotli)
 
-import {
-  register as n,
-  on as c,
-  queueSource as t,
-  value as o,
-  data as r,
-  queueEffect as i,
-  init as u,
-} from "@marko/runtime-tags/dom";
-const a = n("a0", (n) =>
-    c(
+import * as t from "@marko/runtime-tags/dom";
+import { init as n } from "@marko/runtime-tags/dom";
+const a = t.effect("a0", (n) =>
+    t.on(
       n[6],
       "click",
-      ((n) => {
-        const { 11: c } = n;
+      ((t) => {
+        const { 11: n } = t;
         return function () {
-          t(n, s, c + 1);
+          c(t, n + 1);
         };
       })(n),
     ),
   ),
-  s = o(11, (n, c) => {
-    r(n[7], c), i(n, a);
+  c = t.state(11, (n, c) => {
+    t.data(n[7], c), a(n);
   }),
-  e = n("a1", (n) =>
-    c(
+  o = t.effect("a1", (n) =>
+    t.on(
       n[4],
       "click",
-      ((n) => {
-        const { 10: c } = n;
+      ((t) => {
+        const { 10: n } = t;
         return function () {
-          t(n, f, c + 1);
+          e(t, n + 1);
         };
       })(n),
     ),
   ),
-  f = o(10, (n, c) => {
-    r(n[5], c), i(n, e);
+  e = t.state(10, (n, a) => {
+    t.data(n[5], a), o(n);
   }),
-  k = n("a2", (n) =>
-    c(
+  r = t.effect("a2", (n) =>
+    t.on(
       n[2],
       "click",
-      ((n) => {
-        const { 9: c } = n;
+      ((t) => {
+        const { 9: n } = t;
         return function () {
-          t(n, m, c + 1);
+          f(t, n + 1);
         };
       })(n),
     ),
   ),
-  m = o(9, (n, c) => {
-    r(n[3], c), i(n, k);
+  f = t.state(9, (n, a) => {
+    t.data(n[3], a), r(n);
   }),
-  l = n("a3", (n) =>
-    c(
+  i = t.effect("a3", (n) =>
+    t.on(
       n[0],
       "click",
-      ((n) => {
-        const { 8: c } = n;
+      ((t) => {
+        const { 8: n } = t;
         return function () {
-          t(n, d, c + 1);
+          s(t, n + 1);
         };
       })(n),
     ),
   ),
-  d = o(8, (n, c) => {
-    r(n[1], c), i(n, l);
+  s = t.state(8, (n, a) => {
+    t.data(n[1], a), i(n);
   });
-u();
+n();

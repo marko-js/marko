@@ -1,100 +1,84 @@
-// size: 920 (min) 444 (brotli)
+// size: 966 (min) 421 (brotli)
 
-import {
-  dynamicTagAttrs as o,
-  value as i,
-  intersection as n,
-  conditional as d,
-  registerSubscriber as t,
-  dynamicClosure as c,
-  data as l,
-  register as v,
-  createRendererWithOwner as r,
-  inChild as u,
-  on as b,
-  queueSource as m,
-  queueEffect as s,
-  dynamicSubscribers as a,
-  init as e,
-} from "@marko/runtime-tags/dom";
-const f = o(0),
-  k = n(
+import * as e from "@marko/runtime-tags/dom";
+import { init as r } from "@marko/runtime-tags/dom";
+const i = e.dynamicTagAttrs(0),
+  t = e.intersection(
     2,
-    (o) => {
-      const { 4: i } = o;
-      f(o, () => i);
+    (e) => {
+      const { 4: r } = e;
+      i(e, () => r);
     },
-    () => f,
+    () => i,
   ),
-  D = d(0, null, () => k),
-  g = i(4, null, () => k),
-  p = i(
+  a = e.conditional(0, 0, () => t),
+  n = e.value(4, 0, () => t),
+  o = e.value(
     3,
-    (o, i) => D(o, i),
-    () => D,
+    (e, r) => a(e, r),
+    () => a,
   ),
-  h = i(3, (o, i) => l(o[1], i)),
-  j = t(
+  c = e.value(3, (r, i) => e.data(r[1], i)),
+  s = e.registerSubscriber(
     "b0",
-    c(2, (o, i) => l(o[0], i)),
+    e.dynamicClosure(2, (r, i) => e.data(r[0], i)),
   ),
-  q = i(2, (o, i) => h(o, i[0])),
-  w = v(
+  d = e.value(2, (e, r) => c(e, r[0])),
+  u = e.register(
     "b1",
-    r(
+    e.createRendererWithOwner(
       "<div><!>.<!></div>",
       "D%c%",
       void 0,
-      () => [j],
-      void 0,
-      () => q,
+      () => [s],
+      () => d,
     ),
   ),
-  x = t(
+  m = e.registerSubscriber(
     "b2",
-    c(
+    e.dynamicClosure(
       3,
-      (o, i) => g(o[0], i),
+      (e, r) => n(e[0], r),
       void 0,
-      () => u(0, g),
+      () => e.inChild(0, n),
     ),
   ),
-  y = i(2, null, () => a(2)),
-  z = i(
+  l = e.value(2, 0, () => e.dynamicSubscribers(2)),
+  v = e.value(
     1,
-    (o, i) => y(o, i[0]),
-    () => y,
-  );
-v(
+    (e, r) => l(e, r[0]),
+    () => l,
+  ),
+  b = (e) => {
+    e[0], o(e[0], u(e));
+  };
+e.register(
   "b3",
-  r(
+  e.createRendererWithOwner(
     "<div><!></div>",
     "/D%l&",
-    (o) => {
-      o[0], p(o[0], w(o));
-    },
-    () => [x],
-    void 0,
-    () => z,
+    b,
+    () => [m],
+    () => v,
   ),
 );
-const A = v("b4", (o) =>
-    b(
-      o[0],
+const g = e.effect("b4", (r) =>
+    e.on(
+      r[0],
       "click",
-      ((o) => {
-        const { 2: i } = o;
+      ((e) => {
+        const { 2: r } = e;
         return function () {
-          m(o, B, i + 1);
+          f(e, r + 1);
         };
-      })(o),
+      })(r),
     ),
   ),
-  B = i(
+  f = e.state(
     2,
-    (o, i) => {
-      s(o, A), g(o[1], i);
+    (e, r) => {
+      g(e), n(e[1], r);
     },
-    () => u(1, g),
+    () => e.inChild(1, n),
   );
-e();
+r();

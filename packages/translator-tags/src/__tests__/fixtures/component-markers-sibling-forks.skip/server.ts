@@ -20,4 +20,4 @@ const thirdComponent = () => {
   fork(resolveAfter("c", 1), write);
 };
 
-export default createTemplate(renderer, "");
+export default createTemplate("", renderer);

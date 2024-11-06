@@ -1,8 +1,8 @@
 import { asset as asset1 } from "./asset1";
 import { asset as asset2 } from "./asset2";
-import { escapeXML as _escapeXML, write as _write, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
-  _write(`${_escapeXML(asset1)} ${_escapeXML(asset2)}`);
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
+  _$.write(`${_$.escapeXML(asset1)} ${_$.escapeXML(asset2)}`);
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/import-tag-conflict/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/import-tag-conflict/template.marko", _renderer);

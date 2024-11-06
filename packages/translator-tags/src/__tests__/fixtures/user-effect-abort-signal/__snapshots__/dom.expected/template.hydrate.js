@@ -1,20 +1,14 @@
-// size: 264 (min) 177 (brotli)
+// size: 274 (min) 168 (brotli)
 
-import {
-  register as o,
-  queueSource as t,
-  getAbortSignal as a,
-  value as m,
-  data as n,
-  init as r,
-} from "@marko/runtime-tags/dom";
-const s = m(5, (o, t) => n(o[1], t)),
-  c = m(4, (o, t) => n(o[0], t));
-o("a0", (o) => {
-  const { 3: m } = o;
+import * as t from "@marko/runtime-tags/dom";
+import { init as a } from "@marko/runtime-tags/dom";
+const o = t.state(5, (a, o) => t.data(a[1], o)),
+  m = t.state(4, (a, o) => t.data(a[0], o));
+t.effect("a0", (a) => {
+  const { 3: r } = a;
   {
-    const n = t(o, c, m.value + 1);
-    a(o, 0).onabort = () => t(o, s, n);
+    const e = m(a, r.value + 1);
+    t.getAbortSignal(a, 0).onabort = () => o(a, e);
   }
 }),
-  r();
+  a();
