@@ -54,7 +54,6 @@ export {
 } from "./dom/resume";
 export { createScope } from "./dom/scope";
 export {
-  changeHandler,
   childClosures,
   closure,
   dynamicClosure,

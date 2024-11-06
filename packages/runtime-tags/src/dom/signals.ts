@@ -27,36 +27,6 @@ export type BoundIntersectionSignal = ((op?: SignalOp) => void) & {
   ___unsubscribe?(scope: Scope): void;
 };
 
-export function changeHandler<T>(
-  valueAccessor: Accessor,
-  fn: ValueSignal<T>,
-): ValueSignal<T> {
-  const markAccessor = valueAccessor + AccessorChar.Mark;
-  return (scope, valueOrOp) => {
-    if (MARKO_DEBUG) {
-      if (valueOrOp !== MARK && valueOrOp !== CLEAN && valueOrOp !== DIRTY) {
-        if (valueOrOp != null && typeof valueOrOp !== "function") {
-          throw new Error(
-            `Invalid value ${valueOrOp} for change handler '${valueAccessor}'`,
-          );
-        } else if (scope[markAccessor] !== undefined) {
-          const prevValue = scope[valueAccessor];
-          if (prevValue && !valueOrOp) {
-            throw new Error(
-              `Change handler '${valueAccessor}' cannot change from a function to ${valueOrOp}`,
-            );
-          } else if (!prevValue && valueOrOp) {
-            throw new Error(
-              `Change handler '${valueAccessor}' cannot change from a nullish to a function`,
-            );
-          }
-        }
-      }
-    }
-    fn(scope, valueOrOp);
-  };
-}
-
 export function state<T>(
   valueAccessor: Accessor,
   fn: ValueSignal<T>,

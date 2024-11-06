@@ -37,9 +37,9 @@ const _expr__state_change_state = /* @__PURE__ */_$.intersection(2, _scope => {
   _expr__state_change_state_effect(_scope);
 });
 const _otherState = /* @__PURE__ */_$.state("otherState", (_scope, otherState) => _$.data(_scope["#text/5"], otherState), () => _expr__otherState_change_otherState);
-const _otherState_change = _$.changeHandler("_otherState_change", /* @__PURE__ */_$.value("_otherState_change", (_scope, _otherState_change) => {}, () => _expr__otherState_change_otherState));
+const _otherState_change = /* @__PURE__ */_$.value("_otherState_change", null, () => _expr__otherState_change_otherState);
 const _state = /* @__PURE__ */_$.state("state", (_scope, state) => _$.data(_scope["#text/2"], state), () => _expr__state_change_state);
-const _state_change = _$.changeHandler("_state_change", /* @__PURE__ */_$.value("_state_change", (_scope, _state_change) => {}, () => _expr__state_change_state));
+const _state_change = /* @__PURE__ */_$.value("_state_change", null, () => _expr__state_change_state);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _$.data(_scope["#text/1"], input.value);
   _$.data(_scope["#text/4"], input.value);

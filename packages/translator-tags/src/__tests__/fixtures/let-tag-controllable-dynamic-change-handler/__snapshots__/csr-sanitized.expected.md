@@ -50,7 +50,49 @@ container.querySelector("#inc").click()
 # Render 
 container.querySelector("#toggle").click()
 
-# Error
+```html
+<button
+  id="inc"
+>
+  5|5
+</button>
+<button
+  id="toggle"
+>
+  toggle
+</button>
 ```
-Change handler '_y_change' cannot change from a function to null
+
+
+# Render 
+container.querySelector("#inc").click()
+
+```html
+<button
+  id="inc"
+>
+  5|6
+</button>
+<button
+  id="toggle"
+>
+  toggle
+</button>
+```
+
+
+# Render 
+container.querySelector("#inc").click()
+
+```html
+<button
+  id="inc"
+>
+  5|7
+</button>
+<button
+  id="toggle"
+>
+  toggle
+</button>
 ```

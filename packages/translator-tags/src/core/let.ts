@@ -13,10 +13,8 @@ import {
   type Binding,
   BindingType,
   createBinding,
-  getScopeAccessorLiteral,
   trackVarReferences,
 } from "../util/references";
-import { callRuntime } from "../util/runtime";
 import {
   createScopeReadExpression,
   getScopeExpression,
@@ -151,23 +149,10 @@ export default {
           valueChangeBinding &&
           (!optimize || !t.isIdentifier(valueChangeAttr.value))
         ) {
-          const valueChangeSource = initValue(valueChangeBinding);
-          if (!optimize && !t.isFunction(valueChangeAttr.value)) {
-            const build = valueChangeSource.build;
-            valueChangeSource.build = () => {
-              const fn = build();
-              return callRuntime(
-                "changeHandler",
-                getScopeAccessorLiteral(valueChangeBinding),
-                fn,
-              );
-            };
-          }
-
           addValue(
             section,
             valueChangeAttr.value.extra?.referencedBindings,
-            valueChangeSource,
+            initValue(valueChangeBinding),
             valueChangeAttr.value,
           );
         }
