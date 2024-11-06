@@ -1,30 +1,29 @@
-// size: 315 (min) 199 (brotli)
+// size: 296 (min) 188 (brotli)
 
 import {
   register as o,
   createRenderer as n,
   on as t,
-  queueSource as r,
-  value as c,
-  queueEffect as l,
-  conditional as m,
-  init as a,
+  state as r,
+  queueEffect as c,
+  conditional as l,
+  init as m,
 } from "@marko/runtime-tags/dom";
-const i = o("a0", n("Hello!", "")),
-  u = m(0),
-  e = o("a1", (o) =>
+const a = o("a0", n("Hello!", "")),
+  i = l(0),
+  u = o("a1", (o) =>
     t(
       o[1],
       "click",
       ((o) => {
         const { 2: n } = o;
         return function () {
-          r(o, s, !n);
+          e(o, !n);
         };
       })(o),
     ),
   ),
-  s = c(2, (o, n) => {
-    l(o, e), u(o, n ? i : null);
+  e = r(2, (o, n) => {
+    c(o, u), i(o, n ? a : null);
   });
-a();
+m();

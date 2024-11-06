@@ -1,4 +1,4 @@
-// size: 549 (min) 269 (brotli)
+// size: 539 (min) 265 (brotli)
 
 import {
   register as t,
@@ -6,7 +6,7 @@ import {
   value as o,
   data as c,
   queueEffect as r,
-  queueSource as e,
+  state as e,
   intersections as i,
   inChild as m,
   init as s,
@@ -26,16 +26,16 @@ const u = o(7, (t, n) => {
   k = t("b0", (t) => {
     const { 2: n } = t;
     return function () {
-      e(t, d, n + 1);
+      d(t, n + 1);
     };
   }),
   x = t("b1", (t) => {
     const { 2: n } = t;
     return function () {
-      e(t, d, n + 1);
+      d(t, n + 1);
     };
   }),
-  d = o(
+  d = e(
     2,
     (t, n) => {
       a(t[0], { text: n }), b(t[0], k(t)), u(t[1], n), b(t[1], x(t));

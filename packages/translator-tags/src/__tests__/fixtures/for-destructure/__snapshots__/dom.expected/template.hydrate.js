@@ -1,11 +1,11 @@
-// size: 625 (min) 330 (brotli)
+// size: 615 (min) 339 (brotli)
 
 import {
   register as i,
   createRenderer as c,
   on as t,
   value as n,
-  queueSource as o,
+  state as o,
   queueEffect as r,
   loopOf as a,
   data as e,
@@ -31,7 +31,7 @@ const s = n(5, (i, c) => e(i[1], c)),
       ((i) => {
         const { 3: c } = i;
         return function () {
-          o(i, k, [
+          k(i, [
             ...c,
             { name: "JavaScript", description: "Java, but scriptier" },
           ]);
@@ -44,12 +44,12 @@ const s = n(5, (i, c) => e(i[1], c)),
         ((i) => {
           const { 3: c } = i;
           return function () {
-            o(i, k, c.slice(0, -1));
+            k(i, c.slice(0, -1));
           };
         })(i),
       );
   }),
-  k = n(3, (i, c) => {
+  k = o(3, (i, c) => {
     r(i, f), p(i, [c]);
   });
 d();

@@ -1,4 +1,4 @@
-// size: 586 (min) 322 (brotli)
+// size: 578 (min) 317 (brotli)
 
 import {
   dynamicTagAttrs as e,
@@ -8,7 +8,7 @@ import {
   register as o,
   createRendererWithOwner as c,
   on as d,
-  queueSource as i,
+  state as i,
   queueEffect as s,
   inChild as g,
   init as h,
@@ -39,12 +39,12 @@ const m = e(1),
       ((e) => {
         const { 2: n } = e;
         return function () {
-          i(e, f, !n);
+          f(e, !n);
         };
       })(e),
     ),
   ),
-  f = n(
+  f = i(
     2,
     (e, n) => {
       s(e, b), u(e, { selected: n, renderBody: p(e) });

@@ -1,6 +1,6 @@
 export const _template_ = "<button>Toggle</button><div></div><!><!>";
 export const _walks_ = /* get, over(1), get, over(1), replace, over(1) */" b b%bD";
-import { on as _on, register as _register, inChild as _inChild, queueSource as _queueSource, createRenderer as _createRenderer, closure as _closure, value as _value, loopOf as _loopOf, inLoopScope as _inLoopScope, queueEffect as _queueEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, register as _register, inChild as _inChild, createRenderer as _createRenderer, closure as _closure, value as _value, loopOf as _loopOf, inLoopScope as _inLoopScope, queueEffect as _queueEffect, state as _state, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _write = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_0/write", _scope => function (msg) {
   _scope["#div/1"].innerHTML += '\n' + msg;
 });
@@ -19,11 +19,11 @@ const _onClick = _scope => {
     items
   } = _scope;
   return function () {
-    _queueSource(_scope, _items, items.length ? items.slice(0, -1) : [1, 2, 3]);
+    _items(_scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
   };
 };
 const _items_effect = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_0_items", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
-const _items = /* @__PURE__ */_value("items", (_scope, items) => {
+const _items = /* @__PURE__ */_state("items", (_scope, items) => {
   _queueEffect(_scope, _items_effect);
   _for(_scope, [items]);
 }, () => _for);

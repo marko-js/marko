@@ -1,40 +1,39 @@
-// size: 406 (min) 250 (brotli)
+// size: 387 (min) 251 (brotli)
 
 import {
   register as n,
   createRendererWithOwner as o,
   dynamicTagAttrs as t,
   on as r,
-  queueSource as c,
-  value as i,
-  queueEffect as m,
-  conditional as a,
-  init as u,
+  state as c,
+  queueEffect as i,
+  conditional as m,
+  init as a,
 } from "@marko/runtime-tags/dom";
-const d = n("a0", o("Body Content", "")),
-  e = t(0, d),
-  l = a(
+const u = n("a0", o("Body Content", "")),
+  d = t(0, u),
+  e = m(
     0,
-    (n) => e(n, () => ({})),
-    () => e,
+    (n) => d(n, () => ({})),
+    () => d,
   ),
-  s = n("a1", (n) =>
+  l = n("a1", (n) =>
     r(
       n[1],
       "click",
       ((n) => {
         const { 2: o } = n;
         return function () {
-          c(n, f, o ? null : "div");
+          s(n, o ? null : "div");
         };
       })(n),
     ),
   ),
-  f = i(
+  s = c(
     2,
     (n, o) => {
-      m(n, s), l(n, o || d(n));
+      i(n, l), e(n, o || u(n));
     },
-    () => l,
+    () => e,
   );
-u();
+a();

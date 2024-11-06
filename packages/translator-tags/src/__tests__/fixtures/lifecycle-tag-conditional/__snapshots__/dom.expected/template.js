@@ -1,6 +1,6 @@
 export const _template_ = "<!><!><div id=ref></div><button id=increment>Increment</button><button id=toggle>Toggle</button>";
 export const _walks_ = /* replace, over(2), get, over(1), get, over(1) */"D%c b b";
-import { lifecycle as _lifecycle, on as _on, queueSource as _queueSource, createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, closure as _closure, conditional as _conditional, value as _value, inConditionalScope as _inConditionalScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { lifecycle as _lifecycle, on as _on, createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, closure as _closure, conditional as _conditional, state as _state, inConditionalScope as _inConditionalScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onMount = _scope => {
   const {
     _: {
@@ -36,11 +36,11 @@ const _onClick = _scope => {
     show
   } = _scope;
   return function () {
-    _queueSource(_scope, _show, !show);
+    _show(_scope, !show);
   };
 };
 const _show_effect = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_0_show", _scope => _on(_scope["#button/2"], "click", _onClick(_scope)));
-const _show = /* @__PURE__ */_value("show", (_scope, show) => {
+const _show = /* @__PURE__ */_state("show", (_scope, show) => {
   _queueEffect(_scope, _show_effect);
   _if(_scope, show ? _ifBody : null);
 }, () => _if);
@@ -49,11 +49,11 @@ const _onClick2 = _scope => {
     x
   } = _scope;
   return function () {
-    _queueSource(_scope, _x, x + 1);
+    _x(_scope, x + 1);
   };
 };
 const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-conditional/template.marko_0_x", _scope => _on(_scope["#button/1"], "click", _onClick2(_scope)));
-const _x = /* @__PURE__ */_value("x", (_scope, x) => _queueEffect(_scope, _x_effect), () => _inConditionalScope(_x$ifBody, "#text/0"));
+const _x = /* @__PURE__ */_state("x", (_scope, x) => _queueEffect(_scope, _x_effect), () => _inConditionalScope(_x$ifBody, "#text/0"));
 export function _setup_(_scope) {
   _x(_scope, 0);
   _show(_scope, true);

@@ -1,4 +1,5 @@
 import { type Accessor, AccessorChar, type Scope } from "../common/types";
+import { queueSource, rendering } from "./queue";
 import type { Renderer } from "./renderer";
 
 export type Signal = ValueSignal | IntersectionSignal;
@@ -24,18 +25,6 @@ export type BoundIntersectionSignal = ((op?: SignalOp) => void) & {
   ___subscribe?(scope: Scope): void;
   ___unsubscribe?(scope: Scope): void;
 };
-
-export function initValue<T>(
-  valueAccessor: Accessor,
-  valueSignal: ValueSignal<T>,
-): ValueSignal<T> {
-  const markAccessor = valueAccessor + AccessorChar.Mark;
-  return (scope, valueOrOp) => {
-    if (valueOrOp !== MARK && scope[markAccessor] === undefined) {
-      valueSignal(scope, valueOrOp);
-    }
-  };
-}
 
 export function changeHandler<T>(
   valueAccessor: Accessor,
@@ -64,6 +53,37 @@ export function changeHandler<T>(
       }
     }
     fn(scope, valueOrOp);
+  };
+}
+
+export function state<T>(
+  valueAccessor: Accessor,
+  fn: ValueSignal<T>,
+  getIntersection?: () => IntersectionSignal,
+) {
+  const valueSignal = value<T>(valueAccessor, fn, getIntersection);
+  const markAccessor = valueAccessor + AccessorChar.Mark;
+
+  return (
+    scope: Scope,
+    valueOrOp: T | SignalOp,
+    valueChange?: (v: T) => void,
+  ) => {
+    if (rendering) {
+      const valueIsOp =
+        valueOrOp === MARK || valueOrOp === CLEAN || valueOrOp === DIRTY;
+      valueSignal(
+        scope,
+        valueIsOp || valueChange || scope[markAccessor] === undefined
+          ? valueOrOp
+          : CLEAN,
+      );
+    } else if (valueChange) {
+      valueChange(valueOrOp as T);
+    } else {
+      queueSource(scope, valueSignal as ValueSignal, valueOrOp);
+    }
+    return valueOrOp;
   };
 }
 

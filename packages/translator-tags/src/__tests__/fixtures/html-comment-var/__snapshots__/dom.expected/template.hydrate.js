@@ -1,26 +1,26 @@
-// size: 294 (min) 176 (brotli)
+// size: 286 (min) 180 (brotli)
 
 import {
   register as m,
-  queueSource as t,
-  value as a,
-  tagVarSignal as e,
-  registerBoundSignal as o,
+  state as t,
+  tagVarSignal as a,
+  registerBoundSignal as e,
+  value as o,
   data as r,
   init as n,
 } from "@marko/runtime-tags/dom";
-const b = a(
+const b = t(
   1,
-  (m, t) => e(m, t),
-  () => e,
+  (m, t) => a(m, t),
+  () => a,
 );
-m("a0", (m) => t(m, b, m[0].parentElement.tagName)),
-  o(
+m("a0", (m) => b(m, m[0].parentElement.tagName)),
+  e(
     "b0",
-    a(5, (m, t) => r(m[3], t)),
+    o(5, (m, t) => r(m[3], t)),
   ),
-  o(
+  e(
     "b1",
-    a(4, (m, t) => r(m[1], t)),
+    o(4, (m, t) => r(m[1], t)),
   ),
   n();

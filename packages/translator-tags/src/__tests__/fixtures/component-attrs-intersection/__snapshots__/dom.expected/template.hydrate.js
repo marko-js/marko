@@ -1,4 +1,4 @@
-// size: 358 (min) 214 (brotli)
+// size: 350 (min) 211 (brotli)
 
 import {
   value as n,
@@ -6,7 +6,7 @@ import {
   data as t,
   register as c,
   on as r,
-  queueSource as m,
+  state as m,
   queueEffect as i,
   inChild as s,
   init as u,
@@ -23,12 +23,12 @@ const l = o(2, (n) => {
       ((n) => {
         const { 2: o } = n;
         return function () {
-          m(n, f, o + 1);
+          f(n, o + 1);
         };
       })(n),
     ),
   ),
-  f = n(
+  f = m(
     2,
     (n, o) => {
       i(n, e), a(n[0], o);

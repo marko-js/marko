@@ -1,4 +1,4 @@
-// size: 1265 (min) 600 (brotli)
+// size: 1257 (min) 593 (brotli)
 
 import {
   register as n,
@@ -13,7 +13,7 @@ import {
   dynamicClosure as e,
   inChild as s,
   closure as u,
-  queueSource as $,
+  state as $,
   intersections as b,
   inLoopScope as m,
   loopOf as a,
@@ -129,12 +129,12 @@ const p = t(
       ((n) => {
         const { 3: o } = n;
         return function () {
-          $(n, B, o.length ? o.slice(0, -1) : [1, 2, 3]);
+          B(n, o.length ? o.slice(0, -1) : [1, 2, 3]);
         };
       })(n),
     ),
   ),
-  B = i(
+  B = $(
     3,
     (n, o) => {
       l(n, A), z(n, [o]);

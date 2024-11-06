@@ -6,7 +6,7 @@ import {
 } from "../common/types";
 import { attr, normalizeAttrValue } from "./dom";
 import { createDelegator } from "./event";
-import { runSync } from "./queue";
+import { run } from "./queue";
 import { resolveCursorPosition } from "./resolve-cursor-position";
 import { isResuming } from "./resume";
 
@@ -36,7 +36,8 @@ export function controllable_input_checked_effect(
     if (checkedChange) {
       scope[nodeAccessor + AccessorChar.ControlledType] =
         ControlledType.Pending;
-      runSync(checkedChange, el.checked);
+      checkedChange(el.checked);
+      run();
       if (
         scope[nodeAccessor + AccessorChar.ControlledType] ===
         ControlledType.Pending
@@ -79,14 +80,14 @@ export function controllable_input_checkedValue_effect(
       const oldValue = scope[nodeAccessor + AccessorChar.ControlledValue];
       scope[nodeAccessor + AccessorChar.ControlledType] =
         ControlledType.Pending;
-      runSync(
-        checkedValueChange,
+      checkedValueChange(
         Array.isArray(oldValue)
           ? updateList(oldValue, el.value, el.checked)
           : el.checked
             ? el.value
             : undefined,
       );
+      run();
 
       if (
         scope[nodeAccessor + AccessorChar.ControlledType] ===
@@ -139,8 +140,8 @@ export function controllable_input_value_effect(
       scope[nodeAccessor + AccessorChar.ControlledType] =
         ControlledType.Pending;
       if (ev) inputType = (ev as InputEvent).inputType;
-      runSync(valueChange, el.value);
-
+      valueChange(el.value);
+      run();
       if (
         scope[nodeAccessor + AccessorChar.ControlledType] ===
         ControlledType.Pending
@@ -195,12 +196,12 @@ export function controllable_select_value_effect(
     if (valueChange) {
       scope[nodeAccessor + AccessorChar.ControlledType] =
         ControlledType.Pending;
-      runSync(
-        valueChange,
+      valueChange(
         Array.isArray(scope[nodeAccessor + AccessorChar.ControlledValue])
           ? Array.from(el.selectedOptions, toValueProp)
           : el.value,
       );
+      run();
 
       if (
         scope[nodeAccessor + AccessorChar.ControlledType] ===
@@ -279,7 +280,8 @@ export function controllable_detailsOrDialog_open_effect(
       if (openChange) {
         scope[nodeAccessor + AccessorChar.ControlledType] =
           ControlledType.Pending;
-        runSync(openChange, el.open);
+        openChange(el.open);
+        run();
         if (
           scope[nodeAccessor + AccessorChar.ControlledType] ===
           ControlledType.Pending

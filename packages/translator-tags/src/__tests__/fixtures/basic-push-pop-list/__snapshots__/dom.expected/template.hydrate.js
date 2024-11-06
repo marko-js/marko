@@ -1,11 +1,11 @@
-// size: 586 (min) 325 (brotli)
+// size: 574 (min) 324 (brotli)
 
 import {
   register as o,
   createRenderer as n,
   on as c,
   value as t,
-  queueSource as i,
+  state as i,
   queueEffect as r,
   data as s,
   intersection as u,
@@ -26,7 +26,7 @@ const m = t(2, (o, n) => s(o[0], n)),
         const { 3: n, 4: c } = o;
         return function () {
           const t = n + 1;
-          i(o, b, t), i(o, p, [...c, t]);
+          b(o, t), p(o, [...c, t]);
         };
       })(o),
     ),
@@ -42,17 +42,17 @@ const m = t(2, (o, n) => s(o[0], n)),
       ((o) => {
         const { 4: n } = o;
         return function () {
-          i(o, p, n.slice(0, -1));
+          p(o, n.slice(0, -1));
         };
       })(o),
     ),
   ),
-  p = t(
+  p = i(
     4,
     (o, n) => {
       r(o, g), v(o, [n]);
     },
     () => k,
   ),
-  b = t(3, null, () => k);
+  b = i(3, null, () => k);
 l();

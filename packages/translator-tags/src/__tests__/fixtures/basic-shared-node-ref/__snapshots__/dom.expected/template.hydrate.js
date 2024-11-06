@@ -1,11 +1,11 @@
-// size: 580 (min) 308 (brotli)
+// size: 570 (min) 305 (brotli)
 
 import {
   register as n,
   createRenderer as o,
   on as i,
   value as t,
-  queueSource as c,
+  state as c,
   queueEffect as r,
   attr as e,
   data as u,
@@ -28,12 +28,12 @@ const m = t(2, (n, o) => u(n[0], o)),
       ((n) => {
         const { 4: o } = n;
         return function () {
-          c(n, v, [].concat(o).reverse());
+          v(n, [].concat(o).reverse());
         };
       })(n),
     ),
   ),
-  v = t(4, (n, o) => {
+  v = c(4, (n, o) => {
     r(n, l),
       f(n, [
         o,
@@ -49,12 +49,12 @@ const m = t(2, (n, o) => u(n[0], o)),
       ((n) => {
         const { 3: o } = n;
         return function () {
-          c(n, g, !o);
+          g(n, !o);
         };
       })(n),
     ),
   ),
-  g = t(3, (n, o) => {
+  g = c(3, (n, o) => {
     e(n[0], "hidden", !o), r(n, k);
   });
 d();

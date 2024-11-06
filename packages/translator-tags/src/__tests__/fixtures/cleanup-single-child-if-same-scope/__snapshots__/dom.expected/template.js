@@ -1,6 +1,6 @@
 export const _template_ = "<button>Toggle</button><pre></pre><!><!>";
 export const _walks_ = /* get, over(1), get, over(1), replace, over(1) */" b b%bD";
-import { on as _on, resetAbortSignal as _resetAbortSignal, getAbortSignal as _getAbortSignal, queueSource as _queueSource, createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, conditional as _conditional, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, resetAbortSignal as _resetAbortSignal, getAbortSignal as _getAbortSignal, createRenderer as _createRenderer, register as _register, queueEffect as _queueEffect, conditional as _conditional, state as _state, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _setup$ifBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_1", _scope => {
   _scope._["#pre/1"].innerHTML += '\nmounted';
   _getAbortSignal(_scope, 0).onabort = () => {
@@ -18,11 +18,11 @@ const _onClick = _scope => {
     show
   } = _scope;
   return function () {
-    _queueSource(_scope, _show, !show);
+    _show(_scope, !show);
   };
 };
 const _show_effect = _register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_0_show", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
-const _show = /* @__PURE__ */_value("show", (_scope, show) => {
+const _show = /* @__PURE__ */_state("show", (_scope, show) => {
   _queueEffect(_scope, _show_effect);
   _if(_scope, show ? _ifBody : null);
 });

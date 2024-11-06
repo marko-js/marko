@@ -1,4 +1,4 @@
-// size: 789 (min) 367 (brotli)
+// size: 781 (min) 363 (brotli)
 
 import {
   createTemplate as i,
@@ -8,7 +8,7 @@ import {
   dynamicTagAttrs as a,
   register as l,
   on as n,
-  queueSource as t,
+  state as t,
   queueEffect as c,
   conditional as r,
   intersection as s,
@@ -47,12 +47,12 @@ const j = a(0),
       ((i) => {
         const { 2: o } = i;
         return function () {
-          t(i, y, o === f ? p : f);
+          y(i, o === f ? p : f);
         };
       })(i),
     ),
   ),
-  y = v(
+  y = t(
     2,
     (i, o) => {
       c(i, x), w(i, o);

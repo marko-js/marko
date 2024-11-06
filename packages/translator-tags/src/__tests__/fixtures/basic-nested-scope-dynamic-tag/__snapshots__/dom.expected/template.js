@@ -1,7 +1,7 @@
 export const _template_ = "<!><!><!>";
 export const _walks_ = /* replace, over(1) */"D%bD";
 import Child from "./components/child.marko";
-import { on as _on, data as _data, queueSource as _queueSource, createRendererWithOwner as _createRendererWithOwner, register as _register, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, data as _data, createRendererWithOwner as _createRendererWithOwner, register as _register, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onClick = _scope => {
   const {
     _: {
@@ -9,7 +9,7 @@ const _onClick = _scope => {
     }
   } = _scope;
   return function () {
-    _queueSource(_scope._, _count, count + 1);
+    _count(_scope._, count + 1);
   };
 };
 const _count$falseChildBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
@@ -20,7 +20,7 @@ const _count$falseChildBody = _registerSubscriber("packages/translator-tags/src/
 const _falseChildBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_renderer", /* @__PURE__ */_createRendererWithOwner("<button> </button>", /* get, next(1), get */" D ", void 0, () => [_count$falseChildBody]));
 const _falseChild_input = _dynamicTagAttrs("#text/0", _falseChildBody);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", _scope => _falseChild_input(_scope, () => ({})), () => _falseChild_input);
-const _count = /* @__PURE__ */_value("count", null, () => _dynamicSubscribers("count"));
+const _count = /* @__PURE__ */_state("count", null, () => _dynamicSubscribers("count"));
 export function _setup_(_scope) {
   _count(_scope, 0);
   _dynamicTagName(_scope, false || Child || _falseChildBody(_scope));

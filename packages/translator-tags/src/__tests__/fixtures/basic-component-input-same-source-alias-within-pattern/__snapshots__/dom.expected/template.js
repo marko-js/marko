@@ -1,12 +1,12 @@
 export const _template_ = `${_myButton_template}${_myButton_template}`;
 export const _walks_ = /* beginChild, _myButton_walks, endChild, beginChild, _myButton_walks, endChild */`/${_myButton_walks}&/${_myButton_walks}&`;
-import { register as _register, inChild as _inChild, queueSource as _queueSource, intersections as _intersections, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { register as _register, inChild as _inChild, intersections as _intersections, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onClick = _register("packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/template.marko_0/onClick", _scope => {
   const {
     clickCount
   } = _scope;
   return function () {
-    _queueSource(_scope, _clickCount, clickCount + 1);
+    _clickCount(_scope, clickCount + 1);
   };
 });
 import { _setup_ as _myButton, _pattern__ as _myButton_input_value, _onClick_ as _myButton_input_onClick, _template_ as _myButton_template, _walks_ as _myButton_walks, _text_ as _myButton_input_value_text } from "./components/my-button.marko";
@@ -15,10 +15,10 @@ const _onClick2 = _register("packages/translator-tags/src/__tests__/fixtures/bas
     clickCount
   } = _scope;
   return function () {
-    _queueSource(_scope, _clickCount, clickCount + 1);
+    _clickCount(_scope, clickCount + 1);
   };
 });
-const _clickCount = /* @__PURE__ */_value("clickCount", (_scope, clickCount) => {
+const _clickCount = /* @__PURE__ */_state("clickCount", (_scope, clickCount) => {
   _myButton_input_value(_scope["#childScope/0"], {
     text: clickCount
   });

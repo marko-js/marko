@@ -1,6 +1,6 @@
 export const _template_ = "<button> </button><!> <!> <!>";
 export const _walks_ = /* get, next(1), get, out(1), replace, over(2), replace, over(2), replace, over(1) */" D l%c%c%b";
-import { on as _on, data as _data, queueSource as _queueSource, intersection as _intersection, value as _value, register as _register, queueEffect as _queueEffect, intersections as _intersections, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, data as _data, intersection as _intersection, value as _value, register as _register, queueEffect as _queueEffect, intersections as _intersections, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _expr_y_z = /* @__PURE__ */_intersection(2, _scope => {
   const {
     y,
@@ -15,10 +15,10 @@ const _onClick = _scope => {
   const {
     x
   } = _scope;
-  return () => (_queueSource(_scope, _x, x + 1), x);
+  return () => (_x(_scope, x + 1), x);
 };
 const _x_effect = _register("packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
-const _x = /* @__PURE__ */_value("x", (_scope, x) => {
+const _x = /* @__PURE__ */_state("x", (_scope, x) => {
   _data(_scope["#text/1"], x);
   _queueEffect(_scope, _x_effect);
   _y(_scope, x + 1);

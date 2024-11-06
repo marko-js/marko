@@ -1,4 +1,4 @@
-// size: 418 (min) 244 (brotli)
+// size: 410 (min) 239 (brotli)
 
 import {
   dynamicTagAttrs as o,
@@ -7,7 +7,7 @@ import {
   data as c,
   register as r,
   on as m,
-  queueSource as s,
+  state as s,
   queueEffect as i,
   intersection as u,
   init as a,
@@ -32,12 +32,12 @@ const f = r("b1", (o) =>
       ((o) => {
         const { 4: t } = o;
         return function () {
-          s(o, k, t + 1);
+          k(o, t + 1);
         };
       })(o),
     ),
   ),
-  k = n(
+  k = s(
     4,
     (o, t) => {
       c(o[1], t), i(o, f);

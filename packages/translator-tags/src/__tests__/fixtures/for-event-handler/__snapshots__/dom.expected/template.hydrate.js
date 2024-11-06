@@ -1,13 +1,13 @@
-// size: 506 (min) 298 (brotli)
+// size: 498 (min) 294 (brotli)
 
 import {
   register as o,
   on as t,
   createRenderer as n,
   value as i,
-  queueSource as r,
-  closure as c,
-  queueEffect as m,
+  closure as r,
+  queueEffect as c,
+  state as m,
   intersections as u,
   inLoopScope as a,
   data as d,
@@ -25,12 +25,12 @@ const e = i(3, (o, t) => d(o[1], t)),
           _: { 1: t },
         } = o;
         return function () {
-          r(o._, g, t + 1);
+          g(o._, t + 1);
         };
       })(o),
     ),
   ),
-  v = c(1, (o, t) => m(o, k)),
+  v = r(1, (o, t) => c(o, k)),
   _ = s(
     0,
     o(
@@ -45,7 +45,7 @@ const e = i(3, (o, t) => d(o[1], t)),
       ),
     ),
   ),
-  g = i(
+  g = m(
     1,
     (o, t) => _(o, [t, 0, 1]),
     () => u([_, a(v, 0)]),

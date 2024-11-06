@@ -1,7 +1,7 @@
 export const _template_ = "<!><!>";
 export const _walks_ = /*  */"DD";
-import { value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _y = /* @__PURE__ */_value("y", (_scope, y) => {
+import { state as _state, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+const _y = /* @__PURE__ */_state("y", (_scope, y) => {
   debugger;
 });
 const _x = /* @__PURE__ */_value("x", (_scope, x) => {

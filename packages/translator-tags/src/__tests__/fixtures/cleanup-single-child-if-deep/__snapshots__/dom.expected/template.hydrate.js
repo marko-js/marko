@@ -1,4 +1,4 @@
-// size: 1508 (min) 611 (brotli)
+// size: 1496 (min) 607 (brotli)
 
 import {
   register as n,
@@ -15,7 +15,7 @@ import {
   inChild as s,
   conditional as $,
   closure as _,
-  queueSource as m,
+  state as m,
   dynamicSubscribers as v,
   inConditionalScope as f,
   init as a,
@@ -124,12 +124,12 @@ const H = e(
       ((n) => {
         const { 7: t } = n;
         return function () {
-          m(n, B, !t);
+          B(n, !t);
         };
       })(n),
     ),
   ),
-  B = o(
+  B = m(
     7,
     (n, t) => u(n, A),
     () => v(7),
@@ -141,12 +141,12 @@ const H = e(
       ((n) => {
         const { 6: t } = n;
         return function () {
-          m(n, E, !t);
+          E(n, !t);
         };
       })(n),
     ),
   ),
-  E = o(
+  E = m(
     6,
     (n, t) => u(n, C),
     () => f(w, 4),
@@ -158,12 +158,12 @@ const H = e(
       ((n) => {
         const { 5: t } = n;
         return function () {
-          m(n, G, !t);
+          G(n, !t);
         };
       })(n),
     ),
   ),
-  G = o(
+  G = m(
     5,
     (n, t) => {
       u(n, F), z(n, t ? x : null);

@@ -1,12 +1,11 @@
-// size: 199 (min) 148 (brotli)
+// size: 180 (min) 142 (brotli)
 
 import {
   register as o,
-  queueSource as t,
-  value as m,
-  data as r,
-  init as i,
+  state as t,
+  data as m,
+  init as r,
 } from "@marko/runtime-tags/dom";
-import s from "./test-log";
-const a = m(2, (o, t) => r(o[0], t));
-o("a0", (o) => t(o, a, JSON.stringify(s))), i();
+import i from "./test-log";
+const s = t(2, (o, t) => m(o[0], t));
+o("a0", (o) => s(o, JSON.stringify(i))), r();

@@ -2,14 +2,14 @@ import type { Scope } from "../common/types";
 import { schedule } from "./schedule";
 import { MARK, type ValueSignal } from "./signals";
 
-const enum BatchOffset {
+const enum PendingSignalOffset {
   Scope = 0,
   Signal = 1,
   Value = 2,
   Total = 3,
 }
 
-const enum EffectOffset {
+const enum PendingEffectOffset {
   Scope = 0,
   Function = 1,
   Total = 2,
@@ -17,26 +17,16 @@ const enum EffectOffset {
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 
-let currentBatch: unknown[] = [];
-let currentEffects: unknown[] = [];
-
-export function queueControllableSource<T>(
-  scope: Scope,
-  signal: ValueSignal,
-  changeHandler: ((newValue: T) => void) | undefined,
-  value: T,
-) {
-  if (changeHandler) {
-    changeHandler(value);
-    return value;
-  }
-  return queueSource(scope, signal, value);
-}
+let pendingSignals: unknown[] = [];
+let pendingEffects: unknown[] = [];
+export let rendering = false;
 
 export function queueSource<T>(scope: Scope, signal: ValueSignal, value: T) {
   schedule();
+  rendering = true;
   signal(scope, MARK);
-  currentBatch.push(scope, signal, value);
+  rendering = false;
+  pendingSignals.push(scope, signal, value);
   return value;
 }
 
@@ -44,70 +34,60 @@ export function queueEffect<S extends Scope, T extends ExecFn<S>>(
   scope: S,
   fn: T,
 ) {
-  currentEffects.push(scope, fn);
+  pendingEffects.push(scope, fn);
+}
+
+export function renderEffect(fn: () => void) {
+  rendering = false;
+  fn();
+  rendering = true;
 }
 
 export function run() {
+  const signals = pendingSignals;
+  const effects = pendingEffects;
   try {
-    runBatch();
+    rendering = true;
+    pendingSignals = [];
+    runSignals(signals);
   } finally {
-    currentBatch = [];
+    rendering = false;
   }
-  try {
-    runEffects();
-  } finally {
-    currentEffects = [];
-  }
-}
-export function runSync<T>(fn: () => void): void;
-export function runSync<T>(fn: (v: T) => void, v: T): void;
-export function runSync<T>(
-  fn: (() => void) | ((v: T) => void),
-  v?: typeof fn extends (v: T) => void ? T : never,
-): void {
-  const prevBatch = currentBatch;
-  const prevEffects = currentEffects;
-  currentBatch = [];
-  currentEffects = [];
-  try {
-    fn(v as any);
-    runBatch();
-    currentBatch = prevBatch;
-    runEffects();
-  } finally {
-    currentBatch = prevBatch;
-    currentEffects = prevEffects;
-  }
+  pendingEffects = [];
+  runEffects(effects);
 }
 
-export function prepare(fn: () => void) {
-  const prevBatch = currentBatch;
-  const prevEffects = currentEffects;
-  const preparedEffects = (currentEffects = []);
-  currentBatch = [];
+export function prepareEffects(fn: () => void): unknown[] {
+  const prevSignals = pendingSignals;
+  const prevEffects = pendingEffects;
+  const preparedEffects = (pendingEffects = []);
+  const preparedSignals = (pendingSignals = []);
   try {
+    rendering = true;
     fn();
-    runBatch();
+    pendingSignals = prevSignals;
+    runSignals(preparedSignals);
   } finally {
-    currentBatch = prevBatch;
-    currentEffects = prevEffects;
+    rendering = false;
+    pendingSignals = prevSignals;
+    pendingEffects = prevEffects;
   }
   return preparedEffects;
 }
 
-export function runEffects(effects: unknown[] = currentEffects) {
-  for (let i = 0; i < effects.length; i += EffectOffset.Total) {
+export function runEffects(effects: unknown[] = pendingEffects) {
+  for (let i = 0; i < effects.length; i += PendingEffectOffset.Total) {
     const scope = effects[i] as Scope;
     const fn = effects[i + 1] as (scope: Scope) => void;
     fn(scope);
   }
 }
 
-function runBatch() {
-  for (let i = 0; i < currentBatch.length; i += BatchOffset.Total) {
-    const scope = currentBatch[i + BatchOffset.Scope] as Scope;
-    const signal = currentBatch[i + BatchOffset.Signal] as ValueSignal;
-    const value = currentBatch[i + BatchOffset.Value] as unknown;
+function runSignals(signals: unknown[]) {
+  for (let i = 0; i < signals.length; i += PendingSignalOffset.Total) {
+    const scope = signals[i + PendingSignalOffset.Scope] as Scope;
+    const signal = signals[i + PendingSignalOffset.Signal] as ValueSignal;
+    const value = signals[i + PendingSignalOffset.Value] as unknown;
     signal(scope, value);
   }
 }

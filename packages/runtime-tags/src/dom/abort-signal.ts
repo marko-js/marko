@@ -1,4 +1,5 @@
 import type { Scope } from "../common/types";
+import { renderEffect } from "./queue";
 import { onDestroy } from "./scope";
 
 export function resetAbortSignal(scope: Scope, id: string | number) {
@@ -6,7 +7,7 @@ export function resetAbortSignal(scope: Scope, id: string | number) {
   if (controllers) {
     const ctrl = controllers.get(id);
     if (ctrl) {
-      ctrl.abort();
+      renderEffect(() => ctrl.abort());
       controllers.delete(id);
     }
   }

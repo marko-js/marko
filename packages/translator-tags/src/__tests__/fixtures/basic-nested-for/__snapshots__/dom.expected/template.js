@@ -1,6 +1,6 @@
 export const _template_ = "<button>Push</button><!><!>";
 export const _walks_ = /* get, over(1), replace, over(1) */" b%bD";
-import { on as _on, inChild as _inChild, queueSource as _queueSource, createRenderer as _createRenderer, intersection as _intersection, closure as _closure, value as _value, register as _register, loopOf as _loopOf, inLoopScope as _inLoopScope, queueEffect as _queueEffect, intersections as _intersections, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { on as _on, inChild as _inChild, createRenderer as _createRenderer, intersection as _intersection, closure as _closure, value as _value, register as _register, loopOf as _loopOf, inLoopScope as _inLoopScope, queueEffect as _queueEffect, intersections as _intersections, state as _state, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _child, _name_ as _child_input_name, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
 const _expr_outer_inner$forBody = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -29,11 +29,11 @@ const _onClick = _scope => {
     items
   } = _scope;
   return function () {
-    _queueSource(_scope, _items, [...items, items.length]);
+    _items(_scope, [...items, items.length]);
   };
 };
 const _items_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_0_items", _scope => _on(_scope["#button/0"], "click", _onClick(_scope)));
-const _items = /* @__PURE__ */_value("items", (_scope, items) => {
+const _items = /* @__PURE__ */_state("items", (_scope, items) => {
   _queueEffect(_scope, _items_effect);
   _for(_scope, [items]);
 }, () => _intersections([_for, _inLoopScope(_items$forBody, "#text/1")]));

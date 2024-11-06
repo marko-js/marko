@@ -1,17 +1,17 @@
 export const _template_ = `${_checkbox_template}${_checkbox_template}${_checkbox_template}<span> </span>`;
 export const _walks_ = /* beginChild, _checkbox_walks, endChild, beginChild, _checkbox_walks, endChild, beginChild, _checkbox_walks, endChild, next(1), get, out(1) */`/${_checkbox_walks}&/${_checkbox_walks}&/${_checkbox_walks}&D l`;
-import { register as _register, inChild as _inChild, data as _data, queueSource as _queueSource, intersections as _intersections, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { register as _register, inChild as _inChild, data as _data, intersections as _intersections, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _checkedValueChange = _register("packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange", _scope => function (_new_checkedValue) {
-  _queueSource(_scope, _checkedValue, _new_checkedValue);
+  _checkedValue(_scope, _new_checkedValue);
 });
 import { _setup_ as _checkbox, _input_ as _checkbox_input, _template_ as _checkbox_template, _walks_ as _checkbox_walks } from "./components/checkbox.marko";
 const _checkedValueChange2 = _register("packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange_0", _scope => function (_new_checkedValue2) {
-  _queueSource(_scope, _checkedValue, _new_checkedValue2);
+  _checkedValue(_scope, _new_checkedValue2);
 });
 const _checkedValueChange3 = _register("packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange_0", _scope => function (_new_checkedValue3) {
-  _queueSource(_scope, _checkedValue, _new_checkedValue3);
+  _checkedValue(_scope, _new_checkedValue3);
 });
-const _checkedValue = /* @__PURE__ */_value("checkedValue", (_scope, checkedValue) => {
+const _checkedValue = /* @__PURE__ */_state("checkedValue", (_scope, checkedValue) => {
   _data(_scope["#text/3"], checkedValue);
   _checkbox_input(_scope["#childScope/0"], {
     checkedValue: checkedValue,

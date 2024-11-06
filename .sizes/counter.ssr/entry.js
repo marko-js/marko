@@ -1,25 +1,24 @@
 import {
   r as s,
   o as a,
-  q as c,
-  v as n,
-  d as o,
-  a as r,
-  i as t,
-} from "./runtime-CPYNTZvU.js";
-const i = s("XBSGKvBc", (s) =>
+  s as c,
+  d as n,
+  q as o,
+  i as r,
+} from "./runtime-De0JRL1I.js";
+const t = s("XBSGKvBc", (s) =>
     a(
       s[0],
       "click",
       ((s) => {
         const { 2: a } = s;
         return function () {
-          c(s, m, a + 1);
+          i(s, a + 1);
         };
       })(s),
     ),
   ),
-  m = n(2, (s, a) => {
-    o(s[1], a), r(s, i);
+  i = c(2, (s, a) => {
+    n(s[1], a), o(s, t);
   });
-t();
+r();

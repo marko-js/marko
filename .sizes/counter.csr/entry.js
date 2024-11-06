@@ -2,28 +2,27 @@ import {
   r as t,
   c as s,
   o as n,
-  a,
-  q as o,
-  v as c,
-  d as i,
-  b as u,
-} from "./runtime-CaTeSv5w.js";
-const r = t("XBSGKvBc", (t) =>
+  a as o,
+  s as a,
+  d as c,
+  q as i,
+} from "./runtime-3J3zf50L.js";
+const u = t("XBSGKvBc", (t) =>
     n(
       t[0],
       "click",
       ((t) => {
         const { 2: s } = t;
         return function () {
-          o(t, m, s + 1);
+          r(t, s + 1);
         };
       })(t),
     ),
   ),
-  m = c(2, (t, s) => {
-    i(t[1], s), u(t, r);
+  r = a(2, (t, s) => {
+    c(t[1], s), i(t, u);
   });
-function d(t) {
-  m(t, 0);
+function m(t) {
+  r(t, 0);
 }
-s(a("<div><button> </button></div>", "D D m", d), "tPaZsVqd").mount();
+s(o("<div><button> </button></div>", "D D m", m), "tPaZsVqd").mount();

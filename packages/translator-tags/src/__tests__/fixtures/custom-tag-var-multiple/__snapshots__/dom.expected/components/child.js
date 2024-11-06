@@ -1,6 +1,6 @@
 export const _template_ = "<span>child</span>";
 export const _walks_ = /* over(1) */"b";
-import { tagVarSignal as _tagVarSignal, intersection as _intersection, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { tagVarSignal as _tagVarSignal, intersection as _intersection, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _expr_x_y = /* @__PURE__ */_intersection(2, _scope => {
   const {
     x,
@@ -8,8 +8,8 @@ const _expr_x_y = /* @__PURE__ */_intersection(2, _scope => {
   } = _scope;
   _tagVarSignal(_scope, x + y);
 }, () => _tagVarSignal);
-const _y = /* @__PURE__ */_value("y", null, () => _expr_x_y);
-const _x = /* @__PURE__ */_value("x", null, () => _expr_x_y);
+const _y = /* @__PURE__ */_state("y", null, () => _expr_x_y);
+const _x = /* @__PURE__ */_state("x", null, () => _expr_x_y);
 export function _setup_(_scope) {
   _x(_scope, 1);
   _y(_scope, 2);

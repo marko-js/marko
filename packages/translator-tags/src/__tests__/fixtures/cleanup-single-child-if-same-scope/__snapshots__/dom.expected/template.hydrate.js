@@ -1,4 +1,4 @@
-// size: 488 (min) 276 (brotli)
+// size: 469 (min) 261 (brotli)
 
 import {
   register as n,
@@ -7,37 +7,36 @@ import {
   on as t,
   resetAbortSignal as i,
   queueEffect as d,
-  queueSource as e,
-  value as a,
-  conditional as c,
-  init as m,
+  state as e,
+  conditional as a,
+  init as c,
 } from "@marko/runtime-tags/dom";
-const u = n("a0", (n) => {
+const m = n("a0", (n) => {
     (n._[1].innerHTML += "\nmounted"),
       (o(n, 0).onabort = () => {
         n._[1].innerHTML += "\ndestroyed";
       });
   }),
-  l = n(
+  u = n(
     "a1",
     r("<div>child</div>", "", (n) => {
-      i(n, 0), d(n, u);
+      i(n, 0), d(n, m);
     }),
   ),
-  s = c(2),
-  f = n("a2", (n) =>
+  l = a(2),
+  s = n("a2", (n) =>
     t(
       n[0],
       "click",
       ((n) => {
         const { 3: o } = n;
         return function () {
-          e(n, k, !o);
+          f(n, !o);
         };
       })(n),
     ),
   ),
-  k = a(3, (n, o) => {
-    d(n, f), s(n, o ? l : null);
+  f = e(3, (n, o) => {
+    d(n, s), l(n, o ? u : null);
   });
-m();
+c();

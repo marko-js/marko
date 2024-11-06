@@ -5,7 +5,7 @@ import type {
   TemplateInput,
   TemplateInstance,
 } from "../common/types";
-import { prepare, runEffects, runSync } from "./queue";
+import { prepareEffects, runEffects } from "./queue";
 import { initRenderer, type Renderer } from "./renderer";
 import { register } from "./resume";
 import { createScope, removeAndDestroyScope } from "./scope";
@@ -51,7 +51,7 @@ function mount(
   }
 
   const args = this.___args;
-  const effects = prepare(() => {
+  const effects = prepareEffects(() => {
     scope = createScope($global);
     dom = initRenderer(this, scope);
     if (args) {
@@ -89,10 +89,12 @@ function mount(
   return {
     update: (newInput: unknown) => {
       if (args) {
-        runSync(() => {
-          args(scope, MARK);
-          args(scope, [newInput]);
-        });
+        runEffects(
+          prepareEffects(() => {
+            args(scope, MARK);
+            args(scope, [newInput]);
+          }),
+        );
       }
     },
     destroy: () => {

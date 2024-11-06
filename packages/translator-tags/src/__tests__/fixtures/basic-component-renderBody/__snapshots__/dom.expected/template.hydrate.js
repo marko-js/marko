@@ -1,4 +1,4 @@
-// size: 548 (min) 311 (brotli)
+// size: 540 (min) 303 (brotli)
 
 import {
   dynamicTagAttrs as o,
@@ -6,11 +6,11 @@ import {
   on as n,
   value as c,
   queueEffect as r,
-  queueSource as i,
-  registerSubscriber as m,
-  dynamicClosure as s,
-  data as a,
-  createRendererWithOwner as b,
+  registerSubscriber as i,
+  dynamicClosure as m,
+  data as s,
+  createRendererWithOwner as a,
+  state as b,
   intersections as u,
   inChild as d,
   dynamicSubscribers as e,
@@ -25,18 +25,18 @@ const k = t("a0", (o) => {
   l = t("b0", (o) => {
     const { 1: t } = o;
     return function () {
-      i(o, v, t + 1);
+      v(o, t + 1);
     };
   }),
-  p = m(
+  p = i(
     "b1",
-    s(1, (o, t) => a(o[0], t)),
+    m(1, (o, t) => s(o[0], t)),
   );
 t(
   "b2",
-  b(" ", " ", void 0, () => [p]),
+  a(" ", " ", void 0, () => [p]),
 );
-const v = c(
+const v = b(
   1,
   (o, t) => g(o[0], l(o)),
   () => u([d(0, g), e(1)]),

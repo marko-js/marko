@@ -1,32 +1,31 @@
-// size: 395 (min) 234 (brotli)
+// size: 374 (min) 223 (brotli)
 
 import {
   register as l,
   createRenderer as n,
   on as o,
-  queueSource as t,
-  closure as i,
-  data as m,
-  value as u,
-  inConditionalScope as a,
-  conditional as c,
-  init as r,
+  closure as t,
+  data as i,
+  state as m,
+  inConditionalScope as u,
+  conditional as a,
+  init as c,
 } from "@marko/runtime-tags/dom";
-const d = i(2, (l, n) => m(l[0], n.text)),
-  e = l(
+const r = t(2, (l, n) => i(l[0], n.text)),
+  d = l(
     "a0",
-    n(" ", " ", void 0, () => [d]),
+    n(" ", " ", void 0, () => [r]),
   ),
-  f = c(1),
-  k = u(
+  e = a(1),
+  f = m(
     3,
-    (l, n) => f(l, n ? e : null),
-    () => f,
+    (l, n) => e(l, n ? d : null),
+    () => e,
   ),
-  s = u(2, null, () => a(d, 1));
+  k = m(2, null, () => u(r, 1));
 l("a1", (l) =>
   o(l[0], "click", function () {
-    t(l, s, null), t(l, k, !1);
+    k(l, null), f(l, !1);
   }),
 ),
-  r();
+  c();

@@ -1,42 +1,41 @@
-// size: 419 (min) 191 (brotli)
+// size: 396 (min) 181 (brotli)
 
 import {
   register as n,
-  queueSource as o,
-  value as a,
-  controllable_input_checkedValue as t,
-  data as c,
-  controllable_input_checkedValue_effect as i,
-  init as m,
+  state as o,
+  controllable_input_checkedValue as a,
+  data as t,
+  controllable_input_checkedValue_effect as c,
+  init as i,
 } from "@marko/runtime-tags/dom";
-const f = n(
+const m = n(
     "a0",
     (n) =>
-      function (a) {
-        o(n, s, a);
+      function (o) {
+        u(n, o);
+      },
+  ),
+  f = n(
+    "a1",
+    (n) =>
+      function (o) {
+        u(n, o);
       },
   ),
   r = n(
     "a1",
     (n) =>
-      function (a) {
-        o(n, s, a);
+      function (o) {
+        u(n, o);
       },
   ),
-  u = n(
-    "a1",
-    (n) =>
-      function (a) {
-        o(n, s, a);
-      },
-  ),
-  s = a(4, (n, o) => {
-    t(n, 0, o, f(n), "a"),
-      t(n, 1, o, r(n), "b"),
-      t(n, 2, o, u(n), "c"),
-      c(n[3], o);
+  u = o(4, (n, o) => {
+    a(n, 0, o, m(n), "a"),
+      a(n, 1, o, f(n), "b"),
+      a(n, 2, o, r(n), "c"),
+      t(n[3], o);
   });
 n("a2", (n) => {
-  i(n, 0), i(n, 1), i(n, 2);
+  c(n, 0), c(n, 1), c(n, 2);
 }),
-  m();
+  i();

@@ -1,4 +1,4 @@
-// size: 369 (min) 217 (brotli)
+// size: 361 (min) 219 (brotli)
 
 import {
   register as c,
@@ -6,7 +6,7 @@ import {
   value as o,
   attrs as t,
   queueEffect as n,
-  queueSource as m,
+  state as m,
   data as r,
   inChild as a,
   init as h,
@@ -19,10 +19,10 @@ const i = c("a0", (c) => e(c, 0)),
     "b0",
     (c) =>
       function (e) {
-        m(c, g, e);
+        g(c, e);
       },
   ),
-  g = o(
+  g = m(
     2,
     (c, e) => {
       r(c[1], String(e)), k(c[0], { checked: e, checkedChange: d(c) });

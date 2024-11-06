@@ -1,16 +1,16 @@
 export const _template_ = "<!><!><!>";
 export const _walks_ = /* replace, over(1) */"D%bD";
-import { data as _data, on as _on, queueSource as _queueSource, createRendererWithOwner as _createRendererWithOwner, register as _register, queueEffect as _queueEffect, value as _value, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { data as _data, on as _on, createRendererWithOwner as _createRendererWithOwner, register as _register, queueEffect as _queueEffect, state as _state, value as _value, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _onClick = _scope => {
   const {
     y
   } = _scope;
   return function () {
-    _queueSource(_scope, _y$defineBody, y + 1);
+    _y$defineBody(_scope, y + 1);
   };
 };
 const _y$defineBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y", _scope => _on(_scope["#button/2"], "click", _onClick(_scope)));
-const _y$defineBody = /* @__PURE__ */_value("y", (_scope, y) => {
+const _y$defineBody = /* @__PURE__ */_state("y", (_scope, y) => {
   _data(_scope["#text/1"], y);
   _data(_scope["#text/3"], y);
   _queueEffect(_scope, _y$defineBody_effect);

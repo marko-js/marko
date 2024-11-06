@@ -1,6 +1,6 @@
 export const _template_ = "<div></div><div></div><div></div>";
 export const _walks_ = /* get, over(1), get, over(1), get, over(1) */" b b b";
-import { attrs as _attrs, attrsEvents as _attrsEvents, attr as _attr, partialAttrs as _partialAttrs, register as _register, queueEffect as _queueEffect, intersection as _intersection, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { attrs as _attrs, attrsEvents as _attrsEvents, attr as _attr, partialAttrs as _partialAttrs, register as _register, queueEffect as _queueEffect, intersection as _intersection, state as _state, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _expr_input_a_effect = _register("packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko_0_input_a", _scope => _attrsEvents(_scope, "#div/1"));
 const _expr_input_a = /* @__PURE__ */_intersection(2, _scope => {
   const {
@@ -13,7 +13,7 @@ const _expr_input_a = /* @__PURE__ */_intersection(2, _scope => {
   });
   _queueEffect(_scope, _expr_input_a_effect);
 });
-const _a = /* @__PURE__ */_value("a", (_scope, a) => _attr(_scope["#div/2"], "a", a), () => _expr_input_a);
+const _a = /* @__PURE__ */_state("a", (_scope, a) => _attr(_scope["#div/2"], "a", a), () => _expr_input_a);
 const _input__effect = _register("packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko_0_input", _scope => {
   const {
     input

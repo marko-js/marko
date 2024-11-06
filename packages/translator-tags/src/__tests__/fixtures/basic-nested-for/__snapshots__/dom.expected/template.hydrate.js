@@ -1,4 +1,4 @@
-// size: 816 (min) 410 (brotli)
+// size: 808 (min) 410 (brotli)
 
 import {
   value as o,
@@ -7,7 +7,7 @@ import {
   createRenderer as l,
   on as t,
   closure as d,
-  queueSource as v,
+  state as v,
   queueEffect as c,
   intersections as r,
   inLoopScope as u,
@@ -84,12 +84,12 @@ const D = o(3, (o, n) => i(o[0], n)),
       ((o) => {
         const { 2: i } = o;
         return function () {
-          v(o, w, [...i, i.length]);
+          w(o, [...i, i.length]);
         };
       })(o),
     ),
   ),
-  w = o(
+  w = v(
     2,
     (o, i) => {
       c(o, q), j(o, [i]);

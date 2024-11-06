@@ -1,4 +1,4 @@
-// size: 602 (min) 345 (brotli)
+// size: 594 (min) 331 (brotli)
 
 import {
   register as t,
@@ -8,7 +8,7 @@ import {
   queueEffect as i,
   createRenderer as e,
   on as c,
-  queueSource as d,
+  state as d,
   conditional as u,
   init as m,
 } from "@marko/runtime-tags/dom";
@@ -46,12 +46,12 @@ const s = t("a0", (t) => {
       ((t) => {
         const { 3: n } = t;
         return function () {
-          d(t, k, !n);
+          k(t, !n);
         };
       })(t),
     ),
   ),
-  k = o(3, (t, n) => {
+  k = d(3, (t, n) => {
     i(t, w), f(t, n ? l : null);
   });
 m();

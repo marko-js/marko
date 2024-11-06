@@ -4,7 +4,7 @@ import {
 } from "../common/compat-meta";
 import type { Scope } from "../dom";
 import { patchConditionals } from "./control-flow";
-import { prepare, queueEffect, runEffects } from "./queue";
+import { prepareEffects, queueEffect, runEffects } from "./queue";
 import {
   createRenderer,
   createScopeWithRenderer,
@@ -90,7 +90,7 @@ export const compat = {
     const args = renderer.___args || noop;
     let existing = false;
 
-    component.effects = prepare(() => {
+    component.effects = prepareEffects(() => {
       if (!scope) {
         scope = component.scope = createScopeWithRenderer(renderer, out.global);
         const closures = renderer.___closureSignals;

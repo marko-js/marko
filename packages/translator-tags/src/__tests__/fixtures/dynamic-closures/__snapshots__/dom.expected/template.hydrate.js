@@ -1,4 +1,4 @@
-// size: 486 (min) 265 (brotli)
+// size: 467 (min) 259 (brotli)
 
 import {
   dynamicTagAttrs as c,
@@ -8,10 +8,9 @@ import {
   register as m,
   createRendererWithOwner as b,
   on as i,
-  queueSource as r,
-  value as l,
-  dynamicSubscribers as s,
-  init as u,
+  state as r,
+  dynamicSubscribers as l,
+  init as s,
 } from "@marko/runtime-tags/dom";
 c(0);
 o(
@@ -22,11 +21,11 @@ o(
     (c) => c._._,
   ),
 );
-const a = o(
+const u = o(
     "b1",
     n(4, (c, o) => t(c[2], o)),
   ),
-  f = n(3, (c, o) => t(c[1], o));
+  a = n(3, (c, o) => t(c[1], o));
 m(
   "b2",
   b(
@@ -35,13 +34,13 @@ m(
     (c) => {
       t(c[0], 1);
     },
-    () => [a, f],
+    () => [u, a],
   ),
 );
-const k = l(4, null, () => s(4));
+const f = r(4, null, () => l(4));
 m("b3", (c) =>
   i(c[0], "click", function () {
-    r(c, k, 4);
+    f(c, 4);
   }),
 ),
-  u();
+  s();

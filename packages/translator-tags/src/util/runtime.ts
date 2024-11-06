@@ -12,9 +12,6 @@ import {
 
 import { currentProgramPath } from "../visitors/program";
 import { getMarkoOpts } from "./marko-config";
-import type { Binding } from "./references";
-import { getScopeExpression } from "./scope-read";
-import type { Section } from "./sections";
 
 type Falsy = false | 0 | "" | null | undefined;
 
@@ -23,6 +20,7 @@ const pureFunctions: Array<keyof typeof import("@marko/runtime-tags/dom")> = [
   "createRenderer",
   "createRendererWithOwner",
   "value",
+  "state",
   "intersection",
   "closure",
   "dynamicClosure",
@@ -83,20 +81,6 @@ function getRuntimePath(output: string) {
   return `@marko/runtime-tags/${
     optimize ? "" : "debug/"
   }${output === "html" ? "html" : "dom"}`;
-}
-
-export function callQueue(
-  identifier: t.Identifier,
-  binding: Binding,
-  value: t.Expression,
-  section: Section,
-) {
-  return callRuntime(
-    "queueSource",
-    getScopeExpression(section, binding.section),
-    identifier,
-    value,
-  );
 }
 
 function filterArguments<A>(args: (A | Falsy)[]) {

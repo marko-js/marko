@@ -1,4 +1,4 @@
-// size: 915 (min) 472 (brotli)
+// size: 907 (min) 469 (brotli)
 
 import {
   register as n,
@@ -12,7 +12,7 @@ import {
   on as d,
   closure as l,
   inChild as u,
-  queueSource as a,
+  state as a,
   loopOf as m,
   init as p,
 } from "@marko/runtime-tags/dom";
@@ -83,12 +83,12 @@ const g = l(
       ((n) => {
         const { 3: o } = n;
         return function () {
-          a(n, H, o.length ? o.slice(0, -1) : [1, 2, 3]);
+          H(n, o.length ? o.slice(0, -1) : [1, 2, 3]);
         };
       })(n),
     ),
   ),
-  H = t(
+  H = a(
     3,
     (n, o) => {
       c(n, y), h(n, [o]);

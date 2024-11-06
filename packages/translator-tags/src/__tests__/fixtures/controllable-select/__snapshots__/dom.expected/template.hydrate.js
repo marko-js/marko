@@ -1,22 +1,21 @@
-// size: 277 (min) 162 (brotli)
+// size: 258 (min) 155 (brotli)
 
 import {
   register as o,
-  queueSource as m,
-  value as t,
-  controllable_select_value as a,
-  data as n,
-  controllable_select_value_effect as r,
-  init as i,
+  state as m,
+  controllable_select_value as t,
+  data as a,
+  controllable_select_value_effect as n,
+  init as r,
 } from "@marko/runtime-tags/dom";
-const c = o(
+const i = o(
     "a0",
     (o) =>
-      function (t) {
-        m(o, f, t);
+      function (m) {
+        c(o, m);
       },
   ),
-  f = t(2, (o, m) => {
-    a(o, 0, m, c(o)), n(o[1], m);
+  c = m(2, (o, m) => {
+    t(o, 0, m, i(o)), a(o[1], m);
   });
-o("a1", (o) => r(o, 0)), i();
+o("a1", (o) => n(o, 0)), r();

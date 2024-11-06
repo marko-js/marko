@@ -1,14 +1,14 @@
-// size: 502 (min) 306 (brotli)
+// size: 494 (min) 295 (brotli)
 
 import {
   register as o,
   on as t,
   createRendererWithOwner as n,
   dynamicTagAttrs as i,
-  queueSource as c,
-  value as m,
-  data as r,
-  queueEffect as a,
+  state as c,
+  data as m,
+  queueEffect as r,
+  value as a,
   init as d,
 } from "@marko/runtime-tags/dom";
 const u = o("a0", (o) =>
@@ -18,17 +18,17 @@ const u = o("a0", (o) =>
       ((o) => {
         const { 7: t } = o;
         return function () {
-          c(o, e, t + 1);
+          e(o, t + 1);
         };
       })(o),
     ),
   ),
-  e = m(7, (o, t) => {
-    r(o[1], t), r(o[3], t), a(o, u);
+  e = c(7, (o, t) => {
+    m(o[1], t), m(o[3], t), r(o, u);
   }),
-  l = m(6, (o, t) => r(o[0], t)),
-  v = m(5, (o, t) => l(o, t.name)),
-  b = m(4, (o, t) => v(o, t[0]));
+  l = a(6, (o, t) => m(o[0], t)),
+  v = a(5, (o, t) => l(o, t.name)),
+  b = a(4, (o, t) => v(o, t[0]));
 o(
   "a1",
   n(

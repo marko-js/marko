@@ -1,15 +1,15 @@
-// size: 1110 (min) 576 (brotli)
+// size: 1102 (min) 566 (brotli)
 
 import {
   register as n,
   createRenderer as t,
   on as o,
   closure as l,
-  queueSource as m,
-  value as c,
-  attr as i,
-  data as u,
-  queueEffect as s,
+  state as m,
+  attr as c,
+  data as i,
+  queueEffect as u,
+  value as s,
   intersections as a,
   intersection as d,
   inChild as e,
@@ -61,28 +61,28 @@ const f = d(
       ((n) => {
         const { 9: t } = n;
         return function () {
-          m(n, E, !t);
+          E(n, !t);
         };
       })(n),
     ),
   ),
-  E = c(9, (n, t) => {
-    i(n[0], "hidden", !t), u(n[3], t ? "[-]" : "[+]"), s(n, D);
+  E = m(9, (n, t) => {
+    c(n[0], "hidden", !t), i(n[3], t ? "[-]" : "[+]"), u(n, D);
   }),
-  j = c(
+  j = s(
     8,
-    (n, t) => i(n[0], "id", t),
+    (n, t) => c(n[0], "id", t),
     () => r(k, 4),
   ),
-  q = c(7, null, () => g),
-  w = c(
+  q = s(7, null, () => g),
+  w = s(
     6,
     (n, t) => {
-      u(n[1], t.text), x(n, t.comments ? _ : null);
+      i(n[1], t.text), x(n, t.comments ? _ : null);
     },
     () => a([x, r($, 4)]),
   ),
-  y = c(
+  y = s(
     5,
     (n, t) => {
       w(n, t[0]), q(n, t[1]);
@@ -106,7 +106,7 @@ const f = d(
       ),
     ),
   ),
-  B = c(
+  B = s(
     2,
     (n, t) => A(n, [t.comments]),
     () => a([A, p(z, 0)]),

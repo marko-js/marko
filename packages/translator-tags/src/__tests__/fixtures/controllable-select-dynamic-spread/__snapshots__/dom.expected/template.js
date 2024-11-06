@@ -1,6 +1,6 @@
 export const _template_ = "<!><!><span> </span>";
 export const _walks_ = /* replace, over(1), next(1), get, out(1) */"D%bD l";
-import { attrs as _attrs, attrsEvents as _attrsEvents, data as _data, queueSource as _queueSource, createRendererWithOwner as _createRendererWithOwner, register as _register, queueEffect as _queueEffect, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value2, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
+import { attrs as _attrs, attrsEvents as _attrsEvents, data as _data, createRendererWithOwner as _createRendererWithOwner, register as _register, queueEffect as _queueEffect, dynamicTagAttrs as _dynamicTagAttrs, intersection as _intersection, conditional as _conditional, value as _value2, state as _state, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
 const _setup$tagSelectBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_1", _scope => {
   _attrsEvents(_scope, "#option/0");
   _attrsEvents(_scope, "#option/1");
@@ -27,13 +27,13 @@ const _expr_Text_value = /* @__PURE__ */_intersection(2, _scope => {
   _tagSelect_input(_scope, () => ({
     value,
     valueChange(v) {
-      _queueSource(_scope, _value, v);
+      _value(_scope, v);
     }
   }));
 }, () => _tagSelect_input);
 const _dynamicTagName = /* @__PURE__ */_conditional("#text/0", null, () => _expr_Text_value);
 const _tag = /* @__PURE__ */_value2("tag", (_scope, tag) => _dynamicTagName(_scope, (tag ? "select" : {}) || _tagSelectBody(_scope)), () => _dynamicTagName);
-const _value = /* @__PURE__ */_value2("value", (_scope, value) => _data(_scope["#text/1"], value), () => _expr_Text_value);
+const _value = /* @__PURE__ */_state("value", (_scope, value) => _data(_scope["#text/1"], value), () => _expr_Text_value);
 export function _setup_(_scope) {
   _value(_scope, "b");
   _tag(_scope, "select");
