@@ -27,13 +27,13 @@ div0/#text0: "0" => "1"
 # Render {"value":1}
 ```html
 <div>
-  1 1
+  1 0
 </div>
 ```
 
 # Mutations
 ```
-div0/#text2: "0" => "1"
+
 ```
 
 
@@ -46,5 +46,6 @@ div0/#text2: "0" => "1"
 
 # Mutations
 ```
+div0/#text2: "0" => "1"
 div0/#text0: "1" => "2"
 ```

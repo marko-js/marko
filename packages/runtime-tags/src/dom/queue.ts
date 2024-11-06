@@ -37,12 +37,6 @@ export function queueEffect<S extends Scope, T extends ExecFn<S>>(
   pendingEffects.push(scope, fn);
 }
 
-export function renderEffect(fn: () => void) {
-  rendering = false;
-  fn();
-  rendering = true;
-}
-
 export function run() {
   const signals = pendingSignals;
   const effects = pendingEffects;

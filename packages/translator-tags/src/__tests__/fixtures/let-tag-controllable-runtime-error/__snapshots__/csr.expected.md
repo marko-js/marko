@@ -73,8 +73,8 @@ Error: Change handler '_y_change' cannot change from a function to null
     at _y_change (/packages/runtime-tags/src/dom/signals.ts:45:19)
     at /packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-runtime-error/template.marko:5:11
     at signal (/packages/runtime-tags/src/dom/signals.ts:116:13)
-    at runSignals (/packages/runtime-tags/src/dom/queue.ts:91:5)
-    at run (/packages/runtime-tags/src/dom/queue.ts:52:5)
+    at runSignals (/packages/runtime-tags/src/dom/queue.ts:85:5)
+    at run (/packages/runtime-tags/src/dom/queue.ts:46:5)
     at csr (/packages/translator-tags/src/__tests__/main.test.ts:284:17)
     at processTicksAndRejections (node:internal/process/task_queues:95:5)
     at /packages/translator-tags/src/__tests__/main.test.ts:372:37
