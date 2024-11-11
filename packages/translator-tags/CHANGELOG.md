@@ -1,5 +1,15 @@
 # @marko/translator-tags
 
+## 0.2.21
+
+### Patch Changes
+
+- [#2358](https://github.com/marko-js/marko/pull/2358) [`76951d8`](https://github.com/marko-js/marko/commit/76951d887d02e6f0dd3f0fe1345721d4a94a0069) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Always use MarkoTagBody AST nodes for control flow (even with attribute tags). This fixes a regression with the @marko/tags-api-preview and is more accurate to what is actually happening, especially from a variable scoping perspective.
+
+- Updated dependencies [[`76951d8`](https://github.com/marko-js/marko/commit/76951d887d02e6f0dd3f0fe1345721d4a94a0069)]:
+  - @marko/babel-utils@6.5.12
+  - @marko/runtime-tags@0.1.22
+
 ## 0.2.20
 
 ### Patch Changes
