@@ -50,8 +50,8 @@ export default {
     if (!isAttributeTag(path)) {
       if (
         !tagDef &&
-        path.node.attributeTags.length &&
         path.hub.file.markoOpts.ignoreUnrecognizedTags &&
+        (path.node.attributeTags.length || path.node.body.attributeTags) &&
         !isDynamicTag(path)
       ) {
         moveIgnoredAttrTags(path);
@@ -261,9 +261,13 @@ function isMarkoFile(request) {
 }
 
 function moveIgnoredAttrTags(parentTag) {
-  if (!parentTag.node.attributeTags.length) return;
+  const attrTags = parentTag.node.body.attributeTags
+    ? parentTag.get("body").get("body")
+    : parentTag.get("attributeTags");
 
-  for (const attrTag of parentTag.get("attributeTags")) {
+  if (!attrTags.length) return;
+
+  for (const attrTag of attrTags) {
     if (attrTag.isMarkoTag()) {
       if (isAttributeTag(attrTag)) {
         attrTag.set(

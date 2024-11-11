@@ -27,7 +27,10 @@ export function analyzeAttributeTags(rootTag) {
 
   while (i < visit.length) {
     const tag = visit[i++];
-    for (const child of tag.get("attributeTags")) {
+    const attrTags = tag.node.body.attributeTags
+      ? tag.get("body").get("body")
+      : tag.get("attributeTags");
+    for (const child of attrTags) {
       if (isAttributeTag(child)) {
         assertNoArgs(child);
         const tagDef = getTagDef(child) || {};
@@ -89,17 +92,7 @@ export function analyzeAttributeTags(rootTag) {
         parentTags.push(child);
         visit.push(child);
       } else if (isTransparentTag(child)) {
-        switch (getContentType(child)) {
-          case ContentType.mixed:
-            throw child.buildCodeFrameError(
-              "Cannot mix @tags with other content when under a control flow.",
-            );
-          case ContentType.attribute:
-            visit.push(child);
-            break;
-          case ContentType.render:
-            break;
-        }
+        visit.push(child);
       }
     }
   }
@@ -145,45 +138,6 @@ function getAttrTagObject(tag) {
   }
 
   return attrs;
-}
-
-function getContentType(tag) {
-  const { node } = tag;
-  const cached = contentTypeCache.get(node);
-  if (cached !== undefined) return cached;
-
-  const body = tag.get("body").get("body");
-  let hasAttributeTag = false;
-  let hasRenderBody = false;
-
-  for (const child of body) {
-    if (isAttributeTag(child)) {
-      hasAttributeTag = true;
-    } else if (isTransparentTag(child)) {
-      switch (getContentType(child)) {
-        case ContentType.mixed:
-          contentTypeCache.set(node, ContentType.mixed);
-          return ContentType.mixed;
-        case ContentType.attribute:
-          hasAttributeTag = true;
-          break;
-        case ContentType.render:
-          hasRenderBody = true;
-          break;
-      }
-    } else if (!child.isMarkoScriptlet() && !child.isMarkoComment()) {
-      hasRenderBody = true;
-    }
-
-    if (hasAttributeTag && hasRenderBody) {
-      contentTypeCache.set(node, ContentType.mixed);
-      return ContentType.mixed;
-    }
-  }
-
-  const result = hasAttributeTag ? ContentType.attribute : ContentType.render;
-  contentTypeCache.set(node, result);
-  return result;
 }
 
 function removeDashes(str) {

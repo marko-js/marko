@@ -398,7 +398,10 @@ function analyzeAttrs(
       seen.add(attrTagLookup[attrTagName].name);
     }
 
-    for (const child of tag.get("attributeTags")) {
+    const attrTags = tag.node.body.attributeTags
+      ? tag.get("body").get("body")
+      : tag.get("attributeTags");
+    for (const child of attrTags) {
       if (child.isMarkoTag()) {
         if (isAttributeTag(child)) {
           const attrTagMeta = attrTagLookup[getTagName(child)];

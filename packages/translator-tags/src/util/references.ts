@@ -701,7 +701,9 @@ export function getAllTagReferenceNodes(
     referenceNodes.push(attr.value);
   }
 
-  for (const child of tag.attributeTags) {
+  for (const child of tag.body.attributeTags
+    ? tag.body.body
+    : tag.attributeTags) {
     switch (child.type) {
       case "MarkoTag":
         getAllTagReferenceNodes(child, referenceNodes);

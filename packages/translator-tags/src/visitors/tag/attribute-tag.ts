@@ -2,6 +2,7 @@ import { assertNoArgs, assertNoVar, findParentTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 
 import { isOutputHTML } from "../../util/marko-config";
+import { BindingType, trackParamsReferences } from "../../util/references";
 import { startSection } from "../../util/sections";
 import { writeHTMLResumeStatements } from "../../util/signals";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -12,7 +13,9 @@ export default {
     enter(tag) {
       assertNoVar(tag);
       assertNoArgs(tag);
-      startSection(tag.get("body"));
+      const body = tag.get("body");
+      startSection(body);
+      trackParamsReferences(body, BindingType.param);
       if (!findParentTag(tag)) {
         throw tag
           .get("name")

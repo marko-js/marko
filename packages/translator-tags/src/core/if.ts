@@ -60,7 +60,7 @@ declare module "@marko/compiler/dist/types" {
 export const IfTag = {
   analyze(tag) {
     assertValidCondition(tag);
-    if (tag.node.attributeTags.length) return;
+    if (tag.node.body.attributeTags) return;
 
     const [isLast, branches] = getBranches(tag, startSection(tag.get("body")));
     if (isLast) {
@@ -103,7 +103,7 @@ export const IfTag = {
   translate: translateByTarget({
     html: {
       enter(tag) {
-        if (tag.node.attributeTags.length) return;
+        if (tag.node.body.attributeTags) return;
 
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody);
@@ -130,7 +130,7 @@ export const IfTag = {
         }
       },
       exit(tag) {
-        if (tag.node.attributeTags.length) return;
+        if (tag.node.body.attributeTags) return;
 
         const tagBody = tag.get("body");
         const section = getSection(tag);
@@ -271,7 +271,7 @@ export const IfTag = {
     },
     dom: {
       enter(tag) {
-        if (tag.node.attributeTags.length) return;
+        if (tag.node.body.attributeTags) return;
 
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody);
@@ -287,7 +287,7 @@ export const IfTag = {
         walks.enterShallow(tag);
       },
       exit(tag) {
-        if (tag.node.attributeTags.length) return;
+        if (tag.node.body.attributeTags) return;
 
         const [isLast, branches] = getBranches(
           tag,
