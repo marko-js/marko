@@ -15,10 +15,6 @@ export function exit(path) {
       );
   }
 
-  ifStatement.alternate = t.blockStatement(
-    path.node.attributeTags.length
-      ? path.node.attributeTags
-      : path.node.body.body,
-  );
+  ifStatement.alternate = t.blockStatement(path.node.body.body);
   path.remove();
 }

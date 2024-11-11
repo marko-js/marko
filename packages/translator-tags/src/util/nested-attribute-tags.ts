@@ -2,6 +2,7 @@ import { isAttributeTag, isLoopTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 
 import { currentProgramPath } from "../visitors/program";
+import { getParentTag } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
 import { isConditionTag } from "./is-core-tag";
 
@@ -39,7 +40,11 @@ export function getAttrTagIdentifier(
 
 export function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
   if (tag.node.extra?.attributeTags) return tag.node.extra.attributeTags;
-  if (!tag.node.attributeTags.length) return;
+
+  const attrTags = tag.node.body.attributeTags
+    ? tag.get("body").get("body")
+    : tag.get("attributeTags");
+  if (!attrTags.length) return;
 
   const tagExtra = (tag.node.extra ??= {});
   const lookup: AttrTagLookup = (tagExtra.attributeTags = {});
@@ -49,7 +54,7 @@ export function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
     string
   >();
 
-  for (const child of tag.get("attributeTags")) {
+  for (const child of attrTags) {
     if (child.isMarkoTag()) {
       if (isAttributeTag(child)) {
         const name = getTagName(child);
@@ -125,7 +130,10 @@ function crawlAttrTags(
   attrTagNodesByName: Record<string, t.NodePath<t.MarkoTag>[]>,
   attrTagNames = new Set<string>(),
 ) {
-  for (const child of tag.get("attributeTags")) {
+  const attrTags = tag.node.body.attributeTags
+    ? tag.get("body").get("body")
+    : tag.get("attributeTags");
+  for (const child of attrTags) {
     if (child.isMarkoTag()) {
       if (isAttributeTag(child)) {
         const tagName = getTagName(child);
@@ -147,7 +155,7 @@ function hasRepeatedDynamicAttrTags(attrTags: t.NodePath<t.MarkoTag>[]) {
   let conditionRoot: t.NodePath<t.MarkoTag> | undefined;
   const seenBranches = new Set<t.NodePath<t.MarkoTag>>();
   for (const attrTag of attrTags) {
-    const parentTag = attrTag.parentPath as t.NodePath<t.MarkoTag>;
+    const parentTag = getParentTag(attrTag)!;
     if (seenBranches.has(parentTag) || !isConditionTag(parentTag)) {
       return true;
     }

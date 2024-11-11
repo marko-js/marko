@@ -99,6 +99,7 @@ export function getOrCreateSection(path: t.NodePath<any>) {
     if (
       cur.type === "Program" ||
       (cur.type === "MarkoTagBody" &&
+        !cur.node.attributeTags &&
         analyzeTagNameType(cur.parentPath as t.NodePath<t.MarkoTag>) !==
           TagNameType.NativeTag &&
         (cur.parent as { name: t.StringLiteral }).name.value !== "html-comment")

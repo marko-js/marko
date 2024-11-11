@@ -10,6 +10,7 @@ import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
 
 import { assertNoSpreadAttrs } from "../util/assert";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
+import { getParentTag } from "../util/get-parent-tag";
 import { isStatefulReferences } from "../util/is-stateful";
 import {
   type Binding,
@@ -64,7 +65,7 @@ declare module "@marko/compiler/dist/types" {
 export default {
   analyze(tag) {
     const tagExtra = (tag.node.extra ??= {});
-    const isAttrTag = !!tag.node.attributeTags.length;
+    const isAttrTag = tag.node.body.attributeTags;
     let allowAttrs: string[];
     assertNoVar(tag);
     assertNoArgs(tag);
@@ -105,7 +106,7 @@ export default {
     const section = getOrCreateSection(tag);
 
     if (isOnlyChildInParent(tag)) {
-      const parentTag = tag.parentPath.parent as t.MarkoTag;
+      const parentTag = getParentTag(tag)!.node;
       const parentTagName = (parentTag.name as t.StringLiteral)?.value;
       (parentTag.extra ??= {})[kNativeTagBinding] ??= createBinding(
         "#" + parentTagName,
@@ -127,7 +128,7 @@ export default {
   translate: translateByTarget({
     html: {
       enter(tag) {
-        if (tag.node.attributeTags.length) return;
+        if (tag.node.body.attributeTags) return;
 
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody);
@@ -157,7 +158,7 @@ export default {
         }
       },
       exit(tag) {
-        if (tag.node.attributeTags.length) return;
+        if (tag.node.body.attributeTags) return;
 
         const tagBody = tag.get("body");
         const tagSection = getSection(tag);
@@ -165,8 +166,9 @@ export default {
         const { node } = tag;
         const tagExtra = node.extra!;
         const isStateful = isStatefulReferences(tagExtra.referencedBindings);
+        const parentTag = getParentTag(tag);
         const nodeRef = isOnlyChildInParent(tag)
-          ? tag.parentPath.parent.extra![kNativeTagBinding]!
+          ? parentTag!.node.extra![kNativeTagBinding]!
           : tag.node.extra![kForMarkerBinding]!;
         const forAttrs = getKnownAttrValues(node);
         const forType = getForType(node)!;
@@ -177,7 +179,7 @@ export default {
         let keyExpression: t.Expression | undefined;
 
         if (isStateful && isOnlyChildInParent(tag)) {
-          tag.parentPath.parent.extra![kSerializeMarker] = true;
+          parentTag!.node.extra![kSerializeMarker] = true;
         }
 
         if (tagExtra[kForScopeStartIndex]) {
@@ -342,7 +344,7 @@ export default {
     },
     dom: {
       enter(tag) {
-        if (tag.node.attributeTags.length) return;
+        if (tag.node.body.attributeTags) return;
 
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody);
@@ -360,7 +362,7 @@ export default {
         }
       },
       exit(tag) {
-        if (tag.node.attributeTags.length) return;
+        if (tag.node.body.attributeTags) return;
 
         const tagBody = tag.get("body");
         const tagSection = getSection(tag);
@@ -369,7 +371,7 @@ export default {
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
         const nodeRef = isOnlyChildInParent(tag)
-          ? tag.parentPath.parent.extra![kNativeTagBinding]!
+          ? getParentTag(tag)!.node.extra![kNativeTagBinding]!
           : tag.node.extra![kForMarkerBinding]!;
         setSubscriberBuilder(tag, (signal: t.Expression) => {
           return callRuntime(
@@ -572,10 +574,8 @@ function isOnlyChildInParent(tag: t.NodePath<t.MarkoTag>) {
     return extra[kOnlyChildInParent];
   }
 
-  if (
-    t.isMarkoTag(tag.parentPath?.parent) &&
-    getTagDef(tag.parentPath!.parentPath! as t.NodePath<t.MarkoTag>)?.html
-  ) {
+  const parentTag = getParentTag(tag);
+  if (parentTag && getTagDef(parentTag)?.html) {
     return (extra[kOnlyChildInParent] =
       (tag.parent as t.MarkoTagBody).body.length === 1);
   }

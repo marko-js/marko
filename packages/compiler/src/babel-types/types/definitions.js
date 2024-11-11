@@ -175,6 +175,10 @@ const MarkoDefinitions = {
         ]),
         default: [],
       },
+      attributeTags: {
+        validate: assertValueType("boolean"),
+        default: false,
+      },
     },
   },
 

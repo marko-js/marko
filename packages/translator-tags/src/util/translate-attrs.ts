@@ -1,9 +1,10 @@
-import { isAttributeTag } from "@marko/babel-utils";
+import { isAttributeTag, isTransparentTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 
 import { buildForRuntimeCall, getForType } from "../core/for";
 import { scopeIdentifier, type TemplateExports } from "../visitors/program";
 import { getKnownAttrValues } from "./get-known-attr-values";
+import { getParentTag } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
 import { isOutputHTML } from "./marko-config";
 // TODO: should this move here.
@@ -48,7 +49,11 @@ export function translateAttrs(
       }
     }
 
-    const attrTags = tag.get("attributeTags");
+    const attrTags = tag.node.body.attributeTags
+      ? (tag.get("body").get("body") as ReturnType<
+          typeof tag.get<"attributeTags">
+        >)
+      : tag.get("attributeTags");
     for (let i = 0; i < attrTags.length; i++) {
       const child = attrTags[i];
       if (child.isMarkoTag()) {
@@ -329,7 +334,11 @@ function addAllAttrTagsAsDynamic(
   statements: t.Statement[],
   templateExports: TemplateExports,
 ) {
-  const attrTags = tag.get("attributeTags");
+  const attrTags = tag.node.body.attributeTags
+    ? (tag.get("body").get("body") as ReturnType<
+        typeof tag.get<"attributeTags">
+      >)
+    : tag.get("attributeTags");
   for (let i = 0; i < attrTags.length; i++) {
     i = addDynamicAttrTagStatements(
       attrTags,
@@ -406,9 +415,9 @@ function buildRenderBody(body: t.NodePath<t.MarkoTagBody>) {
 function getNonAttributeTagParent(
   tag: t.NodePath<t.MarkoTag>,
 ): t.NodePath<t.MarkoTag> {
-  let cur = tag;
-  while (cur.node && cur.listKey === "attributeTags") {
-    cur = cur.parentPath as t.NodePath<t.MarkoTag>;
+  let cur: t.NodePath<t.MarkoTag> = tag;
+  while (isAttributeTag(cur) || isTransparentTag(cur)) {
+    cur = getParentTag(cur)!;
   }
 
   return cur;

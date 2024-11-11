@@ -12,11 +12,7 @@ export function buildIfStatement(path, args) {
 
   const ifStatement = t.ifStatement(
     args.length === 1 ? args[0] : t.sequenceExpression(args),
-    t.blockStatement(
-      path.node.attributeTags.length
-        ? path.node.attributeTags
-        : path.node.body.body,
-    ),
+    t.blockStatement(path.node.body.body),
   );
 
   let nextPath = path.getNextSibling();

@@ -542,34 +542,50 @@ export function parseMarko(file) {
 
         if (node.body.body.length) {
           const body = [];
+          // When we have a control flow with mixed body and attribute tag content
+          // we move any scriptlets, comments or empty nested control flow.
+          // This is because they initially ambiguous as to whether
+          // they are part of the body or the attributeTags.
+          // Otherwise we only move scriptlets.
           for (const child of node.body.body) {
             if (
               t.isMarkoScriptlet(child) ||
-              (isControlFlow &&
-                (t.isMarkoComment(child) ||
-                  (child.tagDef?.controlFlow && !child.body.body.length)))
+              (isControlFlow && t.isMarkoComment(child))
             ) {
-              // When we have a control flow with mixed body and attribute tag content
-              // we move any scriptlets, comments or empty nested control flow.
-              // This is because they initially ambiguous as to whether
-              // they are part of the body or the attributeTags.
+              attributeTags.push(child);
+            } else if (
+              isControlFlow &&
+              child.tagDef?.controlFlow &&
+              !child.body.body.length
+            ) {
+              child.body.attributeTags = true;
               attributeTags.push(child);
             } else {
               body.push(child);
             }
           }
 
-          if (isControlFlow && body.length) {
-            onNext();
-            throw file.buildCodeFrameError(
-              body[0],
-              "Cannot have attribute tags and body content under a control flow tag.",
-            );
+          if (isControlFlow) {
+            if (body.length) {
+              onNext();
+              throw file.buildCodeFrameError(
+                body[0],
+                "Cannot have attribute tags and body content under a control flow tag.",
+              );
+            }
+
+            node.attributeTags = body;
+            node.body.body = attributeTags;
+            node.body.attributeTags = true;
           } else {
             node.body.body = body;
           }
 
           attributeTags.sort(sortByStart);
+        } else if (isControlFlow) {
+          node.attributeTags = [];
+          node.body.body = attributeTags;
+          node.body.attributeTags = true;
         }
 
         if (isControlFlow) {
