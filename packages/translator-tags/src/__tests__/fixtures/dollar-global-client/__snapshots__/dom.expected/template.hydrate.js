@@ -1,25 +1,33 @@
-// size: 347 (min) 225 (brotli)
+// size: 488 (min) 250 (brotli)
 
-import * as t from "@marko/runtime-tags/dom";
-import { init as a } from "@marko/runtime-tags/dom";
-const o = (a) => {
-    t.data(a[0], a.$global.x);
+import * as a from "@marko/runtime-tags/dom";
+import { init as e } from "@marko/runtime-tags/dom";
+const n = (e) => {
+    a.data(e[0], e.$global.x);
   },
-  r = t.register("a0", t.createRenderer("<span> </span>", "D ", o)),
-  n = t.conditional(0, 0),
-  e = t.effect("a1", (a) =>
-    t.on(
-      a[1],
+  t = a.register(
+    "a0",
+    a.createRenderer("<span class=hidden> </span>", "D ", n),
+  ),
+  r = (e) => {
+    a.data(e[0], e.$global.x);
+  },
+  o = a.register("a1", a.createRenderer("<span> </span>", "D ", r)),
+  s = a.conditional(1, 0),
+  i = a.conditional(0, 0),
+  l = a.effect("a2", (e) =>
+    a.on(
+      e[2],
       "click",
-      ((t) => {
-        const { 2: a } = t;
+      ((a) => {
+        const { 3: e } = a;
         return function () {
-          m(t, !a);
+          c(a, !e);
         };
-      })(a),
+      })(e),
     ),
   ),
-  m = t.state(2, (t, a) => {
-    e(t), n(t, a ? r : null);
+  c = a.state(3, (a, e) => {
+    l(a), i(a, e ? o : null), s(a, e ? null : t);
   });
-a();
+e();

@@ -1,6 +1,11 @@
 # Render {"$global":{"x":1,"serializedGlobals":["x"]}}
 ```html
 <div>
+  <span
+    class="hidden"
+  >
+    1
+  </span>
   <button>
     Toggle
   </button>
@@ -28,6 +33,11 @@ container.querySelector("button").click()
 
 ```html
 <div>
+  <span
+    class="hidden"
+  >
+    1
+  </span>
   <button>
     Toggle
   </button>
