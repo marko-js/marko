@@ -94,9 +94,10 @@ ${HUB_INTERFACE}
     ASSERT,
     ASSERT +
       BREAK +
-      MARKO_TYPES.map((t) => `assert${t}(opts?: object | null): void;`).join(
-        BREAK,
-      ),
+      MARKO_TYPES.map(
+        (t) =>
+          `assert${t}(opts?: object | null): asserts this is NodePath<t.${t}>;`,
+      ).join(BREAK),
   );
 
 export default result;

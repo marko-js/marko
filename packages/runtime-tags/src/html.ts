@@ -24,10 +24,10 @@ export {
 } from "./html/dynamic-tag";
 export { createTemplate } from "./html/template";
 export {
+  $global,
   ensureScopeWithId,
   fork,
   getScopeById,
-  getStreamData,
   markResumeCleanup,
   markResumeControlEnd,
   markResumeControlSingleNodeEnd,

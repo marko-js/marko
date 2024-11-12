@@ -188,8 +188,8 @@ export function ensureScopeWithId(scopeId: number) {
   return scope;
 }
 
-export function getStreamData() {
-  return $chunk.boundary.state;
+export function $global() {
+  return $chunk.boundary.state.$global;
 }
 
 export function fork<T>(

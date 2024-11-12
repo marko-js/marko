@@ -45,10 +45,7 @@ export default {
       case "$global":
         if (isOutputHTML()) {
           identifier.replaceWith(
-            t.memberExpression(
-              t.callExpression(importRuntime("getStreamData"), []),
-              t.identifier("global"),
-            ),
+            t.callExpression(importRuntime("$global"), []),
           );
         } else {
           identifier.replaceWith(

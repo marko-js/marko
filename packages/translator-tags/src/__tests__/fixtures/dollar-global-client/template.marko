@@ -3,6 +3,10 @@
   <if=show>
     <span>${$global.x}</span>
   </if>
+
+  <if=!show>
+    <span.hidden>${$global.x}</span>
+  </if>
   <button onClick() { show = !show; }>
     Toggle
   </button>
