@@ -1,0 +1,17 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "r",
+      "$init": "e",
+      "$_renderBody_input": "t",
+      "$_dynamicTagName": "i",
+      "$_attrs__effect": "n",
+      "$_renderBody_": "a",
+      "$_input_": "o",
+      "$_onClick": "s",
+      "$_clickCount$FancyButtonBody": "d",
+      "$_FancyButtonBody": "c",
+      "$_clickCount": "m"
+    }
+  }
+}

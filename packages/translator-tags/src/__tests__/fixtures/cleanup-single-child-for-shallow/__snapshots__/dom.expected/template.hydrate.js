@@ -1,80 +1,77 @@
-// size: 863 (min) 429 (brotli)
-
-import * as e from "@marko/runtime-tags/dom";
-import { init as t } from "@marko/runtime-tags/dom";
-const n = e.effect("a0", (t) => {
-    const { 3: n, 4: o } = t;
-    o(`mounted ${n}`),
-      (e.getAbortSignal(t, 0).onabort = ((e) => {
-        const { 3: t, 4: n } = e;
+// size: 774 (min) 395 (brotli)
+const _expr_name_write_effect = _$.effect("a0", (_scope) => {
+    const { 3: name, 4: write } = _scope;
+    write(`mounted ${name}`),
+      (_$.getAbortSignal(_scope, 0).onabort = ((_scope) => {
+        const { 3: name, 4: write } = _scope;
         return () => {
-          n(`destroyed ${t}`);
+          write(`destroyed ${name}`);
         };
-      })(t));
+      })(_scope));
   }),
-  o = e.intersection(2, (t) => {
-    e.resetAbortSignal(t, 0), n(t);
+  _expr_name_write = _$.intersection(2, (_scope) => {
+    _$.resetAbortSignal(_scope, 0), _expr_name_write_effect(_scope);
   }),
-  r = e.value(4, 0, () => o),
-  i = e.value(
+  _write_ = _$.value(4, 0, () => _expr_name_write),
+  _name_ = _$.value(
     3,
-    (t, n) => e.data(t[0], n),
-    () => o,
+    (_scope, name) => _$.data(_scope[0], name),
+    () => _expr_name_write,
   );
-e.register(
+_$.register(
   "b0",
-  (e) =>
-    function (t) {
-      e[1].innerHTML += "\n" + t;
+  (_scope) =>
+    function (msg) {
+      _scope[1].innerHTML += "\n" + msg;
     },
 );
-const a = e.closure(
+const _write$forBody = _$.closure(
     4,
-    (e, t) => r(e[0], t),
+    (_scope, write) => _write_(_scope[0], write),
     void 0,
-    () => e.inChild(0, r),
+    () => _$.inChild(0, _write_),
   ),
-  s = e.value(
+  _item$forBody = _$.value(
     2,
-    (e, t) => i(e[0], t),
-    () => e.inChild(0, i),
+    (_scope, item) => _name_(_scope[0], item),
+    () => _$.inChild(0, _name_),
   ),
-  c = e.value(
+  _params_2$forBody = _$.value(
     1,
-    (e, t) => s(e, t[0]),
-    () => s,
+    (_scope, _params_2) => _item$forBody(_scope, _params_2[0]),
+    () => _item$forBody,
   ),
-  l = (e) => {
-    e[0];
+  _setup$forBody = (_scope) => {
+    _scope[0];
   },
-  d = e.register(
+  _forBody = _$.register(
     "b1",
-    e.createRenderer(
+    _$.createRenderer(
       "<div> </div>",
       "/D l&",
-      l,
-      () => [a],
-      () => c,
+      _setup$forBody,
+      () => [_write$forBody],
+      () => _params_2$forBody,
     ),
   ),
-  u = e.loopOf(2, d),
-  m = e.effect("b2", (t) =>
-    e.on(
-      t[0],
+  _for = _$.loopOf(2, _forBody),
+  _items_effect = _$.effect("b2", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((e) => {
-        const { 3: t } = e;
+      ((_scope) => {
+        const { 3: items } = _scope;
         return function () {
-          f(e, t.length ? t.slice(0, -1) : [1, 2, 3]);
+          _items(_scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
         };
-      })(t),
+      })(_scope),
     ),
   ),
-  f = e.state(
+  _items = _$.state(
     3,
-    (e, t) => {
-      m(e), u(e, [t]);
+    (_scope, items) => {
+      _items_effect(_scope), _for(_scope, [items]);
     },
-    () => u,
+    () => _for,
   );
-t();
+init();

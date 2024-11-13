@@ -1,0 +1,23 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "e",
+      "$init": "r",
+      "$_renderBody_input": "i",
+      "$_expr_Text_value": "t",
+      "$_dynamicTagName": "a",
+      "$_value_": "n",
+      "$_renderBody_": "o",
+      "$_inner$childBody": "c",
+      "$_outer$childBody": "s",
+      "$_params_3$childBody": "d",
+      "$_childBody2": "u",
+      "$_y$childBody": "m",
+      "$_outer$childBody2": "l",
+      "$_params_2$childBody": "v",
+      "$_setup$childBody": "b",
+      "$_x_effect": "g",
+      "$_x": "f"
+    }
+  }
+}

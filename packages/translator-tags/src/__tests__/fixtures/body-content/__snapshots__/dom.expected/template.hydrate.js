@@ -1,48 +1,53 @@
-// size: 672 (min) 358 (brotli)
-
-import * as r from "@marko/runtime-tags/dom";
-import { init as e } from "@marko/runtime-tags/dom";
-const t = r.dynamicTagAttrs(1),
-  i = r.conditional(
+// size: 583 (min) 311 (brotli)
+const _renderBody_input = _$.dynamicTagAttrs(1),
+  _dynamicTagName = _$.conditional(
     1,
-    (r) => t(r, () => ({})),
-    () => t,
+    (_scope) => _renderBody_input(_scope, () => ({})),
+    () => _renderBody_input,
   ),
-  n = r.effect("a0", (e) => {
-    r.attrsEvents(e, 0);
+  _attrs__effect = _$.effect("a0", (_scope) => {
+    _$.attrsEvents(_scope, 0);
   }),
-  a = r.value(
+  _renderBody_ = _$.value(
     4,
-    (r, e) => i(r, e),
-    () => i,
+    (_scope, renderBody) => _dynamicTagName(_scope, renderBody),
+    () => _dynamicTagName,
   ),
-  o = r.value(
+  _input_ = _$.value(
     3,
-    (e, t) => {
-      ((e, t) => {
-        r.attrs(e, 0, t), n(e);
-      })(e, t),
-        a(e, t.renderBody);
+    (_scope, input) => {
+      ((_scope, attrs) => {
+        _$.attrs(_scope, 0, attrs), _attrs__effect(_scope);
+      })(_scope, input),
+        _renderBody_(_scope, input.renderBody);
     },
-    () => a,
+    () => _renderBody_,
   ),
-  s = r.register("b0", (r) => {
-    const { 1: e } = r;
+  _onClick = _$.register("b0", (_scope) => {
+    const { 1: clickCount } = _scope;
     return function () {
-      m(r, e + 1);
+      _clickCount(_scope, clickCount + 1);
     };
   }),
-  d = r.registerSubscriber(
+  _clickCount$FancyButtonBody = _$.registerSubscriber(
     "b1",
-    r.dynamicClosure(1, (e, t) => r.data(e[0], t)),
+    _$.dynamicClosure(1, (_scope, clickCount) =>
+      _$.data(_scope[0], clickCount),
+    ),
   ),
-  c = r.register(
+  _FancyButtonBody = _$.register(
     "b2",
-    r.createRendererWithOwner(" ", " ", void 0, () => [d]),
+    _$.createRendererWithOwner(" ", " ", void 0, () => [
+      _clickCount$FancyButtonBody,
+    ]),
   ),
-  m = r.state(
+  _clickCount = _$.state(
     1,
-    (r, e) => o(r[0], { onClick: s(r), renderBody: c(r) }),
-    () => r.intersections([r.inChild(0, o), r.dynamicSubscribers(1)]),
+    (_scope, clickCount) =>
+      _input_(_scope[0], {
+        onClick: _onClick(_scope),
+        renderBody: _FancyButtonBody(_scope),
+      }),
+    () => _$.intersections([_$.inChild(0, _input_), _$.dynamicSubscribers(1)]),
   );
-e();
+init();

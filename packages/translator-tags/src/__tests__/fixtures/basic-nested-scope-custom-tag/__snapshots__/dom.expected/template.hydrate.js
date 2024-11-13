@@ -1,31 +1,30 @@
-// size: 437 (min) 251 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as r } from "@marko/runtime-tags/dom";
-t.dynamicTagAttrs(0);
-const e = t.effect("b0", (r) =>
-    t.on(
-      r[0],
+// size: 348 (min) 216 (brotli)
+_$.dynamicTagAttrs(0);
+const _count$childBody_effect = _$.effect("b0", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
+      ((_scope) => {
         const {
-          _: { 1: r },
-        } = t;
+          _: { 1: count },
+        } = _scope;
         return function () {
-          n(t._, r + 1);
+          _count(_scope._, count + 1);
         };
-      })(r),
+      })(_scope),
     ),
   ),
-  o = t.registerSubscriber(
+  _count$childBody = _$.registerSubscriber(
     "b1",
-    t.dynamicClosure(1, (r, o) => {
-      t.data(r[1], o), e(r);
+    _$.dynamicClosure(1, (_scope, count) => {
+      _$.data(_scope[1], count), _count$childBody_effect(_scope);
     }),
   );
-t.register(
+_$.register(
   "b2",
-  t.createRendererWithOwner("<button> </button>", " D ", void 0, () => [o]),
+  _$.createRendererWithOwner("<button> </button>", " D ", void 0, () => [
+    _count$childBody,
+  ]),
 );
-const n = t.state(1, 0, () => t.dynamicSubscribers(1));
-r();
+const _count = _$.state(1, 0, () => _$.dynamicSubscribers(1));
+init();

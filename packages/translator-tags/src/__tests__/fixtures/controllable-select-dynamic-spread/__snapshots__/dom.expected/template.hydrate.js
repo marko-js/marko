@@ -1,22 +1,21 @@
-// size: 403 (min) 193 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as o } from "@marko/runtime-tags/dom";
-const r = t.effect("a0", (o) => {
-    t.attrsEvents(o, 0), t.attrsEvents(o, 1), t.attrsEvents(o, 2);
+// size: 314 (min) 165 (brotli)
+const _setup$tagSelectBody_effect = _$.effect("a0", (_scope) => {
+    _$.attrsEvents(_scope, 0),
+      _$.attrsEvents(_scope, 1),
+      _$.attrsEvents(_scope, 2);
   }),
-  a = (o) => {
-    t.attrs(o, 0, { value: "a" }),
-      t.attrs(o, 1, { value: "b" }),
-      t.attrs(o, 2, { value: "c" }),
-      r(o);
+  _setup$tagSelectBody = (_scope) => {
+    _$.attrs(_scope, 0, { value: "a" }),
+      _$.attrs(_scope, 1, { value: "b" }),
+      _$.attrs(_scope, 2, { value: "c" }),
+      _setup$tagSelectBody_effect(_scope);
   },
-  e = t.register(
+  _tagSelectBody = _$.register(
     "a1",
-    t.createRendererWithOwner(
+    _$.createRendererWithOwner(
       "<option>A</option><option>B</option><option>C</option>",
       " b b ",
-      a,
+      _setup$tagSelectBody,
     ),
   );
-t.dynamicTagAttrs(0, e), o();
+_$.dynamicTagAttrs(0, _tagSelectBody), init();

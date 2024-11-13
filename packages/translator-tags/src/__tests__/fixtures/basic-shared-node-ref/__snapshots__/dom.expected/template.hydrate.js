@@ -1,48 +1,53 @@
-// size: 577 (min) 303 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as e } from "@marko/runtime-tags/dom";
-const r = t.value(2, (e, r) => t.data(e[0], r)),
-  o = t.value(1, (t, e) => r(t, e[0])),
-  n = t.register(
-    "a0",
-    t.createRenderer("<li> </li>", "D ", void 0, void 0, () => o),
+// size: 488 (min) 250 (brotli)
+const _x$forBody = _$.value(2, (_scope, x) => _$.data(_scope[0], x)),
+  _params_2$forBody = _$.value(1, (_scope, _params_2) =>
+    _x$forBody(_scope, _params_2[0]),
   ),
-  a = t.loopOf(0, n),
-  c = t.effect("a1", (e) =>
-    t.on(
-      e[2],
-      "click",
-      ((t) => {
-        const { 4: e } = t;
-        return function () {
-          i(t, [].concat(e).reverse());
-        };
-      })(e),
+  _forBody = _$.register(
+    "a0",
+    _$.createRenderer(
+      "<li> </li>",
+      "D ",
+      void 0,
+      void 0,
+      () => _params_2$forBody,
     ),
   ),
-  i = t.state(4, (t, e) => {
-    c(t),
-      a(t, [
-        e,
-        function (t) {
-          return t;
+  _for = _$.loopOf(0, _forBody),
+  _list_effect = _$.effect("a1", (_scope) =>
+    _$.on(
+      _scope[2],
+      "click",
+      ((_scope) => {
+        const { 4: list } = _scope;
+        return function () {
+          _list(_scope, [].concat(list).reverse());
+        };
+      })(_scope),
+    ),
+  ),
+  _list = _$.state(4, (_scope, list) => {
+    _list_effect(_scope),
+      _for(_scope, [
+        list,
+        function (x) {
+          return x;
         },
       ]);
   }),
-  f = t.effect("a2", (e) =>
-    t.on(
-      e[1],
+  _open_effect = _$.effect("a2", (_scope) =>
+    _$.on(
+      _scope[1],
       "click",
-      ((t) => {
-        const { 3: e } = t;
+      ((_scope) => {
+        const { 3: open } = _scope;
         return function () {
-          m(t, !e);
+          _open(_scope, !open);
         };
-      })(e),
+      })(_scope),
     ),
   ),
-  m = t.state(3, (e, r) => {
-    t.attr(e[0], "hidden", !r), f(e);
+  _open = _$.state(3, (_scope, open) => {
+    _$.attr(_scope[0], "hidden", !open), _open_effect(_scope);
   });
-e();
+init();

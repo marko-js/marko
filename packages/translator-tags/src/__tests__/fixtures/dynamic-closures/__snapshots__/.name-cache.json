@@ -1,0 +1,12 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "r",
+      "$init": "e",
+      "$_c$customTagBody": "t",
+      "$_b$customTagBody": "a",
+      "$_setup$customTagBody": "i",
+      "$_c": "c"
+    }
+  }
+}

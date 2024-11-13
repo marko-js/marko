@@ -1,0 +1,26 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "e",
+      "$_expr_comment_id$ifBody": "o",
+      "$_id$ifBody": "n",
+      "$_comment$ifBody": "i",
+      "$_setup$ifBody": "r",
+      "$_ifBody": "a",
+      "$_expr_input_i$forBody": "c",
+      "$_if$forBody": "s",
+      "$_open$forBody_effect": "l",
+      "$_open$forBody": "m",
+      "$_id$forBody": "u",
+      "$_i$forBody": "d",
+      "$_comment$forBody": "p",
+      "$_params_2$forBody": "v",
+      "$_input$forBody": "f",
+      "$_setup$forBody": "g",
+      "$_forBody": "h",
+      "$_for": "b",
+      "$_input_": "k"
+    }
+  }
+}

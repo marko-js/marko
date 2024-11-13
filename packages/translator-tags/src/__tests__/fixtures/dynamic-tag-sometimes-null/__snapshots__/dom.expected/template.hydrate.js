@@ -1,31 +1,31 @@
-// size: 387 (min) 241 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as r } from "@marko/runtime-tags/dom";
-const n = t.register("a0", t.createRendererWithOwner("Body Content", "")),
-  o = t.dynamicTagAttrs(0, n),
-  e = t.conditional(
-    0,
-    (t) => o(t, () => ({})),
-    () => o,
+// size: 298 (min) 210 (brotli)
+const _xBody = _$.register(
+    "a0",
+    _$.createRendererWithOwner("Body Content", ""),
   ),
-  a = t.effect("a1", (r) =>
-    t.on(
-      r[1],
+  _x_input = _$.dynamicTagAttrs(0, _xBody),
+  _dynamicTagName = _$.conditional(
+    0,
+    (_scope) => _x_input(_scope, () => ({})),
+    () => _x_input,
+  ),
+  _x_effect = _$.effect("a1", (_scope) =>
+    _$.on(
+      _scope[1],
       "click",
-      ((t) => {
-        const { 2: r } = t;
+      ((_scope) => {
+        const { 2: x } = _scope;
         return function () {
-          i(t, r ? null : "div");
+          _x(_scope, x ? null : "div");
         };
-      })(r),
+      })(_scope),
     ),
   ),
-  i = t.state(
+  _x = _$.state(
     2,
-    (t, r) => {
-      a(t), e(t, r || n(t));
+    (_scope, x) => {
+      _x_effect(_scope), _dynamicTagName(_scope, x || _xBody(_scope));
     },
-    () => e,
+    () => _dynamicTagName,
   );
-r();
+init();

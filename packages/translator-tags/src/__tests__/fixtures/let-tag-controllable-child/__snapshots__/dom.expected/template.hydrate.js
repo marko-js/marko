@@ -1,73 +1,84 @@
-// size: 812 (min) 325 (brotli)
-
-import * as a from "@marko/runtime-tags/dom";
-import { init as t } from "@marko/runtime-tags/dom";
-const e = a.effect("a0", (t) =>
-    a.on(
-      t[3],
+// size: 723 (min) 290 (brotli)
+const _expr__otherState_change_otherState_effect = _$.effect("a0", (_scope) =>
+    _$.on(
+      _scope[3],
       "click",
-      ((a) => {
-        const { 10: t, 11: e } = a;
+      ((_scope) => {
+        const { 10: _otherState_change, 11: otherState } = _scope;
         return function () {
-          u(a, e + 1, t);
+          _otherState(_scope, otherState + 1, _otherState_change);
         };
-      })(t),
+      })(_scope),
     ),
   ),
-  n = a.intersection(2, (a) => {
-    e(a);
+  _expr__otherState_change_otherState = _$.intersection(2, (_scope) => {
+    _expr__otherState_change_otherState_effect(_scope);
   }),
-  o = a.effect("a1", (t) =>
-    a.on(
-      t[0],
+  _expr__state_change_state_effect = _$.effect("a1", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((a) => {
-        const { 8: t, 9: e } = a;
+      ((_scope) => {
+        const { 8: _state_change, 9: state } = _scope;
         return function () {
-          c(a, e + 1, t);
+          _state(_scope, state + 1, _state_change);
         };
-      })(t),
+      })(_scope),
     ),
   ),
-  i = a.intersection(2, (a) => {
-    o(a);
+  _expr__state_change_state = _$.intersection(2, (_scope) => {
+    _expr__state_change_state_effect(_scope);
   }),
-  u = a.state(
+  _otherState = _$.state(
     11,
-    (t, e) => a.data(t[5], e),
-    () => n,
+    (_scope, otherState) => _$.data(_scope[5], otherState),
+    () => _expr__otherState_change_otherState,
   ),
-  r = a.value(10, 0, () => n),
-  c = a.state(
+  _otherState_change = _$.value(
+    10,
+    0,
+    () => _expr__otherState_change_otherState,
+  ),
+  _state = _$.state(
     9,
-    (t, e) => a.data(t[2], e),
-    () => i,
+    (_scope, state) => _$.data(_scope[2], state),
+    () => _expr__state_change_state,
   ),
-  l = a.value(8, 0, () => i),
-  s = a.value(
+  _state_change = _$.value(8, 0, () => _expr__state_change_state),
+  _input_ = _$.value(
     7,
-    (t, e) => {
-      a.data(t[1], e.value),
-        a.data(t[4], e.value),
-        l(t, e.valueChange),
-        c(t, e.value, t[8]),
-        r(t, e.valueChange),
-        u(t, e.value, t[10]);
+    (_scope, input) => {
+      _$.data(_scope[1], input.value),
+        _$.data(_scope[4], input.value),
+        _state_change(_scope, input.valueChange),
+        _state(_scope, input.value, _scope[8]),
+        _otherState_change(_scope, input.valueChange),
+        _otherState(_scope, input.value, _scope[10]);
     },
-    () => a.intersections([l, c, r, u]),
+    () =>
+      _$.intersections([
+        _state_change,
+        _state,
+        _otherState_change,
+        _otherState,
+      ]),
   ),
-  v = a.register(
+  _valueChange = _$.register(
     "b0",
-    (a) =>
-      function (t) {
-        m(a, t);
+    (_scope) =>
+      function (_new_source) {
+        _source(_scope, _new_source);
       },
   ),
-  m = a.state(
+  _source = _$.state(
     2,
-    (t, e) => {
-      a.data(t[1], e), s(t[0], { value: e, valueChange: v(t) });
+    (_scope, source) => {
+      _$.data(_scope[1], source),
+        _input_(_scope[0], {
+          value: source,
+          valueChange: _valueChange(_scope),
+        });
     },
-    () => a.inChild(0, s),
+    () => _$.inChild(0, _input_),
   );
-t();
+init();

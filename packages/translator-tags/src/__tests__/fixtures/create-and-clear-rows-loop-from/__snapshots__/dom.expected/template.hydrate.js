@@ -1,9 +1,9 @@
-// size: 186 (min) 135 (brotli)
-
-import * as e from "@marko/runtime-tags/dom";
-const a = e.value(2, (a, r) => e.data(a[0], r)),
-  r = e.value(1, (e, r) => a(e, r[0]));
-e.register(
+// size: 144 (min) 123 (brotli)
+const _n$forBody = _$.value(2, (_scope, n) => _$.data(_scope[0], n)),
+  _params_2$forBody = _$.value(1, (_scope, _params_2) =>
+    _n$forBody(_scope, _params_2[0]),
+  );
+_$.register(
   "a0",
-  e.createRenderer("<!>, ", "%", void 0, void 0, () => r),
+  _$.createRenderer("<!>, ", "%", void 0, void 0, () => _params_2$forBody),
 );

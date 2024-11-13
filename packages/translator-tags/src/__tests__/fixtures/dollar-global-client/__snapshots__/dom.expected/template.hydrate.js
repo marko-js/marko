@@ -1,33 +1,35 @@
-// size: 488 (min) 250 (brotli)
-
-import * as a from "@marko/runtime-tags/dom";
-import { init as e } from "@marko/runtime-tags/dom";
-const n = (e) => {
-    a.data(e[0], e.$global.x);
+// size: 399 (min) 215 (brotli)
+const _setup$ifBody2 = (_scope) => {
+    _$.data(_scope[0], _scope.$global.x);
   },
-  t = a.register(
+  _ifBody2 = _$.register(
     "a0",
-    a.createRenderer("<span class=hidden> </span>", "D ", n),
+    _$.createRenderer("<span class=hidden> </span>", "D ", _setup$ifBody2),
   ),
-  r = (e) => {
-    a.data(e[0], e.$global.x);
+  _setup$ifBody = (_scope) => {
+    _$.data(_scope[0], _scope.$global.x);
   },
-  o = a.register("a1", a.createRenderer("<span> </span>", "D ", r)),
-  s = a.conditional(1, 0),
-  i = a.conditional(0, 0),
-  l = a.effect("a2", (e) =>
-    a.on(
-      e[2],
+  _ifBody = _$.register(
+    "a1",
+    _$.createRenderer("<span> </span>", "D ", _setup$ifBody),
+  ),
+  _if2 = _$.conditional(1, 0),
+  _if = _$.conditional(0, 0),
+  _show_effect = _$.effect("a2", (_scope) =>
+    _$.on(
+      _scope[2],
       "click",
-      ((a) => {
-        const { 3: e } = a;
+      ((_scope) => {
+        const { 3: show } = _scope;
         return function () {
-          c(a, !e);
+          _show(_scope, !show);
         };
-      })(e),
+      })(_scope),
     ),
   ),
-  c = a.state(3, (a, e) => {
-    l(a), i(a, e ? o : null), s(a, e ? null : t);
+  _show = _$.state(3, (_scope, show) => {
+    _show_effect(_scope),
+      _if(_scope, show ? _ifBody : null),
+      _if2(_scope, show ? null : _ifBody2);
   });
-e();
+init();

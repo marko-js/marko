@@ -1,18 +1,24 @@
-// size: 396 (min) 185 (brotli)
-
-import * as e from "@marko/runtime-tags/dom";
-const a = e.value(2, (a, r) => e.data(a[0], r)),
-  r = e.value(1, (e, r) => a(e, r[0]));
-e.register(
+// size: 354 (min) 156 (brotli)
+const _key$forBody2 = _$.value(2, (_scope, key) => _$.data(_scope[0], key)),
+  _params_3$forBody = _$.value(1, (_scope, _params_3) =>
+    _key$forBody2(_scope, _params_3[0]),
+  );
+_$.register(
   "a0",
-  e.createRenderer("<p> </p>", "D ", void 0, void 0, () => r),
+  _$.createRenderer("<p> </p>", "D ", void 0, void 0, () => _params_3$forBody),
 );
-const t = e.value(4, (a, r) => e.data(a[1], r)),
-  d = e.value(3, (a, r) => e.data(a[0], r)),
-  o = e.value(2, (e, a) => {
-    d(e, a[0]), t(e, a[1]);
+const _text$forBody = _$.value(4, (_scope, text) => _$.data(_scope[1], text)),
+  _key$forBody = _$.value(3, (_scope, key) => _$.data(_scope[0], key)),
+  _params_2$forBody = _$.value(2, (_scope, _params_2) => {
+    _key$forBody(_scope, _params_2[0]), _text$forBody(_scope, _params_2[1]);
   });
-e.register(
+_$.register(
   "a1",
-  e.createRenderer("<p><!>: <!></p>", "D%c%", void 0, void 0, () => o),
+  _$.createRenderer(
+    "<p><!>: <!></p>",
+    "D%c%",
+    void 0,
+    void 0,
+    () => _params_2$forBody,
+  ),
 );

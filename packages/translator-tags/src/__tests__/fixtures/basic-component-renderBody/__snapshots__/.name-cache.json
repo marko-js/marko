@@ -1,0 +1,13 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "r",
+      "$init": "t",
+      "$_onClick__effect": "e",
+      "$_onClick_": "i",
+      "$_onClick": "n",
+      "$_clickCount$myButtonBody": "s",
+      "$_clickCount": "o"
+    }
+  }
+}

@@ -1,37 +1,38 @@
-// size: 506 (min) 293 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as a } from "@marko/runtime-tags/dom";
-const e = t.effect("a0", (a) =>
-    t.on(
-      a[2],
+// size: 417 (min) 250 (brotli)
+const _y$defineBody_effect = _$.effect("a0", (_scope) =>
+    _$.on(
+      _scope[2],
       "click",
-      ((t) => {
-        const { 7: a } = t;
+      ((_scope) => {
+        const { 7: y } = _scope;
         return function () {
-          r(t, a + 1);
+          _y$defineBody(_scope, y + 1);
         };
-      })(a),
+      })(_scope),
     ),
   ),
-  r = t.state(7, (a, r) => {
-    t.data(a[1], r), t.data(a[3], r), e(a);
+  _y$defineBody = _$.state(7, (_scope, y) => {
+    _$.data(_scope[1], y), _$.data(_scope[3], y), _y$defineBody_effect(_scope);
   }),
-  o = t.value(6, (a, e) => t.data(a[0], e)),
-  n = t.value(5, (t, a) => o(t, a.name)),
-  i = t.value(4, (t, a) => n(t, a[0])),
-  m = (t) => {
-    r(t, 1);
+  _name$defineBody = _$.value(6, (_scope, name) => _$.data(_scope[0], name)),
+  _pattern_$defineBody = _$.value(5, (_scope, _pattern_) =>
+    _name$defineBody(_scope, _pattern_.name),
+  ),
+  _params_2$defineBody = _$.value(4, (_scope, _params_2) =>
+    _pattern_$defineBody(_scope, _params_2[0]),
+  ),
+  _setup$defineBody = (_scope) => {
+    _y$defineBody(_scope, 1);
   };
-t.register(
+_$.register(
   "a1",
-  t.createRendererWithOwner(
+  _$.createRendererWithOwner(
     "<div>Hello <!> <!></div><button> </button>",
     "Db%c%l D ",
-    m,
+    _setup$defineBody,
     void 0,
-    () => i,
+    () => _params_2$defineBody,
   ),
 ),
-  t.dynamicTagAttrs(0),
-  a();
+  _$.dynamicTagAttrs(0),
+  init();

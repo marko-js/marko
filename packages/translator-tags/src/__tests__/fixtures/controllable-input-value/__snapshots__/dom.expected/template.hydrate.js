@@ -1,15 +1,14 @@
-// size: 280 (min) 168 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as a } from "@marko/runtime-tags/dom";
-const o = t.register(
+// size: 191 (min) 134 (brotli)
+const _valueChange = _$.register(
     "a0",
-    (t) =>
-      function (a) {
-        e(t, a);
+    (_scope) =>
+      function (_new_value) {
+        _value(_scope, _new_value);
       },
   ),
-  e = t.state(2, (a, e) => {
-    t.controllable_input_value(a, 0, e, o(a)), t.data(a[1], e);
+  _value = _$.state(2, (_scope, value) => {
+    _$.controllable_input_value(_scope, 0, value, _valueChange(_scope)),
+      _$.data(_scope[1], value);
   });
-t.effect("a1", (a) => t.controllable_input_value_effect(a, 0)), a();
+_$.effect("a1", (_scope) => _$.controllable_input_value_effect(_scope, 0)),
+  init();

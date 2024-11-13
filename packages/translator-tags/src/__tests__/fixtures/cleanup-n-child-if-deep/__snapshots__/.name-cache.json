@@ -1,0 +1,33 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "e",
+      "$init": "n",
+      "$_template_": "t",
+      "$_expr_name_write_effect": "r",
+      "$_expr_name_write": "i",
+      "$_write_": "o",
+      "$_name_": "c",
+      "$_write$ifBody3": "a",
+      "$_setup$ifBody3": "l",
+      "$_ifBody3": "d",
+      "$_if$ifBody": "s",
+      "$_write$ifBody2": "u",
+      "$_showInner$ifBody": "b",
+      "$_setup$ifBody2": "m",
+      "$_ifBody2": "f",
+      "$_if$ifBody2": "D",
+      "$_write$ifBody": "g",
+      "$_showMiddle$ifBody": "v",
+      "$_setup$ifBody": "p",
+      "$_ifBody": "C",
+      "$_if": "_",
+      "$_showInner_effect": "k",
+      "$_showInner": "y",
+      "$_showMiddle_effect": "S",
+      "$_showMiddle": "$",
+      "$_showOuter_effect": "h",
+      "$_showOuter": "R"
+    }
+  }
+}

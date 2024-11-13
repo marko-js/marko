@@ -1,23 +1,24 @@
-// size: 356 (min) 204 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as e } from "@marko/runtime-tags/dom";
-const a = t.effect("a0", (e) => t.attrsEvents(e, 0)),
-  r = t.value(2, (e, r) => {
-    t.attrs(e, 0, { type: "checkbox", ...r }), a(e);
+// size: 267 (min) 173 (brotli)
+const _input__effect = _$.effect("a0", (_scope) => _$.attrsEvents(_scope, 0)),
+  _input_ = _$.value(2, (_scope, input) => {
+    _$.attrs(_scope, 0, { type: "checkbox", ...input }), _input__effect(_scope);
   }),
-  o = t.register(
+  _checkedChange = _$.register(
     "b0",
-    (t) =>
-      function (e) {
-        m(t, e);
+    (_scope) =>
+      function (_new_checked) {
+        _checked(_scope, _new_checked);
       },
   ),
-  m = t.state(
+  _checked = _$.state(
     2,
-    (e, a) => {
-      t.data(e[1], String(a)), r(e[0], { checked: a, checkedChange: o(e) });
+    (_scope, checked) => {
+      _$.data(_scope[1], String(checked)),
+        _input_(_scope[0], {
+          checked: checked,
+          checkedChange: _checkedChange(_scope),
+        });
     },
-    () => t.inChild(0, r),
+    () => _$.inChild(0, _input_),
   );
-e();
+init();

@@ -1,37 +1,52 @@
-// size: 580 (min) 193 (brotli)
-
-import * as e from "@marko/runtime-tags/dom";
-import { init as t } from "@marko/runtime-tags/dom";
-const c = e.register(
+// size: 491 (min) 154 (brotli)
+const _checkedValueChange = _$.register(
     "a0",
-    (e) =>
-      function (t) {
-        o(e, t);
+    (_scope) =>
+      function (_new_checkedValue) {
+        _checkedValue(_scope, _new_checkedValue);
       },
   ),
-  a = e.register(
+  _checkedValueChange2 = _$.register(
     "a1",
-    (e) =>
-      function (t) {
-        o(e, t);
+    (_scope) =>
+      function (_new_checkedValue2) {
+        _checkedValue(_scope, _new_checkedValue2);
       },
   ),
-  l = e.register(
+  _checkedValueChange3 = _$.register(
     "a1",
-    (e) =>
-      function (t) {
-        o(e, t);
+    (_scope) =>
+      function (_new_checkedValue3) {
+        _checkedValue(_scope, _new_checkedValue3);
       },
   ),
-  o = e.state(4, (t, o) => {
-    e.controllable_input_checkedValue(t, 0, o, c(t), "a"),
-      e.controllable_input_checkedValue(t, 1, o, a(t), "b"),
-      e.controllable_input_checkedValue(t, 2, o, l(t), "c"),
-      e.data(t[3], o);
+  _checkedValue = _$.state(4, (_scope, checkedValue) => {
+    _$.controllable_input_checkedValue(
+      _scope,
+      0,
+      checkedValue,
+      _checkedValueChange(_scope),
+      "a",
+    ),
+      _$.controllable_input_checkedValue(
+        _scope,
+        1,
+        checkedValue,
+        _checkedValueChange2(_scope),
+        "b",
+      ),
+      _$.controllable_input_checkedValue(
+        _scope,
+        2,
+        checkedValue,
+        _checkedValueChange3(_scope),
+        "c",
+      ),
+      _$.data(_scope[3], checkedValue);
   });
-e.effect("a2", (t) => {
-  e.controllable_input_checkedValue_effect(t, 0),
-    e.controllable_input_checkedValue_effect(t, 1),
-    e.controllable_input_checkedValue_effect(t, 2);
+_$.effect("a2", (_scope) => {
+  _$.controllable_input_checkedValue_effect(_scope, 0),
+    _$.controllable_input_checkedValue_effect(_scope, 1),
+    _$.controllable_input_checkedValue_effect(_scope, 2);
 }),
-  t();
+  init();

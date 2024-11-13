@@ -1,20 +1,19 @@
-// size: 271 (min) 173 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as o } from "@marko/runtime-tags/dom";
-const a = t.effect("a0", (o) =>
-    t.on(
-      o[0],
+// size: 182 (min) 130 (brotli)
+const _count_effect = _$.effect("a0", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 3: o } = t;
+      ((_scope) => {
+        const { 3: count } = _scope;
         return function () {
-          m(t, o + 1);
+          _count(_scope, count + 1);
         };
-      })(o),
+      })(_scope),
     ),
   ),
-  m = t.state(3, (o, m) => {
-    t.data(o[1], m), t.data(o[2], `${m} + ${m} = ${m + m}`), a(o);
+  _count = _$.state(3, (_scope, count) => {
+    _$.data(_scope[1], count),
+      _$.data(_scope[2], `${count} + ${count} = ${count + count}`),
+      _count_effect(_scope);
   });
-o();
+init();

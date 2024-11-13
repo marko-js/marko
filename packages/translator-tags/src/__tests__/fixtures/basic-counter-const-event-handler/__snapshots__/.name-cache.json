@@ -1,0 +1,12 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "o",
+      "$_increment": "r",
+      "$_increment2_effect": "a",
+      "$_increment2": "m",
+      "$_clickCount": "e"
+    }
+  }
+}

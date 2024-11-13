@@ -1,58 +1,57 @@
-// size: 764 (min) 333 (brotli)
-
-import * as a from "@marko/runtime-tags/dom";
-import { init as t } from "@marko/runtime-tags/dom";
-const e = () => {},
-  o = a.value(3, (t, e) => a.data(t[0], e)),
-  i = a.value(2, (a, t) => o(a, t.value)),
-  l = a.value(1, (a, t) => i(a, t[0]));
-var v = a.createTemplate(
+// size: 675 (min) 293 (brotli)
+const _setup_$1 = () => {},
+  _value_$1 = _$.value(3, (_scope, value) => _$.data(_scope[0], value)),
+  _input_$1 = _$.value(2, (_scope, input) => _value_$1(_scope, input.value)),
+  _params__$1 = _$.value(1, (_scope, _params_) =>
+    _input_$1(_scope, _params_[0]),
+  );
+var child1 = _$.createTemplate(
   "a",
   "<div>Child 1 has <!></div>",
   "Db%l",
-  e,
+  _setup_$1,
   void 0,
-  () => l,
+  () => _params__$1,
 );
-const n = () => {},
-  r = a.value(3, (t, e) => a.data(t[0], e)),
-  c = a.value(2, (a, t) => r(a, t.value)),
-  d = a.value(1, (a, t) => c(a, t[0]));
-var m = a.createTemplate(
+const _setup_ = () => {},
+  _value_ = _$.value(3, (_scope, value) => _$.data(_scope[0], value)),
+  _input_ = _$.value(2, (_scope, input) => _value_(_scope, input.value)),
+  _params__ = _$.value(1, (_scope, _params_) => _input_(_scope, _params_[0]));
+var child2 = _$.createTemplate(
   "b",
   "<div>Child 2 has <!></div>",
   "Db%l",
-  n,
+  _setup_,
   void 0,
-  () => d,
+  () => _params__,
 );
-const s = a.dynamicTagAttrs(0),
-  u = a.intersection(
+const _tagName_input = _$.dynamicTagAttrs(0),
+  _expr_Text_val = _$.intersection(
     2,
-    (a) => {
-      const { 3: t } = a;
-      s(a, () => ({ value: t }));
+    (_scope) => {
+      const { 3: val } = _scope;
+      _tagName_input(_scope, () => ({ value: val }));
     },
-    () => s,
+    () => _tagName_input,
   ),
-  f = a.conditional(0, 0, () => u),
-  h = a.effect("c0", (t) =>
-    a.on(
-      t[1],
+  _dynamicTagName = _$.conditional(0, 0, () => _expr_Text_val),
+  _tagName_effect = _$.effect("c0", (_scope) =>
+    _$.on(
+      _scope[1],
       "click",
-      ((a) => {
-        const { 2: t } = a;
+      ((_scope) => {
+        const { 2: tagName } = _scope;
         return function () {
-          p(a, t === v ? m : v);
+          _tagName(_scope, tagName === child1 ? child2 : child1);
         };
-      })(t),
+      })(_scope),
     ),
   ),
-  p = a.state(
+  _tagName = _$.state(
     2,
-    (a, t) => {
-      h(a), f(a, t);
+    (_scope, tagName) => {
+      _tagName_effect(_scope), _dynamicTagName(_scope, tagName);
     },
-    () => f,
+    () => _dynamicTagName,
   );
-t();
+init();

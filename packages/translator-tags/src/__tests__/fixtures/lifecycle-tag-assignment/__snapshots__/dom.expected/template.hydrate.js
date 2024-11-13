@@ -1,34 +1,34 @@
-// size: 434 (min) 212 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as n } from "@marko/runtime-tags/dom";
-const o = t.state(4, (n, o) => t.data(n[1], o)),
-  r = (t) => {
-    const { 3: n } = t;
+// size: 345 (min) 174 (brotli)
+const _prev = _$.state(4, (_scope, prev) => _$.data(_scope[1], prev)),
+  _onMount = (_scope) => {
+    const { 3: x } = _scope;
     return function () {
-      this.cur = n;
+      this.cur = x;
     };
   },
-  c = (t) => {
-    const { 3: n } = t;
+  _onUpdate = (_scope) => {
+    const { 3: x } = _scope;
     return function () {
-      o(t, this.cur), (this.cur = n);
+      _prev(_scope, this.cur), (this.cur = x);
     };
   },
-  a = t.effect("a0", (n) => {
-    t.lifecycle(n, 4, { onMount: r(n), onUpdate: c(n) }),
-      t.on(
-        n[2],
+  _x_effect = _$.effect("a0", (_scope) => {
+    _$.lifecycle(_scope, 4, {
+      onMount: _onMount(_scope),
+      onUpdate: _onUpdate(_scope),
+    }),
+      _$.on(
+        _scope[2],
         "click",
-        ((t) => {
-          const { 3: n } = t;
+        ((_scope) => {
+          const { 3: x } = _scope;
           return function () {
-            e(t, n + 1);
+            _x(_scope, x + 1);
           };
-        })(n),
+        })(_scope),
       );
   }),
-  e = t.state(3, (n, o) => {
-    t.data(n[0], o), a(n);
+  _x = _$.state(3, (_scope, x) => {
+    _$.data(_scope[0], x), _x_effect(_scope);
   });
-n();
+init();

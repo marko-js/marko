@@ -1,13 +1,10 @@
-// size: 209 (min) 118 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as e } from "@marko/runtime-tags/dom";
-t.effect("a0", (t) => {
-  ((t) => {
-    const { 0: e } = t;
+// size: 120 (min) 83 (brotli)
+_$.effect("a0", (_scope) => {
+  ((_scope) => {
+    const { 0: promise } = _scope;
     return async () => {
-      document.getElementById("ref").textContent = await e;
+      document.getElementById("ref").textContent = await promise;
     };
-  })(t)();
+  })(_scope)();
 }),
-  e();
+  init();

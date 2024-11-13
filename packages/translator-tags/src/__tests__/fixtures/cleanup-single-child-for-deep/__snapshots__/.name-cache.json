@@ -1,0 +1,29 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "e",
+      "$init": "i",
+      "$_expr_name_write_effect": "o",
+      "$_expr_name_write": "t",
+      "$_write_": "n",
+      "$_name_": "r",
+      "$_expr_outerItem_middleItem$forBody": "s",
+      "$_write$forBody2": "c",
+      "$_outerItem$forBody2": "d",
+      "$_middleItem$forBody": "l",
+      "$_params_3$forBody": "a",
+      "$_setup$forBody2": "v",
+      "$_forBody2": "u",
+      "$_for$forBody": "m",
+      "$_write$forBody": "f",
+      "$_outerItem$forBody": "g",
+      "$_items$forBody": "p",
+      "$_params_2$forBody": "b",
+      "$_setup$forBody": "h",
+      "$_forBody": "C",
+      "$_for": "D",
+      "$_items_effect": "S",
+      "$_items": "$"
+    }
+  }
+}

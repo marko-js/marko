@@ -1,28 +1,25 @@
-// size: 339 (min) 195 (brotli)
-
-import * as a from "@marko/runtime-tags/dom";
-import { init as t } from "@marko/runtime-tags/dom";
-const r = a.effect("a0", (t) =>
-    a.on(
-      t[0],
+// size: 250 (min) 155 (brotli)
+const _x_effect = _$.effect("a0", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((a) => {
-        const { 2: t } = a;
+      ((_scope) => {
+        const { 2: x } = _scope;
         return function () {
-          o(a, t + 1);
+          _x(_scope, x + 1);
         };
-      })(t),
+      })(_scope),
     ),
   ),
-  o = a.state(
+  _x = _$.state(
     2,
-    (t, o) => {
-      a.data(t[1], o), r(t), a.tagVarSignal(t, o);
+    (_scope, x) => {
+      _$.data(_scope[1], x), _x_effect(_scope), _$.tagVarSignal(_scope, x);
     },
-    () => a.tagVarSignal,
+    () => _$.tagVarSignal,
   );
-a.registerBoundSignal(
+_$.registerBoundSignal(
   "b0",
-  a.value(2, (t, r) => a.data(t[1], r)),
+  _$.value(2, (_scope, data) => _$.data(_scope[1], data)),
 ),
-  t();
+  init();

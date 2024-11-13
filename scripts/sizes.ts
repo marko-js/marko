@@ -5,11 +5,20 @@ import fs from "fs";
 import kleur from "kleur";
 import path from "path";
 import { format } from "prettier";
-import { type OutputChunk, rollup } from "rollup";
+import { type OutputAsset, type OutputChunk, rollup } from "rollup";
 import { table } from "table";
+import { minify } from "terser";
 import zlib from "zlib";
 
 const compiledOutputDir = path.join(process.cwd(), ".sizes");
+const nameCacheFile = path.join(process.cwd(), ".sizes", "name-cache.json");
+const nameCache = (() => {
+  try {
+    return JSON.parse(fs.readFileSync(nameCacheFile, "utf-8"));
+  } catch {
+    return {};
+  }
+})();
 
 fs.rmSync(compiledOutputDir, { recursive: true });
 fs.mkdirSync(compiledOutputDir);
@@ -51,6 +60,7 @@ async function run(configPath: string) {
 
   console.log(renderTable(current, previous, measure));
   writeData(configPath, current);
+  await fs.promises.writeFile(nameCacheFile, JSON.stringify(nameCache));
 }
 
 function loadData(configPath: string): Saved {
@@ -181,12 +191,26 @@ async function getResults(examples: Record<string, string>) {
   return results;
 }
 
-async function getSizesForSrc(minified: string): Promise<Sizes> {
-  const [brotlied] = await Promise.all([brotli(minified)]);
+async function analyzeChunk(chunk: OutputChunk) {
+  const { name, code } = chunk;
+  const minified = stripModuleCode(
+    (
+      await minify(code, {
+        nameCache,
+        compress: {},
+        mangle: { module: true },
+      })
+    ).code!,
+  );
 
+  const sizes = {
+    min: Buffer.byteLength(minified),
+    brotli: Buffer.byteLength(await brotli(minified)),
+  };
   return {
-    min: minified.length,
-    brotli: brotlied.length,
+    name: name + ".js",
+    code: `// size: ${sizes.min} (min) ${sizes.brotli} (brotli)\n${stripModuleCode(code)}`,
+    sizes,
   };
 }
 
@@ -238,7 +262,7 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
               )}; import { init } from "@marko/runtime-tags/dom"; init();`
             : `import template from ${JSON.stringify(examplePath)};template.mount();`,
         }),
-      pluginTerser({ compress: {}, mangle: { module: true } }),
+      pluginTerser({ compress: {}, mangle: false }),
     ],
   });
 
@@ -251,25 +275,20 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
       }
     },
   });
-  const runtimeChunk = output.find(
-    (o) => o.name === "runtime" && "code" in o,
-  ) as OutputChunk;
-  const userCodeChunks = output.filter(
-    (o) => o !== runtimeChunk && "code" in o,
-  ) as OutputChunk[];
-  const runtimeSize = runtimeChunk && (await getSizesForSrc(runtimeChunk.code));
-  const userSize = addSizes(
-    await Promise.all(
-      userCodeChunks.map((chunk) => getSizesForSrc(chunk.code)),
-    ),
-  );
-  const totalSize = addSizes([userSize, runtimeSize].filter(Boolean));
+  const runtimeChunk = output.find(isRuntimeChunk);
+  const [analyzedRuntimeCode, analyzedUserCode] = await Promise.all([
+    runtimeChunk && analyzeChunk(runtimeChunk),
+    Promise.all(output.filter(isUserChunk).map(analyzeChunk)),
+  ]);
+  const runtimeSize = analyzedRuntimeCode?.sizes;
+  const userSize = addSizes(analyzedUserCode.map((it) => it.sizes));
+  const totalSize = runtimeSize ? addSizes([userSize, runtimeSize]) : userSize;
   const files: Record<string, string> = {};
-  for (const chunk of isRuntime ? output : userCodeChunks) {
-    if (chunk.type === "chunk") {
-      files[chunk.name + ".js"] = chunk.code;
-    }
+
+  for (const { name, code } of analyzedUserCode) {
+    files[name] = code;
   }
+
   return [userSize, runtimeSize, totalSize, files] as const;
 }
 
@@ -279,4 +298,21 @@ function brotli(src: string): Promise<Buffer> {
       error ? reject(error) : resolve(result),
     ),
   );
+}
+
+function stripModuleCode(code: string) {
+  return code.replace(
+    /\s*(?:export\s*\{[^}]+\}|import\s*.*\s*from\s*['"][^'"]+['"]);?\s*/gm,
+    "",
+  );
+}
+
+function isUserChunk(chunk: OutputChunk | OutputAsset): chunk is OutputChunk {
+  return chunk.name !== "runtime" && "code" in chunk;
+}
+
+function isRuntimeChunk(
+  chunk: OutputChunk | OutputAsset,
+): chunk is OutputChunk {
+  return chunk.name === "runtime" && "code" in chunk;
 }

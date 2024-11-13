@@ -1,8 +1,6 @@
-// size: 260 (min) 94 (brotli)
-
-import * as e from "@marko/runtime-tags/dom";
-e.register("a0", e.createRenderer("C", "")),
-  e.register("a1", e.createRenderer("B", "")),
-  e.register("a2", e.createRenderer("A", "")),
-  e.register("a3", e.createRenderer("World", "")),
-  e.register("a4", e.createRenderer("Hello", ""));
+// size: 218 (min) 71 (brotli)
+_$.register("a0", _$.createRenderer("C", "")),
+  _$.register("a1", _$.createRenderer("B", "")),
+  _$.register("a2", _$.createRenderer("A", "")),
+  _$.register("a3", _$.createRenderer("World", "")),
+  _$.register("a4", _$.createRenderer("Hello", ""));

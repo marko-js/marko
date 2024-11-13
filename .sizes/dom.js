@@ -1,1330 +1,1655 @@
-var e = [],
-  t = Symbol();
-function n(n) {
-  return (n[Symbol.iterator] = i), (n[t] = e), n;
+// size: 17806 (min) 6448 (brotli)
+var empty = [],
+  rest = Symbol();
+function attrTag(attrs2) {
+  return (
+    (attrs2[Symbol.iterator] = attrTagIterator), (attrs2[rest] = empty), attrs2
+  );
 }
-function r(r, i) {
-  return r ? (r[t] === e ? (r[t] = [i]) : r[t].push(i), r) : n(i);
+function attrTags(first, attrs2) {
+  return first
+    ? (first[rest] === empty
+        ? (first[rest] = [attrs2])
+        : first[rest].push(attrs2),
+      first)
+    : attrTag(attrs2);
 }
-function* i() {
-  yield this, yield* this[t];
+function* attrTagIterator() {
+  yield this, yield* this[rest];
 }
-function l(e, t) {
-  for (let n in e) t(n, e[n]);
+function forIn(obj, cb) {
+  for (let key in obj) cb(key, obj[key]);
 }
-function o(e, t) {
-  if (e) {
-    let n = 0;
-    for (let r of e) t(r, n++);
+function forOf(list, cb) {
+  if (list) {
+    let i = 0;
+    for (let item of list) cb(item, i++);
   }
 }
-function f(e, t, n, r) {
-  let i = t || 0,
-    l = n || 1;
-  for (let t = (e - i) / l, n = 0; n <= t; n++) r(i + n * l);
+function forTo(to, from, step, cb) {
+  let start = from || 0,
+    delta = step || 1;
+  for (let steps = (to - start) / delta, i = 0; i <= steps; i++)
+    cb(start + i * delta);
 }
-var u,
-  a = (() => {
-    let { port1: e, port2: t } = new MessageChannel();
+var isScheduled,
+  port2 = (() => {
+    let { port1: port1, port2: port22 } = new MessageChannel();
     return (
-      (e.onmessage = () => {
-        (u = !1), Q();
+      (port1.onmessage = () => {
+        (isScheduled = !1), run();
       }),
-      t
+      port22
     );
   })();
-function c() {
-  Q(), requestAnimationFrame(s);
+function flushAndWaitFrame() {
+  run(), requestAnimationFrame(triggerMacroTask);
 }
-function s() {
-  a.postMessage(0);
+function triggerMacroTask() {
+  port2.postMessage(0);
 }
-function d(e) {
-  return { u: 1, $global: e };
+function createScope($global) {
+  return { u: 1, $global: $global };
 }
-var h = d({});
-function g(e) {
-  return (h.a = h.b = e), h;
+var emptyScope = createScope({});
+function getEmptyScope(marker) {
+  return (emptyScope.a = emptyScope.b = marker), emptyScope;
 }
-function p(e) {
-  v(e), e.d?.h?.delete(e);
-  let t = e.x?.c;
-  if (t) for (let n of t) n.j?.(e);
-  return e;
+function destroyScope(scope) {
+  _destroyScope(scope), scope.d?.h?.delete(scope);
+  let closureSignals = scope.x?.c;
+  if (closureSignals) for (let signal of closureSignals) signal.j?.(scope);
+  return scope;
 }
-function v(e) {
-  e.h?.forEach(v);
-  let t = e.l;
-  if (t) for (let e of t.values()) e.abort();
+function _destroyScope(scope) {
+  scope.h?.forEach(_destroyScope);
+  let controllers = scope.l;
+  if (controllers) for (let ctrl of controllers.values()) ctrl.abort();
 }
-function b(e) {
-  let t = e.d;
-  for (; t && !t.h?.has(e); ) (t.h ||= new Set()).add(e), (t = (e = t).d);
+function onDestroy(scope) {
+  let parentScope = scope.d;
+  for (; parentScope && !parentScope.h?.has(scope); )
+    (parentScope.h ||= new Set()).add(scope),
+      (parentScope = (scope = parentScope).d);
 }
-function m(e) {
-  p(e);
-  let t = e.a,
-    n = e.b.nextSibling;
-  for (; t !== n; ) {
-    let e = t.nextSibling;
-    t.remove(), (t = e);
+function removeAndDestroyScope(scope) {
+  destroyScope(scope);
+  let current = scope.a,
+    stop = scope.b.nextSibling;
+  for (; current !== stop; ) {
+    let next = current.nextSibling;
+    current.remove(), (current = next);
   }
 }
-function y(e, t, n) {
-  let r = e.a,
-    i = e.b.nextSibling;
-  for (; r !== i; ) {
-    let e = r.nextSibling;
-    t.insertBefore(r, n), (r = e);
+function insertBefore(scope, parent, nextSibling) {
+  let current = scope.a,
+    stop = scope.b.nextSibling;
+  for (; current !== stop; ) {
+    let next = current.nextSibling;
+    parent.insertBefore(current, nextSibling), (current = next);
   }
 }
-var k = {},
-  w = class {
+var registeredValues = {},
+  Render = class {
     m = [];
     n = {};
-    y = { _: k };
-    constructor(e, t, n) {
-      (this.z = e), (this.A = t), (this.o = n), (this.p = e[n]), this.q();
+    y = { _: registeredValues };
+    constructor(renders, runtimeId, renderId) {
+      (this.z = renders),
+        (this.A = runtimeId),
+        (this.o = renderId),
+        (this.p = renders[renderId]),
+        this.q();
     }
     w() {
       this.p.w(), this.q();
     }
     q() {
-      let e = this.p,
-        t = this.y,
-        n = this.n,
-        r = e.v,
-        i = new Map();
-      if (r.length) {
-        let t = e.i.length,
-          l = new Map();
-        e.v = [];
-        let o = (e, t = this.f, r = e) => {
-          let o = (n[t] ||= {}),
-            f = r;
-          for (; 8 === (f = f.previousSibling).nodeType; );
-          o.b = f;
-          let u = (o.a ||= f),
-            a = l.size;
-          for (let [e, n] of l) {
-            if (!a--) break;
-            e !== t &&
-              4 & u.compareDocumentPosition(n) &&
-              2 & r.compareDocumentPosition(n) &&
-              (i.set("" + e, t), l.delete(e));
+      let data2 = this.p,
+        serializeContext = this.y,
+        scopeLookup = this.n,
+        visits = data2.v,
+        cleanupOwners = new Map();
+      if (visits.length) {
+        let commentPrefixLen = data2.i.length,
+          cleanupMarkers = new Map();
+        data2.v = [];
+        let sectionEnd = (visit, scopeId = this.f, curNode = visit) => {
+          let scope = (scopeLookup[scopeId] ||= {}),
+            endNode = curNode;
+          for (; 8 === (endNode = endNode.previousSibling).nodeType; );
+          scope.b = endNode;
+          let startNode = (scope.a ||= endNode),
+            len = cleanupMarkers.size;
+          for (let [markerScopeId, markerNode] of cleanupMarkers) {
+            if (!len--) break;
+            markerScopeId !== scopeId &&
+              4 & startNode.compareDocumentPosition(markerNode) &&
+              2 & curNode.compareDocumentPosition(markerNode) &&
+              (cleanupOwners.set("" + markerScopeId, scopeId),
+              cleanupMarkers.delete(markerScopeId));
           }
-          return l.set(t, e), o;
+          return cleanupMarkers.set(scopeId, visit), scope;
         };
-        for (let e of r) {
-          let r = e.data,
-            i = r[t],
-            f = parseInt(r.slice(t + 1)),
-            u = (n[f] ||= {}),
-            a = r.indexOf(" ") + 1,
-            c = a ? r.slice(a) : "";
-          if ("*" === i) u[c] = e.previousSibling;
-          else if ("$" === i) l.set(f, e);
-          else if ("[" === i)
-            this.f && (c && o(e), this.m.push(this.f)), (this.f = f), (u.a = e);
-          else if ("]" === i) {
-            if (((u[c] = e), f < this.f)) {
-              let t = e.parentNode,
-                n = o(e).a;
-              t && t !== n.parentNode && t.prepend(n), (this.f = this.m.pop());
+        for (let visit of visits) {
+          let commentText = visit.data,
+            token = commentText[commentPrefixLen],
+            scopeId = parseInt(commentText.slice(commentPrefixLen + 1)),
+            scope = (scopeLookup[scopeId] ||= {}),
+            dataIndex = commentText.indexOf(" ") + 1,
+            data3 = dataIndex ? commentText.slice(dataIndex) : "";
+          if ("*" === token) scope[data3] = visit.previousSibling;
+          else if ("$" === token) cleanupMarkers.set(scopeId, visit);
+          else if ("[" === token)
+            this.f && (data3 && sectionEnd(visit), this.m.push(this.f)),
+              (this.f = scopeId),
+              (scope.a = visit);
+          else if ("]" === token) {
+            if (((scope[data3] = visit), scopeId < this.f)) {
+              let currParent = visit.parentNode,
+                startNode = sectionEnd(visit).a;
+              currParent &&
+                currParent !== startNode.parentNode &&
+                currParent.prepend(startNode),
+                (this.f = this.m.pop());
             }
-          } else if ("|" === i) {
-            u[parseInt(c)] = e;
-            let t = JSON.parse("[" + c.slice(c.indexOf(" ") + 1) + "]"),
-              n = e;
-            for (let r = t.length - 1; r >= 0; r--) n = o(e, t[r], n).b;
+          } else if ("|" === token) {
+            scope[parseInt(data3)] = visit;
+            let childScopeIds = JSON.parse(
+                "[" + data3.slice(data3.indexOf(" ") + 1) + "]",
+              ),
+              curNode = visit;
+            for (let i = childScopeIds.length - 1; i >= 0; i--)
+              curNode = sectionEnd(visit, childScopeIds[i], curNode).b;
           }
         }
       }
-      let l = e.r;
-      if (l) {
-        e.r = [];
-        let r = l.length,
-          o = 0;
+      let resumes = data2.r;
+      if (resumes) {
+        data2.r = [];
+        let len = resumes.length,
+          i = 0;
         try {
-          for (C = !0; o < r; ) {
-            let e = l[o++];
-            if ("function" == typeof e) {
-              let r = e(t),
-                { $global: l } = n;
-              l ||
-                ((n.$global = l = r.$ || {}),
-                (l.runtimeId = this.A),
-                (l.renderId = this.o));
-              for (let e in r)
-                if ("$" !== e) {
-                  let t = r[e],
-                    o = n[e];
-                  (t.$global = l), o !== t && (n[e] = Object.assign(t, o));
-                  let f = i.get(e);
-                  f && ((t.d = r[f]), b(t));
+          for (isResuming = !0; i < len; ) {
+            let resumeData = resumes[i++];
+            if ("function" == typeof resumeData) {
+              let scopes = resumeData(serializeContext),
+                { $global: $global } = scopeLookup;
+              $global ||
+                ((scopeLookup.$global = $global = scopes.$ || {}),
+                ($global.runtimeId = this.A),
+                ($global.renderId = this.o));
+              for (let scopeId in scopes)
+                if ("$" !== scopeId) {
+                  let scope = scopes[scopeId],
+                    prevScope = scopeLookup[scopeId];
+                  (scope.$global = $global),
+                    prevScope !== scope &&
+                      (scopeLookup[scopeId] = Object.assign(scope, prevScope));
+                  let cleanupOwnerId = cleanupOwners.get(scopeId);
+                  cleanupOwnerId &&
+                    ((scope.d = scopes[cleanupOwnerId]), onDestroy(scope));
                 }
             } else
-              o === r || "string" != typeof l[o]
+              i === len || "string" != typeof resumes[i]
                 ? delete this.z[this.o]
-                : k[l[o++]](n[e]);
+                : registeredValues[resumes[i++]](scopeLookup[resumeData]);
           }
         } finally {
-          C = !1;
+          isResuming = !1;
         }
       }
     }
   },
-  C = !1;
-function A(e, t) {
-  return (k[e] = t), t;
+  isResuming = !1;
+function register(id, obj) {
+  return (registeredValues[id] = obj), obj;
 }
-function S(e, t) {
-  return (k[e] = (e) => (n) => t(e, n)), t;
-}
-function N(e = "M") {
-  let t,
-    n = (r) => (n[r] = t[r] = new w(t, e, r));
-  function r(r) {
-    t = r;
-    for (let e in r) n(e);
-    Object.defineProperty(window, e, { configurable: !0, value: n });
-  }
-  window[e]
-    ? r(window[e])
-    : Object.defineProperty(window, e, { configurable: !0, set: r });
-}
-function x(e, t) {
-  return A(e, t.g), t;
-}
-function $(e, t) {
-  return A(e, (e) => () => e[t]);
-}
-var M = {},
-  E = {},
-  I = {};
-function T(e, t, n) {
-  let r = _(e, t, n),
-    i = e + "#";
-  return (e, t, n) => (
-    H
-      ? r(e, t === M || t === E || t === I || n || void 0 === e[i] ? t : E)
-      : n
-        ? n(t)
-        : (function (e, t, n) {
-            u || ((u = !0), queueMicrotask(c)),
-              (H = !0),
-              t(e, M),
-              (H = !1),
-              X.push(e, t, n);
-          })(e, r, t),
-    t
+function registerBoundSignal(id, signal) {
+  return (
+    (registeredValues[id] = (scope) => (valueOrOp) => signal(scope, valueOrOp)),
+    signal
   );
 }
-function _(e, t, n) {
-  let r = e + "#",
-    i = n && ((e, t) => (i = n())(e, t));
-  return (n, l) => {
-    if (l === M) 1 === (n[r] = (n[r] ?? 0) + 1) && i?.(n, M);
-    else if (l !== I) {
-      let o = void 0 !== n[r];
-      1 === (n[r] ||= 1) &&
-        (l === E || (o && n[e] === l)
-          ? i?.(n, E)
-          : ((n[e] = l), t && t(n, l), i?.(n, I))),
-        n[r]--;
+function init(runtimeId = "M") {
+  let renders,
+    resumeRender = (renderId) =>
+      (resumeRender[renderId] = renders[renderId] =
+        new Render(renders, runtimeId, renderId));
+  function setRenders(v) {
+    renders = v;
+    for (let renderId in v) resumeRender(renderId);
+    Object.defineProperty(window, runtimeId, {
+      configurable: !0,
+      value: resumeRender,
+    });
+  }
+  window[runtimeId]
+    ? setRenders(window[runtimeId])
+    : Object.defineProperty(window, runtimeId, {
+        configurable: !0,
+        set: setRenders,
+      });
+}
+function registerSubscriber(id, signal) {
+  return register(id, signal.g), signal;
+}
+function nodeRef(id, key) {
+  return register(id, (scope) => () => scope[key]);
+}
+var MARK = {},
+  CLEAN = {},
+  DIRTY = {};
+function state(valueAccessor, fn, getIntersection) {
+  let valueSignal = value(valueAccessor, fn, getIntersection),
+    markAccessor = valueAccessor + "#";
+  return (scope, valueOrOp, valueChange) => (
+    rendering
+      ? valueSignal(
+          scope,
+          valueOrOp === MARK ||
+            valueOrOp === CLEAN ||
+            valueOrOp === DIRTY ||
+            valueChange ||
+            void 0 === scope[markAccessor]
+            ? valueOrOp
+            : CLEAN,
+        )
+      : valueChange
+        ? valueChange(valueOrOp)
+        : (function (scope, signal, value2) {
+            isScheduled ||
+              ((isScheduled = !0), queueMicrotask(flushAndWaitFrame)),
+              (rendering = !0),
+              signal(scope, MARK),
+              (rendering = !1),
+              pendingSignals.push(scope, signal, value2);
+          })(scope, valueSignal, valueOrOp),
+    valueOrOp
+  );
+}
+function value(valueAccessor, fn, getIntersection) {
+  let markAccessor = valueAccessor + "#",
+    intersection2 =
+      getIntersection &&
+      ((scope, op) => (intersection2 = getIntersection())(scope, op));
+  return (scope, valueOrOp) => {
+    if (valueOrOp === MARK)
+      1 === (scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) &&
+        intersection2?.(scope, MARK);
+    else if (valueOrOp !== DIRTY) {
+      let existing = void 0 !== scope[markAccessor];
+      1 === (scope[markAccessor] ||= 1) &&
+        (valueOrOp === CLEAN || (existing && scope[valueAccessor] === valueOrOp)
+          ? intersection2?.(scope, CLEAN)
+          : ((scope[valueAccessor] = valueOrOp),
+            fn && fn(scope, valueOrOp),
+            intersection2?.(scope, DIRTY))),
+        scope[markAccessor]--;
     }
   };
 }
-var O = 0;
-function B(e, t, n) {
-  let r = "?" + O++,
-    i = r + "#",
-    l = n && ((e, t) => (l = n())(e, t));
-  return (n, o) => {
-    o === M
-      ? 1 === (n[i] = (n[i] ?? 0) + 1) && l?.(n, M)
-      : void 0 === n[i]
-        ? ((n[i] = e - 1), (n[r] = !0))
-        : 0 == --n[i]
-          ? o === I || n[r]
-            ? ((n[r] = !1), t(n, 0), l?.(n, I))
-            : l?.(n, E)
-          : (n[r] ||= o === I);
+var accessorId = 0;
+function intersection(count, fn, getIntersection) {
+  let dirtyAccessor = "?" + accessorId++,
+    markAccessor = dirtyAccessor + "#",
+    intersection2 =
+      getIntersection &&
+      ((scope, op) => (intersection2 = getIntersection())(scope, op));
+  return (scope, op) => {
+    op === MARK
+      ? 1 === (scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) &&
+        intersection2?.(scope, MARK)
+      : void 0 === scope[markAccessor]
+        ? ((scope[markAccessor] = count - 1), (scope[dirtyAccessor] = !0))
+        : 0 == --scope[markAccessor]
+          ? op === DIRTY || scope[dirtyAccessor]
+            ? ((scope[dirtyAccessor] = !1),
+              fn(scope, 0),
+              intersection2?.(scope, DIRTY))
+            : intersection2?.(scope, CLEAN)
+          : (scope[dirtyAccessor] ||= op === DIRTY);
   };
 }
-var V = (e) => e._;
-function j(e, t, n = V, r) {
-  let i = "?" + O++,
-    l = i + 1,
-    o = "function" == typeof e ? e : () => e,
-    f = r && ((e, t) => (f = r())(e, t));
-  return (e, r) => {
-    if (r === M) 1 === (e[l] = (e[l] ?? 0) + 1) && f?.(e, M);
+var defaultGetOwnerScope = (scope) => scope._;
+function closure(
+  ownerValueAccessor,
+  fn,
+  getOwnerScope = defaultGetOwnerScope,
+  getIntersection,
+) {
+  let dirtyAccessor = "?" + accessorId++,
+    markAccessor = dirtyAccessor + 1,
+    getOwnerValueAccessor =
+      "function" == typeof ownerValueAccessor
+        ? ownerValueAccessor
+        : () => ownerValueAccessor,
+    intersection2 =
+      getIntersection &&
+      ((scope, op) => (intersection2 = getIntersection())(scope, op));
+  return (scope, op) => {
+    if (op === MARK)
+      1 === (scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) &&
+        intersection2?.(scope, MARK);
     else {
-      let u, a;
-      if (void 0 === e[l]) {
-        (u = n(e)), (a = o(e));
-        let t = u[a + "#"],
-          i = void 0 === t ? !u.u : 0 === t;
-        (e[l] = i ? 1 : 2), (r = I);
+      let ownerScope, ownerValueAccessor2;
+      if (void 0 === scope[markAccessor]) {
+        (ownerScope = getOwnerScope(scope)),
+          (ownerValueAccessor2 = getOwnerValueAccessor(scope));
+        let ownerMark = ownerScope[ownerValueAccessor2 + "#"],
+          ownerHasRun = void 0 === ownerMark ? !ownerScope.u : 0 === ownerMark;
+        (scope[markAccessor] = ownerHasRun ? 1 : 2), (op = DIRTY);
       }
-      0 == --e[l]
-        ? r === I || e[i]
-          ? ((e[i] = !1),
-            (u ||= n(e)),
-            (a ||= o(e)),
-            t && t(e, u[a]),
-            f?.(e, I))
-          : f?.(e, E)
-        : (e[i] ||= r === I);
+      0 == --scope[markAccessor]
+        ? op === DIRTY || scope[dirtyAccessor]
+          ? ((scope[dirtyAccessor] = !1),
+            (ownerScope ||= getOwnerScope(scope)),
+            (ownerValueAccessor2 ||= getOwnerValueAccessor(scope)),
+            fn && fn(scope, ownerScope[ownerValueAccessor2]),
+            intersection2?.(scope, DIRTY))
+          : intersection2?.(scope, CLEAN)
+        : (scope[dirtyAccessor] ||= op === DIRTY);
     }
   };
 }
-function R(e, t, n = V, r) {
-  let i = "function" == typeof e ? e : () => e,
-    l = j(i, t, n, r),
-    o = new WeakMap();
+function dynamicClosure(
+  ownerValueAccessor,
+  fn,
+  getOwnerScope = defaultGetOwnerScope,
+  getIntersection,
+) {
+  let getOwnerValueAccessor =
+      "function" == typeof ownerValueAccessor
+        ? ownerValueAccessor
+        : () => ownerValueAccessor,
+    signalFn = closure(
+      getOwnerValueAccessor,
+      fn,
+      getOwnerScope,
+      getIntersection,
+    ),
+    subscribeFns = new WeakMap();
   return (
-    (l.g = (e) => {
-      let t = (t) => l(e, t),
-        r = n(e),
-        f = i(e) + "*";
-      o.set(e, t), (r[f] ||= new Set()).add(t);
+    (signalFn.g = (scope) => {
+      let subscribeFn = (value2) => signalFn(scope, value2),
+        ownerScope = getOwnerScope(scope),
+        providerSubscriptionsAccessor = getOwnerValueAccessor(scope) + "*";
+      subscribeFns.set(scope, subscribeFn),
+        (ownerScope[providerSubscriptionsAccessor] ||= new Set()).add(
+          subscribeFn,
+        );
     }),
-    (l.j = (e) => {
-      let t = n(e),
-        r = i(e) + "*";
-      t[r]?.delete(o.get(e)), o.delete(e);
+    (signalFn.j = (scope) => {
+      let ownerScope = getOwnerScope(scope),
+        providerSubscriptionsAccessor = getOwnerValueAccessor(scope) + "*";
+      ownerScope[providerSubscriptionsAccessor]?.delete(
+        subscribeFns.get(scope),
+      ),
+        subscribeFns.delete(scope);
     }),
-    l
+    signalFn
   );
 }
-function q(e, t) {
-  let n = (n, r) => {
-    let i = n[t];
-    for (let t of e) t(i, r);
+function childClosures(closureSignals, childAccessor) {
+  let signal = (scope, op) => {
+    let childScope = scope[childAccessor];
+    for (let closureSignal of closureSignals) closureSignal(childScope, op);
   };
   return (
-    (n.g = (n) => {
-      let r = n[t];
-      for (let t of e) t.g?.(r);
+    (signal.g = (scope) => {
+      let childScope = scope[childAccessor];
+      for (let closureSignal of closureSignals) closureSignal.g?.(childScope);
     }),
-    (n.j = (n) => {
-      let r = n[t];
-      for (let t of e) t.j?.(r);
+    (signal.j = (scope) => {
+      let childScope = scope[childAccessor];
+      for (let closureSignal of closureSignals) closureSignal.j?.(childScope);
     }),
-    n
+    signal
   );
 }
-function D(e) {
-  let t = e + "*";
-  return (e, n) => {
-    let r = e[t];
-    if (r) for (let e of r) e(n);
+function dynamicSubscribers(valueAccessor) {
+  let subscribersAccessor = valueAccessor + "*";
+  return (scope, op) => {
+    let subscribers = scope[subscribersAccessor];
+    if (subscribers) for (let subscriber of subscribers) subscriber(op);
   };
 }
-function P(e, t, n) {
-  e[t]["/"] = (t) => n(e, t);
+function setTagVar(scope, childAccessor, tagVarSignal2) {
+  scope[childAccessor]["/"] = (valueOrOp) => tagVarSignal2(scope, valueOrOp);
 }
-var W = (e, t) => e["/"]?.(t),
-  L = (e, t, n) => {
-    let r = e?.c;
-    if (r) for (let e of r) e(t, n);
+var tagVarSignal = (scope, valueOrOp) => scope["/"]?.(valueOrOp),
+  renderBodyClosures = (renderBody, childScope, op) => {
+    let signals = renderBody?.c;
+    if (signals) for (let signal of signals) signal(childScope, op);
   },
-  z = new WeakMap();
-function F({ $global: e }) {
-  let t = z.get(e) || 0;
-  return z.set(e, t + 1), "c" + e.runtimeId + e.renderId + t.toString(36);
-}
-function U(e, t) {
-  return (n, r) => {
-    t(n[e], r);
-  };
-}
-function G(e) {
-  return (t, n) => {
-    for (let r of e) r(t, n);
-  };
-}
-function J(e, t) {
+  tagIdsByGlobal = new WeakMap();
+function nextTagId({ $global: $global }) {
+  let id = tagIdsByGlobal.get($global) || 0;
   return (
-    A(e, t),
-    (e) => {
-      K(e, t);
+    tagIdsByGlobal.set($global, id + 1),
+    "c" + $global.runtimeId + $global.renderId + id.toString(36)
+  );
+}
+function inChild(childAccessor, signal) {
+  return (scope, valueOrOp) => {
+    signal(scope[childAccessor], valueOrOp);
+  };
+}
+function intersections(signals) {
+  return (scope, op) => {
+    for (let signal of signals) signal(scope, op);
+  };
+}
+function effect(id, fn) {
+  return (
+    register(id, fn),
+    (scope) => {
+      queueEffect(scope, fn);
     }
   );
 }
-var X = [],
-  Z = [],
-  H = !1;
-function K(e, t) {
-  Z.push(e, t);
+var pendingSignals = [],
+  pendingEffects = [],
+  rendering = !1;
+function queueEffect(scope, fn) {
+  pendingEffects.push(scope, fn);
 }
-function Q() {
-  let e = X,
-    t = Z;
+function run() {
+  let signals = pendingSignals,
+    effects = pendingEffects;
   try {
-    (H = !0), (X = []), te(e);
+    (rendering = !0), (pendingSignals = []), runSignals(signals);
   } finally {
-    H = !1;
+    rendering = !1;
   }
-  (Z = []), ee(t);
+  (pendingEffects = []), runEffects(effects);
 }
-function Y(e) {
-  let t = X,
-    n = Z,
-    r = (Z = []),
-    i = (X = []);
+function prepareEffects(fn) {
+  let prevSignals = pendingSignals,
+    prevEffects = pendingEffects,
+    preparedEffects = (pendingEffects = []),
+    preparedSignals = (pendingSignals = []);
   try {
-    (H = !0), e(), (X = t), te(i);
+    (rendering = !0),
+      fn(),
+      (pendingSignals = prevSignals),
+      runSignals(preparedSignals);
   } finally {
-    (H = !1), (X = t), (Z = n);
+    (rendering = !1),
+      (pendingSignals = prevSignals),
+      (pendingEffects = prevEffects);
   }
-  return r;
+  return preparedEffects;
 }
-function ee(e = Z) {
-  for (let t = 0; t < e.length; t += 2) {
-    let n = e[t];
-    (0, e[t + 1])(n);
-  }
-}
-function te(e) {
-  for (let t = 0; t < e.length; t += 3) {
-    let n = e[t + 0];
-    (0, e[t + 1])(n, e[t + 2]);
+function runEffects(effects = pendingEffects) {
+  for (let i = 0; i < effects.length; i += 2) {
+    let scope = effects[i];
+    (0, effects[i + 1])(scope);
   }
 }
-function ne(e, t) {
-  let n = e.l;
-  if (n) {
-    let e = n.get(t);
-    e && (K(null, () => e.abort()), n.delete(t));
+function runSignals(signals) {
+  for (let i = 0; i < signals.length; i += 3) {
+    let scope = signals[i + 0];
+    (0, signals[i + 1])(scope, signals[i + 2]);
   }
 }
-function re(e, t) {
-  let n = (e.l ||= new Map()),
-    r = n.get(t);
-  return r || (b(e), n.set(t, (r = new AbortController()))), r.signal;
+function resetAbortSignal(scope, id) {
+  let controllers = scope.l;
+  if (controllers) {
+    let ctrl = controllers.get(id);
+    ctrl && (queueEffect(null, () => ctrl.abort()), controllers.delete(id));
+  }
 }
-function ie(e, t) {
-  return t ? e : "";
+function getAbortSignal(scope, id) {
+  let controllers = (scope.l ||= new Map()),
+    controller = controllers.get(id);
+  return (
+    controller ||
+      (onDestroy(scope),
+      controllers.set(id, (controller = new AbortController()))),
+    controller.signal
+  );
 }
-var le = /^(--|ta|or|li|z)|n-c|i(do|nk|m|t)|w$|we/;
-function oe(e, t) {
-  return t || 0 === t
-    ? `${e}:${"number" == typeof t && t && !le.test(e) ? t + "px" : t}`
+function stringifyClassObject(name, value2) {
+  return value2 ? name : "";
+}
+var NON_DIMENSIONAL = /^(--|ta|or|li|z)|n-c|i(do|nk|m|t)|w$|we/;
+function stringifyStyleObject(name, value2) {
+  return value2 || 0 === value2
+    ? `${name}:${"number" == typeof value2 && value2 && !NON_DIMENSIONAL.test(name) ? value2 + "px" : value2}`
     : "";
 }
-function fe(e, t, n) {
-  switch (typeof e) {
+function toDelimitedString(val, delimiter, stringify) {
+  switch (typeof val) {
     case "string":
-      return e;
+      return val;
     case "object":
-      if (null !== e) {
-        let r = "",
-          i = "";
-        if (Array.isArray(e))
-          for (let l of e) {
-            let e = fe(l, t, n);
-            "" !== e && ((r += i + e), (i = t));
+      if (null !== val) {
+        let result = "",
+          curDelimiter = "";
+        if (Array.isArray(val))
+          for (let v of val) {
+            let part = toDelimitedString(v, delimiter, stringify);
+            "" !== part &&
+              ((result += curDelimiter + part), (curDelimiter = delimiter));
           }
         else
-          for (let l in e) {
-            let o = n(l, e[l]);
-            "" !== o && ((r += i + o), (i = t));
+          for (let name in val) {
+            let part = stringify(name, val[name]);
+            "" !== part &&
+              ((result += curDelimiter + part), (curDelimiter = delimiter));
           }
-        return r;
+        return result;
       }
   }
   return "";
 }
-function ue(e) {
-  if (e) return e.renderBody || e.default || e;
+function normalizeDynamicRenderer(value2) {
+  if (value2) return value2.renderBody || value2.default || value2;
 }
-var ae = 2147483647;
-var ce = new Map(),
-  se = he();
-function de(e, t, n) {
-  let r = ce.get(t);
-  r || ce.set(t, (r = new WeakMap())),
-    r.has(e) || se(e, t, ge),
-    r.set(e, n || void 0);
+var elementHandlersByEvent = new Map(),
+  defaultDelegator = createDelegator();
+function on(element, type, handler) {
+  let handlersByElement = elementHandlersByEvent.get(type);
+  handlersByElement ||
+    elementHandlersByEvent.set(type, (handlersByElement = new WeakMap())),
+    handlersByElement.has(element) ||
+      defaultDelegator(element, type, handleDelegated),
+    handlersByElement.set(element, handler || void 0);
 }
-function he() {
-  let e = new WeakMap();
-  return function (t, n, r) {
-    let i = t.getRootNode(),
-      l = e.get(i);
-    l || e.set(i, (l = new Set())),
-      l.has(n) || (l.add(n), i.addEventListener(n, r, !0));
+function createDelegator() {
+  let delegatedEventsByRoot = new WeakMap();
+  return function (node, type, handler) {
+    let root = node.getRootNode(),
+      delegatedEvents = delegatedEventsByRoot.get(root);
+    delegatedEvents ||
+      delegatedEventsByRoot.set(root, (delegatedEvents = new Set())),
+      delegatedEvents.has(type) ||
+        (delegatedEvents.add(type), root.addEventListener(type, handler, !0));
   };
 }
-function ge(e) {
-  let t = e.target;
-  if (t) {
-    let n = ce.get(e.type);
-    if ((n.get(t)?.(e, t), e.bubbles))
-      for (; (t = t.parentElement) && !e.cancelBubble; ) n.get(t)?.(e, t);
+function handleDelegated(ev) {
+  let target = ev.target;
+  if (target) {
+    let handlersByElement = elementHandlersByEvent.get(ev.type);
+    if ((handlersByElement.get(target)?.(ev, target), ev.bubbles))
+      for (; (target = target.parentElement) && !ev.cancelBubble; )
+        handlersByElement.get(target)?.(ev, target);
   }
 }
-function pe(e) {
-  return e.replace(/[^\p{L}\p{N}]/gu, "");
+function stripSpacesAndPunctuation(str) {
+  return str.replace(/[^\p{L}\p{N}]/gu, "");
 }
-function ve(e, t, n, r) {
-  Ee(e, t, 0, Pe(n), r);
+function controllable_input_checked(
+  scope,
+  nodeAccessor,
+  checked,
+  checkedChange,
+) {
+  setCheckboxValue(
+    scope,
+    nodeAccessor,
+    0,
+    normalizeBoolProp(checked),
+    checkedChange,
+  );
 }
-function be(e, t) {
-  let n = e[t];
-  _e(n, "input", je, () => {
-    let r = e[t + ";"];
-    r &&
-      ((e[t + "="] = 6),
-      r(n.checked),
-      Q(),
-      6 === e[t + "="] && (n.checked = !n.checked));
+function controllable_input_checked_effect(scope, nodeAccessor) {
+  let el = scope[nodeAccessor];
+  syncControllable(el, "input", hasCheckboxChanged, () => {
+    let checkedChange = scope[nodeAccessor + ";"];
+    checkedChange &&
+      ((scope[nodeAccessor + "="] = 6),
+      checkedChange(el.checked),
+      run(),
+      6 === scope[nodeAccessor + "="] && (el.checked = !el.checked));
   });
 }
-function me(e, t, n, r, i) {
-  (e[t + ":"] = n),
-    Ge(e[t], "value", i),
-    Ee(e, t, 1, Array.isArray(n) ? n.includes(i) : n === i, r);
+function controllable_input_checkedValue(
+  scope,
+  nodeAccessor,
+  checkedValue,
+  checkedValueChange,
+  value2,
+) {
+  (scope[nodeAccessor + ":"] = checkedValue),
+    attr(scope[nodeAccessor], "value", value2),
+    setCheckboxValue(
+      scope,
+      nodeAccessor,
+      1,
+      Array.isArray(checkedValue)
+        ? checkedValue.includes(value2)
+        : checkedValue === value2,
+      checkedValueChange,
+    );
 }
-function ye(e, t) {
-  let n = e[t];
-  _e(n, "input", je, () => {
-    let r = e[t + ";"];
-    if (r) {
-      let i = e[t + ":"];
-      (e[t + "="] = 6),
-        r(
-          Array.isArray(i)
-            ? (function (e, t, n) {
-                let r = e.indexOf(t);
+function controllable_input_checkedValue_effect(scope, nodeAccessor) {
+  let el = scope[nodeAccessor];
+  syncControllable(el, "input", hasCheckboxChanged, () => {
+    let checkedValueChange = scope[nodeAccessor + ";"];
+    if (checkedValueChange) {
+      let oldValue = scope[nodeAccessor + ":"];
+      (scope[nodeAccessor + "="] = 6),
+        checkedValueChange(
+          Array.isArray(oldValue)
+            ? (function (arr, val, push) {
+                let index = arr.indexOf(val);
                 return (
-                  (n
-                    ? !~r && [...e, t]
-                    : ~r && e.slice(0, r).concat(e.slice(r + 1))) || e
+                  (push
+                    ? !~index && [...arr, val]
+                    : ~index &&
+                      arr.slice(0, index).concat(arr.slice(index + 1))) || arr
                 );
-              })(i, n.value, n.checked)
-            : n.checked
-              ? n.value
+              })(oldValue, el.value, el.checked)
+            : el.checked
+              ? el.value
               : void 0,
         ),
-        Q(),
-        6 === e[t + "="] && (n.checked = !n.checked);
+        run(),
+        6 === scope[nodeAccessor + "="] && (el.checked = !el.checked);
     }
   });
 }
-function ke(e, t, n, r) {
-  let i = e[t],
-    l = De(n);
-  (e[t + ";"] = r),
-    r
-      ? ((e[t + "="] = 0),
-        (e[t + ":"] = n),
-        i.isConnected ? Me(i, l) : (i.defaultValue = l))
-      : ((e[t + "="] = 5), (i.defaultValue = l));
+function controllable_input_value(scope, nodeAccessor, value2, valueChange) {
+  let el = scope[nodeAccessor],
+    normalizedValue = normalizeStrProp(value2);
+  (scope[nodeAccessor + ";"] = valueChange),
+    valueChange
+      ? ((scope[nodeAccessor + "="] = 0),
+        (scope[nodeAccessor + ":"] = value2),
+        el.isConnected
+          ? setValueAndUpdateSelection(el, normalizedValue)
+          : (el.defaultValue = normalizedValue))
+      : ((scope[nodeAccessor + "="] = 5), (el.defaultValue = normalizedValue));
 }
-function we(e, t) {
-  let n = e[t];
-  C && (e[t + ":"] = n.defaultValue),
-    _e(n, "input", Ve, (r) => {
-      let i = e[t + ";"];
-      i &&
-        ((e[t + "="] = 6),
-        r && ($e = r.inputType),
-        i(n.value),
-        Q(),
-        6 === e[t + "="] && Me(n, e[t + ":"]),
-        ($e = ""));
+function controllable_input_value_effect(scope, nodeAccessor) {
+  let el = scope[nodeAccessor];
+  isResuming && (scope[nodeAccessor + ":"] = el.defaultValue),
+    syncControllable(el, "input", hasValueChanged, (ev) => {
+      let valueChange = scope[nodeAccessor + ";"];
+      valueChange &&
+        ((scope[nodeAccessor + "="] = 6),
+        ev && (inputType = ev.inputType),
+        valueChange(el.value),
+        run(),
+        6 === scope[nodeAccessor + "="] &&
+          setValueAndUpdateSelection(el, scope[nodeAccessor + ":"]),
+        (inputType = ""));
     });
 }
-function Ce(e, t, n, r) {
-  (e[t + ";"] = r),
-    r ? ((e[t + "="] = 3), (e[t + ":"] = n)) : (e[t + "="] = 5),
-    Se(e[t], n, r);
+function controllable_select_value(scope, nodeAccessor, value2, valueChange) {
+  (scope[nodeAccessor + ";"] = valueChange),
+    valueChange
+      ? ((scope[nodeAccessor + "="] = 3), (scope[nodeAccessor + ":"] = value2))
+      : (scope[nodeAccessor + "="] = 5),
+    setSelectOptions(scope[nodeAccessor], value2, valueChange);
 }
-function Ae(e, t) {
-  let n = e[t];
-  _e(n, "input", Re, () => {
-    let r = e[t + ";"];
-    r &&
-      ((e[t + "="] = 6),
-      r(
-        Array.isArray(e[t + ":"]) ? Array.from(n.selectedOptions, We) : n.value,
+function controllable_select_value_effect(scope, nodeAccessor) {
+  let el = scope[nodeAccessor];
+  syncControllable(el, "input", hasSelectChanged, () => {
+    let valueChange = scope[nodeAccessor + ";"];
+    valueChange &&
+      ((scope[nodeAccessor + "="] = 6),
+      valueChange(
+        Array.isArray(scope[nodeAccessor + ":"])
+          ? Array.from(el.selectedOptions, toValueProp)
+          : el.value,
       ),
-      Q(),
-      6 === e[t + "="] && Se(n, e[t + ":"], r));
+      run(),
+      6 === scope[nodeAccessor + "="] &&
+        setSelectOptions(el, scope[nodeAccessor + ":"], valueChange));
   });
 }
-function Se(e, t, n) {
-  if (Array.isArray(t))
-    for (let r of e.options) {
-      let e = t.includes(r.value);
-      n ? (r.selected = e) : (r.defaultSelected = e);
+function setSelectOptions(el, value2, valueChange) {
+  if (Array.isArray(value2))
+    for (let opt of el.options) {
+      let selected = value2.includes(opt.value);
+      valueChange
+        ? (opt.selected = selected)
+        : (opt.defaultSelected = selected);
     }
   else {
-    let r = De(t);
-    if (n) e.value = r;
-    else for (let t of e.options) t.defaultSelected = t.value === r;
+    let normalizedValue = normalizeStrProp(value2);
+    if (valueChange) el.value = normalizedValue;
+    else
+      for (let opt of el.options)
+        opt.defaultSelected = opt.value === normalizedValue;
   }
 }
-function Ne(e, t, n, r) {
-  (e[t + ";"] = r), (e[t + "="] = r ? 4 : 5), (e[t].open = Pe(n));
+function controllable_detailsOrDialog_open(
+  scope,
+  nodeAccessor,
+  open,
+  openChange,
+) {
+  (scope[nodeAccessor + ";"] = openChange),
+    (scope[nodeAccessor + "="] = openChange ? 4 : 5),
+    (scope[nodeAccessor].open = normalizeBoolProp(open));
 }
-function xe(e, t) {
-  let n = e[t];
-  _e(
-    n,
-    "DIALOG" === n.tagName ? "close" : "toggle",
-    () => e[t + ";"] && n.open !== e[t + ":"],
+function controllable_detailsOrDialog_open_effect(scope, nodeAccessor) {
+  let el = scope[nodeAccessor];
+  syncControllable(
+    el,
+    "DIALOG" === el.tagName ? "close" : "toggle",
+    () => scope[nodeAccessor + ";"] && el.open !== scope[nodeAccessor + ":"],
     () => {
-      let r = e[t + ";"];
-      r &&
-        ((e[t + "="] = 6),
-        r(n.open),
-        Q(),
-        6 === e[t + "="] && (n.open = !n.open));
+      let openChange = scope[nodeAccessor + ";"];
+      openChange &&
+        ((scope[nodeAccessor + "="] = 6),
+        openChange(el.open),
+        run(),
+        6 === scope[nodeAccessor + "="] && (el.open = !el.open));
     },
   );
 }
-var $e = "";
-function Me(e, t) {
-  let n = e.value;
-  if (n !== t)
-    if (e.getRootNode().activeElement === e) {
-      let r = e.selectionStart;
-      e.value = t;
-      let i = (function (e, t, n, r) {
-        if (n !== t.length || /kw/.test(r)) {
-          let r = t.slice(0, n),
-            i = t.slice(n);
-          if (e.startsWith(r)) return n;
-          if (e.endsWith(i)) return e.length - i.length;
+var inputType = "";
+function setValueAndUpdateSelection(el, value2) {
+  let initialValue = el.value;
+  if (initialValue !== value2)
+    if (el.getRootNode().activeElement === el) {
+      let initialPosition = el.selectionStart;
+      el.value = value2;
+      let updatedPosition = (function (
+        updatedValue,
+        initialValue,
+        initialPosition,
+        inputType2,
+      ) {
+        if (initialPosition !== initialValue.length || /kw/.test(inputType2)) {
+          let before = initialValue.slice(0, initialPosition),
+            after = initialValue.slice(initialPosition);
+          if (updatedValue.startsWith(before)) return initialPosition;
+          if (updatedValue.endsWith(after))
+            return updatedValue.length - after.length;
           {
-            let t = pe(r).length,
-              n = 0,
-              i = 0;
-            for (; i < t; ) pe(e[n]) && i++, n++;
-            return n;
+            let relevantChars = stripSpacesAndPunctuation(before).length,
+              pos = 0,
+              relevantIndex = 0;
+            for (; relevantIndex < relevantChars; )
+              stripSpacesAndPunctuation(updatedValue[pos]) && relevantIndex++,
+                pos++;
+            return pos;
           }
         }
         return -1;
-      })(e.value, n, r, $e);
-      ~i && e.setSelectionRange(i, i);
-    } else e.value = t;
+      })(el.value, initialValue, initialPosition, inputType);
+      ~updatedPosition &&
+        el.setSelectionRange(updatedPosition, updatedPosition);
+    } else el.value = value2;
 }
-function Ee(e, t, n, r, i) {
-  (e[t + ";"] = i),
-    i
-      ? ((e[t + "="] = n), (e[t].checked = r))
-      : ((e[t + "="] = 5), (e[t].defaultChecked = r));
+function setCheckboxValue(scope, nodeAccessor, type, checked, checkedChange) {
+  (scope[nodeAccessor + ";"] = checkedChange),
+    checkedChange
+      ? ((scope[nodeAccessor + "="] = type),
+        (scope[nodeAccessor].checked = checked))
+      : ((scope[nodeAccessor + "="] = 5),
+        (scope[nodeAccessor].defaultChecked = checked));
 }
-var Ie = he(),
-  Te = new WeakMap();
-function _e(e, t, n, r) {
-  Te.set(e, r),
-    Ie(e, t, Oe),
-    e.form && Ie(e.form, "reset", Be),
-    C && n(e) && queueMicrotask(r);
+var delegateFormControl = createDelegator(),
+  formChangeHandlers = new WeakMap();
+function syncControllable(el, event, hasChanged, onChange) {
+  formChangeHandlers.set(el, onChange),
+    delegateFormControl(el, event, onFormChange),
+    el.form && delegateFormControl(el.form, "reset", onFormReset),
+    isResuming && hasChanged(el) && queueMicrotask(onChange);
 }
-function Oe(e) {
-  Te.get(e.target)?.(e);
+function onFormChange(ev) {
+  formChangeHandlers.get(ev.target)?.(ev);
 }
-function Be(e) {
-  let t = [];
-  for (let n of e.target.elements) {
-    let e = Te.get(n);
-    e && qe(n) && t.push(e);
+function onFormReset(ev) {
+  let handlers = [];
+  for (let el of ev.target.elements) {
+    let handler = formChangeHandlers.get(el);
+    handler && hasFormElementChanged(el) && handlers.push(handler);
   }
   requestAnimationFrame(() => {
-    if (!e.defaultPrevented) for (let e of t) e();
+    if (!ev.defaultPrevented) for (let change of handlers) change();
   });
 }
-function Ve(e) {
-  return e.value !== e.defaultValue;
+function hasValueChanged(el) {
+  return el.value !== el.defaultValue;
 }
-function je(e) {
-  return e.checked !== e.defaultChecked;
+function hasCheckboxChanged(el) {
+  return el.checked !== el.defaultChecked;
 }
-function Re(e) {
-  for (let t of e.options) if (t.selected !== t.defaultSelected) return !0;
+function hasSelectChanged(el) {
+  for (let opt of el.options)
+    if (opt.selected !== opt.defaultSelected) return !0;
 }
-function qe(e) {
-  return e.options ? Re(e) : Ve(e) || je(e);
+function hasFormElementChanged(el) {
+  return el.options
+    ? hasSelectChanged(el)
+    : hasValueChanged(el) || hasCheckboxChanged(el);
 }
-function De(e) {
-  return it(e) || "";
+function normalizeStrProp(value2) {
+  return normalizeAttrValue(value2) || "";
 }
-function Pe(e) {
-  return null != e && !1 !== e;
+function normalizeBoolProp(value2) {
+  return null != value2 && !1 !== value2;
 }
-function We(e) {
-  return e.value;
+function toValueProp(it) {
+  return it.value;
 }
-var Le = document.createTextNode(""),
-  ze = new Range();
-function Fe(e) {
-  return ze.createContextualFragment(e);
+var fallback = document.createTextNode(""),
+  parser = new Range();
+function parseHTML(html2) {
+  return parser.createContextualFragment(html2);
 }
-var Ue = /^on[A-Z-]/;
-function Ge(e, t, n) {
-  Je(e, t, it(n));
+var eventHandlerReg = /^on[A-Z-]/;
+function attr(element, name, value2) {
+  setAttribute(element, name, normalizeAttrValue(value2));
 }
-function Je(e, t, n) {
-  e.getAttribute(t) != n &&
-    (void 0 === n ? e.removeAttribute(t) : e.setAttribute(t, n));
+function setAttribute(element, name, value2) {
+  element.getAttribute(name) != value2 &&
+    (void 0 === value2
+      ? element.removeAttribute(name)
+      : element.setAttribute(name, value2));
 }
-function Xe(e, t) {
-  Je(
-    e,
+function classAttr(element, value2) {
+  setAttribute(
+    element,
     "class",
-    (function (e) {
-      return fe(e, " ", ie);
-    })(t) || void 0,
+    (function (value2) {
+      return toDelimitedString(value2, " ", stringifyClassObject);
+    })(value2) || void 0,
   );
 }
-function Ze(e, t) {
-  Je(
-    e,
+function styleAttr(element, value2) {
+  setAttribute(
+    element,
     "style",
-    (function (e) {
-      return fe(e, ";", oe);
-    })(t) || void 0,
+    (function (value2) {
+      return toDelimitedString(value2, ";", stringifyStyleObject);
+    })(value2) || void 0,
   );
 }
-function He(e, t) {
-  let n = (function (e) {
-    return e || 0 === e ? e + "" : "‍";
-  })(t);
-  e.data !== n && (e.data = n);
+function data(node, value2) {
+  let normalizedValue = (function (value2) {
+    return value2 || 0 === value2 ? value2 + "" : "‍";
+  })(value2);
+  node.data !== normalizedValue && (node.data = normalizedValue);
 }
-function Ke(e, t, n) {
-  let r = e[t];
-  for (let { name: e } of r.attributes)
-    (n && (e in n || Qe(r, e, n))) || r.removeAttribute(e);
-  et(e, t, n);
+function attrs(scope, nodeAccessor, nextAttrs) {
+  let el = scope[nodeAccessor];
+  for (let { name: name } of el.attributes)
+    (nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))) ||
+      el.removeAttribute(name);
+  attrsInternal(scope, nodeAccessor, nextAttrs);
 }
-function Qe(e, t, n) {
-  return "checked" === t && "INPUT" === e.tagName && "checkedValue" in n;
+function hasAttrAlias(element, attr2, nextAttrs) {
+  return (
+    "checked" === attr2 &&
+    "INPUT" === element.tagName &&
+    "checkedValue" in nextAttrs
+  );
 }
-function Ye(e, t, n, r) {
-  let i = e[t],
-    l = {};
-  for (let { name: e } of i.attributes)
-    !r[e] && (!n || !(e in n)) && i.removeAttribute(e);
-  for (let e in n) r[e] || (l[e] = n[e]);
-  et(e, t, l);
+function partialAttrs(scope, nodeAccessor, nextAttrs, skip) {
+  let el = scope[nodeAccessor],
+    partial = {};
+  for (let { name: name } of el.attributes)
+    !skip[name] &&
+      (!nextAttrs || !(name in nextAttrs)) &&
+      el.removeAttribute(name);
+  for (let key in nextAttrs) skip[key] || (partial[key] = nextAttrs[key]);
+  attrsInternal(scope, nodeAccessor, partial);
 }
-function et(e, t, n) {
-  let r,
-    i,
-    l = e[t];
-  switch (l.tagName) {
+function attrsInternal(scope, nodeAccessor, nextAttrs) {
+  let events,
+    skip,
+    el = scope[nodeAccessor];
+  switch (el.tagName) {
     case "INPUT":
-      if ("checked" in n || "checkedChange" in n)
-        ve(e, t, n.checked, n.checkedChange);
-      else if ("checkedValue" in n || "checkedValueChange" in n)
-        me(e, t, n.checkedValue, n.checkedValueChange, n.value);
+      if ("checked" in nextAttrs || "checkedChange" in nextAttrs)
+        controllable_input_checked(
+          scope,
+          nodeAccessor,
+          nextAttrs.checked,
+          nextAttrs.checkedChange,
+        );
+      else if ("checkedValue" in nextAttrs || "checkedValueChange" in nextAttrs)
+        controllable_input_checkedValue(
+          scope,
+          nodeAccessor,
+          nextAttrs.checkedValue,
+          nextAttrs.checkedValueChange,
+          nextAttrs.value,
+        );
       else {
-        if (!("value" in n) && !("valueChange" in n)) break;
-        ke(e, t, n.value, n.valueChange);
+        if (!("value" in nextAttrs) && !("valueChange" in nextAttrs)) break;
+        controllable_input_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        );
       }
-      i = /^(?:value|checked(?:Value)?)(?:Change)?$/;
+      skip = /^(?:value|checked(?:Value)?)(?:Change)?$/;
       break;
     case "SELECT":
-      ("value" in n || "valueChange" in n) &&
-        (Ce(e, t, n.value, n.valueChange), (i = /^value(?:Change)?$/));
+      ("value" in nextAttrs || "valueChange" in nextAttrs) &&
+        (controllable_select_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        ),
+        (skip = /^value(?:Change)?$/));
       break;
     case "TEXTAREA":
-      ("value" in n || "valueChange" in n) &&
-        (ke(e, t, n.value, n.valueChange), (i = /^value(?:Change)?$/));
+      ("value" in nextAttrs || "valueChange" in nextAttrs) &&
+        (controllable_input_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        ),
+        (skip = /^value(?:Change)?$/));
       break;
     case "DETAILS":
     case "DIALOG":
-      ("open" in n || "openChange" in n) &&
-        (Ne(e, t, n.open, n.openChange), (i = /^open(?:Change)?$/));
+      ("open" in nextAttrs || "openChange" in nextAttrs) &&
+        (controllable_detailsOrDialog_open(
+          scope,
+          nodeAccessor,
+          nextAttrs.open,
+          nextAttrs.openChange,
+        ),
+        (skip = /^open(?:Change)?$/));
   }
-  for (let o in n) {
-    let f = n[o];
-    switch (o) {
+  for (let name in nextAttrs) {
+    let value2 = nextAttrs[name];
+    switch (name) {
       case "class":
-        Xe(l, f);
+        classAttr(el, value2);
         break;
       case "style":
-        Ze(l, f);
+        styleAttr(el, value2);
         break;
       case "renderBody":
         break;
       default:
-        Ue.test(o)
-          ? ((r ||= e[t + "~"] = {})[
-              "-" === o[2] ? o.slice(3) : o.slice(2).toLowerCase()
-            ] = f)
-          : i?.test(o) || Ge(l, o, f);
+        eventHandlerReg.test(name)
+          ? ((events ||= scope[nodeAccessor + "~"] = {})[
+              "-" === name[2] ? name.slice(3) : name.slice(2).toLowerCase()
+            ] = value2)
+          : skip?.test(name) || attr(el, name, value2);
     }
   }
 }
-function tt(e, t) {
-  let n = e[t],
-    r = e[t + "~"];
-  switch (e[t + "="]) {
+function attrsEvents(scope, nodeAccessor) {
+  let el = scope[nodeAccessor],
+    events = scope[nodeAccessor + "~"];
+  switch (scope[nodeAccessor + "="]) {
     case 0:
-      be(e, t);
+      controllable_input_checked_effect(scope, nodeAccessor);
       break;
     case 1:
-      ye(e, t);
+      controllable_input_checkedValue_effect(scope, nodeAccessor);
       break;
     case 2:
-      we(e, t);
+      controllable_input_value_effect(scope, nodeAccessor);
       break;
     case 3:
-      Ae(e, t);
+      controllable_select_value_effect(scope, nodeAccessor);
       break;
     case 4:
-      xe(e, t);
+      controllable_detailsOrDialog_open_effect(scope, nodeAccessor);
   }
-  for (let e in r) de(n, e, r[e]);
+  for (let name in events) on(el, name, events[name]);
 }
-function nt(e, t, n) {
-  let r = e[n],
-    i = e[n + "-"] || r,
-    l = r.parentNode,
-    o = i.nextSibling,
-    f = Fe(t || 0 === t ? t + "" : "<!>");
-  (e[n] = f.firstChild), (e[n + "-"] = f.lastChild), l.insertBefore(f, r);
-  let u = r;
-  for (; u !== o; ) {
-    let e = u.nextSibling;
-    u.remove(), (u = e);
+function html(scope, value2, index) {
+  let firstChild = scope[index],
+    lastChild = scope[index + "-"] || firstChild,
+    parentNode = firstChild.parentNode,
+    afterReference = lastChild.nextSibling,
+    newContent = parseHTML(value2 || 0 === value2 ? value2 + "" : "<!>");
+  (scope[index] = newContent.firstChild),
+    (scope[index + "-"] = newContent.lastChild),
+    parentNode.insertBefore(newContent, firstChild);
+  let current = firstChild;
+  for (; current !== afterReference; ) {
+    let next = current.nextSibling;
+    current.remove(), (current = next);
   }
 }
-function rt(e, t, n) {
-  let r = e[n],
-    i = e[n + "-"],
-    l = e[t];
-  if (i) for (let e in i) e in r || (l[e] = void 0);
-  for (let e in r) l[e] = r[e];
-  e[n + "-"] = r;
+function props(scope, nodeIndex, index) {
+  let nextProps = scope[index],
+    prevProps = scope[index + "-"],
+    node = scope[nodeIndex];
+  if (prevProps)
+    for (let name in prevProps) name in nextProps || (node[name] = void 0);
+  for (let name in nextProps) node[name] = nextProps[name];
+  scope[index + "-"] = nextProps;
 }
-function it(e) {
-  if (e || 0 === e) return !0 === e ? "" : e + "";
+function normalizeAttrValue(value2) {
+  if (value2 || 0 === value2) return !0 === value2 ? "" : value2 + "";
 }
-function lt(e, t, n) {
-  let r = e[t];
-  r
-    ? (Object.assign(r, n), r.onUpdate?.())
-    : ((e[t] = n),
-      n.onMount?.(),
-      (re(e, "-" + t).onabort = () => n.onDestroy?.()));
+function lifecycle(scope, index, thisObj) {
+  let instance = scope[index];
+  instance
+    ? (Object.assign(instance, thisObj), instance.onUpdate?.())
+    : ((scope[index] = thisObj),
+      thisObj.onMount?.(),
+      (getAbortSignal(scope, "-" + index).onabort = () =>
+        thisObj.onDestroy?.()));
 }
-var ot = document.createTreeWalker(document);
-function ft(e) {
-  let t = e.length;
-  for (; e.charCodeAt(--t) > 47; );
-  return e.slice(0, t + 1);
+var walker = document.createTreeWalker(document);
+function trimWalkString(walkString) {
+  let end = walkString.length;
+  for (; walkString.charCodeAt(--end) > 47; );
+  return walkString.slice(0, end + 1);
 }
-function ut(e, t, n) {
-  (ot.currentNode = e),
-    at(t, n, n, 0),
-    (ot.currentNode = document.documentElement);
+function walk(startNode, walkCodes, scope) {
+  (walker.currentNode = startNode),
+    walkInternal(walkCodes, scope, scope, 0),
+    (walker.currentNode = document.documentElement);
 }
-function at(e, t, n, r) {
-  let i,
-    l = 0,
-    o = 0,
-    f = 0;
-  for (n !== t && (t.d = n); (i = e.charCodeAt(r++)); )
-    if (((o = l), (l = 0), i >= 117)) l = 10 * o + i - 117;
-    else if (i >= 107) {
-      for (i = 10 * o + i - 107; i--; ) ot.parentNode();
-      ot.nextSibling();
-    } else if (i >= 97) for (i = 10 * o + i - 97; i--; ) ot.nextSibling();
-    else if (i >= 67) for (i = 20 * o + i - 67; i--; ) ot.nextNode();
-    else if (47 === i) r = at(e, (t[f++] = d(t.$global)), n, r);
+function walkInternal(walkCodes, scope, cleanupOwnerScope, currentWalkIndex) {
+  let value2,
+    storedMultiplier = 0,
+    currentMultiplier = 0,
+    currentScopeIndex = 0;
+  for (
+    cleanupOwnerScope !== scope && (scope.d = cleanupOwnerScope);
+    (value2 = walkCodes.charCodeAt(currentWalkIndex++));
+
+  )
+    if (
+      ((currentMultiplier = storedMultiplier),
+      (storedMultiplier = 0),
+      value2 >= 117)
+    )
+      storedMultiplier = 10 * currentMultiplier + value2 - 117;
+    else if (value2 >= 107) {
+      for (value2 = 10 * currentMultiplier + value2 - 107; value2--; )
+        walker.parentNode();
+      walker.nextSibling();
+    } else if (value2 >= 97)
+      for (value2 = 10 * currentMultiplier + value2 - 97; value2--; )
+        walker.nextSibling();
+    else if (value2 >= 67)
+      for (value2 = 20 * currentMultiplier + value2 - 67; value2--; )
+        walker.nextNode();
+    else if (47 === value2)
+      currentWalkIndex = walkInternal(
+        walkCodes,
+        (scope[currentScopeIndex++] = createScope(scope.$global)),
+        cleanupOwnerScope,
+        currentWalkIndex,
+      );
     else {
-      if (38 === i) return r;
-      if (32 === i) t[f++] = ot.currentNode;
+      if (38 === value2) return currentWalkIndex;
+      if (32 === value2) scope[currentScopeIndex++] = walker.currentNode;
       else {
-        let e = (t[f++] = document.createTextNode("")),
-          n = ot.currentNode;
-        n.parentNode.replaceChild(e, n), (ot.currentNode = e);
+        let newNode = (scope[currentScopeIndex++] =
+            document.createTextNode("")),
+          current = walker.currentNode;
+        current.parentNode.replaceChild(newNode, current),
+          (walker.currentNode = newNode);
       }
     }
-  return r;
+  return currentWalkIndex;
 }
-function ct(e, t, n) {
-  let r = d(t);
-  if (((r._ = r.d = e.B || n), (r.x = e), dt(e, r), e.c))
-    for (let t of e.c) t.g?.(r);
-  return r;
+function createScopeWithRenderer(renderer, $global, ownerScope) {
+  let newScope = createScope($global);
+  if (
+    ((newScope._ = newScope.d = renderer.B || ownerScope),
+    (newScope.x = renderer),
+    initRenderer(renderer, newScope),
+    renderer.c)
+  )
+    for (let signal of renderer.c) signal.g?.(newScope);
+  return newScope;
 }
-function st(e, t, n) {
-  if ("string" != typeof e) return ct(e, t, n);
-  let r = d(t);
-  return (r._ = r.d = n), (r[0] = r.a = r.b = document.createElement(e)), r;
-}
-function dt(e, t) {
-  let n = e.k();
+function createScopeWithTagNameOrRenderer(
+  tagNameOrRenderer,
+  $global,
+  ownerScope,
+) {
+  if ("string" != typeof tagNameOrRenderer)
+    return createScopeWithRenderer(tagNameOrRenderer, $global, ownerScope);
+  let newScope = createScope($global);
   return (
-    ut(11 === n.nodeType ? n.firstChild : n, e.C, t),
-    (t.a = 11 === n.nodeType ? n.firstChild : n),
-    (t.b = 11 === n.nodeType ? n.lastChild : n),
-    e.s && e.s(t),
-    n
+    (newScope._ = newScope.d = ownerScope),
+    (newScope[0] =
+      newScope.a =
+      newScope.b =
+        document.createElement(tagNameOrRenderer)),
+    newScope
   );
 }
-function ht(e, t, n) {
-  return (r, i) => {
-    let l = r[e + "("];
-    if (!l || i === I) return;
-    let o = r[e + "!"];
-    if (i === M || i === E) return l.e?.(o, i);
-    let f = t?.(r);
-    if ("string" == typeof l) kt(o, 0, f), Ke(o, 0, i());
-    else if (l.e) {
-      let e = i();
-      l.e(o, n ? e : [f ? { ...e, renderBody: f } : e]);
+function initRenderer(renderer, scope) {
+  let dom = renderer.k();
+  return (
+    walk(11 === dom.nodeType ? dom.firstChild : dom, renderer.C, scope),
+    (scope.a = 11 === dom.nodeType ? dom.firstChild : dom),
+    (scope.b = 11 === dom.nodeType ? dom.lastChild : dom),
+    renderer.s && renderer.s(scope),
+    dom
+  );
+}
+function dynamicTagAttrs(nodeAccessor, getRenderBody, inputIsArgs) {
+  return (scope, attrsOrOp) => {
+    let renderer = scope[nodeAccessor + "("];
+    if (!renderer || attrsOrOp === DIRTY) return;
+    let childScope = scope[nodeAccessor + "!"];
+    if (attrsOrOp === MARK || attrsOrOp === CLEAN)
+      return renderer.e?.(childScope, attrsOrOp);
+    let renderBody = getRenderBody?.(scope);
+    if ("string" == typeof renderer)
+      setConditionalRendererOnlyChild(childScope, 0, renderBody),
+        attrs(childScope, 0, attrsOrOp());
+    else if (renderer.e) {
+      let attributes = attrsOrOp();
+      renderer.e(
+        childScope,
+        inputIsArgs
+          ? attributes
+          : [
+              renderBody
+                ? { ...attributes, renderBody: renderBody }
+                : attributes,
+            ],
+      );
     }
   };
 }
-function gt(e, t, n, r, i) {
-  let l,
-    o,
-    f = {},
-    u = t ? ft(t) : " ";
-  return (t) => ({
-    t: f,
-    D: e,
-    C: u,
-    s: n,
-    k: vt,
-    B: t,
+function createRendererWithOwner(
+  template,
+  rawWalks,
+  setup,
+  getClosureSignals,
+  getArgs,
+) {
+  let args,
+    closureSignals,
+    id = {},
+    walks = rawWalks ? trimWalkString(rawWalks) : " ";
+  return (owner) => ({
+    t: id,
+    D: template,
+    C: walks,
+    s: setup,
+    k: _clone,
+    B: owner,
     E: void 0,
     get e() {
-      return (l ||= i?.());
+      return (args ||= getArgs?.());
     },
     get c() {
-      return (o ||= new Set(r?.()));
+      return (closureSignals ||= new Set(getClosureSignals?.()));
     },
   });
 }
-function pt(e, t, n, r, i) {
-  return gt(e, t, n, r, i)();
+function createRenderer(template, walks, setup, getClosureSignals, getArgs) {
+  return createRendererWithOwner(
+    template,
+    walks,
+    setup,
+    getClosureSignals,
+    getArgs,
+  )();
 }
-function vt() {
-  return (this.E ||= (function (e) {
-    let t = Fe(e);
-    return t.firstChild === t.lastChild ? t.firstChild || Le : t;
+function _clone() {
+  return (this.E ||= (function (html2) {
+    let content = parseHTML(html2);
+    return content.firstChild === content.lastChild
+      ? content.firstChild || fallback
+      : content;
   })(this.D)).cloneNode(!0);
 }
-var bt = function (e, t, n) {
-  let r = e + "(",
-    i = e + "!",
-    l = n && ((e, t) => (l = n())(e, t));
-  return (n, o) => {
-    if (o === I) return;
-    let f = n[r],
-      u = o;
-    if (o !== M && o !== E) {
-      let i = ue(o);
-      _t(i, f)
-        ? ((f = n[r] = i),
-          (function (e, t, n) {
-            let r,
-              i = e[t + "!"];
-            n
-              ? ((r = e[t + "!"] = st(n, e.$global, e)), (i = i || g(e[t])))
-              : ((r = g(e[t])), (e[t + "!"] = void 0)),
-              y(r, i.a.parentNode, i.a),
-              m(i);
-          })(n, e, i),
-          t && t(n),
-          (u = I))
-        : (u = E);
+var conditional = function (nodeAccessor, fn, getIntersection) {
+  let rendererAccessor = nodeAccessor + "(",
+    childScopeAccessor = nodeAccessor + "!",
+    intersection2 =
+      getIntersection &&
+      ((scope, op) => (intersection2 = getIntersection())(scope, op));
+  return (scope, newRendererOrOp) => {
+    if (newRendererOrOp === DIRTY) return;
+    let currentRenderer = scope[rendererAccessor],
+      op = newRendererOrOp;
+    if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
+      let normalizedRenderer = normalizeDynamicRenderer(newRendererOrOp);
+      isDifferentRenderer(normalizedRenderer, currentRenderer)
+        ? ((currentRenderer = scope[rendererAccessor] = normalizedRenderer),
+          (function (scope, nodeAccessor, newRenderer) {
+            let newScope,
+              prevScope = scope[nodeAccessor + "!"];
+            newRenderer
+              ? ((newScope = scope[nodeAccessor + "!"] =
+                  createScopeWithTagNameOrRenderer(
+                    newRenderer,
+                    scope.$global,
+                    scope,
+                  )),
+                (prevScope = prevScope || getEmptyScope(scope[nodeAccessor])))
+              : ((newScope = getEmptyScope(scope[nodeAccessor])),
+                (scope[nodeAccessor + "!"] = void 0)),
+              insertBefore(newScope, prevScope.a.parentNode, prevScope.a),
+              removeAndDestroyScope(prevScope);
+          })(scope, nodeAccessor, normalizedRenderer),
+          fn && fn(scope),
+          (op = DIRTY))
+        : (op = CLEAN);
     }
-    l?.(n, u), L(f, n[i], u);
+    intersection2?.(scope, op),
+      renderBodyClosures(currentRenderer, scope[childScopeAccessor], op);
   };
 };
-function mt(e, t) {
-  let n = t + "!",
-    r = t + "(";
-  return (t, i) => {
-    let l = t[n];
-    if (l) {
-      let n = t[r];
-      (!n?.c || n.c.has(e)) && e(l, i);
+function inConditionalScope(signal, nodeAccessor) {
+  let scopeAccessor = nodeAccessor + "!",
+    rendererAccessor = nodeAccessor + "(";
+  return (scope, op) => {
+    let conditionalScope = scope[scopeAccessor];
+    if (conditionalScope) {
+      let conditionalRenderer = scope[rendererAccessor];
+      (!conditionalRenderer?.c || conditionalRenderer.c.has(signal)) &&
+        signal(conditionalScope, op);
     }
   };
 }
-var yt = function (e, t, n) {
-  let r = e + "(",
-    i = e + "!",
-    l = n && ((e, t) => (l = n())(e, t));
-  return (n, o) => {
-    if (o === I) return;
-    let f = n[r],
-      u = o;
-    if (o !== M && o !== E) {
-      let i = ue(o);
-      _t(i, f) ? ((f = n[r] = i), kt(n, e, i), t && t(n), (u = I)) : (u = E);
+var conditionalOnlyChild = function (nodeAccessor, fn, getIntersection) {
+  let rendererAccessor = nodeAccessor + "(",
+    childScopeAccessor = nodeAccessor + "!",
+    intersection2 =
+      getIntersection &&
+      ((scope, op) => (intersection2 = getIntersection())(scope, op));
+  return (scope, newRendererOrOp) => {
+    if (newRendererOrOp === DIRTY) return;
+    let currentRenderer = scope[rendererAccessor],
+      op = newRendererOrOp;
+    if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
+      let normalizedRenderer = normalizeDynamicRenderer(newRendererOrOp);
+      isDifferentRenderer(normalizedRenderer, currentRenderer)
+        ? ((currentRenderer = scope[rendererAccessor] = normalizedRenderer),
+          setConditionalRendererOnlyChild(
+            scope,
+            nodeAccessor,
+            normalizedRenderer,
+          ),
+          fn && fn(scope),
+          (op = DIRTY))
+        : (op = CLEAN);
     }
-    l?.(n, u), L(f, n[i], u);
+    intersection2?.(scope, op),
+      renderBodyClosures(currentRenderer, scope[childScopeAccessor], op);
   };
 };
-function kt(e, t, n) {
-  let r = e[t + "!"],
-    i = e[t];
-  if (((i.textContent = ""), n)) {
-    y((e[t + "!"] = st(n, e.$global, e)), i, null);
+function setConditionalRendererOnlyChild(scope, nodeAccessor, newRenderer) {
+  let prevScope = scope[nodeAccessor + "!"],
+    referenceNode = scope[nodeAccessor];
+  if (((referenceNode.textContent = ""), newRenderer)) {
+    insertBefore(
+      (scope[nodeAccessor + "!"] = createScopeWithTagNameOrRenderer(
+        newRenderer,
+        scope.$global,
+        scope,
+      )),
+      referenceNode,
+      null,
+    );
   }
-  r && p(r);
+  prevScope && destroyScope(prevScope);
 }
-var wt = new Map([[Symbol(), g(void 0)]]),
-  Ct = [g(void 0)],
-  At = new Map(),
-  St = [];
-function Nt(e, t) {
-  return Mt(e, t, ([e, t = It], n) => {
-    o(
-      e,
-      "string" == typeof t
-        ? (e, r) => n(e[t], [e, r])
-        : (e, r) => n(t(e, r), [e, r]),
+var emptyMarkerMap = new Map([[Symbol(), getEmptyScope(void 0)]]),
+  emptyMarkerArray = [getEmptyScope(void 0)],
+  emptyMap = new Map(),
+  emptyArray = [];
+function loopOf(nodeAccessor, renderer) {
+  return loop(nodeAccessor, renderer, ([all, by = bySecondArg], cb) => {
+    forOf(
+      all,
+      "string" == typeof by
+        ? (item, i) => cb(item[by], [item, i])
+        : (item, i) => cb(by(item, i), [item, i]),
     );
   });
 }
-function xt(e, t) {
-  return Mt(e, t, ([e, t = Tt], n) => l(e, (e, r) => n(t(e, r), [e, r])));
+function loopIn(nodeAccessor, renderer) {
+  return loop(nodeAccessor, renderer, ([obj, by = byFirstArg], cb) =>
+    forIn(obj, (key, value2) => cb(by(key, value2), [key, value2])),
+  );
 }
-function $t(e, t) {
-  return Mt(e, t, ([e, t, n, r = Tt], i) => f(e, t, n, (e) => i(r(e), [e])));
+function loopTo(nodeAccessor, renderer) {
+  return loop(nodeAccessor, renderer, ([to, from, step, by = byFirstArg], cb) =>
+    forTo(to, from, step, (v) => cb(by(v), [v])),
+  );
 }
-function Mt(e, t, n) {
-  let r = e + "!",
-    i = t.c,
-    l = t.e;
-  return (o, f) => {
-    if (f === I) return;
-    if (f === M || f === E) {
-      let t = o[r] ?? o[e + "("]?.values() ?? [];
-      if (t !== Ct)
-        for (let e of t) {
-          l?.(e, f);
-          for (let t of i) t(e, f);
+function loop(nodeAccessor, renderer, forEach) {
+  let loopScopeAccessor = nodeAccessor + "!",
+    closureSignals = renderer.c,
+    params = renderer.e;
+  return (scope, valueOrOp) => {
+    if (valueOrOp === DIRTY) return;
+    if (valueOrOp === MARK || valueOrOp === CLEAN) {
+      let loopScopes =
+        scope[loopScopeAccessor] ?? scope[nodeAccessor + "("]?.values() ?? [];
+      if (loopScopes !== emptyMarkerArray)
+        for (let childScope of loopScopes) {
+          params?.(childScope, valueOrOp);
+          for (let signal of closureSignals) signal(childScope, valueOrOp);
         }
       return;
     }
-    let u,
-      a,
-      c,
-      s,
-      d = o[e],
-      h = 8 === d.nodeType || 3 === d.nodeType,
-      v = o[e + "("] || (h ? wt : At),
-      b = o[e + "!"] || Array.from(v.values()),
-      k = !0;
+    let newMap,
+      newArray,
+      afterReference,
+      parentNode,
+      referenceNode = scope[nodeAccessor],
+      referenceIsMarker =
+        8 === referenceNode.nodeType || 3 === referenceNode.nodeType,
+      oldMap =
+        scope[nodeAccessor + "("] ||
+        (referenceIsMarker ? emptyMarkerMap : emptyMap),
+      oldArray = scope[nodeAccessor + "!"] || Array.from(oldMap.values()),
+      needsReconciliation = !0;
     if (
-      (n(f, (e, n) => {
-        let r = v.get(e),
-          f = E;
-        if ((r || ((r = ct(t, o.$global, o)), (f = I)), l && l(r, n), i))
-          for (let e of i) e(r, f);
-        u ? (u.set(e, r), a.push(r)) : ((u = new Map([[e, r]])), (a = [r]));
+      (forEach(valueOrOp, (key, args) => {
+        let childScope = oldMap.get(key),
+          closureOp = CLEAN;
+        if (
+          (childScope ||
+            ((childScope = createScopeWithRenderer(
+              renderer,
+              scope.$global,
+              scope,
+            )),
+            (closureOp = DIRTY)),
+          params && params(childScope, args),
+          closureSignals)
+        )
+          for (let signal of closureSignals) signal(childScope, closureOp);
+        newMap
+          ? (newMap.set(key, childScope), newArray.push(childScope))
+          : ((newMap = new Map([[key, childScope]])),
+            (newArray = [childScope]));
       }),
-      u ||
-        (h
-          ? ((u = wt), (a = Ct), g(d))
-          : (b.forEach(p), (d.textContent = ""), (u = At), (a = St), (k = !1))),
-      k)
+      newMap ||
+        (referenceIsMarker
+          ? ((newMap = emptyMarkerMap),
+            (newArray = emptyMarkerArray),
+            getEmptyScope(referenceNode))
+          : (oldArray.forEach(destroyScope),
+            (referenceNode.textContent = ""),
+            (newMap = emptyMap),
+            (newArray = emptyArray),
+            (needsReconciliation = !1))),
+      needsReconciliation)
     ) {
-      if (h) {
-        v === wt && g(d);
-        let e = b[b.length - 1];
-        (c = e.b.nextSibling), (s = e.a.parentNode);
-      } else (c = null), (s = d);
-      !(function (e, t, n, r) {
+      if (referenceIsMarker) {
+        oldMap === emptyMarkerMap && getEmptyScope(referenceNode);
+        let oldLastChild = oldArray[oldArray.length - 1];
+        (afterReference = oldLastChild.b.nextSibling),
+          (parentNode = oldLastChild.a.parentNode);
+      } else (afterReference = null), (parentNode = referenceNode);
+      !(function (parent, oldScopes, newScopes, afterReference) {
         let i,
-          l,
-          o,
-          f,
-          u,
-          a,
-          c = 0,
-          s = 0,
-          d = t.length - 1,
-          h = n.length - 1,
-          g = t[c],
-          p = n[s],
-          v = t[d],
-          b = n[h];
-        e: {
-          for (; g === p; ) {
-            if ((++c, ++s, c > d || s > h)) break e;
-            (g = t[c]), (p = n[s]);
+          j,
+          k,
+          nextSibling,
+          oldScope,
+          newScope,
+          oldStart = 0,
+          newStart = 0,
+          oldEnd = oldScopes.length - 1,
+          newEnd = newScopes.length - 1,
+          oldStartScope = oldScopes[oldStart],
+          newStartScope = newScopes[newStart],
+          oldEndScope = oldScopes[oldEnd],
+          newEndScope = newScopes[newEnd];
+        outer: {
+          for (; oldStartScope === newStartScope; ) {
+            if (
+              (++oldStart, ++newStart, oldStart > oldEnd || newStart > newEnd)
+            )
+              break outer;
+            (oldStartScope = oldScopes[oldStart]),
+              (newStartScope = newScopes[newStart]);
           }
-          for (; v === b; ) {
-            if ((--d, --h, c > d || s > h)) break e;
-            (v = t[d]), (b = n[h]);
+          for (; oldEndScope === newEndScope; ) {
+            if ((--oldEnd, --newEnd, oldStart > oldEnd || newStart > newEnd))
+              break outer;
+            (oldEndScope = oldScopes[oldEnd]),
+              (newEndScope = newScopes[newEnd]);
           }
         }
-        if (c > d) {
-          if (s <= h) {
-            (o = h + 1), (f = o < n.length ? n[o].a : r);
+        if (oldStart > oldEnd) {
+          if (newStart <= newEnd) {
+            (k = newEnd + 1),
+              (nextSibling =
+                k < newScopes.length ? newScopes[k].a : afterReference);
             do {
-              y(n[s++], e, f);
-            } while (s <= h);
+              insertBefore(newScopes[newStart++], parent, nextSibling);
+            } while (newStart <= newEnd);
           }
-        } else if (s > h)
+        } else if (newStart > newEnd)
           do {
-            m(t[c++]);
-          } while (c <= d);
+            removeAndDestroyScope(oldScopes[oldStart++]);
+          } while (oldStart <= oldEnd);
         else {
-          let g = d - c + 1,
-            p = h - s + 1,
-            v = t,
-            b = new Array(p);
-          for (i = 0; i < p; ++i) b[i] = -1;
-          let k = 0,
-            w = 0,
-            C = new Map();
-          for (l = s; l <= h; ++l) C.set(n[l], l);
-          for (i = c; i <= d && w < p; ++i)
-            (u = t[i]),
-              (l = C.get(u)),
-              void 0 !== l &&
-                ((k = k > l ? ae : l),
-                ++w,
-                (a = n[l]),
-                (b[l - s] = i),
-                (v[i] = null));
-          if (g === t.length && 0 === w) {
-            for (; s < p; ++s) y(n[s], e, r);
-            for (; c < g; ++c) m(t[c]);
+          let oldLength = oldEnd - oldStart + 1,
+            newLength = newEnd - newStart + 1,
+            aNullable = oldScopes,
+            sources = new Array(newLength);
+          for (i = 0; i < newLength; ++i) sources[i] = -1;
+          let pos = 0,
+            synced = 0,
+            keyIndex = new Map();
+          for (j = newStart; j <= newEnd; ++j) keyIndex.set(newScopes[j], j);
+          for (i = oldStart; i <= oldEnd && synced < newLength; ++i)
+            (oldScope = oldScopes[i]),
+              (j = keyIndex.get(oldScope)),
+              void 0 !== j &&
+                ((pos = pos > j ? 2147483647 : j),
+                ++synced,
+                (newScope = newScopes[j]),
+                (sources[j - newStart] = i),
+                (aNullable[i] = null));
+          if (oldLength === oldScopes.length && 0 === synced) {
+            for (; newStart < newLength; ++newStart)
+              insertBefore(newScopes[newStart], parent, afterReference);
+            for (; oldStart < oldLength; ++oldStart)
+              removeAndDestroyScope(oldScopes[oldStart]);
           } else {
-            for (i = g - w; i > 0; ) (u = v[c++]), null !== u && (m(u), i--);
-            if (k === ae) {
-              let t = (function (e) {
-                let t,
-                  n,
-                  r = e.slice(),
-                  i = [];
-                i.push(0);
-                for (let l = 0, o = e.length; l < o; ++l) {
-                  if (-1 === e[l]) continue;
-                  let o = i[i.length - 1];
-                  if (e[o] < e[l]) (r[l] = o), i.push(l);
+            for (i = oldLength - synced; i > 0; )
+              (oldScope = aNullable[oldStart++]),
+                null !== oldScope && (removeAndDestroyScope(oldScope), i--);
+            if (2147483647 === pos) {
+              let seq = (function (a) {
+                let u,
+                  v,
+                  p = a.slice(),
+                  result = [];
+                result.push(0);
+                for (let i = 0, il = a.length; i < il; ++i) {
+                  if (-1 === a[i]) continue;
+                  let j = result[result.length - 1];
+                  if (a[j] < a[i]) (p[i] = j), result.push(i);
                   else {
-                    for (t = 0, n = i.length - 1; t < n; ) {
-                      let r = ((t + n) / 2) | 0;
-                      e[i[r]] < e[l] ? (t = r + 1) : (n = r);
+                    for (u = 0, v = result.length - 1; u < v; ) {
+                      let c = ((u + v) / 2) | 0;
+                      a[result[c]] < a[i] ? (u = c + 1) : (v = c);
                     }
-                    e[l] < e[i[t]] && (t > 0 && (r[l] = i[t - 1]), (i[t] = l));
+                    a[i] < a[result[u]] &&
+                      (u > 0 && (p[i] = result[u - 1]), (result[u] = i));
                   }
                 }
-                for (t = i.length, n = i[t - 1]; t-- > 0; )
-                  (i[t] = n), (n = r[n]);
-                return i;
-              })(b);
-              for (l = t.length - 1, o = n.length, i = p - 1; i >= 0; --i)
-                -1 === b[i] || l < 0 || i !== t[l]
-                  ? ((k = i + s),
-                    (a = n[k++]),
-                    (f = k < o ? n[k].a : r),
-                    y(a, e, f))
-                  : --l;
-            } else if (w !== p)
-              for (o = n.length, i = p - 1; i >= 0; --i)
-                -1 === b[i] &&
-                  ((k = i + s),
-                  (a = n[k++]),
-                  (f = k < o ? n[k].a : r),
-                  y(a, e, f));
+                for (u = result.length, v = result[u - 1]; u-- > 0; )
+                  (result[u] = v), (v = p[v]);
+                return result;
+              })(sources);
+              for (
+                j = seq.length - 1, k = newScopes.length, i = newLength - 1;
+                i >= 0;
+                --i
+              )
+                -1 === sources[i] || j < 0 || i !== seq[j]
+                  ? ((pos = i + newStart),
+                    (newScope = newScopes[pos++]),
+                    (nextSibling = pos < k ? newScopes[pos].a : afterReference),
+                    insertBefore(newScope, parent, nextSibling))
+                  : --j;
+            } else if (synced !== newLength)
+              for (k = newScopes.length, i = newLength - 1; i >= 0; --i)
+                -1 === sources[i] &&
+                  ((pos = i + newStart),
+                  (newScope = newScopes[pos++]),
+                  (nextSibling = pos < k ? newScopes[pos].a : afterReference),
+                  insertBefore(newScope, parent, nextSibling));
           }
         }
-      })(s, b, a, c);
+      })(parentNode, oldArray, newArray, afterReference);
     }
-    (o[e + "("] = u), (o[e + "!"] = a);
+    (scope[nodeAccessor + "("] = newMap),
+      (scope[nodeAccessor + "!"] = newArray);
   };
 }
-function Et(e, t) {
-  let n = t + "!";
-  return (r, i) => {
-    let l = r[n] ?? r[t + "("]?.values() ?? [];
-    if (l !== Ct) for (let t of l) e(t, i);
+function inLoopScope(signal, loopNodeAccessor) {
+  let loopScopeAccessor = loopNodeAccessor + "!";
+  return (scope, op) => {
+    let loopScopes =
+      scope[loopScopeAccessor] ?? scope[loopNodeAccessor + "("]?.values() ?? [];
+    if (loopScopes !== emptyMarkerArray)
+      for (let scope2 of loopScopes) signal(scope2, op);
   };
 }
-function It(e, t) {
-  return t;
+function bySecondArg(_item, index) {
+  return index;
 }
-function Tt(e) {
-  return e;
+function byFirstArg(name) {
+  return name;
 }
-function _t(e, t) {
-  return e !== t && (e?.t || 0) !== t?.t;
+function isDifferentRenderer(a, b) {
+  return a !== b && (a?.t || 0) !== b?.t;
 }
-var Ot = new Map(),
-  Bt = {
-    patchConditionals: function (e) {
-      (bt = e(bt)), (yt = e(yt));
+var classIdToScope = new Map(),
+  compat = {
+    patchConditionals: function (fn) {
+      (conditional = fn(conditional)),
+        (conditionalOnlyChild = fn(conditionalOnlyChild));
     },
-    queueEffect: K,
+    queueEffect: queueEffect,
     init() {
-      A("$C_s", (e) => {
-        Ot.set(e.m5c, e);
+      register("$C_s", (scope) => {
+        classIdToScope.set(scope.m5c, scope);
       });
     },
-    registerRenderer(e) {
-      A("$C_r", e);
+    registerRenderer(fn) {
+      register("$C_r", fn);
     },
-    isOp: (e) => e === M || e === E || e === I,
-    isRenderer: (e) => void 0 !== e.k,
-    getStartNode: (e) => e.a,
-    setScopeNodes(e, t, n) {
-      (e.a = t), (e.b = n);
+    isOp: (value2) => value2 === MARK || value2 === CLEAN || value2 === DIRTY,
+    isRenderer: (renderer) => void 0 !== renderer.k,
+    getStartNode: (scope) => scope.a,
+    setScopeNodes(scope, startNode, endNode) {
+      (scope.a = startNode), (scope.b = endNode);
     },
     runComponentEffects() {
-      ee(this.effects);
+      runEffects(this.effects);
     },
-    resolveRegistered: (e, { runtimeId: t, componentIdPrefix: n }) =>
-      Array.isArray(e) && "string" == typeof e[0]
-        ? (function (e, t) {
-            let n = k[e];
-            return t ? n(t) : n;
-          })(e[0], 2 === e.length && window[t]?.["s" === n ? "_" : n]?.n[e[1]])
-        : e,
-    createRenderer(e, t, n) {
-      let r = pt("", void 0, e, void 0, n && (() => n));
-      return (r.k = t), r;
+    resolveRegistered: (
+      value2,
+      { runtimeId: runtimeId, componentIdPrefix: componentIdPrefix },
+    ) =>
+      Array.isArray(value2) && "string" == typeof value2[0]
+        ? (function (id, scope) {
+            let val = registeredValues[id];
+            return scope ? val(scope) : val;
+          })(
+            value2[0],
+            2 === value2.length &&
+              window[runtimeId]?.[
+                "s" === componentIdPrefix ? "_" : componentIdPrefix
+              ]?.n[value2[1]],
+          )
+        : value2,
+    createRenderer(setup, clone, args) {
+      let renderer = createRenderer(
+        "",
+        void 0,
+        setup,
+        void 0,
+        args && (() => args),
+      );
+      return (renderer.k = clone), renderer;
     },
-    render(e, t, n, r) {
-      let i = t.scope;
-      i || ((i = Ot.get(t.id)), i && ((t.scope = i), Ot.delete(t.id)));
-      let l = n.e || Vt,
-        o = !1;
+    render(out, component, renderer, input) {
+      let scope = component.scope;
+      scope ||
+        ((scope = classIdToScope.get(component.id)),
+        scope &&
+          ((component.scope = scope), classIdToScope.delete(component.id)));
+      let args = renderer.e || noop,
+        existing = !1;
       if (
-        ((t.effects = Y(() => {
-          if (i) l(i, M), (o = !0);
+        ((component.effects = prepareEffects(() => {
+          if (scope) args(scope, MARK), (existing = !0);
           else {
-            i = t.scope = ct(n, e.global);
-            let r = n.c;
-            if (r) for (let e of r) e(t.scope, E);
+            scope = component.scope = createScopeWithRenderer(
+              renderer,
+              out.global,
+            );
+            let closures = renderer.c;
+            if (closures)
+              for (let signal of closures) signal(component.scope, CLEAN);
           }
-          l(i, r);
+          args(scope, input);
         })),
-        !o)
+        !existing)
       )
-        return i.a === i.b ? i.a : i.a.parentNode;
+        return scope.a === scope.b ? scope.a : scope.a.parentNode;
     },
   };
-function Vt() {}
-var jt = (e, ...t) => {
-  let n = pt(...t);
-  return (n.mount = Rt), (n._ = n), A(e, n);
+function noop() {}
+var createTemplate = (templateId, ...rendererArgs) => {
+  let renderer = createRenderer(...rendererArgs);
+  return (
+    (renderer.mount = mount),
+    (renderer._ = renderer),
+    register(templateId, renderer)
+  );
 };
-function Rt(e = {}, t, n) {
-  let r,
-    i,
-    { $global: l } = e;
-  l
-    ? (({ $global: l, ...e } = e),
-      (l = { runtimeId: "M", renderId: "_", ...l }))
-    : (l = { runtimeId: "M", renderId: "_" });
-  let o = this.e,
-    f = Y(() => {
-      (r = d(l)), (i = dt(this, r)), o && o(r, [e]);
+function mount(input = {}, reference, position) {
+  let scope,
+    dom,
+    { $global: $global } = input;
+  $global
+    ? (({ $global: $global, ...input } = input),
+      ($global = { runtimeId: "M", renderId: "_", ...$global }))
+    : ($global = { runtimeId: "M", renderId: "_" });
+  let args = this.e,
+    effects = prepareEffects(() => {
+      (scope = createScope($global)),
+        (dom = initRenderer(this, scope)),
+        args && args(scope, [input]);
     });
-  switch (n) {
+  switch (position) {
     case "afterbegin":
-      t.insertBefore(i, t.firstChild);
+      reference.insertBefore(dom, reference.firstChild);
       break;
     case "afterend":
-      t.parentElement.insertBefore(i, t.nextSibling);
+      reference.parentElement.insertBefore(dom, reference.nextSibling);
       break;
     case "beforebegin":
-      t.parentElement.insertBefore(i, t);
+      reference.parentElement.insertBefore(dom, reference);
       break;
     default:
-      t.appendChild(i);
+      reference.appendChild(dom);
   }
   return (
-    ee(f),
+    runEffects(effects),
     {
-      update: (e) => {
-        o &&
-          ee(
-            Y(() => {
-              o(r, M), o(r, [e]);
+      update: (newInput) => {
+        args &&
+          runEffects(
+            prepareEffects(() => {
+              args(scope, MARK), args(scope, [newInput]);
             }),
           );
       },
       destroy: () => {
-        m(r);
+        removeAndDestroyScope(scope);
       },
     }
   );
 }
-export {
-  Ge as attr,
-  n as attrTag,
-  r as attrTags,
-  Ke as attrs,
-  tt as attrsEvents,
-  q as childClosures,
-  Xe as classAttr,
-  j as closure,
-  Bt as compat,
-  bt as conditional,
-  yt as conditionalOnlyChild,
-  Ne as controllable_detailsOrDialog_open,
-  xe as controllable_detailsOrDialog_open_effect,
-  ve as controllable_input_checked,
-  me as controllable_input_checkedValue,
-  ye as controllable_input_checkedValue_effect,
-  be as controllable_input_checked_effect,
-  ke as controllable_input_value,
-  we as controllable_input_value_effect,
-  Ce as controllable_select_value,
-  Ae as controllable_select_value_effect,
-  ke as controllable_textarea_value,
-  we as controllable_textarea_value_effect,
-  pt as createRenderer,
-  gt as createRendererWithOwner,
-  d as createScope,
-  jt as createTemplate,
-  He as data,
-  R as dynamicClosure,
-  D as dynamicSubscribers,
-  ht as dynamicTagAttrs,
-  J as effect,
-  l as forIn,
-  o as forOf,
-  f as forTo,
-  re as getAbortSignal,
-  nt as html,
-  U as inChild,
-  mt as inConditionalScope,
-  Et as inLoopScope,
-  N as init,
-  B as intersection,
-  G as intersections,
-  lt as lifecycle,
-  xt as loopIn,
-  Nt as loopOf,
-  $t as loopTo,
-  F as nextTagId,
-  $ as nodeRef,
-  de as on,
-  Ye as partialAttrs,
-  rt as props,
-  A as register,
-  S as registerBoundSignal,
-  x as registerSubscriber,
-  ne as resetAbortSignal,
-  Q as run,
-  P as setTagVar,
-  T as state,
-  Ze as styleAttr,
-  W as tagVarSignal,
-  _ as value,
-};

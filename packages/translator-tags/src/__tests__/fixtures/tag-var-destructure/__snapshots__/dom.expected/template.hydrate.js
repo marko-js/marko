@@ -1,33 +1,30 @@
-// size: 552 (min) 286 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as a } from "@marko/runtime-tags/dom";
-function r(t) {}
-t.register("a0", r);
-const o = t.state(10, (a, r) => t.data(a[5], JSON.stringify(r))),
-  e = t.state(9, (a, r) => t.data(a[4], r)),
-  i = t.state(8, (a, r) => t.data(a[3], JSON.stringify(r))),
-  s = t.state(7, (a, r) => t.data(a[2], r)),
-  m = t.state(6, (a, r) => t.data(a[1], r));
-t.effect("a1", (a) =>
-  t.on(a[0], "click", function () {
-    let t, r, n, c, f, d;
+// size: 463 (min) 222 (brotli)
+function noop(_) {}
+_$.register("a0", noop);
+const _e = _$.state(10, (_scope, e) => _$.data(_scope[5], JSON.stringify(e))),
+  _d = _$.state(9, (_scope, d) => _$.data(_scope[4], d)),
+  _c = _$.state(8, (_scope, c) => _$.data(_scope[3], JSON.stringify(c))),
+  _b = _$.state(7, (_scope, b) => _$.data(_scope[2], b)),
+  _a = _$.state(6, (_scope, a) => _$.data(_scope[1], a));
+_$.effect("a1", (_scope) =>
+  _$.on(_scope[0], "click", function () {
+    let local, _a2, _b2, _c2, _d2, _e2;
     ({
-      a: r,
-      _b: { _b: n },
-      local: t,
-      ...c
+      a: _a2,
+      _b: { _b: _b2 },
+      local: local,
+      ..._c2
     } = { a: 1, _b: { _b: 2 }, local: 3, c: 4 }),
-      m(a, r),
-      s(a, n),
-      i(a, c),
+      _a(_scope, _a2),
+      _b(_scope, _b2),
+      _c(_scope, _c2),
       ([
         {
-          arr: [t, f, , ...d],
+          arr: [local, _d2, , ..._e2],
         },
       ] = [{ arr: [6, 7, 8, 9] }]),
-      e(a, f),
-      o(a, d);
+      _d(_scope, _d2),
+      _e(_scope, _e2);
   }),
 ),
-  a();
+  init();

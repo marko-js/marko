@@ -7,6 +7,7 @@ import type { DOMWindow } from "jsdom";
 import snap from "mocha-snap";
 import path from "path";
 import glob from "tiny-glob";
+import { isDeepStrictEqual } from "util";
 
 import * as translator from "..";
 import { bundle } from "./utils/bundle";
@@ -69,6 +70,18 @@ describe("translator-tags", () => {
       const browserFile = resolve("browser.ts");
       const templateFile = resolve("template.marko");
       const hasTemplate = fs.existsSync(templateFile);
+      const nameCacheFile = resolve("__snapshots__/.name-cache.json");
+      const nameCache = (() => {
+        try {
+          return JSON.parse(fs.readFileSync(nameCacheFile, "utf-8")) as Record<
+            string,
+            unknown
+          >;
+        } catch {
+          return {};
+        }
+      })();
+      const initialNameCache = structuredClone(nameCache);
       const config: TestConfig = (() => {
         try {
           return require(resolve("test.ts"));
@@ -142,7 +155,7 @@ describe("translator-tags", () => {
               !skipResume &&
               !config.error_compiler
             ) {
-              await targetSnap(() => bundle(file, finalConfig), {
+              await targetSnap(() => bundle(file, nameCache, finalConfig), {
                 file: name.replace(".marko", ".hydrate.js"),
                 dir: fixtureDir,
               });
@@ -352,6 +365,15 @@ describe("translator-tags", () => {
 
         return (resumeResult = { browser, tracker });
       };
+
+      after(() => {
+        if (!isDeepStrictEqual(initialNameCache, nameCache)) {
+          fs.writeFileSync(
+            nameCacheFile,
+            JSON.stringify(nameCache, null, 2) + "\n",
+          );
+        }
+      });
 
       describe("compile", () => {
         (skipHTML ? it.skip : it)("html", () => snapAllTemplates(htmlConfig));

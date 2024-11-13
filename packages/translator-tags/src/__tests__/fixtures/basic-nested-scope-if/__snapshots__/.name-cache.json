@@ -1,0 +1,15 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "e",
+      "$_clickCount$elseBody": "o",
+      "$_elseBody": "n",
+      "$_clickCount$ifBody_effect": "r",
+      "$_clickCount$ifBody": "i",
+      "$_ifBody": "a",
+      "$_if": "c",
+      "$_clickCount": "s"
+    }
+  }
+}

@@ -1,84 +1,83 @@
-// size: 966 (min) 421 (brotli)
-
-import * as e from "@marko/runtime-tags/dom";
-import { init as r } from "@marko/runtime-tags/dom";
-const i = e.dynamicTagAttrs(0),
-  t = e.intersection(
+// size: 877 (min) 389 (brotli)
+const _renderBody_input = _$.dynamicTagAttrs(0),
+  _expr_Text_value = _$.intersection(
     2,
-    (e) => {
-      const { 4: r } = e;
-      i(e, () => r);
+    (_scope) => {
+      const { 4: value } = _scope;
+      _renderBody_input(_scope, () => value);
     },
-    () => i,
+    () => _renderBody_input,
   ),
-  a = e.conditional(0, 0, () => t),
-  n = e.value(4, 0, () => t),
-  o = e.value(
+  _dynamicTagName = _$.conditional(0, 0, () => _expr_Text_value),
+  _value_ = _$.value(4, 0, () => _expr_Text_value),
+  _renderBody_ = _$.value(
     3,
-    (e, r) => a(e, r),
-    () => a,
+    (_scope, renderBody) => _dynamicTagName(_scope, renderBody),
+    () => _dynamicTagName,
   ),
-  c = e.value(3, (r, i) => e.data(r[1], i)),
-  s = e.registerSubscriber(
+  _inner$childBody = _$.value(3, (_scope, inner) => _$.data(_scope[1], inner)),
+  _outer$childBody = _$.registerSubscriber(
     "b0",
-    e.dynamicClosure(2, (r, i) => e.data(r[0], i)),
+    _$.dynamicClosure(2, (_scope, outer) => _$.data(_scope[0], outer)),
   ),
-  d = e.value(2, (e, r) => c(e, r[0])),
-  u = e.register(
+  _params_3$childBody = _$.value(2, (_scope, _params_3) =>
+    _inner$childBody(_scope, _params_3[0]),
+  ),
+  _childBody2 = _$.register(
     "b1",
-    e.createRendererWithOwner(
+    _$.createRendererWithOwner(
       "<div><!>.<!></div>",
       "D%c%",
       void 0,
-      () => [s],
-      () => d,
+      () => [_outer$childBody],
+      () => _params_3$childBody,
     ),
   ),
-  m = e.registerSubscriber(
+  _y$childBody = _$.registerSubscriber(
     "b2",
-    e.dynamicClosure(
+    _$.dynamicClosure(
       3,
-      (e, r) => n(e[0], r),
+      (_scope, y) => _value_(_scope[0], y),
       void 0,
-      () => e.inChild(0, n),
+      () => _$.inChild(0, _value_),
     ),
   ),
-  l = e.value(2, 0, () => e.dynamicSubscribers(2)),
-  v = e.value(
+  _outer$childBody2 = _$.value(2, 0, () => _$.dynamicSubscribers(2)),
+  _params_2$childBody = _$.value(
     1,
-    (e, r) => l(e, r[0]),
-    () => l,
+    (_scope, _params_2) => _outer$childBody2(_scope, _params_2[0]),
+    () => _outer$childBody2,
   ),
-  b = (e) => {
-    e[0], o(e[0], u(e));
+  _setup$childBody = (_scope) => {
+    _scope[0], _renderBody_(_scope[0], _childBody2(_scope));
   };
-e.register(
+_$.register(
   "b3",
-  e.createRendererWithOwner(
+  _$.createRendererWithOwner(
     "<div><!></div>",
     "/D%l&",
-    b,
-    () => [m],
-    () => v,
+    _setup$childBody,
+    () => [_y$childBody],
+    () => _params_2$childBody,
   ),
 );
-const g = e.effect("b4", (r) =>
-    e.on(
-      r[0],
+const _x_effect = _$.effect("b4", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((e) => {
-        const { 2: r } = e;
+      ((_scope) => {
+        const { 2: x } = _scope;
         return function () {
-          f(e, r + 1);
+          _x(_scope, x + 1);
         };
-      })(r),
+      })(_scope),
     ),
   ),
-  f = e.state(
+  _x = _$.state(
     2,
-    (e, r) => {
-      g(e), n(e[1], r);
+    (_scope, x) => {
+      _x_effect(_scope), _value_(_scope[1], x);
     },
-    () => e.inChild(1, n),
+    () => _$.inChild(1, _value_),
   );
-r();
+init();

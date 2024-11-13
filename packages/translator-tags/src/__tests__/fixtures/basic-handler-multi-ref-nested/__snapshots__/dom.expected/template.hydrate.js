@@ -1,33 +1,30 @@
-// size: 319 (min) 191 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as o } from "@marko/runtime-tags/dom";
-const n = t.effect("a0", (o) =>
-    t.on(
-      o[0],
+// size: 230 (min) 156 (brotli)
+const _expr_a_b_effect = _$.effect("a0", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 2: o, 3: n } = t;
+      ((_scope) => {
+        const { 2: a, 3: b } = _scope;
         return function () {
-          m(
-            t,
-            o.map(
-              ((t) => {
-                const { 3: o } = t;
-                return (t) => o;
-              })(t),
+          _a(
+            _scope,
+            a.map(
+              ((_scope) => {
+                const { 3: b } = _scope;
+                return (a) => b;
+              })(_scope),
             ),
           );
         };
-      })(o),
+      })(_scope),
     ),
   ),
-  r = t.intersection(2, (t) => {
-    n(t);
+  _expr_a_b = _$.intersection(2, (_scope) => {
+    _expr_a_b_effect(_scope);
   }),
-  m = t.state(
+  _a = _$.state(
     2,
-    (o, n) => t.data(o[1], n.join("")),
-    () => r,
+    (_scope, a) => _$.data(_scope[1], a.join("")),
+    () => _expr_a_b,
   );
-o();
+init();

@@ -1,45 +1,45 @@
-// size: 602 (min) 320 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as e } from "@marko/runtime-tags/dom";
-const r = t.effect("a0", (e) => {
-    const { 1: r } = e;
-    r.write("mounted"),
-      (t.getAbortSignal(e, 0).onabort = ((t) => {
-        const { 1: e } = t;
+// size: 513 (min) 285 (brotli)
+const _input__effect = _$.effect("a0", (_scope) => {
+    const { 1: input } = _scope;
+    input.write("mounted"),
+      (_$.getAbortSignal(_scope, 0).onabort = ((_scope) => {
+        const { 1: input } = _scope;
         return () => {
-          e.write("destroyed");
+          input.write("destroyed");
         };
-      })(e));
+      })(_scope));
   }),
-  n = t.value(1, (e, n) => {
-    t.resetAbortSignal(e, 0), r(e);
+  _input_ = _$.value(1, (_scope, input) => {
+    _$.resetAbortSignal(_scope, 0), _input__effect(_scope);
   }),
-  o = t.register(
+  _write = _$.register(
     "b0",
-    (t) =>
-      function (e) {
-        t._[1].innerHTML = e;
+    (_scope) =>
+      function (state) {
+        _scope._[1].innerHTML = state;
       },
   ),
-  i = (t) => {
-    t[0], n(t[0], { write: o(t) });
+  _setup$ifBody = (_scope) => {
+    _scope[0], _input_(_scope[0], { write: _write(_scope) });
   },
-  a = t.register("b1", t.createRenderer("<div>child</div>", "/b&", i)),
-  c = t.conditional(2, 0),
-  s = t.effect("b2", (e) =>
-    t.on(
-      e[0],
+  _ifBody = _$.register(
+    "b1",
+    _$.createRenderer("<div>child</div>", "/b&", _setup$ifBody),
+  ),
+  _if = _$.conditional(2, 0),
+  _show_effect = _$.effect("b2", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 3: e } = t;
+      ((_scope) => {
+        const { 3: show } = _scope;
         return function () {
-          m(t, !e);
+          _show(_scope, !show);
         };
-      })(e),
+      })(_scope),
     ),
   ),
-  m = t.state(3, (t, e) => {
-    s(t), c(t, e ? a : null);
+  _show = _$.state(3, (_scope, show) => {
+    _show_effect(_scope), _if(_scope, show ? _ifBody : null);
   });
-e();
+init();

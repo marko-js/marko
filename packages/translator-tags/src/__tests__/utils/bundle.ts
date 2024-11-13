@@ -4,6 +4,7 @@ import fs from "fs/promises";
 import path from "path";
 import { format } from "prettier";
 import { type OutputChunk, rollup } from "rollup";
+import { minify } from "terser";
 import glob from "tiny-glob";
 import zlib from "zlib";
 
@@ -14,6 +15,7 @@ interface Sizes {
 
 export async function bundle(
   entryTemplate: string,
+  nameCache: Record<string, unknown>,
   compilerConfig: compiler.Config,
 ) {
   const cache = new Map<unknown, unknown>();
@@ -88,7 +90,7 @@ export async function bundle(
           return null;
         },
       },
-      pluginTerser({ compress: {}, mangle: { module: true } }),
+      pluginTerser({ compress: {}, mangle: false }),
     ],
   });
 
@@ -98,14 +100,16 @@ export async function bundle(
   });
   const chunks = output.filter((chunk) => "code" in chunk) as OutputChunk[];
   const size = addSizes(
-    await Promise.all(chunks.map((chunk) => getSizesForSrc(chunk.code))),
+    await Promise.all(
+      chunks.map((chunk) => getSizesForSrc(chunk.code, nameCache)),
+    ),
   );
 
   if (size.min === 0) {
     return `// size: 0\n`;
   }
 
-  let result = `// size: ${size.min} (min) ${size.brotli} (brotli)`;
+  let result = "";
   for (const chunk of chunks) {
     if (chunk.type === "chunk" && chunk.code) {
       if (chunks.length > 1) {
@@ -116,10 +120,22 @@ export async function bundle(
     }
   }
 
-  return result;
+  return `// size: ${size.min} (min) ${size.brotli} (brotli)\n${stripModuleCode(result)}`;
 }
 
-async function getSizesForSrc(minified: string): Promise<Sizes> {
+async function getSizesForSrc(
+  code: string,
+  nameCache: Record<string, unknown>,
+): Promise<Sizes> {
+  const minified = stripModuleCode(
+    (
+      await minify(code, {
+        nameCache,
+        compress: {},
+        mangle: { module: true },
+      })
+    ).code!,
+  );
   return {
     min: Buffer.byteLength(minified),
     brotli: Buffer.byteLength(await brotli(minified)),
@@ -140,5 +156,12 @@ function brotli(src: string): Promise<Buffer> {
     zlib.brotliCompress(src, (error, result) =>
       error ? reject(error) : resolve(result),
     ),
+  );
+}
+
+function stripModuleCode(code: string) {
+  return code.replace(
+    /\s*(?:export\s*\{[^}]+\}|import\s*.*\s*from\s*['"][^'"]+['"]);?\s*/gm,
+    "",
   );
 }

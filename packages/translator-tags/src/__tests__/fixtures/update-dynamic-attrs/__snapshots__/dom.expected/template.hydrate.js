@@ -1,9 +1,6 @@
-// size: 192 (min) 107 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as r } from "@marko/runtime-tags/dom";
-t.effect("a0", (r) => t.attrsEvents(r, 1)),
-  t.effect("a1", (r) => {
-    t.attrsEvents(r, 0), t.attrsEvents(r, 2);
+// size: 103 (min) 71 (brotli)
+_$.effect("a0", (_scope) => _$.attrsEvents(_scope, 1)),
+  _$.effect("a1", (_scope) => {
+    _$.attrsEvents(_scope, 0), _$.attrsEvents(_scope, 2);
   }),
-  r();
+  init();

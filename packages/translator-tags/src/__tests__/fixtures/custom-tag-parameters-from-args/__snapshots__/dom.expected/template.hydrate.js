@@ -1,54 +1,56 @@
-// size: 690 (min) 338 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as e } from "@marko/runtime-tags/dom";
-const a = t.dynamicTagAttrs(3, void 0, 1),
-  i = t.intersection(
+// size: 601 (min) 301 (brotli)
+const _inputRenderBody_input = _$.dynamicTagAttrs(3, void 0, 1),
+  _expr_Text_x_y = _$.intersection(
     3,
-    (t) => {
-      const { 6: e, 7: i } = t;
-      a(t, () => [e, i]);
+    (_scope) => {
+      const { 6: x, 7: y } = _scope;
+      _inputRenderBody_input(_scope, () => [x, y]);
     },
-    () => a,
+    () => _inputRenderBody_input,
   ),
-  n = t.effect("a0", (e) =>
-    t.on(
-      e[0],
+  _expr_x_y_effect = _$.effect("a0", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 6: e, 7: a } = t;
+      ((_scope) => {
+        const { 6: x, 7: y } = _scope;
         return function () {
-          s(t, e + 1), r(t, a + 1);
+          _x(_scope, x + 1), _y(_scope, y + 1);
         };
-      })(e),
+      })(_scope),
     ),
   ),
-  o = t.intersection(2, (t) => {
-    n(t);
+  _expr_x_y = _$.intersection(2, (_scope) => {
+    _expr_x_y_effect(_scope);
   }),
-  r = t.state(
+  _y = _$.state(
     7,
-    (e, a) => t.data(e[2], a),
-    () => t.intersections([o, i]),
+    (_scope, y) => _$.data(_scope[2], y),
+    () => _$.intersections([_expr_x_y, _expr_Text_x_y]),
   ),
-  s = t.state(
+  _x = _$.state(
     6,
-    (e, a) => t.data(e[1], a),
-    () => t.intersections([o, i]),
+    (_scope, x) => _$.data(_scope[1], x),
+    () => _$.intersections([_expr_x_y, _expr_Text_x_y]),
   ),
-  c = t.value(4, (e, a) => t.data(e[1], a)),
-  d = t.value(3, (e, a) => t.data(e[0], a)),
-  m = t.value(2, (t, e) => {
-    d(t, e[0]), c(t, e[1]);
+  _count2$customTagBody = _$.value(4, (_scope, count2) =>
+    _$.data(_scope[1], count2),
+  ),
+  _count$customTagBody = _$.value(3, (_scope, count) =>
+    _$.data(_scope[0], count),
+  ),
+  _params_2$customTagBody = _$.value(2, (_scope, _params_2) => {
+    _count$customTagBody(_scope, _params_2[0]),
+      _count2$customTagBody(_scope, _params_2[1]);
   });
-t.register(
+_$.register(
   "b0",
-  t.createRendererWithOwner(
+  _$.createRendererWithOwner(
     "<div>Counts: <!>,<!></div>",
     "Db%c%",
     void 0,
     void 0,
-    () => m,
+    () => _params_2$customTagBody,
   ),
 ),
-  e();
+  init();

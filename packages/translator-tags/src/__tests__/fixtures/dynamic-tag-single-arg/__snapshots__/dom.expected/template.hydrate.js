@@ -1,33 +1,30 @@
-// size: 327 (min) 205 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as o } from "@marko/runtime-tags/dom";
-const n = t.dynamicTagAttrs(2),
-  r = t.intersection(
+// size: 238 (min) 161 (brotli)
+const _tags0_input = _$.dynamicTagAttrs(2),
+  _expr_Text_x = _$.intersection(
     2,
-    (t) => {
-      const { 3: o } = t;
-      n(t, () => o);
+    (_scope) => {
+      const { 3: x } = _scope;
+      _tags0_input(_scope, () => x);
     },
-    () => n,
+    () => _tags0_input,
   ),
-  m = t.effect("b0", (o) =>
-    t.on(
-      o[0],
+  _x_effect = _$.effect("b0", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 3: o } = t;
+      ((_scope) => {
+        const { 3: x } = _scope;
         return function () {
-          a(t, o + 1);
+          _x(_scope, x + 1);
         };
-      })(o),
+      })(_scope),
     ),
   ),
-  a = t.state(
+  _x = _$.state(
     3,
-    (o, n) => {
-      t.data(o[1], n), m(o);
+    (_scope, x) => {
+      _$.data(_scope[1], x), _x_effect(_scope);
     },
-    () => r,
+    () => _expr_Text_x,
   );
-o();
+init();

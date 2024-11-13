@@ -1,31 +1,30 @@
-// size: 435 (min) 253 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as o } from "@marko/runtime-tags/dom";
-const e = t.closure(3, (o, e) => t.data(o[0], e)),
-  n = t.register(
-    "a0",
-    t.createRenderer("<span> </span>", "D ", void 0, () => [e]),
+// size: 346 (min) 217 (brotli)
+const _message$ifBody = _$.closure(3, (_scope, message) =>
+    _$.data(_scope[0], message),
   ),
-  a = t.conditional(1, 0),
-  r = t.state(3, 0, () => t.inConditionalScope(e, 1)),
-  i = t.effect("a1", (o) =>
-    t.on(
-      o[0],
+  _ifBody = _$.register(
+    "a0",
+    _$.createRenderer("<span> </span>", "D ", void 0, () => [_message$ifBody]),
+  ),
+  _if = _$.conditional(1, 0),
+  _message = _$.state(3, 0, () => _$.inConditionalScope(_message$ifBody, 1)),
+  _show_effect = _$.effect("a1", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 2: o } = t;
+      ((_scope) => {
+        const { 2: show } = _scope;
         return function () {
-          r(t, "bye"), s(t, !o);
+          _message(_scope, "bye"), _show(_scope, !show);
         };
-      })(o),
+      })(_scope),
     ),
   ),
-  s = t.state(
+  _show = _$.state(
     2,
-    (t, o) => {
-      i(t), a(t, o ? n : null);
+    (_scope, show) => {
+      _show_effect(_scope), _if(_scope, show ? _ifBody : null);
     },
-    () => a,
+    () => _if,
   );
-o();
+init();

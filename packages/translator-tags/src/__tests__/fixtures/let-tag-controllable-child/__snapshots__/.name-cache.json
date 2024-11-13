@@ -1,0 +1,19 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "a",
+      "$init": "t",
+      "$_expr__otherState_change_otherState_effect": "e",
+      "$_expr__otherState_change_otherState": "n",
+      "$_expr__state_change_state_effect": "o",
+      "$_expr__state_change_state": "i",
+      "$_otherState": "u",
+      "$_otherState_change": "r",
+      "$_state": "c",
+      "$_state_change": "l",
+      "$_input_": "s",
+      "$_valueChange": "v",
+      "$_source": "m"
+    }
+  }
+}

@@ -1,29 +1,26 @@
-// size: 423 (min) 225 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as o } from "@marko/runtime-tags/dom";
-const a = t.value(6, (o, a) => {
-    t.data(o[1], a),
-      ((o, a) => {
-        t.data(o[2], a);
-      })(o, a);
+// size: 334 (min) 189 (brotli)
+const _text_ = _$.value(6, (_scope, text) => {
+    _$.data(_scope[1], text),
+      ((_scope, textAlias) => {
+        _$.data(_scope[2], textAlias);
+      })(_scope, text);
   }),
-  i = t.effect("a0", (o) => {
-    const { 5: a } = o;
-    t.on(o[0], "click", a);
+  _onClick__effect = _$.effect("a0", (_scope) => {
+    const { 5: onClick } = _scope;
+    _$.on(_scope[0], "click", onClick);
   }),
-  n = t.value(5, (t, o) => i(t)),
-  r = t.register("b0", (t) => {
-    const { 1: o } = t;
+  _onClick_ = _$.value(5, (_scope, onClick) => _onClick__effect(_scope)),
+  _onClick = _$.register("b0", (_scope) => {
+    const { 1: clickCount } = _scope;
     return function () {
-      e(t, o + 1);
+      _clickCount(_scope, clickCount + 1);
     };
   }),
-  e = t.state(
+  _clickCount = _$.state(
     1,
-    (t, o) => {
-      a(t[0], o), n(t[0], r(t));
+    (_scope, clickCount) => {
+      _text_(_scope[0], clickCount), _onClick_(_scope[0], _onClick(_scope));
     },
-    () => t.intersections([t.inChild(0, a), t.inChild(0, n)]),
+    () => _$.intersections([_$.inChild(0, _text_), _$.inChild(0, _onClick_)]),
   );
-o();
+init();

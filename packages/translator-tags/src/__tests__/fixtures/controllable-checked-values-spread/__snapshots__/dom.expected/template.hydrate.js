@@ -1,40 +1,54 @@
-// size: 623 (min) 255 (brotli)
-
-import * as e from "@marko/runtime-tags/dom";
-import { init as a } from "@marko/runtime-tags/dom";
-const t = e.effect("a0", (a) => e.attrsEvents(a, 0)),
-  c = e.value(2, (a, c) => {
-    e.attrs(a, 0, { type: "checkbox", ...c }), t(a);
+// size: 534 (min) 214 (brotli)
+const _input__effect = _$.effect("a0", (_scope) => _$.attrsEvents(_scope, 0)),
+  _input_ = _$.value(2, (_scope, input) => {
+    _$.attrs(_scope, 0, { type: "checkbox", ...input }), _input__effect(_scope);
   }),
-  i = e.register(
+  _checkedValueChange = _$.register(
     "b0",
-    (e) =>
-      function (a) {
-        u(e, a);
+    (_scope) =>
+      function (_new_checkedValue) {
+        _checkedValue(_scope, _new_checkedValue);
       },
   ),
-  n = e.register(
+  _checkedValueChange2 = _$.register(
     "b1",
-    (e) =>
-      function (a) {
-        u(e, a);
+    (_scope) =>
+      function (_new_checkedValue2) {
+        _checkedValue(_scope, _new_checkedValue2);
       },
   ),
-  r = e.register(
+  _checkedValueChange3 = _$.register(
     "b1",
-    (e) =>
-      function (a) {
-        u(e, a);
+    (_scope) =>
+      function (_new_checkedValue3) {
+        _checkedValue(_scope, _new_checkedValue3);
       },
   ),
-  u = e.state(
+  _checkedValue = _$.state(
     4,
-    (a, t) => {
-      e.data(a[3], t),
-        c(a[0], { checkedValue: t, checkedValueChange: i(a), value: "a" }),
-        c(a[1], { checkedValue: t, checkedValueChange: n(a), value: "b" }),
-        c(a[2], { checkedValue: t, checkedValueChange: r(a), value: "c" });
+    (_scope, checkedValue) => {
+      _$.data(_scope[3], checkedValue),
+        _input_(_scope[0], {
+          checkedValue: checkedValue,
+          checkedValueChange: _checkedValueChange(_scope),
+          value: "a",
+        }),
+        _input_(_scope[1], {
+          checkedValue: checkedValue,
+          checkedValueChange: _checkedValueChange2(_scope),
+          value: "b",
+        }),
+        _input_(_scope[2], {
+          checkedValue: checkedValue,
+          checkedValueChange: _checkedValueChange3(_scope),
+          value: "c",
+        });
     },
-    () => e.intersections([e.inChild(0, c), e.inChild(1, c), e.inChild(2, c)]),
+    () =>
+      _$.intersections([
+        _$.inChild(0, _input_),
+        _$.inChild(1, _input_),
+        _$.inChild(2, _input_),
+      ]),
   );
-a();
+init();

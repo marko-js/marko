@@ -1,42 +1,39 @@
-// size: 519 (min) 297 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as a } from "@marko/runtime-tags/dom";
-const i = () => {},
-  o = t.value(3, (a, i) => t.data(a[0], i)),
-  d = t.value(2, (t, a) => o(t, a.id)),
-  e = t.value(1, (t, a) => d(t, a[0]));
-var m = t.createTemplate(
+// size: 430 (min) 258 (brotli)
+const _setup_ = () => {},
+  _id_ = _$.value(3, (_scope, id) => _$.data(_scope[0], id)),
+  _input_ = _$.value(2, (_scope, input) => _id_(_scope, input.id)),
+  _params__ = _$.value(1, (_scope, _params_) => _input_(_scope, _params_[0]));
+var child = _$.createTemplate(
   "a",
   "<div>Id is <!></div>",
   "Db%l",
-  i,
+  _setup_,
   void 0,
-  () => e,
+  () => _params__,
 );
-const n = t.dynamicTagAttrs(1),
-  r = t.conditional(
+const _tagName_input = _$.dynamicTagAttrs(1),
+  _dynamicTagName = _$.conditional(
     1,
-    (t) => n(t, () => ({ id: "dynamic" })),
-    () => n,
+    (_scope) => _tagName_input(_scope, () => ({ id: "dynamic" })),
+    () => _tagName_input,
   ),
-  c = t.effect("b0", (a) =>
-    t.on(
-      a[0],
+  _tagName_effect = _$.effect("b0", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 2: a } = t;
+      ((_scope) => {
+        const { 2: tagName } = _scope;
         return function () {
-          s(t, a === m ? "div" : m);
+          _tagName(_scope, tagName === child ? "div" : child);
         };
-      })(a),
+      })(_scope),
     ),
   ),
-  s = t.state(
+  _tagName = _$.state(
     2,
-    (t, a) => {
-      c(t), r(t, a);
+    (_scope, tagName) => {
+      _tagName_effect(_scope), _dynamicTagName(_scope, tagName);
     },
-    () => r,
+    () => _dynamicTagName,
   );
-a();
+init();

@@ -1,123 +1,132 @@
-// size: 1355 (min) 574 (brotli)
-
-import * as e from "@marko/runtime-tags/dom";
-import { init as i } from "@marko/runtime-tags/dom";
-const o = "<div> </div>",
-  t = e.effect("a0", (i) => {
-    e.getAbortSignal(i, 0).onabort = ((e) => {
-      const { 3: i, 4: o } = e;
+// size: 1265 (min) 528 (brotli)
+const _expr_name_write_effect = _$.effect("a0", (_scope) => {
+    _$.getAbortSignal(_scope, 0).onabort = ((_scope) => {
+      const { 3: name, 4: write } = _scope;
       return () => {
-        o(`destroyed ${i}`);
+        write(`destroyed ${name}`);
       };
-    })(i);
+    })(_scope);
   }),
-  n = e.intersection(2, (i) => {
-    e.resetAbortSignal(i, 0), t(i);
+  _expr_name_write = _$.intersection(2, (_scope) => {
+    _$.resetAbortSignal(_scope, 0), _expr_name_write_effect(_scope);
   }),
-  r = e.value(4, 0, () => n),
-  s = e.value(
+  _write_ = _$.value(4, 0, () => _expr_name_write),
+  _name_ = _$.value(
     3,
-    (i, o) => e.data(i[0], o),
-    () => n,
+    (_scope, name) => _$.data(_scope[0], name),
+    () => _expr_name_write,
   );
-e.register(
+_$.register(
   "b0",
-  (e) =>
-    function (i) {
-      e[1].innerHTML += "\n" + i;
+  (_scope) =>
+    function (msg) {
+      _scope[1].innerHTML += "\n" + msg;
     },
 );
-const c = e.intersection(
+const _expr_outerItem_middleItem$forBody = _$.intersection(
     2,
-    (e) => {
+    (_scope) => {
       const {
-        _: { 3: i },
-        2: o,
-      } = e;
-      s(e[0], `${i}.${o}`);
+        _: { 3: outerItem },
+        2: middleItem,
+      } = _scope;
+      _name_(_scope[0], `${outerItem}.${middleItem}`);
     },
-    () => e.inChild(0, s),
+    () => _$.inChild(0, _name_),
   ),
-  l = e.dynamicClosure(
+  _write$forBody2 = _$.dynamicClosure(
     4,
-    (e, i) => r(e[0], i),
-    (e) => e._._,
-    () => e.inChild(0, r),
+    (_scope, write) => _write_(_scope[0], write),
+    (_scope) => _scope._._,
+    () => _$.inChild(0, _write_),
   ),
-  a = e.closure(3, 0, void 0, () => c),
-  d = e.value(2, 0, () => c),
-  u = e.value(
-    1,
-    (e, i) => d(e, i[0]),
-    () => d,
-  ),
-  v = (e) => {
-    e[0];
-  },
-  m = e.register(
-    "b1",
-    e.createRenderer(
-      `<div>${o}</div>`,
-      "D/D l&",
-      v,
-      () => [l, a],
-      () => u,
-    ),
-  ),
-  f = e.loopOf(1, m),
-  g = e.closure(
-    4,
-    (e, i) => r(e[0], i),
-    void 0,
-    () => e.inChild(0, r),
-  ),
-  p = e.value(
+  _outerItem$forBody2 = _$.closure(
     3,
-    (e, i) => s(e[0], `${i}`),
-    () => e.intersections([e.inChild(0, s), e.inLoopScope(a, 1)]),
-  ),
-  b = e.closure(
-    3,
-    (e, i) => f(e, [i]),
+    0,
     void 0,
-    () => f,
+    () => _expr_outerItem_middleItem$forBody,
   ),
-  $ = e.value(
+  _middleItem$forBody = _$.value(
     2,
-    (e, i) => p(e, i[0]),
-    () => p,
+    0,
+    () => _expr_outerItem_middleItem$forBody,
   ),
-  h = (e) => {
-    e[0];
+  _params_3$forBody = _$.value(
+    1,
+    (_scope, _params_3) => _middleItem$forBody(_scope, _params_3[0]),
+    () => _middleItem$forBody,
+  ),
+  _setup$forBody2 = (_scope) => {
+    _scope[0];
   },
-  C = e.register(
-    "b2",
-    e.createRenderer(
-      `<div>${o}<!></div>`,
-      "D/D l&%",
-      h,
-      () => [g, b],
-      () => $,
+  _forBody2 = _$.register(
+    "b1",
+    _$.createRenderer(
+      "<div><div> </div></div>",
+      "D/D l&",
+      _setup$forBody2,
+      () => [_write$forBody2, _outerItem$forBody2],
+      () => _params_3$forBody,
     ),
   ),
-  D = e.loopOf(2, C),
-  S = e.effect("b3", (i) =>
-    e.on(
-      i[0],
-      "click",
-      ((e) => {
-        const { 3: i } = e;
-        return function () {
-          k(e, i.length ? i.slice(0, -1) : [1, 2, 3]);
-        };
-      })(i),
-    ),
+  _for$forBody = _$.loopOf(1, _forBody2),
+  _write$forBody = _$.closure(
+    4,
+    (_scope, write) => _write_(_scope[0], write),
+    void 0,
+    () => _$.inChild(0, _write_),
   ),
-  k = e.state(
+  _outerItem$forBody = _$.value(
     3,
-    (e, i) => {
-      S(e), D(e, [i]);
+    (_scope, outerItem) => _name_(_scope[0], `${outerItem}`),
+    () =>
+      _$.intersections([
+        _$.inChild(0, _name_),
+        _$.inLoopScope(_outerItem$forBody2, 1),
+      ]),
+  ),
+  _items$forBody = _$.closure(
+    3,
+    (_scope, items) => _for$forBody(_scope, [items]),
+    void 0,
+    () => _for$forBody,
+  ),
+  _params_2$forBody = _$.value(
+    2,
+    (_scope, _params_2) => _outerItem$forBody(_scope, _params_2[0]),
+    () => _outerItem$forBody,
+  ),
+  _setup$forBody = (_scope) => {
+    _scope[0];
+  },
+  _forBody = _$.register(
+    "b2",
+    _$.createRenderer(
+      "<div><div> </div><!></div>",
+      "D/D l&%",
+      _setup$forBody,
+      () => [_write$forBody, _items$forBody],
+      () => _params_2$forBody,
+    ),
+  ),
+  _for = _$.loopOf(2, _forBody),
+  _items_effect = _$.effect("b3", (_scope) =>
+    _$.on(
+      _scope[0],
+      "click",
+      ((_scope) => {
+        const { 3: items } = _scope;
+        return function () {
+          _items(_scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
+        };
+      })(_scope),
+    ),
+  ),
+  _items = _$.state(
+    3,
+    (_scope, items) => {
+      _items_effect(_scope), _for(_scope, [items]);
     },
-    () => e.intersections([D, e.inLoopScope(b, 2)]),
+    () => _$.intersections([_for, _$.inLoopScope(_items$forBody, 2)]),
   );
-i();
+init();

@@ -1,14 +1,11 @@
-// size: 274 (min) 168 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as a } from "@marko/runtime-tags/dom";
-const o = t.state(5, (a, o) => t.data(a[1], o)),
-  m = t.state(4, (a, o) => t.data(a[0], o));
-t.effect("a0", (a) => {
-  const { 3: r } = a;
+// size: 185 (min) 131 (brotli)
+const _b = _$.state(5, (_scope, b) => _$.data(_scope[1], b)),
+  _a = _$.state(4, (_scope, a) => _$.data(_scope[0], a));
+_$.effect("a0", (_scope) => {
+  const { 3: input } = _scope;
   {
-    const e = m(a, r.value + 1);
-    t.getAbortSignal(a, 0).onabort = () => o(a, e);
+    const previousValue = _a(_scope, input.value + 1);
+    _$.getAbortSignal(_scope, 0).onabort = () => _b(_scope, previousValue);
   }
 }),
-  a();
+  init();

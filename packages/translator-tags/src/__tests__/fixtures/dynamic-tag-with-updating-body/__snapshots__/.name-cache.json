@@ -1,0 +1,16 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "n",
+      "$_count_effect": "o",
+      "$_count": "r",
+      "$_setup$tagNameBody": "e",
+      "$_tagNameBody": "a",
+      "$_tagName_input": "c",
+      "$_dynamicTagName": "i",
+      "$_tagName_effect": "s",
+      "$_tagName": "m"
+    }
+  }
+}
