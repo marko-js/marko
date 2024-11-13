@@ -1,17 +1,17 @@
-import { e as s, o as c, s as n, d as o, i as t } from "./runtime-bm0WoCsz.js";
-const a = s("XBSGKvBc", (s) =>
-    c(
-      s[0],
+// size: 137 (min) 114 (brotli)
+const _clickCount_effect = effect("XBSGKvBc", (_scope) =>
+    on(
+      _scope[0],
       "click",
-      ((s) => {
-        const { 2: c } = s;
+      ((_scope) => {
+        const { 2: clickCount } = _scope;
         return function () {
-          i(s, c + 1);
+          _clickCount(_scope, clickCount + 1);
         };
-      })(s),
+      })(_scope),
     ),
   ),
-  i = n(2, (s, c) => {
-    o(s[1], c), a(s);
+  _clickCount = state(2, (_scope, clickCount) => {
+    data(_scope[1], clickCount), _clickCount_effect(_scope);
   });
-t();
+init();

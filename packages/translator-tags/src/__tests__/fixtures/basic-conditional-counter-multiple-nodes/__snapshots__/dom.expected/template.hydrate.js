@@ -1,47 +1,46 @@
-// size: 530 (min) 263 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as o } from "@marko/runtime-tags/dom";
-const n = t.closure(4, (o, n) => t.data(o[0], n)),
-  e = t.register(
+// size: 441 (min) 228 (brotli)
+const _count$ifBody = _$.closure(4, (_scope, count) =>
+    _$.data(_scope[0], count),
+  ),
+  _ifBody = _$.register(
     "a0",
-    t.createRenderer("The count is <!>", "b%", void 0, () => [n]),
+    _$.createRenderer("The count is <!>", "b%", void 0, () => [_count$ifBody]),
   ),
-  r = t.conditional(2, 0),
-  c = t.effect("a1", (o) =>
-    t.on(
-      o[0],
+  _if = _$.conditional(2, 0),
+  _count_effect = _$.effect("a1", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 4: o } = t;
+      ((_scope) => {
+        const { 4: count } = _scope;
         return function () {
-          i(t, o + 1);
+          _count(_scope, count + 1);
         };
-      })(o),
+      })(_scope),
     ),
   ),
-  i = t.state(
+  _count = _$.state(
     4,
-    (t, o) => c(t),
-    () => t.inConditionalScope(n, 2),
+    (_scope, count) => _count_effect(_scope),
+    () => _$.inConditionalScope(_count$ifBody, 2),
   ),
-  a = t.effect("a2", (o) =>
-    t.on(
-      o[1],
+  _show_effect = _$.effect("a2", (_scope) =>
+    _$.on(
+      _scope[1],
       "click",
-      ((t) => {
-        const { 3: o } = t;
+      ((_scope) => {
+        const { 3: show } = _scope;
         return function () {
-          s(t, !o);
+          _show(_scope, !show);
         };
-      })(o),
+      })(_scope),
     ),
   ),
-  s = t.state(
+  _show = _$.state(
     3,
-    (t, o) => {
-      a(t), r(t, o ? e : null);
+    (_scope, show) => {
+      _show_effect(_scope), _if(_scope, show ? _ifBody : null);
     },
-    () => r,
+    () => _if,
   );
-o();
+init();

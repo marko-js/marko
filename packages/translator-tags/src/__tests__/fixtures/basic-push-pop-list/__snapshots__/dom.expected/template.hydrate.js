@@ -1,48 +1,47 @@
-// size: 574 (min) 306 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as e } from "@marko/runtime-tags/dom";
-const o = t.value(2, (e, o) => t.data(e[0], o)),
-  r = t.value(1, (t, e) => o(t, e[0])),
-  n = t.register(
+// size: 485 (min) 250 (brotli)
+const _item$forBody = _$.value(2, (_scope, item) => _$.data(_scope[0], item)),
+  _params_2$forBody = _$.value(1, (_scope, _params_2) =>
+    _item$forBody(_scope, _params_2[0]),
+  ),
+  _forBody = _$.register(
     "a0",
-    t.createRenderer(" ", " ", void 0, void 0, () => r),
+    _$.createRenderer(" ", " ", void 0, void 0, () => _params_2$forBody),
   ),
-  a = t.effect("a1", (e) =>
-    t.on(
-      e[1],
+  _expr_id_items_effect = _$.effect("a1", (_scope) =>
+    _$.on(
+      _scope[1],
       "click",
-      ((t) => {
-        const { 3: e, 4: o } = t;
+      ((_scope) => {
+        const { 3: id, 4: items } = _scope;
         return function () {
-          const r = e + 1;
-          f(t, r), m(t, [...o, r]);
+          const nextId = id + 1;
+          _id(_scope, nextId), _items(_scope, [...items, nextId]);
         };
-      })(e),
+      })(_scope),
     ),
   ),
-  c = t.intersection(2, (t) => {
-    a(t);
+  _expr_id_items = _$.intersection(2, (_scope) => {
+    _expr_id_items_effect(_scope);
   }),
-  i = t.loopOf(0, n),
-  s = t.effect("a2", (e) =>
-    t.on(
-      e[2],
+  _for = _$.loopOf(0, _forBody),
+  _items_effect = _$.effect("a2", (_scope) =>
+    _$.on(
+      _scope[2],
       "click",
-      ((t) => {
-        const { 4: e } = t;
+      ((_scope) => {
+        const { 4: items } = _scope;
         return function () {
-          m(t, e.slice(0, -1));
+          _items(_scope, items.slice(0, -1));
         };
-      })(e),
+      })(_scope),
     ),
   ),
-  m = t.state(
+  _items = _$.state(
     4,
-    (t, e) => {
-      s(t), i(t, [e]);
+    (_scope, items) => {
+      _items_effect(_scope), _for(_scope, [items]);
     },
-    () => c,
+    () => _expr_id_items,
   ),
-  f = t.state(3, 0, () => c);
-e();
+  _id = _$.state(3, 0, () => _expr_id_items);
+init();

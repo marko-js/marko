@@ -1,0 +1,12 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "o",
+      "$_ifBody": "r",
+      "$_if": "e",
+      "$_show_effect": "n",
+      "$_show": "a"
+    }
+  }
+}

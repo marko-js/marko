@@ -1,22 +1,19 @@
-// size: 303 (min) 191 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as o } from "@marko/runtime-tags/dom";
-const r = t.register("a0", t.createRenderer("Hello!", "")),
-  e = t.conditional(0, 0),
-  n = t.effect("a1", (o) =>
-    t.on(
-      o[1],
+// size: 214 (min) 146 (brotli)
+const _ifBody = _$.register("a0", _$.createRenderer("Hello!", "")),
+  _if = _$.conditional(0, 0),
+  _show_effect = _$.effect("a1", (_scope) =>
+    _$.on(
+      _scope[1],
       "click",
-      ((t) => {
-        const { 2: o } = t;
+      ((_scope) => {
+        const { 2: show } = _scope;
         return function () {
-          a(t, !o);
+          _show(_scope, !show);
         };
-      })(o),
+      })(_scope),
     ),
   ),
-  a = t.state(2, (t, o) => {
-    n(t), e(t, o ? r : null);
+  _show = _$.state(2, (_scope, show) => {
+    _show_effect(_scope), _if(_scope, show ? _ifBody : null);
   });
-o();
+init();

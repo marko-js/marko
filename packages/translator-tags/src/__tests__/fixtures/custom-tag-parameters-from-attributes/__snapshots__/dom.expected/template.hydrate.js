@@ -1,49 +1,51 @@
-// size: 612 (min) 331 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as a } from "@marko/runtime-tags/dom";
-const e = t.dynamicTagAttrs(2),
-  n = t.intersection(
+// size: 523 (min) 296 (brotli)
+const _inputRenderBody_input = _$.dynamicTagAttrs(2),
+  _expr_Text_input_x = _$.intersection(
     3,
-    (t) => {
-      const { 4: a, 5: n } = t;
-      e(t, () => ({ count: n, name: a.name }));
+    (_scope) => {
+      const { 4: input, 5: x } = _scope;
+      _inputRenderBody_input(_scope, () => ({ count: x, name: input.name }));
     },
-    () => e,
+    () => _inputRenderBody_input,
   ),
-  o = t.effect("a0", (a) =>
-    t.on(
-      a[0],
+  _x_effect = _$.effect("a0", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 5: a } = t;
+      ((_scope) => {
+        const { 5: x } = _scope;
         return function () {
-          r(t, a + 1);
+          _x(_scope, x + 1);
         };
-      })(a),
+      })(_scope),
     ),
   ),
-  r = t.state(
+  _x = _$.state(
     5,
-    (a, e) => {
-      t.data(a[1], e), o(a);
+    (_scope, x) => {
+      _$.data(_scope[1], x), _x_effect(_scope);
     },
-    () => n,
+    () => _expr_Text_input_x,
   ),
-  i = t.value(5, (a, e) => t.data(a[0], e)),
-  m = t.value(4, (a, e) => t.data(a[1], e)),
-  c = t.value(3, (t, a) => {
-    m(t, a.count), i(t, a.name);
+  _name$customTagBody = _$.value(5, (_scope, name) => _$.data(_scope[0], name)),
+  _count$customTagBody = _$.value(4, (_scope, count) =>
+    _$.data(_scope[1], count),
+  ),
+  _pattern_$customTagBody = _$.value(3, (_scope, _pattern_) => {
+    _count$customTagBody(_scope, _pattern_.count),
+      _name$customTagBody(_scope, _pattern_.name);
   }),
-  d = t.value(2, (t, a) => c(t, a[0]));
-t.register(
+  _params_2$customTagBody = _$.value(2, (_scope, _params_2) =>
+    _pattern_$customTagBody(_scope, _params_2[0]),
+  );
+_$.register(
   "b0",
-  t.createRendererWithOwner(
+  _$.createRendererWithOwner(
     "<div>Count (<!>): <!></div>",
     "Db%c%",
     void 0,
     void 0,
-    () => d,
+    () => _params_2$customTagBody,
   ),
 ),
-  a();
+  init();

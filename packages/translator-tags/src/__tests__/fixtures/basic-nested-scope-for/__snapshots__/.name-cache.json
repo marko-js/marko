@@ -1,0 +1,11 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "o",
+      "$_expr_selected_num$forBody": "e",
+      "$_selected$forBody": "r",
+      "$_selected": "a"
+    }
+  }
+}

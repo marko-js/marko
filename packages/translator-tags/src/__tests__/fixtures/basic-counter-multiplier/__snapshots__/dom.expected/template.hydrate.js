@@ -1,46 +1,45 @@
-// size: 460 (min) 226 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as o } from "@marko/runtime-tags/dom";
-const n = t.intersection(2, (t) => {
-    const { 4: o, 5: n } = t;
-    a(t, o * n);
+// size: 371 (min) 190 (brotli)
+const _expr_count_multiplier = _$.intersection(2, (_scope) => {
+    const { 4: count, 5: multiplier } = _scope;
+    _multipliedCount(_scope, count * multiplier);
   }),
-  a = t.value(6, (o, n) => t.data(o[3], n)),
-  c = t.effect("a0", (o) =>
-    t.on(
-      o[0],
+  _multipliedCount = _$.value(6, (_scope, multipliedCount) =>
+    _$.data(_scope[3], multipliedCount),
+  ),
+  _multiplier_effect = _$.effect("a0", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 5: o } = t;
+      ((_scope) => {
+        const { 5: multiplier } = _scope;
         return function () {
-          e(t, o + 1);
+          _multiplier(_scope, multiplier + 1);
         };
-      })(o),
+      })(_scope),
     ),
   ),
-  e = t.state(
+  _multiplier = _$.state(
     5,
-    (o, n) => {
-      t.data(o[1], n), c(o);
+    (_scope, multiplier) => {
+      _$.data(_scope[1], multiplier), _multiplier_effect(_scope);
     },
-    () => n,
+    () => _expr_count_multiplier,
   ),
-  r = t.effect("a1", (o) =>
-    t.on(
-      o[2],
+  _count_effect = _$.effect("a1", (_scope) =>
+    _$.on(
+      _scope[2],
       "click",
-      ((t) => {
-        const { 4: o } = t;
+      ((_scope) => {
+        const { 4: count } = _scope;
         return function () {
-          i(t, o + 1);
+          _count(_scope, count + 1);
         };
-      })(o),
+      })(_scope),
     ),
   ),
-  i = t.state(
+  _count = _$.state(
     4,
-    (t, o) => r(t),
-    () => n,
+    (_scope, count) => _count_effect(_scope),
+    () => _expr_count_multiplier,
   );
-o();
+init();

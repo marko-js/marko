@@ -1,42 +1,44 @@
-// size: 584 (min) 265 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as i } from "@marko/runtime-tags/dom";
-const n = t.value(7, (i, n) => {
-    t.data(i[1], n),
-      ((i, n) => {
-        t.data(i[2], n);
-      })(i, n);
+// size: 495 (min) 228 (brotli)
+const _text_ = _$.value(7, (_scope, text) => {
+    _$.data(_scope[1], text),
+      ((_scope, textAlias) => {
+        _$.data(_scope[2], textAlias);
+      })(_scope, text);
   }),
-  e = t.value(6, (t, i) => n(t, i.text)),
-  r = t.effect("a0", (i) => {
-    const { 5: n } = i;
-    t.on(i[0], "click", n);
+  _pattern__ = _$.value(6, (_scope, _pattern_) =>
+    _text_(_scope, _pattern_.text),
+  ),
+  _onClick__effect = _$.effect("a0", (_scope) => {
+    const { 5: onClick } = _scope;
+    _$.on(_scope[0], "click", onClick);
   }),
-  o = t.value(5, (t, i) => r(t)),
-  a = t.register("b0", (t) => {
-    const { 2: i } = t;
+  _onClick_ = _$.value(5, (_scope, onClick) => _onClick__effect(_scope)),
+  _onClick = _$.register("b0", (_scope) => {
+    const { 2: clickCount } = _scope;
     return function () {
-      c(t, i + 1);
+      _clickCount(_scope, clickCount + 1);
     };
   }),
-  s = t.register("b1", (t) => {
-    const { 2: i } = t;
+  _onClick2 = _$.register("b1", (_scope) => {
+    const { 2: clickCount } = _scope;
     return function () {
-      c(t, i + 1);
+      _clickCount(_scope, clickCount + 1);
     };
   }),
-  c = t.state(
+  _clickCount = _$.state(
     2,
-    (t, i) => {
-      e(t[0], { text: i }), o(t[0], a(t)), n(t[1], i), o(t[1], s(t));
+    (_scope, clickCount) => {
+      _pattern__(_scope[0], { text: clickCount }),
+        _onClick_(_scope[0], _onClick(_scope)),
+        _text_(_scope[1], clickCount),
+        _onClick_(_scope[1], _onClick2(_scope));
     },
     () =>
-      t.intersections([
-        t.inChild(0, e),
-        t.inChild(0, o),
-        t.inChild(1, n),
-        t.inChild(1, o),
+      _$.intersections([
+        _$.inChild(0, _pattern__),
+        _$.inChild(0, _onClick_),
+        _$.inChild(1, _text_),
+        _$.inChild(1, _onClick_),
       ]),
   );
-i();
+init();

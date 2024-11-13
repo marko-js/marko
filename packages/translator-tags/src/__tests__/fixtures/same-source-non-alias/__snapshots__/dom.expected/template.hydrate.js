@@ -1,31 +1,28 @@
-// size: 376 (min) 209 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as a } from "@marko/runtime-tags/dom";
-function r(t) {
-  return { a: t };
+// size: 287 (min) 168 (brotli)
+function createWrapper(a) {
+  return { a: a };
 }
-t.register("a0", r);
-const o = t.value(5, (a, r) => {
-    t.data(a[1], r),
-      ((a, r) => {
-        t.data(a[2], r);
-      })(a, r);
+_$.register("a0", createWrapper);
+const _a = _$.value(5, (_scope, a) => {
+    _$.data(_scope[1], a),
+      ((_scope, b) => {
+        _$.data(_scope[2], b);
+      })(_scope, a);
   }),
-  e = t.value(4, (t, a) => o(t, a.a)),
-  n = t.effect("a1", (a) =>
-    t.on(
-      a[0],
+  _pattern_ = _$.value(4, (_scope, _pattern_) => _a(_scope, _pattern_.a)),
+  _count_effect = _$.effect("a1", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 3: a } = t;
+      ((_scope) => {
+        const { 3: count } = _scope;
         return function () {
-          m(t, a + 1);
+          _count(_scope, count + 1);
         };
-      })(a),
+      })(_scope),
     ),
   ),
-  m = t.state(3, (t, a) => {
-    n(t), e(t, r(a));
+  _count = _$.state(3, (_scope, count) => {
+    _count_effect(_scope), _pattern_(_scope, createWrapper(count));
   });
-a();
+init();

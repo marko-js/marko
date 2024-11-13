@@ -1,31 +1,31 @@
-// size: 473 (min) 261 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as e } from "@marko/runtime-tags/dom";
-const n = t.effect("a0", (e) => {
-    (e._[1].innerHTML += "\nmounted"),
-      (t.getAbortSignal(e, 0).onabort = () => {
-        e._[1].innerHTML += "\ndestroyed";
+// size: 384 (min) 224 (brotli)
+const _setup$ifBody_effect = _$.effect("a0", (_scope) => {
+    (_scope._[1].innerHTML += "\nmounted"),
+      (_$.getAbortSignal(_scope, 0).onabort = () => {
+        _scope._[1].innerHTML += "\ndestroyed";
       });
   }),
-  r = (e) => {
-    t.resetAbortSignal(e, 0), n(e);
+  _setup$ifBody = (_scope) => {
+    _$.resetAbortSignal(_scope, 0), _setup$ifBody_effect(_scope);
   },
-  o = t.register("a1", t.createRenderer("<div>child</div>", "", r)),
-  i = t.conditional(2, 0),
-  a = t.effect("a2", (e) =>
-    t.on(
-      e[0],
+  _ifBody = _$.register(
+    "a1",
+    _$.createRenderer("<div>child</div>", "", _setup$ifBody),
+  ),
+  _if = _$.conditional(2, 0),
+  _show_effect = _$.effect("a2", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 3: e } = t;
+      ((_scope) => {
+        const { 3: show } = _scope;
         return function () {
-          m(t, !e);
+          _show(_scope, !show);
         };
-      })(e),
+      })(_scope),
     ),
   ),
-  m = t.state(3, (t, e) => {
-    a(t), i(t, e ? o : null);
+  _show = _$.state(3, (_scope, show) => {
+    _show_effect(_scope), _if(_scope, show ? _ifBody : null);
   });
-e();
+init();

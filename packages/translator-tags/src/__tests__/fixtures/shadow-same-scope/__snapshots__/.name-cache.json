@@ -1,0 +1,16 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "n",
+      "$_count4_effect": "a",
+      "$_count4": "c",
+      "$_count3_effect": "o",
+      "$_count3": "e",
+      "$_count2_effect": "r",
+      "$_count2": "f",
+      "$_count_effect": "i",
+      "$_count": "s"
+    }
+  }
+}

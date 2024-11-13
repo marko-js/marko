@@ -1,6 +1,4 @@
-// size: 175 (min) 107 (brotli)
-
-import * as e from "@marko/runtime-tags/dom";
-e.dynamicTagAttrs(0),
-  e.register("b0", e.createRendererWithOwner("Goodbye", "")),
-  e.register("b1", e.createRendererWithOwner("Hello", ""));
+// size: 133 (min) 82 (brotli)
+_$.dynamicTagAttrs(0),
+  _$.register("b0", _$.createRendererWithOwner("Goodbye", "")),
+  _$.register("b1", _$.createRendererWithOwner("Hello", ""));

@@ -1,45 +1,46 @@
-// size: 492 (min) 285 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as e } from "@marko/runtime-tags/dom";
-const r = t.dynamicTagAttrs(2),
-  o = t.intersection(
+// size: 403 (min) 248 (brotli)
+const _inputRenderBody_input = _$.dynamicTagAttrs(2),
+  _expr_Text_x = _$.intersection(
     2,
-    (t) => {
-      const { 5: e } = t;
-      r(t, () => e);
+    (_scope) => {
+      const { 5: x } = _scope;
+      _inputRenderBody_input(_scope, () => x);
     },
-    () => r,
+    () => _inputRenderBody_input,
   ),
-  a = t.effect("a0", (e) =>
-    t.on(
-      e[0],
+  _x_effect = _$.effect("a0", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 5: e } = t;
+      ((_scope) => {
+        const { 5: x } = _scope;
         return function () {
-          i(t, e + 1);
+          _x(_scope, x + 1);
         };
-      })(e),
+      })(_scope),
     ),
   ),
-  i = t.state(
+  _x = _$.state(
     5,
-    (e, r) => {
-      t.data(e[1], r), a(e);
+    (_scope, x) => {
+      _$.data(_scope[1], x), _x_effect(_scope);
     },
-    () => o,
+    () => _expr_Text_x,
   ),
-  n = t.value(2, (e, r) => t.data(e[0], r)),
-  m = t.value(1, (t, e) => n(t, e[0]));
-t.register(
+  _count$customTagBody = _$.value(2, (_scope, count) =>
+    _$.data(_scope[0], count),
+  ),
+  _params_2$customTagBody = _$.value(1, (_scope, _params_2) =>
+    _count$customTagBody(_scope, _params_2[0]),
+  );
+_$.register(
   "b0",
-  t.createRendererWithOwner(
+  _$.createRendererWithOwner(
     "<div>Count: <!></div>",
     "Db%",
     void 0,
     void 0,
-    () => m,
+    () => _params_2$customTagBody,
   ),
 ),
-  e();
+  init();

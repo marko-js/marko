@@ -1,7 +1,5 @@
-// size: 105 (min) 91 (brotli)
-
-import * as a from "@marko/runtime-tags/dom";
-a.registerBoundSignal(
+// size: 63 (min) 67 (brotli)
+_$.registerBoundSignal(
   "b0",
-  a.value(2, (r, m) => a.data(r[1], m)),
+  _$.value(2, (_scope, data) => _$.data(_scope[1], data)),
 );

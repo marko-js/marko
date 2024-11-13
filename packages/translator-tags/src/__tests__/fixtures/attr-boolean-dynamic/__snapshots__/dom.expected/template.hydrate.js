@@ -1,20 +1,19 @@
-// size: 279 (min) 175 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as a } from "@marko/runtime-tags/dom";
-const o = t.effect("a0", (a) =>
-    t.on(
-      a[1],
+// size: 190 (min) 135 (brotli)
+const _disabled_effect = _$.effect("a0", (_scope) =>
+    _$.on(
+      _scope[1],
       "click",
-      ((t) => {
-        const { 3: a } = t;
+      ((_scope) => {
+        const { 3: disabled } = _scope;
         return function () {
-          r(t, !a);
+          _disabled(_scope, !disabled);
         };
-      })(a),
+      })(_scope),
     ),
   ),
-  r = t.state(3, (a, r) => {
-    t.attr(a[0], "disabled", r), t.data(a[2], r ? "enable" : "disable"), o(a);
+  _disabled = _$.state(3, (_scope, disabled) => {
+    _$.attr(_scope[0], "disabled", disabled),
+      _$.data(_scope[2], disabled ? "enable" : "disable"),
+      _disabled_effect(_scope);
   });
-a();
+init();

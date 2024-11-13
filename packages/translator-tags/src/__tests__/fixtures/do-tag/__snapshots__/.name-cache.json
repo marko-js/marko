@@ -1,0 +1,10 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "r",
+      "$log": "e",
+      "$_logOutput": "o"
+    }
+  }
+}

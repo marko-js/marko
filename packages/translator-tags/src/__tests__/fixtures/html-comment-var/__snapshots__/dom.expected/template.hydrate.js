@@ -1,19 +1,16 @@
-// size: 340 (min) 182 (brotli)
-
-import * as a from "@marko/runtime-tags/dom";
-import { init as t } from "@marko/runtime-tags/dom";
-const e = a.state(
+// size: 251 (min) 125 (brotli)
+const _tagName = _$.state(
   1,
-  (t, e) => a.tagVarSignal(t, e),
-  () => a.tagVarSignal,
+  (_scope, tagName) => _$.tagVarSignal(_scope, tagName),
+  () => _$.tagVarSignal,
 );
-a.effect("a0", (a) => e(a, a[0].parentElement.tagName)),
-  a.registerBoundSignal(
+_$.effect("a0", (_scope) => _tagName(_scope, _scope[0].parentElement.tagName)),
+  _$.registerBoundSignal(
     "b0",
-    a.value(5, (t, e) => a.data(t[3], e)),
+    _$.value(5, (_scope, spanName) => _$.data(_scope[3], spanName)),
   ),
-  a.registerBoundSignal(
+  _$.registerBoundSignal(
     "b1",
-    a.value(4, (t, e) => a.data(t[1], e)),
+    _$.value(4, (_scope, divName) => _$.data(_scope[1], divName)),
   ),
-  t();
+  init();

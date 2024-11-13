@@ -1,17 +1,15 @@
-// size: 311 (min) 175 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as r } from "@marko/runtime-tags/dom";
-import e from "./test-log";
-t.register("a1", function () {
-  e.static += "rendered";
+// size: 196 (min) 119 (brotli)
+_$.register("a1", function () {
+  log.static += "rendered";
 }),
-  t.register(
+  _$.register(
     "a0",
-    (t) =>
+    (_scope) =>
       function () {
-        e.const += "rendered";
+        log.const += "rendered";
       },
   );
-const o = t.state(3, (r, e) => t.data(r[0], e));
-t.effect("a2", (t) => o(t, JSON.stringify(e))), r();
+const _logOutput = _$.state(3, (_scope, logOutput) =>
+  _$.data(_scope[0], logOutput),
+);
+_$.effect("a2", (_scope) => _logOutput(_scope, JSON.stringify(log))), init();

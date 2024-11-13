@@ -1,44 +1,48 @@
-// size: 569 (min) 310 (brotli)
-
-import * as e from "@marko/runtime-tags/dom";
-import { init as t } from "@marko/runtime-tags/dom";
-const n = e.dynamicTagAttrs(1),
-  r = e.conditional(
+// size: 480 (min) 275 (brotli)
+const _inputThingRenderBody_input = _$.dynamicTagAttrs(1),
+  _dynamicTagName = _$.conditional(
     1,
-    (e) => n(e, () => ({})),
-    () => n,
+    (_scope) => _inputThingRenderBody_input(_scope, () => ({})),
+    () => _inputThingRenderBody_input,
   ),
-  i = e.value(
+  _input_ = _$.value(
     3,
-    (t, n) => {
-      e.classAttr(t[0], { selected: n.thing.selected }),
-        r(t, n.thing.renderBody);
+    (_scope, input) => {
+      _$.classAttr(_scope[0], { selected: input.thing.selected }),
+        _dynamicTagName(_scope, input.thing.renderBody);
     },
-    () => r,
+    () => _dynamicTagName,
   ),
-  o = e.register("b0", e.createRendererWithOwner("<span>The thing</span>", "")),
-  a = e.value(
+  _defineBody = _$.register(
+    "b0",
+    _$.createRendererWithOwner("<span>The thing</span>", ""),
+  ),
+  _myThing = _$.value(
     3,
-    (e, t) => i(e[0], { thing: t }),
-    () => e.inChild(0, i),
+    (_scope, myThing) => _input_(_scope[0], { thing: myThing }),
+    () => _$.inChild(0, _input_),
   ),
-  s = e.effect("b1", (t) =>
-    e.on(
-      t[1],
+  _selected_effect = _$.effect("b1", (_scope) =>
+    _$.on(
+      _scope[1],
       "click",
-      ((e) => {
-        const { 2: t } = e;
+      ((_scope) => {
+        const { 2: selected } = _scope;
         return function () {
-          c(e, !t);
+          _selected(_scope, !selected);
         };
-      })(t),
+      })(_scope),
     ),
   ),
-  c = e.state(
+  _selected = _$.state(
     2,
-    (e, t) => {
-      s(e), a(e, { selected: t, renderBody: o(e) });
+    (_scope, selected) => {
+      _selected_effect(_scope),
+        _myThing(_scope, {
+          selected: selected,
+          renderBody: _defineBody(_scope),
+        });
     },
-    () => a,
+    () => _myThing,
   );
-t();
+init();

@@ -1,30 +1,31 @@
-// size: 519 (min) 281 (brotli)
-
-import * as r from "@marko/runtime-tags/dom";
-import { init as t } from "@marko/runtime-tags/dom";
-r.dynamicTagAttrs(1);
-const e = r.effect("a0", (t) => {
-    const { 4: e } = t;
-    r.on(t[0], "click", e);
+// size: 430 (min) 241 (brotli)
+_$.dynamicTagAttrs(1);
+const _onClick__effect = _$.effect("a0", (_scope) => {
+    const { 4: onClick } = _scope;
+    _$.on(_scope[0], "click", onClick);
   }),
-  i = r.value(4, (r, t) => e(r)),
-  n = r.register("b0", (r) => {
-    const { 1: t } = r;
+  _onClick_ = _$.value(4, (_scope, onClick) => _onClick__effect(_scope)),
+  _onClick = _$.register("b0", (_scope) => {
+    const { 1: clickCount } = _scope;
     return function () {
-      o(r, t + 1);
+      _clickCount(_scope, clickCount + 1);
     };
   }),
-  s = r.registerSubscriber(
+  _clickCount$myButtonBody = _$.registerSubscriber(
     "b1",
-    r.dynamicClosure(1, (t, e) => r.data(t[0], e)),
+    _$.dynamicClosure(1, (_scope, clickCount) =>
+      _$.data(_scope[0], clickCount),
+    ),
   );
-r.register(
+_$.register(
   "b2",
-  r.createRendererWithOwner(" ", " ", void 0, () => [s]),
+  _$.createRendererWithOwner(" ", " ", void 0, () => [
+    _clickCount$myButtonBody,
+  ]),
 );
-const o = r.state(
+const _clickCount = _$.state(
   1,
-  (r, t) => i(r[0], n(r)),
-  () => r.intersections([r.inChild(0, i), r.dynamicSubscribers(1)]),
+  (_scope, clickCount) => _onClick_(_scope[0], _onClick(_scope)),
+  () => _$.intersections([_$.inChild(0, _onClick_), _$.dynamicSubscribers(1)]),
 );
-t();
+init();

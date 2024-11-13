@@ -1,126 +1,116 @@
-import {
-  r as s,
-  e as a,
-  c as n,
-  o as t,
-  s as o,
-  a as c,
-  v as i,
-  i as m,
-  b as e,
-  d as l,
-  f as u,
-  g as d,
-  h as r,
-  j as b,
-  l as f,
-  k as p,
-  m as v,
-} from "./runtime-C9sq24Du.js";
-const $ = "<ul></ul>",
-  h = r(
+// size: 1028 (min) 518 (brotli)
+const _expr_comment_id$ifBody = intersection(
     2,
-    (s) => {
+    (_scope) => {
       const {
-        _: { 6: a, 8: n },
-      } = s;
-      I(s[0], { comments: a.comments, path: n });
+        _: { 6: comment, 8: id },
+      } = _scope;
+      _input_$1(_scope[0], { comments: comment.comments, path: id });
     },
-    () => p(0, I),
+    () => inChild(0, _input_$1),
   ),
-  k = c(8, 0, void 0, () => h),
-  K = c(6, 0, void 0, () => h),
-  T = s(
+  _id$ifBody = closure(8, 0, void 0, () => _expr_comment_id$ifBody),
+  _comment$ifBody = closure(6, 0, void 0, () => _expr_comment_id$ifBody),
+  _ifBody = register(
     "QURHKITf",
-    n(
-      `${$}`,
+    createRenderer(
+      "<ul></ul>",
       "/ b&",
-      (s) => {
-        s[0];
+      (_scope) => {
+        _scope[0];
       },
-      () => [k, K],
+      () => [_id$ifBody, _comment$ifBody],
     ),
   ),
-  _ = r(
+  _expr_input_i$forBody = intersection(
     2,
-    (s) => {
+    (_scope) => {
       const {
-        _: { 2: a },
-        7: n,
-      } = s;
-      U(s, `${a.path || "c"}-${n}`);
+        _: { 2: input },
+        7: i,
+      } = _scope;
+      _id$forBody(_scope, `${input.path || "c"}-${i}`);
     },
-    () => U,
+    () => _id$forBody,
   ),
-  j = b(4),
-  E = a("ZcKJNKFe", (s) =>
-    t(
-      s[2],
+  _if$forBody = conditional(4),
+  _open$forBody_effect = effect("ZcKJNKFe", (_scope) =>
+    on(
+      _scope[2],
       "click",
-      ((s) => {
-        const { 9: a } = s;
+      ((_scope) => {
+        const { 9: open } = _scope;
         return function () {
-          F(s, !a);
+          _open$forBody(_scope, !open);
         };
-      })(s),
+      })(_scope),
     ),
   ),
-  F = o(9, (s, a) => {
-    e(s[0], "hidden", !a), l(s[3], a ? "[-]" : "[+]"), E(s);
+  _open$forBody = state(9, (_scope, open) => {
+    attr(_scope[0], "hidden", !open),
+      data(_scope[3], open ? "[-]" : "[+]"),
+      _open$forBody_effect(_scope);
   }),
-  U = i(
+  _id$forBody = value(
     8,
-    (s, a) => e(s[0], "id", a),
-    () => u(k, 4),
+    (_scope, id) => attr(_scope[0], "id", id),
+    () => inConditionalScope(_id$ifBody, 4),
   ),
-  Z = i(7, 0, () => _),
-  g = i(
+  _i$forBody = value(7, 0, () => _expr_input_i$forBody),
+  _comment$forBody = value(
     6,
-    (s, a) => {
-      l(s[1], a.text), j(s, a.comments ? T : null);
+    (_scope, comment) => {
+      data(_scope[1], comment.text),
+        _if$forBody(_scope, comment.comments ? _ifBody : null);
     },
-    () => m([j, u(K, 4)]),
+    () => intersections([_if$forBody, inConditionalScope(_comment$ifBody, 4)]),
   ),
-  x = i(
+  _params_2$forBody = value(
     5,
-    (s, a) => {
-      g(s, a[0]), Z(s, a[1]);
+    (_scope, _params_2) => {
+      _comment$forBody(_scope, _params_2[0]), _i$forBody(_scope, _params_2[1]);
     },
-    () => m([g, Z]),
+    () => intersections([_comment$forBody, _i$forBody]),
   ),
-  D = c(2, 0, void 0, () => _),
-  H = f(
+  _input$forBody = closure(2, 0, void 0, () => _expr_input_i$forBody),
+  _for = loopOf(
     0,
-    s(
+    register(
       "$F_EaYZk",
-      n(
+      createRenderer(
         "<li><span> </span><button> </button><!></li>",
         " E l D l%",
-        (s) => {
-          F(s, !0);
+        (_scope) => {
+          _open$forBody(_scope, !0);
         },
-        () => [D],
-        () => x,
+        () => [_input$forBody],
+        () => _params_2$forBody,
       ),
     ),
   ),
-  I = i(
+  _input_$1 = value(
     2,
-    (s, a) => H(s, [a.comments]),
-    () => m([H, d(D, 0)]),
+    (_scope, input) => _for(_scope, [input.comments]),
+    () => intersections([_for, inLoopScope(_input$forBody, 0)]),
   ),
-  J = `${$}`,
-  N = i(
+  _input_ = value(
     2,
-    (s, a) => I(s[0], a),
-    () => p(0, I),
+    (_scope, input) => _input_$1(_scope[0], input),
+    () => inChild(0, _input_$1),
   ),
-  Q = i(
+  _params__ = value(
     1,
-    (s, a) => N(s, a[0]),
-    () => N,
+    (_scope, _params_) => _input_(_scope, _params_[0]),
+    () => _input_,
   );
-function R(s) {
-  s[0];
+function _setup_(_scope) {
+  _scope[0];
 }
-v("rUbTinTf", J, "/ b&", R, void 0, () => Q).mount();
+createTemplate(
+  "rUbTinTf",
+  "<ul></ul>",
+  "/ b&",
+  _setup_,
+  void 0,
+  () => _params__,
+).mount();

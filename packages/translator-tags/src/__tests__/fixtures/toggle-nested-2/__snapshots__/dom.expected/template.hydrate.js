@@ -1,86 +1,88 @@
-// size: 913 (min) 392 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as n } from "@marko/runtime-tags/dom";
-const e = t.effect("a0", (n) =>
-    t.on(
-      n[0],
+// size: 824 (min) 341 (brotli)
+const _count$ifBody_effect = _$.effect("a0", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
+      ((_scope) => {
         const {
           _: {
-            _: { 4: n },
+            _: { 4: count },
           },
-        } = t;
+        } = _scope;
         return function () {
-          d(t._._, n + 1);
+          _count(_scope._._, count + 1);
         };
-      })(n),
+      })(_scope),
     ),
   ),
-  o = t.registerSubscriber(
+  _count$ifBody = _$.registerSubscriber(
     "a1",
-    t.dynamicClosure(
+    _$.dynamicClosure(
       4,
-      (n, o) => {
-        t.data(n[1], o), e(n);
+      (_scope, count) => {
+        _$.data(_scope[1], count), _count$ifBody_effect(_scope);
       },
-      (t) => t._._,
+      (_scope) => _scope._._,
     ),
   ),
-  r = t.register(
+  _ifBody2 = _$.register(
     "a2",
-    t.createRenderer("<button id=count> </button>", " D ", void 0, () => [o]),
-  ),
-  i = t.conditional(1, 0),
-  c = t.effect("a3", (n) =>
-    t.on(
-      n[0],
-      "click",
-      ((t) => {
-        const {
-          _: { 3: n },
-        } = t;
-        return function () {
-          l(t._, !n);
-        };
-      })(n),
-    ),
-  ),
-  a = t.closure(
-    3,
-    (t, n) => {
-      c(t), i(t, n ? r : null);
-    },
-    void 0,
-    () => i,
-  ),
-  u = t.register(
-    "a4",
-    t.createRenderer("<button id=inner></button><!><!>", " b%D", void 0, () => [
-      a,
+    _$.createRenderer("<button id=count> </button>", " D ", void 0, () => [
+      _count$ifBody,
     ]),
   ),
-  s = t.conditional(1, 0),
-  d = t.state(4, 0, () => t.dynamicSubscribers(4)),
-  l = t.state(3, 0, () => t.inConditionalScope(a, 1)),
-  m = t.effect("a5", (n) =>
-    t.on(
-      n[0],
+  _if$ifBody = _$.conditional(1, 0),
+  _inner$ifBody_effect = _$.effect("a3", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 2: n } = t;
+      ((_scope) => {
+        const {
+          _: { 3: inner },
+        } = _scope;
         return function () {
-          f(t, !n);
+          _inner(_scope._, !inner);
         };
-      })(n),
+      })(_scope),
     ),
   ),
-  f = t.state(
-    2,
-    (t, n) => {
-      m(t), s(t, n ? u : null);
+  _inner$ifBody = _$.closure(
+    3,
+    (_scope, inner) => {
+      _inner$ifBody_effect(_scope), _if$ifBody(_scope, inner ? _ifBody2 : null);
     },
-    () => s,
+    void 0,
+    () => _if$ifBody,
+  ),
+  _ifBody = _$.register(
+    "a4",
+    _$.createRenderer(
+      "<button id=inner></button><!><!>",
+      " b%D",
+      void 0,
+      () => [_inner$ifBody],
+    ),
+  ),
+  _if = _$.conditional(1, 0),
+  _count = _$.state(4, 0, () => _$.dynamicSubscribers(4)),
+  _inner = _$.state(3, 0, () => _$.inConditionalScope(_inner$ifBody, 1)),
+  _outer_effect = _$.effect("a5", (_scope) =>
+    _$.on(
+      _scope[0],
+      "click",
+      ((_scope) => {
+        const { 2: outer } = _scope;
+        return function () {
+          _outer(_scope, !outer);
+        };
+      })(_scope),
+    ),
+  ),
+  _outer = _$.state(
+    2,
+    (_scope, outer) => {
+      _outer_effect(_scope), _if(_scope, outer ? _ifBody : null);
+    },
+    () => _if,
   );
-n();
+init();

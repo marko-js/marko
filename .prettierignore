@@ -2,6 +2,7 @@ __snapshots__
 !packages/marko/src/node_modules
 .cache
 .nvm
+.sizes
 .sizes.json
 .vscode
 *actual*

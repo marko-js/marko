@@ -1,21 +1,22 @@
-// size: 309 (min) 190 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as o } from "@marko/runtime-tags/dom";
-const a = t.value(4, (o, a) => t.data(o[0], JSON.stringify(a))),
-  r = t.effect("a0", (o) =>
-    t.on(
-      o[1],
+// size: 220 (min) 154 (brotli)
+const _myObj = _$.value(4, (_scope, myObj) =>
+    _$.data(_scope[0], JSON.stringify(myObj)),
+  ),
+  _x_effect = _$.effect("a0", (_scope) =>
+    _$.on(
+      _scope[1],
       "click",
-      ((t) => {
-        const { 3: o } = t;
+      ((_scope) => {
+        const { 3: x } = _scope;
         return function () {
-          m(t, o + 1);
+          _x(_scope, x + 1);
         };
-      })(o),
+      })(_scope),
     ),
   ),
-  m = t.state(3, (o, m) => {
-    t.data(o[2], m), r(o), a(o, { foo: 1, bar: m + 1 });
+  _x = _$.state(3, (_scope, x) => {
+    _$.data(_scope[2], x),
+      _x_effect(_scope),
+      _myObj(_scope, { foo: 1, bar: x + 1 });
   });
-o();
+init();

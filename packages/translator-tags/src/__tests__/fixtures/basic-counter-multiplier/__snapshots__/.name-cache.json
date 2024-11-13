@@ -1,0 +1,14 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "o",
+      "$_expr_count_multiplier": "n",
+      "$_multipliedCount": "a",
+      "$_multiplier_effect": "c",
+      "$_multiplier": "e",
+      "$_count_effect": "r",
+      "$_count": "i"
+    }
+  }
+}

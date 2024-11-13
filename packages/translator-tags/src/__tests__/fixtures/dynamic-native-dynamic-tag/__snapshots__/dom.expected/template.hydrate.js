@@ -1,35 +1,36 @@
-// size: 450 (min) 267 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as n } from "@marko/runtime-tags/dom";
-const o = t.register("a0", t.createRendererWithOwner("body content", "")),
-  r = t.dynamicTagAttrs(0, o),
-  e = t.intersection(
-    2,
-    (t) => {
-      const { 3: n } = t;
-      r(t, () => ({ class: n }));
-    },
-    () => r,
+// size: 361 (min) 228 (brotli)
+const _tagNameBody = _$.register(
+    "a0",
+    _$.createRendererWithOwner("body content", ""),
   ),
-  a = t.conditional(0, 0, () => e),
-  i = t.effect("a1", (n) =>
-    t.on(
-      n[1],
+  _tagName_input = _$.dynamicTagAttrs(0, _tagNameBody),
+  _expr_Text_className = _$.intersection(
+    2,
+    (_scope) => {
+      const { 3: className } = _scope;
+      _tagName_input(_scope, () => ({ class: className }));
+    },
+    () => _tagName_input,
+  ),
+  _dynamicTagName = _$.conditional(0, 0, () => _expr_Text_className),
+  _tagName_effect = _$.effect("a1", (_scope) =>
+    _$.on(
+      _scope[1],
       "click",
-      ((t) => {
-        const { 2: n } = t;
+      ((_scope) => {
+        const { 2: tagName } = _scope;
         return function () {
-          s(t, "span" === n ? "div" : "span");
+          _tagName(_scope, "span" === tagName ? "div" : "span");
         };
-      })(n),
+      })(_scope),
     ),
   ),
-  s = t.state(
+  _tagName = _$.state(
     2,
-    (t, n) => {
-      i(t), a(t, n || o(t));
+    (_scope, tagName) => {
+      _tagName_effect(_scope),
+        _dynamicTagName(_scope, tagName || _tagNameBody(_scope));
     },
-    () => a,
+    () => _dynamicTagName,
   );
-n();
+init();

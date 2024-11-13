@@ -1,54 +1,56 @@
-// size: 597 (min) 314 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as n } from "@marko/runtime-tags/dom";
-const o = t.effect("a0", (n) =>
-    t.on(
-      n[0],
+// size: 502 (min) 268 (brotli)
+const _count_effect = _$.effect("a0", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 2: n } = t;
+      ((_scope) => {
+        const { 2: count } = _scope;
         return function () {
-          r(t, n + 1);
+          _count(_scope, count + 1);
         };
-      })(n),
+      })(_scope),
     ),
   ),
-  r = t.state(2, (n, r) => {
-    t.data(n[1], r), o(n);
+  _count = _$.state(2, (_scope, count) => {
+    _$.data(_scope[1], count), _count_effect(_scope);
   });
-const e = (t) => {
-    !(function (t) {
-      r(t, 0);
-    })(t[0]);
+const _setup$tagNameBody = (_scope) => {
+    !(function (_scope) {
+      _count(_scope, 0);
+    })(_scope[0]);
   },
-  c = t.register(
+  _tagNameBody = _$.register(
     "b0",
-    t.createRendererWithOwner("<button id=count> </button>", "/ D l&", e),
-  ),
-  a = t.dynamicTagAttrs(0, c),
-  i = t.conditional(
-    0,
-    (t) => a(t, () => ({})),
-    () => a,
-  ),
-  s = t.effect("b1", (n) =>
-    t.on(
-      n[1],
-      "click",
-      ((t) => {
-        const { 2: n } = t;
-        return function () {
-          m(t, "span" === n ? "div" : "span");
-        };
-      })(n),
+    _$.createRendererWithOwner(
+      "<button id=count> </button>",
+      "/ D l&",
+      _setup$tagNameBody,
     ),
   ),
-  m = t.state(
+  _tagName_input = _$.dynamicTagAttrs(0, _tagNameBody),
+  _dynamicTagName = _$.conditional(
+    0,
+    (_scope) => _tagName_input(_scope, () => ({})),
+    () => _tagName_input,
+  ),
+  _tagName_effect = _$.effect("b1", (_scope) =>
+    _$.on(
+      _scope[1],
+      "click",
+      ((_scope) => {
+        const { 2: tagName } = _scope;
+        return function () {
+          _tagName(_scope, "span" === tagName ? "div" : "span");
+        };
+      })(_scope),
+    ),
+  ),
+  _tagName = _$.state(
     2,
-    (t, n) => {
-      s(t), i(t, n || c(t));
+    (_scope, tagName) => {
+      _tagName_effect(_scope),
+        _dynamicTagName(_scope, tagName || _tagNameBody(_scope));
     },
-    () => i,
+    () => _dynamicTagName,
   );
-n();
+init();

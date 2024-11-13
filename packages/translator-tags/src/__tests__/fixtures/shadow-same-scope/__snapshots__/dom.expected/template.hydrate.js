@@ -1,65 +1,62 @@
-// size: 647 (min) 210 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as n } from "@marko/runtime-tags/dom";
-const a = t.effect("a0", (n) =>
-    t.on(
-      n[6],
+// size: 558 (min) 169 (brotli)
+const _count4_effect = _$.effect("a0", (_scope) =>
+    _$.on(
+      _scope[6],
       "click",
-      ((t) => {
-        const { 11: n } = t;
+      ((_scope) => {
+        const { 11: _count3 } = _scope;
         return function () {
-          c(t, n + 1);
+          _count4(_scope, _count3 + 1);
         };
-      })(n),
+      })(_scope),
     ),
   ),
-  c = t.state(11, (n, c) => {
-    t.data(n[7], c), a(n);
+  _count4 = _$.state(11, (_scope, _count3) => {
+    _$.data(_scope[7], _count3), _count4_effect(_scope);
   }),
-  o = t.effect("a1", (n) =>
-    t.on(
-      n[4],
+  _count3_effect = _$.effect("a1", (_scope) =>
+    _$.on(
+      _scope[4],
       "click",
-      ((t) => {
-        const { 10: n } = t;
+      ((_scope) => {
+        const { 10: _count2 } = _scope;
         return function () {
-          e(t, n + 1);
+          _count3(_scope, _count2 + 1);
         };
-      })(n),
+      })(_scope),
     ),
   ),
-  e = t.state(10, (n, a) => {
-    t.data(n[5], a), o(n);
+  _count3 = _$.state(10, (_scope, _count2) => {
+    _$.data(_scope[5], _count2), _count3_effect(_scope);
   }),
-  r = t.effect("a2", (n) =>
-    t.on(
-      n[2],
+  _count2_effect = _$.effect("a2", (_scope) =>
+    _$.on(
+      _scope[2],
       "click",
-      ((t) => {
-        const { 9: n } = t;
+      ((_scope) => {
+        const { 9: _count } = _scope;
         return function () {
-          f(t, n + 1);
+          _count2(_scope, _count + 1);
         };
-      })(n),
+      })(_scope),
     ),
   ),
-  f = t.state(9, (n, a) => {
-    t.data(n[3], a), r(n);
+  _count2 = _$.state(9, (_scope, _count) => {
+    _$.data(_scope[3], _count), _count2_effect(_scope);
   }),
-  i = t.effect("a3", (n) =>
-    t.on(
-      n[0],
+  _count_effect = _$.effect("a3", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 8: n } = t;
+      ((_scope) => {
+        const { 8: count } = _scope;
         return function () {
-          s(t, n + 1);
+          _count(_scope, count + 1);
         };
-      })(n),
+      })(_scope),
     ),
   ),
-  s = t.state(8, (n, a) => {
-    t.data(n[1], a), i(n);
+  _count = _$.state(8, (_scope, count) => {
+    _$.data(_scope[1], count), _count_effect(_scope);
   });
-n();
+init();

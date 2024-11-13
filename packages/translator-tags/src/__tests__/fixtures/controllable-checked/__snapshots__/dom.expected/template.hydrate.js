@@ -1,15 +1,14 @@
-// size: 292 (min) 167 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as e } from "@marko/runtime-tags/dom";
-const o = t.register(
+// size: 203 (min) 138 (brotli)
+const _checkedChange = _$.register(
     "a0",
-    (t) =>
-      function (e) {
-        r(t, e);
+    (_scope) =>
+      function (_new_checked) {
+        _checked(_scope, _new_checked);
       },
   ),
-  r = t.state(2, (e, r) => {
-    t.controllable_input_checked(e, 0, r, o(e)), t.data(e[1], String(r));
+  _checked = _$.state(2, (_scope, checked) => {
+    _$.controllable_input_checked(_scope, 0, checked, _checkedChange(_scope)),
+      _$.data(_scope[1], String(checked));
   });
-t.effect("a1", (e) => t.controllable_input_checked_effect(e, 0)), e();
+_$.effect("a1", (_scope) => _$.controllable_input_checked_effect(_scope, 0)),
+  init();

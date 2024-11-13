@@ -1,20 +1,25 @@
-import { e as t, c as n, o, s, d as c } from "./runtime-iO38DTrJ.js";
-const i = t("XBSGKvBc", (t) =>
-    o(
-      t[0],
+// size: 222 (min) 159 (brotli)
+const _clickCount_effect = effect("XBSGKvBc", (_scope) =>
+    on(
+      _scope[0],
       "click",
-      ((t) => {
-        const { 2: n } = t;
+      ((_scope) => {
+        const { 2: clickCount } = _scope;
         return function () {
-          u(t, n + 1);
+          _clickCount(_scope, clickCount + 1);
         };
-      })(t),
+      })(_scope),
     ),
   ),
-  u = s(2, (t, n) => {
-    c(t[1], n), i(t);
+  _clickCount = state(2, (_scope, clickCount) => {
+    data(_scope[1], clickCount), _clickCount_effect(_scope);
   });
-function a(t) {
-  u(t, 0);
+function _setup_(_scope) {
+  _clickCount(_scope, 0);
 }
-n("tPaZsVqd", "<div><button> </button></div>", "D D m", a).mount();
+createTemplate(
+  "tPaZsVqd",
+  "<div><button> </button></div>",
+  "D D m",
+  _setup_,
+).mount();

@@ -1,47 +1,48 @@
-// size: 607 (min) 305 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as e } from "@marko/runtime-tags/dom";
-const o = t.closure(1, (e, o) => t.data(e[0], o)),
-  n = t.register(
+// size: 518 (min) 272 (brotli)
+const _clickCount$elseBody = _$.closure(1, (_scope, clickCount) =>
+    _$.data(_scope[0], clickCount),
+  ),
+  _elseBody = _$.register(
     "a0",
-    t.createRenderer(
+    _$.createRenderer(
       "<span>The button was clicked <!> times.</span>",
       "Db%",
       void 0,
-      () => [o],
+      () => [_clickCount$elseBody],
     ),
   ),
-  r = t.effect("a1", (e) =>
-    t.on(
-      e[0],
+  _clickCount$ifBody_effect = _$.effect("a1", (_scope) =>
+    _$.on(
+      _scope[0],
       "click",
-      ((t) => {
+      ((_scope) => {
         const {
-          _: { 1: e },
-        } = t;
+          _: { 1: clickCount },
+        } = _scope;
         return function () {
-          s(t._, e + 1);
+          _clickCount(_scope._, clickCount + 1);
         };
-      })(e),
+      })(_scope),
     ),
   ),
-  i = t.closure(1, (e, o) => {
-    t.data(e[1], o), r(e);
+  _clickCount$ifBody = _$.closure(1, (_scope, clickCount) => {
+    _$.data(_scope[1], clickCount), _clickCount$ifBody_effect(_scope);
   }),
-  a = t.register(
+  _ifBody = _$.register(
     "a2",
-    t.createRenderer("<button> </button>", " D ", void 0, () => [i]),
+    _$.createRenderer("<button> </button>", " D ", void 0, () => [
+      _clickCount$ifBody,
+    ]),
   ),
-  c = t.conditional(0, 0),
-  s = t.state(
+  _if = _$.conditional(0, 0),
+  _clickCount = _$.state(
     1,
-    (t, e) => c(t, e < 3 ? a : n),
+    (_scope, clickCount) => _if(_scope, clickCount < 3 ? _ifBody : _elseBody),
     () =>
-      t.intersections([
-        c,
-        t.inConditionalScope(i, 0),
-        t.inConditionalScope(o, 0),
+      _$.intersections([
+        _if,
+        _$.inConditionalScope(_clickCount$ifBody, 0),
+        _$.inConditionalScope(_clickCount$elseBody, 0),
       ]),
   );
-e();
+init();

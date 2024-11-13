@@ -1,6 +1,3 @@
-// size: 175 (min) 119 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as m } from "@marko/runtime-tags/dom";
-const a = t.state(1, (m, a) => t.data(m[0], a));
-t.effect("a0", (t) => a(t, "Client Only")), m();
+// size: 86 (min) 77 (brotli)
+const _x = _$.state(1, (_scope, x) => _$.data(_scope[0], x));
+_$.effect("a0", (_scope) => _x(_scope, "Client Only")), init();

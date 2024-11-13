@@ -1,91 +1,98 @@
-// size: 1182 (min) 541 (brotli)
-
-import * as t from "@marko/runtime-tags/dom";
-import { init as e } from "@marko/runtime-tags/dom";
-const o = t.intersection(
+// size: 1093 (min) 508 (brotli)
+const _expr_comment_id$ifBody = _$.intersection(
     2,
-    (t) => {
+    (_scope) => {
       const {
-        _: { 6: e, 8: o },
-      } = t;
-      k(t[0], { comments: e.comments, path: o });
+        _: { 6: comment, 8: id },
+      } = _scope;
+      _input_(_scope[0], { comments: comment.comments, path: id });
     },
-    () => t.inChild(0, k),
+    () => _$.inChild(0, _input_),
   ),
-  n = t.closure(8, 0, void 0, () => o),
-  i = t.closure(6, 0, void 0, () => o),
-  r = (t) => {
-    t[0];
+  _id$ifBody = _$.closure(8, 0, void 0, () => _expr_comment_id$ifBody),
+  _comment$ifBody = _$.closure(6, 0, void 0, () => _expr_comment_id$ifBody),
+  _setup$ifBody = (_scope) => {
+    _scope[0];
   },
-  a = t.register(
+  _ifBody = _$.register(
     "a0",
-    t.createRenderer("<ul></ul>", "/ b&", r, () => [n, i]),
+    _$.createRenderer("<ul></ul>", "/ b&", _setup$ifBody, () => [
+      _id$ifBody,
+      _comment$ifBody,
+    ]),
   ),
-  c = t.intersection(
+  _expr_input_i$forBody = _$.intersection(
     2,
-    (t) => {
+    (_scope) => {
       const {
-        _: { 2: e },
-        7: o,
-      } = t;
-      u(t, `${e.path || "c"}-${o}`);
+        _: { 2: input },
+        7: i,
+      } = _scope;
+      _id$forBody(_scope, `${input.path || "c"}-${i}`);
     },
-    () => u,
+    () => _id$forBody,
   ),
-  s = t.conditional(4, 0),
-  l = t.effect("a1", (e) =>
-    t.on(
-      e[2],
+  _if$forBody = _$.conditional(4, 0),
+  _open$forBody_effect = _$.effect("a1", (_scope) =>
+    _$.on(
+      _scope[2],
       "click",
-      ((t) => {
-        const { 9: e } = t;
+      ((_scope) => {
+        const { 9: open } = _scope;
         return function () {
-          m(t, !e);
+          _open$forBody(_scope, !open);
         };
-      })(e),
+      })(_scope),
     ),
   ),
-  m = t.state(9, (e, o) => {
-    t.attr(e[0], "hidden", !o), t.data(e[3], o ? "[-]" : "[+]"), l(e);
+  _open$forBody = _$.state(9, (_scope, open) => {
+    _$.attr(_scope[0], "hidden", !open),
+      _$.data(_scope[3], open ? "[-]" : "[+]"),
+      _open$forBody_effect(_scope);
   }),
-  u = t.value(
+  _id$forBody = _$.value(
     8,
-    (e, o) => t.attr(e[0], "id", o),
-    () => t.inConditionalScope(n, 4),
+    (_scope, id) => _$.attr(_scope[0], "id", id),
+    () => _$.inConditionalScope(_id$ifBody, 4),
   ),
-  d = t.value(7, 0, () => c),
-  p = t.value(
+  _i$forBody = _$.value(7, 0, () => _expr_input_i$forBody),
+  _comment$forBody = _$.value(
     6,
-    (e, o) => {
-      t.data(e[1], o.text), s(e, o.comments ? a : null);
+    (_scope, comment) => {
+      _$.data(_scope[1], comment.text),
+        _if$forBody(_scope, comment.comments ? _ifBody : null);
     },
-    () => t.intersections([s, t.inConditionalScope(i, 4)]),
+    () =>
+      _$.intersections([
+        _if$forBody,
+        _$.inConditionalScope(_comment$ifBody, 4),
+      ]),
   ),
-  v = t.value(
+  _params_2$forBody = _$.value(
     5,
-    (t, e) => {
-      p(t, e[0]), d(t, e[1]);
+    (_scope, _params_2) => {
+      _comment$forBody(_scope, _params_2[0]), _i$forBody(_scope, _params_2[1]);
     },
-    () => t.intersections([p, d]),
+    () => _$.intersections([_comment$forBody, _i$forBody]),
   ),
-  f = t.closure(2, 0, void 0, () => c),
-  g = (t) => {
-    m(t, !0);
+  _input$forBody = _$.closure(2, 0, void 0, () => _expr_input_i$forBody),
+  _setup$forBody = (_scope) => {
+    _open$forBody(_scope, !0);
   },
-  h = t.register(
+  _forBody = _$.register(
     "a2",
-    t.createRenderer(
+    _$.createRenderer(
       "<li><span> </span><button> </button><!></li>",
       " E l D l%",
-      g,
-      () => [f],
-      () => v,
+      _setup$forBody,
+      () => [_input$forBody],
+      () => _params_2$forBody,
     ),
   ),
-  b = t.loopOf(0, h),
-  k = t.value(
+  _for = _$.loopOf(0, _forBody),
+  _input_ = _$.value(
     2,
-    (t, e) => b(t, [e.comments]),
-    () => t.intersections([b, t.inLoopScope(f, 0)]),
+    (_scope, input) => _for(_scope, [input.comments]),
+    () => _$.intersections([_for, _$.inLoopScope(_input$forBody, 0)]),
   );
-e();
+init();

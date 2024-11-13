@@ -1,32 +1,34 @@
-// size: 534 (min) 248 (brotli)
-
-import * as r from "@marko/runtime-tags/dom";
-import { init as e } from "@marko/runtime-tags/dom";
-r.dynamicTagAttrs(0);
-r.registerSubscriber(
+// size: 445 (min) 212 (brotli)
+_$.dynamicTagAttrs(0);
+_$.registerSubscriber(
   "b0",
-  r.dynamicClosure(
+  _$.dynamicClosure(
     4,
-    (e, t) => r.data(e[2], t),
-    (r) => r._._,
+    (_scope, c) => _$.data(_scope[2], c),
+    (_scope) => _scope._._,
   ),
 );
-const t = r.registerSubscriber(
+const _c$customTagBody = _$.registerSubscriber(
     "b1",
-    r.dynamicClosure(4, (e, t) => r.data(e[2], t)),
+    _$.dynamicClosure(4, (_scope, c) => _$.data(_scope[2], c)),
   ),
-  a = r.dynamicClosure(3, (e, t) => r.data(e[1], t)),
-  i = (e) => {
-    r.data(e[0], 1);
+  _b$customTagBody = _$.dynamicClosure(3, (_scope, b) => _$.data(_scope[1], b)),
+  _setup$customTagBody = (_scope) => {
+    _$.data(_scope[0], 1);
   };
-r.register(
+_$.register(
   "b2",
-  r.createRendererWithOwner("<!> <!> <!>", "%c%c%", i, () => [t, a]),
+  _$.createRendererWithOwner(
+    "<!> <!> <!>",
+    "%c%c%",
+    _setup$customTagBody,
+    () => [_c$customTagBody, _b$customTagBody],
+  ),
 );
-const c = r.state(4, 0, () => r.dynamicSubscribers(4));
-r.effect("b3", (e) =>
-  r.on(e[0], "click", function () {
-    c(e, 4);
+const _c = _$.state(4, 0, () => _$.dynamicSubscribers(4));
+_$.effect("b3", (_scope) =>
+  _$.on(_scope[0], "click", function () {
+    _c(_scope, 4);
   }),
 ),
-  e();
+  init();

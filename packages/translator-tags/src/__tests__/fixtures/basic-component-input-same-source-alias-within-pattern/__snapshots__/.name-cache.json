@@ -1,0 +1,15 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "i",
+      "$_text_": "n",
+      "$_pattern__": "e",
+      "$_onClick__effect": "r",
+      "$_onClick_": "o",
+      "$_onClick": "a",
+      "$_onClick2": "s",
+      "$_clickCount": "c"
+    }
+  }
+}

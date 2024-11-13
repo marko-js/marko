@@ -1,45 +1,46 @@
-// size: 593 (min) 225 (brotli)
-
-import * as e from "@marko/runtime-tags/dom";
-const r = e.registerSubscriber(
+// size: 551 (min) 198 (brotli)
+const _value2$ifBody = _$.registerSubscriber(
     "a0",
-    e.dynamicClosure(
+    _$.dynamicClosure(
       5,
-      (r, a) => e.data(r[0], a),
-      (e) => e._._,
+      (_scope, value2) => _$.data(_scope[0], value2),
+      (_scope) => _scope._._,
     ),
   ),
-  a = e.register(
+  _ifBody3 = _$.register(
     "a1",
-    e.createRenderer("<span> </span>", "D ", void 0, () => [r]),
+    _$.createRenderer("<span> </span>", "D ", void 0, () => [_value2$ifBody]),
   ),
-  i = e.registerSubscriber(
+  _value1$ifBody = _$.registerSubscriber(
     "a2",
-    e.dynamicClosure(
+    _$.dynamicClosure(
       4,
-      (r, a) => e.data(r[0], a),
-      (e) => e._._,
+      (_scope, value1) => _$.data(_scope[0], value1),
+      (_scope) => _scope._._,
     ),
   ),
-  o = e.register(
+  _ifBody2 = _$.register(
     "a3",
-    e.createRenderer("<span> </span>", "D ", void 0, () => [i]),
+    _$.createRenderer("<span> </span>", "D ", void 0, () => [_value1$ifBody]),
   ),
-  s = e.conditional(1, 0),
-  n = e.conditional(0, 0),
-  t = e.closure(
+  _if$ifBody2 = _$.conditional(1, 0),
+  _if$ifBody = _$.conditional(0, 0),
+  _value2$ifBody2 = _$.closure(
     5,
-    (e, r) => s(e, r ? a : null),
+    (_scope, value2) => _if$ifBody2(_scope, value2 ? _ifBody3 : null),
     void 0,
-    () => s,
+    () => _if$ifBody2,
   ),
-  d = e.closure(
+  _value1$ifBody2 = _$.closure(
     4,
-    (e, r) => n(e, r ? o : null),
+    (_scope, value1) => _if$ifBody(_scope, value1 ? _ifBody2 : null),
     void 0,
-    () => n,
+    () => _if$ifBody,
   );
-e.register(
+_$.register(
   "a4",
-  e.createRenderer("<!><!><!><!>", "D%b%D", void 0, () => [t, d]),
+  _$.createRenderer("<!><!><!><!>", "D%b%D", void 0, () => [
+    _value2$ifBody2,
+    _value1$ifBody2,
+  ]),
 );
