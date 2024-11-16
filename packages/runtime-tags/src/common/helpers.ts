@@ -56,6 +56,13 @@ function toDelimitedString(
   return "";
 }
 
+export function isEventHandler(name: string): name is `on${string}` {
+  return /^on[A-Z-]/.test(name);
+}
+export function getEventHandlerName(name: `on${string}`) {
+  return name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase();
+}
+
 export function isVoid(value: unknown) {
   return value == null || value === false;
 }

@@ -1,4 +1,10 @@
-import { classValue, isVoid, styleValue } from "../common/helpers";
+import {
+  classValue,
+  getEventHandlerName,
+  isEventHandler,
+  isVoid,
+  styleValue,
+} from "../common/helpers";
 import { type Accessor, AccessorChar, ControlledType } from "../common/types";
 import { escapeTextAreaValue } from "./content";
 import { ensureScopeWithId, getChunk, withContext } from "./writer";
@@ -35,7 +41,7 @@ export function controllable_select_value(
   renderBody?: () => void,
 ) {
   if (valueChange) {
-    const scope = ensureScopeWithId(scopeId!);
+    const scope = ensureScopeWithId(scopeId);
     scope[nodeAccessor + AccessorChar.ControlledValue] = value;
     scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
     scope[nodeAccessor + AccessorChar.ControlledType] =
@@ -54,7 +60,7 @@ export function controllable_textarea_value(
   valueChange: unknown,
 ) {
   if (valueChange) {
-    const scope = ensureScopeWithId(scopeId!);
+    const scope = ensureScopeWithId(scopeId);
     scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
     scope[nodeAccessor + AccessorChar.ControlledType] =
       ControlledType.InputValue;
@@ -70,7 +76,7 @@ export function controllable_input_value(
   valueChange: unknown,
 ) {
   if (valueChange) {
-    const scope = ensureScopeWithId(scopeId!);
+    const scope = ensureScopeWithId(scopeId);
     scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
     scope[nodeAccessor + AccessorChar.ControlledType] =
       ControlledType.InputValue;
@@ -85,7 +91,7 @@ export function controllable_input_checked(
   checkedChange: unknown,
 ) {
   if (checkedChange) {
-    const scope = ensureScopeWithId(scopeId!);
+    const scope = ensureScopeWithId(scopeId);
     // scope[nodeAccessor + AccessorChar.ControlledValue] = checked;
     scope[nodeAccessor + AccessorChar.ControlledHandler] = checkedChange;
     scope[nodeAccessor + AccessorChar.ControlledType] =
@@ -104,7 +110,7 @@ export function controllable_input_checkedValue(
   const multiple = Array.isArray(checkedValue);
   const valueAttr = attr("value", value);
   if (checkedValueChange) {
-    const scope = ensureScopeWithId(scopeId!);
+    const scope = ensureScopeWithId(scopeId);
     scope[nodeAccessor + AccessorChar.ControlledHandler] = checkedValueChange;
     scope[nodeAccessor + AccessorChar.ControlledType] =
       ControlledType.InputCheckedValue;
@@ -125,7 +131,7 @@ export function controllable_detailsOrDialog_open(
   openChange: unknown,
 ) {
   if (openChange) {
-    const scope = ensureScopeWithId(scopeId!);
+    const scope = ensureScopeWithId(scopeId);
     scope[nodeAccessor + AccessorChar.ControlledValue] = open;
     scope[nodeAccessor + AccessorChar.ControlledHandler] = openChange;
     scope[nodeAccessor + AccessorChar.ControlledType] =
@@ -146,7 +152,6 @@ export function attrs(
 ) {
   let result = "";
   let skip = /[\s/>"'=]/;
-  let scope: Record<string, unknown> | undefined;
   let events: Record<string, unknown> | undefined;
   switch (tagName) {
     case "input":
@@ -218,13 +223,11 @@ export function attrs(
         break;
       default:
         if (!isVoid(val)) {
-          if (/^on[A-Z-]/.test(name)) {
-            events ||= (scope ??= ensureScopeWithId(scopeId!))[
-              (nodeAccessor + AccessorChar.EventAttributes) as any
-            ] ||= {} as any;
-            events![
-              name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()
-            ] = val;
+          if (isEventHandler(name)) {
+            (events ||= ensureScopeWithId(scopeId)[
+              nodeAccessor + AccessorChar.EventAttributes
+            ] =
+              {})[getEventHandlerName(name)] = val;
           } else if (!skip.test(name)) {
             result += nonVoidAttr(name, val);
           }

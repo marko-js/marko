@@ -5,6 +5,10 @@ import {
   getTagDef,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import {
+  getEventHandlerName,
+  isEventHandler,
+} from "@marko/runtime-tags/common/helpers";
 import { WalkCode } from "@marko/runtime-tags/common/types";
 
 import evaluate from "../../util/evaluate";
@@ -802,18 +806,8 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
   };
 }
 
-function isEventHandler(propName: string) {
-  return /^on[A-Z-]/.test(propName);
-}
-
 function isChangeHandler(propName: string) {
   return /^(?:value|checked(?:Values?)?|open)Change/.test(propName);
-}
-
-function getEventHandlerName(propName: string) {
-  return propName.charAt(2) === "-"
-    ? propName.slice(3)
-    : propName.charAt(2).toLowerCase() + propName.slice(3);
 }
 
 function attrToObjectProperty(attr: t.MarkoAttribute) {

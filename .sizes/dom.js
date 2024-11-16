@@ -1,4 +1,4 @@
-// size: 17806 (min) 6448 (brotli)
+// size: 17850 (min) 6455 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -544,6 +544,12 @@ function toDelimitedString(val, delimiter, stringify) {
   }
   return "";
 }
+function isEventHandler(name) {
+  return /^on[A-Z-]/.test(name);
+}
+function getEventHandlerName(name) {
+  return "-" === name[2] ? name.slice(3) : name.slice(2).toLowerCase();
+}
 function normalizeDynamicRenderer(value2) {
   if (value2) return value2.renderBody || value2.default || value2;
 }
@@ -836,7 +842,6 @@ var fallback = document.createTextNode(""),
 function parseHTML(html2) {
   return parser.createContextualFragment(html2);
 }
-var eventHandlerReg = /^on[A-Z-]/;
 function attr(element, name, value2) {
   setAttribute(element, name, normalizeAttrValue(value2));
 }
@@ -969,9 +974,9 @@ function attrsInternal(scope, nodeAccessor, nextAttrs) {
       case "renderBody":
         break;
       default:
-        eventHandlerReg.test(name)
+        isEventHandler(name)
           ? ((events ||= scope[nodeAccessor + "~"] = {})[
-              "-" === name[2] ? name.slice(3) : name.slice(2).toLowerCase()
+              getEventHandlerName(name)
             ] = value2)
           : skip?.test(name) || attr(el, name, value2);
     }
