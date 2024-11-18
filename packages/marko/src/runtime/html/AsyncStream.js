@@ -193,6 +193,8 @@ var proto = (AsyncStream.prototype = {
 
     return (this.___iterator = {
       next: iteratorNextFn,
+      return: iteratorReturnFn,
+      throw: iteratorReturnFn,
       [Symbol.asyncIterator]() {
         return this;
       },
@@ -763,4 +765,11 @@ function getNonMarkoStack(error) {
     .slice(1)
     .filter((line) => !/\/node_modules\/marko\//.test(line))
     .join("\n");
+}
+
+function iteratorReturnFn(value) {
+  return Promise.resolve({
+    value,
+    done: true,
+  });
 }
