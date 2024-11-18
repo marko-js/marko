@@ -1,5 +1,17 @@
 # @marko/translator-tags
 
+## 0.2.23
+
+### Patch Changes
+
+- [#2367](https://github.com/marko-js/marko/pull/2367) [`c8e943d`](https://github.com/marko-js/marko/commit/c8e943d30ea621356b14ce5a2bf8c040f9d41f82) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ignore errors from child template analysis (assume child will be compiled after imported anyway).
+
+- [#2367](https://github.com/marko-js/marko/pull/2367) [`c8e943d`](https://github.com/marko-js/marko/commit/c8e943d30ea621356b14ce5a2bf8c040f9d41f82) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - When unable to perform child template analysis, custom tag will become a dynamic tag.
+
+- Updated dependencies [[`cbcd7ec`](https://github.com/marko-js/marko/commit/cbcd7ecd3bb6a670c0cbd90f02b3a16332a71282), [`c8e943d`](https://github.com/marko-js/marko/commit/c8e943d30ea621356b14ce5a2bf8c040f9d41f82)]:
+  - @marko/runtime-tags@0.1.24
+  - @marko/babel-utils@6.5.13
+
 ## 0.2.22
 
 ### Patch Changes

@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.37.25
+
+### Patch Changes
+
+- [#2367](https://github.com/marko-js/marko/pull/2367) [`c8e943d`](https://github.com/marko-js/marko/commit/c8e943d30ea621356b14ce5a2bf8c040f9d41f82) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ignore errors from child template analysis (assume child will be compiled after imported anyway).
+
+- [#2365](https://github.com/marko-js/marko/pull/2365) [`894d0d0`](https://github.com/marko-js/marko/commit/894d0d05daddee107640f83bcd8a11f46b4e359b) Thanks [@rturnq](https://github.com/rturnq)! - Expose globalConfig and fix config default export
+
+- Updated dependencies [[`c8e943d`](https://github.com/marko-js/marko/commit/c8e943d30ea621356b14ce5a2bf8c040f9d41f82)]:
+  - @marko/babel-utils@6.5.13
+
 ## 5.37.24
 
 ### Patch Changes

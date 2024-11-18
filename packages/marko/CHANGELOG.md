@@ -1,5 +1,19 @@
 # Change Log
 
+## 5.35.34
+
+### Patch Changes
+
+- [#2364](https://github.com/marko-js/marko/pull/2364) [`cbcd7ec`](https://github.com/marko-js/marko/commit/cbcd7ecd3bb6a670c0cbd90f02b3a16332a71282) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add `return` method to asyncIterator on render method to better support apis that expect it to be there.
+
+- [#2367](https://github.com/marko-js/marko/pull/2367) [`c8e943d`](https://github.com/marko-js/marko/commit/c8e943d30ea621356b14ce5a2bf8c040f9d41f82) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ignore errors from child template analysis (assume child will be compiled after imported anyway).
+
+- [#2365](https://github.com/marko-js/marko/pull/2365) [`894d0d0`](https://github.com/marko-js/marko/commit/894d0d05daddee107640f83bcd8a11f46b4e359b) Thanks [@rturnq](https://github.com/rturnq)! - Expose globalConfig and fix config default export
+
+- Updated dependencies [[`c8e943d`](https://github.com/marko-js/marko/commit/c8e943d30ea621356b14ce5a2bf8c040f9d41f82), [`894d0d0`](https://github.com/marko-js/marko/commit/894d0d05daddee107640f83bcd8a11f46b4e359b)]:
+  - @marko/compiler@5.37.25
+  - @marko/translator-default@6.0.25
+
 ## 5.35.33
 
 ### Patch Changes

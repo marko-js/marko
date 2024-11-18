@@ -1,5 +1,11 @@
 # Change Log
 
+## 6.5.13
+
+### Patch Changes
+
+- [#2367](https://github.com/marko-js/marko/pull/2367) [`c8e943d`](https://github.com/marko-js/marko/commit/c8e943d30ea621356b14ce5a2bf8c040f9d41f82) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ignore errors from child template analysis (assume child will be compiled after imported anyway).
+
 ## 6.5.12
 
 ### Patch Changes
