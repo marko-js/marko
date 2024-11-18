@@ -71,7 +71,7 @@ class ServerRenderResult implements RenderResult {
     let done = false;
     let aborted = false;
     let reason: unknown;
-    this.#read(
+    const boundary = this.#read(
       (html) => {
         value += html;
         if (resolve) {
@@ -104,10 +104,30 @@ class ServerRenderResult implements RenderResult {
         }
 
         return done
-          ? Promise.resolve({ value, done })
+          ? Promise.resolve({ value: "", done })
           : aborted
             ? Promise.reject(reason)
             : new Promise(exec);
+      },
+      throw(error: unknown) {
+        if (!(done || aborted)) {
+          boundary?.abort(error);
+        }
+
+        return Promise.resolve({
+          value: "",
+          done: true,
+        } as const);
+      },
+      return(value: unknown) {
+        if (!(done || aborted)) {
+          boundary?.abort(new Error("Iterator returned before consumed."));
+        }
+
+        return Promise.resolve({
+          value,
+          done: true,
+        } as const);
       },
     };
 
@@ -255,6 +275,7 @@ class ServerRenderResult implements RenderResult {
     });
 
     onNext();
+    return boundary;
   }
 
   toString() {
