@@ -1,4 +1,9 @@
-import { classValue, styleValue } from "../common/helpers";
+import {
+  classValue,
+  getEventHandlerName,
+  isEventHandler,
+  styleValue,
+} from "../common/helpers";
 import {
   type Accessor,
   AccessorChar,
@@ -22,8 +27,6 @@ import {
 } from "./controllable";
 import { on } from "./event";
 import { parseHTML } from "./parse-html";
-
-const eventHandlerReg = /^on[A-Z-]/;
 
 export function isDocumentFragment(node: Node): node is DocumentFragment {
   return node.nodeType === NodeType.DocumentFragment;
@@ -203,14 +206,15 @@ function attrsInternal(
         break;
       case "renderBody":
         break;
-      default:
-        if (eventHandlerReg.test(name)) {
+      default: {
+        if (isEventHandler(name)) {
           (events ||= scope[nodeAccessor + AccessorChar.EventAttributes] = {})[
-            name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()
+            getEventHandlerName(name)
           ] = value;
         } else if (!skip?.test(name)) {
           attr(el, name, value);
         }
+      }
     }
   }
 }
