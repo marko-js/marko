@@ -113,7 +113,7 @@ export default {
       if (childFile.opts.filename === tag.hub.file.opts.filename) {
         mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
       } else {
-        const childProgramExtra = childFile?.ast.program.extra;
+        const childProgramExtra = childFile.ast.program.extra;
         analyzeAttrs(
           section,
           tag,

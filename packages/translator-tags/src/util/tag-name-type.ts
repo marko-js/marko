@@ -58,8 +58,9 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
           analyzeExpressionTagName(name.replaceWith(tagIdentifier)[0], extra);
         } else {
           const childFile = loadFileForTag(tag);
-          const childProgram = childFile?.ast.program;
-          if (childProgram?.extra!.featureType === "class") {
+          if (!childFile) {
+            extra.tagNameType = TagNameType.DynamicTag;
+          } else if (childFile.ast.program.extra!.featureType === "class") {
             extra.tagNameType = TagNameType.DynamicTag;
             extra.featureType = "class";
           }
