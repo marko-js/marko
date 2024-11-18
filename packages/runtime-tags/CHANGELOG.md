@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.1.24
+
+### Patch Changes
+
+- [#2364](https://github.com/marko-js/marko/pull/2364) [`cbcd7ec`](https://github.com/marko-js/marko/commit/cbcd7ecd3bb6a670c0cbd90f02b3a16332a71282) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add `return` method to asyncIterator on render method to better support apis that expect it to be there.
+
 ## 0.1.23
 
 ### Patch Changes
