@@ -305,11 +305,15 @@ function resolveMarkoFile(file, filename) {
     return file.___getMarkoFile(file.code, file.opts, file.markoOpts);
   }
 
-  return file.___getMarkoFile(
-    file.markoOpts.fileSystem.readFileSync(filename).toString("utf-8"),
-    createNewFileOpts(file.opts, filename),
-    file.markoOpts,
-  );
+  try {
+    return file.___getMarkoFile(
+      file.markoOpts.fileSystem.readFileSync(filename).toString("utf-8"),
+      createNewFileOpts(file.opts, filename),
+      file.markoOpts,
+    );
+  } catch (_) {
+    // ignore
+  }
 }
 
 const idCache = new WeakMap();
