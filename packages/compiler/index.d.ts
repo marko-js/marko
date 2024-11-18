@@ -38,6 +38,8 @@ export interface CompileResult {
   meta: MarkoMeta;
 }
 
+export const globalConfig: Config;
+
 export function configure(config: Config): void;
 
 export function compile(

@@ -17,7 +17,7 @@ export { taglib };
 
 const CWD = process.cwd();
 
-let globalConfig = { ...defaultConfig };
+export let globalConfig = { ...defaultConfig };
 export function configure(newConfig) {
   globalConfig = { ...defaultConfig, ...newConfig };
 }
