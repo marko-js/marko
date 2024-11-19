@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.35.35
+
+### Patch Changes
+
+- [#2368](https://github.com/marko-js/marko/pull/2368) [`bb44af0`](https://github.com/marko-js/marko/commit/bb44af04b1ad29d14200ff5cff26b27a39ce446e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with "package: " deps (used for lasso) not being hoisted when building the hydrate output.
+
+- Updated dependencies [[`bb44af0`](https://github.com/marko-js/marko/commit/bb44af04b1ad29d14200ff5cff26b27a39ce446e)]:
+  - @marko/translator-default@6.0.26
+  - @marko/compiler@5.37.26
+
 ## 5.35.34
 
 ### Patch Changes
