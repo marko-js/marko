@@ -14,9 +14,8 @@ export default (entryFile, isHydrate) => {
   const programNode = program.node;
 
   if (!isHydrate) {
-    const imports = new Set();
     const body = [];
-    addBrowserImports(imports, body, entryFile, entryFile);
+    addBrowserImports(new Set(), undefined, body, entryFile, entryFile);
     if (body.length) {
       programNode.body = body.concat(programNode.body);
     }
@@ -54,6 +53,10 @@ export const entryBuilder = {
     const entryMarkoMeta = entryFile.metadata.marko;
     const { body } = state;
     entryMarkoMeta.watchFiles = Array.from(state.watchFiles);
+    entryMarkoMeta.deps = Array.from(
+      state.lassoDeps,
+      (dep) => `package: ${dep}`,
+    );
 
     if (state.hasComponents) {
       const initId = t.identifier("init");
@@ -92,12 +95,13 @@ export const entryBuilder = {
       shouldIncludeImport: toTestFn(file.markoOpts.hydrateIncludeImports),
       watchFiles: new Set(),
       imports: new Set(),
+      lassoDeps: new Set(),
       hasComponents: false,
       splitComponentIndex: 0,
       body: [],
     });
 
-    const { watchFiles, imports, body } = state;
+    const { watchFiles, imports, lassoDeps, body } = state;
 
     if (fileMeta.component) {
       state.hasComponents = true;
@@ -115,7 +119,7 @@ export const entryBuilder = {
       watchFiles.add(watchFile);
     }
 
-    addBrowserImports(imports, body, file, entryFile);
+    addBrowserImports(imports, lassoDeps, body, file, entryFile);
 
     for (const child of file.path.node.body) {
       if (t.isImportDeclaration(child)) {
@@ -167,7 +171,7 @@ export const entryBuilder = {
   },
 };
 
-function addBrowserImports(seenImports, body, file, entryFile) {
+function addBrowserImports(seenImports, lassoDeps, body, file, entryFile) {
   const { filename, sourceMaps } = file.opts;
   let s;
 
@@ -204,7 +208,12 @@ function addBrowserImports(seenImports, body, file, entryFile) {
       if (!dep) {
         continue;
       }
-    } else if (dep.startsWith("package:")) {
+    } else if (isLassoDep(dep)) {
+      if (lassoDeps) {
+        lassoDeps.add(
+          resolveRelativeToEntry(entryFile, file, lassoManifestDepToPath(dep)),
+        );
+      }
       continue;
     }
 
@@ -293,4 +302,12 @@ function toTestFn(val) {
   }
 
   return val.test.bind(val);
+}
+
+function isLassoDep(dep) {
+  return dep.startsWith("package: ");
+}
+
+function lassoManifestDepToPath(dep) {
+  return dep.slice(9);
 }
