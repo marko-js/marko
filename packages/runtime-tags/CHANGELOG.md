@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.1.25
+
+### Patch Changes
+
+- [#2370](https://github.com/marko-js/marko/pull/2370) [`263e548`](https://github.com/marko-js/marko/commit/263e548ed8d00d6743ac3cb102730e2190866a0f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix race condition with debug mode scheduler.
+
 ## 0.1.24
 
 ### Patch Changes
