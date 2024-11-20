@@ -1,12 +1,13 @@
 import { run } from "./queue";
-let task: any;
+let runTask: undefined | (() => void);
 const port2 = /* @__PURE__ */ (() => {
   const { port1, port2 } = new MessageChannel();
   port1.onmessage = () => {
     isScheduled = false;
     if (MARKO_DEBUG) {
-      task.run(run);
-      task = undefined;
+      const run = runTask!;
+      runTask = undefined;
+      run();
     } else {
       run();
     }
@@ -19,11 +20,12 @@ export let isScheduled: boolean;
 export function schedule() {
   if (!isScheduled) {
     if (MARKO_DEBUG) {
-      task = (console as any).createTask?.("queue") || {
-        run(fn: any) {
-          fn();
-        },
-      };
+      if ((console as any).createTask) {
+        const task = (console as any).createTask("queue");
+        runTask = () => task.run(run);
+      } else {
+        runTask = run;
+      }
     }
 
     isScheduled = true;
@@ -33,7 +35,7 @@ export function schedule() {
 
 function flushAndWaitFrame() {
   if (MARKO_DEBUG) {
-    task.run(run);
+    runTask!();
   } else {
     run();
   }
