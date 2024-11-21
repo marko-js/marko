@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
-import type { Accessor } from "../common/types";
+import type { $Global, Accessor } from "../common/types";
 import { escapeAttrValue } from "./attrs";
 import { REORDER_RUNTIME_CODE, WALKER_RUNTIME_CODE } from "./inlined-runtimes";
 import { register as serializerRegister, Serializer } from "./serializer";
@@ -333,7 +333,7 @@ export class State {
   public writeScopes: null | (Record<number, PartialScope> & { $?: unknown }) =
     null;
   constructor(
-    public $global: Record<string, unknown> & {
+    public $global: $Global & {
       renderId: string;
       runtimeId: string;
     },
@@ -695,20 +695,27 @@ export function prepareChunk(chunk: Chunk) {
 
 export function flushChunk(head: Chunk) {
   const { html, scripts } = head;
+  const { $global } = head.boundary.state;
+  const { __flush__ } = $global;
+  const result = scripts
+    ? html +
+      "<script" +
+      (head.boundary.state.$global.cspNonce
+        ? " nonce=" + escapeAttrValue(head.boundary.state.$global.cspNonce + "")
+        : "") +
+      ">" +
+      scripts +
+      "</script>"
+    : html;
+
   head.html = head.scripts = "";
-  return (
-    html +
-    (scripts
-      ? "<script" +
-        (head.boundary.state.$global.cspNonce
-          ? " nonce=" +
-            escapeAttrValue(head.boundary.state.$global.cspNonce + "")
-          : "") +
-        ">" +
-        scripts +
-        "</script>"
-      : "")
-  );
+
+  if (__flush__) {
+    $global.__flush__ = undefined;
+    return __flush__($global, result);
+  }
+
+  return result;
 }
 
 function concatEffects(a: string, b: string) {

@@ -1,5 +1,4 @@
 import { taglibId } from "../util/is-core-tag";
-import FlushHereAndAfter from "./__flush_here_and_after__";
 import AttrsTag from "./attrs";
 import ClientTag from "./client";
 import ConstTag from "./const";
@@ -49,5 +48,4 @@ export default {
   "<static>": StaticTag,
   "<server>": ServerTag,
   "<client>": ClientTag,
-  "<__flush_here_and_after__>": FlushHereAndAfter,
 };
