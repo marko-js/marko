@@ -1,5 +1,11 @@
 # @marko/translator-tags
 
+## 0.2.24
+
+### Patch Changes
+
+- [#2372](https://github.com/marko-js/marko/pull/2372) [`2fa5df5`](https://github.com/marko-js/marko/commit/2fa5df5c067393def706c2a94811d2d443aa83a7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure tag name type analysis only returns a custom tag when we can perform child template analysis.
+
 ## 0.2.23
 
 ### Patch Changes
