@@ -1,5 +1,16 @@
 # @marko/translator-tags
 
+## 0.3.0
+
+### Minor Changes
+
+- [#2374](https://github.com/marko-js/marko/pull/2374) [`d8a9ee5`](https://github.com/marko-js/marko/commit/d8a9ee58a0ce0428c858886a3493aca0b9e91084) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support valueChange attribute on `<return>` tag.
+
+### Patch Changes
+
+- Updated dependencies [[`d8a9ee5`](https://github.com/marko-js/marko/commit/d8a9ee58a0ce0428c858886a3493aca0b9e91084)]:
+  - @marko/runtime-tags@0.2.0
+
 ## 0.2.24
 
 ### Patch Changes
