@@ -7,7 +7,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.write("<body>");
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_dynamicScope, renderBody, {});
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/0")}</body>`);
+  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/0")}`), _$.writeTrailers("</body>");
   _$.writeScope(_scope0_id, {
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(renderBody)
