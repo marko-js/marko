@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.2.1
+
+### Patch Changes
+
+- [#2376](https://github.com/marko-js/marko/pull/2376) [`07de4fc`](https://github.com/marko-js/marko/commit/07de4fc6fb3a17d2c059292bfade4ef0e22d9cec) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose psuedo internal `$global.__flush__` api to be used by bundler integrations.
+
 ## 0.2.0
 
 ### Minor Changes
