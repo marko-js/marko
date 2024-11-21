@@ -38,6 +38,7 @@ export enum AccessorChar {
   LifecycleAbortController = "-",
   DynamicPlaceholderLastChild = "-",
   TagVariable = "/",
+  TagVariableChange = "@",
   ConditionalScope = "!",
   ConditionalRenderer = "(",
   LoopScopeArray = "!",

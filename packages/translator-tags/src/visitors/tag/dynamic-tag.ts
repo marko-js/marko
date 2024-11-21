@@ -20,7 +20,8 @@ import {
   trackParamsReferences,
   trackVarReferences,
 } from "../../util/references";
-import { callRuntime } from "../../util/runtime";
+import { callRuntime, importRuntime } from "../../util/runtime";
+import { getScopeExpression } from "../../util/scope-read";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
@@ -277,11 +278,25 @@ export default {
         );
 
         if (tag.node.var) {
+          const childScopeLiteral = t.stringLiteral(
+            getScopeAccessorLiteral(extra[kDOMBinding]!).value +
+              AccessorChar.ConditionalScope,
+          );
           const source = initValue(
             // TODO: support destructuring
             tag.node.var.extra!.binding!,
           );
           source.register = true;
+          source.buildAssignment = (valueSection, value) => {
+            return t.callExpression(importRuntime("tagVarSignalChange"), [
+              t.memberExpression(
+                getScopeExpression(source.section, valueSection),
+                childScopeLiteral,
+                true,
+              ),
+              value,
+            ]);
+          };
 
           addStatement(
             "render",
@@ -291,10 +306,7 @@ export default {
               callRuntime(
                 "setTagVar",
                 scopeIdentifier,
-                t.stringLiteral(
-                  getScopeAccessorLiteral(extra[kDOMBinding]!).value +
-                    AccessorChar.ConditionalScope,
-                ),
+                childScopeLiteral,
                 source.identifier,
               ),
             ),
