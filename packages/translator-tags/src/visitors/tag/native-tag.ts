@@ -658,6 +658,7 @@ export default {
       const isHTML = isOutputHTML();
       const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
       const selectArgs = isHTML && htmlSelectArgs.get(tag.node);
+      const tagName = getTagName(tag);
 
       if (isHTML && extra.tagNameNullable) {
         writer.flushInto(tag);
@@ -686,7 +687,10 @@ export default {
       }
 
       if (!openTagOnly && !selectArgs) {
-        writer.writeTo(tag)`</${tag.node.name}>`;
+        writer.writeTo(
+          tag,
+          isHTML && (tagName === "html" || tagName === "body"),
+        )`</${tag.node.name}>`;
       }
 
       // dynamic tag stuff

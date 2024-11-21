@@ -25,14 +25,20 @@ const [getWrites] = createSectionState<(string | t.Expression)[]>(
   () => [""],
 );
 
-export function writeTo(path: t.NodePath<any>) {
+const [getTrailerWrites] = createSectionState<(string | t.Expression)[]>(
+  "trailerWrites",
+  () => [""],
+);
+
+export function writeTo(path: t.NodePath<any>, trailer?: boolean) {
   const section = getSection(path);
+  const get = trailer ? getTrailerWrites : getWrites;
   return (
     strs: TemplateStringsArray,
     ...exprs: Array<string | t.Expression>
   ): void => {
     const exprsLen = exprs.length;
-    const writes = getWrites(section);
+    const writes = get(section);
     appendLiteral(writes, strs[0]);
 
     for (let i = 0; i < exprsLen; i++) {
@@ -42,14 +48,27 @@ export function writeTo(path: t.NodePath<any>) {
 }
 
 export function consumeHTML(path: t.NodePath<any>) {
-  const writes = getWrites(getSection(path));
-  const result = toTemplateOrStringLiteral(writes);
-
+  const section = getSection(path);
+  const writes = getWrites(section);
+  const trailers = getTrailerWrites(section);
+  const writeResult = toTemplateOrStringLiteral(writes);
+  const trailerResult = toTemplateOrStringLiteral(trailers);
   writes.length = 0;
   writes[0] = "";
+  trailers.length = 0;
+  trailers[0] = "";
 
-  if (result) {
-    return t.expressionStatement(callRuntime("write", result));
+  if (writeResult && trailerResult) {
+    return t.expressionStatement(
+      t.sequenceExpression([
+        callRuntime("write", writeResult),
+        callRuntime("writeTrailers", trailerResult),
+      ]),
+    );
+  } else if (writeResult) {
+    return t.expressionStatement(callRuntime("write", writeResult));
+  } else if (trailerResult) {
+    return t.expressionStatement(callRuntime("writeTrailers", trailerResult));
   }
 }
 
