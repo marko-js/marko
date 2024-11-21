@@ -28,7 +28,7 @@ import {
   trackParamsReferences,
   trackVarReferences,
 } from "../../util/references";
-import { callRuntime } from "../../util/runtime";
+import { callRuntime, importRuntime } from "../../util/runtime";
 import { createScopeReadExpression } from "../../util/scope-read";
 import {
   getOrCreateSection,
@@ -296,6 +296,12 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       node.var.extra!.binding!,
     );
     source.register = true;
+    source.buildAssignment = (_valueSection, value) => {
+      return t.callExpression(importRuntime("tagVarSignalChange"), [
+        createScopeReadExpression(source.section, childScopeBinding),
+        value,
+      ]);
+    };
     addStatement(
       "render",
       tagSection,

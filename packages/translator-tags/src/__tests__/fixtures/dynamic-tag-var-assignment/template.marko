@@ -1,0 +1,6 @@
+import Counter from "<counter>";
+static function getCounter() {
+  return Counter; // breaks tag name analysis.
+}
+<${getCounter()}/count/>
+<button.reset onClick() { count = 0 }>reset</button>

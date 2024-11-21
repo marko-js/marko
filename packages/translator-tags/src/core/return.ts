@@ -1,17 +1,20 @@
 import {
+  assertAllowedAttributes,
   assertNoArgs,
   assertNoParams,
   assertNoVar,
   type Tag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { AccessorChar } from "@marko/runtime-tags/common/types";
 
-import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
-import { isOutputHTML } from "../util/marko-config";
+import { assertNoBodyContent } from "../util/assert";
+import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { importRuntime } from "../util/runtime";
 import { getSection } from "../util/sections";
-import { addValue } from "../util/signals";
+import { addValue, getSerializedScopeProperties } from "../util/signals";
 import { createSectionState } from "../util/state";
+import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
 
 const [returnId, _setReturnId] = createSectionState<t.Identifier | undefined>(
@@ -27,7 +30,7 @@ export default {
     assertNoVar(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
-    assertNoSpreadAttrs(tag);
+    assertAllowedAttributes(tag, ["value", "valueChange"]);
 
     if (usedTag.has(tag.hub)) {
       throw tag
@@ -38,71 +41,75 @@ export default {
     }
     usedTag.add(tag.hub);
 
-    const { node } = tag;
-    const [valueAttr] = node.attributes;
-
-    if (!t.isMarkoAttribute(valueAttr) || !valueAttr.default) {
+    if (!getKnownAttrValues(tag.node).value) {
       throw tag
         .get("name")
         .buildCodeFrameError("The `return` tag requires a value.");
     }
-
-    if (
-      node.attributes.length > 1 &&
-      (node.attributes[1] as t.MarkoAttribute).name !== "valueChange"
-    ) {
-      const start = node.attributes[1].loc?.start;
-      const end = node.attributes[node.attributes.length - 1].loc?.end;
-      const msg = "The `return` tag only supports the `value` attribute.";
-
-      if (start == null || end == null) {
-        throw tag.get("name").buildCodeFrameError(msg);
-      } else {
-        throw tag.hub.buildError(
-          { loc: { start, end } } as unknown as t.Node,
-          msg,
-          Error,
-        );
-      }
-    }
   },
-  translate: {
-    exit(tag) {
-      const section = getSection(tag);
-      const {
-        node: {
-          attributes: [{ value }],
-        },
-        hub: { file },
-      } = tag;
-
-      if (isOutputHTML()) {
+  translate: translateByTarget({
+    html: {
+      exit(tag) {
+        const section = getSection(tag);
+        const attrs = getKnownAttrValues(tag.node);
         writer.flushBefore(tag);
-        const returnId = file.path.scope.generateUidIdentifier("return");
-        _setReturnId(section, returnId);
 
-        tag
-          .replaceWith(
-            t.variableDeclaration("const", [
-              t.variableDeclarator(returnId, value),
-            ]),
-          )[0]
-          .skip();
-      } else {
-        addValue(
-          section,
-          value.extra?.referencedBindings,
-          {
-            identifier: importRuntime("tagVarSignal"),
-            hasDownstreamIntersections: () => true,
-          },
-          value,
-        );
+        if (attrs.valueChange) {
+          // TODO: this should be based on the child actually mutating the tag variable.
+          getSerializedScopeProperties(section).set(
+            t.stringLiteral(AccessorChar.TagVariableChange),
+            attrs.valueChange,
+          );
+        }
+
+        if (attrs.value) {
+          const returnId =
+            tag.hub.file.path.scope.generateUidIdentifier("return");
+          _setReturnId(section, returnId);
+
+          tag
+            .replaceWith(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(returnId, attrs.value),
+              ]),
+            )[0]
+            .skip();
+        }
+      },
+    },
+    dom: {
+      exit(tag) {
+        const section = getSection(tag);
+        const attrs = getKnownAttrValues(tag.node);
+
+        if (attrs.value) {
+          addValue(
+            section,
+            attrs.value.extra?.referencedBindings,
+            {
+              identifier: importRuntime("tagVarSignal"),
+              hasDownstreamIntersections: () => true,
+            },
+            attrs.value,
+          );
+        }
+
+        if (attrs.valueChange) {
+          addValue(
+            section,
+            attrs.valueChange.extra?.referencedBindings,
+            {
+              identifier: importRuntime("setTagVarChange"),
+              hasDownstreamIntersections: () => false,
+            },
+            attrs.valueChange,
+          );
+        }
 
         tag.remove();
-      }
+      },
     },
-  },
+  }),
   autocomplete: [
     {
       displayText: "return=<value>",

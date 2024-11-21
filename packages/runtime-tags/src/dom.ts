@@ -64,8 +64,10 @@ export {
   intersections,
   nextTagId,
   setTagVar,
+  setTagVarChange,
   state,
   tagVarSignal,
+  tagVarSignalChange,
   value,
 } from "./dom/signals";
 export { createTemplate } from "./dom/template";

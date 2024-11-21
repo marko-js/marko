@@ -1,4 +1,4 @@
-// size: 17850 (min) 6455 (brotli)
+// size: 17902 (min) 6477 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -417,7 +417,11 @@ function dynamicSubscribers(valueAccessor) {
 function setTagVar(scope, childAccessor, tagVarSignal2) {
   scope[childAccessor]["/"] = (valueOrOp) => tagVarSignal2(scope, valueOrOp);
 }
-var tagVarSignal = (scope, valueOrOp) => scope["/"]?.(valueOrOp),
+var tagVarSignal = (scope, valueOrOp) => scope["/"]?.(valueOrOp);
+function setTagVarChange(scope, changeHandler) {
+  scope["@"] = changeHandler;
+}
+var tagVarSignalChange = (scope, value2) => scope["@"]?.(value2),
   renderBodyClosures = (renderBody, childScope, op) => {
     let signals = renderBody?.c;
     if (signals) for (let signal of signals) signal(childScope, op);

@@ -269,6 +269,15 @@ export function setTagVar(
 export const tagVarSignal = (scope: Scope, valueOrOp: unknown | SignalOp) =>
   scope[AccessorChar.TagVariable]?.(valueOrOp);
 
+export function setTagVarChange(
+  scope: Scope,
+  changeHandler: (value: unknown) => void,
+) {
+  scope[AccessorChar.TagVariableChange] = changeHandler;
+}
+export const tagVarSignalChange = (scope: Scope, value: unknown) =>
+  scope[AccessorChar.TagVariableChange]?.(value);
+
 export const renderBodyClosures = (
   renderBody: Renderer | string | undefined,
   childScope: Scope,
