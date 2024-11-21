@@ -56,14 +56,6 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
             referencedBindings: bindingIdentifier.extra?.binding,
           };
           analyzeExpressionTagName(name.replaceWith(tagIdentifier)[0], extra);
-        } else {
-          const childFile = loadFileForTag(tag);
-          if (!childFile) {
-            extra.tagNameType = TagNameType.DynamicTag;
-          } else if (childFile.ast.program.extra!.featureType === "class") {
-            extra.tagNameType = TagNameType.DynamicTag;
-            extra.featureType = "class";
-          }
         }
       }
 
@@ -77,6 +69,16 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
 
     if (extra.tagNameType === undefined) {
       extra.tagNameType = TagNameType.DynamicTag;
+    }
+
+    if (extra.tagNameType === TagNameType.CustomTag) {
+      const childFile = loadFileForTag(tag);
+      if (!childFile) {
+        extra.tagNameType = TagNameType.DynamicTag;
+      } else if (childFile.ast.program.extra!.featureType === "class") {
+        extra.tagNameType = TagNameType.DynamicTag;
+        extra.featureType = "class";
+      }
     }
   }
 
