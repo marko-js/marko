@@ -1,7 +1,5 @@
 # Write
-  <h1>Hello World</h1><script>
-      console.log('Hello World');
-    </script>
+  BEFORE-M-<h1>Hello World</h1>-AFTER
 
 
 # Render "End"
@@ -9,14 +7,11 @@
 <html>
   <head />
   <body>
+    BEFORE-M-
     <h1>
       Hello World
     </h1>
-    <script>
-      
-    console.log('Hello World');
-  
-    </script>
+    -AFTER
   </body>
 </html>
 ```
@@ -26,8 +21,8 @@
 inserted #document/html0
 inserted #document/html0/head0
 inserted #document/html0/body1
-inserted #document/html0/body1/h10
-inserted #document/html0/body1/h10/#text0
-inserted #document/html0/body1/script1
-inserted #document/html0/body1/script1/#text0
+inserted #document/html0/body1/#text0
+inserted #document/html0/body1/h11
+inserted #document/html0/body1/h11/#text0
+inserted #document/html0/body1/#text2
 ```

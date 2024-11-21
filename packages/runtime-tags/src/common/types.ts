@@ -97,6 +97,8 @@ export interface $Global {
   cspNonce?: string;
   renderId?: string;
   runtimeId?: string;
+  /** @internal */
+  __flush__?($global: $Global, html: string): string;
 }
 export interface Input {
   [x: PropertyKey]: unknown;
