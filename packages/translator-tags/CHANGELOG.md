@@ -1,5 +1,14 @@
 # @marko/translator-tags
 
+## 0.3.2
+
+### Patch Changes
+
+- [#2378](https://github.com/marko-js/marko/pull/2378) [`ecfba07`](https://github.com/marko-js/marko/commit/ecfba07954ecfd80c1f2eecfe7791529278e801b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add trailing HTML api and ensure that closing `</body>` and `</html>` are always appended to the end of the stream if they are rendered.
+
+- Updated dependencies [[`ecfba07`](https://github.com/marko-js/marko/commit/ecfba07954ecfd80c1f2eecfe7791529278e801b)]:
+  - @marko/runtime-tags@0.2.2
+
 ## 0.3.1
 
 ### Patch Changes
