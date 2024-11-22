@@ -1,5 +1,5 @@
-// size: 222 (min) 159 (brotli)
-const _clickCount_effect = effect("XBSGKvBc", (_scope) =>
+// size: 208 (min) 146 (brotli)
+const _clickCount_effect = effect("b", (_scope) =>
     on(
       _scope[0],
       "click",
@@ -17,9 +17,4 @@ const _clickCount_effect = effect("XBSGKvBc", (_scope) =>
 function _setup_(_scope) {
   _clickCount(_scope, 0);
 }
-createTemplate(
-  "tPaZsVqd",
-  "<div><button> </button></div>",
-  "D D m",
-  _setup_,
-).mount();
+createTemplate("a", "<div><button> </button></div>", "D D m", _setup_).mount();

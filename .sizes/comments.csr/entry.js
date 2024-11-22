@@ -1,4 +1,4 @@
-// size: 1028 (min) 518 (brotli)
+// size: 1000 (min) 491 (brotli)
 const _expr_comment_id$ifBody = intersection(
     2,
     (_scope) => {
@@ -12,7 +12,7 @@ const _expr_comment_id$ifBody = intersection(
   _id$ifBody = closure(8, 0, void 0, () => _expr_comment_id$ifBody),
   _comment$ifBody = closure(6, 0, void 0, () => _expr_comment_id$ifBody),
   _ifBody = register(
-    "QURHKITf",
+    "c",
     createRenderer(
       "<ul></ul>",
       "/ b&",
@@ -34,7 +34,7 @@ const _expr_comment_id$ifBody = intersection(
     () => _id$forBody,
   ),
   _if$forBody = conditional(4),
-  _open$forBody_effect = effect("ZcKJNKFe", (_scope) =>
+  _open$forBody_effect = effect("d", (_scope) =>
     on(
       _scope[2],
       "click",
@@ -76,7 +76,7 @@ const _expr_comment_id$ifBody = intersection(
   _for = loopOf(
     0,
     register(
-      "$F_EaYZk",
+      "e",
       createRenderer(
         "<li><span> </span><button> </button><!></li>",
         " E l D l%",
@@ -107,7 +107,7 @@ function _setup_(_scope) {
   _scope[0];
 }
 createTemplate(
-  "rUbTinTf",
+  "a",
   "<ul></ul>",
   "/ b&",
   _setup_,

@@ -1,9 +1,9 @@
-// size: 392 (min) 229 (brotli)
+// size: 390 (min) 233 (brotli)
 const _i$forBody = _$.value(3, (_scope, i) => _$.data(_scope[1], i)),
   _params_2$forBody = _$.value(2, (_scope, _params_2) =>
     _i$forBody(_scope, _params_2[0]),
   ),
-  _num$forBody_effect = _$.effect("a0", (_scope) =>
+  _num$forBody_effect = _$.effect("b", (_scope) =>
     _$.on(
       _scope[0],
       "click",
@@ -19,7 +19,7 @@ const _i$forBody = _$.value(3, (_scope, i) => _$.data(_scope[1], i)),
   ),
   _num$forBody = _$.closure(1, (_scope, num) => _num$forBody_effect(_scope)),
   _forBody = _$.register(
-    "a1",
+    "c",
     _$.createRenderer(
       "<button> </button>",
       " D ",

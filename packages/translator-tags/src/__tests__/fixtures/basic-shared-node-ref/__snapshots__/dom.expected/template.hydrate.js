@@ -1,10 +1,10 @@
-// size: 488 (min) 250 (brotli)
+// size: 485 (min) 247 (brotli)
 const _x$forBody = _$.value(2, (_scope, x) => _$.data(_scope[0], x)),
   _params_2$forBody = _$.value(1, (_scope, _params_2) =>
     _x$forBody(_scope, _params_2[0]),
   ),
   _forBody = _$.register(
-    "a0",
+    "b",
     _$.createRenderer(
       "<li> </li>",
       "D ",
@@ -14,7 +14,7 @@ const _x$forBody = _$.value(2, (_scope, x) => _$.data(_scope[0], x)),
     ),
   ),
   _for = _$.loopOf(0, _forBody),
-  _list_effect = _$.effect("a1", (_scope) =>
+  _list_effect = _$.effect("c", (_scope) =>
     _$.on(
       _scope[2],
       "click",
@@ -35,7 +35,7 @@ const _x$forBody = _$.value(2, (_scope, x) => _$.data(_scope[0], x)),
         },
       ]);
   }),
-  _open_effect = _$.effect("a2", (_scope) =>
+  _open_effect = _$.effect("d", (_scope) =>
     _$.on(
       _scope[1],
       "click",

@@ -1,5 +1,5 @@
 import { t as _t } from "marko/dist/runtime/html/index.js";
-const _marko_componentType = "A_B_NaGg",
+const _marko_componentType = "JvugOxh",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _testHello from "./tags/test-hello/renderer.js";

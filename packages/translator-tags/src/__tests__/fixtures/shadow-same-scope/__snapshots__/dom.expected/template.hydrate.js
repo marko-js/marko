@@ -1,5 +1,5 @@
-// size: 558 (min) 169 (brotli)
-const _count4_effect = _$.effect("a0", (_scope) =>
+// size: 554 (min) 167 (brotli)
+const _count4_effect = _$.effect("b", (_scope) =>
     _$.on(
       _scope[6],
       "click",
@@ -14,7 +14,7 @@ const _count4_effect = _$.effect("a0", (_scope) =>
   _count4 = _$.state(11, (_scope, _count3) => {
     _$.data(_scope[7], _count3), _count4_effect(_scope);
   }),
-  _count3_effect = _$.effect("a1", (_scope) =>
+  _count3_effect = _$.effect("c", (_scope) =>
     _$.on(
       _scope[4],
       "click",
@@ -29,7 +29,7 @@ const _count4_effect = _$.effect("a0", (_scope) =>
   _count3 = _$.state(10, (_scope, _count2) => {
     _$.data(_scope[5], _count2), _count3_effect(_scope);
   }),
-  _count2_effect = _$.effect("a2", (_scope) =>
+  _count2_effect = _$.effect("d", (_scope) =>
     _$.on(
       _scope[2],
       "click",
@@ -44,7 +44,7 @@ const _count4_effect = _$.effect("a0", (_scope) =>
   _count2 = _$.state(9, (_scope, _count) => {
     _$.data(_scope[3], _count), _count2_effect(_scope);
   }),
-  _count_effect = _$.effect("a3", (_scope) =>
+  _count_effect = _$.effect("e", (_scope) =>
     _$.on(
       _scope[0],
       "click",

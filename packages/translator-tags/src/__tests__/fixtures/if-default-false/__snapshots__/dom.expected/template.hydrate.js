@@ -1,7 +1,7 @@
-// size: 210 (min) 155 (brotli)
-const _ifBody = _$.register("a0", _$.createRenderer("hi", "")),
+// size: 208 (min) 150 (brotli)
+const _ifBody = _$.register("b", _$.createRenderer("hi", "")),
   _if = _$.conditional(1, 0),
-  _show_effect = _$.effect("a1", (_scope) =>
+  _show_effect = _$.effect("c", (_scope) =>
     _$.on(
       _scope[0],
       "click",

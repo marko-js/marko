@@ -1,12 +1,12 @@
-// size: 532 (min) 295 (brotli)
+// size: 527 (min) 271 (brotli)
 const _valueChange = _$.register(
-    "a0",
+    "f",
     (_scope) =>
       function (_new_x) {
         _x(_scope, _new_x);
       },
   ),
-  _x_effect = _$.effect("a1", (_scope) =>
+  _x_effect = _$.effect("g", (_scope) =>
     _$.on(
       _scope[0],
       "click",
@@ -29,17 +29,17 @@ function _setup_(_scope) {
   _x(_scope, 1), _$.setTagVarChange(_scope, _valueChange(_scope));
 }
 var Counter = _$.createTemplate(
-  "a",
+  "e",
   "<button class=inc> </button>",
   " D l",
   _setup_,
 );
-_$.register("b0", function () {
+_$.register("b", function () {
   return Counter;
 }),
   _$.dynamicTagAttrs(0),
-  _$.registerBoundSignal("b1", (_scope, count) => {}),
-  _$.effect("b2", (_scope) =>
+  _$.registerBoundSignal("c", (_scope, count) => {}),
+  _$.effect("d", (_scope) =>
     _$.on(_scope[1], "click", function () {
       _$.tagVarSignalChange(_scope["0!"], 0);
     }),

@@ -1,4 +1,4 @@
-// size: 307 (min) 189 (brotli)
+// size: 305 (min) 182 (brotli)
 const _tags0_input = _$.dynamicTagAttrs(2),
   _expr_Text_x = _$.intersection(
     2,
@@ -9,10 +9,10 @@ const _tags0_input = _$.dynamicTagAttrs(2),
     () => _tags0_input,
   );
 _$.registerBoundSignal(
-  "b0",
+  "b",
   _$.value(5, (_scope, y) => _$.data(_scope[3], y)),
 );
-const _x_effect = _$.effect("b1", (_scope) =>
+const _x_effect = _$.effect("c", (_scope) =>
     _$.on(
       _scope[0],
       "click",

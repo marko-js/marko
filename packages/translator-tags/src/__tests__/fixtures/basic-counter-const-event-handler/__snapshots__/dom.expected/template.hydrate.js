@@ -1,11 +1,11 @@
-// size: 211 (min) 142 (brotli)
-const _increment = _$.register("a0", (_scope) => {
+// size: 209 (min) 143 (brotli)
+const _increment = _$.register("b", (_scope) => {
     const { 2: clickCount } = _scope;
     return function () {
       _clickCount(_scope, clickCount + 1);
     };
   }),
-  _increment2_effect = _$.effect("a1", (_scope) => {
+  _increment2_effect = _$.effect("c", (_scope) => {
     const { 3: increment } = _scope;
     _$.on(_scope[0], "click", increment);
   }),

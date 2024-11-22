@@ -1,5 +1,5 @@
-// size: 417 (min) 250 (brotli)
-const _y$defineBody_effect = _$.effect("a0", (_scope) =>
+// size: 415 (min) 248 (brotli)
+const _y$defineBody_effect = _$.effect("b", (_scope) =>
     _$.on(
       _scope[2],
       "click",
@@ -25,7 +25,7 @@ const _y$defineBody_effect = _$.effect("a0", (_scope) =>
     _y$defineBody(_scope, 1);
   };
 _$.register(
-  "a1",
+  "c",
   _$.createRendererWithOwner(
     "<div>Hello <!> <!></div><button> </button>",
     "Db%c%l D ",

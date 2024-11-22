@@ -1,4 +1,4 @@
-// size: 364 (min) 166 (brotli)
+// size: 363 (min) 166 (brotli)
 const _onMount = (_scope) => {
     const { 1: x } = _scope;
     return function () {
@@ -11,7 +11,7 @@ const _onMount = (_scope) => {
       document.getElementById("ref").textContent = "Update " + x;
     };
   },
-  _x_effect = _$.effect("a0", (_scope) => {
+  _x_effect = _$.effect("b", (_scope) => {
     _$.lifecycle(_scope, 3, {
       onMount: _onMount(_scope),
       onUpdate: _onUpdate(_scope),

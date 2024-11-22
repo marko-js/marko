@@ -1,12 +1,12 @@
-// size: 351 (min) 182 (brotli)
+// size: 347 (min) 183 (brotli)
 _$.register(
-  "a0",
+  "c",
   (_scope) =>
     function (_new_x) {
       _x(_scope, _new_x);
     },
 );
-const _x_effect = _$.effect("a1", (_scope) =>
+const _x_effect = _$.effect("f", (_scope) =>
     _$.on(
       _scope[0],
       "click",
@@ -25,8 +25,8 @@ const _x_effect = _$.effect("a1", (_scope) =>
     },
     () => _$.tagVarSignal,
   );
-_$.registerBoundSignal("b0", (_scope, count) => {}),
-  _$.effect("b1", (_scope) =>
+_$.registerBoundSignal("d", (_scope, count) => {}),
+  _$.effect("e", (_scope) =>
     _$.on(_scope[1], "click", function () {
       _$.tagVarSignalChange(_scope[0], 0);
     }),

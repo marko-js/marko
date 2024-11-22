@@ -1,4 +1,4 @@
-// size: 345 (min) 174 (brotli)
+// size: 344 (min) 173 (brotli)
 const _prev = _$.state(4, (_scope, prev) => _$.data(_scope[1], prev)),
   _onMount = (_scope) => {
     const { 3: x } = _scope;
@@ -12,7 +12,7 @@ const _prev = _$.state(4, (_scope, prev) => _$.data(_scope[1], prev)),
       _prev(_scope, this.cur), (this.cur = x);
     };
   },
-  _x_effect = _$.effect("a0", (_scope) => {
+  _x_effect = _$.effect("b", (_scope) => {
     _$.lifecycle(_scope, 4, {
       onMount: _onMount(_scope),
       onUpdate: _onUpdate(_scope),

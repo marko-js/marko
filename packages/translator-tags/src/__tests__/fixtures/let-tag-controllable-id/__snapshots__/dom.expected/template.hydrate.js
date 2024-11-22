@@ -1,12 +1,12 @@
-// size: 288 (min) 176 (brotli)
+// size: 286 (min) 168 (brotli)
 _$.register(
-  "a0",
+  "b",
   (_scope) =>
     function (newValue) {
       _x(_scope, newValue + 1);
     },
 );
-const _expr_handler_y_effect = _$.effect("a1", (_scope) =>
+const _expr_handler_y_effect = _$.effect("c", (_scope) =>
     _$.on(
       _scope[0],
       "click",
