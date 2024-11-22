@@ -1,5 +1,17 @@
 # Change Log
 
+## 5.36.0
+
+### Minor Changes
+
+- [#2380](https://github.com/marko-js/marko/pull/2380) [`c5d2b48`](https://github.com/marko-js/marko/commit/c5d2b4871e9dab7037a624681d0161b72fdc799d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Replace `optimizeKnownTemplates` with a better an simpler `optimizeRegistryId` api.
+
+### Patch Changes
+
+- Updated dependencies [[`c5d2b48`](https://github.com/marko-js/marko/commit/c5d2b4871e9dab7037a624681d0161b72fdc799d)]:
+  - @marko/translator-default@6.1.0
+  - @marko/compiler@5.38.0
+
 ## 5.35.35
 
 ### Patch Changes
