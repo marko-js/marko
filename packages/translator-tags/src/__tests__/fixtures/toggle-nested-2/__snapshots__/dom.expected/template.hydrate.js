@@ -1,5 +1,5 @@
-// size: 824 (min) 341 (brotli)
-const _count$ifBody_effect = _$.effect("a0", (_scope) =>
+// size: 818 (min) 332 (brotli)
+const _count$ifBody_effect = _$.effect("b", (_scope) =>
     _$.on(
       _scope[0],
       "click",
@@ -16,7 +16,7 @@ const _count$ifBody_effect = _$.effect("a0", (_scope) =>
     ),
   ),
   _count$ifBody = _$.registerSubscriber(
-    "a1",
+    "c",
     _$.dynamicClosure(
       4,
       (_scope, count) => {
@@ -26,13 +26,13 @@ const _count$ifBody_effect = _$.effect("a0", (_scope) =>
     ),
   ),
   _ifBody2 = _$.register(
-    "a2",
+    "d",
     _$.createRenderer("<button id=count> </button>", " D ", void 0, () => [
       _count$ifBody,
     ]),
   ),
   _if$ifBody = _$.conditional(1, 0),
-  _inner$ifBody_effect = _$.effect("a3", (_scope) =>
+  _inner$ifBody_effect = _$.effect("e", (_scope) =>
     _$.on(
       _scope[0],
       "click",
@@ -55,7 +55,7 @@ const _count$ifBody_effect = _$.effect("a0", (_scope) =>
     () => _if$ifBody,
   ),
   _ifBody = _$.register(
-    "a4",
+    "f",
     _$.createRenderer(
       "<button id=inner></button><!><!>",
       " b%D",
@@ -66,7 +66,7 @@ const _count$ifBody_effect = _$.effect("a0", (_scope) =>
   _if = _$.conditional(1, 0),
   _count = _$.state(4, 0, () => _$.dynamicSubscribers(4)),
   _inner = _$.state(3, 0, () => _$.inConditionalScope(_inner$ifBody, 1)),
-  _outer_effect = _$.effect("a5", (_scope) =>
+  _outer_effect = _$.effect("g", (_scope) =>
     _$.on(
       _scope[0],
       "click",

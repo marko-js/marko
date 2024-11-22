@@ -1,21 +1,21 @@
-// size: 399 (min) 215 (brotli)
+// size: 396 (min) 216 (brotli)
 const _setup$ifBody2 = (_scope) => {
     _$.data(_scope[0], _scope.$global.x);
   },
   _ifBody2 = _$.register(
-    "a0",
+    "b",
     _$.createRenderer("<span class=hidden> </span>", "D ", _setup$ifBody2),
   ),
   _setup$ifBody = (_scope) => {
     _$.data(_scope[0], _scope.$global.x);
   },
   _ifBody = _$.register(
-    "a1",
+    "c",
     _$.createRenderer("<span> </span>", "D ", _setup$ifBody),
   ),
   _if2 = _$.conditional(1, 0),
   _if = _$.conditional(0, 0),
-  _show_effect = _$.effect("a2", (_scope) =>
+  _show_effect = _$.effect("d", (_scope) =>
     _$.on(
       _scope[2],
       "click",

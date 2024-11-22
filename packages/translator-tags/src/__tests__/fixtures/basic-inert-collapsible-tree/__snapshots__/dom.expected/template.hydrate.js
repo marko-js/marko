@@ -1,4 +1,4 @@
-// size: 1093 (min) 508 (brotli)
+// size: 1090 (min) 508 (brotli)
 const _expr_comment_id$ifBody = _$.intersection(
     2,
     (_scope) => {
@@ -15,7 +15,7 @@ const _expr_comment_id$ifBody = _$.intersection(
     _scope[0];
   },
   _ifBody = _$.register(
-    "a0",
+    "c",
     _$.createRenderer("<ul></ul>", "/ b&", _setup$ifBody, () => [
       _id$ifBody,
       _comment$ifBody,
@@ -33,7 +33,7 @@ const _expr_comment_id$ifBody = _$.intersection(
     () => _id$forBody,
   ),
   _if$forBody = _$.conditional(4, 0),
-  _open$forBody_effect = _$.effect("a1", (_scope) =>
+  _open$forBody_effect = _$.effect("d", (_scope) =>
     _$.on(
       _scope[2],
       "click",
@@ -80,7 +80,7 @@ const _expr_comment_id$ifBody = _$.intersection(
     _open$forBody(_scope, !0);
   },
   _forBody = _$.register(
-    "a2",
+    "e",
     _$.createRenderer(
       "<li><span> </span><button> </button><!></li>",
       " E l D l%",

@@ -1,5 +1,5 @@
-// size: 137 (min) 114 (brotli)
-const _clickCount_effect = effect("XBSGKvBc", (_scope) =>
+// size: 130 (min) 125 (brotli)
+const _clickCount_effect = effect("b", (_scope) =>
     on(
       _scope[0],
       "click",

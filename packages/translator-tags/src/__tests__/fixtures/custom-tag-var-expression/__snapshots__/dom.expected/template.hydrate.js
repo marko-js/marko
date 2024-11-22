@@ -1,5 +1,5 @@
-// size: 63 (min) 67 (brotli)
+// size: 62 (min) 66 (brotli)
 _$.registerBoundSignal(
-  "b0",
+  "c",
   _$.value(2, (_scope, data) => _$.data(_scope[1], data)),
 );

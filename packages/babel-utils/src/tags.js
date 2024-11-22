@@ -317,51 +317,28 @@ function resolveMarkoFile(file, filename) {
 }
 
 const idCache = new WeakMap();
+const templateIdHashOpts = { outputLength: 5 };
 export function getTemplateId(opts, request, child) {
   const id = relative(ROOT, request);
   const optimize = typeof opts === "object" ? opts.optimize : opts;
 
   if (optimize) {
-    const optimizeKnownTemplates =
-      typeof opts === "object" && opts.optimizeKnownTemplates;
-    const knownTemplatesSize = optimizeKnownTemplates?.length || 0;
+    const optimizeRegistryId =
+      typeof opts === "object" && opts.optimizeRegistryId;
 
-    if (knownTemplatesSize) {
-      let lookup = idCache.get(optimizeKnownTemplates);
-      if (!lookup) {
-        lookup = new Map();
-        idCache.set(optimizeKnownTemplates, lookup);
-        for (let i = 0; i < knownTemplatesSize; i++) {
-          lookup.set(optimizeKnownTemplates[i], {
-            id: encodeTemplateId(i),
-            children: new Map(),
-          });
-        }
-      }
-      let registered = lookup.get(request);
-      if (registered) {
-        if (child) {
-          let childId = registered.children.get(child);
-          if (childId === undefined) {
-            childId = registered.children.size;
-            registered.children.set(child, childId);
-          }
-          return registered.id + childId;
-        }
-
-        return registered.id;
-      }
+    if (optimizeRegistryId) {
+      const result = optimizeRegistryId(
+        child ? request + "_" + child : request,
+      );
+      return typeof result === "number" ? encodeTemplateId(result) : result;
     }
 
-    const hash = createHash("MD5").update(id);
-
+    const hash = createHash("shake256", templateIdHashOpts).update(id);
     if (child) {
       hash.update(child);
     }
 
-    return encodeTemplateId(
-      parseInt(hash.digest("hex").slice(0, 11), 16) + knownTemplatesSize,
-    );
+    return encodeTemplateId(parseInt(hash.digest("hex"), 16));
   }
 
   return id + (child ? `_${child}` : "");
@@ -414,18 +391,21 @@ function createNewFileOpts(opts, filename) {
   };
 }
 
-const ENCODE_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_";
-const ENCODE_CHARS_LEN = ENCODE_CHARS.length;
-
 function encodeTemplateId(index) {
-  let id = "";
+  const encodeChars =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
+  const encodeLen = encodeChars.length;
+  const encodeStartLen = encodeLen - 11; // Avoids chars that cannot start a property name and _ (reserved).
   let cur = index;
+  let mod = cur % encodeStartLen;
+  let id = encodeChars[mod];
+  cur = (cur - mod) / encodeStartLen;
 
-  do {
-    const mod = cur % ENCODE_CHARS_LEN;
-    id += ENCODE_CHARS[mod];
-    cur = (cur - mod) / ENCODE_CHARS_LEN;
-  } while (cur > 0);
+  while (cur > 0) {
+    mod = cur % encodeLen;
+    id += encodeChars[mod];
+    cur = (cur - mod) / encodeLen;
+  }
 
   return id;
 }

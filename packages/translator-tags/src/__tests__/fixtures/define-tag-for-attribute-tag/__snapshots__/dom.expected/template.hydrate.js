@@ -1,4 +1,4 @@
-// size: 480 (min) 275 (brotli)
+// size: 478 (min) 275 (brotli)
 const _inputThingRenderBody_input = _$.dynamicTagAttrs(1),
   _dynamicTagName = _$.conditional(
     1,
@@ -14,7 +14,7 @@ const _inputThingRenderBody_input = _$.dynamicTagAttrs(1),
     () => _dynamicTagName,
   ),
   _defineBody = _$.register(
-    "b0",
+    "c",
     _$.createRendererWithOwner("<span>The thing</span>", ""),
   ),
   _myThing = _$.value(
@@ -22,7 +22,7 @@ const _inputThingRenderBody_input = _$.dynamicTagAttrs(1),
     (_scope, myThing) => _input_(_scope[0], { thing: myThing }),
     () => _$.inChild(0, _input_),
   ),
-  _selected_effect = _$.effect("b1", (_scope) =>
+  _selected_effect = _$.effect("d", (_scope) =>
     _$.on(
       _scope[1],
       "click",

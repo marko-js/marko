@@ -1,15 +1,12 @@
-// size: 298 (min) 210 (brotli)
-const _xBody = _$.register(
-    "a0",
-    _$.createRendererWithOwner("Body Content", ""),
-  ),
+// size: 296 (min) 203 (brotli)
+const _xBody = _$.register("b", _$.createRendererWithOwner("Body Content", "")),
   _x_input = _$.dynamicTagAttrs(0, _xBody),
   _dynamicTagName = _$.conditional(
     0,
     (_scope) => _x_input(_scope, () => ({})),
     () => _x_input,
   ),
-  _x_effect = _$.effect("a1", (_scope) =>
+  _x_effect = _$.effect("c", (_scope) =>
     _$.on(
       _scope[1],
       "click",

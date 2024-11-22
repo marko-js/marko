@@ -1,6 +1,6 @@
-// size: 551 (min) 198 (brotli)
+// size: 546 (min) 223 (brotli)
 const _value2$ifBody = _$.registerSubscriber(
-    "a0",
+    "b",
     _$.dynamicClosure(
       5,
       (_scope, value2) => _$.data(_scope[0], value2),
@@ -8,11 +8,11 @@ const _value2$ifBody = _$.registerSubscriber(
     ),
   ),
   _ifBody3 = _$.register(
-    "a1",
+    "c",
     _$.createRenderer("<span> </span>", "D ", void 0, () => [_value2$ifBody]),
   ),
   _value1$ifBody = _$.registerSubscriber(
-    "a2",
+    "d",
     _$.dynamicClosure(
       4,
       (_scope, value1) => _$.data(_scope[0], value1),
@@ -20,7 +20,7 @@ const _value2$ifBody = _$.registerSubscriber(
     ),
   ),
   _ifBody2 = _$.register(
-    "a3",
+    "e",
     _$.createRenderer("<span> </span>", "D ", void 0, () => [_value1$ifBody]),
   ),
   _if$ifBody2 = _$.conditional(1, 0),
@@ -38,7 +38,7 @@ const _value2$ifBody = _$.registerSubscriber(
     () => _if$ifBody,
   );
 _$.register(
-  "a4",
+  "f",
   _$.createRenderer("<!><!><!><!>", "D%b%D", void 0, () => [
     _value2$ifBody2,
     _value1$ifBody2,

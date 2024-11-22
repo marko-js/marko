@@ -1,11 +1,11 @@
-// size: 583 (min) 311 (brotli)
+// size: 579 (min) 329 (brotli)
 const _renderBody_input = _$.dynamicTagAttrs(1),
   _dynamicTagName = _$.conditional(
     1,
     (_scope) => _renderBody_input(_scope, () => ({})),
     () => _renderBody_input,
   ),
-  _attrs__effect = _$.effect("a0", (_scope) => {
+  _attrs__effect = _$.effect("f", (_scope) => {
     _$.attrsEvents(_scope, 0);
   }),
   _renderBody_ = _$.value(
@@ -23,20 +23,20 @@ const _renderBody_input = _$.dynamicTagAttrs(1),
     },
     () => _renderBody_,
   ),
-  _onClick = _$.register("b0", (_scope) => {
+  _onClick = _$.register("c", (_scope) => {
     const { 1: clickCount } = _scope;
     return function () {
       _clickCount(_scope, clickCount + 1);
     };
   }),
   _clickCount$FancyButtonBody = _$.registerSubscriber(
-    "b1",
+    "d",
     _$.dynamicClosure(1, (_scope, clickCount) =>
       _$.data(_scope[0], clickCount),
     ),
   ),
   _FancyButtonBody = _$.register(
-    "b2",
+    "e",
     _$.createRendererWithOwner(" ", " ", void 0, () => [
       _clickCount$FancyButtonBody,
     ]),

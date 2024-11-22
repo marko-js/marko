@@ -1,6 +1,6 @@
-// size: 193 (min) 125 (brotli)
+// size: 191 (min) 120 (brotli)
 const _valueChange = _$.register(
-    "a0",
+    "b",
     (_scope) =>
       function (v) {
         _value(_scope, v);
@@ -10,5 +10,5 @@ const _valueChange = _$.register(
     _$.controllable_select_value(_scope, 0, value, _valueChange(_scope)),
       _$.data(_scope[1], value);
   });
-_$.effect("a1", (_scope) => _$.controllable_select_value_effect(_scope, 0)),
+_$.effect("c", (_scope) => _$.controllable_select_value_effect(_scope, 0)),
   init();

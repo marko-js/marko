@@ -1,4 +1,4 @@
-// size: 877 (min) 389 (brotli)
+// size: 872 (min) 390 (brotli)
 const _renderBody_input = _$.dynamicTagAttrs(0),
   _expr_Text_value = _$.intersection(
     2,
@@ -17,14 +17,14 @@ const _renderBody_input = _$.dynamicTagAttrs(0),
   ),
   _inner$childBody = _$.value(3, (_scope, inner) => _$.data(_scope[1], inner)),
   _outer$childBody = _$.registerSubscriber(
-    "b0",
+    "c",
     _$.dynamicClosure(2, (_scope, outer) => _$.data(_scope[0], outer)),
   ),
   _params_3$childBody = _$.value(2, (_scope, _params_3) =>
     _inner$childBody(_scope, _params_3[0]),
   ),
   _childBody2 = _$.register(
-    "b1",
+    "d",
     _$.createRendererWithOwner(
       "<div><!>.<!></div>",
       "D%c%",
@@ -34,7 +34,7 @@ const _renderBody_input = _$.dynamicTagAttrs(0),
     ),
   ),
   _y$childBody = _$.registerSubscriber(
-    "b2",
+    "e",
     _$.dynamicClosure(
       3,
       (_scope, y) => _value_(_scope[0], y),
@@ -52,7 +52,7 @@ const _renderBody_input = _$.dynamicTagAttrs(0),
     _scope[0], _renderBody_(_scope[0], _childBody2(_scope));
   };
 _$.register(
-  "b3",
+  "f",
   _$.createRendererWithOwner(
     "<div><!></div>",
     "/D%l&",
@@ -61,7 +61,7 @@ _$.register(
     () => _params_2$childBody,
   ),
 );
-const _x_effect = _$.effect("b4", (_scope) =>
+const _x_effect = _$.effect("g", (_scope) =>
     _$.on(
       _scope[0],
       "click",

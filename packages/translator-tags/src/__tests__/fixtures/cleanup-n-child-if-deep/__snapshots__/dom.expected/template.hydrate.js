@@ -1,6 +1,6 @@
-// size: 1617 (min) 571 (brotli)
+// size: 1608 (min) 568 (brotli)
 const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
-  _expr_name_write_effect = _$.effect("a0", (_scope) => {
+  _expr_name_write_effect = _$.effect("k", (_scope) => {
     const { 5: name, 6: write } = _scope;
     write(`${name} mounted`),
       (_$.getAbortSignal(_scope, 0).onabort = ((_scope) => {
@@ -24,7 +24,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     () => _expr_name_write,
   );
 _$.register(
-  "b0",
+  "c",
   (_scope) =>
     function (msg) {
       _scope[3].innerHTML += "\n" + msg;
@@ -40,7 +40,7 @@ const _write$ifBody3 = _$.dynamicClosure(
     _scope[0], _name_(_scope[0], "Inner");
   },
   _ifBody3 = _$.register(
-    "b1",
+    "d",
     _$.createRenderer(`${_template_}`, "/D%lD%lD%l&", _setup$ifBody3, () => [
       _write$ifBody3,
     ]),
@@ -53,7 +53,7 @@ const _write$ifBody3 = _$.dynamicClosure(
     () => _$.inChild(0, _write_),
   ),
   _showInner$ifBody = _$.registerSubscriber(
-    "b2",
+    "e",
     _$.dynamicClosure(
       7,
       (_scope, showInner) => _if$ifBody(_scope, showInner ? _ifBody3 : null),
@@ -65,7 +65,7 @@ const _write$ifBody3 = _$.dynamicClosure(
     _scope[0], _name_(_scope[0], "Middle");
   },
   _ifBody2 = _$.register(
-    "b3",
+    "f",
     _$.createRenderer(
       `<div>${_template_}<!></div>`,
       "D/D%lD%lD%l&%",
@@ -90,7 +90,7 @@ const _write$ifBody3 = _$.dynamicClosure(
     _scope[0], _name_(_scope[0], "Outer");
   },
   _ifBody = _$.register(
-    "b4",
+    "g",
     _$.createRenderer(
       `<div>${_template_}<!></div>`,
       "D/D%lD%lD%l&%",
@@ -99,7 +99,7 @@ const _write$ifBody3 = _$.dynamicClosure(
     ),
   ),
   _if = _$.conditional(4, 0),
-  _showInner_effect = _$.effect("b5", (_scope) =>
+  _showInner_effect = _$.effect("h", (_scope) =>
     _$.on(
       _scope[2],
       "click",
@@ -116,7 +116,7 @@ const _write$ifBody3 = _$.dynamicClosure(
     (_scope, showInner) => _showInner_effect(_scope),
     () => _$.dynamicSubscribers(7),
   ),
-  _showMiddle_effect = _$.effect("b6", (_scope) =>
+  _showMiddle_effect = _$.effect("i", (_scope) =>
     _$.on(
       _scope[1],
       "click",
@@ -133,7 +133,7 @@ const _write$ifBody3 = _$.dynamicClosure(
     (_scope, showMiddle) => _showMiddle_effect(_scope),
     () => _$.inConditionalScope(_showMiddle$ifBody, 4),
   ),
-  _showOuter_effect = _$.effect("b7", (_scope) =>
+  _showOuter_effect = _$.effect("j", (_scope) =>
     _$.on(
       _scope[0],
       "click",

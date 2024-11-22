@@ -1,6 +1,6 @@
-// size: 218 (min) 71 (brotli)
-_$.register("a0", _$.createRenderer("C", "")),
-  _$.register("a1", _$.createRenderer("B", "")),
-  _$.register("a2", _$.createRenderer("A", "")),
-  _$.register("a3", _$.createRenderer("World", "")),
-  _$.register("a4", _$.createRenderer("Hello", ""));
+// size: 213 (min) 74 (brotli)
+_$.register("b", _$.createRenderer("C", "")),
+  _$.register("c", _$.createRenderer("B", "")),
+  _$.register("d", _$.createRenderer("A", "")),
+  _$.register("e", _$.createRenderer("World", "")),
+  _$.register("f", _$.createRenderer("Hello", ""));

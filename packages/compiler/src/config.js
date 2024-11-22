@@ -114,11 +114,10 @@ const config = {
   optimize: undefined,
 
   /**
-   * If `optimize` is enabled you can provide an array of template paths which the compiler will
-   * use to generate shorter registry/template ids using incrementing ids. This can only be used
-   * if the same `optimizeKnownTemplates` are used for both server and client compilations.
+   * If `optimize` is enabled this function will be called to resolve the "template id" used for Marko's
+   * hydration registry.
    */
-  optimizeKnownTemplates: undefined,
+  optimizeRegistryId: undefined,
 
   /**
    * This option should be set if `hydrate` output is specified.

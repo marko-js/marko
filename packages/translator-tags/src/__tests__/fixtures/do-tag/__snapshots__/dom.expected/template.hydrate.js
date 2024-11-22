@@ -1,9 +1,9 @@
-// size: 196 (min) 119 (brotli)
-_$.register("a1", function () {
+// size: 193 (min) 115 (brotli)
+_$.register("c", function () {
   log.static += "rendered";
 }),
   _$.register(
-    "a0",
+    "b",
     (_scope) =>
       function () {
         log.const += "rendered";
@@ -12,4 +12,4 @@ _$.register("a1", function () {
 const _logOutput = _$.state(3, (_scope, logOutput) =>
   _$.data(_scope[0], logOutput),
 );
-_$.effect("a2", (_scope) => _logOutput(_scope, JSON.stringify(log))), init();
+_$.effect("d", (_scope) => _logOutput(_scope, JSON.stringify(log))), init();

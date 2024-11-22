@@ -1,5 +1,5 @@
-// size: 723 (min) 290 (brotli)
-const _expr__otherState_change_otherState_effect = _$.effect("a0", (_scope) =>
+// size: 720 (min) 294 (brotli)
+const _expr__otherState_change_otherState_effect = _$.effect("d", (_scope) =>
     _$.on(
       _scope[3],
       "click",
@@ -14,7 +14,7 @@ const _expr__otherState_change_otherState_effect = _$.effect("a0", (_scope) =>
   _expr__otherState_change_otherState = _$.intersection(2, (_scope) => {
     _expr__otherState_change_otherState_effect(_scope);
   }),
-  _expr__state_change_state_effect = _$.effect("a1", (_scope) =>
+  _expr__state_change_state_effect = _$.effect("e", (_scope) =>
     _$.on(
       _scope[0],
       "click",
@@ -64,7 +64,7 @@ const _expr__otherState_change_otherState_effect = _$.effect("a0", (_scope) =>
       ]),
   ),
   _valueChange = _$.register(
-    "b0",
+    "c",
     (_scope) =>
       function (_new_source) {
         _source(_scope, _new_source);

@@ -226,6 +226,7 @@ function addSizes(all: Sizes[]) {
 async function bundleExample(examplePath: string, hydrate: boolean) {
   const isRuntime = examplePath === runtimePath;
   const virtualEntry = "./entry.js";
+  const registryIds = new Map<string, number>();
   const bundle = await rollup({
     input: isRuntime ? runtimePath : virtualEntry,
     plugins: [
@@ -248,6 +249,13 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
                   configFile: false,
                 },
                 writeVersionComment: false,
+                optimizeRegistryId(id) {
+                  let registryId = registryIds.get(id);
+                  if (registryId === undefined) {
+                    registryIds.set(id, (registryId = registryIds.size));
+                  }
+                  return registryId;
+                },
               })
             ).code;
           }

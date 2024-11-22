@@ -1,5 +1,5 @@
-// size: 531 (min) 293 (brotli)
-const _input__effect = _$.effect("a0", (_scope) => {
+// size: 527 (min) 291 (brotli)
+const _input__effect = _$.effect("f", (_scope) => {
     const { 1: input } = _scope;
     input.write("mounted"),
       (_$.getAbortSignal(_scope, 0).onabort = ((_scope) => {
@@ -13,7 +13,7 @@ const _input__effect = _$.effect("a0", (_scope) => {
     _$.resetAbortSignal(_scope, 0), _input__effect(_scope);
   }),
   _write = _$.register(
-    "b0",
+    "c",
     (_scope) =>
       function (state) {
         _scope._[1].innerHTML = state;
@@ -23,7 +23,7 @@ const _input__effect = _$.effect("a0", (_scope) => {
     _scope[0], _input_(_scope[0], { write: _write(_scope) });
   },
   _ifBody = _$.register(
-    "b1",
+    "d",
     _$.createRenderer(
       "<div>a</div><span>b</span><p>c</p>",
       "/d&",
@@ -31,7 +31,7 @@ const _input__effect = _$.effect("a0", (_scope) => {
     ),
   ),
   _if = _$.conditional(2, 0),
-  _show_effect = _$.effect("b2", (_scope) =>
+  _show_effect = _$.effect("e", (_scope) =>
     _$.on(
       _scope[0],
       "click",
