@@ -40,7 +40,7 @@ export default {
     const tagExtra = (node.extra ??= {});
     const section = getOrCreateSection(tag);
     tagExtra[kRef] = createBinding(
-      tag.scope.generateUid("lifecycle"),
+      currentProgramPath.scope.generateUid("lifecycle"),
       BindingType.derived,
       section,
       undefined,

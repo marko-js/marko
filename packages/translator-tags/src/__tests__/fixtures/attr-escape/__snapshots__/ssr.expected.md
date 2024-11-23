@@ -1,5 +1,5 @@
 # Write
-  <div class=c foo=acb bar="a d b" nested="a c nested d b"></div><!--M_*0 #div/0--><script>WALKER_RUNTIME("M")("_")</script>
+  <div class=c foo=acb bar="a d b" nested="a c nested d b"></div><!--M_*0 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{input_foo:"c",input_bar:"d"}}),0]</script>
 
 
 # Render "End"
@@ -15,7 +15,7 @@
     />
     <!--M_*0 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_")
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{input_foo:"c",input_bar:"d"}}),0]
     </script>
   </body>
 </html>

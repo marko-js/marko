@@ -12,6 +12,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   });
   _$.write(`${_$.markResumeControlEnd(_scope0_id, "#div/0")}</div>${_$.markResumeNode(_scope0_id, "#div/0")}`);
   _$.writeScope(_scope0_id, {
+    "input_from": input.from,
+    "input_to": input.to,
+    "input_step": input.step,
     "#div/0(": _scope1_.size ? _scope1_ : undefined
   });
 });

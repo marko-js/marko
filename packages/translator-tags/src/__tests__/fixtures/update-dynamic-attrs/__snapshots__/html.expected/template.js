@@ -8,10 +8,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   }, "#div/1", _scope0_id, "div")}></div>${_$.markResumeNode(_scope0_id, "#div/1")}<div${_$.attr("a", a)}${_$.partialAttrs(input.value, {
     a: 1
   }, "#div/2", _scope0_id, "div")}></div>${_$.markResumeNode(_scope0_id, "#div/2")}`);
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko_0_input_a");
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko_0_input");
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko_0_input_value_a");
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko_0_input_value");
   _$.writeScope(_scope0_id, {
-    "input": input,
+    "input_value": input.value,
     "a": a
   });
 });

@@ -8,6 +8,7 @@ import {
   currentProgramPath,
   scopeIdentifier,
 } from "../visitors/program";
+import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
 import { isStatefulReferences } from "./is-stateful";
 import { isOutputHTML } from "./marko-config";
 import { forEach, type Opt, push } from "./optional";
@@ -26,6 +27,7 @@ import {
   type Section,
 } from "./sections";
 import { createSectionState } from "./state";
+import withPreviousLocation from "./with-previous-location";
 
 export type subscribeBuilder = (subscriber: t.Expression) => t.Expression;
 export type registerScopeBuilder = (scope: t.Expression) => t.Expression;
@@ -284,7 +286,7 @@ export function getSignalFn(
         t.expressionStatement(
           t.callExpression(aliasSignal.identifier, [
             scopeIdentifier,
-            toMemberExpression(valueIdentifier, key),
+            toMemberExpression(valueIdentifier, key, binding.nullable),
             ...(aliasSignal.extraArgs || []),
           ]),
         ),
@@ -655,14 +657,32 @@ export function getRegisterUID(section: Section, name: string) {
 }
 
 export function renameBindings() {
-  t.traverseFast(currentProgramPath.node, (node) => {
-    if (t.isIdentifier(node)) {
-      const binding = node.extra && (node.extra.source || node.extra.binding);
-      if (binding && binding.name !== node.name) {
-        node.name = binding.name;
+  const program = currentProgramPath.node;
+  const { body } = program;
+
+  for (let i = 0; i < body.length; i++) {
+    traverse(body[i], body, i, (node, container, key) => {
+      if (t.isIdentifier(node)) {
+        const binding = node.extra && (node.extra.source || node.extra.binding);
+        if (binding && binding.name !== node.name) {
+          node.name = binding.name;
+        }
+      } else if (t.isMemberExpression(node)) {
+        const binding = node.extra?.source;
+        if (binding && !isOutputHTML()) {
+          // TODO: this should probably happen for html mode as well, but
+          // currently html mode does not hoist member expression bindings.
+          // We may be able to implement that by making the identifier binding check
+          // above seeing if the binding has propertyAliases which are node `defined`
+          // and then defining them.
+          container[key] = withPreviousLocation(
+            t.identifier(binding.name),
+            node,
+          );
+        }
       }
-    }
-  });
+    });
+  }
 }
 
 export function replaceAssignments() {
@@ -935,7 +955,7 @@ export function writeHTMLResumeStatements(
     if (binding.serialize && binding.type !== BindingType.dom) {
       const accessor = getScopeAccessorLiteral(binding);
       serializedProperties.push(
-        t.objectProperty(accessor, t.identifier(binding.name)),
+        t.objectProperty(accessor, getDeclaredBindingExpression(binding)),
       );
       accessors.add(accessor.value);
     }
@@ -1049,7 +1069,7 @@ function handleDestructure(
         if (binding) {
           const { buildAssignment } = getSignal(binding.section, binding);
           if (buildAssignment) {
-            const valueId = ctx.statement.scope.generateUidIdentifier(
+            const valueId = currentProgramPath.scope.generateUidIdentifier(
               node.name,
             );
 
@@ -1075,7 +1095,7 @@ function bindFunction(
   const { extra } = node;
   if (!extra?.referencedBindings) return;
   const { name, referencedBindings } = extra;
-  const fnId = fn.hub.file.path.scope.generateUidIdentifier(name);
+  const fnId = currentProgramPath.scope.generateUidIdentifier(name);
 
   root
     .insertBefore(
@@ -1108,13 +1128,16 @@ export function getSetup(section: Section) {
   return getSignals(section).get(undefined)?.identifier;
 }
 
-function toMemberExpression(value: t.Expression, key: string) {
+function toMemberExpression(
+  value: t.Expression,
+  key: string,
+  optional?: boolean,
+) {
   const keyLiteral = keyToNode(key);
-  return t.memberExpression(
-    value,
-    keyLiteral,
-    keyLiteral.type !== "Identifier",
-  );
+  const computed = keyLiteral.type !== "Identifier";
+  return optional
+    ? t.optionalMemberExpression(value, keyLiteral, computed, true)
+    : t.memberExpression(value, keyLiteral, computed);
 }
 
 function keyToNode(key: string) {
@@ -1125,4 +1148,32 @@ function keyToNode(key: string) {
   }
 
   return t.stringLiteral(key);
+}
+
+function traverse<
+  Container extends t.Node | t.Node[],
+  Key extends (string | number) & keyof Container,
+  Node extends Container[Key] & t.Node,
+>(
+  node: Node | null | void,
+  container: Container,
+  key: Key,
+  enter: (node: t.Node, container: any, key: string | number) => void,
+): void {
+  if (node) {
+    enter(node, container, key);
+    for (const key of (t as any).VISITOR_KEYS[
+      node.type
+    ] as (keyof typeof node)[]) {
+      const child = node[key];
+
+      if (Array.isArray(child)) {
+        for (let i = 0; i < child.length; i++) {
+          traverse(child[i], child, i, enter);
+        }
+      } else {
+        traverse(child as any, node, key as any, enter);
+      }
+    }
+  }
 }

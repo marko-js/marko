@@ -22,6 +22,7 @@ import {
 import { getSection } from "../util/sections";
 import { addValue, initValue } from "../util/signals";
 import translateVar from "../util/translate-var";
+import { currentProgramPath } from "../visitors/program";
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
@@ -102,7 +103,7 @@ export default {
         valueChangeAttr.value.extra!.binding = valueChangeReferences as Binding;
       } else {
         valueChangeAttr.value.extra!.binding = createBinding(
-          tag.scope.generateUid(tagVar.name + "_change"),
+          currentProgramPath.scope.generateUid(tagVar.name + "_change"),
           BindingType.let,
           getSection(tag),
           undefined,

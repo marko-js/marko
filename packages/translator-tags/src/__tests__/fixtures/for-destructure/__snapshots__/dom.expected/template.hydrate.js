@@ -1,4 +1,4 @@
-// size: 544 (min) 268 (brotli)
+// size: 546 (min) 269 (brotli)
 const _description$forBody = _$.value(5, (_scope, description) =>
     _$.data(_scope[1], description),
   ),
@@ -8,7 +8,7 @@ const _description$forBody = _$.value(5, (_scope, description) =>
       _description$forBody(_scope, _pattern_.description);
   }),
   _params_2$forBody = _$.value(2, (_scope, _params_2) =>
-    _pattern_$forBody(_scope, _params_2[0]),
+    _pattern_$forBody(_scope, _params_2?.[0]),
   ),
   _forBody = _$.register(
     "a0",

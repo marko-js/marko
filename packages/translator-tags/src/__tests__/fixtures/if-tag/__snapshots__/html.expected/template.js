@@ -41,6 +41,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   }
   _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/2", _ifScopeId3)}</div>`);
   _$.writeScope(_scope0_id, {
+    "input_a": input.a,
+    "input_b": input.b,
+    "input_x": input.x,
+    "input_y": input.y,
     "#text/0(": _ifRenderer,
     "#text/0!": _$.getScopeById(_ifScopeId),
     "#text/1(": _ifRenderer2,

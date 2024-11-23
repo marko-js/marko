@@ -3,13 +3,15 @@
     "props": {
       "$_$": "e",
       "$init": "t",
-      "$_inputThingRenderBody_input": "n",
-      "$_dynamicTagName": "r",
-      "$_input_": "i",
-      "$_defineBody": "o",
-      "$_myThing": "a",
-      "$_selected_effect": "s",
-      "$_selected": "c"
+      "$_inputThingRenderBody_input": "r",
+      "$_dynamicTagName": "n",
+      "$_input_thing_renderBody_": "a",
+      "$_input_thing_selected_": "o",
+      "$_input_thing_": "s",
+      "$_defineBody": "i",
+      "$_myThing": "c",
+      "$_selected_effect": "d",
+      "$_selected": "l"
     }
   }
 }

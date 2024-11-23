@@ -7,14 +7,16 @@
       "$_expr_name_write": "o",
       "$_write_": "r",
       "$_name_": "i",
-      "$_write$forBody": "a",
-      "$_item$forBody": "s",
+      "$_write$forBody": "s",
+      "$_item$forBody": "a",
       "$_params_2$forBody": "c",
       "$_setup$forBody": "l",
-      "$_forBody": "d",
-      "$_for": "u",
-      "$_items_effect": "m",
-      "$_items": "f"
+      "$_forBody": "u",
+      "$_expr_items_items_length_effect": "d",
+      "$_expr_items_items_length": "m",
+      "$_for": "f",
+      "$_items_length": "g",
+      "$_items": "v"
     }
   }
 }

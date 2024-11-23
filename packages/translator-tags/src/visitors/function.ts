@@ -1,6 +1,7 @@
 import { getTemplateId, isNativeTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 
+import { getDeclaredBindingExpression } from "../util/get-defined-binding-expression";
 import { getMarkoRoot, isMarko } from "../util/get-root";
 import { isCoreTagName } from "../util/is-core-tag";
 import { isOutputHTML } from "../util/marko-config";
@@ -124,7 +125,7 @@ export default {
         forEach(extra.referencedBindings, (ref) => {
           serializedScopeProperties.set(
             getScopeAccessorLiteral(ref),
-            t.identifier(ref.name),
+            getDeclaredBindingExpression(ref),
           );
         });
 

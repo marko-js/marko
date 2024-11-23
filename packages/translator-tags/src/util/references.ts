@@ -42,6 +42,8 @@ export type Binding = {
   upstreamExpression: t.NodeExtra | undefined;
   downstreamExpressions: Set<t.NodeExtra>;
   export: string | undefined;
+  declared: boolean;
+  nullable: boolean;
 };
 
 export type ReferencedBindings = Opt<Binding>;
@@ -65,6 +67,7 @@ export function createBinding(
   upstreamAlias?: Binding["upstreamAlias"],
   upstreamExpression?: Binding["upstreamExpression"],
   property?: string,
+  declared = false,
 ): Binding {
   const id = getNextBindingId();
   const binding: Binding = {
@@ -73,6 +76,7 @@ export function createBinding(
     type,
     section,
     property,
+    declared,
     excludeProperties: undefined,
     serialize: false,
     aliases: new Set(),
@@ -81,9 +85,13 @@ export function createBinding(
     upstreamExpression,
     downstreamExpressions: new Set(),
     export: undefined,
+    nullable:
+      !upstreamExpression?.confident || upstreamExpression.computed == null,
   };
 
   if (property) {
+    if (declared) upstreamAlias!.nullable = false;
+    // TODO: should prefer declared properties as alias roots.
     const propBinding = upstreamAlias!.propertyAliases.get(property);
     if (propBinding) {
       binding.property = undefined;
@@ -141,7 +149,7 @@ export function trackParamsReferences(
     const paramsBinding =
       canonicalUpstreamAlias ||
       ((body.node.extra ??= {}).binding = createBinding(
-        body.scope.generateUid("params_"),
+        currentProgramPath.scope.generateUid("params_"),
         type,
         section,
         canonicalUpstreamAlias,
@@ -249,6 +257,9 @@ function assignBinding(
         (node.extra ??= {}).source = binding;
       }
       break;
+    case "MemberExpression":
+      (node.extra ??= {}).source = binding;
+      break;
   }
 }
 
@@ -271,6 +282,7 @@ function createBindingsAndTrackReferences(
         upstreamAlias,
         upstreamExpression,
         property,
+        true,
       );
       trackReferencesForBinding(scope.getBinding(lVal.name)!, changeBinding);
       break;
@@ -280,7 +292,7 @@ function createBindingsAndTrackReferences(
           ? upstreamAlias!.propertyAliases.get(property)
           : upstreamAlias) ||
         ((lVal.extra ??= {}).binding = createBinding(
-          scope.generateUid("pattern_"),
+          currentProgramPath.scope.generateUid("pattern_"),
           type,
           section,
           upstreamAlias,
@@ -332,7 +344,7 @@ function createBindingsAndTrackReferences(
           ? upstreamAlias!.propertyAliases.get(property)
           : upstreamAlias) ||
         ((lVal.extra ??= {}).binding = createBinding(
-          scope.generateUid("pattern_"),
+          currentProgramPath.scope.generateUid("pattern_"),
           type,
           section,
           upstreamAlias,
@@ -391,13 +403,49 @@ function trackReference(
   referencePath: t.NodePath<t.Identifier>,
   binding: Binding,
 ) {
-  const fnRoot = getFnRoot(referencePath.scope.path);
-  const exprRoot = getExprRoot(fnRoot || referencePath);
+  let root: t.NodePath<t.Identifier> | t.NodePath<t.MemberExpression> =
+    referencePath;
+  let reference = binding;
+  let propPath = binding.name;
+
+  while (true) {
+    const { parent } = root;
+    if (!t.isMemberExpression(parent)) break;
+
+    const prop = getMemberExpressionPropString(parent);
+    if (prop === undefined) break;
+
+    if (reference.propertyAliases.has(prop)) {
+      root = root.parentPath as t.NodePath<t.MemberExpression>;
+      reference = reference.propertyAliases.get(prop)!;
+      propPath = reference.name;
+      continue;
+    }
+
+    if (
+      root.parentPath.parentPath!.isCallExpression() &&
+      !isEventOrChangeHandler(prop)
+    ) {
+      break;
+    }
+
+    root = root.parentPath as t.NodePath<t.MemberExpression>;
+    reference = createBinding(
+      (propPath += `_${prop.replace(/[^a-zA-Z0-9_$]/g, "_")}`),
+      reference.type,
+      reference.section,
+      reference,
+      reference.upstreamExpression,
+      prop,
+    );
+  }
+
+  const fnRoot = getFnRoot(root);
+  const exprRoot = getExprRoot(fnRoot || root);
   const section = getOrCreateSection(exprRoot);
-  const reference = binding;
   const exprExtra = (exprRoot.node.extra ??= {});
-  addReferenceToExpression(exprRoot, binding);
-  assignBinding(referencePath.node, binding);
+  addReferenceToExpression(exprRoot, reference);
+  assignBinding(root.node, reference);
 
   if (fnRoot) {
     let fnExtra = exprExtra;
@@ -658,15 +706,15 @@ const [getIntersections, setIntersections] = createSectionState(
   "intersections",
   () => [] as Intersection[],
 );
-export function addReferenceToExpression(path: t.NodePath, binding: Binding) {
+export function addReferenceToExpression(path: t.NodePath, reference: Binding) {
   const exprExtra = (path.node.extra ??= {});
   const section = getOrCreateSection(path);
   exprExtra.referencedBindings = addReference(
     section,
     exprExtra.referencedBindings,
-    binding,
+    reference,
   );
-  binding.downstreamExpressions.add(exprExtra);
+  reference.downstreamExpressions.add(exprExtra);
 }
 
 const [getDroppedReferences] = createProgramState(() => new Set<t.Node>());
@@ -788,6 +836,21 @@ function pruneBinding(bindings: Set<Binding>, binding: Binding) {
   }
 
   return shouldPrune;
+}
+
+function getMemberExpressionPropString(expr: t.MemberExpression) {
+  switch (expr.property.type) {
+    case "StringLiteral":
+      return expr.property.value;
+    case "NumericLiteral":
+      return "" + expr.property.value;
+    case "Identifier":
+      return expr.property.name;
+  }
+}
+
+function isEventOrChangeHandler(prop: string) {
+  return /^on[-A-Z][a-zA-Z0-9_$]|[a-zA-Z_$][a-zA-Z0-9_$]*Change$/.test(prop);
 }
 
 // TODO: we need this? maybe for passing input to child?

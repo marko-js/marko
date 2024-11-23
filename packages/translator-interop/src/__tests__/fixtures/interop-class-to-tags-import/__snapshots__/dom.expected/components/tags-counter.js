@@ -14,7 +14,8 @@ const _count = /* @__PURE__ */_$.state("count", (_scope, count) => {
   _$.data(_scope["#text/1"], count);
   _count_effect(_scope);
 });
-export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _$.attr(_scope["#button/0"], "data-parent", input.count));
+export const _input_count_ = /* @__PURE__ */_$.value("input_count", (_scope, input_count) => _$.attr(_scope["#button/0"], "data-parent", input_count));
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_count_(_scope, input.count));
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export function _setup_(_scope) {
   _count(_scope, 0);

@@ -49,7 +49,7 @@ type DOMMethod = "html" | "data";
 export default {
   analyze(placeholder) {
     const { node } = placeholder;
-    const { confident, computed } = evaluate(placeholder);
+    const { confident, computed } = evaluate(node.value);
 
     if (!(confident && (node.escape || !computed))) {
       (node.extra ??= {})[kBinding] = createBinding(
@@ -68,8 +68,8 @@ export default {
       const write = writer.writeTo(placeholder);
       const { node } = placeholder;
       const { value } = node;
-      const extra = node.extra!;
-      const { confident, computed } = extra;
+      const extra = node.extra || {};
+      const { confident, computed, referencedBindings } = evaluate(value);
       const nodeBinding = extra[kBinding]!;
       const canWriteHTML = isHTML || (confident && (node.escape || !computed));
       const method = canWriteHTML
@@ -79,7 +79,7 @@ export default {
         : node.escape
           ? "data"
           : "html";
-      const isStateful = isStatefulReferences(value.extra?.referencedBindings);
+      const isStateful = isStatefulReferences(referencedBindings);
       const siblingText = extra[kSiblingText]!;
 
       if (confident && canWriteHTML) {

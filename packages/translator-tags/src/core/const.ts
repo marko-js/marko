@@ -2,6 +2,7 @@ import { assertNoArgs, assertNoParams, type Tag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 
 import { assertNoBodyContent } from "../util/assert";
+import evaluate from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
 import { BindingType, trackVarReferences } from "../util/references";
 import { getSection } from "../util/sections";
@@ -48,7 +49,7 @@ export default {
       tag,
       BindingType.derived,
       upstreamAlias,
-      (valueAttr.value.extra ??= {}),
+      evaluate(valueAttr.value), // TODO could perform a more extensive "nullable" check.
     );
   },
   translate: {

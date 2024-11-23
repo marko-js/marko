@@ -1,5 +1,5 @@
 # Write
-  <div>0<!--M_*0 #text/0--> <!>0<!--M_*0 #text/1--></div><!--M_$0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{input:{value:0}}}),0,"packages/translator-tags/src/__tests__/fixtures/user-effect-abort-signal/template.marko_0_input",0];M._.w()</script>
+  <div>0<!--M_*0 #text/0--> <!>0<!--M_*0 #text/1--></div><!--M_$0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{input_value:0}}),0,"packages/translator-tags/src/__tests__/fixtures/user-effect-abort-signal/template.marko_0_input_value",0];M._.w()</script>
 
 
 # Render "End"
@@ -17,7 +17,7 @@
     </div>
     <!--M_$0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{input:{value:0}}}),0,"packages/translator-tags/src/__tests__/fixtures/user-effect-abort-signal/template.marko_0_input",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{input_value:0}}),0,"packages/translator-tags/src/__tests__/fixtures/user-effect-abort-signal/template.marko_0_input_value",0];M._.w()
     </script>
   </body>
 </html>

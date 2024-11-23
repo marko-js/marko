@@ -1,10 +1,10 @@
-// size: 523 (min) 296 (brotli)
+// size: 520 (min) 291 (brotli)
 const _inputRenderBody_input = _$.dynamicTagAttrs(2),
-  _expr_Text_input_x = _$.intersection(
+  _expr_Text_input_name_x = _$.intersection(
     3,
     (_scope) => {
-      const { 4: input, 5: x } = _scope;
-      _inputRenderBody_input(_scope, () => ({ count: x, name: input.name }));
+      const { 6: input_name, 7: x } = _scope;
+      _inputRenderBody_input(_scope, () => ({ count: x, name: input_name }));
     },
     () => _inputRenderBody_input,
   ),
@@ -13,7 +13,7 @@ const _inputRenderBody_input = _$.dynamicTagAttrs(2),
       _scope[0],
       "click",
       ((_scope) => {
-        const { 5: x } = _scope;
+        const { 7: x } = _scope;
         return function () {
           _x(_scope, x + 1);
         };
@@ -21,11 +21,11 @@ const _inputRenderBody_input = _$.dynamicTagAttrs(2),
     ),
   ),
   _x = _$.state(
-    5,
+    7,
     (_scope, x) => {
       _$.data(_scope[1], x), _x_effect(_scope);
     },
-    () => _expr_Text_input_x,
+    () => _expr_Text_input_name_x,
   ),
   _name$customTagBody = _$.value(5, (_scope, name) => _$.data(_scope[0], name)),
   _count$customTagBody = _$.value(4, (_scope, count) =>
@@ -36,7 +36,7 @@ const _inputRenderBody_input = _$.dynamicTagAttrs(2),
       _name$customTagBody(_scope, _pattern_.name);
   }),
   _params_2$customTagBody = _$.value(2, (_scope, _params_2) =>
-    _pattern_$customTagBody(_scope, _params_2[0]),
+    _pattern_$customTagBody(_scope, _params_2?.[0]),
   );
 _$.register(
   "b0",

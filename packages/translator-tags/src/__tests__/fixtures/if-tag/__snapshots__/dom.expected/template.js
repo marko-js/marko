@@ -7,13 +7,33 @@ const _elseIfBody = _$.register("packages/translator-tags/src/__tests__/fixtures
 const _ifBody3 = _$.register("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_3_renderer", /* @__PURE__ */_$.createRenderer("A", ""));
 const _ifBody2 = _$.register("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer("World", ""));
 const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("Hello", ""));
+const _expr_input_x_input_y = /* @__PURE__ */_$.intersection(2, _scope => {
+  const {
+    input_x,
+    input_y
+  } = _scope;
+  _if3(_scope, input_x ? _ifBody3 : input_y ? _elseIfBody : _elseBody);
+});
+const _expr_input_a_input_b = /* @__PURE__ */_$.intersection(2, _scope => {
+  const {
+    input_a,
+    input_b
+  } = _scope;
+  _if(_scope, input_a + input_b ? _ifBody : null);
+  _if2(_scope, (input_a, input_b) ? _ifBody2 : null);
+});
 const _if3 = /* @__PURE__ */_$.conditional("#text/2", 0);
 const _if2 = /* @__PURE__ */_$.conditional("#text/1", 0);
 const _if = /* @__PURE__ */_$.conditional("#text/0", 0);
+export const _input_y_ = /* @__PURE__ */_$.value("input_y", 0, () => _expr_input_x_input_y);
+export const _input_x_ = /* @__PURE__ */_$.value("input_x", 0, () => _expr_input_x_input_y);
+export const _input_b_ = /* @__PURE__ */_$.value("input_b", 0, () => _expr_input_a_input_b);
+export const _input_a_ = /* @__PURE__ */_$.value("input_a", 0, () => _expr_input_a_input_b);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
-  _if(_scope, input.a + input.b ? _ifBody : null);
-  _if2(_scope, (input.a, input.b) ? _ifBody2 : null);
-  _if3(_scope, input.x ? _ifBody3 : input.y ? _elseIfBody : _elseBody);
-});
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
+  _input_a_(_scope, input.a);
+  _input_b_(_scope, input.b);
+  _input_x_(_scope, input.x);
+  _input_y_(_scope, input.y);
+}, () => _$.intersections([_input_a_, _input_b_, _input_x_, _input_y_]));
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
 export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);

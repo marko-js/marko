@@ -4,12 +4,12 @@
       "$_$": "t",
       "$init": "a",
       "$_inputRenderBody_input": "e",
-      "$_expr_Text_input_x": "n",
+      "$_expr_Text_input_name_x": "n",
       "$_x_effect": "o",
       "$_x": "r",
       "$_name$customTagBody": "i",
-      "$_count$customTagBody": "m",
-      "$_pattern_$customTagBody": "c",
+      "$_count$customTagBody": "c",
+      "$_pattern_$customTagBody": "m",
       "$_params_2$customTagBody": "d"
     }
   }

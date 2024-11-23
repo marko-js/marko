@@ -38,13 +38,14 @@ const _expr_c_d = /* @__PURE__ */_$.intersection(2, _scope => {
   }]);
 }, () => _$.inChild("#childScope/1", _customTag_input_class));
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/3", 0, () => _expr_Text_c_d);
-const _d = /* @__PURE__ */_$.value("d", 0, () => _$.intersections([_expr_c_d, _expr_Text_c_d]));
-const _c = /* @__PURE__ */_$.value("c", 0, () => _$.intersections([_expr_c_d, _expr_Text_c_d]));
+export const _d_ = /* @__PURE__ */_$.value("d", 0, () => _$.intersections([_expr_c_d, _expr_Text_c_d]));
+export const _c_ = /* @__PURE__ */_$.value("c", 0, () => _$.intersections([_expr_c_d, _expr_Text_c_d]));
+export const _input_test_ = /* @__PURE__ */_$.value("input_test", (_scope, input_test) => _dynamicTagName(_scope, input_test), () => _dynamicTagName);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
-  _c(_scope, input.c);
-  _d(_scope, input.d);
-  _dynamicTagName(_scope, input.test);
-}, () => _$.intersections([_c, _d, _dynamicTagName]));
+  _input_test_(_scope, input.test);
+  _c_(_scope, input.c);
+  _d_(_scope, input.d);
+}, () => _$.intersections([_input_test_, _c_, _d_]));
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
 export function _setup_(_scope) {
   _customTag(_scope["#childScope/1"]);

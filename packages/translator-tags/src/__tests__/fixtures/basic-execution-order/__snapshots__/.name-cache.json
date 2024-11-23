@@ -3,11 +3,12 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_message$ifBody": "e",
+      "$_message_text$ifBody": "e",
       "$_ifBody": "a",
       "$_if": "n",
       "$_show": "r",
-      "$_message": "i"
+      "$_message_text": "i",
+      "$_message": "m"
     }
   }
 }

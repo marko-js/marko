@@ -2,7 +2,7 @@ export const _template_ = `<button></button>${_customTag_template}<div><!></div>
 export const _walks_ = /* get, over(1), beginChild, _customTag_walks, endChild, next(1), replace, out(1) */` b/${_customTag_walks}&D%l`;
 const a = 1;
 import * as _$ from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _customTag, _input_ as _customTag_input, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag.marko";
+import { _setup_ as _customTag, _input_renderBody_ as _customTag_input_renderBody, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag.marko";
 const _c$ifBody = _$.registerSubscriber("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_3_c/subscriber", /* @__PURE__ */_$.dynamicClosure("c", (_scope, c) => _$.data(_scope["#text/2"], c), _scope => _scope._._));
 const _b$ifBody = /* @__PURE__ */_$.dynamicClosure("b", (_scope, b) => _$.data(_scope["#text/1"], b), _scope => _scope._._);
 const _setup$ifBody = _scope => {
@@ -31,9 +31,7 @@ export function _setup_(_scope) {
   _setup__effect(_scope);
   _b(_scope, 2);
   _c(_scope, 3);
-  _customTag_input(_scope["#childScope/1"], {
-    renderBody: _customTagBody(_scope)
-  });
+  _customTag_input_renderBody(_scope["#childScope/1"], _customTagBody(_scope));
   _if(_scope, Math.random() ? _ifBody : null);
 }
 export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko", _template_, _walks_, _setup_);

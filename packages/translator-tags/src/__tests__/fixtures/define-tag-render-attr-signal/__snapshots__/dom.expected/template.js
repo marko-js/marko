@@ -3,7 +3,7 @@ export const _walks_ = /* replace, over(1), get, next(1), get, out(1) */"D%b D l
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _number$defineBody = /* @__PURE__ */_$.value("number", (_scope, number) => _$.data(_scope["#text/0"], number));
 const _pattern_$defineBody = /* @__PURE__ */_$.value("_pattern_", (_scope, _pattern_) => _number$defineBody(_scope, _pattern_.number));
-const _params_2$defineBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _pattern_$defineBody(_scope, _params_2[0]));
+const _params_2$defineBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _pattern_$defineBody(_scope, _params_2?.[0]));
 const _defineBody = _$.register("packages/translator-tags/src/__tests__/fixtures/define-tag-render-attr-signal/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div> </div>", /* next(1), get */"D ", void 0, void 0, () => _params_2$defineBody));
 const _MyTag_input = _$.dynamicTagAttrs("#text/0");
 const _expr_Text_x = /* @__PURE__ */_$.intersection(2, _scope => {

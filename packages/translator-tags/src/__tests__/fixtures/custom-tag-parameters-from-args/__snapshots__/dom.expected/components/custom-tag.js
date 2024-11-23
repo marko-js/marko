@@ -30,7 +30,8 @@ const _expr_x_y = /* @__PURE__ */_$.intersection(2, _scope => {
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/3", 0, () => _expr_Text_x_y);
 const _y = /* @__PURE__ */_$.state("y", (_scope, y) => _$.data(_scope["#text/2"], y), () => _$.intersections([_expr_x_y, _expr_Text_x_y]));
 const _x = /* @__PURE__ */_$.state("x", (_scope, x) => _$.data(_scope["#text/1"], x), () => _$.intersections([_expr_x_y, _expr_Text_x_y]));
-export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _dynamicTagName(_scope, input.renderBody), () => _dynamicTagName);
+export const _input_renderBody_ = /* @__PURE__ */_$.value("input_renderBody", (_scope, input_renderBody) => _dynamicTagName(_scope, input_renderBody), () => _dynamicTagName);
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_renderBody_(_scope, input.renderBody), () => _input_renderBody_);
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
 export function _setup_(_scope) {
   _x(_scope, 1);

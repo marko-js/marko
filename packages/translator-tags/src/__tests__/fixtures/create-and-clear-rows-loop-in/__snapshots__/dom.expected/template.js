@@ -14,9 +14,10 @@ const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_
 const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/create-and-clear-rows-loop-in/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<p><!>: <!></p>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, () => _params_2$forBody));
 const _for2 = /* @__PURE__ */_$.loopIn("#text/1", _forBody2);
 const _for = /* @__PURE__ */_$.loopIn("#text/0", _forBody);
-export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
-  _for(_scope, [input.children]);
-  _for2(_scope, [input.children]);
+export const _input_children_ = /* @__PURE__ */_$.value("input_children", (_scope, input_children) => {
+  _for(_scope, [input_children]);
+  _for2(_scope, [input_children]);
 });
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_children_(_scope, input.children));
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/create-and-clear-rows-loop-in/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);

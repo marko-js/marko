@@ -1,4 +1,4 @@
-// size: 774 (min) 395 (brotli)
+// size: 859 (min) 428 (brotli)
 const _expr_name_write_effect = _$.effect("a0", (_scope) => {
     const { 3: name, 4: write } = _scope;
     write(`mounted ${name}`),
@@ -26,7 +26,7 @@ _$.register(
     },
 );
 const _write$forBody = _$.closure(
-    4,
+    5,
     (_scope, write) => _write_(_scope[0], write),
     void 0,
     () => _$.inChild(0, _write_),
@@ -54,24 +54,28 @@ const _write$forBody = _$.closure(
       () => _params_2$forBody,
     ),
   ),
-  _for = _$.loopOf(2, _forBody),
-  _items_effect = _$.effect("b2", (_scope) =>
+  _expr_items_items_length_effect = _$.effect("b2", (_scope) =>
     _$.on(
       _scope[0],
       "click",
       ((_scope) => {
-        const { 3: items } = _scope;
+        const { 3: items, 4: items_length } = _scope;
         return function () {
-          _items(_scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
+          _items(_scope, items_length ? items.slice(0, -1) : [1, 2, 3]);
         };
       })(_scope),
     ),
   ),
+  _expr_items_items_length = _$.intersection(2, (_scope) => {
+    _expr_items_items_length_effect(_scope);
+  }),
+  _for = _$.loopOf(2, _forBody),
+  _items_length = _$.value(4, 0, () => _expr_items_items_length),
   _items = _$.state(
     3,
     (_scope, items) => {
-      _items_effect(_scope), _for(_scope, [items]);
+      _items_length(_scope, items?.length), _for(_scope, [items]);
     },
-    () => _for,
+    () => _$.intersections([_expr_items_items_length, _items_length, _for]),
   );
 init();

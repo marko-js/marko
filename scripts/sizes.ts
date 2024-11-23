@@ -21,8 +21,13 @@ const nameCache = (() => {
   }
 })();
 
-fs.rmSync(compiledOutputDir, { recursive: true });
-fs.mkdirSync(compiledOutputDir);
+try {
+  fs.rmSync(compiledOutputDir, { recursive: true });
+} catch {
+  // ignore
+} finally {
+  fs.mkdirSync(compiledOutputDir);
+}
 
 interface Sizes {
   min: number;

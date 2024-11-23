@@ -1,17 +1,26 @@
-// size: 480 (min) 275 (brotli)
+// size: 528 (min) 305 (brotli)
 const _inputThingRenderBody_input = _$.dynamicTagAttrs(1),
   _dynamicTagName = _$.conditional(
     1,
     (_scope) => _inputThingRenderBody_input(_scope, () => ({})),
     () => _inputThingRenderBody_input,
   ),
-  _input_ = _$.value(
-    3,
-    (_scope, input) => {
-      _$.classAttr(_scope[0], { selected: input.thing.selected }),
-        _dynamicTagName(_scope, input.thing.renderBody);
-    },
+  _input_thing_renderBody_ = _$.value(
+    6,
+    (_scope, input_thing_renderBody) =>
+      _dynamicTagName(_scope, input_thing_renderBody),
     () => _dynamicTagName,
+  ),
+  _input_thing_selected_ = _$.value(5, (_scope, input_thing_selected) =>
+    _$.classAttr(_scope[0], { selected: input_thing_selected }),
+  ),
+  _input_thing_ = _$.value(
+    4,
+    (_scope, input_thing) => {
+      _input_thing_selected_(_scope, input_thing?.selected),
+        _input_thing_renderBody_(_scope, input_thing?.renderBody);
+    },
+    () => _input_thing_renderBody_,
   ),
   _defineBody = _$.register(
     "b0",
@@ -19,8 +28,8 @@ const _inputThingRenderBody_input = _$.dynamicTagAttrs(1),
   ),
   _myThing = _$.value(
     3,
-    (_scope, myThing) => _input_(_scope[0], { thing: myThing }),
-    () => _$.inChild(0, _input_),
+    (_scope, myThing) => _input_thing_(_scope[0], myThing),
+    () => _$.inChild(0, _input_thing_),
   ),
   _selected_effect = _$.effect("b1", (_scope) =>
     _$.on(

@@ -32,6 +32,7 @@ export default {
     const tagBody = tag.get("body");
     startSection(tagBody);
     trackVarReferences(tag, BindingType.derived);
+    // TODO: should determine if var bindings are nullable based on attrs.
     trackParamsReferences(tagBody, BindingType.param);
     mergeReferences(
       getOrCreateSection(tag),
