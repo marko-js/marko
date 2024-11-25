@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.36.1
+
+### Patch Changes
+
+- [#2383](https://github.com/marko-js/marko/pull/2383) [`133b562`](https://github.com/marko-js/marko/commit/133b562c19081402330e4054eabc49a4ce635274) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Partially revert #2380 which was causing non idempotent builds.
+
+- Updated dependencies [[`133b562`](https://github.com/marko-js/marko/commit/133b562c19081402330e4054eabc49a4ce635274)]:
+  - @marko/compiler@5.38.1
+
 ## 5.36.0
 
 ### Minor Changes
