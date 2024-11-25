@@ -1,6 +1,6 @@
-// size: 141 (min) 103 (brotli)
+// size: 142 (min) 103 (brotli)
 const _y = _$.state(3, (_scope, y) => _$.data(_scope[1], y)),
-  _x_effect = _$.effect("b", (_scope) => {
+  _x_effect = _$.effect("a0", (_scope) => {
     const { 2: x } = _scope;
     _y(_scope, x), _x(_scope, 2);
   }),

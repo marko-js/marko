@@ -1,4 +1,4 @@
-// size: 237 (min) 160 (brotli)
+// size: 238 (min) 161 (brotli)
 const _tags0_input = _$.dynamicTagAttrs(2),
   _expr_Text_x = _$.intersection(
     2,
@@ -8,7 +8,7 @@ const _tags0_input = _$.dynamicTagAttrs(2),
     },
     () => _tags0_input,
   ),
-  _x_effect = _$.effect("b", (_scope) =>
+  _x_effect = _$.effect("b0", (_scope) =>
     _$.on(
       _scope[0],
       "click",

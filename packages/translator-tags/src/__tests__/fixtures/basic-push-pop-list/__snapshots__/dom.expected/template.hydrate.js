@@ -1,13 +1,13 @@
-// size: 482 (min) 249 (brotli)
+// size: 485 (min) 250 (brotli)
 const _item$forBody = _$.value(2, (_scope, item) => _$.data(_scope[0], item)),
   _params_2$forBody = _$.value(1, (_scope, _params_2) =>
     _item$forBody(_scope, _params_2[0]),
   ),
   _forBody = _$.register(
-    "b",
+    "a0",
     _$.createRenderer(" ", " ", void 0, void 0, () => _params_2$forBody),
   ),
-  _expr_id_items_effect = _$.effect("c", (_scope) =>
+  _expr_id_items_effect = _$.effect("a1", (_scope) =>
     _$.on(
       _scope[1],
       "click",
@@ -24,7 +24,7 @@ const _item$forBody = _$.value(2, (_scope, item) => _$.data(_scope[0], item)),
     _expr_id_items_effect(_scope);
   }),
   _for = _$.loopOf(0, _forBody),
-  _items_effect = _$.effect("d", (_scope) =>
+  _items_effect = _$.effect("a2", (_scope) =>
     _$.on(
       _scope[2],
       "click",

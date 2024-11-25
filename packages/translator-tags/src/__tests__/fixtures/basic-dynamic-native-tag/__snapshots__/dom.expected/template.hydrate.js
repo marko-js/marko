@@ -1,6 +1,6 @@
-// size: 91 (min) 79 (brotli)
+// size: 92 (min) 74 (brotli)
 const _tagNameBody = _$.register(
-  "b",
+  "a0",
   _$.createRendererWithOwner("Hello World", ""),
 );
 _$.dynamicTagAttrs(0, _tagNameBody);

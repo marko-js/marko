@@ -1,5 +1,5 @@
-// size: 248 (min) 153 (brotli)
-const _x_effect = _$.effect("d", (_scope) =>
+// size: 250 (min) 155 (brotli)
+const _x_effect = _$.effect("a0", (_scope) =>
     _$.on(
       _scope[0],
       "click",
@@ -19,7 +19,7 @@ const _x_effect = _$.effect("d", (_scope) =>
     () => _$.tagVarSignal,
   );
 _$.registerBoundSignal(
-  "c",
+  "b0",
   _$.value(2, (_scope, data) => _$.data(_scope[1], data)),
 ),
   init();

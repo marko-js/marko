@@ -1,5 +1,5 @@
-// size: 229 (min) 155 (brotli)
-const _expr_a_b_effect = _$.effect("b", (_scope) =>
+// size: 230 (min) 156 (brotli)
+const _expr_a_b_effect = _$.effect("a0", (_scope) =>
     _$.on(
       _scope[0],
       "click",

@@ -1,5 +1,5 @@
-// size: 312 (min) 156 (brotli)
-const _setup$tagSelectBody_effect = _$.effect("b", (_scope) => {
+// size: 314 (min) 165 (brotli)
+const _setup$tagSelectBody_effect = _$.effect("a0", (_scope) => {
     _$.attrsEvents(_scope, 0),
       _$.attrsEvents(_scope, 1),
       _$.attrsEvents(_scope, 2);
@@ -11,7 +11,7 @@ const _setup$tagSelectBody_effect = _$.effect("b", (_scope) => {
       _setup$tagSelectBody_effect(_scope);
   },
   _tagSelectBody = _$.register(
-    "c",
+    "a1",
     _$.createRendererWithOwner(
       "<option>A</option><option>B</option><option>C</option>",
       " b b ",

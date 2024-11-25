@@ -1,4 +1,4 @@
-// size: 296 (min) 193 (brotli)
+// size: 297 (min) 193 (brotli)
 const _expr_selected_num$forBody = _$.intersection(2, (_scope) => {
   const {
     _: { 1: selected },
@@ -7,7 +7,7 @@ const _expr_selected_num$forBody = _$.intersection(2, (_scope) => {
   _$.attr(_scope[0], "data-selected", selected === num),
     _$.attr(_scope[0], "data-multiple", num % selected == 0);
 });
-_$.effect("b", (_scope) =>
+_$.effect("a0", (_scope) =>
   _$.on(
     _scope[0],
     "click",

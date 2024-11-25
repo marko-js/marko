@@ -1,4 +1,4 @@
-// size: 674 (min) 290 (brotli)
+// size: 675 (min) 293 (brotli)
 const _setup_$1 = () => {},
   _value_$1 = _$.value(3, (_scope, value) => _$.data(_scope[0], value)),
   _input_$1 = _$.value(2, (_scope, input) => _value_$1(_scope, input.value)),
@@ -6,7 +6,7 @@ const _setup_$1 = () => {},
     _input_$1(_scope, _params_[0]),
   );
 var child1 = _$.createTemplate(
-  "c",
+  "a",
   "<div>Child 1 has <!></div>",
   "Db%l",
   _setup_$1,
@@ -18,7 +18,7 @@ const _setup_ = () => {},
   _input_ = _$.value(2, (_scope, input) => _value_(_scope, input.value)),
   _params__ = _$.value(1, (_scope, _params_) => _input_(_scope, _params_[0]));
 var child2 = _$.createTemplate(
-  "d",
+  "b",
   "<div>Child 2 has <!></div>",
   "Db%l",
   _setup_,
@@ -35,7 +35,7 @@ const _tagName_input = _$.dynamicTagAttrs(0),
     () => _tagName_input,
   ),
   _dynamicTagName = _$.conditional(0, 0, () => _expr_Text_val),
-  _tagName_effect = _$.effect("b", (_scope) =>
+  _tagName_effect = _$.effect("c0", (_scope) =>
     _$.on(
       _scope[1],
       "click",

@@ -1,4 +1,4 @@
-// size: 263 (min) 162 (brotli)
+// size: 264 (min) 148 (brotli)
 const _expr_a_b = _$.intersection(2, (_scope) => {
     const { 5: a, 6: b } = _scope;
     _$.data(_scope[4], a + b);
@@ -13,7 +13,7 @@ const _expr_a_b = _$.intersection(2, (_scope) => {
     (_scope, a) => _$.data(_scope[1], a),
     () => _expr_a_b,
   );
-_$.effect("b", (_scope) => {
+_$.effect("a0", (_scope) => {
   _$.on(_scope[0], "click", function () {
     _a(_scope, 10);
   }),

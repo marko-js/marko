@@ -1,8 +1,8 @@
-// size: 219 (min) 152 (brotli)
+// size: 220 (min) 154 (brotli)
 const _myObj = _$.value(4, (_scope, myObj) =>
     _$.data(_scope[0], JSON.stringify(myObj)),
   ),
-  _x_effect = _$.effect("b", (_scope) =>
+  _x_effect = _$.effect("a0", (_scope) =>
     _$.on(
       _scope[1],
       "click",

@@ -1,4 +1,4 @@
-// size: 318 (min) 178 (brotli)
+// size: 319 (min) 179 (brotli)
 const _onUpdate = (_scope) => {
     const { 1: x } = _scope;
     return function () {
@@ -6,7 +6,7 @@ const _onUpdate = (_scope) => {
         (this.cur = x);
     };
   },
-  _x_effect = _$.effect("b", (_scope) => {
+  _x_effect = _$.effect("a0", (_scope) => {
     _$.lifecycle(_scope, 3, {
       onMount: function () {
         this.onUpdate();

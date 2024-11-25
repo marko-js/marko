@@ -1,4 +1,4 @@
-// size: 748 (min) 367 (brotli)
+// size: 751 (min) 367 (brotli)
 const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
   _expr_outer_inner$forBody = _$.intersection(
     2,
@@ -22,7 +22,7 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
     _scope[0];
   },
   _forBody2 = _$.register(
-    "c",
+    "b0",
     _$.createRenderer(
       "<div> </div>",
       "/D l&",
@@ -45,7 +45,7 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
     () => _outer$forBody2,
   ),
   _forBody = _$.register(
-    "d",
+    "b1",
     _$.createRenderer(
       "<!><!><!>",
       "D%D",
@@ -55,7 +55,7 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
     ),
   ),
   _for = _$.loopOf(1, _forBody),
-  _items_effect = _$.effect("e", (_scope) =>
+  _items_effect = _$.effect("b2", (_scope) =>
     _$.on(
       _scope[0],
       "click",

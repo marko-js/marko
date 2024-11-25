@@ -206,17 +206,12 @@ Default: [environment based](https://github.com/marko-js/marko/blob/0f212897d2d3
 
 Enables production mode optimizations.
 
-#### `optimizeRegistryId`
+#### `optimizeKnownTemplates`
 
-Type: `(request: string) => string | number`<br>
+Type: `string[]`<br>
 Default: `undefined`
 
-If `optimize` is enabled this function will be called with each "template id" / "registry id" that Marko uses for hydration.
-The function must return a number (which will be encoded) or a string which is used verbatim.
-
-It is _required_ that when a template is compiled for the server it is given the same id when it is compiled for the browser.
-
-Without this function Marko will use a generic hash of the raw `request` id.
+If `optimize` is enabled you can provide an array of template paths which the compiler will use to generate shorter registry/template ids using incrementing ids. This can only be used if the same `optimizeKnownTemplates` are used for both server and client compilations.
 
 #### `resolveVirtualDependency`
 

@@ -1,7 +1,7 @@
-// size: 441 (min) 217 (brotli)
+// size: 445 (min) 212 (brotli)
 _$.dynamicTagAttrs(0);
 _$.registerSubscriber(
-  "c",
+  "b0",
   _$.dynamicClosure(
     4,
     (_scope, c) => _$.data(_scope[2], c),
@@ -9,7 +9,7 @@ _$.registerSubscriber(
   ),
 );
 const _c$customTagBody = _$.registerSubscriber(
-    "d",
+    "b1",
     _$.dynamicClosure(4, (_scope, c) => _$.data(_scope[2], c)),
   ),
   _b$customTagBody = _$.dynamicClosure(3, (_scope, b) => _$.data(_scope[1], b)),
@@ -17,7 +17,7 @@ const _c$customTagBody = _$.registerSubscriber(
     _$.data(_scope[0], 1);
   };
 _$.register(
-  "e",
+  "b2",
   _$.createRendererWithOwner(
     "<!> <!> <!>",
     "%c%c%",
@@ -26,7 +26,7 @@ _$.register(
   ),
 );
 const _c = _$.state(4, 0, () => _$.dynamicSubscribers(4));
-_$.effect("f", (_scope) =>
+_$.effect("b3", (_scope) =>
   _$.on(_scope[0], "click", function () {
     _c(_scope, 4);
   }),

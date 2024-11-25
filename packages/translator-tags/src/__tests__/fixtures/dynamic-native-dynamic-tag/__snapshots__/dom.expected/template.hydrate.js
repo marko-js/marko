@@ -1,6 +1,6 @@
-// size: 359 (min) 221 (brotli)
+// size: 361 (min) 228 (brotli)
 const _tagNameBody = _$.register(
-    "b",
+    "a0",
     _$.createRendererWithOwner("body content", ""),
   ),
   _tagName_input = _$.dynamicTagAttrs(0, _tagNameBody),
@@ -13,7 +13,7 @@ const _tagNameBody = _$.register(
     () => _tagName_input,
   ),
   _dynamicTagName = _$.conditional(0, 0, () => _expr_Text_className),
-  _tagName_effect = _$.effect("c", (_scope) =>
+  _tagName_effect = _$.effect("a1", (_scope) =>
     _$.on(
       _scope[1],
       "click",

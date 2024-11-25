@@ -1,5 +1,5 @@
-// size: 381 (min) 223 (brotli)
-const _setup$ifBody_effect = _$.effect("b", (_scope) => {
+// size: 384 (min) 224 (brotli)
+const _setup$ifBody_effect = _$.effect("a0", (_scope) => {
     (_scope._[1].innerHTML += "\nmounted"),
       (_$.getAbortSignal(_scope, 0).onabort = () => {
         _scope._[1].innerHTML += "\ndestroyed";
@@ -9,11 +9,11 @@ const _setup$ifBody_effect = _$.effect("b", (_scope) => {
     _$.resetAbortSignal(_scope, 0), _setup$ifBody_effect(_scope);
   },
   _ifBody = _$.register(
-    "c",
+    "a1",
     _$.createRenderer("<div>child</div>", "", _setup$ifBody),
   ),
   _if = _$.conditional(2, 0),
-  _show_effect = _$.effect("d", (_scope) =>
+  _show_effect = _$.effect("a2", (_scope) =>
     _$.on(
       _scope[0],
       "click",

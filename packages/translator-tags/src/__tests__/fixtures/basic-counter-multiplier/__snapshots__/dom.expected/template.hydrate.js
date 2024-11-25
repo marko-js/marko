@@ -1,4 +1,4 @@
-// size: 369 (min) 189 (brotli)
+// size: 371 (min) 190 (brotli)
 const _expr_count_multiplier = _$.intersection(2, (_scope) => {
     const { 4: count, 5: multiplier } = _scope;
     _multipliedCount(_scope, count * multiplier);
@@ -6,7 +6,7 @@ const _expr_count_multiplier = _$.intersection(2, (_scope) => {
   _multipliedCount = _$.value(6, (_scope, multipliedCount) =>
     _$.data(_scope[3], multipliedCount),
   ),
-  _multiplier_effect = _$.effect("b", (_scope) =>
+  _multiplier_effect = _$.effect("a0", (_scope) =>
     _$.on(
       _scope[0],
       "click",
@@ -25,7 +25,7 @@ const _expr_count_multiplier = _$.intersection(2, (_scope) => {
     },
     () => _expr_count_multiplier,
   ),
-  _count_effect = _$.effect("c", (_scope) =>
+  _count_effect = _$.effect("a1", (_scope) =>
     _$.on(
       _scope[2],
       "click",

@@ -1,6 +1,6 @@
-// size: 370 (min) 221 (brotli)
+// size: 373 (min) 222 (brotli)
 _$.dynamicTagAttrs(0);
-const _count$falseChildBody_effect = _$.effect("b", (_scope) =>
+const _count$falseChildBody_effect = _$.effect("b0", (_scope) =>
     _$.on(
       _scope[0],
       "click",
@@ -15,13 +15,13 @@ const _count$falseChildBody_effect = _$.effect("b", (_scope) =>
     ),
   ),
   _count$falseChildBody = _$.registerSubscriber(
-    "c",
+    "b1",
     _$.dynamicClosure(1, (_scope, count) => {
       _$.data(_scope[1], count), _count$falseChildBody_effect(_scope);
     }),
   ),
   _falseChildBody = _$.register(
-    "d",
+    "b2",
     _$.createRendererWithOwner("<button> </button>", " D ", void 0, () => [
       _count$falseChildBody,
     ]),
