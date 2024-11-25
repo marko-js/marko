@@ -1,8 +1,8 @@
-// size: 189 (min) 129 (brotli)
+// size: 190 (min) 126 (brotli)
 const _lastClickCount = _$.state(4, (_scope, lastClickCount) =>
     _$.data(_scope[2], lastClickCount),
   ),
-  _clickCount_effect = _$.effect("b", (_scope) =>
+  _clickCount_effect = _$.effect("a0", (_scope) =>
     _$.on(
       _scope[0],
       "click",

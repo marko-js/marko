@@ -1,13 +1,13 @@
-// size: 436 (min) 222 (brotli)
+// size: 439 (min) 224 (brotli)
 const _count$ifBody = _$.closure(4, (_scope, count) =>
     _$.data(_scope[0], count),
   ),
   _ifBody = _$.register(
-    "b",
+    "a0",
     _$.createRenderer("<span> </span>", "D ", void 0, () => [_count$ifBody]),
   ),
   _if = _$.conditional(2, 0),
-  _count_effect = _$.effect("c", (_scope) =>
+  _count_effect = _$.effect("a1", (_scope) =>
     _$.on(
       _scope[0],
       "click",
@@ -24,7 +24,7 @@ const _count$ifBody = _$.closure(4, (_scope, count) =>
     (_scope, count) => _count_effect(_scope),
     () => _$.inConditionalScope(_count$ifBody, 2),
   ),
-  _show_effect = _$.effect("d", (_scope) =>
+  _show_effect = _$.effect("a2", (_scope) =>
     _$.on(
       _scope[1],
       "click",

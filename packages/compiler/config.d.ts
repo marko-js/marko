@@ -24,7 +24,7 @@ declare const Config: {
   hydrateIncludeImports?: RegExp | ((request: string) => boolean);
   hydrateInit?: boolean;
   optimize?: boolean;
-  optimizeRegistryId?: (request: string) => string | number;
+  optimizeKnownTemplates?: string[];
   cache?: Map<unknown, unknown>;
   hot?: boolean;
   /** @deprecated */

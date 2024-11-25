@@ -1,5 +1,5 @@
-// size: 318 (min) 137 (brotli)
-const _count_effect = _$.effect("b", (_scope) => {
+// size: 319 (min) 138 (brotli)
+const _count_effect = _$.effect("a0", (_scope) => {
     _$.on(
       _scope[0],
       "click",

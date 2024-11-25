@@ -1,10 +1,10 @@
-// size: 243 (min) 167 (brotli)
+// size: 244 (min) 161 (brotli)
 const _expr_value_dummy = _$.intersection(2, (_scope) => {
     const { 3: value, 4: dummy } = _scope;
     _$.data(_scope[0], value);
   }),
   _value_ = _$.value(3, 0, () => _expr_value_dummy),
-  _count_effect = _$.effect("c", (_scope) =>
+  _count_effect = _$.effect("b0", (_scope) =>
     _$.on(
       _scope[1],
       "click",

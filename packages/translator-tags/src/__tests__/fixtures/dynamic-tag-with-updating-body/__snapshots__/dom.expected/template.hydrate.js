@@ -1,5 +1,5 @@
-// size: 499 (min) 289 (brotli)
-const _count_effect = _$.effect("e", (_scope) =>
+// size: 502 (min) 268 (brotli)
+const _count_effect = _$.effect("a0", (_scope) =>
     _$.on(
       _scope[0],
       "click",
@@ -20,7 +20,7 @@ const _setup$tagNameBody = (_scope) => {
     })(_scope[0]);
   },
   _tagNameBody = _$.register(
-    "c",
+    "b0",
     _$.createRendererWithOwner(
       "<button id=count> </button>",
       "/ D l&",
@@ -33,7 +33,7 @@ const _setup$tagNameBody = (_scope) => {
     (_scope) => _tagName_input(_scope, () => ({})),
     () => _tagName_input,
   ),
-  _tagName_effect = _$.effect("d", (_scope) =>
+  _tagName_effect = _$.effect("b1", (_scope) =>
     _$.on(
       _scope[1],
       "click",

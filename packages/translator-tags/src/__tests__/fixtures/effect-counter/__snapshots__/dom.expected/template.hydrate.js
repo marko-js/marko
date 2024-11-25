@@ -1,5 +1,5 @@
-// size: 191 (min) 118 (brotli)
-const _clickCount_effect = _$.effect("b", (_scope) => {
+// size: 192 (min) 120 (brotli)
+const _clickCount_effect = _$.effect("a0", (_scope) => {
     const { 1: clickCount } = _scope;
     (document.getElementById("button").textContent = clickCount),
       _$.on(

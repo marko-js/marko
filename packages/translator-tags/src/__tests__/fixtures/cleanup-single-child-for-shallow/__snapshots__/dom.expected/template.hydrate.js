@@ -1,5 +1,5 @@
-// size: 770 (min) 399 (brotli)
-const _expr_name_write_effect = _$.effect("f", (_scope) => {
+// size: 774 (min) 395 (brotli)
+const _expr_name_write_effect = _$.effect("a0", (_scope) => {
     const { 3: name, 4: write } = _scope;
     write(`mounted ${name}`),
       (_$.getAbortSignal(_scope, 0).onabort = ((_scope) => {
@@ -19,7 +19,7 @@ const _expr_name_write_effect = _$.effect("f", (_scope) => {
     () => _expr_name_write,
   );
 _$.register(
-  "c",
+  "b0",
   (_scope) =>
     function (msg) {
       _scope[1].innerHTML += "\n" + msg;
@@ -45,7 +45,7 @@ const _write$forBody = _$.closure(
     _scope[0];
   },
   _forBody = _$.register(
-    "d",
+    "b1",
     _$.createRenderer(
       "<div> </div>",
       "/D l&",
@@ -55,7 +55,7 @@ const _write$forBody = _$.closure(
     ),
   ),
   _for = _$.loopOf(2, _forBody),
-  _items_effect = _$.effect("e", (_scope) =>
+  _items_effect = _$.effect("b2", (_scope) =>
     _$.on(
       _scope[0],
       "click",

@@ -1,7 +1,7 @@
-// size: 79 (min) 74 (brotli)
-_$.effect("d", (_scope) => {
+// size: 81 (min) 77 (brotli)
+_$.effect("a0", (_scope) => {
   const { 2: el } = _scope;
   el().textContent = "hello";
 }),
-  _$.nodeRef("c", 0),
+  _$.nodeRef("b0", 0),
   init();

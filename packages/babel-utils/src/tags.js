@@ -323,14 +323,33 @@ export function getTemplateId(opts, request, child) {
   const optimize = typeof opts === "object" ? opts.optimize : opts;
 
   if (optimize) {
-    const optimizeRegistryId =
-      typeof opts === "object" && opts.optimizeRegistryId;
-
-    if (optimizeRegistryId) {
-      const result = optimizeRegistryId(
-        child ? request + "_" + child : request,
-      );
-      return typeof result === "number" ? encodeTemplateId(result) : result;
+    const optimizeKnownTemplates =
+      typeof opts === "object" && opts.optimizeKnownTemplates;
+    const knownTemplatesSize = optimizeKnownTemplates?.length || 0;
+    if (knownTemplatesSize) {
+      let lookup = idCache.get(optimizeKnownTemplates);
+      if (!lookup) {
+        lookup = new Map();
+        idCache.set(optimizeKnownTemplates, lookup);
+        for (let i = 0; i < knownTemplatesSize; i++) {
+          lookup.set(optimizeKnownTemplates[i], {
+            id: encodeTemplateId(i),
+            children: new Map(),
+          });
+        }
+      }
+      let registered = lookup.get(request);
+      if (registered) {
+        if (child) {
+          let childId = registered.children.get(child);
+          if (childId === undefined) {
+            childId = registered.children.size;
+            registered.children.set(child, childId);
+          }
+          return registered.id + childId;
+        }
+        return registered.id;
+      }
     }
 
     const hash = createHash("shake256", templateIdHashOpts).update(id);

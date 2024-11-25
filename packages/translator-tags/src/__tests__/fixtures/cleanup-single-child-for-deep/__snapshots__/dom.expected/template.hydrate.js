@@ -1,5 +1,5 @@
-// size: 1260 (min) 532 (brotli)
-const _expr_name_write_effect = _$.effect("g", (_scope) => {
+// size: 1265 (min) 528 (brotli)
+const _expr_name_write_effect = _$.effect("a0", (_scope) => {
     _$.getAbortSignal(_scope, 0).onabort = ((_scope) => {
       const { 3: name, 4: write } = _scope;
       return () => {
@@ -17,7 +17,7 @@ const _expr_name_write_effect = _$.effect("g", (_scope) => {
     () => _expr_name_write,
   );
 _$.register(
-  "b",
+  "b0",
   (_scope) =>
     function (msg) {
       _scope[1].innerHTML += "\n" + msg;
@@ -60,7 +60,7 @@ const _expr_outerItem_middleItem$forBody = _$.intersection(
     _scope[0];
   },
   _forBody2 = _$.register(
-    "d",
+    "b1",
     _$.createRenderer(
       "<div><div> </div></div>",
       "D/D l&",
@@ -100,7 +100,7 @@ const _expr_outerItem_middleItem$forBody = _$.intersection(
     _scope[0];
   },
   _forBody = _$.register(
-    "e",
+    "b2",
     _$.createRenderer(
       "<div><div> </div><!></div>",
       "D/D l&%",
@@ -110,7 +110,7 @@ const _expr_outerItem_middleItem$forBody = _$.intersection(
     ),
   ),
   _for = _$.loopOf(2, _forBody),
-  _items_effect = _$.effect("f", (_scope) =>
+  _items_effect = _$.effect("b3", (_scope) =>
     _$.on(
       _scope[0],
       "click",
