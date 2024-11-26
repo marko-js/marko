@@ -1,4 +1,3 @@
-import path from "path";
 import {
   loadFileForImport,
   parseStatements,
@@ -6,121 +5,155 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import MagicString from "magic-string";
+import path from "path";
 import resolveFrom from "resolve-from";
+const kEntryState = Symbol();
 
 export default (entryFile, isHydrate) => {
-  const { resolveVirtualDependency, hydrateIncludeImports, hydrateInit } =
-    entryFile.markoOpts;
   const program = entryFile.path;
-  const shouldIncludeImport = toTestFn(hydrateIncludeImports);
-  const resolvedDeps = new Set();
-  const body = [];
+  const programNode = program.node;
 
   if (!isHydrate) {
-    scanBrowserDeps(entryFile);
+    const body = [];
+    addBrowserImports(new Set(), undefined, body, entryFile, entryFile);
     if (body.length) {
-      program.node.body = body.concat(program.node.body);
+      programNode.body = body.concat(programNode.body);
     }
     return;
   }
 
-  const hydratedTemplates = new Set();
-  const watchFiles = new Set();
-  let hasComponents = false;
-  let splitComponentIndex = 0;
-
-  scanHydrateDeps(entryFile);
-
-  if (hasComponents) {
-    const initId = t.identifier("init");
-    const markoComponentsImport = importPath(
-      resolvePath(entryFile, "marko/src/runtime/components/index.js"),
-    );
-    if (splitComponentIndex) {
-      markoComponentsImport.specifiers.push(
-        t.importSpecifier(t.identifier("register"), t.identifier("register")),
-      );
+  const visitedFiles = new Set([
+    resolveRelativePath(entryFile, entryFile.opts.filename),
+  ]);
+  entryBuilder.visit(entryFile, entryFile, function visitChild(resolved) {
+    if (!visitedFiles.has(resolved)) {
+      visitedFiles.add(resolved);
+      const file = loadFileForImport(entryFile, resolved);
+      if (file) {
+        entryBuilder.visit(file, entryFile, (id) =>
+          visitChild(resolveRelativeToEntry(entryFile, file, id)),
+        );
+      }
     }
+  });
 
-    body.unshift(markoComponentsImport);
-
-    if (hydrateInit) {
-      markoComponentsImport.specifiers.push(t.importSpecifier(initId, initId));
-      body.push(
-        t.expressionStatement(
-          t.callExpression(
-            initId,
-            entryFile.markoOpts.runtimeId
-              ? [t.stringLiteral(entryFile.markoOpts.runtimeId)]
-              : [],
-          ),
-        ),
-      );
-    }
-  }
-
-  entryFile.metadata.marko.watchFiles = Array.from(watchFiles);
-  program.node.body = body;
+  programNode.body = entryBuilder.build(entryFile);
   program.skip();
+};
 
-  function scanHydrateDeps(file) {
-    const meta = file.metadata.marko;
-    const resolved = resolveRelativePath(entryFile, file.opts.filename);
-    if (hydratedTemplates.has(resolved)) return;
+export const entryBuilder = {
+  build(entryFile) {
+    const state = entryFile[kEntryState];
+    if (!state) {
+      throw entryFile.path.buildCodeFrameError(
+        "Unable to build hydrate code, no files were visited before finalizing the build",
+      );
+    }
+    const { markoOpts } = entryFile;
+    const entryMarkoMeta = entryFile.metadata.marko;
+    const { body } = state;
+    entryMarkoMeta.watchFiles = Array.from(state.watchFiles);
+    entryMarkoMeta.deps = Array.from(
+      state.lassoDeps,
+      (dep) => `package: ${dep}`,
+    );
 
-    hydratedTemplates.add(resolved);
+    if (state.hasComponents) {
+      const initId = t.identifier("init");
+      const markoComponentsImport = importPath(
+        resolveRelativePath(entryFile, "marko/src/runtime/components/index.js"),
+      );
+      if (state.splitComponentIndex) {
+        markoComponentsImport.specifiers.push(
+          t.importSpecifier(t.identifier("register"), t.identifier("register")),
+        );
+      }
 
-    if (meta.component) {
-      hasComponents = true;
+      body.unshift(markoComponentsImport);
 
-      if (path.basename(meta.component) === path.basename(file.opts.filename)) {
+      if (markoOpts.hydrateInit) {
+        markoComponentsImport.specifiers.push(
+          t.importSpecifier(initId, initId),
+        );
+        body.push(
+          t.expressionStatement(
+            t.callExpression(
+              initId,
+              markoOpts.runtimeId ? [t.stringLiteral(markoOpts.runtimeId)] : [],
+            ),
+          ),
+        );
+      }
+    }
+
+    return body;
+  },
+  visit(file, entryFile, visitChild) {
+    const fileMeta = file.metadata.marko;
+    const fileName = file.opts.filename;
+    const state = (entryFile[kEntryState] ||= {
+      shouldIncludeImport: toTestFn(file.markoOpts.hydrateIncludeImports),
+      watchFiles: new Set(),
+      imports: new Set(),
+      lassoDeps: new Set(),
+      hasComponents: false,
+      splitComponentIndex: 0,
+      body: [],
+    });
+
+    const { watchFiles, imports, lassoDeps, body } = state;
+
+    if (fileMeta.component) {
+      state.hasComponents = true;
+
+      if (path.basename(fileMeta.component) === path.basename(fileName)) {
         // Stateful component.
-        addDep(resolved);
+        addImport(imports, body, resolveRelativePath(entryFile, fileName));
         return;
       }
     }
 
-    watchFiles.add(file.opts.filename);
+    watchFiles.add(fileName);
 
-    for (const watchFile of meta.watchFiles) {
+    for (const watchFile of fileMeta.watchFiles) {
       watchFiles.add(watchFile);
     }
 
-    scanBrowserDeps(file);
+    addBrowserImports(imports, lassoDeps, body, file, entryFile);
 
     for (const child of file.path.node.body) {
       if (t.isImportDeclaration(child)) {
         const { value } = child.source;
-        if (shouldIncludeImport(value)) {
-          addDep(resolvePath(file, value));
+        if (state.shouldIncludeImport(value)) {
+          addImport(
+            imports,
+            body,
+            resolveRelativeToEntry(entryFile, file, value),
+          );
         }
       }
     }
 
-    for (const tag of meta.tags) {
+    for (const tag of fileMeta.tags) {
       if (tag.endsWith(".marko")) {
-        if (!hydratedTemplates.has(resolvePath(file, tag))) {
-          scanHydrateDeps(loadFileForImport(file, tag));
-        }
+        visitChild(tag);
       } else {
         const importedTemplates = tryGetTemplateImports(file, tag);
         if (importedTemplates) {
           for (const templateFile of importedTemplates) {
-            if (!hydratedTemplates.has(resolvePath(file, templateFile))) {
-              scanHydrateDeps(loadFileForImport(file, templateFile));
-            }
+            visitChild(templateFile);
           }
         }
       }
     }
 
-    if (meta.component) {
+    if (fileMeta.component) {
       // Split component
       const splitComponentId = t.identifier(
-        `component_${splitComponentIndex++}`,
+        `component_${state.splitComponentIndex++}`,
       );
       const splitComponentImport = importPath(
-        resolvePath(file, meta.component),
+        resolveRelativeToEntry(entryFile, file, fileMeta.component),
       );
       splitComponentImport.specifiers.push(
         t.importDefaultSpecifier(splitComponentId),
@@ -129,78 +162,83 @@ export default (entryFile, isHydrate) => {
         splitComponentImport,
         t.expressionStatement(
           t.callExpression(t.identifier("register"), [
-            t.stringLiteral(meta.id),
+            t.stringLiteral(fileMeta.id),
             splitComponentId,
           ]),
         ),
       );
     }
-  }
+  },
+};
 
-  function scanBrowserDeps(file) {
-    const { filename, sourceMaps } = file.opts;
-    let s;
+function addBrowserImports(seenImports, lassoDeps, body, file, entryFile) {
+  const { filename, sourceMaps } = file.opts;
+  let s;
 
-    for (let dep of file.metadata.marko.deps) {
-      if (typeof dep !== "string") {
-        const { virtualPath } = dep;
-        let { code } = dep;
-        let map;
+  for (let dep of file.metadata.marko.deps) {
+    if (typeof dep !== "string") {
+      const { virtualPath } = dep;
+      let { code } = dep;
+      let map;
 
-        if (sourceMaps && dep.startPos !== undefined) {
-          s = s || new MagicString(file.code, { source: filename });
-          map = s.snip(dep.startPos, dep.endPos).generateMap({
-            source: filename,
-            includeContent: true,
-          });
-
-          if (sourceMaps === "inline" || sourceMaps === "both") {
-            code += dep.style
-              ? `\n/*# sourceMappingURL=${map.toUrl()}*/`
-              : `\n//# sourceMappingURL=${map.toUrl()}`;
-
-            if (sourceMaps === "inline") {
-              map = undefined;
-            }
-          }
-        }
-
-        dep = resolveVirtualDependency(filename, {
-          map,
-          code,
-          virtualPath,
+      if (sourceMaps && dep.startPos !== undefined) {
+        s = s || new MagicString(file.code, { filename });
+        map = s.snip(dep.startPos, dep.endPos).generateMap({
+          source: filename,
+          includeContent: true,
         });
 
-        if (!dep) {
-          continue;
+        if (sourceMaps === "inline" || sourceMaps === "both") {
+          code += dep.style
+            ? `\n/*# sourceMappingURL=${map.toUrl()}*/`
+            : `\n//# sourceMappingURL=${map.toUrl()}`;
+
+          if (sourceMaps === "inline") {
+            map = undefined;
+          }
         }
-      } else if (dep.startsWith("package:")) {
-        continue;
       }
 
-      addDep(resolvePath(file, dep));
-    }
-  }
+      dep = file.markoOpts.resolveVirtualDependency(filename, {
+        map,
+        code,
+        virtualPath,
+      });
 
-  function addDep(resolved) {
-    if (resolvedDeps.has(resolved)) return;
-    resolvedDeps.add(resolved);
-    body.push(importPath(resolved));
-  }
-
-  function resolvePath(file, req) {
-    return file === entryFile
-      ? resolveRelativePath(file, req)
-      : resolveRelativePath(
-          entryFile,
-          path.join(file.opts.filename, "..", req),
+      if (!dep) {
+        continue;
+      }
+    } else if (isLassoDep(dep)) {
+      if (lassoDeps) {
+        lassoDeps.add(
+          resolveRelativeToEntry(entryFile, file, lassoManifestDepToPath(dep)),
         );
-  }
+      }
+      continue;
+    }
 
-  function importPath(path) {
-    return t.importDeclaration([], t.stringLiteral(path));
+    addImport(seenImports, body, resolveRelativeToEntry(entryFile, file, dep));
   }
-};
+}
+
+function addImport(seenImports, body, resolved) {
+  if (seenImports.has(resolved)) return;
+  seenImports.add(resolved);
+  body.push(importPath(resolved));
+}
+
+function resolveRelativeToEntry(entryFile, file, req) {
+  return file === entryFile
+    ? resolveRelativePath(file, req)
+    : resolveRelativePath(
+        entryFile,
+        req[0] === "." ? path.join(file.opts.filename, "..", req) : req,
+      );
+}
+
+function importPath(path) {
+  return t.importDeclaration([], t.stringLiteral(path));
+}
 
 function tryGetTemplateImports(file, rendererRelativePath) {
   const resolvedRendererPath = path.join(
@@ -216,7 +254,7 @@ function tryGetTemplateImports(file, rendererRelativePath) {
       file.markoOpts.fileSystem.readFileSync(resolvedRendererPath, "utf-8"),
     )) {
       if (statement.type === "ImportDeclaration") {
-        addImport(statement.source.value);
+        addTemplateImport(statement.source.value);
       } else {
         t.traverseFast(statement, (node) => {
           if (
@@ -230,7 +268,7 @@ function tryGetTemplateImports(file, rendererRelativePath) {
             node.arguments.length === 1 &&
             node.arguments[0].type === "StringLiteral"
           ) {
-            addImport(node.arguments[0].value);
+            addTemplateImport(node.arguments[0].value);
           }
         });
       }
@@ -241,7 +279,7 @@ function tryGetTemplateImports(file, rendererRelativePath) {
 
   return templateImports;
 
-  function addImport(request) {
+  function addTemplateImport(request) {
     if (request.endsWith(".marko")) {
       const resolvedTemplatePath =
         request[0] === "."
@@ -264,4 +302,12 @@ function toTestFn(val) {
   }
 
   return val.test.bind(val);
+}
+
+function isLassoDep(dep) {
+  return dep.startsWith("package: ");
+}
+
+function lassoManifestDepToPath(dep) {
+  return dep.slice(9);
 }

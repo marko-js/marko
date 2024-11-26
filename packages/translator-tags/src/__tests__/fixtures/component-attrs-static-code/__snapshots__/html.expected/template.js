@@ -1,16 +1,25 @@
-const formatNumber = n => {
+const formatNumber = _$.register(n => {
   return "$" + n.toFixed(2);
-};
+}, "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/anonymous");
+function formatNumber2(n) {
+  return "$" + n.toFixed(2);
+}
+import * as _$ from "@marko/runtime-tags/debug/html";
 import _counter from "./components/counter.marko";
-import { peekSerializedScope as _peekSerializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
-  const _childScope = _peekSerializedScope();
-  _counter._({
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
+  _$.register(formatNumber2, "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/formatNumber2");
+  const _childScope = _$.peekNextScope();
+  _counter({
     format: formatNumber
   });
-  _writeScope(_scope0_id, {
-    "#childScope/0": _childScope
+  const _childScope2 = _$.peekNextScope();
+  _counter({
+    format: formatNumber2
+  });
+  _$.writeScope(_scope0_id, {
+    "#childScope/0": _$.writeExistingScope(_childScope),
+    "#childScope/1": _$.writeExistingScope(_childScope2)
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko", _renderer);

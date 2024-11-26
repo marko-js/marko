@@ -1,25 +1,18 @@
-import { data as _data, intersection as _intersection, value as _value2, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _expr_value_dummy = /* @__PURE__ */_intersection(2, _scope => {
+export const _template_ = "<div> </div>";
+export const _walks_ = /* next(1), get, out(1) */"D l";
+import * as _$ from "@marko/runtime-tags/debug/dom";
+const _expr_value_dummy = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     value,
     dummy
   } = _scope;
-  _data(_scope["#text/0"], (dummy, value));
+  _$.data(_scope["#text/0"], (dummy, value));
 });
-const _dummy = /* @__PURE__ */_value2("dummy", null, _expr_value_dummy);
-const _value = /* @__PURE__ */_value2("value", null, _expr_value_dummy);
-const _setup = _scope => {
+const _dummy = /* @__PURE__ */_$.state("dummy", 0, () => _expr_value_dummy);
+export const _value_ = /* @__PURE__ */_$.value("value", 0, () => _expr_value_dummy);
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _value_(_scope, input.value), () => _value_);
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
+export function _setup_(_scope) {
   _dummy(_scope, {});
-};
-export const args = (_scope, _destructure, _clean) => {
-  let value;
-  if (!_clean) [{
-    value
-  }] = _destructure;
-  _value(_scope, value, _clean);
-};
-export { _value };
-export const template = "<div> </div>";
-export const walks = /* next(1), get, out(1) */"D l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/components/display-intersection.marko");
+}
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/components/display-intersection.marko", _template_, _walks_, _setup_, void 0, () => _params__);

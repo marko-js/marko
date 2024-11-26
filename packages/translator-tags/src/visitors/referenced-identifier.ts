@@ -1,38 +1,28 @@
 import { types as t } from "@marko/compiler";
-import { getExprRoot } from "../util/get-root";
-import isStatic from "../util/is-static";
-import { isOutputHTML } from "../util/marko-config";
-import { importRuntime } from "../util/runtime";
-import { getSection, type Section } from "../util/sections";
-import { addStatement } from "../util/signals";
-import { currentProgramPath, scopeIdentifier } from "./program";
 
-const programsWithInputReference = new WeakSet<t.NodePath<t.Program>>();
+import { getExprRoot } from "../util/get-root";
+import { isOutputHTML } from "../util/marko-config";
+import { callRuntime, importRuntime } from "../util/runtime";
+import {
+  getScopeIdIdentifier,
+  getSection,
+  type Section,
+} from "../util/sections";
+import { addStatement } from "../util/signals";
+import type { TemplateVisitor } from "../util/visitors";
+import * as writer from "../util/writer";
+import { scopeIdentifier } from "./program";
+
 const abortIdsByExpressionForSection = new WeakMap<
   Section,
   Map<t.NodePath<t.Node>, number>
 >();
 
 export default {
-  migrate(identifier: t.NodePath<t.Identifier>) {
+  migrate(identifier) {
     const { name } = identifier.node;
     if (identifier.scope.hasBinding(name)) return;
     switch (name) {
-      case "input": {
-        if (!programsWithInputReference.has(currentProgramPath)) {
-          programsWithInputReference.add(currentProgramPath);
-          insertAfterStatic(
-            t.markoTag(
-              t.stringLiteral("attrs"),
-              undefined,
-              t.markoTagBody(),
-              undefined,
-              identifier.node,
-            ),
-          );
-        }
-        break;
-      }
       case "out":
         if (
           t.isMemberExpression(identifier.parent) &&
@@ -42,23 +32,20 @@ export default {
           identifier.parentPath.replaceWith(t.identifier("$global"));
         } else {
           throw identifier.buildCodeFrameError(
-            "Only out.global is supported for compatibility.",
+            "Only `out.global` is supported for compatibility.",
           );
         }
         break;
     }
   },
-  translate(identifier: t.NodePath<t.Identifier>) {
+  translate(identifier) {
     const { name } = identifier.node;
     if (identifier.scope.hasBinding(name)) return;
     switch (name) {
       case "$global":
         if (isOutputHTML()) {
           identifier.replaceWith(
-            t.memberExpression(
-              t.callExpression(importRuntime("getStreamData"), []),
-              t.identifier("global"),
-            ),
+            t.callExpression(importRuntime("$global"), []),
           );
         } else {
           identifier.replaceWith(
@@ -68,6 +55,14 @@ export default {
         break;
       case "$signal":
         if (isOutputHTML()) {
+          const section = getSection(identifier);
+          if (!section.hasCleanup) {
+            section.hasCleanup = true;
+            const exprRoot = getExprRoot(identifier);
+            const write = writer.writeTo(exprRoot);
+            write`${callRuntime("markResumeCleanup", getScopeIdIdentifier(section))}`;
+          }
+
           identifier.replaceWith(
             t.callExpression(
               t.arrowFunctionExpression(
@@ -103,7 +98,7 @@ export default {
             addStatement(
               "render",
               section,
-              exprRoot.node.extra?.references,
+              exprRoot.node.extra?.referencedBindings,
               t.expressionStatement(
                 t.callExpression(importRuntime("resetAbortSignal"), [
                   scopeIdentifier,
@@ -122,15 +117,4 @@ export default {
         }
     }
   },
-};
-
-function insertAfterStatic(node: t.Statement) {
-  for (const child of currentProgramPath.get("body")) {
-    if (!isStatic(child)) {
-      child.insertBefore(node);
-      return;
-    }
-  }
-
-  currentProgramPath.unshiftContainer("body", node);
-}
+} satisfies TemplateVisitor<t.Identifier>;

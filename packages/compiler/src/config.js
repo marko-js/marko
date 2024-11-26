@@ -114,6 +114,13 @@ const config = {
   optimize: undefined,
 
   /**
+   * If `optimize` is enabled you can provide an array of template paths which the compiler will
+   * use to generate shorter registry/template ids using incrementing ids. This can only be used
+   * if the same `optimizeKnownTemplates` are used for both server and client compilations.
+   */
+  optimizeKnownTemplates: undefined,
+
+  /**
    * This option should be set if `hydrate` output is specified.
    * Maps a virtual dependency to a resolved file which can be implemented
    * for specific bundlers.
@@ -123,10 +130,6 @@ const config = {
   /**
    * Compiling a Marko template may require other (used) Marko templates to compile.
    * To prevent compiling templates more than once, most of the compilation is cached.
-   *
-   * The default cache strategy is to clear the cache on every macrotask.
-   * If the default cache is overwritten it is up to the user to determine when the
-   * cache is cleared.
    */
   cache: new Map(),
 

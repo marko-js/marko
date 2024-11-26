@@ -1,4 +1,6 @@
+import { getRootPackage } from "lasso-package-root";
 import path from "path";
+
 import markoModules from "../../modules";
 import tryLoadTranslator from "../util/try-load-translator";
 import taglibConfig from "./config";
@@ -35,24 +37,16 @@ export function buildLookup(dirname, requestedTranslator, onError) {
     loadedTranslatorsTaglibs.set(
       translator,
       (taglibsForDir = registeredTaglibs.concat(
-        translator.taglibs.map(([id, props]) => loadTaglib(id, props)),
+        resolveOptionalTaglibs(translator.optionalTaglibs || [], onError)
+          .concat(translator.taglibs)
+          .map(([id, props]) => loadTaglib(id, props)),
       )),
     );
   }
 
-  if (onError) {
-    const prevOnError = taglibConfig.onError;
-    taglibConfig.onError = onError;
-    try {
-      taglibsForDir = finder.find(dirname, taglibsForDir);
-    } catch (err) {
-      taglibConfig.onError(err);
-    } finally {
-      taglibConfig.onError = prevOnError;
-    }
-  } else {
+  runAndCatchErrors(() => {
     taglibsForDir = finder.find(dirname, taglibsForDir);
-  }
+  }, onError);
 
   const cacheKey = taglibsForDir
     .map((it) => it.id)
@@ -80,21 +74,8 @@ export function buildLookup(dirname, requestedTranslator, onError) {
 
 export function register(id, props) {
   if (typeof props === "undefined") {
-    switch (id[0]) {
-      case ".":
-      case "/":
-      case "\\":
-        break;
-      default:
-        if (!id.endsWith(".json")) {
-          id = path.join(id, "marko.json");
-        }
-        break;
-    }
-    id = markoModules.require.resolve(id);
-    props = markoModules.require(id);
+    [id, props] = resolveTaglib(id);
   }
-
   registeredTaglibs.push(loadTaglib(id, props));
 }
 
@@ -104,10 +85,61 @@ export function clearCaches() {
   lookupCache = Object.create(null);
 }
 
+export function resolveOptionalTaglibs(taglibIds, onError) {
+  const resolvedTaglibs = [];
+  for (const id of taglibIds) {
+    if (hasRootDependency(id)) {
+      runAndCatchErrors(() => {
+        resolvedTaglibs.push(resolveTaglib(id));
+      }, onError);
+    }
+  }
+
+  return resolvedTaglibs;
+}
+
 // Used by legacy compiler api.
 export const _loader = loader;
 export const _finder = finder;
 
+function runAndCatchErrors(fn, onError) {
+  if (onError) {
+    const prevOnError = taglibConfig.onError;
+    taglibConfig.onError = onError;
+    try {
+      fn();
+    } catch (err) {
+      taglibConfig.onError(err);
+    } finally {
+      taglibConfig.onError = prevOnError;
+    }
+  } else {
+    fn();
+  }
+}
+
 function loadTaglib(id, props) {
   return loader.loadTaglibFromProps(loader.createTaglib(id), props);
+}
+
+function resolveTaglib(id) {
+  switch (id[0]) {
+    case ".":
+    case "/":
+    case "\\":
+      break;
+    default:
+      if (!id.endsWith(".json")) {
+        id = path.join(id, "marko.json");
+      }
+      break;
+  }
+
+  const resolved = markoModules.require.resolve(id);
+  return [resolved, markoModules.require(resolved)];
+}
+
+function hasRootDependency(id) {
+  const pkg = getRootPackage(process.cwd());
+  return !!(pkg && (pkg.dependencies?.[id] || pkg.devDependencies?.[id]));
 }

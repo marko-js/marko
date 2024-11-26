@@ -1,15 +1,15 @@
 import type { Scope } from "../common/types";
 import { schedule } from "./schedule";
-import type { ValueSignal } from "./signals";
+import { MARK, type ValueSignal } from "./signals";
 
-const enum BatchOffset {
+const enum PendingSignalOffset {
   Scope = 0,
   Signal = 1,
   Value = 2,
   Total = 3,
 }
 
-const enum EffectOffset {
+const enum PendingEffectOffset {
   Scope = 0,
   Function = 1,
   Total = 2,
@@ -17,13 +17,16 @@ const enum EffectOffset {
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 
-let currentBatch: unknown[] = [];
-let currentEffects: unknown[] = [];
+let pendingSignals: unknown[] = [];
+let pendingEffects: unknown[] = [];
+export let rendering = false;
 
 export function queueSource<T>(scope: Scope, signal: ValueSignal, value: T) {
   schedule();
-  signal(scope, 0, 1);
-  currentBatch.push(scope, signal, value);
+  rendering = true;
+  signal(scope, MARK);
+  rendering = false;
+  pendingSignals.push(scope, signal, value);
   return value;
 }
 
@@ -31,66 +34,54 @@ export function queueEffect<S extends Scope, T extends ExecFn<S>>(
   scope: S,
   fn: T,
 ) {
-  currentEffects.push(scope, fn);
+  pendingEffects.push(scope, fn);
 }
 
 export function run() {
+  const signals = pendingSignals;
+  const effects = pendingEffects;
   try {
-    runBatch();
+    rendering = true;
+    pendingSignals = [];
+    runSignals(signals);
   } finally {
-    currentBatch = [];
+    rendering = false;
   }
-  try {
-    runEffects();
-  } finally {
-    currentEffects = [];
-  }
+  pendingEffects = [];
+  runEffects(effects);
 }
 
-export function runSync(fn: () => void) {
-  const prevBatch = currentBatch;
-  const prevEffects = currentEffects;
-  currentBatch = [];
-  currentEffects = [];
+export function prepareEffects(fn: () => void): unknown[] {
+  const prevSignals = pendingSignals;
+  const prevEffects = pendingEffects;
+  const preparedEffects = (pendingEffects = []);
+  const preparedSignals = (pendingSignals = []);
   try {
+    rendering = true;
     fn();
-    runBatch();
-    currentBatch = prevBatch;
-    runEffects();
+    pendingSignals = prevSignals;
+    runSignals(preparedSignals);
   } finally {
-    currentBatch = prevBatch;
-    currentEffects = prevEffects;
-  }
-}
-
-export function prepare(fn: () => void) {
-  const prevBatch = currentBatch;
-  const prevEffects = currentEffects;
-  const preparedEffects = (currentEffects = []);
-  currentBatch = [];
-  try {
-    fn();
-    runBatch();
-  } finally {
-    currentBatch = prevBatch;
-    currentEffects = prevEffects;
+    rendering = false;
+    pendingSignals = prevSignals;
+    pendingEffects = prevEffects;
   }
   return preparedEffects;
 }
 
-export function runEffects(effects: unknown[] = currentEffects) {
-  for (let i = 0; i < effects.length; i += EffectOffset.Total) {
+export function runEffects(effects: unknown[] = pendingEffects) {
+  for (let i = 0; i < effects.length; i += PendingEffectOffset.Total) {
     const scope = effects[i] as Scope;
     const fn = effects[i + 1] as (scope: Scope) => void;
     fn(scope);
   }
 }
 
-function runBatch() {
-  for (let i = 0; i < currentBatch.length; i += BatchOffset.Total) {
-    const scope = currentBatch[i + BatchOffset.Scope] as Scope;
-    const signal = currentBatch[i + BatchOffset.Signal] as ValueSignal;
-    const value = currentBatch[i + BatchOffset.Value] as unknown;
+function runSignals(signals: unknown[]) {
+  for (let i = 0; i < signals.length; i += PendingSignalOffset.Total) {
+    const scope = signals[i + PendingSignalOffset.Scope] as Scope;
+    const signal = signals[i + PendingSignalOffset.Signal] as ValueSignal;
+    const value = signals[i + PendingSignalOffset.Value] as unknown;
     signal(scope, value);
   }
 }

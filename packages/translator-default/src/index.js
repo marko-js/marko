@@ -1,4 +1,3 @@
-import { resolve } from "path";
 import {
   findParentTag,
   getTagDef,
@@ -16,6 +15,8 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { version } from "marko/package.json";
+import { resolve } from "path";
+
 import MarkoCDATA from "./cdata";
 import MarkoClass from "./class";
 import MarkoComment from "./comment";
@@ -30,7 +31,8 @@ import getComponentFiles from "./util/get-component-files";
 import { optimizeHTMLWrites } from "./util/optimize-html-writes";
 import { analyzeStaticVDOM } from "./util/optimize-vdom-create";
 
-export { default as taglibs } from "./taglib";
+export { optionalTaglibs, default as taglibs } from "./taglib";
+export { entryBuilder as internalEntryBuilder } from "./util/add-dependencies";
 
 export const analyze = {
   Program: {
@@ -48,8 +50,8 @@ export const analyze = {
     exit(program) {
       const { file } = program.hub;
       const meta = file.metadata.marko;
-      const { styleFile, packageFile, componentBrowserFile } =
-        getComponentFiles(program);
+      const componentFiles = getComponentFiles(program);
+      const { styleFile, packageFile, componentBrowserFile } = componentFiles;
 
       if (packageFile) {
         meta.deps.unshift(`package: ${packageFile}`);
@@ -59,10 +61,20 @@ export const analyze = {
         meta.deps.unshift(styleFile);
       }
 
-      if (meta.hasComponentBrowser) {
-        meta.component = componentBrowserFile;
-      } else if (meta.hasComponent || meta.hasStatefulTagParams) {
-        meta.component = file.opts.filename;
+      if (!meta.widgetBind) {
+        if (meta.hasComponentBrowser) {
+          meta.component = componentBrowserFile;
+        } else if (
+          meta.hasComponent ||
+          meta.hasStatefulTagParams ||
+          meta.hasFunctionEventHandlers
+        ) {
+          meta.component = file.opts.filename;
+        } else if (meta.hasStringEventHandlers) {
+          meta.component = componentFiles.componentBrowserFile =
+            "marko/src/runtime/helpers/empty-component.js";
+          meta.hasComponentBrowser = true;
+        }
       }
 
       meta.component =
@@ -113,6 +125,26 @@ export const analyze = {
       }
     }
 
+    if (!(meta.hasFunctionEventHandlers || meta.hasStringEventHandlers)) {
+      for (const attr of tag.node.attributes) {
+        if (
+          t.isMarkoAttribute(attr) &&
+          attr.arguments &&
+          /^on[-A-Z]/.test(attr.name)
+        ) {
+          if (
+            attr.arguments.length >= 1 &&
+            attr.arguments[0].type === "StringLiteral"
+          ) {
+            meta.hasStringEventHandlers = true;
+          } else {
+            meta.hasFunctionEventHandlers = true;
+          }
+          break;
+        }
+      }
+    }
+
     if (
       meta.hasStatefulTagParams ||
       isNativeTag(tag) ||
@@ -137,6 +169,7 @@ export const analyze = {
     meta.hasStatefulTagParams =
       childMeta &&
       (childMeta.hasStatefulTagParams ||
+        childMeta.hasFunctionEventHandlers ||
         (childMeta.hasComponent && !childMeta.hasComponentBrowser));
   },
   ImportDeclaration: {
@@ -467,13 +500,14 @@ export function getRuntimeEntryFiles(output, optimize) {
     `${base}runtime/components/attach-detach.js`,
     `${base}runtime/helpers/assign.js`,
     `${base}runtime/helpers/class-value.js`,
+    `${base}runtime/helpers/of-fallback.js`,
     `${base}runtime/helpers/dynamic-tag.js`,
     `${base}runtime/helpers/attr-tag.js`,
     `${base}runtime/helpers/merge.js`,
-    `${base}runtime/helpers/repeatable.js`,
     `${base}runtime/helpers/render-tag.js`,
     `${base}runtime/helpers/style-value.js`,
     `${base}runtime/helpers/to-string.js`,
+    `${base}runtime/helpers/empty-component.js`,
     `${base}core-tags/components/preserve-tag.js`,
     ...(output === "html"
       ? [
@@ -495,14 +529,12 @@ export function getRuntimeEntryFiles(output, optimize) {
           `${base}core-tags/core/__flush_here_and_after__.js`,
           `${base}core-tags/core/await/renderer.js`,
           `${base}core-tags/core/await/reorderer-renderer.js`,
-          `${base}runtime/helpers/tags-compat/html${optimize ? "" : "-debug"}.mjs`,
         ]
       : [
           `${base}runtime/vdom/index.js`,
           `${base}runtime/vdom/hot-reload.js`,
           `${base}runtime/vdom/helpers/attrs.js`,
           `${base}runtime/vdom/helpers/const-element.js`,
-          `${base}runtime/helpers/tags-compat/dom${optimize ? "" : "-debug"}.mjs`,
         ]),
   ];
 }

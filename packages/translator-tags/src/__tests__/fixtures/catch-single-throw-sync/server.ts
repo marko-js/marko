@@ -8,10 +8,10 @@ const renderer = () => {
       throw new Error("ERROR!");
     },
     (err) => {
-      write(err.message);
+      write((err as Error).message);
     },
   );
   write("d");
 };
 
-export default createTemplate(renderer);
+export default createTemplate("", renderer);

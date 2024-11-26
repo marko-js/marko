@@ -1,3 +1,12 @@
-import { createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {});
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/at-tags/components/hello/index.marko");
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
+  const _dynamicScope = _$.peekNextScope();
+  _$.dynamicTagInput(_dynamicScope, input.foo, {});
+  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/0")}`);
+  _$.writeScope(_scope0_id, {
+    "#text/0!": _$.writeExistingScope(_dynamicScope),
+    "#text/0(": _$.normalizeDynamicRenderer(input.foo)
+  });
+});
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/at-tags/components/hello/index.marko", _renderer);

@@ -1,4 +1,3 @@
-import nodePath from "path";
 import {
   assertNoVar,
   findAttributeTags,
@@ -7,8 +6,12 @@ import {
   isDynamicTag,
   isMacroTag,
   isNativeTag,
+  isTransparentTag,
+  resolveTagImport,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import nodePath from "path";
+
 import { getKeyManager } from "../util/key-manager";
 import { optimizeStaticVDOM } from "../util/optimize-vdom-create";
 import { enter, exit } from "../util/plugin-hooks";
@@ -44,16 +47,16 @@ export default {
       }
     }
 
-    if (path.hub.file.markoOpts.ignoreUnrecognizedTags && !tagDef) {
-      findAttributeTags(path).forEach((child) => {
-        child.set(
-          "name",
-          t.stringLiteral(`at_${child.get("name.value").node.slice(1)}`),
-        );
-      });
-    }
-
     if (!isAttributeTag(path)) {
+      if (
+        !tagDef &&
+        path.hub.file.markoOpts.ignoreUnrecognizedTags &&
+        (path.node.attributeTags.length || path.node.body.attributeTags) &&
+        !isDynamicTag(path)
+      ) {
+        moveIgnoredAttrTags(path);
+      }
+
       if (isDynamicTag(path) || !(isMacroTag(path) || isNativeTag(path))) {
         analyzeAttributeTags(path);
       }
@@ -139,6 +142,7 @@ function findDynamicTagTypes(root) {
     empty: false,
     component: false,
   };
+  let tagNameImported;
 
   let path;
   while ((path = pending.pop())) {
@@ -193,11 +197,24 @@ function findDynamicTagTypes(root) {
           }
 
           if (binding.kind === "module") {
-            const importSourcePath = binding.path.parentPath.get("source");
+            const importSource = binding.path.parent.source;
             if (
-              importSourcePath.isStringLiteral() &&
-              isMarkoFile(importSourcePath.get("value").node)
+              t.isStringLiteral(importSource) &&
+              isMarkoFile(importSource.value)
             ) {
+              const resolvedImport =
+                resolveTagImport(root.parentPath, importSource.value) ||
+                importSource.value;
+
+              if (tagNameImported === undefined) {
+                tagNameImported = resolvedImport;
+              } else if (
+                tagNameImported &&
+                tagNameImported !== resolvedImport
+              ) {
+                tagNameImported = null;
+              }
+
               types.component = true;
             } else {
               return false;
@@ -232,9 +249,39 @@ function findDynamicTagTypes(root) {
     }
   }
 
+  if (tagNameImported && !types.string) {
+    (root.parent.extra ??= {}).tagNameImported = tagNameImported;
+  }
+
   return types;
 }
 
 function isMarkoFile(request) {
   return nodePath.extname(request) === ".marko" || /^<.*>$/.test(request);
+}
+
+function moveIgnoredAttrTags(parentTag) {
+  const attrTags = parentTag.node.body.attributeTags
+    ? parentTag.get("body").get("body")
+    : parentTag.get("attributeTags");
+
+  if (!attrTags.length) return;
+
+  for (const attrTag of attrTags) {
+    if (attrTag.isMarkoTag()) {
+      if (isAttributeTag(attrTag)) {
+        attrTag.set(
+          "name",
+          t.stringLiteral(`at_${attrTag.get("name.value").node.slice(1)}`),
+        );
+      }
+
+      moveIgnoredAttrTags(attrTag);
+    }
+  }
+
+  parentTag.node.body.body = parentTag.node.attributeTags.concat(
+    parentTag.node.body.body,
+  );
+  parentTag.node.attributeTags = [];
 }

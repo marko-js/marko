@@ -1,5 +1,5 @@
 # Write
-  <button id=addTwo>0<!M*0 #text/1></button><!M*0 #button/0><button id=triple>0<!M*0 #text/3></button><!M*0 #button/2><button id=cube>0<!M*0 #text/5></button><!M*0 #button/4><script>(M$h=[]).push((b,s)=>({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])</script>
+  <button id=addTwo>0<!--M_*0 #text/1--></button><!--M_*0 #button/0--><button id=triple>0<!--M_*0 #text/3--></button><!--M_*0 #button/2--><button id=cube>0<!--M_*0 #text/5--></button><!--M_*0 #button/4--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{count:0}}),0,"packages/translator-tags/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",0];M._.w()</script>
 
 
 # Render "End"
@@ -11,25 +11,25 @@
       id="addTwo"
     >
       0
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <button
       id="triple"
     >
       0
-      <!--M*0 #text/3-->
+      <!--M_*0 #text/3-->
     </button>
-    <!--M*0 #button/2-->
+    <!--M_*0 #button/2-->
     <button
       id="cube"
     >
       0
-      <!--M*0 #text/5-->
+      <!--M_*0 #text/5-->
     </button>
-    <!--M*0 #button/4-->
+    <!--M_*0 #button/4-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-tags/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0}}),0,"packages/translator-tags/src/__tests__/fixtures/reassignment-expression-counter/template.marko_0_count",0];M._.w()
     </script>
   </body>
 </html>

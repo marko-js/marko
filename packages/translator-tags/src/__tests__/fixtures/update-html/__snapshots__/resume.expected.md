@@ -12,7 +12,10 @@
     <strong>
       World
     </strong>
-    <!--M*0 #text/0-->
+    <!--M_*0 #text/0-->
+    <script>
+      WALKER_RUNTIME("M")("_")
+    </script>
   </body>
 </html>
 ```

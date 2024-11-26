@@ -1,5 +1,5 @@
 "use strict";
-
+// eslint-disable-next-line no-constant-binary-expression
 const complain = "MARKO_DEBUG" && require("complain");
 const path = require("path");
 const resolveFrom = require("resolve-from");
@@ -8,6 +8,11 @@ const defaultCompilerOptions = {
   // eslint-disable-next-line no-constant-condition
   sourceMaps: "MARKO_DEBUG" ? "inline" : false,
   meta: true,
+  babelConfig: {
+    babelrc: false,
+    configFile: false,
+    browserslistConfigFile: false,
+  },
 };
 const MARKO_EXTENSIONS = Symbol("MARKO_EXTENSIONS");
 

@@ -9,6 +9,7 @@ module.exports = function (helpers) {
 
   component1.subscribeTo(component2).on("foo", function fooListener() {
     fooEvent = arguments;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     fooEventThis = this;
   });
 

@@ -1,14 +1,8 @@
-import { data as _data, value as _value2, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _value = /* @__PURE__ */_value2("value", (_scope, value) => _data(_scope["#text/0"], value));
-export const args = (_scope, _destructure, _clean) => {
-  let value;
-  if (!_clean) [{
-    value
-  }] = _destructure;
-  _value(_scope, value, _clean);
-};
-export { _value };
-export const template = "Static <!>";
-export const walks = /* over(1), replace, over(1) */"b%b";
-export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/update-text/template.marko");
+export const _template_ = "Static <!>";
+export const _walks_ = /* over(1), replace, over(1) */"b%b";
+export const _setup_ = () => {};
+import * as _$ from "@marko/runtime-tags/debug/dom";
+export const _value_ = /* @__PURE__ */_$.value("value", (_scope, value) => _$.data(_scope["#text/0"], value));
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _value_(_scope, input.value));
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/update-text/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);

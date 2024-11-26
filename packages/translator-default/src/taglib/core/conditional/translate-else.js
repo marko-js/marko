@@ -5,10 +5,7 @@ export function exit(path) {
   assertNoArgs(path);
   assertNoAttributes(path);
 
-  const {
-    ifStatement,
-    body: { body },
-  } = path.node;
+  const { ifStatement } = path.node;
 
   if (!ifStatement) {
     throw path
@@ -18,6 +15,6 @@ export function exit(path) {
       );
   }
 
-  ifStatement.alternate = t.blockStatement(body);
+  ifStatement.alternate = t.blockStatement(path.node.body.body);
   path.remove();
 }

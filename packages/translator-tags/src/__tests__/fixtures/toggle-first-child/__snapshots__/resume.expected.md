@@ -6,14 +6,14 @@
     <div>
       <span>
         Hello
-        <!--M*1 #text/0-->
+        <!--M_*1 #text/0-->
       </span>
-      <!--M|0 #text/0 1-->
+      <!--M_|0 #text/0 1-->
       <span />
       <span />
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/toggle-first-child/template.marko_1_renderer")},1:j},j._=h,k),[])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={value:"Hello","#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/toggle-first-child/template.marko_1_renderer"],"#text/0!":_.b={}},1:_.b},_.b._=_.a,_.c),0]
     </script>
   </body>
 </html>

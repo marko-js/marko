@@ -1,26 +1,25 @@
-import { write as _write, escapeXML as _escapeXML, markResumeNode as _markResumeNode, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeScope as _writeScope, nextScopeId as _nextScopeId, maybeFlush as _maybeFlush, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer(({
-  children
-}, _tagVar) => {
-  const _scope0_id = _nextScopeId();
-  _write("<div>");
-  const _forScopeIds = [],
-    _scope1_ = new Map();
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
+  const {
+    children
+  } = input;
+  _$.write("<div>");
   const _by = function (c) {
     return c.id;
   };
-  let _i2 = 0;
-  for (const child of children) {
-    const _scope1_id = _nextScopeId();
-    let _i = _i2++;
+  const _forScopeIds = [],
+    _scope1_ = new Map();
+  _$.forOf(children, (child, _index) => {
+    const _scope1_id = _$.nextScopeId();
     _forScopeIds.push(_scope1_id);
-    _write(`${_escapeXML(child.text)}${_markResumeNode(_scope1_id, "#text/0")}`);
-    _writeScope(_scope1_id, (_s => (_scope1_.set(_by(child, _i), _s), _s))({}));
-    _maybeFlush();
-  }
-  _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#div/0", _forScopeIds)}</div>${_markResumeNode(_scope0_id, "#div/0")}`);
-  _writeScope(_scope0_id, {
+    _$.write(`${_$.escapeXML(child.text)}${_$.markResumeNode(_scope1_id, "#text/0")}`);
+    _$.writeScope(_scope1_id, {});
+    _scope1_.set(_by(child, _index), _$.getScopeById(_scope1_id));
+  });
+  _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#div/0", _forScopeIds)}</div>${_$.markResumeNode(_scope0_id, "#div/0")}`);
+  _$.writeScope(_scope0_id, {
     "#div/0(": _scope1_.size ? _scope1_ : undefined
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/remove-and-add-rows/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/remove-and-add-rows/template.marko", _renderer);

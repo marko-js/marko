@@ -1,8 +1,10 @@
-import { createHash } from "crypto";
-import { basename, dirname, relative, resolve, join } from "path";
 import { types as t } from "@marko/compiler";
+import { createHash } from "crypto";
 import { getRootDir } from "lasso-package-root";
+import { basename, dirname, join, relative, resolve } from "path";
 import resolveFrom from "resolve-from";
+
+import { diagnosticWarn } from "./diagnostics";
 import { resolveRelativePath } from "./imports";
 import { getTagDefForTagName } from "./taglib";
 
@@ -63,9 +65,12 @@ export function registerMacro(path, name) {
 
   if (macroNames) {
     if (macroNames[name]) {
-      throw path.buildCodeFrameError(
-        `A macro with the name "${name}" already exists.`,
-      );
+      diagnosticWarn(path, {
+        label: `A macro with the name "${name}" already exists.`,
+        fix() {
+          findParentTag(path).remove();
+        },
+      });
     }
     macroNames[name] = true;
   } else {
@@ -208,7 +213,10 @@ export function findParentTag(path) {
 }
 
 export function findAttributeTags(path, attributeTags = []) {
-  path.get("body.body").forEach((child) => {
+  const attrTags = path.node.body.attributeTags
+    ? path.get("body").get("body")
+    : path.get("attributeTags");
+  attrTags.forEach((child) => {
     if (isAttributeTag(child)) {
       attributeTags.push(child);
     } else if (isTransparentTag(child)) {
@@ -255,18 +263,15 @@ export function loadFileForTag(tag) {
 
   if (filename) {
     const markoMeta = file.metadata.marko;
+    const relativeFileName = resolveRelativePath(file, filename);
     const { analyzedTags } = markoMeta;
     if (analyzedTags) {
-      analyzedTags.push(filename);
+      analyzedTags.add(relativeFileName);
     } else {
-      markoMeta.analyzedTags = [filename];
+      markoMeta.analyzedTags = new Set([relativeFileName]);
     }
 
-    return file.___getMarkoFile(
-      fs.readFileSync(filename).toString("utf-8"),
-      createNewFileOpts(file.opts, filename),
-      file.markoOpts,
-    );
+    return resolveMarkoFile(file, filename);
   }
 }
 
@@ -282,27 +287,80 @@ export function loadFileForImport(file, request) {
     const markoMeta = file.metadata.marko;
     const { analyzedTags } = markoMeta;
     if (analyzedTags) {
-      analyzedTags.push(filename);
+      analyzedTags.add(relativeRequest);
     } else {
-      markoMeta.analyzedTags = [filename];
+      markoMeta.analyzedTags = new Set([relativeRequest]);
     }
 
-    return file.___getMarkoFile(
-      fs.readFileSync(filename).toString("utf-8"),
-      createNewFileOpts(file.opts, filename),
-      file.markoOpts,
-    );
+    return resolveMarkoFile(file, filename);
   }
 }
 
-export function getTemplateId(optimize, request) {
-  const id = relative(ROOT, request);
+function resolveMarkoFile(file, filename) {
+  if (filename === file.opts.filename) {
+    if (file.___compileStage === "analyze") {
+      return file;
+    }
 
-  if (optimize) {
-    return createHash("MD5").update(id).digest("base64").slice(0, 8);
+    return file.___getMarkoFile(file.code, file.opts, file.markoOpts);
   }
 
-  return id;
+  try {
+    return file.___getMarkoFile(
+      file.markoOpts.fileSystem.readFileSync(filename).toString("utf-8"),
+      createNewFileOpts(file.opts, filename),
+      file.markoOpts,
+    );
+  } catch (_) {
+    // ignore
+  }
+}
+
+const idCache = new WeakMap();
+const templateIdHashOpts = { outputLength: 5 };
+export function getTemplateId(opts, request, child) {
+  const id = relative(ROOT, request);
+  const optimize = typeof opts === "object" ? opts.optimize : opts;
+
+  if (optimize) {
+    const optimizeKnownTemplates =
+      typeof opts === "object" && opts.optimizeKnownTemplates;
+    const knownTemplatesSize = optimizeKnownTemplates?.length || 0;
+    if (knownTemplatesSize) {
+      let lookup = idCache.get(optimizeKnownTemplates);
+      if (!lookup) {
+        lookup = new Map();
+        idCache.set(optimizeKnownTemplates, lookup);
+        for (let i = 0; i < knownTemplatesSize; i++) {
+          lookup.set(optimizeKnownTemplates[i], {
+            id: encodeTemplateId(i),
+            children: new Map(),
+          });
+        }
+      }
+      let registered = lookup.get(request);
+      if (registered) {
+        if (child) {
+          let childId = registered.children.get(child);
+          if (childId === undefined) {
+            childId = registered.children.size;
+            registered.children.set(child, childId);
+          }
+          return registered.id + childId;
+        }
+        return registered.id;
+      }
+    }
+
+    const hash = createHash("shake256", templateIdHashOpts).update(id);
+    if (child) {
+      hash.update(child);
+    }
+
+    return encodeTemplateId(parseInt(hash.digest("hex"), 16));
+  }
+
+  return id + (child ? `_${child}` : "");
 }
 
 export function resolveTagImport(path, request) {
@@ -350,4 +408,23 @@ function createNewFileOpts(opts, filename) {
       sourceFileName,
     },
   };
+}
+
+function encodeTemplateId(index) {
+  const encodeChars =
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
+  const encodeLen = encodeChars.length;
+  const encodeStartLen = encodeLen - 11; // Avoids chars that cannot start a property name and _ (reserved).
+  let cur = index;
+  let mod = cur % encodeStartLen;
+  let id = encodeChars[mod];
+  cur = (cur - mod) / encodeStartLen;
+
+  while (cur > 0) {
+    mod = cur % encodeLen;
+    id += encodeChars[mod];
+    cur = (cur - mod) / encodeLen;
+  }
+
+  return id;
 }

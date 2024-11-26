@@ -1,0 +1,10 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "a",
+      "$_disabled_effect": "o",
+      "$_disabled": "r"
+    }
+  }
+}

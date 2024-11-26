@@ -1,22 +1,23 @@
 import _counter from "./components/counter.marko";
-import { peekSerializedScope as _peekSerializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, dynamicTagInput as _dynamicTagInput, markResumeControlEnd as _markResumeControlEnd, markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
   const tagName = "div";
-  const _dynamicScope = _dynamicTagInput(tagName, {}, _register( /* @__PURE__ */_createRenderer(() => {
-    const _scope1_id = _nextScopeId();
-    const _childScope = _peekSerializedScope();
-    _counter._({});
-    _writeScope(_scope1_id, {
-      "#childScope/0": _childScope
+  const _dynamicScope = _$.peekNextScope();
+  _$.dynamicTagInput(_dynamicScope, tagName, {}, _$.register(/* @__PURE__ */_$.createRenderer(() => {
+    const _scope1_id = _$.nextScopeId();
+    const _childScope = _$.peekNextScope();
+    _counter({});
+    _$.writeScope(_scope1_id, {
+      "#childScope/0": _$.writeExistingScope(_childScope)
     });
   }), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_1_renderer", _scope0_id));
-  _write(`${_markResumeControlEnd(_scope0_id, "#text/0")}<button id=changeTag></button>${_markResumeNode(_scope0_id, "#button/1")}`);
-  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName");
-  _writeScope(_scope0_id, {
+  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/0")}<button id=changeTag></button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName");
+  _$.writeScope(_scope0_id, {
     "tagName": tagName,
-    "#text/0!": _dynamicScope,
-    "#text/0(": tagName
+    "#text/0!": _$.writeExistingScope(_dynamicScope),
+    "#text/0(": _$.normalizeDynamicRenderer(tagName)
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko", _renderer);

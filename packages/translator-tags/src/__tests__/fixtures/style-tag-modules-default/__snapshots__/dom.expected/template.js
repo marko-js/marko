@@ -1,9 +1,8 @@
+export const _template_ = "<div>Hello</div>";
+export const _walks_ = /* get, over(1) */" b";
 import myStyles from "virtual:./template.marko.module.css \n  .content {\n    color: green;\n  }\n";
-import { classAttr as _classAttr, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _setup = _scope => {
-  _classAttr(_scope["#div/1"], myStyles.content);
-};
-export const template = "<div>Hello</div>";
-export const walks = /* get, over(1) */" b";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/style-tag-modules-default/template.marko");
+import * as _$ from "@marko/runtime-tags/debug/dom";
+export function _setup_(_scope) {
+  _$.classAttr(_scope["#div/0"], myStyles.content);
+}
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/style-tag-modules-default/template.marko", _template_, _walks_, _setup_);

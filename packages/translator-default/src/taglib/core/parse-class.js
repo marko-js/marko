@@ -4,6 +4,7 @@ import {
   parseExpression,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import getComponentFiles from "../../util/get-component-files";
 
 export default function (path) {
@@ -68,6 +69,9 @@ export default function (path) {
     diagnosticDeprecate(path, {
       label: "Component class should not have a name.",
       loc: parsed.id.loc,
+      fix() {
+        parsed.id = null;
+      },
     });
   }
 

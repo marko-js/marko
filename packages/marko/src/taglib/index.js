@@ -1,5 +1,6 @@
 "use strict";
 
+// eslint-disable-next-line no-constant-binary-expression
 let complain = "MARKO_DEBUG" && require("complain");
 const compiler = require("@marko/compiler");
 

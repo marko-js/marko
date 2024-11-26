@@ -1,8 +1,6 @@
 "use strict";
 
-globalThis.Marko = {
-  Component: function () {},
-};
+require("./marko-namespace");
 
 /**
  * Method is for internal usage only. This method

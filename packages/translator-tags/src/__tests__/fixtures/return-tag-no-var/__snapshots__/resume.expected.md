@@ -7,7 +7,7 @@
       child
     </span>
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{"#childScope/0":h={}},1:h}),[])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{"#childScope/0":_.a={}},1:_.a}),0]
     </script>
   </body>
 </html>

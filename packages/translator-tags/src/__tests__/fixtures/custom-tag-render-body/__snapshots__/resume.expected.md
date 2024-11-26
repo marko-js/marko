@@ -1,13 +1,16 @@
 # Render undefined
 ```html
+<!---->
 <html>
   <head />
   <body>
-    <!--M[2-->
+    World
+    <!--M_*1 #text/0-->
+    <!--M_[2-->
     This is the body content
-    <!--M]1 #text/0-->
+    <!--M_]1 #text/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{"#childScope/0":h={"#text/0!":j={}}},1:h,2:j}),[])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#text/1!":_.c={}}},1:_.b,2:_.c},_.b["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-render-body/template.marko_1_renderer"](_.a),_.d),0]
     </script>
   </body>
 </html>
@@ -15,6 +18,5 @@
 
 # Mutations
 ```
-removed #document/html0/body1/#comment0 before #document/html0
-inserted #document/html0/body1/#comment0
+
 ```

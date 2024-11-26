@@ -1,19 +1,22 @@
 # Write
-  3<!M*1 #text/0> y<!M*2 #text/0> <script>(M$h=[]).push((b,s)=>({0:{"#childScope/0":void 0,"#childScope/1":void 0}}),[])</script>
+  <!>3<!--M_*1 #text/0--> <!>y<!--M_*2 #text/0--> <script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:{"#childScope/0":_.a={},"#childScope/1":_.b={}},1:_.a,2:_.b}),0]</script>
 
 
 # Render "End"
 ```html
+<!---->
 <html>
   <head />
   <body>
     3
-    <!--M*1 #text/0-->
-     y
-    <!--M*2 #text/0-->
+    <!--M_*1 #text/0-->
+     
+    <!---->
+    y
+    <!--M_*2 #text/0-->
      
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{"#childScope/0":void 0,"#childScope/1":void 0}}),[])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{"#childScope/0":_.a={},"#childScope/1":_.b={}},1:_.a,2:_.b}),0]
     </script>
   </body>
 </html>
@@ -21,14 +24,17 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/body1
-inserted #document/html0/body1/#text0
-inserted #document/html0/body1/#comment1
-inserted #document/html0/body1/#text2
-inserted #document/html0/body1/#comment3
-inserted #document/html0/body1/#text4
-inserted #document/html0/body1/script5
-inserted #document/html0/body1/script5/#text0
+inserted #document/#comment0
+inserted #document/html1
+inserted #document/html1/head0
+inserted #document/html1/body1
+inserted #document/html1/body1/#text0
+inserted #document/html1/body1/#comment1
+inserted #document/html1/body1/#text2
+inserted #document/html1/body1/#comment3
+inserted #document/html1/body1/#text4
+inserted #document/html1/body1/#comment5
+inserted #document/html1/body1/#text6
+inserted #document/html1/body1/script7
+inserted #document/html1/body1/script7/#text0
 ```

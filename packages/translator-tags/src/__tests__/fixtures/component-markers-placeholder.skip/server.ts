@@ -4,6 +4,7 @@ import {
   tryPlaceholder,
   write,
 } from "@marko/runtime-tags/html";
+
 import { resolveAfter } from "../../utils/resolve";
 
 const renderer = () => {
@@ -43,4 +44,4 @@ const secondComponent = () => {
   write("z");
 };
 
-export default createTemplate(renderer);
+export default createTemplate("", renderer);

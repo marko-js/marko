@@ -1,12 +1,13 @@
-import { assertAllowedAttributes } from "@marko/babel-utils";
+import { assertAllowedAttributes, importDefault } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 
 export function exit(path) {
   const { node } = path;
   const {
     attributes,
-    body: { body, params },
+    body: { params },
   } = node;
+  const body = node.body.body;
   const namePath = path.get("name");
   const ofAttr = findName(attributes, "of");
   const inAttr = findName(attributes, "in");
@@ -44,10 +45,13 @@ export function exit(path) {
       block,
     );
   } else if (ofAttr) {
-    let ofAttrValue = t.logicalExpression(
-      "||",
-      ofAttr.value,
-      t.arrayExpression([]),
+    let ofAttrValue = t.callExpression(
+      importDefault(
+        path.hub.file,
+        "marko/src/runtime/helpers/of-fallback.js",
+        "of_fallback",
+      ),
+      [ofAttr.value],
     );
     allowedAttributes.push("of");
 

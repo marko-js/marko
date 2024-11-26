@@ -1,27 +1,26 @@
-import { on as _on, queueSource as _queueSource, data as _data, intersection as _intersection, value as _value, register as _register, queueEffect as _queueEffect, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _expr_a_b = /* @__PURE__ */_intersection(2, _scope => {
+export const _template_ = "<div><button class=a> </button> + <button class=b> </button> = <!></div>";
+export const _walks_ = /* next(1), get, next(1), get, out(1), over(1), get, next(1), get, out(1), over(1), replace, out(1) */"D D lb D lb%l";
+import * as _$ from "@marko/runtime-tags/debug/dom";
+const _expr_a_b = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     a,
     b
   } = _scope;
-  _data(_scope["#text/4"], a + b);
+  _$.data(_scope["#text/4"], a + b);
 });
-const _b = /* @__PURE__ */_value("b", (_scope, b) => _data(_scope["#text/3"], b), _expr_a_b);
-const _a = /* @__PURE__ */_value("a", (_scope, a) => _data(_scope["#text/1"], a), _expr_a_b);
-const _setup_effect = _register("packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0", _scope => {
-  _on(_scope["#button/0"], "click", function () {
-    _queueSource(_scope, _a, 10);
+const _b = /* @__PURE__ */_$.state("b", (_scope, b) => _$.data(_scope["#text/3"], b), () => _expr_a_b);
+const _a = /* @__PURE__ */_$.state("a", (_scope, a) => _$.data(_scope["#text/1"], a), () => _expr_a_b);
+const _setup__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0", _scope => {
+  _$.on(_scope["#button/0"], "click", function () {
+    _a(_scope, 10);
   });
-  _on(_scope["#button/2"], "click", function () {
-    _queueSource(_scope, _b, 5);
+  _$.on(_scope["#button/2"], "click", function () {
+    _b(_scope, 5);
   });
 });
-const _setup = _scope => {
-  _queueEffect(_scope, _setup_effect);
+export function _setup_(_scope) {
+  _setup__effect(_scope);
   _a(_scope, 0);
   _b(_scope, 0);
-};
-export const template = "<div><button class=a> </button> + <button class=b> </button> = <!></div>";
-export const walks = /* next(1), get, next(1), get, out(1), over(1), get, next(1), get, out(1), over(1), replace, out(1) */"D D lb D lb%l";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko");
+}
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko", _template_, _walks_, _setup_);

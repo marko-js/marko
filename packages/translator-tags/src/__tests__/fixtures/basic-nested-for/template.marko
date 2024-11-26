@@ -1,0 +1,8 @@
+<let/items=[0,1]/>
+<button onClick() { items = [...items, items.length] }>Push</button>
+
+<for|outer| of=items>
+  <for|inner| of=items>
+    <child name=`${outer}.${inner}` />
+  </for>
+</>

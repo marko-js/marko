@@ -7,11 +7,14 @@ import {
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { decode } from "he";
+
 import translateAttributes from "../tag/native-tag[vdom]/attributes";
 import { getKeyManager, hasUserKey } from "./key-manager";
 import write from "./vdom-out-write";
 
 const skipDirectives = new Set([
+  "key",
+  "w-bind",
   "no-update",
   "no-update-if",
   "no-update-body",
@@ -68,6 +71,8 @@ const analyzeStaticVisitor = {
       // check name
       let isStatic =
         isNativeTag(path) &&
+        !path.node.attributeTags.length &&
+        !path.node.body.attributeTags &&
         !path.node.body.params.length &&
         !path.node.arguments &&
         !hasUserKey(path);

@@ -1,5 +1,5 @@
 # Write
-  <div>0<!M*1 #text/0></div><button></button><!M*0 #button/1><script>(M$h=[]).push((b,s,h)=>({0:{count:0,"#childScope/0":h={value:0,dummy:{}}},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count",])</script>
+  <div>0<!--M_*1 #text/0--></div><button></button><!--M_*0 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{count:0,"#childScope/0":_.a={value:0,dummy:{}}},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count",0];M._.w()</script>
 
 
 # Render "End"
@@ -9,12 +9,12 @@
   <body>
     <div>
       0
-      <!--M*1 #text/0-->
+      <!--M_*1 #text/0-->
     </div>
     <button />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{count:0,"#childScope/0":h={value:0,dummy:{}}},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{count:0,"#childScope/0":_.a={value:0,dummy:{}}},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count",0];M._.w()
     </script>
   </body>
 </html>

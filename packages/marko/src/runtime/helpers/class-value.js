@@ -3,7 +3,7 @@
 module.exports = function classHelper(arg) {
   switch (typeof arg) {
     case "string":
-      return arg || null;
+      return arg || undefined;
     case "object":
       var result = "";
       var sep = "";
@@ -25,9 +25,6 @@ module.exports = function classHelper(arg) {
         }
       }
 
-      return result || null;
-
-    default:
-      return null;
+      return result || undefined;
   }
 };

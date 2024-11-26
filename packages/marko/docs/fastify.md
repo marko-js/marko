@@ -41,6 +41,24 @@ app.get("/", (request, reply) => {
 await fastify.listen(3000);
 ```
 
+### Global Outputs
+
+We can add global outputs from the server side using the reply object or fastify instance.
+
+```javascript
+reply.locals.newProperty = "Your value";
+```
+
+To use this in marko components we just need to refer out.global
+
+```marko
+$ const { newProperty } = $global;
+```
+
+To know more about sending the data to the browser checkout:
+
+### [Sending global data to browsers](https://markojs.com/docs/rendering/#sending-global-data-to-browsers)
+
 ### BYOB (Bring your own bundler)
 
 For the large portion of Marko's API a bundler is required. The example code above assumes that Marko templates can be loaded in your environment.

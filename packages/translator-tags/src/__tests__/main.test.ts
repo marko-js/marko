@@ -1,24 +1,20 @@
-import "./test-globals";
-import assert from "assert";
-import fs from "fs";
-import path from "path";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
-import type { Template, Input } from "@marko/runtime-tags/common/types";
-import reorderRuntime from "@marko/runtime-tags/html/reorder-runtime";
+import type { Input, Template } from "@marko/runtime-tags/common/types";
+import assert from "assert";
+import fs from "fs";
 import type { DOMWindow } from "jsdom";
 import snap from "mocha-snap";
+import path from "path";
 import glob from "tiny-glob";
-import * as translator from "..";
-import createBrowser from "./utils/create-browser";
-import { isWait } from "./utils/resolve";
-import createMutationTracker from "./utils/track-mutations";
+import { isDeepStrictEqual } from "util";
 
-const runtimeId = "M";
-const reorderRuntimeString = String(reorderRuntime).replace(
-  "RUNTIME_ID",
-  runtimeId,
-);
+import * as translator from "..";
+import { bundle } from "./utils/bundle";
+import createBrowser from "./utils/create-browser";
+import { isThrows, isWait } from "./utils/resolve";
+import { stripInlineRuntime } from "./utils/strip-inline-runtime";
+import createMutationTracker from "./utils/track-mutations";
 
 type TestConfig = {
   steps?: unknown[] | (() => Promise<unknown[]>);
@@ -32,6 +28,11 @@ type TestConfig = {
   manual_resume?: boolean;
   error_compiler?: true | string[];
   error_runtime?: boolean;
+};
+
+type TestHooks = {
+  before?: () => void;
+  after?: () => void;
 };
 
 type Result = {
@@ -50,6 +51,7 @@ const baseConfig: compiler.Config = {
 
 const htmlConfig: compiler.Config = { ...baseConfig, output: "html" };
 const domConfig: compiler.Config = { ...baseConfig, output: "dom" };
+const snapCache = new Map<unknown, unknown>();
 
 describe("translator-tags", () => {
   before(() => {
@@ -68,67 +70,25 @@ describe("translator-tags", () => {
       const browserFile = resolve("browser.ts");
       const templateFile = resolve("template.marko");
       const hasTemplate = fs.existsSync(templateFile);
-      const snapMD = (fn: () => unknown) =>
-        (config.error_runtime ? snap.catch : snap)(fn, {
-          ext: `.md`,
-          dir: fixtureDir,
-        });
-      const snapAllTemplates = async (compilerConfig: compiler.Config) => {
-        const additionalMarkoFiles = await glob(resolve("**/*.marko"));
-        const finalConfig: compiler.Config = {
-          ...compilerConfig,
-          resolveVirtualDependency(_filename, { code, virtualPath }) {
-            return `virtual:${virtualPath} ${code}`;
-          },
-        };
-        const errors: Error[] = [];
-
-        for (const file of additionalMarkoFiles) {
-          try {
-            let name = path.relative(fixtureDir, file);
-            let targetSnap: typeof snap.catch = snap;
-            if (
-              config.error_compiler === true ||
-              config.error_compiler?.includes(name)
-            ) {
-              name = name.replace(".marko", ".error.txt");
-              targetSnap = snap.catch;
-            } else {
-              name = name.replace(".marko", ".js");
-            }
-
-            await targetSnap(() => compileCode(file, finalConfig), {
-              file: name,
-              dir: fixtureDir,
-            });
-          } catch (e) {
-            errors.push(e as Error);
-          }
-        }
-
-        if (errors.length === 1) {
-          throw errors[0];
-        } else if (errors.length > 1) {
-          throw new AggregateError(
-            errors,
-            "\n" + errors.map((e) => e.toString()).join("\n"),
-          );
-        }
-      };
-
-      const config: TestConfig = (() => {
+      const nameCacheFile = resolve("__snapshots__/.name-cache.json");
+      const nameCache = (() => {
         try {
-          return require(resolve("test.ts"));
-          // eslint-disable-next-line no-empty
+          return JSON.parse(fs.readFileSync(nameCacheFile, "utf-8")) as Record<
+            string,
+            unknown
+          >;
         } catch {
           return {};
         }
       })();
-
-      let ssrResult: Result;
-      let csrResult: Result;
-      let resumeResult: Result;
-
+      const initialNameCache = structuredClone(nameCache);
+      const config: TestConfig = (() => {
+        try {
+          return require(resolve("test.ts"));
+        } catch {
+          return {};
+        }
+      })();
       const skipHTML = !hasTemplate || config.skip_html;
       const skipDOM = !hasTemplate || config.skip_dom;
 
@@ -145,13 +105,92 @@ describe("translator-tags", () => {
         config.skip_csr ||
         config.error_compiler;
       const skipResume =
-        !(manualResume ? fs.existsSync(resumeFile) : hasTemplate) ||
-        config.skip_resume ||
-        skipSSR ||
-        skipCSR;
+        config.skip_resume !== false &&
+        (!(manualResume ? fs.existsSync(resumeFile) : hasTemplate) ||
+          config.skip_resume ||
+          skipSSR ||
+          skipCSR);
+      const snapMD = (fn: () => unknown) =>
+        (config.error_runtime ? snap.catch : snap)(fn, {
+          ext: `.md`,
+          dir: fixtureDir,
+        });
+      const snapAllTemplates = async (compilerConfig: compiler.Config) => {
+        const additionalMarkoFiles = await glob(resolve("**/*.marko"), {
+          absolute: true,
+          cwd: fixtureDir,
+        });
+        const finalConfig: compiler.Config = {
+          ...compilerConfig,
+          cache: snapCache, // these need a different cache since they `resolveVirtualDependency` is relevant to the compile cache.
+          resolveVirtualDependency(_filename, { code, virtualPath }) {
+            return `virtual:${virtualPath} ${code}`;
+          },
+        };
+        const errors: Error[] = [];
+
+        for (const file of additionalMarkoFiles) {
+          try {
+            const name = path.relative(fixtureDir, file);
+            let snapName = name;
+            let targetSnap: typeof snap.catch = snap;
+            if (
+              config.error_compiler === true ||
+              config.error_compiler?.includes(name)
+            ) {
+              snapName = name.replace(".marko", ".error.txt");
+              targetSnap = snap.catch;
+            } else {
+              snapName = name.replace(".marko", ".js");
+            }
+
+            await targetSnap(() => compileCode(file, finalConfig), {
+              file: snapName,
+              dir: fixtureDir,
+            });
+
+            if (
+              compilerConfig.output === "dom" &&
+              file === templateFile &&
+              !skipResume &&
+              !config.error_compiler
+            ) {
+              await targetSnap(() => bundle(file, nameCache, finalConfig), {
+                file: name.replace(".marko", ".hydrate.js"),
+                dir: fixtureDir,
+              });
+            }
+          } catch (e) {
+            errors.push(e as Error);
+          }
+        }
+
+        if (errors.length === 1) {
+          throw errors[0];
+        } else if (errors.length > 1) {
+          console.error(errors);
+          throw new AggregateError(
+            errors,
+            "\n" + errors.map((e) => e.toString()).join("\n"),
+          );
+        }
+      };
+
+      let ssrResult: Result;
+      let csrResult: Result;
+      let resumeResult: Result;
 
       const ssr = async () => {
         if (ssrResult) return ssrResult;
+        const hooks: TestHooks = (() => {
+          try {
+            return require(resolve("hooks.ts"));
+          } catch {
+            return {};
+          }
+        })();
+
+        hooks.before?.();
 
         const serverTemplate = require(manualSSR ? serverFile : templateFile)
           .default as Template;
@@ -181,11 +220,7 @@ describe("translator-tags", () => {
         try {
           for await (const data of serverTemplate.render(input)) {
             buffer += data;
-            tracker.log(
-              `# Write\n${indent(
-                data.replace(reorderRuntimeString, "REORDER_RUNTIME"),
-              )}`,
-            );
+            tracker.log(`# Write\n${indent(stripInlineRuntime(data))}`);
           }
           document.write(buffer);
           document.close();
@@ -198,6 +233,8 @@ describe("translator-tags", () => {
         }
 
         tracker.cleanup();
+
+        hooks.after?.();
 
         return (ssrResult = { browser, tracker });
       };
@@ -212,6 +249,16 @@ describe("translator-tags", () => {
             extensions: {},
           }),
         });
+
+        const hooks: TestHooks = (() => {
+          try {
+            return browser.require(resolve("hooks.ts"));
+          } catch {
+            return {};
+          }
+        })();
+
+        hooks.before?.();
 
         const { window } = browser;
         const { document } = window;
@@ -243,9 +290,21 @@ describe("translator-tags", () => {
           if (isWait(update)) {
             await update();
           } else if (typeof update === "function") {
+            tracker.beginUpdate();
             await update(document.documentElement);
-            run();
-            tracker.logUpdate(update);
+            if (isThrows(update)) {
+              try {
+                run();
+                throw new Error("Expected error to be thrown");
+              } catch (err) {
+                tracker.logUpdate(update, err as Error);
+                throwErrors();
+                break;
+              }
+            } else {
+              run();
+              tracker.logUpdate(update);
+            }
           } else {
             instance.update(update);
             tracker.logUpdate(update);
@@ -255,6 +314,8 @@ describe("translator-tags", () => {
         }
 
         tracker.cleanup();
+
+        hooks.after?.();
 
         return (csrResult = { browser, tracker });
       };
@@ -287,6 +348,7 @@ describe("translator-tags", () => {
           if (isWait(update)) {
             await update();
           } else if (typeof update === "function") {
+            tracker.beginUpdate();
             await update(document.documentElement);
             run();
             tracker.logUpdate(update);
@@ -303,6 +365,15 @@ describe("translator-tags", () => {
 
         return (resumeResult = { browser, tracker });
       };
+
+      after(() => {
+        if (!isDeepStrictEqual(initialNameCache, nameCache)) {
+          fs.writeFileSync(
+            nameCacheFile,
+            JSON.stringify(nameCache, null, 2) + "\n",
+          );
+        }
+      });
 
       describe("compile", () => {
         (skipHTML ? it.skip : it)("html", () => snapAllTemplates(htmlConfig));
@@ -346,8 +417,8 @@ describe("translator-tags", () => {
             .getRawLogs(true)
             .slice(0, resumeLogs.length);
           assert.strictEqual(
-            csrLogs.join("\n\n").replace(/[cs]\d+/g, "%id"),
-            resumeLogs.join("\n\n").replace(/[cs]\d+/g, "%id"),
+            csrLogs.join("\n\n").replace(/[cs]M_[a-z0-9]+/g, "%id"),
+            resumeLogs.join("\n\n").replace(/[cs]M_[a-z0-9]+/g, "%id"),
           );
         });
       });

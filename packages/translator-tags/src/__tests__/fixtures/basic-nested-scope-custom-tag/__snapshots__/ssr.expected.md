@@ -1,21 +1,21 @@
 # Write
-  <!M[2><button>0<!M*2 #text/1></button><!M*2 #button/0><!M]1 #text/0><script>(M$h=[]).push((b,s,h,j,k,m)=>(m={0:h={count:0,"#childScope/0":k={"#text/0!":j={}}},1:k,2:j},j._=h,m),[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count/subscriber",])</script>
+  <!--M_[2--><button>0<!--M_*2 #text/1--></button><!--M_*2 #button/0--><!--M_]1 #text/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d={0:_.a={count:0,"#childScope/0":_.c={"#text/0!":_.b={}}},1:_.c,2:_.b},_.b._=_.a,_.c["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_renderer"](_.a),_.d),2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count",0];M._.w()</script>
 
 
 # Render "End"
 ```html
-<!--M[2-->
+<!--M_[2-->
 <html>
   <head />
   <body>
     <button>
       0
-      <!--M*2 #text/1-->
+      <!--M_*2 #text/1-->
     </button>
-    <!--M*2 #button/0-->
-    <!--M]1 #text/0-->
+    <!--M_*2 #button/0-->
+    <!--M_]1 #text/0-->
     <script>
-      (M$h=[]).push((b,s,h,j,k,m)=&gt;(m={0:h={count:0,"#childScope/0":k={"#text/0!":j={}}},1:k,2:j},j._=h,m),[2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count/subscriber",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={count:0,"#childScope/0":_.c={"#text/0!":_.b={}}},1:_.c,2:_.b},_.b._=_.a,_.c["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_renderer"](_.a),_.d),2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count/subscriber",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count",0];M._.w()
     </script>
   </body>
 </html>

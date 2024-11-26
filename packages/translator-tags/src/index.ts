@@ -1,5 +1,7 @@
-import type { types as t, Config } from "@marko/compiler";
+import type { Config } from "@marko/compiler";
+
 import coreTagLib from "./core";
+import { extractVisitors } from "./util/visitors";
 import AssignmentExpression from "./visitors/assignment-expression";
 import MarkoCDATA from "./visitors/cdata";
 import MarkoComment from "./visitors/comment";
@@ -15,7 +17,7 @@ import MarkoTag from "./visitors/tag";
 import MarkoText from "./visitors/text";
 import UpdateExpression from "./visitors/update-expression";
 
-const visitors = {
+const visitors = extractVisitors({
   Program,
   Function,
   AssignmentExpression,
@@ -30,26 +32,16 @@ const visitors = {
   MarkoPlaceholder,
   MarkoScriptlet,
   MarkoComment,
-};
+});
 
-const getVisitorOfType = (
-  typename: "migrate" | "analyze" | "translate",
-): t.Visitor =>
-  Object.entries(visitors).reduce((visitor, [name, value]) => {
-    if (typename in value) {
-      visitor[name as any] = (value as any)[typename];
-    }
-    return visitor;
-  }, {} as t.Visitor);
-
-export const analyze = getVisitorOfType("analyze");
-export const translate = getVisitorOfType("translate");
+export { default as internalEntryBuilder } from "./util/entry-builder";
+export const { transform, analyze, translate } = visitors;
 export const taglibs = [
   [
     __dirname,
     {
       ...coreTagLib,
-      migrate: getVisitorOfType("migrate"),
+      migrate: visitors.migrate,
     },
   ],
 ];
@@ -59,11 +51,10 @@ export function getRuntimeEntryFiles(
   optimize: boolean,
 ) {
   return [
-    `@marko/runtime-tags${optimize ? "" : "/debug"}/${output === "html" ? "html" : "dom"}.mjs`,
+    `@marko/runtime-tags${optimize ? "" : "/debug"}/${output === "html" ? "html" : "dom"}`,
   ];
 }
 
-/* eslint-disable @typescript-eslint/no-empty-interface */
 declare module "@marko/compiler/dist/types" {
   // This is extended by individual helpers.
   export interface ProgramExtra {}
@@ -77,6 +68,10 @@ declare module "@marko/compiler/dist/types" {
 
   export interface Program {
     extra: ProgramExtra & NodeExtra;
+  }
+
+  export interface FunctionDeclaration {
+    extra?: FunctionDeclarationExtra & NodeExtra;
   }
 
   export interface FunctionExpression {

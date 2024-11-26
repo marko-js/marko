@@ -1,8 +1,7 @@
 import * as babelParser from "@babel/parser";
 import { types as t } from "@marko/compiler";
-import { getLocRange } from "./loc";
 
-const CODE_AS_WHITE_SPACE_KEY = Symbol();
+import { getLoc, getLocRange } from "./loc";
 
 export function parseStatements(
   file,
@@ -112,26 +111,19 @@ export function parseTypeParams(file, str, sourceStart, sourceEnd) {
 function tryParse(
   file,
   isExpression,
-  str,
+  code,
   sourceStart,
   sourceEnd,
   sourceOffset,
 ) {
   const { parserOpts } = file.opts;
-  let code = str;
 
   if (typeof sourceStart === "number") {
-    const whitespace =
-      file.metadata.marko[CODE_AS_WHITE_SPACE_KEY] ||
-      (file.metadata.marko[CODE_AS_WHITE_SPACE_KEY] = file.code.replace(
-        /[^\s]/g,
-        " ",
-      ));
-    code =
-      whitespace.slice(
-        0,
-        sourceOffset ? sourceStart - sourceOffset : sourceStart,
-      ) + str;
+    const startIndex = sourceStart - (sourceOffset || 0);
+    const startLoc = getLoc(file, startIndex);
+    parserOpts.startIndex = startIndex;
+    parserOpts.startColumn = startLoc.column;
+    parserOpts.startLine = startLoc.line;
 
     try {
       return isExpression
@@ -151,6 +143,10 @@ function tryParse(
       } else {
         return [parseError];
       }
+    } finally {
+      parserOpts.startIndex = 0;
+      parserOpts.startColumn = 0;
+      parserOpts.startLine = 1;
     }
   } else {
     return isExpression
@@ -185,15 +181,19 @@ function createParseError(file, sourceStart, sourceEnd, label, errorLoc) {
   };
 }
 
-function getBoundedRange(sourceRange, start) {
-  if (start && typeof start.index === "number") {
+function getBoundedRange(range, loc) {
+  if (loc && typeof loc.line === "number") {
+    const { start, end } = range;
+    // If start is out of bounds return the source.
     if (
-      start.index < sourceRange.start.index ||
-      start.index >= sourceRange.end.index
+      loc.line < start.line ||
+      (loc.line === start.line && loc.column < start.column) ||
+      loc.line > end.line ||
+      (loc.line === end.line && loc.column > end.column)
     ) {
-      return sourceRange;
+      return range;
     }
 
-    return { start, end: start };
+    return { start: loc, end: loc };
   }
 }

@@ -1,10 +1,10 @@
 # Write
-  <!M[1><span class=A>body content</span><!M]0 #text/0><button></button><!M*0 #button/1><script>(M$h=[]).push((b,s,h)=>({0:{tagName:"span",className:"A","#text/0!":h={},"#text/0(":"span"},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName",])</script>
+  <!--M_[1--><span class=A>body content</span><!--M_]0 #text/0--><button></button><!--M_*0 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{tagName:"span",className:"A","#text/0!":_.a={},"#text/0(":"span"},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName",0];M._.w()</script>
 
 
 # Render "End"
 ```html
-<!--M[1-->
+<!--M_[1-->
 <html>
   <head />
   <body>
@@ -13,11 +13,11 @@
     >
       body content
     </span>
-    <!--M]0 #text/0-->
+    <!--M_]0 #text/0-->
     <button />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{tagName:"span",className:"A","#text/0!":h={},"#text/0(":"span"},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:"span",className:"A","#text/0!":_.a={},"#text/0(":"span"},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>

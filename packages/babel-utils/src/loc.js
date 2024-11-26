@@ -26,11 +26,42 @@ export function withLoc(file, node, start, end) {
   return node;
 }
 
+export function getStart(file, node) {
+  // Restore if merged: https://github.com/babel/babel/pull/16849
+  // if (node.start != null) {
+  //   return node.start;
+  // }
+
+  if (node.loc) {
+    return locToIndex(file, node.loc.start);
+  }
+
+  return null;
+}
+
+export function getEnd(file, node) {
+  // Restore if merged: https://github.com/babel/babel/pull/16849
+  // if (node.end != null) {
+  //   return node.end;
+  // }
+
+  if (node.loc) {
+    return locToIndex(file, node.loc.end);
+  }
+
+  return null;
+}
+
+function locToIndex(file, loc) {
+  const { line, column } = loc;
+  return line === 1 ? column : getLineIndexes(file)[line - 1] + column + 1;
+}
+
 function getLineIndexes(file) {
   let lineIndexes = file.metadata.marko[LINE_INDEX_KEY];
 
   if (!lineIndexes) {
-    lineIndexes = [0];
+    lineIndexes = [-1];
     for (let i = 0; i < file.code.length; i++) {
       if (file.code[i] === "\n") {
         lineIndexes.push(i);
@@ -58,13 +89,19 @@ function findLoc(lineIndexes, startLine, index) {
   }
 
   let lineIndex = lineIndexes[line];
-  if (lineIndex > index) {
+  if (lineIndex >= index) {
     lineIndex = lineIndexes[--line];
   }
 
+  if (line === 0) {
+    return {
+      line: 1,
+      column: index,
+    };
+  }
+
   return {
-    index,
     line: line + 1,
-    column: index === lineIndex ? 0 : index - lineIndex - (line === 0 ? 0 : 1),
+    column: index - lineIndex - 1,
   };
 }

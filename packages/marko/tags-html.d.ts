@@ -188,7 +188,6 @@ declare global {
           | "prev"
           | "search"
           | "tag"
-          // eslint-disable-next-line @typescript-eslint/ban-types
           | (string & {});
 
         /**
@@ -316,7 +315,6 @@ declare global {
           | "nofullscreen"
           | "noplaybackrate"
           | "noremoteplayback"
-          // eslint-disable-next-line @typescript-eslint/ban-types
           | (string & {});
 
         /**
@@ -820,7 +818,6 @@ declare global {
           | "opener"
           | "prev"
           | "search"
-          // eslint-disable-next-line @typescript-eslint/ban-types
           | (string & {});
         /**
          * Specifies the browsing context in which the linked resource will be opened.
@@ -854,6 +851,8 @@ declare global {
       interface Head extends HTMLAttributes<HTMLHeadElement> {
         /** @deprecated */
         profile?: AttrString;
+        /** @see https://ogp.me/ */
+        prefix?: AttrString;
       }
       interface Header extends HTMLAttributes<HTMLElement> {}
       interface HGroup extends HTMLAttributes<HTMLElement> {}
@@ -876,6 +875,8 @@ declare global {
         manifest?: AttrString;
         /** @deprecated */
         version?: AttrString;
+        /** @see https://ogp.me/ */
+        prefix?: AttrString;
       }
       interface I extends HTMLAttributes<HTMLElement> {}
       interface IFrame extends HTMLAttributes<HTMLIFrameElement> {
@@ -930,7 +931,6 @@ declare global {
           | "allow-top-navigation-by-user-activation"
           | "allow-top-navigation-to-custom-protocols"
           | "allow-top-navigation"
-          // eslint-disable-next-line @typescript-eslint/ban-types
           | (string & {});
         /**
          * The URL of the page to embed in the iframe.
@@ -1435,7 +1435,6 @@ declare global {
           | "prev"
           | "search"
           | "stylesheet"
-          // eslint-disable-next-line @typescript-eslint/ban-types
           | (string & {});
 
         /**
@@ -1509,6 +1508,9 @@ declare global {
          * @see https://html.spec.whatwg.org/multipage/semantics.html#attr-meta-name
          */
         name?: AttrString;
+
+        /** @see https://ogp.me/ */
+        property?: AttrString;
       }
       interface Meter extends HTMLAttributes<HTMLMeterElement> {
         /**
@@ -1786,7 +1788,6 @@ declare global {
           | "application/javascript"
           | "module"
           | "import-map"
-          // eslint-disable-next-line @typescript-eslint/ban-types
           | (string & {});
 
         /** @deprecated */
@@ -2244,7 +2245,6 @@ declare global {
           | "nofullscreen"
           | "noplaybackrate"
           | "noremoteplayback"
-          // eslint-disable-next-line @typescript-eslint/ban-types
           | (string & {});
 
         /**
@@ -2509,6 +2509,12 @@ declare global {
        * @see https://html.spec.whatwg.org/multipage/urls-and-fetching.html#attr-nonce
        */
       nonce?: AttrString;
+
+      /**
+       * Specifies that the element won't be rendered until it becomes shown, at which point it will be rendered on top of other page content.
+       * @see https://html.spec.whatwg.org/multipage/popover.html#attr-popover
+       */
+      popover?: AttrBoolean | "auto" | "manual";
 
       /**
        * Specifies a list of part names for the element that can be targeted by the ::part() CSS pseudo-element.
@@ -3774,7 +3780,6 @@ type AttrTarget =
   | "_parent"
   | "_self"
   | "_top"
-  // eslint-disable-next-line @typescript-eslint/ban-types
   | (string & {});
 type AttrReferrerPolicy =
   | AttrMissing
@@ -3847,5 +3852,4 @@ type AttrAutoComplete =
   | "mobile"
   | "fax"
   | "pager"
-  // eslint-disable-next-line @typescript-eslint/ban-types
   | (string & {});

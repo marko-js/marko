@@ -4,8 +4,10 @@ import {
   importDefault,
   loadFileForTag,
   resolveRelativePath,
+  resolveTagImport,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import withPreviousLocation from "../util/with-previous-location";
 import dynamicTag from "./dynamic-tag";
 import nativeTag from "./native-tag";
@@ -37,13 +39,21 @@ export default function (path, isNullable) {
       }
     }
 
-    let binding = path.scope.getBinding(tagName);
+    let binding = !relativePath && path.scope.getBinding(tagName);
     if (binding && !binding.identifier.loc) binding = null;
+
+    if (binding && binding.kind === "module") {
+      const importSource = binding.path.parent.source;
+      relativePath =
+        resolveTagImport(path, importSource.value) || importSource.value;
+      (node.extra ??= {}).tagNameImported = relativePath;
+      binding = undefined;
+    }
 
     const childFile = loadFileForTag(path);
     const childProgram = childFile?.ast.program;
 
-    if (childProgram?.extra?.___featureType === "tags") {
+    if (childProgram?.extra?.featureType === "tags") {
       const compatRuntimeFile = `marko/src/runtime/helpers/tags-compat/${
         markoOpts.output === "html" ? "html" : "dom"
       }${markoOpts.optimize ? "" : "-debug"}.${markoOpts.modules === "esm" ? "mjs" : "js"}`;

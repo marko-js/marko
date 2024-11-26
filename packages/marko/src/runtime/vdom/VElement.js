@@ -1,11 +1,11 @@
-/* jshint newcap:false */
-
+// eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
 var inherit = require("raptor-util/inherit");
 var componentsUtil = require("@internal/components-util");
 var domData = require("../components/dom-data");
 var vElementByDOMNode = domData.___vElementByDOMNode;
 var VNode = require("./VNode");
+var isTextOnly = require("./is-text-only");
 var ATTR_XLINK_HREF = "xlink:href";
 var xmlnsRegExp = /^xmlns(:|$)/;
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -90,7 +90,7 @@ function VElementClone(other) {
   this.___properties = other.___properties;
   this.___nodeName = other.___nodeName;
   this.___flags = other.___flags;
-  this.___valueInternal = other.___valueInternal;
+  this.___textContent = other.___textContent;
   this.___constId = other.___constId;
 }
 
@@ -116,7 +116,7 @@ function VElement(
   this.___attributes = attrs || EMPTY_OBJECT;
   this.___properties = props || EMPTY_OBJECT;
   this.___nodeName = tagName;
-  this.___valueInternal = "";
+  this.___textContent = "";
   this.___constId = constId;
   this.___preserve = false;
   this.___preserveBody = false;
@@ -195,22 +195,14 @@ VElement.prototype = {
         }
       }
 
-      if (tagName === "textarea") {
-        el.defaultValue = this.___valueInternal;
+      if (isTextOnly(tagName)) {
+        el.textContent = this.___textContent;
       }
     }
 
     vElementByDOMNode.set(el, this);
 
     return el;
-  },
-
-  ___hasAttribute: function (name) {
-    // We don't care about the namespaces since the there
-    // is no chance that attributes with the same name will have
-    // different namespaces
-    var value = this.___attributes[name];
-    return value != null && value !== false;
   },
 };
 
@@ -258,8 +250,8 @@ function virtualizeElement(node, virtualizeChildNodes, ownerComponent) {
     props,
   );
 
-  if (vdomEl.___nodeName === "textarea") {
-    vdomEl.___valueInternal = node.value;
+  if (isTextOnly(tagName)) {
+    vdomEl.___textContent = node.textContent;
   } else if (virtualizeChildNodes) {
     virtualizeChildNodes(node, vdomEl, ownerComponent);
   }
@@ -303,13 +295,25 @@ VElement.___morphAttrs = function (fromEl, vFromEl, toEl) {
 
   if (toFlags & FLAG_SIMPLE_ATTRS && fromFlags & FLAG_SIMPLE_ATTRS) {
     if (oldAttrs["class"] !== (attrValue = attrs["class"])) {
-      fromEl.className = attrValue;
+      if (attrValue) {
+        fromEl.className = attrValue;
+      } else {
+        fromEl.removeAttribute("class");
+      }
     }
     if (oldAttrs.id !== (attrValue = attrs.id)) {
-      fromEl.id = attrValue;
+      if (attrValue) {
+        fromEl.id = attrValue;
+      } else {
+        fromEl.removeAttribute("id");
+      }
     }
     if (oldAttrs.style !== (attrValue = attrs.style)) {
-      fromEl.style.cssText = attrValue;
+      if (attrValue) {
+        fromEl.style.cssText = attrValue;
+      } else {
+        fromEl.removeAttribute("style");
+      }
     }
     return;
   }

@@ -7,7 +7,6 @@ declare module "*.marko" {
 
 declare global {
   namespace NodeJS {
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
     interface ReadableStream {}
   }
 
@@ -79,11 +78,9 @@ declare global {
     }
 
     /** Body content created from by a component, typically held in an object with a renderBody property. */
-    // eslint-disable-next-line @typescript-eslint/no-empty-interface
+
     export interface Body<
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       in Params extends readonly any[] = [],
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       out Return = void,
     > {}
 
@@ -214,7 +211,6 @@ declare global {
     }
 
     /** The top level api for a Marko Template. */
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     export abstract class Template<Input = unknown, Return = unknown> {
       /** Creates a Marko compatible output stream. */
       createOut(): Out;
@@ -314,17 +310,21 @@ declare global {
       removeAllListeners(eventName?: PropertyKey): this;
     }
 
-    export type AttrTag<T> = T & Iterable<AttrTag<T>>;
-    export type RepeatableAttrTag<T> =
-      | AttrTag<T>
-      | [AttrTag<T>, AttrTag<T>, ...AttrTag<T>[]];
+    export type AttrTag<T> = T & {
+      [Symbol.iterator](): Iterator<T>;
+    };
+
+    /**
+     * @deprecated Prefer to use AttrTag
+     */
+    export type RepeatableAttrTag<T> = AttrTag<T>;
 
     export interface NativeTag<
       Input extends Record<string, any>,
       Return extends Element,
     > {
       input: Input;
-      return: () => Return;
+      return: { value: () => Return };
     }
     export interface NativeTags {
       [name: string]: NativeTag<Record<string, any>, Element>;
@@ -345,10 +345,10 @@ declare global {
                 length: infer Length;
               }
               ? number extends Length
-                ? { value?: Args }
+                ? Args[0] | undefined
                 : 0 extends Length
-                  ? { value?: [] }
-                  : { value: Args }
+                  ? undefined
+                  : Args[0]
               : never
             : never;
 

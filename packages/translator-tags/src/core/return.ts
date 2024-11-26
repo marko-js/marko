@@ -1,10 +1,20 @@
-import { type Tag, assertNoParams, assertNoVar } from "@marko/babel-utils";
+import {
+  assertAllowedAttributes,
+  assertNoArgs,
+  assertNoParams,
+  assertNoVar,
+  type Tag,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
-import { isOutputHTML } from "../util/marko-config";
+import { AccessorChar } from "@marko/runtime-tags/common/types";
+
+import { assertNoBodyContent } from "../util/assert";
+import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { importRuntime } from "../util/runtime";
-import { createSectionState, getSection } from "../util/sections";
-import { addValue } from "../util/signals";
+import { getSection } from "../util/sections";
+import { addValue, getSerializedScopeProperties } from "../util/signals";
+import { createSectionState } from "../util/state";
+import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
 
 const [returnId, _setReturnId] = createSectionState<t.Identifier | undefined>(
@@ -12,73 +22,94 @@ const [returnId, _setReturnId] = createSectionState<t.Identifier | undefined>(
 );
 export { returnId };
 
+const usedTag = new WeakSet<t.Hub>();
+
 export default {
-  translate(tag) {
+  analyze(tag) {
+    assertNoArgs(tag);
     assertNoVar(tag);
     assertNoParams(tag);
     assertNoBodyContent(tag);
-    assertNoSpreadAttrs(tag);
+    assertAllowedAttributes(tag, ["value", "valueChange"]);
 
-    const section = getSection(tag);
-
-    const {
-      node,
-      hub: { file },
-    } = tag;
-    const [defaultAttr] = node.attributes;
-
-    if (!t.isMarkoAttribute(defaultAttr) || !defaultAttr.default) {
+    if (usedTag.has(tag.hub)) {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          `The '<return>' tag requires default attribute like '<return=VALUE>'.`,
+          "The `return` tag can only be used once per template.",
         );
     }
+    usedTag.add(tag.hub);
 
-    if (node.attributes.length > 1) {
-      const start = node.attributes[1].loc?.start;
-      const end = node.attributes[node.attributes.length - 1].loc?.end;
-      const msg = `The '<return>' tag only supports a default attribute.`;
-
-      if (start == null || end == null) {
-        throw tag.get("name").buildCodeFrameError(msg);
-      } else {
-        throw tag.hub.buildError(
-          { loc: { start, end } } as unknown as t.Node,
-          msg,
-          Error,
-        );
-      }
-    }
-
-    const { value } = defaultAttr;
-
-    if (isOutputHTML()) {
-      writer.flushBefore(tag);
-      const returnId = file.path.scope.generateUidIdentifier("return");
-      _setReturnId(section, returnId);
-
-      tag
-        .replaceWith(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(returnId, value),
-          ]),
-        )[0]
-        .skip();
-    } else {
-      addValue(
-        section,
-        value.extra?.references,
-        {
-          identifier: importRuntime("tagVarSignal"),
-          hasDownstreamIntersections: () => true,
-        },
-        value,
-      );
-
-      tag.remove();
+    if (!getKnownAttrValues(tag.node).value) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError("The `return` tag requires a value.");
     }
   },
+  translate: translateByTarget({
+    html: {
+      exit(tag) {
+        const section = getSection(tag);
+        const attrs = getKnownAttrValues(tag.node);
+        writer.flushBefore(tag);
+
+        if (attrs.valueChange) {
+          // TODO: this should be based on the child actually mutating the tag variable.
+          getSerializedScopeProperties(section).set(
+            t.stringLiteral(AccessorChar.TagVariableChange),
+            attrs.valueChange,
+          );
+        }
+
+        if (attrs.value) {
+          const returnId =
+            tag.hub.file.path.scope.generateUidIdentifier("return");
+          _setReturnId(section, returnId);
+
+          tag
+            .replaceWith(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(returnId, attrs.value),
+              ]),
+            )[0]
+            .skip();
+        }
+      },
+    },
+    dom: {
+      exit(tag) {
+        const section = getSection(tag);
+        const attrs = getKnownAttrValues(tag.node);
+
+        if (attrs.value) {
+          addValue(
+            section,
+            attrs.value.extra?.referencedBindings,
+            {
+              identifier: importRuntime("tagVarSignal"),
+              hasDownstreamIntersections: () => true,
+            },
+            attrs.value,
+          );
+        }
+
+        if (attrs.valueChange) {
+          addValue(
+            section,
+            attrs.valueChange.extra?.referencedBindings,
+            {
+              identifier: importRuntime("setTagVarChange"),
+              hasDownstreamIntersections: () => false,
+            },
+            attrs.valueChange,
+          );
+        }
+
+        tag.remove();
+      },
+    },
+  }),
   autocomplete: [
     {
       displayText: "return=<value>",

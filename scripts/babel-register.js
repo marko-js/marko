@@ -1,3 +1,5 @@
+globalThis.MARKO_DEBUG = true;
+
 // aliased as ~ts via package.json
 require("@babel/register")({
   babelrc: false,
@@ -8,5 +10,5 @@ require("@babel/register")({
     "@babel/plugin-transform-modules-commonjs",
     "@babel/plugin-transform-export-namespace-from",
   ],
-  presets: ["@babel/preset-typescript"],
+  presets: [["@babel/preset-typescript", { allowDeclareFields: true }]],
 });

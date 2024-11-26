@@ -1,17 +1,44 @@
-import { type Plugin, getTagDef, isNativeTag } from "@marko/babel-utils";
+import { getTagDef, isNativeTag, type Plugin } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import { isOutputHTML } from "../../util/marko-config";
-import analyzeAttributeTags from "../../util/nested-attribute-tags";
 import * as hooks from "../../util/plugin-hooks";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
+import type { TemplateVisitor } from "../../util/visitors";
 import AttributeTag from "./attribute-tag";
 import CustomTag from "./custom-tag";
 import DynamicTag from "./dynamic-tag";
 import NativeTag from "./native-tag";
 
 export default {
+  transform: {
+    enter(tag) {
+      const attrs = tag.get("attributes");
+
+      for (let i = 0; i < attrs.length; i++) {
+        const attr = attrs[i];
+        if (t.isMarkoAttribute(attr.node) && attr.node.bound) {
+          attr.node.bound = false;
+          const changeValue = getChangeHandler(tag, attr);
+          if (changeValue === null) {
+            throw attr.buildCodeFrameError(
+              "Attributes may only be bound to identifiers or member expressions",
+            );
+          }
+
+          tag.node.attributes.splice(
+            ++i,
+            0,
+            t.markoAttribute(attr.node.name + "Change", changeValue),
+          );
+
+          tag.scope.crawl();
+        }
+      }
+    },
+  },
   analyze: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
+    enter(tag) {
       const tagDef = getTagDef(tag);
       const type = analyzeTagNameType(tag);
       const hook = tagDef?.analyzer?.hook as Plugin;
@@ -21,10 +48,12 @@ export default {
         return;
       }
 
+      if (type === TagNameType.NativeTag) {
+        NativeTag.analyze.enter(tag);
+        return;
+      }
+
       switch (type) {
-        case TagNameType.NativeTag:
-          NativeTag.analyze.enter(tag);
-          break;
         case TagNameType.CustomTag:
           CustomTag.analyze.enter(tag);
           break;
@@ -36,37 +65,32 @@ export default {
           break;
       }
     },
-    exit(tag: t.NodePath<t.MarkoTag>) {
-      const tagDef = getTagDef(tag);
-      const type = analyzeTagNameType(tag);
-      const hook = tagDef?.analyzer?.hook as Plugin;
+    exit(tag) {
+      const hook = getTagDef(tag)?.analyzer?.hook as Plugin;
 
       if (hook) {
         hooks.exit(hook, tag);
         return;
       }
 
-      if (type === TagNameType.NativeTag) {
-        // NativeTag.analyze.exit(tag);
-        return;
-      }
-
-      analyzeAttributeTags(tag);
-      switch (type) {
-        case TagNameType.CustomTag:
-          CustomTag.analyze.exit(tag);
-          break;
-        case TagNameType.AttributeTag:
-          // AttributeTag.analyze.exit(tag);
-          break;
-        case TagNameType.DynamicTag:
-          DynamicTag.analyze.exit(tag);
-          break;
-      }
+      // switch (analyzeTagNameType(tag)) {
+      //   case TagNameType.NativeTag:
+      //     // NativeTag.analyze.exit(tag);
+      //     break;
+      //   case TagNameType.CustomTag:
+      //     // CustomTag.analyze.exit(tag);
+      //     break;
+      //   case TagNameType.AttributeTag:
+      //     // AttributeTag.analyze.exit(tag);
+      //     break;
+      //   case TagNameType.DynamicTag:
+      //     // DynamicTag.analyze.exit(tag);
+      //     break;
+      // }
     },
   },
   translate: {
-    enter(tag: t.NodePath<t.MarkoTag>) {
+    enter(tag) {
       const tagDef = getTagDef(tag);
       const extra = tag.node.extra!;
 
@@ -82,7 +106,7 @@ export default {
         if (attr.isMarkoAttribute()) {
           if (attr.node.arguments) {
             throw attr.buildCodeFrameError(
-              `Unsupported arguments on the "${attr.node.name}" attribute.`,
+              `Unsupported arguments on the \`${attr.node.name}\` attribute.`,
             );
           }
 
@@ -91,7 +115,7 @@ export default {
               attr.node.name += `:${attr.node.modifier}`;
             } else {
               throw attr.buildCodeFrameError(
-                `Unsupported modifier "${attr.node.modifier}".`,
+                `Unsupported modifier \`${attr.node.modifier}\`.`,
               );
             }
           }
@@ -131,7 +155,7 @@ export default {
       }
     },
 
-    exit(tag: t.NodePath<t.MarkoTag>) {
+    exit(tag) {
       const translator = getTagDef(tag)?.translator;
 
       if (translator) {
@@ -155,4 +179,40 @@ export default {
       }
     },
   },
-};
+} satisfies TemplateVisitor<t.MarkoTag>;
+
+function getChangeHandler(
+  tag: t.NodePath<t.MarkoTag>,
+  attr: t.NodePath<t.MarkoAttribute | t.MarkoSpreadAttribute>,
+) {
+  if (t.isIdentifier(attr.node.value)) {
+    const valueId = tag.scope.generateUidIdentifier(
+      "new_" + attr.node.value.name,
+    );
+    return t.functionExpression(
+      null,
+      [valueId],
+      t.blockStatement([
+        t.expressionStatement(
+          t.assignmentExpression("=", attr.node.value, valueId),
+        ),
+      ]),
+    );
+  } else if (t.isMemberExpression(attr.node.value)) {
+    const prop = attr.node.value.property;
+    if (t.isPrivateName(prop)) return null;
+    if (t.isIdentifier(prop)) {
+      return t.memberExpression(
+        t.cloneNode(attr.node.value.object),
+        t.identifier(prop.name + "Change"),
+      );
+    } else {
+      return t.memberExpression(
+        t.cloneNode(attr.node.value.object),
+        t.binaryExpression("+", t.cloneNode(prop), t.stringLiteral("Change")),
+        true,
+      );
+    }
+  }
+  return null;
+}

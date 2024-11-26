@@ -1,48 +1,60 @@
 import {
-  type Tag,
   assertNoArgs,
   assertNoAttributes,
+  assertNoAttributeTags,
   assertNoParams,
+  type Tag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
+import { BindingType, trackVarReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getSection } from "../util/sections";
 import { addValue, initValue } from "../util/signals";
+import { scopeIdentifier } from "../visitors/program";
 
 export default {
-  translate(tag) {
-    const { node } = tag;
-    const { var: tagVar } = node;
-    const id = callRuntime("nextTagId");
-
+  analyze(tag) {
     assertNoArgs(tag);
+    assertNoParams(tag);
     assertNoAttributes(tag);
     assertNoBodyContent(tag);
-    assertNoParams(tag);
+    assertNoAttributeTags(tag);
 
+    const { node } = tag;
     if (!node.var) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The 'id' tag requires a tag variable.");
+        .buildCodeFrameError("The `id` tag requires a tag variable.");
     }
 
-    if (!t.isIdentifier(tagVar)) {
+    if (!t.isIdentifier(node.var)) {
       throw tag
         .get("var")
-        .buildCodeFrameError("The 'id' tag cannot be destructured");
+        .buildCodeFrameError("The `id` tag cannot be destructured");
     }
 
-    if (isOutputHTML()) {
-      tag.replaceWith(
-        t.variableDeclaration("const", [t.variableDeclarator(node.var, id)]),
-      );
-    } else {
-      const source = initValue(tagVar.extra!.reserve!);
-      addValue(getSection(tag), undefined, source, id);
-      tag.remove();
-    }
+    trackVarReferences(tag, BindingType.derived);
+  },
+  translate: {
+    exit(tag) {
+      const { node } = tag;
+      const id = isOutputHTML()
+        ? callRuntime("nextTagId")
+        : callRuntime("nextTagId", scopeIdentifier);
+
+      if (isOutputHTML()) {
+        tag.replaceWith(
+          t.variableDeclaration("const", [t.variableDeclarator(node.var!, id)]),
+        );
+      } else {
+        const source = initValue(node.var!.extra!.binding!);
+        addValue(getSection(tag), undefined, source, id);
+        tag.remove();
+      }
+    },
   },
   attributes: {},
   autocomplete: [
@@ -53,4 +65,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#id",
     },
   ],
+  types: "@marko/translator-tags/tag-types/id.d.marko",
 } as Tag;

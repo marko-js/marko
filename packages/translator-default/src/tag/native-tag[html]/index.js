@@ -1,11 +1,12 @@
-import { resolve } from "path";
 import {
   getTagDef,
   importDefault,
   normalizeTemplateString,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { resolve } from "path";
 import SELF_CLOSING from "self-closing-tags";
+
 import write from "../../util/html-out-write";
 import { hasUserKey } from "../../util/key-manager";
 import withPreviousLocation from "../../util/with-previous-location";
@@ -92,6 +93,7 @@ export default function (path, isNullable) {
   if (isHTML) {
     if (
       (!meta.hasStatefulTagParams &&
+        !meta.hasFunctionEventHandlers &&
         (meta.hasComponentBrowser || !meta.hasComponent)) ||
       isPreserved(path)
     ) {
@@ -102,12 +104,12 @@ export default function (path, isNullable) {
         dataMarkoArgs.push(t.objectExpression(tagProperties));
       }
 
-      if (hasUserKey(path)) {
+      if (hasUserKey(path) || (key && node.isPreserved)) {
         if (dataMarkoArgs.length === 2) {
           dataMarkoArgs.push(t.numericLiteral(0));
         }
 
-        dataMarkoArgs.push(key, file._componentDefIdentifier);
+        dataMarkoArgs.push(key);
       }
 
       if (dataMarkoArgs.length > 2) {
@@ -153,10 +155,10 @@ export default function (path, isNullable) {
   );
 
   if (isNullable) {
-    writeStartNode = t.ifStatement(
-      name,
-      writeStartNode,
-      t.expressionStatement(
+    writeStartNode = t.ifStatement(name, writeStartNode);
+
+    if (!isEmpty) {
+      writeStartNode.alternate = t.expressionStatement(
         t.callExpression(
           t.memberExpression(t.identifier("out"), t.identifier("bf")),
           [
@@ -165,8 +167,8 @@ export default function (path, isNullable) {
             t.numericLiteral(1),
           ],
         ),
-      ),
-    );
+      );
+    }
   }
 
   if (isEmpty) {

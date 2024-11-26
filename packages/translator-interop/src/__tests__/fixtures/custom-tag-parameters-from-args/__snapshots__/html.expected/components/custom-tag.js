@@ -1,17 +1,18 @@
-import { escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, dynamicTagArgs as _dynamicTagArgs, markResumeControlEnd as _markResumeControlEnd, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
   const x = 1;
   const y = 10;
-  _write(`<button class=inc>${_escapeXML(x)}${_markResumeNode(_scope0_id, "#text/1")},<!>${_escapeXML(y)}${_markResumeNode(_scope0_id, "#text/2")}</button>${_markResumeNode(_scope0_id, "#button/0")}`);
-  const _dynamicScope = _dynamicTagArgs(input.renderBody, [x, y]);
-  _write(`${_markResumeControlEnd(_scope0_id, "#text/3")}`);
-  _writeEffect(_scope0_id, "packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y");
-  _writeScope(_scope0_id, {
+  _$.write(`<button class=inc>${_$.escapeXML(x)}${_$.markResumeNode(_scope0_id, "#text/1")},<!>${_$.escapeXML(y)}${_$.markResumeNode(_scope0_id, "#text/2")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
+  const _dynamicScope = _$.peekNextScope();
+  _$.dynamicTagArgs(_dynamicScope, input.renderBody, [x, y]);
+  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/3")}`);
+  _$.writeEffect(_scope0_id, "packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y");
+  _$.writeScope(_scope0_id, {
     "x": x,
     "y": y,
-    "#text/3!": _dynamicScope,
-    "#text/3(": input.renderBody
+    "#text/3!": _$.writeExistingScope(_dynamicScope),
+    "#text/3(": _$.normalizeDynamicRenderer(input.renderBody)
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko", _renderer);

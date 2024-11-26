@@ -1,5 +1,5 @@
 import { t as _t } from "marko/dist/runtime/html/index.js";
-const _marko_componentType = "7zxvsBE8",
+const _marko_componentType = "GtuO9oh",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _marko_props from "marko/dist/runtime/html/helpers/data-marko.js";
@@ -20,5 +20,5 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   _marko_tag(_customTag, {}, out, _componentDef, "5", [["camelcasedEvent", "handle", false]]);
 }, {
   t: _marko_componentType,
-  i: true
+  s: true
 }, _marko_component);

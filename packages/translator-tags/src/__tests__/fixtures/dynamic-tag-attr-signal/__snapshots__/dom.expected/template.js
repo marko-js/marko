@@ -1,18 +1,20 @@
-import { classAttr as _classAttr, on as _on, queueSource as _queueSource, register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _className_effect = _register("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className", _scope => _on(_scope["#button/1"], "click", function () {
+export const _template_ = "<!><p>paragraph</p><button></button>";
+export const _walks_ = /* get, over(1), get, over(1) */"D b b";
+import * as _$ from "@marko/runtime-tags/debug/dom";
+const _onClick = _scope => {
   const {
     className
   } = _scope;
-  _queueSource(_scope, _className, className === "A" ? "B" : "A");
-}));
-const _className = /* @__PURE__ */_value("className", (_scope, className) => {
-  _classAttr(_scope["#p/0"], className);
-  _queueEffect(_scope, _className_effect);
-});
-const _setup = _scope => {
-  _className(_scope, "A");
+  return function () {
+    _className(_scope, className === "A" ? "B" : "A");
+  };
 };
-export const template = "<!><p>paragraph</p><button></button>";
-export const walks = /* get, over(1), get, over(1) */"D b b";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko");
+const _className_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko_0_className", _scope => _$.on(_scope["#button/1"], "click", _onClick(_scope)));
+const _className = /* @__PURE__ */_$.state("className", (_scope, className) => {
+  _$.classAttr(_scope["#p/0"], className);
+  _className_effect(_scope);
+});
+export function _setup_(_scope) {
+  _className(_scope, "A");
+}
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-attr-signal/template.marko", _template_, _walks_, _setup_);

@@ -1,4 +1,5 @@
-/* jshint newcap:false */
+var hasTextContent = require("./is-text-only");
+
 function VNode() {}
 
 VNode.prototype = {
@@ -48,9 +49,9 @@ VNode.prototype = {
   ___appendChild: function (child) {
     this.___childCount++;
 
-    if (this.___nodeName === "textarea") {
+    if (hasTextContent(this.___nodeName)) {
       if (child.___Text) {
-        this.___valueInternal += child.___nodeValue;
+        this.___textContent += child.___nodeValue;
       } else {
         throw TypeError();
       }

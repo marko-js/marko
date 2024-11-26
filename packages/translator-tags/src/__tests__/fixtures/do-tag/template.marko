@@ -1,0 +1,13 @@
+import log from "./test-log";
+
+<do() { log.block += "rendered"}/>
+<const/fromConst() { log.const += "rendered"}/>
+<do=fromConst/>
+<let/str="rendered"/>
+<do() { log.let += str}/>
+static function fromStatic() { log.static += "rendered"}
+<do=fromStatic/>
+
+<let/logOutput = JSON.stringify(log)/>
+<effect() { logOutput = JSON.stringify(log) }/>
+-- ${logOutput}

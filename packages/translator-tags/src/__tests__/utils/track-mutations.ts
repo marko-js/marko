@@ -1,15 +1,10 @@
-import reorderRuntime from "@marko/runtime-tags/html/reorder-runtime";
 import type { JSDOM } from "jsdom";
 import format, { plugins } from "pretty-format";
+
 import { getNodePath } from "./get-node-info";
+import { stripInlineRuntime } from "./strip-inline-runtime";
 
 const { DOMElement, DOMCollection } = plugins;
-
-const runtimeId = "M";
-const reorderRuntimeString = String(reorderRuntime).replace(
-  "RUNTIME_ID",
-  runtimeId,
-);
 
 export default function createMutationTracker(
   window: JSDOM["window"],
@@ -33,26 +28,34 @@ export default function createMutationTracker(
       }
       result.push(message);
     },
-    logUpdate(update: unknown) {
+    logUpdate(update: unknown, expectedError?: Error) {
       if (!connected) {
         throw new Error(`logUpdate called after cleanup`);
       }
+
       if (currentRecords) {
         currentRecords = currentRecords.concat(observer.takeRecords());
       } else {
         currentRecords = observer.takeRecords();
       }
-      result.push(
-        getStatusString(cloneAndNormalize(container), currentRecords, update),
-      );
-      sanitizedResult.push(
-        getStatusString(
-          cloneAndSanitize(window, container),
-          currentRecords,
-          update,
-          true,
-        ),
-      );
+
+      if (expectedError) {
+        result.push(getErrorStatusString(expectedError, update));
+        sanitizedResult.push(getErrorStatusString(expectedError, update, true));
+      } else {
+        result.push(
+          getStatusString(cloneAndNormalize(container), currentRecords, update),
+        );
+        sanitizedResult.push(
+          getStatusString(
+            cloneAndSanitize(window, container),
+            currentRecords,
+            update,
+            true,
+          ),
+        );
+      }
+
       currentRecords = null;
     },
     getRawLogs(sanitized?: boolean) {
@@ -88,6 +91,7 @@ export default function createMutationTracker(
 
 function cloneAndNormalize(container: ParentNode) {
   const clone = container.cloneNode(true);
+  normalizeTree(container, clone);
   clone.normalize();
   return clone;
 }
@@ -97,23 +101,69 @@ function cloneAndSanitize(window: JSDOM["window"], container: ParentNode) {
     container = window.document.body || window.document.createElement("body");
   }
   const clone = container.cloneNode(true);
-  const treeWalker = window.document.createTreeWalker(clone);
-  const nodesToRemove: ChildNode[] = [];
-
-  while (treeWalker.nextNode()) {
-    const node = treeWalker.currentNode;
-    if (node.nodeType === 8 || isSanitizedTag(node as Element)) {
-      nodesToRemove.push(node as ChildNode);
-    } else if ((node as Element).tagName === "TEXTAREA") {
-      node.textContent = (node as HTMLTextAreaElement).value;
-    }
+  const ignoredNodes: ChildNode[] = [];
+  normalizeTree(container, clone, shouldIgnore);
+  for (const ignoredNode of ignoredNodes) {
+    ignoredNode.remove();
   }
-
-  nodesToRemove.forEach((n) => n.remove());
-
   clone.normalize();
 
   return clone;
+
+  function shouldIgnore(node: Node) {
+    if (isComment(node) || isIgnoredTag(node)) {
+      ignoredNodes.push(node);
+      return true;
+    }
+
+    return false;
+  }
+}
+
+function normalizeTree(
+  source: Node,
+  target: Node,
+  shouldIgnore?: (node: Node) => boolean,
+) {
+  if (shouldIgnore?.(target)) return;
+  if (isElement(target) && isElement(source)) {
+    if (isInputElement(target) && isInputElement(source)) {
+      if (target.type === "checkbox" || target.type === "radio") {
+        if (source.checked) {
+          target.setAttribute("checked", "");
+        } else {
+          target.removeAttribute("checked");
+        }
+      } else if (source.value) {
+        target.setAttribute("value", source.value);
+      } else {
+        target.removeAttribute("value");
+      }
+    } else if (isTextAreaElement(target) && isTextAreaElement(source)) {
+      target.textContent = source.value;
+    } else if (isOptionElement(target) && isOptionElement(source)) {
+      if (source.selected) {
+        target.setAttribute("selected", "");
+      } else {
+        target.removeAttribute("selected");
+      }
+    }
+  }
+
+  // Recursively handle child nodes
+  for (let i = 0; i < source.childNodes.length; i++) {
+    normalizeTree(source.childNodes[i], target.childNodes[i], shouldIgnore);
+  }
+}
+
+function getUpdateString(update: unknown) {
+  return typeof update === "function"
+    ? `\n${update
+        .toString()
+        .replace(/^.*?{\s*([\s\S]*?)\s*}.*?$/, "$1")
+        .replace(/^ {4}/gm, "")
+        .replace(/;$/, "")}\n`
+    : JSON.stringify(update);
 }
 
 function getStatusString(
@@ -122,24 +172,18 @@ function getStatusString(
   update: unknown,
   omitMutations?: boolean,
 ) {
-  const updateString =
-    typeof update === "function"
-      ? `\n${update
-          .toString()
-          .replace(/^.*?{\s*([\s\S]*?)\s*}.*?$/, "$1")
-          .replace(/^ {4}/gm, "")
-          .replace(/;$/, "")}\n`
-      : JSON.stringify(update);
-
-  const formattedHTML = Array.from(container.childNodes)
-    .map((child) =>
-      format(child, {
-        plugins: [DOMElement, DOMCollection],
-      }).trim(),
-    )
-    .filter(Boolean)
-    .join("\n")
-    .trim();
+  const updateString = getUpdateString(update);
+  const formattedHTML = stripInlineRuntime(
+    Array.from(container.childNodes)
+      .map((child) =>
+        format(child, {
+          plugins: [DOMElement, DOMCollection],
+        }).trim(),
+      )
+      .filter(Boolean)
+      .join("\n")
+      .trim(),
+  );
 
   return `# Render ${updateString}\n\`\`\`html\n${formattedHTML}\n\`\`\`${
     omitMutations
@@ -149,6 +193,19 @@ function getStatusString(
           .filter(Boolean)
           .join("\n")}\n\`\`\``
   }`;
+}
+
+function getErrorStatusString(
+  error: Error,
+  update: unknown,
+  omitStack?: boolean,
+) {
+  const updateString = getUpdateString(update);
+  const formattedError =
+    !omitStack && error.stack
+      ? error.stack.replaceAll(process.cwd(), "")
+      : error.message;
+  return `# Render ${updateString}\n# Error\n\`\`\`\n${formattedError}\n\`\`\``;
 }
 
 function formatMutationRecord(record: MutationRecord) {
@@ -181,13 +238,8 @@ function formatMutationRecord(record: MutationRecord) {
       }
 
       return `${getNodePath(target)}: ${JSON.stringify(
-        (oldValue || "").replace(reorderRuntimeString, "REORDER_RUNTIME"),
-      )} => ${JSON.stringify(
-        (target.nodeValue || "").replace(
-          reorderRuntimeString,
-          "REORDER_RUNTIME",
-        ),
-      )}`;
+        oldValue || "",
+      )} => ${JSON.stringify(target.nodeValue || "")}`;
     }
 
     case "childList": {
@@ -219,8 +271,8 @@ function formatMutationRecord(record: MutationRecord) {
   }
 }
 
-function isSanitizedTag(node: Element) {
-  switch (node.tagName) {
+function isIgnoredTag(node: Node): node is Element {
+  switch (isElement(node) && node.tagName) {
     case "LINK":
     case "TITLE":
     case "STYLE":
@@ -229,4 +281,24 @@ function isSanitizedTag(node: Element) {
     default:
       return false;
   }
+}
+
+function isElement(node: Node): node is Element {
+  return node.nodeType === 1;
+}
+
+function isComment(node: Node): node is Comment {
+  return node.nodeType === 8;
+}
+
+function isInputElement(node: Element): node is HTMLInputElement {
+  return node.tagName === "INPUT";
+}
+
+function isOptionElement(node: Element): node is HTMLOptionElement {
+  return node.tagName === "OPTION";
+}
+
+function isTextAreaElement(node: Element): node is HTMLTextAreaElement {
+  return node.tagName === "TEXTAREA";
 }

@@ -1,122 +1,136 @@
-import type { Renderer } from "../common/types";
-import { attrs } from "./attrs";
-import { serializedScope } from "./serializer";
-import type { ServerTemplate as Template } from "./template";
+import { normalizeDynamicRenderer } from "../html";
 import {
+  attrs,
+  controllable_select_value,
+  controllable_textarea_value,
+} from "./attrs";
+import type { ServerRenderer } from "./template";
+import {
+  getScopeId,
   markResumeScopeStart,
   nextScopeId,
-  peekNextScopeId,
+  type PartialScope,
   write,
   writeScope,
 } from "./writer";
 
-const voidElements = new Set([
-  "area",
-  "base",
-  "br",
-  "col",
-  "embed",
-  "hr",
-  "img",
-  "input",
-  "link",
-  "meta",
-  "param",
-  "source",
-  "track",
-  "wbr",
-]);
+const voidElementsReg =
+  /^(?:area|b(?:ase|r)|col|embed|hr|i(?:mg|nput)|link|meta|param|source|track|wbr)$/;
 interface RenderBodyObject {
-  [x: string]: unknown;
-  renderBody: Renderer;
+  [x: PropertyKey]: unknown;
+  renderBody: ServerRenderer;
 }
 
 export function dynamicTagInput(
-  tag: unknown | string | Renderer | RenderBodyObject | Template,
+  scope: PartialScope,
+  tag: unknown | string | ServerRenderer | RenderBodyObject,
   input: Record<string, unknown>,
   renderBody?: () => void,
+  tagVar?: unknown,
 ) {
   if (!tag && !renderBody) return undefined;
 
-  const futureScopeId = peekNextScopeId();
-  const futureScope = serializedScope(futureScopeId);
-  write(`${markResumeScopeStart(futureScopeId)}`);
-  writeScope(futureScopeId, {});
+  const scopeId = getScopeId(scope)!;
+  write(`${markResumeScopeStart(scopeId)}`);
+  writeScope(scopeId, scope);
 
   if (!tag) {
-    renderBody!();
-
-    return futureScope;
+    return renderBody!();
   }
 
   if (typeof tag === "string") {
     nextScopeId();
-    write(`<${tag}${attrs(input)}>`);
+    write(
+      `<${tag}${attrs(input, MARKO_DEBUG ? `#${tag}/0` : 0, scopeId, tag)}>`,
+    );
 
-    if (!voidElements.has(tag)) {
-      if (renderBody) {
-        renderBody();
+    if (!voidElementsReg.test(tag)) {
+      if (tag === "textarea") {
+        if (MARKO_DEBUG && renderBody) {
+          throw new Error(
+            "A dynamic tag rendering a `<textarea>` cannot have a `renderBody` and must use the `value` attribute instead.",
+          );
+        }
+        write(
+          controllable_textarea_value(
+            scopeId,
+            MARKO_DEBUG ? `#${tag}/0` : 0,
+            input.value,
+            input.valueChange,
+          ),
+        );
+      } else if (renderBody) {
+        if (tag === "select" && ("value" in input || "valueChange" in input)) {
+          controllable_select_value(
+            scopeId,
+            MARKO_DEBUG ? `#${tag}/0` : 0,
+            input.value,
+            input.valueChange,
+            renderBody,
+          );
+        } else {
+          renderBody();
+        }
       }
-
       write(`</${tag}>`);
     } else if (MARKO_DEBUG && renderBody) {
       throw new Error(
         `A renderBody was provided for a "${tag}" tag, which cannot have children.`,
       );
     }
-
-    return futureScope;
+    // TODO: this needs to return the element getter
+    return null;
   }
 
-  const renderer = getDynamicRenderer(tag);
+  const renderer = getDynamicRenderer(tag) as ServerRenderer;
 
-  if (typeof renderer === "function") {
-    renderer(renderBody ? { ...input, renderBody } : input);
-    return futureScope;
-  } else if (MARKO_DEBUG) {
-    throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
+  if (MARKO_DEBUG) {
+    if (typeof renderer !== "function") {
+      throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
+    }
   }
+
+  return renderer(renderBody ? { ...input, renderBody } : input, tagVar);
 }
 
 export function dynamicTagArgs(
-  tag: unknown | string | Renderer | RenderBodyObject | Template,
+  scope: PartialScope,
+  tag: unknown | string | ServerRenderer | RenderBodyObject,
   args: unknown[],
 ) {
   if (!tag) return undefined;
 
-  const futureScopeId = peekNextScopeId();
-  const futureScope = serializedScope(futureScopeId);
-  write(`${markResumeScopeStart(futureScopeId)}`);
-  writeScope(futureScopeId, {});
+  const scopeId = getScopeId(scope)!;
+  write(`${markResumeScopeStart(scopeId)}`);
+  writeScope(scopeId, scope);
 
   if (typeof tag === "string") {
     nextScopeId();
-    write(`<${tag}${attrs(args[0] as Record<string, unknown>)}></${tag}>`);
+    write(
+      `<${tag}${attrs(args[0] as Record<string, unknown>, MARKO_DEBUG ? `#${tag}/0` : 0, scopeId, tag)}>`,
+    );
 
-    // if (!voidElements.has(tag)) {
-    //   if (renderBody) {
-    //     renderBody();
-    //   }
-    //   write(`</${tag}>`);
-    // }
+    if (!voidElementsReg.test(tag)) {
+      write(`</${tag}>`);
+    }
 
-    return futureScope;
+    // TODO: this needs to return the element getter
+    return undefined;
   }
 
-  const renderer = getDynamicRenderer(tag);
+  const renderer = getDynamicRenderer(tag) as ServerRenderer;
 
-  if (typeof renderer === "function") {
-    renderer(...args);
-    return futureScope;
-  } else if (MARKO_DEBUG) {
-    throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
+  if (MARKO_DEBUG) {
+    if (typeof renderer !== "function") {
+      throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
+    }
   }
+
+  return renderer(...args);
 }
 
-let getDynamicRenderer = (
-  tag: unknown | string | Renderer | RenderBodyObject | Template,
-) => (tag as Template)._ || (tag as RenderBodyObject).renderBody || tag;
-export let createRenderer = (fn: Renderer) => fn;
+let getDynamicRenderer = normalizeDynamicRenderer<ServerRenderer>;
+export let createRenderer = (fn: ServerRenderer) => fn;
 
 export function patchDynamicTag(
   newGetDynamicRenderer: typeof getDynamicRenderer,

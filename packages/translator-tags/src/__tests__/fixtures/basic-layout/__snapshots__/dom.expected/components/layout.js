@@ -1,15 +1,10 @@
-import { conditional as _conditional, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _dynamicTagName = /* @__PURE__ */_conditional("#text/0");
-const _renderBody = /* @__PURE__ */_value("renderBody", (_scope, renderBody) => _dynamicTagName(_scope, renderBody), void 0, _dynamicTagName);
-export const args = (_scope, _destructure, _clean) => {
-  let renderBody;
-  if (!_clean) [{
-    renderBody
-  }] = _destructure;
-  _renderBody(_scope, renderBody, _clean);
-};
-export { _renderBody };
-export const template = "<body><!></body>";
-export const walks = /* next(1), replace, out(1) */"D%l";
-export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/basic-layout/components/layout.marko");
+export const _template_ = "<body><!></body>";
+export const _walks_ = /* next(1), replace, out(1) */"D%l";
+export const _setup_ = () => {};
+import * as _$ from "@marko/runtime-tags/debug/dom";
+const _renderBody_input = _$.dynamicTagAttrs("#text/0");
+const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _renderBody_input(_scope, () => ({})), () => _renderBody_input);
+export const _renderBody_ = /* @__PURE__ */_$.value("renderBody", (_scope, renderBody) => _dynamicTagName(_scope, renderBody), () => _dynamicTagName);
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _renderBody_(_scope, input.renderBody), () => _renderBody_);
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-layout/components/layout.marko", _template_, _walks_, _setup_, void 0, () => _params__);

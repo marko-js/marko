@@ -1,4 +1,6 @@
+import { getStart } from "@marko/babel-utils";
 import path from "path";
+
 import getComponentFiles from "../../util/get-component-files";
 
 const STYLE_REG = /^style((?:\.[^.\s\\/:*?"<>|({]+)+)?\s*\{/;
@@ -41,14 +43,21 @@ export default function (tag) {
   const codeEndOffset = rawValue.lastIndexOf("}");
   const code = rawValue.slice(codeSartOffset, codeEndOffset);
   const base = path.basename(hub.file.opts.filename);
-  const start = node.extra && node.extra.nameStart;
+  const start = getStart(hub.file, node.name);
+  let startPos = undefined;
+  let endPos = undefined;
+
+  if (start !== null) {
+    startPos = start + codeSartOffset;
+    endPos = start + codeEndOffset;
+  }
 
   deps.push({
     type: type.slice(1),
     code,
     style: true,
-    startPos: start + codeSartOffset,
-    endPos: start + codeEndOffset,
+    startPos,
+    endPos,
     path: `./${base}`,
     virtualPath: `./${base + type}`,
   });

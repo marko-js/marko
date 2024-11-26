@@ -1,36 +1,34 @@
-import { write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, serializedScope as _serializedScope, peekSerializedScope as _peekSerializedScope, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import * as _$ from "@marko/runtime-tags/debug/html";
 import _customTag from "./components/custom-tag/index.marko";
-const _renderer = /* @__PURE__ */_createRenderer(({
-  x
-}, _tagVar) => {
-  const _scope0_id = _nextScopeId();
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
+  const {
+    x
+  } = input;
+  const _childScope = _$.peekNextScope();
   let _thing;
-  const _scope1_id = _nextScopeId();
-  let _ifScopeId, _scope2_, _ifRenderer;
   if (x) {
-    const _scope2_id = _nextScopeId();
-    _thing = {
+    _thing = _$.attrTag({
       x: 1,
-      renderBody() {
-        _write("Hello");
-      }
-    };
-    _writeScope(_scope2_id, _scope2_ = {});
-    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_2_renderer");
-    _ifScopeId = _scope2_id;
+      renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+        const _scope1_id = _$.nextScopeId();
+        _$.write("Hello");
+      }), "packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_1_renderer", _scope0_id)
+    });
+  } else {
+    _thing = _$.attrTag({
+      x: 2,
+      renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+        const _scope2_id = _$.nextScopeId();
+        _$.write("Goodbye");
+      }), "packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_2_renderer", _scope0_id)
+    });
   }
-  _write(`${_markResumeControlSingleNodeEnd(_scope1_id, "#text/0", _ifScopeId)}`);
-  _writeScope(_scope1_id, {
-    "#text/0!": _scope2_,
-    "#text/0(": _ifRenderer,
-    "_": _serializedScope(_scope0_id)
-  });
-  const _childScope = _peekSerializedScope();
-  _customTag._({
+  _customTag({
     thing: _thing
   });
-  _writeScope(_scope0_id, {
-    "#childScope/0": _childScope
+  _$.writeScope(_scope0_id, {
+    "#childScope/0": _$.writeExistingScope(_childScope)
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko", _renderer);

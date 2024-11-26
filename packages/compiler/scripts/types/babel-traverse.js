@@ -27,6 +27,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ***********************************************************************************************/
 
 import fs from "fs";
+
 import { MARKO_TYPES } from "../../src/babel-types/types/definitions";
 
 const HUB_INTERFACE = "export interface HubInterface {";
@@ -63,7 +64,7 @@ var result = data
     path: NodePath<t.Program>,
     hub: HubInterface,
     code: string,
-    opts: Record<string, unknown>,
+    opts: Record<string, unknown> & { filename: string },
     metadata: Record<string, unknown> & {
       marko: import("@marko/compiler").MarkoMeta
     },
@@ -93,9 +94,10 @@ ${HUB_INTERFACE}
     ASSERT,
     ASSERT +
       BREAK +
-      MARKO_TYPES.map((t) => `assert${t}(opts?: object | null): void;`).join(
-        BREAK,
-      ),
+      MARKO_TYPES.map(
+        (t) =>
+          `assert${t}(opts?: object | null): asserts this is NodePath<t.${t}>;`,
+      ).join(BREAK),
   );
 
 export default result;

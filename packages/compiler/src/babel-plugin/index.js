@@ -1,7 +1,8 @@
-import { createHash } from "crypto";
-import path from "path";
 import { visitors } from "@babel/traverse";
 import { diagnosticError, getTemplateId } from "@marko/babel-utils";
+import { createHash } from "crypto";
+import path from "path";
+
 import * as t from "../babel-types";
 import { buildLookup } from "../taglib";
 import taglibConfig from "../taglib/config";
@@ -158,7 +159,7 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
   const isSource = markoOpts.output === "source";
   const isMigrate = markoOpts.output === "migrate";
   const canCache = !(isSource || isMigrate);
-  const id = getTemplateId(markoOpts.optimize, filename);
+  const id = getTemplateId(markoOpts, filename);
   const contentHash = canCache && createHash("MD5").update(code).digest("hex");
   const cacheKey = canCache && createHash("MD5").update(id).digest("hex");
 
@@ -201,6 +202,7 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
         sourceType: "module",
         body: [],
         directives: [],
+        params: [t.identifier("input")],
       },
     },
   });
@@ -278,6 +280,9 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
   }
 
   rootTransformers.push(transform);
+  if (translator.transform) {
+    rootTransformers.push(translator.transform);
+  }
   file.___compileStage = "transform";
   traverseAll(file, rootTransformers);
 
@@ -399,6 +404,6 @@ function isMarkoOutput(output) {
 function finalizeMeta(meta) {
   meta.watchFiles = [...new Set(meta.watchFiles)];
   if (meta.analyzedTags) {
-    meta.analyzedTags = [...new Set(meta.analyzedTags)];
+    meta.analyzedTags = [...meta.analyzedTags];
   }
 }

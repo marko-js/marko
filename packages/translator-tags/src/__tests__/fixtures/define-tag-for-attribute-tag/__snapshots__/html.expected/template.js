@@ -1,24 +1,24 @@
-import { write as _write, nextScopeId as _nextScopeId, peekSerializedScope as _peekSerializedScope, markResumeNode as _markResumeNode, writeEffect as _writeEffect, writeScope as _writeScope, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
+import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./components/child.marko";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
   const selected = false;
   const myThing = {
     selected: selected,
-    renderBody() {
-      const _scope1_id = _nextScopeId();
-      _write("<span>The thing</span>");
-    }
+    renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+      const _scope1_id = _$.nextScopeId();
+      _$.write("<span>The thing</span>");
+    }), "packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_1_renderer", _scope0_id)
   };
-  const _childScope = _peekSerializedScope();
-  _child._({
+  const _childScope = _$.peekNextScope();
+  _child({
     thing: myThing
   });
-  _write(`<button>Toggle</button>${_markResumeNode(_scope0_id, "#button/1")}`);
-  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_0_selected");
-  _writeScope(_scope0_id, {
+  _$.write(`<button>Toggle</button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_0_selected");
+  _$.writeScope(_scope0_id, {
     "selected": selected,
-    "#childScope/0": _childScope
+    "#childScope/0": _$.writeExistingScope(_childScope)
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko", _renderer);

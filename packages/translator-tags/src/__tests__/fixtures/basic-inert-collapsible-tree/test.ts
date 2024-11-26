@@ -26,4 +26,3 @@ function toggle(id: string) {
   };
 }
 
-export const skip_csr = true;

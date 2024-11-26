@@ -257,7 +257,7 @@ class TaglibLoader {
     var path = this.filePath;
     var dirname = this.dirname;
 
-    if (taglib.isFromPackageJson) {
+    if (taglib.isFromPackageJson || /[\\/]node_modules[\\/]/.test(path)) {
       taglib.tagsDir = false;
 
       scanTagsDir(

@@ -3,23 +3,23 @@
 <html>
   <head />
   <body>
-    <!--M[1-->
+    <!--M_[1-->
     <div>
       <button
         id="count"
       >
         0
-        <!--M*3 #text/1-->
+        <!--M_*3 #text/1-->
       </button>
-      <!--M*3 #button/0-->
+      <!--M_*3 #button/0-->
     </div>
-    <!--M]0 #text/0-->
+    <!--M_]0 #text/0-->
     <button
       id="changeTag"
     />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{"#childScope/0":j={count:0}},3:j}),[3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{tagName:"div","#text/0!":_.a={},"#text/0(":"div"},1:_.a,2:{"#childScope/0":_.b={count:0}},3:_.b}),3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>
@@ -39,23 +39,23 @@ container.querySelector("#count").click()
 <html>
   <head />
   <body>
-    <!--M[1-->
+    <!--M_[1-->
     <div>
       <button
         id="count"
       >
         1
-        <!--M*3 #text/1-->
+        <!--M_*3 #text/1-->
       </button>
-      <!--M*3 #button/0-->
+      <!--M_*3 #button/0-->
     </div>
-    <!--M]0 #text/0-->
+    <!--M_]0 #text/0-->
     <button
       id="changeTag"
     />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{"#childScope/0":j={count:0}},3:j}),[3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{tagName:"div","#text/0!":_.a={},"#text/0(":"div"},1:_.a,2:{"#childScope/0":_.b={count:0}},3:_.b}),3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>
@@ -81,13 +81,13 @@ container.querySelector("#changeTag").click()
         0
       </button>
     </span>
-    <!--M]0 #text/0-->
+    <!--M_]0 #text/0-->
     <button
       id="changeTag"
     />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{"#childScope/0":j={count:0}},3:j}),[3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{tagName:"div","#text/0!":_.a={},"#text/0(":"div"},1:_.a,2:{"#childScope/0":_.b={count:0}},3:_.b}),3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>
@@ -116,13 +116,13 @@ container.querySelector("#count").click()
         1
       </button>
     </span>
-    <!--M]0 #text/0-->
+    <!--M_]0 #text/0-->
     <button
       id="changeTag"
     />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h,j)=&gt;({0:{tagName:"div","#text/0!":h={},"#text/0(":"div"},1:h,2:{"#childScope/0":j={count:0}},3:j}),[3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{tagName:"div","#text/0!":_.a={},"#text/0(":"div"},1:_.a,2:{"#childScope/0":_.b={count:0}},3:_.b}),3,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/components/counter.marko_0_count",0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>

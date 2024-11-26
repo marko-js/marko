@@ -1,9 +1,8 @@
-import { tagVarSignal as _tagVarSignal, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _x = /* @__PURE__ */_value("x", (_scope, x) => _tagVarSignal(_scope, x), void 0, _tagVarSignal);
-const _setup = _scope => {
+export const _template_ = "<span>child</span>";
+export const _walks_ = /* over(1) */"b";
+import * as _$ from "@marko/runtime-tags/debug/dom";
+const _x = /* @__PURE__ */_$.state("x", (_scope, x) => _$.tagVarSignal(_scope, x), () => _$.tagVarSignal);
+export function _setup_(_scope) {
   _x(_scope, 1);
-};
-export const template = "<span>child</span>";
-export const walks = /* over(1) */"b";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/return-tag-no-var/components/child.marko");
+}
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/return-tag-no-var/components/child.marko", _template_, _walks_, _setup_);

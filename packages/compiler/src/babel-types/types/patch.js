@@ -4,6 +4,7 @@ import defineType from "@babel/types/lib/definitions/utils";
 import * as generatedValidators from "@babel/types/lib/validators/generated";
 import * as referencedValidators from "@babel/types/lib/validators/isReferenced";
 import validate from "@babel/types/lib/validators/validate";
+
 import definitions, { MARKO_ALIAS_TYPES, MARKO_TYPES } from "./definitions";
 
 const {
@@ -15,12 +16,16 @@ const {
   getBindingIdentifiers,
 } = babelTypes;
 
-getBindingIdentifiers.keys["MarkoTag"] = ["var"];
-getBindingIdentifiers.keys["MarkoTagBody"] = ["params"];
+getBindingIdentifiers.keys.Program = ["params"];
+getBindingIdentifiers.keys.MarkoTag = ["var"];
+getBindingIdentifiers.keys.MarkoTagBody = ["params"];
 
 MARKO_TYPES.forEach((typeName) => {
   defineType(typeName, definitions[typeName]);
 });
+
+babelTypes.NODE_FIELDS.Program.params =
+  babelTypes.NODE_FIELDS.MarkoTagBody.params;
 
 for (const type of [
   ...Object.keys(VISITOR_KEYS),
@@ -96,7 +101,7 @@ function builder(type, args) {
   }
 
   // (assume all enumerable properties are own)
-  // eslint-disable-next-line guard-for-in
+
   for (const key in node) {
     validate(node, key, node[key]);
   }

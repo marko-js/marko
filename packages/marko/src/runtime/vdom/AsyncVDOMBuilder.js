@@ -4,6 +4,7 @@ var attrsHelper = require("./helpers/attrs");
 var morphdom = require("./morphdom");
 var vdom = require("./vdom");
 var VElement = vdom.___VElement;
+var VComment = vdom.___VComment;
 var VDocumentFragment = vdom.___VDocumentFragment;
 var VText = vdom.___VText;
 var VComponent = vdom.___VComponent;
@@ -131,6 +132,10 @@ var proto = (AsyncVDOMBuilder.prototype = {
 
     this.___parent.___appendChild(new VText(text, ownerComponent));
     return this;
+  },
+
+  comment: function (comment, ownerComponent) {
+    return this.node(new VComment(comment, ownerComponent));
   },
 
   html: function (html, ownerComponent) {
@@ -418,6 +423,7 @@ var proto = (AsyncVDOMBuilder.prototype = {
   },
 
   then: function (fn, fnErr) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     var out = this;
     var promise = new Promise(function (resolve, reject) {
       out.on("error", reject).on(EVENT_FINISH, function (result) {

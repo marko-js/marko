@@ -1,20 +1,42 @@
 import { isNativeTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
+
 import evaluate from "../util/evaluate";
-import { isCoreTag } from "../util/is-core-tag";
+import { isStatefulReferences } from "../util/is-stateful";
 import { isOutputHTML } from "../util/marko-config";
 import {
-  ReserveType,
+  type Binding,
+  BindingType,
+  createBinding,
   getScopeAccessorLiteral,
-  reserveScope,
-} from "../util/reserve";
+} from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
-import { getOrCreateSection, getSection } from "../util/sections";
+import {
+  ContentType,
+  getNodeContentType,
+  getOrCreateSection,
+  getSection,
+} from "../util/sections";
 import { addStatement } from "../util/signals";
+import type { TemplateVisitor } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "./program";
+
+const kBinding = Symbol("placeholder node binding");
+const kSiblingText = Symbol("placeholder has sibling text");
+enum SiblingText {
+  None,
+  Before,
+  After,
+}
+declare module "@marko/compiler/dist/types" {
+  export interface MarkoPlaceholderExtra {
+    [kBinding]?: Binding;
+    [kSiblingText]?: SiblingText;
+  }
+}
 
 const ESCAPE_TYPES = {
   script: "escapeScript",
@@ -25,29 +47,30 @@ type HTMLMethod = "escapeScript" | "escapeStyle" | "escapeXML" | "toString";
 type DOMMethod = "html" | "data";
 
 export default {
-  analyze(placeholder: t.NodePath<t.MarkoPlaceholder>) {
+  analyze(placeholder) {
     const { node } = placeholder;
     const { confident, computed } = evaluate(placeholder);
 
     if (!(confident && (node.escape || !computed))) {
-      reserveScope(
-        ReserveType.Visit,
-        getOrCreateSection(placeholder),
-        node,
-        placeholder.scope.generateUid("placeholder"),
+      (node.extra ??= {})[kBinding] = createBinding(
         "#text",
+        BindingType.dom,
+        getOrCreateSection(placeholder),
+        undefined,
+        node.value.extra,
       );
-      needsMarker(placeholder);
+      analyzeSiblingText(placeholder);
     }
   },
   translate: {
-    exit(placeholder: t.NodePath<t.MarkoPlaceholder>) {
+    exit(placeholder) {
       const isHTML = isOutputHTML();
       const write = writer.writeTo(placeholder);
       const { node } = placeholder;
       const { value } = node;
       const extra = node.extra!;
-      const { confident, computed, reserve } = extra;
+      const { confident, computed } = extra;
+      const nodeBinding = extra[kBinding]!;
       const canWriteHTML = isHTML || (confident && (node.escape || !computed));
       const method = canWriteHTML
         ? node.escape
@@ -56,11 +79,18 @@ export default {
         : node.escape
           ? "data"
           : "html";
+      const isStateful = isStatefulReferences(value.extra?.referencedBindings);
+      const siblingText = extra[kSiblingText]!;
 
       if (confident && canWriteHTML) {
         write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
       } else {
-        if (extra.needsMarker) {
+        if (siblingText === SiblingText.Before) {
+          if (isHTML && isStateful) {
+            write`<!>`;
+          }
+          walks.visit(placeholder, WalkCode.Replace);
+        } else if (siblingText === SiblingText.After) {
           walks.visit(placeholder, WalkCode.Replace);
         } else {
           if (!isHTML) write` `;
@@ -69,19 +99,21 @@ export default {
 
         if (isHTML) {
           write`${callRuntime(method as HTMLMethod | DOMMethod, value)}`;
-          writer.markNode(placeholder);
+          if (isStateful) {
+            writer.markNode(placeholder, nodeBinding);
+          }
         } else {
           addStatement(
             "render",
             getSection(placeholder),
-            value.extra?.references,
+            value.extra?.referencedBindings,
             t.expressionStatement(
               method === "data"
                 ? callRuntime(
                     "data",
                     t.memberExpression(
                       scopeIdentifier,
-                      getScopeAccessorLiteral(reserve!),
+                      getScopeAccessorLiteral(nodeBinding),
                       true,
                     ),
                     value,
@@ -90,7 +122,7 @@ export default {
                     "html",
                     scopeIdentifier,
                     value,
-                    getScopeAccessorLiteral(reserve!),
+                    getScopeAccessorLiteral(nodeBinding),
                   ),
             ),
           );
@@ -101,7 +133,7 @@ export default {
       placeholder.remove();
     },
   },
-};
+} satisfies TemplateVisitor<t.MarkoPlaceholder>;
 
 function getParentTagName({ parentPath }: t.NodePath<t.MarkoPlaceholder>) {
   return (
@@ -112,40 +144,50 @@ function getParentTagName({ parentPath }: t.NodePath<t.MarkoPlaceholder>) {
   );
 }
 
-function noOutput(path: t.NodePath<t.Node>) {
-  return (
-    t.isMarkoComment(path) ||
-    (t.isMarkoTag(path) &&
-      isCoreTag(path) &&
-      ["let", "const", "effect", "lifecycle", "attrs", "get", "id"].includes(
-        path.node.name.value,
-      ))
-  );
-}
-
-function needsMarker(placeholder: t.NodePath<t.MarkoPlaceholder>) {
+function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
+  const placeholderExtra = placeholder.node.extra!;
   let prev = placeholder.getPrevSibling();
-
-  while (prev.node && noOutput(prev)) {
-    prev = prev.getPrevSibling();
+  while (prev.node) {
+    const contentType = getNodeContentType(
+      prev as t.NodePath<t.Statement>,
+      "endType",
+    );
+    if (contentType === null) {
+      prev = prev.getPrevSibling();
+    } else if (
+      contentType === ContentType.Text ||
+      contentType === ContentType.Dynamic ||
+      contentType === ContentType.Placeholder
+    ) {
+      return (placeholderExtra[kSiblingText] = SiblingText.Before);
+    } else {
+      break;
+    }
   }
-  if (
-    (prev.node || t.isProgram(placeholder.parentPath)) &&
-    !(t.isMarkoTag(prev) && isNativeTag(prev as t.NodePath<t.MarkoTag>))
-  ) {
-    return (placeholder.node.extra!.needsMarker = true);
+  if (!prev.node && t.isProgram(placeholder.parentPath)) {
+    return (placeholderExtra[kSiblingText] = SiblingText.Before);
   }
-
   let next = placeholder.getNextSibling();
-  while (next.node && noOutput(next)) {
-    next = next.getNextSibling();
+  while (next.node) {
+    const contentType = getNodeContentType(
+      next as t.NodePath<t.Statement>,
+      "startType",
+    );
+    if (contentType === null) {
+      next = next.getNextSibling();
+    } else if (
+      contentType === ContentType.Text ||
+      contentType === ContentType.Dynamic ||
+      contentType === ContentType.Placeholder
+    ) {
+      return (placeholderExtra[kSiblingText] = SiblingText.After);
+    } else {
+      break;
+    }
   }
-  if (
-    (next.node || t.isProgram(placeholder.parentPath)) &&
-    !(t.isMarkoTag(next) && isNativeTag(next as t.NodePath<t.MarkoTag>))
-  ) {
-    return (placeholder.node.extra!.needsMarker = true);
+  if (!next.node && t.isProgram(placeholder.parentPath)) {
+    return (placeholderExtra[kSiblingText] = SiblingText.After);
   }
 
-  return (placeholder.node.extra!.needsMarker = false);
+  return (placeholderExtra[kSiblingText] = SiblingText.None);
 }

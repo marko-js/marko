@@ -1,30 +1,35 @@
-import { attrs as _attrs, intersection as _intersection, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _expr_input_a = /* @__PURE__ */_intersection(2, _scope => {
+export const _template_ = "<div></div><div></div><div></div>";
+export const _walks_ = /* get, over(1), get, over(1), get, over(1) */" b b b";
+import * as _$ from "@marko/runtime-tags/debug/dom";
+const _expr_input_a_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko_0_input_a", _scope => _$.attrsEvents(_scope, "#div/1"));
+const _expr_input_a = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     input,
     a
   } = _scope;
-  _attrs(_scope, "#div/1", {
+  _$.attrs(_scope, "#div/1", {
     a: a,
     ...input.value
   });
-  _attrs(_scope, "#div/2", {
-    ...input.value,
-    a: a
-  });
+  _expr_input_a_effect(_scope);
 });
-const _a = /* @__PURE__ */_value("a", null, _expr_input_a);
-const _input = /* @__PURE__ */_value("input", (_scope, input) => _attrs(_scope, "#div/0", input.value), _expr_input_a);
-const _setup = _scope => {
+const _a = /* @__PURE__ */_$.state("a", (_scope, a) => _$.attr(_scope["#div/2"], "a", a), () => _expr_input_a);
+const _input__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko_0_input", _scope => {
+  const {
+    input
+  } = _scope;
+  _$.attrsEvents(_scope, "#div/0");
+  _$.attrsEvents(_scope, "#div/2");
+});
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
+  _$.attrs(_scope, "#div/0", input.value);
+  _$.partialAttrs(_scope, "#div/2", input.value, {
+    a: 1
+  });
+  _input__effect(_scope);
+}, () => _expr_input_a);
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
+export function _setup_(_scope) {
   _a(_scope, 0);
-};
-export const args = (_scope, _destructure, _clean) => {
-  let input;
-  if (!_clean) [input] = _destructure;
-  _input(_scope, input, _clean);
-};
-export { _input };
-export const template = "<div></div><div></div><div></div>";
-export const walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko");
+}
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);

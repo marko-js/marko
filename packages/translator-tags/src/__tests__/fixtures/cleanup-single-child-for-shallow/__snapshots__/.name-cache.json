@@ -1,0 +1,20 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "e",
+      "$init": "t",
+      "$_expr_name_write_effect": "n",
+      "$_expr_name_write": "o",
+      "$_write_": "r",
+      "$_name_": "i",
+      "$_write$forBody": "a",
+      "$_item$forBody": "s",
+      "$_params_2$forBody": "c",
+      "$_setup$forBody": "l",
+      "$_forBody": "d",
+      "$_for": "u",
+      "$_items_effect": "m",
+      "$_items": "f"
+    }
+  }
+}

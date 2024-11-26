@@ -5,10 +5,8 @@
   <body>
     <div>
       1
-      <!--M*0 #text/0-->
     </div>
     1
-    <!--M*0 #text/1-->
   </body>
 </html>
 ```

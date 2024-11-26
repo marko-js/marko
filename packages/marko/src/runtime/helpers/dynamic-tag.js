@@ -1,14 +1,14 @@
 "use strict";
 
+// eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
-var w10NOOP = require("warp10/constants").NOOP;
 var ComponentDef = require("../components/ComponentDef");
 var ComponentsContext = require("../components/ComponentsContext");
+var serializeNOOP = require("../helpers/serialize-noop");
+var w10NOOP = serializeNOOP.___noop;
+var w10ToJSON = serializeNOOP.___toJSON;
 var changeCase = require("./_change-case");
 var getComponentsContext = ComponentsContext.___getComponentsContext;
-var RENDER_BODY_TO_JSON = function () {
-  return w10NOOP;
-};
 
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_HAS_RENDER_BODY = 2;
@@ -80,7 +80,12 @@ module.exports = function dynamicTag(
       }
 
       if (dynamicTag.___runtimeCompat) {
-        renderer = dynamicTag.___runtimeCompat(renderer, render, args);
+        renderer = dynamicTag.___runtimeCompat(
+          renderer,
+          render,
+          args,
+          out.global,
+        );
       }
 
       if (renderer) {
@@ -113,7 +118,7 @@ module.exports = function dynamicTag(
               parentComponentDef.id + "-" + parentComponentDef.___nextKey(key),
               globalContext,
             );
-            render.toJSON = RENDER_BODY_TO_JSON;
+            render.toJSON = w10ToJSON;
 
             if (args) {
               render.apply(null, [out].concat(args, attrs));

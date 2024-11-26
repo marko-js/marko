@@ -1,19 +1,19 @@
 # Write
-  <!M[1>Body Content<!M]0 #text/0><button></button><!M*0 #button/1><script>(M$h=[]).push((b,s,h)=>({0:{x:null,"#text/0!":h={},"#text/0(":null},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x",])</script>
+  <!--M_[1-->Body Content<!--M_]0 #text/0--><button></button><!--M_*0 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{x:null,"#text/0!":_.a={}},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x",0];M._.w()</script>
 
 
 # Render "End"
 ```html
-<!--M[1-->
+<!--M_[1-->
 <html>
   <head />
   <body>
     Body Content
-    <!--M]0 #text/0-->
+    <!--M_]0 #text/0-->
     <button />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{x:null,"#text/0!":h={},"#text/0(":null},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{x:null,"#text/0!":_.a={}},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-sometimes-null/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

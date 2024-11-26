@@ -4,30 +4,49 @@ import {
   loadFileForTag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import { currentProgramPath } from "../visitors/program";
-import type { Reserve } from "./reserve";
+import { isStatefulReferences } from "./is-stateful";
+import { find } from "./optional";
+import type { Binding, ReferencedBindings } from "./references";
+import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
 export enum ContentType {
-  Static,
+  Comment,
   Dynamic,
-  Empty,
+  Placeholder,
+  Tag,
+  Text,
 }
 
-export type Section = {
+export interface Section {
   id: number;
   name: string;
   depth: number;
-  parent?: Section;
-  closures?: Reserve[];
-  startNodeContentType: ContentType;
-  endNodeContentType: ContentType;
-};
+  parent: Section | undefined;
+  params: undefined | Binding;
+  closures: ReferencedBindings;
+  bindings: ReferencedBindings;
+  upstreamExpression: t.NodeExtra | undefined;
+  hasCleanup: boolean;
+  content: null | {
+    startType: ContentType;
+    endType: ContentType;
+    singleChild: boolean;
+  };
+}
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     section?: Section;
     sections?: Section[];
+    assignments?: [
+      valueSection: Section,
+      assignment:
+        | t.NodePath<t.UpdateExpression>
+        | t.NodePath<t.AssignmentExpression>,
+    ][];
   }
 
   export interface MarkoTagBodyExtra {
@@ -37,11 +56,11 @@ declare module "@marko/compiler/dist/types" {
 
 export function startSection(
   path: t.NodePath<t.MarkoTagBody | t.Program>,
-): Section {
+): Section | undefined {
   const extra = (path.node.extra ??= {});
   let section = extra.section;
 
-  if (!section) {
+  if (!section && (path.type === "Program" || path.get("body").length)) {
     const parentSection = path.parentPath
       ? getOrCreateSection(path.parentPath)
       : undefined;
@@ -60,8 +79,12 @@ export function startSection(
       name: sectionName,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
-      startNodeContentType: getStartNodeContentType(path),
-      endNodeContentType: getEndNodeContentType(path),
+      params: undefined,
+      closures: undefined,
+      bindings: undefined,
+      content: getContentInfo(path),
+      upstreamExpression: undefined,
+      hasCleanup: false,
     };
     sections.push(section);
   }
@@ -72,19 +95,26 @@ export function startSection(
 export function getOrCreateSection(path: t.NodePath<any>) {
   let cur = path;
 
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     if (
       cur.type === "Program" ||
       (cur.type === "MarkoTagBody" &&
+        !cur.node.attributeTags &&
         analyzeTagNameType(cur.parentPath as t.NodePath<t.MarkoTag>) !==
-          TagNameType.NativeTag)
+          TagNameType.NativeTag &&
+        (cur.parent as { name: t.StringLiteral }).name.value !== "html-comment")
     ) {
-      return startSection(cur);
+      return startSection(cur)!;
     }
 
     cur = cur.parentPath!;
   }
+}
+
+export function getSectionForBody(
+  body: t.NodePath<t.MarkoTagBody | t.Program>,
+) {
+  return body.node.extra?.section;
 }
 
 export function getSection(path: t.NodePath) {
@@ -94,33 +124,11 @@ export function getSection(path: t.NodePath) {
     currentPath = currentPath.parentPath!;
   }
 
-  _setSectionPath(
-    section,
-    currentPath as t.NodePath<t.MarkoTagBody | t.Program>,
-  );
   return section;
 }
 
 export function getParentSection(path: t.NodePath) {
   return getSection(path.parentPath!);
-}
-
-export function createSectionState<T = unknown>(
-  key: string,
-  init?: ((section: Section) => T) | (() => T),
-) {
-  return [
-    (section: Section): T => {
-      const arrayOfSectionData = (currentProgramPath.state[key] ??= {});
-      const sectionData = (arrayOfSectionData[section.id] ??=
-        init && init(section));
-      return sectionData as T;
-    },
-    (section: Section, value: T): void => {
-      const arrayOfSectionData = (currentProgramPath.state[key] ??= {});
-      arrayOfSectionData[section.id] = value;
-    },
-  ] as const;
 }
 
 export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
@@ -129,9 +137,8 @@ export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
     currentProgramPath.scope.generateUidIdentifier(`scope${section.id}_id`),
 );
 
-const [getSectionPath, _setSectionPath] =
-  createSectionState<t.NodePath<t.MarkoTagBody | t.Program>>("sectionPath");
-export { getSectionPath };
+export const [getSectionParentIsOwner, setSectionParentIsOwner] =
+  createSectionState<boolean>("parentIsOwner", () => false);
 
 const [_getScopeIdentifier] = createSectionState<t.Identifier>(
   "scopeIdentifier",
@@ -161,55 +168,61 @@ export function forEachSectionReverse(fn: (section: Section) => void) {
   }
 }
 
-function getStartNodeContentType(path: t.NodePath<t.Program | t.MarkoTagBody>) {
-  for (const child of path.get("body")) {
-    const contentType = getNodeContentType(child, "startNodeContentType");
-    if (contentType !== ContentType.Empty) {
-      return contentType;
-    }
-  }
-  return ContentType.Empty;
-}
-
-function getEndNodeContentType(path: t.NodePath<t.Program | t.MarkoTagBody>) {
+function getContentInfo(path: t.NodePath<t.Program | t.MarkoTagBody>) {
   const body = path.get("body");
-  for (let i = body.length; i--; ) {
-    const contentType = getNodeContentType(body[i], "endNodeContentType");
-    if (contentType !== ContentType.Empty) {
-      return contentType;
+  const contentInfo: Section["content"] = {
+    startType: null!,
+    endType: null!,
+    singleChild: true,
+  };
+  for (let endIndex = body.length; endIndex--; ) {
+    const endType = getNodeContentType(body[endIndex], "endType", contentInfo);
+    if (endType !== null) {
+      contentInfo.endType = endType;
+
+      for (let startIndex = 0; startIndex < endIndex; startIndex++) {
+        const startType = getNodeContentType(body[startIndex], "startType");
+        if (startType !== null) {
+          contentInfo.startType = startType;
+          contentInfo.singleChild = false;
+          return contentInfo;
+        }
+      }
+
+      contentInfo.startType = getNodeContentType(body[endIndex], "startType")!;
+      return contentInfo;
     }
   }
-  return ContentType.Empty;
+
+  return null;
 }
 
-/**
- * @returns null if the node should be skipped
- */
-function getNodeContentType(
+export function getNodeContentType(
   path: t.NodePath<t.Statement>,
-  extraMember: "startNodeContentType" | "endNodeContentType",
+  extraMember: "startType" | "endType",
+  contentInfo?: Section["content"],
 ) {
-  if (
-    t.isMarkoText(path) ||
-    t.isMarkoComment(path) ||
-    t.isMarkoPlaceholder(path) ||
-    t.isMarkoCDATA(path)
-  ) {
-    return ContentType.Static;
+  if (t.isMarkoText(path)) {
+    return ContentType.Text;
   }
-  if (t.isMarkoScriptlet(path)) {
-    return ContentType.Empty;
+  if (t.isMarkoPlaceholder(path)) {
+    return ContentType.Placeholder;
+  }
+  if (t.isMarkoScriptlet(path) || t.isMarkoComment(path)) {
+    return null;
   }
   if (t.isMarkoTag(path.node)) {
     const tag = path as t.NodePath<t.MarkoTag>;
     if (isNativeTag(tag)) {
-      return ContentType.Static;
+      return ContentType.Tag;
     }
     if (isAttributeTag(tag)) {
-      return ContentType.Empty;
+      return null;
     }
     if (t.isStringLiteral(path.node.name)) {
       switch (path.node.name.value) {
+        case "html-comment":
+          return ContentType.Comment;
         case "let":
         case "const":
         case "attrs":
@@ -218,13 +231,44 @@ function getNodeContentType(
         case "return":
         case "id":
         case "define":
-          return ContentType.Empty;
+          return null;
       }
       const tagSection = loadFileForTag(tag)?.ast.program.extra.section;
       if (tagSection) {
-        return tagSection[extraMember] ?? ContentType.Empty;
+        if (tagSection.content) {
+          if (contentInfo && !tagSection.content.singleChild) {
+            if (extraMember === "endType") {
+              contentInfo.startType = tagSection.content.startType;
+              contentInfo.singleChild = false;
+            }
+          }
+
+          return tagSection.content[extraMember];
+        } else {
+          return null;
+        }
       }
     }
   }
   return ContentType.Dynamic;
 }
+
+export const isStatefulSection = (section: Section) => {
+  const upstreamExpression = section.upstreamExpression;
+  return (
+    !upstreamExpression ||
+    isStatefulReferences(upstreamExpression.referencedBindings)
+  );
+};
+
+export const checkStatefulClosures = (
+  section: Section,
+  immediateOnly: boolean,
+) => {
+  return !!find(
+    section.closures,
+    (closure) =>
+      (!immediateOnly || section.parent === closure.section) &&
+      isStatefulReferences(closure),
+  );
+};

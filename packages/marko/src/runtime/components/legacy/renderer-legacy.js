@@ -8,6 +8,7 @@ var componentLookup = componentsUtil.___componentLookup;
 var modernRenderer = require("../renderer");
 var resolveComponentKey = modernRenderer.___resolveComponentKey;
 var trackAsyncComponents = modernRenderer.___trackAsyncComponents;
+// eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
 
 function createRendererFunc(templateRenderFunc, componentProps) {

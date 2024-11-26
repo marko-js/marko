@@ -1,5 +1,5 @@
 # Write
-  <!--M#s0--><button id=class>0</button><!--F#1--><button id=tags data-parent=0>0<!M*0 #text/1></button><!M*0 #button/0><script>(M$h=[]).push((b,s)=>({0:{count:0}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])</script><!--F/--><!--M/--><script>$MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-1":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/template.marko"]})</script>
+  <!--M#s0--><button id=class>0</button><!--F#1--><button id=tags data-parent=0>0<!--M_*0 #text/1--></button><!--M_*0 #button/0--><!--F/--><!--M/--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{m5c:"s0-1",count:0}}),0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/template.marko"]})</script>
 
 
 # Render "End"
@@ -19,16 +19,13 @@
       id="tags"
     >
       0
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </button>
-    <!--M*0 #button/0-->
-    <script>
-      (M$h=[]).push((b,s)=&gt;({0:{count:0}}),[0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",])
-    </script>
+    <!--M_*0 #button/0-->
     <!--F/-->
     <!--M/-->
     <script>
-      $MC=(window.$MC||[]).concat({"g":{"componentIdToScopeId":{"s0-1":0}},"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{m5c:"s0-1",count:0}}),0,"$compat_setScope",0,"packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/components/tags-counter.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["packages/translator-interop/src/__tests__/fixtures/interop-basic-class-to-tags/template.marko"]})
     </script>
   </body>
 </html>
@@ -47,10 +44,8 @@ inserted #document/html0/body1/button3
 inserted #document/html0/body1/button3/#text0
 inserted #document/html0/body1/button3/#comment1
 inserted #document/html0/body1/#comment4
-inserted #document/html0/body1/script5
-inserted #document/html0/body1/script5/#text0
+inserted #document/html0/body1/#comment5
 inserted #document/html0/body1/#comment6
-inserted #document/html0/body1/#comment7
-inserted #document/html0/body1/script8
-inserted #document/html0/body1/script8/#text0
+inserted #document/html0/body1/script7
+inserted #document/html0/body1/script7/#text0
 ```

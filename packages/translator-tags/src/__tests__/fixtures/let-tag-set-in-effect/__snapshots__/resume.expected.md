@@ -5,14 +5,14 @@
   <body>
     <span>
       1
-      <!--M*0 #text/0-->
+      <!--M_*0 #text/0-->
     </span>
     <span>
       0
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </span>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{x:1}}),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -31,14 +31,14 @@
   <body>
     <span>
       2
-      <!--M*0 #text/0-->
+      <!--M_*0 #text/0-->
     </span>
     <span>
       1
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </span>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{x:1}}),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -58,14 +58,14 @@
   <body>
     <span>
       2
-      <!--M*0 #text/0-->
+      <!--M_*0 #text/0-->
     </span>
     <span>
       2
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </span>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{x:1}}),[0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{x:1}}),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-set-in-effect/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

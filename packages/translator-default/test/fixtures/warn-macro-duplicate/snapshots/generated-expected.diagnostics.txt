@@ -1,0 +1,1 @@
+warning[fixable](5:15-5:27): A macro with the name "thing" already exists.

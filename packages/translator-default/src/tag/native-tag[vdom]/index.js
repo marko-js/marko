@@ -1,5 +1,6 @@
 import { getTagDef, normalizeTemplateString } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import * as FLAGS from "../../util/runtime-flags";
 import write from "../../util/vdom-out-write";
 import withPreviousLocation from "../../util/with-previous-location";
@@ -26,10 +27,10 @@ export default function (path, isNullable) {
   );
 
   if (isNullable) {
-    writeStartNode = t.ifStatement(
-      name,
-      writeStartNode,
-      t.expressionStatement(
+    writeStartNode = t.ifStatement(name, writeStartNode);
+
+    if (!isEmpty) {
+      writeStartNode.alternate = t.expressionStatement(
         t.callExpression(
           t.memberExpression(t.identifier("out"), t.identifier("bf")),
           [
@@ -37,8 +38,8 @@ export default function (path, isNullable) {
             path.hub.file._componentInstanceIdentifier,
           ],
         ),
-      ),
-    );
+      );
+    }
   }
 
   if (isEmpty) {

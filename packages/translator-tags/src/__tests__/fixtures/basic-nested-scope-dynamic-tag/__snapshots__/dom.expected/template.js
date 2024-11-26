@@ -1,26 +1,28 @@
+export const _template_ = "<!><!><!>";
+export const _walks_ = /* replace, over(1) */"D%bD";
 import Child from "./components/child.marko";
-import { on as _on, queueSource as _queueSource, data as _data, register as _register, queueEffect as _queueEffect, dynamicClosure as _dynamicClosure, registerSubscriber as _registerSubscriber, createRenderer as _createRenderer, dynamicTagAttrs as _dynamicTagAttrs, conditional as _conditional, dynamicSubscribers as _dynamicSubscribers, value as _value, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _count$falseChildBody_effect = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count", _scope => _on(_scope["#button/0"], "click", function () {
+import * as _$ from "@marko/runtime-tags/debug/dom";
+const _onClick = _scope => {
   const {
     _: {
       count
     }
   } = _scope;
-  _queueSource(_scope._, _count, count + 1);
-}));
-const _count$falseChildBody = _registerSubscriber("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count/subscriber", /* @__PURE__ */_dynamicClosure("count", (_scope, count) => {
-  _data(_scope["#text/1"], count);
-  _queueEffect(_scope, _count$falseChildBody_effect);
-}));
-const _falseChildBody = _register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_renderer", /* @__PURE__ */_createRenderer("<button> </button>", /* get, next(1), get */" D ", void 0, [_count$falseChildBody]));
-const _falseChild_input = _dynamicTagAttrs("#text/0", _falseChildBody);
-const _dynamicTagName_ChildScope = /* @__PURE__ */_conditional("#text/0", _scope => _falseChild_input(_scope, () => ({})), void 0, _falseChild_input);
-const _count = /* @__PURE__ */_value("count", null, _dynamicSubscribers("count"));
-const _setup = _scope => {
-  _count(_scope, 0);
-  _dynamicTagName_ChildScope(_scope, false || Child || _falseChildBody);
+  return function () {
+    _count(_scope._, count + 1);
+  };
 };
-export const template = "<!><!><!>";
-export const walks = /* replace, over(1) */"D%bD";
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko");
+const _count$falseChildBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _count$falseChildBody = _$.registerSubscriber("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_count/subscriber", /* @__PURE__ */_$.dynamicClosure("count", (_scope, count) => {
+  _$.data(_scope["#text/1"], count);
+  _count$falseChildBody_effect(_scope);
+}));
+const _falseChildBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<button> </button>", /* get, next(1), get */" D ", void 0, () => [_count$falseChildBody]));
+const _falseChild_input = _$.dynamicTagAttrs("#text/0", _falseChildBody);
+const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _falseChild_input(_scope, () => ({})), () => _falseChild_input);
+const _count = /* @__PURE__ */_$.state("count", 0, () => _$.dynamicSubscribers("count"));
+export function _setup_(_scope) {
+  _count(_scope, 0);
+  _dynamicTagName(_scope, false || Child || _falseChildBody(_scope));
+}
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko", _template_, _walks_, _setup_);

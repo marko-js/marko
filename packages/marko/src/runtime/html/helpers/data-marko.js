@@ -15,7 +15,6 @@ module.exports = function dataMarko(out, componentDef, props, key) {
 
   if (willNotRerender) {
     if (props) {
-      // eslint-disable-next-line no-unused-vars
       for (var _ in props) {
         result +=
           " data-marko='" + escapeSingleQuotes(JSON.stringify(props)) + "'";
@@ -23,7 +22,7 @@ module.exports = function dataMarko(out, componentDef, props, key) {
       }
     }
 
-    if (key && key[0] === "@") {
+    if (key) {
       result +=
         ' data-marko-key="' +
         escapeDoubleQuotes(

@@ -1,0 +1,3 @@
+window.Marko = {
+  Component: function () {},
+};

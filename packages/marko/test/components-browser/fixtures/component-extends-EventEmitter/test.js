@@ -7,6 +7,7 @@ module.exports = function (helpers) {
 
   function fooListener() {
     fooEvent = arguments;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     fooEventThis = this;
   }
 

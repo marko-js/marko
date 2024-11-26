@@ -6,13 +6,13 @@
     <div>
       <button>
         0
-        <!--M*1 #text/1-->
+        <!--M_*1 #text/1-->
       </button>
-      <!--M*1 #button/0-->
-      <!--M|0 #text/0 1-->
+      <!--M_*1 #button/0-->
+      <!--M_|0 #text/0 1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={clickCount:0,"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer")},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer"],"#text/0!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",0];M._.w()
     </script>
   </body>
 </html>
@@ -34,13 +34,13 @@ container.querySelector("button").click()
     <div>
       <button>
         1
-        <!--M*1 #text/1-->
+        <!--M_*1 #text/1-->
       </button>
-      <!--M*1 #button/0-->
-      <!--M|0 #text/0 1-->
+      <!--M_*1 #button/0-->
+      <!--M_|0 #text/0 1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={clickCount:0,"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer")},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer"],"#text/0!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",0];M._.w()
     </script>
   </body>
 </html>
@@ -62,13 +62,13 @@ container.querySelector("button").click()
     <div>
       <button>
         2
-        <!--M*1 #text/1-->
+        <!--M_*1 #text/1-->
       </button>
-      <!--M*1 #button/0-->
-      <!--M|0 #text/0 1-->
+      <!--M_*1 #button/0-->
+      <!--M_|0 #text/0 1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={clickCount:0,"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer")},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer"],"#text/0!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",0];M._.w()
     </script>
   </body>
 </html>
@@ -91,11 +91,11 @@ container.querySelector("button").click()
       <span>
         The button was clicked 3 times.
       </span>
-      <!--M*1 #button/0-->
-      <!--M|0 #text/0 1-->
+      <!--M_*1 #button/0-->
+      <!--M_|0 #text/0 1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={clickCount:0,"#text/0!":j={},"#text/0(":b("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer")},1:j},j._=h,k),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#text/0(":_._["packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer"],"#text/0!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount",0];M._.w()
     </script>
   </body>
 </html>

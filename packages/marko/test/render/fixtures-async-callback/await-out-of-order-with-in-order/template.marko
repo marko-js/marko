@@ -1,0 +1,17 @@
+---
+BEFORE-OUT-OF-ORDER
+<await(new Promise(r => setTimeout(r, 20))) name="a" client-reorder>
+    <@then>
+        BEFORE-IN-ORDER
+        <await(new Promise(r => setTimeout(r, 20))) name="b">
+            <@then>INSIDE-IN-ORDER</>
+        </>
+        <await(Promise.resolve()) name="c" client-reorder>
+            <@then>NESTED-OUT-OF-ORDER</>
+        </>
+        AFTER-IN-ORDER
+    </>
+</>
+AFTER-OUT-OF-ORDER
+<await-reorderer/>
+---

@@ -1,5 +1,5 @@
-import path from "path";
 import { build } from "esbuild";
+import path from "path";
 
 const absWorkingDir = path.join(__dirname, "..");
 
@@ -12,6 +12,9 @@ build({
   platform: "node",
   packages: "external",
   entryPoints: [`src/index.ts`],
+  define: {
+    MARKO_DEBUG: "false",
+  },
 }).catch((err) => {
   console.error(err);
   process.exit(1);

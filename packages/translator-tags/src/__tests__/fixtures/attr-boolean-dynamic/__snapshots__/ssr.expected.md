@@ -1,5 +1,5 @@
 # Write
-  <input disabled><!M*0 #input/0><button>enable<!M*0 #text/2></button><!M*0 #button/1><script>(M$h=[]).push((b,s)=>({0:{disabled:!0}}),[0,"packages/translator-tags/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])</script>
+  <input disabled><!--M_*0 #input/0--><button>enable<!--M_*0 #text/2--></button><!--M_*0 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{disabled:!0}}),0,"packages/translator-tags/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",0];M._.w()</script>
 
 
 # Render "End"
@@ -10,14 +10,14 @@
     <input
       disabled=""
     />
-    <!--M*0 #input/0-->
+    <!--M_*0 #input/0-->
     <button>
       enable
-      <!--M*0 #text/2-->
+      <!--M_*0 #text/2-->
     </button>
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{disabled:!0}}),[0,"packages/translator-tags/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{disabled:!0}}),0,"packages/translator-tags/src/__tests__/fixtures/attr-boolean-dynamic/template.marko_0_disabled",0];M._.w()
     </script>
   </body>
 </html>

@@ -44,7 +44,6 @@ function attachDepsAndComponentsToTemplate(target, context) {
   var components = (target.___components = {});
 
   if (!template.meta) {
-    // eslint-disable-next-line no-console
     console.warn("Metadata not set for template at ", template.path);
     return;
   }

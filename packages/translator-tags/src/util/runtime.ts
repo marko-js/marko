@@ -1,4 +1,4 @@
-import { importNamed } from "@marko/babel-utils";
+import { importStar } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import {
   attr,
@@ -9,18 +9,18 @@ import {
   styleAttr,
   toString,
 } from "@marko/runtime-tags/html";
+
 import { currentProgramPath } from "../visitors/program";
 import { getMarkoOpts } from "./marko-config";
-import type { Reserve } from "./reserve";
-import { getScopeExpression } from "./scope-read";
-import type { Section } from "./sections";
 
 type Falsy = false | 0 | "" | null | undefined;
 
 const pureFunctions: Array<keyof typeof import("@marko/runtime-tags/dom")> = [
   "createTemplate",
   "createRenderer",
+  "createRendererWithOwner",
   "value",
+  "state",
   "intersection",
   "closure",
   "dynamicClosure",
@@ -28,8 +28,6 @@ const pureFunctions: Array<keyof typeof import("@marko/runtime-tags/dom")> = [
   "loopIn",
   "loopTo",
   "conditional",
-  "bindFunction",
-  "bindRenderer",
 ];
 
 export function importRuntime(
@@ -38,7 +36,10 @@ export function importRuntime(
     | keyof typeof import("@marko/runtime-tags/html"),
 ) {
   const { output } = getMarkoOpts();
-  return importNamed(currentProgramPath.hub.file, getRuntimePath(output), name);
+  return t.memberExpression(
+    importStar(currentProgramPath.hub.file, getRuntimePath(output), "$"),
+    t.identifier(name),
+  );
 }
 
 export function callRuntime(
@@ -83,20 +84,6 @@ function getRuntimePath(output: string) {
   return `@marko/runtime-tags/${
     optimize ? "" : "debug/"
   }${output === "html" ? "html" : "dom"}`;
-}
-
-export function callQueue(
-  identifier: t.Identifier,
-  reference: Reserve,
-  value: t.Expression,
-  section: Section,
-) {
-  return callRuntime(
-    "queueSource",
-    getScopeExpression(section, reference.section),
-    identifier,
-    value,
-  );
 }
 
 function filterArguments<A>(args: (A | Falsy)[]) {

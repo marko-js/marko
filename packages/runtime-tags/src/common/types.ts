@@ -1,7 +1,5 @@
 import type { Renderer as ClientRenderer } from "../dom/renderer";
 
-export type Renderer = (...args: unknown[]) => unknown;
-
 export type CommentWalker = TreeWalker & Record<string, Comment>;
 
 export type Scope<
@@ -13,10 +11,11 @@ export type Scope<
   ___startNode: Node & ChildNode;
   ___endNode: Node & ChildNode;
   ___cleanup: Set<Scope> | undefined;
-  ___client: boolean;
+  ___client: 1 | undefined;
   ___bound: Map<unknown, unknown> | undefined;
   ___renderer: ClientRenderer | undefined;
   ___abortControllers: Map<string | number, AbortController> | undefined;
+  ___cleanupOwner: Scope | undefined;
   $global: Record<string, unknown>;
   _: Scope | undefined;
   [x: string | number]: any;
@@ -25,31 +24,29 @@ export type Scope<
 // TODO: SectionSiblings that is both a SectionStart and a SectionEnd (<for> siblings)
 //       NODE that doesn't have a sectionId and uses the previous sectionId
 export enum ResumeSymbol {
-  DefaultRuntimeId = "M",
   SectionStart = "[",
   SectionEnd = "]",
   SectionSingleNodesEnd = "|",
   Node = "*",
-  PlaceholderStart = "",
-  PlaceholderEnd = "",
-  ReplacementId = "",
-  VarResume = "$h",
-  VarReorderRuntime = "$r",
+  Cleanup = "$",
 }
 
 export enum AccessorChar {
   Dynamic = "?",
   Mark = "#",
-  Stale = "&",
   Subscribers = "*",
   LifecycleAbortController = "-",
+  DynamicPlaceholderLastChild = "-",
   TagVariable = "/",
+  TagVariableChange = "@",
   ConditionalScope = "!",
   ConditionalRenderer = "(",
   LoopScopeArray = "!",
   LoopScopeMap = "(",
-  LoopValue = ")",
-  PreviousAttributes = "~",
+  EventAttributes = "~",
+  ControlledValue = ":",
+  ControlledHandler = ";",
+  ControlledType = "=",
 }
 
 export enum NodeType {
@@ -67,8 +64,6 @@ export enum NodeType {
 // 96 ` [backtick]
 export enum WalkCode {
   Get = 32,
-  Before = 33,
-  After = 35,
   Inside = 36,
   Replace = 37,
   EndChild = 38,
@@ -96,11 +91,23 @@ export enum WalkRangeSize {
 }
 
 export type Accessor = string | number;
-export type Input = Record<string, unknown>;
-export type Context = Record<string, unknown>;
+export interface $Global {
+  [x: PropertyKey]: unknown;
+  signal?: AbortSignal;
+  cspNonce?: string;
+  renderId?: string;
+  runtimeId?: string;
+  /** @internal */
+  __flush__?($global: $Global, html: string): string;
+}
+export interface Input {
+  [x: PropertyKey]: unknown;
+}
+export interface TemplateInput extends Input {
+  $global?: $Global;
+}
 
 export interface Template {
-  _: unknown;
   mount(
     input: Input,
     reference: ParentNode & Node,
@@ -114,7 +121,17 @@ export interface TemplateInstance {
   destroy(): void;
 }
 
-export type RenderResult = Promise<string> &
+export type RenderResult = PromiseLike<string> &
   AsyncIterable<string> & {
     toReadable(): ReadableStream;
   };
+
+export enum ControlledType {
+  InputChecked,
+  InputCheckedValue,
+  InputValue,
+  SelectValue,
+  DetailsOrDialogOpen,
+  None,
+  Pending,
+}

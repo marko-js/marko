@@ -6,18 +6,18 @@
     <button
       class="inc"
     />
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <button
       class="toggle"
     />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <span>
       0
-      <!--M*1 #text/0-->
+      <!--M_*1 #text/0-->
     </span>
-    <!--M|0 #text/2 1-->
+    <!--M_|0 #text/2 1-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,count:0,"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",0];M._.w()
     </script>
   </body>
 </html>
@@ -39,18 +39,18 @@ container.querySelector("button.inc").click()
     <button
       class="inc"
     />
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <button
       class="toggle"
     />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <span>
       1
-      <!--M*1 #text/0-->
+      <!--M_*1 #text/0-->
     </span>
-    <!--M|0 #text/2 1-->
+    <!--M_|0 #text/2 1-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,count:0,"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",0];M._.w()
     </script>
   </body>
 </html>
@@ -72,14 +72,14 @@ container.querySelector("button.toggle").click()
     <button
       class="inc"
     />
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <button
       class="toggle"
     />
-    <!--M*0 #button/1-->
-    <!--M|0 #text/2 1-->
+    <!--M_*0 #button/1-->
+    <!--M_|0 #text/2 1-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,count:0,"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",0];M._.w()
     </script>
   </body>
 </html>
@@ -103,14 +103,14 @@ container.querySelector("button.inc").click()
     <button
       class="inc"
     />
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <button
       class="toggle"
     />
-    <!--M*0 #button/1-->
-    <!--M|0 #text/2 1-->
+    <!--M_*0 #button/1-->
+    <!--M_|0 #text/2 1-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,count:0,"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",0];M._.w()
     </script>
   </body>
 </html>
@@ -132,16 +132,16 @@ container.querySelector("button.toggle").click()
     <button
       class="inc"
     />
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <button
       class="toggle"
     />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <span>
       2
     </span>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,count:0,"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",0];M._.w()
     </script>
   </body>
 </html>
@@ -165,16 +165,16 @@ container.querySelector("button.inc").click()
     <button
       class="inc"
     />
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <button
       class="toggle"
     />
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <span>
       3
     </span>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={show:!0,count:0,"#text/2!":j={},"#text/2(":b("packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer")},1:j},j._=h,k),[0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,count:0,"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_show",0,"packages/translator-tags/src/__tests__/fixtures/basic-conditional-counter/template.marko_0_count",0];M._.w()
     </script>
   </body>
 </html>

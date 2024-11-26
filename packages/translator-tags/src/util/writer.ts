@@ -1,47 +1,44 @@
 import { types as t } from "@marko/compiler";
+
 import {
-  type Section,
-  createSectionState,
+  ContentType,
   getScopeIdIdentifier,
   getSection,
-  ContentType,
+  type Section,
 } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
-import { ReserveType, getScopeAccessorLiteral } from "./reserve";
+import {
+  type Binding,
+  BindingType,
+  getScopeAccessorLiteral,
+} from "./references";
 import { callRuntime } from "./runtime";
 import { getSetup } from "./signals";
+import { createSectionState } from "./state";
 import toTemplateOrStringLiteral, {
   appendLiteral,
 } from "./to-template-string-or-literal";
 import { getWalkString } from "./walks";
-
-const [getRenderer] = createSectionState<t.Identifier>(
-  "renderer",
-  (section: Section) => t.identifier(section.name),
-);
-
-export { getRenderer };
 
 const [getWrites] = createSectionState<(string | t.Expression)[]>(
   "writes",
   () => [""],
 );
 
-const [getRegisterRenderer, setRegisterRenderer] = createSectionState<boolean>(
-  "registerRenderer",
-  () => false,
+const [getTrailerWrites] = createSectionState<(string | t.Expression)[]>(
+  "trailerWrites",
+  () => [""],
 );
 
-export { setRegisterRenderer };
-
-export function writeTo(path: t.NodePath<any>) {
+export function writeTo(path: t.NodePath<any>, trailer?: boolean) {
   const section = getSection(path);
+  const get = trailer ? getTrailerWrites : getWrites;
   return (
     strs: TemplateStringsArray,
     ...exprs: Array<string | t.Expression>
   ): void => {
     const exprsLen = exprs.length;
-    const writes = getWrites(section);
+    const writes = get(section);
     appendLiteral(writes, strs[0]);
 
     for (let i = 0; i < exprsLen; i++) {
@@ -51,22 +48,28 @@ export function writeTo(path: t.NodePath<any>) {
 }
 
 export function consumeHTML(path: t.NodePath<any>) {
-  const writes = getWrites(getSection(path));
-  const result = toTemplateOrStringLiteral(writes);
-
+  const section = getSection(path);
+  const writes = getWrites(section);
+  const trailers = getTrailerWrites(section);
+  const writeResult = toTemplateOrStringLiteral(writes);
+  const trailerResult = toTemplateOrStringLiteral(trailers);
   writes.length = 0;
   writes[0] = "";
+  trailers.length = 0;
+  trailers[0] = "";
 
-  if (result) {
-    return t.expressionStatement(callRuntime("write", result));
+  if (writeResult && trailerResult) {
+    return t.expressionStatement(
+      t.sequenceExpression([
+        callRuntime("write", writeResult),
+        callRuntime("writeTrailers", trailerResult),
+      ]),
+    );
+  } else if (writeResult) {
+    return t.expressionStatement(callRuntime("write", writeResult));
+  } else if (trailerResult) {
+    return t.expressionStatement(callRuntime("writeTrailers", trailerResult));
   }
-}
-
-export function hasPendingHTML(
-  path: t.NodePath<t.MarkoTag> | t.NodePath<t.Program>,
-) {
-  const writes = getWrites(getSection(path));
-  return Boolean(writes.length > 1 || writes[0]);
 }
 
 export function flushBefore(path: t.NodePath<any>) {
@@ -90,9 +93,9 @@ export function flushInto(
 
 export function getSectionMeta(section: Section) {
   const writePrefix =
-    section.startNodeContentType === ContentType.Dynamic ? "<!>" : "";
+    section.content?.startType === ContentType.Dynamic ? "<!>" : "";
   const writePostfix =
-    section.endNodeContentType === ContentType.Dynamic ? "<!>" : "";
+    section.content?.endType === ContentType.Dynamic ? "<!>" : "";
   const writes = getWrites(section);
   return {
     setup: getSetup(section),
@@ -100,15 +103,16 @@ export function getSectionMeta(section: Section) {
     writes:
       toTemplateOrStringLiteral([writePrefix, ...writes, writePostfix]) ||
       t.stringLiteral(""),
-    register: getRegisterRenderer(section),
   };
 }
 
-export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
+export function markNode(
+  path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
+  binding: Binding,
+) {
   const section = getSection(path);
-  const { reserve } = path.node.extra!;
 
-  if (reserve?.type !== ReserveType.Visit) {
+  if (binding.type !== BindingType.dom) {
     throw path.buildCodeFrameError(
       "Tried to mark a node that was not determined to need a mark during analyze.",
     );
@@ -118,7 +122,7 @@ export function markNode(path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>) {
     writeTo(path)`${callRuntime(
       "markResumeNode",
       getScopeIdIdentifier(section),
-      getScopeAccessorLiteral(reserve!),
+      getScopeAccessorLiteral(binding),
     )}`;
   }
 }

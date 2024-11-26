@@ -2,6 +2,7 @@ var helloComponent = require("./components/hello").default;
 
 module.exports = {
   onMount: function () {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     var self = this;
     helloComponent.renderToString(
       {

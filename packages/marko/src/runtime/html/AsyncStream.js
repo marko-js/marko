@@ -10,6 +10,7 @@ var escapeXmlHelper = require("./helpers/escape-xml");
 var StringWriter = require("./StringWriter");
 var escapeXmlOrNullish = escapeXmlHelper.x;
 var escapeXmlString = escapeXmlHelper.___escapeXML;
+var missingSetTimeout = typeof setTimeout !== "function";
 
 function noop() {}
 
@@ -192,6 +193,8 @@ var proto = (AsyncStream.prototype = {
 
     return (this.___iterator = {
       next: iteratorNextFn,
+      return: iteratorReturnFn,
+      throw: iteratorReturnFn,
       [Symbol.asyncIterator]() {
         return this;
       },
@@ -293,7 +296,9 @@ var proto = (AsyncStream.prototype = {
       }
     }
 
-    if (timeout == null) {
+    if (missingSetTimeout) {
+      timeout = 0;
+    } else if (timeout == null) {
       timeout = AsyncStream.DEFAULT_TIMEOUT;
     }
 
@@ -594,7 +599,12 @@ var proto = (AsyncStream.prototype = {
     var str =
       "<" +
       tagName +
-      markoAttr(this, componentDef, props, key) +
+      markoAttr(
+        this,
+        componentDef,
+        props,
+        key && key[0] === "@" ? key : undefined,
+      ) +
       attrsHelper(elementAttrs);
 
     if (selfClosingTags.voidElements.indexOf(tagName) !== -1) {
@@ -717,6 +727,7 @@ var proto = (AsyncStream.prototype = {
   },
 
   then: function (fn, fnErr) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     var out = this;
     return new Promise(function (resolve, reject) {
       out.on("error", reject);
@@ -754,4 +765,11 @@ function getNonMarkoStack(error) {
     .slice(1)
     .filter((line) => !/\/node_modules\/marko\//.test(line))
     .join("\n");
+}
+
+function iteratorReturnFn(value) {
+  return Promise.resolve({
+    value,
+    done: true,
+  });
 }

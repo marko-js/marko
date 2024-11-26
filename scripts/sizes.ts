@@ -1,12 +1,28 @@
-import fs from "fs";
-import path from "path";
-import zlib from "zlib";
 import * as compiler from "@marko/compiler";
 import pluginTerser from "@rollup/plugin-terser";
 import pluginVirtual from "@rollup/plugin-virtual";
+import fs from "fs";
 import kleur from "kleur";
-import { type OutputChunk, rollup } from "rollup";
+import path from "path";
+import { format } from "prettier";
+import { type OutputAsset, type OutputChunk, rollup } from "rollup";
 import { table } from "table";
+import { minify } from "terser";
+import glob from "tiny-glob";
+import zlib from "zlib";
+
+const compiledOutputDir = path.join(process.cwd(), ".sizes");
+const nameCacheFile = path.join(process.cwd(), ".sizes", "name-cache.json");
+const nameCache = (() => {
+  try {
+    return JSON.parse(fs.readFileSync(nameCacheFile, "utf-8"));
+  } catch {
+    return {};
+  }
+})();
+
+fs.rmSync(compiledOutputDir, { recursive: true });
+fs.mkdirSync(compiledOutputDir);
 
 interface Sizes {
   min: number;
@@ -45,6 +61,7 @@ async function run(configPath: string) {
 
   console.log(renderTable(current, previous, measure));
   writeData(configPath, current);
+  await fs.promises.writeFile(nameCacheFile, JSON.stringify(nameCache));
 }
 
 function loadData(configPath: string): Saved {
@@ -126,21 +143,45 @@ function renderSize(
 }
 
 async function getResults(examples: Record<string, string>) {
+  const [, , runtimeTotal, runtimeFiles] = await bundleExample(
+    runtimePath,
+    false,
+  );
   const results: Result[] = [
     {
       name: "*",
-      total: (await bundleExample(runtimePath, false))[2], // await getSizesForSrc(fs.readFileSync(runtimePath, "utf-8")),
+      total: runtimeTotal,
     },
   ];
 
+  for (const [name, code] of Object.entries(runtimeFiles)) {
+    fs.writeFileSync(
+      path.join(compiledOutputDir, name),
+      await format(code, { parser: "babel" }),
+    );
+  }
+
   for (const [exampleName, examplePath] of Object.entries(examples)) {
-    for (const hydrate of ["", " 💧"]) {
-      const [user, runtime, total] = await bundleExample(
+    for (const hydrate of [false, true]) {
+      const [user, runtime, total, files] = await bundleExample(
         examplePath,
-        !!hydrate,
+        hydrate,
       );
+
+      for (const [name, code] of Object.entries(files)) {
+        const exampleOutputFolder = path.join(
+          compiledOutputDir,
+          exampleName + (hydrate ? ".ssr" : ".csr"),
+        );
+        fs.mkdirSync(exampleOutputFolder, { recursive: true });
+        fs.writeFileSync(
+          path.join(exampleOutputFolder, name),
+          await format(code, { parser: "babel" }),
+        );
+      }
+
       results.push({
-        name: exampleName + hydrate,
+        name: exampleName + (hydrate ? " 💧" : ""),
         user,
         runtime,
         total,
@@ -151,12 +192,26 @@ async function getResults(examples: Record<string, string>) {
   return results;
 }
 
-async function getSizesForSrc(minified: string): Promise<Sizes> {
-  const [brotlied] = await Promise.all([brotli(minified)]);
+async function analyzeChunk(chunk: OutputChunk) {
+  const { name, code } = chunk;
+  const minified = stripModuleCode(
+    (
+      await minify(code, {
+        nameCache,
+        compress: {},
+        mangle: { module: true },
+      })
+    ).code!,
+  );
 
+  const sizes = {
+    min: Buffer.byteLength(minified),
+    brotli: Buffer.byteLength(await brotli(minified)),
+  };
   return {
-    min: minified.length,
-    brotli: brotlied.length,
+    name: name + ".js",
+    code: `// size: ${sizes.min} (min) ${sizes.brotli} (brotli)\n${stripModuleCode(code)}`,
+    sizes,
   };
 }
 
@@ -170,8 +225,15 @@ function addSizes(all: Sizes[]) {
 }
 
 async function bundleExample(examplePath: string, hydrate: boolean) {
+  const isRuntime = examplePath === runtimePath;
+  const virtualEntry = "./entry.js";
+  const optimizeKnownTemplates: string[] | undefined = isRuntime
+    ? undefined
+    : await glob(path.join(path.dirname(examplePath), "**/*.marko"), {
+        absolute: true,
+      });
   const bundle = await rollup({
-    input: hydrate ? "./hydrate.js" : examplePath,
+    input: isRuntime ? runtimePath : virtualEntry,
     plugins: [
       {
         name: "marko",
@@ -192,19 +254,22 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
                   configFile: false,
                 },
                 writeVersionComment: false,
+                optimizeKnownTemplates,
               })
             ).code;
           }
           return null;
         },
       },
-      hydrate &&
+      !isRuntime &&
         pluginVirtual({
-          "./hydrate.js": `import ${JSON.stringify(
-            examplePath,
-          )}; import { init } from "@marko/runtime-tags/dom"; init();`,
+          [virtualEntry]: hydrate
+            ? `import ${JSON.stringify(
+                examplePath,
+              )}; import { init } from "@marko/runtime-tags/dom"; init();`
+            : `import template from ${JSON.stringify(examplePath)};template.mount();`,
         }),
-      pluginTerser({ compress: {}, mangle: { module: true } }),
+      pluginTerser({ compress: {}, mangle: false }),
     ],
   });
 
@@ -217,20 +282,21 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
       }
     },
   });
-  const runtimeChunk = output.find(
-    (o) => o.name === "runtime" && "code" in o,
-  ) as OutputChunk;
-  const userCodeChunks = output.filter(
-    (o) => o !== runtimeChunk && "code" in o,
-  ) as OutputChunk[];
-  const runtimeSize = runtimeChunk && (await getSizesForSrc(runtimeChunk.code));
-  const userSize = addSizes(
-    await Promise.all(
-      userCodeChunks.map((chunk) => getSizesForSrc(chunk.code)),
-    ),
-  );
-  const totalSize = addSizes([userSize, runtimeSize].filter(Boolean));
-  return [userSize, runtimeSize, totalSize];
+  const runtimeChunk = output.find(isRuntimeChunk);
+  const [analyzedRuntimeCode, analyzedUserCode] = await Promise.all([
+    runtimeChunk && analyzeChunk(runtimeChunk),
+    Promise.all(output.filter(isUserChunk).map(analyzeChunk)),
+  ]);
+  const runtimeSize = analyzedRuntimeCode?.sizes;
+  const userSize = addSizes(analyzedUserCode.map((it) => it.sizes));
+  const totalSize = runtimeSize ? addSizes([userSize, runtimeSize]) : userSize;
+  const files: Record<string, string> = {};
+
+  for (const { name, code } of analyzedUserCode) {
+    files[name] = code;
+  }
+
+  return [userSize, runtimeSize, totalSize, files] as const;
 }
 
 function brotli(src: string): Promise<Buffer> {
@@ -239,4 +305,21 @@ function brotli(src: string): Promise<Buffer> {
       error ? reject(error) : resolve(result),
     ),
   );
+}
+
+function stripModuleCode(code: string) {
+  return code.replace(
+    /\s*(?:export\s*\{[^}]+\}|import\s*.*\s*from\s*['"][^'"]+['"]);?\s*/gm,
+    "",
+  );
+}
+
+function isUserChunk(chunk: OutputChunk | OutputAsset): chunk is OutputChunk {
+  return chunk.name !== "runtime" && "code" in chunk;
+}
+
+function isRuntimeChunk(
+  chunk: OutputChunk | OutputAsset,
+): chunk is OutputChunk {
+  return chunk.name === "runtime" && "code" in chunk;
 }

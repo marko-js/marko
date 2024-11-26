@@ -1,4 +1,4 @@
-import type { types as t } from "@marko/compiler";
+import type { Config, types as t } from "@marko/compiler";
 
 export interface AttributeDefinition {
   allowExpressions: boolean;
@@ -133,6 +133,7 @@ export interface Tag {
     rootOnly?: boolean;
     rawOpenTag?: boolean;
     openTagOnly?: boolean;
+    controlFlow?: boolean;
     ignoreAttributes?: boolean;
     relaxRequireCommas?: boolean;
     state?: "html" | "static-text" | "parsed-text" | "cdata";
@@ -145,7 +146,7 @@ export type FunctionPlugin<T = any> = (
   path: t.NodePath<T>,
   types: typeof t,
 ) => void;
-type EnterExitPlugin<T = any> = {
+export type EnterExitPlugin<T = any> = {
   enter?(path: t.NodePath<T>, types: typeof t): void;
   exit?(path: t.NodePath<T>, types: typeof t): void;
 };
@@ -174,9 +175,15 @@ export function assertAttributesOrSingleArg(path: t.NodePath<t.MarkoTag>): void;
 export function isNativeTag(path: t.NodePath<t.MarkoTag>): boolean;
 export function isMacroTag(path: t.NodePath<t.MarkoTag>): boolean;
 export function isDynamicTag(path: t.NodePath<t.MarkoTag>): boolean;
-export function isAttributeTag(path: t.NodePath<t.MarkoTag>): boolean;
-export function isTransparentTag(path: t.NodePath<t.MarkoTag>): boolean;
-export function isLoopTag(path: t.NodePath<t.MarkoTag>): boolean;
+export function isAttributeTag(
+  path: t.NodePath<t.MarkoTag>,
+): path is t.NodePath<t.MarkoTag & { name: t.StringLiteral }>;
+export function isTransparentTag(
+  path: t.NodePath<t.MarkoTag>,
+): path is t.NodePath<t.MarkoTag & { name: t.StringLiteral }>;
+export function isLoopTag(
+  path: t.NodePath<t.MarkoTag>,
+): path is t.NodePath<t.MarkoTag & { name: t.StringLiteral }>;
 
 export function registerMacro(path: t.NodePath<any>, name: string): void;
 export function hasMacro(path: t.NodePath<any>, name: string): boolean;
@@ -220,6 +227,8 @@ export function normalizeTemplateString(
 type Loc = { line: number; column: number; index?: number };
 type LocRange = { start: Loc; end: Loc };
 
+export function getStart(file: t.BabelFile, node: t.Node): number | null;
+export function getEnd(file: t.BabelFile, node: t.Node): number | null;
 export function getLoc(file: t.BabelFile, pos: number): Loc;
 export function getLocRange(
   file: t.BabelFile,
@@ -301,6 +310,11 @@ export function importDefault(
   request: string,
   nameHint?: string,
 ): t.Identifier;
+export function importStar(
+  file: t.BabelFile,
+  request: string,
+  nameHint?: string,
+): t.Identifier;
 export function importNamed(
   file: t.BabelFile,
   request: string,
@@ -314,7 +328,11 @@ export function getTagDefForTagName(
   tagName: string,
 ): TagDefinition | undefined;
 
-export function getTemplateId(optimize: boolean, request: string): string;
+export function getTemplateId(
+  optimize: boolean | Config,
+  request: string,
+  child?: string,
+): string;
 export function resolveTagImport(
   path: t.NodePath<any>,
   request: string,

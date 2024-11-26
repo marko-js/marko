@@ -1,11 +1,12 @@
 import type { DOMWindow } from "jsdom";
 import { createBrowser } from "jsdom-context-require";
-import init from "../test-globals";
 
 export default function (options: Parameters<typeof createBrowser>[0]) {
   const browser = createBrowser(options);
-  const window = browser.window as DOMWindow & { MessageChannel: any };
-  init(window);
+  const window = browser.window as unknown as DOMWindow & {
+    MessageChannel: any;
+  };
+  window.MARKO_DEBUG = true;
   window.queueMicrotask = queueMicrotask;
   window.MessageChannel = (window as any).MessageChannel =
     class MessageChannel {

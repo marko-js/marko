@@ -1,5 +1,5 @@
 # Write
-  <span>child</span><div>4<!M*0 #text/1></div><script>(M$h=[]).push((b,s,h,j,k)=>(k={0:h={"#childScope/0":j={}},1:j},j["/"]=b("packages/translator-tags/src/__tests__/fixtures/custom-tag-var-expression/template.marko_0_data",h),k),[])</script>
+  <span>child</span><div>4<!--M_*0 #text/1--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:_.a={"#childScope/0":_.b={}},1:_.b},_.b["/"]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-var-expression/template.marko_0_data"](_.a),_.c),0]</script>
 
 
 # Render "End"
@@ -12,10 +12,10 @@
     </span>
     <div>
       4
-      <!--M*0 #text/1-->
+      <!--M_*0 #text/1-->
     </div>
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;(k={0:h={"#childScope/0":j={}},1:j},j["/"]=b("packages/translator-tags/src/__tests__/fixtures/custom-tag-var-expression/template.marko_0_data",h),k),[])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#childScope/0":_.b={}},1:_.b},_.b["/"]=_._["packages/translator-tags/src/__tests__/fixtures/custom-tag-var-expression/template.marko_0_data"](_.a),_.c),0]
     </script>
   </body>
 </html>

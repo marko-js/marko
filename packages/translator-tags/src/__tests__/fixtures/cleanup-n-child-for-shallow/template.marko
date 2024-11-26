@@ -1,0 +1,9 @@
+<let/items=[1,2,3]/>
+<button onClick() { items = items.length ? items.slice(0, -1) : [1,2,3] }>Toggle</button>
+
+<div/el/>
+<const/write(msg) { el().innerHTML += '\n' + msg } />
+
+<for|item| of=items>
+  <child write=write name=item />
+</for>

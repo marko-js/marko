@@ -21,4 +21,12 @@ module.exports = function (helpers) {
   expect(component.el.childNodes.length).to.equal(1);
   expect(component.el.firstChild.nodeName).to.equal("SELECT");
   expect(component.el.firstChild.selectedIndex).to.equal(1);
+
+  component.state.html =
+    '<!-- A comment -->';
+  component.update();
+
+  expect(component.el.childNodes.length).to.equal(1);
+  expect(component.el.firstChild.nodeType).to.equal(Node.COMMENT_NODE);
+  expect(component.el.firstChild.data).to.equal(" A comment ");
 };

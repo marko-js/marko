@@ -1,5 +1,5 @@
 # Write
-  <div><!M|0 #text/0 ><button id=add>Add</button><!M*0 #button/1><button id=remove>Remove</button><!M*0 #button/2></div><script>(M$h=[]).push((b,s)=>({0:{id:0,items:[]}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])</script>
+  <div><!--M_|0 #text/0 --><button id=add>Add</button><!--M_*0 #button/1--><button id=remove>Remove</button><!--M_*0 #button/2--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{id:0,items:[]}}),0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",0];M._.w()</script>
 
 
 # Render "End"
@@ -8,22 +8,22 @@
   <head />
   <body>
     <div>
-      <!--M|0 #text/0 -->
+      <!--M_|0 #text/0 -->
       <button
         id="add"
       >
         Add
       </button>
-      <!--M*0 #button/1-->
+      <!--M_*0 #button/1-->
       <button
         id="remove"
       >
         Remove
       </button>
-      <!--M*0 #button/2-->
+      <!--M_*0 #button/2-->
     </div>
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{id:0,items:[]}}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{id:0,items:[]}}),0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_items",0,"packages/translator-tags/src/__tests__/fixtures/basic-push-pop-list/template.marko_0_id_items",0];M._.w()
     </script>
   </body>
 </html>

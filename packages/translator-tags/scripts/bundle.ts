@@ -1,6 +1,6 @@
+import { build } from "esbuild";
 import fs from "fs";
 import path from "path";
-import { build } from "esbuild";
 
 const absWorkingDir = path.join(__dirname, "..");
 const pkg = JSON.parse(
@@ -22,6 +22,9 @@ build({
   platform: "node",
   external: [...external],
   entryPoints: [`src/index.ts`],
+  define: {
+    MARKO_DEBUG: "false",
+  },
 }).catch((err) => {
   console.error(err);
   process.exit(1);

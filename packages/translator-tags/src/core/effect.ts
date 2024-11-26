@@ -1,54 +1,56 @@
-import { type Tag, assertNoParams } from "@marko/babel-utils";
+import {
+  assertNoArgs,
+  assertNoParams,
+  assertNoVar,
+  type Tag,
+} from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import { getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 
-declare module "@marko/compiler/dist/types" {
-  export interface ProgramExtra {
-    isInteractive?: boolean;
-  }
-}
-
 export default {
-  analyze() {
+  analyze(tag) {
+    const { node } = tag;
+    const [valueAttr] = node.attributes;
+    assertNoArgs(tag);
+    assertNoVar(tag);
+    assertNoParams(tag);
+    assertNoBodyContent(tag);
+
+    if (!valueAttr) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError("The `effect` tag requires a value.");
+    }
+
+    if (
+      node.attributes.length > 1 ||
+      !t.isMarkoAttribute(valueAttr) ||
+      (!valueAttr.default && valueAttr.name !== "value")
+    ) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError(
+          "The `effect` tag only supports the `value` attribute.",
+        );
+    }
+
+    (valueAttr.value.extra ??= {}).isEffect = true;
     (currentProgramPath.node.extra ??= {}).isInteractive = true;
   },
   translate: {
     exit(tag) {
       const { node } = tag;
-      const [defaultAttr] = node.attributes;
-
-      assertNoParams(tag);
-      assertNoBodyContent(tag);
-
-      if (!defaultAttr) {
-        throw tag
-          .get("name")
-          .buildCodeFrameError(
-            "The 'effect' tag requires a default attribute.",
-          );
-      }
-
-      if (
-        node.attributes.length > 1 ||
-        !t.isMarkoAttribute(defaultAttr) ||
-        (!defaultAttr.default && defaultAttr.name !== "value")
-      ) {
-        throw tag
-          .get("name")
-          .buildCodeFrameError(
-            "The 'effect' tag only supports the 'default' attribute.",
-          );
-      }
-
+      const [valueAttr] = node.attributes;
       const section = getSection(tag);
-      const { value } = defaultAttr;
-      const references = value.extra?.references;
+      const { value } = valueAttr;
+      const referencedBindings = value.extra?.referencedBindings;
       if (isOutputDOM()) {
-        const { value } = defaultAttr;
+        const { value } = valueAttr;
         let inlineBody: t.Statement | t.Statement[] | null = null;
         if (
           t.isFunctionExpression(value) ||
@@ -71,14 +73,14 @@ export default {
         addStatement(
           "effect",
           section,
-          references,
+          referencedBindings,
           inlineBody ||
             t.expressionStatement(t.callExpression(value, [scopeIdentifier])),
           value,
           !!inlineBody,
         );
       } else {
-        addHTMLEffectCall(section, references);
+        addHTMLEffectCall(section, referencedBindings);
       }
 
       tag.remove();
@@ -91,4 +93,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#effect",
     },
   ],
+  types: "@marko/translator-tags/tag-types/effect.d.marko",
 } as Tag;

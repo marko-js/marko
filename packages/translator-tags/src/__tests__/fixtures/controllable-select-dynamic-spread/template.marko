@@ -1,0 +1,8 @@
+<let/value = "b"/>
+<const/tag = "select"/>
+<${tag ? "select" : {}} ...{ value, valueChange(v) { value=v } }>
+  <option ...{ value:"a" }>A</option>
+  <option ...{ value:"b" }>B</option>
+  <option ...{ value:"c" }>C</option>
+</>
+<span>${value}</span>

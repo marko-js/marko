@@ -1,4 +1,5 @@
 var parseHTML = require("./parse-html");
+var VComment = require("./VComment");
 var VComponent = require("./VComponent");
 var VDocumentFragment = require("./VDocumentFragment");
 var VElement = require("./VElement");
@@ -22,6 +23,8 @@ function virtualize(node, ownerComponent) {
       return VElement.___virtualize(node, virtualizeChildNodes, ownerComponent);
     case 3:
       return new VText(node.nodeValue, ownerComponent);
+    case 8:
+      return new VComment(node.nodeValue, ownerComponent);
     case 11:
       var vdomDocFragment = new VDocumentFragment();
       virtualizeChildNodes(node, vdomDocFragment, ownerComponent);
@@ -36,9 +39,11 @@ function virtualizeHTML(html, ownerComponent) {
 
   var vdomFragment = new VDocumentFragment();
   var curChild = parseHTML(html);
+  var virtualized;
 
   while (curChild) {
-    vdomFragment.___appendChild(virtualize(curChild, ownerComponent));
+    virtualized = virtualize(curChild, ownerComponent);
+    if (virtualized) vdomFragment.___appendChild(virtualized);
     curChild = curChild.nextSibling;
   }
 
@@ -73,6 +78,7 @@ Node_prototype.___appendDocumentFragment = function () {
   return this.___appendChild(new VDocumentFragment());
 };
 
+exports.___VComment = VComment;
 exports.___VDocumentFragment = VDocumentFragment;
 exports.___VElement = VElement;
 exports.___VText = VText;

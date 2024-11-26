@@ -1,20 +1,23 @@
-import { getTemplateId } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+
 import { returnId } from "../../core/return";
 import isStatic from "../../util/is-static";
 import { callRuntime } from "../../util/runtime";
-import { getSection } from "../../util/sections";
-import { writeHTMLResumeStatements } from "../../util/signals";
+import { getSectionForBody } from "../../util/sections";
+import { renameBindings, writeHTMLResumeStatements } from "../../util/signals";
+import type { TemplateVisitor } from "../../util/visitors";
 import { flushInto } from "../../util/writer";
+import { htmlRendererIdentifier } from ".";
 
 export default {
   translate: {
-    exit(program: t.NodePath<t.Program>) {
-      const section = getSection(program);
+    exit(program) {
+      const section = getSectionForBody(program)!;
       const tagVarIdentifier = program.scope.generateUidIdentifier("tagVar");
 
       flushInto(program);
       writeHTMLResumeStatements(program, tagVarIdentifier);
+      renameBindings();
 
       const returnIdentifier = returnId(section);
       if (returnIdentifier !== undefined) {
@@ -28,27 +31,22 @@ export default {
           renderContent.push(child.node);
           child.remove();
         } else if (child.isMarkoScriptlet()) {
-          child.replaceWithMultiple(child.node.body);
+          if (child.node.target && child.node.target !== "server") {
+            child.remove();
+          } else {
+            child.replaceWithMultiple(child.node.body);
+          }
         }
       }
 
-      const rendererId = program.scope.generateUidIdentifier("renderer");
-      const { args } = program.node.extra;
-      const {
-        markoOpts: { optimize },
-        opts: { filename },
-      } = program.hub.file;
       program.pushContainer("body", [
         t.variableDeclaration("const", [
           t.variableDeclarator(
-            rendererId,
+            htmlRendererIdentifier,
             callRuntime(
               "createRenderer",
               t.arrowFunctionExpression(
-                [
-                  args ? (args.var as any) : t.identifier("input"),
-                  tagVarIdentifier,
-                ],
+                [t.identifier("input"), tagVarIdentifier],
                 t.blockStatement(renderContent),
               ),
             ),
@@ -58,11 +56,11 @@ export default {
         t.exportDefaultDeclaration(
           callRuntime(
             "createTemplate",
-            rendererId,
-            t.stringLiteral(getTemplateId(optimize, `${filename}`)),
+            t.stringLiteral(program.hub.file.metadata.marko.id),
+            htmlRendererIdentifier,
           ),
         ),
       ]);
     },
   },
-};
+} satisfies TemplateVisitor<t.Program>;

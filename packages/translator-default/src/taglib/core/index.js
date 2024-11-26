@@ -8,7 +8,6 @@ import * as parseExport from "./parse-export";
 import * as parseImport from "./parse-import";
 import * as parseModuleCode from "./parse-module-code";
 import * as parseStatic from "./parse-static";
-import * as parseStyle from "./parse-style";
 import * as transformStyle from "./transform-style";
 import * as translateAwait from "./translate-await";
 import * as translateBody from "./translate-body";
@@ -88,7 +87,6 @@ export default {
     ],
   },
   "<style>": {
-    "node-factory": parseStyle,
     transformer: transformStyle,
     "parse-options": {
       rawOpenTag: true,
@@ -139,6 +137,7 @@ export default {
     ],
   },
   "<if>": {
+    "parse-options": { controlFlow: true },
     "code-generator": translateIf,
     attributes: {},
     autocomplete: [
@@ -151,6 +150,7 @@ export default {
     ],
   },
   "<else-if>": {
+    "parse-options": { controlFlow: true },
     "code-generator": translateElseIf,
     attributes: {},
     autocomplete: [
@@ -164,6 +164,7 @@ export default {
     ],
   },
   "<else>": {
+    "parse-options": { controlFlow: true },
     "code-generator": translateElse,
     attributes: {},
     autocomplete: [
@@ -176,6 +177,7 @@ export default {
     ],
   },
   "<for>": {
+    "parse-options": { controlFlow: true },
     "code-generator": translateFor,
     "@of": {
       type: "expression",
@@ -240,6 +242,7 @@ export default {
     ],
   },
   "<while>": {
+    "parse-options": { controlFlow: true },
     "code-generator": translateWhile,
     autocomplete: [
       {

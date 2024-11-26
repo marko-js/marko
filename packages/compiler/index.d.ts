@@ -1,5 +1,6 @@
 import { Diagnostic, TaglibLookup } from "@marko/babel-utils";
 import { SourceMap } from "magic-string";
+
 import * as types from "./babel-types";
 export { types };
 
@@ -37,6 +38,8 @@ export interface CompileResult {
   meta: MarkoMeta;
 }
 
+export const globalConfig: Config;
+
 export function configure(config: Config): void;
 
 export function compile(
@@ -67,6 +70,9 @@ export function getRuntimeEntryFiles(
 ): string[];
 
 export namespace taglib {
+  export function resolveOptionalTaglibs(
+    taglibIds: string[],
+  ): [id: string, props: { [x: string]: unknown }][];
   export function excludeDir(dirname: string): void;
   export function excludePackage(packageName: string): void;
   export function register(id: string): void;

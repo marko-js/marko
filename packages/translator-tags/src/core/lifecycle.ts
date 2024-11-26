@@ -1,87 +1,112 @@
-import { type Tag, assertNoParams } from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
-import { assertNoBodyContent } from "../util/assert";
-import attrsToObject from "../util/attrs-to-object";
-import { isOutputDOM } from "../util/marko-config";
-import { mergeReferences } from "../util/references";
 import {
-  ReserveType,
+  assertNoArgs,
+  assertNoParams,
+  assertNoVar,
+  type Tag,
+} from "@marko/babel-utils";
+import { types as t } from "@marko/compiler";
+
+import { assertNoBodyContent } from "../util/assert";
+import { isOutputDOM } from "../util/marko-config";
+import {
+  type Binding,
+  BindingType,
+  createBinding,
+  getAllTagReferenceNodes,
   getScopeAccessorLiteral,
-  reserveScope,
-} from "../util/reserve";
+  mergeReferences,
+} from "../util/references";
 import { callRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
+import { propsToExpression, translateAttrs } from "../util/translate-attrs";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
-import customTag from "../visitors/tag/custom-tag";
+
+const kRef = Symbol("lifecycle attrs reference");
+const supportedAttrNames = new Set(["onMount", "onUpdate", "onDestroy"]);
 
 declare module "@marko/compiler/dist/types" {
-  export interface ProgramExtra {
-    isInteractive?: boolean;
+  export interface MarkoTagExtra {
+    [kRef]?: Binding;
   }
 }
 
 export default {
-  analyze: {
-    enter(tag) {
-      customTag.analyze.enter(tag);
-      reserveScope(
-        ReserveType.Store,
-        getOrCreateSection(tag),
-        tag.node,
-        tag.scope.generateUid("lifecycle"),
-      );
-      (currentProgramPath.node.extra ??= {}).isInteractive = true;
-    },
-    exit(tag) {
-      customTag.analyze.exit(tag);
-      mergeReferences(
-        tag,
-        tag.node.attributes.map((attr) => attr.value),
-      );
-    },
+  analyze(tag) {
+    assertNoArgs(tag);
+    assertNoVar(tag);
+    assertNoParams(tag);
+    assertNoBodyContent(tag);
+
+    const { node } = tag;
+    const tagExtra = (node.extra ??= {});
+    const section = getOrCreateSection(tag);
+    tagExtra[kRef] = createBinding(
+      tag.scope.generateUid("lifecycle"),
+      BindingType.derived,
+      section,
+      undefined,
+      tagExtra,
+    );
+
+    if (node.attributes.length === 0) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError(
+          "The `lifecycle` tag requires at least one attribute.",
+        );
+    }
+
+    for (const attr of node.attributes) {
+      if (t.isMarkoSpreadAttribute(attr)) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            "The `lifecycle` tag does not support `...spread` attributes.",
+          );
+      } else if (!supportedAttrNames.has(attr.name)) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            `The \`lifecycle\` tag does not support the \`${attr.name}\` attribute.`,
+          );
+      }
+      (attr.value.extra ??= {}).isEffect = true;
+    }
+
+    (currentProgramPath.node.extra ??= {}).isInteractive = true;
+    mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
   },
   translate: {
     exit(tag) {
       const { node } = tag;
 
-      assertNoParams(tag);
-      assertNoBodyContent(tag);
-
-      // TODO: Check attributes?
-      // if (
-      //   node.attributes.length > 1 ||
-      //   !t.isMarkoAttribute(defaultAttr) ||
-      //   (!defaultAttr.default && defaultAttr.name !== "default")
-      // ) {
-      //   throw tag
-      //     .get("name")
-      //     .buildCodeFrameError(
-      //       "The 'lifecycle' tag only supports the 'default' attribute."
-      //     );
-      // }
-
       const section = getSection(tag);
-      const { references } = node.extra!;
+      const tagExtra = node.extra!;
+      const { referencedBindings } = tagExtra;
+      const lifecycleAttrsRef = tagExtra[kRef]!;
 
       if (isOutputDOM()) {
-        const attrsObject = attrsToObject(tag);
-        addStatement(
-          "effect",
-          section,
-          references,
+        const translatedAttrs = translateAttrs(tag);
+        translatedAttrs.statements.push(
           t.expressionStatement(
             callRuntime(
               "lifecycle",
               scopeIdentifier,
-              getScopeAccessorLiteral(tag.node.extra!.reserve!),
-              attrsObject,
+              getScopeAccessorLiteral(lifecycleAttrsRef),
+              propsToExpression(translatedAttrs.properties),
             ),
           ),
+        );
+        addStatement(
+          "effect",
+          section,
+          referencedBindings,
+          translatedAttrs.statements,
           node.attributes.map((a) => a.value),
         );
       } else {
-        addHTMLEffectCall(section, references);
+        addHTMLEffectCall(section, referencedBindings);
       }
 
       tag.remove();
@@ -94,4 +119,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#effect",
     },
   ],
+  types: "@marko/translator-tags/tag-types/lifecycle.d.marko",
 } as Tag;

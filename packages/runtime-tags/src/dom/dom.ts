@@ -1,32 +1,62 @@
-import { classValue, styleValue } from "../common/helpers";
+import {
+  classValue,
+  getEventHandlerName,
+  isEventHandler,
+  styleValue,
+} from "../common/helpers";
 import {
   type Accessor,
   AccessorChar,
+  ControlledType,
   NodeType,
   type Scope,
 } from "../common/types";
 import { getAbortSignal } from "./abort-signal";
-import { write } from "./scope";
+import {
+  controllable_detailsOrDialog_open,
+  controllable_detailsOrDialog_open_effect,
+  controllable_input_checked,
+  controllable_input_checked_effect,
+  controllable_input_checkedValue,
+  controllable_input_checkedValue_effect,
+  controllable_input_value,
+  controllable_input_value_effect,
+  controllable_select_value,
+  controllable_select_value_effect,
+  controllable_textarea_value,
+} from "./controllable";
+import { on } from "./event";
+import { parseHTML } from "./parse-html";
 
 export function isDocumentFragment(node: Node): node is DocumentFragment {
   return node.nodeType === NodeType.DocumentFragment;
 }
 
 export function attr(element: Element, name: string, value: unknown) {
-  const normalizedValue = normalizeAttrValue(value);
-  if (normalizedValue === undefined) {
-    element.removeAttribute(name);
-  } else {
-    element.setAttribute(name, normalizedValue);
+  setAttribute(element, name, normalizeAttrValue(value));
+}
+
+export function setAttribute(
+  element: Element,
+  name: string,
+  value: string | undefined,
+) {
+  // TODO: benchmark if it is actually faster to check first
+  if (element.getAttribute(name) != value) {
+    if (value === undefined) {
+      element.removeAttribute(name);
+    } else {
+      element.setAttribute(name, value);
+    }
   }
 }
 
 export function classAttr(element: Element, value: unknown) {
-  attr(element, "class", classValue(value) || false);
+  setAttribute(element, "class", classValue(value) || undefined);
 }
 
 export function styleAttr(element: Element, value: unknown) {
-  attr(element, "style", styleValue(value) || false);
+  setAttribute(element, "style", styleValue(value) || undefined);
 }
 
 export function data(node: Text | Comment, value: unknown) {
@@ -39,50 +69,196 @@ export function data(node: Text | Comment, value: unknown) {
 
 export function attrs(
   scope: Scope,
-  elementAccessor: Accessor,
+  nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
-  const prevAttrs = scope[elementAccessor + AccessorChar.PreviousAttributes] as
-    | typeof nextAttrs
-    | undefined;
-  const element = scope[elementAccessor] as Element;
-
-  if (prevAttrs) {
-    for (const name in prevAttrs) {
-      if (!(nextAttrs && name in nextAttrs)) {
-        element.removeAttribute(name);
-      }
-    }
-  }
-  // https://jsperf.com/object-keys-vs-for-in-with-closure/194
-  for (const name in nextAttrs) {
-    if (!(prevAttrs && nextAttrs[name] === prevAttrs[name])) {
-      if (name === "class") {
-        classAttr(element, nextAttrs[name]);
-      } else if (name === "style") {
-        styleAttr(element, nextAttrs[name]);
-      } else if (name !== "renderBody") {
-        attr(element, name, nextAttrs[name]);
-      }
+  const el = scope[nodeAccessor] as Element;
+  for (const { name } of el.attributes) {
+    if (
+      !(nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs)))
+    ) {
+      el.removeAttribute(name);
     }
   }
 
-  scope[elementAccessor + AccessorChar.PreviousAttributes] = nextAttrs;
+  attrsInternal(scope, nodeAccessor, nextAttrs);
 }
 
-const doc = document;
-const parser = /* @__PURE__ */ doc.createElement("template");
+function hasAttrAlias(
+  element: Element,
+  attr: string,
+  nextAttrs: Record<string, unknown>,
+) {
+  return (
+    attr === "checked" &&
+    element.tagName === "INPUT" &&
+    "checkedValue" in nextAttrs
+  );
+}
+
+export function partialAttrs(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  nextAttrs: Record<string, unknown>,
+  skip: Record<string, 1>,
+) {
+  const el = scope[nodeAccessor] as Element;
+  const partial: Partial<typeof nextAttrs> = {};
+
+  for (const { name } of el.attributes) {
+    if (!skip[name] && !(nextAttrs && name in nextAttrs)) {
+      el.removeAttribute(name);
+    }
+  }
+
+  for (const key in nextAttrs) {
+    if (!skip[key]) partial[key] = nextAttrs[key];
+  }
+
+  attrsInternal(scope, nodeAccessor, partial);
+}
+
+function attrsInternal(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  nextAttrs: Record<string, unknown>,
+) {
+  const el = scope[nodeAccessor] as Element;
+  let events: undefined | Record<string, unknown>;
+  let skip: RegExp | undefined;
+  switch (el.tagName) {
+    case "INPUT":
+      if ("checked" in nextAttrs || "checkedChange" in nextAttrs) {
+        controllable_input_checked(
+          scope,
+          nodeAccessor,
+          nextAttrs.checked,
+          nextAttrs.checkedChange,
+        );
+      } else if (
+        "checkedValue" in nextAttrs ||
+        "checkedValueChange" in nextAttrs
+      ) {
+        controllable_input_checkedValue(
+          scope,
+          nodeAccessor,
+          nextAttrs.checkedValue,
+          nextAttrs.checkedValueChange,
+          nextAttrs.value,
+        );
+      } else if ("value" in nextAttrs || "valueChange" in nextAttrs) {
+        controllable_input_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        );
+      } else {
+        break;
+      }
+      skip = /^(?:value|checked(?:Value)?)(?:Change)?$/;
+      break;
+    case "SELECT":
+      if ("value" in nextAttrs || "valueChange" in nextAttrs) {
+        controllable_select_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        );
+        skip = /^value(?:Change)?$/;
+      }
+      break;
+    case "TEXTAREA":
+      if ("value" in nextAttrs || "valueChange" in nextAttrs) {
+        controllable_textarea_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        );
+        skip = /^value(?:Change)?$/;
+      }
+      break;
+    case "DETAILS":
+    case "DIALOG":
+      if ("open" in nextAttrs || "openChange" in nextAttrs) {
+        controllable_detailsOrDialog_open(
+          scope,
+          nodeAccessor,
+          nextAttrs.open,
+          nextAttrs.openChange,
+        );
+        skip = /^open(?:Change)?$/;
+      }
+      break;
+  }
+
+  // https://jsperf.com/object-keys-vs-for-in-with-closure/194
+  for (const name in nextAttrs) {
+    const value = nextAttrs[name];
+    switch (name) {
+      case "class":
+        classAttr(el, value);
+        break;
+      case "style":
+        styleAttr(el, value);
+        break;
+      case "renderBody":
+        break;
+      default: {
+        if (isEventHandler(name)) {
+          (events ||= scope[nodeAccessor + AccessorChar.EventAttributes] = {})[
+            getEventHandlerName(name)
+          ] = value;
+        } else if (!skip?.test(name)) {
+          attr(el, name, value);
+        }
+      }
+    }
+  }
+}
+
+export function attrsEvents(scope: Scope, nodeAccessor: Accessor) {
+  const el = scope[nodeAccessor] as Element;
+  const events = scope[nodeAccessor + AccessorChar.EventAttributes] as Record<
+    string,
+    any
+  >;
+
+  switch (scope[nodeAccessor + AccessorChar.ControlledType]) {
+    case ControlledType.InputChecked:
+      controllable_input_checked_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.InputCheckedValue:
+      controllable_input_checkedValue_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.InputValue:
+      controllable_input_value_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.SelectValue:
+      controllable_select_value_effect(scope, nodeAccessor);
+      break;
+    case ControlledType.DetailsOrDialogOpen:
+      controllable_detailsOrDialog_open_effect(scope, nodeAccessor);
+      break;
+  }
+
+  for (const name in events) {
+    on(el, name as any, events[name] as any);
+  }
+}
 
 export function html(scope: Scope, value: unknown, index: Accessor) {
   const firstChild = scope[index] as Node & ChildNode;
   const lastChild = (scope[index + "-"] || firstChild) as Node & ChildNode;
   const parentNode = firstChild.parentNode!;
   const afterReference = lastChild.nextSibling;
+  const newContent = parseHTML(value || value === 0 ? value + "" : "<!>");
 
-  parser.innerHTML = value || value === 0 ? `${value}` : "<!>";
-  const newContent = parser.content;
-  write(scope, index, newContent.firstChild);
-  write(scope, (index + "-") as any as number, newContent.lastChild);
+  scope[index] = newContent.firstChild;
+  scope[index + AccessorChar.DynamicPlaceholderLastChild] =
+    newContent.lastChild;
   parentNode.insertBefore(newContent, firstChild);
 
   let current = firstChild;
@@ -113,7 +289,7 @@ export function props(scope: Scope, nodeIndex: number, index: number) {
   scope[index + "-"] = nextProps;
 }
 
-function normalizeAttrValue(value: unknown) {
+export function normalizeAttrValue(value: unknown) {
   if (value || value === 0) {
     return value === true ? "" : value + "";
   }

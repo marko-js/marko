@@ -4,14 +4,14 @@
   <head />
   <body>
     a
-    <!--M*1 #text/0-->
+    <!--M_*1 #text/0-->
     b
-    <!--M*2 #text/0-->
+    <!--M_*2 #text/0-->
     c
-    <!--M*3 #text/0-->
-    <!--M|0 #text/0 1,2,3-->
+    <!--M_*3 #text/0-->
+    <!--M_|0 #text/0 1,2,3-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;({0:{"#text/0(":new Map([[1,h={}],[2,j={}],[3,k={}]])},1:h,2:j,3:k}),[])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={0:{"#text/0(":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},1:_.b,2:_.c,3:_.d}),0]
     </script>
   </body>
 </html>

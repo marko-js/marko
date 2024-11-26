@@ -1,5 +1,5 @@
 # Write
-  <button><pre>a    1    <!>0<!M*0 #text/1></pre><pre>b    2    <!>0<!M*0 #text/2></pre><pre>c  {c:4}  <!>0<!M*0 #text/3></pre><pre>d    7    <!>0<!M*0 #text/4></pre><pre>f   [9]   <!>[]<!M*0 #text/5></pre></button><!M*0 #button/0><script>(M$h=[]).push(null,[0,"packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0",])</script>
+  <button><pre>a    1    <!>0<!--M_*0 #text/1--></pre><pre>b    2    <!>0<!--M_*0 #text/2--></pre><pre>c  {c:4}  <!>{}<!--M_*0 #text/3--></pre><pre>d    7    <!>0<!--M_*0 #text/4--></pre><pre>f   [9]   <!>[]<!--M_*0 #text/5--></pre></button><!--M_*0 #button/0--><script>WALKER_RUNTIME("M")("_");M._.r=[0,"packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0",0];M._.w()</script>
 
 
 # Render "End"
@@ -12,36 +12,36 @@
         a    1    
         <!---->
         0
-        <!--M*0 #text/1-->
+        <!--M_*0 #text/1-->
       </pre>
       <pre>
         b    2    
         <!---->
         0
-        <!--M*0 #text/2-->
+        <!--M_*0 #text/2-->
       </pre>
       <pre>
         c  {c:4}  
         <!---->
-        0
-        <!--M*0 #text/3-->
+        {}
+        <!--M_*0 #text/3-->
       </pre>
       <pre>
         d    7    
         <!---->
         0
-        <!--M*0 #text/4-->
+        <!--M_*0 #text/4-->
       </pre>
       <pre>
         f   [9]   
         <!---->
         []
-        <!--M*0 #text/5-->
+        <!--M_*0 #text/5-->
       </pre>
     </button>
-    <!--M*0 #button/0-->
+    <!--M_*0 #button/0-->
     <script>
-      (M$h=[]).push(null,[0,"packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0",])
+      WALKER_RUNTIME("M")("_");M._.r=[0,"packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

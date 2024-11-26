@@ -1,20 +1,14 @@
-import { register as _register, queueEffect as _queueEffect, value as _value, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _el_effect = _register("packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko_0_el", _scope => {
+export const _template_ = "";
+export const _walks_ = "";
+export const _setup_ = () => {};
+import * as _$ from "@marko/runtime-tags/debug/dom";
+const _el__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko_0_el", _scope => {
   const {
     el
   } = _scope;
   el().textContent = "hello";
 });
-const _el = /* @__PURE__ */_value("el", (_scope, el) => _queueEffect(_scope, _el_effect));
-export const args = (_scope, _destructure, _clean) => {
-  let el;
-  if (!_clean) [{
-    el
-  }] = _destructure;
-  _el(_scope, el, _clean);
-};
-export { _el };
-export const template = "";
-export const walks = "";
-export const setup = function () {};
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup, void 0, void 0, args), "packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko");
+export const _el_ = /* @__PURE__ */_$.value("el", (_scope, el) => _el__effect(_scope));
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _el_(_scope, input.el));
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko", _template_, _walks_, _setup_, void 0, () => _params__);

@@ -1,11 +1,10 @@
-import { setup as _child, template as _child_template, walks as _child_walks } from "./components/child.marko";
-import { setTagVar as _setTagVar, data as _data2, value as _value, register as _register, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _data = _register("packages/translator-tags/src/__tests__/fixtures/custom-tag-var/template.marko_0_data", /* @__PURE__ */_value("data", (_scope, data) => _data2(_scope["#text/1"], data)));
-const _setup = _scope => {
-  _setTagVar(_scope, "#childScope/0", _data);
+export const _template_ = `${_child_template}<div> </div>`;
+export const _walks_ = /* beginChild, _child_walks, endChild, next(1), get, out(1) */`/${_child_walks}&D l`;
+import { _setup_ as _child, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
+import * as _$ from "@marko/runtime-tags/debug/dom";
+const _data = _$.registerBoundSignal("packages/translator-tags/src/__tests__/fixtures/custom-tag-var/template.marko_0_data", /* @__PURE__ */_$.value("data", (_scope, data) => _$.data(_scope["#text/1"], data)));
+export function _setup_(_scope) {
+  _$.setTagVar(_scope, "#childScope/0", _data);
   _child(_scope["#childScope/0"]);
-};
-export const template = `${_child_template}<div> </div>`;
-export const walks = /* beginChild, _child_walks, endChild, next(1), get, out(1) */`/${_child_walks}&D l`;
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/custom-tag-var/template.marko");
+}
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/custom-tag-var/template.marko", _template_, _walks_, _setup_);

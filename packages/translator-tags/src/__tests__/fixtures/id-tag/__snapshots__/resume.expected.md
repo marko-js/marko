@@ -4,11 +4,14 @@
   <head />
   <body>
     <div>
-      s0
-      <!--M*0 #text/0-->
+      sM_0
+      <!--M_*0 #text/0-->
     </div>
-    s1
-    <!--M*0 #text/1-->
+    sM_1
+    <!--M_*0 #text/1-->
+    <script>
+      WALKER_RUNTIME("M")("_")
+    </script>
   </body>
 </html>
 ```

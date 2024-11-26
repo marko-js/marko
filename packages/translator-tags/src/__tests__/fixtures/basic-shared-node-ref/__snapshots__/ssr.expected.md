@@ -1,5 +1,5 @@
 # Write
-  <ul><li>1<!M*1 #text/0></li><li>2<!M*2 #text/0></li><li>3<!M*3 #text/0></li><!M|0 #ul/0 1,2,3></ul><!M*0 #ul/0><button id=toggle>Toggle</button><!M*0 #button/1><button id=reverse>Reverse</button><!M*0 #button/2><script>(M$h=[]).push((b,s,h,j,k)=>({0:{open:!0,list:[1,2,3],"#ul/0(":new Map([[1,h={}],[2,j={}],[3,k={}]])},1:h,2:j,3:k}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list",0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open",])</script>
+  <ul><li>1<!--M_*1 #text/0--></li><li>2<!--M_*2 #text/0--></li><li>3<!--M_*3 #text/0--></li><!--M_|0 #ul/0 1,2,3--></ul><!--M_*0 #ul/0--><button id=toggle>Toggle</button><!--M_*0 #button/1--><button id=reverse>Reverse</button><!--M_*0 #button/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.e={0:{open:!0,list:[1,2,3],"#ul/0(":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},1:_.b,2:_.c,3:_.d}),0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list",0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open",0];M._.w()</script>
 
 
 # Render "End"
@@ -10,33 +10,33 @@
     <ul>
       <li>
         1
-        <!--M*1 #text/0-->
+        <!--M_*1 #text/0-->
       </li>
       <li>
         2
-        <!--M*2 #text/0-->
+        <!--M_*2 #text/0-->
       </li>
       <li>
         3
-        <!--M*3 #text/0-->
+        <!--M_*3 #text/0-->
       </li>
-      <!--M|0 #ul/0 1,2,3-->
+      <!--M_|0 #ul/0 1,2,3-->
     </ul>
-    <!--M*0 #ul/0-->
+    <!--M_*0 #ul/0-->
     <button
       id="toggle"
     >
       Toggle
     </button>
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <button
       id="reverse"
     >
       Reverse
     </button>
-    <!--M*0 #button/2-->
+    <!--M_*0 #button/2-->
     <script>
-      (M$h=[]).push((b,s,h,j,k)=&gt;({0:{open:!0,list:[1,2,3],"#ul/0(":new Map([[1,h={}],[2,j={}],[3,k={}]])},1:h,2:j,3:k}),[0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list",0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={0:{open:!0,list:[1,2,3],"#ul/0(":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},1:_.b,2:_.c,3:_.d}),0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_list",0,"packages/translator-tags/src/__tests__/fixtures/basic-shared-node-ref/template.marko_0_open",0];M._.w()
     </script>
   </body>
 </html>

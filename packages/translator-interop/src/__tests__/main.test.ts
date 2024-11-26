@@ -1,21 +1,16 @@
-import fs from "fs";
-import path from "path";
 import * as compiler from "@marko/compiler";
 import register from "@marko/compiler/register";
 import type { Input, Template } from "@marko/runtime-tags/common/types";
-import reorderRuntime from "@marko/runtime-tags/html/reorder-runtime";
+import { stripInlineRuntime } from "@marko/translator-tags/src/__tests__/utils/strip-inline-runtime";
+import fs from "fs";
 import type { DOMWindow } from "jsdom";
 import snap from "mocha-snap";
+import path from "path";
 import glob from "tiny-glob";
+
 import createBrowser from "../../../translator-tags/src/__tests__/utils/create-browser";
 import { isWait } from "../../../translator-tags/src/__tests__/utils/resolve";
 import createMutationTracker from "../../../translator-tags/src/__tests__/utils/track-mutations";
-
-const runtimeId = "X";
-const reorderRuntimeString = String(reorderRuntime).replace(
-  "RUNTIME_ID",
-  runtimeId,
-);
 
 const baseConfig: compiler.Config = {
   translator: require.resolve(".."),
@@ -58,7 +53,7 @@ describe("translator-interop", () => {
   after(() => {
     // TODO: remove this once we have a better way to patch dynamic tags
     delete require("marko/src/runtime/helpers/dynamic-tag").___runtimeCompat;
-    require("@marko/runtime-tags/html").patchDynamicTag(
+    require("@marko/runtime-tags/html").compat.patchDynamicTag(
       (tag: any) => tag._ || tag.renderBody || tag,
       (v: any) => v,
     );
@@ -76,7 +71,6 @@ describe("translator-interop", () => {
       const config: TestConfig = (() => {
         try {
           return require(resolve("test.ts"));
-          // eslint-disable-next-line no-empty
         } catch {
           return {};
         }
@@ -89,7 +83,10 @@ describe("translator-interop", () => {
         });
 
       const snapAllTemplates = async (compilerConfig: compiler.Config) => {
-        const additionalMarkoFiles = await glob(resolve("**/*.marko"));
+        const additionalMarkoFiles = await glob(resolve("**/*.marko"), {
+          absolute: true,
+          cwd: fixtureDir,
+        });
         const finalConfig: compiler.Config = {
           ...compilerConfig,
           resolveVirtualDependency(_filename, { code, virtualPath }) {
@@ -99,21 +96,41 @@ describe("translator-interop", () => {
         const errors: Error[] = [];
 
         for (const file of additionalMarkoFiles) {
-          let name = path.relative(fixtureDir, file);
+          const name = path.relative(fixtureDir, file);
+          let snapName = name;
           let targetSnap: typeof snap.catch = snap;
           if (
             config.error_compiler === true ||
-            config.error_compiler?.includes(name)
+            config.error_compiler?.includes(snapName)
           ) {
-            name = name.replace(".marko", ".error.txt");
+            snapName = snapName.replace(".marko", ".error.txt");
             targetSnap = snap.catch;
           } else {
-            name = name.replace(".marko", ".js");
+            snapName = snapName.replace(".marko", ".js");
           }
           await targetSnap(() => compileCode(file, finalConfig), {
-            file: name,
+            file: snapName,
             dir: fixtureDir,
           });
+
+          if (
+            compilerConfig.output === "dom" &&
+            file === templateFile &&
+            !config.skip_resume &&
+            !config.error_compiler
+          ) {
+            await targetSnap(
+              () =>
+                compileCode(file, {
+                  ...finalConfig,
+                  output: "hydrate",
+                }),
+              {
+                file: name.replace(".marko", ".hydrate.js"),
+                dir: fixtureDir,
+              },
+            );
+          }
         }
 
         if (errors.length === 1) {
@@ -157,14 +174,9 @@ describe("translator-interop", () => {
         const tracker = createMutationTracker(browser.window, document);
 
         try {
-          const iteratable = serverTemplate.render(input);
-          for await (const data of iteratable) {
-            buffer += data;
-            tracker.log(
-              `# Write\n${indent(
-                data.replace(reorderRuntimeString, "REORDER_RUNTIME"),
-              )}`,
-            );
+          for await (const chunk of serverTemplate.render(input)) {
+            buffer += chunk;
+            tracker.log(`# Write\n${indent(stripInlineRuntime(chunk))}`);
           }
           document.write(`<html><body>${buffer}</body></html>`);
           document.close();

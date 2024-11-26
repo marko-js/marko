@@ -1,5 +1,5 @@
 # Write
-  <div></div><div></div><script>(M$h=[]).push((b,s)=>({0:{"#childScope/0":void 0,"#childScope/1":void 0}}),[])</script>
+  <div></div><div></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:{"#childScope/0":_.a={},"#childScope/1":_.b={}},1:_.a,2:_.b}),0]</script>
 
 
 # Render "End"
@@ -10,7 +10,7 @@
     <div />
     <div />
     <script>
-      (M$h=[]).push((b,s)=&gt;({0:{"#childScope/0":void 0,"#childScope/1":void 0}}),[])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{"#childScope/0":_.a={},"#childScope/1":_.b={}},1:_.a,2:_.b}),0]
     </script>
   </body>
 </html>

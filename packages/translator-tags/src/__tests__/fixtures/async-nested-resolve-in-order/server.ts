@@ -1,4 +1,5 @@
 import { createTemplate, fork, write } from "@marko/runtime-tags/html";
+
 import { resolveAfter } from "../../utils/resolve";
 
 const renderer = () => {
@@ -24,4 +25,4 @@ const renderer = () => {
   });
 };
 
-export default createTemplate(renderer);
+export default createTemplate("", renderer);

@@ -9,7 +9,8 @@ import {
   parseTypeParams,
   parseVar,
 } from "@marko/babel-utils";
-import { TagType, createParser } from "htmljs-parser";
+import { createParser, TagType } from "htmljs-parser";
+
 import * as t from "../babel-types";
 
 const noop = () => {};
@@ -48,7 +49,28 @@ export function parseMarko(file) {
     return node;
   };
   const enterTag = (node) => {
-    currentTag = currentBody.pushContainer("body", node)[0];
+    if (isAttrTag(node)) {
+      if (currentTag === file.path) {
+        throw file.buildCodeFrameError(
+          node.name,
+          "@tags must be nested within another element.",
+        );
+      }
+
+      let previousSiblingIndex = currentBody.length;
+      while (previousSiblingIndex) {
+        let previousSibling = currentBody[--previousSiblingIndex];
+        if (!t.isMarkoComment(previousSibling)) {
+          break;
+        }
+        currentTag.pushContainer("attributeTags", previousSibling.node);
+        currentBody.get("body").get(previousSiblingIndex).remove();
+      }
+
+      currentTag = currentTag.pushContainer("attributeTags", node)[0];
+    } else {
+      currentTag = currentBody.pushContainer("body", node)[0];
+    }
     currentBody = currentTag.get("body");
     onNext(node);
   };
@@ -250,7 +272,8 @@ export function parseMarko(file) {
       const tagName = parseTemplateString(part);
       const node = t.markoTag(tagName, [], t.markoTagBody());
       let parseType = TagType.html;
-      node.start = part.start - (part.concise ? 0 : 1); // Account for leading `<`.
+      node.start =
+        part.start - (part.start && code[part.start - 1] === "<" ? 1 : 0); // Account for leading `<` in html mode.
       node.end = part.end;
 
       if (t.isStringLiteral(tagName)) {
@@ -494,7 +517,8 @@ export function parseMarko(file) {
     },
     onCloseTagEnd(part) {
       const { node } = currentTag;
-      const parserPlugin = node.tagDef?.parser;
+      const tagDef = node.tagDef;
+      const parserPlugin = tagDef?.parser;
       if (preservingWhitespaceUntil === node) {
         preservingWhitespaceUntil = undefined;
       }
@@ -508,9 +532,70 @@ export function parseMarko(file) {
         (hook.default || hook)(currentTag, t);
       }
 
-      currentTag = currentTag.parentPath.parentPath;
+      const parentTag = isAttrTag(node)
+        ? currentTag.parentPath
+        : currentTag.parentPath.parentPath;
+      const { attributeTags } = node;
 
-      if (currentTag) {
+      if (attributeTags.length) {
+        const isControlFlow = tagDef?.parseOptions?.controlFlow;
+
+        if (node.body.body.length) {
+          const body = [];
+          // When we have a control flow with mixed body and attribute tag content
+          // we move any scriptlets, comments or empty nested control flow.
+          // This is because they initially ambiguous as to whether
+          // they are part of the body or the attributeTags.
+          // Otherwise we only move scriptlets.
+          for (const child of node.body.body) {
+            if (
+              t.isMarkoScriptlet(child) ||
+              (isControlFlow && t.isMarkoComment(child))
+            ) {
+              attributeTags.push(child);
+            } else if (
+              isControlFlow &&
+              child.tagDef?.controlFlow &&
+              !child.body.body.length
+            ) {
+              child.body.attributeTags = true;
+              attributeTags.push(child);
+            } else {
+              body.push(child);
+            }
+          }
+
+          if (isControlFlow) {
+            if (body.length) {
+              onNext();
+              throw file.buildCodeFrameError(
+                body[0],
+                "Cannot have attribute tags and body content under a control flow tag.",
+              );
+            }
+
+            node.attributeTags = body;
+            node.body.body = attributeTags;
+            node.body.attributeTags = true;
+          } else {
+            node.body.body = body;
+          }
+
+          attributeTags.sort(sortByStart);
+        } else if (isControlFlow) {
+          node.attributeTags = [];
+          node.body.body = attributeTags;
+          node.body.attributeTags = true;
+        }
+
+        if (isControlFlow) {
+          currentTag.remove();
+          parentTag.pushContainer("attributeTags", node);
+        }
+      }
+
+      if (parentTag) {
+        currentTag = parentTag;
         currentBody = currentTag.get("body");
       } else {
         currentTag = currentBody = file.path;
@@ -531,4 +616,8 @@ export function parseMarko(file) {
     start: { line: 1, column: 0 },
     end: positionAt(ast.end),
   };
+}
+
+function sortByStart(a, b) {
+  return a.start - b.start;
 }

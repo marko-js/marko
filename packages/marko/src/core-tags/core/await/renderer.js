@@ -1,4 +1,5 @@
 "use strict";
+// eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
 var AsyncValue = require("./AsyncValue");
 
@@ -106,6 +107,7 @@ module.exports = function awaitTag(input, out) {
   };
 
   if (clientReorder) {
+    awaitInfo.parent = out;
     awaitInfo.after = input.showAfter;
 
     clientReorderContext =

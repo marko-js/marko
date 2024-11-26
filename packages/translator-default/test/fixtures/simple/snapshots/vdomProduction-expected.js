@@ -1,7 +1,8 @@
 import { t as _t } from "marko/dist/runtime/vdom/index.js";
-const _marko_componentType = "NRekT+g6",
+const _marko_componentType = "BJGcVss",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
+import _of_fallback from "marko/dist/runtime/helpers/of-fallback.js";
 import _marko_constElement from "marko/dist/runtime/vdom/helpers/const-element.js";
 const _marko_node = _marko_constElement("div", null, 1).t("No colors!");
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
@@ -16,7 +17,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     out.be("ul", null, "0", _component, null, 0);
     {
       let _keyValue = 0;
-      for (const color of input.colors || []) {
+      for (const color of _of_fallback(input.colors)) {
         const _keyScope = `[${_keyValue++}]`;
         out.be("li", null, "1" + _keyScope, _component, null, 0);
         out.t(color, _component);

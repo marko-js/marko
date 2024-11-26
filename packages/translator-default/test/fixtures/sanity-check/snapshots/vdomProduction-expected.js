@@ -1,5 +1,5 @@
 import { t as _t } from "marko/dist/runtime/vdom/index.js";
-const _marko_componentType = "OLFRWJ/R",
+const _marko_componentType = "dyODUjm",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import a from "b";
@@ -134,6 +134,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     "id": "a"
   }), "18", _component, null, 4);
   out.t(a, _component);
+  out.comment("abc", _component);
   out.n(_marko_node7, _component);
   out.n(_marko_node8, _component);
   if (x === a) {

@@ -1,25 +1,26 @@
-import { markResumeNode as _markResumeNode, write as _write, escapeXML as _escapeXML, serializedScope as _serializedScope, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, register as _register, markResumeControlSingleNodeEnd as _markResumeControlSingleNodeEnd, writeEffect as _writeEffect, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
   const show = true;
   const message = "hi";
-  _write(`<button></button>${_markResumeNode(_scope0_id, "#button/0")}`);
-  let _ifScopeId, _scope1_, _ifRenderer;
+  _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
+  let _ifScopeId, _ifRenderer;
   if (show) {
-    const _scope1_id = _nextScopeId();
-    _write(`<span>${_escapeXML(message)}${_markResumeNode(_scope1_id, "#text/0")}</span>`);
-    _writeScope(_scope1_id, _scope1_ = {
-      "_": _serializedScope(_scope0_id)
+    const _scope1_id = _$.nextScopeId();
+    _$.write(`<span>${_$.escapeXML(message)}${_$.markResumeNode(_scope1_id, "#text/0")}</span>`);
+    _$.writeScope(_scope1_id, {
+      "_": _$.ensureScopeWithId(_scope0_id)
     });
-    _register(_ifRenderer = /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_1_renderer");
+    _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
-  _write(`${_markResumeControlSingleNodeEnd(_scope0_id, "#text/1", _ifScopeId)}`);
-  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_0_show");
-  _writeScope(_scope0_id, {
+  _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/1", _ifScopeId)}`);
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_0_show");
+  _$.writeScope(_scope0_id, {
     "show": show,
-    "#text/1!": _scope1_,
-    "#text/1(": _ifRenderer
+    "message": message,
+    "#text/1(": _ifRenderer,
+    "#text/1!": _$.getScopeById(_ifScopeId)
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko", _renderer);

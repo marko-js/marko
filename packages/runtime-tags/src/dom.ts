@@ -1,70 +1,73 @@
+export { attrTag, attrTags } from "./common/attr-tag";
+export { forIn, forOf, forTo } from "./common/for";
+export type { Scope } from "./common/types";
+export { getAbortSignal, resetAbortSignal } from "./dom/abort-signal";
+export { compat } from "./dom/compat";
 export {
   conditional,
   conditionalOnlyChild,
   inConditionalScope,
-  loopOf,
-  loopIn,
-  loopTo,
   inLoopScope,
+  loopIn,
+  loopOf,
+  loopTo,
 } from "./dom/control-flow";
-
 export {
-  data,
-  html,
+  controllable_detailsOrDialog_open,
+  controllable_detailsOrDialog_open_effect,
+  controllable_input_checked,
+  controllable_input_checked_effect,
+  controllable_input_checkedValue,
+  controllable_input_checkedValue_effect,
+  controllable_input_value,
+  controllable_input_value_effect,
+  controllable_select_value,
+  controllable_select_value_effect,
+  controllable_textarea_value,
+  controllable_textarea_value_effect,
+} from "./dom/controllable";
+export {
   attr,
   attrs,
+  attrsEvents,
   classAttr,
-  styleAttr,
-  props,
+  data,
+  html,
   lifecycle,
+  partialAttrs,
+  props,
+  styleAttr,
 } from "./dom/dom";
-
-export { resetAbortSignal, getAbortSignal } from "./dom/abort-signal";
-
 export { on } from "./dom/event";
-
-export {
-  init,
-  register,
-  registerSubscriber,
-  getRegisteredWithScope,
-  scopeLookup,
-} from "./dom/resume";
-
-export {
-  queueSource,
-  queueEffect,
-  run,
-  prepare,
-  runEffects,
-} from "./dom/queue";
-
-export { write, bindFunction, bindRenderer, createScope } from "./dom/scope";
-
-export type { Scope } from "./common/types";
-
+export { run } from "./dom/queue";
 export {
   createRenderer,
+  createRendererWithOwner,
   dynamicTagAttrs,
-  createScopeWithRenderer,
 } from "./dom/renderer";
-
-export { createTemplate } from "./dom/template";
-
 export {
-  value,
-  initValue,
-  intersection,
+  init,
+  nodeRef,
+  register,
+  registerBoundSignal,
+  registerSubscriber,
+} from "./dom/resume";
+export { createScope } from "./dom/scope";
+export {
+  childClosures,
   closure,
   dynamicClosure,
   dynamicSubscribers,
-  childClosures,
-  setTagVar,
-  tagVarSignal,
-  nextTagId,
+  effect,
   inChild,
-  values,
+  intersection,
   intersections,
+  nextTagId,
+  setTagVar,
+  setTagVarChange,
+  state,
+  tagVarSignal,
+  tagVarSignalChange,
+  value,
 } from "./dom/signals";
-
-export { compat } from "./dom/compat";
+export { createTemplate } from "./dom/template";

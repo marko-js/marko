@@ -1,11 +1,11 @@
-import { markResumeNode as _markResumeNode, write as _write, writeEffect as _writeEffect, writeScope as _writeScope, nextScopeId as _nextScopeId, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
   const clickCount = 0;
-  _write(`<div><button id=button>0</button>${_markResumeNode(_scope0_id, "#button/0")}</div>`);
-  _writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount");
-  _writeScope(_scope0_id, {
+  _$.write(`<div><button id=button>0</button>${_$.markResumeNode(_scope0_id, "#button/0")}</div>`);
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/effect-counter/template.marko_0_clickCount");
+  _$.writeScope(_scope0_id, {
     "clickCount": clickCount
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/effect-counter/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/effect-counter/template.marko", _renderer);

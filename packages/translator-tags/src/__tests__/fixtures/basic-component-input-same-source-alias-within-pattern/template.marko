@@ -1,0 +1,11 @@
+<let/clickCount = 0/>
+<my-button 
+  value={ text: clickCount }
+  onClick() {
+    clickCount++
+  }
+/>
+
+<my-button  onClick() { clickCount++ }>
+  <@value text=clickCount/>
+</>

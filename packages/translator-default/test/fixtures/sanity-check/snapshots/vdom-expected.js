@@ -117,6 +117,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     "id": "a"
   }), "18", _component, null, 4);
   out.t(a, _component);
+  out.comment("abc", _component);
   out.e("div", {
     "c": "1"
   }, "19", _component, 0, 0);

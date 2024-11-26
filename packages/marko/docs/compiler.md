@@ -206,6 +206,13 @@ Default: [environment based](https://github.com/marko-js/marko/blob/0f212897d2d3
 
 Enables production mode optimizations.
 
+#### `optimizeKnownTemplates`
+
+Type: `string[]`<br>
+Default: `undefined`
+
+If `optimize` is enabled you can provide an array of template paths which the compiler will use to generate shorter registry/template ids using incrementing ids. This can only be used if the same `optimizeKnownTemplates` are used for both server and client compilations.
+
 #### `resolveVirtualDependency`
 
 Type:

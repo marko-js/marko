@@ -4,6 +4,7 @@ import {
   tryCatch,
   write,
 } from "@marko/runtime-tags/html";
+
 import { rejectAfter, resolveAfter } from "../../utils/resolve";
 
 const renderer = () => {
@@ -15,7 +16,7 @@ const renderer = () => {
       write("d");
     },
     (err) => {
-      write(err.message);
+      write((err as Error).message);
     },
   );
   write("e");
@@ -23,4 +24,4 @@ const renderer = () => {
   write("g");
 };
 
-export default createTemplate(renderer);
+export default createTemplate("", renderer);

@@ -1,33 +1,33 @@
 # Write
-  <!M[1><div>1<!M*1 #text/0>|<!>Hello<!M*1 #text/1>|<!>1<!M*1 #text/2></div><!M]0 #text/0><button>1<!M*0 #text/2></button><!M*0 #button/1><script>(M$h=[]).push((b,s,h)=>({0:{x:1,"#text/0!":h={}},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_0_x",])</script>
+  <!--M_[1--><div>1<!--M_*1 #text/0-->|<!>Hello<!--M_*1 #text/1-->|<!>1<!--M_*1 #text/2--></div><!--M_]0 #text/0--><button>1<!--M_*0 #text/2--></button><!--M_*0 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:_.a={x:1,"#text/0!":_.b={}},1:_.b},_.a["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_1_renderer"](_.a),_.c),0,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_0_x",0];M._.w()</script>
 
 
 # Render "End"
 ```html
-<!--M[1-->
+<!--M_[1-->
 <html>
   <head />
   <body>
     <div>
       1
-      <!--M*1 #text/0-->
+      <!--M_*1 #text/0-->
       |
       <!---->
       Hello
-      <!--M*1 #text/1-->
+      <!--M_*1 #text/1-->
       |
       <!---->
       1
-      <!--M*1 #text/2-->
+      <!--M_*1 #text/2-->
     </div>
-    <!--M]0 #text/0-->
+    <!--M_]0 #text/0-->
     <button>
       1
-      <!--M*0 #text/2-->
+      <!--M_*0 #text/2-->
     </button>
-    <!--M*0 #button/1-->
+    <!--M_*0 #button/1-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{x:1,"#text/0!":h={}},1:h}),[0,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_0_x",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={x:1,"#text/0!":_.b={}},1:_.b},_.a["#text/0("]=_._["packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_1_renderer"](_.a),_.c),0,"packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

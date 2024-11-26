@@ -5,67 +5,66 @@
   <body>
     <button>
       1
-      <!--M*1 #text/1-->
+      <!--M_*1 #text/1-->
     </button>
-    <!--M*1 #button/0-->
+    <!--M_*1 #button/0-->
     <button>
       2
-      <!--M*2 #text/1-->
+      <!--M_*2 #text/1-->
     </button>
-    <!--M*2 #button/0-->
+    <!--M_*2 #button/0-->
     <button>
       3
-      <!--M*3 #text/1-->
+      <!--M_*3 #text/1-->
     </button>
-    <!--M*3 #button/0-->
+    <!--M_*3 #button/0-->
     <button>
       4
-      <!--M*4 #text/1-->
+      <!--M_*4 #text/1-->
     </button>
-    <!--M*4 #button/0-->
+    <!--M_*4 #button/0-->
     <button>
       5
-      <!--M*5 #text/1-->
+      <!--M_*5 #text/1-->
     </button>
-    <!--M*5 #button/0-->
+    <!--M_*5 #button/0-->
     <button>
       6
-      <!--M*6 #text/1-->
+      <!--M_*6 #text/1-->
     </button>
-    <!--M*6 #button/0-->
+    <!--M_*6 #button/0-->
     <button>
       7
-      <!--M*7 #text/1-->
+      <!--M_*7 #text/1-->
     </button>
-    <!--M*7 #button/0-->
+    <!--M_*7 #button/0-->
     <button>
       8
-      <!--M*8 #text/1-->
+      <!--M_*8 #text/1-->
     </button>
-    <!--M*8 #button/0-->
+    <!--M_*8 #button/0-->
     <button>
       9
-      <!--M*9 #text/1-->
+      <!--M_*9 #text/1-->
     </button>
-    <!--M*9 #button/0-->
+    <!--M_*9 #button/0-->
     <button>
       10
-      <!--M*10 #text/1-->
+      <!--M_*10 #text/1-->
     </button>
-    <!--M*10 #button/0-->
+    <!--M_*10 #button/0-->
     <button>
       11
-      <!--M*11 #text/1-->
+      <!--M_*11 #text/1-->
     </button>
-    <!--M*11 #button/0-->
+    <!--M_*11 #button/0-->
     <button>
       12
-      <!--M*12 #text/1-->
+      <!--M_*12 #text/1-->
     </button>
-    <!--M*12 #button/0-->
-    <!--M|0 #text/0 1,2,3,4,5,6,7,8,9,10,11,12-->
+    <!--M_*12 #button/0-->
     <script>
-      (M$h=[]).push((b,s,h,j,k,m,o,q,u,x,z,A,B,C,D,E)=&gt;(E={0:h={"#text/0(":new Map([[0,j={num:1}],[1,k={num:2}],[2,m={num:3}],[3,o={num:4}],[4,q={num:5}],[5,u={num:6}],[6,x={num:7}],[7,z={num:8}],[8,A={num:9}],[9,B={num:10}],[10,C={num:11}],[11,D={num:12}]]),selected:0},1:j,2:k,3:m,4:o,5:q,6:u,7:x,8:z,9:A,10:B,11:C,12:D},j._=k._=m._=o._=q._=u._=x._=z._=A._=B._=C._=D._=h,E),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",3,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",4,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",5,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",6,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",7,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",8,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",9,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",10,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",11,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",12,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.o={0:_.b={"#text/0(":new Map(_.a=[[0,_.c={num:1}],[1,_.d={num:2}],[2,_.e={num:3}],[3,_.f={num:4}],[4,_.g={num:5}],[5,_.h={num:6}],[6,_.i={num:7}],[7,_.j={num:8}],[8,_.k={num:9}],[9,_.l={num:10}],[10,_.m={num:11}],[11,_.n={num:12}]])},1:_.c,2:_.d,3:_.e,4:_.f,5:_.g,6:_.h,7:_.i,8:_.j,9:_.k,10:_.l,11:_.m,12:_.n},_.c._=_.d._=_.e._=_.f._=_.g._=_.h._=_.i._=_.j._=_.k._=_.l._=_.m._=_.n._=_.b,_.o),1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",3,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",4,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",5,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",6,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",7,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",8,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",9,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",10,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",11,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",12,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",0];M._.w()
     </script>
   </body>
 </html>
@@ -86,80 +85,79 @@ c => click(c, 2)
   <body>
     <button>
       1
-      <!--M*1 #text/1-->
+      <!--M_*1 #text/1-->
     </button>
-    <!--M*1 #button/0-->
+    <!--M_*1 #button/0-->
     <button
       data-multiple=""
       data-selected=""
     >
       2
-      <!--M*2 #text/1-->
+      <!--M_*2 #text/1-->
     </button>
-    <!--M*2 #button/0-->
+    <!--M_*2 #button/0-->
     <button>
       3
-      <!--M*3 #text/1-->
+      <!--M_*3 #text/1-->
     </button>
-    <!--M*3 #button/0-->
+    <!--M_*3 #button/0-->
     <button
       data-multiple=""
     >
       4
-      <!--M*4 #text/1-->
+      <!--M_*4 #text/1-->
     </button>
-    <!--M*4 #button/0-->
+    <!--M_*4 #button/0-->
     <button>
       5
-      <!--M*5 #text/1-->
+      <!--M_*5 #text/1-->
     </button>
-    <!--M*5 #button/0-->
+    <!--M_*5 #button/0-->
     <button
       data-multiple=""
     >
       6
-      <!--M*6 #text/1-->
+      <!--M_*6 #text/1-->
     </button>
-    <!--M*6 #button/0-->
+    <!--M_*6 #button/0-->
     <button>
       7
-      <!--M*7 #text/1-->
+      <!--M_*7 #text/1-->
     </button>
-    <!--M*7 #button/0-->
+    <!--M_*7 #button/0-->
     <button
       data-multiple=""
     >
       8
-      <!--M*8 #text/1-->
+      <!--M_*8 #text/1-->
     </button>
-    <!--M*8 #button/0-->
+    <!--M_*8 #button/0-->
     <button>
       9
-      <!--M*9 #text/1-->
+      <!--M_*9 #text/1-->
     </button>
-    <!--M*9 #button/0-->
+    <!--M_*9 #button/0-->
     <button
       data-multiple=""
     >
       10
-      <!--M*10 #text/1-->
+      <!--M_*10 #text/1-->
     </button>
-    <!--M*10 #button/0-->
+    <!--M_*10 #button/0-->
     <button>
       11
-      <!--M*11 #text/1-->
+      <!--M_*11 #text/1-->
     </button>
-    <!--M*11 #button/0-->
+    <!--M_*11 #button/0-->
     <button
       data-multiple=""
     >
       12
-      <!--M*12 #text/1-->
+      <!--M_*12 #text/1-->
     </button>
-    <!--M*12 #button/0-->
-    <!--M|0 #text/0 1,2,3,4,5,6,7,8,9,10,11,12-->
+    <!--M_*12 #button/0-->
     <script>
-      (M$h=[]).push((b,s,h,j,k,m,o,q,u,x,z,A,B,C,D,E)=&gt;(E={0:h={"#text/0(":new Map([[0,j={num:1}],[1,k={num:2}],[2,m={num:3}],[3,o={num:4}],[4,q={num:5}],[5,u={num:6}],[6,x={num:7}],[7,z={num:8}],[8,A={num:9}],[9,B={num:10}],[10,C={num:11}],[11,D={num:12}]]),selected:0},1:j,2:k,3:m,4:o,5:q,6:u,7:x,8:z,9:A,10:B,11:C,12:D},j._=k._=m._=o._=q._=u._=x._=z._=A._=B._=C._=D._=h,E),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",3,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",4,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",5,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",6,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",7,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",8,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",9,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",10,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",11,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",12,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.o={0:_.b={"#text/0(":new Map(_.a=[[0,_.c={num:1}],[1,_.d={num:2}],[2,_.e={num:3}],[3,_.f={num:4}],[4,_.g={num:5}],[5,_.h={num:6}],[6,_.i={num:7}],[7,_.j={num:8}],[8,_.k={num:9}],[9,_.l={num:10}],[10,_.m={num:11}],[11,_.n={num:12}]])},1:_.c,2:_.d,3:_.e,4:_.f,5:_.g,6:_.h,7:_.i,8:_.j,9:_.k,10:_.l,11:_.m,12:_.n},_.c._=_.d._=_.e._=_.f._=_.g._=_.h._=_.i._=_.j._=_.k._=_.l._=_.m._=_.n._=_.b,_.o),1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",3,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",4,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",5,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",6,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",7,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",8,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",9,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",10,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",11,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",12,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",0];M._.w()
     </script>
   </body>
 </html>
@@ -186,76 +184,75 @@ c => click(c, 3)
   <body>
     <button>
       1
-      <!--M*1 #text/1-->
+      <!--M_*1 #text/1-->
     </button>
-    <!--M*1 #button/0-->
+    <!--M_*1 #button/0-->
     <button>
       2
-      <!--M*2 #text/1-->
+      <!--M_*2 #text/1-->
     </button>
-    <!--M*2 #button/0-->
+    <!--M_*2 #button/0-->
     <button
       data-multiple=""
       data-selected=""
     >
       3
-      <!--M*3 #text/1-->
+      <!--M_*3 #text/1-->
     </button>
-    <!--M*3 #button/0-->
+    <!--M_*3 #button/0-->
     <button>
       4
-      <!--M*4 #text/1-->
+      <!--M_*4 #text/1-->
     </button>
-    <!--M*4 #button/0-->
+    <!--M_*4 #button/0-->
     <button>
       5
-      <!--M*5 #text/1-->
+      <!--M_*5 #text/1-->
     </button>
-    <!--M*5 #button/0-->
+    <!--M_*5 #button/0-->
     <button
       data-multiple=""
     >
       6
-      <!--M*6 #text/1-->
+      <!--M_*6 #text/1-->
     </button>
-    <!--M*6 #button/0-->
+    <!--M_*6 #button/0-->
     <button>
       7
-      <!--M*7 #text/1-->
+      <!--M_*7 #text/1-->
     </button>
-    <!--M*7 #button/0-->
+    <!--M_*7 #button/0-->
     <button>
       8
-      <!--M*8 #text/1-->
+      <!--M_*8 #text/1-->
     </button>
-    <!--M*8 #button/0-->
+    <!--M_*8 #button/0-->
     <button
       data-multiple=""
     >
       9
-      <!--M*9 #text/1-->
+      <!--M_*9 #text/1-->
     </button>
-    <!--M*9 #button/0-->
+    <!--M_*9 #button/0-->
     <button>
       10
-      <!--M*10 #text/1-->
+      <!--M_*10 #text/1-->
     </button>
-    <!--M*10 #button/0-->
+    <!--M_*10 #button/0-->
     <button>
       11
-      <!--M*11 #text/1-->
+      <!--M_*11 #text/1-->
     </button>
-    <!--M*11 #button/0-->
+    <!--M_*11 #button/0-->
     <button
       data-multiple=""
     >
       12
-      <!--M*12 #text/1-->
+      <!--M_*12 #text/1-->
     </button>
-    <!--M*12 #button/0-->
-    <!--M|0 #text/0 1,2,3,4,5,6,7,8,9,10,11,12-->
+    <!--M_*12 #button/0-->
     <script>
-      (M$h=[]).push((b,s,h,j,k,m,o,q,u,x,z,A,B,C,D,E)=&gt;(E={0:h={"#text/0(":new Map([[0,j={num:1}],[1,k={num:2}],[2,m={num:3}],[3,o={num:4}],[4,q={num:5}],[5,u={num:6}],[6,x={num:7}],[7,z={num:8}],[8,A={num:9}],[9,B={num:10}],[10,C={num:11}],[11,D={num:12}]]),selected:0},1:j,2:k,3:m,4:o,5:q,6:u,7:x,8:z,9:A,10:B,11:C,12:D},j._=k._=m._=o._=q._=u._=x._=z._=A._=B._=C._=D._=h,E),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",3,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",4,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",5,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",6,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",7,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",8,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",9,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",10,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",11,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",12,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.o={0:_.b={"#text/0(":new Map(_.a=[[0,_.c={num:1}],[1,_.d={num:2}],[2,_.e={num:3}],[3,_.f={num:4}],[4,_.g={num:5}],[5,_.h={num:6}],[6,_.i={num:7}],[7,_.j={num:8}],[8,_.k={num:9}],[9,_.l={num:10}],[10,_.m={num:11}],[11,_.n={num:12}]])},1:_.c,2:_.d,3:_.e,4:_.f,5:_.g,6:_.h,7:_.i,8:_.j,9:_.k,10:_.l,11:_.m,12:_.n},_.c._=_.d._=_.e._=_.f._=_.g._=_.h._=_.i._=_.j._=_.k._=_.l._=_.m._=_.n._=_.b,_.o),1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",3,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",4,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",5,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",6,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",7,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",8,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",9,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",10,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",11,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",12,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",0];M._.w()
     </script>
   </body>
 </html>
@@ -268,11 +265,9 @@ c => click(c, 3)
 #document/html0/body1/button4: attr(data-selected) null => ""
 #document/html0/body1/button4: attr(data-multiple) null => ""
 #document/html0/body1/button6: attr(data-multiple) "" => null
-#document/html0/body1/button10: attr(data-multiple) "" => ""
 #document/html0/body1/button14: attr(data-multiple) "" => null
 #document/html0/body1/button16: attr(data-multiple) null => ""
 #document/html0/body1/button18: attr(data-multiple) "" => null
-#document/html0/body1/button22: attr(data-multiple) "" => ""
 ```
 
 
@@ -285,72 +280,71 @@ c => click(c, 5)
   <body>
     <button>
       1
-      <!--M*1 #text/1-->
+      <!--M_*1 #text/1-->
     </button>
-    <!--M*1 #button/0-->
+    <!--M_*1 #button/0-->
     <button>
       2
-      <!--M*2 #text/1-->
+      <!--M_*2 #text/1-->
     </button>
-    <!--M*2 #button/0-->
+    <!--M_*2 #button/0-->
     <button>
       3
-      <!--M*3 #text/1-->
+      <!--M_*3 #text/1-->
     </button>
-    <!--M*3 #button/0-->
+    <!--M_*3 #button/0-->
     <button>
       4
-      <!--M*4 #text/1-->
+      <!--M_*4 #text/1-->
     </button>
-    <!--M*4 #button/0-->
+    <!--M_*4 #button/0-->
     <button
       data-multiple=""
       data-selected=""
     >
       5
-      <!--M*5 #text/1-->
+      <!--M_*5 #text/1-->
     </button>
-    <!--M*5 #button/0-->
+    <!--M_*5 #button/0-->
     <button>
       6
-      <!--M*6 #text/1-->
+      <!--M_*6 #text/1-->
     </button>
-    <!--M*6 #button/0-->
+    <!--M_*6 #button/0-->
     <button>
       7
-      <!--M*7 #text/1-->
+      <!--M_*7 #text/1-->
     </button>
-    <!--M*7 #button/0-->
+    <!--M_*7 #button/0-->
     <button>
       8
-      <!--M*8 #text/1-->
+      <!--M_*8 #text/1-->
     </button>
-    <!--M*8 #button/0-->
+    <!--M_*8 #button/0-->
     <button>
       9
-      <!--M*9 #text/1-->
+      <!--M_*9 #text/1-->
     </button>
-    <!--M*9 #button/0-->
+    <!--M_*9 #button/0-->
     <button
       data-multiple=""
     >
       10
-      <!--M*10 #text/1-->
+      <!--M_*10 #text/1-->
     </button>
-    <!--M*10 #button/0-->
+    <!--M_*10 #button/0-->
     <button>
       11
-      <!--M*11 #text/1-->
+      <!--M_*11 #text/1-->
     </button>
-    <!--M*11 #button/0-->
+    <!--M_*11 #button/0-->
     <button>
       12
-      <!--M*12 #text/1-->
+      <!--M_*12 #text/1-->
     </button>
-    <!--M*12 #button/0-->
-    <!--M|0 #text/0 1,2,3,4,5,6,7,8,9,10,11,12-->
+    <!--M_*12 #button/0-->
     <script>
-      (M$h=[]).push((b,s,h,j,k,m,o,q,u,x,z,A,B,C,D,E)=&gt;(E={0:h={"#text/0(":new Map([[0,j={num:1}],[1,k={num:2}],[2,m={num:3}],[3,o={num:4}],[4,q={num:5}],[5,u={num:6}],[6,x={num:7}],[7,z={num:8}],[8,A={num:9}],[9,B={num:10}],[10,C={num:11}],[11,D={num:12}]]),selected:0},1:j,2:k,3:m,4:o,5:q,6:u,7:x,8:z,9:A,10:B,11:C,12:D},j._=k._=m._=o._=q._=u._=x._=z._=A._=B._=C._=D._=h,E),[1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",3,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",4,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",5,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",6,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",7,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",8,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",9,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",10,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",11,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",12,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.o={0:_.b={"#text/0(":new Map(_.a=[[0,_.c={num:1}],[1,_.d={num:2}],[2,_.e={num:3}],[3,_.f={num:4}],[4,_.g={num:5}],[5,_.h={num:6}],[6,_.i={num:7}],[7,_.j={num:8}],[8,_.k={num:9}],[9,_.l={num:10}],[10,_.m={num:11}],[11,_.n={num:12}]])},1:_.c,2:_.d,3:_.e,4:_.f,5:_.g,6:_.h,7:_.i,8:_.j,9:_.k,10:_.l,11:_.m,12:_.n},_.c._=_.d._=_.e._=_.f._=_.g._=_.h._=_.i._=_.j._=_.k._=_.l._=_.m._=_.n._=_.b,_.o),1,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",2,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",3,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",4,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",5,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",6,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",7,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",8,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",9,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",10,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",11,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",12,"packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num",0];M._.w()
     </script>
   </body>
 </html>

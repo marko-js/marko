@@ -1,0 +1,23 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "a",
+      "$init": "t",
+      "$_setup_$1": "e",
+      "$_value_$1": "o",
+      "$_input_$1": "i",
+      "$_params__$1": "l",
+      "$child1": "v",
+      "$_setup_": "n",
+      "$_value_": "r",
+      "$_input_": "c",
+      "$_params__": "d",
+      "$child2": "m",
+      "$_tagName_input": "s",
+      "$_expr_Text_val": "u",
+      "$_dynamicTagName": "f",
+      "$_tagName_effect": "h",
+      "$_tagName": "p"
+    }
+  }
+}

@@ -1,56 +1,188 @@
-import type {
-  Context,
-  Template,
-  Input,
-  TemplateInstance,
-  Renderer,
-  RenderResult,
-} from "../common/types";
-import { register } from "./serializer";
-import { type Writable, createRenderFn } from "./writer";
+import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
+import type { RenderResult, Template, TemplateInput } from "../common/types";
+import {
+  Boundary,
+  Chunk,
+  flushChunk,
+  offTick,
+  prepareChunk,
+  queueTick,
+  register,
+  State,
+} from "./writer";
 
-export const createTemplate = (renderer: Renderer, id = "") =>
-  register(new ServerTemplate(renderer), id);
+export type ServerRenderer = (...args: unknown[]) => unknown;
 
-interface Deferred<T> {
-  promise: Promise<T>;
-  resolve(value: T): void;
-  reject(reason?: any): void;
-}
+export const createTemplate = (
+  templateId: string,
+  renderer: ServerRenderer,
+) => {
+  (renderer as unknown as Template).render = render;
+  (renderer as unknown as any)._ = renderer; // This is added exclusively for the compat layer, maybe someday it can be removed.
 
-function deferred<T>(): Deferred<T> {
-  let resolve!: (value: T) => void;
-  let reject!: (reason?: any) => void;
-  const promise = new Promise<T>((res, rej) => {
-    resolve = res;
-    reject = rej;
-  });
-  return { promise, resolve, reject };
-}
-
-async function stringFromAsync(
-  iterable: AsyncIterable<string>,
-): Promise<string> {
-  let str = "";
-  for await (const part of iterable) {
-    str += part;
+  if (MARKO_DEBUG) {
+    (renderer as unknown as Template).mount = () => {
+      throw new Error(
+        `mount() is not implemented for the HTML compilation of a Marko template`,
+      );
+    };
   }
-  return str;
+
+  return register(renderer as unknown as Template, templateId);
+};
+
+function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
+  let { $global } = input;
+  if ($global) {
+    ({ $global, ...input } = input);
+    $global = {
+      runtimeId: DEFAULT_RUNTIME_ID,
+      renderId: DEFAULT_RENDER_ID,
+      ...$global,
+    };
+  } else {
+    $global = {
+      runtimeId: DEFAULT_RUNTIME_ID,
+      renderId: DEFAULT_RENDER_ID,
+    };
+  }
+
+  const head = new Chunk(
+    new Boundary(new State($global as State["$global"]), $global.signal),
+    null,
+    null,
+  );
+  head.render(this, input);
+  return new ServerRenderResult(head);
 }
 
 class ServerRenderResult implements RenderResult {
-  #iterable: AsyncIterableIterator<string>;
-  #promise: Promise<string> | undefined;
-
-  constructor(iterable: AsyncIterableIterator<string>) {
-    this.#iterable = iterable;
+  #head: Chunk | null;
+  #cachedPromise: Promise<string> | null = null;
+  constructor(head: Chunk) {
+    this.#head = head;
   }
 
   [Symbol.asyncIterator]() {
-    return this.#iterable;
+    type Iter = { value: string; done: boolean };
+    let resolve: (value: Iter) => void;
+    let reject: (reason: unknown) => void;
+    let value = "";
+    let done = false;
+    let aborted = false;
+    let reason: unknown;
+    const boundary = this.#read(
+      (html) => {
+        value += html;
+        if (resolve) {
+          resolve({ value, done });
+          value = "";
+        }
+      },
+      (err) => {
+        aborted = true;
+        reason = err;
+
+        if (reject) {
+          reject(err);
+        }
+      },
+      () => {
+        done = true;
+        if (resolve) {
+          resolve({ value, done: !value });
+        }
+      },
+    );
+
+    return {
+      next() {
+        if (value) {
+          const result = { value, done: false };
+          value = "";
+          return Promise.resolve(result);
+        }
+
+        return done
+          ? Promise.resolve({ value: "", done })
+          : aborted
+            ? Promise.reject(reason)
+            : new Promise(exec);
+      },
+      throw(error: unknown) {
+        if (!(done || aborted)) {
+          boundary?.abort(error);
+        }
+
+        return Promise.resolve({
+          value: "",
+          done: true,
+        } as const);
+      },
+      return(value: unknown) {
+        if (!(done || aborted)) {
+          boundary?.abort(new Error("Iterator returned before consumed."));
+        }
+
+        return Promise.resolve({
+          value,
+          done: true,
+        } as const);
+      },
+    };
+
+    function exec(_resolve: typeof resolve, _reject: typeof reject) {
+      resolve = _resolve;
+      reject = _reject;
+    }
   }
 
-  [Symbol.toStringTag] = "RenderResult";
+  pipe(stream: {
+    write: (chunk: string) => void;
+    end: () => void;
+    flush?: () => void;
+    emit?: (eventName: string, ...args: any[]) => any;
+  }) {
+    this.#read(
+      (html) => {
+        stream.write(html);
+      },
+      (err) => {
+        const socket = ("socket" in stream && stream.socket) as
+          | Record<PropertyKey, unknown>
+          | undefined
+          | false;
+        if (socket && typeof socket.destroySoon === "function") {
+          socket.destroySoon();
+        }
+
+        if (!stream.emit?.("error", err)) {
+          throw err;
+        }
+      },
+      () => {
+        stream.end();
+      },
+    );
+  }
+
+  toReadable() {
+    return new ReadableStream({
+      start: (ctrl) => {
+        this.#read(
+          (html) => {
+            ctrl.enqueue(html);
+          },
+          (err) => {
+            ctrl.error(err);
+          },
+          () => {
+            ctrl.close();
+          },
+        );
+      },
+    });
+  }
 
   then<TResult1 = string, TResult2 = never>(
     onfulfilled?:
@@ -62,107 +194,95 @@ class ServerRenderResult implements RenderResult {
       | undefined
       | null,
   ): Promise<TResult1 | TResult2> {
-    return (this.#promise ||= stringFromAsync(this.#iterable)).then(
-      onfulfilled,
-      onrejected,
-    );
+    return this.#promise().then(onfulfilled, onrejected);
   }
 
   catch<TResult = never>(
     onrejected?:
-      | ((reason: any) => TResult | PromiseLike<TResult>)
+      | ((reason: unknown) => TResult | PromiseLike<TResult>)
       | undefined
       | null,
   ): Promise<string | TResult> {
-    return this.then(undefined, onrejected);
+    return this.#promise().catch(onrejected);
   }
 
   finally(onfinally?: (() => void) | undefined | null): Promise<string> {
-    return this.then(undefined, undefined).finally(onfinally);
+    return this.#promise().finally(onfinally);
   }
 
-  toReadable() {
-    return new ReadableStream({
-      start: async (controller) => {
-        try {
-          for await (const chunk of this.#iterable) {
-            if (chunk) {
-              controller.enqueue(chunk);
-            }
+  #promise() {
+    return (this.#cachedPromise ||= new Promise<string>((resolve, reject) => {
+      let head = this.#head!;
+      this.#head = null;
+
+      if (!head) {
+        return reject(new Error("Cannot read from a consumed render result"));
+      }
+
+      const { boundary } = head;
+      (boundary.onNext = () => {
+        if (boundary.done) {
+          if (boundary.signal.aborted) {
+            reject(boundary.signal.reason);
+          } else {
+            head = prepareChunk(head);
+            if (boundary.done) resolve(flushChunk(head, true));
           }
-          controller.close();
-        } catch (err) {
-          controller.error(err);
         }
-      },
-    });
-  }
-}
-
-export class ServerTemplate implements Template {
-  #writeTo: (writable: Writable, input?: Input, context?: Context) => void;
-
-  public _: Renderer;
-
-  constructor(renderer: Renderer) {
-    this._ = renderer;
-    this.#writeTo = createRenderFn(renderer);
+      })();
+    }));
   }
 
-  mount(): TemplateInstance {
-    throw new Error(
-      `mount() is not implemented for the HTML compilation of a Marko template`,
-    );
-  }
+  #read(
+    onWrite: (html: string) => void,
+    onAbort: (err: unknown) => void,
+    onClose: () => void,
+  ) {
+    let tick = true;
+    let head = this.#head!;
+    this.#head = null;
 
-  render(templateInput: Input = {}): RenderResult {
-    const { $global, ...input } = templateInput;
-    let buffer = "";
-    let done = false;
-    let pending = deferred<IteratorResult<string>>();
+    if (!head) {
+      onAbort(new Error("Cannot read from a consumed render result"));
+      return;
+    }
 
-    this.#writeTo(
-      {
-        write(data: string) {
-          buffer += data;
-        },
-        flush() {
-          pending.resolve({
-            value: buffer,
-            done: false,
-          });
-          buffer = "";
-          pending = deferred();
-        },
-        emit(name, error: Error) {
-          if (name === "error") {
-            pending.reject(error);
-          }
-        },
-        end() {
-          done = true;
-          pending.resolve({
-            value: "",
-            done,
-          });
-        },
-      },
-      input,
-      $global as Context,
-    );
-
-    return new ServerRenderResult({
-      [Symbol.asyncIterator]() {
-        return this;
-      },
-      async next() {
-        if (buffer || done) {
-          const value = buffer;
-          buffer = "";
-          return { value, done };
+    const { boundary } = head;
+    const onNext = (boundary.onNext = (write?: boolean) => {
+      if (write || boundary.done) {
+        if (boundary.signal.aborted) {
+          if (!tick) offTick(onNext);
+          onAbort(boundary.signal.reason);
+          return;
         }
-        return pending.promise;
-      },
+
+        head = prepareChunk(head);
+      }
+
+      if (write || boundary.done) {
+        const html = flushChunk(head, boundary.done);
+        if (html) onWrite(html);
+        if (boundary.done) {
+          if (!tick) offTick(onNext);
+          onClose();
+        } else {
+          tick = true;
+        }
+      } else if (tick) {
+        tick = false;
+        queueTick(onNext);
+      }
     });
+
+    onNext();
+    return boundary;
+  }
+
+  toString() {
+    const head = this.#head;
+    if (!head) throw new Error("Cannot read from a consumed render result");
+    if (head.next) throw new Error("Cannot fork in sync mode");
+    this.#head = null;
+    return flushChunk(prepareChunk(head), true);
   }
 }

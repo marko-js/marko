@@ -1,13 +1,9 @@
 import { types as t } from "@marko/compiler";
 import { WalkCode, WalkRangeSize } from "@marko/runtime-tags/common/types";
-import { ReserveType } from "../util/reserve";
-import {
-  type Section,
-  createSectionState,
-  getSection,
-  ContentType,
-} from "../util/sections";
+
+import { ContentType, getSection, type Section } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
+import { createSectionState } from "./state";
 import toTemplateOrStringLiteral, {
   appendLiteral,
 } from "./to-template-string-or-literal";
@@ -30,8 +26,6 @@ export enum Step {
 
 const walkCodeToName = {
   [WalkCode.Get]: "get",
-  [WalkCode.Before]: "before",
-  [WalkCode.After]: "after",
   [WalkCode.Inside]: "inside",
   [WalkCode.Replace]: "replace",
   [WalkCode.EndChild]: "endChild",
@@ -46,12 +40,7 @@ const walkCodeToName = {
   [WalkCode.MultiplierEnd]: "multiplierEnd",
 };
 
-type VisitCodes =
-  | WalkCode.Get
-  | WalkCode.Before
-  | WalkCode.After
-  | WalkCode.Inside
-  | WalkCode.Replace;
+type VisitCodes = WalkCode.Get | WalkCode.Inside | WalkCode.Replace;
 
 export function enter(path: t.NodePath<any>) {
   getSteps(getSection(path)).push(Step.Enter);
@@ -81,12 +70,12 @@ export function visit(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder | t.Program>,
   code?: VisitCodes,
 ) {
-  const { reserve } = path.node.extra!;
-  if (code && (!reserve || reserve.type !== ReserveType.Visit)) {
-    throw path.buildCodeFrameError(
-      "Tried to visit a node that was not marked as needing to visit during analyze.",
-    );
-  }
+  // const { binding } = path.node.extra!;
+  // if (code && (!binding || binding.type !== BindingType.dom)) {
+  //   throw path.buildCodeFrameError(
+  //     "Tried to visit a node that was not marked as needing to visit during analyze.",
+  //   );
+  // }
 
   if (isOutputHTML()) {
     return;
@@ -100,32 +89,32 @@ export function visit(
   let walkString = "";
 
   if (steps.length) {
-    const walks: WalkCode[] = [];
+    const walkCodes: WalkCode[] = [];
     let depth = 0;
 
     for (const step of steps) {
       if (step === Step.Enter) {
         depth++;
-        walks.push(WalkCode.Next);
+        walkCodes.push(WalkCode.Next);
       } else {
         depth--;
         if (depth >= 0) {
           // delete back to and including previous NEXT
-          walks.length = walks.lastIndexOf(WalkCode.Next);
-          walks.push(WalkCode.Over);
+          walkCodes.length = walkCodes.lastIndexOf(WalkCode.Next);
+          walkCodes.push(WalkCode.Over);
         } else {
           // delete back to previous OUT
-          walks.length = walks.lastIndexOf(WalkCode.Out) + 1;
-          walks.push(WalkCode.Out);
+          walkCodes.length = walkCodes.lastIndexOf(WalkCode.Out) + 1;
+          walkCodes.push(WalkCode.Out);
           depth = 0;
         }
       }
     }
 
-    let current = walks[0];
+    let current = walkCodes[0];
     let count = 0;
 
-    for (const walk of walks) {
+    for (const walk of walkCodes) {
       if (walk !== current) {
         walkComment.push(`${walkCodeToName[current]}(${count})`);
         walkString += nCodeString(current, count);
@@ -184,11 +173,11 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
 
 export function getWalkString(section: Section) {
   const prefix =
-    section.startNodeContentType === ContentType.Dynamic
+    section.content?.startType === ContentType.Dynamic
       ? String.fromCharCode(WalkCode.Next + 1)
       : "";
   const postfix =
-    section.endNodeContentType === ContentType.Dynamic
+    section.content?.endType === ContentType.Dynamic
       ? String.fromCharCode(WalkCode.Next + 1)
       : "";
   const walks = getWalks(section);

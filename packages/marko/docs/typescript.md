@@ -137,10 +137,9 @@ Marko exposes [type definitions](https://github.com/marko-js/marko/blob/main/pac
   - Helpers to extract the input and return types native tags (when a string is passed) or a custom tag.
 - **`Marko.BodyParameters<Body>`** and **`Marko.BodyReturnType<Body>`**
   - Helpers to extract the parameters and return types from the specified `Marko.Body`
-- **`Marko.AttrTag<T>`** and **`Marko.RepeatableAttrTag<T>`**
+- **`Marko.AttrTag<T>`**
   - Used to represent types for [attributes tags](./body-content.md#named-body-content)
-  - `Marko.AttrTag<T>`: A single attribute tag
-  - `Marko.RepeatableAttrTag<T>`: One or more attribute tags
+  - A single attribute tag, with a `[Symbol.iterator]` to consume any repeated tags.
 
 ### Typing `renderBody`
 
@@ -228,9 +227,9 @@ interface MyCustomElementAttributes {
 
 declare global {
   namespace Marko {
-    namespace NativeTags {
+    interface NativeTags {
       // By adding this entry, you can now use `my-custom-element` as a native html tag.
-      "my-custom-element": MyCustomElementAttributes
+      "my-custom-element": MyCustomElementAttributes;
     }
   }
 }

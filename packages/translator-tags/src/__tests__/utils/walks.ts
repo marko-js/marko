@@ -1,8 +1,6 @@
 // TODO: These are duped, but when deduped they break everything
 enum WalkCodes {
   Get = 32,
-  Before = 33,
-  After = 35,
   Inside = 36,
   Replace = 37,
   EndChild = 38,
@@ -35,8 +33,6 @@ enum WalkRangeSizes {
 }
 
 export const get = String.fromCharCode(WalkCodes.Get);
-export const before = String.fromCharCode(WalkCodes.Before);
-export const after = String.fromCharCode(WalkCodes.After);
 export const replace = String.fromCharCode(WalkCodes.Replace);
 export const inside = String.fromCharCode(WalkCodes.Inside);
 export const endChild = String.fromCharCode(WalkCodes.EndChild);

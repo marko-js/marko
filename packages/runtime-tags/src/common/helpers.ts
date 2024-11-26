@@ -3,11 +3,7 @@ export function classValue(value: unknown) {
 }
 
 function stringifyClassObject(name: string, value: unknown) {
-  if (isVoid(value)) {
-    return "";
-  }
-
-  return name;
+  return value ? name : "";
 }
 
 export function styleValue(value: unknown) {
@@ -16,15 +12,9 @@ export function styleValue(value: unknown) {
 
 const NON_DIMENSIONAL = /^(--|ta|or|li|z)|n-c|i(do|nk|m|t)|w$|we/;
 function stringifyStyleObject(name: string, value: unknown) {
-  if (isVoid(value)) {
-    return "";
-  }
-
-  if (typeof value === "number" && value && !NON_DIMENSIONAL.test(name)) {
-    (value as unknown as string) += "px";
-  }
-
-  return `${name}:${value}`;
+  return value || value === 0
+    ? `${name}:${typeof value === "number" && value && !NON_DIMENSIONAL.test(name) ? value + "px" : value}`
+    : "";
 }
 
 function toDelimitedString(
@@ -66,6 +56,13 @@ function toDelimitedString(
   return "";
 }
 
+export function isEventHandler(name: string): name is `on${string}` {
+  return /^on[A-Z-]/.test(name);
+}
+export function getEventHandlerName(name: `on${string}`) {
+  return name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase();
+}
+
 export function isVoid(value: unknown) {
   return value == null || value === false;
 }
@@ -74,4 +71,10 @@ export function alphaEncode(num: number): string {
   return num < 52
     ? String.fromCharCode(num < 26 ? num + 97 : num + (65 - 26))
     : alphaEncode((num / 52) | 0) + alphaEncode(num % 52);
+}
+
+export function normalizeDynamicRenderer<Renderer>(
+  value: any,
+): Renderer | string | undefined {
+  if (value) return value.renderBody || value.default || value;
 }

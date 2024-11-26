@@ -1,6 +1,6 @@
-import path from "path";
 import { codeFrameColumns } from "@babel/code-frame";
 import type { types as t } from "@marko/compiler";
+import path from "path";
 const CWD = process.cwd();
 
 export function buildAggregateError(

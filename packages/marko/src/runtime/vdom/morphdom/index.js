@@ -11,6 +11,7 @@ var KeySequence = require("../../components/KeySequence");
 var VElement = require("../vdom").___VElement;
 var fragment = require("./fragment");
 var helpers = require("./helpers");
+var isTextOnly = require("../is-text-only");
 var virtualizeElement = VElement.___virtualize;
 var morphAttrs = VElement.___morphAttrs;
 var keysByDOMNode = domData.___keyByDOMNode;
@@ -87,7 +88,7 @@ function morphdom(fromNode, toNode, host, componentsContext) {
         ] = realNode;
       }
 
-      if (vNode.___nodeName !== "textarea") {
+      if (!isTextOnly(vNode.___nodeName)) {
         morphChildren(realNode, vNode, parentComponent);
       }
 
@@ -360,7 +361,6 @@ function morphdom(fromNode, toNode, host, componentsContext) {
                   var depth = 0;
                   var nodeValue;
 
-                  // eslint-disable-next-line no-constant-condition
                   while (true) {
                     if (endNode.nodeType === COMMENT_NODE) {
                       nodeValue = endNode.nodeValue;
@@ -592,8 +592,13 @@ function morphdom(fromNode, toNode, host, componentsContext) {
             if (curFromNodeValue !== curToNodeValue) {
               if (
                 isHydrate &&
+                toNextSibling &&
                 curFromNodeType === TEXT_NODE &&
-                curFromNodeValue.startsWith(curToNodeValue)
+                toNextSibling.___nodeType === TEXT_NODE &&
+                curFromNodeValue.startsWith(curToNodeValue) &&
+                curFromNodeValue
+                  .slice(curToNodeValue.length)
+                  .startsWith(toNextSibling.___nodeValue)
               ) {
                 // In hydrate mode we can use splitText to more efficiently handle
                 // adjacent text vdom nodes that were merged.
@@ -695,19 +700,18 @@ function morphdom(fromNode, toNode, host, componentsContext) {
       return;
     }
 
-    if (nodeName === "textarea") {
-      if (toEl.___valueInternal !== vFromEl.___valueInternal) {
-        fromEl.value = toEl.___valueInternal;
+    if (isTextOnly(nodeName)) {
+      if (toEl.___textContent !== vFromEl.___textContent) {
+        if (nodeName === "textarea") {
+          fromEl.value = toEl.___textContent;
+        } else {
+          fromEl.textContent = toEl.___textContent;
+        }
       }
     } else {
       morphChildren(fromEl, toEl, parentComponent);
     }
   } // END: morphEl(...)
-
-  // eslint-disable-next-line no-constant-condition
-  if ("MARKO_DEBUG") {
-    componentsUtil.___stopDOMManipulationWarning(host);
-  }
 
   morphChildren(fromNode, toNode, toNode.___component);
 
@@ -732,11 +736,6 @@ function morphdom(fromNode, toNode, host, componentsContext) {
       }
     }
   });
-
-  // eslint-disable-next-line no-constant-condition
-  if ("MARKO_DEBUG") {
-    componentsUtil.___startDOMManipulationWarning(host);
-  }
 }
 
 module.exports = morphdom;

@@ -1,5 +1,321 @@
 # Change Log
 
+## 6.1.0
+
+### Minor Changes
+
+- [#2380](https://github.com/marko-js/marko/pull/2380) [`c5d2b48`](https://github.com/marko-js/marko/commit/c5d2b4871e9dab7037a624681d0161b72fdc799d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Replace `optimizeKnownTemplates` with a better an simpler `optimizeRegistryId` api.
+
+### Patch Changes
+
+- Updated dependencies [[`c5d2b48`](https://github.com/marko-js/marko/commit/c5d2b4871e9dab7037a624681d0161b72fdc799d)]:
+  - @marko/babel-utils@6.6.0
+
+## 6.0.26
+
+### Patch Changes
+
+- [#2368](https://github.com/marko-js/marko/pull/2368) [`bb44af0`](https://github.com/marko-js/marko/commit/bb44af04b1ad29d14200ff5cff26b27a39ce446e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with "package: " deps (used for lasso) not being hoisted when building the hydrate output.
+
+## 6.0.25
+
+### Patch Changes
+
+- [#2367](https://github.com/marko-js/marko/pull/2367) [`c8e943d`](https://github.com/marko-js/marko/commit/c8e943d30ea621356b14ce5a2bf8c040f9d41f82) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ignore errors from child template analysis (assume child will be compiled after imported anyway).
+
+- Updated dependencies [[`c8e943d`](https://github.com/marko-js/marko/commit/c8e943d30ea621356b14ce5a2bf8c040f9d41f82)]:
+  - @marko/babel-utils@6.5.13
+
+## 6.0.24
+
+### Patch Changes
+
+- [#2358](https://github.com/marko-js/marko/pull/2358) [`76951d8`](https://github.com/marko-js/marko/commit/76951d887d02e6f0dd3f0fe1345721d4a94a0069) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Always use MarkoTagBody AST nodes for control flow (even with attribute tags). This fixes a regression with the @marko/tags-api-preview and is more accurate to what is actually happening, especially from a variable scoping perspective.
+
+- Updated dependencies [[`76951d8`](https://github.com/marko-js/marko/commit/76951d887d02e6f0dd3f0fe1345721d4a94a0069)]:
+  - @marko/babel-utils@6.5.12
+
+## 6.0.23
+
+### Patch Changes
+
+- [#2344](https://github.com/marko-js/marko/pull/2344) [`bafeac1`](https://github.com/marko-js/marko/commit/bafeac1db6acc73e5c38ade2a078485df28670b8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize circular reference child template analysis.
+
+- Updated dependencies [[`8ec88ff`](https://github.com/marko-js/marko/commit/8ec88fff87ef40ce19aba8992e075a839a61683e), [`bafeac1`](https://github.com/marko-js/marko/commit/bafeac1db6acc73e5c38ade2a078485df28670b8)]:
+  - @marko/babel-utils@6.5.10
+
+## 6.0.22
+
+### Patch Changes
+
+- [#2342](https://github.com/marko-js/marko/pull/2342) [`8e07673`](https://github.com/marko-js/marko/commit/8e07673ca07cc83d9910c68ff8359264015c28d1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Make attribute tags a property on the MarkoTag AST and refactor how attribute tags are translated.
+
+- Updated dependencies [[`8e07673`](https://github.com/marko-js/marko/commit/8e07673ca07cc83d9910c68ff8359264015c28d1)]:
+  - @marko/babel-utils@6.5.9
+
+## 6.0.21
+
+### Patch Changes
+
+- [#2337](https://github.com/marko-js/marko/pull/2337) [`ea95de1`](https://github.com/marko-js/marko/commit/ea95de1deaaa03bf2bc57b2518954084dbc1442f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid babel `startColumn` api until https://github.com/babel/babel/pull/16936 is merged.
+
+- Updated dependencies [[`ea95de1`](https://github.com/marko-js/marko/commit/ea95de1deaaa03bf2bc57b2518954084dbc1442f)]:
+  - @marko/babel-utils@6.5.8
+
+## 6.0.20
+
+### Patch Changes
+
+- [#2332](https://github.com/marko-js/marko/pull/2332) [`6e87653`](https://github.com/marko-js/marko/commit/6e8765300dabc1d370058dca76f17d87b80aea3a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove extraneous runtime helper.
+
+## 6.0.19
+
+### Patch Changes
+
+- [#2324](https://github.com/marko-js/marko/pull/2324) [`4776e33`](https://github.com/marko-js/marko/commit/4776e334ed8f4f70559042d28007dfa447942693) Thanks [@rturnq](https://github.com/rturnq)! - Allow child template analysis on manually imported tags in translator-default and optimize direct reference of imported tag
+
+## 6.0.18
+
+### Patch Changes
+
+- [#2320](https://github.com/marko-js/marko/pull/2320) [`13b3270`](https://github.com/marko-js/marko/commit/13b32707ed673dd3dabe6dfdb90fcf5a19448776) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize how style and script tags are diffed (similar to textarea) where the text nodes are concatenated and diffed as a whole.
+
+- [#2320](https://github.com/marko-js/marko/pull/2320) [`a9da4d6`](https://github.com/marko-js/marko/commit/a9da4d64cf8116867ea80150f10c4dc8a45a0c98) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression from #2138 which caused nullable native dynamic tags with body contents to not output the end tag. 😱
+
+## 6.0.17
+
+### Patch Changes
+
+- [#2318](https://github.com/marko-js/marko/pull/2318) [`1dbb189`](https://github.com/marko-js/marko/commit/1dbb189976ef56a28252fbf7da95ac18a3eadaf6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where a null able native tag with no body content (eg `<${show && "div}/>`) was incorrectly outputting a fragment for the body content (which did not exist).
+
+## 6.0.16
+
+### Patch Changes
+
+- [#2310](https://github.com/marko-js/marko/pull/2310) [`f06d4b0`](https://github.com/marko-js/marko/commit/f06d4b0559c3fbb3af67773c70b3aab25278b0ca) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid babel compiler assert api to fix a regression.
+
+- Updated dependencies [[`f06d4b0`](https://github.com/marko-js/marko/commit/f06d4b0559c3fbb3af67773c70b3aab25278b0ca)]:
+  - @marko/babel-utils@6.5.7
+
+## 6.0.15
+
+### Patch Changes
+
+- [#2300](https://github.com/marko-js/marko/pull/2300) [`d45f91a`](https://github.com/marko-js/marko/commit/d45f91a5e0fff686cac7b7daf29deb60a6a1ffd7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where legacy compat `w-bind` directives were being incorrectly optimized as static vdom.
+
+## 6.0.14
+
+### Patch Changes
+
+- [#2298](https://github.com/marko-js/marko/pull/2298) [`c01d83f`](https://github.com/marko-js/marko/commit/c01d83fb2617443a7dc03eb3b43a2f7752754a45) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with the "ignoreUnrecognizedTags" compiler option being used with dynamic tags that have attribute tags.
+
+- [#2298](https://github.com/marko-js/marko/pull/2298) [`cfff311`](https://github.com/marko-js/marko/commit/cfff3111148a43f58c7d2b78f679c09c04d429b5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Removes the debug mode dom manipulation warning since chrome dropped the api's that allowed us to get useful stack traces.
+
+## 6.0.13
+
+### Patch Changes
+
+- [#2296](https://github.com/marko-js/marko/pull/2296) [`81c5c0e`](https://github.com/marko-js/marko/commit/81c5c0e0436dc694f09c722f2103bfdc9cb3844f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issues related to recent babel changes.
+
+- [#2296](https://github.com/marko-js/marko/pull/2296) [`81c5c0e`](https://github.com/marko-js/marko/commit/81c5c0e0436dc694f09c722f2103bfdc9cb3844f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve support for @marko/compat.
+
+- Updated dependencies [[`81c5c0e`](https://github.com/marko-js/marko/commit/81c5c0e0436dc694f09c722f2103bfdc9cb3844f), [`81c5c0e`](https://github.com/marko-js/marko/commit/81c5c0e0436dc694f09c722f2103bfdc9cb3844f)]:
+  - @marko/babel-utils@6.5.6
+
+## 6.0.12
+
+### Patch Changes
+
+- [#2294](https://github.com/marko-js/marko/pull/2294) [`c600610`](https://github.com/marko-js/marko/commit/c6006102479d8d10ffd1f18d13b8c607fbabd177) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with comment nodes in unescaped html by bringing back virtual comment nodes.
+
+## 6.0.11
+
+### Patch Changes
+
+- [#2286](https://github.com/marko-js/marko/pull/2286) [`55338b5`](https://github.com/marko-js/marko/commit/55338b52969817b63c90ea84f30246ad0b94b6f9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize template literal printing in html output.
+
+## 6.0.10
+
+### Patch Changes
+
+- [#2284](https://github.com/marko-js/marko/pull/2284) [`d0723d3`](https://github.com/marko-js/marko/commit/d0723d398338d86b48524e230fe24d93d62ee19a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix off by one issue for static statement sourcemaps (eg import) and for concise mode tags.
+
+- Updated dependencies [[`d0723d3`](https://github.com/marko-js/marko/commit/d0723d398338d86b48524e230fe24d93d62ee19a)]:
+  - @marko/babel-utils@6.5.5
+
+## 6.0.9
+
+### Patch Changes
+
+- [#2282](https://github.com/marko-js/marko/pull/2282) [`32e2eff`](https://github.com/marko-js/marko/commit/32e2eff5c3ecdcb36f7b6ed98ea2a1e705538a29) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve handling of sourcemaps for inline style blocks and tags.
+
+- Updated dependencies [[`32e2eff`](https://github.com/marko-js/marko/commit/32e2eff5c3ecdcb36f7b6ed98ea2a1e705538a29)]:
+  - @marko/babel-utils@6.5.4
+
+## 6.0.8
+
+### Patch Changes
+
+- [#2277](https://github.com/marko-js/marko/pull/2277) [`ce88d81`](https://github.com/marko-js/marko/commit/ce88d8194f98b4010032634f5427021810f6acdb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix "off by one" issue with source location information when the index was at the start of the line.
+
+- Updated dependencies [[`ce88d81`](https://github.com/marko-js/marko/commit/ce88d8194f98b4010032634f5427021810f6acdb)]:
+  - @marko/babel-utils@6.5.3
+
+## 6.0.7
+
+### Patch Changes
+
+- [#2274](https://github.com/marko-js/marko/pull/2274) [`5cea7d6`](https://github.com/marko-js/marko/commit/5cea7d65ead9b58d7d7d244078d279d561fd3ea7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize javascript parsing helpers to pass in start line / column information to babel rather than faking it with whitespace.
+
+  For large templates this can have a significant impact on parsing performance.
+
+- Updated dependencies [[`5cea7d6`](https://github.com/marko-js/marko/commit/5cea7d65ead9b58d7d7d244078d279d561fd3ea7)]:
+  - @marko/babel-utils@6.5.2
+
+## 6.0.6
+
+### Patch Changes
+
+- [#2264](https://github.com/marko-js/marko/pull/2264) [`992753e`](https://github.com/marko-js/marko/commit/992753e695e054d2789cdc1b439da5065468cb3a) Thanks [@LuLaValva](https://github.com/LuLaValva)! - For-of loop code coverage improvement
+
+## 6.0.5
+
+### Patch Changes
+
+- [#2252](https://github.com/marko-js/marko/pull/2252) [`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow diagnostic fixes in parse stage.
+
+- [#2252](https://github.com/marko-js/marko/pull/2252) [`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reduce duplicated macros from an error to a warning.
+
+- [#2252](https://github.com/marko-js/marko/pull/2252) [`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add auto fix for named inline component classes
+
+- Updated dependencies [[`339c28d`](https://github.com/marko-js/marko/commit/339c28dd590dc15b6a1011f38411809060f1a4ba)]:
+  - @marko/babel-utils@6.5.1
+
+## 6.0.4
+
+### Patch Changes
+
+- [#2248](https://github.com/marko-js/marko/pull/2248) [`0ced6e1`](https://github.com/marko-js/marko/commit/0ced6e17c24808586bd24f025d77cfb3c391ea2e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix typo in upgrade docs and adding missing `browser-refresh` module.
+
+## 6.0.3
+
+### Patch Changes
+
+- [#2246](https://github.com/marko-js/marko/pull/2246) [`a699cd9`](https://github.com/marko-js/marko/commit/a699cd9434996b8da0a14acba39fd1db03c0329a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Misc backward compat improvements:
+
+  - Expose `marko/browser-refresh` as a noop
+  - Allow translators to specify "optional" taglibs to load if they're installed (used for automatically loading compat taglibs)
+  - `marko/node-require` legacy require hook now disables user babel transforms by default
+  - Allow `<macro>` tag instances to use tag arguments syntax
+
+## 6.0.2
+
+### Patch Changes
+
+- [#2244](https://github.com/marko-js/marko/pull/2244) [`934dc13`](https://github.com/marko-js/marko/commit/934dc13972b14b6cc9511ae19db70f5b74a366b5) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Allow mixing comments with attr tags
+
+## 6.0.1
+
+### Patch Changes
+
+- [#2232](https://github.com/marko-js/marko/pull/2232) [`a67e1c4`](https://github.com/marko-js/marko/commit/a67e1c42b04ede5d9b9ef3cb2f8e21bedd2f004f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where the `ignoreUnrecognizedTags` compiler option was incorrectly escaping attribute tags for recognized tags that did not explicitly define their attribute tags in a marko.json
+
+## 6.0.0
+
+### Major Changes
+
+- [#2219](https://github.com/marko-js/marko/pull/2219) [`0ee141c`](https://github.com/marko-js/marko/commit/0ee141c525899dcccd0ffa69b8012c8c23ed5d4f) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Update runtime entry files
+
+## 5.33.1
+
+### Patch Changes
+
+- [#2217](https://github.com/marko-js/marko/pull/2217) [`4fc4614`](https://github.com/marko-js/marko/commit/4fc46149ae046dd0fac0e7cc7e904b188f616f7f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where element keys could be different because of hoisted const elements not always being keyed. This could cause a hydration issue since the server and client compilations would not agree on the keys.
+
+## 5.33.0
+
+### Minor Changes
+
+- [#2214](https://github.com/marko-js/marko/pull/2214) [`2d0a566`](https://github.com/marko-js/marko/commit/2d0a566a569e0d8caab2fd9abc960e6810e29b56) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Using event handlers now causes a template to become an implicit component or split component (depending on if a string event handler is used).
+
+## 5.32.16
+
+### Patch Changes
+
+- [#2212](https://github.com/marko-js/marko/pull/2212) [`a1a91a4`](https://github.com/marko-js/marko/commit/a1a91a474853a4b6dc31217d374ee0e7e1179cec) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issues related to hydrating sections under a native tag with the `no-update` directive.
+
+## 5.32.15
+
+### Patch Changes
+
+- [#2210](https://github.com/marko-js/marko/pull/2210) [`7d1bbdb`](https://github.com/marko-js/marko/commit/7d1bbdb9af63164448697ceb20490ee0776bc70f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - I completely messed up the release of https://github.com/marko-js/marko/pull/2205, this fixes that.
+
+## 5.32.14
+
+### Patch Changes
+
+- [`c8fe951`](https://github.com/marko-js/marko/commit/c8fe951813bf6c7d11e581faf9e43522ae76ae98) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Bump compiler and translator to pull in Marko runtime changes.
+
+## 5.32.13
+
+### Patch Changes
+
+- [#2196](https://github.com/marko-js/marko/pull/2196) [`e98d1b2`](https://github.com/marko-js/marko/commit/e98d1b256499b8346fca20b89f0943d515573c9d) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix collision with tags-api-preview
+
+## 5.32.12
+
+### Patch Changes
+
+- [#2190](https://github.com/marko-js/marko/pull/2190) [`638ca07`](https://github.com/marko-js/marko/commit/638ca07db382345c26f90247115eef13394e9905) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update dependencies
+
+- Updated dependencies [[`638ca07`](https://github.com/marko-js/marko/commit/638ca07db382345c26f90247115eef13394e9905)]:
+  - @marko/babel-utils@6.4.3
+
+## 5.32.11
+
+### Patch Changes
+
+- [#2187](https://github.com/marko-js/marko/pull/2187) [`fe344b0`](https://github.com/marko-js/marko/commit/fe344b00041677f40ce49d03c0fb283322a1c898) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix some tags/class interop issues.
+
+## 5.32.10
+
+### Patch Changes
+
+- [#2182](https://github.com/marko-js/marko/pull/2182) [`1fa3b05`](https://github.com/marko-js/marko/commit/1fa3b056006d5d0e3ac221b5b4a18b78de5add21) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support tracking the "input" using babels scope analysis.
+
+## 5.32.9
+
+### Patch Changes
+
+- [#2180](https://github.com/marko-js/marko/pull/2180) [`a8bfb50`](https://github.com/marko-js/marko/commit/a8bfb50d7617d338c8e6b11c3f18cbb4829a5cba) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where vdom optimizer was including elements with user key attributes.
+
+## 5.32.8
+
+### Patch Changes
+
+- [#2173](https://github.com/marko-js/marko/pull/2173) [`614f432`](https://github.com/marko-js/marko/commit/614f432bfeab93eb35c23d6e378e914b27540f7f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression where hydrate dependencies had the incorrect resolved path if they were in node_modules.
+
+## 5.32.7
+
+### Patch Changes
+
+- [`409ef4e`](https://github.com/marko-js/marko/commit/409ef4e76d680b6e4202658fdf9567c663898d8b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression where hydrate entry files had incorrect relative paths.
+
+## 5.32.6
+
+### Patch Changes
+
+- [#2164](https://github.com/marko-js/marko/pull/2164) [`08823b9`](https://github.com/marko-js/marko/commit/08823b916b0aca172edeaba86b632a4cf5462a8a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with interop translator not outputting correct hydrate entry code.
+
+- Updated dependencies [[`08823b9`](https://github.com/marko-js/marko/commit/08823b916b0aca172edeaba86b632a4cf5462a8a)]:
+  - @marko/babel-utils@6.4.2
+
+## 5.32.5
+
+### Patch Changes
+
+- [#2162](https://github.com/marko-js/marko/pull/2162) [`88b45d4`](https://github.com/marko-js/marko/commit/88b45d4901647ae99e8cfab29c5aa13ee4599358) Thanks [@rturnq](https://github.com/rturnq)! - Avoid pre-bundling interop and including tags runtime
+
 ## 5.32.4
 
 ### Patch Changes

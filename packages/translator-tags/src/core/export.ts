@@ -1,4 +1,4 @@
-import { type Tag, parseStatements } from "@marko/babel-utils";
+import { parseStatements, type Tag } from "@marko/babel-utils";
 
 export default {
   parse(tag) {
@@ -8,11 +8,8 @@ export default {
     );
   },
   parseOptions: {
-    rootOnly: true,
+    statement: true,
     rawOpenTag: true,
-    openTagOnly: true,
-    ignoreAttributes: true,
-    relaxRequireCommas: true,
   },
   autocomplete: [
     {

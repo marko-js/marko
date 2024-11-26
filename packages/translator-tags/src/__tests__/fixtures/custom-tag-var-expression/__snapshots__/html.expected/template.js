@@ -1,12 +1,12 @@
 import _child from "./components/child.marko";
-import { peekSerializedScope as _peekSerializedScope, createRenderer as _createRenderer, register as _register, escapeXML as _escapeXML, markResumeNode as _markResumeNode, write as _write, writeScope as _writeScope, nextScopeId as _nextScopeId, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_createRenderer((input, _tagVar) => {
-  const _scope0_id = _nextScopeId();
-  const _childScope = _peekSerializedScope();
-  const data = _child._({}, _register( /* @__PURE__ */_createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/custom-tag-var-expression/template.marko_0_data", _scope0_id));
-  _write(`<div>${_escapeXML(data)}${_markResumeNode(_scope0_id, "#text/1")}</div>`);
-  _writeScope(_scope0_id, {
-    "#childScope/0": _childScope
+import * as _$ from "@marko/runtime-tags/debug/html";
+const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+  const _scope0_id = _$.nextScopeId();
+  const _childScope = _$.peekNextScope();
+  const data = _child({}, _$.register(() => {}, "packages/translator-tags/src/__tests__/fixtures/custom-tag-var-expression/template.marko_0_data", _scope0_id));
+  _$.write(`<div>${_$.escapeXML(data)}${_$.markResumeNode(_scope0_id, "#text/1")}</div>`);
+  _$.writeScope(_scope0_id, {
+    "#childScope/0": _$.writeExistingScope(_childScope)
   });
 });
-export default /* @__PURE__ */_createTemplate(_renderer, "packages/translator-tags/src/__tests__/fixtures/custom-tag-var-expression/template.marko");
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/custom-tag-var-expression/template.marko", _renderer);

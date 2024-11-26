@@ -13,11 +13,7 @@ export default function translateVar(
     return;
   }
 
-  tag.get("var").remove();
   tag.insertBefore(
-    t.variableDeclaration(kind, [
-      t.variableDeclarator(t.cloneDeep(tagVar), initialValue),
-    ]),
+    t.variableDeclaration(kind, [t.variableDeclarator(tagVar, initialValue)]),
   );
-  tag.hub.file.path.scope.crawl();
 }

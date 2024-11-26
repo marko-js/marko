@@ -1,4 +1,5 @@
 import { createTemplate, fork, write } from "@marko/runtime-tags/html";
+
 import { rejectAfter } from "../../utils/resolve";
 
 const renderer = () => {
@@ -7,4 +8,4 @@ const renderer = () => {
   write("b");
 };
 
-export default createTemplate(renderer);
+export default createTemplate("", renderer);

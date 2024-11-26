@@ -1,5 +1,5 @@
 # Write
-  <div></div><!M*0 #div/0><script>(M$h=[]).push((b,s,h)=>({0:{"#childScope/1":h={}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko_0_el",])</script>
+  <div></div><!--M_*0 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:_.a={"#childScope/1":_.b={}},1:_.b},_.b.el=_._["packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/template.marko_0/#div"](_.a),_.c),1,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko_0_el",0];M._.w()</script>
 
 
 # Render "End"
@@ -8,9 +8,9 @@
   <head />
   <body>
     <div />
-    <!--M*0 #div/0-->
+    <!--M_*0 #div/0-->
     <script>
-      (M$h=[]).push((b,s,h)=&gt;({0:{"#childScope/1":h={}},1:h}),[1,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko_0_el",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#childScope/1":_.b={}},1:_.b},_.b.el=_._["packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/template.marko_0/#div"](_.a),_.c),1,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-effect-child/components/hello-setter.marko_0_el",0];M._.w()
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 # Write
-  <div></div><!M*0 #div/0><script>(M$h=[]).push(null,[1,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko_1",])</script>
+  <div></div><!--M_*0 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={1:{_:{}}}),1,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko_1",0];M._.w()</script>
 
 
 # Render "End"
@@ -8,9 +8,9 @@
   <head />
   <body>
     <div />
-    <!--M*0 #div/0-->
+    <!--M_*0 #div/0-->
     <script>
-      (M$h=[]).push(null,[1,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko_1",])
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{_:{}}}),1,"packages/translator-tags/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko_1",0];M._.w()
     </script>
   </body>
 </html>

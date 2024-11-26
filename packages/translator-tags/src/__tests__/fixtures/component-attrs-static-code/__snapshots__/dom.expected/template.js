@@ -1,15 +1,22 @@
-const formatNumber = n => {
+export const _template_ = `${_counter_template}${_counter_template}`;
+export const _walks_ = /* beginChild, _counter_walks, endChild, beginChild, _counter_walks, endChild */`/${_counter_walks}&/${_counter_walks}&`;
+_$.register("packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/formatNumber2", formatNumber2);
+const formatNumber = _$.register("packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/anonymous", n => {
   return "$" + n.toFixed(2);
-};
-import { setup as _counter, args as _counter_args, template as _counter_template, walks as _counter_walks } from "./components/counter.marko";
-import { inChild as _inChild, createRenderer as _createRenderer, createTemplate as _createTemplate } from "@marko/runtime-tags/debug/dom";
-const _setup = _scope => {
+});
+function formatNumber2(n) {
+  return "$" + n.toFixed(2);
+}
+import * as _$ from "@marko/runtime-tags/debug/dom";
+import { _setup_ as _counter, _input_ as _counter_input, _template_ as _counter_template, _walks_ as _counter_walks } from "./components/counter.marko";
+export function _setup_(_scope) {
   _counter(_scope["#childScope/0"]);
-  _counter_args(_scope["#childScope/0"], [{
+  _counter(_scope["#childScope/1"]);
+  _counter_input(_scope["#childScope/0"], {
     format: formatNumber
-  }]);
-};
-export const template = `${_counter_template}`;
-export const walks = /* beginChild, _counter_walks, endChild */`/${_counter_walks}&`;
-export const setup = _setup;
-export default /* @__PURE__ */_createTemplate( /* @__PURE__ */_createRenderer(template, walks, setup), "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko");
+  });
+  _counter_input(_scope["#childScope/1"], {
+    format: formatNumber2
+  });
+}
+export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko", _template_, _walks_, _setup_);
