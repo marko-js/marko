@@ -313,8 +313,9 @@ export function importDefault(
 export function importStar(
   file: t.BabelFile,
   request: string,
-  nameHint?: string,
-): t.Identifier;
+  nameHint: string,
+  memberName: string,
+): t.MemberExpression;
 export function importNamed(
   file: t.BabelFile,
   request: string,

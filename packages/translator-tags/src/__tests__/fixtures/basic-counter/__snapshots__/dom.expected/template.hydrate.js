@@ -1,4 +1,4 @@
-// size: 235 (min) 173 (brotli)
+// size: 227 (min) 158 (brotli)
 
 import * as t from "@marko/runtime-tags/dom";
 import { init as o } from "@marko/runtime-tags/dom";
@@ -9,12 +9,12 @@ const m = t.effect("a0", (o) =>
       ((t) => {
         const { 2: o } = t;
         return function () {
-          r(t, o + 1);
+          r(o + 1, t);
         };
       })(o),
     ),
   ),
-  r = t.state(2, (o, r) => {
-    t.data(o[1], r), m(o);
+  r = t.state(2, (o) => {
+    t.data(1, o), m();
   });
 o();

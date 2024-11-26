@@ -1,45 +1,36 @@
-import {
-  type Accessor,
-  AccessorChar,
-  ControlledType,
-  type Scope,
-} from "../common/types";
+import { type Accessor, AccessorChar, ControlledType } from "../common/types";
 import { attr, normalizeAttrValue } from "./dom";
 import { createDelegator } from "./event";
 import { run } from "./queue";
 import { resolveCursorPosition } from "./resolve-cursor-position";
 import { isResuming } from "./resume";
+import { $scope } from "./scope";
 
 export function controllable_input_checked(
-  scope: Scope,
   nodeAccessor: Accessor,
   checked: unknown,
   checkedChange: unknown,
 ) {
   setCheckboxValue(
-    scope,
     nodeAccessor,
     ControlledType.InputChecked,
     normalizeBoolProp(checked),
     checkedChange,
   );
 }
-export function controllable_input_checked_effect(
-  scope: Scope,
-  nodeAccessor: Accessor,
-) {
-  const el = scope[nodeAccessor] as HTMLInputElement;
+export function controllable_input_checked_effect(nodeAccessor: Accessor) {
+  const el = $scope[nodeAccessor] as HTMLInputElement;
   syncControllable(el, "input", hasCheckboxChanged, () => {
-    const checkedChange = scope[
+    const checkedChange = $scope[
       nodeAccessor + AccessorChar.ControlledHandler
     ] as undefined | ((value: unknown) => unknown);
     if (checkedChange) {
-      scope[nodeAccessor + AccessorChar.ControlledType] =
+      $scope[nodeAccessor + AccessorChar.ControlledType] =
         ControlledType.Pending;
       checkedChange(el.checked);
       run();
       if (
-        scope[nodeAccessor + AccessorChar.ControlledType] ===
+        $scope[nodeAccessor + AccessorChar.ControlledType] ===
         ControlledType.Pending
       ) {
         el.checked = !el.checked;
@@ -49,16 +40,14 @@ export function controllable_input_checked_effect(
 }
 
 export function controllable_input_checkedValue(
-  scope: Scope,
   nodeAccessor: Accessor,
   checkedValue: unknown,
   checkedValueChange: unknown,
   value: unknown,
 ) {
-  scope[nodeAccessor + AccessorChar.ControlledValue] = checkedValue;
-  attr(scope[nodeAccessor] as HTMLInputElement, "value", value);
+  $scope[nodeAccessor + AccessorChar.ControlledValue] = checkedValue;
+  attr($scope[nodeAccessor] as HTMLInputElement, "value", value);
   setCheckboxValue(
-    scope,
     nodeAccessor,
     ControlledType.InputCheckedValue,
     Array.isArray(checkedValue)
@@ -67,18 +56,15 @@ export function controllable_input_checkedValue(
     checkedValueChange,
   );
 }
-export function controllable_input_checkedValue_effect(
-  scope: Scope,
-  nodeAccessor: Accessor,
-) {
-  const el = scope[nodeAccessor] as HTMLInputElement;
+export function controllable_input_checkedValue_effect(nodeAccessor: Accessor) {
+  const el = $scope[nodeAccessor] as HTMLInputElement;
   syncControllable(el, "input", hasCheckboxChanged, () => {
-    const checkedValueChange = scope[
+    const checkedValueChange = $scope[
       nodeAccessor + AccessorChar.ControlledHandler
     ] as undefined | ((value: unknown) => unknown);
     if (checkedValueChange) {
-      const oldValue = scope[nodeAccessor + AccessorChar.ControlledValue];
-      scope[nodeAccessor + AccessorChar.ControlledType] =
+      const oldValue = $scope[nodeAccessor + AccessorChar.ControlledValue];
+      $scope[nodeAccessor + AccessorChar.ControlledType] =
         ControlledType.Pending;
       checkedValueChange(
         Array.isArray(oldValue)
@@ -90,7 +76,7 @@ export function controllable_input_checkedValue_effect(
       run();
 
       if (
-        scope[nodeAccessor + AccessorChar.ControlledType] ===
+        $scope[nodeAccessor + AccessorChar.ControlledType] ===
         ControlledType.Pending
       ) {
         el.checked = !el.checked;
@@ -100,19 +86,18 @@ export function controllable_input_checkedValue_effect(
 }
 
 export function controllable_input_value(
-  scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
 ) {
-  const el = scope[nodeAccessor] as HTMLInputElement;
+  const el = $scope[nodeAccessor] as HTMLInputElement;
   const normalizedValue = normalizeStrProp(value);
-  scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
+  $scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
 
   if (valueChange) {
-    scope[nodeAccessor + AccessorChar.ControlledType] =
+    $scope[nodeAccessor + AccessorChar.ControlledType] =
       ControlledType.InputChecked;
-    scope[nodeAccessor + AccessorChar.ControlledValue] = value;
+    $scope[nodeAccessor + AccessorChar.ControlledValue] = value;
 
     if (el.isConnected) {
       setValueAndUpdateSelection(el, normalizedValue);
@@ -120,35 +105,32 @@ export function controllable_input_value(
       el.defaultValue = normalizedValue;
     }
   } else {
-    scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
+    $scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
     el.defaultValue = normalizedValue;
   }
 }
-export function controllable_input_value_effect(
-  scope: Scope,
-  nodeAccessor: Accessor,
-) {
-  const el = scope[nodeAccessor] as HTMLInputElement;
+export function controllable_input_value_effect(nodeAccessor: Accessor) {
+  const el = $scope[nodeAccessor] as HTMLInputElement;
   if (isResuming) {
-    scope[nodeAccessor + AccessorChar.ControlledValue] = el.defaultValue;
+    $scope[nodeAccessor + AccessorChar.ControlledValue] = el.defaultValue;
   }
   syncControllable(el, "input", hasValueChanged, (ev?: Event) => {
-    const valueChange = scope[nodeAccessor + AccessorChar.ControlledHandler] as
-      | undefined
-      | ((value: unknown) => unknown);
+    const valueChange = $scope[
+      nodeAccessor + AccessorChar.ControlledHandler
+    ] as undefined | ((value: unknown) => unknown);
     if (valueChange) {
-      scope[nodeAccessor + AccessorChar.ControlledType] =
+      $scope[nodeAccessor + AccessorChar.ControlledType] =
         ControlledType.Pending;
       if (ev) inputType = (ev as InputEvent).inputType;
       valueChange(el.value);
       run();
       if (
-        scope[nodeAccessor + AccessorChar.ControlledType] ===
+        $scope[nodeAccessor + AccessorChar.ControlledType] ===
         ControlledType.Pending
       ) {
         setValueAndUpdateSelection(
           el,
-          scope[nodeAccessor + AccessorChar.ControlledValue],
+          $scope[nodeAccessor + AccessorChar.ControlledValue],
         );
       }
 
@@ -163,53 +145,49 @@ export {
 };
 
 export function controllable_select_value(
-  scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
 ) {
-  scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
+  $scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
 
   if (valueChange) {
-    scope[nodeAccessor + AccessorChar.ControlledType] =
+    $scope[nodeAccessor + AccessorChar.ControlledType] =
       ControlledType.SelectValue;
-    scope[nodeAccessor + AccessorChar.ControlledValue] = value;
+    $scope[nodeAccessor + AccessorChar.ControlledValue] = value;
   } else {
-    scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
+    $scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
   }
 
   setSelectOptions(
-    scope[nodeAccessor] as HTMLSelectElement,
+    $scope[nodeAccessor] as HTMLSelectElement,
     value,
     valueChange,
   );
 }
-export function controllable_select_value_effect(
-  scope: Scope,
-  nodeAccessor: Accessor,
-) {
-  const el = scope[nodeAccessor] as HTMLSelectElement;
+export function controllable_select_value_effect(nodeAccessor: Accessor) {
+  const el = $scope[nodeAccessor] as HTMLSelectElement;
   syncControllable(el, "input", hasSelectChanged, () => {
-    const valueChange = scope[nodeAccessor + AccessorChar.ControlledHandler] as
-      | undefined
-      | ((value: unknown) => unknown);
+    const valueChange = $scope[
+      nodeAccessor + AccessorChar.ControlledHandler
+    ] as undefined | ((value: unknown) => unknown);
     if (valueChange) {
-      scope[nodeAccessor + AccessorChar.ControlledType] =
+      $scope[nodeAccessor + AccessorChar.ControlledType] =
         ControlledType.Pending;
       valueChange(
-        Array.isArray(scope[nodeAccessor + AccessorChar.ControlledValue])
+        Array.isArray($scope[nodeAccessor + AccessorChar.ControlledValue])
           ? Array.from(el.selectedOptions, toValueProp)
           : el.value,
       );
       run();
 
       if (
-        scope[nodeAccessor + AccessorChar.ControlledType] ===
+        $scope[nodeAccessor + AccessorChar.ControlledType] ===
         ControlledType.Pending
       ) {
         setSelectOptions(
           el,
-          scope[nodeAccessor + AccessorChar.ControlledValue],
+          $scope[nodeAccessor + AccessorChar.ControlledValue],
           valueChange,
         );
       }
@@ -244,46 +222,44 @@ function setSelectOptions(
 }
 
 export function controllable_detailsOrDialog_open(
-  scope: Scope,
   nodeAccessor: Accessor,
   open: unknown,
   openChange: unknown,
 ) {
-  scope[nodeAccessor + AccessorChar.ControlledHandler] = openChange;
+  $scope[nodeAccessor + AccessorChar.ControlledHandler] = openChange;
   if (openChange) {
-    scope[nodeAccessor + AccessorChar.ControlledType] =
+    $scope[nodeAccessor + AccessorChar.ControlledType] =
       ControlledType.DetailsOrDialogOpen;
   } else {
-    scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
+    $scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
   }
 
-  (scope[nodeAccessor] as HTMLDetailsElement).open = normalizeBoolProp(open);
+  ($scope[nodeAccessor] as HTMLDetailsElement).open = normalizeBoolProp(open);
 }
 export function controllable_detailsOrDialog_open_effect(
-  scope: Scope,
   nodeAccessor: Accessor,
 ) {
-  const el = scope[nodeAccessor] as HTMLDetailsElement;
+  const el = $scope[nodeAccessor] as HTMLDetailsElement;
   syncControllable(
     el,
     el.tagName === "DIALOG" ? "close" : "toggle",
     () => {
       return (
-        scope[nodeAccessor + AccessorChar.ControlledHandler] &&
-        el.open !== scope[nodeAccessor + AccessorChar.ControlledValue]
+        $scope[nodeAccessor + AccessorChar.ControlledHandler] &&
+        el.open !== $scope[nodeAccessor + AccessorChar.ControlledValue]
       );
     },
     () => {
-      const openChange = scope[
+      const openChange = $scope[
         nodeAccessor + AccessorChar.ControlledHandler
       ] as undefined | ((value: unknown) => unknown);
       if (openChange) {
-        scope[nodeAccessor + AccessorChar.ControlledType] =
+        $scope[nodeAccessor + AccessorChar.ControlledType] =
           ControlledType.Pending;
         openChange(el.open);
         run();
         if (
-          scope[nodeAccessor + AccessorChar.ControlledType] ===
+          $scope[nodeAccessor + AccessorChar.ControlledType] ===
           ControlledType.Pending
         ) {
           el.open = !el.open;
@@ -316,20 +292,19 @@ function setValueAndUpdateSelection(el: HTMLInputElement, value: string) {
 }
 
 function setCheckboxValue(
-  scope: Scope,
   nodeAccessor: Accessor,
   type: ControlledType,
   checked: boolean,
   checkedChange: unknown,
 ) {
-  scope[nodeAccessor + AccessorChar.ControlledHandler] = checkedChange;
+  $scope[nodeAccessor + AccessorChar.ControlledHandler] = checkedChange;
 
   if (checkedChange) {
-    scope[nodeAccessor + AccessorChar.ControlledType] = type;
-    (scope[nodeAccessor] as HTMLInputElement).checked = checked;
+    $scope[nodeAccessor + AccessorChar.ControlledType] = type;
+    ($scope[nodeAccessor] as HTMLInputElement).checked = checked;
   } else {
-    scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
-    (scope[nodeAccessor] as HTMLInputElement).defaultChecked = checked;
+    $scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
+    ($scope[nodeAccessor] as HTMLInputElement).defaultChecked = checked;
   }
 }
 

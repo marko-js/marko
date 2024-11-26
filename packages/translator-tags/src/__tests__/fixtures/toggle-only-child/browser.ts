@@ -6,7 +6,6 @@ import {
   data,
   inConditionalScope,
   intersections,
-  type Scope,
   value,
 } from "@marko/runtime-tags/dom";
 import type { ValueSignal } from "@marko/runtime-tags/dom/signals";
@@ -48,22 +47,21 @@ const enum INDEX_BRANCH0 {
 export const template = `<div></div>`;
 export const walks = get + over(1);
 
-const value$if = closure(INDEX.value, (scope: Scope, value: string) => {
-  data(scope[INDEX_BRANCH0.text], value);
+const value$if = closure(INDEX.value, (value: string) => {
+  data(INDEX_BRANCH0.text, value);
 });
 
 const _if = conditionalOnlyChild(INDEX.conditional);
 
 const _value = value(
   INDEX.value,
-  (scope, value) => {
-    _if(scope, value ? _ifBody : undefined);
+  (value) => {
+    _if(value ? _ifBody : undefined);
   },
   () => intersections([inConditionalScope(value$if, INDEX.conditional), _if]),
 );
 
 export const args = (
-  scope: Scope,
   _destructure: [Input],
 ) => {
   let value;
@@ -73,7 +71,7 @@ export const args = (
     // TODO: this is a really bad hack because I'm lazy 
     // and we shouldn't be manually compiling this test anyways
   }
-  _value(scope, value ?? _destructure);
+  _value(value ?? _destructure);
 };
 
 export default createTemplate(

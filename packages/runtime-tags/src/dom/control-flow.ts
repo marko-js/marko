@@ -8,10 +8,13 @@ import {
   type Renderer,
 } from "./renderer";
 import {
+  $scope,
   destroyScope,
   getEmptyScope,
   insertBefore,
   removeAndDestroyScope,
+  withScope,
+  withScopes,
 } from "./scope";
 import {
   CLEAN,
@@ -40,13 +43,12 @@ export let conditional = function conditional(
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
   let intersection: IntersectionSignal | undefined =
-    getIntersection &&
-    ((scope, op) => (intersection = getIntersection!())(scope, op));
+    getIntersection && ((op) => (intersection = getIntersection!())(op));
 
-  return (scope, newRendererOrOp) => {
+  return (newRendererOrOp) => {
     if (newRendererOrOp === DIRTY) return;
 
-    let currentRenderer = scope[rendererAccessor] as
+    let currentRenderer = $scope[rendererAccessor] as
       | Renderer
       | string
       | undefined;
@@ -56,16 +58,16 @@ export let conditional = function conditional(
       const normalizedRenderer =
         normalizeDynamicRenderer<Renderer>(newRendererOrOp);
       if (isDifferentRenderer(normalizedRenderer, currentRenderer)) {
-        currentRenderer = scope[rendererAccessor] = normalizedRenderer;
-        setConditionalRenderer(scope, nodeAccessor, normalizedRenderer);
-        fn && fn(scope);
+        currentRenderer = $scope[rendererAccessor] = normalizedRenderer;
+        setConditionalRenderer(nodeAccessor, normalizedRenderer);
+        fn && fn($scope);
         op = DIRTY;
       } else {
         op = CLEAN;
       }
     }
-    intersection?.(scope, op);
-    renderBodyClosures(currentRenderer, scope[childScopeAccessor], op);
+    intersection?.(op);
+    renderBodyClosures(currentRenderer, $scope[childScopeAccessor], op);
   };
 };
 
@@ -76,41 +78,40 @@ export function inConditionalScope<S extends Scope>(
 ): IntersectionSignal {
   const scopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
-  return (scope: Scope, op: SignalOp) => {
-    const conditionalScope = scope[scopeAccessor] as S;
+  return (op: SignalOp) => {
+    const conditionalScope = $scope[scopeAccessor] as S;
     if (conditionalScope) {
-      const conditionalRenderer = scope[rendererAccessor] as Renderer;
+      const conditionalRenderer = $scope[rendererAccessor] as Renderer;
       if (
         !conditionalRenderer?.___closureSignals ||
         conditionalRenderer.___closureSignals.has(signal)
       ) {
-        signal(conditionalScope, op);
+        withScope(conditionalScope, signal, op);
       }
     }
   };
 }
 
 export function setConditionalRenderer<ChildScope extends Scope>(
-  scope: Scope,
   nodeAccessor: Accessor,
   newRenderer: Renderer | string | undefined,
 ) {
   let newScope: ChildScope;
-  let prevScope = scope[
+  let prevScope = $scope[
     nodeAccessor + AccessorChar.ConditionalScope
   ] as ChildScope;
 
   if (newRenderer) {
-    newScope = scope[nodeAccessor + AccessorChar.ConditionalScope] =
+    newScope = $scope[nodeAccessor + AccessorChar.ConditionalScope] =
       createScopeWithTagNameOrRenderer(
         newRenderer,
-        scope.$global,
-        scope,
+        $scope.$global,
+        $scope,
       ) as ChildScope;
-    prevScope = prevScope || getEmptyScope(scope[nodeAccessor] as Comment);
+    prevScope = prevScope || getEmptyScope($scope[nodeAccessor] as Comment);
   } else {
-    newScope = getEmptyScope(scope[nodeAccessor] as Comment) as ChildScope;
-    scope[nodeAccessor + AccessorChar.ConditionalScope] = undefined;
+    newScope = getEmptyScope($scope[nodeAccessor] as Comment) as ChildScope;
+    $scope[nodeAccessor + AccessorChar.ConditionalScope] = undefined;
   }
 
   insertBefore(
@@ -129,13 +130,12 @@ export let conditionalOnlyChild = function conditional(
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
   let intersection: IntersectionSignal | undefined =
-    getIntersection &&
-    ((scope, op) => (intersection = getIntersection!())(scope, op));
+    getIntersection && ((op) => (intersection = getIntersection!())(op));
 
-  return (scope, newRendererOrOp) => {
+  return (newRendererOrOp) => {
     if (newRendererOrOp === DIRTY) return;
 
-    let currentRenderer = scope[rendererAccessor] as
+    let currentRenderer = $scope[rendererAccessor] as
       | Renderer
       | string
       | undefined;
@@ -145,37 +145,32 @@ export let conditionalOnlyChild = function conditional(
       const normalizedRenderer =
         normalizeDynamicRenderer<Renderer>(newRendererOrOp);
       if (isDifferentRenderer(normalizedRenderer, currentRenderer)) {
-        currentRenderer = scope[rendererAccessor] = normalizedRenderer;
-        setConditionalRendererOnlyChild(
-          scope,
-          nodeAccessor,
-          normalizedRenderer,
-        );
-        fn && fn(scope);
+        currentRenderer = $scope[rendererAccessor] = normalizedRenderer;
+        setConditionalRendererOnlyChild(nodeAccessor, normalizedRenderer);
+        fn && fn($scope);
         op = DIRTY;
       } else {
         op = CLEAN;
       }
     }
-    intersection?.(scope, op);
-    renderBodyClosures(currentRenderer, scope[childScopeAccessor], op);
+    intersection?.(op);
+    renderBodyClosures(currentRenderer, $scope[childScopeAccessor], op);
   };
 };
 
 export function setConditionalRendererOnlyChild(
-  scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: Renderer | string | undefined,
+  newRenderer: Renderer | string | undefined | false,
 ) {
-  const prevScope = scope[
+  const prevScope = $scope[
     nodeAccessor + AccessorChar.ConditionalScope
   ] as Scope;
-  const referenceNode = scope[nodeAccessor] as Element;
+  const referenceNode = $scope[nodeAccessor] as Element;
   referenceNode.textContent = "";
 
   if (newRenderer) {
-    const newScope = (scope[nodeAccessor + AccessorChar.ConditionalScope] =
-      createScopeWithTagNameOrRenderer(newRenderer, scope.$global, scope));
+    const newScope = ($scope[nodeAccessor + AccessorChar.ConditionalScope] =
+      createScopeWithTagNameOrRenderer(newRenderer, $scope.$global, $scope));
     insertBefore(newScope, referenceNode, null);
   }
 
@@ -230,37 +225,37 @@ function loop<T extends unknown[] = unknown[]>(
   const loopScopeAccessor = nodeAccessor + AccessorChar.LoopScopeArray;
   const closureSignals = renderer.___closureSignals;
   const params = renderer.___args;
-  return (scope: Scope, valueOrOp: T | SignalOp) => {
+  return (valueOrOp: T | SignalOp) => {
     if (valueOrOp === DIRTY) return;
     if (valueOrOp === MARK || valueOrOp === CLEAN) {
       const loopScopes =
-        scope[loopScopeAccessor] ??
-        scope[nodeAccessor + AccessorChar.LoopScopeMap]?.values() ??
+        $scope[loopScopeAccessor] ??
+        $scope[nodeAccessor + AccessorChar.LoopScopeMap]?.values() ??
         [];
       if (loopScopes !== emptyMarkerArray) {
-        for (const childScope of loopScopes) {
-          params?.(childScope, valueOrOp);
+        withScopes(loopScopes, () => {
+          params?.(valueOrOp);
           for (const signal of closureSignals) {
-            signal(childScope, valueOrOp);
+            signal(valueOrOp);
           }
-        }
+        });
       }
 
       return;
     }
 
-    const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
+    const referenceNode = $scope[nodeAccessor] as Element | Comment | Text;
     // TODO: compiler should use only comment so the text check can be removed
     const referenceIsMarker =
       referenceNode.nodeType === 8 /* Comment */ ||
       referenceNode.nodeType === 3; /* Text */
     const oldMap =
-      (scope[nodeAccessor + AccessorChar.LoopScopeMap] as Map<
+      ($scope[nodeAccessor + AccessorChar.LoopScopeMap] as Map<
         unknown,
         Scope
       >) || (referenceIsMarker ? emptyMarkerMap : emptyMap);
     const oldArray =
-      (scope[nodeAccessor + AccessorChar.LoopScopeArray] as Scope[]) ||
+      ($scope[nodeAccessor + AccessorChar.LoopScopeArray] as Scope[]) ||
       Array.from(oldMap.values());
 
     let newMap!: Map<unknown, Scope>;
@@ -273,7 +268,7 @@ function loop<T extends unknown[] = unknown[]>(
       let childScope = oldMap.get(key);
       let closureOp: SignalOp = CLEAN;
       if (!childScope) {
-        childScope = createScopeWithRenderer(renderer, scope.$global, scope);
+        childScope = createScopeWithRenderer(renderer, $scope.$global, $scope);
         closureOp = DIRTY;
         // TODO: once we can track moves
         // needsReconciliation = true;
@@ -281,14 +276,16 @@ function loop<T extends unknown[] = unknown[]>(
         // TODO: track if any childScope has changed index
         // needsReconciliation ||= oldArray[index] !== childScope;
       }
-      if (params) {
-        params(childScope, args);
-      }
-      if (closureSignals) {
-        for (const signal of closureSignals) {
-          signal(childScope, closureOp);
+      withScope(childScope, () => {
+        if (params) {
+          params(args);
         }
-      }
+        if (closureSignals) {
+          for (const signal of closureSignals) {
+            signal(closureOp);
+          }
+        }
+      });
 
       if (newMap) {
         newMap.set(key, childScope);
@@ -329,8 +326,8 @@ function loop<T extends unknown[] = unknown[]>(
       reconcile(parentNode, oldArray, newArray!, afterReference);
     }
 
-    scope[nodeAccessor + AccessorChar.LoopScopeMap] = newMap;
-    scope[nodeAccessor + AccessorChar.LoopScopeArray] = newArray;
+    $scope[nodeAccessor + AccessorChar.LoopScopeMap] = newMap;
+    $scope[nodeAccessor + AccessorChar.LoopScopeArray] = newArray;
   };
 }
 
@@ -340,15 +337,13 @@ export function inLoopScope(
   loopNodeAccessor: Accessor,
 ) {
   const loopScopeAccessor = loopNodeAccessor + AccessorChar.LoopScopeArray;
-  return (scope: Scope, op: SignalOp) => {
+  return (op: SignalOp) => {
     const loopScopes =
-      scope[loopScopeAccessor] ??
-      scope[loopNodeAccessor + AccessorChar.LoopScopeMap]?.values() ??
+      $scope[loopScopeAccessor] ??
+      $scope[loopNodeAccessor + AccessorChar.LoopScopeMap]?.values() ??
       [];
     if (loopScopes !== emptyMarkerArray) {
-      for (const scope of loopScopes) {
-        signal(scope, op);
-      }
+      withScopes(loopScopes, signal, op);
     }
   };
 }

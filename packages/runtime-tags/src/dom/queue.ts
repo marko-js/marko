@@ -1,5 +1,6 @@
 import type { Scope } from "../common/types";
 import { schedule } from "./schedule";
+import { $scope, withScope } from "./scope";
 import { MARK, type ValueSignal } from "./signals";
 
 const enum PendingSignalOffset {
@@ -19,34 +20,23 @@ type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 
 let pendingSignals: unknown[] = [];
 let pendingEffects: unknown[] = [];
-export let rendering = false;
 
 export function queueSource<T>(scope: Scope, signal: ValueSignal, value: T) {
   schedule();
-  rendering = true;
-  signal(scope, MARK);
-  rendering = false;
+  withScope(scope, signal, MARK);
   pendingSignals.push(scope, signal, value);
   return value;
 }
 
-export function queueEffect<S extends Scope, T extends ExecFn<S>>(
-  scope: S,
-  fn: T,
-) {
-  pendingEffects.push(scope, fn);
+export function queueEffect<T extends ExecFn<Scope>>(fn: T) {
+  pendingEffects.push($scope, fn);
 }
 
 export function run() {
   const signals = pendingSignals;
   const effects = pendingEffects;
-  try {
-    rendering = true;
-    pendingSignals = [];
-    runSignals(signals);
-  } finally {
-    rendering = false;
-  }
+  pendingSignals = [];
+  runSignals(signals);
   pendingEffects = [];
   runEffects(effects);
 }
@@ -57,12 +47,10 @@ export function prepareEffects(fn: () => void): unknown[] {
   const preparedEffects = (pendingEffects = []);
   const preparedSignals = (pendingSignals = []);
   try {
-    rendering = true;
     fn();
     pendingSignals = prevSignals;
     runSignals(preparedSignals);
   } finally {
-    rendering = false;
     pendingSignals = prevSignals;
     pendingEffects = prevEffects;
   }
@@ -72,8 +60,8 @@ export function prepareEffects(fn: () => void): unknown[] {
 export function runEffects(effects: unknown[] = pendingEffects) {
   for (let i = 0; i < effects.length; i += PendingEffectOffset.Total) {
     const scope = effects[i] as Scope;
-    const fn = effects[i + 1] as (scope: Scope) => void;
-    fn(scope);
+    const fn = effects[i + 1] as (scope: Scope, scopeAgain: Scope) => void;
+    withScope(scope, fn, scope, scope);
   }
 }
 
@@ -82,6 +70,6 @@ function runSignals(signals: unknown[]) {
     const scope = signals[i + PendingSignalOffset.Scope] as Scope;
     const signal = signals[i + PendingSignalOffset.Signal] as ValueSignal;
     const value = signals[i + PendingSignalOffset.Value] as unknown;
-    signal(scope, value);
+    withScope(scope, signal, value);
   }
 }

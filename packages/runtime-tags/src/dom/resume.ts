@@ -1,6 +1,6 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import { ResumeSymbol, type Scope } from "../common/types";
-import { onDestroy } from "./scope";
+import { $scope, onDestroy, withScope } from "./scope";
 import type { IntersectionSignal, SignalOp, ValueSignal } from "./signals";
 
 interface Renders {
@@ -16,7 +16,7 @@ interface RenderData {
   r?: (string | number | ((ctx: object) => Record<number | string, Scope>))[];
   w(): void;
 }
-type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
+type RegisteredFn<S extends Scope = Scope> = (scope: S, scopeAgain: S) => void;
 
 const registeredValues: Record<string, unknown> = {};
 
@@ -176,8 +176,12 @@ class Render implements RenderData {
           } else if (i === len || typeof resumes[i] !== "string") {
             delete this.___renders[this.___renderId];
           } else {
-            (registeredValues[resumes[i++] as string] as RegisteredFn)(
-              scopeLookup[resumeData],
+            const scope = scopeLookup[resumeData];
+            withScope(
+              scope,
+              registeredValues[resumes[i++] as string] as RegisteredFn,
+              scope,
+              scope,
             );
           }
         }
@@ -199,14 +203,16 @@ export function registerBoundSignal<T extends ValueSignal>(
   id: string,
   signal: T,
 ): T {
-  registeredValues[id] = (scope: Scope) => (valueOrOp: unknown | SignalOp) =>
-    signal(scope, valueOrOp);
+  registeredValues[id] =
+    (scope: Scope = $scope) =>
+    (valueOrOp: unknown | SignalOp) =>
+      withScope(scope, signal, valueOrOp);
   return signal;
 }
 
 export function getRegisteredWithScope(id: string, scope?: Scope) {
   const val = registeredValues[id];
-  return scope ? (val as RegisteredFn)(scope) : val;
+  return scope ? (val as RegisteredFn)(scope, scope) : val;
 }
 
 export function init(runtimeId = DEFAULT_RUNTIME_ID) {

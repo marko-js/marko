@@ -186,7 +186,7 @@ export default {
 
           return t.callExpression(
             signal.identifier,
-            changeBindingId ? [scope, value, changeBindingId] : [scope, value],
+            changeBindingId ? [value, changeBindingId, scope] : [value, scope],
           );
         };
       } else {

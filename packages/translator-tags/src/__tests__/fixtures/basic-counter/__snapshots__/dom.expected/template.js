@@ -6,15 +6,15 @@ const _onClick = _scope => {
     clickCount
   } = _scope;
   return function () {
-    _clickCount(_scope, clickCount + 1);
+    _clickCount(clickCount + 1, _scope);
   };
 };
 const _clickCount_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-counter/template.marko_0_clickCount", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
-const _clickCount = /* @__PURE__ */_$.state("clickCount", (_scope, clickCount) => {
-  _$.data(_scope["#text/1"], clickCount);
-  _clickCount_effect(_scope);
+const _clickCount = /* @__PURE__ */_$.state("clickCount", clickCount => {
+  _$.data("#text/1", clickCount);
+  _clickCount_effect();
 });
 export function _setup_(_scope) {
-  _clickCount(_scope, 0);
+  _clickCount(0);
 }
 export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-counter/template.marko", _template_, _walks_, _setup_);

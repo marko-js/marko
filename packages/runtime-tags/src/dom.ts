@@ -63,8 +63,11 @@ export {
   intersection,
   intersections,
   nextTagId,
+  param,
   setTagVar,
+  setup,
   state,
+  // stateControllable,
   tagVarSignal,
   value,
 } from "./dom/signals";

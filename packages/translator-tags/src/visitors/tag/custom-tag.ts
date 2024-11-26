@@ -2,7 +2,7 @@ import {
   assertAttributesOrSingleArg,
   getTagTemplate,
   importDefault,
-  importNamed,
+  importStar,
   isAttributeTag,
   loadFileForTag,
   resolveRelativePath,
@@ -29,7 +29,6 @@ import {
   trackVarReferences,
 } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
-import { createScopeReadExpression } from "../../util/scope-read";
 import {
   getOrCreateSection,
   getScopeIdIdentifier,
@@ -268,12 +267,13 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
   const relativePath = getTagRelativePath(tag);
   const childFile = loadFileForTag(tag)!;
   const childExports = childFile.ast.program.extra!.domExports!;
-  const tagIdentifier = importOrSelfReferenceName(
+  const tagSetupReference = importOrSelfReferenceName(
     file,
     relativePath,
     childExports.setup,
     tagName,
   );
+
   const inputExport = childExports.params?.props?.[0];
   if (inputExport) {
     writeAttrsToExports(tag, inputExport, `${getTagName(tag) || "tag"}_input`, {
@@ -284,10 +284,10 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     });
   }
 
-  write`${importNamed(file, relativePath, childExports.template, `${tagName}_template`)}`;
+  write`${importStar(file, relativePath, childExports.template, tagName)}`;
   walks.injectWalks(
     tag,
-    importNamed(file, relativePath, childExports.walks, `${tagName}_walks`),
+    importStar(file, relativePath, childExports.walks, tagName),
   );
 
   if (node.var) {
@@ -310,13 +310,14 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       ),
     );
   }
+
   addStatement(
     "render",
     tagSection,
     undefined,
     t.expressionStatement(
-      t.callExpression(tagIdentifier, [
-        createScopeReadExpression(tagSection, childScopeBinding),
+      t.callExpression(tagSetupReference, [
+        getScopeAccessorLiteral(childScopeBinding),
       ]),
     ),
   );
@@ -476,7 +477,7 @@ function writeAttrsToExports(
   if (tag.node.arguments?.length) {
     // With arguments passed to a custom tag we supply the first arg and thats all.
     const [arg] = tag.node.arguments;
-    const tagInputIdentifier = importOrSelfReferenceName(
+    const tagInputReference = importOrSelfReferenceName(
       tag.hub.file,
       info.relativePath,
       templateExport.id,
@@ -487,15 +488,15 @@ function writeAttrsToExports(
       // technically this should be `arg.extra?.referencedBindings`
       // but we should probably ensure all other references are dropped in this case before we do that.
       tag.node.extra?.referencedBindings,
-      identifierToSignal(tagInputIdentifier),
+      identifierToSignal(tagInputReference),
       t.isSpreadElement(arg)
         ? t.memberExpression(arg.argument, t.numericLiteral(0))
         : arg,
-      createScopeReadExpression(info.tagSection, info.childScopeBinding),
+      getScopeAccessorLiteral(info.childScopeBinding),
       callRuntime(
         "inChild",
         getScopeAccessorLiteral(info.childScopeBinding),
-        t.identifier(tagInputIdentifier.name),
+        tagInputReference,
       ),
     );
     return;
@@ -503,7 +504,7 @@ function writeAttrsToExports(
 
   if (!templateExport.props || info.circular) {
     const referencedBindings = tag.node.extra?.referencedBindings;
-    const tagInputIdentifier = importOrSelfReferenceName(
+    const tagInputReference = importOrSelfReferenceName(
       tag.hub.file,
       info.relativePath,
       templateExport.id,
@@ -524,13 +525,13 @@ function writeAttrsToExports(
     addValue(
       info.tagSection,
       referencedBindings,
-      identifierToSignal(tagInputIdentifier),
+      identifierToSignal(tagInputReference),
       propsToExpression(translatedAttrs.properties),
-      createScopeReadExpression(info.tagSection, info.childScopeBinding),
+      getScopeAccessorLiteral(info.childScopeBinding),
       callRuntime(
         "inChild",
         getScopeAccessorLiteral(info.childScopeBinding),
-        t.identifier(tagInputIdentifier.name),
+        tagInputReference,
       ),
     );
     return;
@@ -585,12 +586,7 @@ function writeAttrsToExports(
             if (attrTagMeta.dynamic) {
               i = translateDynamicAttrTagChildInGroup(attrTagMeta.group, i);
             } else {
-              writeAttrsToExports(
-                child,
-                childAttrExport,
-                `${importAlias}_${attrTagMeta.name}`,
-                info,
-              );
+              writeAttrsToExports(child, childAttrExport, importAlias, info);
             }
           }
         } else if (child.node.extra?.attributeTagGroup) {
@@ -611,24 +607,20 @@ function writeAttrsToExports(
         const attrTagMeta = attrTagLookup[name];
         const childAttrExports = templateExport.props[attrTagMeta.name];
         if (!childAttrExports) continue;
-        const attrExportIdentifier = importOrSelfReferenceName(
+        const attrExportReference = importOrSelfReferenceName(
           tag.hub.file,
           info.relativePath,
           childAttrExports.id,
-          `${importAlias}_${attrTagMeta.name}`,
+          importAlias,
         );
         decls.push(t.variableDeclarator(getAttrTagIdentifier(attrTagMeta)));
         addValue(
           info.tagSection,
           referencedBindings,
-          identifierToSignal(attrExportIdentifier),
+          identifierToSignal(attrExportReference),
           getAttrTagIdentifier(attrTagMeta),
-          createScopeReadExpression(info.tagSection, info.childScopeBinding),
-          callRuntime(
-            "inChild",
-            getScopeAccessorLiteral(info.childScopeBinding),
-            t.identifier(attrExportIdentifier.name),
-          ),
+          getScopeAccessorLiteral(info.childScopeBinding),
+          callRuntime("inChild", attrExportReference),
         );
       }
 
@@ -643,22 +635,22 @@ function writeAttrsToExports(
   if (bodySection && !seen.has("renderBody")) {
     seen.add("renderBody");
     if (templateExport.props.renderBody) {
-      const renderBodyExportIdentifier = importNamed(
+      const renderBodyExportReference = importStar(
         tag.hub.file,
         info.relativePath,
         templateExport.props.renderBody.id,
-        `${importAlias}_renderBody`,
+        importAlias,
       );
       addValue(
         info.tagSection,
         undefined, // TODO: pretty sure renderBody needs to have the reference group of it's param defaults.
-        identifierToSignal(renderBodyExportIdentifier),
+        identifierToSignal(renderBodyExportReference),
         t.callExpression(t.identifier(bodySection.name), [scopeIdentifier]),
-        createScopeReadExpression(info.tagSection, info.childScopeBinding),
+        getScopeAccessorLiteral(info.childScopeBinding),
         callRuntime(
           "inChild",
           getScopeAccessorLiteral(info.childScopeBinding),
-          t.identifier(renderBodyExportIdentifier.name),
+          renderBodyExportReference,
         ),
       );
     }
@@ -691,22 +683,22 @@ function writeAttrsToExports(
 
   for (const attr of staticAttrs.reverse()) {
     const childAttrExports = templateExport.props[attr.name];
-    const attrExportIdentifier = importOrSelfReferenceName(
+    const attrExportReference = importOrSelfReferenceName(
       tag.hub.file,
       info.relativePath,
       childAttrExports.id,
-      `${importAlias}_${attr.name}`,
+      importAlias,
     );
     addValue(
       info.tagSection,
       attr.value.extra?.referencedBindings,
-      identifierToSignal(attrExportIdentifier),
+      identifierToSignal(attrExportReference),
       attr.value,
-      createScopeReadExpression(info.tagSection, info.childScopeBinding),
+      getScopeAccessorLiteral(info.childScopeBinding),
       callRuntime(
         "inChild",
         getScopeAccessorLiteral(info.childScopeBinding),
-        t.identifier(attrExportIdentifier.name),
+        attrExportReference,
       ),
     );
   }
@@ -731,22 +723,22 @@ function writeAttrsToExports(
 
     for (const name of missing) {
       const childAttrExports = templateExport.props[name]!;
-      const attrExportIdentifier = importOrSelfReferenceName(
+      const attrExportReference = importOrSelfReferenceName(
         tag.hub.file,
         info.relativePath,
         childAttrExports.id,
-        `${importAlias}_${name}`,
+        importAlias,
       );
       addValue(
         info.tagSection,
         referencedBindings,
-        identifierToSignal(attrExportIdentifier),
+        identifierToSignal(attrExportReference),
         getMissingPropValue(name),
-        createScopeReadExpression(info.tagSection, info.childScopeBinding),
+        getScopeAccessorLiteral(info.childScopeBinding),
         callRuntime(
           "inChild",
           getScopeAccessorLiteral(info.childScopeBinding),
-          t.identifier(attrExportIdentifier.name),
+          attrExportReference,
         ),
       );
     }
@@ -757,13 +749,13 @@ function importOrSelfReferenceName(
   file: t.BabelFile,
   request: string,
   name: string,
-  nameHint?: string,
-): t.Identifier {
+  nameHint: string,
+): t.MemberExpression | t.Identifier {
   if (isCircularRequest(file, request)) {
     return t.identifier(name);
   }
 
-  return importNamed(file, request, name, nameHint);
+  return importStar(file, request, name, nameHint);
 }
 
 function isCircularRequest(file: t.BabelFile, request: string) {
@@ -788,7 +780,7 @@ function callExpression(
   return t.callExpression(id, args.filter(Boolean) as t.Expression[]);
 }
 
-function identifierToSignal(identifier: t.Identifier) {
+function identifierToSignal(identifier: t.Identifier | t.MemberExpression) {
   return {
     identifier,
     hasDownstreamIntersections: always,

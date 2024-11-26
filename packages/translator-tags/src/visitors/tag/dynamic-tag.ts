@@ -256,7 +256,7 @@ export default {
           return callRuntime(
             "conditional",
             getScopeAccessorLiteral(nodeRef),
-            getSignalFn(signal, [scopeIdentifier]),
+            getSignalFn(signal),
             buildSignalIntersections(signal),
           );
         };

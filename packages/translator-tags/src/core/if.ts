@@ -43,7 +43,6 @@ import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
-import { scopeIdentifier } from "../visitors/program";
 
 const kBinding = Symbol("if node binding");
 const BRANCHES_LOOKUP = new WeakMap<
@@ -298,7 +297,7 @@ export const IfTag = {
           const section = getSection(tag);
           const rootExtra = branches[0][0].node.extra!;
           const nodeRef = rootExtra[kBinding]!;
-          let expr: t.Expression = t.nullLiteral();
+          let expr: t.Expression = t.numericLiteral(0);
 
           for (let i = branches.length; i--; ) {
             const [branchTag, branchBodySection] = branches[i];
@@ -327,7 +326,7 @@ export const IfTag = {
             return callRuntime(
               "conditional",
               getScopeAccessorLiteral(nodeRef),
-              getSignalFn(signal, [scopeIdentifier]),
+              getSignalFn(signal),
             );
           };
           signal.hasDownstreamIntersections = () =>

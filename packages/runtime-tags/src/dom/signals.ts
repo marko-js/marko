@@ -1,7 +1,8 @@
 import { type Accessor, AccessorChar, type Scope } from "../common/types";
-import { queueEffect, queueSource, rendering } from "./queue";
+import { queueEffect, queueSource } from "./queue";
 import type { Renderer } from "./renderer";
 import { register } from "./resume";
+import { $scope, withScope } from "./scope";
 
 export type Signal = ValueSignal | IntersectionSignal;
 
@@ -11,9 +12,11 @@ export const DIRTY: unique symbol = MARKO_DEBUG ? Symbol("dirty") : ({} as any);
 
 export type SignalOp = typeof MARK | typeof CLEAN | typeof DIRTY;
 
-export type SignalFn<T = unknown> = (scope: Scope, value: T) => void;
+export type SignalFn<T = unknown> = (value: T) => void;
 
 export type ValueSignal<T = unknown> = SignalFn<T | SignalOp>;
+
+export type ParamSignal<T = unknown> = SignalFn<T | SignalOp>;
 
 export type BoundValueSignal<T = unknown> = (valueOrOp: T | SignalOp) => void;
 
@@ -31,30 +34,57 @@ export function state<T>(
   valueAccessor: Accessor,
   fn: ValueSignal<T>,
   getIntersection?: () => IntersectionSignal,
+  // ) {
+  //   const valueSignal = stateControllable<T>(valueAccessor, fn, getIntersection);
+
+  //   return (valueOrOp: T | SignalOp, assignedScope?: Scope) =>
+  //     valueSignal(valueOrOp, undefined, assignedScope);
+  // }
+
+  // export function stateControllable<T>(
+  //   valueAccessor: Accessor,
+  //   fn: ValueSignal<T>,
+  //   getIntersection?: () => IntersectionSignal,
 ) {
   const valueSignal = value<T>(valueAccessor, fn, getIntersection);
   const markAccessor = valueAccessor + AccessorChar.Mark;
 
   return (
-    scope: Scope,
     valueOrOp: T | SignalOp,
-    valueChange?: (v: T) => void,
+    valueChange: ((v: T) => void) | undefined,
+    assignedScope?: Scope,
   ) => {
-    if (rendering) {
+    if (assignedScope) {
+      if (valueChange) {
+        valueChange(valueOrOp as T);
+      } else {
+        queueSource(assignedScope, valueSignal as ValueSignal, valueOrOp);
+      }
+    } else {
       const valueIsOp =
         valueOrOp === MARK || valueOrOp === CLEAN || valueOrOp === DIRTY;
       valueSignal(
-        scope,
-        valueIsOp || valueChange || scope[markAccessor] === undefined
+        valueIsOp || valueChange || $scope[markAccessor] === undefined
           ? valueOrOp
           : CLEAN,
       );
-    } else if (valueChange) {
-      valueChange(valueOrOp as T);
-    } else {
-      queueSource(scope, valueSignal as ValueSignal, valueOrOp);
     }
     return valueOrOp;
+  };
+}
+
+export function param<T>(
+  valueAccessor: Accessor,
+  fn: ParamSignal<T>,
+  getIntersection?: () => IntersectionSignal,
+) {
+  const valueSignal = value<T>(valueAccessor, fn, getIntersection);
+  return (valueOrOp: T | SignalOp, accessor?: Accessor) => {
+    if (accessor) {
+      withScope($scope[accessor] as Scope, valueSignal, valueOrOp);
+    } else {
+      valueSignal(valueOrOp);
+    }
   };
 }
 
@@ -65,31 +95,30 @@ export function value<T>(
 ): ValueSignal<T> {
   const markAccessor = valueAccessor + AccessorChar.Mark;
   let intersection: IntersectionSignal | undefined =
-    getIntersection &&
-    ((scope, op) => (intersection = getIntersection!())(scope, op));
+    getIntersection && ((op) => (intersection = getIntersection!())(op));
 
-  return (scope, valueOrOp) => {
+  return (valueOrOp) => {
     if (valueOrOp === MARK) {
-      if ((scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) === 1) {
-        intersection?.(scope, MARK);
+      if (($scope[markAccessor] = ($scope[markAccessor] ?? 0) + 1) === 1) {
+        intersection?.(MARK);
       }
     } else if (valueOrOp !== DIRTY) {
-      const existing = scope[markAccessor] !== undefined;
-      if ((scope[markAccessor] ||= 1) === 1) {
+      const existing = $scope[markAccessor] !== undefined;
+      if (($scope[markAccessor] ||= 1) === 1) {
         if (
           valueOrOp === CLEAN ||
-          (existing && scope[valueAccessor] === valueOrOp)
+          (existing && $scope[valueAccessor] === valueOrOp)
         ) {
-          intersection?.(scope, CLEAN);
+          intersection?.(CLEAN);
         } else {
-          scope[valueAccessor] = valueOrOp;
-          fn && fn(scope, valueOrOp);
-          intersection?.(scope, DIRTY);
+          $scope[valueAccessor] = valueOrOp;
+          fn && fn(valueOrOp);
+          intersection?.(DIRTY);
         }
       }
       // closure needs this to be called after the fn
       // so it is marked until all downstream have been called
-      scope[markAccessor]--;
+      $scope[markAccessor]--;
     }
   };
 }
@@ -98,33 +127,32 @@ let accessorId = 0;
 
 export function intersection(
   count: number,
-  fn: SignalFn<never>,
+  fn: SignalFn<Scope>,
   getIntersection?: () => IntersectionSignal,
 ): IntersectionSignal {
   const dirtyAccessor = AccessorChar.Dynamic + accessorId++;
   const markAccessor = dirtyAccessor + AccessorChar.Mark;
   let intersection: IntersectionSignal | undefined =
-    getIntersection &&
-    ((scope, op) => (intersection = getIntersection!())(scope, op));
+    getIntersection && ((op) => (intersection = getIntersection!())(op));
 
-  return (scope, op) => {
+  return (op) => {
     if (op === MARK) {
-      if ((scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) === 1) {
-        intersection?.(scope, MARK);
+      if (($scope[markAccessor] = ($scope[markAccessor] ?? 0) + 1) === 1) {
+        intersection?.(MARK);
       }
-    } else if (scope[markAccessor] === undefined) {
-      scope[markAccessor] = count - 1;
-      scope[dirtyAccessor] = true;
-    } else if (--scope[markAccessor] === 0) {
-      if (op === DIRTY || scope[dirtyAccessor]) {
-        scope[dirtyAccessor] = false;
-        fn(scope, 0 as never);
-        intersection?.(scope, DIRTY);
+    } else if ($scope[markAccessor] === undefined) {
+      $scope[markAccessor] = count - 1;
+      $scope[dirtyAccessor] = true;
+    } else if (--$scope[markAccessor] === 0) {
+      if (op === DIRTY || $scope[dirtyAccessor]) {
+        $scope[dirtyAccessor] = false;
+        fn($scope);
+        intersection?.(DIRTY);
       } else {
-        intersection?.(scope, CLEAN);
+        intersection?.(CLEAN);
       }
     } else {
-      scope[dirtyAccessor] ||= op === DIRTY;
+      $scope[dirtyAccessor] ||= op === DIRTY;
     }
   };
 }
@@ -145,36 +173,35 @@ export function closure<T>(
       ? ownerValueAccessor
       : () => ownerValueAccessor as Accessor;
   let intersection: IntersectionSignal | undefined =
-    getIntersection &&
-    ((scope, op) => (intersection = getIntersection!())(scope, op));
-  return (scope, op) => {
+    getIntersection && ((op) => (intersection = getIntersection!())(op));
+  return (op) => {
     if (op === MARK) {
-      if ((scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) === 1) {
-        intersection?.(scope, MARK);
+      if (($scope[markAccessor] = ($scope[markAccessor] ?? 0) + 1) === 1) {
+        intersection?.(MARK);
       }
     } else {
       let ownerScope, ownerValueAccessor;
-      if (scope[markAccessor] === undefined) {
-        ownerScope = getOwnerScope(scope);
-        ownerValueAccessor = getOwnerValueAccessor(scope);
+      if ($scope[markAccessor] === undefined) {
+        ownerScope = getOwnerScope($scope);
+        ownerValueAccessor = getOwnerValueAccessor($scope);
         const ownerMark = ownerScope[ownerValueAccessor + AccessorChar.Mark];
         const ownerHasRun =
           ownerMark === undefined ? !ownerScope.___client : ownerMark === 0;
-        scope[markAccessor] = ownerHasRun ? 1 : 2;
+        $scope[markAccessor] = ownerHasRun ? 1 : 2;
         op = DIRTY;
       }
-      if (--scope[markAccessor] === 0) {
-        if (op === DIRTY || scope[dirtyAccessor]) {
-          scope[dirtyAccessor] = false;
-          ownerScope ||= getOwnerScope(scope);
-          ownerValueAccessor ||= getOwnerValueAccessor(scope);
-          fn && fn(scope, ownerScope[ownerValueAccessor]);
-          intersection?.(scope, DIRTY);
+      if (--$scope[markAccessor] === 0) {
+        if (op === DIRTY || $scope[dirtyAccessor]) {
+          $scope[dirtyAccessor] = false;
+          ownerScope ||= getOwnerScope($scope);
+          ownerValueAccessor ||= getOwnerValueAccessor($scope);
+          fn && fn(ownerScope[ownerValueAccessor]);
+          intersection?.(DIRTY);
         } else {
-          intersection?.(scope, CLEAN);
+          intersection?.(CLEAN);
         }
       } else {
-        scope[dirtyAccessor] ||= op === DIRTY;
+        $scope[dirtyAccessor] ||= op === DIRTY;
       }
     }
   };
@@ -199,7 +226,7 @@ export function dynamicClosure<T>(
   );
   const subscribeFns = new WeakMap<Scope, (value: SignalOp) => void>();
   signalFn.___subscribe = (scope: Scope) => {
-    const subscribeFn = (value: SignalOp) => signalFn(scope, value);
+    const subscribeFn = (value: SignalOp) => withScope(scope, signalFn, value);
     const ownerScope = getOwnerScope(scope);
     const providerSubscriptionsAccessor =
       getOwnerValueAccessor(scope) + AccessorChar.Subscribers;
@@ -221,11 +248,13 @@ export function childClosures(
   closureSignals: IntersectionSignal[],
   childAccessor: Accessor,
 ) {
-  const signal = (scope: Scope, op: SignalOp) => {
-    const childScope = scope[childAccessor] as Scope;
-    for (const closureSignal of closureSignals) {
-      closureSignal(childScope, op);
-    }
+  const signal = (op: SignalOp) => {
+    const childScope = $scope[childAccessor] as Scope;
+    withScope(childScope, () => {
+      for (const closureSignal of closureSignals) {
+        closureSignal(op);
+      }
+    });
   };
   signal.___subscribe = (scope: Scope) => {
     const childScope = scope[childAccessor] as Scope;
@@ -244,8 +273,8 @@ export function childClosures(
 
 export function dynamicSubscribers(valueAccessor: Accessor) {
   const subscribersAccessor = valueAccessor + AccessorChar.Subscribers;
-  return (scope: Scope, op: SignalOp) => {
-    const subscribers = scope[
+  return (op: SignalOp) => {
+    const subscribers = $scope[
       subscribersAccessor
     ] as Set<BoundIntersectionSignal>;
     if (subscribers) {
@@ -256,18 +285,15 @@ export function dynamicSubscribers(valueAccessor: Accessor) {
   };
 }
 
-export function setTagVar(
-  scope: Scope,
-  childAccessor: Accessor,
-  tagVarSignal: ValueSignal,
-) {
-  scope[childAccessor][AccessorChar.TagVariable] = (
+export function setTagVar(childAccessor: Accessor, tagVarSignal: ValueSignal) {
+  const scope = $scope;
+  $scope[childAccessor][AccessorChar.TagVariable] = (
     valueOrOp: unknown | SignalOp,
-  ) => tagVarSignal(scope, valueOrOp);
+  ) => withScope(scope, tagVarSignal, valueOrOp);
 }
 
-export const tagVarSignal = (scope: Scope, valueOrOp: unknown | SignalOp) =>
-  scope[AccessorChar.TagVariable]?.(valueOrOp);
+export const tagVarSignal = (valueOrOp: unknown | SignalOp) =>
+  $scope[AccessorChar.TagVariable]?.(valueOrOp);
 
 export const renderBodyClosures = (
   renderBody: Renderer | string | undefined,
@@ -276,9 +302,11 @@ export const renderBodyClosures = (
 ) => {
   const signals = (renderBody as unknown as Renderer)?.___closureSignals;
   if (signals) {
-    for (const signal of signals) {
-      signal(childScope, op);
-    }
+    withScope(childScope, () => {
+      for (const signal of signals) {
+        signal(op);
+      }
+    });
   }
 };
 
@@ -288,7 +316,7 @@ export const inMany = (
   signal: IntersectionSignal,
 ) => {
   for (const scope of scopes) {
-    signal(scope, op);
+    withScope(scope, signal, op);
   }
 };
 
@@ -300,24 +328,34 @@ export function nextTagId({ $global }: Scope) {
 }
 
 export function inChild(childAccessor: Accessor, signal: ValueSignal) {
-  return (scope: Scope, valueOrOp: unknown | SignalOp) => {
-    signal(scope[childAccessor] as Scope, valueOrOp);
+  return (valueOrOp: unknown | SignalOp) => {
+    withScope($scope[childAccessor] as Scope, signal, valueOrOp);
   };
 }
 
 export function intersections(
   signals: IntersectionSignal[],
 ): IntersectionSignal {
-  return (scope, op) => {
+  return (op) => {
     for (const signal of signals) {
-      signal(scope, op);
+      signal(op);
     }
   };
 }
 
-export function effect(id: string, fn: (scope: Scope) => void) {
+export function effect(
+  id: string,
+  fn: (scope: Scope, scopeAgain: Scope) => void,
+) {
   register(id, fn);
-  return (scope: Scope) => {
-    queueEffect(scope, fn);
+  return () => queueEffect(fn);
+}
+
+export function setup(fn: (scope: Scope) => void) {
+  return (
+    accessor?: Accessor,
+    scope = accessor ? $scope[accessor] : $scope,
+  ) => {
+    withScope(scope, fn, scope);
   };
 }

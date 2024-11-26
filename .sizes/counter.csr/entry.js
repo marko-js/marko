@@ -1,20 +1,29 @@
-import { e as t, c as n, o, s, d as c } from "./runtime-iO38DTrJ.js";
+import {
+  e as t,
+  c as s,
+  o as n,
+  s as o,
+  a,
+  d as c,
+} from "./runtime-kEbnU4H9.js";
 const i = t("XBSGKvBc", (t) =>
-    o(
+    n(
       t[0],
       "click",
       ((t) => {
-        const { 2: n } = t;
+        const { 2: s } = t;
         return function () {
-          u(t, n + 1);
+          u(s + 1, t);
         };
       })(t),
     ),
   ),
-  u = s(2, (t, n) => {
-    c(t[1], n), i(t);
+  u = a(2, (t) => {
+    c(1, t), i();
   });
-function a(t) {
-  u(t, 0);
-}
-n("tPaZsVqd", "<div><button> </button></div>", "D D m", a).mount();
+s(
+  "tPaZsVqd",
+  "<div><button> </button></div>",
+  "D D m",
+  o(() => u(0)),
+).mount();

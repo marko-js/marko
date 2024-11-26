@@ -89,7 +89,7 @@ export function importNamed(file, request, name, nameHint = name) {
   return t.identifier(specifier.node.local.name);
 }
 
-export function importStar(file, request, nameHint) {
+export function importStar(file, request, name, nameHint) {
   const imports = getImports(file);
   request = resolveRelativePath(file, request);
   let importDeclaration = imports.get(request);
@@ -109,20 +109,22 @@ export function importStar(file, request, nameHint) {
   }
 
   const specifiers = importDeclaration.get("specifiers");
-  const specifier = specifiers.find((specifier) =>
+  let specifier = specifiers.find((specifier) =>
     specifier.isImportNamespaceSpecifier(),
-  );
+  )?.node;
 
   if (!specifier) {
     const identifier = file.scope.generateUidIdentifier(nameHint);
     importDeclaration.pushContainer(
       "specifiers",
-      t.importNamespaceSpecifier(identifier),
+      (specifier = t.importNamespaceSpecifier(identifier)),
     );
-    return identifier;
   }
 
-  return t.identifier(specifier.node.local.name);
+  return t.memberExpression(
+    t.identifier(specifier.local.name),
+    t.identifier(name),
+  );
 }
 
 function getImports(file) {

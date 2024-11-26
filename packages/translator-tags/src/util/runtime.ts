@@ -36,9 +36,11 @@ export function importRuntime(
     | keyof typeof import("@marko/runtime-tags/html"),
 ) {
   const { output } = getMarkoOpts();
-  return t.memberExpression(
-    importStar(currentProgramPath.hub.file, getRuntimePath(output), "$"),
-    t.identifier(name),
+  return importStar(
+    currentProgramPath.hub.file,
+    getRuntimePath(output),
+    name,
+    "$",
   );
 }
 

@@ -7,7 +7,7 @@ import {
 import { setConditionalRendererOnlyChild } from "./control-flow";
 import { attrs } from "./dom";
 import { parseHTMLOrSingleNode as parseHTMLFragmentOrFirstNode } from "./parse-html";
-import { createScope } from "./scope";
+import { $scope, createScope, withScope } from "./scope";
 import {
   CLEAN,
   DIRTY,
@@ -83,7 +83,7 @@ export function initRenderer(renderer: Renderer, scope: Scope) {
       ? dom.lastChild!
       : (dom as ChildNode);
   if (renderer.___setup) {
-    renderer.___setup(scope);
+    withScope(scope, renderer.___setup, scope, scope as never);
   }
   return dom;
 }
@@ -93,52 +93,50 @@ export function dynamicTagAttrs(
   getRenderBody?: (scope: Scope) => Renderer,
   inputIsArgs?: boolean,
 ) {
-  return (
-    scope: Scope,
-    attrsOrOp: (() => Record<string, unknown>) | SignalOp,
-  ) => {
+  return (attrsOrOp: (() => Record<string, unknown>) | SignalOp) => {
     const renderer: Renderer | string | undefined =
-      scope[nodeAccessor + AccessorChar.ConditionalRenderer];
+      $scope[nodeAccessor + AccessorChar.ConditionalRenderer];
 
     if (!renderer || attrsOrOp === DIRTY) {
       return;
     }
 
-    const childScope = scope[nodeAccessor + AccessorChar.ConditionalScope];
-
-    if (attrsOrOp === MARK || attrsOrOp === CLEAN) {
-      return (renderer as Renderer).___args?.(childScope, attrsOrOp);
-    }
-
-    const renderBody = getRenderBody?.(scope);
-    if (typeof renderer === "string") {
-      // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
-      const nodeAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
-
-      if (MARKO_DEBUG && renderer === "textarea" && renderBody) {
-        throw new Error(
-          "A dynamic tag rendering a `<textarea>` cannot have a `renderBody` and must use the `value` attribute instead.",
-        );
+    const childScope = $scope[nodeAccessor + AccessorChar.ConditionalScope];
+    const attrsIsOp = attrsOrOp === MARK || attrsOrOp === CLEAN;
+    const renderBody = !attrsIsOp && getRenderBody?.($scope);
+    return withScope(childScope, () => {
+      if (attrsIsOp) {
+        return (renderer as Renderer).___args?.(attrsOrOp);
       }
 
-      setConditionalRendererOnlyChild(childScope, nodeAccessor, renderBody);
-      attrs(childScope, nodeAccessor, attrsOrOp());
-    } else if (renderer.___args) {
-      const attributes = attrsOrOp();
-      renderer.___args(
-        childScope,
-        inputIsArgs
-          ? attributes
-          : [
-              renderBody
-                ? {
-                    ...attributes,
-                    renderBody,
-                  }
-                : attributes,
-            ],
-      );
-    }
+      if (typeof renderer === "string") {
+        // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
+        const nodeAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
+
+        if (MARKO_DEBUG && renderer === "textarea" && renderBody) {
+          throw new Error(
+            "A dynamic tag rendering a `<textarea>` cannot have a `renderBody` and must use the `value` attribute instead.",
+          );
+        }
+
+        setConditionalRendererOnlyChild(nodeAccessor, renderBody);
+        attrs(nodeAccessor, attrsOrOp());
+      } else if (renderer.___args) {
+        const attributes = attrsOrOp();
+        renderer.___args(
+          inputIsArgs
+            ? attributes
+            : [
+                renderBody
+                  ? {
+                      ...attributes,
+                      renderBody,
+                    }
+                  : attributes,
+              ],
+        );
+      }
+    });
   };
 }
 

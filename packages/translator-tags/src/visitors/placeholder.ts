@@ -22,7 +22,6 @@ import { addStatement } from "../util/signals";
 import type { TemplateVisitor } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
-import { scopeIdentifier } from "./program";
 
 const kBinding = Symbol("placeholder node binding");
 const kSiblingText = Symbol("placeholder has sibling text");
@@ -111,16 +110,11 @@ export default {
               method === "data"
                 ? callRuntime(
                     "data",
-                    t.memberExpression(
-                      scopeIdentifier,
-                      getScopeAccessorLiteral(nodeBinding),
-                      true,
-                    ),
+                    getScopeAccessorLiteral(nodeBinding),
                     value,
                   )
                 : callRuntime(
                     "html",
-                    scopeIdentifier,
                     value,
                     getScopeAccessorLiteral(nodeBinding),
                   ),

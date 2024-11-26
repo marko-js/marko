@@ -2,6 +2,8 @@ import type { Scope } from "../common/types";
 
 let debugID = 0;
 
+export let $scope!: Scope;
+
 export function createScope($global: Scope["$global"]): Scope {
   const scope = {
     ___client: 1,
@@ -77,4 +79,30 @@ export function insertBefore(
     parent.insertBefore(current, nextSibling);
     current = next!;
   }
+}
+
+export function withScope<T extends (...args: any[]) => any>(
+  scope: Scope,
+  fn: T,
+  arg0?: Parameters<T>[0],
+  arg1?: Parameters<T>[1],
+): ReturnType<T> {
+  const prevScope = $scope;
+  $scope = scope;
+  const result = fn(arg0, arg1);
+  $scope = prevScope;
+  return result;
+}
+
+export function withScopes<T extends (...args: any[]) => any>(
+  scopes: Scope[],
+  fn: T,
+  arg0?: Parameters<T>[0],
+  arg1?: Parameters<T>[1],
+): void {
+  const prevScope = $scope;
+  for ($scope of scopes) {
+    fn(arg0, arg1);
+  }
+  $scope = prevScope;
 }

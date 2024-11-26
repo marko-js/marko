@@ -1,23 +1,22 @@
-import type { Scope } from "../common/types";
 import { queueEffect } from "./queue";
-import { onDestroy } from "./scope";
+import { $scope, onDestroy } from "./scope";
 
-export function resetAbortSignal(scope: Scope, id: string | number) {
-  const controllers = scope.___abortControllers;
+export function resetAbortSignal(id: string | number) {
+  const controllers = $scope.___abortControllers;
   if (controllers) {
     const ctrl = controllers.get(id);
     if (ctrl) {
-      queueEffect(null as any as Scope, () => ctrl.abort());
+      queueEffect(() => ctrl.abort());
       controllers.delete(id);
     }
   }
 }
 
-export function getAbortSignal(scope: Scope, id: string | number) {
-  const controllers = (scope.___abortControllers ||= new Map());
+export function getAbortSignal(id: string | number) {
+  const controllers = ($scope.___abortControllers ||= new Map());
   let controller = controllers.get(id);
   if (!controller) {
-    onDestroy(scope);
+    onDestroy($scope);
     controllers.set(id, (controller = new AbortController()));
   }
 

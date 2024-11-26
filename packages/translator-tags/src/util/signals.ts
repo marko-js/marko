@@ -46,7 +46,7 @@ export type Signal = {
       extraArgs?: t.Expression[];
     };
     value: t.Expression;
-    scope: t.Expression;
+    scopeAccessor: t.Expression | undefined;
     intersectionExpression?: t.Expression;
   }>;
   intersection: Opt<t.Expression>;
@@ -164,14 +164,18 @@ export function getSignal(
     if (isOutputHTML()) {
       return signal;
     } else if (!referencedBindings) {
-      signal.build = () => getSignalFn(signal, [scopeIdentifier]);
+      if (!section.parent) {
+        signal.build = () => callRuntime("setup", getSignalFn(signal));
+      } else {
+        signal.build = () => getSignalFn(signal);
+      }
     } else if (Array.isArray(referencedBindings)) {
       subscribe(referencedBindings, signal);
       signal.build = () => {
         return callRuntime(
           "intersection",
           t.numericLiteral(referencedBindings.length),
-          getSignalFn(signal, [scopeIdentifier], referencedBindings),
+          getSignalFn(signal, [], referencedBindings),
           buildSignalIntersections(signal),
         );
       };
@@ -194,10 +198,7 @@ export function getSignal(
         return callRuntime(
           isDynamicClosure ? "dynamicClosure" : "closure",
           getScopeAccessorLiteral(referencedBindings),
-          getSignalFn(signal, [
-            scopeIdentifier,
-            t.identifier(referencedBindings.name),
-          ]),
+          getSignalFn(signal, [t.identifier(referencedBindings.name)]),
           isImmediateOwner
             ? null
             : t.arrowFunctionExpression([scopeIdentifier], ownerScope),
@@ -217,10 +218,7 @@ export function initValue(
   const section = binding.section;
   const signal = getSignal(section, binding);
   signal.build = () => {
-    const fn = getSignalFn(signal, [
-      scopeIdentifier,
-      t.identifier(binding.name),
-    ]);
+    const fn = getSignalFn(signal, [t.identifier(binding.name)]);
     const intersections = buildSignalIntersections(signal);
     const isParamBinding =
       !binding.upstreamAlias &&
@@ -234,7 +232,12 @@ export function initValue(
     const needsCache = needsGuard || intersections;
     const needsMarks = isParamBinding || intersections;
     if (needsCache || needsMarks) {
-      return callRuntime(runtimeHelper, valueAccessor, fn, intersections);
+      return callRuntime(
+        signal.export ? "param" : runtimeHelper,
+        valueAccessor,
+        fn,
+        intersections,
+      );
     } else {
       return fn;
     }
@@ -254,23 +257,19 @@ export function initValue(
 
 export function getSignalFn(
   signal: Signal,
-  params: Array<t.Identifier | t.Pattern>,
+  params: Array<t.Identifier | t.Pattern> = [],
   referencedBindings?: ReferencedBindings,
 ) {
   const section = signal.section;
   const binding = signal.referencedBindings;
 
   if (binding && !Array.isArray(binding) && binding.section === section) {
-    const [scopeIdentifier, valueIdentifier] = params as [
-      t.Identifier,
-      t.Identifier,
-    ];
+    const [valueIdentifier] = params as [t.Identifier];
     for (const alias of binding.aliases) {
       const aliasSignal = getSignal(alias.section, alias);
       signal.render.push(
         t.expressionStatement(
           t.callExpression(aliasSignal.identifier, [
-            scopeIdentifier,
             valueIdentifier,
             ...(aliasSignal.extraArgs || []),
           ]),
@@ -283,7 +282,6 @@ export function getSignalFn(
       signal.render.push(
         t.expressionStatement(
           t.callExpression(aliasSignal.identifier, [
-            scopeIdentifier,
             toMemberExpression(valueIdentifier, key),
             ...(aliasSignal.extraArgs || []),
           ]),
@@ -296,8 +294,8 @@ export function getSignalFn(
     signal.render.push(
       t.expressionStatement(
         t.callExpression(value.signal.identifier, [
-          value.scope,
           value.value,
+          ...(value.scopeAccessor ? [value.scopeAccessor] : []),
           ...(value.signal.extraArgs || []),
         ]),
       ),
@@ -305,14 +303,12 @@ export function getSignalFn(
   }
 
   if (referencedBindings) {
-    signal.render.unshift(
-      t.variableDeclaration("const", [
-        t.variableDeclarator(
-          createScopeReadPattern(section, referencedBindings),
-          scopeIdentifier,
-        ),
-      ]),
-    );
+    params.push(createScopeReadPattern(section, referencedBindings));
+  }
+
+  // TODO: walk signal.render and see if `scopeIdentifier` is referenced
+  if (!scopeIdentifier) {
+    params.push(scopeIdentifier);
   }
 
   return t.arrowFunctionExpression(params, t.blockStatement(signal.render));
@@ -438,7 +434,6 @@ export function getDestructureSignal(
               bindingSignals.map((signal, i) =>
                 t.expressionStatement(
                   t.callExpression(signal.identifier, [
-                    scopeIdentifier,
                     bindingIdentifiers[i],
                     ...(signal.extraArgs || []),
                   ]),
@@ -464,7 +459,6 @@ export function getDestructureSignal(
             ...bindingSignals.map((signal, i) =>
               t.expressionStatement(
                 t.callExpression(signal.identifier, [
-                  scopeIdentifier,
                   bindingIdentifiers[i],
                   ...(signal.extraArgs || []),
                 ]),
@@ -582,13 +576,13 @@ export function addValue(
   referencedBindings: ReferencedBindings,
   signal: Signal["values"][number]["signal"],
   value: t.Expression,
-  scope: t.Expression = scopeIdentifier,
+  scopeAccessor?: t.Expression,
   intersectionExpression?: t.Expression,
 ) {
   getSignal(targetSection, referencedBindings).values.push({
     signal,
     value,
-    scope,
+    scopeAccessor,
     intersectionExpression,
   });
 }
@@ -729,15 +723,11 @@ export function writeSignals(section: Section) {
     let effectDeclarator;
     if (signal.effect.length) {
       const effectIdentifier = t.identifier(`${signal.identifier.name}_effect`);
+      const effectParams: Array<t.Identifier | t.Pattern> = [scopeIdentifier];
 
       if (signal.effectInlineReferences) {
-        signal.effect.unshift(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              createScopeReadPattern(section, signal.effectInlineReferences),
-              scopeIdentifier,
-            ),
-          ]),
+        effectParams.unshift(
+          createScopeReadPattern(section, signal.effectInlineReferences),
         );
       }
 
@@ -749,7 +739,7 @@ export function writeSignals(section: Section) {
             getResumeRegisterId(section, signal.referencedBindings),
           ),
           t.arrowFunctionExpression(
-            [scopeIdentifier],
+            effectParams,
             signal.effect.length === 1 &&
               t.isExpressionStatement(signal.effect[0])
               ? signal.effect[0].expression
@@ -758,9 +748,7 @@ export function writeSignals(section: Section) {
         ),
       );
       signal.render.push(
-        t.expressionStatement(
-          t.callExpression(effectIdentifier, [scopeIdentifier]),
-        ),
+        t.expressionStatement(t.callExpression(effectIdentifier, [])),
       );
     }
 

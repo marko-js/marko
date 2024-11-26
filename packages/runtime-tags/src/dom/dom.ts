@@ -4,7 +4,6 @@ import {
   AccessorChar,
   ControlledType,
   NodeType,
-  type Scope,
 } from "../common/types";
 import { getAbortSignal } from "./abort-signal";
 import {
@@ -22,6 +21,7 @@ import {
 } from "./controllable";
 import { on } from "./event";
 import { parseHTML } from "./parse-html";
+import { $scope } from "./scope";
 
 const eventHandlerReg = /^on[A-Z-]/;
 
@@ -56,7 +56,8 @@ export function styleAttr(element: Element, value: unknown) {
   setAttribute(element, "style", styleValue(value) || undefined);
 }
 
-export function data(node: Text | Comment, value: unknown) {
+export function data(nodeAccessor: Accessor, value: unknown) {
+  const node = $scope[nodeAccessor] as Text | Comment;
   const normalizedValue = normalizeString(value);
   // TODO: benchmark if it is actually faster to check data first
   if (node.data !== normalizedValue) {
@@ -65,11 +66,10 @@ export function data(node: Text | Comment, value: unknown) {
 }
 
 export function attrs(
-  scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
-  const el = scope[nodeAccessor] as Element;
+  const el = $scope[nodeAccessor] as Element;
   for (const { name } of el.attributes) {
     if (
       !(nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs)))
@@ -78,7 +78,7 @@ export function attrs(
     }
   }
 
-  attrsInternal(scope, nodeAccessor, nextAttrs);
+  attrsInternal(nodeAccessor, nextAttrs);
 }
 
 function hasAttrAlias(
@@ -94,12 +94,11 @@ function hasAttrAlias(
 }
 
 export function partialAttrs(
-  scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
   skip: Record<string, 1>,
 ) {
-  const el = scope[nodeAccessor] as Element;
+  const el = $scope[nodeAccessor] as Element;
   const partial: Partial<typeof nextAttrs> = {};
 
   for (const { name } of el.attributes) {
@@ -112,22 +111,20 @@ export function partialAttrs(
     if (!skip[key]) partial[key] = nextAttrs[key];
   }
 
-  attrsInternal(scope, nodeAccessor, partial);
+  attrsInternal(nodeAccessor, partial);
 }
 
 function attrsInternal(
-  scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
-  const el = scope[nodeAccessor] as Element;
+  const el = $scope[nodeAccessor] as Element;
   let events: undefined | Record<string, unknown>;
   let skip: RegExp | undefined;
   switch (el.tagName) {
     case "INPUT":
       if ("checked" in nextAttrs || "checkedChange" in nextAttrs) {
         controllable_input_checked(
-          scope,
           nodeAccessor,
           nextAttrs.checked,
           nextAttrs.checkedChange,
@@ -137,7 +134,6 @@ function attrsInternal(
         "checkedValueChange" in nextAttrs
       ) {
         controllable_input_checkedValue(
-          scope,
           nodeAccessor,
           nextAttrs.checkedValue,
           nextAttrs.checkedValueChange,
@@ -145,7 +141,6 @@ function attrsInternal(
         );
       } else if ("value" in nextAttrs || "valueChange" in nextAttrs) {
         controllable_input_value(
-          scope,
           nodeAccessor,
           nextAttrs.value,
           nextAttrs.valueChange,
@@ -158,7 +153,6 @@ function attrsInternal(
     case "SELECT":
       if ("value" in nextAttrs || "valueChange" in nextAttrs) {
         controllable_select_value(
-          scope,
           nodeAccessor,
           nextAttrs.value,
           nextAttrs.valueChange,
@@ -169,7 +163,6 @@ function attrsInternal(
     case "TEXTAREA":
       if ("value" in nextAttrs || "valueChange" in nextAttrs) {
         controllable_textarea_value(
-          scope,
           nodeAccessor,
           nextAttrs.value,
           nextAttrs.valueChange,
@@ -181,7 +174,6 @@ function attrsInternal(
     case "DIALOG":
       if ("open" in nextAttrs || "openChange" in nextAttrs) {
         controllable_detailsOrDialog_open(
-          scope,
           nodeAccessor,
           nextAttrs.open,
           nextAttrs.openChange,
@@ -205,7 +197,7 @@ function attrsInternal(
         break;
       default:
         if (eventHandlerReg.test(name)) {
-          (events ||= scope[nodeAccessor + AccessorChar.EventAttributes] = {})[
+          (events ||= $scope[nodeAccessor + AccessorChar.EventAttributes] = {})[
             name[2] === "-" ? name.slice(3) : name.slice(2).toLowerCase()
           ] = value;
         } else if (!skip?.test(name)) {
@@ -215,28 +207,28 @@ function attrsInternal(
   }
 }
 
-export function attrsEvents(scope: Scope, nodeAccessor: Accessor) {
-  const el = scope[nodeAccessor] as Element;
-  const events = scope[nodeAccessor + AccessorChar.EventAttributes] as Record<
+export function attrsEvents(nodeAccessor: Accessor) {
+  const el = $scope[nodeAccessor] as Element;
+  const events = $scope[nodeAccessor + AccessorChar.EventAttributes] as Record<
     string,
     any
   >;
 
-  switch (scope[nodeAccessor + AccessorChar.ControlledType]) {
+  switch ($scope[nodeAccessor + AccessorChar.ControlledType]) {
     case ControlledType.InputChecked:
-      controllable_input_checked_effect(scope, nodeAccessor);
+      controllable_input_checked_effect(nodeAccessor);
       break;
     case ControlledType.InputCheckedValue:
-      controllable_input_checkedValue_effect(scope, nodeAccessor);
+      controllable_input_checkedValue_effect(nodeAccessor);
       break;
     case ControlledType.InputValue:
-      controllable_input_value_effect(scope, nodeAccessor);
+      controllable_input_value_effect(nodeAccessor);
       break;
     case ControlledType.SelectValue:
-      controllable_select_value_effect(scope, nodeAccessor);
+      controllable_select_value_effect(nodeAccessor);
       break;
     case ControlledType.DetailsOrDialogOpen:
-      controllable_detailsOrDialog_open_effect(scope, nodeAccessor);
+      controllable_detailsOrDialog_open_effect(nodeAccessor);
       break;
   }
 
@@ -245,15 +237,15 @@ export function attrsEvents(scope: Scope, nodeAccessor: Accessor) {
   }
 }
 
-export function html(scope: Scope, value: unknown, index: Accessor) {
-  const firstChild = scope[index] as Node & ChildNode;
-  const lastChild = (scope[index + "-"] || firstChild) as Node & ChildNode;
+export function html(value: unknown, index: Accessor) {
+  const firstChild = $scope[index] as Node & ChildNode;
+  const lastChild = ($scope[index + "-"] || firstChild) as Node & ChildNode;
   const parentNode = firstChild.parentNode!;
   const afterReference = lastChild.nextSibling;
   const newContent = parseHTML(value || value === 0 ? value + "" : "<!>");
 
-  scope[index] = newContent.firstChild;
-  scope[index + AccessorChar.DynamicPlaceholderLastChild] =
+  $scope[index] = newContent.firstChild;
+  $scope[index + AccessorChar.DynamicPlaceholderLastChild] =
     newContent.lastChild;
   parentNode.insertBefore(newContent, firstChild);
 
@@ -265,10 +257,10 @@ export function html(scope: Scope, value: unknown, index: Accessor) {
   }
 }
 
-export function props(scope: Scope, nodeIndex: number, index: number) {
-  const nextProps = scope[index] as Record<string, unknown>;
-  const prevProps = scope[index + "-"] as Record<string, unknown> | undefined;
-  const node = scope[nodeIndex] as Node;
+export function props(nodeIndex: number, index: number) {
+  const nextProps = $scope[index] as Record<string, unknown>;
+  const prevProps = $scope[index + "-"] as Record<string, unknown> | undefined;
+  const node = $scope[nodeIndex] as Node;
 
   if (prevProps) {
     for (const name in prevProps) {
@@ -282,7 +274,7 @@ export function props(scope: Scope, nodeIndex: number, index: number) {
     (node as any)[name] = nextProps[name];
   }
 
-  scope[index + "-"] = nextProps;
+  $scope[index + "-"] = nextProps;
 }
 
 export function normalizeAttrValue(value: unknown) {
@@ -295,7 +287,6 @@ function normalizeString(value: unknown) {
   return value || value === 0 ? value + "" : "\u200d";
 }
 export function lifecycle(
-  scope: Scope,
   index: string | number,
   thisObj: Record<string, unknown> & {
     onMount?: (this: unknown) => void;
@@ -303,16 +294,14 @@ export function lifecycle(
     onDestroy?: (this: unknown) => void;
   },
 ) {
-  const instance = scope[index] as typeof thisObj;
+  const instance = $scope[index] as typeof thisObj;
   if (instance) {
     Object.assign(instance, thisObj);
     instance.onUpdate?.();
   } else {
-    scope[index] = thisObj;
+    $scope[index] = thisObj;
     thisObj.onMount?.();
-    getAbortSignal(
-      scope,
-      AccessorChar.LifecycleAbortController + index,
-    ).onabort = () => thisObj.onDestroy?.();
+    getAbortSignal(AccessorChar.LifecycleAbortController + index).onabort =
+      () => thisObj.onDestroy?.();
   }
 }

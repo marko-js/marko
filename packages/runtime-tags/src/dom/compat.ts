@@ -11,6 +11,7 @@ import {
   type Renderer,
 } from "./renderer";
 import { getRegisteredWithScope, register } from "./resume";
+import { withScope } from "./scope";
 import { CLEAN, DIRTY, MARK } from "./signals";
 const classIdToScope = new Map<string, Scope>();
 
@@ -90,19 +91,25 @@ export const compat = {
     let existing = false;
 
     component.effects = prepareEffects(() => {
-      if (!scope) {
-        scope = component.scope = createScopeWithRenderer(renderer, out.global);
-        const closures = renderer.___closureSignals;
-        if (closures) {
-          for (const signal of closures) {
-            signal(component.scope, CLEAN);
+      const missingScope = !scope;
+      scope ||= component.scope ||= createScopeWithRenderer(
+        renderer,
+        out.global,
+      );
+      withScope(scope, () => {
+        if (missingScope) {
+          const closures = renderer.___closureSignals;
+          if (closures) {
+            for (const signal of closures) {
+              signal(CLEAN);
+            }
           }
+        } else {
+          args(MARK);
+          existing = true;
         }
-      } else {
-        args(scope, MARK);
-        existing = true;
-      }
-      args(scope, input);
+        args(input);
+      });
     });
 
     if (!existing) {

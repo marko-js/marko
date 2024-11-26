@@ -8,7 +8,7 @@ import type {
 import { prepareEffects, runEffects } from "./queue";
 import { createRenderer, initRenderer, type Renderer } from "./renderer";
 import { register } from "./resume";
-import { createScope, removeAndDestroyScope } from "./scope";
+import { createScope, removeAndDestroyScope, withScope } from "./scope";
 import { MARK } from "./signals";
 
 export const createTemplate = (
@@ -56,7 +56,7 @@ function mount(
     scope = createScope($global);
     dom = initRenderer(this, scope);
     if (args) {
-      args(scope, [input]);
+      withScope(scope, args, [input]);
     }
   });
 
@@ -91,9 +91,9 @@ function mount(
     update: (newInput: unknown) => {
       if (args) {
         runEffects(
-          prepareEffects(() => {
-            args(scope, MARK);
-            args(scope, [newInput]);
+          withScope(scope, prepareEffects, () => {
+            args(MARK);
+            args([newInput]);
           }),
         );
       }
