@@ -3,7 +3,7 @@ import { types as t } from "@marko/compiler";
 import classToString from "marko/src/runtime/helpers/class-value";
 import styleToString from "marko/src/runtime/helpers/style-value";
 
-export function getAttrs(path, preserveNames) {
+export function getAttrs(path, preserveNames, isAttrTag) {
   const { node } = path;
   const {
     extra,
@@ -109,6 +109,7 @@ export function getAttrs(path, preserveNames) {
     properties.length === 0
       ? t.nullLiteral()
       : !hasAttributeTags &&
+          !isAttrTag &&
           properties.length === 1 &&
           t.isSpreadElement(properties[0])
         ? properties[0].argument
