@@ -19,12 +19,12 @@ export async function bundle(
   compilerConfig: compiler.Config,
 ) {
   const cache = new Map<unknown, unknown>();
+  const hydratePrefix = "\0hydrate:";
+  const entryCode = await fs.readFile(entryTemplate, "utf-8");
   const optimizeKnownTemplates: string[] = await glob(
     path.join(path.dirname(entryTemplate), "**/*.marko"),
     { absolute: true },
   );
-  const hydratePrefix = "\0hydrate:";
-  const entryCode = await fs.readFile(entryTemplate, "utf-8");
   const bundle = await rollup({
     input: hydratePrefix + entryTemplate,
     onwarn(warning, warn) {

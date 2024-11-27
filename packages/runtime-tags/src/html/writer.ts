@@ -327,6 +327,7 @@ export class State {
   public hasMainRuntime = false;
   public hasReorderRuntime = false;
   public hasWrittenResume = false;
+  public trailerHTML = "";
   public serializer = new Serializer();
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, PartialScope>();
@@ -693,29 +694,38 @@ export function prepareChunk(chunk: Chunk) {
   return head;
 }
 
-export function flushChunk(head: Chunk) {
+export function flushChunk(head: Chunk, last: boolean) {
+  const { boundary } = head;
+  const { state } = boundary;
   const { html, scripts } = head;
-  const { $global } = head.boundary.state;
+  const { $global } = state;
   const { __flush__ } = $global;
-  const result = scripts
-    ? html +
-      "<script" +
-      (head.boundary.state.$global.cspNonce
-        ? " nonce=" + escapeAttrValue(head.boundary.state.$global.cspNonce + "")
-        : "") +
-      ">" +
-      scripts +
-      "</script>"
-    : html;
-
+  let result = html;
   head.html = head.scripts = "";
+
+  if (scripts) {
+    result +=
+      ($global.cspNonce
+        ? "<script nonce=" + escapeAttrValue($global.cspNonce + "") + ">"
+        : "<script>") +
+      scripts +
+      "</script>";
+  }
 
   if (__flush__) {
     $global.__flush__ = undefined;
-    return __flush__($global, result);
+    result = __flush__($global, result);
+  }
+
+  if (last && state.trailerHTML) {
+    result += state.trailerHTML;
   }
 
   return result;
+}
+
+export function writeTrailers(html: string) {
+  $chunk.boundary.state.trailerHTML += html;
 }
 
 function concatEffects(a: string, b: string) {

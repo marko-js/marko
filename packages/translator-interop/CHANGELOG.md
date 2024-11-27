@@ -1,5 +1,14 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.33
+
+### Patch Changes
+
+- Updated dependencies [[`c5d2b48`](https://github.com/marko-js/marko/commit/c5d2b4871e9dab7037a624681d0161b72fdc799d)]:
+  - @marko/translator-default@6.1.0
+  - @marko/translator-tags@0.4.0
+  - @marko/babel-utils@6.6.0
+
 ## 0.1.32
 
 ### Patch Changes

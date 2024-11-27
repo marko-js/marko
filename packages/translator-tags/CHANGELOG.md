@@ -1,5 +1,34 @@
 # @marko/translator-tags
 
+## 0.4.1
+
+### Patch Changes
+
+- [#2383](https://github.com/marko-js/marko/pull/2383) [`133b562`](https://github.com/marko-js/marko/commit/133b562c19081402330e4054eabc49a4ce635274) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Partially revert #2380 which was causing non idempotent builds.
+
+- Updated dependencies [[`133b562`](https://github.com/marko-js/marko/commit/133b562c19081402330e4054eabc49a4ce635274)]:
+  - @marko/babel-utils@6.6.1
+
+## 0.4.0
+
+### Minor Changes
+
+- [#2380](https://github.com/marko-js/marko/pull/2380) [`c5d2b48`](https://github.com/marko-js/marko/commit/c5d2b4871e9dab7037a624681d0161b72fdc799d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Replace `optimizeKnownTemplates` with a better an simpler `optimizeRegistryId` api.
+
+### Patch Changes
+
+- Updated dependencies [[`c5d2b48`](https://github.com/marko-js/marko/commit/c5d2b4871e9dab7037a624681d0161b72fdc799d)]:
+  - @marko/babel-utils@6.6.0
+
+## 0.3.2
+
+### Patch Changes
+
+- [#2378](https://github.com/marko-js/marko/pull/2378) [`ecfba07`](https://github.com/marko-js/marko/commit/ecfba07954ecfd80c1f2eecfe7791529278e801b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add trailing HTML api and ensure that closing `</body>` and `</html>` are always appended to the end of the stream if they are rendered.
+
+- Updated dependencies [[`ecfba07`](https://github.com/marko-js/marko/commit/ecfba07954ecfd80c1f2eecfe7791529278e801b)]:
+  - @marko/runtime-tags@0.2.2
+
 ## 0.3.1
 
 ### Patch Changes

@@ -44,4 +44,5 @@ export {
   writeEffect,
   writeExistingScope,
   writeScope,
+  writeTrailers,
 } from "./html/writer";

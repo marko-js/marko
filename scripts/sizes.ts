@@ -8,6 +8,7 @@ import { format } from "prettier";
 import { type OutputAsset, type OutputChunk, rollup } from "rollup";
 import { table } from "table";
 import { minify } from "terser";
+import glob from "tiny-glob";
 import zlib from "zlib";
 
 const compiledOutputDir = path.join(process.cwd(), ".sizes");
@@ -226,6 +227,11 @@ function addSizes(all: Sizes[]) {
 async function bundleExample(examplePath: string, hydrate: boolean) {
   const isRuntime = examplePath === runtimePath;
   const virtualEntry = "./entry.js";
+  const optimizeKnownTemplates: string[] | undefined = isRuntime
+    ? undefined
+    : await glob(path.join(path.dirname(examplePath), "**/*.marko"), {
+        absolute: true,
+      });
   const bundle = await rollup({
     input: isRuntime ? runtimePath : virtualEntry,
     plugins: [
@@ -248,6 +254,7 @@ async function bundleExample(examplePath: string, hydrate: boolean) {
                   configFile: false,
                 },
                 writeVersionComment: false,
+                optimizeKnownTemplates,
               })
             ).code;
           }

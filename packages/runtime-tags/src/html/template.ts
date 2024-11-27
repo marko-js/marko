@@ -226,7 +226,7 @@ class ServerRenderResult implements RenderResult {
             reject(boundary.signal.reason);
           } else {
             head = prepareChunk(head);
-            if (boundary.done) resolve(flushChunk(head));
+            if (boundary.done) resolve(flushChunk(head, true));
           }
         }
       })();
@@ -260,7 +260,7 @@ class ServerRenderResult implements RenderResult {
       }
 
       if (write || boundary.done) {
-        const html = flushChunk(head);
+        const html = flushChunk(head, boundary.done);
         if (html) onWrite(html);
         if (boundary.done) {
           if (!tick) offTick(onNext);
@@ -283,6 +283,6 @@ class ServerRenderResult implements RenderResult {
     if (!head) throw new Error("Cannot read from a consumed render result");
     if (head.next) throw new Error("Cannot fork in sync mode");
     this.#head = null;
-    return flushChunk(prepareChunk(head));
+    return flushChunk(prepareChunk(head), true);
   }
 }
