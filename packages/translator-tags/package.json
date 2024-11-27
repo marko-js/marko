@@ -1,6 +1,6 @@
 {
   "name": "@marko/translator-tags",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Translates Marko templates to the experimental fast, lean, unified, update & render target.",
   "keywords": [
     "babel",
