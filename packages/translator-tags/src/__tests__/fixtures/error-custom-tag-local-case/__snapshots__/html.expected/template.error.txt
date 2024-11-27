@@ -3,4 +3,4 @@
       1 | static const myTag = "div"
       2 |
     > 3 | <myTag/>
-        |  ^^^^^ Local variables must in a dynamic tag unless they are PascalCase. Use `<${myTag}/>` or rename to `MyTag`.
+        |  ^^^^^ Local variables must be in a dynamic tag unless they are PascalCase. Use `<${myTag}/>` or rename to `MyTag`.
