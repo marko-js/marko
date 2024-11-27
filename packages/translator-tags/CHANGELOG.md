@@ -1,5 +1,11 @@
 # @marko/translator-tags
 
+## 0.4.3
+
+### Patch Changes
+
+- [#2388](https://github.com/marko-js/marko/pull/2388) [`fab09f4`](https://github.com/marko-js/marko/commit/fab09f4043814ad7aa25308f2569b7007f8ad662) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Remove unnecessary lifecycle tag error
+
 ## 0.4.2
 
 ### Patch Changes
