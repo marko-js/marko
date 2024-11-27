@@ -1,5 +1,11 @@
 # @marko/translator-tags
 
+## 0.4.2
+
+### Patch Changes
+
+- [#2385](https://github.com/marko-js/marko/pull/2385) [`5543021`](https://github.com/marko-js/marko/commit/55430215e8bae0bee384ad49cc269157fd67d8cf) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix TS types
+
 ## 0.4.1
 
 ### Patch Changes
