@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.36.2
+
+### Patch Changes
+
+- [#2387](https://github.com/marko-js/marko/pull/2387) [`8e67da0`](https://github.com/marko-js/marko/commit/8e67da0f725ad5074a1bf933cb75ca569d21f2d7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with an attribute tag containing only a spread.
+
+- Updated dependencies [[`8e67da0`](https://github.com/marko-js/marko/commit/8e67da0f725ad5074a1bf933cb75ca569d21f2d7)]:
+  - @marko/translator-default@6.1.1
+  - @marko/compiler@5.38.2
+
 ## 5.36.1
 
 ### Patch Changes
