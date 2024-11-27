@@ -86,7 +86,7 @@ export default {
           throw tag
             .get("name")
             .buildCodeFrameError(
-              `Local variables must in a dynamic tag unless they are PascalCase. Use \`<\${${tagName}}/>\` or rename to \`${tagName.charAt(0).toUpperCase() + tagName.slice(1)}\`.`,
+              `Local variables must be in a dynamic tag unless they are PascalCase. Use \`<\${${tagName}}/>\` or rename to \`${tagName.charAt(0).toUpperCase() + tagName.slice(1)}\`.`,
             );
         }
         throw tag
@@ -349,7 +349,7 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          `Local variables must in a dynamic tag unless they are PascalCase. Use \`<\${${tagName}}/>\` or rename to \`${tagName.charAt(0).toUpperCase() + tagName.slice(1)}\`.`,
+          `Local variables must be in a dynamic tag unless they are PascalCase. Use \`<\${${tagName}}/>\` or rename to \`${tagName.charAt(0).toUpperCase() + tagName.slice(1)}\`.`,
         );
     }
     throw tag
