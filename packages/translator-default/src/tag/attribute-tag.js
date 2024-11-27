@@ -131,7 +131,7 @@ export default function translateAttributeTag(tag) {
 }
 
 function getAttrTagObject(tag) {
-  const attrs = getAttrs(tag);
+  const attrs = getAttrs(tag, false, true);
 
   if (t.isNullLiteral(attrs)) {
     return t.objectExpression([]);
