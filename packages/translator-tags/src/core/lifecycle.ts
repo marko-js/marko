@@ -23,8 +23,6 @@ import { propsToExpression, translateAttrs } from "../util/translate-attrs";
 import { currentProgramPath, scopeIdentifier } from "../visitors/program";
 
 const kRef = Symbol("lifecycle attrs reference");
-const supportedAttrNames = new Set(["onMount", "onUpdate", "onDestroy"]);
-
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kRef]?: Binding;
@@ -63,12 +61,6 @@ export default {
           .get("name")
           .buildCodeFrameError(
             "The `lifecycle` tag does not support `...spread` attributes.",
-          );
-      } else if (!supportedAttrNames.has(attr.name)) {
-        throw tag
-          .get("name")
-          .buildCodeFrameError(
-            `The \`lifecycle\` tag does not support the \`${attr.name}\` attribute.`,
           );
       }
       (attr.value.extra ??= {}).isEffect = true;

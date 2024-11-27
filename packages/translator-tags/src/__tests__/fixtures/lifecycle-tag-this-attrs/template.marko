@@ -1,0 +1,12 @@
+<let/x=0/>
+<lifecycle
+  x=1
+  setX(value) {
+    x = value;
+  }
+  onMount() {
+    this.setX(this.x)
+  }
+/>
+
+<div>${x}</div>
