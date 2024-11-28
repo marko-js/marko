@@ -1,0 +1,10 @@
+{
+  "name": "website",
+  "private": true,
+  "dependencies": {
+    "@marko/babel-utils": "./node_modules/.dev/marko-babel-utils.tgz",
+    "@marko/compiler": "./node_modules/.dev/marko-compiler.tgz",
+    "@marko/run": "^0.5.4",
+    "@marko/translator-tags": "./node_modules/.dev/marko-translator-tags.tgz"
+  }
+}

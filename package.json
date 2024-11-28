@@ -15,6 +15,7 @@
     "change": "changeset add",
     "compile": "node -r ~ts scripts/inspect-compiled-output.ts",
     "format": "eslint --format unix --fix .; prettier . --write --with-node-modules --log-level=warn",
+    "postinstall": "cd website && ./install.sh",
     "lint": "eslint --format unix . && prettier . --check --with-node-modules --log-level=warn",
     "prepare": "husky",
     "report": "open ./coverage/lcov-report/index.html",
