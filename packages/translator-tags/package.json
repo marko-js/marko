@@ -18,7 +18,7 @@
     "url": "https://github.com/marko-js/marko/tree/main/packages/translator-tags"
   },
   "license": "MIT",
-  "main": "src/index.ts",
+  "main": "./src/index.ts",
   "files": [
     "dist",
     "tag-types",
@@ -31,10 +31,13 @@
   },
   "dependencies": {
     "@marko/babel-utils": "^6.6.1",
-    "@marko/runtime-tags": "^0.2.2"
+    "@marko/runtime-tags": "^0.2.2",
+    "magic-string": "^0.30.14"
+  },
+  "devDependencies": {
+    "@marko/compiler": "^5.38.2"
   },
   "peerDependencies": {
     "@marko/compiler": "^5.23.0"
-  },
-  "main:override": "dist/index.js"
+  }
 }

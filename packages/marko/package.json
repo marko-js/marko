@@ -31,14 +31,14 @@
     "Dylan Piercey <pierceydylan@gmail.com>",
     "Martin Aberer"
   ],
-  "main": "index.js",
+  "main": "./index.js",
   "browser": {
     "./compiler.js": "./compiler-browser.marko",
     "./components.js": "./components-browser.marko",
     "./legacy-components.js": "./legacy-components-browser.marko",
     "./index.js": "./index-browser.marko"
   },
-  "types": "index.d.ts",
+  "types": "./index.d.ts",
   "bin": {
     "markoc": "bin/markoc"
   },

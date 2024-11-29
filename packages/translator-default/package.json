@@ -18,8 +18,8 @@
   },
   "license": "MIT",
   "author": "Dylan Piercey <dpiercey@ebay.com>",
-  "main": "src/index.js",
-  "types": "index.d.ts",
+  "main": "./src/index.js",
+  "types": "./index.d.ts",
   "files": [
     "dist",
     "index.d.ts"
@@ -30,7 +30,7 @@
   "dependencies": {
     "@babel/runtime": "^7.26.0",
     "@marko/babel-utils": "^6.6.0",
-    "magic-string": "^0.30.12",
+    "magic-string": "^0.30.14",
     "self-closing-tags": "^1.0.1"
   },
   "devDependencies": {
@@ -43,6 +43,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "main:override": "dist/index.js"
+  }
 }

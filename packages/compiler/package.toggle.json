@@ -1,0 +1,24 @@
+{
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./config": {
+      "types": "./config.d.ts",
+      "default": "./dist/config.js"
+    },
+    "./register": {
+      "types": "./register.d.ts",
+      "default": "./dist/register.js"
+    },
+    "./modules": "./modules.js",
+    "./babel-types": "./babel-types.d.ts",
+    "./dist/types": "./dist/types.d.ts",
+    "./package": "./package.json",
+    "./package.json": "./package.json",
+    "./*": "./*"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts"
+}

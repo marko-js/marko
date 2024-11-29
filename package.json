@@ -7,7 +7,7 @@
   "scripts": {
     "@ci:build": "npm run build",
     "@ci:lint": "eslint --format unix . && prettier . --check --with-node-modules --log-level=warn",
-    "@ci:release": "npm run build && node scripts/pkg-override && changeset publish && node scripts/pkg-override && npm ci",
+    "@ci:release": "npm run build && node scripts/pkg-toggle && changeset publish && node scripts/pkg-toggle && npm ci",
     "@ci:test": "cross-env NODE_OPTIONS=\"--max-old-space-size=4096\" MARKO_DEBUG=1 c8 npm test",
     "@ci:version": "npm run build && npm run format && changeset version && npm i --package-lock-only",
     "build": "npm run build --ws && tsc -b tsconfig.build.json",
@@ -20,11 +20,13 @@
     "prepare": "husky",
     "report": "open ./coverage/lcov-report/index.html",
     "test": "mocha",
-    "test:update": "UPDATE_EXPECTATIONS=1 mocha --update"
+    "test:update": "UPDATE_EXPECTATIONS=1 mocha --update",
+    "web": "cd website && npm exec marko-run"
   },
   "devDependencies": {
     "@babel/cli": "^7.25.9",
     "@babel/core": "^7.26.0",
+    "@babel/plugin-transform-export-namespace-from": "^7.25.9",
     "@babel/plugin-transform-modules-commonjs": "^7.25.9",
     "@babel/plugin-transform-runtime": "^7.25.9",
     "@babel/preset-env": "^7.26.0",

@@ -18,7 +18,7 @@
     "url": "https://github.com/marko-js/marko/tree/main/packages/translator-interop"
   },
   "license": "MIT",
-  "main": "src/index.ts",
+  "main": "./src/index.ts",
   "files": [
     "dist",
     "!**/__tests__",
@@ -33,8 +33,10 @@
     "@marko/translator-default": "^6.1.0",
     "@marko/translator-tags": "^0.4.0"
   },
+  "devDependencies": {
+    "@marko/compiler": "^5.38.2"
+  },
   "peerDependencies": {
     "@marko/compiler": "^5.23.0"
-  },
-  "main:override": "dist/index.js"
+  }
 }

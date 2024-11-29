@@ -27,18 +27,5 @@
   ],
   "scripts": {
     "build": "node -r ~ts ./scripts/bundle.ts"
-  },
-  "exports:override": {
-    "./package.json": "./package.json",
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.mjs",
-      "default": "./dist/*.js"
-    },
-    "./debug/*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/debug/*.mjs",
-      "default": "./dist/debug/*.js"
-    }
   }
 }
