@@ -16,7 +16,12 @@
       "$_expr_items_items_length": "m",
       "$_for": "f",
       "$_items_length": "g",
-      "$_items": "v"
+      "$_items": "v",
+      "$_write": "p",
+      "$_name": "b",
+      "$_input_": "k",
+      "$_expr_item_write$forBody": "D",
+      "$_items_effect": "h"
     }
   }
 }

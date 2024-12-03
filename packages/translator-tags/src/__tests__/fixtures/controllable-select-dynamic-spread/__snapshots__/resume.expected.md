@@ -31,7 +31,7 @@
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{value:"b","#text/0!":_.a={"#select/0:":"b","#select/0=":3},"#text/0(":"select"},1:_.a}),2,"packages/translator-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_1",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{value:"b","#text/0!":_.a={"#select/0=":3,"#select/0:":"b"},"#text/0(":"select"},1:_.a}),2,"packages/translator-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_1",0];M._.w()
     </script>
   </body>
 </html>
@@ -84,7 +84,7 @@ bubbles: true
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{value:"b","#text/0!":_.a={"#select/0:":"b","#select/0=":3},"#text/0(":"select"},1:_.a}),2,"packages/translator-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_1",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{value:"b","#text/0!":_.a={"#select/0=":3,"#select/0:":"b"},"#text/0(":"select"},1:_.a}),2,"packages/translator-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_1",0];M._.w()
     </script>
   </body>
 </html>

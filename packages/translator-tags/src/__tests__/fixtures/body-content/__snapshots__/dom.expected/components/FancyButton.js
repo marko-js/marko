@@ -4,12 +4,7 @@ export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _renderBody_input = _$.dynamicTagAttrs("#text/1");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/1", _scope => _renderBody_input(_scope, () => ({})), () => _renderBody_input);
-const _attrs__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/body-content/components/FancyButton.marko_0_attrs", _scope => {
-  const {
-    attrs
-  } = _scope;
-  _$.attrsEvents(_scope, "#button/0");
-});
+const _attrs__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/body-content/components/FancyButton.marko_0_attrs", _scope => _$.attrsEvents(_scope, "#button/0"));
 export const _attrs_ = (_scope, attrs) => {
   _$.attrs(_scope, "#button/0", attrs);
   _attrs__effect(_scope);

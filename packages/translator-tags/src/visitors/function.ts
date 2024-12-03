@@ -122,7 +122,7 @@ export default {
 
       if (isOutputHTML()) {
         const serializedScopeProperties = getSerializedScopeProperties(section);
-        forEach(extra.referencedBindings, (ref) => {
+        forEach(extra.referencedBindingsInFunction, (ref) => {
           serializedScopeProperties.set(
             getScopeAccessorLiteral(ref),
             getDeclaredBindingExpression(ref),
@@ -158,7 +158,7 @@ export default {
           fn.replaceWith(replacement)[0].skip();
         }
       } else {
-        const { referencedBindings } = extra;
+        const { referencedBindingsInFunction } = extra;
         const fnId = currentProgramPath.scope.generateUidIdentifier(extra.name);
 
         if (t.isFunctionDeclaration(node)) {
@@ -202,13 +202,13 @@ export default {
                     t.stringLiteral(extra.registerId!),
                     t.arrowFunctionExpression(
                       [scopeIdentifier],
-                      referencedBindings
+                      referencedBindingsInFunction
                         ? t.blockStatement([
                             t.variableDeclaration("const", [
                               t.variableDeclarator(
                                 createScopeReadPattern(
                                   section,
-                                  referencedBindings,
+                                  referencedBindingsInFunction,
                                 ),
                                 scopeIdentifier,
                               ),

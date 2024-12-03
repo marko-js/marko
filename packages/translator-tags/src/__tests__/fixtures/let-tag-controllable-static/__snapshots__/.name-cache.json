@@ -6,7 +6,9 @@
       "$_expr__y_change_y_effect": "a",
       "$_expr__y_change_y": "r",
       "$_y": "n",
-      "$_x": "e"
+      "$_x": "e",
+      "$_valueChange": "m",
+      "$_y_effect": "i"
     }
   }
 }

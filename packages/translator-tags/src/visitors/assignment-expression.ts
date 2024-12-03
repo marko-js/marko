@@ -39,8 +39,8 @@ function handleDestructure(
       handleDestructure(assignment, node.value);
       break;
     case "Identifier": {
-      const source = node.extra?.source;
-      if (source) {
+      const binding = node.extra?.binding;
+      if (binding) {
         const section = getSection(assignment);
         (currentProgramPath.node.extra.assignments ??= []).push([
           section,

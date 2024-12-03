@@ -25,7 +25,8 @@
       "$_expr_items_items_length": "S",
       "$_for": "$",
       "$_items_length": "k",
-      "$_items": "L"
+      "$_items": "L",
+      "$_items_effect": "_"
     }
   }
 }

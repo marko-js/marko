@@ -33,10 +33,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _scope1_.set(_index2, _$.getScopeById(_scope1_id));
   });
   _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/1", _forScopeIds2)}`);
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_0_items_items_length");
+  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_0_items");
   _$.writeScope(_scope0_id, {
     "items": items,
-    "items_length": items?.length,
     "#text/1(": _scope1_.size ? _scope1_ : undefined
   });
 });

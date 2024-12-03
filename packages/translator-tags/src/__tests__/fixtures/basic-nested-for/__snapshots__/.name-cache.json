@@ -19,7 +19,8 @@
       "$_expr_items_items_length": "f",
       "$_for": "g",
       "$_items_length": "b",
-      "$_items": "k"
+      "$_items": "k",
+      "$_items_effect": "D"
     }
   }
 }

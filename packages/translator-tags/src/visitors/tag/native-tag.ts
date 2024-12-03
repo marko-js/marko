@@ -261,7 +261,7 @@ export default {
       if (relatedControllable) {
         mergeReferences(
           section,
-          relatedControllable.attrs.find(Boolean)!,
+          relatedControllable.attrs.find(Boolean)!.value,
           relatedControllable.attrs.map((it) => it?.value),
         );
       }
@@ -705,6 +705,7 @@ export default {
       if (
         nodeRef &&
         (extra[kSerializeMarker] ||
+          isStatefulReferences(extra.referencedBindings) ||
           tag.node.attributes.some((attr) =>
             isStatefulReferences(attr.value.extra?.referencedBindings),
           ))

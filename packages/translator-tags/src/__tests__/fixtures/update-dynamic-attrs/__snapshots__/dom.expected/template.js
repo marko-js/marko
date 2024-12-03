@@ -15,9 +15,6 @@ const _expr_input_value_a = /* @__PURE__ */_$.intersection(2, _scope => {
 });
 const _a = /* @__PURE__ */_$.state("a", (_scope, a) => _$.attr(_scope["#div/2"], "a", a), () => _expr_input_value_a);
 const _input_value__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/update-dynamic-attrs/template.marko_0_input_value", _scope => {
-  const {
-    input_value
-  } = _scope;
   _$.attrsEvents(_scope, "#div/0");
   _$.attrsEvents(_scope, "#div/2");
 });

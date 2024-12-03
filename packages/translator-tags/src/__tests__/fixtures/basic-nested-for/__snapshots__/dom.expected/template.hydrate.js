@@ -1,4 +1,4 @@
-// size: 817 (min) 392 (brotli)
+// size: 751 (min) 369 (brotli)
 const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
   _expr_outer_inner$forBody = _$.intersection(
     2,
@@ -54,34 +54,24 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
       () => _params_2$forBody,
     ),
   ),
-  _expr_items_items_length_effect = _$.effect("b2", (_scope) =>
+  _for = _$.loopOf(1, _forBody),
+  _items_effect = _$.effect("b2", (_scope) =>
     _$.on(
       _scope[0],
       "click",
       ((_scope) => {
-        const { 2: items, 3: items_length } = _scope;
+        const { 2: items } = _scope;
         return function () {
-          _items(_scope, [...items, items_length]);
+          _items(_scope, [...items, items.length]);
         };
       })(_scope),
     ),
   ),
-  _expr_items_items_length = _$.intersection(2, (_scope) => {
-    _expr_items_items_length_effect(_scope);
-  }),
-  _for = _$.loopOf(1, _forBody),
-  _items_length = _$.value(3, 0, () => _expr_items_items_length),
   _items = _$.state(
     2,
     (_scope, items) => {
-      _items_length(_scope, items?.length), _for(_scope, [items]);
+      _items_effect(_scope), _for(_scope, [items]);
     },
-    () =>
-      _$.intersections([
-        _expr_items_items_length,
-        _items_length,
-        _for,
-        _$.inLoopScope(_items$forBody, 1),
-      ]),
+    () => _$.intersections([_for, _$.inLoopScope(_items$forBody, 1)]),
   );
 init();

@@ -10,7 +10,7 @@ import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
 import { isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import {
-  addReferenceToExpression,
+  addReadToExpression,
   type Binding,
   BindingType,
   createBinding,
@@ -79,7 +79,7 @@ export default {
       trackVarReferences(tag, BindingType.derived);
       trackParamsReferences(tagBody, BindingType.param);
       mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
-      addReferenceToExpression(tag, domBinding);
+      addReadToExpression(tag, domBinding);
     },
   },
   translate: {

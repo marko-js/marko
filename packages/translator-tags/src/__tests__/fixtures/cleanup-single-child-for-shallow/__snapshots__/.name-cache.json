@@ -16,7 +16,8 @@
       "$_expr_items_items_length": "m",
       "$_for": "f",
       "$_items_length": "g",
-      "$_items": "v"
+      "$_items": "v",
+      "$_items_effect": "b"
     }
   }
 }

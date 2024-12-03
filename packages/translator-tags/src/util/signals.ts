@@ -27,6 +27,7 @@ import {
   type Section,
 } from "./sections";
 import { createSectionState } from "./state";
+import toPropertyName from "./to-property-name";
 import withPreviousLocation from "./with-previous-location";
 
 export type subscribeBuilder = (subscriber: t.Expression) => t.Expression;
@@ -662,23 +663,61 @@ export function renameBindings() {
 
   for (let i = 0; i < body.length; i++) {
     traverse(body[i], body, i, (node, container, key) => {
-      if (t.isIdentifier(node)) {
-        const binding = node.extra && (node.extra.source || node.extra.binding);
-        if (binding && binding.name !== node.name) {
-          node.name = binding.name;
-        }
-      } else if (t.isMemberExpression(node)) {
-        const binding = node.extra?.source;
-        if (binding && !isOutputHTML()) {
-          // TODO: this should probably happen for html mode as well, but
-          // currently html mode does not hoist member expression bindings.
-          // We may be able to implement that by making the identifier binding check
-          // above seeing if the binding has propertyAliases which are node `defined`
-          // and then defining them.
-          container[key] = withPreviousLocation(
-            t.identifier(binding.name),
-            node,
-          );
+      switch (node.type) {
+        case "Identifier":
+        case "MemberExpression": {
+          const { extra } = node;
+          if (!extra) break;
+          let { binding, read } = extra;
+          let replacement: t.Node | undefined;
+
+          if (
+            (isOutputHTML() && read && !read.binding.declared) ||
+            (binding && !binding.declared)
+          ) {
+            return; // TODO this is probably wrong and should walk up to the closest declared binding.
+          }
+
+          if (read) {
+            if (read.props === undefined) {
+              binding = read.binding;
+              read = undefined;
+            } else {
+              binding = undefined;
+            }
+          }
+
+          if (binding) {
+            if (node.type === "Identifier") {
+              if (binding.name !== node.name) {
+                node.name = binding.name;
+              }
+            } else {
+              replacement = t.identifier(binding.name);
+            }
+          } else if (read) {
+            replacement = t.memberExpression(
+              t.identifier(read.binding.name),
+              toPropertyName(
+                Array.isArray(read.props) ? read.props[0] : read.props!,
+              ),
+            );
+
+            if (Array.isArray(read.props)) {
+              for (let i = 1; i < read.props.length; i++) {
+                replacement = t.memberExpression(
+                  replacement,
+                  toPropertyName(read.props[i]),
+                );
+              }
+            }
+          }
+
+          if (replacement) {
+            container[key] = withPreviousLocation(replacement, node);
+          }
+
+          break;
         }
       }
     });
@@ -691,7 +730,7 @@ export function replaceAssignments() {
       .assignments) {
       const { node } = assignment;
       if (node.type === "UpdateExpression") {
-        const binding = node.argument.extra?.source;
+        const binding = node.argument.extra?.binding;
         if (binding) {
           const { buildAssignment } = getSignal(binding.section, binding);
           if (buildAssignment) {
@@ -717,7 +756,7 @@ export function replaceAssignments() {
         ) {
           handleDestructure(assignment, node.left, valueSection);
         } else if (node.left.type === "Identifier") {
-          const binding = node.left.extra?.source;
+          const binding = node.left.extra?.binding;
           if (binding) {
             const { buildAssignment } = getSignal(binding.section, binding);
             if (buildAssignment) {
@@ -1065,7 +1104,7 @@ function handleDestructure(
       break;
     case "Identifier":
       {
-        const binding = node.extra?.source;
+        const binding = node.extra?.binding;
         if (binding) {
           const { buildAssignment } = getSignal(binding.section, binding);
           if (buildAssignment) {
@@ -1093,8 +1132,8 @@ function bindFunction(
 ) {
   const { node } = fn;
   const { extra } = node;
-  if (!extra?.referencedBindings) return;
-  const { name, referencedBindings } = extra;
+  if (!extra?.referencedBindingsInFunction) return;
+  const { name, referencedBindingsInFunction } = extra;
   const fnId = currentProgramPath.scope.generateUidIdentifier(name);
 
   root
@@ -1104,11 +1143,14 @@ function bindFunction(
           fnId,
           t.arrowFunctionExpression(
             [scopeIdentifier],
-            referencedBindings
+            referencedBindingsInFunction
               ? t.blockStatement([
                   t.variableDeclaration("const", [
                     t.variableDeclarator(
-                      createScopeReadPattern(section, referencedBindings),
+                      createScopeReadPattern(
+                        section,
+                        referencedBindingsInFunction,
+                      ),
                       scopeIdentifier,
                     ),
                   ]),

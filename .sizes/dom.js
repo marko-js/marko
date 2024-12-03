@@ -1,4 +1,4 @@
-// size: 17910 (min) 6466 (brotli)
+// size: 17931 (min) 6479 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -242,7 +242,8 @@ var MARK = {},
   DIRTY = {};
 function state(valueAccessor, fn, getIntersection) {
   let valueSignal = value(valueAccessor, fn, getIntersection),
-    markAccessor = valueAccessor + "#";
+    markAccessor = valueAccessor + "#",
+    valueChangeAccessor = valueAccessor + "@";
   return (scope, valueOrOp, valueChange) => (
     rendering
       ? valueSignal(
@@ -250,13 +251,13 @@ function state(valueAccessor, fn, getIntersection) {
           valueOrOp === MARK ||
             valueOrOp === CLEAN ||
             valueOrOp === DIRTY ||
-            valueChange ||
+            (scope[valueChangeAccessor] = valueChange) ||
             void 0 === scope[markAccessor]
             ? valueOrOp
             : CLEAN,
         )
-      : valueChange
-        ? valueChange(valueOrOp)
+      : scope[valueChangeAccessor]
+        ? scope[valueChangeAccessor](valueOrOp)
         : (function (scope, signal, value2) {
             isScheduled ||
               ((isScheduled = !0), queueMicrotask(flushAndWaitFrame)),

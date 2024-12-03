@@ -5,24 +5,24 @@ import {
   type Tag,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { AccessorChar } from "@marko/runtime-tags/common/types";
 
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
-import { getMarkoOpts, isOutputDOM } from "../util/marko-config";
-import { size } from "../util/optional";
+import { isOutputDOM } from "../util/marko-config";
 import {
-  type Binding,
   BindingType,
-  createBinding,
+  getScopeAccessorLiteral,
+  mergeReferences,
   trackVarReferences,
 } from "../util/references";
+import { getScopeExpression } from "../util/scope-read";
+import { getOrCreateSection, getSection } from "../util/sections";
 import {
-  createScopeReadExpression,
-  getScopeExpression,
-} from "../util/scope-read";
-import { getSection } from "../util/sections";
-import { addValue, initValue } from "../util/signals";
+  addValue,
+  getSerializedScopeProperties,
+  initValue,
+} from "../util/signals";
 import translateVar from "../util/translate-var";
-import { currentProgramPath } from "../visitors/program";
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
@@ -34,7 +34,6 @@ export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
     const { node } = tag;
     const tagVar = node.var;
-    const { optimize } = getMarkoOpts();
     let valueAttr: t.MarkoAttribute | undefined;
     let valueChangeAttr: t.MarkoAttribute | undefined;
     for (const attr of node.attributes) {
@@ -89,46 +88,17 @@ export default {
         );
     }
 
-    if (valueChangeAttr) {
-      const valueChangeReferences = (valueChangeAttr.value.extra ??= {})
-        ?.referencedBindings;
+    mergeReferences(getOrCreateSection(tag), tag.node, [
+      valueAttr?.value,
+      valueChangeAttr?.value,
+    ]);
 
-      valueChangeAttr.value.extra!.static = t.isFunction(valueChangeAttr.value);
-
-      if (
-        optimize &&
-        t.isIdentifier(valueChangeAttr.value) &&
-        size(valueChangeReferences) === 1
-      ) {
-        valueChangeAttr.value.extra!.binding = valueChangeReferences as Binding;
-      } else {
-        valueChangeAttr.value.extra!.binding = createBinding(
-          currentProgramPath.scope.generateUid(tagVar.name + "_change"),
-          BindingType.let,
-          getSection(tag),
-          undefined,
-          valueChangeAttr.value.extra,
-        );
-      }
-    }
-
-    const upstreamExpressionExtra = valueAttr
-      ? (valueAttr.value.extra ??= {})
-      : undefined;
-
-    trackVarReferences(
-      tag,
-      BindingType.let,
-      undefined,
-      upstreamExpressionExtra,
-      valueChangeAttr?.value.extra?.binding,
-    );
+    trackVarReferences(tag, BindingType.let, undefined, tag.node.extra);
   },
   translate: {
     exit(tag) {
       const { node } = tag;
       const tagVar = node.var!;
-      const { optimize } = getMarkoOpts();
       const valueAttr =
         node.attributes.find(
           (attr) =>
@@ -137,69 +107,34 @@ export default {
       const valueChangeAttr = node.attributes.find(
         (attr) => t.isMarkoAttribute(attr) && attr.name === "valueChange",
       );
-      const valueChangeBinding = valueChangeAttr?.value.extra?.binding;
+      const section = getSection(tag);
+      const binding = tagVar.extra!.binding!;
 
       if (isOutputDOM()) {
-        const section = getSection(tag);
-        const binding = tagVar.extra!.binding!;
         const signal = initValue(binding, "state");
-        const referencedBindings = valueAttr.value.extra?.referencedBindings;
-        const isSetup = !referencedBindings;
-
-        if (
-          valueChangeBinding &&
-          (!optimize || !t.isIdentifier(valueChangeAttr.value))
-        ) {
-          addValue(
-            section,
-            valueChangeAttr.value.extra?.referencedBindings,
-            initValue(valueChangeBinding),
-            valueChangeAttr.value,
-          );
-        }
+        const referencedBindings = tag.node.extra!.referencedBindings;
 
         addValue(section, referencedBindings, signal, valueAttr.value);
-        if (!isSetup) {
-          let extraArgsExpression: t.Expression[] | undefined;
-          Object.defineProperty(signal, "extraArgs", {
-            get() {
-              if (!extraArgsExpression) {
-                extraArgsExpression = valueChangeBinding
-                  ? valueChangeAttr?.value.extra?.static
-                    ? [t.numericLiteral(1)]
-                    : [createScopeReadExpression(section, valueChangeBinding)]
-                  : [];
-              }
-              return extraArgsExpression;
-            },
-          });
+
+        if (valueChangeAttr) {
+          signal.extraArgs = [valueChangeAttr.value];
         }
 
         signal.buildAssignment = (valueSection, value) => {
-          const changeBindingId =
-            valueChangeBinding && t.identifier(valueChangeBinding.name);
-
-          if (valueChangeBinding?.upstreamExpression?.static) {
-            return t.callExpression(changeBindingId!, [value]);
-          }
-
           const scope = getScopeExpression(valueSection, signal.section);
 
-          return t.callExpression(
-            signal.identifier,
-            changeBindingId ? [scope, value, changeBindingId] : [scope, value],
-          );
+          return t.callExpression(signal.identifier, [scope, value]);
         };
       } else {
         translateVar(tag, valueAttr.value);
-        if (valueChangeBinding) {
-          tag.insertBefore(
-            t.variableDeclaration("const", [
-              t.variableDeclarator(
-                t.identifier(valueChangeBinding.name),
-                valueChangeAttr.value,
-              ),
-            ]),
+
+        if (valueChangeAttr) {
+          getSerializedScopeProperties(section).set(
+            t.stringLiteral(
+              getScopeAccessorLiteral(binding).value +
+                AccessorChar.TagVariableChange,
+            ),
+            valueChangeAttr.value,
           );
         }
       }

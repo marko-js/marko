@@ -6,12 +6,14 @@ import { isStatefulReferences } from "./is-stateful";
 import { isOptimize } from "./marko-config";
 import {
   addSorted,
+  concat,
   filter,
   find,
   findSorted,
   forEach,
   type Many,
   type Opt,
+  push,
   Sorted,
 } from "./optional";
 import { forEachSection, getOrCreateSection, type Section } from "./sections";
@@ -40,7 +42,7 @@ export type Binding = {
   excludeProperties: undefined | string[];
   upstreamAlias: Binding | undefined;
   upstreamExpression: t.NodeExtra | undefined;
-  downstreamExpressions: Set<t.NodeExtra>;
+  downstreamExpressions: Set<ExprExtra>;
   export: string | undefined;
   declared: boolean;
   nullable: boolean;
@@ -49,12 +51,37 @@ export type Binding = {
 export type ReferencedBindings = Opt<Binding>;
 export type Intersection = Many<Binding>;
 
+type ExprExtra = t.NodeExtra & { section: Section };
+type FnExtra = (
+  | t.FunctionExpressionExtra
+  | t.ArrowFunctionExpressionExtra
+  | t.FunctionDeclarationExtra
+) & { section: Section };
+type Read = {
+  binding: Binding;
+  node: undefined | t.MemberExpression | t.Identifier;
+};
+
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
+    section?: Section;
     referencedBindings?: ReferencedBindings;
     binding?: Binding;
-    source?: Binding;
+    read?: { binding: Binding; props: Opt<string> };
+    pruned?: true;
     isEffect?: true;
+  }
+
+  export interface FunctionExpressionExtra {
+    referencedBindingsInFunction?: ReferencedBindings;
+  }
+
+  export interface ArrowFunctionExpressionExtra {
+    referencedBindingsInFunction?: ReferencedBindings;
+  }
+
+  export interface FunctionDeclarationExtra {
+    referencedBindingsInFunction?: ReferencedBindings;
   }
 }
 
@@ -121,7 +148,7 @@ export function trackVarReferences(
   if (tagVar) {
     const section = getOrCreateSection(tag);
     const canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
-    upstreamAlias?.downstreamExpressions.delete(upstreamExpression!);
+    if (upstreamAlias && upstreamExpression) upstreamExpression.pruned = true;
     createBindingsAndTrackReferences(
       tagVar,
       type,
@@ -143,7 +170,7 @@ export function trackParamsReferences(
 ) {
   const params = body.node.params;
   if (body.node.body.length && params.length) {
-    upstreamAlias?.downstreamExpressions.delete(upstreamExpression!);
+    if (upstreamAlias && upstreamExpression) upstreamExpression.pruned = true;
     const section = getOrCreateSection(body);
     const canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
     const paramsBinding =
@@ -254,11 +281,8 @@ function assignBinding(
       break;
     case "Identifier":
       if (node.name === binding.name) {
-        (node.extra ??= {}).source = binding;
+        (node.extra ??= {}).binding = binding;
       }
-      break;
-    case "MemberExpression":
-      (node.extra ??= {}).source = binding;
       break;
   }
 }
@@ -296,7 +320,7 @@ function createBindingsAndTrackReferences(
           type,
           section,
           upstreamAlias,
-          upstreamExpression,
+          undefined,
           property,
         ));
 
@@ -348,7 +372,7 @@ function createBindingsAndTrackReferences(
           type,
           section,
           upstreamAlias,
-          upstreamExpression,
+          undefined,
           property,
         ));
 
@@ -392,7 +416,7 @@ function createBindingsAndTrackReferences(
         scope,
         section,
         upstreamAlias,
-        upstreamExpression,
+        undefined,
         property,
       );
       break;
@@ -435,41 +459,39 @@ function trackReference(
       reference.type,
       reference.section,
       reference,
-      reference.upstreamExpression,
+      undefined,
       prop,
     );
   }
 
   const fnRoot = getFnRoot(root);
   const exprRoot = getExprRoot(fnRoot || root);
-  const section = getOrCreateSection(exprRoot);
-  const exprExtra = (exprRoot.node.extra ??= {});
-  addReferenceToExpression(exprRoot, reference);
-  assignBinding(root.node, reference);
+  const { section } = addReadToExpression(exprRoot, reference, root.node);
 
   if (fnRoot) {
-    let fnExtra = exprExtra;
-
-    if (fnRoot !== exprRoot) {
-      fnExtra = fnRoot.node.extra ??= {};
-      fnExtra.referencedBindings = addReference(
-        section,
-        fnExtra.referencedBindings,
-        reference,
-      );
-    }
+    const readsByFn = getReadsByFunction();
+    const fnExtra = (fnRoot.node.extra ??= {}) as FnExtra;
+    fnExtra.section = section;
+    readsByFn.set(
+      fnExtra,
+      push(readsByFn.get(fnExtra), {
+        binding: reference,
+        node: root.node,
+      }),
+    );
   }
 }
 
 const [getMergedReferences] = createProgramState(
-  () => new Map<t.Node, { section: Section; nodes: (t.Node | undefined)[] }>(),
+  () => new Map<t.Node, (t.Node | undefined)[]>(),
 );
 export function mergeReferences(
   section: Section,
   target: t.Node,
   nodes: (t.Node | undefined)[],
 ) {
-  getMergedReferences().set(target, { section, nodes });
+  (target.extra ??= {}).section = section;
+  getMergedReferences().set(target, nodes);
 }
 
 /**
@@ -494,70 +516,49 @@ function compareIntersections(a: Intersection, b: Intersection) {
 }
 
 export function finalizeReferences() {
-  const droppedReferences = getDroppedReferences();
-  if (droppedReferences.size) {
-    for (const expr of droppedReferences) {
-      const { extra } = expr;
-      if (extra && extra.referencedBindings) {
-        forEach(extra.referencedBindings, ({ downstreamExpressions }) => {
-          downstreamExpressions.delete(extra);
-        });
-
-        extra.referencedBindings = undefined;
-      }
-    }
-    droppedReferences.clear();
-  }
-
+  const bindings = getBindings();
+  const readsByExpression = getReadsByExpression();
+  const readsByFn = getReadsByFunction();
   const mergedReferences = getMergedReferences();
+
   if (mergedReferences.size) {
-    for (const [target, { section, nodes }] of mergedReferences) {
-      const targetExtra = (target.extra ??= {});
-      let { referencedBindings, isEffect } = targetExtra;
+    for (const [target, nodes] of mergedReferences) {
+      const targetExtra = target.extra as ExprExtra;
+      let reads = readsByExpression.get(targetExtra);
+      let { isEffect } = targetExtra;
       for (const node of nodes) {
         const extra = node?.extra;
-        if (extra) {
-          const additionalBindings = extra.referencedBindings;
+        if (isReferenceExpression(extra)) {
           isEffect ||= extra.isEffect;
-          if (additionalBindings) {
-            referencedBindings = bindingUtil.union(
-              referencedBindings,
-              additionalBindings,
-            );
-            forEach(additionalBindings, ({ downstreamExpressions }) => {
-              downstreamExpressions.delete(extra);
-              downstreamExpressions.add(targetExtra);
-            });
+          const additionalReads = readsByExpression.get(extra);
+          if (additionalReads) {
+            reads = concat(reads, additionalReads);
+            readsByExpression.delete(extra);
           }
         }
       }
 
-      referencedBindings = findReferences(section, referencedBindings);
-      targetExtra.referencedBindings = referencedBindings;
+      readsByExpression.set(targetExtra, reads);
       targetExtra.isEffect = isEffect;
     }
-
-    mergedReferences.clear();
   }
 
-  const bindings = getBindings();
+  for (const [expr, reads] of readsByExpression) {
+    if (isReferenceExpression(expr)) {
+      expr.referencedBindings = resolveReferencedBindings(expr, reads);
+      forEach(expr.referencedBindings, (binding) => {
+        binding.downstreamExpressions.add(expr);
+      });
+    }
+  }
+
+  for (const [fn, reads] of readsByFn) {
+    fn.referencedBindingsInFunction = resolveReferencedBindings(fn, reads);
+  }
 
   for (const binding of bindings) {
     if (binding.type !== BindingType.dom && !binding.upstreamAlias) {
-      if (pruneBinding(bindings, binding)) {
-        const { upstreamExpression } = binding;
-        if (upstreamExpression) {
-          forEach(
-            upstreamExpression.referencedBindings,
-            (referencedBinding) => {
-              referencedBinding.downstreamExpressions.delete(
-                upstreamExpression,
-              );
-              pruneBinding(bindings, referencedBinding);
-            },
-          );
-        }
-      }
+      pruneBinding(bindings, binding);
     }
   }
 
@@ -586,16 +587,21 @@ export function finalizeReferences() {
     for (const {
       referencedBindings,
       isEffect,
+      section,
     } of binding.downstreamExpressions) {
+      if (section !== binding.section) {
+        section.closures = bindingUtil.add(section.closures, binding);
+      }
+
       if (Array.isArray(referencedBindings)) {
         intersections.add(referencedBindings);
       }
 
-      forEach(referencedBindings, (bindingReference) => {
-        if (isEffect) {
+      if (isEffect) {
+        forEach(referencedBindings, (bindingReference) => {
           bindingReference.serialize = true;
-        }
-      });
+        });
+      }
     }
   }
 
@@ -650,6 +656,10 @@ export function finalizeReferences() {
       },
     );
   });
+
+  mergedReferences.clear();
+  readsByExpression.clear();
+  readsByFn.clear();
 }
 
 function isSuperset(set: Set<any>, subset: Set<any>) {
@@ -706,26 +716,35 @@ const [getIntersections, setIntersections] = createSectionState(
   "intersections",
   () => [] as Intersection[],
 );
-export function addReferenceToExpression(path: t.NodePath, reference: Binding) {
-  const exprExtra = (path.node.extra ??= {});
-  const section = getOrCreateSection(path);
-  exprExtra.referencedBindings = addReference(
-    section,
-    exprExtra.referencedBindings,
-    reference,
+const [getReadsByExpression] = createProgramState(
+  () => new Map<ExprExtra, Opt<Read>>(),
+);
+const [getReadsByFunction] = createProgramState(
+  () => new Map<FnExtra, Opt<Read>>(),
+);
+
+export function addReadToExpression(
+  path: t.NodePath,
+  binding: Binding,
+  node?: t.Identifier | t.MemberExpression,
+) {
+  const exprExtra = (path.node.extra ??= {}) as ExprExtra;
+  const readsByExpression = getReadsByExpression();
+  exprExtra.section = getOrCreateSection(path);
+  readsByExpression.set(
+    exprExtra,
+    push(readsByExpression.get(exprExtra), { binding, node }),
   );
-  reference.downstreamExpressions.add(exprExtra);
+  return exprExtra;
 }
 
-const [getDroppedReferences] = createProgramState(() => new Set<t.Node>());
 export function dropReferences(node: t.Node | t.Node[]) {
-  const droppedReferences = getDroppedReferences();
   if (Array.isArray(node)) {
     for (const item of node) {
-      droppedReferences.add(item);
+      (item.extra ??= {}).pruned = true;
     }
   } else {
-    droppedReferences.add(node);
+    (node.extra ??= {}).pruned = true;
   }
 }
 
@@ -765,18 +784,6 @@ export function getAllTagReferenceNodes(
   }
 
   return referenceNodes;
-}
-
-function addReference(
-  section: Section,
-  referencedBindings: ReferencedBindings,
-  binding: Binding,
-) {
-  if (section !== binding.section) {
-    section.closures = bindingUtil.add(section.closures, binding);
-  }
-  const newIntersection = bindingUtil.add(referencedBindings, binding);
-  return findReferences(section, newIntersection);
 }
 
 function findReferences(
@@ -838,6 +845,67 @@ function pruneBinding(bindings: Set<Binding>, binding: Binding) {
   return shouldPrune;
 }
 
+function resolveReferencedBindings(
+  expr: { section: Section },
+  reads: Opt<Read>,
+) {
+  let referencedBindings: ReferencedBindings;
+  if (Array.isArray(reads)) {
+    for (const read of reads) {
+      let { binding } = read;
+      if (read.node) {
+        const exprReference = ((read.node.extra ??= {}).read ??=
+          resolveExpressionReference(reads, binding, undefined));
+        ({ binding } = (read.node.extra ??= {}).read = exprReference);
+      }
+
+      referencedBindings = bindingUtil.add(referencedBindings, binding);
+    }
+  } else if (reads) {
+    if (reads.node) {
+      (reads.node.extra ??= {}).read = createRead(reads.binding, undefined);
+    }
+    referencedBindings = reads.binding;
+  }
+
+  return findReferences(expr.section, referencedBindings);
+}
+
+function resolveExpressionReference(
+  reads: Opt<Read>,
+  readBinding: Binding,
+  readProps: Opt<string>,
+) {
+  const { upstreamAlias } = readBinding;
+  if (upstreamAlias && Array.isArray(reads)) {
+    const prop = getCanonicalProperty(readBinding);
+    const aliasProps = prop === undefined ? readProps : push(readProps, prop);
+    for (const { binding } of reads) {
+      if (binding !== readBinding) {
+        let alias = upstreamAlias;
+
+        while (alias) {
+          if (binding === alias) {
+            return resolveExpressionReference(reads, alias, aliasProps);
+          }
+
+          alias = alias.upstreamAlias!;
+        }
+      }
+    }
+  }
+
+  return createRead(readBinding, readProps);
+}
+
+function getCanonicalProperty(binding: Binding) {
+  return binding.property ?? binding.upstreamAlias?.property;
+}
+
+function createRead(binding: Binding, props: Opt<string>) {
+  return { binding, props };
+}
+
 function getMemberExpressionPropString(expr: t.MemberExpression) {
   switch (expr.property.type) {
     case "StringLiteral":
@@ -851,6 +919,12 @@ function getMemberExpressionPropString(expr: t.MemberExpression) {
 
 function isEventOrChangeHandler(prop: string) {
   return /^on[-A-Z][a-zA-Z0-9_$]|[a-zA-Z_$][a-zA-Z0-9_$]*Change$/.test(prop);
+}
+
+function isReferenceExpression(
+  extra: t.NodeExtra | undefined,
+): extra is ExprExtra {
+  return !!(extra && !extra.pruned && extra.section);
 }
 
 // TODO: we need this? maybe for passing input to child?
