@@ -56,6 +56,9 @@ export default {
       }
     },
   },
+  parseOptions: {
+    openTagOnly: true,
+  },
   attributes: {},
   autocomplete: [
     {

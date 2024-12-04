@@ -1,7 +1,7 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-const-body-content/template.marko:1:2
-    > 1 | <const/x=1>
-        |  ^^^^^ The `const` tag does not support body content.
-      2 |   Hello!
+    at packages/translator-tags/src/__tests__/fixtures/error-const-body-content/template.marko:2:3
+      1 | <const/x=1>
+    > 2 |   Hello!
+        |   ^ Line has extra indentation at the beginning
       3 | </const>
       4 |

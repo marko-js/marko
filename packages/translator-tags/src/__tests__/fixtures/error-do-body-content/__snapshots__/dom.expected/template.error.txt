@@ -1,5 +1,0 @@
-
-    at packages/translator-tags/src/__tests__/fixtures/error-do-body-content/template.marko:1:2
-    > 1 | <do=(() => {})>Hello</do>
-        |  ^^ The `do` tag does not support body content.
-      2 |
