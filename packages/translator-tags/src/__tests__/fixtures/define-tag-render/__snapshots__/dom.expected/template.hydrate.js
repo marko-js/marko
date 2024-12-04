@@ -1,4 +1,4 @@
-// size: 417 (min) 250 (brotli)
+// size: 419 (min) 251 (brotli)
 const _y$defineBody_effect = _$.effect("a0", (_scope) =>
     _$.on(
       _scope[2],
@@ -19,7 +19,7 @@ const _y$defineBody_effect = _$.effect("a0", (_scope) =>
     _name$defineBody(_scope, _pattern_.name),
   ),
   _params_2$defineBody = _$.value(4, (_scope, _params_2) =>
-    _pattern_$defineBody(_scope, _params_2[0]),
+    _pattern_$defineBody(_scope, _params_2?.[0]),
   ),
   _setup$defineBody = (_scope) => {
     _y$defineBody(_scope, 1);

@@ -16,6 +16,7 @@ import { addValue, getSerializedScopeProperties } from "../util/signals";
 import { createSectionState } from "../util/state";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
+import { currentProgramPath } from "../visitors/program";
 
 const [returnId, _setReturnId] = createSectionState<t.Identifier | undefined>(
   "returnId",
@@ -64,7 +65,7 @@ export default {
 
         if (attrs.value) {
           const returnId =
-            tag.hub.file.path.scope.generateUidIdentifier("return");
+            currentProgramPath.scope.generateUidIdentifier("return");
           _setReturnId(section, returnId);
 
           tag

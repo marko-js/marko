@@ -4,30 +4,28 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _yChange = _$.register("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-dynamic-change-handler/template.marko_0/yChange", _scope => function (newValue) {
   _x(_scope, newValue + 1);
 });
+const _expr_x_yChange = /* @__PURE__ */_$.intersection(2, _scope => {
+  const {
+    x,
+    yChange
+  } = _scope;
+  _y(_scope, x, yChange);
+});
 const _onClick = _scope => {
   const {
-    _y_change,
     y
   } = _scope;
   return function () {
-    _y(_scope, y + 1, _y_change);
+    _y(_scope, y + 1);
   };
 };
-const _expr__y_change_y_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-dynamic-change-handler/template.marko_0__y_change_y", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
-const _expr__y_change_y = /* @__PURE__ */_$.intersection(2, _scope => {
-  const {
-    _y_change,
-    y
-  } = _scope;
-  _expr__y_change_y_effect(_scope);
+const _y_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-dynamic-change-handler/template.marko_0_y", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _y = /* @__PURE__ */_$.state("y", (_scope, y) => {
+  _$.data(_scope["#text/2"], y);
+  _y_effect(_scope);
 });
-const _y = /* @__PURE__ */_$.state("y", (_scope, y) => _$.data(_scope["#text/2"], y), () => _expr__y_change_y);
-const _y_change = /* @__PURE__ */_$.value("_y_change", 0, () => _expr__y_change_y);
-const _yChange2 = /* @__PURE__ */_$.state("yChange", (_scope, yChange) => _y_change(_scope, yChange), () => _y_change);
-const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
-  _$.data(_scope["#text/1"], x);
-  _y(_scope, x, _scope["_y_change"]);
-}, () => _y);
+const _yChange2 = /* @__PURE__ */_$.state("yChange", 0, () => _expr_x_yChange);
+const _x = /* @__PURE__ */_$.state("x", (_scope, x) => _$.data(_scope["#text/1"], x), () => _expr_x_yChange);
 const _setup__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-dynamic-change-handler/template.marko_0", _scope => _$.on(_scope["#button/3"], "click", function () {
   _yChange2(_scope, null);
 }));

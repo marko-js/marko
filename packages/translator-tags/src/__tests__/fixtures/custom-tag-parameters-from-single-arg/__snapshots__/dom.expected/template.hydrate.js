@@ -3,7 +3,7 @@ const _inputRenderBody_input = _$.dynamicTagAttrs(2),
   _expr_Text_x = _$.intersection(
     2,
     (_scope) => {
-      const { 5: x } = _scope;
+      const { 6: x } = _scope;
       _inputRenderBody_input(_scope, () => x);
     },
     () => _inputRenderBody_input,
@@ -13,7 +13,7 @@ const _inputRenderBody_input = _$.dynamicTagAttrs(2),
       _scope[0],
       "click",
       ((_scope) => {
-        const { 5: x } = _scope;
+        const { 6: x } = _scope;
         return function () {
           _x(_scope, x + 1);
         };
@@ -21,7 +21,7 @@ const _inputRenderBody_input = _$.dynamicTagAttrs(2),
     ),
   ),
   _x = _$.state(
-    5,
+    6,
     (_scope, x) => {
       _$.data(_scope[1], x), _x_effect(_scope);
     },

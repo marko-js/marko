@@ -9,8 +9,8 @@
       "$_name_": "r",
       "$_expr_outerItem_middleItem$forBody": "s",
       "$_write$forBody2": "c",
-      "$_outerItem$forBody2": "d",
-      "$_middleItem$forBody": "l",
+      "$_outerItem$forBody2": "l",
+      "$_middleItem$forBody": "d",
       "$_params_3$forBody": "a",
       "$_setup$forBody2": "v",
       "$_forBody2": "u",
@@ -21,9 +21,12 @@
       "$_params_2$forBody": "b",
       "$_setup$forBody": "h",
       "$_forBody": "C",
-      "$_for": "D",
-      "$_items_effect": "S",
-      "$_items": "$"
+      "$_expr_items_items_length_effect": "D",
+      "$_expr_items_items_length": "S",
+      "$_for": "$",
+      "$_items_length": "k",
+      "$_items": "L",
+      "$_items_effect": "_"
     }
   }
 }

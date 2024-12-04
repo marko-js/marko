@@ -70,7 +70,8 @@ describe("translator-tags", () => {
       const browserFile = resolve("browser.ts");
       const templateFile = resolve("template.marko");
       const hasTemplate = fs.existsSync(templateFile);
-      const nameCacheFile = resolve("__snapshots__/.name-cache.json");
+      const snapshotsDir = resolve("__snapshots__");
+      const nameCacheFile = path.join(snapshotsDir, ".name-cache.json");
       const nameCache = (() => {
         try {
           return JSON.parse(fs.readFileSync(nameCacheFile, "utf-8")) as Record<
@@ -78,6 +79,11 @@ describe("translator-tags", () => {
             unknown
           >;
         } catch {
+          try {
+            fs.mkdirSync(snapshotsDir, { recursive: true });
+          } catch {
+            // ignore
+          }
           return {};
         }
       })();

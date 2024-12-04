@@ -9,8 +9,8 @@ export default {
   translate: {
     exit(expr) {
       if (isOutputDOM()) {
-        const source = expr.node.argument.extra?.source;
-        if (source) {
+        const binding = expr.node.argument.extra?.binding;
+        if (binding) {
           const section = getSection(expr);
           (currentProgramPath.node.extra.assignments ??= []).push([
             section,

@@ -1,4 +1,4 @@
-// size: 751 (min) 367 (brotli)
+// size: 751 (min) 369 (brotli)
 const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
   _expr_outer_inner$forBody = _$.intersection(
     2,

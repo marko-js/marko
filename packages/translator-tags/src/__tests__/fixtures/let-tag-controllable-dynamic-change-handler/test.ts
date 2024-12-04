@@ -7,5 +7,3 @@ function increment(container: Element) {
 function toggle(container: Element) {
   container.querySelector<HTMLButtonElement>("#toggle")!.click();
 }
-
-export const skip_resume = true;

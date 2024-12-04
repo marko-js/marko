@@ -1,4 +1,4 @@
-// size: 1265 (min) 528 (brotli)
+// size: 1265 (min) 527 (brotli)
 const _expr_name_write_effect = _$.effect("a0", (_scope) => {
     _$.getAbortSignal(_scope, 0).onabort = ((_scope) => {
       const { 3: name, 4: write } = _scope;

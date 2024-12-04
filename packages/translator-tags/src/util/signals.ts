@@ -8,6 +8,7 @@ import {
   currentProgramPath,
   scopeIdentifier,
 } from "../visitors/program";
+import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
 import { isStatefulReferences } from "./is-stateful";
 import { isOutputHTML } from "./marko-config";
 import { forEach, type Opt, push } from "./optional";
@@ -26,6 +27,8 @@ import {
   type Section,
 } from "./sections";
 import { createSectionState } from "./state";
+import toPropertyName from "./to-property-name";
+import withPreviousLocation from "./with-previous-location";
 
 export type subscribeBuilder = (subscriber: t.Expression) => t.Expression;
 export type registerScopeBuilder = (scope: t.Expression) => t.Expression;
@@ -284,7 +287,7 @@ export function getSignalFn(
         t.expressionStatement(
           t.callExpression(aliasSignal.identifier, [
             scopeIdentifier,
-            toMemberExpression(valueIdentifier, key),
+            toMemberExpression(valueIdentifier, key, binding.nullable),
             ...(aliasSignal.extraArgs || []),
           ]),
         ),
@@ -655,14 +658,70 @@ export function getRegisterUID(section: Section, name: string) {
 }
 
 export function renameBindings() {
-  t.traverseFast(currentProgramPath.node, (node) => {
-    if (t.isIdentifier(node)) {
-      const binding = node.extra && (node.extra.source || node.extra.binding);
-      if (binding && binding.name !== node.name) {
-        node.name = binding.name;
+  const program = currentProgramPath.node;
+  const { body } = program;
+
+  for (let i = 0; i < body.length; i++) {
+    traverse(body[i], body, i, (node, container, key) => {
+      switch (node.type) {
+        case "Identifier":
+        case "MemberExpression": {
+          const { extra } = node;
+          if (!extra) break;
+          let { binding, read } = extra;
+          let replacement: t.Node | undefined;
+
+          if (
+            (isOutputHTML() && read && !read.binding.declared) ||
+            (binding && !binding.declared)
+          ) {
+            return; // TODO this is probably wrong and should walk up to the closest declared binding.
+          }
+
+          if (read) {
+            if (read.props === undefined) {
+              binding = read.binding;
+              read = undefined;
+            } else {
+              binding = undefined;
+            }
+          }
+
+          if (binding) {
+            if (node.type === "Identifier") {
+              if (binding.name !== node.name) {
+                node.name = binding.name;
+              }
+            } else {
+              replacement = t.identifier(binding.name);
+            }
+          } else if (read) {
+            replacement = t.memberExpression(
+              t.identifier(read.binding.name),
+              toPropertyName(
+                Array.isArray(read.props) ? read.props[0] : read.props!,
+              ),
+            );
+
+            if (Array.isArray(read.props)) {
+              for (let i = 1; i < read.props.length; i++) {
+                replacement = t.memberExpression(
+                  replacement,
+                  toPropertyName(read.props[i]),
+                );
+              }
+            }
+          }
+
+          if (replacement) {
+            container[key] = withPreviousLocation(replacement, node);
+          }
+
+          break;
+        }
       }
-    }
-  });
+    });
+  }
 }
 
 export function replaceAssignments() {
@@ -671,7 +730,7 @@ export function replaceAssignments() {
       .assignments) {
       const { node } = assignment;
       if (node.type === "UpdateExpression") {
-        const binding = node.argument.extra?.source;
+        const binding = node.argument.extra?.binding;
         if (binding) {
           const { buildAssignment } = getSignal(binding.section, binding);
           if (buildAssignment) {
@@ -697,7 +756,7 @@ export function replaceAssignments() {
         ) {
           handleDestructure(assignment, node.left, valueSection);
         } else if (node.left.type === "Identifier") {
-          const binding = node.left.extra?.source;
+          const binding = node.left.extra?.binding;
           if (binding) {
             const { buildAssignment } = getSignal(binding.section, binding);
             if (buildAssignment) {
@@ -935,7 +994,7 @@ export function writeHTMLResumeStatements(
     if (binding.serialize && binding.type !== BindingType.dom) {
       const accessor = getScopeAccessorLiteral(binding);
       serializedProperties.push(
-        t.objectProperty(accessor, t.identifier(binding.name)),
+        t.objectProperty(accessor, getDeclaredBindingExpression(binding)),
       );
       accessors.add(accessor.value);
     }
@@ -1045,11 +1104,11 @@ function handleDestructure(
       break;
     case "Identifier":
       {
-        const binding = node.extra?.source;
+        const binding = node.extra?.binding;
         if (binding) {
           const { buildAssignment } = getSignal(binding.section, binding);
           if (buildAssignment) {
-            const valueId = ctx.statement.scope.generateUidIdentifier(
+            const valueId = currentProgramPath.scope.generateUidIdentifier(
               node.name,
             );
 
@@ -1073,9 +1132,9 @@ function bindFunction(
 ) {
   const { node } = fn;
   const { extra } = node;
-  if (!extra?.referencedBindings) return;
-  const { name, referencedBindings } = extra;
-  const fnId = fn.hub.file.path.scope.generateUidIdentifier(name);
+  if (!extra?.referencedBindingsInFunction) return;
+  const { name, referencedBindingsInFunction } = extra;
+  const fnId = currentProgramPath.scope.generateUidIdentifier(name);
 
   root
     .insertBefore(
@@ -1084,11 +1143,14 @@ function bindFunction(
           fnId,
           t.arrowFunctionExpression(
             [scopeIdentifier],
-            referencedBindings
+            referencedBindingsInFunction
               ? t.blockStatement([
                   t.variableDeclaration("const", [
                     t.variableDeclarator(
-                      createScopeReadPattern(section, referencedBindings),
+                      createScopeReadPattern(
+                        section,
+                        referencedBindingsInFunction,
+                      ),
                       scopeIdentifier,
                     ),
                   ]),
@@ -1108,13 +1170,16 @@ export function getSetup(section: Section) {
   return getSignals(section).get(undefined)?.identifier;
 }
 
-function toMemberExpression(value: t.Expression, key: string) {
+function toMemberExpression(
+  value: t.Expression,
+  key: string,
+  optional?: boolean,
+) {
   const keyLiteral = keyToNode(key);
-  return t.memberExpression(
-    value,
-    keyLiteral,
-    keyLiteral.type !== "Identifier",
-  );
+  const computed = keyLiteral.type !== "Identifier";
+  return optional
+    ? t.optionalMemberExpression(value, keyLiteral, computed, true)
+    : t.memberExpression(value, keyLiteral, computed);
 }
 
 function keyToNode(key: string) {
@@ -1125,4 +1190,32 @@ function keyToNode(key: string) {
   }
 
   return t.stringLiteral(key);
+}
+
+function traverse<
+  Container extends t.Node | t.Node[],
+  Key extends (string | number) & keyof Container,
+  Node extends Container[Key] & t.Node,
+>(
+  node: Node | null | void,
+  container: Container,
+  key: Key,
+  enter: (node: t.Node, container: any, key: string | number) => void,
+): void {
+  if (node) {
+    enter(node, container, key);
+    for (const key of (t as any).VISITOR_KEYS[
+      node.type
+    ] as (keyof typeof node)[]) {
+      const child = node[key];
+
+      if (Array.isArray(child)) {
+        for (let i = 0; i < child.length; i++) {
+          traverse(child[i], child, i, enter);
+        }
+      } else {
+        traverse(child as any, node, key as any, enter);
+      }
+    }
+  }
 }

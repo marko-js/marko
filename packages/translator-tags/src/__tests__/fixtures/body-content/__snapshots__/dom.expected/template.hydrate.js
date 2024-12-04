@@ -1,13 +1,11 @@
-// size: 583 (min) 311 (brotli)
+// size: 581 (min) 314 (brotli)
 const _renderBody_input = _$.dynamicTagAttrs(1),
   _dynamicTagName = _$.conditional(
     1,
     (_scope) => _renderBody_input(_scope, () => ({})),
     () => _renderBody_input,
   ),
-  _attrs__effect = _$.effect("a0", (_scope) => {
-    _$.attrsEvents(_scope, 0);
-  }),
+  _attrs__effect = _$.effect("a0", (_scope) => _$.attrsEvents(_scope, 0)),
   _renderBody_ = _$.value(
     4,
     (_scope, renderBody) => _dynamicTagName(_scope, renderBody),

@@ -194,7 +194,7 @@ function getChangeHandler(
       [valueId],
       t.blockStatement([
         t.expressionStatement(
-          t.assignmentExpression("=", attr.node.value, valueId),
+          t.assignmentExpression("=", t.cloneNode(attr.node.value), valueId),
         ),
       ]),
     );

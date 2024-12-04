@@ -9,8 +9,7 @@ const _onClick = _scope => {
 };
 const _onClick2 = _scope => {
   const {
-    a,
-    b
+    a
   } = _scope;
   return function () {
     _a(_scope, a.map(_onClick(_scope)));

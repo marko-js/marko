@@ -6,29 +6,22 @@ const _valueChange = _$.register("packages/translator-tags/src/__tests__/fixture
 });
 const _onClick = _scope => {
   const {
-    _y_change,
     y
   } = _scope;
   return function () {
-    _y_change(y + 1);
+    _y(_scope, y + 1);
   };
 };
-const _expr__y_change_y_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-static/template.marko_0__y_change_y", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
-const _expr__y_change_y = /* @__PURE__ */_$.intersection(2, _scope => {
-  const {
-    _y_change,
-    y
-  } = _scope;
-  _expr__y_change_y_effect(_scope);
+const _y_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-static/template.marko_0_y", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _y = /* @__PURE__ */_$.state("y", (_scope, y) => {
+  _$.data(_scope["#text/2"], y);
+  _y_effect(_scope);
 });
-const _y = /* @__PURE__ */_$.state("y", (_scope, y) => _$.data(_scope["#text/2"], y), () => _expr__y_change_y);
-const _y_change = /* @__PURE__ */_$.value("_y_change", 0, () => _expr__y_change_y);
 const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
   _$.data(_scope["#text/1"], x);
-  _y(_scope, x, 1);
-}, () => _y);
+  _y(_scope, x, _valueChange(_scope));
+});
 export function _setup_(_scope) {
   _x(_scope, 1);
-  _y_change(_scope, _valueChange(_scope));
 }
 export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-static/template.marko", _template_, _walks_, _setup_);

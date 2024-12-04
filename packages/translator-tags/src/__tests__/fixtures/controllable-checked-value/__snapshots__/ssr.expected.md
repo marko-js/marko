@@ -1,5 +1,5 @@
 # Write
-  <input value=a checked type=radio><!--M_*0 #input/0--><input value=b type=radio><!--M_*0 #input/1--><input value=c type=radio><!--M_*0 #input/2--><span>a<!--M_*0 #text/3--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={"#input/0=":1,"#input/1=":1,"#input/2=":1,checkedValue:"a"}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0/checkedValueChange_0"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0",0];M._.w()</script>
+  <input value=a checked type=radio><!--M_*0 #input/0--><input value=b type=radio><!--M_*0 #input/1--><input value=c type=radio><!--M_*0 #input/2--><span>a<!--M_*0 #text/3--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={"#input/0=":1,"#input/1=":1,"#input/2=":1}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0/checkedValueChange_0"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0",0];M._.w()</script>
 
 
 # Render "End"
@@ -28,7 +28,7 @@
       <!--M_*0 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#input/0=":1,"#input/1=":1,"#input/2=":1,checkedValue:"a"}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0/checkedValueChange_0"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#input/0=":1,"#input/1=":1,"#input/2=":1}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0/checkedValueChange_0"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-value/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

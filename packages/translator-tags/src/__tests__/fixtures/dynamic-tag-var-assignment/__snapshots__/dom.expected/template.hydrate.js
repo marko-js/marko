@@ -1,4 +1,4 @@
-// size: 532 (min) 295 (brotli)
+// size: 532 (min) 280 (brotli)
 const _valueChange = _$.register(
     "a0",
     (_scope) =>

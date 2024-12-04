@@ -11,7 +11,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/2")}`);
   _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/components/custom-tag.marko_0_x");
   _$.writeScope(_scope0_id, {
-    "input": input,
+    "input_name": input.name,
     "x": x,
     "#text/2!": _$.writeExistingScope(_dynamicScope),
     "#text/2(": _$.normalizeDynamicRenderer(input.renderBody)

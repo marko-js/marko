@@ -225,7 +225,7 @@ export default {
           if (isEventHandler(attr.name) || isChangeHandler(attr.name)) {
             (attr.value.extra ??= {}).isEffect = true;
             hasEventHandlers = true;
-          } else if (!evaluate(tag.get("attributes")[i]).confident) {
+          } else if (!evaluate(attr.value).confident) {
             hasDynamicAttributes = true;
           }
         } else if (t.isMarkoSpreadAttribute(attr)) {
@@ -261,7 +261,7 @@ export default {
       if (relatedControllable) {
         mergeReferences(
           section,
-          relatedControllable.attrs.find(Boolean)!,
+          relatedControllable.attrs.find(Boolean)!.value,
           relatedControllable.attrs.map((it) => it?.value),
         );
       }
@@ -496,7 +496,7 @@ export default {
 
       for (const attr of staticAttrs) {
         const { name, value } = attr;
-        const { confident, computed } = attr.extra ?? {};
+        const { confident, computed } = value.extra || {};
         const valueReferences = value.extra?.referencedBindings;
 
         if (isHTML && tagName === "option" && name === "value") {
@@ -705,6 +705,7 @@ export default {
       if (
         nodeRef &&
         (extra[kSerializeMarker] ||
+          isStatefulReferences(extra.referencedBindings) ||
           tag.node.attributes.some((attr) =>
             isStatefulReferences(attr.value.extra?.referencedBindings),
           ))

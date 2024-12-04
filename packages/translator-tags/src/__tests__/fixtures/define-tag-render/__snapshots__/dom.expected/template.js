@@ -17,7 +17,7 @@ const _y$defineBody = /* @__PURE__ */_$.state("y", (_scope, y) => {
 });
 const _name$defineBody = /* @__PURE__ */_$.value("name", (_scope, name) => _$.data(_scope["#text/0"], name));
 const _pattern_$defineBody = /* @__PURE__ */_$.value("_pattern_", (_scope, _pattern_) => _name$defineBody(_scope, _pattern_.name));
-const _params_2$defineBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _pattern_$defineBody(_scope, _params_2[0]));
+const _params_2$defineBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _pattern_$defineBody(_scope, _params_2?.[0]));
 const _setup$defineBody = _scope => {
   _y$defineBody(_scope, 1);
 };

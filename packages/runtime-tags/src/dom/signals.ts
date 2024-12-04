@@ -34,6 +34,7 @@ export function state<T>(
 ) {
   const valueSignal = value<T>(valueAccessor, fn, getIntersection);
   const markAccessor = valueAccessor + AccessorChar.Mark;
+  const valueChangeAccessor = valueAccessor + AccessorChar.TagVariableChange;
 
   return (
     scope: Scope,
@@ -45,12 +46,14 @@ export function state<T>(
         valueOrOp === MARK || valueOrOp === CLEAN || valueOrOp === DIRTY;
       valueSignal(
         scope,
-        valueIsOp || valueChange || scope[markAccessor] === undefined
+        valueIsOp ||
+          (scope[valueChangeAccessor] = valueChange) ||
+          scope[markAccessor] === undefined
           ? valueOrOp
           : CLEAN,
       );
-    } else if (valueChange) {
-      valueChange(valueOrOp as T);
+    } else if (scope[valueChangeAccessor]) {
+      scope[valueChangeAccessor](valueOrOp as T);
     } else {
       queueSource(scope, valueSignal as ValueSignal, valueOrOp);
     }

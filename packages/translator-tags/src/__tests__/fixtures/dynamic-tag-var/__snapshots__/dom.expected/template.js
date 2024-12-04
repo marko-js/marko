@@ -9,10 +9,15 @@ const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", _scope => {
   _inputDynamic_input(_scope, () => ({}));
 }, () => _inputDynamic_input);
 const _data3 = _$.registerBoundSignal("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-var/template.marko_0_data3", (_scope, data3) => {});
-export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _dynamicTagName(_scope, input.dynamic), () => _dynamicTagName);
+export const _input_dynamic_ = /* @__PURE__ */_$.value("input_dynamic", (_scope, input_dynamic) => _dynamicTagName(_scope, input_dynamic), () => _dynamicTagName);
 const _data2 = _$.registerBoundSignal("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-var/template.marko_0_data2", (_scope, data2) => {});
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
+export const _input_show_ = /* @__PURE__ */_$.value("input_show", 0);
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
+  _input_show_(_scope, input.show);
+  _input_dynamic_(_scope, input.dynamic);
+}, () => _input_dynamic_);
 const _data = _$.registerBoundSignal("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-var/template.marko_0_data1", (_scope, data1) => {});
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
 export function _setup_(_scope) {
   _$.setTagVar(_scope, "#childScope/0", _data);
   _child(_scope["#childScope/0"]);

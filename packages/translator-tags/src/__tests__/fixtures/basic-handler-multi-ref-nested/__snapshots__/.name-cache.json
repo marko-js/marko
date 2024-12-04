@@ -5,7 +5,8 @@
       "$init": "o",
       "$_expr_a_b_effect": "n",
       "$_expr_a_b": "r",
-      "$_a": "m"
+      "$_a": "m",
+      "$_onClick": "a"
     }
   }
 }

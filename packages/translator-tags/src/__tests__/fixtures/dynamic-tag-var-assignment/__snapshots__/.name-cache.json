@@ -3,9 +3,9 @@
     "props": {
       "$_$": "t",
       "$init": "a",
-      "$_x_effect": "n",
-      "$_x": "r",
-      "$_valueChange": "e",
+      "$_valueChange": "n",
+      "$_x_effect": "r",
+      "$_x": "e",
       "$_setup_": "i",
       "$Counter": "o"
     }

@@ -1,4 +1,4 @@
-// size: 834 (min) 421 (brotli)
+// size: 834 (min) 419 (brotli)
 const _expr_name_write_effect = _$.effect("a0", (_scope) => {
     const { 5: name, 6: write } = _scope;
     write(`mounted ${name}`),
