@@ -530,11 +530,16 @@ function writeAttrsToExports(
       );
     }
 
+    let translatedProps = propsToExpression(translatedAttrs.properties);
+    if (isAttributeTag(tag)) {
+      translatedProps = callRuntime("attrTag", translatedProps);
+    }
+
     addValue(
       info.tagSection,
       referencedBindings,
       identifierToSignal(tagInputIdentifier),
-      propsToExpression(translatedAttrs.properties),
+      translatedProps,
       createScopeReadExpression(info.tagSection, info.childScopeBinding),
       callRuntime(
         "inChild",
