@@ -1,5 +1,4 @@
 export { attrTag, attrTags } from "./common/attr-tag";
-export { forIn, forOf, forTo } from "./common/for";
 export { normalizeDynamicRenderer } from "./common/helpers";
 export {
   attr,
@@ -22,6 +21,7 @@ export {
   dynamicTagArgs,
   dynamicTagInput,
 } from "./html/dynamic-tag";
+export { forIn, forInBy, forOf, forOfBy, forTo, forToBy } from "./html/for";
 export { createTemplate } from "./html/template";
 export {
   $global,

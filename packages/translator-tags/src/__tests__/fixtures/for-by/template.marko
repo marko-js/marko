@@ -1,0 +1,37 @@
+static function getStringBy() {
+  return "id";
+}
+
+static function getFunctionBy() {
+  return item => item.id;
+}
+
+static function getMissingBy() {
+  return undefined;
+}
+
+<div>
+  <let/items=[{ id:0, text: "first"}, { id:1, text: "second"}, { id:2, text: "third"}]/>
+
+  <div.by-string>
+    <for|{ text }| of=items by="id">${text}</for>
+  </>
+
+  <div.by-function>
+    <for|{ text }| of=items by=item=> item.id>${text}</for>
+  </div>
+
+  <div.by-unknown-string>
+    <for|{ text }| of=items by=getStringBy()>${text}</for>
+  </div>
+
+  <div.by-unknown-function>
+    <for|{ text }| of=items by=getFunctionBy()>${text}</for>
+  </div>
+
+  <div.by-unknown-missing>
+    <for|{ text }| of=items by=getMissingBy()>${text}</for>
+  </div>
+
+  <button onClick() { items = [...items.slice(1), items[0]]; }>Rotate</button>
+</div>

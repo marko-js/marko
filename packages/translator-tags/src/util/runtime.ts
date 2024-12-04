@@ -12,6 +12,7 @@ import {
 
 import { currentProgramPath } from "../visitors/program";
 import { getMarkoOpts } from "./marko-config";
+import { toMemberExpression } from "./to-property-name";
 
 type Falsy = false | 0 | "" | null | undefined;
 
@@ -36,9 +37,9 @@ export function importRuntime(
     | keyof typeof import("@marko/runtime-tags/html"),
 ) {
   const { output } = getMarkoOpts();
-  return t.memberExpression(
+  return toMemberExpression(
     importStar(currentProgramPath.hub.file, getRuntimePath(output), "$"),
-    t.identifier(name),
+    name,
   );
 }
 
