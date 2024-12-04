@@ -17,15 +17,8 @@ export function getMarkoRoot(path: t.NodePath<t.Node>) {
 export function getExprRoot(path: t.NodePath<t.Node>) {
   let curPath = path;
   while (!isMarko(curPath.parentPath!)) {
+    // TODO: eventually this should be updated to handle default assignments in a destructure.
     curPath = curPath.parentPath!;
-    if (curPath.type === "AssignmentExpression") {
-      const destructRoot = getDestructureRoot(curPath);
-      if (isMarko(destructRoot.parentPath!)) {
-        curPath = (curPath as t.NodePath<t.AssignmentExpression>).get("right");
-        break;
-      }
-      curPath = destructRoot.parentPath!;
-    }
   }
   return curPath;
 }
@@ -65,16 +58,5 @@ function isFunctionExpression(
       return true;
     default:
       return false;
-  }
-}
-
-function getDestructureRoot(path: t.NodePath): t.NodePath {
-  switch (path.parent.type) {
-    case "ArrayPattern":
-    case "ObjectPattern":
-    case "ObjectProperty":
-      return getDestructureRoot(path.parentPath!);
-    default:
-      return path;
   }
 }

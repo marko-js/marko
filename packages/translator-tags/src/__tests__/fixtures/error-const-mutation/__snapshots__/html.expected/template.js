@@ -7,6 +7,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     lastName: "Martin"
   };
   const fullName = user.fullName = `${user.firstName} ${user.middleName} ${user.lastName}`;
-  _$.write(`<p>${_$.escapeXML(fullName)}</p>`);
+  _$.write(`<p>${_$.escapeXML(fullName)}${_$.markResumeNode(_scope0_id, "#text/0")}</p>`);
 });
 export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/error-const-mutation/template.marko", _renderer);
