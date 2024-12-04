@@ -1,5 +1,11 @@
 # @marko/translator-tags
 
+## 0.4.5
+
+### Patch Changes
+
+- [#2393](https://github.com/marko-js/marko/pull/2393) [`279ac34`](https://github.com/marko-js/marko/commit/279ac34329d2533db402c3c41f3cdaf39371d51e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Drop <do> tag, make some core tags void.
+
 ## 0.4.4
 
 ### Patch Changes
