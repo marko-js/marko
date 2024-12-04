@@ -17,7 +17,7 @@ import {
   Sorted,
 } from "./optional";
 import { forEachSection, getOrCreateSection, type Section } from "./sections";
-import { createProgramState, createSectionState } from "./state";
+import { createProgramState } from "./state";
 
 export type Aliases = undefined | Binding | { [property: string]: Aliases };
 
@@ -543,9 +543,14 @@ export function finalizeReferences() {
     }
   }
 
+  const intersectionsBySection = new Map<Section, Intersection[]>();
   for (const [expr, reads] of readsByExpression) {
     if (isReferenceExpression(expr)) {
-      expr.referencedBindings = resolveReferencedBindings(expr, reads);
+      expr.referencedBindings = resolveReferencedBindings(
+        expr,
+        reads,
+        intersectionsBySection,
+      );
       forEach(expr.referencedBindings, (binding) => {
         binding.downstreamExpressions.add(expr);
       });
@@ -553,7 +558,11 @@ export function finalizeReferences() {
   }
 
   for (const [fn, reads] of readsByFn) {
-    fn.referencedBindingsInFunction = resolveReferencedBindings(fn, reads);
+    fn.referencedBindingsInFunction = resolveReferencedBindings(
+      fn,
+      reads,
+      intersectionsBySection,
+    );
   }
 
   for (const binding of bindings) {
@@ -561,8 +570,6 @@ export function finalizeReferences() {
       pruneBinding(bindings, binding);
     }
   }
-
-  const intersections = new Set<Intersection>();
 
   for (const binding of bindings) {
     const { name, section } = binding;
@@ -592,11 +599,6 @@ export function finalizeReferences() {
       if (section !== binding.section) {
         section.closures = bindingUtil.add(section.closures, binding);
       }
-
-      if (Array.isArray(referencedBindings)) {
-        intersections.add(referencedBindings);
-      }
-
       if (isEffect) {
         forEach(referencedBindings, (bindingReference) => {
           bindingReference.serialize = true;
@@ -605,29 +607,32 @@ export function finalizeReferences() {
     }
   }
 
-  // mark bindings that need to be serialized due to being in an intersection with state
-  for (const intersection of intersections) {
-    const numReferences = intersection.length;
-    // TODO: in some cases we should be able to short circuit this
-    // if we know that the references are already serialized
-    for (let i = 0; i < numReferences - 1; i++) {
-      for (let j = i + 1; j < numReferences; j++) {
-        const binding1 = intersection[i];
-        const binding2 = intersection[j];
-        const sources1 = getSourceBindings(binding1);
-        const sources2 = getSourceBindings(binding2);
-        if (!binding1.serialize && !isSuperset(sources1, sources2)) {
-          binding1.serialize = true;
-        }
-        if (!binding2.serialize && !isSuperset(sources2, sources1)) {
-          binding2.serialize = true;
+  forEachSection((section) => {
+    const intersections = intersectionsBySection.get(section);
+    if (intersections) {
+      // mark bindings that need to be serialized due to being in an intersection with state
+      for (const intersection of intersections) {
+        const numReferences = intersection.length;
+        // TODO: in some cases we should be able to short circuit this
+        // if we know that the references are already serialized
+        for (let i = 0; i < numReferences - 1; i++) {
+          for (let j = i + 1; j < numReferences; j++) {
+            const binding1 = intersection[i];
+            const binding2 = intersection[j];
+            const sources1 = getSourceBindings(binding1);
+            const sources2 = getSourceBindings(binding2);
+            if (!binding1.serialize && !isSuperset(sources1, sources2)) {
+              binding1.serialize = true;
+            }
+            if (!binding2.serialize && !isSuperset(sources2, sources1)) {
+              binding2.serialize = true;
+            }
+          }
         }
       }
     }
-  }
 
-  // mark bindings that need to be serialized due to being closed over by stateful sections
-  forEachSection((section) => {
+    // mark bindings that need to be serialized due to being closed over by stateful sections
     forEach(section.closures, (binding) => {
       if (!binding.serialize) {
         let serialize = false;
@@ -712,10 +717,6 @@ export const bindingUtil = new Sorted(function compareBindings(
     : a.id - b.id;
 });
 
-const [getIntersections, setIntersections] = createSectionState(
-  "intersections",
-  () => [] as Intersection[],
-);
 const [getReadsByExpression] = createProgramState(
   () => new Map<ExprExtra, Opt<Read>>(),
 );
@@ -786,30 +787,6 @@ export function getAllTagReferenceNodes(
   return referenceNodes;
 }
 
-function findReferences(
-  section: Section,
-  referencedBindings: ReferencedBindings,
-) {
-  if (!referencedBindings || !Array.isArray(referencedBindings)) {
-    return referencedBindings;
-  }
-
-  const intersections = getIntersections(section);
-  let intersection = findSorted(
-    compareIntersections,
-    intersections,
-    referencedBindings,
-  );
-  if (!intersection) {
-    setIntersections(
-      section,
-      addSorted(compareIntersections, intersections, referencedBindings),
-    );
-    intersection = referencedBindings;
-  }
-  return intersection;
-}
-
 export function getScopeAccessorLiteral(binding: Binding) {
   if (isOptimize()) {
     return t.numericLiteral(binding.id);
@@ -848,6 +825,7 @@ function pruneBinding(bindings: Set<Binding>, binding: Binding) {
 function resolveReferencedBindings(
   expr: { section: Section },
   reads: Opt<Read>,
+  intersectionsBySection: Map<Section, Intersection[]>,
 ) {
   let referencedBindings: ReferencedBindings;
   if (Array.isArray(reads)) {
@@ -868,7 +846,25 @@ function resolveReferencedBindings(
     referencedBindings = reads.binding;
   }
 
-  return findReferences(expr.section, referencedBindings);
+  if (Array.isArray(referencedBindings)) {
+    // Resolve canonical intersection based on the expressions section.
+    // This ensures referential equality between reference binding groups.
+    const intersections = intersectionsBySection.get(expr.section) || [];
+    const intersection = findSorted(
+      compareIntersections,
+      intersections,
+      referencedBindings,
+    );
+    if (intersection) {
+      referencedBindings = intersection;
+    } else {
+      intersectionsBySection.set(
+        expr.section,
+        addSorted(compareIntersections, intersections, referencedBindings),
+      );
+    }
+  }
+  return referencedBindings;
 }
 
 function resolveExpressionReference(
