@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 0.2.3
+
+### Patch Changes
+
+- [#2382](https://github.com/marko-js/marko/pull/2382) [`fefe9ae`](https://github.com/marko-js/marko/commit/fefe9ae6681beaf15728afb48ce64e86030853b9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure native tag controlled elements and event handler scopes are serialized.
+
+- [#2392](https://github.com/marko-js/marko/pull/2392) [`c7bcf4b`](https://github.com/marko-js/marko/commit/c7bcf4b363a5b7824fa8222b6a01dbf139a25528) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issues with dynamic for by attribute.
+
 ## 0.2.2
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.34
+
+### Patch Changes
+
+- [#2382](https://github.com/marko-js/marko/pull/2382) [`fefe9ae`](https://github.com/marko-js/marko/commit/fefe9ae6681beaf15728afb48ce64e86030853b9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Implement basic member expression tag variable hoisting.
+
+- Updated dependencies [[`fefe9ae`](https://github.com/marko-js/marko/commit/fefe9ae6681beaf15728afb48ce64e86030853b9), [`c7bcf4b`](https://github.com/marko-js/marko/commit/c7bcf4b363a5b7824fa8222b6a01dbf139a25528)]:
+  - @marko/translator-tags@0.4.4
+
 ## 0.1.33
 
 ### Patch Changes
