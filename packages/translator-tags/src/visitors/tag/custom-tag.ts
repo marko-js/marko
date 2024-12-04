@@ -46,7 +46,10 @@ import {
   setForceResumeScope,
   writeHTMLResumeStatements,
 } from "../../util/signals";
-import toPropertyName from "../../util/to-property-name";
+import {
+  toMemberExpression,
+  toPropertyName,
+} from "../../util/to-property-name";
 import {
   addDynamicAttrTagStatements,
   getTranslatedRenderBodyProperty,
@@ -498,7 +501,7 @@ function writeAttrsToExports(
       tag.node.extra?.referencedBindings,
       identifierToSignal(tagInputIdentifier),
       t.isSpreadElement(arg)
-        ? t.memberExpression(arg.argument, t.numericLiteral(0))
+        ? t.memberExpression(arg.argument, t.numericLiteral(0), true)
         : arg,
       createScopeReadExpression(info.tagSection, info.childScopeBinding),
       callRuntime(
@@ -734,8 +737,7 @@ function writeAttrsToExports(
     if (spreadProps) {
       const spreadId = tag.scope.generateUidIdentifier(`${importAlias}_spread`);
       spreadProps.reverse();
-      getMissingPropValue = (name) =>
-        t.memberExpression(spreadId, toPropertyName(name));
+      getMissingPropValue = (name) => toMemberExpression(spreadId, name);
       addStatement("render", info.tagSection, referencedBindings, [
         t.variableDeclaration("const", [
           t.variableDeclarator(spreadId, propsToExpression(spreadProps)),

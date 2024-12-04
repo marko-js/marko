@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import type { Binding } from "./references";
+import { toMemberExpression } from "./to-property-name";
 
 export function getDeclaredBindingExpression(
   binding: Binding,
@@ -8,20 +9,11 @@ export function getDeclaredBindingExpression(
   if (binding.declared || !binding.upstreamAlias) {
     return t.identifier(binding.name);
   } else if (binding.property !== undefined) {
-    if (binding.upstreamAlias.nullable) {
-      return t.optionalMemberExpression(
-        getDeclaredBindingExpression(binding.upstreamAlias),
-        t.identifier(binding.property),
-        false,
-        true,
-      );
-    } else {
-      return t.memberExpression(
-        getDeclaredBindingExpression(binding.upstreamAlias),
-        t.identifier(binding.property),
-        false,
-      );
-    }
+    return toMemberExpression(
+      getDeclaredBindingExpression(binding.upstreamAlias),
+      binding.property,
+      binding.upstreamAlias.nullable,
+    );
   } else {
     return getDeclaredBindingExpression(binding.upstreamAlias);
   }

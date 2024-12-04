@@ -15,7 +15,7 @@ import {
 import { callRuntime } from "./runtime";
 import { getScopeIdIdentifier, getSection } from "./sections";
 import { getResumeRegisterId } from "./signals";
-import toPropertyName from "./to-property-name";
+import { toPropertyName } from "./to-property-name";
 
 const renderBodyProps = new WeakSet<t.Node>();
 

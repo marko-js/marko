@@ -27,7 +27,7 @@ import {
   type Section,
 } from "./sections";
 import { createSectionState } from "./state";
-import toPropertyName from "./to-property-name";
+import { toMemberExpression } from "./to-property-name";
 import withPreviousLocation from "./with-previous-location";
 
 export type subscribeBuilder = (subscriber: t.Expression) => t.Expression;
@@ -696,19 +696,14 @@ export function renameBindings() {
               replacement = t.identifier(binding.name);
             }
           } else if (read) {
-            replacement = t.memberExpression(
+            replacement = toMemberExpression(
               t.identifier(read.binding.name),
-              toPropertyName(
-                Array.isArray(read.props) ? read.props[0] : read.props!,
-              ),
+              Array.isArray(read.props) ? read.props[0] : read.props!,
             );
 
             if (Array.isArray(read.props)) {
               for (let i = 1; i < read.props.length; i++) {
-                replacement = t.memberExpression(
-                  replacement,
-                  toPropertyName(read.props[i]),
-                );
+                replacement = toMemberExpression(replacement, read.props[i]);
               }
             }
           }
@@ -1168,28 +1163,6 @@ function bindFunction(
 
 export function getSetup(section: Section) {
   return getSignals(section).get(undefined)?.identifier;
-}
-
-function toMemberExpression(
-  value: t.Expression,
-  key: string,
-  optional?: boolean,
-) {
-  const keyLiteral = keyToNode(key);
-  const computed = keyLiteral.type !== "Identifier";
-  return optional
-    ? t.optionalMemberExpression(value, keyLiteral, computed, true)
-    : t.memberExpression(value, keyLiteral, computed);
-}
-
-function keyToNode(key: string) {
-  if (/^[a-z_$][a-z0-9_$]*$/i.test(key)) {
-    return t.identifier(key);
-  } else if (/^(?:0|[1-9][0-9]*)$/.test(key)) {
-    return t.numericLiteral(parseInt(key, 10));
-  }
-
-  return t.stringLiteral(key);
 }
 
 function traverse<

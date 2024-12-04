@@ -39,7 +39,7 @@ import {
   getRegisterUID,
   getSerializedScopeProperties,
 } from "../../util/signals";
-import toPropertyName from "../../util/to-property-name";
+import { toPropertyName } from "../../util/to-property-name";
 import toTemplateOrStringLiteral from "../../util/to-template-string-or-literal";
 import { propsToExpression } from "../../util/translate-attrs";
 import translateVar from "../../util/translate-var";

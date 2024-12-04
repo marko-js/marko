@@ -41,6 +41,7 @@ import {
   setSubscriberBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
+import { toMemberExpression } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
@@ -228,18 +229,30 @@ export default {
           }
 
           if (forAttrs.by) {
-            // TODO: handle `by` being undefined or a string.
-            const byIdentifier =
-              currentProgramPath.scope.generateUidIdentifier("by");
-            statements.push(
-              t.variableDeclaration("const", [
-                t.variableDeclarator(byIdentifier, forAttrs.by),
-              ]),
-            );
-            keyExpression = t.callExpression(
-              byIdentifier,
-              params as t.Identifier[],
-            );
+            if (t.isStringLiteral(forAttrs.by)) {
+              keyExpression = toMemberExpression(
+                params[0] as t.Identifier,
+                forAttrs.by.value,
+              );
+            } else if (t.isFunction(forAttrs.by)) {
+              const byIdentifier =
+                currentProgramPath.scope.generateUidIdentifier("by");
+              statements.push(
+                t.variableDeclaration("const", [
+                  t.variableDeclarator(byIdentifier, forAttrs.by),
+                ]),
+              );
+              keyExpression = t.callExpression(
+                byIdentifier,
+                params as t.Identifier[],
+              );
+            } else {
+              keyExpression = callRuntime(
+                forTypeToHTMLByRuntime(forType),
+                forAttrs.by,
+                ...(params as t.Identifier[]),
+              );
+            }
           } else {
             keyExpression = params[defaultByParamIndex] as t.Identifier;
           }
@@ -547,6 +560,17 @@ function forTypeToDOMRuntime(type: ForType) {
       return "loopIn";
     case "to":
       return "loopTo";
+  }
+}
+
+function forTypeToHTMLByRuntime(type: ForType) {
+  switch (type) {
+    case "of":
+      return "forOfBy";
+    case "in":
+      return "forInBy";
+    case "to":
+      return "forToBy";
   }
 }
 
