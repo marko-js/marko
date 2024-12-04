@@ -1,7 +1,6 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-lifecycle-body-content/template.marko:1:2
-    > 1 | <lifecycle
-        |  ^^^^^^^^^ The `lifecycle` tag does not support body content.
-      2 |   onMount() {}
+    at packages/translator-tags/src/__tests__/fixtures/error-lifecycle-body-content/template.marko:5:7
       3 |   onUpdate() {}
       4 |   onDestroy() {}
+    > 5 | >Hello</lifecycle>
+        |       ^^^^^^^^^^^^ The closing "lifecycle" tag was not expected

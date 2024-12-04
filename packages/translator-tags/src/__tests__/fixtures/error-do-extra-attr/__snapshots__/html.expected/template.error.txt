@@ -1,5 +1,0 @@
-
-    at packages/translator-tags/src/__tests__/fixtures/error-do-extra-attr/template.marko:1:2
-    > 1 | <do=(() => {}) y=1/>
-        |  ^^ The `do` tag only supports the `value` attribute.
-      2 |

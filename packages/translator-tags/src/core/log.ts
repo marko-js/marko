@@ -60,6 +60,9 @@ export default {
       tag.remove();
     },
   },
+  parseOptions: {
+    openTagOnly: true,
+  },
   attributes: {},
   autocomplete: [
     {

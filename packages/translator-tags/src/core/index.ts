@@ -4,7 +4,6 @@ import ClientTag from "./client";
 import ConstTag from "./const";
 import DebugTag from "./debug";
 import DefineTag from "./define";
-import DoTag from "./do";
 import EffectTag from "./effect";
 import ExportTag from "./export";
 import ForTag from "./for";
@@ -34,7 +33,6 @@ export default {
   "<const>": ConstTag,
   "<define>": DefineTag,
   "<effect>": EffectTag,
-  "<do>": DoTag,
   "<log>": LogTag,
   "<debug>": DebugTag,
   "<lifecycle>": LifecycleTag,

@@ -1,5 +1,0 @@
-
-    at packages/translator-tags/src/__tests__/fixtures/error-do-args/template.marko:1:5
-    > 1 | <do(x)=(() => {})/>
-        |     ^ Tag does not support arguments.
-      2 |

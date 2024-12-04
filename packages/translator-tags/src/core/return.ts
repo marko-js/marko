@@ -111,6 +111,9 @@ export default {
       },
     },
   }),
+  parseOptions: {
+    openTagOnly: true,
+  },
   autocomplete: [
     {
       displayText: "return=<value>",
