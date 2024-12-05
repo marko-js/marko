@@ -1,5 +1,15 @@
 # Change Log
 
+## 5.36.3
+
+### Patch Changes
+
+- [#2395](https://github.com/marko-js/marko/pull/2395) [`00cc3fb`](https://github.com/marko-js/marko/commit/00cc3fbe934d96a644175cc86cd72221131a884d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where lasso manifest file paths were not being provided correctly for lasso-marko.
+
+- Updated dependencies [[`00cc3fb`](https://github.com/marko-js/marko/commit/00cc3fbe934d96a644175cc86cd72221131a884d)]:
+  - @marko/translator-default@6.1.2
+  - @marko/compiler@5.38.3
+
 ## 5.36.2
 
 ### Patch Changes
