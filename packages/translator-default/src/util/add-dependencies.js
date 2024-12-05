@@ -8,6 +8,7 @@ import MagicString from "magic-string";
 import path from "path";
 import resolveFrom from "resolve-from";
 const kEntryState = Symbol();
+const lassoDepPrefix = "package: ";
 
 export default (entryFile, isHydrate) => {
   const program = entryFile.path;
@@ -52,11 +53,8 @@ export const entryBuilder = {
     const { markoOpts } = entryFile;
     const entryMarkoMeta = entryFile.metadata.marko;
     const { body } = state;
-    entryMarkoMeta.watchFiles = Array.from(state.watchFiles);
-    entryMarkoMeta.deps = Array.from(
-      state.lassoDeps,
-      (dep) => `package: ${dep}`,
-    );
+    entryMarkoMeta.watchFiles = [...state.watchFiles];
+    entryMarkoMeta.deps = [...state.lassoDeps];
 
     if (state.hasComponents) {
       const initId = t.identifier("init");
@@ -211,7 +209,7 @@ function addBrowserImports(seenImports, lassoDeps, body, file, entryFile) {
     } else if (isLassoDep(dep)) {
       if (lassoDeps) {
         lassoDeps.add(
-          resolveRelativeToEntry(entryFile, file, lassoManifestDepToPath(dep)),
+          resolveLassoManifestDepRelativeToEntry(entryFile, file, dep),
         );
       }
       continue;
@@ -305,9 +303,27 @@ function toTestFn(val) {
 }
 
 function isLassoDep(dep) {
-  return dep.startsWith("package: ");
+  return dep.startsWith(lassoDepPrefix);
 }
 
-function lassoManifestDepToPath(dep) {
-  return dep.slice(9);
+/**
+ * Lasso manifest deps in `lasso-marko` do not support node module resolution.
+ * eg `package: @ebay/ebayui-core/browser.json` will not resolve.
+ *
+ * This resolution returns a direct posix relative path.
+ */
+function resolveLassoManifestDepRelativeToEntry(entryFile, targetFile, dep) {
+  const entryFileName = entryFile.opts.filename;
+  const targetFileName = targetFile.opts.filename;
+  if (entryFileName === targetFileName) return dep;
+
+  const resolved = toPosix(
+    path.relative(
+      path.dirname(entryFileName),
+      path.join(targetFileName, "..", dep.slice(lassoDepPrefix.length)),
+    ),
+  );
+  return lassoDepPrefix + (resolved[0] === "." ? resolved : `./${resolved}`);
 }
+
+const toPosix = path.sep === "/" ? (v) => v : (v) => v.replace(/\\/g, "/");
