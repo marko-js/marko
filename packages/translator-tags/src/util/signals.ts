@@ -6,8 +6,10 @@ import { returnId } from "../core/return";
 import {
   cleanIdentifier,
   currentProgramPath,
+  isScopeIdentifier,
   scopeIdentifier,
 } from "../visitors/program";
+import { forEachIdentifier } from "./for-each-identifier";
 import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
 import { isStatefulReferences } from "./is-stateful";
 import { isOutputHTML } from "./marko-config";
@@ -16,7 +18,10 @@ import {
   type Binding,
   BindingType,
   bindingUtil,
+  getReadReplacement,
   getScopeAccessorLiteral,
+  isAssignedBindingExtra,
+  isRegisteredFnExtra,
   type ReferencedBindings,
 } from "./references";
 import { callRuntime } from "./runtime";
@@ -26,9 +31,10 @@ import {
   getSectionForBody,
   type Section,
 } from "./sections";
+import { simplifyFunction } from "./simplify-fn";
 import { createSectionState } from "./state";
 import { toMemberExpression } from "./to-property-name";
-import withPreviousLocation from "./with-previous-location";
+import { traverseContains, traverseReplace } from "./traverse";
 
 export type subscribeBuilder = (subscriber: t.Expression) => t.Expression;
 export type registerScopeBuilder = (scope: t.Expression) => t.Expression;
@@ -54,8 +60,9 @@ export type Signal = {
   }>;
   intersection: Opt<t.Expression>;
   render: t.Statement[];
+  renderReferencedBindings: ReferencedBindings;
   effect: t.Statement[];
-  effectInlineReferences: ReferencedBindings;
+  effectReferencedBindings: ReferencedBindings;
   closures: Map<Section, Signal>;
   hasDownstreamIntersections: () => boolean;
   hasDynamicSubscribers?: true;
@@ -122,8 +129,9 @@ export function getSignal(
         values: [],
         intersection: undefined,
         render: [],
+        renderReferencedBindings: undefined,
         effect: [],
-        effectInlineReferences: undefined,
+        effectReferencedBindings: undefined,
         subscribers: [],
         closures: new Map(),
         hasDownstreamIntersections: () => {
@@ -275,7 +283,7 @@ export function getSignalFn(
           t.callExpression(aliasSignal.identifier, [
             scopeIdentifier,
             valueIdentifier,
-            ...(aliasSignal.extraArgs || []),
+            ...getTranslatedExtraArgs(aliasSignal),
           ]),
         ),
       );
@@ -288,7 +296,7 @@ export function getSignalFn(
           t.callExpression(aliasSignal.identifier, [
             scopeIdentifier,
             toMemberExpression(valueIdentifier, key, binding.nullable),
-            ...(aliasSignal.extraArgs || []),
+            ...getTranslatedExtraArgs(aliasSignal),
           ]),
         ),
       );
@@ -301,7 +309,7 @@ export function getSignalFn(
         t.callExpression(value.signal.identifier, [
           value.scope,
           value.value,
-          ...(value.signal.extraArgs || []),
+          ...getTranslatedExtraArgs(value.signal),
         ]),
       ),
     );
@@ -319,6 +327,21 @@ export function getSignalFn(
   }
 
   return t.arrowFunctionExpression(params, t.blockStatement(signal.render));
+}
+
+const hasTranslatedExtraArgs = new WeakSet<{ extraArgs?: t.Expression[] }>();
+const emptyExtraArgs: never[] = [];
+function getTranslatedExtraArgs(signal: { extraArgs?: t.Expression[] }) {
+  if (signal.extraArgs) {
+    if (!hasTranslatedExtraArgs.has(signal)) {
+      hasTranslatedExtraArgs.add(signal);
+      traverseReplace(signal, "extraArgs", replaceRenderNode);
+    }
+
+    return signal.extraArgs;
+  }
+
+  return emptyExtraArgs;
 }
 
 export function buildSignalIntersections(signal: Signal) {
@@ -443,7 +466,7 @@ export function getDestructureSignal(
                   t.callExpression(signal.identifier, [
                     scopeIdentifier,
                     bindingIdentifiers[i],
-                    ...(signal.extraArgs || []),
+                    ...getTranslatedExtraArgs(signal),
                   ]),
                 ),
               ),
@@ -469,7 +492,7 @@ export function getDestructureSignal(
                 t.callExpression(signal.identifier, [
                   scopeIdentifier,
                   bindingIdentifiers[i],
-                  ...(signal.extraArgs || []),
+                  ...getTranslatedExtraArgs(signal),
                 ]),
               ),
             ),
@@ -537,29 +560,15 @@ export function finalizeSignalArgs(args: t.Expression[]) {
   }
 }
 export function addStatement(
-  type: "effect",
-  targetSection: Section,
-  referencedBindings: ReferencedBindings,
-  statement: t.Statement | t.Statement[],
-  originalNodes?: t.Expression | t.Expression[],
-  isInlined?: boolean,
-): void;
-export function addStatement(
-  type: "render",
-  targetSection: Section,
-  referencedBindings: ReferencedBindings,
-  statement: t.Statement | t.Statement[],
-): void;
-export function addStatement(
   type: "render" | "effect",
   targetSection: Section,
   referencedBindings: ReferencedBindings,
   statement: t.Statement | t.Statement[],
-  originalNodes?: t.Expression | t.Expression[],
-  isInlined?: boolean,
+  usedReferences?: ReferencedBindings[] | false,
 ): void {
   const signal = getSignal(targetSection, referencedBindings);
   const statements = (signal[type] ??= []);
+  const add = type === "effect" ? addEffectReferences : addRenderReferences;
 
   if (Array.isArray(statement)) {
     statements.push(...statement);
@@ -567,17 +576,35 @@ export function addStatement(
     statements.push(statement);
   }
 
-  if (type === "effect") {
-    if (Array.isArray(originalNodes)) {
-      for (const node of originalNodes) {
-        if (isInlined || !t.isFunction(node)) {
-          addEffectReferences(signal, node);
-        }
+  if (usedReferences !== false) {
+    if (usedReferences) {
+      for (const ref of usedReferences) {
+        add(signal, ref);
       }
-    } else if (originalNodes && (isInlined || !t.isFunction(originalNodes))) {
-      addEffectReferences(signal, originalNodes!);
+    } else {
+      add(signal, referencedBindings);
     }
   }
+}
+
+function addEffectReferences(
+  signal: Signal,
+  referencedBindings: ReferencedBindings,
+) {
+  signal.effectReferencedBindings = bindingUtil.union(
+    signal.effectReferencedBindings,
+    referencedBindings,
+  );
+}
+
+function addRenderReferences(
+  signal: Signal,
+  referencedBindings: ReferencedBindings,
+) {
+  signal.renderReferencedBindings = bindingUtil.union(
+    signal.renderReferencedBindings,
+    referencedBindings,
+  );
 }
 
 export function addValue(
@@ -594,13 +621,6 @@ export function addValue(
     scope,
     intersectionExpression,
   });
-}
-
-export function addEffectReferences(signal: Signal, expression: t.Expression) {
-  signal.effectInlineReferences = bindingUtil.union(
-    signal.effectInlineReferences,
-    expression.extra?.referencedBindings,
-  );
 }
 
 export function getResumeRegisterId(
@@ -657,144 +677,24 @@ export function getRegisterUID(section: Section, name: string) {
   return id;
 }
 
-export function renameBindings() {
-  const program = currentProgramPath.node;
-  const { body } = program;
-
-  for (let i = 0; i < body.length; i++) {
-    traverse(body[i], body, i, (node, container, key) => {
-      switch (node.type) {
-        case "Identifier":
-        case "MemberExpression": {
-          const { extra } = node;
-          if (!extra) break;
-          let { binding, read } = extra;
-          let replacement: t.Node | undefined;
-
-          if (
-            (isOutputHTML() && read && !read.binding.declared) ||
-            (binding && !binding.declared)
-          ) {
-            return; // TODO this is probably wrong and should walk up to the closest declared binding.
-          }
-
-          if (read) {
-            if (read.props === undefined) {
-              binding = read.binding;
-              read = undefined;
-            } else {
-              binding = undefined;
-            }
-          }
-
-          if (binding) {
-            if (node.type === "Identifier") {
-              if (binding.name !== node.name) {
-                node.name = binding.name;
-              }
-            } else {
-              replacement = t.identifier(binding.name);
-            }
-          } else if (read) {
-            replacement = toMemberExpression(
-              t.identifier(read.binding.name),
-              Array.isArray(read.props) ? read.props[0] : read.props!,
-            );
-
-            if (Array.isArray(read.props)) {
-              for (let i = 1; i < read.props.length; i++) {
-                replacement = toMemberExpression(replacement, read.props[i]);
-              }
-            }
-          }
-
-          if (replacement) {
-            container[key] = withPreviousLocation(replacement, node);
-          }
-
-          break;
-        }
-      }
-    });
-  }
-}
-
-export function replaceAssignments() {
-  if (currentProgramPath.node.extra.assignments) {
-    for (const [valueSection, assignment] of currentProgramPath.node.extra
-      .assignments) {
-      const { node } = assignment;
-      if (node.type === "UpdateExpression") {
-        const binding = node.argument.extra?.binding;
-        if (binding) {
-          const { buildAssignment } = getSignal(binding.section, binding);
-          if (buildAssignment) {
-            const replacement = buildAssignment(
-              valueSection,
-              t.binaryExpression(
-                node.operator === "++" ? "+" : "-",
-                node.argument,
-                t.numericLiteral(1),
-              ),
-            );
-            assignment.replaceWith(
-              node.prefix || assignment.parentPath.isExpressionStatement()
-                ? replacement
-                : t.sequenceExpression([replacement, node.argument]),
-            );
-          }
-        }
-      } else {
-        if (
-          node.left.type === "ObjectPattern" ||
-          node.left.type === "ArrayPattern"
-        ) {
-          handleDestructure(assignment, node.left, valueSection);
-        } else if (node.left.type === "Identifier") {
-          const binding = node.left.extra?.binding;
-          if (binding) {
-            const { buildAssignment } = getSignal(binding.section, binding);
-            if (buildAssignment) {
-              const replacement = buildAssignment(
-                valueSection,
-                node.operator === "="
-                  ? node.right
-                  : t.binaryExpression(
-                      node.operator.slice(
-                        0,
-                        -1,
-                      ) as t.BinaryExpression["operator"],
-                      node.left as t.Identifier,
-                      node.right,
-                    ),
-              );
-              assignment.replaceWith(replacement);
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
 export function writeSignals(section: Section) {
   const signals = [...getSignals(section).values()].sort(sortSignals);
   for (const signal of signals) {
-    let effectDeclarator;
+    traverseReplace(signal, "render", replaceRenderNode);
+
+    for (const value of signal.values) {
+      traverseReplace(value, "value", replaceRenderNode);
+    }
+
+    let effectDeclarator: t.VariableDeclarator | undefined;
     if (signal.effect.length) {
+      traverseReplace(signal, "effect", replaceEffectNode);
       const effectIdentifier = t.identifier(`${signal.identifier.name}_effect`);
-
-      if (signal.effectInlineReferences) {
-        signal.effect.unshift(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              createScopeReadPattern(section, signal.effectInlineReferences),
-              scopeIdentifier,
-            ),
-          ]),
-        );
-      }
-
+      const referencedBindings = signal.effectReferencedBindings;
+      const referencesScope = traverseContains(
+        signal.effect,
+        isScopeIdentifier,
+      );
       effectDeclarator = t.variableDeclarator(
         effectIdentifier,
         callRuntime(
@@ -803,7 +703,16 @@ export function writeSignals(section: Section) {
             getResumeRegisterId(section, signal.referencedBindings),
           ),
           t.arrowFunctionExpression(
-            [scopeIdentifier],
+            referencedBindings
+              ? referencesScope
+                ? [
+                    scopeIdentifier,
+                    createScopeReadPattern(section, referencedBindings),
+                  ]
+                : [createScopeReadPattern(section, referencedBindings)]
+              : referencesScope
+                ? [scopeIdentifier]
+                : [],
             signal.effect.length === 1 &&
               t.isExpressionStatement(signal.effect[0])
               ? signal.effect[0].expression
@@ -863,7 +772,7 @@ export function writeSignals(section: Section) {
     if (signal.export) {
       signalDeclaration = t.exportNamedDeclaration(signalDeclaration);
     }
-    const roots = currentProgramPath.pushContainer(
+    currentProgramPath.pushContainer(
       "body",
       effectDeclarator
         ? [
@@ -872,11 +781,85 @@ export function writeSignals(section: Section) {
           ]
         : signalDeclaration,
     );
+  }
+}
 
-    for (const root of roots) {
-      root.traverse(bindFunctionsVisitor, { root, section });
+export function writeRegisteredFns() {
+  const registeredFns = registeredFnsForProgram.get(currentProgramPath.node);
+  const statements: t.Statement[] = [];
+  if (registeredFns) {
+    for (const registeredFn of registeredFns) {
+      let fn: t.FunctionDeclaration;
+      const params = registeredFn.referencedBindings
+        ? registeredFn.referencesScope
+          ? [
+              scopeIdentifier,
+              t.assignmentPattern(
+                createScopeReadPattern(
+                  registeredFn.section,
+                  registeredFn.referencedBindings,
+                ),
+                scopeIdentifier,
+              ),
+            ]
+          : [
+              createScopeReadPattern(
+                registeredFn.section,
+                registeredFn.referencedBindings,
+              ),
+            ]
+        : registeredFn.referencesScope
+          ? [scopeIdentifier]
+          : undefined;
+      if (params) {
+        fn = t.functionDeclaration(
+          t.identifier(registeredFn.id),
+          params,
+          t.blockStatement(toReturnedFunction(registeredFn.node)),
+        );
+      } else if (
+        registeredFn.node.type === "FunctionDeclaration" &&
+        registeredFn.node.id?.name === registeredFn.id
+      ) {
+        fn = registeredFn.node;
+      } else {
+        fn = t.functionDeclaration(
+          t.identifier(registeredFn.id),
+          registeredFn.node.params as t.FunctionDeclaration["params"],
+          registeredFn.node.body.type === "BlockStatement"
+            ? registeredFn.node.body
+            : t.blockStatement([t.returnStatement(registeredFn.node.body)]),
+          registeredFn.node.generator,
+          registeredFn.node.async,
+        );
+      }
+
+      statements.push(fn);
+    }
+
+    for (const registeredFn of registeredFns) {
+      statements.push(
+        t.expressionStatement(
+          callRuntime(
+            "register",
+            t.stringLiteral(registeredFn.registerId),
+            t.identifier(registeredFn.id),
+          ),
+        ),
+      );
+    }
+
+    for (const stmt of currentProgramPath.pushContainer("body", statements)) {
+      stmt.skip();
     }
   }
+}
+
+function toReturnedFunction(rawFn: t.Function) {
+  const fn = simplifyFunction(rawFn);
+  return fn.type === "FunctionDeclaration"
+    ? [fn, t.returnStatement(fn.id!)]
+    : [t.returnStatement(fn)];
 }
 
 function sortSignals(a: Signal, b: Signal) {
@@ -917,7 +900,7 @@ export function addHTMLEffectCall(
   referencedBindings?: ReferencedBindings,
 ) {
   // TODO: this should not add an undefined statement.
-  addStatement("effect", section, referencedBindings, undefined as any, []);
+  addStatement("effect", section, referencedBindings, undefined as any, false);
 }
 
 export function writeHTMLResumeStatements(
@@ -1035,160 +1018,195 @@ export function writeHTMLResumeStatements(
   }
 }
 
-const bindFunctionsVisitor: t.Visitor<{
-  root: t.NodePath<any>;
-  section: Section;
-}> = {
-  FunctionExpression: { exit: bindFunction },
-  ArrowFunctionExpression: { exit: bindFunction },
-};
-
-function handleDestructure(
-  assignment: t.NodePath,
-  node: t.LVal | t.ObjectProperty | t.ObjectProperty["value"],
-  section: Section,
-  ctx?: {
-    statement: t.NodePath;
-    end: t.NodePath;
-  },
-  replace?: (value: t.Identifier) => void,
-) {
-  if (!ctx) {
-    ctx = {
-      statement: assignment.getStatementParent()!,
-      end: assignment.getStatementParent()!,
-    };
-  }
-
-  switch (node.type) {
-    case "ObjectPattern":
-      for (const prop of node.properties) {
-        handleDestructure(assignment, prop, section, ctx);
-      }
-      break;
-    case "ArrayPattern":
-      for (const i in node.elements) {
-        if (node.elements[i] === null) continue;
-
-        handleDestructure(
-          assignment,
-          node.elements[i]!,
-          section,
-          ctx,
-          (id) => (node.elements[i] = id),
-        );
-      }
-      break;
-    case "RestElement":
-      handleDestructure(
-        assignment,
-        node.argument,
-        section,
-        ctx,
-        (id) => (node.argument = id),
-      );
-      break;
-    case "ObjectProperty":
-      handleDestructure(
-        assignment,
-        node.value,
-        section,
-        ctx,
-        (id) => (node.value = id),
-      );
-      break;
-    case "Identifier":
-      {
-        const binding = node.extra?.binding;
-        if (binding) {
-          const { buildAssignment } = getSignal(binding.section, binding);
-          if (buildAssignment) {
-            const valueId = currentProgramPath.scope.generateUidIdentifier(
-              node.name,
-            );
-
-            ctx.statement.insertBefore(
-              t.variableDeclaration("let", [t.variableDeclarator(valueId)]),
-            );
-            replace?.(valueId);
-            [ctx.end] = ctx.end.insertAfter(
-              t.expressionStatement(buildAssignment(section, valueId)),
-            );
-          }
-        }
-      }
-      break;
-  }
-}
-
-function bindFunction(
-  fn: t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression>,
-  { root, section }: { root: t.NodePath<any>; section: Section },
-) {
-  const { node } = fn;
-  const { extra } = node;
-  if (!extra?.referencedBindingsInFunction) return;
-  const { name, referencedBindingsInFunction } = extra;
-  const fnId = currentProgramPath.scope.generateUidIdentifier(name);
-
-  root
-    .insertBefore(
-      t.variableDeclaration("const", [
-        t.variableDeclarator(
-          fnId,
-          t.arrowFunctionExpression(
-            [scopeIdentifier],
-            referencedBindingsInFunction
-              ? t.blockStatement([
-                  t.variableDeclaration("const", [
-                    t.variableDeclarator(
-                      createScopeReadPattern(
-                        section,
-                        referencedBindingsInFunction,
-                      ),
-                      scopeIdentifier,
-                    ),
-                  ]),
-                  t.returnStatement(node),
-                ])
-              : node,
-          ),
-        ),
-      ]),
-    )[0]
-    .skip();
-
-  fn.replaceWith(t.callExpression(fnId, [scopeIdentifier]))[0].skip();
-}
-
 export function getSetup(section: Section) {
   return getSignals(section).get(undefined)?.identifier;
 }
 
-function traverse<
-  Container extends t.Node | t.Node[],
-  Key extends (string | number) & keyof Container,
-  Node extends Container[Key] & t.Node,
->(
-  node: Node | null | void,
-  container: Container,
-  key: Key,
-  enter: (node: t.Node, container: any, key: string | number) => void,
-): void {
-  if (node) {
-    enter(node, container, key);
-    for (const key of (t as any).VISITOR_KEYS[
-      node.type
-    ] as (keyof typeof node)[]) {
-      const child = node[key];
+function replaceRenderNode(node: t.Node) {
+  return (
+    replaceAssignedNode(node) ||
+    replaceBindingReadNode(node) ||
+    replaceRegisteredFunctionNode(node)
+  );
+}
 
-      if (Array.isArray(child)) {
-        for (let i = 0; i < child.length; i++) {
-          traverse(child[i], child, i, enter);
+function replaceEffectNode(node: t.Node) {
+  return replaceAssignedNode(node) || replaceBindingReadNode(node);
+}
+
+function replaceBindingReadNode(node: t.Node) {
+  switch (node.type) {
+    case "Identifier":
+    case "MemberExpression": {
+      return getReadReplacement(node);
+    }
+  }
+}
+
+function replaceAssignedNode(node: t.Node) {
+  switch (node.type) {
+    case "UpdateExpression": {
+      const { extra } = node.argument;
+      if (isAssignedBindingExtra(extra)) {
+        const { buildAssignment } = getSignal(
+          extra.assignment.section,
+          extra.assignment,
+        );
+        if (buildAssignment) {
+          const replacement = buildAssignment(
+            extra.section,
+            t.binaryExpression(
+              node.operator === "++" ? "+" : "-",
+              node.argument,
+              t.numericLiteral(1),
+            ),
+          );
+
+          if (!node.prefix) {
+            return t.sequenceExpression([replacement, node.argument]);
+          }
+          return replacement;
         }
-      } else {
-        traverse(child as any, node, key as any, enter);
       }
+      break;
+    }
+    case "AssignmentExpression":
+      switch (node.left.type) {
+        case "Identifier": {
+          const { extra } = node.left;
+          if (isAssignedBindingExtra(extra)) {
+            const { buildAssignment } = getSignal(
+              extra.assignment.section,
+              extra.assignment,
+            );
+            if (buildAssignment) {
+              return buildAssignment(
+                extra.section,
+                node.operator === "="
+                  ? node.right
+                  : t.binaryExpression(
+                      node.operator.slice(
+                        0,
+                        -1,
+                      ) as t.BinaryExpression["operator"],
+                      node.left as t.Identifier,
+                      node.right,
+                    ),
+              );
+            }
+          }
+          break;
+        }
+        case "ArrayPattern":
+        case "ObjectPattern": {
+          let params: undefined | t.Identifier[];
+          let assignments: undefined | t.Expression[];
+          forEachIdentifier(node.left, (id) => {
+            const { extra } = id;
+            if (isAssignedBindingExtra(extra)) {
+              const signal = getSignal(
+                extra.assignment.section,
+                extra.assignment,
+              );
+              if (signal?.buildAssignment) {
+                id.name = currentProgramPath.scope.generateUid(id.name);
+                (params ||= []).push(t.identifier(id.name));
+                (assignments ||= []).push(
+                  signal.buildAssignment(extra.section, t.identifier(id.name)),
+                );
+              }
+            }
+          });
+          if (params && assignments) {
+            const resultId = currentProgramPath.scope.generateUid("result");
+            return t.callExpression(
+              t.arrowFunctionExpression(
+                [t.identifier(resultId), ...params],
+                t.sequenceExpression([
+                  t.assignmentExpression(
+                    "=",
+                    node.left,
+                    t.identifier(resultId),
+                  ),
+                  ...assignments,
+                  t.identifier(resultId),
+                ]),
+              ),
+              [node.right],
+            );
+          }
+          break;
+        }
+      }
+      break;
+  }
+}
+
+const registeredFnsForProgram = new WeakMap<
+  t.Program,
+  {
+    id: string;
+    registerId: string;
+    node: t.Function;
+    section: Section;
+    referencesScope: undefined | boolean;
+    referencedBindings: ReferencedBindings;
+  }[]
+>();
+export function replaceRegisteredFunctionNode(node: t.Node) {
+  switch (node.type) {
+    case "ClassMethod": {
+      const replacement = getRegisteredFnExpression(node);
+      return replacement && t.classProperty(node.key, replacement);
+    }
+    case "ClassPrivateMethod": {
+      const replacement = getRegisteredFnExpression(node);
+      return replacement && t.classPrivateProperty(node.key, replacement);
+    }
+    case "ObjectMethod": {
+      const replacement = getRegisteredFnExpression(node);
+      return replacement && t.objectProperty(node.key, replacement);
+    }
+    case "ArrowFunctionExpression":
+    case "FunctionExpression": {
+      return getRegisteredFnExpression(node);
+    }
+    case "FunctionDeclaration": {
+      const replacement = getRegisteredFnExpression(node);
+      if (replacement) {
+        return t.variableDeclaration("const", [
+          t.variableDeclarator(node.id!, replacement),
+        ]);
+      }
+      break;
+    }
+  }
+}
+
+function getRegisteredFnExpression(node: t.Function) {
+  const { extra } = node;
+  if (isRegisteredFnExtra(extra)) {
+    const id = currentProgramPath.scope.generateUid(extra.name);
+    const referencesScope = extra.referencesScope;
+    const referencedBindings = extra.referencedBindingsInFunction;
+    let registedFns = registeredFnsForProgram.get(currentProgramPath.node);
+    if (!registedFns) {
+      registeredFnsForProgram.set(currentProgramPath.node, (registedFns = []));
+    }
+
+    registedFns.push({
+      id,
+      node,
+      registerId: extra.registerId,
+      section: extra.section,
+      referencesScope,
+      referencedBindings,
+    });
+
+    if (referencesScope || referencedBindings) {
+      return t.callExpression(t.identifier(id), [scopeIdentifier]);
+    } else {
+      return t.identifier(id);
     }
   }
 }

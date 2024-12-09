@@ -1,15 +1,8 @@
-// size: 502 (min) 268 (brotli)
-const _count_effect = _$.effect("a0", (_scope) =>
-    _$.on(
-      _scope[0],
-      "click",
-      ((_scope) => {
-        const { 2: count } = _scope;
-        return function () {
-          _count(_scope, count + 1);
-        };
-      })(_scope),
-    ),
+// size: 462 (min) 270 (brotli)
+const _count_effect = _$.effect("a0", (_scope, { 2: count }) =>
+    _$.on(_scope[0], "click", function () {
+      _count(_scope, count + 1);
+    }),
   ),
   _count = _$.state(2, (_scope, count) => {
     _$.data(_scope[1], count), _count_effect(_scope);
@@ -33,17 +26,10 @@ const _setup$tagNameBody = (_scope) => {
     (_scope) => _tagName_input(_scope, () => ({})),
     () => _tagName_input,
   ),
-  _tagName_effect = _$.effect("b1", (_scope) =>
-    _$.on(
-      _scope[1],
-      "click",
-      ((_scope) => {
-        const { 2: tagName } = _scope;
-        return function () {
-          _tagName(_scope, "span" === tagName ? "div" : "span");
-        };
-      })(_scope),
-    ),
+  _tagName_effect = _$.effect("b1", (_scope, { 2: tagName }) =>
+    _$.on(_scope[1], "click", function () {
+      _tagName(_scope, "span" === tagName ? "div" : "span");
+    }),
   ),
   _tagName = _$.state(
     2,

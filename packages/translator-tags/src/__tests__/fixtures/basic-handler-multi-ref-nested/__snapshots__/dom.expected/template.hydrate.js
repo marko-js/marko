@@ -1,23 +1,11 @@
-// size: 226 (min) 150 (brotli)
-const _expr_a_b_effect = _$.effect("a0", (_scope) =>
-    _$.on(
-      _scope[0],
-      "click",
-      ((_scope) => {
-        const { 2: a } = _scope;
-        return function () {
-          _a(
-            _scope,
-            a.map(
-              ((_scope) => {
-                const { 3: b } = _scope;
-                return (a) => b;
-              })(_scope),
-            ),
-          );
-        };
-      })(_scope),
-    ),
+// size: 182 (min) 143 (brotli)
+const _expr_a_b_effect = _$.effect("a0", (_scope, { 2: a, 3: b }) =>
+    _$.on(_scope[0], "click", function () {
+      _a(
+        _scope,
+        a.map((a) => b),
+      );
+    }),
   ),
   _expr_a_b = _$.intersection(2, (_scope) => {
     _expr_a_b_effect(_scope);

@@ -6,7 +6,8 @@
       "$_increment": "r",
       "$_increment2_effect": "a",
       "$_increment2": "m",
-      "$_clickCount": "e"
+      "$_clickCount": "e",
+      "$_increment_effect": "n"
     }
   }
 }

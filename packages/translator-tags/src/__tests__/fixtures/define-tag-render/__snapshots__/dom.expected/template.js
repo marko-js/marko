@@ -1,15 +1,11 @@
 export const _template_ = "<!><!><!>";
 export const _walks_ = /* replace, over(1) */"D%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _onClick = _scope => {
-  const {
-    y
-  } = _scope;
-  return function () {
-    _y$defineBody(_scope, y + 1);
-  };
-};
-const _y$defineBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y", _scope => _$.on(_scope["#button/2"], "click", _onClick(_scope)));
+const _y$defineBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y", (_scope, {
+  y
+}) => _$.on(_scope["#button/2"], "click", function () {
+  _y$defineBody(_scope, y + 1), y;
+}));
 const _y$defineBody = /* @__PURE__ */_$.state("y", (_scope, y) => {
   _$.data(_scope["#text/1"], y);
   _$.data(_scope["#text/3"], y);

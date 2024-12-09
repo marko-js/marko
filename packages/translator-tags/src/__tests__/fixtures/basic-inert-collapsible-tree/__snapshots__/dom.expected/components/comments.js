@@ -31,15 +31,11 @@ const _expr_input_path_i$forBody = /* @__PURE__ */_$.intersection(2, _scope => {
   _id$forBody(_scope, `${input_path || "c"}-${i}`);
 }, () => _id$forBody);
 const _if$forBody = /* @__PURE__ */_$.conditional("#text/4", 0);
-const _onClick = _scope => {
-  const {
-    open
-  } = _scope;
-  return function () {
-    _open$forBody(_scope, !open);
-  };
-};
-const _open$forBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", _scope => _$.on(_scope["#button/2"], "click", _onClick(_scope)));
+const _open$forBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open", (_scope, {
+  open
+}) => _$.on(_scope["#button/2"], "click", function () {
+  _open$forBody(_scope, !open);
+}));
 const _open$forBody = /* @__PURE__ */_$.state("open", (_scope, open) => {
   _$.attr(_scope["#li/0"], "hidden", !open);
   _$.data(_scope["#text/3"], open ? "[-]" : "[+]");

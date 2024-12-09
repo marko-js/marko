@@ -9,17 +9,13 @@ const _expr_Text_x_y = /* @__PURE__ */_$.intersection(3, _scope => {
   } = _scope;
   _inputRenderBody_input(_scope, () => [x, y]);
 }, () => _inputRenderBody_input);
-const _onClick = _scope => {
-  const {
-    x,
-    y
-  } = _scope;
-  return function () {
-    _x(_scope, x + 1);
-    _y(_scope, y + 1);
-  };
-};
-const _expr_x_y_effect = _$.effect("packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _expr_x_y_effect = _$.effect("packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y", (_scope, {
+  x,
+  y
+}) => _$.on(_scope["#button/0"], "click", function () {
+  _x(_scope, x + 1), x;
+  _y(_scope, y + 1), y;
+}));
 const _expr_x_y = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     x,

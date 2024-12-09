@@ -1,4 +1,4 @@
-// size: 298 (min) 210 (brotli)
+// size: 278 (min) 197 (brotli)
 const _xBody = _$.register(
     "a0",
     _$.createRendererWithOwner("Body Content", ""),
@@ -9,17 +9,10 @@ const _xBody = _$.register(
     (_scope) => _x_input(_scope, () => ({})),
     () => _x_input,
   ),
-  _x_effect = _$.effect("a1", (_scope) =>
-    _$.on(
-      _scope[1],
-      "click",
-      ((_scope) => {
-        const { 2: x } = _scope;
-        return function () {
-          _x(_scope, x ? null : "div");
-        };
-      })(_scope),
-    ),
+  _x_effect = _$.effect("a1", (_scope, { 2: x }) =>
+    _$.on(_scope[1], "click", function () {
+      _x(_scope, x ? null : "div");
+    }),
   ),
   _x = _$.state(
     2,

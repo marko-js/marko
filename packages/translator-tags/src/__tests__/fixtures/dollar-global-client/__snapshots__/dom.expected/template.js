@@ -11,15 +11,11 @@ const _setup$ifBody = _scope => {
 const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", _setup$ifBody));
 const _if2 = /* @__PURE__ */_$.conditional("#text/1", 0);
 const _if = /* @__PURE__ */_$.conditional("#text/0", 0);
-const _onClick = _scope => {
-  const {
-    show
-  } = _scope;
-  return function () {
-    _show(_scope, !show);
-  };
-};
-const _show_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show", _scope => _$.on(_scope["#button/2"], "click", _onClick(_scope)));
+const _show_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show", (_scope, {
+  show
+}) => _$.on(_scope["#button/2"], "click", function () {
+  _show(_scope, !show);
+}));
 const _show = /* @__PURE__ */_$.state("show", (_scope, show) => {
   _show_effect(_scope);
   _if(_scope, show ? _ifBody : null);

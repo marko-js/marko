@@ -3,10 +3,10 @@ function createWrapper(a) {
     a
   };
 }
+_$.register(createWrapper, "packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0/createWrapper");
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
-  _$.register(createWrapper, "packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0/createWrapper");
   const count = 0;
   const {
     a,

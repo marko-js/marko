@@ -1,4 +1,4 @@
-// size: 520 (min) 291 (brotli)
+// size: 500 (min) 293 (brotli)
 const _inputRenderBody_input = _$.dynamicTagAttrs(2),
   _expr_Text_input_name_x = _$.intersection(
     3,
@@ -8,17 +8,10 @@ const _inputRenderBody_input = _$.dynamicTagAttrs(2),
     },
     () => _inputRenderBody_input,
   ),
-  _x_effect = _$.effect("a0", (_scope) =>
-    _$.on(
-      _scope[0],
-      "click",
-      ((_scope) => {
-        const { 7: x } = _scope;
-        return function () {
-          _x(_scope, x + 1);
-        };
-      })(_scope),
-    ),
+  _x_effect = _$.effect("a0", (_scope, { 7: x }) =>
+    _$.on(_scope[0], "click", function () {
+      _x(_scope, x + 1);
+    }),
   ),
   _x = _$.state(
     7,

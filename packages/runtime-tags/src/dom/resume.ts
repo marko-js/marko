@@ -176,7 +176,8 @@ class Render implements RenderData {
           } else if (i === len || typeof resumes[i] !== "string") {
             delete this.___renders[this.___renderId];
           } else {
-            (registeredValues[resumes[i++] as string] as RegisteredFn)(
+            (registeredValues[resumes[i++] as string] as any)(
+              scopeLookup[resumeData],
               scopeLookup[resumeData],
             );
           }

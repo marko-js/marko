@@ -6,15 +6,11 @@ const _tagName_input = _$.dynamicTagAttrs("#text/1");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/1", _scope => _tagName_input(_scope, () => ({
   id: "dynamic"
 })), () => _tagName_input);
-const _onClick = _scope => {
-  const {
-    tagName
-  } = _scope;
-  return function () {
-    _tagName(_scope, tagName === child ? "div" : child);
-  };
-};
-const _tagName_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _tagName_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName", (_scope, {
+  tagName
+}) => _$.on(_scope["#button/0"], "click", function () {
+  _tagName(_scope, tagName === child ? "div" : child);
+}));
 const _tagName = /* @__PURE__ */_$.state("tagName", (_scope, tagName) => {
   _tagName_effect(_scope);
   _dynamicTagName(_scope, tagName);

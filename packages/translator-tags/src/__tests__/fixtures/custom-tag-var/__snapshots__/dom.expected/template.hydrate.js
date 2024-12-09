@@ -1,15 +1,8 @@
-// size: 250 (min) 155 (brotli)
-const _x_effect = _$.effect("a0", (_scope) =>
-    _$.on(
-      _scope[0],
-      "click",
-      ((_scope) => {
-        const { 2: x } = _scope;
-        return function () {
-          _x(_scope, x + 1);
-        };
-      })(_scope),
-    ),
+// size: 230 (min) 152 (brotli)
+const _x_effect = _$.effect("a0", (_scope, { 2: x }) =>
+    _$.on(_scope[0], "click", function () {
+      _x(_scope, x + 1);
+    }),
   ),
   _x = _$.state(
     2,

@@ -13,15 +13,11 @@ const _expr_Text_className = /* @__PURE__ */_$.intersection(2, _scope => {
 }, () => _tagName_input);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", 0, () => _expr_Text_className);
 const _className = /* @__PURE__ */_$.state("className", 0, () => _expr_Text_className);
-const _onClick = _scope => {
-  const {
-    tagName
-  } = _scope;
-  return function () {
-    _tagName(_scope, tagName === "span" ? "div" : "span");
-  };
-};
-const _tagName_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName", _scope => _$.on(_scope["#button/1"], "click", _onClick(_scope)));
+const _tagName_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/dynamic-native-dynamic-tag/template.marko_0_tagName", (_scope, {
+  tagName
+}) => _$.on(_scope["#button/1"], "click", function () {
+  _tagName(_scope, tagName === "span" ? "div" : "span");
+}));
 const _tagName = /* @__PURE__ */_$.state("tagName", (_scope, tagName) => {
   _tagName_effect(_scope);
   _dynamicTagName(_scope, tagName || _tagNameBody(_scope));

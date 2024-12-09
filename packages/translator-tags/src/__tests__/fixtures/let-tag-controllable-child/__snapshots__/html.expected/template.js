@@ -1,12 +1,12 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./components/child.marko";
+import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   const source = 1;
   const _childScope = _$.peekNextScope();
   _child({
     value: source,
-    valueChange: _$.register(function (_new_source) {
+    valueChange: _$.register(_new_source => {
       source = _new_source;
     }, "packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/template.marko_0/valueChange", _scope0_id)
   });

@@ -1,35 +1,14 @@
-// size: 319 (min) 138 (brotli)
-const _count_effect = _$.effect("a0", (_scope) => {
-    _$.on(
-      _scope[0],
-      "click",
-      ((_scope) => {
-        const { 6: count } = _scope;
-        return function () {
-          _count(_scope, count + 2);
-        };
-      })(_scope),
-    ),
-      _$.on(
-        _scope[2],
-        "click",
-        ((_scope) => {
-          const { 6: count } = _scope;
-          return function () {
-            _count(_scope, 3 * count);
-          };
-        })(_scope),
-      ),
-      _$.on(
-        _scope[4],
-        "click",
-        ((_scope) => {
-          const { 6: count } = _scope;
-          return function () {
-            _count(_scope, count ** 3);
-          };
-        })(_scope),
-      );
+// size: 243 (min) 126 (brotli)
+const _count_effect = _$.effect("a0", (_scope, { 6: count }) => {
+    _$.on(_scope[0], "click", function () {
+      _count(_scope, count + 2);
+    }),
+      _$.on(_scope[2], "click", function () {
+        _count(_scope, 3 * count);
+      }),
+      _$.on(_scope[4], "click", function () {
+        _count(_scope, count ** 3);
+      });
   }),
   _count = _$.state(6, (_scope, count) => {
     _$.data(_scope[1], count),

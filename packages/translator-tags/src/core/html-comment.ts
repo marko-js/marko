@@ -215,7 +215,6 @@ export default {
     tag.remove();
   },
   parseOptions: {
-    // TODO: fix the types for Tag or parseOptions or something
     text: true,
   },
   attributes: {},

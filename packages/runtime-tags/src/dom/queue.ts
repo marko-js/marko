@@ -72,8 +72,8 @@ export function prepareEffects(fn: () => void): unknown[] {
 export function runEffects(effects: unknown[] = pendingEffects) {
   for (let i = 0; i < effects.length; i += PendingEffectOffset.Total) {
     const scope = effects[i] as Scope;
-    const fn = effects[i + 1] as (scope: Scope) => void;
-    fn(scope);
+    const fn = effects[i + 1] as (a: Scope, b: Scope) => void;
+    fn(scope, scope);
   }
 }
 

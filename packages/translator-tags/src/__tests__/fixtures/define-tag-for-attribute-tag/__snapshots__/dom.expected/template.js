@@ -4,15 +4,11 @@ import { _setup_ as _child, _input_thing_ as _child_input_thing, _template_ as _
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _defineBody = _$.register("packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<span>The thing</span>", ""));
 const _myThing = /* @__PURE__ */_$.value("myThing", (_scope, myThing) => _child_input_thing(_scope["#childScope/0"], myThing), () => _$.inChild("#childScope/0", _child_input_thing));
-const _onClick = _scope => {
-  const {
-    selected
-  } = _scope;
-  return function () {
-    _selected(_scope, !selected);
-  };
-};
-const _selected_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_0_selected", _scope => _$.on(_scope["#button/1"], "click", _onClick(_scope)));
+const _selected_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_0_selected", (_scope, {
+  selected
+}) => _$.on(_scope["#button/1"], "click", function () {
+  _selected(_scope, !selected);
+}));
 const _selected = /* @__PURE__ */_$.state("selected", (_scope, selected) => {
   _selected_effect(_scope);
   _myThing(_scope, {

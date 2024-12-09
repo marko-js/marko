@@ -1,4 +1,4 @@
-// size: 399 (min) 215 (brotli)
+// size: 379 (min) 205 (brotli)
 const _setup$ifBody2 = (_scope) => {
     _$.data(_scope[0], _scope.$global.x);
   },
@@ -15,17 +15,10 @@ const _setup$ifBody2 = (_scope) => {
   ),
   _if2 = _$.conditional(1, 0),
   _if = _$.conditional(0, 0),
-  _show_effect = _$.effect("a2", (_scope) =>
-    _$.on(
-      _scope[2],
-      "click",
-      ((_scope) => {
-        const { 3: show } = _scope;
-        return function () {
-          _show(_scope, !show);
-        };
-      })(_scope),
-    ),
+  _show_effect = _$.effect("a2", (_scope, { 3: show }) =>
+    _$.on(_scope[2], "click", function () {
+      _show(_scope, !show);
+    }),
   ),
   _show = _$.state(3, (_scope, show) => {
     _show_effect(_scope),
