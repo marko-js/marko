@@ -828,7 +828,7 @@ export function writeSignals(section: Section) {
       value = callRuntime(
         "registerBoundSignal",
         t.stringLiteral(
-          getResumeRegisterId(section, signal.referencedBindings),
+          getResumeRegisterId(section, signal.referencedBindings, "var"),
         ),
         value,
       );

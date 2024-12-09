@@ -181,6 +181,7 @@ export default {
                 getResumeRegisterId(
                   section,
                   (node.var as t.Identifier).extra?.binding, // TODO: node.var is not always an identifier.
+                  "var",
                 ),
               ),
               getScopeIdIdentifier(section),

@@ -238,6 +238,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
             getResumeRegisterId(
               section,
               (node.var as t.Identifier).extra?.binding, // TODO: node.var is not always an identifier.
+              "var",
             ),
           ),
           getScopeIdIdentifier(section),
