@@ -11,7 +11,7 @@ const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => {
   _$.setTagVar(_scope, "#text/0!", _count);
   _getCounter_input(_scope, () => ({}));
 }, () => _getCounter_input);
-const _count = _$.registerBoundSignal("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-var-assignment/template.marko_0_count", (_scope, count) => {});
+const _count = _$.registerBoundSignal("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-var-assignment/template.marko_0_count/var", (_scope, count) => {});
 const _setup__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-var-assignment/template.marko_0", _scope => _$.on(_scope["#button/1"], "click", function () {
   _$.tagVarSignalChange(_scope["#text/0!"], 0);
 }));

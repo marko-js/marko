@@ -11,7 +11,7 @@ const _expr_Text_x = /* @__PURE__ */_$.intersection(2, _scope => {
   _tags0_input(_scope, () => x);
 }, () => _tags0_input);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", _scope => _$.setTagVar(_scope, "#text/2!", _y), () => _expr_Text_x);
-const _y = _$.registerBoundSignal("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args-tag-var/template.marko_0_y", /* @__PURE__ */_$.value("y", (_scope, y) => _$.data(_scope["#text/3"], y)));
+const _y = _$.registerBoundSignal("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args-tag-var/template.marko_0_y/var", /* @__PURE__ */_$.value("y", (_scope, y) => _$.data(_scope["#text/3"], y)));
 const _onClick = _scope => {
   const {
     x
