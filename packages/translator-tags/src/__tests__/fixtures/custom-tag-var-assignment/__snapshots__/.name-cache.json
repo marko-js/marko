@@ -4,7 +4,8 @@
       "$_$": "t",
       "$init": "a",
       "$_x_effect": "n",
-      "$_x": "r"
+      "$_x": "r",
+      "$_count_effect": "i"
     }
   }
 }

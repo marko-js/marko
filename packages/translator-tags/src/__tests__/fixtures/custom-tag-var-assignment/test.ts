@@ -1,5 +1,9 @@
-const increment = (container: Element) => {
-  container.querySelector<HTMLButtonElement>("button.inc")!.click();
+const increment_child = (container: Element) => {
+  container.querySelector<HTMLButtonElement>("button.inc-child")!.click();
+};
+
+const increment_parent = (container: Element) => {
+  container.querySelector<HTMLButtonElement>("button.inc-parent")!.click();
 };
 
 const reset = (container: Element) => {
@@ -7,4 +11,4 @@ const reset = (container: Element) => {
 };
 
 
-export const steps = [{}, increment, increment, reset, increment];
+export const steps = [{}, increment_child, increment_parent, reset];
