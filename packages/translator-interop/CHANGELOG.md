@@ -1,5 +1,14 @@
 # @marko/translator-interop-class-tags
 
+## 0.1.35
+
+### Patch Changes
+
+- [#2397](https://github.com/marko-js/marko/pull/2397) [`95e6e3f`](https://github.com/marko-js/marko/commit/95e6e3f8ae045b753c7a4bad29b652525432ece5) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix controllable components on resume
+
+- Updated dependencies [[`95e6e3f`](https://github.com/marko-js/marko/commit/95e6e3f8ae045b753c7a4bad29b652525432ece5)]:
+  - @marko/translator-tags@0.4.6
+
 ## 0.1.34
 
 ### Patch Changes

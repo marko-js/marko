@@ -1,5 +1,11 @@
 # @marko/translator-tags
 
+## 0.4.6
+
+### Patch Changes
+
+- [#2397](https://github.com/marko-js/marko/pull/2397) [`95e6e3f`](https://github.com/marko-js/marko/commit/95e6e3f8ae045b753c7a4bad29b652525432ece5) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix controllable components on resume
+
 ## 0.4.5
 
 ### Patch Changes
