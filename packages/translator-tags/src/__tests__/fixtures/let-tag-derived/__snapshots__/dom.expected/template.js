@@ -2,13 +2,9 @@ export const _template_ = "<button>Increment</button><!> <!>";
 export const _walks_ = /* get, over(1), replace, over(2), replace, over(1) */" b%c%b";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _onClick = _scope => {
-  const {
-    b
-  } = _scope;
-  return () => (_b(_scope, b + 1), b);
-};
-const _b_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko_0_b", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _b_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko_0_b", (_scope, {
+  b
+}) => _$.on(_scope["#button/0"], "click", () => (_b(_scope, b + 1), b)));
 const _b = /* @__PURE__ */_$.state("b", (_scope, b) => {
   _$.data(_scope["#text/2"], b);
   _b_effect(_scope);

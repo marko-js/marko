@@ -1,4 +1,4 @@
-// size: 581 (min) 314 (brotli)
+// size: 583 (min) 311 (brotli)
 const _renderBody_input = _$.dynamicTagAttrs(1),
   _dynamicTagName = _$.conditional(
     1,
@@ -21,12 +21,6 @@ const _renderBody_input = _$.dynamicTagAttrs(1),
     },
     () => _renderBody_,
   ),
-  _onClick = _$.register("b0", (_scope) => {
-    const { 1: clickCount } = _scope;
-    return function () {
-      _clickCount(_scope, clickCount + 1);
-    };
-  }),
   _clickCount$FancyButtonBody = _$.registerSubscriber(
     "b1",
     _$.dynamicClosure(1, (_scope, clickCount) =>
@@ -48,4 +42,9 @@ const _renderBody_input = _$.dynamicTagAttrs(1),
       }),
     () => _$.intersections([_$.inChild(0, _input_), _$.dynamicSubscribers(1)]),
   );
-init();
+function _onClick(_scope, { 1: clickCount } = _scope) {
+  return function () {
+    _clickCount(_scope, clickCount + 1);
+  };
+}
+_$.register("b0", _onClick), init();

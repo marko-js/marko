@@ -1,4 +1,4 @@
-// size: 751 (min) 369 (brotli)
+// size: 731 (min) 364 (brotli)
 const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
   _expr_outer_inner$forBody = _$.intersection(
     2,
@@ -55,17 +55,10 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
     ),
   ),
   _for = _$.loopOf(1, _forBody),
-  _items_effect = _$.effect("b2", (_scope) =>
-    _$.on(
-      _scope[0],
-      "click",
-      ((_scope) => {
-        const { 2: items } = _scope;
-        return function () {
-          _items(_scope, [...items, items.length]);
-        };
-      })(_scope),
-    ),
+  _items_effect = _$.effect("b2", (_scope, { 2: items }) =>
+    _$.on(_scope[0], "click", function () {
+      _items(_scope, [...items, items.length]);
+    }),
   ),
   _items = _$.state(
     2,

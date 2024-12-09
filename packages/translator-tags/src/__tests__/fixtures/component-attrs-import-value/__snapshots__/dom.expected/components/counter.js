@@ -8,15 +8,11 @@ const _expr_input_count = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _$.data(_scope["#text/1"], input.format(count));
 });
-const _onClick = _scope => {
-  const {
-    count
-  } = _scope;
-  return function () {
-    _count(_scope, count + 1);
-  };
-};
-const _count_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/component-attrs-import-value/components/counter.marko_0_count", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _count_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/component-attrs-import-value/components/counter.marko_0_count", (_scope, {
+  count
+}) => _$.on(_scope["#button/0"], "click", function () {
+  _count(_scope, count + 1), count;
+}));
 const _count = /* @__PURE__ */_$.state("count", (_scope, count) => _count_effect(_scope), () => _expr_input_count);
 export const _input_ = /* @__PURE__ */_$.value("input", 0, () => _expr_input_count);
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);

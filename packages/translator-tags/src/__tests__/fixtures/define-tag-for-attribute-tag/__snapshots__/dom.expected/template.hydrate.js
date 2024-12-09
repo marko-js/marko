@@ -1,4 +1,4 @@
-// size: 528 (min) 305 (brotli)
+// size: 508 (min) 275 (brotli)
 const _inputThingRenderBody_input = _$.dynamicTagAttrs(1),
   _dynamicTagName = _$.conditional(
     1,
@@ -31,17 +31,10 @@ const _inputThingRenderBody_input = _$.dynamicTagAttrs(1),
     (_scope, myThing) => _input_thing_(_scope[0], myThing),
     () => _$.inChild(0, _input_thing_),
   ),
-  _selected_effect = _$.effect("b1", (_scope) =>
-    _$.on(
-      _scope[1],
-      "click",
-      ((_scope) => {
-        const { 2: selected } = _scope;
-        return function () {
-          _selected(_scope, !selected);
-        };
-      })(_scope),
-    ),
+  _selected_effect = _$.effect("b1", (_scope, { 2: selected }) =>
+    _$.on(_scope[1], "click", function () {
+      _selected(_scope, !selected);
+    }),
   ),
   _selected = _$.state(
     2,

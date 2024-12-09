@@ -11,15 +11,11 @@ const _expr_selected_num$forBody = /* @__PURE__ */_$.intersection(2, _scope => {
   _$.attr(_scope["#button/0"], "data-selected", selected === num);
   _$.attr(_scope["#button/0"], "data-multiple", num % selected === 0);
 });
-const _onClick = _scope => {
-  const {
-    num
-  } = _scope;
-  return function () {
-    _selected(_scope._, num);
-  };
-};
-const _num$forBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _num$forBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num", (_scope, {
+  num
+}) => _$.on(_scope["#button/0"], "click", function () {
+  _selected(_scope._, num);
+}));
 const _num$forBody = /* @__PURE__ */_$.value("num", (_scope, num) => {
   _$.data(_scope["#text/1"], num);
   _num$forBody_effect(_scope);

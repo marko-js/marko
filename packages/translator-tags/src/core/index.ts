@@ -8,13 +8,14 @@ import EffectTag from "./effect";
 import ExportTag from "./export";
 import ForTag from "./for";
 import HTMLCommentTag from "./html-comment";
+import HTMLScriptTag from "./html-script";
+import HTMLStyleTag from "./html-style";
 import IdTag from "./id";
 import { ElseIfTag, ElseTag, IfTag } from "./if";
 import ImportTag from "./import";
 import LetTag from "./let";
 import LifecycleTag from "./lifecycle";
 import LogTag from "./log";
-import NoopTag from "./noop";
 import ReturnTag from "./return";
 import ServerTag from "./server";
 import StaticTag from "./static";
@@ -22,28 +23,27 @@ import StyleTag from "./style";
 
 export default {
   taglibId,
-  "<import>": ImportTag,
-  "<export>": ExportTag,
   "<attrs>": AttrsTag,
-  "<if>": IfTag,
-  "<else-if>": ElseIfTag,
-  "<else>": ElseTag,
-  "<for>": ForTag,
-  "<let>": LetTag,
+  "<client>": ClientTag,
   "<const>": ConstTag,
+  "<debug>": DebugTag,
   "<define>": DefineTag,
   "<effect>": EffectTag,
-  "<log>": LogTag,
-  "<debug>": DebugTag,
-  "<lifecycle>": LifecycleTag,
-  "<id>": IdTag,
+  "<else-if>": ElseIfTag,
+  "<else>": ElseTag,
+  "<export>": ExportTag,
+  "<for>": ForTag,
   "<html-comment>": HTMLCommentTag,
+  "<html-script>": HTMLScriptTag,
+  "<html-style>": HTMLStyleTag,
+  "<id>": IdTag,
+  "<if>": IfTag,
+  "<import>": ImportTag,
+  "<let>": LetTag,
+  "<lifecycle>": LifecycleTag,
+  "<log>": LogTag,
   "<return>": ReturnTag,
-  "<style>": StyleTag,
-  "<await-reorderer>": NoopTag,
-  "<init-widgets>": NoopTag,
-  "<init-components>": NoopTag,
-  "<static>": StaticTag,
   "<server>": ServerTag,
-  "<client>": ClientTag,
+  "<static>": StaticTag,
+  "<style>": StyleTag,
 };

@@ -76,8 +76,6 @@ export default {
           referencedBindings,
           inlineBody ||
             t.expressionStatement(t.callExpression(value, [scopeIdentifier])),
-          value,
-          !!inlineBody,
         );
       } else {
         addHTMLEffectCall(section, referencedBindings);

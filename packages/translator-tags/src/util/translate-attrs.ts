@@ -15,7 +15,7 @@ import {
 import { callRuntime } from "./runtime";
 import { getScopeIdIdentifier, getSection } from "./sections";
 import { getResumeRegisterId } from "./signals";
-import { toPropertyName } from "./to-property-name";
+import { toObjectProperty } from "./to-property-name";
 
 const renderBodyProps = new WeakSet<t.Node>();
 
@@ -40,8 +40,8 @@ export function translateAttrs(
             ]),
           );
           properties.push(
-            t.objectProperty(
-              toPropertyName(attrTagMeta.name),
+            toObjectProperty(
+              attrTagMeta.name,
               getAttrTagIdentifier(attrTagMeta),
             ),
           );
@@ -84,8 +84,8 @@ export function translateAttrs(
                 );
               } else {
                 properties.push(
-                  t.objectProperty(
-                    toPropertyName(attrTagMeta.name),
+                  toObjectProperty(
+                    attrTagMeta.name,
                     callRuntime(
                       "attrTag",
                       propsToExpression(translatedAttrTag.properties),
@@ -95,8 +95,8 @@ export function translateAttrs(
               }
             } else {
               properties.push(
-                t.objectProperty(
-                  toPropertyName(attrTagMeta.name),
+                toObjectProperty(
+                  attrTagMeta.name,
                   callRuntime(
                     "attrTag",
                     propsToExpression(translatedAttrTag.properties),
@@ -139,7 +139,7 @@ export function translateAttrs(
       properties.push(t.spreadElement(value));
     } else if (!seen.has(attr.name) && usesExport(templateExports, attr.name)) {
       seen.add(attr.name);
-      properties.push(t.objectProperty(toPropertyName(attr.name), value));
+      properties.push(toObjectProperty(attr.name, value));
     }
   }
 

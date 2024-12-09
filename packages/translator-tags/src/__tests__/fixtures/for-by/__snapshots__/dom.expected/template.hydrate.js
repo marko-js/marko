@@ -1,15 +1,8 @@
-// size: 1304 (min) 382 (brotli)
-function getStringBy() {
-  return "id";
-}
-function getFunctionBy() {
-  return _$.register("a2", (item) => item.id);
-}
-function getMissingBy() {}
-_$.register("a3", getMissingBy),
-  _$.register("a1", getFunctionBy),
-  _$.register("a0", getStringBy);
-const _text$forBody5 = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
+// size: 1312 (min) 379 (brotli)
+const getStringBy = _getStringBy,
+  getFunctionBy = _getFunctionBy,
+  getMissingBy = _getMissingBy,
+  _text$forBody5 = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
   _pattern_5$forBody = _$.value(2, (_scope, _pattern_5) =>
     _text$forBody5(_scope, _pattern_5.text),
   ),
@@ -69,24 +62,31 @@ const _text$forBody5 = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
   _for3 = _$.loopOf(2, _forBody3),
   _for2 = _$.loopOf(1, _forBody2),
   _for = _$.loopOf(0, _forBody),
-  _items_effect = _$.effect("a9", (_scope) =>
-    _$.on(
-      _scope[5],
-      "click",
-      ((_scope) => {
-        const { 6: items } = _scope;
-        return function () {
-          _items(_scope, [...items.slice(1), items[0]]);
-        };
-      })(_scope),
-    ),
+  _items_effect = _$.effect("a9", (_scope, { 6: items }) =>
+    _$.on(_scope[5], "click", function () {
+      _items(_scope, [...items.slice(1), items[0]]);
+    }),
   ),
   _items = _$.state(6, (_scope, items) => {
     _items_effect(_scope),
       _for(_scope, [items, "id"]),
       _for2(_scope, [items, (item) => item.id]),
-      _for3(_scope, [items, "id"]),
+      _for3(_scope, [items, getStringBy()]),
       _for4(_scope, [items, getFunctionBy()]),
-      _for5(_scope, [items, void 0]);
+      _for5(_scope, [items, getMissingBy()]);
   });
-init();
+function _getStringBy() {
+  return "id";
+}
+function _anonymous(item) {
+  return item.id;
+}
+function _getFunctionBy() {
+  return _anonymous;
+}
+function _getMissingBy() {}
+_$.register("a0", _getStringBy),
+  _$.register("a2", _anonymous),
+  _$.register("a1", _getFunctionBy),
+  _$.register("a3", _getMissingBy),
+  init();

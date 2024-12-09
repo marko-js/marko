@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.writeScope(_scope0_id, {
     "x": x,
     "/": _tagVar,
-    "@": _$.register(function (_new_x) {
+    "@": _$.register(_new_x => {
       x = _new_x;
     }, "packages/translator-tags/src/__tests__/fixtures/custom-tag-var-assignment/components/counter.marko_0/valueChange", _scope0_id)
   });

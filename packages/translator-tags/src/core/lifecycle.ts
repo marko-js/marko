@@ -95,7 +95,6 @@ export default {
           section,
           referencedBindings,
           translatedAttrs.statements,
-          node.attributes.map((a) => a.value),
         );
       } else {
         addHTMLEffectCall(section, referencedBindings);

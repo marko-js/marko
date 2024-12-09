@@ -48,7 +48,7 @@ import {
 } from "../../util/signals";
 import {
   toMemberExpression,
-  toPropertyName,
+  toObjectProperty,
 } from "../../util/to-property-name";
 import {
   addDynamicAttrTagStatements,
@@ -693,9 +693,7 @@ function writeAttrsToExports(
       seen.add(attr.name);
 
       if (spreadProps) {
-        spreadProps.push(
-          t.objectProperty(toPropertyName(attr.name), attr.value),
-        );
+        spreadProps.push(toObjectProperty(attr.name, attr.value));
         continue;
       }
 

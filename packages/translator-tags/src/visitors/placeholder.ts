@@ -1,4 +1,3 @@
-import { isNativeTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
 import { WalkCode } from "@marko/runtime-tags/common/types";
 
@@ -38,12 +37,7 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-const ESCAPE_TYPES = {
-  script: "escapeScript",
-  style: "escapeStyle",
-} as Record<string, string>;
-
-type HTMLMethod = "escapeScript" | "escapeStyle" | "escapeXML" | "toString";
+type HTMLMethod = "escapeXML" | "toString";
 type DOMMethod = "html" | "data";
 
 export default {
@@ -74,7 +68,7 @@ export default {
       const canWriteHTML = isHTML || (confident && (node.escape || !computed));
       const method = canWriteHTML
         ? node.escape
-          ? ESCAPE_TYPES[getParentTagName(placeholder)] || "escapeXML"
+          ? "escapeXML"
           : "toString"
         : node.escape
           ? "data"
@@ -134,15 +128,6 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.MarkoPlaceholder>;
-
-function getParentTagName({ parentPath }: t.NodePath<t.MarkoPlaceholder>) {
-  return (
-    (parentPath.isMarkoTag() &&
-      isNativeTag(parentPath) &&
-      (parentPath.node.name as t.StringLiteral).value) ||
-    ""
-  );
-}
 
 function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   const placeholderExtra = placeholder.node.extra!;

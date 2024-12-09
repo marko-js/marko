@@ -11,15 +11,11 @@ const _expr_Text_x = /* @__PURE__ */_$.intersection(2, _scope => {
   _tags0_input(_scope, () => [x, 'foo']);
 }, () => _tags0_input);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", 0, () => _expr_Text_x);
-const _onClick = _scope => {
-  const {
-    x
-  } = _scope;
-  return function () {
-    _x(_scope, x + 1);
-  };
-};
-const _x_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/template.marko_0_x", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _x_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/template.marko_0_x", (_scope, {
+  x
+}) => _$.on(_scope["#button/0"], "click", function () {
+  _x(_scope, x + 1), x;
+}));
 const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
   _$.data(_scope["#text/1"], x);
   _x_effect(_scope);

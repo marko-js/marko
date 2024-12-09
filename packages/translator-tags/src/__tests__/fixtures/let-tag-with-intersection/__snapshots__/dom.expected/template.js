@@ -11,13 +11,9 @@ const _expr_y_z = /* @__PURE__ */_$.intersection(2, _scope => {
 const _a = /* @__PURE__ */_$.value("a", (_scope, a) => _$.data(_scope["#text/4"], a));
 const _z = /* @__PURE__ */_$.value("z", (_scope, z) => _$.data(_scope["#text/3"], z), () => _expr_y_z);
 const _y = /* @__PURE__ */_$.value("y", (_scope, y) => _$.data(_scope["#text/2"], y), () => _expr_y_z);
-const _onClick = _scope => {
-  const {
-    x
-  } = _scope;
-  return () => (_x(_scope, x + 1), x);
-};
-const _x_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _x_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-with-intersection/template.marko_0_x", (_scope, {
+  x
+}) => _$.on(_scope["#button/0"], "click", () => (_x(_scope, x + 1), x)));
 const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
   _$.data(_scope["#text/1"], x);
   _x_effect(_scope);

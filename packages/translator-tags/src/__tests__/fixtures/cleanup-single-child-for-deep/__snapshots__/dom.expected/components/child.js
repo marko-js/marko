@@ -2,26 +2,11 @@ export const _template_ = "<div> </div>";
 export const _walks_ = /* next(1), get, out(1) */"D l";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _effect = _scope => {
-  const {
-    name,
-    write
-  } = _scope;
-  return () => {
-    write(`destroyed ${name}`);
-  };
-};
-const _expr_name_write_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/components/child.marko_0_name_write", _scope => {
-  const {
-    name,
-    write
-  } = _scope;
-  // TODO: In SSR this effect will be resumed depth first while CSR will be
-  // queued breadth first so the output will be different. Figure out if we
-  // care and then restore the `write` call below.
-
-  // write(`mounted ${name}`);
-  _$.getAbortSignal(_scope, 0).onabort = _effect(_scope);
+const _expr_name_write_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/components/child.marko_0_name_write", (_scope, {
+  name,
+  write
+}) => _$.getAbortSignal(_scope, 0).onabort = () => {
+  write(`destroyed ${name}`);
 });
 const _expr_name_write = /* @__PURE__ */_$.intersection(2, _scope => {
   const {

@@ -1,4 +1,4 @@
-// size: 974 (min) 487 (brotli)
+// size: 954 (min) 477 (brotli)
 const _expr_comment_comments_id$ifBody = intersection(
     2,
     (_scope) => {
@@ -39,17 +39,10 @@ const _expr_comment_comments_id$ifBody = intersection(
     () => _id$forBody,
   ),
   _if$forBody = conditional(4),
-  _open$forBody_effect = effect("a1", (_scope) =>
-    on(
-      _scope[2],
-      "click",
-      ((_scope) => {
-        const { 11: open } = _scope;
-        return function () {
-          _open$forBody(_scope, !open);
-        };
-      })(_scope),
-    ),
+  _open$forBody_effect = effect("a1", (_scope, { 11: open }) =>
+    on(_scope[2], "click", function () {
+      _open$forBody(_scope, !open);
+    }),
   ),
   _open$forBody = state(11, (_scope, open) => {
     attr(_scope[0], "hidden", !open),

@@ -15,15 +15,11 @@ const _setup$childBody = _scope => {
 };
 const _childBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-nested-params/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$childBody, () => [_y$childBody], () => _params_2$childBody));
 const _y = /* @__PURE__ */_$.state("y", 0, () => _$.dynamicSubscribers("y"));
-const _onClick = _scope => {
-  const {
-    x
-  } = _scope;
-  return function () {
-    _x(_scope, x + 1);
-  };
-};
-const _x_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-nested-params/template.marko_0_x", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _x_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-nested-params/template.marko_0_x", (_scope, {
+  x
+}) => _$.on(_scope["#button/0"], "click", function () {
+  _x(_scope, x + 1), x;
+}));
 const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
   _x_effect(_scope);
   _child_input_value(_scope["#childScope/1"], x);

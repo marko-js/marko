@@ -9,28 +9,20 @@ const _expr_count_multiplier = /* @__PURE__ */_$.intersection(2, _scope => {
   _multipliedCount(_scope, count * multiplier);
 });
 const _multipliedCount = /* @__PURE__ */_$.value("multipliedCount", (_scope, multipliedCount) => _$.data(_scope["#text/3"], multipliedCount));
-const _onClick = _scope => {
-  const {
-    multiplier
-  } = _scope;
-  return function () {
-    _multiplier(_scope, multiplier + 1);
-  };
-};
-const _multiplier_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _multiplier_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_multiplier", (_scope, {
+  multiplier
+}) => _$.on(_scope["#button/0"], "click", function () {
+  _multiplier(_scope, multiplier + 1), multiplier;
+}));
 const _multiplier = /* @__PURE__ */_$.state("multiplier", (_scope, multiplier) => {
   _$.data(_scope["#text/1"], multiplier);
   _multiplier_effect(_scope);
 }, () => _expr_count_multiplier);
-const _onClick2 = _scope => {
-  const {
-    count
-  } = _scope;
-  return function () {
-    _count(_scope, count + 1);
-  };
-};
-const _count_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count", _scope => _$.on(_scope["#button/2"], "click", _onClick2(_scope)));
+const _count_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-counter-multiplier/template.marko_0_count", (_scope, {
+  count
+}) => _$.on(_scope["#button/2"], "click", function () {
+  _count(_scope, count + 1), count;
+}));
 const _count = /* @__PURE__ */_$.state("count", (_scope, count) => _count_effect(_scope), () => _expr_count_multiplier);
 export function _setup_(_scope) {
   _count(_scope, 0);

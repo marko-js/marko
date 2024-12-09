@@ -32,7 +32,11 @@
       "$_for5": "A",
       "$_for4": "B",
       "$_for3": "C",
-      "$_for2": "D"
+      "$_for2": "D",
+      "$_getStringBy": "E",
+      "$_anonymous": "F",
+      "$_getFunctionBy": "G",
+      "$_getMissingBy": "H"
     }
   }
 }

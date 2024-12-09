@@ -1,6 +1,6 @@
-// size: 84 (min) 66 (brotli)
-_$.effect("a0", (_scope) => {
-  const { 0: x } = _scope;
-  document.getElementById("ref").textContent = x;
-}),
+// size: 77 (min) 54 (brotli)
+_$.effect(
+  "a0",
+  (_scope, { 0: x }) => (document.getElementById("ref").textContent = x),
+),
   init();
