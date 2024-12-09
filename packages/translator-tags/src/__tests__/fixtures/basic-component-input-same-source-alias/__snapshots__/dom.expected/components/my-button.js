@@ -9,12 +9,9 @@ export const _text_ = /* @__PURE__ */_$.value("text", (_scope, text) => {
   _$.data(_scope["#text/1"], text);
   _textAlias(_scope, text);
 });
-const _onClick__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias/components/my-button.marko_0_onClick", _scope => {
-  const {
-    onClick
-  } = _scope;
-  _$.on(_scope["#button/0"], "click", onClick);
-});
+const _onClick__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias/components/my-button.marko_0_onClick", (_scope, {
+  onClick
+}) => _$.on(_scope["#button/0"], "click", onClick));
 export const _onClick_ = /* @__PURE__ */_$.value("onClick", (_scope, onClick) => _onClick__effect(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _onClick_(_scope, input.onClick);

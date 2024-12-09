@@ -1,22 +1,8 @@
-// size: 243 (min) 160 (brotli)
-const _valueChange = _$.register(
-    "a0",
-    (_scope) =>
-      function (newValue) {
-        _x(_scope, newValue + 1);
-      },
-  ),
-  _y_effect = _$.effect("a1", (_scope) =>
-    _$.on(
-      _scope[0],
-      "click",
-      ((_scope) => {
-        const { 4: y } = _scope;
-        return function () {
-          _y(_scope, y + 1);
-        };
-      })(_scope),
-    ),
+// size: 239 (min) 154 (brotli)
+const _y_effect = _$.effect("a1", (_scope, { 4: y }) =>
+    _$.on(_scope[0], "click", function () {
+      _y(_scope, y + 1);
+    }),
   ),
   _y = _$.state(4, (_scope, y) => {
     _$.data(_scope[2], y), _y_effect(_scope);
@@ -24,4 +10,9 @@ const _valueChange = _$.register(
   _x = _$.state(3, (_scope, x) => {
     _$.data(_scope[1], x), _y(_scope, x, _valueChange(_scope));
   });
-init();
+function _valueChange(_scope) {
+  return function (newValue) {
+    _x(_scope, newValue + 1);
+  };
+}
+_$.register("a0", _valueChange), init();

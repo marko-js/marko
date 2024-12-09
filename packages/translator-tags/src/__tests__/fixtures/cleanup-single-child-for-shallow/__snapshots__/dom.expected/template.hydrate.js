@@ -1,14 +1,13 @@
-// size: 774 (min) 395 (brotli)
-const _expr_name_write_effect = _$.effect("a0", (_scope) => {
-    const { 3: name, 4: write } = _scope;
-    write(`mounted ${name}`),
-      (_$.getAbortSignal(_scope, 0).onabort = ((_scope) => {
-        const { 3: name, 4: write } = _scope;
-        return () => {
+// size: 727 (min) 383 (brotli)
+const _expr_name_write_effect = _$.effect(
+    "a0",
+    (_scope, { 3: name, 4: write }) => {
+      write(`mounted ${name}`),
+        (_$.getAbortSignal(_scope, 0).onabort = () => {
           write(`destroyed ${name}`);
-        };
-      })(_scope));
-  }),
+        });
+    },
+  ),
   _expr_name_write = _$.intersection(2, (_scope) => {
     _$.resetAbortSignal(_scope, 0), _expr_name_write_effect(_scope);
   }),
@@ -17,15 +16,8 @@ const _expr_name_write_effect = _$.effect("a0", (_scope) => {
     3,
     (_scope, name) => _$.data(_scope[0], name),
     () => _expr_name_write,
-  );
-_$.register(
-  "b0",
-  (_scope) =>
-    function (msg) {
-      _scope[1].innerHTML += "\n" + msg;
-    },
-);
-const _write$forBody = _$.closure(
+  ),
+  _write$forBody = _$.closure(
     4,
     (_scope, write) => _write_(_scope[0], write),
     void 0,
@@ -55,17 +47,10 @@ const _write$forBody = _$.closure(
     ),
   ),
   _for = _$.loopOf(2, _forBody),
-  _items_effect = _$.effect("b2", (_scope) =>
-    _$.on(
-      _scope[0],
-      "click",
-      ((_scope) => {
-        const { 3: items } = _scope;
-        return function () {
-          _items(_scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
-        };
-      })(_scope),
-    ),
+  _items_effect = _$.effect("b2", (_scope, { 3: items }) =>
+    _$.on(_scope[0], "click", function () {
+      _items(_scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
+    }),
   ),
   _items = _$.state(
     3,
@@ -74,4 +59,9 @@ const _write$forBody = _$.closure(
     },
     () => _for,
   );
-init();
+_$.register("b0", function (_scope) {
+  return function (msg) {
+    _scope[1].innerHTML += "\n" + msg;
+  };
+}),
+  init();

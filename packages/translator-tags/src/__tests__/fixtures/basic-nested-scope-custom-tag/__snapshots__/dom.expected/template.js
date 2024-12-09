@@ -2,17 +2,13 @@ export const _template_ = `<!>${_child_template}<!>`;
 export const _walks_ = /* beginChild, _child_walks, endChild */`D/${_child_walks}&D`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _child, _input_renderBody_ as _child_input_renderBody, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
-const _onClick = _scope => {
-  const {
-    _: {
-      count
-    }
-  } = _scope;
-  return function () {
-    _count(_scope._, count + 1);
-  };
-};
-const _count$childBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _count$childBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count", (_scope, {
+  _: {
+    count
+  }
+}) => _$.on(_scope["#button/0"], "click", function () {
+  _count(_scope._, count + 1), count;
+}));
 const _count$childBody = _$.registerSubscriber("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-custom-tag/template.marko_1_count/subscriber", /* @__PURE__ */_$.dynamicClosure("count", (_scope, count) => {
   _$.data(_scope["#text/1"], count);
   _count$childBody_effect(_scope);

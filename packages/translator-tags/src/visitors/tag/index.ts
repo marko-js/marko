@@ -189,8 +189,7 @@ function getChangeHandler(
     const valueId = tag.scope.generateUidIdentifier(
       "new_" + attr.node.value.name,
     );
-    return t.functionExpression(
-      null,
+    return t.arrowFunctionExpression(
       [valueId],
       t.blockStatement([
         t.expressionStatement(

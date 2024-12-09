@@ -67,6 +67,14 @@ export function data(node: Text | Comment, value: unknown) {
   }
 }
 
+export function textContent(node: ParentNode, value: unknown) {
+  const normalizedValue = normalizeString(value);
+  // TODO: benchmark if it is actually faster to check data first
+  if (node.textContent !== normalizedValue) {
+    node.textContent = normalizedValue;
+  }
+}
+
 export function attrs(
   scope: Scope,
   nodeAccessor: Accessor,

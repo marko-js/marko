@@ -1,31 +1,21 @@
 export const _template_ = "<div id=ref></div><button id=increment>Increment</button>";
 export const _walks_ = /* over(1), get, over(1) */"b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _onUpdate = _scope => {
-  const {
-    x
-  } = _scope;
-  return function () {
-    document.getElementById("ref").textContent = `x=${x}, was=${this.cur}`;
-    this.cur = x;
-  };
-};
-const _onClick = _scope => {
-  const {
-    x
-  } = _scope;
-  return function () {
-    _x(_scope, x + 1);
-  };
-};
-const _x_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x", _scope => {
+const _x_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this/template.marko_0_x", (_scope, {
+  x
+}) => {
   _$.lifecycle(_scope, "_lifecycle", {
     onMount: function () {
       this.onUpdate();
     },
-    onUpdate: _onUpdate(_scope)
+    onUpdate: function () {
+      document.getElementById("ref").textContent = `x=${x}, was=${this.cur}`;
+      this.cur = x;
+    }
   });
-  _$.on(_scope["#button/0"], "click", _onClick(_scope));
+  _$.on(_scope["#button/0"], "click", function () {
+    _x(_scope, x + 1), x;
+  });
 });
 const _x = /* @__PURE__ */_$.state("x", (_scope, x) => _x_effect(_scope));
 export function _setup_(_scope) {

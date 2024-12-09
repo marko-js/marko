@@ -16,7 +16,7 @@ interface RenderData {
   r?: (string | number | ((ctx: object) => Record<number | string, Scope>))[];
   w(): void;
 }
-type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
+type RegisteredFn<S extends Scope = Scope> = (a: S, b: S) => void;
 
 const registeredValues: Record<string, unknown> = {};
 
@@ -176,8 +176,10 @@ class Render implements RenderData {
           } else if (i === len || typeof resumes[i] !== "string") {
             delete this.___renders[this.___renderId];
           } else {
+            const scope = scopeLookup[resumeData];
             (registeredValues[resumes[i++] as string] as RegisteredFn)(
-              scopeLookup[resumeData],
+              scope,
+              scope,
             );
           }
         }
@@ -206,7 +208,7 @@ export function registerBoundSignal<T extends ValueSignal>(
 
 export function getRegisteredWithScope(id: string, scope?: Scope) {
   const val = registeredValues[id];
-  return scope ? (val as RegisteredFn)(scope) : val;
+  return scope ? (val as RegisteredFn)(scope, scope) : val;
 }
 
 export function init(runtimeId = DEFAULT_RUNTIME_ID) {

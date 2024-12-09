@@ -13,15 +13,11 @@ const _setup$ifBody = _scope => {
 };
 const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-same-scope/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<div>a</div><span>b</span><p>c</p>", "", _setup$ifBody));
 const _if = /* @__PURE__ */_$.conditional("#text/2", 0);
-const _onClick = _scope => {
-  const {
-    show
-  } = _scope;
-  return function () {
-    _show(_scope, !show);
-  };
-};
-const _show_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-same-scope/template.marko_0_show", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _show_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-same-scope/template.marko_0_show", (_scope, {
+  show
+}) => _$.on(_scope["#button/0"], "click", function () {
+  _show(_scope, !show);
+}));
 const _show = /* @__PURE__ */_$.state("show", (_scope, show) => {
   _show_effect(_scope);
   _if(_scope, show ? _ifBody : null);

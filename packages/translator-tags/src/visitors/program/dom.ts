@@ -14,8 +14,7 @@ import {
   getResumeRegisterId,
   getSignal,
   initValue,
-  renameBindings,
-  replaceAssignments,
+  writeRegisteredFns,
   writeSignals,
 } from "../../util/signals";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -38,8 +37,6 @@ export default {
         paramsBinding && bindingHasDownstreamExpressions(paramsBinding)
           ? initValue(paramsBinding)
           : undefined;
-
-      replaceAssignments();
 
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
@@ -82,8 +79,7 @@ export default {
       const closures = getSectionClosuresExpr(section);
 
       writeSignals(section);
-
-      renameBindings();
+      writeRegisteredFns();
 
       if (!setup) {
         program.node.body.unshift(

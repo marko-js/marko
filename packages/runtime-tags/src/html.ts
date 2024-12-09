@@ -36,6 +36,7 @@ export {
   nextScopeId,
   nextTagId,
   nodeRef,
+  nonceAttr,
   peekNextScope,
   register,
   tryCatch,

@@ -37,6 +37,7 @@ export {
   partialAttrs,
   props,
   styleAttr,
+  textContent,
 } from "./dom/dom";
 export { on } from "./dom/event";
 export { run } from "./dom/queue";

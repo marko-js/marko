@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 
 import { getExprRoot } from "../util/get-root";
 import { isOutputHTML } from "../util/marko-config";
+import { setReferencesScope } from "../util/references";
 import { callRuntime, importRuntime } from "../util/runtime";
 import {
   getScopeIdIdentifier,
@@ -36,6 +37,13 @@ export default {
           );
         }
         break;
+    }
+  },
+  analyze(identifier) {
+    const { name } = identifier.node;
+    if (identifier.scope.hasBinding(name)) return;
+    if (name === "$global" || name === "$signal") {
+      setReferencesScope(identifier);
     }
   },
   translate(identifier) {

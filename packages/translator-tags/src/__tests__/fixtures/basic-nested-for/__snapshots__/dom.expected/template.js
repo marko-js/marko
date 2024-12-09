@@ -24,15 +24,11 @@ const _items$forBody = /* @__PURE__ */_$.closure("items", (_scope, items) => _fo
 const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outer$forBody2(_scope, _params_2[0]), () => _outer$forBody2);
 const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", void 0, () => [_items$forBody], () => _params_2$forBody));
 const _for = /* @__PURE__ */_$.loopOf("#text/1", _forBody);
-const _onClick = _scope => {
-  const {
-    items
-  } = _scope;
-  return function () {
-    _items(_scope, [...items, items.length]);
-  };
-};
-const _items_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_0_items", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _items_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_0_items", (_scope, {
+  items
+}) => _$.on(_scope["#button/0"], "click", function () {
+  _items(_scope, [...items, items.length]);
+}));
 const _items = /* @__PURE__ */_$.state("items", (_scope, items) => {
   _items_effect(_scope);
   _for(_scope, [items]);

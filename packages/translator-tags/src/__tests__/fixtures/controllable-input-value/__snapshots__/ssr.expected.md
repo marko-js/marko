@@ -1,5 +1,5 @@
 # Write
-  <input value=hello type=text><!--M_*0 #input/0--><span>hello<!--M_*0 #text/1--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={"#input/0=":2}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-input-value/template.marko_0/valueChange"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/controllable-input-value/template.marko_0",0];M._.w()</script>
+  <input value=hello type=text><!--M_*0 #input/0--><span>hello<!--M_*0 #text/1--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={"#input/0=":2,value:"hello"}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-input-value/template.marko_0/valueChange"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/controllable-input-value/template.marko_0",0];M._.w()</script>
 
 
 # Render "End"
@@ -17,7 +17,7 @@
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#input/0=":2}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-input-value/template.marko_0/valueChange"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/controllable-input-value/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#input/0=":2,value:"hello"}},_.a["#input/0;"]=_._["packages/translator-tags/src/__tests__/fixtures/controllable-input-value/template.marko_0/valueChange"](_.a),_.b),0,"packages/translator-tags/src/__tests__/fixtures/controllable-input-value/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

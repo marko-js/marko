@@ -2,22 +2,14 @@ export const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>";
 export const _walks_ = /* next(1), replace, out(1), next(1), replace, out(1), next(1), replace, out(1) */"D%lD%lD%l";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _effect = _scope => {
-  const {
-    name,
-    write
-  } = _scope;
-  return () => {
+const _expr_name_write_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/components/child.marko_0_name_write", (_scope, {
+  name,
+  write
+}) => {
+  write(`${name} mounted`);
+  _$.getAbortSignal(_scope, 0).onabort = () => {
     write(`${name} destroyed`);
   };
-};
-const _expr_name_write_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/components/child.marko_0_name_write", _scope => {
-  const {
-    name,
-    write
-  } = _scope;
-  write(`${name} mounted`);
-  _$.getAbortSignal(_scope, 0).onabort = _effect(_scope);
 });
 const _expr_name_write = /* @__PURE__ */_$.intersection(2, _scope => {
   const {

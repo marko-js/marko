@@ -1,17 +1,8 @@
 export const _template_ = "<div><div class=by-string></div><div class=by-function></div><div class=by-unknown-string></div><div class=by-unknown-function></div><div class=by-unknown-missing></div><button>Rotate</button></div>";
 export const _walks_ = /* next(1), get, over(1), get, over(1), get, over(1), get, over(1), get, over(1), get, out(1) */"D b b b b b l";
-_$.register("packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getMissingBy", getMissingBy);
-_$.register("packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getFunctionBy", getFunctionBy);
-_$.register("packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getStringBy", getStringBy);
-function getStringBy() {
-  return "id";
-}
-function getFunctionBy() {
-  return _$.register("packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/anonymous", item => item.id);
-}
-function getMissingBy() {
-  return undefined;
-}
+const getStringBy = _getStringBy;
+const getFunctionBy = _getFunctionBy;
+const getMissingBy = _getMissingBy;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _text$forBody5 = /* @__PURE__ */_$.value("text", (_scope, text) => _$.data(_scope["#text/0"], text));
 const _pattern_5$forBody = /* @__PURE__ */_$.value("_pattern_5", (_scope, _pattern_5) => _text$forBody5(_scope, _pattern_5.text));
@@ -38,15 +29,11 @@ const _for4 = /* @__PURE__ */_$.loopOf("#div/3", _forBody4);
 const _for3 = /* @__PURE__ */_$.loopOf("#div/2", _forBody3);
 const _for2 = /* @__PURE__ */_$.loopOf("#div/1", _forBody2);
 const _for = /* @__PURE__ */_$.loopOf("#div/0", _forBody);
-const _onClick = _scope => {
-  const {
-    items
-  } = _scope;
-  return function () {
-    _items(_scope, [...items.slice(1), items[0]]);
-  };
-};
-const _items_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0_items", _scope => _$.on(_scope["#button/5"], "click", _onClick(_scope)));
+const _items_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0_items", (_scope, {
+  items
+}) => _$.on(_scope["#button/5"], "click", function () {
+  _items(_scope, [...items.slice(1), items[0]]);
+}));
 const _items = /* @__PURE__ */_$.state("items", (_scope, items) => {
   _items_effect(_scope);
   _for(_scope, [items, "id"]);
@@ -67,4 +54,20 @@ export function _setup_(_scope) {
     text: "third"
   }]);
 }
+function _getStringBy() {
+  return "id";
+}
+function _anonymous(item) {
+  return item.id;
+}
+function _getFunctionBy() {
+  return _anonymous;
+}
+function _getMissingBy() {
+  return undefined;
+}
+_$.register("packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getStringBy", _getStringBy);
+_$.register("packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/anonymous", _anonymous);
+_$.register("packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getFunctionBy", _getFunctionBy);
+_$.register("packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getMissingBy", _getMissingBy);
 export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/for-by/template.marko", _template_, _walks_, _setup_);

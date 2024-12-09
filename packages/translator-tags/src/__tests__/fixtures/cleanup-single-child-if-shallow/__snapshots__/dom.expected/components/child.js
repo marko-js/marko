@@ -2,20 +2,13 @@ export const _template_ = "<div>child</div>";
 export const _walks_ = /* over(1) */"b";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _effect = _scope => {
-  const {
-    input
-  } = _scope;
-  return () => {
+const _input__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-shallow/components/child.marko_0_input", (_scope, {
+  input
+}) => {
+  input.write('mounted');
+  _$.getAbortSignal(_scope, 0).onabort = () => {
     input.write('destroyed');
   };
-};
-const _input__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-shallow/components/child.marko_0_input", _scope => {
-  const {
-    input
-  } = _scope;
-  input.write('mounted');
-  _$.getAbortSignal(_scope, 0).onabort = _effect(_scope);
 });
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _$.resetAbortSignal(_scope, 0);

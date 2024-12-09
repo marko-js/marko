@@ -4,6 +4,7 @@ type MarkoExprRootPath = t.NodePath<
   | t.MarkoTagBody
   | t.MarkoAttribute
   | t.MarkoSpreadAttribute
+  | t.MarkoScriptlet
   | t.MarkoPlaceholder
 >;
 

@@ -62,8 +62,9 @@ export interface TagDefinition {
   migrators?: PluginDefinition<t.MarkoTag>[];
   parseOptions?: {
     text?: boolean;
-    openTagOnly?: boolean;
     statement?: boolean;
+    controlFlow?: boolean;
+    openTagOnly?: boolean;
     rawOpenTag?: boolean;
     preserveWhitespace?: boolean;
   };
@@ -136,7 +137,7 @@ export interface Tag {
     controlFlow?: boolean;
     ignoreAttributes?: boolean;
     relaxRequireCommas?: boolean;
-    state?: "html" | "static-text" | "parsed-text" | "cdata";
+    text?: boolean;
   };
 }
 
