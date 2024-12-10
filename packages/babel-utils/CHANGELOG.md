@@ -1,5 +1,11 @@
 # Change Log
 
+## 6.6.2
+
+### Patch Changes
+
+- [#2399](https://github.com/marko-js/marko/pull/2399) [`032afa1`](https://github.com/marko-js/marko/commit/032afa125b19969346639ac99ae9740521d0c3a2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor and improve logic around functon registration, binding renaming, and binding assignments.
+
 ## 6.6.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@marko/babel-utils",
-  "version": "6.6.1",
+  "version": "6.6.2",
   "description": "Utilities for use with Marko babel plugins.",
   "keywords": [
     "htmljs",
