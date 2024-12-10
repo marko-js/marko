@@ -22,6 +22,7 @@ import {
   dropReferences,
   getScopeAccessorLiteral,
   mergeReferences,
+  setReferencesScope,
 } from "../../util/references";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 import {
@@ -39,17 +40,14 @@ import {
   getRegisterUID,
   getSerializedScopeProperties,
 } from "../../util/signals";
-import { toPropertyName } from "../../util/to-property-name";
+import { toObjectProperty } from "../../util/to-property-name";
 import toTemplateOrStringLiteral from "../../util/to-template-string-or-literal";
 import { propsToExpression } from "../../util/translate-attrs";
 import translateVar from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
-import AssignmentExpressionVisitor from "../assignment-expression";
-import FunctionVisitor from "../function";
 import { currentProgramPath, scopeIdentifier } from "../program";
-import UpdateExpressionVisitor from "../update-expression";
 
 export const kNativeTagBinding = Symbol("native tag binding");
 export const kSerializeMarker = Symbol("serialize marker");
@@ -284,6 +282,7 @@ export default {
         if (node.var) {
           for (const ref of tag.scope.getBinding(node.var.name)!
             .referencePaths) {
+            setReferencesScope(ref);
             if (!ref.parentPath?.isCallExpression()) {
               tagExtra[kGetterId] = getRegisterUID(section, bindingName);
               break;
@@ -392,17 +391,8 @@ export default {
 
       if (staticControllable) {
         const { helper, attrs } = staticControllable;
-        const changeAttr = attrs[1];
         const firstAttr = attrs.find(Boolean)!;
         const referencedBindings = firstAttr.value.extra?.referencedBindings;
-
-        if (changeAttr) {
-          tag
-            .get("attributes")
-            .find((it) => it.node === changeAttr)!
-            .traverse(HoistVisitors);
-        }
-
         const values = attrs.map((attr) => attr?.value);
 
         if (isHTML) {
@@ -550,7 +540,6 @@ export default {
                     value,
                   ),
                 ),
-                value,
               );
             } else {
               addStatement(
@@ -620,7 +609,7 @@ export default {
             t.expressionStatement(
               callRuntime("attrsEvents", scopeIdentifier, visitAccessor),
             ),
-            spreadExpression,
+            false,
           );
         }
       }
@@ -738,7 +727,7 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
         if (staticControllable && !staticControllable.attrs.every(Boolean)) {
           for (const attr of staticControllable.attrs) {
             if (attr) {
-              spreadProps.push(attrToObjectProperty(attr));
+              spreadProps.push(toObjectProperty(attr.name, attr.value));
               maybeStaticAttrs.delete(attr);
             }
           }
@@ -750,7 +739,7 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
     } else if (!seen[attr.name]) {
       seen[attr.name] = attr;
       if (spreadProps) {
-        spreadProps.push(attrToObjectProperty(attr));
+        spreadProps.push(toObjectProperty(attr.name, attr.value));
       } else {
         maybeStaticAttrs.add(attr);
       }
@@ -784,16 +773,14 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
       for (const attr of staticControllable.attrs) {
         if (attr) {
           (skipProps ||= []).push(
-            t.objectProperty(toPropertyName(attr.name), t.numericLiteral(1)),
+            toObjectProperty(attr.name, t.numericLiteral(1)),
           );
         }
       }
     }
 
     for (const { name } of staticAttrs) {
-      (skipProps ||= []).push(
-        t.objectProperty(toPropertyName(name), t.numericLiteral(1)),
-      );
+      (skipProps ||= []).push(toObjectProperty(name, t.numericLiteral(1)));
     }
 
     if (skipProps) {
@@ -812,18 +799,8 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
 }
 
 function isChangeHandler(propName: string) {
-  return /^(?:value|checked(?:Values?)?|open)Change/.test(propName);
+  return /^(?:value|checked(?:Value)?|open)Change/.test(propName);
 }
-
-function attrToObjectProperty(attr: t.MarkoAttribute) {
-  return t.objectProperty(toPropertyName(attr.name), attr.value);
-}
-
-const HoistVisitors = {
-  Function: FunctionVisitor.translate,
-  UpdateExpression: UpdateExpressionVisitor.translate,
-  AssignmentExpression: AssignmentExpressionVisitor.translate,
-};
 
 function buildUndefined() {
   return t.unaryExpression("void", t.numericLiteral(0));

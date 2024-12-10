@@ -14,15 +14,11 @@ const _expr_Text_count = /* @__PURE__ */_$.intersection(2, _scope => {
   }));
 }, () => _classCounter_input);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", 0, () => _expr_Text_count);
-const _onClick = _scope => {
-  const {
-    count
-  } = _scope;
-  return function () {
-    _count(_scope, count + 1);
-  };
-};
-const _count_effect = _$.effect("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _count_effect = _$.effect("packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count", (_scope, {
+  count
+}) => _$.on(_scope["#button/0"], "click", function () {
+  _count(_scope, count + 1), count;
+}));
 const _count = /* @__PURE__ */_$.state("count", (_scope, count) => {
   _$.data(_scope["#text/1"], count);
   _count_effect(_scope);

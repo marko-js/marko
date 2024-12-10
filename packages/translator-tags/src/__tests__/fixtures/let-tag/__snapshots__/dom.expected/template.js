@@ -1,14 +1,10 @@
 export const _template_ = "<button> </button><!>";
 export const _walks_ = /* get, next(1), get, out(1), replace, over(1) */" D l%b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _onClick = _scope => {
-  const {
-    x,
-    y
-  } = _scope;
-  return () => _x(_scope, _y(_scope, x + y));
-};
-const _expr_x_y_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag/template.marko_0_x_y", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _expr_x_y_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag/template.marko_0_x_y", (_scope, {
+  x,
+  y
+}) => _$.on(_scope["#button/0"], "click", () => _x(_scope, _y(_scope, x + y))));
 const _expr_x_y = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     x,

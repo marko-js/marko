@@ -1,18 +1,18 @@
 function getStringBy() {
   return "id";
 }
+_$.register(getStringBy, "packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getStringBy");
 function getFunctionBy() {
   return _$.register(item => item.id, "packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/anonymous");
 }
+_$.register(getFunctionBy, "packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getFunctionBy");
 function getMissingBy() {
   return undefined;
 }
+_$.register(getMissingBy, "packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getMissingBy");
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
-  _$.register(getMissingBy, "packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getMissingBy");
-  _$.register(getFunctionBy, "packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getFunctionBy");
-  _$.register(getStringBy, "packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getStringBy");
   const items = [{
     id: 0,
     text: "first"

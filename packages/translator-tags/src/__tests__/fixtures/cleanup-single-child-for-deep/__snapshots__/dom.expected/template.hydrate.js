@@ -1,12 +1,11 @@
-// size: 1265 (min) 527 (brotli)
-const _expr_name_write_effect = _$.effect("a0", (_scope) => {
-    _$.getAbortSignal(_scope, 0).onabort = ((_scope) => {
-      const { 3: name, 4: write } = _scope;
-      return () => {
+// size: 1233 (min) 522 (brotli)
+const _expr_name_write_effect = _$.effect(
+    "a0",
+    (_scope, { 3: name, 4: write }) =>
+      (_$.getAbortSignal(_scope, 0).onabort = () => {
         write(`destroyed ${name}`);
-      };
-    })(_scope);
-  }),
+      }),
+  ),
   _expr_name_write = _$.intersection(2, (_scope) => {
     _$.resetAbortSignal(_scope, 0), _expr_name_write_effect(_scope);
   }),
@@ -15,15 +14,8 @@ const _expr_name_write_effect = _$.effect("a0", (_scope) => {
     3,
     (_scope, name) => _$.data(_scope[0], name),
     () => _expr_name_write,
-  );
-_$.register(
-  "b0",
-  (_scope) =>
-    function (msg) {
-      _scope[1].innerHTML += "\n" + msg;
-    },
-);
-const _expr_outerItem_middleItem$forBody = _$.intersection(
+  ),
+  _expr_outerItem_middleItem$forBody = _$.intersection(
     2,
     (_scope) => {
       const {
@@ -110,17 +102,10 @@ const _expr_outerItem_middleItem$forBody = _$.intersection(
     ),
   ),
   _for = _$.loopOf(2, _forBody),
-  _items_effect = _$.effect("b3", (_scope) =>
-    _$.on(
-      _scope[0],
-      "click",
-      ((_scope) => {
-        const { 3: items } = _scope;
-        return function () {
-          _items(_scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
-        };
-      })(_scope),
-    ),
+  _items_effect = _$.effect("b3", (_scope, { 3: items }) =>
+    _$.on(_scope[0], "click", function () {
+      _items(_scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
+    }),
   ),
   _items = _$.state(
     3,
@@ -129,4 +114,9 @@ const _expr_outerItem_middleItem$forBody = _$.intersection(
     },
     () => _$.intersections([_for, _$.inLoopScope(_items$forBody, 2)]),
   );
-init();
+_$.register("b0", function (_scope) {
+  return function (msg) {
+    _scope[1].innerHTML += "\n" + msg;
+  };
+}),
+  init();

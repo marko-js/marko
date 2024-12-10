@@ -1,12 +1,12 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
 import _checkbox from "./components/checkbox.marko";
+import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   const checkedValue = ["a", "b"];
   const _childScope = _$.peekNextScope();
   _checkbox({
     checkedValue: checkedValue,
-    checkedValueChange: _$.register(function (_new_checkedValue) {
+    checkedValueChange: _$.register(_new_checkedValue => {
       checkedValue = _new_checkedValue;
     }, "packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange", _scope0_id),
     value: "a"
@@ -14,7 +14,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _childScope2 = _$.peekNextScope();
   _checkbox({
     checkedValue: checkedValue,
-    checkedValueChange: _$.register(function (_new_checkedValue2) {
+    checkedValueChange: _$.register(_new_checkedValue2 => {
       checkedValue = _new_checkedValue2;
     }, "packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange_0", _scope0_id),
     value: "b"
@@ -22,7 +22,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _childScope3 = _$.peekNextScope();
   _checkbox({
     checkedValue: checkedValue,
-    checkedValueChange: _$.register(function (_new_checkedValue3) {
+    checkedValueChange: _$.register(_new_checkedValue3 => {
       checkedValue = _new_checkedValue3;
     }, "packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange_0", _scope0_id),
     value: "c"

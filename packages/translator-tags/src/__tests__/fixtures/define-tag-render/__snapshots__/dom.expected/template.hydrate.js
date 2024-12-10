@@ -1,15 +1,8 @@
-// size: 419 (min) 251 (brotli)
-const _y$defineBody_effect = _$.effect("a0", (_scope) =>
-    _$.on(
-      _scope[2],
-      "click",
-      ((_scope) => {
-        const { 7: y } = _scope;
-        return function () {
-          _y$defineBody(_scope, y + 1);
-        };
-      })(_scope),
-    ),
+// size: 399 (min) 252 (brotli)
+const _y$defineBody_effect = _$.effect("a0", (_scope, { 7: y }) =>
+    _$.on(_scope[2], "click", function () {
+      _y$defineBody(_scope, y + 1);
+    }),
   ),
   _y$defineBody = _$.state(7, (_scope, y) => {
     _$.data(_scope[1], y), _$.data(_scope[3], y), _y$defineBody_effect(_scope);

@@ -1,4 +1,4 @@
-// size: 546 (min) 269 (brotli)
+// size: 498 (min) 257 (brotli)
 const _description$forBody = _$.value(5, (_scope, description) =>
     _$.data(_scope[1], description),
   ),
@@ -21,30 +21,16 @@ const _description$forBody = _$.value(5, (_scope, description) =>
     ),
   ),
   _for = _$.loopOf(0, _forBody),
-  _items_effect = _$.effect("a1", (_scope) => {
-    _$.on(
-      _scope[1],
-      "click",
-      ((_scope) => {
-        const { 3: items } = _scope;
-        return function () {
-          _items(_scope, [
-            ...items,
-            { name: "JavaScript", description: "Java, but scriptier" },
-          ]);
-        };
-      })(_scope),
-    ),
-      _$.on(
-        _scope[2],
-        "click",
-        ((_scope) => {
-          const { 3: items } = _scope;
-          return function () {
-            _items(_scope, items.slice(0, -1));
-          };
-        })(_scope),
-      );
+  _items_effect = _$.effect("a1", (_scope, { 3: items }) => {
+    _$.on(_scope[1], "click", function () {
+      _items(_scope, [
+        ...items,
+        { name: "JavaScript", description: "Java, but scriptier" },
+      ]);
+    }),
+      _$.on(_scope[2], "click", function () {
+        _items(_scope, items.slice(0, -1));
+      });
   }),
   _items = _$.state(3, (_scope, items) => {
     _items_effect(_scope), _for(_scope, [items]);

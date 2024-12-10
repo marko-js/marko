@@ -9,6 +9,11 @@ export function toPropertyName(name: string) {
 
   return t.stringLiteral(name);
 }
+
+export function toObjectProperty(name: string, value: t.Expression) {
+  return t.objectProperty(toPropertyName(name), value);
+}
+
 export function toMemberExpression(
   object: t.Expression,
   key: string,

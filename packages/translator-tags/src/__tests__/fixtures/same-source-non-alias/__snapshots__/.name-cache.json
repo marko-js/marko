@@ -7,7 +7,8 @@
       "$_a": "o",
       "$_pattern_": "e",
       "$_count_effect": "n",
-      "$_count": "m"
+      "$_count": "m",
+      "$_createWrapper": "i"
     }
   }
 }

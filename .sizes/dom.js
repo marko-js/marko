@@ -1,4 +1,4 @@
-// size: 17931 (min) 6479 (brotli)
+// size: 18009 (min) 6502 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -193,7 +193,10 @@ var registeredValues = {},
             } else
               i === len || "string" != typeof resumes[i]
                 ? delete this.z[this.o]
-                : registeredValues[resumes[i++]](scopeLookup[resumeData]);
+                : registeredValues[resumes[i++]](
+                    scopeLookup[resumeData],
+                    scopeLookup[resumeData],
+                  );
           }
         } finally {
           isResuming = !1;
@@ -489,7 +492,7 @@ function prepareEffects(fn) {
 function runEffects(effects = pendingEffects) {
   for (let i = 0; i < effects.length; i += 2) {
     let scope = effects[i];
-    (0, effects[i + 1])(scope);
+    (0, effects[i + 1])(scope, scope);
   }
 }
 function runSignals(signals) {
@@ -875,10 +878,12 @@ function styleAttr(element, value2) {
   );
 }
 function data(node, value2) {
-  let normalizedValue = (function (value2) {
-    return value2 || 0 === value2 ? value2 + "" : "‍";
-  })(value2);
+  let normalizedValue = normalizeString(value2);
   node.data !== normalizedValue && (node.data = normalizedValue);
+}
+function textContent(node, value2) {
+  let normalizedValue = normalizeString(value2);
+  node.textContent !== normalizedValue && (node.textContent = normalizedValue);
 }
 function attrs(scope, nodeAccessor, nextAttrs) {
   let el = scope[nodeAccessor];
@@ -1034,6 +1039,9 @@ function props(scope, nodeIndex, index) {
 }
 function normalizeAttrValue(value2) {
   if (value2 || 0 === value2) return !0 === value2 ? "" : value2 + "";
+}
+function normalizeString(value2) {
+  return value2 || 0 === value2 ? value2 + "" : "‍";
 }
 function lifecycle(scope, index, thisObj) {
   let instance = scope[index];

@@ -19,17 +19,13 @@ const _params_2$classLayoutBody = /* @__PURE__ */_$.value("_params_2", (_scope, 
   _baseCount$classLayoutBody(_scope, _params_2[0]);
   _message$classLayoutBody(_scope, _params_2[1]);
 }, () => _baseCount$classLayoutBody);
-const _onClick = _scope => {
-  const {
-    _: {
-      multiplier
-    }
-  } = _scope;
-  return function () {
-    _multiplier(_scope._, multiplier + 1);
-  };
-};
-const _multiplier$classLayoutBody_effect = _$.effect("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier", _scope => _$.on(_scope["#button/1"], "click", _onClick(_scope)));
+const _multiplier$classLayoutBody_effect = _$.effect("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier", (_scope, {
+  _: {
+    multiplier
+  }
+}) => _$.on(_scope["#button/1"], "click", function () {
+  _multiplier(_scope._, multiplier + 1), multiplier;
+}));
 const _multiplier$classLayoutBody = _$.registerSubscriber("packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_multiplier/subscriber", /* @__PURE__ */_$.dynamicClosure("multiplier", (_scope, multiplier) => {
   _$.data(_scope["#text/2"], multiplier);
   _multiplier$classLayoutBody_effect(_scope);

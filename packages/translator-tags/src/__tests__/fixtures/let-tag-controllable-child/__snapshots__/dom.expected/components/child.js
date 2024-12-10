@@ -9,28 +9,20 @@ const _expr_input_value_input_valueChange = /* @__PURE__ */_$.intersection(2, _s
   } = _scope;
   _state(_scope, input_value, input_valueChange);
 });
-const _onClick = _scope => {
-  const {
-    otherState
-  } = _scope;
-  return function () {
-    _otherState(_scope, otherState + 1);
-  };
-};
-const _otherState_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0_otherState", _scope => _$.on(_scope["#button/3"], "click", _onClick(_scope)));
+const _otherState_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0_otherState", (_scope, {
+  otherState
+}) => _$.on(_scope["#button/3"], "click", function () {
+  _otherState(_scope, otherState + 1), otherState;
+}));
 const _otherState = /* @__PURE__ */_$.state("otherState", (_scope, otherState) => {
   _$.data(_scope["#text/5"], otherState);
   _otherState_effect(_scope);
 });
-const _onClick2 = _scope => {
-  const {
-    state
-  } = _scope;
-  return function () {
-    _state(_scope, state + 1);
-  };
-};
-const _state_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0_state", _scope => _$.on(_scope["#button/0"], "click", _onClick2(_scope)));
+const _state_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0_state", (_scope, {
+  state
+}) => _$.on(_scope["#button/0"], "click", function () {
+  _state(_scope, state + 1), state;
+}));
 const _state = /* @__PURE__ */_$.state("state", (_scope, state) => {
   _$.data(_scope["#text/2"], state);
   _state_effect(_scope);

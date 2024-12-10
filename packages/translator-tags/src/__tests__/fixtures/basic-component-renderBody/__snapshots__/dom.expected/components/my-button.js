@@ -5,12 +5,9 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _renderBody_input = _$.dynamicTagAttrs("#text/1");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/1", _scope => _renderBody_input(_scope, () => ({})), () => _renderBody_input);
 export const _renderBody_ = /* @__PURE__ */_$.value("renderBody", (_scope, renderBody) => _dynamicTagName(_scope, renderBody), () => _dynamicTagName);
-const _onClick__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onClick", _scope => {
-  const {
-    onClick
-  } = _scope;
-  _$.on(_scope["#button/0"], "click", onClick);
-});
+const _onClick__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onClick", (_scope, {
+  onClick
+}) => _$.on(_scope["#button/0"], "click", onClick));
 export const _onClick_ = /* @__PURE__ */_$.value("onClick", (_scope, onClick) => _onClick__effect(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _onClick_(_scope, input.onClick);

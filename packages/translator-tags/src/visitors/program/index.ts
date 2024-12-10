@@ -21,9 +21,13 @@ import programDOM from "./dom";
 import programHTML from "./html";
 
 export let currentProgramPath: t.NodePath<t.Program>;
-export let scopeIdentifier: t.Identifier;
 export let cleanIdentifier: t.Identifier;
 export let htmlRendererIdentifier: t.Identifier;
+
+export let scopeIdentifier: t.Identifier;
+export function isScopeIdentifier(node: t.Node): node is t.Identifier {
+  return node === scopeIdentifier;
+}
 
 const previousProgramPath: WeakMap<
   t.NodePath<t.Program>,

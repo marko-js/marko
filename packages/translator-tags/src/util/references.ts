@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { currentProgramPath } from "../visitors/program";
+import { forEachIdentifier } from "./for-each-identifier";
 import { getExprRoot, getFnRoot } from "./get-root";
 import { isStatefulReferences } from "./is-stateful";
 import { isOptimize } from "./marko-config";
@@ -18,6 +19,8 @@ import {
 } from "./optional";
 import { forEachSection, getOrCreateSection, type Section } from "./sections";
 import { createProgramState } from "./state";
+import { toMemberExpression } from "./to-property-name";
+import withPreviousLocation from "./with-previous-location";
 
 export type Aliases = undefined | Binding | { [property: string]: Aliases };
 
@@ -42,7 +45,7 @@ export type Binding = {
   excludeProperties: undefined | string[];
   upstreamAlias: Binding | undefined;
   upstreamExpression: t.NodeExtra | undefined;
-  downstreamExpressions: Set<ExprExtra>;
+  downstreamExpressions: Set<ReferencedExtra>;
   export: string | undefined;
   declared: boolean;
   nullable: boolean;
@@ -51,7 +54,6 @@ export type Binding = {
 export type ReferencedBindings = Opt<Binding>;
 export type Intersection = Many<Binding>;
 
-type ExprExtra = t.NodeExtra & { section: Section };
 type FnExtra = (
   | t.FunctionExpressionExtra
   | t.ArrowFunctionExpressionExtra
@@ -67,22 +69,19 @@ declare module "@marko/compiler/dist/types" {
     section?: Section;
     referencedBindings?: ReferencedBindings;
     binding?: Binding;
+    assignment?: Binding;
     read?: { binding: Binding; props: Opt<string> };
     pruned?: true;
     isEffect?: true;
   }
 
-  export interface FunctionExpressionExtra {
+  export interface FunctionExtra {
     referencedBindingsInFunction?: ReferencedBindings;
   }
 
-  export interface ArrowFunctionExpressionExtra {
-    referencedBindingsInFunction?: ReferencedBindings;
-  }
-
-  export interface FunctionDeclarationExtra {
-    referencedBindingsInFunction?: ReferencedBindings;
-  }
+  export interface ArrowFunctionExpressionExtra extends FunctionExtra {}
+  export interface FunctionDeclarationExtra extends FunctionExtra {}
+  export interface FunctionExpressionExtra extends FunctionExtra {}
 }
 
 const [getBindings] = createProgramState(() => new Set<Binding>());
@@ -142,7 +141,6 @@ export function trackVarReferences(
   type: BindingType,
   upstreamAlias?: Binding["upstreamAlias"],
   upstreamExpression?: Binding["upstreamExpression"],
-  changeBinding?: Binding,
 ) {
   const tagVar = tag.node.var;
   if (tagVar) {
@@ -157,7 +155,6 @@ export function trackVarReferences(
       canonicalUpstreamAlias,
       upstreamExpression,
       undefined,
-      changeBinding,
     );
   }
 }
@@ -201,10 +198,7 @@ export function trackParamsReferences(
   }
 }
 
-export function trackReferencesForBinding(
-  babelBinding: t.Binding,
-  changeBinding?: Binding,
-) {
+function trackReferencesForBinding(babelBinding: t.Binding) {
   const { identifier, referencePaths, constantViolations } = babelBinding;
   const binding = identifier.extra!.binding!;
 
@@ -212,78 +206,48 @@ export function trackReferencesForBinding(
     trackReference(referencePath as t.NodePath<t.Identifier>, binding);
   }
 
-  for (const referencePath of constantViolations) {
-    /*
-     * https://github.com/babel/babel/issues/11313
-     * We need this so we can handle `+=` and friends
-     */
-    const node = referencePath.node;
+  for (const ref of constantViolations) {
+    if (ref.isUpdateExpression()) {
+      trackAssignment(ref.get("argument"), binding);
+    } else if (ref.isAssignmentExpression()) {
+      trackAssignment(ref.get("left"), binding);
 
-    if (t.isAssignmentExpression(node)) {
-      assignBinding(node.left, binding);
-    }
-
-    if (t.isUpdateExpression(node)) {
-      assignBinding(node.argument, binding);
-    }
-
-    if (
-      t.isAssignmentExpression(node) &&
-      t.isIdentifier(node.left) &&
-      node.operator !== "="
-    ) {
-      trackReference(
-        (referencePath as t.NodePath<t.AssignmentExpression>).get(
-          "left",
-        ) as t.NodePath<t.Identifier>,
-        binding,
-      );
-    }
-
-    if (changeBinding) {
-      if (referencePath.isUpdateExpression()) {
-        trackReference(
-          referencePath.get("argument") as t.NodePath<t.Identifier>,
-          changeBinding,
-        );
-      } else if (referencePath.isAssignmentExpression()) {
-        trackReference(
-          referencePath.get("left") as t.NodePath<t.Identifier>,
-          changeBinding,
-        );
+      if (ref.node.operator !== "=") {
+        /*
+         * https://github.com/babel/babel/issues/11313
+         * We need this so we can handle `+=` and friends
+         */
+        const left = ref.get("left");
+        if (left.isIdentifier()) {
+          trackReference(left, binding);
+        }
       }
     }
   }
 }
 
-function assignBinding(
-  node: t.LVal | t.ObjectProperty | t.ObjectProperty["value"],
+function trackAssignment(
+  assignment: t.NodePath<
+    t.AssignmentExpression["left"] | t.UpdateExpression["argument"]
+  >,
   binding: Binding,
 ) {
-  switch (node.type) {
-    case "ObjectPattern":
-      for (const prop of node.properties) {
-        assignBinding(prop, binding);
-      }
-      break;
-    case "ArrayPattern":
-      for (const element of node.elements) {
-        if (element !== null) {
-          assignBinding(element, binding);
-        }
-      }
-      break;
-    case "RestElement":
-      assignBinding(node.argument, binding);
-      break;
-    case "ObjectProperty":
-      assignBinding(node.value, binding);
-      break;
-    case "Identifier":
-      if (node.name === binding.name) {
-        (node.extra ??= {}).binding = binding;
-      }
-      break;
+  const section = getOrCreateSection(assignment);
+  setReferencesScope(assignment);
+  forEachIdentifier(assignment.node, (id) => {
+    if (id.name === binding.name) {
+      const extra = (id.extra ??= {});
+      extra.assignment = binding;
+      extra.section = section;
+    }
+  });
+}
+
+export function setReferencesScope(path: t.NodePath<any>) {
+  let fnRoot = getFnRoot(path);
+  while (fnRoot) {
+    (fnRoot.node.extra ??= {}).referencesScope = true;
+    fnRoot = getFnRoot(fnRoot.parentPath);
   }
 }
 
@@ -295,7 +259,6 @@ function createBindingsAndTrackReferences(
   upstreamAlias?: Binding["upstreamAlias"],
   upstreamExpression?: Binding["upstreamExpression"],
   property?: string,
-  changeBinding?: Binding,
 ) {
   switch (lVal.type) {
     case "Identifier":
@@ -308,7 +271,7 @@ function createBindingsAndTrackReferences(
         property,
         true,
       );
-      trackReferencesForBinding(scope.getBinding(lVal.name)!, changeBinding);
+      trackReferencesForBinding(scope.getBinding(lVal.name)!);
       break;
     case "ObjectPattern": {
       const patternBinding =
@@ -523,12 +486,12 @@ export function finalizeReferences() {
 
   if (mergedReferences.size) {
     for (const [target, nodes] of mergedReferences) {
-      const targetExtra = target.extra as ExprExtra;
+      const targetExtra = target.extra as ReferencedExtra;
       let reads = readsByExpression.get(targetExtra);
       let { isEffect } = targetExtra;
       for (const node of nodes) {
         const extra = node?.extra;
-        if (isReferenceExpression(extra)) {
+        if (isReferencedExtra(extra)) {
           isEffect ||= extra.isEffect;
           const additionalReads = readsByExpression.get(extra);
           if (additionalReads) {
@@ -545,7 +508,7 @@ export function finalizeReferences() {
 
   const intersectionsBySection = new Map<Section, Intersection[]>();
   for (const [expr, reads] of readsByExpression) {
-    if (isReferenceExpression(expr)) {
+    if (isReferencedExtra(expr)) {
       expr.referencedBindings = resolveReferencedBindings(
         expr,
         reads,
@@ -563,6 +526,10 @@ export function finalizeReferences() {
       reads,
       intersectionsBySection,
     );
+
+    forEach(fn.referencedBindingsInFunction, (binding) => {
+      binding.serialize = true;
+    });
   }
 
   for (const binding of bindings) {
@@ -718,7 +685,7 @@ export const bindingUtil = new Sorted(function compareBindings(
 });
 
 const [getReadsByExpression] = createProgramState(
-  () => new Map<ExprExtra, Opt<Read>>(),
+  () => new Map<ReferencedExtra, Opt<Read>>(),
 );
 const [getReadsByFunction] = createProgramState(
   () => new Map<FnExtra, Opt<Read>>(),
@@ -729,7 +696,7 @@ export function addReadToExpression(
   binding: Binding,
   node?: t.Identifier | t.MemberExpression,
 ) {
-  const exprExtra = (path.node.extra ??= {}) as ExprExtra;
+  const exprExtra = (path.node.extra ??= {}) as ReferencedExtra;
   const readsByExpression = getReadsByExpression();
   exprExtra.section = getOrCreateSection(path);
   readsByExpression.set(
@@ -795,6 +762,45 @@ export function getScopeAccessorLiteral(binding: Binding) {
   return t.stringLiteral(
     binding.name + (binding.type === BindingType.dom ? `/${binding.id}` : ""),
   );
+}
+
+export function getReadReplacement(node: t.Identifier | t.MemberExpression) {
+  const { extra } = node;
+  if (!extra) return;
+  let { binding, read } = extra;
+  let replacement: t.Node | undefined;
+
+  if (read) {
+    if (read.props === undefined) {
+      binding = read.binding;
+      read = undefined;
+    } else {
+      binding = undefined;
+    }
+  }
+
+  if (binding) {
+    if (node.type === "Identifier") {
+      if (binding.name !== node.name) {
+        node.name = binding.name;
+      }
+    } else {
+      replacement = t.identifier(binding.name);
+    }
+  } else if (read) {
+    replacement = toMemberExpression(
+      t.identifier(read.binding.name),
+      Array.isArray(read.props) ? read.props[0] : read.props!,
+    );
+
+    if (Array.isArray(read.props)) {
+      for (let i = 1; i < read.props.length; i++) {
+        replacement = toMemberExpression(replacement, read.props[i]);
+      }
+    }
+  }
+
+  return replacement && withPreviousLocation(replacement, node);
 }
 
 function pruneBinding(bindings: Set<Binding>, binding: Binding) {
@@ -917,10 +923,34 @@ function isEventOrChangeHandler(prop: string) {
   return /^on[-A-Z][a-zA-Z0-9_$]|[a-zA-Z_$][a-zA-Z0-9_$]*Change$/.test(prop);
 }
 
-function isReferenceExpression(
+export interface ReferencedExtra extends t.NodeExtra {
+  section: Section;
+}
+export function isReferencedExtra(
   extra: t.NodeExtra | undefined,
-): extra is ExprExtra {
+): extra is ReferencedExtra {
   return !!(extra && !extra.pruned && extra.section);
+}
+
+export interface AssignedBindingExtra extends ReferencedExtra {
+  assignment: Binding;
+}
+export function isAssignedBindingExtra(
+  extra: t.NodeExtra | undefined,
+): extra is AssignedBindingExtra {
+  return isReferencedExtra(extra) && extra.assignment !== undefined;
+}
+
+export interface RegisteredFnExtra extends ReferencedExtra {
+  registerId: string;
+  name: string | undefined;
+  referencesScope?: boolean;
+  referencedBindingsInFunction: ReferencedBindings;
+}
+export function isRegisteredFnExtra(
+  extra: t.NodeExtra | undefined,
+): extra is RegisteredFnExtra {
+  return isReferencedExtra(extra) && extra.registerId !== undefined;
 }
 
 // TODO: we need this? maybe for passing input to child?

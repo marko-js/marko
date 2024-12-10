@@ -1,8 +1,8 @@
 function noop(_) {}
+_$.register(noop, "packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0/noop");
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
-  _$.register(noop, "packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0/noop");
   const a = 0;
   const b = 0;
   const c = {};

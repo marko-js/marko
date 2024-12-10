@@ -1,18 +1,11 @@
-// size: 373 (min) 222 (brotli)
+// size: 353 (min) 218 (brotli)
 _$.dynamicTagAttrs(0);
-const _count$falseChildBody_effect = _$.effect("b0", (_scope) =>
-    _$.on(
-      _scope[0],
-      "click",
-      ((_scope) => {
-        const {
-          _: { 1: count },
-        } = _scope;
-        return function () {
-          _count(_scope._, count + 1);
-        };
-      })(_scope),
-    ),
+const _count$falseChildBody_effect = _$.effect(
+    "b0",
+    (_scope, { _: { 1: count } }) =>
+      _$.on(_scope[0], "click", function () {
+        _count(_scope._, count + 1);
+      }),
   ),
   _count$falseChildBody = _$.registerSubscriber(
     "b1",

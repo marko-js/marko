@@ -328,6 +328,7 @@ export class State {
   public hasReorderRuntime = false;
   public hasWrittenResume = false;
   public trailerHTML = "";
+  public nonceAttr = "";
   public serializer = new Serializer();
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, PartialScope>();
@@ -340,6 +341,9 @@ export class State {
     },
   ) {
     this.$global = $global;
+    if ($global.cspNonce) {
+      this.nonceAttr = " " + escapeAttrValue($global.cspNonce + "");
+    }
   }
 
   get runtimePrefix() {
@@ -545,10 +549,7 @@ export function prepareChunk(chunk: Chunk) {
   const head = chunk.consume();
   const { boundary, effects } = head;
   const { state } = boundary;
-  const { $global, runtimePrefix, serializer } = state;
-  const nonceAttr = $global.cspNonce
-    ? " nonce=" + escapeAttrValue($global.cspNonce + "")
-    : "";
+  const { $global, runtimePrefix, serializer, nonceAttr } = state;
   let { html, scripts } = head;
   let hasWalk = false;
   head.effects = "";
@@ -704,12 +705,7 @@ export function flushChunk(head: Chunk, last: boolean) {
   head.html = head.scripts = "";
 
   if (scripts) {
-    result +=
-      ($global.cspNonce
-        ? "<script nonce=" + escapeAttrValue($global.cspNonce + "") + ">"
-        : "<script>") +
-      scripts +
-      "</script>";
+    result += "<script" + state.nonceAttr + ">" + scripts + "</script>";
   }
 
   if (__flush__) {

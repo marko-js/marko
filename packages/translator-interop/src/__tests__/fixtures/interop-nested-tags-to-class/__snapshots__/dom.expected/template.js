@@ -4,17 +4,13 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 import _classLayout from "./components/class-layout.marko";
 import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 _$.register("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko", _classLayout);
-const _onClick = _scope => {
-  const {
-    _: {
-      count
-    }
-  } = _scope;
-  return function () {
-    _count(_scope._, count + 1);
-  };
-};
-const _count$classLayoutBody_effect = _$.effect("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count", _scope => _$.on(_scope["#button/0"], "click", _onClick(_scope)));
+const _count$classLayoutBody_effect = _$.effect("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count", (_scope, {
+  _: {
+    count
+  }
+}) => _$.on(_scope["#button/0"], "click", function () {
+  _count(_scope._, count + 1), count;
+}));
 const _count$classLayoutBody = _$.registerSubscriber("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber", /* @__PURE__ */_$.dynamicClosure("count", (_scope, count) => {
   _$.data(_scope["#text/1"], count);
   _count$classLayoutBody_effect(_scope);

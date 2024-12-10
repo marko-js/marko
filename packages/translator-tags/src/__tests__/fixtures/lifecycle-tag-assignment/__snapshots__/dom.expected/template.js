@@ -2,37 +2,21 @@ export const _template_ = "<div>x=<span> </span>, was=<!></div><button id=increm
 export const _walks_ = /* next(1), over(1), next(1), get, out(1), over(1), replace, out(1), get, over(1) */"DbD lb%l b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _prev = /* @__PURE__ */_$.state("prev", (_scope, prev) => _$.data(_scope["#text/1"], prev));
-const _onMount = _scope => {
-  const {
-    x
-  } = _scope;
-  return function () {
-    this.cur = x;
-  };
-};
-const _onUpdate = _scope => {
-  const {
-    x
-  } = _scope;
-  return function () {
-    _prev(_scope, this.cur);
-    this.cur = x;
-  };
-};
-const _onClick = _scope => {
-  const {
-    x
-  } = _scope;
-  return function () {
-    _x(_scope, x + 1);
-  };
-};
-const _x_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x", _scope => {
+const _x_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x", (_scope, {
+  x
+}) => {
   _$.lifecycle(_scope, "_lifecycle", {
-    onMount: _onMount(_scope),
-    onUpdate: _onUpdate(_scope)
+    onMount: function () {
+      this.cur = x;
+    },
+    onUpdate: function () {
+      _prev(_scope, this.cur);
+      this.cur = x;
+    }
   });
-  _$.on(_scope["#button/2"], "click", _onClick(_scope));
+  _$.on(_scope["#button/2"], "click", function () {
+    _x(_scope, x + 1), x;
+  });
 });
 const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
   _$.data(_scope["#text/0"], x);

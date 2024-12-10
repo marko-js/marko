@@ -2,7 +2,6 @@ import type { Config } from "@marko/compiler";
 
 import coreTagLib from "./core";
 import { extractVisitors } from "./util/visitors";
-import AssignmentExpression from "./visitors/assignment-expression";
 import MarkoCDATA from "./visitors/cdata";
 import MarkoComment from "./visitors/comment";
 import MarkoDeclaration from "./visitors/declaration";
@@ -15,13 +14,10 @@ import ReferencedIdentifier from "./visitors/referenced-identifier";
 import MarkoScriptlet from "./visitors/scriptlet";
 import MarkoTag from "./visitors/tag";
 import MarkoText from "./visitors/text";
-import UpdateExpression from "./visitors/update-expression";
 
 const visitors = extractVisitors({
   Program,
   Function,
-  AssignmentExpression,
-  UpdateExpression,
   ReferencedIdentifier,
   ImportDeclaration,
   MarkoDocumentType,

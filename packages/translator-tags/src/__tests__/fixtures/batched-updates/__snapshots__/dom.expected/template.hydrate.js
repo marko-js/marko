@@ -1,15 +1,8 @@
-// size: 227 (min) 146 (brotli)
-const _expr_a_b_effect = _$.effect("a0", (_scope) =>
-    _$.on(
-      _scope[0],
-      "click",
-      ((_scope) => {
-        const { 2: a, 3: b } = _scope;
-        return function () {
-          _a(_scope, a + 1), _b(_scope, b + 1);
-        };
-      })(_scope),
-    ),
+// size: 207 (min) 149 (brotli)
+const _expr_a_b_effect = _$.effect("a0", (_scope, { 2: a, 3: b }) =>
+    _$.on(_scope[0], "click", function () {
+      _a(_scope, a + 1), _b(_scope, b + 1);
+    }),
   ),
   _expr_a_b = _$.intersection(2, (_scope) => {
     const { 2: a, 3: b } = _scope;
