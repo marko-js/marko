@@ -6,6 +6,7 @@ import {
 import { types as t } from "@marko/compiler";
 
 import { currentProgramPath } from "../visitors/program";
+import { isCoreTag } from "./is-core-tag";
 import { isStatefulReferences } from "./is-stateful";
 import { find } from "./optional";
 import type { Binding, ReferencedBindings } from "./references";
@@ -202,54 +203,55 @@ export function getNodeContentType(
   extraMember: "startType" | "endType",
   contentInfo?: Section["content"],
 ) {
-  if (t.isMarkoText(path)) {
-    return ContentType.Text;
-  }
-  if (t.isMarkoPlaceholder(path)) {
-    return ContentType.Placeholder;
-  }
-  if (t.isMarkoScriptlet(path) || t.isMarkoComment(path)) {
-    return null;
-  }
-  if (t.isMarkoTag(path.node)) {
-    const tag = path as t.NodePath<t.MarkoTag>;
-    if (isNativeTag(tag)) {
-      return ContentType.Tag;
-    }
-    if (isAttributeTag(tag)) {
+  switch (path.type) {
+    case "MarkoText":
+      return ContentType.Text;
+    case "MarkoPlaceholder":
+      return ContentType.Placeholder;
+    case "MarkoScriptlet":
+    case "MarkoComment":
+    case "ImportDeclaration":
+    case "ExportAllDeclaration":
+    case "ExportNamedDeclaration":
       return null;
-    }
-    if (t.isStringLiteral(path.node.name)) {
-      switch (path.node.name.value) {
-        case "html-comment":
-          return ContentType.Comment;
-        case "let":
-        case "const":
-        case "attrs":
-        case "effect":
-        case "lifecycle":
-        case "return":
-        case "id":
-        case "define":
-          return null;
-      }
-      const tagSection = loadFileForTag(tag)?.ast.program.extra.section;
-      if (tagSection) {
-        if (tagSection.content) {
-          if (contentInfo && !tagSection.content.singleChild) {
-            if (extraMember === "endType") {
-              contentInfo.startType = tagSection.content.startType;
-              contentInfo.singleChild = false;
+    case "MarkoTag": {
+      const tag = path as t.NodePath<t.MarkoTag>;
+      if (isCoreTag(tag)) {
+        switch (tag.node.name.value) {
+          case "html-comment":
+            return ContentType.Comment;
+          case "html-script":
+          case "html-style":
+            return ContentType.Tag;
+          case "for":
+          case "if":
+            return ContentType.Dynamic;
+          default:
+            return null;
+        }
+      } else if (isNativeTag(tag)) {
+        return ContentType.Tag;
+      } else if (isAttributeTag(tag)) {
+        return null;
+      } else if (t.isStringLiteral(tag.node.name)) {
+        const tagSection = loadFileForTag(tag)?.ast.program.extra.section;
+        if (tagSection) {
+          if (tagSection.content) {
+            if (contentInfo && !tagSection.content.singleChild) {
+              if (extraMember === "endType") {
+                contentInfo.startType = tagSection.content.startType;
+                contentInfo.singleChild = false;
+              }
             }
+            return tagSection.content[extraMember];
+          } else {
+            return null;
           }
-
-          return tagSection.content[extraMember];
-        } else {
-          return null;
         }
       }
     }
   }
+
   return ContentType.Dynamic;
 }
 

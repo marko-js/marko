@@ -11,9 +11,12 @@ import { types as t } from "@marko/compiler";
 import MagicString, { type SourceMap } from "magic-string";
 import path from "path";
 
-import { assertNoSpreadAttrs } from "../util/assert";
 import { getMarkoOpts } from "../util/marko-config";
 import { currentProgramPath } from "../visitors/program";
+
+const STYLE_EXT_REG = /^style((?:\.[a-zA-Z0-9$_-]+)+)?/;
+const htmlStyleTagAlternateMsg =
+  " For a native html `style` tag use the `html-style` core tag instead.";
 
 export default {
   analyze(tag) {
@@ -21,75 +24,61 @@ export default {
     assertNoParams(tag);
     assertNoAttributeTags(tag);
 
-    // TODO: if any attributes present (besides shorthand class)
-    // recommend `html-style` tag (which we still need to add).
+    const { node } = tag;
+    const ext = STYLE_EXT_REG.exec(node.rawValue || "")?.[1]?.slice(1);
+    for (const attr of node.attributes) {
+      if (
+        attr.start == null &&
+        attr.type === "MarkoAttribute" &&
+        attr.name === "class" &&
+        attr.value.type === "StringLiteral" &&
+        attr.value.value === ext
+      ) {
+        continue;
+      }
+
+      throw tag.hub.buildError(
+        attr.value,
+        "The `style` does not support html attributes." +
+          htmlStyleTagAlternateMsg,
+      );
+    }
+
+    for (const child of node.body.body) {
+      if (child.type !== "MarkoText") {
+        throw tag.hub.buildError(
+          child,
+          "The `style` tag currently only supports static content." +
+            htmlStyleTagAlternateMsg,
+        );
+      }
+    }
+
+    if (node.body.body.length > 1) {
+      throw tag.hub.buildError(
+        node.name,
+        "The `style` tag currently only supports static content." +
+          htmlStyleTagAlternateMsg,
+      );
+    }
   },
   translate(tag) {
     const {
+      node,
       hub: { file },
     } = tag;
     const { filename, sourceMaps } = file.opts;
+    let ext = STYLE_EXT_REG.exec(node.rawValue || "")?.[1] || ".css";
 
-    assertNoParams(tag);
-    assertNoSpreadAttrs(tag);
-
-    let type = "text/css";
-    const attrs = tag.get("attributes");
-
-    const base = path.basename(filename);
-
-    const typeAttr = attrs.find(
-      (attr) => attr.isMarkoAttribute() && attr.node.name === "type",
-    );
-    const classAttr = attrs.find(
-      (attr) => attr.isMarkoAttribute() && attr.node.name === "class",
-    );
-
-    if (typeAttr && classAttr) {
-      throw classAttr.buildCodeFrameError(
-        "The `style` tag must only use `type` or `class` and not both.",
-      );
-    } else if (typeAttr) {
-      const typeValue = typeAttr.get("value");
-      if (typeValue.isStringLiteral()) {
-        type = typeValue.node.value;
-      } else {
-        throw typeValue.buildCodeFrameError(
-          "The `style` tag `type` attribute can only be a string literal.",
-        );
-      }
-    } else if (classAttr) {
-      const classValue = classAttr.get("value");
-      if (classValue.isStringLiteral()) {
-        type = classValue.node.value;
-      } else {
-        throw classValue.buildCodeFrameError(
-          "The `style` tag `class` attribute can only be a string literal.",
-        );
-      }
+    if (node.var && !/\.module\./.test(ext)) {
+      ext = ".module" + ext;
     }
 
-    if (type === "text/css") {
-      type = "css";
-    }
-
-    if (tag.node.var && !type.startsWith("module")) {
-      type = "module." + type;
-    }
-
-    const body = tag.get("body").get("body");
-    const markoText = body[0]!;
-
-    if (body.length !== 1 || !markoText.isMarkoText()) {
-      throw (markoText.isMarkoText() ? body[1] : body[0]).buildCodeFrameError(
-        "The `style` tag currently only supports static content.",
-      );
-    }
-
+    const markoText = node.body.body[0] as t.MarkoText;
     const { resolveVirtualDependency } = getMarkoOpts();
-    const start = getStart(file, markoText.node);
-    const end = getEnd(file, markoText.node);
-    let code = markoText.node.value;
+    const start = getStart(file, markoText);
+    const end = getEnd(file, markoText);
+    let code = markoText.value;
     let map: SourceMap | undefined;
 
     if (
@@ -116,22 +105,22 @@ export default {
     }
 
     const importPath = resolveVirtualDependency?.(filename, {
-      virtualPath: `./${base}.${type}`,
+      virtualPath: `./${path.basename(filename) + ext}`,
       code,
       map,
     });
 
     if (importPath) {
-      if (!tag.node.var) {
+      if (!node.var) {
         currentProgramPath.pushContainer(
           "body",
           t.importDeclaration([], t.stringLiteral(importPath)),
         );
-      } else if (t.isIdentifier(tag.node.var)) {
+      } else if (t.isIdentifier(node.var)) {
         currentProgramPath.pushContainer(
           "body",
           t.importDeclaration(
-            [t.importDefaultSpecifier(tag.node.var)],
+            [t.importDefaultSpecifier(node.var)],
             t.stringLiteral(importPath),
           ),
         );
@@ -140,7 +129,7 @@ export default {
           "body",
           t.variableDeclaration("const", [
             t.variableDeclarator(
-              tag.node.var,
+              node.var,
               importDefault(file, importPath, "style"),
             ),
           ]),
@@ -149,6 +138,12 @@ export default {
     }
 
     tag.remove();
+  },
+  parseOptions: {
+    html: false,
+    text: true,
+    rawOpenTag: true,
+    preserveWhitespace: true,
   },
   attributes: {},
 } as Tag;

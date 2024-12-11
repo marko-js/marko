@@ -5,9 +5,9 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _expr_name_write_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/components/child.marko_0_name_write", (_scope, {
   name,
   write
-}) => _$.getAbortSignal(_scope, 0).onabort = () => {
+}) => (_$.getAbortSignal(_scope, 0).onabort = () => {
   write(`destroyed ${name}`);
-});
+}));
 const _expr_name_write = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     name,

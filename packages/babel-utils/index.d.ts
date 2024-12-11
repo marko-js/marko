@@ -243,23 +243,29 @@ export function withLoc<T extends t.Node>(
   end: number,
 ): T;
 
-export function parseStatements(file: t.BabelFile, str: string): t.Statement[];
-export function parseStatements(
+export function parseStatements<T extends t.Statement[]>(
+  file: t.BabelFile,
+  str: string,
+): T;
+export function parseStatements<T extends t.Statement[]>(
   file: t.BabelFile,
   str: string,
   sourceStart: number,
   sourceEnd: number,
   sourceOffset?: number,
-): t.Statement[];
+): T;
 
-export function parseExpression(file: t.BabelFile, str: string): t.Expression;
-export function parseExpression(
+export function parseExpression<T extends t.Expression>(
+  file: t.BabelFile,
+  str: string,
+): T;
+export function parseExpression<T extends t.Expression>(
   file: t.BabelFile,
   str: string,
   sourceStart: number,
   sourceEnd: number,
   sourceOffset?: number,
-): t.Expression;
+): T;
 
 export function parseParams(
   file: t.BabelFile,

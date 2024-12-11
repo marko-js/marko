@@ -6,7 +6,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.write(`<button class=inc>${_$.escapeXML(x)}${_$.markResumeNode(_scope0_id, "#text/1")},<!>${_$.escapeXML(y)}${_$.markResumeNode(_scope0_id, "#text/2")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagArgs(_dynamicScope, input.renderBody, [x, y]);
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/3")}`);
+  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/3"));
   _$.writeEffect(_scope0_id, "packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y");
   _$.writeScope(_scope0_id, {
     "x": x,

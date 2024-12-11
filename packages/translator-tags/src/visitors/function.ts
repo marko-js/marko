@@ -61,7 +61,7 @@ export default {
       isMarkoAttribute(markoRoot) &&
       ((isNativeTag(markoRoot.parentPath) &&
         /^on[A-Z-]/.test(markoRoot.node.name)) ||
-        isCoreTagName(markoRoot.parentPath, "effect") ||
+        isCoreTagName(markoRoot.parentPath, "script") ||
         isCoreTagName(markoRoot.parentPath, "lifecycle") ||
         isCoreTagName(markoRoot.parentPath, "for"))
     ) {

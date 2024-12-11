@@ -1,4 +1,4 @@
-export const _template_ = `${_layout_template}`;
+export const _template_ = _layout_template;
 export const _walks_ = /* beginChild, _layout_walks, endChild */`/${_layout_walks}&`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _layout, _renderBody_ as _layout_input_renderBody, _template_ as _layout_template, _walks_ as _layout_walks } from "./components/layout.marko";

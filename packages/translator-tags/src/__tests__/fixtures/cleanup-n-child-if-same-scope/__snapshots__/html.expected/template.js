@@ -15,7 +15,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-same-scope/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/2")}`);
+  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/2"));
   _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-same-scope/template.marko_0_show");
   _$.writeScope(_scope0_id, {
     "show": show,

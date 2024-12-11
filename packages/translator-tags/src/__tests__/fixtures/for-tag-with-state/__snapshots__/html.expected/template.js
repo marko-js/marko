@@ -16,7 +16,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.writeScope(_scope2_id, {});
     _scope2_.set(i, _$.getScopeById(_scope2_id));
   });
-  _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/1", _forScopeIds)}`);
+  _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/1", _forScopeIds));
   _$.writeScope(_scope0_id, {
     "#text/1(": _scope2_.size ? _scope2_ : undefined
   });

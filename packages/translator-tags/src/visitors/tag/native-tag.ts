@@ -15,6 +15,7 @@ import evaluate from "../../util/evaluate";
 import { getTagName } from "../../util/get-tag-name";
 import { isStatefulReferences } from "../../util/is-stateful";
 import { isOutputHTML } from "../../util/marko-config";
+import normalizeStringExpression from "../../util/normalize-string-expression";
 import {
   type Binding,
   BindingType,
@@ -41,7 +42,6 @@ import {
   getSerializedScopeProperties,
 } from "../../util/signals";
 import { toObjectProperty } from "../../util/to-property-name";
-import toTemplateOrStringLiteral from "../../util/to-template-string-or-literal";
 import { propsToExpression } from "../../util/translate-attrs";
 import translateVar from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
@@ -177,7 +177,7 @@ export default {
         tag.node.attributes.push(
           t.markoAttribute(
             "value",
-            toTemplateOrStringLiteral(parts) || buildUndefined(),
+            normalizeStringExpression(parts) || buildUndefined(),
           ),
         );
 

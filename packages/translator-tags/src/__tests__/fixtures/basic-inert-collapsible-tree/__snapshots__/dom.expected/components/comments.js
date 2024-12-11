@@ -20,7 +20,7 @@ const _comment_comments$ifBody = /* @__PURE__ */_$.closure("comment_comments", 0
 const _setup$ifBody = _scope => {
   _setup_(_scope["#childScope/0"]);
 };
-const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer", /* @__PURE__ */_$.createRenderer(`${_comments_template}`, /* beginChild, _comments_walks, endChild */`/${_comments_walks}&`, _setup$ifBody, () => [_id$ifBody, _comment_comments$ifBody]));
+const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer", /* @__PURE__ */_$.createRenderer(_comments_template, /* beginChild, _comments_walks, endChild */`/${_comments_walks}&`, _setup$ifBody, () => [_id$ifBody, _comment_comments$ifBody]));
 const _expr_input_path_i$forBody = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     _: {

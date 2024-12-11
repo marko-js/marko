@@ -415,15 +415,25 @@ export default {
       }
     }
 
-    walks.exit(tag);
     write`</script>`;
 
     if (nodeRef) {
       writer.markNode(tag, nodeRef);
     }
 
+    walks.exit(tag);
     tag.remove();
   },
+  "@async": "#html-async",
+  "@crossorigin": "#html-crossorigin",
+  "@defer": "#html-defer",
+  "@integrity": "#html-integrity",
+  "@nomodule": "#html-nomodule",
+  "@nonce": "#html-nonce",
+  "@referrerpolicy": "#html-referrerpolicy",
+  "@src": "#html-src",
+  "@type": "#html-type",
+  "attribute-groups": ["html-attributes"],
   parseOptions: {
     text: true,
     preserveWhitespace: true,

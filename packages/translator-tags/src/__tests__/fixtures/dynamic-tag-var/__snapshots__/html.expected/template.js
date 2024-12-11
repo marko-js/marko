@@ -11,11 +11,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _dynamicScope = _$.peekNextScope();
   const data3 = _$.dynamicTagInput(_dynamicScope, input.dynamic, {}, void 0, _$.register(() => {}, "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-var/template.marko_0_data3/var", _scope0_id));
   const _tagName2 = input.show && "div";
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/2")}`);
+  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/2"));
   const el1 = _$.nodeRef();
   if (_tagName2) _$.write(`<${_tagName2}>`);
   if (_tagName2) _$.write(`</${_tagName2}>`);
-  _$.write(`${_$.markResumeNode(_scope0_id, "#inputShowDiv/3")}`);
+  _$.write(_$.markResumeNode(_scope0_id, "#inputShowDiv/3"));
   _$.writeScope(_scope0_id, {
     "#childScope/0": _$.writeExistingScope(_childScope),
     "#childScope/1": _$.writeExistingScope(_childScope2),

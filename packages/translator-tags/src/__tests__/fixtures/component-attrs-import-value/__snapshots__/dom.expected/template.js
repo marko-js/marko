@@ -1,5 +1,5 @@
-export const _template_ = `<!>${_counter_template}`;
-export const _walks_ = /* beginChild, _counter_walks, endChild */`D/${_counter_walks}&`;
+export const _template_ = _counter_template;
+export const _walks_ = /* beginChild, _counter_walks, endChild */`/${_counter_walks}&`;
 import { formatNumber } from "./helpers";
 import { _setup_ as _counter, _input_ as _counter_input, _template_ as _counter_template, _walks_ as _counter_walks } from "./components/counter.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";

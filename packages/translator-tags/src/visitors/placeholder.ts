@@ -45,7 +45,7 @@ export default {
     const { node } = placeholder;
     const { confident, computed } = evaluate(node.value);
 
-    if (!(confident && (node.escape || !computed))) {
+    if (!(confident && (node.escape || isVoid(computed)))) {
       (node.extra ??= {})[kBinding] = createBinding(
         "#text",
         BindingType.dom,
@@ -58,14 +58,20 @@ export default {
   },
   translate: {
     exit(placeholder) {
-      const isHTML = isOutputHTML();
-      const write = writer.writeTo(placeholder);
       const { node } = placeholder;
       const { value } = node;
-      const extra = node.extra || {};
       const { confident, computed, referencedBindings } = evaluate(value);
+
+      if (confident && isVoid(computed)) {
+        placeholder.remove();
+        return;
+      }
+
+      const isHTML = isOutputHTML();
+      const write = writer.writeTo(placeholder);
+      const extra = node.extra || {};
       const nodeBinding = extra[kBinding]!;
-      const canWriteHTML = isHTML || (confident && (node.escape || !computed));
+      const canWriteHTML = isHTML || (confident && node.escape);
       const method = canWriteHTML
         ? node.escape
           ? "escapeXML"
@@ -175,4 +181,8 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   }
 
   return (placeholderExtra[kSiblingText] = SiblingText.None);
+}
+
+function isVoid(value: unknown) {
+  return value == null || value === false;
 }

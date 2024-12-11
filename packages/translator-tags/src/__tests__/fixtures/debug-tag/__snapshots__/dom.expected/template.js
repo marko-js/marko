@@ -1,5 +1,5 @@
-export const _template_ = "<!><!>";
-export const _walks_ = /*  */"DD";
+export const _template_ = "";
+export const _walks_ = "";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _y = /* @__PURE__ */_$.state("y", (_scope, y) => {
   debugger;

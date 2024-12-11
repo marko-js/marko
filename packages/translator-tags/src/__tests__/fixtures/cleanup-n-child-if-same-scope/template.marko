@@ -7,10 +7,10 @@
   <div>a</div>
   <span>b</span>
   <p>c</p>
-  <effect() {
+  <script>
     el().innerHTML += '\nmounted';
     $signal.onabort = () => {
       el().innerHTML += '\ndestroyed';
     };
-  }/>
+  </script>
 </if>

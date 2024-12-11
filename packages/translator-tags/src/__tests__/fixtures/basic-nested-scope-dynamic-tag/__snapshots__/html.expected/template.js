@@ -13,7 +13,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
   }), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-dynamic-tag/template.marko_1_renderer", _scope0_id));
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/0")}`);
+  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/0"));
   _$.writeScope(_scope0_id, {
     "count": count,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
