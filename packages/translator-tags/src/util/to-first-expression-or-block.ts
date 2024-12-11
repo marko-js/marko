@@ -1,15 +1,25 @@
 import { types as t } from "@marko/compiler";
-export default function toFirstExpressionOrBlock(
-  body: t.BlockStatement | t.MarkoTagBody,
-) {
-  const nodes = body.body;
-  if (nodes.length === 1 && t.isExpressionStatement(nodes[0])) {
-    return nodes[0].expression;
+export function toFirstExpressionOrBlock(stmts: t.Statement[]) {
+  if (stmts.length === 1 && t.isExpressionStatement(stmts[0])) {
+    const { expression } = stmts[0];
+    switch (expression.type) {
+      case "ObjectExpression":
+      case "AssignmentExpression":
+        return toParenthesizedExpressionIfNeeded(expression);
+      default:
+        return expression;
+    }
   }
 
-  if (t.isBlockStatement(body)) {
-    return body;
-  }
+  return t.blockStatement(stmts);
+}
 
-  return t.blockStatement(nodes);
+export function toParenthesizedExpressionIfNeeded(expr: t.Expression) {
+  switch (expr.type) {
+    case "ObjectExpression":
+    case "AssignmentExpression":
+      return t.parenthesizedExpression(expr);
+    default:
+      return expr;
+  }
 }

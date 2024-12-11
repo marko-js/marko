@@ -1,4 +1,4 @@
-// size: 1530 (min) 558 (brotli)
+// size: 1525 (min) 551 (brotli)
 const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _expr_name_write_effect = _$.effect("a0", (_scope, { 5: name, 6: write }) => {
     write(`${name} mounted`),
@@ -30,7 +30,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   },
   _ifBody3 = _$.register(
     "b1",
-    _$.createRenderer(`${_template_}`, "/D%lD%lD%l&", _setup$ifBody3, () => [
+    _$.createRenderer(_template_, "/D%lD%lD%l&", _setup$ifBody3, () => [
       _write$ifBody3,
     ]),
   ),

@@ -142,6 +142,7 @@ Object.assign(Printer.prototype, {
     const isDynamicTag = !t.isStringLiteral(node.name);
     const tagName = !isDynamicTag && node.name.value;
     const rawValue = node.rawValue;
+    let bodyOverride;
 
     if (
       tagName === "style" &&
@@ -199,28 +200,39 @@ Object.assign(Printer.prototype, {
         this.token("|");
       }
 
-      if (node.attributes.length) {
-        if (
-          !(node.attributes && node.attributes[0] && node.attributes[0].default)
-        ) {
+      let { attributes } = node;
+      if (attributes.length) {
+        if (tagName === "script") {
+          for (let i = attributes.length; i--; ) {
+            if (attributes[i].value.fromBody) {
+              bodyOverride = attributes[i].value.body.body;
+              attributes = toSpliced(attributes, i);
+              break;
+            }
+          }
+        }
+
+        if (!(attributes && attributes[0] && attributes[0].default)) {
           this.token(" ");
         }
 
-        this.printJoin(node.attributes, { separator: spaceSeparator });
+        this.printJoin(attributes, { separator: spaceSeparator });
       }
     }
 
     if (SELF_CLOSING.voidElements.includes(tagName)) {
       this.token(">");
     } else if (
-      !(node.body.body.length || node.attributeTags.length) ||
+      !(bodyOverride || node.body.body.length || node.attributeTags.length) ||
       SELF_CLOSING.svgElements.includes(tagName)
     ) {
       this.token("/>");
     } else {
       this.token(">");
       this.newline();
-      this.printSequence(zipAttributeTagsAndBody(node), { indent: true });
+      this.printSequence(bodyOverride || zipAttributeTagsAndBody(node), {
+        indent: true,
+      });
       this.token("</");
       if (!isDynamicTag) {
         this.token(tagName);
@@ -331,4 +343,20 @@ function compareStartLoc(a, b) {
     a.loc.start.line - b.loc.start.line ||
     a.loc.start.column - b.loc.start.column
   );
+}
+
+function toSpliced(arr, index) {
+  const len = arr.length;
+  const result = new Array(len - 1);
+  let i = 0;
+
+  for (; i < index; i++) {
+    result[i] = arr[i];
+  }
+
+  for (i++; i < len; i++) {
+    result[i - 1] = arr[i];
+  }
+
+  return result;
 }

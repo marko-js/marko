@@ -33,6 +33,10 @@ import {
 } from "./sections";
 import { simplifyFunction } from "./simplify-fn";
 import { createSectionState } from "./state";
+import {
+  toFirstExpressionOrBlock,
+  toParenthesizedExpressionIfNeeded,
+} from "./to-first-expression-or-block";
 import { toMemberExpression } from "./to-property-name";
 import { traverseContains, traverseReplace } from "./traverse";
 
@@ -543,14 +547,12 @@ function generateSignalName(referencedBindings?: ReferencedBindings) {
 export function finalizeSignalArgs(args: t.Expression[]) {
   for (let i = args.length - 1; i >= 0; i--) {
     const arg = args[i];
-    if (t.isArrowFunctionExpression(arg)) {
-      const body = (arg.body as t.BlockStatement).body;
-      if (body) {
-        if (body.length === 0) {
-          args[i] = t.numericLiteral(0);
-        } else if (body.length === 1 && t.isExpressionStatement(body[0])) {
-          arg.body = body[0].expression;
-        }
+    if (t.isArrowFunctionExpression(arg) && t.isBlockStatement(arg.body)) {
+      const body = arg.body.body;
+      if (body.length === 0) {
+        args[i] = t.numericLiteral(0);
+      } else if (body.length === 1 && t.isExpressionStatement(body[0])) {
+        arg.body = toParenthesizedExpressionIfNeeded(body[0].expression);
       }
     }
   }
@@ -713,10 +715,7 @@ export function writeSignals(section: Section) {
               : referencesScope
                 ? [scopeIdentifier]
                 : [],
-            signal.effect.length === 1 &&
-              t.isExpressionStatement(signal.effect[0])
-              ? signal.effect[0].expression
-              : t.blockStatement(signal.effect),
+            toFirstExpressionOrBlock(signal.effect),
           ),
         ),
       );

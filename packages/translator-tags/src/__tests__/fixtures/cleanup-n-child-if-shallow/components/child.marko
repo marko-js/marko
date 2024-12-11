@@ -1,9 +1,9 @@
 <div>a</div>
 <span>b</span>
 <p>c</p>
-<effect() {
+<script>
   input.write('mounted');
   $signal.onabort = () => {
     input.write('destroyed')
   };
-}/>
+</script>

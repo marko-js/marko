@@ -17,7 +17,7 @@ const _params_3$forBody = /* @__PURE__ */_$.value("_params_3", (_scope, _params_
 const _setup$forBody = _scope => {
   _child(_scope["#childScope/0"]);
 };
-const _forBody2 = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_outer$forBody], () => _params_3$forBody));
+const _forBody2 = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_outer$forBody], () => _params_3$forBody));
 const _for$forBody = /* @__PURE__ */_$.loopOf("#text/0", _forBody2);
 const _outer$forBody2 = /* @__PURE__ */_$.value("outer", 0, () => _$.inLoopScope(_outer$forBody, "#text/0"));
 const _items$forBody = /* @__PURE__ */_$.closure("items", (_scope, items) => _for$forBody(_scope, [items]), void 0, () => _for$forBody);

@@ -3,10 +3,10 @@ import { WalkCode, WalkRangeSize } from "@marko/runtime-tags/common/types";
 
 import { ContentType, getSection, type Section } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
-import { createSectionState } from "./state";
-import toTemplateOrStringLiteral, {
+import normalizeStringExpression, {
   appendLiteral,
-} from "./to-template-string-or-literal";
+} from "./normalize-string-expression";
+import { createSectionState } from "./state";
 import { writeTo } from "./writer";
 
 const [getWalks] = createSectionState<(string | t.Expression)[]>(
@@ -182,7 +182,7 @@ export function getWalkString(section: Section) {
       : "";
   const walks = getWalks(section);
   const walkLiteral =
-    toTemplateOrStringLiteral([prefix, ...walks, postfix]) ||
+    normalizeStringExpression([prefix, ...walks, postfix]) ||
     t.stringLiteral("");
   if ((walkLiteral as t.StringLiteral).value !== "") {
     walkLiteral.leadingComments = [

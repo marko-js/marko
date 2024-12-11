@@ -23,7 +23,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     });
     _scope1_.set(_index, _$.getScopeById(_scope1_id));
   });
-  _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/2", _forScopeIds)}`);
+  _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/2", _forScopeIds));
   _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-shallow/template.marko_0_items");
   _$.writeScope(_scope0_id, {
     "items": items,

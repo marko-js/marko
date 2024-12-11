@@ -7,5 +7,5 @@ static const staticVar = "static var";
 <log=staticVar/>
 
 <let/output=JSON.stringify(testLog)/>
-<effect() { output = JSON.stringify(testLog) }/>
+<script>output = JSON.stringify(testLog)</script>
 -- ${output}

@@ -1,4 +1,4 @@
-export const _template_ = `${_myButton_template}`;
+export const _template_ = _myButton_template;
 export const _walks_ = /* beginChild, _myButton_walks, endChild */`/${_myButton_walks}&`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _myButton, _renderBody_ as _myButton_input_renderBody, _onClick_ as _myButton_input_onClick, _template_ as _myButton_template, _walks_ as _myButton_walks } from "./components/my-button.marko";

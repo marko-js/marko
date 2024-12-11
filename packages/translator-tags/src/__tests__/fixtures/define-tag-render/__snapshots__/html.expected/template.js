@@ -18,7 +18,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.dynamicTagInput(_dynamicScope, MyTag, {
     name: "Ryan"
   });
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/0")}`);
+  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/0"));
   _$.writeScope(_scope0_id, {
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(MyTag)

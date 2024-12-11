@@ -1,4 +1,4 @@
-// size: 18009 (min) 6502 (brotli)
+// size: 18048 (min) 6515 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1212,9 +1212,12 @@ function createRenderer(template, walks, setup, getClosureSignals, getArgs) {
 function _clone() {
   return (this.E ||= (function (html2) {
     let content = parseHTML(html2);
-    return content.firstChild === content.lastChild
-      ? content.firstChild || fallback
-      : content;
+    return content.firstChild
+      ? content.firstChild === content.lastChild &&
+        8 !== content.firstChild.nodeType
+        ? content.firstChild
+        : content
+      : fallback;
   })(this.D)).cloneNode(!0);
 }
 var conditional = function (nodeAccessor, fn, getIntersection) {

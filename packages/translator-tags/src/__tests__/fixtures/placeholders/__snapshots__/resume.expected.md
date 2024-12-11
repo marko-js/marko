@@ -22,13 +22,21 @@
       replaced
       <!--M_*0 #text/3-->
       Hello HTML 
-      <a>
-        <script>
-          
-    Hello &lt;b&gt; &lt;/script&gt;
+      <span>
+        hi
+      </span>
+      <script>
+        
+    'Hello &lt;b&gt; \x3C/script&gt;'
   
-        </script>
-      </a>
+      </script>
+      <!--M_*0 #script/5-->
+      <style>
+        
+    .test { content: 'Hello &lt;b&gt; \3C/style&gt;' }
+  
+      </style>
+      <!--M_*0 #style/6-->
     </div>
     <script>
       WALKER_RUNTIME("M")("_")

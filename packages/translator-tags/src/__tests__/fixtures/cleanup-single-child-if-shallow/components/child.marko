@@ -1,7 +1,7 @@
 <div>child</div>
-<effect() {
+<script>
   input.write('mounted');
   $signal.onabort = () => {
     input.write('destroyed')
   };
-}/>
+</script>

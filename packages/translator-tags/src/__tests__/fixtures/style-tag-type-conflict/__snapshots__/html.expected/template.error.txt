@@ -1,2 +1,0 @@
-The `style` tag must only use `type` or `class` and not both.
-    at packages/translator-tags/src/__tests__/fixtures/style-tag-type-conflict/template.marko

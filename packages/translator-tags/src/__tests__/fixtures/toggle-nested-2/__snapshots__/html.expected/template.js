@@ -21,7 +21,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_2_renderer");
       _ifScopeId = _scope2_id;
     }
-    _$.write(`${_$.markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId)}`);
+    _$.write(_$.markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId));
     _$.writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/toggle-nested-2/template.marko_1_inner");
     _$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id),

@@ -1,7 +1,7 @@
 export const _template_ = "<div></div><!><!>";
 export const _walks_ = /* get, over(1), replace, over(1) */" b%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _setup$ifBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko_1", _scope => _scope._["#div/0"].textContent = "hello");
+const _setup$ifBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/native-tag-ref-downstream-effect/template.marko_1", _scope => (_scope._["#div/0"].textContent = "hello"));
 const _setup$ifBody = _scope => {
   _setup$ifBody_effect(_scope);
 };

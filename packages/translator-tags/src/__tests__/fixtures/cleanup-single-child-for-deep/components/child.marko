@@ -1,6 +1,6 @@
 <const/{name, write}=input/>
 <div>${name}</div>
-<effect() {
+<script>
   // TODO: In SSR this effect will be resumed depth first while CSR will be
   // queued breadth first so the output will be different. Figure out if we
   // care and then restore the `write` call below.
@@ -9,4 +9,4 @@
   $signal.onabort = () => {
     write(`destroyed ${name}`)
   };
-}/>
+</script>
