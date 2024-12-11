@@ -63,7 +63,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.register(_ifRenderer3 = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_1_renderer");
     _ifScopeId3 = _scope1_id;
   }
-  _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/4", _ifScopeId3)}`);
+  _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/4", _ifScopeId3));
   _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showInner");
   _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showMiddle");
   _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-deep/template.marko_0_showOuter");

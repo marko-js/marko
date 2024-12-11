@@ -40,7 +40,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       }), "packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko_1_renderer", _scope0_id)
     })
   });
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/4")}`);
+  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/4"));
   _$.writeScope(_scope0_id, {
     "#childScope/1": _$.writeExistingScope(_childScope),
     "#childScope/2": _$.writeExistingScope(_childScope2),

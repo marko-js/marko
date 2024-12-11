@@ -33,6 +33,7 @@ import {
 } from "./sections";
 import { simplifyFunction } from "./simplify-fn";
 import { createSectionState } from "./state";
+import toFirstExpressionOrBlock from "./to-first-expression-or-block";
 import { toMemberExpression } from "./to-property-name";
 import { traverseContains, traverseReplace } from "./traverse";
 
@@ -713,10 +714,7 @@ export function writeSignals(section: Section) {
               : referencesScope
                 ? [scopeIdentifier]
                 : [],
-            signal.effect.length === 1 &&
-              t.isExpressionStatement(signal.effect[0])
-              ? signal.effect[0].expression
-              : t.blockStatement(signal.effect),
+            toFirstExpressionOrBlock(signal.effect),
           ),
         ),
       );

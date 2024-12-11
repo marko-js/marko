@@ -1,6 +1,5 @@
 # Render {}
 ```html
-<!---->
 <style>
   
   .test {
@@ -8,12 +7,11 @@
   }
 
 </style>
-<!---->
 ```
 
 # Mutations
 ```
-inserted #comment0, style1, #comment2
+inserted style0
 ```
 
 
@@ -21,7 +19,6 @@ inserted #comment0, style1, #comment2
 container.querySelector("style").click()
 
 ```html
-<!---->
 <style>
   
   .test {
@@ -29,13 +26,12 @@ container.querySelector("style").click()
   }
 
 </style>
-<!---->
 ```
 
 # Mutations
 ```
-removed #text in style1
-inserted style1/#text0
+removed #text in style0
+inserted style0/#text0
 ```
 
 
@@ -43,7 +39,6 @@ inserted style1/#text0
 container.querySelector("style").click()
 
 ```html
-<!---->
 <style>
   
   .test {
@@ -51,13 +46,12 @@ container.querySelector("style").click()
   }
 
 </style>
-<!---->
 ```
 
 # Mutations
 ```
-removed #text in style1
-inserted style1/#text0
+removed #text in style0
+inserted style0/#text0
 ```
 
 
@@ -65,7 +59,6 @@ inserted style1/#text0
 container.querySelector("style").click()
 
 ```html
-<!---->
 <style>
   
   .test {
@@ -73,11 +66,10 @@ container.querySelector("style").click()
   }
 
 </style>
-<!---->
 ```
 
 # Mutations
 ```
-removed #text in style1
-inserted style1/#text0
+removed #text in style0
+inserted style0/#text0
 ```

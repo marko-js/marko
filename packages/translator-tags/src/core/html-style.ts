@@ -415,15 +415,20 @@ export default {
       }
     }
 
-    walks.exit(tag);
     write`</style>`;
 
     if (nodeRef) {
       writer.markNode(tag, nodeRef);
     }
 
+    walks.exit(tag);
     tag.remove();
   },
+  "@disabled": "#html-disabled",
+  "@media": "#html-media",
+  "@nonce": "#html-nonce",
+  "@type": "#html-type",
+  "attribute-groups": ["html-attributes"],
   parseOptions: {
     text: true,
     preserveWhitespace: true,

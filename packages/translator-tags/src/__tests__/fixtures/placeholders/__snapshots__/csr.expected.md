@@ -9,10 +9,20 @@ replaced
   <div>
     a
   </div>
-  replacedHello Text &lt;a/&gt;replaced
-  <!---->
-  Hello HTML 
-  <a />
+  replacedHello Text &lt;a/&gt;replacedHello HTML 
+  <span>
+    hi
+  </span>
+  <script>
+    
+    'Hello &lt;b&gt; &lt;/script&gt;'
+  
+  </script>
+  <style>
+    
+    .test { content: 'Hello &lt;b&gt; &lt;/style&gt;' }
+  
+  </style>
 </div>
 ```
 

@@ -24,7 +24,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       _scope2_.set(_index, _$.getScopeById(_scope2_id));
     });
     _forScopeIds2.push(_scope1_id);
-    _$.write(`${_$.markResumeControlSingleNodeEnd(_scope1_id, "#text/0", _forScopeIds)}`);
+    _$.write(_$.markResumeControlSingleNodeEnd(_scope1_id, "#text/0", _forScopeIds));
     _$.writeScope(_scope1_id, {
       "outer": outer,
       "#text/0(": _scope2_.size ? _scope2_ : undefined,
@@ -32,7 +32,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     });
     _scope1_.set(_index2, _$.getScopeById(_scope1_id));
   });
-  _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/1", _forScopeIds2)}`);
+  _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/1", _forScopeIds2));
   _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_0_items");
   _$.writeScope(_scope0_id, {
     "items": items,

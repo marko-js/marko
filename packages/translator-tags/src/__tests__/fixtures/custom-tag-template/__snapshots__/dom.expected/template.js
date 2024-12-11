@@ -1,4 +1,4 @@
-export const _template_ = `${_hello_template}`;
+export const _template_ = _hello_template;
 export const _walks_ = /* beginChild, _hello_walks, endChild */`/${_hello_walks}&`;
 import { _setup_ as _hello, _input_name_ as _hello_input_name, _template_ as _hello_template, _walks_ as _hello_walks } from "./hello.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";

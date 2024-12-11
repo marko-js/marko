@@ -8,7 +8,7 @@ const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_
 const _setup$forBody = _scope => {
   _child(_scope["#childScope/0"]);
 };
-const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-shallow/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_write$forBody], () => _params_2$forBody));
+const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-shallow/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_write$forBody], () => _params_2$forBody));
 const _for = /* @__PURE__ */_$.loopOf("#text/2", _forBody);
 const _write = /* @__PURE__ */_$.value("write", 0, () => _$.inLoopScope(_write$forBody, "#text/2"));
 const _items_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-shallow/template.marko_0_items", (_scope, {

@@ -8,9 +8,11 @@
   ${"Hello Text <a/>"}
   $!{input.x}
   $!{null}
-  $!{"Hello HTML <a/>"}
-
-  <script>
-    ${"Hello <b> </script>"}
-  </script>
+  $!{"Hello HTML <span>hi</span>"}
+  <html-script>
+    ${"'Hello <b> </script>'"}
+  </html-script>
+  <html-style>
+    ${".test { content: 'Hello <b> </style>' }"}
+  </html-style>
 </div>

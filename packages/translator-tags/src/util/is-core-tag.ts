@@ -3,13 +3,31 @@ import type { types as t } from "@marko/compiler";
 
 import { getTagName } from "./get-tag-name";
 export const taglibId = "marko-core";
+const htmlTaglibId = "marko-html";
 const interopTaglibId = "@marko/translator-interop-class-tags";
 
 export function isCoreTag(
   tag: t.NodePath,
 ): tag is t.NodePath<t.MarkoTag & { name: t.StringLiteral }> {
-  const id = tag.isMarkoTag() && getTagDef(tag)?.taglibId;
-  return id === taglibId || id === interopTaglibId;
+  if (tag.isMarkoTag()) {
+    const tagDef = getTagDef(tag);
+    if (tagDef) {
+      switch (tagDef.taglibId) {
+        case taglibId:
+        case interopTaglibId:
+          return true;
+        case htmlTaglibId:
+          switch (tagDef.name) {
+            case "script":
+            case "style":
+              return true;
+          }
+          break;
+      }
+    }
+  }
+
+  return false;
 }
 
 export function isCoreTagName(

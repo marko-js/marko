@@ -16,7 +16,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     });
   }), "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/template.marko_1_renderer", _scope0_id));
   _s(_classLayout, "packages/translator-interop/src/__tests__/fixtures/interop-tag-params-tags-to-class/components/class-layout.marko");
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/0")}`);
+  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/0"));
   _$.writeScope(_scope0_id, {
     "multiplier": multiplier,
     "#text/0!": _$.writeExistingScope(_dynamicScope),

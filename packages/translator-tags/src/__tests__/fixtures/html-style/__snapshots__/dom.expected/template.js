@@ -1,5 +1,5 @@
-export const _template_ = "<!><style></style><!>";
-export const _walks_ = /* get, over(1) */"D bD";
+export const _template_ = "<style></style>";
+export const _walks_ = /* get, over(1) */" b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _count$htmlStyleBody = _$.registerSubscriber("packages/translator-tags/src/__tests__/fixtures/html-style/template.marko_1_count/subscriber", /* @__PURE__ */_$.dynamicClosure("count", 0));
 const _htmlStyleBody = _$.register("packages/translator-tags/src/__tests__/fixtures/html-style/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("", "", void 0, () => [_count$htmlStyleBody]));

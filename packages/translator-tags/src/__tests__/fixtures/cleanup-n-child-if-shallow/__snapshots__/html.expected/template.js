@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   let _ifScopeId, _ifRenderer;
   if (show) {
     const _scope1_id = _$.nextScopeId();
-    _$.write(`${_$.markResumeScopeStart(_scope1_id)}`);
+    _$.write(_$.markResumeScopeStart(_scope1_id));
     const _childScope = _$.peekNextScope();
     _child({
       write: _$.register(function (state) {
@@ -22,7 +22,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-shallow/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/2")}`);
+  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/2"));
   _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-shallow/template.marko_0_show");
   _$.writeScope(_scope0_id, {
     "show": show,

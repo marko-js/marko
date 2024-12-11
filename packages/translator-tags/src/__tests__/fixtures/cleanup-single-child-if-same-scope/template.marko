@@ -5,10 +5,10 @@
 
 <if=show>
   <div>child</div>
-  <effect() {
+  <script>
     el().innerHTML += '\nmounted';
     $signal.onabort = () => {
       el().innerHTML += '\ndestroyed';
     };
-  }/>
+  </script>
 </if>

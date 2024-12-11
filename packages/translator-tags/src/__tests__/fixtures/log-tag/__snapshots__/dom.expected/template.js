@@ -1,5 +1,5 @@
-export const _template_ = "<!><!>";
-export const _walks_ = /* replace, over(1) */"D%b";
+export const _template_ = "<!>";
+export const _walks_ = /* replace, over(1) */"%b";
 import testLog from "./test-log";
 const staticVar = "static var";
 import * as _$ from "@marko/runtime-tags/debug/dom";

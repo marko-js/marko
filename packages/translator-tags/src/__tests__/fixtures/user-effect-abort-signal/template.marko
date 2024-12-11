@@ -1,7 +1,7 @@
 <let/a = 0/>
 <let/b = 0/>
 <div>${a} ${b}</div>
-<effect() {
+<script>
   const previousValue = a = input.value + 1;
   $signal.onabort = () => b = previousValue;
-}/>
+</script>

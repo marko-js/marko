@@ -10,6 +10,8 @@ replaced
     a
   </div>
   replacedHello Text &lt;a/&gt;replacedHello HTML 
-  <a />
+  <span>
+    hi
+  </span>
 </div>
 ```

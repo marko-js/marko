@@ -13,7 +13,7 @@ const _setup$childBody = _scope => {
   _child(_scope["#childScope/0"]);
   _child_input_renderBody(_scope["#childScope/0"], _childBody2(_scope));
 };
-const _childBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-nested-params/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$childBody, () => [_y$childBody], () => _params_2$childBody));
+const _childBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-nested-params/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$childBody, () => [_y$childBody], () => _params_2$childBody));
 const _y = /* @__PURE__ */_$.state("y", 0, () => _$.dynamicSubscribers("y"));
 const _x_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-nested-params/template.marko_0_x", (_scope, {
   x

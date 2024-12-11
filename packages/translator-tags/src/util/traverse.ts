@@ -1,4 +1,6 @@
 import { types as t } from "@marko/compiler";
+export const skip = Symbol("skip");
+
 type VisitValue = null | void | t.Node | t.Node[];
 type VisitKeys<T> = (string | number) &
   (T extends T
@@ -38,7 +40,7 @@ export function traverseReplace<T, K extends VisitKeys<T>>(
 
 export function traverseContains(
   node: undefined | null | t.Node | t.Node[],
-  check: (node: t.Node) => void | boolean,
+  check: (node: t.Node) => void | boolean | typeof skip,
 ): boolean {
   if (node) {
     if (Array.isArray(node)) {
@@ -48,6 +50,13 @@ export function traverseContains(
         }
       }
     } else {
+      switch (check(node)) {
+        case true:
+          return true;
+        case skip:
+          return false;
+      }
+
       for (const key of (t as any).VISITOR_KEYS[node.type] as VisitKeys<
         typeof node
       >[]) {
@@ -55,8 +64,6 @@ export function traverseContains(
           return true;
         }
       }
-
-      return !!check(node);
     }
   }
 

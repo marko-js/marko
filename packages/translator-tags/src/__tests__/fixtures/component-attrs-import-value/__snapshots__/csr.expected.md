@@ -1,6 +1,5 @@
 # Render {}
 ```html
-<!---->
 <button>
   $0.00
 </button>
@@ -8,7 +7,7 @@
 
 # Mutations
 ```
-inserted #comment0, button1
+inserted button0
 ```
 
 
@@ -16,7 +15,6 @@ inserted #comment0, button1
 container.querySelector("button").click()
 
 ```html
-<!---->
 <button>
   $1.00
 </button>
@@ -24,5 +22,5 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-button1/#text0: "$0.00" => "$1.00"
+button0/#text0: "$0.00" => "$1.00"
 ```

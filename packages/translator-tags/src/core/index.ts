@@ -17,6 +17,7 @@ import LetTag from "./let";
 import LifecycleTag from "./lifecycle";
 import LogTag from "./log";
 import ReturnTag from "./return";
+import ScriptTag from "./script";
 import ServerTag from "./server";
 import StaticTag from "./static";
 import StyleTag from "./style";
@@ -43,6 +44,7 @@ export default {
   "<lifecycle>": LifecycleTag,
   "<log>": LogTag,
   "<return>": ReturnTag,
+  "<script>": ScriptTag,
   "<server>": ServerTag,
   "<static>": StaticTag,
   "<style>": StyleTag,

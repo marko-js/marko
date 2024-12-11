@@ -8,7 +8,7 @@ const _setup$ifBody = _scope => {
     write: _write(_scope)
   });
 };
-const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-shallow/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(`${_child_template}`, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$ifBody));
+const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-shallow/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$ifBody));
 const _if = /* @__PURE__ */_$.conditional("#text/2", 0);
 const _show_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-shallow/template.marko_0_show", (_scope, {
   show
