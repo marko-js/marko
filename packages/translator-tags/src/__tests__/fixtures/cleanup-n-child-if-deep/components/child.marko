@@ -2,9 +2,9 @@
 <div>${name} a</div>
 <span>${name} a</span>
 <p>${name} a</p>
-<effect() {
+<script>
   write(`${name} mounted`);
   $signal.onabort = () => {
     write(`${name} destroyed`)
   };
-}/>
+</script>

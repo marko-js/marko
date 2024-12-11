@@ -11,7 +11,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
-  _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _ifScopeId)}`);
+  _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _ifScopeId));
   let _ifScopeId2, _ifRenderer2;
   if (!show) {
     const _scope2_id = _$.nextScopeId();

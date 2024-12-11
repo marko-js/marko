@@ -1,6 +1,5 @@
 # Render {}
 ```html
-<!---->
 <script
   type="importmap"
 >
@@ -12,12 +11,11 @@
   }
 
 </script>
-<!---->
 ```
 
 # Mutations
 ```
-inserted #comment0, script1, #comment2
+inserted script0
 ```
 
 
@@ -25,7 +23,6 @@ inserted #comment0, script1, #comment2
 container.querySelector("script").click()
 
 ```html
-<!---->
 <script
   type="importmap"
 >
@@ -37,13 +34,12 @@ container.querySelector("script").click()
   }
 
 </script>
-<!---->
 ```
 
 # Mutations
 ```
-removed #text in script1
-inserted script1/#text0
+removed #text in script0
+inserted script0/#text0
 ```
 
 
@@ -51,7 +47,6 @@ inserted script1/#text0
 container.querySelector("script").click()
 
 ```html
-<!---->
 <script
   type="importmap"
 >
@@ -63,13 +58,12 @@ container.querySelector("script").click()
   }
 
 </script>
-<!---->
 ```
 
 # Mutations
 ```
-removed #text in script1
-inserted script1/#text0
+removed #text in script0
+inserted script0/#text0
 ```
 
 
@@ -77,7 +71,6 @@ inserted script1/#text0
 container.querySelector("script").click()
 
 ```html
-<!---->
 <script
   type="importmap"
 >
@@ -89,11 +82,10 @@ container.querySelector("script").click()
   }
 
 </script>
-<!---->
 ```
 
 # Mutations
 ```
-removed #text in script1
-inserted script1/#text0
+removed #text in script0
+inserted script0/#text0
 ```

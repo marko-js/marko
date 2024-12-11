@@ -11,7 +11,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   Baz({});
   const _childScope3 = _$.peekNextScope();
   _baz({});
-  _$.write(`${_$.escapeXML(c)}`);
+  _$.write(_$.escapeXML(c));
   _$.writeScope(_scope0_id, {
     "#childScope/0": _$.writeExistingScope(_childScope),
     "#childScope/1": _$.writeExistingScope(_childScope2),

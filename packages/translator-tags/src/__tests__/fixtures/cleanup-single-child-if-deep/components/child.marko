@@ -1,8 +1,8 @@
 <const/{name, write}=input/>
 <p>${name}</p>
-<effect() {
+<script>
   write(`${name} mounted`);
   $signal.onabort = () => {
     write(`${name} destroyed`)
   };
-}/>
+</script>

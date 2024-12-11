@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.dynamicTagInput(_dynamicScope, tagName, {
     id: "dynamic"
   });
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/1")}`);
+  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/1"));
   _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName");
   _$.writeScope(_scope0_id, {
     "tagName": tagName,

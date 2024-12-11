@@ -58,14 +58,20 @@ export default {
   },
   translate: {
     exit(placeholder) {
-      const isHTML = isOutputHTML();
-      const write = writer.writeTo(placeholder);
       const { node } = placeholder;
       const { value } = node;
-      const extra = node.extra || {};
       const { confident, computed, referencedBindings } = evaluate(value);
+
+      if (confident && !computed) {
+        placeholder.remove();
+        return;
+      }
+
+      const isHTML = isOutputHTML();
+      const write = writer.writeTo(placeholder);
+      const extra = node.extra || {};
       const nodeBinding = extra[kBinding]!;
-      const canWriteHTML = isHTML || (confident && (node.escape || !computed));
+      const canWriteHTML = isHTML || (confident && node.escape);
       const method = canWriteHTML
         ? node.escape
           ? "escapeXML"

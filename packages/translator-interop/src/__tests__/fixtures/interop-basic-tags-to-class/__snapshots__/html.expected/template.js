@@ -10,7 +10,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     count: count
   });
   _s(_classCounter, "packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/components/class-counter.marko");
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/2")}`);
+  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/2"));
   _$.writeEffect(_scope0_id, "packages/translator-interop/src/__tests__/fixtures/interop-basic-tags-to-class/template.marko_0_count");
   _$.writeScope(_scope0_id, {
     "count": count,

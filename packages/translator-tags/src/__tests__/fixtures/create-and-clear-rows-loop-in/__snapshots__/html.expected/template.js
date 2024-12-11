@@ -11,7 +11,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.writeScope(_scope1_id, {});
     _scope1_.set(key, _$.getScopeById(_scope1_id));
   });
-  _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _forScopeIds)}`);
+  _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _forScopeIds));
   const _forScopeIds2 = [],
     _scope2_ = new Map();
   _$.forIn(input.children, key => {

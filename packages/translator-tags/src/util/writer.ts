@@ -7,6 +7,9 @@ import {
   type Section,
 } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
+import normalizeStringExpression, {
+  appendLiteral,
+} from "./normalize-string-expression";
 import {
   type Binding,
   BindingType,
@@ -15,9 +18,6 @@ import {
 import { callRuntime } from "./runtime";
 import { getSetup } from "./signals";
 import { createSectionState } from "./state";
-import toTemplateOrStringLiteral, {
-  appendLiteral,
-} from "./to-template-string-or-literal";
 import { getWalkString } from "./walks";
 
 const [getWrites] = createSectionState<(string | t.Expression)[]>(
@@ -51,8 +51,8 @@ export function consumeHTML(path: t.NodePath<any>) {
   const section = getSection(path);
   const writes = getWrites(section);
   const trailers = getTrailerWrites(section);
-  const writeResult = toTemplateOrStringLiteral(writes);
-  const trailerResult = toTemplateOrStringLiteral(trailers);
+  const writeResult = normalizeStringExpression(writes);
+  const trailerResult = normalizeStringExpression(trailers);
   writes.length = 0;
   writes[0] = "";
   trailers.length = 0;
@@ -101,7 +101,7 @@ export function getSectionMeta(section: Section) {
     setup: getSetup(section),
     walks: getWalkString(section),
     writes:
-      toTemplateOrStringLiteral([writePrefix, ...writes, writePostfix]) ||
+      normalizeStringExpression([writePrefix, ...writes, writePostfix]) ||
       t.stringLiteral(""),
   };
 }

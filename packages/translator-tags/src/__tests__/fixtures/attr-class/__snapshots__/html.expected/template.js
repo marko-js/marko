@@ -38,7 +38,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       }), "packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_1_renderer", _scope0_id)
     })
   });
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/3")}`);
+  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/3"));
   _$.writeScope(_scope0_id, {
     "c": c,
     "d": d,

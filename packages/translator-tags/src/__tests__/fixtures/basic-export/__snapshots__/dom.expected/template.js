@@ -1,5 +1,5 @@
-export const _template_ = "<!><div> </div>";
-export const _walks_ = /* next(1), get, out(1) */"DD l";
+export const _template_ = "<div> </div>";
+export const _walks_ = /* next(1), get, out(1) */"D l";
 export const _setup_ = () => {};
 export const v = 123;
 import * as _$ from "@marko/runtime-tags/debug/dom";

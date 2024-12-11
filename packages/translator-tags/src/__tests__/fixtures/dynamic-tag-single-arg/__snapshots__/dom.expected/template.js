@@ -1,5 +1,5 @@
-export const _template_ = "<!><button>Count: <!></button><!><!>";
-export const _walks_ = /* get, next(1), over(1), replace, out(1), replace, over(1) */"D Db%l%bD";
+export const _template_ = "<button>Count: <!></button><!><!>";
+export const _walks_ = /* get, next(1), over(1), replace, out(1), replace, over(1) */" Db%l%bD";
 import customTag from './components/custom-tag.marko';
 const tags = [customTag];
 import * as _$ from "@marko/runtime-tags/debug/dom";

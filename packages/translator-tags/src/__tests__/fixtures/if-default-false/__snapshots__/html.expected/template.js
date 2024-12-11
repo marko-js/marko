@@ -11,7 +11,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-default-false/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
-  _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/1", _ifScopeId)}`);
+  _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/1", _ifScopeId));
   _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/if-default-false/template.marko_0_show");
   _$.writeScope(_scope0_id, {
     "show": show,

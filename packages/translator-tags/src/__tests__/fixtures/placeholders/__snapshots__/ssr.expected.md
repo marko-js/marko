@@ -1,7 +1,9 @@
 # Write
-  <!>replaced<!--M_*0 #text/0--><span>replaced<!--M_*0 #text/1--><div></div></span><div><div>a</div>replaced<!--M_*0 #text/2-->Hello Text &lt;a/><!>replaced<!--M_*0 #text/3-->Hello HTML <a/><script>
-      Hello &lt;b> &lt;/script>
-    </script></div><script>WALKER_RUNTIME("M")("_")</script>
+  <!>replaced<!--M_*0 #text/0--><span>replaced<!--M_*0 #text/1--><div></div></span><div><div>a</div>replaced<!--M_*0 #text/2-->Hello Text &lt;a/><!>replaced<!--M_*0 #text/3-->Hello HTML <span>hi</span><script>
+      'Hello <b> \x3C/script>'
+    </script><!--M_*0 #script/5--><style>
+      .test { content: 'Hello <b> \3C/style>' }
+    </style><!--M_*0 #style/6--></div><script>WALKER_RUNTIME("M")("_")</script>
 
 
 # Render "End"
@@ -28,13 +30,21 @@
       replaced
       <!--M_*0 #text/3-->
       Hello HTML 
-      <a>
-        <script>
-          
-    Hello &lt;b&gt; &lt;/script&gt;
+      <span>
+        hi
+      </span>
+      <script>
+        
+    'Hello &lt;b&gt; \x3C/script&gt;'
   
-        </script>
-      </a>
+      </script>
+      <!--M_*0 #script/5-->
+      <style>
+        
+    .test { content: 'Hello &lt;b&gt; \3C/style&gt;' }
+  
+      </style>
+      <!--M_*0 #style/6-->
     </div>
     <script>
       WALKER_RUNTIME("M")("_")
@@ -65,9 +75,14 @@ inserted #document/html1/body1/div3/#comment4
 inserted #document/html1/body1/div3/#text5
 inserted #document/html1/body1/div3/#comment6
 inserted #document/html1/body1/div3/#text7
-inserted #document/html1/body1/div3/a8
-inserted #document/html1/body1/div3/a8/script0
-inserted #document/html1/body1/div3/a8/script0/#text0
+inserted #document/html1/body1/div3/span8
+inserted #document/html1/body1/div3/span8/#text0
+inserted #document/html1/body1/div3/script9
+inserted #document/html1/body1/div3/script9/#text0
+inserted #document/html1/body1/div3/#comment10
+inserted #document/html1/body1/div3/style11
+inserted #document/html1/body1/div3/style11/#text0
+inserted #document/html1/body1/div3/#comment12
 inserted #document/html1/body1/script4
 inserted #document/html1/body1/script4/#text0
 ```

@@ -1,5 +1,5 @@
-export const _template_ = "<!><script type=importmap></script><!>";
-export const _walks_ = /* get, over(1) */"D bD";
+export const _template_ = "<script type=importmap></script>";
+export const _walks_ = /* get, over(1) */" b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _count$htmlScriptBody = _$.registerSubscriber("packages/translator-tags/src/__tests__/fixtures/html-script/template.marko_1_count/subscriber", /* @__PURE__ */_$.dynamicClosure("count", 0));
 const _htmlScriptBody = _$.register("packages/translator-tags/src/__tests__/fixtures/html-script/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("", "", void 0, () => [_count$htmlScriptBody]));

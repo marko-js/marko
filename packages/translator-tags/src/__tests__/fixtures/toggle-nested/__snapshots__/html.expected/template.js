@@ -10,7 +10,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   let _ifScopeId3, _ifRenderer3;
   if (show) {
     const _scope1_id = _$.nextScopeId();
-    _$.write(`${_$.markResumeScopeStart(_scope1_id)}`);
+    _$.write(_$.markResumeScopeStart(_scope1_id));
     let _ifScopeId, _ifRenderer;
     if (value1) {
       const _scope2_id = _$.nextScopeId();
@@ -22,7 +22,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_2_renderer");
       _ifScopeId = _scope2_id;
     }
-    _$.write(`${_$.markResumeControlSingleNodeEnd(_scope1_id, "#text/0", _ifScopeId)}`);
+    _$.write(_$.markResumeControlSingleNodeEnd(_scope1_id, "#text/0", _ifScopeId));
     let _ifScopeId2, _ifRenderer2;
     if (value2) {
       const _scope3_id = _$.nextScopeId();
@@ -34,7 +34,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       _$.register(_ifRenderer2 = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/toggle-nested/template.marko_3_renderer");
       _ifScopeId2 = _scope3_id;
     }
-    _$.write(`${_$.markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId2)}`);
+    _$.write(_$.markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId2));
     _$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id),
       "#text/0(": _ifRenderer,

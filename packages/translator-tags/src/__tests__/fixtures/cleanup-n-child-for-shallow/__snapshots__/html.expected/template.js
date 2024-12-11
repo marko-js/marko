@@ -12,7 +12,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope1_ = new Map();
   _$.forOf(items, (item, _index) => {
     const _scope1_id = _$.nextScopeId();
-    _$.write(`${_$.markResumeScopeStart(_scope1_id, _k++)}`);
+    _$.write(_$.markResumeScopeStart(_scope1_id, _k++));
     const _childScope = _$.peekNextScope();
     _child({
       write: write,
@@ -23,7 +23,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     });
     _scope1_.set(_index, _$.getScopeById(_scope1_id));
   });
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/2")}`);
+  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/2"));
   _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-for-shallow/template.marko_0_items");
   _$.writeScope(_scope0_id, {
     "items": items,

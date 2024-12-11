@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     count: x,
     name: input.name
   });
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/2")}`);
+  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/2"));
   _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-attributes/components/custom-tag.marko_0_x");
   _$.writeScope(_scope0_id, {
     "input_name": input.name,
