@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.38.4
+
+### Patch Changes
+
+- [#2401](https://github.com/marko-js/marko/pull/2401) [`46f8d7c`](https://github.com/marko-js/marko/commit/46f8d7cfba231d1ab724fec83f07d1192d5d4d7f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add support for tags API script tag.
+
+- Updated dependencies [[`032afa1`](https://github.com/marko-js/marko/commit/032afa125b19969346639ac99ae9740521d0c3a2)]:
+  - @marko/babel-utils@6.6.2
+
 ## 5.38.3
 
 ### Patch Changes
