@@ -1,5 +1,14 @@
 # Change Log
 
+## 6.1.3
+
+### Patch Changes
+
+- [#2404](https://github.com/marko-js/marko/pull/2404) [`fbc0cef`](https://github.com/marko-js/marko/commit/fbc0cefb860cd91142231df04c05b7e4c0d1b1ee) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade all dependencies. Fix support for latest babel version.
+
+- Updated dependencies [[`fbc0cef`](https://github.com/marko-js/marko/commit/fbc0cefb860cd91142231df04c05b7e4c0d1b1ee)]:
+  - @marko/babel-utils@6.6.3
+
 ## 6.1.2
 
 ### Patch Changes
