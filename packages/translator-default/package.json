@@ -29,13 +29,13 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.26.0",
-    "@marko/babel-utils": "^6.6.0",
-    "magic-string": "^0.30.12",
+    "@marko/babel-utils": "^6.6.2",
+    "magic-string": "^0.30.15",
     "self-closing-tags": "^1.0.1"
   },
   "devDependencies": {
-    "@marko/compiler": "^5.38.3",
-    "marko": "^5.36.3"
+    "@marko/compiler": "^5.38.4",
+    "marko": "^5.36.4"
   },
   "peerDependencies": {
     "@marko/compiler": "^5.16.1",

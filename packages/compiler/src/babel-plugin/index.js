@@ -1,4 +1,4 @@
-import { visitors } from "@babel/traverse";
+import traverse from "@babel/traverse";
 import { diagnosticError, getTemplateId } from "@marko/babel-utils";
 import { createHash } from "crypto";
 import path from "path";
@@ -358,27 +358,23 @@ function mergeVisitors(all) {
     if (all.length === 1) {
       all = all[0];
     } else {
-      return visitors.merge(all);
+      return traverse.visitors.merge(all);
     }
   }
 
-  return visitors.explode(all);
+  return traverse.visitors.explode(all);
 }
 
 function traverseAll(file, visitors) {
   const program = file.path;
-  const { Program, ...mergedVisitors } = mergeVisitors(visitors);
-  program.state = {};
-
-  // Traverse only walks into children by default
-  // This manually traverses into the Program node as well.
-  if (!(Program && Program.enter && program._call(Program.enter))) {
-    program.traverse(mergedVisitors, program.state);
-
-    if (Program && Program.exit) {
-      program._call(Program.exit);
-    }
-  }
+  traverse(
+    program.node,
+    mergeVisitors(visitors),
+    program.scope,
+    (program.state = {}),
+    program,
+    true,
+  );
 }
 
 function addPlugin(meta, arr, plugin) {

@@ -24,11 +24,11 @@ class Render implements RenderData {
   declare i: RenderData["i"];
   declare v: RenderData["v"];
   declare r?: RenderData["r"];
-  private declare ___currentScopeId: number | undefined;
-  private declare ___data: RenderData;
-  private declare ___renders: Renders;
-  private declare ___runtimeId: string;
-  private declare ___renderId: string;
+  declare private ___currentScopeId: number | undefined;
+  declare private ___data: RenderData;
+  declare private ___renders: Renders;
+  declare private ___runtimeId: string;
+  declare private ___renderId: string;
   private ___scopeStack: number[] = [];
   private ___scopeLookup: Record<number | string, Scope> = {};
   private ___serializeContext: Record<string, unknown> = {

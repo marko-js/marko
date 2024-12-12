@@ -136,7 +136,7 @@ Object.assign(Printer.prototype, {
     }
   },
   MarkoTagBody(node) {
-    this.printSequence(node.body, { indent: true });
+    this.printSequence(node.body, true);
   },
   MarkoTag(node) {
     const isDynamicTag = !t.isStringLiteral(node.name);
@@ -216,7 +216,7 @@ Object.assign(Printer.prototype, {
           this.token(" ");
         }
 
-        this.printJoin(attributes, { separator: spaceSeparator });
+        this.printJoin(attributes, undefined, undefined, spaceSeparator);
       }
     }
 
@@ -230,9 +230,7 @@ Object.assign(Printer.prototype, {
     } else {
       this.token(">");
       this.newline();
-      this.printSequence(bodyOverride || zipAttributeTagsAndBody(node), {
-        indent: true,
-      });
+      this.printSequence(bodyOverride || zipAttributeTagsAndBody(node), true);
       this.token("</");
       if (!isDynamicTag) {
         this.token(tagName);

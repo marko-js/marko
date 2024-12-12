@@ -28,8 +28,9 @@
     "build": "babel ./src --out-dir ./dist --copy-files --config-file ../../babel.config.js --env-name=production"
   },
   "dependencies": {
+    "@babel/parser": "^7.26.3",
     "@babel/runtime": "^7.26.0",
-    "jsesc": "^3.0.2",
+    "jsesc": "^3.1.0",
     "relative-import-path": "^1.0.0"
   },
   "devDependencies": {
