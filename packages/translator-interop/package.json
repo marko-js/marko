@@ -29,9 +29,9 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.26.2",
-    "@marko/babel-utils": "^6.6.0",
-    "@marko/translator-default": "^6.1.0",
-    "@marko/translator-tags": "^0.4.6"
+    "@marko/babel-utils": "^6.6.2",
+    "@marko/translator-default": "^6.1.2",
+    "@marko/translator-tags": "^0.4.7"
   },
   "peerDependencies": {
     "@marko/compiler": "^5.23.0"
