@@ -147,29 +147,50 @@ var proto = (AsyncStream.prototype = {
       };
     } else {
       let done = false;
-      let pending = deferred();
+      let error = noop; // Used as a identity object reference.
+      let pending;
       const stream = {
         write(data) {
           buffer += data;
         },
         end() {
           done = true;
-          pending.resolve({
-            value: "",
-            done,
-          });
+
+          if (pending) {
+            pending.resolve(
+              buffer
+                ? {
+                    value: buffer,
+                    done: false,
+                  }
+                : {
+                    value: undefined,
+                    done: true,
+                  },
+            );
+            pending = undefined;
+          }
         },
         flush() {
-          pending.resolve({
-            value: buffer,
-            done: false,
-          });
-          buffer = "";
-          pending = deferred();
+          if (pending) {
+            pending.resolve({
+              value: buffer,
+              done: false,
+            });
+            buffer = "";
+            pending = undefined;
+          }
         },
       };
 
-      this.on("error", pending.reject);
+      this.once("error", (err) => {
+        error = err;
+
+        if (pending) {
+          pending.reject(error);
+          pending = undefined;
+        }
+      });
 
       const writer = new BufferedWriter(stream);
       writer.stream = originalWriter.stream;
@@ -182,11 +203,20 @@ var proto = (AsyncStream.prototype = {
       this._state.writer = writer;
 
       iteratorNextFn = async () => {
-        if (buffer || done) {
+        if (error !== noop) {
+          throw error;
+        } else if (buffer) {
           const value = buffer;
           buffer = "";
-          return { value, done };
+          return { value, done: false };
+        } else if (done) {
+          return { value: undefined, done: true };
         }
+
+        if (!pending) {
+          pending = deferred();
+        }
+
         return pending.promise;
       };
     }
