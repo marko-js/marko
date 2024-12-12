@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.36.4
+
+### Patch Changes
+
+- [#2402](https://github.com/marko-js/marko/pull/2402) [`0a38845`](https://github.com/marko-js/marko/commit/0a3884573b9abaff7b315d9b6ed0ceed5c344dc7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fixes race conditions with new async iterator api.
+
 ## 5.36.3
 
 ### Patch Changes
