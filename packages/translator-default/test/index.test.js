@@ -37,6 +37,7 @@ describe("translator-class", () => {
 
 function runTest(config) {
   return ({ mode, test, resolve, snapshot }) => {
+    const relativeFixtureDir = path.relative(process.cwd(), resolve("."));
     const testConfigFile = resolve("test.js");
     const testConfig = fs.existsSync(testConfigFile)
       ? require(testConfigFile)
@@ -55,6 +56,8 @@ function runTest(config) {
 
     const snapshotsDir = resolve("snapshots");
     const name = `snapshots${path.sep + mode}`;
+    const stripFixtureDir = (str) =>
+      str.replaceAll(relativeFixtureDir, "__tests__");
 
     if (!fs.existsSync(snapshotsDir)) {
       fs.mkdirSync(snapshotsDir);
@@ -65,13 +68,15 @@ function runTest(config) {
       let diags;
       try {
         const result = compileFileSync(templateFile, compilerConfig);
-        output = result.code;
+        output = stripFixtureDir(result.code);
         diags = result.meta.diagnostics;
       } catch (err) {
         try {
           snapshot(
-            stripCwd(
-              stripModuleStackTrace(String(err.stack).replace(ansiReg, "")),
+            stripFixtureDir(
+              stripCwd(
+                stripModuleStackTrace(String(err.stack).replace(ansiReg, "")),
+              ),
             ),
             {
               name: `${name}-error`,
@@ -96,7 +101,7 @@ function runTest(config) {
         });
 
         if (diags && diags.length) {
-          snapshot(printDiags(diags), {
+          snapshot(stripFixtureDir(printDiags(diags)), {
             name,
             ext: ".diagnostics.txt",
           });

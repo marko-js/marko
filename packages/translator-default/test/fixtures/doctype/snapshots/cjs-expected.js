@@ -9,7 +9,7 @@ var _reordererRenderer = _interopRequireDefault(require("marko/src/core-tags/cor
 var _preferredScriptLocationTag = _interopRequireDefault(require("marko/src/core-tags/components/preferred-script-location-tag.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-const _marko_componentType = "packages/translator-default/test/fixtures/doctype/template.marko",
+const _marko_componentType = "__tests__/template.marko",
   _marko_template = (0, _index.t)(_marko_componentType);
 var _default = exports.default = _marko_template;
 const _marko_component = {};

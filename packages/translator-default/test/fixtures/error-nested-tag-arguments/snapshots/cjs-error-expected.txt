@@ -1,5 +1,5 @@
 CompileError: 
-    at packages/translator-default/test/fixtures/error-nested-tag-arguments/template.marko:2:10
+    at __tests__/template.marko:2:10
       1 | <custom-tag>
     > 2 |   <@test(a, b, { c })>
         |          ^^^^^^^^^^^ Tag does not support arguments.

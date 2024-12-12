@@ -21,12 +21,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
         "#childScope/0": _$.writeExistingScope(_childScope),
         "_": _$.ensureScopeWithId(_scope1_id)
       });
-      _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_2_renderer");
+      _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/components/comments.marko_2_renderer");
       _ifScopeId = _scope2_id;
     }
     _forScopeIds.push(_scope1_id);
     _$.write(`${_$.markResumeControlSingleNodeEnd(_scope1_id, "#text/4", _ifScopeId)}</li>${_$.markResumeNode(_scope1_id, "#li/0")}`);
-    _$.writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko_1_open");
+    _$.writeEffect(_scope1_id, "__tests__/components/comments.marko_1_open");
     _$.writeScope(_scope1_id, {
       "comment_comments": comment?.comments,
       "i": i,
@@ -44,4 +44,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#ul/0(": _scope1_.size ? _scope1_ : undefined
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/components/comments.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/comments.marko", _renderer);

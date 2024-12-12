@@ -1,5 +1,5 @@
 # Write
-  <div></div><!--M_*0 #div/0--><div></div><!--M_*0 #div/1--><button>Click</button><!--M_*0 #button/2--><script>WALKER_RUNTIME("M")("_");M._.r=[0,"packages/translator-tags/src/__tests__/fixtures/basic-merge-member-expression/template.marko_0",0];M._.w()</script>
+  <div></div><!--M_*0 #div/0--><div></div><!--M_*0 #div/1--><button>Click</button><!--M_*0 #button/2--><script>WALKER_RUNTIME("M")("_");M._.r=[0,"__tests__/template.marko_0",0];M._.w()</script>
 
 
 # Render "End"
@@ -16,7 +16,7 @@
     </button>
     <!--M_*0 #button/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[0,"packages/translator-tags/src/__tests__/fixtures/basic-merge-member-expression/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[0,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

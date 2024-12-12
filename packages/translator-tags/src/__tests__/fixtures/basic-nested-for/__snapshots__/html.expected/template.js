@@ -33,10 +33,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _scope1_.set(_index2, _$.getScopeById(_scope1_id));
   });
   _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/1", _forScopeIds2));
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_0_items");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope(_scope0_id, {
     "items": items,
     "#text/1(": _scope1_.size ? _scope1_ : undefined
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

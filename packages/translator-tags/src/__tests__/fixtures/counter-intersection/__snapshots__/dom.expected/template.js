@@ -10,7 +10,7 @@ const _expr_a_b = /* @__PURE__ */_$.intersection(2, _scope => {
 });
 const _b = /* @__PURE__ */_$.state("b", (_scope, b) => _$.data(_scope["#text/3"], b), () => _expr_a_b);
 const _a = /* @__PURE__ */_$.state("a", (_scope, a) => _$.data(_scope["#text/1"], a), () => _expr_a_b);
-const _setup__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko_0", _scope => {
+const _setup__effect = _$.effect("__tests__/template.marko_0", _scope => {
   _$.on(_scope["#button/0"], "click", function () {
     _a(_scope, 10);
   });
@@ -23,4 +23,4 @@ export function _setup_(_scope) {
   _a(_scope, 0);
   _b(_scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/counter-intersection/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

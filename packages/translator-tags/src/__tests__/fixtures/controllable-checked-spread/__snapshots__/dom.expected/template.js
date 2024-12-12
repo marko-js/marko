@@ -18,5 +18,5 @@ function _checkedChange(_scope) {
     _checked(_scope, _new_checked);
   };
 }
-_$.register("packages/translator-tags/src/__tests__/fixtures/controllable-checked-spread/template.marko_0/checkedChange", _checkedChange);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/controllable-checked-spread/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_0/checkedChange", _checkedChange);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

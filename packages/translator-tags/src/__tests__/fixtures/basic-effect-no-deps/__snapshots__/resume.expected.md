@@ -3,7 +3,7 @@
 <html>
   <head>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[0,"packages/translator-tags/src/__tests__/fixtures/basic-effect-no-deps/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[0,"__tests__/template.marko_0",0];M._.w()
     </script>
   </head>
   <body

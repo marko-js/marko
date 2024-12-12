@@ -8,10 +8,10 @@ const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_
 const _setup$forBody = _scope => {
   _child(_scope["#childScope/0"]);
 };
-const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-shallow/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_write$forBody], () => _params_2$forBody));
+const _forBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_write$forBody], () => _params_2$forBody));
 const _for = /* @__PURE__ */_$.loopOf("#text/2", _forBody);
 const _write = /* @__PURE__ */_$.value("write", 0, () => _$.inLoopScope(_write$forBody, "#text/2"));
-const _items_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-shallow/template.marko_0_items", (_scope, {
+const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {
   items
 }) => _$.on(_scope["#button/0"], "click", function () {
   _items(_scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
@@ -29,5 +29,5 @@ function _write2(_scope) {
     _scope["#div/1"].innerHTML += '\n' + msg;
   };
 }
-_$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-shallow/template.marko_0/write", _write2);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-shallow/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_0/write", _write2);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

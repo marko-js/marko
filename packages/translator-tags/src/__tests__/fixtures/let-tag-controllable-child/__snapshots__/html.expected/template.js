@@ -8,11 +8,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     value: source,
     valueChange: _$.register(_new_source => {
       source = _new_source;
-    }, "packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/template.marko_0/valueChange", _scope0_id)
+    }, "__tests__/template.marko_0/valueChange", _scope0_id)
   });
   _$.write(`source=<!>${_$.escapeXML(source)}${_$.markResumeNode(_scope0_id, "#text/1")}`);
   _$.writeScope(_scope0_id, {
     "#childScope/0": _$.writeExistingScope(_childScope)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

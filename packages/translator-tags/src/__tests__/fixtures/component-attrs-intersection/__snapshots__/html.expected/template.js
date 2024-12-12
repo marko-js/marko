@@ -8,10 +8,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     value: count
   });
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko_0_count");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope(_scope0_id, {
     "count": count,
     "#childScope/0": _$.writeExistingScope(_childScope)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/component-attrs-intersection/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

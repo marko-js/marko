@@ -1,7 +1,7 @@
 export const _template_ = "<button> </button>";
 export const _walks_ = /* get, next(1), get, out(1) */" D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _increment_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0_increment", (_scope, {
+const _increment_effect = _$.effect("__tests__/template.marko_0_increment", (_scope, {
   increment
 }) => _$.on(_scope["#button/0"], "click", increment));
 const _increment = /* @__PURE__ */_$.value("increment", (_scope, increment) => _increment_effect(_scope));
@@ -19,5 +19,5 @@ function _increment2(_scope, {
     _clickCount(_scope, clickCount + 1), clickCount;
   };
 }
-_$.register("packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko_0/increment", _increment2);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-counter-const-event-handler/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_0/increment", _increment2);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

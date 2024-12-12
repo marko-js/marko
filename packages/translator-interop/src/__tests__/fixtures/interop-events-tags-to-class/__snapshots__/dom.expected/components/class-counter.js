@@ -1,5 +1,5 @@
 import { t as _t } from "marko/src/runtime/vdom/index.js";
-const _marko_componentType = "packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko",
+const _marko_componentType = "__tests__/components/class-counter.marko",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _marko_renderer from "marko/src/runtime/components/renderer.js";

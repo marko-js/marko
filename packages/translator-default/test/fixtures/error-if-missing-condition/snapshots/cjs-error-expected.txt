@@ -1,5 +1,5 @@
 CompileError: 
-    at packages/translator-default/test/fixtures/error-if-missing-condition/template.marko:1:2
+    at __tests__/template.marko:1:2
     > 1 | <if>
         |  ^^ Invalid '<if>' tag, expected arguments like '<if(test)>'.
       2 |   Test

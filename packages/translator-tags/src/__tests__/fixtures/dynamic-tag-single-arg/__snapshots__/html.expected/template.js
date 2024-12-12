@@ -8,11 +8,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_dynamicScope, tags[0], x);
   _$.write(_$.markResumeControlEnd(_scope0_id, "#text/2"));
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-single-arg/template.marko_0_x");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope(_scope0_id, {
     "x": x,
     "#text/2!": _$.writeExistingScope(_dynamicScope),
     "#text/2(": _$.normalizeDynamicRenderer(tags[0])
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-single-arg/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

@@ -66,6 +66,7 @@ describe("translator-interop", () => {
     describe(entry, () => {
       const resolve = (file: string) => path.join(fixturesDir, entry, file);
       const fixtureDir = resolve(".");
+      const relativeFixtureDir = path.relative(process.cwd(), fixtureDir);
       const templateFile = resolve("template.marko");
 
       const config: TestConfig = (() => {
@@ -75,13 +76,16 @@ describe("translator-interop", () => {
           return {};
         }
       })();
-
-      const snapMD = (fn: () => unknown) =>
-        (config.error_runtime ? snap.catch : snap)(fn, {
-          ext: `.md`,
-          dir: fixtureDir,
-        });
-
+      const stripFixtureDir = async (str: string | Promise<string>) =>
+        (await str).replaceAll(relativeFixtureDir, "__tests__");
+      const snapMD = (fn: () => Promise<string>) =>
+        (config.error_runtime ? snap.catch : snap)(
+          () => stripFixtureDir(fn()),
+          {
+            ext: `.md`,
+            dir: fixtureDir,
+          },
+        );
       const snapAllTemplates = async (compilerConfig: compiler.Config) => {
         const additionalMarkoFiles = await glob(resolve("**/*.marko"), {
           absolute: true,
@@ -108,10 +112,13 @@ describe("translator-interop", () => {
           } else {
             snapName = snapName.replace(".marko", ".js");
           }
-          await targetSnap(() => compileCode(file, finalConfig), {
-            file: snapName,
-            dir: fixtureDir,
-          });
+          await targetSnap(
+            () => stripFixtureDir(compileCode(file, finalConfig)),
+            {
+              file: snapName,
+              dir: fixtureDir,
+            },
+          );
 
           if (
             compilerConfig.output === "dom" &&
@@ -121,10 +128,12 @@ describe("translator-interop", () => {
           ) {
             await targetSnap(
               () =>
-                compileCode(file, {
-                  ...finalConfig,
-                  output: "hydrate",
-                }),
+                stripFixtureDir(
+                  compileCode(file, {
+                    ...finalConfig,
+                    output: "hydrate",
+                  }),
+                ),
               {
                 file: name.replace(".marko", ".hydrate.js"),
                 dir: fixtureDir,

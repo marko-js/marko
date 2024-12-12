@@ -9,7 +9,7 @@ var _index2 = _interopRequireDefault(require("./components/hello/index.marko"));
 var _renderTag = _interopRequireDefault(require("marko/src/runtime/helpers/render-tag.js"));
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
-const _marko_componentType = "packages/translator-default/test/fixtures/at-tags-dynamic-with-params/template.marko",
+const _marko_componentType = "__tests__/template.marko",
   _marko_template = (0, _index.t)(_marko_componentType);
 var _default = exports.default = _marko_template;
 const _marko_component = {};

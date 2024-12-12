@@ -12,4 +12,4 @@ export const _pattern__ = /* @__PURE__ */_$.value("_pattern_", (_scope, _pattern
 }, () => _renderBody_);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _pattern__(_scope, input.thing), () => _pattern__);
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/components/custom-tag/index.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/custom-tag/index.marko", _template_, _walks_, _setup_, void 0, () => _params__);

@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     const _scope1_id = _$.nextScopeId();
     _forScopeIds.push(_scope1_id);
     _$.write(`<button>${_$.escapeXML(i)}${_$.markResumeNode(_scope1_id, "#text/1")}</button>${_$.markResumeNode(_scope1_id, "#button/0")}`);
-    _$.writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/for-event-handler/template.marko_1_num");
+    _$.writeEffect(_scope1_id, "__tests__/template.marko_1_num");
     _$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
@@ -20,4 +20,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/0(": _scope1_.size ? _scope1_ : undefined
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/for-event-handler/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

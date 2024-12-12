@@ -3,7 +3,7 @@ function createWrapper(a) {
     a
   };
 }
-_$.register(createWrapper, "packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0/createWrapper");
+_$.register(createWrapper, "__tests__/template.marko_0/createWrapper");
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
@@ -13,9 +13,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     a: b
   } = createWrapper(count);
   _$.write(`<button>${_$.escapeXML(a)}${_$.markResumeNode(_scope0_id, "#text/1")} <!>${_$.escapeXML(b)}${_$.markResumeNode(_scope0_id, "#text/2")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0_count");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope(_scope0_id, {
     "count": count
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

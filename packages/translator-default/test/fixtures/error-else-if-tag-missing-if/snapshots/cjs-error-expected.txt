@@ -1,5 +1,5 @@
 CompileError: 
-    at packages/translator-default/test/fixtures/error-else-if-tag-missing-if/template.marko:4:2
+    at __tests__/template.marko:4:2
       2 | </if>
       3 | <div/>
     > 4 | <else>

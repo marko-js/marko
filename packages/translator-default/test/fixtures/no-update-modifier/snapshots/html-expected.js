@@ -1,5 +1,5 @@
 import { t as _t } from "marko/src/runtime/html/index.js";
-const _marko_componentType = "packages/translator-default/test/fixtures/no-update-modifier/template.marko",
+const _marko_componentType = "__tests__/template.marko",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _marko_props from "marko/src/runtime/html/helpers/data-marko.js";

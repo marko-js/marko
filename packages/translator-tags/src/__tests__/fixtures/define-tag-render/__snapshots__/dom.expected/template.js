@@ -1,7 +1,7 @@
 export const _template_ = "<!><!><!>";
 export const _walks_ = /* replace, over(1) */"D%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _y$defineBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_y", (_scope, {
+const _y$defineBody_effect = _$.effect("__tests__/template.marko_1_y", (_scope, {
   y
 }) => _$.on(_scope["#button/2"], "click", function () {
   _y$defineBody(_scope, y + 1), y;
@@ -17,7 +17,7 @@ const _params_2$defineBody = /* @__PURE__ */_$.value("_params_2", (_scope, _para
 const _setup$defineBody = _scope => {
   _y$defineBody(_scope, 1);
 };
-const _defineBody = _$.register("packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div>Hello <!> <!></div><button> </button>", /* next(1), over(1), replace, over(2), replace, out(1), get, next(1), get */"Db%c%l D ", _setup$defineBody, void 0, () => _params_2$defineBody));
+const _defineBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div>Hello <!> <!></div><button> </button>", /* next(1), over(1), replace, over(2), replace, out(1), get, next(1), get */"Db%c%l D ", _setup$defineBody, void 0, () => _params_2$defineBody));
 const _MyTag_input = _$.dynamicTagAttrs("#text/0");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _MyTag_input(_scope, () => ({
   name: "Ryan"
@@ -28,4 +28,4 @@ export function _setup_(_scope) {
     renderBody: _defineBody(_scope)
   });
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/define-tag-render/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

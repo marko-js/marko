@@ -7,7 +7,7 @@ const _checkedValue = /* @__PURE__ */_$.state("checkedValue", (_scope, checkedVa
   _$.controllable_input_checkedValue(_scope, "#input/2", checkedValue, _checkedValueChange(_scope), "c");
   _$.data(_scope["#text/3"], checkedValue);
 });
-const _setup__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0", _scope => {
+const _setup__effect = _$.effect("__tests__/template.marko_0", _scope => {
   _$.controllable_input_checkedValue_effect(_scope, "#input/0");
   _$.controllable_input_checkedValue_effect(_scope, "#input/1");
   _$.controllable_input_checkedValue_effect(_scope, "#input/2");
@@ -31,7 +31,7 @@ function _checkedValueChange3(_scope) {
     _checkedValue(_scope, _new_checkedValue);
   };
 }
-_$.register("packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange_0", _checkedValueChange);
-_$.register("packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange_0", _checkedValueChange2);
-_$.register("packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko_0/checkedValueChange", _checkedValueChange3);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/controllable-checked-values/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_0/checkedValueChange_0", _checkedValueChange);
+_$.register("__tests__/template.marko_0/checkedValueChange_0", _checkedValueChange2);
+_$.register("__tests__/template.marko_0/checkedValueChange", _checkedValueChange3);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

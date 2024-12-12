@@ -6,7 +6,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     const _scope1_id = _$.nextScopeId();
     _$.write("Hello");
     _$.writeScope(_scope1_id, {});
-    _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_1_renderer");
+    _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
   _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _ifScopeId));
@@ -15,7 +15,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     const _scope2_id = _$.nextScopeId();
     _$.write("World");
     _$.writeScope(_scope2_id, {});
-    _$.register(_ifRenderer2 = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_2_renderer");
+    _$.register(_ifRenderer2 = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_2_renderer");
     _ifScopeId2 = _scope2_id;
   }
   _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/1", _ifScopeId2)}<div>`);
@@ -24,19 +24,19 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     const _scope3_id = _$.nextScopeId();
     _$.write("A");
     _$.writeScope(_scope3_id, {});
-    _$.register(_ifRenderer3 = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_3_renderer");
+    _$.register(_ifRenderer3 = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_3_renderer");
     _ifScopeId3 = _scope3_id;
   } else if (input.y) {
     const _scope4_id = _$.nextScopeId();
     _$.write("B");
     _$.writeScope(_scope4_id, {});
-    _$.register(_ifRenderer3 = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_4_renderer");
+    _$.register(_ifRenderer3 = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_4_renderer");
     _ifScopeId3 = _scope4_id;
   } else {
     const _scope5_id = _$.nextScopeId();
     _$.write("C");
     _$.writeScope(_scope5_id, {});
-    _$.register(_ifRenderer3 = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_5_renderer");
+    _$.register(_ifRenderer3 = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_5_renderer");
     _ifScopeId3 = _scope5_id;
   }
   _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/2", _ifScopeId3)}</div>`);
@@ -53,4 +53,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/2!": _$.getScopeById(_ifScopeId3)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

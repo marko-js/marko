@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const el = _$.nodeRef();
   const write = _$.register(function (msg) {
     el().innerHTML += '\n' + msg;
-  }, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_0/write", _scope0_id);
+  }, "__tests__/template.marko_0/write", _scope0_id);
   _$.write(`<button id=outer>Toggle Outer</button>${_$.markResumeNode(_scope0_id, "#button/0")}<button id=middle>Toggle Middle</button>${_$.markResumeNode(_scope0_id, "#button/1")}<button id=inner>Toggle Inner</button>${_$.markResumeNode(_scope0_id, "#button/2")}<pre></pre>${_$.markResumeNode(_scope0_id, "#pre/3")}`);
   let _ifScopeId3, _ifRenderer3;
   if (showOuter) {
@@ -40,18 +40,18 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
         _$.writeScope(_scope3_id, {
           "#childScope/0": _$.writeExistingScope(_childScope3)
         });
-        _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_3_renderer");
+        _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_3_renderer");
         _ifScopeId = _scope3_id;
       }
       _$.write(`${_$.markResumeControlEnd(_scope2_id, "#text/1")}</div>`);
-      _$.writeEffect(_scope2_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_2_showInner/subscriber");
+      _$.writeEffect(_scope2_id, "__tests__/template.marko_2_showInner/subscriber");
       _$.writeScope(_scope2_id, {
         "#childScope/0": _$.writeExistingScope(_childScope2),
         "#text/1(": _ifRenderer,
         "#text/1!": _$.getScopeById(_ifScopeId),
         "_": _$.ensureScopeWithId(_scope1_id)
       });
-      _$.register(_ifRenderer2 = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_2_renderer");
+      _$.register(_ifRenderer2 = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_2_renderer");
       _ifScopeId2 = _scope2_id;
     }
     _$.write(`${_$.markResumeControlSingleNodeEnd(_scope1_id, "#text/1", _ifScopeId2)}</div>`);
@@ -61,13 +61,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       "#text/1(": _ifRenderer2,
       "#text/1!": _$.getScopeById(_ifScopeId2)
     });
-    _$.register(_ifRenderer3 = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_1_renderer");
+    _$.register(_ifRenderer3 = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_1_renderer");
     _ifScopeId3 = _scope1_id;
   }
   _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/4", _ifScopeId3));
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_0_showInner");
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_0_showMiddle");
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko_0_showOuter");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_showInner");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_showMiddle");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_showOuter");
   _$.writeScope(_scope0_id, {
     "showOuter": showOuter,
     "showMiddle": showMiddle,
@@ -77,4 +77,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/4!": _$.getScopeById(_ifScopeId3)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-deep/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

@@ -65,6 +65,7 @@ describe("translator-tags", () => {
     describe(entry, () => {
       const resolve = (file: string) => path.join(fixturesDir, entry, file);
       const fixtureDir = resolve(".");
+      const relativeFixtureDir = path.relative(process.cwd(), fixtureDir);
       const serverFile = resolve("server.ts");
       const resumeFile = resolve("resume.ts");
       const browserFile = resolve("browser.ts");
@@ -116,11 +117,16 @@ describe("translator-tags", () => {
           config.skip_resume ||
           skipSSR ||
           skipCSR);
-      const snapMD = (fn: () => unknown) =>
-        (config.error_runtime ? snap.catch : snap)(fn, {
-          ext: `.md`,
-          dir: fixtureDir,
-        });
+      const stripFixtureDir = async (str: string | Promise<string>) =>
+        (await str).replaceAll(relativeFixtureDir, "__tests__");
+      const snapMD = (fn: () => Promise<string>) =>
+        (config.error_runtime ? snap.catch : snap)(
+          () => stripFixtureDir(fn()),
+          {
+            ext: `.md`,
+            dir: fixtureDir,
+          },
+        );
       const snapAllTemplates = async (compilerConfig: compiler.Config) => {
         const additionalMarkoFiles = await glob(resolve("**/*.marko"), {
           absolute: true,
@@ -150,10 +156,13 @@ describe("translator-tags", () => {
               snapName = name.replace(".marko", ".js");
             }
 
-            await targetSnap(() => compileCode(file, finalConfig), {
-              file: snapName,
-              dir: fixtureDir,
-            });
+            await targetSnap(
+              () => stripFixtureDir(compileCode(file, finalConfig)),
+              {
+                file: snapName,
+                dir: fixtureDir,
+              },
+            );
 
             if (
               compilerConfig.output === "dom" &&
@@ -161,10 +170,13 @@ describe("translator-tags", () => {
               !skipResume &&
               !config.error_compiler
             ) {
-              await targetSnap(() => bundle(file, nameCache, finalConfig), {
-                file: name.replace(".marko", ".hydrate.js"),
-                dir: fixtureDir,
-              });
+              await targetSnap(
+                () => stripFixtureDir(bundle(file, nameCache, finalConfig)),
+                {
+                  file: name.replace(".marko", ".hydrate.js"),
+                  dir: fixtureDir,
+                },
+              );
             }
           } catch (e) {
             errors.push(e as Error);

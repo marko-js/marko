@@ -1,5 +1,5 @@
 # Write
-  <button></button><!--M_*0 #button/0--><!--M_[1--><div>Id is <!>dynamic<!--M_*1 #text/0--></div><!--M_]0 #text/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"],"#text/1!":_.a={},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"]},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",0];M._.w()</script>
+  <button></button><!--M_*0 #button/0--><!--M_[1--><div>Id is <!>dynamic<!--M_*1 #text/0--></div><!--M_]0 #text/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{tagName:_._["__tests__/components/child.marko"],"#text/1!":_.a={},"#text/1(":_._["__tests__/components/child.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()</script>
 
 
 # Render "End"
@@ -18,7 +18,7 @@
     </div>
     <!--M_]0 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"],"#text/1!":_.a={},"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/components/child.marko"]},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-custom-native/template.marko_0_tagName",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["__tests__/components/child.marko"],"#text/1!":_.a={},"#text/1(":_._["__tests__/components/child.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>

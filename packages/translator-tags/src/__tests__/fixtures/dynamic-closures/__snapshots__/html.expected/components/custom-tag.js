@@ -10,4 +10,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/0(": _$.normalizeDynamicRenderer(input.renderBody)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/components/custom-tag.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/custom-tag.marko", _renderer);

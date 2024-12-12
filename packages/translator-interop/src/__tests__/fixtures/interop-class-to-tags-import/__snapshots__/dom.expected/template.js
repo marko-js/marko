@@ -1,5 +1,5 @@
 import { t as _t } from "marko/src/runtime/vdom/index.js";
-const _marko_componentType = "packages/translator-interop/src/__tests__/fixtures/interop-class-to-tags-import/template.marko",
+const _marko_componentType = "__tests__/template.marko",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import TagsCounter from "./components/tags-counter.marko";

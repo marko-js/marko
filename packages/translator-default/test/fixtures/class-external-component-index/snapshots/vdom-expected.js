@@ -1,5 +1,5 @@
 import { t as _t } from "marko/src/runtime/vdom/index.js";
-const _marko_componentType = "packages/translator-default/test/fixtures/class-external-component-index/index.marko",
+const _marko_componentType = "__tests__/index.marko",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _marko_component from "./component.js";

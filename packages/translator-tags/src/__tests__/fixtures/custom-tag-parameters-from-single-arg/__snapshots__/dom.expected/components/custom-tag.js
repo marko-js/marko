@@ -9,7 +9,7 @@ const _expr_Text_x = /* @__PURE__ */_$.intersection(2, _scope => {
   _inputRenderBody_input(_scope, () => x);
 }, () => _inputRenderBody_input);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", 0, () => _expr_Text_x);
-const _x_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-single-arg/components/custom-tag.marko_0_x", (_scope, {
+const _x_effect = _$.effect("__tests__/components/custom-tag.marko_0_x", (_scope, {
   x
 }) => _$.on(_scope["#button/0"], "click", function () {
   _x(_scope, x + 1), x;
@@ -24,4 +24,4 @@ export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) 
 export function _setup_(_scope) {
   _x(_scope, 1);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-single-arg/components/custom-tag.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/custom-tag.marko", _template_, _walks_, _setup_, void 0, () => _params__);

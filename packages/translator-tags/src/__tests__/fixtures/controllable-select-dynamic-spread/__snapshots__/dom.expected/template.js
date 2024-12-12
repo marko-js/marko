@@ -1,7 +1,7 @@
 export const _template_ = "<!><!><span> </span>";
 export const _walks_ = /* replace, over(1), next(1), get, out(1) */"D%bD l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _setup$tagSelectBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_1", _scope => {
+const _setup$tagSelectBody_effect = _$.effect("__tests__/template.marko_1", _scope => {
   _$.attrsEvents(_scope, "#option/0");
   _$.attrsEvents(_scope, "#option/1");
   _$.attrsEvents(_scope, "#option/2");
@@ -18,7 +18,7 @@ const _setup$tagSelectBody = _scope => {
   });
   _setup$tagSelectBody_effect(_scope);
 };
-const _tagSelectBody = _$.register("packages/translator-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<option>A</option><option>B</option><option>C</option>", /* get, over(1), get, over(1), get */" b b ", _setup$tagSelectBody));
+const _tagSelectBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<option>A</option><option>B</option><option>C</option>", /* get, over(1), get, over(1), get */" b b ", _setup$tagSelectBody));
 const _tagSelect_input = _$.dynamicTagAttrs("#text/0", _tagSelectBody);
 const _expr_Text_value = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
@@ -38,4 +38,4 @@ export function _setup_(_scope) {
   _value(_scope, "b");
   _tag(_scope, "select");
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/controllable-select-dynamic-spread/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

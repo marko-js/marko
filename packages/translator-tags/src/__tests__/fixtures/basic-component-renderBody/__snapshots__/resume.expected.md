@@ -11,7 +11,7 @@
     </button>
     <!--M_*1 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={clickCount:0,"#childScope/0":_.b={"#text/1!":_.c={}}},1:_.b,2:_.c},_.b.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_0/onClick"](_.a),_.c._=_.a,_.b["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_1_renderer"](_.a),_.d),2,"packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_1_clickCount/subscriber",1,"packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onClick",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={clickCount:0,"#childScope/0":_.b={"#text/1!":_.c={}}},1:_.b,2:_.c},_.b.onClick=_._["__tests__/template.marko_0/onClick"](_.a),_.c._=_.a,_.b["#text/1("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d),2,"__tests__/template.marko_1_clickCount/subscriber",1,"__tests__/components/my-button.marko_0_onClick",0];M._.w()
     </script>
   </body>
 </html>
@@ -38,7 +38,7 @@ container.querySelector("button").click()
     </button>
     <!--M_*1 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={clickCount:0,"#childScope/0":_.b={"#text/1!":_.c={}}},1:_.b,2:_.c},_.b.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_0/onClick"](_.a),_.c._=_.a,_.b["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_1_renderer"](_.a),_.d),2,"packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_1_clickCount/subscriber",1,"packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onClick",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={clickCount:0,"#childScope/0":_.b={"#text/1!":_.c={}}},1:_.b,2:_.c},_.b.onClick=_._["__tests__/template.marko_0/onClick"](_.a),_.c._=_.a,_.b["#text/1("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d),2,"__tests__/template.marko_1_clickCount/subscriber",1,"__tests__/components/my-button.marko_0_onClick",0];M._.w()
     </script>
   </body>
 </html>
@@ -65,7 +65,7 @@ container.querySelector("button").click()
     </button>
     <!--M_*1 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={clickCount:0,"#childScope/0":_.b={"#text/1!":_.c={}}},1:_.b,2:_.c},_.b.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_0/onClick"](_.a),_.c._=_.a,_.b["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_1_renderer"](_.a),_.d),2,"packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_1_clickCount/subscriber",1,"packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onClick",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={clickCount:0,"#childScope/0":_.b={"#text/1!":_.c={}}},1:_.b,2:_.c},_.b.onClick=_._["__tests__/template.marko_0/onClick"](_.a),_.c._=_.a,_.b["#text/1("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d),2,"__tests__/template.marko_1_clickCount/subscriber",1,"__tests__/components/my-button.marko_0_onClick",0];M._.w()
     </script>
   </body>
 </html>
@@ -92,7 +92,7 @@ container.querySelector("button").click()
     </button>
     <!--M_*1 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={clickCount:0,"#childScope/0":_.b={"#text/1!":_.c={}}},1:_.b,2:_.c},_.b.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_0/onClick"](_.a),_.c._=_.a,_.b["#text/1("]=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_1_renderer"](_.a),_.d),2,"packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/template.marko_1_clickCount/subscriber",1,"packages/translator-tags/src/__tests__/fixtures/basic-component-renderBody/components/my-button.marko_0_onClick",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={clickCount:0,"#childScope/0":_.b={"#text/1!":_.c={}}},1:_.b,2:_.c},_.b.onClick=_._["__tests__/template.marko_0/onClick"](_.a),_.c._=_.a,_.b["#text/1("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d),2,"__tests__/template.marko_1_clickCount/subscriber",1,"__tests__/components/my-button.marko_0_onClick",0];M._.w()
     </script>
   </body>
 </html>

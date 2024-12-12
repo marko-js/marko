@@ -18,7 +18,7 @@ const _params_3$forBody = /* @__PURE__ */_$.value("_params_3", (_scope, _params_
 const _setup$forBody2 = _scope => {
   _child(_scope["#childScope/0"]);
 };
-const _forBody2 = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer(`<div>${_child_template}</div>`, /* next(1), beginChild, _child_walks, endChild */`D/${_child_walks}&`, _setup$forBody2, () => [_write$forBody2, _outerItem$forBody2], () => _params_3$forBody));
+const _forBody2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer(`<div>${_child_template}</div>`, /* next(1), beginChild, _child_walks, endChild */`D/${_child_walks}&`, _setup$forBody2, () => [_write$forBody2, _outerItem$forBody2], () => _params_3$forBody));
 const _for$forBody = /* @__PURE__ */_$.loopOf("#text/1", _forBody2);
 const _write$forBody = /* @__PURE__ */_$.closure("write", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), void 0, () => _$.inChild("#childScope/0", _child_input_write));
 const _outerItem$forBody = /* @__PURE__ */_$.value("outerItem", (_scope, outerItem) => _child_input_name(_scope["#childScope/0"], `${outerItem}`), () => _$.intersections([_$.inChild("#childScope/0", _child_input_name), _$.inLoopScope(_outerItem$forBody2, "#text/1")]));
@@ -27,10 +27,10 @@ const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_
 const _setup$forBody = _scope => {
   _child(_scope["#childScope/0"]);
 };
-const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$forBody, () => [_write$forBody, _items$forBody], () => _params_2$forBody));
+const _forBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$forBody, () => [_write$forBody, _items$forBody], () => _params_2$forBody));
 const _for = /* @__PURE__ */_$.loopOf("#text/2", _forBody);
 const _write = /* @__PURE__ */_$.value("write", 0, () => _$.intersections([_$.inLoopScope(_write$forBody, "#text/2"), _$.dynamicSubscribers("write")]));
-const _items_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/template.marko_0_items", (_scope, {
+const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {
   items
 }) => _$.on(_scope["#button/0"], "click", function () {
   _items(_scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
@@ -48,5 +48,5 @@ function _write2(_scope) {
     _scope["#div/1"].innerHTML += '\n' + msg;
   };
 }
-_$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/template.marko_0/write", _write2);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_0/write", _write2);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

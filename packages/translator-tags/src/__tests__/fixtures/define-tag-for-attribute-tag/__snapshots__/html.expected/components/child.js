@@ -12,4 +12,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/1(": _$.normalizeDynamicRenderer(input.thing.renderBody)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/components/child.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/child.marko", _renderer);

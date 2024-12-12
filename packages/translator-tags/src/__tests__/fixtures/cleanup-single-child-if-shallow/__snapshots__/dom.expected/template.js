@@ -8,9 +8,9 @@ const _setup$ifBody = _scope => {
     write: _write(_scope)
   });
 };
-const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-shallow/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$ifBody));
+const _ifBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$ifBody));
 const _if = /* @__PURE__ */_$.conditional("#text/2", 0);
-const _show_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-shallow/template.marko_0_show", (_scope, {
+const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
   show
 }) => _$.on(_scope["#button/0"], "click", function () {
   _show(_scope, !show);
@@ -27,5 +27,5 @@ function _write(_scope) {
     _scope._["#div/1"].innerHTML = state;
   };
 }
-_$.register("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-shallow/template.marko_1/write", _write);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-shallow/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_1/write", _write);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

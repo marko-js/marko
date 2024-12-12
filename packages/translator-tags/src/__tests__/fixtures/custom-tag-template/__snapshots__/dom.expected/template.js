@@ -6,4 +6,4 @@ export function _setup_(_scope) {
   _hello(_scope["#childScope/0"]);
   _hello_input_name(_scope["#childScope/0"], "Frank");
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/custom-tag-template/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

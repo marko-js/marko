@@ -9,7 +9,7 @@ const _expr_Text_x_y = /* @__PURE__ */_$.intersection(3, _scope => {
   } = _scope;
   _inputRenderBody_input(_scope, () => [x, y]);
 }, () => _inputRenderBody_input);
-const _expr_x_y_effect = _$.effect("packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y", (_scope, {
+const _expr_x_y_effect = _$.effect("__tests__/components/custom-tag.marko_0_x_y", (_scope, {
   x,
   y
 }) => _$.on(_scope["#button/0"], "click", function () {
@@ -33,4 +33,4 @@ export function _setup_(_scope) {
   _x(_scope, 1);
   _y(_scope, 10);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-interop/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/custom-tag.marko", _template_, _walks_, _setup_, void 0, () => _params__);

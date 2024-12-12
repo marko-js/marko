@@ -11,11 +11,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
       const _scope1_id = _$.nextScopeId();
       _$.write(`${_$.escapeXML(a)} ${_$.escapeXML(b)} <!>${_$.escapeXML(c)}${_$.markResumeNode(_scope1_id, "#text/2")}`);
-      _$.writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_c/subscriber");
+      _$.writeEffect(_scope1_id, "__tests__/template.marko_1_c/subscriber");
       _$.writeScope(_scope1_id, {
         "_": _$.ensureScopeWithId(_scope0_id)
       });
-    }), "packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_1_renderer", _scope0_id)
+    }), "__tests__/template.marko_1_renderer", _scope0_id)
   });
   _$.write("<div>");
   if (Math.random()) {
@@ -23,7 +23,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     if (Math.random()) {
       const _scope3_id = _$.nextScopeId();
       _$.write(`${_$.escapeXML(a)} ${_$.escapeXML(b)} <!>${_$.escapeXML(c)}${_$.markResumeNode(_scope3_id, "#text/2")}`);
-      _$.writeEffect(_scope3_id, "packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_3_c/subscriber");
+      _$.writeEffect(_scope3_id, "__tests__/template.marko_3_c/subscriber");
       _$.writeScope(_scope3_id, {
         "_": _$.ensureScopeWithId(_scope2_id)
       });
@@ -33,11 +33,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     });
   }
   _$.write("</div>");
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko_0");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.writeScope(_scope0_id, {
     "b": b,
     "c": c,
     "#childScope/1": _$.writeExistingScope(_childScope)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/dynamic-closures/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

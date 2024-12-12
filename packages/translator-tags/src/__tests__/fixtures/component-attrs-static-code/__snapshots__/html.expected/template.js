@@ -1,10 +1,10 @@
 const formatNumber = _$.register(n => {
   return "$" + n.toFixed(2);
-}, "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/formatNumber");
+}, "__tests__/template.marko_0/formatNumber");
 function formatNumber2(n) {
   return "$" + n.toFixed(2);
 }
-_$.register(formatNumber2, "packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/formatNumber2");
+_$.register(formatNumber2, "__tests__/template.marko_0/formatNumber2");
 import _counter from "./components/counter.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
@@ -22,4 +22,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#childScope/1": _$.writeExistingScope(_childScope2)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

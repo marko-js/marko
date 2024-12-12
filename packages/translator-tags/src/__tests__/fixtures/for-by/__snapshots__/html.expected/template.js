@@ -1,15 +1,15 @@
 function getStringBy() {
   return "id";
 }
-_$.register(getStringBy, "packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getStringBy");
+_$.register(getStringBy, "__tests__/template.marko_0/getStringBy");
 function getFunctionBy() {
-  return _$.register(item => item.id, "packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/anonymous");
+  return _$.register(item => item.id, "__tests__/template.marko_0/anonymous");
 }
-_$.register(getFunctionBy, "packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getFunctionBy");
+_$.register(getFunctionBy, "__tests__/template.marko_0/getFunctionBy");
 function getMissingBy() {
   return undefined;
 }
-_$.register(getMissingBy, "packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0/getMissingBy");
+_$.register(getMissingBy, "__tests__/template.marko_0/getMissingBy");
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
@@ -90,7 +90,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _scope5_.set(_$.forOfBy(getMissingBy(), _list5, _index5), _$.getScopeById(_scope5_id));
   });
   _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#div/4", _forScopeIds5)}</div>${_$.markResumeNode(_scope0_id, "#div/4")}<button>Rotate</button>${_$.markResumeNode(_scope0_id, "#button/5")}</div>`);
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/for-by/template.marko_0_items");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope(_scope0_id, {
     "items": items,
     "#div/0(": _scope1_.size ? _scope1_ : undefined,
@@ -100,4 +100,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#div/4(": _scope5_.size ? _scope5_ : undefined
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/for-by/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

@@ -8,13 +8,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.dynamicTagInput(_dynamicScope, _classLayout, {}, _$.register(/* @__PURE__ */_$.createRenderer(() => {
     const _scope1_id = _$.nextScopeId();
     _$.write(`<button id=tags>${_$.escapeXML(count)}${_$.markResumeNode(_scope1_id, "#text/1")}</button>${_$.markResumeNode(_scope1_id, "#button/0")}`);
-    _$.writeEffect(_scope1_id, "packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count/subscriber");
-    _$.writeEffect(_scope1_id, "packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_count");
+    _$.writeEffect(_scope1_id, "__tests__/template.marko_1_count/subscriber");
+    _$.writeEffect(_scope1_id, "__tests__/template.marko_1_count");
     _$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
-  }), "packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko_1_renderer", _scope0_id));
-  _s(_classLayout, "packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko");
+  }), "__tests__/template.marko_1_renderer", _scope0_id));
+  _s(_classLayout, "__tests__/components/class-layout.marko");
   _$.write(_$.markResumeControlEnd(_scope0_id, "#text/0"));
   _$.writeScope(_scope0_id, {
     "count": count,
@@ -22,4 +22,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/0(": _$.normalizeDynamicRenderer(_classLayout)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

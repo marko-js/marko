@@ -15,7 +15,7 @@
     </button>
     <!--M_*0 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{x:0}}),0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{x:0}}),0,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -46,7 +46,7 @@ container.querySelector("#increment")?.click()
     </button>
     <!--M_*0 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{x:0}}),0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{x:0}}),0,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -78,7 +78,7 @@ container.querySelector("#increment")?.click()
     </button>
     <!--M_*0 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{x:0}}),0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{x:0}}),0,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

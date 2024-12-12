@@ -8,17 +8,17 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
       const _scope1_id = _$.nextScopeId();
       _$.write("<span>The thing</span>");
-    }), "packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_1_renderer", _scope0_id)
+    }), "__tests__/template.marko_1_renderer", _scope0_id)
   };
   const _childScope = _$.peekNextScope();
   _child({
     thing: myThing
   });
   _$.write(`<button>Toggle</button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko_0_selected");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_selected");
   _$.writeScope(_scope0_id, {
     "selected": selected,
     "#childScope/0": _$.writeExistingScope(_childScope)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

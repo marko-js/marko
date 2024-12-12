@@ -7,7 +7,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagArgs(_dynamicScope, input.renderBody, [x, y]);
   _$.write(_$.markResumeControlEnd(_scope0_id, "#text/3"));
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko_0_x_y");
+  _$.writeEffect(_scope0_id, "__tests__/components/custom-tag.marko_0_x_y");
   _$.writeScope(_scope0_id, {
     "x": x,
     "y": y,
@@ -15,4 +15,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/3(": _$.normalizeDynamicRenderer(input.renderBody)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/components/custom-tag.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/custom-tag.marko", _renderer);

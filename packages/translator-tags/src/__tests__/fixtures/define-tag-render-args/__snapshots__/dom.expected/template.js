@@ -9,7 +9,7 @@ const _params_2$defineBody = /* @__PURE__ */_$.value("_params_2", (_scope, _para
   _b$defineBody(_scope, _params_2[1]);
   _c$defineBody(_scope, _params_2[2]);
 });
-const _defineBody = _$.register("packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div><!>|<!>|<!></div>", /* next(1), replace, over(2), replace, over(2), replace */"D%c%c%", void 0, void 0, () => _params_2$defineBody));
+const _defineBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div><!>|<!>|<!></div>", /* next(1), replace, over(2), replace, over(2), replace */"D%c%c%", void 0, void 0, () => _params_2$defineBody));
 const _MyTag_input = _$.dynamicTagAttrs("#text/0", void 0, 1);
 const _expr_Text_x = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
@@ -18,7 +18,7 @@ const _expr_Text_x = /* @__PURE__ */_$.intersection(2, _scope => {
   _MyTag_input(_scope, () => [1, "Hello", x]);
 }, () => _MyTag_input);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", 0, () => _expr_Text_x);
-const _x_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko_0_x", (_scope, {
+const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
   x
 }) => _$.on(_scope["#button/1"], "click", function () {
   _x(_scope, x + 1), x;
@@ -34,4 +34,4 @@ export function _setup_(_scope) {
     renderBody: _defineBody(_scope)
   });
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/define-tag-render-args/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

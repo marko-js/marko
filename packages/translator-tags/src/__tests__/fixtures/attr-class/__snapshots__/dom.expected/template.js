@@ -2,7 +2,7 @@ export const _template_ = `<div></div><div class="a b"></div><div class="a b c">
 export const _walks_ = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(1) */` d/${_customTag_walks}&/${_customTag_walks}&%bD`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _customTag, _className_ as _customTag_input_class, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag.marko";
-const _testBody = _$.register("packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello", ""));
+const _testBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello", ""));
 const _inputTest_input = _$.dynamicTagAttrs("#text/3");
 const _expr_Text_c_d = /* @__PURE__ */_$.intersection(3, _scope => {
   const {
@@ -52,4 +52,4 @@ export function _setup_(_scope) {
   _customTag(_scope["#childScope/2"]);
   _customTag_input_class(_scope["#childScope/2"], ["a", false, "b"]);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/attr-class/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);

@@ -7,7 +7,7 @@ const _d = /* @__PURE__ */_$.state("d", (_scope, d) => _$.data(_scope["#text/4"]
 const _c = /* @__PURE__ */_$.state("c", (_scope, c) => _$.data(_scope["#text/3"], JSON.stringify(c)));
 const _b = /* @__PURE__ */_$.state("b", (_scope, b) => _$.data(_scope["#text/2"], b));
 const _a = /* @__PURE__ */_$.state("a", (_scope, a) => _$.data(_scope["#text/1"], a));
-const _setup__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0", _scope => _$.on(_scope["#button/0"], "click", function () {
+const _setup__effect = _$.effect("__tests__/template.marko_0", _scope => _$.on(_scope["#button/0"], "click", function () {
   let local;
   ((_result2, _a2, _b2, _c2) => ({
     a: _a2,
@@ -39,5 +39,5 @@ export function _setup_(_scope) {
   _e(_scope, []);
 }
 function _noop(_) {}
-_$.register("packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko_0/noop", _noop);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/tag-var-destructure/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_0/noop", _noop);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

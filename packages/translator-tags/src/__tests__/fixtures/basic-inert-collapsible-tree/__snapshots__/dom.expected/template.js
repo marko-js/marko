@@ -11,4 +11,4 @@ export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) 
 export function _setup_(_scope) {
   _comments(_scope["#childScope/0"]);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);

@@ -1,4 +1,4 @@
 CompileError: 
-    at packages/translator-default/test/fixtures/error-unknown-modifier/template.marko:1:6
+    at __tests__/template.marko:1:6
     > 1 | <div value:n-update=1/>
         |      ^^^^^^^^^^^^^^^^ Unsupported modifier "n-update".

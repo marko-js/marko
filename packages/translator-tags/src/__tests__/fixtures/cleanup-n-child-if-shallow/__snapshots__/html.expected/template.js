@@ -13,21 +13,21 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _child({
       write: _$.register(function (state) {
         el().innerHTML = state;
-      }, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-shallow/template.marko_1/write", _scope1_id)
+      }, "__tests__/template.marko_1/write", _scope1_id)
     });
     _$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id),
       "#childScope/0": _$.writeExistingScope(_childScope)
     });
-    _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-shallow/template.marko_1_renderer");
+    _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
   _$.write(_$.markResumeControlEnd(_scope0_id, "#text/2"));
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-shallow/template.marko_0_show");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_show");
   _$.writeScope(_scope0_id, {
     "show": show,
     "#text/2(": _ifRenderer,
     "#text/2!": _$.getScopeById(_ifScopeId)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/cleanup-n-child-if-shallow/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

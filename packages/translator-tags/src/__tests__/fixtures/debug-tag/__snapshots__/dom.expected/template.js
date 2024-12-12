@@ -12,4 +12,4 @@ export function _setup_(_scope) {
   _x(_scope, 0);
   _y(_scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/debug-tag/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

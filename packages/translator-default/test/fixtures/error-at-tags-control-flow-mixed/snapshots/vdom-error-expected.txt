@@ -1,5 +1,5 @@
 CompileError: 
-    at packages/translator-default/test/fixtures/error-at-tags-control-flow-mixed/template.marko:7:9
+    at __tests__/template.marko:7:9
        5 |         </@header>
        6 |
     >  7 |         Body content

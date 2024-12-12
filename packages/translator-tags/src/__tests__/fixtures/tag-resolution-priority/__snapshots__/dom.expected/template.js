@@ -11,4 +11,4 @@ export function _setup_(_scope) {
   _foo(_scope["#childScope/0"]);
   _dynamicTagName(_scope, Bar);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/tag-resolution-priority/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

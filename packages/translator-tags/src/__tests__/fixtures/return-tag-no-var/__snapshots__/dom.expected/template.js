@@ -5,4 +5,4 @@ export function _setup_(_scope) {
   _child(_scope["#childScope/0"]);
 }
 import * as _$ from "@marko/runtime-tags/debug/dom";
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/return-tag-no-var/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

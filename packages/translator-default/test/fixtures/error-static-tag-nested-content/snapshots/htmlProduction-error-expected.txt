@@ -1,5 +1,5 @@
 CompileError: 
-    at packages/translator-default/test/fixtures/error-static-tag-nested-content/template.marko:2:2
+    at __tests__/template.marko:2:2
       1 | static { console.log(x); }
     > 2 |  <div/>
         |  ^ Line has extra indentation at the beginning

@@ -18,5 +18,5 @@ function _valueChange(_scope) {
     _source(_scope, _new_source);
   };
 }
-_$.register("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/template.marko_0/valueChange", _valueChange);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_0/valueChange", _valueChange);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

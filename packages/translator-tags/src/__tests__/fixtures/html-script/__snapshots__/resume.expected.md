@@ -15,7 +15,7 @@
     </script>
     <!--M_*0 #script/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0}}),0,"packages/translator-tags/src/__tests__/fixtures/html-script/template.marko_0_count",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0}}),0,"__tests__/template.marko_0_count",0];M._.w()
     </script>
   </head>
   <body />
@@ -47,7 +47,7 @@ container.querySelector("script").click()
     </script>
     <!--M_*0 #script/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0}}),0,"packages/translator-tags/src/__tests__/fixtures/html-script/template.marko_0_count",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0}}),0,"__tests__/template.marko_0_count",0];M._.w()
     </script>
   </head>
   <body />
@@ -80,7 +80,7 @@ container.querySelector("script").click()
     </script>
     <!--M_*0 #script/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0}}),0,"packages/translator-tags/src/__tests__/fixtures/html-script/template.marko_0_count",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0}}),0,"__tests__/template.marko_0_count",0];M._.w()
     </script>
   </head>
   <body />
@@ -113,7 +113,7 @@ container.querySelector("script").click()
     </script>
     <!--M_*0 #script/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0}}),0,"packages/translator-tags/src/__tests__/fixtures/html-script/template.marko_0_count",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0}}),0,"__tests__/template.marko_0_count",0];M._.w()
     </script>
   </head>
   <body />

@@ -7,11 +7,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   if (clickCount < 3) {
     const _scope1_id = _$.nextScopeId();
     _$.write(`<button>${_$.escapeXML(clickCount)}${_$.markResumeNode(_scope1_id, "#text/1")}</button>${_$.markResumeNode(_scope1_id, "#button/0")}`);
-    _$.writeEffect(_scope1_id, "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_clickCount");
+    _$.writeEffect(_scope1_id, "__tests__/template.marko_1_clickCount");
     _$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
-    _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_1_renderer");
+    _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   } else {
     const _scope2_id = _$.nextScopeId();
@@ -19,7 +19,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.writeScope(_scope2_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
-    _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko_2_renderer");
+    _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_2_renderer");
     _ifScopeId = _scope2_id;
   }
   _$.write(`${_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _ifScopeId)}</div>`);
@@ -29,4 +29,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/0!": _$.getScopeById(_ifScopeId)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-if/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

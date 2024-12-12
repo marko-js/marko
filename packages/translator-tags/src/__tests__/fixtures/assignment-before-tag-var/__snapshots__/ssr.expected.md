@@ -1,5 +1,5 @@
 # Write
-  <button>+</button><!--M_*0 #button/0--><span>0<!--M_*0 #text/1--> was <!>&zwj;<!--M_*0 #text/2--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{clickCount:0}}),0,"packages/translator-tags/src/__tests__/fixtures/assignment-before-tag-var/template.marko_0_clickCount",0];M._.w()</script>
+  <button>+</button><!--M_*0 #button/0--><span>0<!--M_*0 #text/1--> was <!>&zwj;<!--M_*0 #text/2--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{clickCount:0}}),0,"__tests__/template.marko_0_clickCount",0];M._.w()</script>
 
 
 # Render "End"
@@ -20,7 +20,7 @@
       <!--M_*0 #text/2-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"packages/translator-tags/src/__tests__/fixtures/assignment-before-tag-var/template.marko_0_clickCount",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"__tests__/template.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>

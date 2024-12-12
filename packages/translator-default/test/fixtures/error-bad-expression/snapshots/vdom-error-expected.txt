@@ -1,5 +1,5 @@
 CompileError: 
-    at packages/translator-default/test/fixtures/error-bad-expression/template.marko:1:18
+    at __tests__/template.marko:1:18
     > 1 | <div class=(this is not valid)></div>
         |                  ^ Unexpected token, expected ","
       2 |

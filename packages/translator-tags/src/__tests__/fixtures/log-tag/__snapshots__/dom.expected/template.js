@@ -5,7 +5,7 @@ const staticVar = "static var";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _output = /* @__PURE__ */_$.state("output", (_scope, output) => _$.data(_scope["#text/0"], output));
 const _tagVar = /* @__PURE__ */_$.value("tagVar", (_scope, tagVar) => console.log(tagVar));
-const _setup__effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/log-tag/template.marko_0", _scope => _output(_scope, JSON.stringify(testLog)));
+const _setup__effect = _$.effect("__tests__/template.marko_0", _scope => _output(_scope, JSON.stringify(testLog)));
 export function _setup_(_scope) {
   console.log("identifier");
   console.log(staticVar);
@@ -13,4 +13,4 @@ export function _setup_(_scope) {
   _tagVar(_scope, "tag var");
   _output(_scope, JSON.stringify(testLog));
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/log-tag/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

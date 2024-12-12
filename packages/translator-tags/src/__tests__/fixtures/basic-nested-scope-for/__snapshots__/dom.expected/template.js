@@ -11,7 +11,7 @@ const _expr_selected_num$forBody = /* @__PURE__ */_$.intersection(2, _scope => {
   _$.attr(_scope["#button/0"], "data-selected", selected === num);
   _$.attr(_scope["#button/0"], "data-multiple", num % selected === 0);
 });
-const _num$forBody_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko_1_num", (_scope, {
+const _num$forBody_effect = _$.effect("__tests__/template.marko_1_num", (_scope, {
   num
 }) => _$.on(_scope["#button/0"], "click", function () {
   _selected(_scope._, num);
@@ -29,4 +29,4 @@ export function _setup_(_scope) {
   _selected(_scope, 0);
   _for(_scope, [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-nested-scope-for/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

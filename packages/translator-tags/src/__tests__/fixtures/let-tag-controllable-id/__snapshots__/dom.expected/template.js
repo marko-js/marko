@@ -8,7 +8,7 @@ const _expr_x_handler = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _y(_scope, x, handler);
 });
-const _y_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0_y", (_scope, {
+const _y_effect = _$.effect("__tests__/template.marko_0_y", (_scope, {
   y
 }) => _$.on(_scope["#button/0"], "click", function () {
   _y(_scope, y + 1), y;
@@ -28,5 +28,5 @@ function _handler2(_scope) {
     _x(_scope, newValue + 1);
   };
 }
-_$.register("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko_0/handler", _handler2);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-id/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_0/handler", _handler2);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
