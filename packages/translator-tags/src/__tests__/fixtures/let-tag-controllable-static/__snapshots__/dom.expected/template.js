@@ -1,7 +1,7 @@
 export const _template_ = "<button><!>|<!></button>";
 export const _walks_ = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _y_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-static/template.marko_0_y", (_scope, {
+const _y_effect = _$.effect("__tests__/template.marko_0_y", (_scope, {
   y
 }) => _$.on(_scope["#button/0"], "click", function () {
   _y(_scope, y + 1), y;
@@ -22,5 +22,5 @@ function _valueChange(_scope) {
     _x(_scope, newValue + 1);
   };
 }
-_$.register("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-static/template.marko_0/valueChange", _valueChange);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-static/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_0/valueChange", _valueChange);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

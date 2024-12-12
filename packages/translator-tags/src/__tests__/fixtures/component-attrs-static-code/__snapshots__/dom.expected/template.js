@@ -20,6 +20,6 @@ function _formatNumber(n) {
 function _formatNumber2(n) {
   return "$" + n.toFixed(2);
 }
-_$.register("packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/formatNumber", _formatNumber);
-_$.register("packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko_0/formatNumber2", _formatNumber2);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/component-attrs-static-code/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_0/formatNumber", _formatNumber);
+_$.register("__tests__/template.marko_0/formatNumber2", _formatNumber2);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

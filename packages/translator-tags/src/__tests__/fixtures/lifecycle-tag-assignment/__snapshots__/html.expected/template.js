@@ -4,9 +4,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const x = 0;
   const prev = false;
   _$.write(`<div>x=<span>${_$.escapeXML(x)}${_$.markResumeNode(_scope0_id, "#text/0")}</span>, was=<!>${_$.escapeXML(prev)}${_$.markResumeNode(_scope0_id, "#text/1")}</div><button id=increment>Increment</button>${_$.markResumeNode(_scope0_id, "#button/2")}`);
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko_0_x");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope(_scope0_id, {
     "x": x
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-assignment/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

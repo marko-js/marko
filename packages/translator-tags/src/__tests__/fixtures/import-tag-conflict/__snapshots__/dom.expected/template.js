@@ -7,4 +7,4 @@ export function _setup_(_scope) {
   _$.data(_scope["#text/0"], asset1);
   _$.data(_scope["#text/1"], asset2);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/import-tag-conflict/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

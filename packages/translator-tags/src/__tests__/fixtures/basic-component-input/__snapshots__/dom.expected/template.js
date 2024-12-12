@@ -17,5 +17,5 @@ function _onClick(_scope, {
     _clickCount(_scope, clickCount + 1), clickCount;
   };
 }
-_$.register("packages/translator-tags/src/__tests__/fixtures/basic-component-input/template.marko_0/onClick", _onClick);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-component-input/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_0/onClick", _onClick);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

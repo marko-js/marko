@@ -14,4 +14,4 @@ export const _input_thing_ = /* @__PURE__ */_$.value("input_thing", (_scope, inp
 }, () => _input_thing_renderBody_);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_thing_(_scope, input.thing), () => _input_thing_);
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/define-tag-for-attribute-tag/components/child.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/child.marko", _template_, _walks_, _setup_, void 0, () => _params__);

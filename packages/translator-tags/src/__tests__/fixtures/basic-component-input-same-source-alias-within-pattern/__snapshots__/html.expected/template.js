@@ -10,13 +10,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     },
     onClick: _$.register(function () {
       clickCount++;
-    }, "packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/template.marko_0/onClick", _scope0_id)
+    }, "__tests__/template.marko_0/onClick", _scope0_id)
   });
   const _childScope2 = _$.peekNextScope();
   _myButton({
     onClick: _$.register(function () {
       clickCount++;
-    }, "packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/template.marko_0/onClick_0", _scope0_id),
+    }, "__tests__/template.marko_0/onClick_0", _scope0_id),
     value: _$.attrTag({
       text: clickCount
     })
@@ -27,4 +27,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#childScope/1": _$.writeExistingScope(_childScope2)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-component-input-same-source-alias-within-pattern/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

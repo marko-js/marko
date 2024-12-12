@@ -3,9 +3,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   const clickCount = 0;
   _$.write(`<button>${_$.escapeXML(clickCount)}${_$.markResumeNode(_scope0_id, "#text/1")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/basic-component/components/counter.marko_0_clickCount");
+  _$.writeEffect(_scope0_id, "__tests__/components/counter.marko_0_clickCount");
   _$.writeScope(_scope0_id, {
     "clickCount": clickCount
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-component/components/counter.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/counter.marko", _renderer);

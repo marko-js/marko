@@ -2,11 +2,11 @@ export const _template_ = "<!><!><!><div><!></div>";
 export const _walks_ = /* replace, over(1), replace, over(1), next(1), replace, out(1) */"D%b%bD%l";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _elseBody = _$.register("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_5_renderer", /* @__PURE__ */_$.createRenderer("C", ""));
-const _elseIfBody = _$.register("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_4_renderer", /* @__PURE__ */_$.createRenderer("B", ""));
-const _ifBody3 = _$.register("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_3_renderer", /* @__PURE__ */_$.createRenderer("A", ""));
-const _ifBody2 = _$.register("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer("World", ""));
-const _ifBody = _$.register("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("Hello", ""));
+const _elseBody = _$.register("__tests__/template.marko_5_renderer", /* @__PURE__ */_$.createRenderer("C", ""));
+const _elseIfBody = _$.register("__tests__/template.marko_4_renderer", /* @__PURE__ */_$.createRenderer("B", ""));
+const _ifBody3 = _$.register("__tests__/template.marko_3_renderer", /* @__PURE__ */_$.createRenderer("A", ""));
+const _ifBody2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer("World", ""));
+const _ifBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("Hello", ""));
 const _expr_input_x_input_y = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     input_x,
@@ -36,4 +36,4 @@ export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_y_(_scope, input.y);
 }, () => _$.intersections([_input_a_, _input_b_, _input_x_, _input_y_]));
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/if-tag/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);

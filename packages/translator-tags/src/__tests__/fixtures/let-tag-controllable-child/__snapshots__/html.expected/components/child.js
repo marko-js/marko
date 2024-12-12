@@ -4,8 +4,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const state = input.value;
   const otherState = input.value;
   _$.write(`<button>${_$.escapeXML(input.value)}${_$.markResumeNode(_scope0_id, "#text/1")}|<!>${_$.escapeXML(state)}${_$.markResumeNode(_scope0_id, "#text/2")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}<button>${_$.escapeXML(input.value)}${_$.markResumeNode(_scope0_id, "#text/4")}|<!>${_$.escapeXML(otherState)}${_$.markResumeNode(_scope0_id, "#text/5")}</button>${_$.markResumeNode(_scope0_id, "#button/3")}`);
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0_otherState");
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0_state");
+  _$.writeEffect(_scope0_id, "__tests__/components/child.marko_0_otherState");
+  _$.writeEffect(_scope0_id, "__tests__/components/child.marko_0_state");
   _$.writeScope(_scope0_id, {
     "input_value": input.value,
     "input_valueChange": input.valueChange,
@@ -15,4 +15,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "otherState@": input["value" + "Change"]
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/child.marko", _renderer);

@@ -1,5 +1,5 @@
 CompileError: 
-    at packages/translator-default/test/fixtures/error-macro-missing-name/template.marko:1:1
+    at __tests__/template.marko:1:1
     > 1 | <macro|stuff|>
         | ^ The 'macro' tag must have a 'name' attribute.
       2 |   <div/>

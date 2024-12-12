@@ -8,7 +8,7 @@
       <!--M_*0 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this-attrs/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[0,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -30,7 +30,7 @@
       <!--M_*0 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[0,"packages/translator-tags/src/__tests__/fixtures/lifecycle-tag-this-attrs/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[0,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

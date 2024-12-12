@@ -6,7 +6,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const el = _$.nodeRef();
   const write = _$.register(function (msg) {
     el().innerHTML += '\n' + msg;
-  }, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/template.marko_0/write", _scope0_id);
+  }, "__tests__/template.marko_0/write", _scope0_id);
   _$.write(`<button>Toggle</button>${_$.markResumeNode(_scope0_id, "#button/0")}<div></div>${_$.markResumeNode(_scope0_id, "#div/1")}`);
   const _forScopeIds2 = [],
     _scope1_ = new Map();
@@ -47,11 +47,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _scope1_.set(_index2, _$.getScopeById(_scope1_id));
   });
   _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/2", _forScopeIds2));
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/template.marko_0_items");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope(_scope0_id, {
     "items": items,
     "write": write,
     "#text/2(": _scope1_.size ? _scope1_ : undefined
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-for-deep/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

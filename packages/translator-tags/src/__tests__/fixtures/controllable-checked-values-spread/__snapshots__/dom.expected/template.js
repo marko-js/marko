@@ -41,7 +41,7 @@ function _checkedValueChange3(_scope) {
     _checkedValue(_scope, _new_checkedValue3);
   };
 }
-_$.register("packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange", _checkedValueChange);
-_$.register("packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange_0", _checkedValueChange2);
-_$.register("packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange_0", _checkedValueChange3);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_0/checkedValueChange", _checkedValueChange);
+_$.register("__tests__/template.marko_0/checkedValueChange_0", _checkedValueChange2);
+_$.register("__tests__/template.marko_0/checkedValueChange_0", _checkedValueChange3);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

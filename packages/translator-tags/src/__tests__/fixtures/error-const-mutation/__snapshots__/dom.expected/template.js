@@ -28,4 +28,4 @@ export function _setup_(_scope) {
     lastName: "Martin"
   });
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/error-const-mutation/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

@@ -21,4 +21,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/1(": _scope2_.size ? _scope2_ : undefined
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/for-tag-with-state/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

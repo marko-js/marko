@@ -9,9 +9,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     }
   }
 </script>${_$.markResumeNode(_scope0_id, "#script/0")}`);
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/html-script/template.marko_0_count");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope(_scope0_id, {
     "count": count
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/html-script/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

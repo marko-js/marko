@@ -37,7 +37,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
         const _scope1_id = _$.nextScopeId();
         _$.write("Hello");
-      }), "packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko_1_renderer", _scope0_id)
+      }), "__tests__/template.marko_1_renderer", _scope0_id)
     })
   });
   _$.write(_$.markResumeControlEnd(_scope0_id, "#text/4"));
@@ -49,4 +49,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/4(": _$.normalizeDynamicRenderer(test)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/attr-style/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

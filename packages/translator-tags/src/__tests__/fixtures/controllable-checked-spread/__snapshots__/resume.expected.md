@@ -12,7 +12,7 @@
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#input/0=":0,input:_.c={checked:!1}}},1:_.b},_.b["#input/0;"]=_.c.checkedChange=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-spread/template.marko_0/checkedChange"](_.a),_.d),1,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-spread/components/checkbox.marko_0_input",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#input/0=":0,input:_.c={checked:!1}}},1:_.b},_.b["#input/0;"]=_.c.checkedChange=_._["__tests__/template.marko_0/checkedChange"](_.a),_.d),1,"__tests__/components/checkbox.marko_0_input",0];M._.w()
     </script>
   </body>
 </html>
@@ -41,7 +41,7 @@ container.querySelector("input").click()
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#input/0=":0,input:_.c={checked:!1}}},1:_.b},_.b["#input/0;"]=_.c.checkedChange=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-spread/template.marko_0/checkedChange"](_.a),_.d),1,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-spread/components/checkbox.marko_0_input",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#input/0=":0,input:_.c={checked:!1}}},1:_.b},_.b["#input/0;"]=_.c.checkedChange=_._["__tests__/template.marko_0/checkedChange"](_.a),_.d),1,"__tests__/components/checkbox.marko_0_input",0];M._.w()
     </script>
   </body>
 </html>
@@ -69,7 +69,7 @@ container.querySelector("input").click()
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#input/0=":0,input:_.c={checked:!1}}},1:_.b},_.b["#input/0;"]=_.c.checkedChange=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-spread/template.marko_0/checkedChange"](_.a),_.d),1,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-spread/components/checkbox.marko_0_input",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#input/0=":0,input:_.c={checked:!1}}},1:_.b},_.b["#input/0;"]=_.c.checkedChange=_._["__tests__/template.marko_0/checkedChange"](_.a),_.d),1,"__tests__/components/checkbox.marko_0_input",0];M._.w()
     </script>
   </body>
 </html>
@@ -98,7 +98,7 @@ container.querySelector("input").click()
       <!--M_*0 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#input/0=":0,input:_.c={checked:!1}}},1:_.b},_.b["#input/0;"]=_.c.checkedChange=_._["packages/translator-tags/src/__tests__/fixtures/controllable-checked-spread/template.marko_0/checkedChange"](_.a),_.d),1,"packages/translator-tags/src/__tests__/fixtures/controllable-checked-spread/components/checkbox.marko_0_input",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#input/0=":0,input:_.c={checked:!1}}},1:_.b},_.b["#input/0;"]=_.c.checkedChange=_._["__tests__/template.marko_0/checkedChange"](_.a),_.d),1,"__tests__/components/checkbox.marko_0_input",0];M._.w()
     </script>
   </body>
 </html>

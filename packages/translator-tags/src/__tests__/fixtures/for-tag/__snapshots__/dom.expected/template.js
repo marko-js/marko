@@ -97,4 +97,4 @@ export function _setup_(_scope) {
   _for8(_scope, [10, 0, 1]);
   _for9(_scope, [10, 0, 1]);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/for-tag/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

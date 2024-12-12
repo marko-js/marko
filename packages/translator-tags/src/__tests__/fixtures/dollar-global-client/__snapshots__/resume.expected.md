@@ -17,7 +17,7 @@
       <!--M_*0 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{show:!1,"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_2_renderer"],"#text/1!":_.a={}},1:_.a,$:{x:1}}),0,"packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{show:!1,"#text/1(":_._["__tests__/template.marko_2_renderer"],"#text/1!":_.a={}},1:_.a,$:{x:1}}),0,"__tests__/template.marko_0_show",0];M._.w()
     </script>
   </body>
 </html>
@@ -47,7 +47,7 @@ container.querySelector("button").click()
       <!--M_*0 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{show:!1,"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_2_renderer"],"#text/1!":_.a={}},1:_.a,$:{x:1}}),0,"packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{show:!1,"#text/1(":_._["__tests__/template.marko_2_renderer"],"#text/1!":_.a={}},1:_.a,$:{x:1}}),0,"__tests__/template.marko_0_show",0];M._.w()
     </script>
   </body>
 </html>
@@ -83,7 +83,7 @@ container.querySelector("button").click()
       <!--M_*0 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{show:!1,"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_2_renderer"],"#text/1!":_.a={}},1:_.a,$:{x:1}}),0,"packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{show:!1,"#text/1(":_._["__tests__/template.marko_2_renderer"],"#text/1!":_.a={}},1:_.a,$:{x:1}}),0,"__tests__/template.marko_0_show",0];M._.w()
     </script>
   </body>
 </html>
@@ -116,7 +116,7 @@ container.querySelector("button").click()
       <!--M_*0 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{show:!1,"#text/1(":_._["packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_2_renderer"],"#text/1!":_.a={}},1:_.a,$:{x:1}}),0,"packages/translator-tags/src/__tests__/fixtures/dollar-global-client/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{show:!1,"#text/1(":_._["__tests__/template.marko_2_renderer"],"#text/1!":_.a={}},1:_.a,$:{x:1}}),0,"__tests__/template.marko_0_show",0];M._.w()
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 CompileError: 
-    at packages/translator-default/test/fixtures/error-import-tag-root-only/template.marko:2:4
+    at __tests__/template.marko:2:4
       1 | <div>
     > 2 |   <import x from "y"/>
         |    ^^^^^^ The "import" tag is reserved and cannot be used as an HTML tag.

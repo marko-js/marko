@@ -10,7 +10,7 @@ const _a = /* @__PURE__ */_$.value("a", (_scope, a) => {
   _b(_scope, a);
 });
 const _pattern_ = /* @__PURE__ */_$.value("_pattern_", (_scope, _pattern_) => _a(_scope, _pattern_.a));
-const _count_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0_count", (_scope, {
+const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
   count
 }) => _$.on(_scope["#button/0"], "click", function () {
   _count(_scope, count + 1), count;
@@ -27,5 +27,5 @@ function _createWrapper(a) {
     a
   };
 }
-_$.register("packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko_0/createWrapper", _createWrapper);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/same-source-non-alias/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_0/createWrapper", _createWrapper);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

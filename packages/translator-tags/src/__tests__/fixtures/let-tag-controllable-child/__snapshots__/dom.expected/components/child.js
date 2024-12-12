@@ -9,7 +9,7 @@ const _expr_input_value_input_valueChange = /* @__PURE__ */_$.intersection(2, _s
   } = _scope;
   _state(_scope, input_value, input_valueChange);
 });
-const _otherState_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0_otherState", (_scope, {
+const _otherState_effect = _$.effect("__tests__/components/child.marko_0_otherState", (_scope, {
   otherState
 }) => _$.on(_scope["#button/3"], "click", function () {
   _otherState(_scope, otherState + 1), otherState;
@@ -18,7 +18,7 @@ const _otherState = /* @__PURE__ */_$.state("otherState", (_scope, otherState) =
   _$.data(_scope["#text/5"], otherState);
   _otherState_effect(_scope);
 });
-const _state_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko_0_state", (_scope, {
+const _state_effect = _$.effect("__tests__/components/child.marko_0_state", (_scope, {
   state
 }) => _$.on(_scope["#button/0"], "click", function () {
   _state(_scope, state + 1), state;
@@ -38,4 +38,4 @@ export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _otherState(_scope, input.value, input["value" + "Change"]);
 }, () => _$.intersections([_input_value, _input_valueChange]));
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/let-tag-controllable-child/components/child.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/child.marko", _template_, _walks_, _setup_, void 0, () => _params__);

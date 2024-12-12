@@ -1,5 +1,5 @@
 import { t as _t } from "marko/src/runtime/vdom/index.js";
-const _marko_componentType = "packages/translator-default/test/fixtures/await-tag/template.marko",
+const _marko_componentType = "__tests__/template.marko",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import { a as _marko_repeatable_attr_tag, i as _marko_render_input } from "marko/src/runtime/helpers/attr-tag.js";

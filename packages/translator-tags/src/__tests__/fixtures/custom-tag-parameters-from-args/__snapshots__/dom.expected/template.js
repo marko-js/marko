@@ -8,9 +8,9 @@ const _params_2$customTagBody = /* @__PURE__ */_$.value("_params_2", (_scope, _p
   _count$customTagBody(_scope, _params_2[0]);
   _count2$customTagBody(_scope, _params_2[1]);
 });
-const _customTagBody = _$.register("packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div>Counts: <!>,<!></div>", /* next(1), over(1), replace, over(2), replace */"Db%c%", void 0, void 0, () => _params_2$customTagBody));
+const _customTagBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div>Counts: <!>,<!></div>", /* next(1), over(1), replace, over(2), replace */"Db%c%", void 0, void 0, () => _params_2$customTagBody));
 export function _setup_(_scope) {
   _customTag(_scope["#childScope/0"]);
   _customTag_input_renderBody(_scope["#childScope/0"], _customTagBody(_scope));
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-args/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

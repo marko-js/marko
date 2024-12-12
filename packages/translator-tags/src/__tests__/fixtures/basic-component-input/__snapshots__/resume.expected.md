@@ -9,7 +9,7 @@
     </button>
     <!--M_*1 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#childScope/0":_.b={}},1:_.b},_.b.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-input/template.marko_0/onClick"](_.a),_.c),1,"packages/translator-tags/src/__tests__/fixtures/basic-component-input/components/my-button.marko_0_onClick",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#childScope/0":_.b={}},1:_.b},_.b.onClick=_._["__tests__/template.marko_0/onClick"](_.a),_.c),1,"__tests__/components/my-button.marko_0_onClick",0];M._.w()
     </script>
   </body>
 </html>
@@ -34,7 +34,7 @@ container.querySelector("button").click()
     </button>
     <!--M_*1 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#childScope/0":_.b={}},1:_.b},_.b.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-input/template.marko_0/onClick"](_.a),_.c),1,"packages/translator-tags/src/__tests__/fixtures/basic-component-input/components/my-button.marko_0_onClick",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#childScope/0":_.b={}},1:_.b},_.b.onClick=_._["__tests__/template.marko_0/onClick"](_.a),_.c),1,"__tests__/components/my-button.marko_0_onClick",0];M._.w()
     </script>
   </body>
 </html>
@@ -59,7 +59,7 @@ container.querySelector("button").click()
     </button>
     <!--M_*1 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#childScope/0":_.b={}},1:_.b},_.b.onClick=_._["packages/translator-tags/src/__tests__/fixtures/basic-component-input/template.marko_0/onClick"](_.a),_.c),1,"packages/translator-tags/src/__tests__/fixtures/basic-component-input/components/my-button.marko_0_onClick",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#childScope/0":_.b={}},1:_.b},_.b.onClick=_._["__tests__/template.marko_0/onClick"](_.a),_.c),1,"__tests__/components/my-button.marko_0_onClick",0];M._.w()
     </script>
   </body>
 </html>

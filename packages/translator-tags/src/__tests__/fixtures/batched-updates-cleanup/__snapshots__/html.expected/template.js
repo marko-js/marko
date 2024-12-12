@@ -11,11 +11,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
-    _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_1_renderer");
+    _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
   _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/1", _ifScopeId));
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko_0_show");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_show");
   _$.writeScope(_scope0_id, {
     "show": show,
     "message": message,
@@ -23,4 +23,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/1!": _$.getScopeById(_ifScopeId)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/batched-updates-cleanup/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

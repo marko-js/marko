@@ -1,5 +1,5 @@
 CompileError: 
-    at packages/translator-default/test/fixtures/error-style-block-multiple/template.marko:5:1
+    at __tests__/template.marko:5:1
       3 | }
       4 |
     > 5 | style {

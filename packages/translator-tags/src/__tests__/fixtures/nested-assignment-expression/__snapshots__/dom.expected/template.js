@@ -3,7 +3,7 @@ export const _walks_ = /* get, next(1), get, out(1), over(1), next(1), get, out(
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _lastCount2 = /* @__PURE__ */_$.state("lastCount2", (_scope, lastCount2) => _$.data(_scope["#text/3"], lastCount2));
 const _lastCount = /* @__PURE__ */_$.state("lastCount", (_scope, lastCount) => _$.data(_scope["#text/2"], lastCount));
-const _clickCount_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/nested-assignment-expression/template.marko_0_clickCount", (_scope, {
+const _clickCount_effect = _$.effect("__tests__/template.marko_0_clickCount", (_scope, {
   clickCount
 }) => _$.on(_scope["#button/0"], "click", function () {
   const last = _lastCount(_scope, (_clickCount(_scope, clickCount + 1), clickCount));
@@ -18,4 +18,4 @@ export function _setup_(_scope) {
   _lastCount(_scope, 0);
   _lastCount2(_scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/nested-assignment-expression/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

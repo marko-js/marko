@@ -6,11 +6,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_dynamicScope, input.renderBody, {});
   _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/2")}</div>`);
-  _$.writeEffect(_scope0_id, "packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko_0_count");
+  _$.writeEffect(_scope0_id, "__tests__/components/tags-layout.marko_0_count");
   _$.writeScope(_scope0_id, {
     "count": count,
     "#text/2!": _$.writeExistingScope(_dynamicScope),
     "#text/2(": _$.normalizeDynamicRenderer(input.renderBody)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-interop/src/__tests__/fixtures/interop-nested-class-to-tags/components/tags-layout.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/tags-layout.marko", _renderer);

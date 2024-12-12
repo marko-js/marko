@@ -1,5 +1,5 @@
 import { t as _t } from "marko/src/runtime/html/index.js";
-const _marko_componentType = "packages/translator-interop/src/__tests__/fixtures/interop-nested-tags-to-class/components/class-layout.marko",
+const _marko_componentType = "__tests__/components/class-layout.marko",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import { x as _marko_escapeXml } from "marko/src/runtime/html/helpers/escape-xml.js";

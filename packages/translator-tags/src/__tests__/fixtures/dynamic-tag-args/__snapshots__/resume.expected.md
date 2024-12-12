@@ -17,7 +17,7 @@
     </div>
     <!--M_]0 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{x:1,"#text/2!":_.a={},"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/components/custom-tag.marko"]},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{x:1,"#text/2!":_.a={},"#text/2(":_._["__tests__/components/custom-tag.marko"]},1:_.a}),0,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -50,7 +50,7 @@ container.querySelector("button").click()
     </div>
     <!--M_]0 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{x:1,"#text/2!":_.a={},"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/components/custom-tag.marko"]},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{x:1,"#text/2!":_.a={},"#text/2(":_._["__tests__/components/custom-tag.marko"]},1:_.a}),0,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -84,7 +84,7 @@ container.querySelector("button").click()
     </div>
     <!--M_]0 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{x:1,"#text/2!":_.a={},"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/components/custom-tag.marko"]},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{x:1,"#text/2!":_.a={},"#text/2(":_._["__tests__/components/custom-tag.marko"]},1:_.a}),0,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -118,7 +118,7 @@ container.querySelector("button").click()
     </div>
     <!--M_]0 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{x:1,"#text/2!":_.a={},"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/components/custom-tag.marko"]},1:_.a}),0,"packages/translator-tags/src/__tests__/fixtures/dynamic-tag-args/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{x:1,"#text/2!":_.a={},"#text/2(":_._["__tests__/components/custom-tag.marko"]},1:_.a}),0,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

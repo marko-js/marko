@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     checkedValue: checkedValue,
     checkedValueChange: _$.register(_new_checkedValue => {
       checkedValue = _new_checkedValue;
-    }, "packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange", _scope0_id),
+    }, "__tests__/template.marko_0/checkedValueChange", _scope0_id),
     value: "a"
   });
   const _childScope2 = _$.peekNextScope();
@@ -16,7 +16,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     checkedValue: checkedValue,
     checkedValueChange: _$.register(_new_checkedValue2 => {
       checkedValue = _new_checkedValue2;
-    }, "packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange_0", _scope0_id),
+    }, "__tests__/template.marko_0/checkedValueChange_0", _scope0_id),
     value: "b"
   });
   const _childScope3 = _$.peekNextScope();
@@ -24,7 +24,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     checkedValue: checkedValue,
     checkedValueChange: _$.register(_new_checkedValue3 => {
       checkedValue = _new_checkedValue3;
-    }, "packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko_0/checkedValueChange_0", _scope0_id),
+    }, "__tests__/template.marko_0/checkedValueChange_0", _scope0_id),
     value: "c"
   });
   _$.write(`<span>${_$.escapeXML(checkedValue)}${_$.markResumeNode(_scope0_id, "#text/3")}</span>`);
@@ -34,4 +34,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#childScope/2": _$.writeExistingScope(_childScope3)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/controllable-checked-values-spread/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

@@ -7,10 +7,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     renderBody: _$.register(/* @__PURE__ */_$.createRenderer(count => {
       const _scope1_id = _$.nextScopeId();
       _$.write(`<div>Count: <!>${_$.escapeXML(count)}${_$.markResumeNode(_scope1_id, "#text/0")}</div>`);
-    }), "packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-single-arg/template.marko_1_renderer", _scope0_id)
+    }), "__tests__/template.marko_1_renderer", _scope0_id)
   });
   _$.writeScope(_scope0_id, {
     "#childScope/0": _$.writeExistingScope(_childScope)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/custom-tag-parameters-from-single-arg/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

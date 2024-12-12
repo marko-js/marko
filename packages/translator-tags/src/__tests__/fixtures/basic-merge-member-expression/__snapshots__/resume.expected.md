@@ -12,7 +12,7 @@
     </button>
     <!--M_*0 #button/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[0,"packages/translator-tags/src/__tests__/fixtures/basic-merge-member-expression/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[0,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -44,7 +44,7 @@ container.querySelector("button").click()
     </button>
     <!--M_*0 #button/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[0,"packages/translator-tags/src/__tests__/fixtures/basic-merge-member-expression/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[0,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

@@ -1,5 +1,5 @@
 CompileError: 
-    at packages/translator-default/test/fixtures/error-style-file-and-inline/template.marko:1:1
+    at __tests__/template.marko:1:1
     > 1 | style {
         | ^^^^^ A Marko file can either have an inline style block, or an external "style.ext" file, but not both.
       2 |   body {

@@ -11,13 +11,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.writeScope(_scope1_id, {
       "#childScope/0": _$.writeExistingScope(_childScope)
     });
-  }), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_1_renderer", _scope0_id));
+  }), "__tests__/template.marko_1_renderer", _scope0_id));
   _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/0")}<button id=changeTag></button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
-  _$.writeEffect(_scope0_id, "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko_0_tagName");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_tagName");
   _$.writeScope(_scope0_id, {
     "tagName": tagName,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(tagName)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-with-updating-body/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

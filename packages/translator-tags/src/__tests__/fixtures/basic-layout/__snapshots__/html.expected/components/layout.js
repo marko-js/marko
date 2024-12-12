@@ -13,4 +13,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/0(": _$.normalizeDynamicRenderer(renderBody)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-layout/components/layout.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/layout.marko", _renderer);

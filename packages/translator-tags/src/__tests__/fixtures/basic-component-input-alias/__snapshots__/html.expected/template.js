@@ -8,11 +8,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     text: clickCount,
     onClick: _$.register(function () {
       clickCount++;
-    }, "packages/translator-tags/src/__tests__/fixtures/basic-component-input-alias/template.marko_0/onClick", _scope0_id)
+    }, "__tests__/template.marko_0/onClick", _scope0_id)
   });
   _$.writeScope(_scope0_id, {
     "clickCount": clickCount,
     "#childScope/0": _$.writeExistingScope(_childScope)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-component-input-alias/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

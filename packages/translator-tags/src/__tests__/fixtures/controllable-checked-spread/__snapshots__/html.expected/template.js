@@ -8,11 +8,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     checked: checked,
     checkedChange: _$.register(_new_checked => {
       checked = _new_checked;
-    }, "packages/translator-tags/src/__tests__/fixtures/controllable-checked-spread/template.marko_0/checkedChange", _scope0_id)
+    }, "__tests__/template.marko_0/checkedChange", _scope0_id)
   });
   _$.write(`<span>${_$.escapeXML(String(checked))}${_$.markResumeNode(_scope0_id, "#text/1")}</span>`);
   _$.writeScope(_scope0_id, {
     "#childScope/0": _$.writeExistingScope(_childScope)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/controllable-checked-spread/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

@@ -18,7 +18,7 @@ mounted
     <!--M_$1-->
     <!--M_|0 #text/2 1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_1",0,"packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,"#text/2(":_._["__tests__/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_1",0,"__tests__/template.marko_0_show",0];M._.w()
     </script>
   </body>
 </html>
@@ -50,7 +50,7 @@ destroyed
     <!--M_|0 #text/2 1-->
     <!--M_$1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_1",0,"packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,"#text/2(":_._["__tests__/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_1",0,"__tests__/template.marko_0_show",0];M._.w()
     </script>
   </body>
 </html>
@@ -89,7 +89,7 @@ mounted
     </div>
     <!--M_$1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_1",0,"packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,"#text/2(":_._["__tests__/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_1",0,"__tests__/template.marko_0_show",0];M._.w()
     </script>
   </body>
 </html>
@@ -126,7 +126,7 @@ destroyed
     <!--M_|0 #text/2 1-->
     <!--M_$1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,"#text/2(":_._["packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_1",0,"packages/translator-tags/src/__tests__/fixtures/cleanup-single-child-if-same-scope/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,"#text/2(":_._["__tests__/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_1",0,"__tests__/template.marko_0_show",0];M._.w()
     </script>
   </body>
 </html>

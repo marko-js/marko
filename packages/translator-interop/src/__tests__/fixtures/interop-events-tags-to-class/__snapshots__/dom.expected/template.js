@@ -3,7 +3,7 @@ export const _walks_ = /* replace, over(1), next(1), get, out(1) */"D%bD l";
 import _classCounter from "./components/class-counter.marko";
 import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-_$.register("packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/components/class-counter.marko", _classCounter);
+_$.register("__tests__/components/class-counter.marko", _classCounter);
 const _classCounter_input = _$.dynamicTagAttrs("#text/0");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _classCounter_input(_scope, () => ({
   onCount: _onCount(_scope)
@@ -18,5 +18,5 @@ function _onCount(_scope) {
     _count(_scope, newCount);
   };
 }
-_$.register("packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko_0/onCount", _onCount);
-export default /* @__PURE__ */_$.createTemplate("packages/translator-interop/src/__tests__/fixtures/interop-events-tags-to-class/template.marko", _template_, _walks_, _setup_);
+_$.register("__tests__/template.marko_0/onCount", _onCount);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

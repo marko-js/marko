@@ -1,7 +1,7 @@
 export const _template_ = "<button> </button>";
 export const _walks_ = /* get, next(1), get, out(1) */" D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _expr_a_b_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/batched-updates/template.marko_0_a_b", (_scope, {
+const _expr_a_b_effect = _$.effect("__tests__/template.marko_0_a_b", (_scope, {
   a,
   b
 }) => _$.on(_scope["#button/0"], "click", function () {
@@ -22,4 +22,4 @@ export function _setup_(_scope) {
   _a(_scope, 0);
   _b(_scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/batched-updates/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

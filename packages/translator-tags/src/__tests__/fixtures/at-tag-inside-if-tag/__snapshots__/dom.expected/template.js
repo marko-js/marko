@@ -2,8 +2,8 @@ export const _template_ = `<!>${_customTag_template}`;
 export const _walks_ = /* beginChild, _customTag_walks, endChild */`D/${_customTag_walks}&`;
 import { _setup_ as _customTag, _pattern__ as _customTag_input_thing, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag/index.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _thingBody2 = _$.register("packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_2_renderer", /* @__PURE__ */_$.createRendererWithOwner("Goodbye", ""));
-const _thingBody = _$.register("packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello", ""));
+const _thingBody2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRendererWithOwner("Goodbye", ""));
+const _thingBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello", ""));
 export const _x_ = /* @__PURE__ */_$.value("x", (_scope, x) => {
   let _thing;
   if (x) {
@@ -24,4 +24,4 @@ export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) 
 export function _setup_(_scope) {
   _customTag(_scope["#childScope/0"]);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/at-tag-inside-if-tag/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);

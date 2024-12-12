@@ -14,7 +14,7 @@
     4
     <!--M_*0 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{b:4}}),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko_0_b",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{b:4}}),0,"__tests__/template.marko_0_b",0];M._.w()
     </script>
   </body>
 </html>
@@ -44,7 +44,7 @@ container.querySelector("button").click()
     5
     <!--M_*0 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{b:4}}),0,"packages/translator-tags/src/__tests__/fixtures/let-tag-derived/template.marko_0_b",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{b:4}}),0,"__tests__/template.marko_0_b",0];M._.w()
     </script>
   </body>
 </html>

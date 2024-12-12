@@ -17,14 +17,14 @@ const _params_3$forBody = /* @__PURE__ */_$.value("_params_3", (_scope, _params_
 const _setup$forBody = _scope => {
   _child(_scope["#childScope/0"]);
 };
-const _forBody2 = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_outer$forBody], () => _params_3$forBody));
+const _forBody2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_outer$forBody], () => _params_3$forBody));
 const _for$forBody = /* @__PURE__ */_$.loopOf("#text/0", _forBody2);
 const _outer$forBody2 = /* @__PURE__ */_$.value("outer", 0, () => _$.inLoopScope(_outer$forBody, "#text/0"));
 const _items$forBody = /* @__PURE__ */_$.closure("items", (_scope, items) => _for$forBody(_scope, [items]), void 0, () => _for$forBody);
 const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outer$forBody2(_scope, _params_2[0]), () => _outer$forBody2);
-const _forBody = _$.register("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", void 0, () => [_items$forBody], () => _params_2$forBody));
+const _forBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", void 0, () => [_items$forBody], () => _params_2$forBody));
 const _for = /* @__PURE__ */_$.loopOf("#text/1", _forBody);
-const _items_effect = _$.effect("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko_0_items", (_scope, {
+const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {
   items
 }) => _$.on(_scope["#button/0"], "click", function () {
   _items(_scope, [...items, items.length]);
@@ -36,4 +36,4 @@ const _items = /* @__PURE__ */_$.state("items", (_scope, items) => {
 export function _setup_(_scope) {
   _items(_scope, [0, 1]);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/basic-nested-for/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

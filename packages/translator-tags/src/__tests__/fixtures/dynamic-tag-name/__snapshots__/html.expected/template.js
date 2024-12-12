@@ -56,7 +56,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _renderBody = _$.register(/* @__PURE__ */_$.createRenderer(() => {
     const _scope1_id = _$.nextScopeId();
     _$.write("Body content");
-  }), "packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko_1_renderer", _scope0_id);
+  }), "__tests__/template.marko_1_renderer", _scope0_id);
   if (_tagName4) _tagName4({
     class: ["a", "b"],
     other: other,
@@ -99,4 +99,4 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/9(": _$.normalizeDynamicRenderer(_tagName5)
   });
 });
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/dynamic-tag-name/template.marko", _renderer);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

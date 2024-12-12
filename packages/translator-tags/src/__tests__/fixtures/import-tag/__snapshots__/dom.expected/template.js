@@ -11,4 +11,4 @@ export function _setup_(_scope) {
   _Baz(_scope["#childScope/2"]);
   _$.data(_scope["#text/3"], c);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/import-tag/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

@@ -7,7 +7,7 @@ const _params_3$forBody = /* @__PURE__ */_$.value("_params_3", (_scope, _params_
   _val$forBody2(_scope, _params_3[0]);
   _i$forBody2(_scope, _params_3[1]);
 });
-const _forBody2 = _$.register("packages/translator-tags/src/__tests__/fixtures/for-tag-with-state/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, () => _params_3$forBody));
+const _forBody2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, void 0, () => _params_3$forBody));
 const _i$forBody = /* @__PURE__ */_$.value("i", (_scope, i) => _$.data(_scope["#text/0"], i));
 const _val$forBody = /* @__PURE__ */_$.value("val", (_scope, val) => _$.data(_scope["#text/1"], val));
 const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => {
@@ -23,4 +23,4 @@ export function _setup_(_scope) {
   _arrA(_scope, [1, 2, 3]);
   _arrB(_scope, [1, 2, 3]);
 }
-export default /* @__PURE__ */_$.createTemplate("packages/translator-tags/src/__tests__/fixtures/for-tag-with-state/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
