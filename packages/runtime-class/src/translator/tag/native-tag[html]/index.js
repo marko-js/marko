@@ -1,9 +1,9 @@
+import { types as t } from "@marko/compiler";
 import {
   getTagDef,
   importDefault,
   normalizeTemplateString,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 import { resolve } from "path";
 import SELF_CLOSING from "self-closing-tags";
 

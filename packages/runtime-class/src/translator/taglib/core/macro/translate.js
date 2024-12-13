@@ -1,5 +1,8 @@
-import { diagnosticError, getMacroIdentifierForName } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import {
+  diagnosticError,
+  getMacroIdentifierForName,
+} from "@marko/compiler/babel-utils";
 
 import withPreviousLocation from "../../../util/with-previous-location";
 

@@ -1,5 +1,8 @@
-import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import {
+  loadFileForImport,
+  resolveRelativePath,
+} from "@marko/compiler/babel-utils";
 import path from "path";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";

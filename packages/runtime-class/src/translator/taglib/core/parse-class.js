@@ -1,9 +1,9 @@
+import { types as t } from "@marko/compiler";
 import {
   diagnosticDeprecate,
   diagnosticError,
   parseExpression,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 
 import getComponentFiles from "../../util/get-component-files";
 

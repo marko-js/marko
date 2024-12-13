@@ -1,4 +1,4 @@
-import { getStart } from "@marko/babel-utils";
+import { getStart } from "@marko/compiler/babel-utils";
 import path from "path";
 
 import getComponentFiles from "../../util/get-component-files";

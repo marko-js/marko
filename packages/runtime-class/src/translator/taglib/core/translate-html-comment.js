@@ -1,9 +1,9 @@
+import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoAttributes,
   assertNoParams,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 
 import writeHTML from "../../util/html-out-write";
 import writeVDOM from "../../util/vdom-out-write";

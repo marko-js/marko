@@ -1,11 +1,11 @@
+import { types as t } from "@marko/compiler";
 import {
   assertAllowedAttributes,
   assertNoArgs,
   assertNoParams,
   assertNoVar,
   type Tag,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 import { AccessorChar } from "@marko/runtime-tags/common/types";
 
 import { assertNoBodyContent } from "../util/assert";

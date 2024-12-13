@@ -1,3 +1,4 @@
+import { types as t } from "@marko/compiler";
 import {
   findParentTag,
   getTagDef,
@@ -12,8 +13,7 @@ import {
   parseStatements,
   resolveRelativePath,
   resolveTagImport,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 import { version } from "marko/package.json";
 import { resolve } from "path";
 

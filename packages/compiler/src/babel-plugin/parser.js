@@ -8,7 +8,7 @@ import {
   parseTypeArgs,
   parseTypeParams,
   parseVar,
-} from "@marko/babel-utils";
+} from "@marko/compiler/babel-utils";
 import { createParser, TagType } from "htmljs-parser";
 
 import * as t from "../babel-types";

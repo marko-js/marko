@@ -1,4 +1,4 @@
-import { parseStatements, type Tag } from "@marko/babel-utils";
+import { parseStatements, type Tag } from "@marko/compiler/babel-utils";
 
 export default {
   parse(tag) {

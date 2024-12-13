@@ -1,10 +1,10 @@
+import { types as t } from "@marko/compiler";
+import type { MarkoTagExtra } from "@marko/compiler/babel-types";
 import {
   isNativeTag,
   loadFileForTag,
   resolveTagImport,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
-import type { MarkoTagExtra } from "@marko/compiler/babel-types";
+} from "@marko/compiler/babel-utils";
 
 import withPreviousLocation from "./with-previous-location";
 

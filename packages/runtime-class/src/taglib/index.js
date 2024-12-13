@@ -30,11 +30,11 @@ exports.finder = compiler.taglib._finder;
 exports.lookup = {
   buildLookup: function (dir, translator) {
     if (!translator || !Array.isArray(translator.taglibs)) {
-      translator = require("@marko/translator-default");
+      translator = require("../translator");
       // eslint-disable-next-line no-constant-condition
       if ("MARKO_DEBUG") {
         complain(
-          "buildTaglibLookup now requires passing in a transltor as the second argument, eg `buildTaglibLookup(dir, require('@marko/translator-default'))`.",
+          "buildTaglibLookup now requires passing in a transltor as the second argument, eg `buildTaglibLookup(dir, require('marko/translator'))`.",
         );
       }
     }

@@ -1,4 +1,4 @@
-import { computeNode } from "@marko/babel-utils";
+import { computeNode } from "@marko/compiler/babel-utils";
 
 import write from "../util/vdom-out-write";
 import withPreviousLocation from "../util/with-previous-location";

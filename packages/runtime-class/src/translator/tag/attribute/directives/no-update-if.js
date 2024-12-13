@@ -1,4 +1,4 @@
-import { getArgOrSequence } from "@marko/babel-utils";
+import { getArgOrSequence } from "@marko/compiler/babel-utils";
 
 import noUpdateTransform from "./no-update";
 

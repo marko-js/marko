@@ -1,5 +1,5 @@
-import { isAttributeTag, isLoopTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { isAttributeTag, isLoopTag } from "@marko/compiler/babel-utils";
 
 import { currentProgramPath } from "../visitors/program";
 import { getParentTag } from "./get-parent-tag";

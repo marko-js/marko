@@ -1,5 +1,9 @@
-import { assertNoArgs, assertNoVar, findParentTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import {
+  assertNoArgs,
+  assertNoVar,
+  findParentTag,
+} from "@marko/compiler/babel-utils";
 
 import { isOutputHTML } from "../../util/marko-config";
 import { BindingType, trackParamsReferences } from "../../util/references";

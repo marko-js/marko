@@ -2,8 +2,12 @@
 // we should probably attempt to share that logic where possible.
 // Also need to ensure it stays in sync.
 
-import { assertNoArgs, assertNoParams, type Tag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import {
+  assertNoArgs,
+  assertNoParams,
+  type Tag,
+} from "@marko/compiler/babel-utils";
 import {
   getEventHandlerName,
   isEventHandler,

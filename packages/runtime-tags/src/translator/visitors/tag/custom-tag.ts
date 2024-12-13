@@ -1,3 +1,4 @@
+import { types as t } from "@marko/compiler";
 import {
   assertAttributesOrSingleArg,
   getTagTemplate,
@@ -6,8 +7,7 @@ import {
   isAttributeTag,
   loadFileForTag,
   resolveRelativePath,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 import path from "path";
 
 import { getTagName } from "../../util/get-tag-name";

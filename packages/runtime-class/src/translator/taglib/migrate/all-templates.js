@@ -1,5 +1,5 @@
-import { diagnosticDeprecate } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { diagnosticDeprecate } from "@marko/compiler/babel-utils";
 
 import withPreviousLocation from "../../util/with-previous-location";
 const kHadAssignment = Symbol();

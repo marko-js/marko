@@ -35,7 +35,10 @@ Module._resolveFilename = function (request, parent, isMain) {
       request = nodePath.join(rootDir, request.substring("marko/".length));
     } else if (request === "marko") {
       request = rootDir;
-    } else if (request.startsWith("marko/")) {
+    } else if (
+      request !== "marko/package.json" &&
+      request.startsWith("marko/")
+    ) {
       request = nodePath.join(markoDir, request.substring("marko/".length));
     }
   }

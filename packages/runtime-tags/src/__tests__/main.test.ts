@@ -9,7 +9,7 @@ import path from "path";
 import glob from "tiny-glob";
 import { isDeepStrictEqual } from "util";
 
-import * as translator from "..";
+import * as translator from "../translator";
 import { bundle } from "./utils/bundle";
 import createBrowser from "./utils/create-browser";
 import { isThrows, isWait } from "./utils/resolve";
@@ -53,7 +53,7 @@ const htmlConfig: compiler.Config = { ...baseConfig, output: "html" };
 const domConfig: compiler.Config = { ...baseConfig, output: "dom" };
 const snapCache = new Map<unknown, unknown>();
 
-describe("translator-tags", () => {
+describe("runtime-tags/translator", () => {
   before(() => {
     register({ ...htmlConfig, modules: "cjs" });
   });

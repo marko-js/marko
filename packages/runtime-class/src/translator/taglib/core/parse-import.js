@@ -1,4 +1,4 @@
-import { parseStatements } from "@marko/babel-utils";
+import { parseStatements } from "@marko/compiler/babel-utils";
 
 export default function (path) {
   const {

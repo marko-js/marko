@@ -1,10 +1,10 @@
+import { types as t } from "@marko/compiler";
 import {
   computeNode,
   getTagDef,
   importDefault,
   importNamed,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 import toString from "marko/src/runtime/helpers/to-string";
 import escapeScript from "marko/src/runtime/html/helpers/escape-script-placeholder";
 import escapeStyle from "marko/src/runtime/html/helpers/escape-style-placeholder";

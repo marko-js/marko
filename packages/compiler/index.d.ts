@@ -1,4 +1,4 @@
-import { Diagnostic, TaglibLookup } from "@marko/babel-utils";
+import { Diagnostic, TaglibLookup } from "@marko/compiler/babel-utils";
 import { SourceMap } from "magic-string";
 
 import * as types from "./babel-types";

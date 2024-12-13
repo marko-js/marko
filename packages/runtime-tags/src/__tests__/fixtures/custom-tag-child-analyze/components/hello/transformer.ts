@@ -1,5 +1,5 @@
-import { loadFileForTag } from "@marko/babel-utils";
 import type { types } from "@marko/compiler";
+import { loadFileForTag } from "@marko/compiler/babel-utils";
 
 export default (helloTag: types.NodePath<types.MarkoTag>, t: typeof types) => {
   const messageTag = (helloTag as any).getNextSibling();

@@ -1,4 +1,4 @@
-import { normalizeTemplateString } from "@marko/babel-utils";
+import { normalizeTemplateString } from "@marko/compiler/babel-utils";
 
 const mergeWriteCallsVisitor = {
   ExpressionStatement(path) {

@@ -1,9 +1,9 @@
+import { types as t } from "@marko/compiler";
 import {
   loadFileForImport,
   parseStatements,
   resolveRelativePath,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 import MagicString from "magic-string";
 import path from "path";
 import resolveFrom from "resolve-from";

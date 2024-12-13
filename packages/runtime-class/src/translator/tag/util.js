@@ -1,5 +1,9 @@
-import { computeNode, getTagDef, importNamed } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import {
+  computeNode,
+  getTagDef,
+  importNamed,
+} from "@marko/compiler/babel-utils";
 import classToString from "marko/src/runtime/helpers/class-value";
 import styleToString from "marko/src/runtime/helpers/style-value";
 

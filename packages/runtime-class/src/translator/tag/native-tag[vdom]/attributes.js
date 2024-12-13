@@ -1,5 +1,5 @@
-import { importDefault } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { importDefault } from "@marko/compiler/babel-utils";
 
 import { evaluateAttr } from "../util";
 

@@ -1,5 +1,5 @@
-import { resolveRelativePath } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { resolveRelativePath } from "@marko/compiler/babel-utils";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
