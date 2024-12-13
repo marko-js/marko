@@ -1,5 +1,0 @@
-
-    at packages/runtime-tags/src/translator/__tests__/fixtures/error-log-tag-var/template.marko:1:6
-    > 1 | <log/x="Hello"/>
-        |      ^ Tag does not support a variable.
-      2 |

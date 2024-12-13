@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-log-extra-attr/template.marko:1:2
+    > 1 | <log="Hello" y=1/>
+        |  ^^^ The `log` tag only supports the `value` attribute.
+      2 |

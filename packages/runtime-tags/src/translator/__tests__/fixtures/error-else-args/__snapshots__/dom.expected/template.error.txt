@@ -1,6 +1,0 @@
-
-    at packages/runtime-tags/src/translator/__tests__/fixtures/error-else-args/template.marko:2:7
-      1 | <if=false>Skipped</if>
-    > 2 | <else(input.show)>Hello World</else>
-        |       ^^^^^^^^^^ Tag does not support arguments.
-      3 |

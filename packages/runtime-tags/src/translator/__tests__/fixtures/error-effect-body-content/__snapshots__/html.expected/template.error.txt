@@ -1,5 +1,0 @@
-
-    at packages/runtime-tags/src/translator/__tests__/fixtures/error-effect-body-content/template.marko:1:2
-    > 1 | <effect=(() => {})>Hello</effect>
-        |  ^^^^^^ The `effect` tag does not support body content.
-      2 |

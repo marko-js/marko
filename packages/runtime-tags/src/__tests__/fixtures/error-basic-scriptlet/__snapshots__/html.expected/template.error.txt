@@ -1,0 +1,9 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-basic-scriptlet/template.marko:3:3
+      1 | <div>
+      2 |   <let/clickCount = 0/>
+    > 3 |   $ const doubleCount = clickCount * 2;
+        |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Scriptlets are not supported when using the tags api.
+      4 |   <button onClick() {
+      5 |     clickCount++
+      6 |   }>${doubleCount}</button>

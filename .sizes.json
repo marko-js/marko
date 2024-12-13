@@ -1,44 +1,44 @@
 {
   "examples": {
-    "counter": "./packages/runtime-tags/src/translator/__tests__/fixtures/basic-counter/template.marko",
-    "comments": "./packages/runtime-tags/src/translator/__tests__/fixtures/basic-inert-collapsible-tree/template.marko"
+    "counter": "./packages/runtime-tags/src/__tests__/fixtures/basic-counter/template.marko",
+    "comments": "./packages/runtime-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/template.marko"
   },
   "results": [
     {
       "name": "*",
       "total": {
         "min": 18048,
-        "brotli": 6515
+        "brotli": 6509
       }
     },
     {
       "name": "counter",
       "user": {
         "min": 189,
-        "brotli": 144
+        "brotli": 146
       },
       "runtime": {
         "min": 3802,
-        "brotli": 1590
+        "brotli": 1595
       },
       "total": {
         "min": 3991,
-        "brotli": 1734
+        "brotli": 1741
       }
     },
     {
       "name": "counter 💧",
       "user": {
         "min": 111,
-        "brotli": 100
+        "brotli": 99
       },
       "runtime": {
         "min": 3168,
-        "brotli": 1438
+        "brotli": 1429
       },
       "total": {
         "min": 3279,
-        "brotli": 1538
+        "brotli": 1528
       }
     },
     {
@@ -49,26 +49,26 @@
       },
       "runtime": {
         "min": 7809,
-        "brotli": 3166
+        "brotli": 3168
       },
       "total": {
         "min": 8962,
-        "brotli": 3710
+        "brotli": 3712
       }
     },
     {
       "name": "comments 💧",
       "user": {
         "min": 954,
-        "brotli": 477
+        "brotli": 482
       },
       "runtime": {
         "min": 8821,
-        "brotli": 3573
+        "brotli": 3581
       },
       "total": {
         "min": 9775,
-        "brotli": 4050
+        "brotli": 4063
       }
     }
   ]

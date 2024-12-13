@@ -1,5 +1,0 @@
-
-    at packages/runtime-tags/src/translator/__tests__/fixtures/error-define-no-tag-var/template.marko:1:2
-    > 1 | <define>Hello!</define>
-        |  ^^^^^^ The `define` tag requires a tag variable.
-      2 |

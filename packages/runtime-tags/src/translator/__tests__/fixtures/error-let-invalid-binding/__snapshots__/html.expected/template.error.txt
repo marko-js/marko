@@ -1,5 +1,0 @@
-
-    at packages/runtime-tags/src/translator/__tests__/fixtures/error-let-invalid-binding/template.marko:1:11
-    > 1 | <let/count:=1/>
-        |           ^^^ Attributes may only be bound to identifiers or member expressions
-      2 |

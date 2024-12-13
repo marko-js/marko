@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-html-comment-attrs/template.marko:1:15
+    > 1 | <html-comment|x|>${x}</html-comment>
+        |               ^ Tag does not support parameters.
+      2 |

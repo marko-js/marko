@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-effect-extra-attr/template.marko:1:20
+    > 1 | <script=(() => {}) y=1/>
+        |                    ^^^ The `script` tag does not support html attributes. For a native html `script` tag use the `html-script` core tag instead.
+      2 |

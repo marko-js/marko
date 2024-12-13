@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-effect-tag-var/template.marko:1:9
+    > 1 | <script/x=(() => {})/>
+        |         ^ The `script` tag does not support a tag variable reference. For a native html `script` tag use the `html-script` core tag instead.
+      2 |

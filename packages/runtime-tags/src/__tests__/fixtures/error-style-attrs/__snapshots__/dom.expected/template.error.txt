@@ -1,0 +1,7 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-style-attrs/template.marko:1:17
+    > 1 | <style blocking="render">
+        |                 ^^^^^^^^ The `style` does not support html attributes. For a native html `style` tag use the `html-style` core tag instead.
+      2 |   body {
+      3 |     color: green;
+      4 |   }

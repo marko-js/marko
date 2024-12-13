@@ -1,4 +1,4 @@
-// size: 111 (min) 100 (brotli)
+// size: 111 (min) 99 (brotli)
 const _clickCount_effect = effect("a0", (_scope, { 2: clickCount }) =>
     on(_scope[0], "click", function () {
       _clickCount(_scope, clickCount + 1);

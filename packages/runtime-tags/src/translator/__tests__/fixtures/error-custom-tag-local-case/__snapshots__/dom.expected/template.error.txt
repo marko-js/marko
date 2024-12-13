@@ -1,6 +1,0 @@
-
-    at packages/runtime-tags/src/translator/__tests__/fixtures/error-custom-tag-local-case/template.marko:3:2
-      1 | static const myTag = "div"
-      2 |
-    > 3 | <myTag/>
-        |  ^^^^^ Local variables must be in a dynamic tag unless they are PascalCase. Use `<${myTag}/>` or rename to `MyTag`.

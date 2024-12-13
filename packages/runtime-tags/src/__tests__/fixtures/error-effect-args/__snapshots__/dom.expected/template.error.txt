@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-effect-args/template.marko:1:9
+    > 1 | <script(x)=(() => {})/>
+        |         ^ Tag does not support arguments.
+      2 |

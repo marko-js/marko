@@ -1,5 +1,0 @@
-
-    at packages/runtime-tags/src/translator/__tests__/fixtures/error-id-attr/template.marko:1:17
-    > 1 | <id/firstNameId x=1/>
-        |                 ^^^ Tag does not support attributes.
-      2 |

@@ -1,5 +1,0 @@
-
-    at packages/runtime-tags/src/translator/__tests__/fixtures/cdata/template.marko:1:31
-    > 1 | <div>Here is a CDATA section: <![CDATA[ < > & ]]> with all kinds of unescaped text.</div>
-        |                               ^^^^^^^^^^^^^^^^^^^ CDATA sections are not supported in Marko.
-      2 |

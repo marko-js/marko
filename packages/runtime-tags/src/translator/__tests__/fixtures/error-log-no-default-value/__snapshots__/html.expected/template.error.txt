@@ -1,5 +1,0 @@
-
-    at packages/runtime-tags/src/translator/__tests__/fixtures/error-log-no-default-value/template.marko:1:2
-    > 1 | <log/>
-        |  ^^^ The `log` tag requires a value.
-      2 |

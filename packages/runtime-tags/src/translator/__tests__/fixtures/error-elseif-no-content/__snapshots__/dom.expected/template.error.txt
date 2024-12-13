@@ -1,6 +1,0 @@
-
-    at packages/runtime-tags/src/translator/__tests__/fixtures/error-elseif-no-content/template.marko:2:2
-      1 | <if=false>Skipped</if>
-    > 2 | <else-if=input.show />
-        |  ^^^^^^^ The `else-if` tag requires body content.
-      3 |

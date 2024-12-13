@@ -1,7 +1,0 @@
-
-    at packages/runtime-tags/src/translator/__tests__/fixtures/declaration/template.marko:1:1
-    > 1 | <?xml version="1.0" encoding="utf-8"?>
-        | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ XML declarations sections are not supported in Marko.
-      2 | <contact-info>
-      3 |    <name>Hello World</name>
-      4 | </contact-info>

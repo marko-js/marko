@@ -7,10 +7,10 @@ import snap from "mocha-snap";
 import path from "path";
 import glob from "tiny-glob";
 
-import createBrowser from "../../../runtime-tags/src/translator/__tests__/utils/create-browser";
-import { isWait } from "../../../runtime-tags/src/translator/__tests__/utils/resolve";
-import { stripInlineRuntime } from "../../../runtime-tags/src/translator/__tests__/utils/strip-inline-runtime";
-import createMutationTracker from "../../../runtime-tags/src/translator/__tests__/utils/track-mutations";
+import createBrowser from "../../../runtime-tags/src/__tests__/utils/create-browser";
+import { isWait } from "../../../runtime-tags/src/__tests__/utils/resolve";
+import { stripInlineRuntime } from "../../../runtime-tags/src/__tests__/utils/strip-inline-runtime";
+import createMutationTracker from "../../../runtime-tags/src/__tests__/utils/track-mutations";
 
 const baseConfig: compiler.Config = {
   translator: require.resolve(".."),

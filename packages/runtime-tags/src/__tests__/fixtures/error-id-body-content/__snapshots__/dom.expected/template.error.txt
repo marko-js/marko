@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-id-body-content/template.marko:1:17
+    > 1 | <id/firstNameId|y|/>
+        |                 ^ Tag does not support parameters.
+      2 |

@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-let-spread-attr/template.marko:1:12
+    > 1 | <let/count ...{ value: 1, valueChange() {} }/>
+        |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ The `let` tag does not support `...spread` attributes.
+      2 |

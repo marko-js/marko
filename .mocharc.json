@@ -2,6 +2,6 @@
   "timeout": 5000,
   "enable-source-maps": true,
   "require": ["~ts", "mocha-snap"],
-  "spec": ["packages/{*,*/translator}/@(src|test)/**/*.test.@(js|ts)"],
+  "spec": ["packages/*/@(src|test)/**/*.test.@(js|ts)"],
   "watchFiles": ["src/**/*.@(js|ts|marko)", "!**/__snapshots__/**"]
 }

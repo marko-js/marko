@@ -1,0 +1,5 @@
+
+    at packages/runtime-tags/src/__tests__/fixtures/error-const-no-tag-var/template.marko:1:2
+    > 1 | <const="Hello"/>
+        |  ^^^^^ The `const` tag requires a tag variable.
+      2 |
