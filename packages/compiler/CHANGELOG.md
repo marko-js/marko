@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.0
+
+### Minor Changes
+
+- [#2408](https://github.com/marko-js/marko/pull/2408) [`2be37f7`](https://github.com/marko-js/marko/commit/2be37f72d3030621e2f85b6615731a5af24e0211) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Merge translator packages into their respective runtime packages.
+
 ## 5.38.5
 
 ### Patch Changes
