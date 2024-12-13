@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.37.3
+
+### Patch Changes
+
+- [#2420](https://github.com/marko-js/marko/pull/2420) [`4a980fe`](https://github.com/marko-js/marko/commit/4a980fe444299f095f0f423767d5340e15c33682) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix publish alias issue.
+
+- Updated dependencies [[`4a980fe`](https://github.com/marko-js/marko/commit/4a980fe444299f095f0f423767d5340e15c33682)]:
+  - @marko/compiler@5.39.3
+
 ## 5.37.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.6
+
+### Patch Changes
+
+- [#2420](https://github.com/marko-js/marko/pull/2420) [`4a980fe`](https://github.com/marko-js/marko/commit/4a980fe444299f095f0f423767d5340e15c33682) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix publish alias issue.
+
 ## 0.3.5
 
 ### Patch Changes
