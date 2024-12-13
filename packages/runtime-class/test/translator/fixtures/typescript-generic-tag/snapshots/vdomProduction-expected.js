@@ -1,5 +1,5 @@
 import { t as _t } from "marko/dist/runtime/vdom/index.js";
-const _marko_componentType = "SvVq0ks",
+const _marko_componentType = "mOqoQkl",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _typeArg from "./components/type-arg.marko";

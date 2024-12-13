@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-effect-params/template.marko:1:9
+    at packages/runtime-tags/src/__tests__/fixtures/error-effect-params/template.marko:1:9
     > 1 | <script|x|=(() => {})/>
         |         ^ Tag does not support parameters.
       2 |
