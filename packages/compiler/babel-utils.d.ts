@@ -246,69 +246,45 @@ export function withLoc<T extends t.Node>(
 export function parseStatements<T extends t.Statement[]>(
   file: t.BabelFile,
   str: string,
-): T;
-export function parseStatements<T extends t.Statement[]>(
-  file: t.BabelFile,
-  str: string,
-  sourceStart: number,
-  sourceEnd: number,
-  sourceOffset?: number,
+  sourceStart?: null | number,
+  sourceEnd?: null | number,
+  sourceOffset?: null | number,
 ): T;
 
 export function parseExpression<T extends t.Expression>(
   file: t.BabelFile,
   str: string,
-): T;
-export function parseExpression<T extends t.Expression>(
-  file: t.BabelFile,
-  str: string,
-  sourceStart: number,
-  sourceEnd: number,
-  sourceOffset?: number,
+  sourceStart?: null | number,
+  sourceEnd?: null | number,
+  sourceOffset?: null | number,
 ): T;
 
 export function parseParams(
   file: t.BabelFile,
   str: string,
-): t.Function["params"];
-export function parseParams(
-  file: t.BabelFile,
-  str: string,
-  sourceStart: number,
-  sourceEnd: number,
+  sourceStart?: null | number,
+  sourceEnd?: null | number,
 ): t.Function["params"];
 
 export function parseArgs(
   file: t.BabelFile,
   str: string,
-): t.CallExpression["arguments"];
-export function parseArgs(
-  file: t.BabelFile,
-  str: string,
-  sourceStart: number,
-  sourceEnd: number,
+  sourceStart?: null | number,
+  sourceEnd?: null | number,
 ): t.CallExpression["arguments"];
 
 export function parseVar(
   file: t.BabelFile,
   str: string,
-): t.VariableDeclarator["id"];
-export function parseVar(
-  file: t.BabelFile,
-  str: string,
-  sourceStart: number,
-  sourceEnd: number,
+  sourceStart?: null | number,
+  sourceEnd?: null | number,
 ): t.VariableDeclarator["id"];
 
 export function parseTemplateLiteral(
   file: t.BabelFile,
   str: string,
-): t.TemplateLiteral;
-export function parseTemplateLiteral(
-  file: t.BabelFile,
-  str: string,
-  sourceStart: number,
-  sourceEnd: number,
+  sourceStart?: null | number,
+  sourceEnd?: null | number,
 ): t.TemplateLiteral;
 
 export function resolveRelativePath(file: t.BabelFile, request: string): string;
