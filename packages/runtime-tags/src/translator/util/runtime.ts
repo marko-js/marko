@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { importStar } from "@marko/compiler/babel-utils";
+
 import {
   attr,
   classAttr,
@@ -8,15 +9,15 @@ import {
   escapeXML,
   styleAttr,
   toString,
-} from "@marko/runtime-tags/html";
-
+} from "../../html";
 import { currentProgramPath } from "../visitors/program";
 import { getMarkoOpts } from "./marko-config";
+import runtimeInfo from "./runtime-info";
 import { toMemberExpression } from "./to-property-name";
 
 type Falsy = false | 0 | "" | null | undefined;
 
-const pureFunctions: Array<keyof typeof import("@marko/runtime-tags/dom")> = [
+const pureFunctions: Array<keyof typeof import("../../dom")> = [
   "createTemplate",
   "createRenderer",
   "createRendererWithOwner",
@@ -32,9 +33,7 @@ const pureFunctions: Array<keyof typeof import("@marko/runtime-tags/dom")> = [
 ];
 
 export function importRuntime(
-  name:
-    | keyof typeof import("@marko/runtime-tags/dom")
-    | keyof typeof import("@marko/runtime-tags/html"),
+  name: keyof typeof import("../../dom") | keyof typeof import("../../html"),
 ) {
   const { output } = getMarkoOpts();
   return toMemberExpression(
@@ -44,20 +43,14 @@ export function importRuntime(
 }
 
 export function callRuntime(
-  name:
-    | keyof typeof import("@marko/runtime-tags/dom")
-    | keyof typeof import("@marko/runtime-tags/html"),
+  name: keyof typeof import("../../dom") | keyof typeof import("../../html"),
   ...args: Array<Parameters<typeof t.callExpression>[1][number] | Falsy>
 ) {
   const callExpression = t.callExpression(
     importRuntime(name),
     filterArguments(args),
   );
-  if (
-    pureFunctions.includes(
-      name as keyof typeof import("@marko/runtime-tags/dom"),
-    )
-  ) {
+  if (pureFunctions.includes(name as keyof typeof import("../../dom"))) {
     callExpression.leadingComments = [
       {
         type: "CommentBlock",
@@ -82,7 +75,7 @@ export function getHTMLRuntime() {
 
 function getRuntimePath(output: string) {
   const { optimize } = getMarkoOpts();
-  return `@marko/runtime-tags/${
+  return `${runtimeInfo.name}/${
     optimize ? "" : "debug/"
   }${output === "html" ? "html" : "dom"}`;
 }

@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getTemplateId } from "@marko/compiler/babel-utils";
-import { AccessorChar } from "@marko/runtime-tags/common/types";
 
+import { AccessorChar } from "../../common/types";
 import { returnId } from "../core/return";
 import {
   cleanIdentifier,

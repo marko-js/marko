@@ -9,6 +9,7 @@ import {
   trackParamsReferences,
   trackVarReferences,
 } from "../util/references";
+import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection, startSection } from "../util/sections";
 import {
   addStatement,
@@ -87,5 +88,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#define",
     },
   ],
-  types: "@marko/runtime-tags/tag-types/define.d.marko",
+  types: runtimeInfo.name + "/tag-types/define.d.marko",
 } as Tag;

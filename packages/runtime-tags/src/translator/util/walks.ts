@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
-import { WalkCode, WalkRangeSize } from "@marko/runtime-tags/common/types";
 
+import { WalkCode, WalkRangeSize } from "../../common/types";
 import { ContentType, getSection, type Section } from "../util/sections";
 import { isOutputHTML } from "./marko-config";
 import normalizeStringExpression, {

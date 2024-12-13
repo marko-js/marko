@@ -5,8 +5,8 @@ import {
   importNamed,
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
-import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
 
+import { AccessorChar, WalkCode } from "../../../common/types";
 import { isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import {

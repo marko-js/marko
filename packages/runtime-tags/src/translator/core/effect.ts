@@ -9,6 +9,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
+import runtimeInfo from "../util/runtime-info";
 import withPreviousLocation from "../util/with-previous-location";
 
 export default {
@@ -39,5 +40,5 @@ export default {
     },
   ],
   attributes: {},
-  types: "@marko/runtime-tags/tag-types/effect.d.marko",
+  types: runtimeInfo.name + "/tag-types/effect.d.marko",
 } as Tag;

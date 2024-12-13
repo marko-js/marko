@@ -8,6 +8,7 @@ import {
 
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
+import runtimeInfo from "../util/runtime-info";
 import { getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
 import withPreviousLocation from "../util/with-previous-location";
@@ -60,5 +61,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#debug",
     },
   ],
-  types: "@marko/runtime-tags/tag-types/debug.d.marko",
+  types: runtimeInfo.name + "/tag-types/debug.d.marko",
 } as Tag;

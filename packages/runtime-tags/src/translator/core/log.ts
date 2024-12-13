@@ -8,6 +8,7 @@ import {
 
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
+import runtimeInfo from "../util/runtime-info";
 import { getSection } from "../util/sections";
 import { addStatement } from "../util/signals";
 
@@ -70,5 +71,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#log",
     },
   ],
-  types: "@marko/runtime-tags/tag-types/log.d.marko",
+  types: runtimeInfo.name + "/tag-types/log.d.marko",
 } as Tag;

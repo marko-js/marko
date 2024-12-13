@@ -14,6 +14,7 @@ Promise.all([
     sourcemap: false,
     platform: "node",
     packages: "external",
+    external: [path.join(absWorkingDir, "package.json")],
     entryPoints: ["src/translator/index.ts"],
     define: {
       MARKO_DEBUG: "false",

@@ -17,6 +17,7 @@ import {
   mergeReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
+import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { propsToExpression, translateAttrs } from "../util/translate-attrs";
@@ -113,5 +114,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#effect",
     },
   ],
-  types: "@marko/runtime-tags/tag-types/lifecycle.d.marko",
+  types: runtimeInfo.name + "/tag-types/lifecycle.d.marko",
 } as Tag;

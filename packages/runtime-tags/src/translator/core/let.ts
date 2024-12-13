@@ -5,8 +5,8 @@ import {
   computeNode,
   type Tag,
 } from "@marko/compiler/babel-utils";
-import { AccessorChar } from "@marko/runtime-tags/common/types";
 
+import { AccessorChar } from "../../common/types";
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import {
@@ -15,6 +15,7 @@ import {
   mergeReferences,
   trackVarReferences,
 } from "../util/references";
+import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
 import {
@@ -152,5 +153,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#let",
     },
   ],
-  types: "@marko/runtime-tags/tag-types/let.d.marko",
+  types: runtimeInfo.name + "/tag-types/let.d.marko",
 } as Tag;

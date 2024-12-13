@@ -5,8 +5,8 @@ import {
   assertNoVar,
   type Tag,
 } from "@marko/compiler/babel-utils";
-import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
 
+import { AccessorChar, WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
