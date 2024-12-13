@@ -43,16 +43,13 @@ export default {
 
       const start = body[0]?.start;
       const end = body[body.length - 1]?.end;
-      const bodyExpression =
-        start == null || end == null
-          ? parseExpression<t.ArrowFunctionExpression>(tag.hub.file, code)
-          : parseExpression<t.ArrowFunctionExpression>(
-              tag.hub.file,
-              code,
-              codePrefix.length,
-              start,
-              end,
-            );
+      const bodyExpression = parseExpression<t.ArrowFunctionExpression>(
+        tag.hub.file,
+        code,
+        start,
+        end,
+        codePrefix.length,
+      );
 
       bodyExpression.async = traverseContains(
         bodyExpression.body,

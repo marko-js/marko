@@ -75,6 +75,13 @@ function getLineIndexes(file) {
 }
 
 function findLoc(lineIndexes, startLine, index) {
+  if (index <= 0) {
+    return {
+      line: 1,
+      column: 0,
+    };
+  }
+
   const endLine = lineIndexes.length - 1;
   let max = endLine;
   let line = startLine;
