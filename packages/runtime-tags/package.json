@@ -16,6 +16,8 @@
   },
   "license": "MIT",
   "exports": {
+    "./*.d.marko": "./tag-types/*",
+    "./translator": "./src/translator/index.ts",
     "./*": "./src/*.ts",
     "./debug/*": "./src/*.ts"
   },
@@ -29,7 +31,9 @@
     "build": "node -r ~ts ./scripts/bundle.ts"
   },
   "exports:override": {
+    "./*.d.marko": "./tag-types/*",
     "./package.json": "./package.json",
+    "./translator": "./dist/translator/index.js",
     "./*": {
       "types": "./dist/*.d.ts",
       "import": "./dist/*.mjs",

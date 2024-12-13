@@ -2,6 +2,14 @@ import generate from "@babel/generator";
 import { loadFileForImport, resolveRelativePath } from "@marko/babel-utils";
 import { type Config, taglib, types as t } from "@marko/compiler";
 import {
+  analyze as analyze6,
+  getRuntimeEntryFiles as getRuntimeEntryFiles6,
+  internalEntryBuilder as internalEntryBuilder6,
+  taglibs as taglibs6,
+  transform as transform6,
+  translate as translate6,
+} from "@marko/runtime-tags/translator";
+import {
   analyze as analyze5,
   getRuntimeEntryFiles as getRuntimeEntryFiles5,
   internalEntryBuilder as internalEntryBuilder5,
@@ -9,15 +17,7 @@ import {
   taglibs as taglibs5,
   transform as transform5,
   translate as translate5,
-} from "@marko/translator-default";
-import {
-  analyze as analyze6,
-  getRuntimeEntryFiles as getRuntimeEntryFiles6,
-  internalEntryBuilder as internalEntryBuilder6,
-  taglibs as taglibs6,
-  transform as transform6,
-  translate as translate6,
-} from "@marko/translator-tags";
+} from "marko/translator";
 import path from "path";
 
 import { isTagsAPI } from "./feature-detection";

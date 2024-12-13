@@ -1,7 +1,7 @@
 import { getTagDef } from "@marko/babel-utils";
 import type { types as t } from "@marko/compiler";
-import { taglibs as taglibs5 } from "@marko/translator-default";
-import { taglibs as taglibs6 } from "@marko/translator-tags";
+import { taglibs as taglibs6 } from "@marko/runtime-tags/translator";
+import { taglibs as taglibs5 } from "marko/translator";
 
 import { buildAggregateError } from "./build-aggregate-error";
 

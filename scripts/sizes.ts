@@ -50,7 +50,7 @@ const rootDir = path.join(__dirname, "..");
 const runtimePath = path.join(rootDir, "packages/runtime-tags/dist/dom.mjs");
 const translatorPath = path.join(
   rootDir,
-  "packages/translator-tags/dist/index.js",
+  "packages/runtime-tags/dist/translator/index.js",
 );
 const configPath = path.join(rootDir, ".sizes.json");
 const skipExamples = process.argv.includes("--no-examples");

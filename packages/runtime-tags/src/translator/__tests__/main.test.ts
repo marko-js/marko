@@ -53,7 +53,7 @@ const htmlConfig: compiler.Config = { ...baseConfig, output: "html" };
 const domConfig: compiler.Config = { ...baseConfig, output: "dom" };
 const snapCache = new Map<unknown, unknown>();
 
-describe("translator-tags", () => {
+describe("runtime-tags/translator", () => {
   before(() => {
     register({ ...htmlConfig, modules: "cjs" });
   });

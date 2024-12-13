@@ -14,9 +14,9 @@ import {
   resolveTagImport,
 } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
-import { version } from "marko/package.json";
 import { resolve } from "path";
 
+import { version } from "../../package.json";
 import MarkoCDATA from "./cdata";
 import MarkoClass from "./class";
 import MarkoComment from "./comment";

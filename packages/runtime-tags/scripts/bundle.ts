@@ -4,8 +4,23 @@ import path from "path";
 
 const absWorkingDir = path.join(__dirname, "..");
 
-Promise.all(
-  ["dist/debug", "dist"].flatMap((env) =>
+Promise.all([
+  // Build translator
+  build({
+    format: "cjs",
+    bundle: true,
+    absWorkingDir,
+    outdir: "dist/translator",
+    sourcemap: false,
+    platform: "node",
+    packages: "external",
+    entryPoints: ["src/translator/index.ts"],
+    define: {
+      MARKO_DEBUG: "false",
+    },
+  }),
+  // Build runtime
+  ...["dist/debug", "dist"].flatMap((env) =>
     ["dom", "html"].flatMap((name) => {
       (["esm", "cjs"] as const).map(async (format) => {
         const isProd = env === "dist";
@@ -34,4 +49,7 @@ Promise.all(
       });
     }),
   ),
-);
+]).catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

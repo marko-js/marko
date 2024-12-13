@@ -39,8 +39,8 @@ for (const entry of args.positionals) {
     },
     translator:
       args.values.translator === "class"
-        ? "@marko/translator-default"
-        : "@marko/translator-tags",
+        ? "marko/translator"
+        : "@marko/runtime-tags/translator",
   });
 
   fs.writeFileSync(outputFileName, code);
