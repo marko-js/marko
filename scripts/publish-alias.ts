@@ -13,7 +13,7 @@ pkg.version = "6.0.0-" + pkg.version.replace(/^(0\.)+/, "");
 
 try {
   fs.writeFileSync(runtimeTagsPkgFile, JSON.stringify(pkg, null, 2) + "\n");
-  cp.execSync(`npm publish --tag next --dry-run ./${relativeRuntimeTagsDir}`);
+  cp.execSync(`npm publish --tag next ./${relativeRuntimeTagsDir}`);
 } finally {
   fs.writeFileSync(runtimeTagsPkgFile, originalPkgSource);
 }

@@ -12,7 +12,8 @@
   "bugs": "https://github.com/marko-js/marko/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marko-js/marko"
+    "url": "git+https://github.com/marko-js/marko.git",
+    "directory": "packages/runtime-tags"
   },
   "license": "MIT",
   "exports": {

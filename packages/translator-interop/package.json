@@ -15,7 +15,8 @@
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marko-js/marko/tree/main/packages/translator-interop"
+    "url": "git+https://github.com/marko-js/marko.git",
+    "directory": "packages/translator-interop"
   },
   "license": "MIT",
   "main": "src/index.ts",
