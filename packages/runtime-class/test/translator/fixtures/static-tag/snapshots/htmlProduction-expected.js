@@ -1,5 +1,5 @@
 import { t as _t } from "marko/dist/runtime/html/index.js";
-const _marko_componentType = "c8RteFr",
+const _marko_componentType = "ynfc7vd",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 var foo = 123;

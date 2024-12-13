@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-id-destructure/template.marko:1:5
+    at packages/runtime-tags/src/__tests__/fixtures/error-id-destructure/template.marko:1:5
     > 1 | <id/{ firstNameId }/>
         |     ^^^^^^^^^^^^^^^ The `id` tag cannot be destructured
       2 |

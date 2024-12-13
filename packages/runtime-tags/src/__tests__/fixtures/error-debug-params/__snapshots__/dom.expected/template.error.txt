@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-debug-params/template.marko:1:8
+    at packages/runtime-tags/src/__tests__/fixtures/error-debug-params/template.marko:1:8
     > 1 | <debug|x|/>
         |        ^ Tag does not support parameters.
       2 |

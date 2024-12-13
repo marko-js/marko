@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-let-body-content/template.marko:1:19
+    at packages/runtime-tags/src/__tests__/fixtures/error-let-body-content/template.marko:1:19
     > 1 | <let/count=0>Hello</let>
         |                   ^^^^^^ The closing "let" tag was not expected
       2 |

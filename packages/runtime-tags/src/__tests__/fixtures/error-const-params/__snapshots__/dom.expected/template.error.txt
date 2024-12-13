@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-const-params/template.marko:1:10
+    at packages/runtime-tags/src/__tests__/fixtures/error-const-params/template.marko:1:10
     > 1 | <const/x|y|=1/>
         |          ^ Tag does not support parameters.
       2 |

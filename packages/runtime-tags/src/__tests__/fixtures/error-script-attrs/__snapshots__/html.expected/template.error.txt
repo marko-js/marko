@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-script-attrs/template.marko:1:9
+    at packages/runtime-tags/src/__tests__/fixtures/error-script-attrs/template.marko:1:9
     > 1 | <script blocking="render">
         |         ^^^^^^^^^^^^^^^^^ The `script` tag does not support html attributes. For a native html `script` tag use the `html-script` core tag instead.
       2 |   console.log("hi")
