@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.3
+
+### Patch Changes
+
+- [#2414](https://github.com/marko-js/marko/pull/2414) [`58c8886`](https://github.com/marko-js/marko/commit/58c8886cb99bfbaa763f4eecfe636b4d374f6a68) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Attempt 2 at release alias via github action.
+
 ## 0.3.2
 
 ### Patch Changes
