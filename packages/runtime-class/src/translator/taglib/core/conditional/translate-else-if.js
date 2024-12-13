@@ -1,4 +1,4 @@
-import { assertNoAttributes } from "@marko/babel-utils";
+import { assertNoAttributes } from "@marko/compiler/babel-utils";
 
 import { buildIfStatement } from "./util";
 

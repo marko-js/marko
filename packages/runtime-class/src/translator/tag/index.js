@@ -1,3 +1,4 @@
+import { types as t } from "@marko/compiler";
 import {
   assertNoVar,
   findAttributeTags,
@@ -8,8 +9,7 @@ import {
   isNativeTag,
   isTransparentTag,
   resolveTagImport,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 import nodePath from "path";
 
 import { getKeyManager } from "../util/key-manager";

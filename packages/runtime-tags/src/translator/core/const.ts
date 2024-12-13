@@ -1,5 +1,9 @@
-import { assertNoArgs, assertNoParams, type Tag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import {
+  assertNoArgs,
+  assertNoParams,
+  type Tag,
+} from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent } from "../util/assert";
 import evaluate from "../util/evaluate";
@@ -83,5 +87,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#const",
     },
   ],
-  types: "@marko/translator-tags/tag-types/const.d.marko",
+  types: "@marko/runtime-tags/tag-types/const.d.marko",
 } as Tag;

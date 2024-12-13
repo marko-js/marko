@@ -1,9 +1,9 @@
+import { types as t } from "@marko/compiler";
 import {
   importDefault,
   importNamed,
   normalizeTemplateString,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 import attrHelper from "marko/src/runtime/html/helpers/attr";
 import { d as escapeDoubleQuotes } from "marko/src/runtime/html/helpers/escape-quotes";
 

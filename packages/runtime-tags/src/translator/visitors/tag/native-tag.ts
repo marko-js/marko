@@ -1,10 +1,10 @@
+import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoAttributeTags,
   assertNoParams,
   getTagDef,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 import {
   getEventHandlerName,
   isEventHandler,

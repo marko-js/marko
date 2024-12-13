@@ -1,4 +1,4 @@
-const { loadFileForTag } = require("@marko/babel-utils");
+const { loadFileForTag } = require("@marko/compiler/babel-utils");
 
 module.exports = (helloTag, t) => {
   const messageTag = helloTag.getNextSibling();

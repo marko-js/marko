@@ -1,5 +1,5 @@
-import { assertNoArgs, assertNoAttributes } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { assertNoArgs, assertNoAttributes } from "@marko/compiler/babel-utils";
 
 export function exit(path) {
   assertNoArgs(path);

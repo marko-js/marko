@@ -1,3 +1,4 @@
+import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoAttributeTags,
@@ -6,8 +7,7 @@ import {
   getStart,
   importDefault,
   type Tag,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 import MagicString, { type SourceMap } from "magic-string";
 import path from "path";
 

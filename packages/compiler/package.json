@@ -23,6 +23,10 @@
       "types": "./index.d.ts",
       "default": "./src/index.js"
     },
+    "./babel-utils": {
+      "types": "./babel-utils.d.ts",
+      "default": "./src/babel-utils/index.js"
+    },
     "./config": {
       "types": "./config.d.ts",
       "default": "./src/config.js"
@@ -47,6 +51,7 @@
     "modules.js",
     "index.d.ts",
     "babel-types.d.ts",
+    "babel-utils.d.ts",
     "register.js",
     "register.d.ts"
   ],
@@ -66,7 +71,6 @@
     "@babel/traverse": "^7.26.4",
     "@babel/types": "^7.26.3",
     "@luxass/strip-json-comments": "^1.3.2",
-    "@marko/babel-utils": "^6.6.3",
     "complain": "^1.6.1",
     "he": "^1.2.0",
     "htmljs-parser": "^5.5.3",
@@ -75,12 +79,13 @@
     "lasso-package-root": "^1.0.1",
     "raptor-regexp": "^1.0.1",
     "raptor-util": "^3.2.0",
+    "relative-import-path": "^1.0.0",
     "resolve-from": "^5.0.0",
     "self-closing-tags": "^1.0.1",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
-    "@marko/translator-default": "^6.1.3"
+    "marko": "^5.36.5"
   },
   "publishConfig": {
     "access": "public"
@@ -89,6 +94,10 @@
     ".": {
       "types": "./index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./babel-utils": {
+      "types": "./babel-utils.d.ts",
+      "default": "./dist/babel-utils/index.js"
     },
     "./config": {
       "types": "./config.d.ts",

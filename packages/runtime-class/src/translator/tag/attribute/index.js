@@ -1,4 +1,8 @@
-import { getTagDef, importDefault, isNativeTag } from "@marko/babel-utils";
+import {
+  getTagDef,
+  importDefault,
+  isNativeTag,
+} from "@marko/compiler/babel-utils";
 
 import directives from "./directives";
 import modifiers from "./modifiers";

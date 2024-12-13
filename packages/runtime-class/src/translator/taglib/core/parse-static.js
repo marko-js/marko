@@ -1,5 +1,5 @@
-import { parseStatements } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { parseStatements } from "@marko/compiler/babel-utils";
 
 export default function (path) {
   const {

@@ -1,5 +1,5 @@
-import { assertNoArgs, type Tag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { assertNoArgs, type Tag } from "@marko/compiler/babel-utils";
 
 import { isOutputHTML } from "../util/marko-config";
 import {
@@ -87,5 +87,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#define",
     },
   ],
-  types: "@marko/translator-tags/tag-types/define.d.marko",
+  types: "@marko/runtime-tags/tag-types/define.d.marko",
 } as Tag;

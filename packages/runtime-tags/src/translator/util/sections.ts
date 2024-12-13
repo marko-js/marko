@@ -1,9 +1,9 @@
+import { types as t } from "@marko/compiler";
 import {
   isAttributeTag,
   isNativeTag,
   loadFileForTag,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 
 import { currentProgramPath } from "../visitors/program";
 import { isCoreTag } from "./is-core-tag";

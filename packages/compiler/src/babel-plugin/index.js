@@ -1,5 +1,5 @@
 import traverse from "@babel/traverse";
-import { diagnosticError, getTemplateId } from "@marko/babel-utils";
+import { diagnosticError, getTemplateId } from "@marko/compiler/babel-utils";
 import { createHash } from "crypto";
 import path from "path";
 

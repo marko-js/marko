@@ -12,7 +12,7 @@ const cwdRegExp = new RegExp(
   "g",
 );
 
-describe("translator-class", () => {
+describe("runtime-class/translator", () => {
   autotest("fixtures", {
     cjs: runTest({ output: "html", modules: "cjs" }),
     html: runTest({ output: "html" }),

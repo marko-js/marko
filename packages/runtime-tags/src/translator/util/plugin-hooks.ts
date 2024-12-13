@@ -1,10 +1,10 @@
+import { types as t } from "@marko/compiler";
 import type {
   EnterExitPlugin,
   FunctionPlugin,
   ModulePlugin,
   Plugin,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 
 export function enter<T extends t.Node>(
   modulePlugin: Plugin | void,

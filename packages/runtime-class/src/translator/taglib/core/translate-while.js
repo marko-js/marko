@@ -1,9 +1,9 @@
+import { types as t } from "@marko/compiler";
 import {
   assertNoAttributes,
   assertNoParams,
   getArgOrSequence,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 
 import withPreviousLocation from "../../util/with-previous-location";
 

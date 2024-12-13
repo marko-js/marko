@@ -1,3 +1,4 @@
+import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoAttributes,
@@ -5,8 +6,7 @@ import {
   assertNoParams,
   diagnosticDeprecate,
   type Tag,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent } from "../util/assert";
 

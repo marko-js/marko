@@ -1,7 +1,7 @@
 {
   "examples": {
-    "counter": "./packages/translator-tags/src/__tests__/fixtures/basic-counter/template.marko",
-    "comments": "./packages/translator-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/template.marko"
+    "counter": "./packages/runtime-tags/src/__tests__/fixtures/basic-counter/template.marko",
+    "comments": "./packages/runtime-tags/src/__tests__/fixtures/basic-inert-collapsible-tree/template.marko"
   },
   "results": [
     {

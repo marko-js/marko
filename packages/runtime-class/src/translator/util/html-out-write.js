@@ -1,5 +1,5 @@
-import { normalizeTemplateString } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { normalizeTemplateString } from "@marko/compiler/babel-utils";
 
 export default function write(strings, ...expressions) {
   const template = normalizeTemplateString(strings, ...expressions);

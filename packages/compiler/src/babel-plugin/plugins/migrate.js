@@ -1,4 +1,4 @@
-import { getTagDef, getTagDefForTagName } from "@marko/babel-utils";
+import { getTagDef, getTagDefForTagName } from "@marko/compiler/babel-utils";
 
 import * as t from "../../babel-types";
 import { enter, exit } from "../util/plugin-hooks";

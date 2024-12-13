@@ -1,10 +1,10 @@
+import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoParams,
   computeNode,
   type Tag,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 import { AccessorChar } from "@marko/runtime-tags/common/types";
 
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
@@ -152,5 +152,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#let",
     },
   ],
-  types: "@marko/translator-tags/tag-types/let.d.marko",
+  types: "@marko/runtime-tags/tag-types/let.d.marko",
 } as Tag;

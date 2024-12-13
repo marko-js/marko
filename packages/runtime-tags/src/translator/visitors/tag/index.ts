@@ -1,5 +1,9 @@
-import { getTagDef, isNativeTag, type Plugin } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import {
+  getTagDef,
+  isNativeTag,
+  type Plugin,
+} from "@marko/compiler/babel-utils";
 
 import { isOutputHTML } from "../../util/marko-config";
 import * as hooks from "../../util/plugin-hooks";

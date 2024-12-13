@@ -1,10 +1,10 @@
+import { type Config, types as t } from "@marko/compiler";
 import {
   assertAttributesOrArgs,
   importDefault,
   importNamed,
   loadFileForTag,
-} from "@marko/babel-utils";
-import { type Config, types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 import { AccessorChar, WalkCode } from "@marko/runtime-tags/common/types";
 
 import { isOutputHTML } from "../../util/marko-config";

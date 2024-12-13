@@ -1,5 +1,8 @@
-import { getTagDef, normalizeTemplateString } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import {
+  getTagDef,
+  normalizeTemplateString,
+} from "@marko/compiler/babel-utils";
 
 import * as FLAGS from "../../util/runtime-flags";
 import write from "../../util/vdom-out-write";

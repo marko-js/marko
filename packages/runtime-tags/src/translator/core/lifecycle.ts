@@ -1,10 +1,10 @@
+import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoParams,
   assertNoVar,
   type Tag,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
@@ -113,5 +113,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#effect",
     },
   ],
-  types: "@marko/translator-tags/tag-types/lifecycle.d.marko",
+  types: "@marko/runtime-tags/tag-types/lifecycle.d.marko",
 } as Tag;

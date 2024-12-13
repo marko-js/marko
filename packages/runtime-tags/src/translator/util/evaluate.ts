@@ -1,5 +1,5 @@
-import { computeNode } from "@marko/babel-utils";
 import type { types as t } from "@marko/compiler";
+import { computeNode } from "@marko/compiler/babel-utils";
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {

@@ -1,5 +1,5 @@
-import { importStar } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { importStar } from "@marko/compiler/babel-utils";
 import {
   attr,
   classAttr,

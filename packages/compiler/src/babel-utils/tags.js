@@ -112,7 +112,7 @@ export function getMacroIdentifierForName(path, name) {
 
   if (!id) {
     throw new Error(
-      "<macro> was added programmatically, but was not registered via the 'registerMacro' api in @marko/babel-utils.",
+      "<macro> was added programmatically, but was not registered via the 'registerMacro' api in @marko/compiler/babel-utils.",
     );
   }
 

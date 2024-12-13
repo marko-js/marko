@@ -1,11 +1,11 @@
+import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoAttributes,
   assertNoAttributeTags,
   assertNoParams,
   type Tag,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
@@ -68,5 +68,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#id",
     },
   ],
-  types: "@marko/translator-tags/tag-types/id.d.marko",
+  types: "@marko/runtime-tags/tag-types/id.d.marko",
 } as Tag;

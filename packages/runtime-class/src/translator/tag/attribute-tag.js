@@ -1,3 +1,4 @@
+import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   findParentTag,
@@ -6,8 +7,7 @@ import {
   importNamed,
   isAttributeTag,
   isTransparentTag,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 
 import { getAttrs } from "./util";
 

@@ -1,3 +1,4 @@
+import { types as t } from "@marko/compiler";
 import {
   assertAllowedAttributes,
   assertNoArgs,
@@ -5,8 +6,7 @@ import {
   assertNoParams,
   diagnosticDeprecate,
   type Tag,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import withPreviousLocation from "../util/with-previous-location";
@@ -39,5 +39,5 @@ export default {
     },
   ],
   attributes: {},
-  types: "@marko/translator-tags/tag-types/effect.d.marko",
+  types: "@marko/runtime-tags/tag-types/effect.d.marko",
 } as Tag;

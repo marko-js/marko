@@ -52,7 +52,7 @@ const config = {
    * Allows configuring Marko to compile to different runtimes.
    */
   translator: (() => {
-    const translatorReg = /^(@marko\/|marko-)translator-/;
+    const translatorReg = /^(?:@marko\/|marko-)(?:translator|runtime)-/;
     let translator;
     let pkg;
 
@@ -93,7 +93,11 @@ const config = {
       }
     }
 
-    return translator || "@marko/translator-default";
+    if (translator && translator.endsWith("runtime")) {
+      translator += "/translator";
+    }
+
+    return translator || "marko/translator";
   })(),
 
   /**

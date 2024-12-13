@@ -1,11 +1,11 @@
+import { types as t } from "@marko/compiler";
 import {
   computeNode,
   getTagDef,
   importDefault,
   isLoopTag,
   isNativeTag,
-} from "@marko/babel-utils";
-import { types as t } from "@marko/compiler";
+} from "@marko/compiler/babel-utils";
 import { decode } from "he";
 
 import translateAttributes from "../tag/native-tag[vdom]/attributes";

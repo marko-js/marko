@@ -1,5 +1,5 @@
-import { isAttributeTag, isTransparentTag } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { isAttributeTag, isTransparentTag } from "@marko/compiler/babel-utils";
 
 import { buildForRuntimeCall, getForType } from "../core/for";
 import { scopeIdentifier, type TemplateExports } from "../visitors/program";

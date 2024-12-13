@@ -1,5 +1,5 @@
-import { registerMacro } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import { registerMacro } from "@marko/compiler/babel-utils";
 
 export default function (path) {
   const attrs = path.node.attributes;

@@ -1,5 +1,5 @@
-import { resolveTagImport } from "@marko/babel-utils";
 import type { types as t } from "@marko/compiler";
+import { resolveTagImport } from "@marko/compiler/babel-utils";
 
 import type { TemplateVisitor } from "../util/visitors";
 

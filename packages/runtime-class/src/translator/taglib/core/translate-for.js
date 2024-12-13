@@ -1,5 +1,8 @@
-import { assertAllowedAttributes, importDefault } from "@marko/babel-utils";
 import { types as t } from "@marko/compiler";
+import {
+  assertAllowedAttributes,
+  importDefault,
+} from "@marko/compiler/babel-utils";
 
 export function exit(path) {
   const { node } = path;
