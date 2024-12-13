@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.2
+
+### Patch Changes
+
+- [#2418](https://github.com/marko-js/marko/pull/2418) [`00e7392`](https://github.com/marko-js/marko/commit/00e7392361a17f49345400d53644bcee13e9b375) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue when parsing embedded script code with negative offset locations.
+
+- Updated dependencies [[`00e7392`](https://github.com/marko-js/marko/commit/00e7392361a17f49345400d53644bcee13e9b375)]:
+  - @marko/runtime-tags@0.3.5
+  - marko@5.37.2
+
 ## 0.2.1
 
 ### Patch Changes
