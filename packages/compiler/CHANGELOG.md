@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.1
+
+### Patch Changes
+
+- [#2416](https://github.com/marko-js/marko/pull/2416) [`619c87f`](https://github.com/marko-js/marko/commit/619c87faeebc31f6885bbb868fc89bab8a90ebea) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix package json repository config.
+
 ## 5.39.0
 
 ### Minor Changes
