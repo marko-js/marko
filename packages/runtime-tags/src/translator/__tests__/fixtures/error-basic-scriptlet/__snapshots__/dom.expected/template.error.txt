@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-basic-scriptlet/template.marko:3:3
+    at packages/runtime-tags/src/translator/__tests__/fixtures/error-basic-scriptlet/template.marko:3:3
       1 | <div>
       2 |   <let/clickCount = 0/>
     > 3 |   $ const doubleCount = clickCount * 2;

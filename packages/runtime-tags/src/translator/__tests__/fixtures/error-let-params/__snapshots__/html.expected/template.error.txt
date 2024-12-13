@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-let-params/template.marko:1:12
+    at packages/runtime-tags/src/translator/__tests__/fixtures/error-let-params/template.marko:1:12
     > 1 | <let/count|x|=0/>
         |            ^ Tag does not support parameters.
       2 |

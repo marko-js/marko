@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-return-args/template.marko:1:9
+    at packages/runtime-tags/src/translator/__tests__/fixtures/error-return-args/template.marko:1:9
     > 1 | <return(x)=3/>
         |         ^ Tag does not support arguments.
       2 |

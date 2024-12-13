@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-return-extra-attr/template.marko:1:11
+    at packages/runtime-tags/src/translator/__tests__/fixtures/error-return-extra-attr/template.marko:1:11
     > 1 | <return=3 y=5/>
         |           ^^^ Tag does not support the `y` attribute.
       2 |

@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-const-body-content/template.marko:2:3
+    at packages/runtime-tags/src/translator/__tests__/fixtures/error-const-body-content/template.marko:2:3
       1 | <const/x=1>
     > 2 |   Hello!
         |   ^ Line has extra indentation at the beginning

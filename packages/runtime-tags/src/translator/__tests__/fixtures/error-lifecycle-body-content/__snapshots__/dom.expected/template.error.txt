@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-lifecycle-body-content/template.marko:5:7
+    at packages/runtime-tags/src/translator/__tests__/fixtures/error-lifecycle-body-content/template.marko:5:7
       3 |   onUpdate() {}
       4 |   onDestroy() {}
     > 5 | >Hello</lifecycle>

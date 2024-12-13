@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-if-no-content/template.marko:1:2
+    at packages/runtime-tags/src/translator/__tests__/fixtures/error-if-no-content/template.marko:1:2
     > 1 | <if=input.show />
         |  ^^ The `if` tag requires body content.
       2 |

@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-style-placeholder/template.marko:3:12
+    at packages/runtime-tags/src/translator/__tests__/fixtures/error-style-placeholder/template.marko:3:12
       1 | <style>
       2 |   body {
     > 3 |     color: ${"green"}

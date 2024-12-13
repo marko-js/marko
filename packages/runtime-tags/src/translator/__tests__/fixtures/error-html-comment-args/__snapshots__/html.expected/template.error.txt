@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-html-comment-args/template.marko:1:15
+    at packages/runtime-tags/src/translator/__tests__/fixtures/error-html-comment-args/template.marko:1:15
     > 1 | <html-comment(x)/>
         |               ^ Tag does not support arguments.
       2 |

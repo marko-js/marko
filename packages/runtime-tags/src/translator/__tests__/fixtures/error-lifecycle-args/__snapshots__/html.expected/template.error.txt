@@ -1,5 +1,5 @@
 
-    at packages/translator-tags/src/__tests__/fixtures/error-lifecycle-args/template.marko:1:12
+    at packages/runtime-tags/src/translator/__tests__/fixtures/error-lifecycle-args/template.marko:1:12
     > 1 | <lifecycle(x)
         |            ^ Tag does not support arguments.
       2 |   onMount() {}
