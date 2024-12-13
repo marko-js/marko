@@ -34,6 +34,7 @@ import { analyzeStaticVDOM } from "./util/optimize-vdom-create";
 export { optionalTaglibs, default as taglibs } from "./taglib";
 export { entryBuilder as internalEntryBuilder } from "./util/add-dependencies";
 
+export const preferAPI = "class";
 export const analyze = {
   Program: {
     enter(program) {

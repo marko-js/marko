@@ -13,7 +13,9 @@ pkg.version = "6.0.0-" + pkg.version.replace(/^(0\.)+/, "");
 
 try {
   fs.writeFileSync(runtimeTagsPkgFile, JSON.stringify(pkg, null, 2) + "\n");
-  cp.execSync(`npm publish --tag next ./${relativeRuntimeTagsDir}`);
+  cp.execSync(
+    `node scripts/pkg-override && npm publish --tag next ./${relativeRuntimeTagsDir} && node scripts/pkg-override`,
+  );
 } finally {
   fs.writeFileSync(runtimeTagsPkgFile, originalPkgSource);
 }
