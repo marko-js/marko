@@ -5,12 +5,9 @@ import {
   assertNoParams,
   getTagDef,
 } from "@marko/compiler/babel-utils";
-import {
-  getEventHandlerName,
-  isEventHandler,
-} from "@marko/runtime-tags/common/helpers";
-import { WalkCode } from "@marko/runtime-tags/common/types";
 
+import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
+import { WalkCode } from "../../../common/types";
 import evaluate from "../../util/evaluate";
 import { getTagName } from "../../util/get-tag-name";
 import { isStatefulReferences } from "../../util/is-stateful";

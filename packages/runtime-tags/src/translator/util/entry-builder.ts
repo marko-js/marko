@@ -1,6 +1,8 @@
 import { types as t } from "@marko/compiler";
 import { resolveRelativePath } from "@marko/compiler/babel-utils";
 
+import runtimeInfo from "./runtime-info";
+
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     isInteractive?: boolean;
@@ -32,7 +34,7 @@ export default {
         t.importDeclaration(
           [t.importSpecifier(t.identifier("init"), t.identifier("init"))],
           t.stringLiteral(
-            `@marko/runtime-tags/${
+            `${runtimeInfo.name}/${
               entryFile.markoOpts.optimize ? "" : "debug/"
             }dom`,
           ),

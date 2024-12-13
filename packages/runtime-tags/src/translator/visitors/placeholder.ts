@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
-import { WalkCode } from "@marko/runtime-tags/common/types";
 
+import { WalkCode } from "../../common/types";
 import evaluate from "../util/evaluate";
 import { isStatefulReferences } from "../util/is-stateful";
 import { isOutputHTML } from "../util/marko-config";

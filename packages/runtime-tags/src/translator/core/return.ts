@@ -6,8 +6,8 @@ import {
   assertNoVar,
   type Tag,
 } from "@marko/compiler/babel-utils";
-import { AccessorChar } from "@marko/runtime-tags/common/types";
 
+import { AccessorChar } from "../../common/types";
 import { assertNoBodyContent } from "../util/assert";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { importRuntime } from "../util/runtime";

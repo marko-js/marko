@@ -1,6 +1,7 @@
 import type { Config } from "@marko/compiler";
 
 import coreTagLib from "./core";
+import runtimeInfo from "./util/runtime-info";
 import { extractVisitors } from "./util/visitors";
 import MarkoCDATA from "./visitors/cdata";
 import MarkoComment from "./visitors/comment";
@@ -47,7 +48,7 @@ export function getRuntimeEntryFiles(
   optimize: boolean,
 ) {
   return [
-    `@marko/runtime-tags${optimize ? "" : "/debug"}/${output === "html" ? "html" : "dom"}`,
+    `${runtimeInfo.name}${optimize ? "" : "/debug"}/${output === "html" ? "html" : "dom"}`,
   ];
 }
 

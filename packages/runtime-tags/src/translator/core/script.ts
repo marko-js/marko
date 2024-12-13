@@ -10,6 +10,7 @@ import {
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import { dropReferences, getAllTagReferenceNodes } from "../util/references";
+import runtimeInfo from "../util/runtime-info";
 import { getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { skip, traverseContains } from "../util/traverse";
@@ -160,7 +161,7 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#script",
     },
   ],
-  types: "@marko/runtime-tags/tag-types/script.d.marko",
+  types: runtimeInfo.name + "/tag-types/script.d.marko",
 } as Tag;
 
 function isAwaitExpression(node: t.Node) {

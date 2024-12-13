@@ -9,6 +9,7 @@ import { assertNoBodyContent } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
 import { BindingType, trackVarReferences } from "../util/references";
+import runtimeInfo from "../util/runtime-info";
 import { getSection } from "../util/sections";
 import { addValue, initValue } from "../util/signals";
 import translateVar from "../util/translate-var";
@@ -87,5 +88,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#const",
     },
   ],
-  types: "@marko/runtime-tags/tag-types/const.d.marko",
+  types: runtimeInfo.name + "/tag-types/const.d.marko",
 } as Tag;

@@ -1,4 +1,4 @@
-import { taglibId } from "../util/is-core-tag";
+import runtimeInfo from "../util/runtime-info";
 import AttrsTag from "./attrs";
 import ClientTag from "./client";
 import ConstTag from "./const";
@@ -23,7 +23,7 @@ import StaticTag from "./static";
 import StyleTag from "./style";
 
 export default {
-  taglibId,
+  taglibId: runtimeInfo.taglibId,
   "<attrs>": AttrsTag,
   "<client>": ClientTag,
   "<const>": ConstTag,

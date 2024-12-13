@@ -2,7 +2,8 @@ import type { types as t } from "@marko/compiler";
 import { getTagDef } from "@marko/compiler/babel-utils";
 
 import { getTagName } from "./get-tag-name";
-export const taglibId = "marko-core";
+import runtimeInfo from "./runtime-info";
+const { taglibId } = runtimeInfo;
 const htmlTaglibId = "marko-html";
 const interopTaglibId = "@marko/translator-interop-class-tags";
 

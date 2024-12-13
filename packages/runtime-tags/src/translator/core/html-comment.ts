@@ -5,8 +5,8 @@ import {
   assertNoParams,
   type Tag,
 } from "@marko/compiler/babel-utils";
-import { WalkCode } from "@marko/runtime-tags/common/types";
 
+import { WalkCode } from "../../common/types";
 import { isOutputHTML } from "../util/marko-config";
 import {
   type Binding,

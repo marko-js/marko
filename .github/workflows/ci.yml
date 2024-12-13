@@ -81,3 +81,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Release Alias
+        if: "${{ contains(steps.changesets.outputs.publishedPackages.*.name, '@marko/runtime-tags') }}"
+        run: npm run @ci:release-alias
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

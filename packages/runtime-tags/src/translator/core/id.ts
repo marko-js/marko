@@ -11,6 +11,7 @@ import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
 import { BindingType, trackVarReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
+import runtimeInfo from "../util/runtime-info";
 import { getSection } from "../util/sections";
 import { addValue, initValue } from "../util/signals";
 import { scopeIdentifier } from "../visitors/program";
@@ -68,5 +69,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#id",
     },
   ],
-  types: "@marko/runtime-tags/tag-types/id.d.marko",
+  types: runtimeInfo.name + "/tag-types/id.d.marko",
 } as Tag;
