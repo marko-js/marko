@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 0.3.1
+
+### Patch Changes
+
+- [#2410](https://github.com/marko-js/marko/pull/2410) [`2f68463`](https://github.com/marko-js/marko/commit/2f6846382a7f6ad5de10a0978a69a16fa37c6dc0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Create marko@6 publish alias scripts.
+
+- [#2410](https://github.com/marko-js/marko/pull/2410) [`2f68463`](https://github.com/marko-js/marko/commit/2f6846382a7f6ad5de10a0978a69a16fa37c6dc0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Use relative paths for tags translator to tags runtime.
+
 ## 0.3.0
 
 ### Minor Changes
