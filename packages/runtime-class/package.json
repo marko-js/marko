@@ -19,7 +19,8 @@
   "homepage": "https://markojs.com/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/marko-js/marko.git"
+    "url": "git+https://github.com/marko-js/marko.git",
+    "directory": "packages/runtime-class"
   },
   "license": "MIT",
   "author": "Patrick Steele-Idem <pnidem@gmail.com>",
