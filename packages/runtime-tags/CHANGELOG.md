@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.2
+
+### Patch Changes
+
+- [#2412](https://github.com/marko-js/marko/pull/2412) [`3e660d8`](https://github.com/marko-js/marko/commit/3e660d8602b77d4c657558e913a19f4f7b43e65b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Attempt 1 to alias tags api to marko@6
+
 ## 0.3.1
 
 ### Patch Changes
