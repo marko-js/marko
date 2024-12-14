@@ -14,7 +14,7 @@ module.exports = (api) => ({
   plugins: ["@babel/transform-runtime"],
   overrides: [
     {
-      test: "./packages/marko/src/**/*",
+      test: "./packages/runtime-class/src/**/*",
       plugins: api.env("production")
         ? [
             ["babel-plugin-minprops", { matchPrefix: "___", context: "marko" }],
