@@ -106,7 +106,7 @@ $ const instanceFn = (val: T) => {
 
 ## Built-in Marko Types
 
-Marko exposes [type definitions](https://github.com/marko-js/marko/blob/main/packages/marko/index.d.ts) you can reuse in [a TypeScript namespace](https://www.typescriptlang.org/docs/handbook/namespaces.html) called `Marko`:
+Marko exposes [type definitions](https://github.com/marko-js/marko/blob/main/packages/runtime-class/index.d.ts) you can reuse in [a TypeScript namespace](https://www.typescriptlang.org/docs/handbook/namespaces.html) called `Marko`:
 
 - **`Marko.Template<Input, Return>`**
   - The type of a `.marko` file

@@ -1,5 +1,5 @@
 __snapshots__
-!packages/marko/src/node_modules
+!packages/runtime-class/src/node_modules
 .cache
 .nvm
 .sizes

@@ -6,7 +6,7 @@ import tseslint from "typescript-eslint";
 export default tseslint.config(
   {
     ignores: [
-      "!packages/marko/src/node_modules",
+      "!packages/runtime-class/src/node_modules",
       ".cache",
       ".sizes",
       ".vscode",

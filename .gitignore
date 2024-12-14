@@ -28,7 +28,7 @@ coverage
 
 # Dependency directories
 node_modules
-!packages/marko/src/node_modules
+!packages/runtime-class/src/node_modules
 
 # Optional npm cache directory
 .npm

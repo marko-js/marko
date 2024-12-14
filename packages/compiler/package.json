@@ -10,7 +10,7 @@
     "parser",
     "plugin"
   ],
-  "homepage": "https://github.com/marko-js/marko/blob/main/packages/marko/docs/compiler.md",
+  "homepage": "https://github.com/marko-js/marko/blob/main/packages/runtime-class/docs/compiler.md",
   "bugs": "https://github.com/marko-js/marko/issues/new?template=Bug_report.md",
   "repository": {
     "type": "git",
