@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.8
+
+### Patch Changes
+
+- [#2424](https://github.com/marko-js/marko/pull/2424) [`0c6fea2`](https://github.com/marko-js/marko/commit/0c6fea2f0f8ae8024a3dd8dff46d08805b779a08) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix tag-types not being exposed.
+
 ## 0.3.7
 
 ### Patch Changes
