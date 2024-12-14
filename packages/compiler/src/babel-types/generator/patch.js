@@ -204,7 +204,17 @@ Object.assign(Printer.prototype, {
       if (attributes.length) {
         if (tagName === "script") {
           for (let i = attributes.length; i--; ) {
-            if (attributes[i].value.fromBody) {
+            const attr = attributes[i];
+            if (
+              attr.name === "value" &&
+              (attr.value.type === "ArrowFunctionExpression" ||
+                attr.value.type === "FunctionExpression") &&
+              !(
+                attr.value.generator ||
+                attr.value.returnType ||
+                attr.value.typeParameters
+              )
+            ) {
               bodyOverride = attributes[i].value.body.body;
               attributes = toSpliced(attributes, i);
               break;

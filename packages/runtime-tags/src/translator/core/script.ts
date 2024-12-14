@@ -3,7 +3,7 @@ import {
   assertNoArgs,
   assertNoAttributeTags,
   assertNoParams,
-  parseExpression,
+  parseStatements,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
@@ -24,9 +24,7 @@ export default {
     const { node } = tag;
     const { body } = node.body;
     if (body.length) {
-      const codePrefix = "async ()=>{";
-      const codeSuffix = "}";
-      let code = codePrefix;
+      let code = "";
       for (const child of body) {
         if (child.type !== "MarkoText") {
           throw tag.hub.file.hub.buildError(
@@ -39,24 +37,17 @@ export default {
 
         code += child.value;
       }
-      code += codeSuffix;
 
       const start = body[0]?.start;
       const end = body[body.length - 1]?.end;
-      const bodyExpression = parseExpression<t.ArrowFunctionExpression>(
-        tag.hub.file,
-        code,
-        start,
-        end,
-        codePrefix.length,
+      const bodyStatements = parseStatements(tag.hub.file, code, start, end);
+      const valueFn = t.arrowFunctionExpression(
+        [],
+        t.blockStatement(bodyStatements),
+        traverseContains(bodyStatements, isAwaitExpression),
       );
 
-      bodyExpression.async = traverseContains(
-        bodyExpression.body,
-        isAwaitExpression,
-      );
-      (bodyExpression as any).fromBody = true;
-      node.attributes.push(t.markoAttribute("value", bodyExpression));
+      node.attributes.push(t.markoAttribute("value", valueFn));
       node.body.body = [];
     }
   },

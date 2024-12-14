@@ -75,7 +75,7 @@ export function parseTemplateLiteral(file, str, sourceStart, sourceEnd) {
   );
 
   if (parsed.type === "TemplateLiteral") {
-    return parsed;
+    return t.templateLiteral(parsed.quasis, parsed.expressions);
   }
 
   return ensureParseError(file, parsed, sourceStart, sourceEnd);
@@ -119,11 +119,19 @@ function tryParse(
   const { parserOpts } = file.opts;
 
   if (typeof sourceStart === "number") {
-    const startIndex = sourceStart - (sourceOffset || 0);
-    const startLoc = getLoc(file, startIndex);
+    const startLoc = getLoc(file, sourceStart);
+    const startLine = startLoc.line;
+    let startIndex = sourceStart;
+    let startColumn = startLoc.column;
+
+    if (sourceOffset) {
+      startIndex -= sourceOffset;
+      startColumn -= sourceOffset;
+    }
+
+    parserOpts.startLine = startLine;
     parserOpts.startIndex = startIndex;
-    parserOpts.startColumn = startLoc.column;
-    parserOpts.startLine = startLoc.line;
+    parserOpts.startColumn = startColumn;
 
     try {
       return isExpression
