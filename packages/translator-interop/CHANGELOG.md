@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.4
+
+### Patch Changes
+
+- [`e60bd4f`](https://github.com/marko-js/marko/commit/e60bd4fd25ccee475dad49195fca64024a6164bf) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix incorrect filepath for marko babel transform.
+
+- Updated dependencies [[`e60bd4f`](https://github.com/marko-js/marko/commit/e60bd4fd25ccee475dad49195fca64024a6164bf)]:
+  - marko@5.37.4
+  - @marko/runtime-tags@0.3.7
+
 ## 0.2.3
 
 ### Patch Changes
