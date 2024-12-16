@@ -141,7 +141,7 @@ class ServerRenderResult implements RenderResult {
     write: (chunk: string) => void;
     end: () => void;
     flush?: () => void;
-    emit?: (eventName: string, ...args: any[]) => any;
+    emit?: (eventName: PropertyKey, ...args: any[]) => any;
   }) {
     this.#read(
       (html) => {
