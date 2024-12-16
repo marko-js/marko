@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.12
+
+### Patch Changes
+
+- [#2432](https://github.com/marko-js/marko/pull/2432) [`6078d47`](https://github.com/marko-js/marko/commit/6078d474c2285df8a22705d0d4edeccb7a4bd204) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix exported types.
+
 ## 0.3.11
 
 ### Patch Changes
