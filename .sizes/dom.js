@@ -1,4 +1,4 @@
-// size: 18048 (min) 6515 (brotli)
+// size: 18045 (min) 6518 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -742,14 +742,16 @@ function controllable_detailsOrDialog_open(
     (scope[nodeAccessor].open = normalizeBoolProp(open));
 }
 function controllable_detailsOrDialog_open_effect(scope, nodeAccessor) {
-  let el = scope[nodeAccessor];
+  let el = scope[nodeAccessor],
+    hasChanged = () => el.open !== scope[nodeAccessor + ":"];
   syncControllable(
     el,
     "DIALOG" === el.tagName ? "close" : "toggle",
-    () => scope[nodeAccessor + ";"] && el.open !== scope[nodeAccessor + ":"],
+    hasChanged,
     () => {
       let openChange = scope[nodeAccessor + ";"];
       openChange &&
+        hasChanged() &&
         ((scope[nodeAccessor + "="] = 6),
         openChange(el.open),
         run(),
