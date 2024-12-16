@@ -17,14 +17,20 @@
   },
   "license": "MIT",
   "exports": {
-    "./*.d.marko": "./tag-types/*",
+    ".": {
+      "types": "./index.d.ts"
+    },
     "./translator": "./src/translator/index.ts",
-    "./*": "./src/*.ts",
-    "./debug/*": "./src/*.ts"
+    "./tag-types/*": "./tag-types/*",
+    "./debug/*": "./src/*.ts",
+    "./*": "./src/*.ts"
   },
+  "types": "index.d.ts",
   "files": [
     "dist",
     "tag-types",
+    "index.d.ts",
+    "tags-html.d.ts",
     "!**/meta.*.json",
     "!**/__tests__",
     "!**/*.tsbuildinfo"
@@ -38,18 +44,21 @@
     "magic-string": "^0.30.17"
   },
   "exports:override": {
-    "./*.d.marko": "./tag-types/*",
+    ".": {
+      "types": "./index.d.ts"
+    },
     "./package.json": "./package.json",
     "./translator": "./dist/translator/index.js",
-    "./*": {
-      "types": "./dist/*.d.ts",
-      "import": "./dist/*.mjs",
-      "default": "./dist/*.js"
-    },
+    "./tag-types/*": "./tag-types/*",
     "./debug/*": {
       "types": "./dist/*.d.ts",
       "import": "./dist/debug/*.mjs",
       "default": "./dist/debug/*.js"
+    },
+    "./*": {
+      "types": "./dist/*.d.ts",
+      "import": "./dist/*.mjs",
+      "default": "./dist/*.js"
     }
   }
 }

@@ -85,7 +85,7 @@ declare global {
         reference: ParentNode & Node,
         position?: "afterbegin" | "afterend" | "beforebegin" | "beforeend",
       ): {
-        update(input: Input): void;
+        update(input: Marko.TemplateInput<Input>): void;
         destroy(): void;
       };
       /** @marko-overload-end */
