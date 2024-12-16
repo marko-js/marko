@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.11
+
+### Patch Changes
+
+- [#2429](https://github.com/marko-js/marko/pull/2429) [`f3416e1`](https://github.com/marko-js/marko/commit/f3416e1d9352892e8a603d7196cc685c2f88fe26) Thanks [@mlrawlings](https://github.com/mlrawlings)! - fix controllable details toggle loop
+
 ## 0.3.10
 
 ### Patch Changes
