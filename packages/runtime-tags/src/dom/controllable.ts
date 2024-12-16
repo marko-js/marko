@@ -264,20 +264,17 @@ export function controllable_detailsOrDialog_open_effect(
   nodeAccessor: Accessor,
 ) {
   const el = scope[nodeAccessor] as HTMLDetailsElement;
+  const hasChanged = () =>
+    el.open !== scope[nodeAccessor + AccessorChar.ControlledValue];
   syncControllable(
     el,
     el.tagName === "DIALOG" ? "close" : "toggle",
-    () => {
-      return (
-        scope[nodeAccessor + AccessorChar.ControlledHandler] &&
-        el.open !== scope[nodeAccessor + AccessorChar.ControlledValue]
-      );
-    },
+    hasChanged,
     () => {
       const openChange = scope[
         nodeAccessor + AccessorChar.ControlledHandler
       ] as undefined | ((value: unknown) => unknown);
-      if (openChange) {
+      if (openChange && hasChanged()) {
         scope[nodeAccessor + AccessorChar.ControlledType] =
           ControlledType.Pending;
         openChange(el.open);
