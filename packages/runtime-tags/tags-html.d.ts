@@ -1293,6 +1293,41 @@ declare global {
          * @see https://html.spec.whatwg.org/multipage/embedded-content-other.html#attr-dim-width
          */
         width?: AttrStringOrNumber;
+
+        // NON STANDARD
+
+        /**
+         * Called whenever a the `checked` property of an `input` has changed.
+         * When `checkedChange` is a function, `checked` becomes controlled.
+         * This means the `checked` property is synchronized instead of the `checked` attribute.
+         */
+        checkedChange?: AttrMissing | ((checked: boolean) => void);
+
+        /**
+         * Used to synchronize the `checked` attribute with a `value` attribute used across related `input type="checkbox"` and `input type="radio"` controls.
+         * When `checkedValue` is a string, the `checked` attribute will be set to a boolean that is `true` if the `checkedValue` is the same as the `value`.
+         * When `checkedValue` is an array of strings, the `checked` attribute will be set to a boolean that is `true` if the `checkedValue` array includes the `value`.
+         * If the `checkedValue` is falsy then `checked` is always `false`.
+         */
+        checkedValue?: AttrMissing | string | string[];
+        /**
+         * Called whenever a `input type="checkbox"` or `input type="radio"` using the `checkedValue` attribute has changed.
+         * When `checkedValueChange` is a function, `checked` becomes controlled.
+         * This means the `checked` property is synchronized instead of the `checked` attribute.
+         */
+        checkedValueChange?:
+          | AttrMissing
+          | ((
+              /** Note this is hack that allows you to work with the value as both a string and a string[] without needing generics */
+              checkedValue: string & string[],
+            ) => void);
+
+        /**
+         * Called whenever a the `value` property of an `input` has changed.
+         * When `valueChange` is a function, `value` becomes controlled. This means
+         * This means the `value` property is synchronized instead of the `value` attribute.
+         */
+        valueChange?: AttrMissing | ((value: string) => void);
       }
 
       interface Ins extends HTMLAttributes<HTMLModElement> {
@@ -1470,41 +1505,6 @@ declare global {
 
         /** @deprecated */
         rev?: AttrString;
-
-        // NON STANDARD
-
-        /**
-         * Called whenever a the `checked` property of an `input` has changed.
-         * When `checkedChange` is a function, `checked` becomes controlled.
-         * This means the `checked` property is synchronized instead of the `checked` attribute.
-         */
-        checkedChange?: AttrMissing | ((checked: boolean) => void);
-
-        /**
-         * Used to synchronize the `checked` attribute with a `value` attribute used across related `input type="checkbox"` and `input type="radio"` controls.
-         * When `checkedValue` is a string, the `checked` attribute will be set to a boolean that is `true` if the `checkedValue` is the same as the `value`.
-         * When `checkedValue` is an array of strings, the `checked` attribute will be set to a boolean that is `true` if the `checkedValue` array includes the `value`.
-         * If the `checkedValue` is falsy then `checked` is always `false`.
-         */
-        checkedValue?: AttrMissing | string | string[];
-        /**
-         * Called whenever a `input type="checkbox"` or `input type="radio"` using the `checkedValue` attribute has changed.
-         * When `checkedValueChange` is a function, `checked` becomes controlled.
-         * This means the `checked` property is synchronized instead of the `checked` attribute.
-         */
-        checkedValueChange?:
-          | AttrMissing
-          | ((
-              /** Note this is hack that allows you to work with the value as both a string and a string[] without needing generics */
-              checkedValue: string & string[],
-            ) => void);
-
-        /**
-         * Called whenever a the `value` property of an `input` has changed.
-         * When `valueChange` is a function, `value` becomes controlled. This means
-         * This means the `value` property is synchronized instead of the `value` attribute.
-         */
-        valueChange?: AttrMissing | ((value: string) => void);
       }
 
       interface Main extends HTMLAttributes<HTMLElement> {}
