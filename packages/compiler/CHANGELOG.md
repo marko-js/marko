@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.6
+
+### Patch Changes
+
+- [#2434](https://github.com/marko-js/marko/pull/2434) [`6a235a8`](https://github.com/marko-js/marko/commit/6a235a88813cd45a8704060e4fac3ed82c2f3437) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve registry id normalization.
+
 ## 5.39.5
 
 ### Patch Changes
