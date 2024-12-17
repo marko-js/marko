@@ -319,7 +319,7 @@ function resolveMarkoFile(file, filename) {
 const idCache = new WeakMap();
 const templateIdHashOpts = { outputLength: 5 };
 export function getTemplateId(opts, request, child) {
-  const id = relative(ROOT, request);
+  const id = relative(ROOT, request).replace(/[^a-zA-Z0-9_$./-]/g, "/");
   const optimize = typeof opts === "object" ? opts.optimize : opts;
 
   if (optimize) {
