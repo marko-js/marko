@@ -1,0 +1,2 @@
+import "virtual:./template.marko.hydrate-5.js import { init } from \"marko/src/runtime/components/index.js\";\nimport \"./tags/components/hello-internal.marko\";\ninit();";
+import "virtual:./template.marko.hydrate-6.js import \"./tags/hello.marko\";";

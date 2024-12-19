@@ -23,20 +23,44 @@ const DEFAULT_FEATURE_TYPE = FeatureType.Class;
 
 export function isTagsAPI(path: t.NodePath) {
   const { file } = path.hub;
+  let featureType = file.path.node.extra?.featureType;
 
-  if ((file as any).___compileStage === "parse") {
-    return false; // can't analyze the entire program for parse hooks
-  }
-
-  const program = file.path;
-  let featureType = program.node.extra?.featureType;
   if (!featureType) {
-    const state = {} as FeatureState;
-    program.node.extra ??= {};
-    program.traverse(featureDetectionVisitor, state);
-    featureType = program.node.extra.featureType =
-      state.feature?.type || DEFAULT_FEATURE_TYPE;
+    let forceTags = false;
+
+    if (file.opts.filename) {
+      const filename = file.opts.filename;
+      const tagsIndex = filename.lastIndexOf("/tags/");
+      const componentsIndex = filename.lastIndexOf("/components/");
+      if (tagsIndex > componentsIndex) {
+        forceTags = true;
+      }
+    }
+
+    if ((file as any).___compileStage === "parse") {
+      featureType = forceTags ? FeatureType.Tags : DEFAULT_FEATURE_TYPE;
+    } else {
+      const program = file.path;
+      const state = {} as FeatureState;
+      program.node.extra ??= {};
+      program.traverse(featureDetectionVisitor, state);
+
+      if (forceTags) {
+        if (state.feature?.type === FeatureType.Class) {
+          throw buildAggregateError(
+            path.hub.file,
+            'Cannot use "class api" features under a "tags/" directory',
+            [state.feature.name, state.feature.path],
+          );
+        }
+      }
+
+      featureType = program.node.extra.featureType = forceTags
+        ? FeatureType.Tags
+        : state.feature?.type || DEFAULT_FEATURE_TYPE;
+    }
   }
+
   return featureType === FeatureType.Tags;
 }
 
