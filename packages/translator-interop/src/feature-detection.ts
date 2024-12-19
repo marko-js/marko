@@ -2,7 +2,6 @@ import type { types as t } from "@marko/compiler";
 import { getTagDef } from "@marko/compiler/babel-utils";
 import { taglibs as taglibs6 } from "@marko/runtime-tags/translator";
 import { taglibs as taglibs5 } from "marko/translator";
-import { sep } from "path";
 
 import { buildAggregateError } from "./build-aggregate-error";
 
@@ -27,16 +26,7 @@ export function isTagsAPI(path: t.NodePath) {
   let featureType = file.path.node.extra?.featureType;
 
   if (!featureType) {
-    let forceTags = false;
-
-    if (file.opts.filename) {
-      const filename = file.opts.filename;
-      const tagsIndex = filename.lastIndexOf(sep + "tags" + sep);
-      const componentsIndex = filename.lastIndexOf(sep + "components" + sep);
-      if (tagsIndex > componentsIndex) {
-        forceTags = true;
-      }
-    }
+    const forceTags = isTagsAPIFromFileName(file.opts.filename);
 
     if ((file as any).___compileStage === "parse") {
       featureType = forceTags ? FeatureType.Tags : DEFAULT_FEATURE_TYPE;
@@ -63,6 +53,24 @@ export function isTagsAPI(path: t.NodePath) {
   }
 
   return featureType === FeatureType.Tags;
+}
+
+function isTagsAPIFromFileName(filename: string) {
+  for (let end = filename.length, i = end; --i; ) {
+    switch (filename[i]) {
+      case "/":
+      case "\\":
+        if (filename.startsWith("tags" + filename[i], i + 1)) {
+          return true;
+        } else if (filename.startsWith("components" + filename[i], i + 1)) {
+          return false;
+        }
+
+        end = i;
+        break;
+    }
+  }
+  return false;
 }
 
 const featureDetectionVisitor = {
