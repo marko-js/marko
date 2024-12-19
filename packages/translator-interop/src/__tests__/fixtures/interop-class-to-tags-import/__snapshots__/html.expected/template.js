@@ -1,11 +1,10 @@
+import "marko/src/runtime/helpers/tags-compat/html-debug.mjs";
 import { t as _t } from "marko/src/runtime/html/index.js";
 const _marko_componentType = "__tests__/template.marko",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import TagsCounter from "./components/tags-counter.marko";
 import { x as _marko_escapeXml } from "marko/src/runtime/html/helpers/escape-xml.js";
-import "marko/src/runtime/helpers/tags-compat/html-debug.mjs";
-import _TagsCounter from "./components/tags-counter.marko";
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag.js";
 import _initComponents from "marko/src/core-tags/components/init-components-tag.js";
 import _marko_tag from "marko/src/runtime/helpers/render-tag.js";
@@ -24,7 +23,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   out.w("<button id=class>");
   out.w(_marko_escapeXml(state.count));
   out.w("</button>");
-  _marko_dynamic_tag(out, _TagsCounter, () => ({
+  _marko_dynamic_tag(out, TagsCounter, () => ({
     "count": state.count
   }), null, null, null, _componentDef, "1");
   _marko_tag(_initComponents, {}, out, _componentDef, "2");

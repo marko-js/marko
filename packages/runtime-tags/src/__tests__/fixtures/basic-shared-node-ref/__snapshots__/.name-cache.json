@@ -10,7 +10,10 @@
       "$_list_effect": "c",
       "$_list": "i",
       "$_open_effect": "f",
-      "$_open": "m"
+      "$_open": "m",
+      "$_x$for_content": "d",
+      "$_params_2$for_content": "s",
+      "$_for_content": "u"
     }
   }
 }

@@ -1,3 +1,4 @@
+import "marko/src/runtime/helpers/tags-compat/html-debug.mjs";
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _classLayout from "./components/class-layout.marko";
 import { s as _s } from "marko/src/runtime/helpers/tags-compat/html-debug.mjs";

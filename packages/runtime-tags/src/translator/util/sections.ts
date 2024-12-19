@@ -71,7 +71,7 @@ export function startSection(
     const sectionName = path.isProgram()
       ? ""
       : currentProgramPath.scope.generateUid(
-          sectionNamePath.toString() + "Body",
+          sectionNamePath.toString() + "_content",
         );
     const programExtra = (path.hub.file.path.node.extra ??= {});
     const sections = (programExtra.sections ??= []);

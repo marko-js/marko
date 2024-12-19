@@ -10,7 +10,12 @@
       "$_forBody": "n",
       "$_for": "c",
       "$_items_effect": "m",
-      "$_items": "s"
+      "$_items": "s",
+      "$_description$for_content": "d",
+      "$_name$for_content": "v",
+      "$_pattern_$for_content": "u",
+      "$_params_2$for_content": "l",
+      "$_for_content": "f"
     }
   }
 }

@@ -26,7 +26,21 @@
       "$_for": "$",
       "$_items_length": "k",
       "$_items": "L",
-      "$_items_effect": "_"
+      "$_items_effect": "_",
+      "$_expr_outerItem_middleItem$for_content": "y",
+      "$_write$for_content2": "A",
+      "$_outerItem$for_content2": "O",
+      "$_middleItem$for_content": "R",
+      "$_params_3$for_content": "H",
+      "$_setup$for_content2": "M",
+      "$_for_content2": "T",
+      "$_for$for_content": "j",
+      "$_write$for_content": "q",
+      "$_outerItem$for_content": "w",
+      "$_items$for_content": "x",
+      "$_params_2$for_content": "z",
+      "$_setup$for_content": "B",
+      "$_for_content": "E"
     }
   }
 }

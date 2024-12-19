@@ -32,6 +32,7 @@ const visitors = extractVisitors({
 });
 
 export { default as internalEntryBuilder } from "./util/entry-builder";
+export const preferAPI = "tags";
 export const { transform, analyze, translate } = visitors;
 export const taglibs = [
   [

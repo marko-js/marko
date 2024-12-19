@@ -8,7 +8,13 @@
       "$_name$defineBody": "o",
       "$_pattern_$defineBody": "n",
       "$_params_2$defineBody": "i",
-      "$_setup$defineBody": "m"
+      "$_setup$defineBody": "m",
+      "$_y$define_content_effect": "d",
+      "$_y$define_content": "c",
+      "$_name$define_content": "u",
+      "$_pattern_$define_content": "l",
+      "$_params_2$define_content": "s",
+      "$_setup$define_content": "v"
     }
   }
 }

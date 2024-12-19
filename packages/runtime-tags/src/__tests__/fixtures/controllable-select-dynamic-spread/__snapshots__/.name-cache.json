@@ -5,7 +5,10 @@
       "$init": "o",
       "$_setup$tagSelectBody_effect": "r",
       "$_setup$tagSelectBody": "a",
-      "$_tagSelectBody": "e"
+      "$_tagSelectBody": "e",
+      "$_setup$tagSelect_content_effect": "n",
+      "$_setup$tagSelect_content": "s",
+      "$_tagSelect_content": "i"
     }
   }
 }

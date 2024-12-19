@@ -1,5 +1,5 @@
-// size: 1206 (min) 542 (brotli)
-const _expr_comment_comments_id$ifBody = _$.intersection(
+// size: 1206 (min) 546 (brotli)
+const _expr_comment_comments_id$if_content = _$.intersection(
     2,
     (_scope) => {
       const {
@@ -9,105 +9,108 @@ const _expr_comment_comments_id$ifBody = _$.intersection(
     },
     () => _$.inChild(0, _input_),
   ),
-  _id$ifBody = _$.closure(
+  _id$if_content = _$.closure(
     10,
     0,
     void 0,
-    () => _expr_comment_comments_id$ifBody,
+    () => _expr_comment_comments_id$if_content,
   ),
-  _comment_comments$ifBody = _$.closure(
+  _comment_comments$if_content = _$.closure(
     8,
     0,
     void 0,
-    () => _expr_comment_comments_id$ifBody,
+    () => _expr_comment_comments_id$if_content,
   ),
-  _setup$ifBody = (_scope) => {
+  _setup$if_content = (_scope) => {
     _scope[0];
   },
-  _ifBody = _$.register(
+  _if_content = _$.register(
     "a0",
-    _$.createRenderer("<ul></ul>", "/ b&", _setup$ifBody, () => [
-      _id$ifBody,
-      _comment_comments$ifBody,
+    _$.createRenderer("<ul></ul>", "/ b&", _setup$if_content, () => [
+      _id$if_content,
+      _comment_comments$if_content,
     ]),
   ),
-  _expr_input_path_i$forBody = _$.intersection(
+  _expr_input_path_i$for_content = _$.intersection(
     2,
     (_scope) => {
       const {
         _: { 4: input_path },
         9: i,
       } = _scope;
-      _id$forBody(_scope, `${input_path || "c"}-${i}`);
+      _id$for_content(_scope, `${input_path || "c"}-${i}`);
     },
-    () => _id$forBody,
+    () => _id$for_content,
   ),
-  _if$forBody = _$.conditional(4, 0),
-  _open$forBody_effect = _$.effect("a1", (_scope, { 11: open }) =>
+  _if$for_content = _$.conditional(4, 0),
+  _open$for_content_effect = _$.effect("a1", (_scope, { 11: open }) =>
     _$.on(_scope[2], "click", function () {
-      _open$forBody(_scope, !open);
+      _open$for_content(_scope, !open);
     }),
   ),
-  _open$forBody = _$.state(11, (_scope, open) => {
+  _open$for_content = _$.state(11, (_scope, open) => {
     _$.attr(_scope[0], "hidden", !open),
       _$.data(_scope[3], open ? "[-]" : "[+]"),
-      _open$forBody_effect(_scope);
+      _open$for_content_effect(_scope);
   }),
-  _id$forBody = _$.value(
+  _id$for_content = _$.value(
     10,
     (_scope, id) => _$.attr(_scope[0], "id", id),
-    () => _$.inConditionalScope(_id$ifBody, 4),
+    () => _$.inConditionalScope(_id$if_content, 4),
   ),
-  _i$forBody = _$.value(9, 0, () => _expr_input_path_i$forBody),
-  _comment_comments$forBody = _$.value(
+  _i$for_content = _$.value(9, 0, () => _expr_input_path_i$for_content),
+  _comment_comments$for_content = _$.value(
     8,
     (_scope, comment_comments) =>
-      _if$forBody(_scope, comment_comments ? _ifBody : null),
+      _if$for_content(_scope, comment_comments ? _if_content : null),
     () =>
       _$.intersections([
-        _if$forBody,
-        _$.inConditionalScope(_comment_comments$ifBody, 4),
+        _if$for_content,
+        _$.inConditionalScope(_comment_comments$if_content, 4),
       ]),
   ),
-  _comment_text$forBody = _$.value(7, (_scope, comment_text) =>
+  _comment_text$for_content = _$.value(7, (_scope, comment_text) =>
     _$.data(_scope[1], comment_text),
   ),
-  _comment$forBody = _$.value(
+  _comment$for_content = _$.value(
     6,
     (_scope, comment) => {
-      _comment_text$forBody(_scope, comment?.text),
-        _comment_comments$forBody(_scope, comment?.comments);
+      _comment_text$for_content(_scope, comment?.text),
+        _comment_comments$for_content(_scope, comment?.comments);
     },
-    () => _comment_comments$forBody,
+    () => _comment_comments$for_content,
   ),
-  _params_2$forBody = _$.value(
+  _params_2$for_content = _$.value(
     5,
     (_scope, _params_2) => {
-      _comment$forBody(_scope, _params_2[0]), _i$forBody(_scope, _params_2[1]);
+      _comment$for_content(_scope, _params_2[0]),
+        _i$for_content(_scope, _params_2[1]);
     },
-    () => _$.intersections([_comment$forBody, _i$forBody]),
+    () => _$.intersections([_comment$for_content, _i$for_content]),
   ),
-  _input_path$forBody = _$.closure(
+  _input_path$for_content = _$.closure(
     4,
     0,
     void 0,
-    () => _expr_input_path_i$forBody,
+    () => _expr_input_path_i$for_content,
   ),
-  _setup$forBody = (_scope) => {
-    _open$forBody(_scope, !0);
+  _setup$for_content = (_scope) => {
+    _open$for_content(_scope, !0);
   },
-  _forBody = _$.register(
+  _for_content = _$.register(
     "a2",
     _$.createRenderer(
       "<li><span> </span><button> </button><!></li>",
       " E l D l%",
-      _setup$forBody,
-      () => [_input_path$forBody],
-      () => _params_2$forBody,
+      _setup$for_content,
+      () => [_input_path$for_content],
+      () => _params_2$for_content,
     ),
   ),
-  _for = _$.loopOf(0, _forBody),
-  _input_path_ = _$.value(4, 0, () => _$.inLoopScope(_input_path$forBody, 0)),
+  _for = _$.loopOf(0, _for_content),
+  _input_path_ = _$.value(4, 0, () =>
+    _$.inLoopScope(_input_path$for_content, 0),
+  ),
   _input_comments_ = _$.value(
     3,
     (_scope, input_comments) => _for(_scope, [input_comments]),

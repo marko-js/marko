@@ -1,8 +1,8 @@
+import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 import { t as _t } from "marko/src/runtime/vdom/index.js";
 const _marko_componentType = "__tests__/template.marko",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
-import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 import _tagsCounter from "./components/tags-counter.marko";
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";

@@ -38,7 +38,7 @@ export function controllable_select_value(
   nodeAccessor: Accessor,
   value: unknown,
   valueChange: unknown,
-  renderBody?: () => void,
+  content?: () => void,
 ) {
   if (valueChange) {
     writeControlledScope(
@@ -50,8 +50,8 @@ export function controllable_select_value(
     );
   }
 
-  if (renderBody) {
-    withContext(kSelectedValue, value, renderBody);
+  if (content) {
+    withContext(kSelectedValue, value, content);
   }
 }
 
@@ -231,7 +231,7 @@ export function attrs(
         result += styleAttr(val);
         break;
       case "":
-      case "renderBody":
+      case "content":
         break;
       default:
         if (!isVoid(val)) {

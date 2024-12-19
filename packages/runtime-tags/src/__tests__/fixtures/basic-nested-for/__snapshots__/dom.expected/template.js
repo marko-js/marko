@@ -2,7 +2,7 @@ export const _template_ = "<button>Push</button><!><!>";
 export const _walks_ = /* get, over(1), replace, over(1) */" b%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _child, _name_ as _child_input_name, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
-const _expr_outer_inner$forBody = /* @__PURE__ */_$.intersection(2, _scope => {
+const _expr_outer_inner$for_content = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     _: {
       outer
@@ -11,19 +11,19 @@ const _expr_outer_inner$forBody = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _child_input_name(_scope["#childScope/0"], `${outer}.${inner}`);
 }, () => _$.inChild("#childScope/0", _child_input_name));
-const _outer$forBody = /* @__PURE__ */_$.closure("outer", 0, void 0, () => _expr_outer_inner$forBody);
-const _inner$forBody = /* @__PURE__ */_$.value("inner", 0, () => _expr_outer_inner$forBody);
-const _params_3$forBody = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _inner$forBody(_scope, _params_3[0]), () => _inner$forBody);
-const _setup$forBody = _scope => {
+const _outer$for_content = /* @__PURE__ */_$.closure("outer", 0, void 0, () => _expr_outer_inner$for_content);
+const _inner$for_content = /* @__PURE__ */_$.value("inner", 0, () => _expr_outer_inner$for_content);
+const _params_3$for_content = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _inner$for_content(_scope, _params_3[0]), () => _inner$for_content);
+const _setup$for_content = _scope => {
   _child(_scope["#childScope/0"]);
 };
-const _forBody2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$forBody, () => [_outer$forBody], () => _params_3$forBody));
-const _for$forBody = /* @__PURE__ */_$.loopOf("#text/0", _forBody2);
-const _outer$forBody2 = /* @__PURE__ */_$.value("outer", 0, () => _$.inLoopScope(_outer$forBody, "#text/0"));
-const _items$forBody = /* @__PURE__ */_$.closure("items", (_scope, items) => _for$forBody(_scope, [items]), void 0, () => _for$forBody);
-const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outer$forBody2(_scope, _params_2[0]), () => _outer$forBody2);
-const _forBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", void 0, () => [_items$forBody], () => _params_2$forBody));
-const _for = /* @__PURE__ */_$.loopOf("#text/1", _forBody);
+const _for_content2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$for_content, () => [_outer$for_content], () => _params_3$for_content));
+const _for$for_content = /* @__PURE__ */_$.loopOf("#text/0", _for_content2);
+const _outer$for_content2 = /* @__PURE__ */_$.value("outer", 0, () => _$.inLoopScope(_outer$for_content, "#text/0"));
+const _items$for_content = /* @__PURE__ */_$.closure("items", (_scope, items) => _for$for_content(_scope, [items]), void 0, () => _for$for_content);
+const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outer$for_content2(_scope, _params_2[0]), () => _outer$for_content2);
+const _for_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", void 0, () => [_items$for_content], () => _params_2$for_content));
+const _for = /* @__PURE__ */_$.loopOf("#text/1", _for_content);
 const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {
   items
 }) => _$.on(_scope["#button/0"], "click", function () {
@@ -32,7 +32,7 @@ const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {
 const _items = /* @__PURE__ */_$.state("items", (_scope, items) => {
   _items_effect(_scope);
   _for(_scope, [items]);
-}, () => _$.intersections([_for, _$.inLoopScope(_items$forBody, "#text/1")]));
+}, () => _$.intersections([_for, _$.inLoopScope(_items$for_content, "#text/1")]));
 export function _setup_(_scope) {
   _items(_scope, [0, 1]);
 }

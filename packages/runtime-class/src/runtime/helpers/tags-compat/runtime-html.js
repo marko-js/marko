@@ -83,17 +83,17 @@ exports.p = function (htmlCompat) {
           const normalizedInput = {};
 
           for (const key in input) {
-            let value = input[key];
-            if (key.startsWith("on") && typeof value === "function") {
-              const c = key[2];
-              customEvents = customEvents || [];
-              customEvents.push([
-                (c === "-" ? "" : c.toLowerCase()) + key.slice(3),
-                value,
-              ]);
-              value.toJSON = htmlCompat.toJSON;
+            const value = input[key];
+            if (/^on[-A-Z]/.test(key)) {
+              if (typeof value === "function") {
+                (customEvents || (customEvents = [])).push([
+                  key[2] === "-" ? key.slice(3) : key.slice(2).toLowerCase(),
+                  value,
+                ]);
+                value.toJSON = htmlCompat.toJSON;
+              }
             } else {
-              normalizedInput[key] = input[key];
+              normalizedInput[key === "content" ? "renderBody" : key] = value;
             }
           }
           renderer5(normalizedInput, out);

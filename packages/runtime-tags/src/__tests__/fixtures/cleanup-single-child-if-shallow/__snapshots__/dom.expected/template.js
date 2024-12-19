@@ -2,13 +2,13 @@ export const _template_ = "<button>Toggle</button><div></div><!><!>";
 export const _walks_ = /* get, over(1), get, over(1), replace, over(1) */" b b%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _child, _input_ as _child_input, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
-const _setup$ifBody = _scope => {
+const _setup$if_content = _scope => {
   _child(_scope["#childScope/0"]);
   _child_input(_scope["#childScope/0"], {
     write: _write(_scope)
   });
 };
-const _ifBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$ifBody));
+const _if_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$if_content));
 const _if = /* @__PURE__ */_$.conditional("#text/2", 0);
 const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
   show
@@ -17,7 +17,7 @@ const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
 }));
 const _show = /* @__PURE__ */_$.state("show", (_scope, show) => {
   _show_effect(_scope);
-  _if(_scope, show ? _ifBody : null);
+  _if(_scope, show ? _if_content : null);
 });
 export function _setup_(_scope) {
   _show(_scope, true);

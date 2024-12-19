@@ -1,12 +1,12 @@
-// size: 581 (min) 299 (brotli)
-const _inputRenderBody_input = _$.dynamicTagAttrs(3, void 0, 1),
+// size: 581 (min) 303 (brotli)
+const _inputContent_input = _$.dynamicTagAttrs(3, void 0, 1),
   _expr_Text_x_y = _$.intersection(
     3,
     (_scope) => {
       const { 7: x, 8: y } = _scope;
-      _inputRenderBody_input(_scope, () => [x, y]);
+      _inputContent_input(_scope, () => [x, y]);
     },
-    () => _inputRenderBody_input,
+    () => _inputContent_input,
   ),
   _expr_x_y_effect = _$.effect("a0", (_scope, { 7: x, 8: y }) =>
     _$.on(_scope[0], "click", function () {
@@ -26,15 +26,15 @@ const _inputRenderBody_input = _$.dynamicTagAttrs(3, void 0, 1),
     (_scope, x) => _$.data(_scope[1], x),
     () => _$.intersections([_expr_x_y, _expr_Text_x_y]),
   ),
-  _count2$customTagBody = _$.value(4, (_scope, count2) =>
+  _count2$customTag_content = _$.value(4, (_scope, count2) =>
     _$.data(_scope[1], count2),
   ),
-  _count$customTagBody = _$.value(3, (_scope, count) =>
+  _count$customTag_content = _$.value(3, (_scope, count) =>
     _$.data(_scope[0], count),
   ),
-  _params_2$customTagBody = _$.value(2, (_scope, _params_2) => {
-    _count$customTagBody(_scope, _params_2[0]),
-      _count2$customTagBody(_scope, _params_2[1]);
+  _params_2$customTag_content = _$.value(2, (_scope, _params_2) => {
+    _count$customTag_content(_scope, _params_2[0]),
+      _count2$customTag_content(_scope, _params_2[1]);
   });
 _$.register(
   "b0",
@@ -43,7 +43,7 @@ _$.register(
     "Db%c%",
     void 0,
     void 0,
-    () => _params_2$customTagBody,
+    () => _params_2$customTag_content,
   ),
 ),
   init();

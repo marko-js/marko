@@ -70,10 +70,10 @@ describe("runtime-tags/html/attrs", () => {
       );
     });
 
-    it("should strip event handlers, invalid attribute names and renderBody", () => {
+    it("should strip event handlers, invalid attribute names and content", () => {
       // assert.equal(helpers.attrs({ onClick() {} }, 0, 0, ""), "");
       // assert.equal(helpers.attrs({ "on-click"() {}, 0, 0, "" }), "");
-      assert.equal(helpers.attrs({ renderBody() {} }, 0, 0, ""), "");
+      assert.equal(helpers.attrs({ content() {} }, 0, 0, ""), "");
       assert.equal(helpers.attrs({ "foo bar": "baz" }, 0, 0, ""), "");
       assert.equal(helpers.attrs({ "foo\tbar": "baz" }, 0, 0, ""), "");
       assert.equal(helpers.attrs({ "foo\nbar": "baz" }, 0, 0, ""), "");

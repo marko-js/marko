@@ -2,7 +2,8 @@
   "vars": {
     "props": {
       "$_$": "r",
-      "$_name$layoutBody": "e"
+      "$_name$layoutBody": "e",
+      "$_name$layout_content": "t"
     }
   }
 }

@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   const _childScope = _$.peekNextScope();
   _customTag({
-    renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+    content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
       const _scope1_id = _$.nextScopeId();
       _$.write(`${_$.escapeXML(a)} ${_$.escapeXML(b)} <!>${_$.escapeXML(c)}${_$.markResumeNode(_scope1_id, "#text/2")}`);
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_c/subscriber");

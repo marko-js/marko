@@ -17,12 +17,14 @@ import { getScopeIdIdentifier, getSection } from "./sections";
 import { getResumeRegisterId } from "./signals";
 import { toObjectProperty } from "./to-property-name";
 
-const renderBodyProps = new WeakSet<t.Node>();
+const contentProps = new WeakSet<t.Node>();
+type ContentKey = "renderBody" | "content";
 
 export function translateAttrs(
   tag: t.NodePath<t.MarkoTag>,
   templateExports?: TemplateExports,
   statements: t.Statement[] = [],
+  contentKey: ContentKey = "content",
 ) {
   const seen = new Set<string>();
   const properties: t.ObjectExpression["properties"] = [];
@@ -66,12 +68,14 @@ export function translateAttrs(
               attrTagLookup,
               statements,
               templateExports,
+              contentKey,
             );
           } else {
             const translatedAttrTag = translateAttrs(
               child,
               templateExports?.[attrTagMeta.name]?.props,
               statements,
+              contentKey,
             );
 
             if (attrTagMeta.repeated) {
@@ -112,22 +116,23 @@ export function translateAttrs(
             attrTagLookup,
             statements,
             templateExports,
+            contentKey,
           );
         }
       }
     }
   }
 
-  if (!seen.has("renderBody") && usesExport(templateExports, "renderBody")) {
-    seen.add("renderBody");
-    const renderBodyExpression = buildRenderBody(tag.get("body"));
-    if (renderBodyExpression) {
-      const renderBodyProp = t.objectProperty(
-        t.identifier("renderBody"),
-        renderBodyExpression,
+  if (!seen.has(contentKey) && usesExport(templateExports, contentKey)) {
+    seen.add(contentKey);
+    const contentExpression = buildContent(tag.get("body"));
+    if (contentExpression) {
+      const contentProp = t.objectProperty(
+        t.identifier(contentKey),
+        contentExpression,
       );
-      renderBodyProps.add(renderBodyProp);
-      properties.push(renderBodyProp);
+      contentProps.add(contentProp);
+      properties.push(contentProp);
     }
   }
 
@@ -147,11 +152,11 @@ export function translateAttrs(
   return { properties, statements };
 }
 
-export function getTranslatedRenderBodyProperty(
+export function getTranslatedBodyContentProperty(
   props: t.ObjectExpression["properties"],
 ) {
   for (const prop of props) {
-    if (renderBodyProps.has(prop)) {
+    if (contentProps.has(prop)) {
       return prop as unknown as t.ObjectProperty & { value: t.Expression };
     }
   }
@@ -163,6 +168,7 @@ export function addDynamicAttrTagStatements(
   attrTagLookup: AttrTagLookup,
   statements: t.Statement[],
   templateExports: TemplateExports,
+  contentKey: ContentKey = "content",
 ): number {
   const tag = attrTags[index];
   if (tag.isMarkoTag()) {
@@ -176,6 +182,7 @@ export function addDynamicAttrTagStatements(
           tag,
           templateExports?.[attrTagMeta.name]?.props,
           statements,
+          contentKey,
         );
         if (attrTagMeta.repeated) {
           statements.push(
@@ -215,6 +222,7 @@ export function addDynamicAttrTagStatements(
             attrTagLookup,
             statements,
             templateExports,
+            contentKey,
           );
 
         case "for": {
@@ -224,6 +232,7 @@ export function addDynamicAttrTagStatements(
             attrTagLookup,
             statements,
             templateExports,
+            contentKey,
           );
         }
       }
@@ -247,6 +256,7 @@ function translateForAttrTag(
   attrTagLookup: AttrTagLookup,
   statements: t.Statement[],
   templateExports: TemplateExports,
+  contentKey: ContentKey,
 ) {
   const forTag = attrTags[index] as t.NodePath<t.MarkoTag>;
   const bodyStatements: t.Statement[] = [];
@@ -255,6 +265,7 @@ function translateForAttrTag(
     attrTagLookup,
     bodyStatements,
     templateExports,
+    contentKey,
   );
   statements.push(
     buildForRuntimeCall(
@@ -274,6 +285,7 @@ function translateIfAttrTag(
   attrTagLookup: AttrTagLookup,
   statements: t.Statement[],
   templateExports: TemplateExports,
+  contentKey: ContentKey,
 ) {
   const ifTag = attrTags[index] as t.NodePath<t.MarkoTag>;
   const consequentStatements: t.Statement[] = [];
@@ -288,6 +300,7 @@ function translateIfAttrTag(
     attrTagLookup,
     consequentStatements,
     templateExports,
+    contentKey,
   );
 
   let nextIndex = index + 1;
@@ -304,6 +317,7 @@ function translateIfAttrTag(
             attrTagLookup,
             alternateStatements,
             templateExports,
+            contentKey,
           );
 
           if (testValue) {
@@ -333,6 +347,7 @@ function addAllAttrTagsAsDynamic(
   attrTagLookup: AttrTagLookup,
   statements: t.Statement[],
   templateExports: TemplateExports,
+  contentKey: ContentKey,
 ) {
   const attrTags = tag.node.body.attributeTags
     ? (tag.get("body").get("body") as ReturnType<
@@ -346,6 +361,7 @@ function addAllAttrTagsAsDynamic(
       attrTagLookup,
       statements,
       templateExports,
+      contentKey,
     );
   }
 }
@@ -384,7 +400,7 @@ function getConditionTestValue({
   return attributes.length === 1 ? attributes[0].value : undefined;
 }
 
-function buildRenderBody(body: t.NodePath<t.MarkoTagBody>) {
+function buildContent(body: t.NodePath<t.MarkoTagBody>) {
   const bodySection = body.node.extra?.section;
   if (bodySection) {
     if (isOutputHTML()) {

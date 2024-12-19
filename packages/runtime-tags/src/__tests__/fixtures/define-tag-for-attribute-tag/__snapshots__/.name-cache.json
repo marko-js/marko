@@ -11,7 +11,10 @@
       "$_defineBody": "i",
       "$_myThing": "c",
       "$_selected_effect": "d",
-      "$_selected": "l"
+      "$_selected": "l",
+      "$_inputThingContent_input": "m",
+      "$_input_thing_content_": "u",
+      "$_define_content": "f"
     }
   }
 }

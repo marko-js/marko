@@ -1,3 +1,4 @@
+import "marko/src/runtime/helpers/tags-compat/html-debug.mjs";
 import _classCounter from "./components/class-counter.marko";
 import { s as _s } from "marko/src/runtime/helpers/tags-compat/html-debug.mjs";
 import * as _$ from "@marko/runtime-tags/debug/html";

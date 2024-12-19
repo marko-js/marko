@@ -1,10 +1,9 @@
+import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 import { t as _t } from "marko/src/runtime/vdom/index.js";
 const _marko_componentType = "__tests__/template.marko",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import TagsCounter from "./components/tags-counter.marko";
-import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
-import _TagsCounter from "./components/tags-counter.marko";
 import _marko_dynamic_tag from "marko/src/runtime/helpers/dynamic-tag.js";
 import _marko_renderer from "marko/src/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/src/runtime/components/registry.js";
@@ -27,7 +26,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   });
   out.t(state.count, _component);
   out.ee();
-  _marko_dynamic_tag(out, _TagsCounter, () => ({
+  _marko_dynamic_tag(out, TagsCounter, () => ({
     "count": state.count
   }), null, null, null, _componentDef, "1");
 }, {

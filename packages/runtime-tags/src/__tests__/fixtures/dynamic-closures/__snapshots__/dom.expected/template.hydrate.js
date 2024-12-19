@@ -8,12 +8,14 @@ _$.registerSubscriber(
     (_scope) => _scope._._,
   ),
 );
-const _c$customTagBody = _$.registerSubscriber(
+const _c$customTag_content = _$.registerSubscriber(
     "b1",
     _$.dynamicClosure(4, (_scope, c) => _$.data(_scope[2], c)),
   ),
-  _b$customTagBody = _$.dynamicClosure(3, (_scope, b) => _$.data(_scope[1], b)),
-  _setup$customTagBody = (_scope) => {
+  _b$customTag_content = _$.dynamicClosure(3, (_scope, b) =>
+    _$.data(_scope[1], b),
+  ),
+  _setup$customTag_content = (_scope) => {
     _$.data(_scope[0], 1);
   };
 _$.register(
@@ -21,8 +23,8 @@ _$.register(
   _$.createRendererWithOwner(
     "<!> <!> <!>",
     "%c%c%",
-    _setup$customTagBody,
-    () => [_c$customTagBody, _b$customTagBody],
+    _setup$customTag_content,
+    () => [_c$customTag_content, _b$customTag_content],
   ),
 );
 const _c = _$.state(4, 0, () => _$.dynamicSubscribers(4));

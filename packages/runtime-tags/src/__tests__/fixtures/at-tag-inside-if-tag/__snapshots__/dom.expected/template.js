@@ -2,19 +2,19 @@ export const _template_ = `<!>${_customTag_template}`;
 export const _walks_ = /* beginChild, _customTag_walks, endChild */`D/${_customTag_walks}&`;
 import { _setup_ as _customTag, _pattern__ as _customTag_input_thing, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag/index.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _thingBody2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRendererWithOwner("Goodbye", ""));
-const _thingBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello", ""));
+const _thing_content2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRendererWithOwner("Goodbye", ""));
+const _thing_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello", ""));
 export const _x_ = /* @__PURE__ */_$.value("x", (_scope, x) => {
   let _thing;
   if (x) {
     _thing = _$.attrTag({
       x: 1,
-      renderBody: _thingBody(_scope)
+      content: _thing_content(_scope)
     });
   } else {
     _thing = _$.attrTag({
       x: 2,
-      renderBody: _thingBody2(_scope)
+      content: _thing_content2(_scope)
     });
   }
   _customTag_input_thing(_scope["#childScope/0"], _thing);

@@ -14,7 +14,14 @@
       "$_count": "d",
       "$_inner": "l",
       "$_outer_effect": "m",
-      "$_outer": "f"
+      "$_outer": "f",
+      "$_count$if_content_effect": "b",
+      "$_count$if_content": "_",
+      "$_if_content2": "g",
+      "$_if$if_content": "k",
+      "$_inner$if_content_effect": "p",
+      "$_inner$if_content": "v",
+      "$_if_content": "S"
     }
   }
 }

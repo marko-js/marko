@@ -1,4 +1,4 @@
-// size: 787 (min) 392 (brotli)
+// size: 787 (min) 404 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 5: name, 6: write }) => {
@@ -21,36 +21,36 @@ const _expr_name_write_effect = _$.effect(
     },
     () => _expr_name_write,
   ),
-  _write$forBody = _$.closure(
+  _write$for_content = _$.closure(
     4,
     (_scope, write) => _write_(_scope[0], write),
     void 0,
     () => _$.inChild(0, _write_),
   ),
-  _item$forBody = _$.value(
+  _item$for_content = _$.value(
     2,
     (_scope, item) => _name_(_scope[0], item),
     () => _$.inChild(0, _name_),
   ),
-  _params_2$forBody = _$.value(
+  _params_2$for_content = _$.value(
     1,
-    (_scope, _params_2) => _item$forBody(_scope, _params_2[0]),
-    () => _item$forBody,
+    (_scope, _params_2) => _item$for_content(_scope, _params_2[0]),
+    () => _item$for_content,
   ),
-  _setup$forBody = (_scope) => {
+  _setup$for_content = (_scope) => {
     _scope[0];
   },
-  _forBody = _$.register(
+  _for_content = _$.register(
     "b1",
     _$.createRenderer(
       "<div> </div><span> </span><p> </p>",
       "/D lD lD l&",
-      _setup$forBody,
-      () => [_write$forBody],
-      () => _params_2$forBody,
+      _setup$for_content,
+      () => [_write$for_content],
+      () => _params_2$for_content,
     ),
   ),
-  _for = _$.loopOf(2, _forBody),
+  _for = _$.loopOf(2, _for_content),
   _items_effect = _$.effect("b2", (_scope, { 3: items }) =>
     _$.on(_scope[0], "click", function () {
       _items(_scope, items.length ? items.slice(0, -1) : [1, 2, 3]);

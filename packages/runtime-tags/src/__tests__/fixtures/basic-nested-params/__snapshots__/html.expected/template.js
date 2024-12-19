@@ -8,12 +8,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _childScope2 = _$.peekNextScope();
   _child({
     value: x,
-    renderBody: _$.register(/* @__PURE__ */_$.createRenderer(outer => {
+    content: _$.register(/* @__PURE__ */_$.createRenderer(outer => {
       const _scope1_id = _$.nextScopeId();
       const _childScope = _$.peekNextScope();
       _child({
         value: y,
-        renderBody: _$.register(/* @__PURE__ */_$.createRenderer(inner => {
+        content: _$.register(/* @__PURE__ */_$.createRenderer(inner => {
           const _scope2_id = _$.nextScopeId();
           _$.write(`<div>${_$.escapeXML(outer)}${_$.markResumeNode(_scope2_id, "#text/0")}.<!>${_$.escapeXML(inner)}${_$.markResumeNode(_scope2_id, "#text/1")}</div>`);
           _$.writeEffect(_scope2_id, "__tests__/template.marko_2_outer/subscriber");

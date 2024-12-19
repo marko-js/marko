@@ -2,7 +2,7 @@ export const _template_ = `<div></div><div style=width:100px></div><div style="c
 export const _walks_ = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(1) */` d/${_customTag_walks}&/${_customTag_walks}&/${_customTag_walks}&%bD`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _customTag, _style_ as _customTag_input_style, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag.marko";
-const _testBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello", ""));
+const _test_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello", ""));
 const _test_input = _$.dynamicTagAttrs("#text/4");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/4", _scope => _test_input(_scope, () => ({
   style: {
@@ -12,7 +12,7 @@ const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/4", _scope => _test
     style: {
       color: "green"
     },
-    renderBody: _testBody(_scope)
+    content: _test_content(_scope)
   })
 })), () => _test_input);
 export const _test_ = /* @__PURE__ */_$.value("test", (_scope, test) => _dynamicTagName(_scope, test), () => _dynamicTagName);

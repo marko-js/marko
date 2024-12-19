@@ -20,7 +20,18 @@
       "$_for": "g",
       "$_items_length": "b",
       "$_items": "k",
-      "$_items_effect": "D"
+      "$_items_effect": "D",
+      "$_expr_outer_inner$for_content": "h",
+      "$_outer$for_content": "L",
+      "$_inner$for_content": "O",
+      "$_params_3$for_content": "R",
+      "$_setup$for_content": "S",
+      "$_for_content2": "$",
+      "$_for$for_content": "C",
+      "$_outer$for_content2": "_",
+      "$_items$for_content": "j",
+      "$_params_2$for_content": "q",
+      "$_for_content": "w"
     }
   }
 }

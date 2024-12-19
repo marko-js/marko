@@ -2649,7 +2649,7 @@ declare global {
        * Provide body content for the tag as a Marko.Body.
        * @see Marko.Body
        */
-      renderBody?: Marko.Body<[], void>;
+      content?: Marko.Body<[], void>;
 
       /**
        * Fired when resource was not fully loaded, but not as the result of an error.

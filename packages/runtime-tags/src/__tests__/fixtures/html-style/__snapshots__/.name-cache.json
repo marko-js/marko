@@ -5,7 +5,8 @@
       "$init": "e",
       "$_count$htmlStyleBody": "r",
       "$_count_effect": "n",
-      "$_count": "o"
+      "$_count": "o",
+      "$_count$htmlStyle_content": "i"
     }
   }
 }

@@ -212,7 +212,7 @@ function attrsInternal(
       case "style":
         styleAttr(el, value);
         break;
-      case "renderBody":
+      case "content":
         break;
       default: {
         if (isEventHandler(name)) {

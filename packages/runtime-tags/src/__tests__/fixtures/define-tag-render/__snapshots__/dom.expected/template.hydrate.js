@@ -1,30 +1,34 @@
-// size: 399 (min) 252 (brotli)
-const _y$defineBody_effect = _$.effect("a0", (_scope, { 7: y }) =>
+// size: 399 (min) 247 (brotli)
+const _y$define_content_effect = _$.effect("a0", (_scope, { 7: y }) =>
     _$.on(_scope[2], "click", function () {
-      _y$defineBody(_scope, y + 1);
+      _y$define_content(_scope, y + 1);
     }),
   ),
-  _y$defineBody = _$.state(7, (_scope, y) => {
-    _$.data(_scope[1], y), _$.data(_scope[3], y), _y$defineBody_effect(_scope);
+  _y$define_content = _$.state(7, (_scope, y) => {
+    _$.data(_scope[1], y),
+      _$.data(_scope[3], y),
+      _y$define_content_effect(_scope);
   }),
-  _name$defineBody = _$.value(6, (_scope, name) => _$.data(_scope[0], name)),
-  _pattern_$defineBody = _$.value(5, (_scope, _pattern_) =>
-    _name$defineBody(_scope, _pattern_.name),
+  _name$define_content = _$.value(6, (_scope, name) =>
+    _$.data(_scope[0], name),
   ),
-  _params_2$defineBody = _$.value(4, (_scope, _params_2) =>
-    _pattern_$defineBody(_scope, _params_2?.[0]),
+  _pattern_$define_content = _$.value(5, (_scope, _pattern_) =>
+    _name$define_content(_scope, _pattern_.name),
   ),
-  _setup$defineBody = (_scope) => {
-    _y$defineBody(_scope, 1);
+  _params_2$define_content = _$.value(4, (_scope, _params_2) =>
+    _pattern_$define_content(_scope, _params_2?.[0]),
+  ),
+  _setup$define_content = (_scope) => {
+    _y$define_content(_scope, 1);
   };
 _$.register(
   "a1",
   _$.createRendererWithOwner(
     "<div>Hello <!> <!></div><button> </button>",
     "Db%c%l D ",
-    _setup$defineBody,
+    _setup$define_content,
     void 0,
-    () => _params_2$defineBody,
+    () => _params_2$define_content,
   ),
 ),
   _$.dynamicTagAttrs(0),

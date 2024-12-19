@@ -5,7 +5,9 @@
       "$init": "o",
       "$_expr_selected_num$forBody": "e",
       "$_selected$forBody": "r",
-      "$_selected": "a"
+      "$_selected": "a",
+      "$_expr_selected_num$for_content": "c",
+      "$_selected$for_content": "i"
     }
   }
 }

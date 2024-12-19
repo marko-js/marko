@@ -80,14 +80,21 @@ export const compat = {
       null,
       null /* TODO: this should grab the context from the previous chunk */,
     );
+    let normalizedInput = input;
+    if ("renderBody" in input) {
+      normalizedInput = {};
+      for (const key in input) {
+        normalizedInput[key === "renderBody" ? "content" : key] = input[key];
+      }
+    }
+
     head.render(() => {
       if (willRerender) {
         const scopeId = peekNextScopeId();
         writeScope(scopeId, { m5c: component.id });
         writeEffect(scopeId, SET_SCOPE_REGISTER_ID);
       }
-
-      renderer(input);
+      renderer(normalizedInput);
     });
 
     const asyncOut = classAPIOut.beginAsync();

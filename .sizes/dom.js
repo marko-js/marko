@@ -1,4 +1,4 @@
-// size: 18045 (min) 6518 (brotli)
+// size: 18159 (min) 6558 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -426,8 +426,8 @@ function setTagVarChange(scope, changeHandler) {
   scope["@"] = changeHandler;
 }
 var tagVarSignalChange = (scope, value2) => scope["@"]?.(value2),
-  renderBodyClosures = (renderBody, childScope, op) => {
-    let signals = renderBody?.c;
+  contentClosures = (content, childScope, op) => {
+    let signals = content?.c;
     if (signals) for (let signal of signals) signal(childScope, op);
   },
   tagIdsByGlobal = new WeakMap();
@@ -559,7 +559,7 @@ function getEventHandlerName(name) {
   return "-" === name[2] ? name.slice(3) : name.slice(2).toLowerCase();
 }
 function normalizeDynamicRenderer(value2) {
-  if (value2) return value2.renderBody || value2.default || value2;
+  if (value2) return value2.content || value2.default || value2;
 }
 var elementHandlersByEvent = new Map(),
   defaultDelegator = createDelegator();
@@ -983,7 +983,7 @@ function attrsInternal(scope, nodeAccessor, nextAttrs) {
       case "style":
         styleAttr(el, value2);
         break;
-      case "renderBody":
+      case "content":
         break;
       default:
         isEventHandler(name)
@@ -1149,16 +1149,16 @@ function initRenderer(renderer, scope) {
     dom
   );
 }
-function dynamicTagAttrs(nodeAccessor, getRenderBody, inputIsArgs) {
+function dynamicTagAttrs(nodeAccessor, getContent, inputIsArgs) {
   return (scope, attrsOrOp) => {
     let renderer = scope[nodeAccessor + "("];
     if (!renderer || attrsOrOp === DIRTY) return;
     let childScope = scope[nodeAccessor + "!"];
     if (attrsOrOp === MARK || attrsOrOp === CLEAN)
       return renderer.e?.(childScope, attrsOrOp);
-    let renderBody = getRenderBody?.(scope);
+    let content = getContent?.(scope);
     if ("string" == typeof renderer)
-      setConditionalRendererOnlyChild(childScope, 0, renderBody),
+      setConditionalRendererOnlyChild(childScope, 0, content),
         attrs(childScope, 0, attrsOrOp());
     else if (renderer.e) {
       let attributes = attrsOrOp();
@@ -1166,11 +1166,7 @@ function dynamicTagAttrs(nodeAccessor, getRenderBody, inputIsArgs) {
         childScope,
         inputIsArgs
           ? attributes
-          : [
-              renderBody
-                ? { ...attributes, renderBody: renderBody }
-                : attributes,
-            ],
+          : [content ? { ...attributes, content: content } : attributes],
       );
     }
   };
@@ -1257,7 +1253,7 @@ var conditional = function (nodeAccessor, fn, getIntersection) {
         : (op = CLEAN);
     }
     intersection2?.(scope, op),
-      renderBodyClosures(currentRenderer, scope[childScopeAccessor], op);
+      contentClosures(currentRenderer, scope[childScopeAccessor], op);
   };
 };
 function inConditionalScope(signal, nodeAccessor) {
@@ -1296,7 +1292,7 @@ var conditionalOnlyChild = function (nodeAccessor, fn, getIntersection) {
         : (op = CLEAN);
     }
     intersection2?.(scope, op),
-      renderBodyClosures(currentRenderer, scope[childScopeAccessor], op);
+      contentClosures(currentRenderer, scope[childScopeAccessor], op);
   };
 };
 function setConditionalRendererOnlyChild(scope, nodeAccessor, newRenderer) {
@@ -1596,17 +1592,23 @@ var classIdToScope = new Map(),
       );
       return (renderer.k = clone), renderer;
     },
-    render(out, component, renderer, input) {
+    render(out, component, renderer, args) {
       let scope = component.scope;
       scope ||
         ((scope = classIdToScope.get(component.id)),
         scope &&
           ((component.scope = scope), classIdToScope.delete(component.id)));
-      let args = renderer.e || noop,
+      let applyArgs = renderer.e || noop,
         existing = !1;
+      if ("object" == typeof args[0] && "renderBody" in args[0]) {
+        let input = args[0],
+          normalizedInput = (args[0] = {});
+        for (let key in input)
+          normalizedInput["renderBody" === key ? "content" : key] = input[key];
+      }
       if (
         ((component.effects = prepareEffects(() => {
-          if (scope) args(scope, MARK), (existing = !0);
+          if (scope) applyArgs(scope, MARK), (existing = !0);
           else {
             scope = component.scope = createScopeWithRenderer(
               renderer,
@@ -1616,7 +1618,7 @@ var classIdToScope = new Map(),
             if (closures)
               for (let signal of closures) signal(component.scope, CLEAN);
           }
-          args(scope, input);
+          applyArgs(scope, args);
         })),
         !existing)
       )

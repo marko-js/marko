@@ -1,4 +1,4 @@
-// size: 1525 (min) 551 (brotli)
+// size: 1525 (min) 554 (brotli)
 const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _expr_name_write_effect = _$.effect("a0", (_scope, { 5: name, 6: write }) => {
     write(`${name} mounted`),
@@ -19,72 +19,74 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     },
     () => _expr_name_write,
   ),
-  _write$ifBody3 = _$.dynamicClosure(
+  _write$if_content3 = _$.dynamicClosure(
     8,
     (_scope, write) => _write_(_scope[0], write),
     (_scope) => _scope._._._,
     () => _$.inChild(0, _write_),
   ),
-  _setup$ifBody3 = (_scope) => {
+  _setup$if_content3 = (_scope) => {
     _scope[0], _name_(_scope[0], "Inner");
   },
-  _ifBody3 = _$.register(
+  _if_content3 = _$.register(
     "b1",
-    _$.createRenderer(_template_, "/D%lD%lD%l&", _setup$ifBody3, () => [
-      _write$ifBody3,
+    _$.createRenderer(_template_, "/D%lD%lD%l&", _setup$if_content3, () => [
+      _write$if_content3,
     ]),
   ),
-  _if$ifBody = _$.conditional(1, 0),
-  _write$ifBody2 = _$.dynamicClosure(
+  _if$if_content = _$.conditional(1, 0),
+  _write$if_content2 = _$.dynamicClosure(
     8,
     (_scope, write) => _write_(_scope[0], write),
     (_scope) => _scope._._,
     () => _$.inChild(0, _write_),
   ),
-  _showInner$ifBody = _$.registerSubscriber(
+  _showInner$if_content = _$.registerSubscriber(
     "b2",
     _$.dynamicClosure(
       7,
-      (_scope, showInner) => _if$ifBody(_scope, showInner ? _ifBody3 : null),
+      (_scope, showInner) =>
+        _if$if_content(_scope, showInner ? _if_content3 : null),
       (_scope) => _scope._._,
-      () => _if$ifBody,
+      () => _if$if_content,
     ),
   ),
-  _setup$ifBody2 = (_scope) => {
+  _setup$if_content2 = (_scope) => {
     _scope[0], _name_(_scope[0], "Middle");
   },
-  _ifBody2 = _$.register(
+  _if_content2 = _$.register(
     "b3",
     _$.createRenderer(
       `<div>${_template_}<!></div>`,
       "D/D%lD%lD%l&%",
-      _setup$ifBody2,
-      () => [_write$ifBody2, _showInner$ifBody],
+      _setup$if_content2,
+      () => [_write$if_content2, _showInner$if_content],
     ),
   ),
-  _if$ifBody2 = _$.conditional(1, 0),
-  _write$ifBody = _$.closure(
+  _if$if_content2 = _$.conditional(1, 0),
+  _write$if_content = _$.closure(
     8,
     (_scope, write) => _write_(_scope[0], write),
     void 0,
     () => _$.inChild(0, _write_),
   ),
-  _showMiddle$ifBody = _$.closure(
+  _showMiddle$if_content = _$.closure(
     6,
-    (_scope, showMiddle) => _if$ifBody2(_scope, showMiddle ? _ifBody2 : null),
+    (_scope, showMiddle) =>
+      _if$if_content2(_scope, showMiddle ? _if_content2 : null),
     void 0,
-    () => _if$ifBody2,
+    () => _if$if_content2,
   ),
-  _setup$ifBody = (_scope) => {
+  _setup$if_content = (_scope) => {
     _scope[0], _name_(_scope[0], "Outer");
   },
-  _ifBody = _$.register(
+  _if_content = _$.register(
     "b4",
     _$.createRenderer(
       `<div>${_template_}<!></div>`,
       "D/D%lD%lD%l&%",
-      _setup$ifBody,
-      () => [_write$ifBody, _showMiddle$ifBody],
+      _setup$if_content,
+      () => [_write$if_content, _showMiddle$if_content],
     ),
   ),
   _if = _$.conditional(4, 0),
@@ -106,7 +108,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _showMiddle = _$.state(
     6,
     (_scope, showMiddle) => _showMiddle_effect(_scope),
-    () => _$.inConditionalScope(_showMiddle$ifBody, 4),
+    () => _$.inConditionalScope(_showMiddle$if_content, 4),
   ),
   _showOuter_effect = _$.effect("b7", (_scope, { 5: showOuter }) =>
     _$.on(_scope[0], "click", function () {
@@ -116,7 +118,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _showOuter = _$.state(
     5,
     (_scope, showOuter) => {
-      _showOuter_effect(_scope), _if(_scope, showOuter ? _ifBody : null);
+      _showOuter_effect(_scope), _if(_scope, showOuter ? _if_content : null);
     },
     () => _if,
   );

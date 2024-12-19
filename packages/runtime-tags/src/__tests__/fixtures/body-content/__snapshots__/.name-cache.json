@@ -11,7 +11,11 @@
       "$_onClick": "s",
       "$_clickCount$FancyButtonBody": "d",
       "$_FancyButtonBody": "c",
-      "$_clickCount": "m"
+      "$_clickCount": "m",
+      "$_content_input": "u",
+      "$_content_": "b",
+      "$_clickCount$FancyButton_content": "f",
+      "$_FancyButton_content": "g"
     }
   }
 }

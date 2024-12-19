@@ -281,12 +281,12 @@ export function setTagVarChange(
 export const tagVarSignalChange = (scope: Scope, value: unknown) =>
   scope[AccessorChar.TagVariableChange]?.(value);
 
-export const renderBodyClosures = (
-  renderBody: Renderer | string | undefined,
+export const contentClosures = (
+  content: Renderer | string | undefined,
   childScope: Scope,
   op: SignalOp,
 ) => {
-  const signals = (renderBody as unknown as Renderer)?.___closureSignals;
+  const signals = (content as unknown as Renderer)?.___closureSignals;
   if (signals) {
     for (const signal of signals) {
       signal(childScope, op);

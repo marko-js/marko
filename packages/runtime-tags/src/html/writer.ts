@@ -192,12 +192,9 @@ export function $global() {
   return $chunk.boundary.state.$global;
 }
 
-export function fork<T>(
-  promise: Promise<T> | T,
-  renderBody: (value: T) => void,
-) {
+export function fork<T>(promise: Promise<T> | T, content: (value: T) => void) {
   if (!isPromise(promise)) {
-    renderBody(promise);
+    content(promise);
     return;
   }
 
@@ -215,7 +212,7 @@ export function fork<T>(
         chunk.async = false;
 
         if (!boundary.signal.aborted) {
-          chunk.render(renderBody, value);
+          chunk.render(content, value);
           boundary.endAsync(chunk);
         }
       }
@@ -227,38 +224,35 @@ export function fork<T>(
   );
 }
 
-export function tryPlaceholder(
-  renderBody: () => void,
-  renderPlaceholder: () => void,
-) {
+export function tryPlaceholder(content: () => void, placeholder: () => void) {
   const chunk = $chunk;
   const { boundary } = chunk;
   const body = new Chunk(boundary, null, chunk.context);
 
-  if (body === body.render(renderBody)) {
+  if (body === body.render(content)) {
     chunk.append(body);
     return;
   }
 
   chunk.next = $chunk = new Chunk(boundary, chunk.next, body.context);
   chunk.placeholderBody = body;
-  chunk.placeholderRender = renderPlaceholder;
+  chunk.placeholderRender = placeholder;
 }
 
 export function tryCatch(
-  renderBody: () => void,
-  renderCatch: (err: unknown) => void,
+  content: () => void,
+  catchContent: (err: unknown) => void,
 ) {
   const chunk = $chunk;
   const { boundary } = chunk;
   const { state } = boundary;
   const catchBoundary = new Boundary(state);
   const body = new Chunk(catchBoundary, null, chunk.context);
-  const bodyEnd = body.render(renderBody);
+  const bodyEnd = body.render(content);
 
   if (catchBoundary.signal.aborted) {
     // Sync error
-    renderCatch(catchBoundary.signal.reason);
+    catchContent(catchBoundary.signal.reason);
     return;
   }
 
@@ -307,7 +301,7 @@ export function tryCatch(
 
       const catchChunk = new Chunk(boundary, null, chunk.context);
       catchChunk.reorderId = reorderId;
-      catchChunk.render(renderCatch, catchBoundary.signal.reason);
+      catchChunk.render(catchContent, catchBoundary.signal.reason);
       state.reorder(catchChunk);
       boundary.endAsync();
     } else if (catchBoundary.done) {
@@ -528,13 +522,13 @@ export class Chunk {
     return cur;
   }
 
-  render(renderBody: () => void): Chunk;
-  render<T>(renderBody: (val: T) => void, val: T): Chunk;
-  render<T>(renderBody: (val?: T) => void, val?: T): Chunk {
+  render(content: () => void): Chunk;
+  render<T>(content: (val: T) => void, val: T): Chunk;
+  render<T>(content: (val?: T) => void, val?: T): Chunk {
     const prev = $chunk;
     $chunk = this;
     try {
-      renderBody(val);
+      content(val);
       return $chunk;
     } catch (err) {
       this.boundary.abort(err);

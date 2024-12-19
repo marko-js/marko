@@ -140,6 +140,21 @@ export default {
       } else {
         programDOM.translate.exit(program);
       }
+
+      if (program.node.extra?.needsCompat) {
+        const { markoOpts } = program.hub.file;
+        program.unshiftContainer(
+          "body",
+          t.importDeclaration(
+            [],
+            t.stringLiteral(
+              `marko/${markoOpts.optimize ? "dist" : "src"}/runtime/helpers/tags-compat/${
+                markoOpts.output === "html" ? "html" : "dom"
+              }${markoOpts.optimize ? "" : "-debug"}.${markoOpts.modules === "esm" ? "mjs" : "js"}`,
+            ),
+          ),
+        );
+      }
       currentProgramPath = previousProgramPath.get(currentProgramPath)!;
     },
   },

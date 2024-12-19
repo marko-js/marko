@@ -1,14 +1,14 @@
-// size: 583 (min) 311 (brotli)
-const _renderBody_input = _$.dynamicTagAttrs(1),
+// size: 577 (min) 316 (brotli)
+const _content_input = _$.dynamicTagAttrs(1),
   _dynamicTagName = _$.conditional(
     1,
-    (_scope) => _renderBody_input(_scope, () => ({})),
-    () => _renderBody_input,
+    (_scope) => _content_input(_scope, () => ({})),
+    () => _content_input,
   ),
   _attrs__effect = _$.effect("a0", (_scope) => _$.attrsEvents(_scope, 0)),
-  _renderBody_ = _$.value(
+  _content_ = _$.value(
     4,
-    (_scope, renderBody) => _dynamicTagName(_scope, renderBody),
+    (_scope, content) => _dynamicTagName(_scope, content),
     () => _dynamicTagName,
   ),
   _input_ = _$.value(
@@ -17,20 +17,20 @@ const _renderBody_input = _$.dynamicTagAttrs(1),
       ((_scope, attrs) => {
         _$.attrs(_scope, 0, attrs), _attrs__effect(_scope);
       })(_scope, input),
-        _renderBody_(_scope, input.renderBody);
+        _content_(_scope, input.content);
     },
-    () => _renderBody_,
+    () => _content_,
   ),
-  _clickCount$FancyButtonBody = _$.registerSubscriber(
+  _clickCount$FancyButton_content = _$.registerSubscriber(
     "b1",
     _$.dynamicClosure(1, (_scope, clickCount) =>
       _$.data(_scope[0], clickCount),
     ),
   ),
-  _FancyButtonBody = _$.register(
+  _FancyButton_content = _$.register(
     "b2",
     _$.createRendererWithOwner(" ", " ", void 0, () => [
-      _clickCount$FancyButtonBody,
+      _clickCount$FancyButton_content,
     ]),
   ),
   _clickCount = _$.state(
@@ -38,7 +38,7 @@ const _renderBody_input = _$.dynamicTagAttrs(1),
     (_scope, clickCount) =>
       _input_(_scope[0], {
         onClick: _onClick(_scope),
-        renderBody: _FancyButtonBody(_scope),
+        content: _FancyButton_content(_scope),
       }),
     () => _$.intersections([_$.inChild(0, _input_), _$.dynamicSubscribers(1)]),
   );

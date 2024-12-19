@@ -9,7 +9,12 @@
       "$_clickCount$ifBody": "i",
       "$_ifBody": "a",
       "$_if": "c",
-      "$_clickCount": "s"
+      "$_clickCount": "s",
+      "$_clickCount$else_content": "d",
+      "$_else_content": "m",
+      "$_clickCount$if_content_effect": "u",
+      "$_clickCount$if_content": "l",
+      "$_if_content": "p"
     }
   }
 }

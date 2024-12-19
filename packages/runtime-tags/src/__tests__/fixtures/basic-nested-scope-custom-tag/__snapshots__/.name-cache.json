@@ -5,7 +5,9 @@
       "$init": "r",
       "$_count$childBody_effect": "e",
       "$_count$childBody": "o",
-      "$_count": "n"
+      "$_count": "n",
+      "$_count$child_content_effect": "i",
+      "$_count$child_content": "a"
     }
   }
 }

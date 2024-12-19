@@ -3,15 +3,15 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   const {
     name,
-    renderBody
+    content
   } = input;
   _$.write(`<!>${_$.escapeXML(name)}${_$.markResumeNode(_scope0_id, "#text/0")}`);
   const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope, renderBody, {});
+  _$.dynamicTagInput(_dynamicScope, content, {});
   _$.write(_$.markResumeControlEnd(_scope0_id, "#text/1"));
   _$.writeScope(_scope0_id, {
     "#text/1!": _$.writeExistingScope(_dynamicScope),
-    "#text/1(": _$.normalizeDynamicRenderer(renderBody)
+    "#text/1(": _$.normalizeDynamicRenderer(content)
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/components/child/index.marko", _renderer);

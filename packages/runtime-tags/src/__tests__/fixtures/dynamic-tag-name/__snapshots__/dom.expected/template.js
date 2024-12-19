@@ -3,8 +3,8 @@ export const _walks_ = /* replace, over(1), replace, over(1), get, over(1), get,
 import tagA from "./components/tag-a/index.marko";
 import tagB from "./components/tag-b/index.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _tag, _className_ as _tag_input_class, _other_ as _tag_input_other, _renderBody_ as _tag_input_renderBody, _template_ as _tag_template, _walks_ as _tag_walks } from "./components/tag-a/index.marko";
-const _showTagATagABody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Body content", ""));
+import { _setup_ as _tag, _className_ as _tag_input_class, _other_ as _tag_input_other, _content_ as _tag_input_content, _template_ as _tag_template, _walks_ as _tag_walks } from "./components/tag-a/index.marko";
+const _showTagATagA_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Body content", ""));
 const _largeHeadingH2_input = _$.dynamicTagAttrs("#text/9");
 const _expr_Text_other6 = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
@@ -55,16 +55,16 @@ const _expr_Text_other2 = /* @__PURE__ */_$.intersection(2, _scope => {
     other: other
   }));
 }, () => _x_input);
-const _renderBody_input = _$.dynamicTagAttrs("#text/0");
+const _content_input = _$.dynamicTagAttrs("#text/0");
 const _expr_Text_other = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     other
   } = _scope;
-  _renderBody_input(_scope, () => ({
+  _content_input(_scope, () => ({
     class: ["a", "b"],
     other: other
   }));
-}, () => _renderBody_input);
+}, () => _content_input);
 const _dynamicTagName6 = /* @__PURE__ */_$.conditional("#text/9", 0, () => _expr_Text_other6);
 const _dynamicTagName5 = /* @__PURE__ */_$.conditional("#text/8", 0, () => _expr_Text_other5);
 const _dynamicTagName4 = /* @__PURE__ */_$.conditional("#text/5", 0, () => _expr_Text_other4);
@@ -94,9 +94,9 @@ export const _isLarge_ = /* @__PURE__ */_$.value("isLarge", (_scope, isLarge) =>
 export const _showTagA_ = /* @__PURE__ */_$.value("showTagA", (_scope, showTagA) => _dynamicTagName4(_scope, showTagA ? tagA : tagB), () => _dynamicTagName4);
 export const _show_ = /* @__PURE__ */_$.value("show", (_scope, show) => _tagConstB(_scope, show ? "div" : null));
 export const _x_ = /* @__PURE__ */_$.value("x", (_scope, x) => _dynamicTagName2(_scope, x), () => _dynamicTagName2);
-export const _renderBody_ = /* @__PURE__ */_$.value("renderBody", (_scope, renderBody) => _dynamicTagName(_scope, renderBody), () => _dynamicTagName);
+export const _content_ = /* @__PURE__ */_$.value("content", (_scope, content) => _dynamicTagName(_scope, content), () => _dynamicTagName);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
-  _renderBody_(_scope, input.renderBody);
+  _content_(_scope, input.content);
   _x_(_scope, input.x);
   _show_(_scope, input.show);
   _showTagA_(_scope, input.showTagA);
@@ -104,14 +104,14 @@ export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _tag_(_scope, input.tag);
   _level_(_scope, input.level);
   _other_(_scope, input.other);
-}, () => _$.intersections([_renderBody_, _x_, _showTagA_, _isLarge_, _tag_, _other_]));
+}, () => _$.intersections([_content_, _x_, _showTagA_, _isLarge_, _tag_, _other_]));
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
 export function _setup_(_scope) {
   _tag(_scope["#childScope/6"]);
   _tag(_scope["#childScope/7"]);
   _tag_input_class(_scope["#childScope/6"], ["a", "b"]);
-  _tag_input_renderBody(_scope["#childScope/6"], void 0);
-  _tag_input_renderBody(_scope["#childScope/7"], _showTagATagABody(_scope));
+  _tag_input_content(_scope["#childScope/6"], void 0);
+  _tag_input_content(_scope["#childScope/7"], _showTagATagA_content(_scope));
   _tag_input_class(_scope["#childScope/7"], ["a", "b"]);
   _tagConstA(_scope, "a");
 }

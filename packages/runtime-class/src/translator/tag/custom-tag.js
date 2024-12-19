@@ -25,6 +25,16 @@ export default function (path, isNullable) {
 
   let tagIdentifier;
 
+  if (node.extra?.featureType === "tags") {
+    path.set(
+      "name",
+      path.scope.hasBinding(name.value)
+        ? t.identifier(name.value)
+        : importDefault(file, node.extra.relativePath, name.value),
+    );
+    return dynamicTag(path);
+  }
+
   if (t.isStringLiteral(name)) {
     const tagName = name.value;
     let relativePath = node.extra && node.extra.relativePath;
@@ -42,35 +52,7 @@ export default function (path, isNullable) {
     let binding = !relativePath && path.scope.getBinding(tagName);
     if (binding && !binding.identifier.loc) binding = null;
 
-    if (binding && binding.kind === "module") {
-      const importSource = binding.path.parent.source;
-      relativePath =
-        resolveTagImport(path, importSource.value) || importSource.value;
-      (node.extra ??= {}).tagNameImported = relativePath;
-      binding = undefined;
-    }
-
-    const childFile = loadFileForTag(path);
-    const childProgram = childFile?.ast.program;
-
-    if (childProgram?.extra?.featureType === "tags") {
-      const compatRuntimeFile = `marko/src/runtime/helpers/tags-compat/${
-        markoOpts.output === "html" ? "html" : "dom"
-      }${markoOpts.optimize ? "" : "-debug"}.${markoOpts.modules === "esm" ? "mjs" : "js"}`;
-      importDefault(file, compatRuntimeFile);
-      path.set("name", importDefault(file, relativePath, path.node.name.value));
-      return dynamicTag(path);
-    } else if (relativePath) {
-      if (binding) {
-        // TODO: implement auto migration for conflicts here
-        // and log below warning
-        // console.warn(
-        //   path.buildCodeFrameError(
-        //     `The <${tagName}> tag has been resolved from the filesystem, however a local variable with the same name exists. In the next major version of Marko the local variable will tag precedence.`
-        //   )
-        // );
-      }
-
+    if (relativePath) {
       tagIdentifier = importDefault(file, relativePath, tagName);
     } else if (binding) {
       path.set("name", t.identifier(tagName));
