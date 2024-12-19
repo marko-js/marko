@@ -1,7 +1,7 @@
 export const _template_ = `<button>Inc</button>${_child_template}`;
 export const _walks_ = /* get, over(1), beginChild, _child_walks, endChild */` b/${_child_walks}&`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _child, _content_ as _child_input_content, _value_ as _child_input_value, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
+import { _setup_ as _child, _content_ as _child_input_content, _value_ as _child_input_value, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child.marko";
 const _inner$child_content = /* @__PURE__ */_$.value("inner", (_scope, inner) => _$.data(_scope["#text/1"], inner));
 const _outer$child_content = _$.registerSubscriber("__tests__/template.marko_2_outer/subscriber", /* @__PURE__ */_$.dynamicClosure("outer", (_scope, outer) => _$.data(_scope["#text/0"], outer)));
 const _params_3$child_content = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _inner$child_content(_scope, _params_3[0]));

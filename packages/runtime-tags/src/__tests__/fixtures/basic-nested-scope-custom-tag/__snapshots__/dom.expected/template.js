@@ -1,7 +1,7 @@
 export const _template_ = `<!>${_child_template}<!>`;
 export const _walks_ = /* beginChild, _child_walks, endChild */`D/${_child_walks}&D`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _child, _input_content_ as _child_input_content, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
+import { _setup_ as _child, _input_content_ as _child_input_content, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child.marko";
 const _count$child_content_effect = _$.effect("__tests__/template.marko_1_count", (_scope, {
   _: {
     count

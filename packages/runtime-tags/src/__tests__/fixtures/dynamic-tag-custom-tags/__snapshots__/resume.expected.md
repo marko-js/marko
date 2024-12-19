@@ -14,7 +14,7 @@
     <button />
     <!--M_*0 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["__tests__/components/child1.marko"],val:3,"#text/0!":_.a={},"#text/0(":_._["__tests__/components/child1.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["__tests__/tags/child1.marko"],val:3,"#text/0!":_.a={},"#text/0(":_._["__tests__/tags/child1.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>
@@ -41,7 +41,7 @@ container.querySelector("button").click()
     <button />
     <!--M_*0 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["__tests__/components/child1.marko"],val:3,"#text/0!":_.a={},"#text/0(":_._["__tests__/components/child1.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["__tests__/tags/child1.marko"],val:3,"#text/0!":_.a={},"#text/0(":_._["__tests__/tags/child1.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>
@@ -70,7 +70,7 @@ container.querySelector("button").click()
     <button />
     <!--M_*0 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["__tests__/components/child1.marko"],val:3,"#text/0!":_.a={},"#text/0(":_._["__tests__/components/child1.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["__tests__/tags/child1.marko"],val:3,"#text/0!":_.a={},"#text/0(":_._["__tests__/tags/child1.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>

@@ -1,6 +1,6 @@
 export const _template_ = _myButton_template;
 export const _walks_ = /* beginChild, _myButton_walks, endChild */`/${_myButton_walks}&`;
-import { _setup_ as _myButton, _text_ as _myButton_input_text, _onClick_ as _myButton_input_onClick, _template_ as _myButton_template, _walks_ as _myButton_walks } from "./components/my-button.marko";
+import { _setup_ as _myButton, _text_ as _myButton_input_text, _onClick_ as _myButton_input_onClick, _template_ as _myButton_template, _walks_ as _myButton_walks } from "./tags/my-button.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _clickCount = /* @__PURE__ */_$.state("clickCount", (_scope, clickCount) => {
   _myButton_input_text(_scope["#childScope/0"], clickCount);

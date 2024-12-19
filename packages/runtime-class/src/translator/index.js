@@ -31,6 +31,7 @@ import getComponentFiles from "./util/get-component-files";
 import { optimizeHTMLWrites } from "./util/optimize-html-writes";
 import { analyzeStaticVDOM } from "./util/optimize-vdom-create";
 
+export const tagDiscoveryDirs = ["components"];
 export { optionalTaglibs, default as taglibs } from "./taglib";
 export { entryBuilder as internalEntryBuilder } from "./util/add-dependencies";
 

@@ -50,7 +50,7 @@ function getAllDependencyNames(pkg) {
   return Object.keys(map);
 }
 
-function find(dirname, registeredTaglibs) {
+function find(dirname, registeredTaglibs, tagDiscoveryDirs) {
   var found = findCache[dirname];
   if (found) {
     return found;
@@ -92,10 +92,14 @@ function find(dirname, registeredTaglibs) {
       }
 
       if (!taglib || taglib.tagsDir === undefined) {
-        const componentsPath = nodePath.join(curDirname, "components");
+        for (const tagDiscoveryDir of tagDiscoveryDirs) {
+          const componentsPath = nodePath.join(curDirname, tagDiscoveryDir);
 
-        if (existsSync(componentsPath) && !excludedDirs[componentsPath]) {
-          helper.addTaglib(taglibLoader.loadTaglibFromDir(curDirname));
+          if (existsSync(componentsPath) && !excludedDirs[componentsPath]) {
+            helper.addTaglib(
+              taglibLoader.loadTaglibFromDir(curDirname, tagDiscoveryDir),
+            );
+          }
         }
       }
     }

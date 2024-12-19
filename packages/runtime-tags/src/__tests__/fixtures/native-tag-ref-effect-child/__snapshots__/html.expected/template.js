@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-import _helloSetter from "./components/hello-setter.marko";
+import _helloSetter from "./tags/hello-setter.marko";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   const el = _$.nodeRef(_scope0_id, "__tests__/template.marko_0/#div");

@@ -1,6 +1,6 @@
 export const _template_ = "<!><!><!>";
 export const _walks_ = /* replace, over(1) */"D%bD";
-import Child from "./components/child.marko";
+import Child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _count$falseChild_content_effect = _$.effect("__tests__/template.marko_1_count", (_scope, {
   _: {

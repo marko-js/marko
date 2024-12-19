@@ -2,7 +2,7 @@ var expect = require("chai").expect;
 
 exports.check = function (taglibFinder) {
   const discoveredTags = taglibFinder
-    .find(__dirname, [])
+    .find(__dirname, [], ["components"])
     .flatMap((taglib) => Object.keys(taglib.tags));
 
   expect(discoveredTags).to.include("included-tag");

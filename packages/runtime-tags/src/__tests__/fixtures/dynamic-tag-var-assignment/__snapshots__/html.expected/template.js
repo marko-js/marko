@@ -1,4 +1,4 @@
-import Counter from "./components/counter.marko";
+import Counter from "./tags/counter.marko";
 function getCounter() {
   return Counter; // breaks tag name analysis.
 }

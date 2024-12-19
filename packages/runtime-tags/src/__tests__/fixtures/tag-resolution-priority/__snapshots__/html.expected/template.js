@@ -2,7 +2,7 @@ const div = "span";
 const foo = "div";
 const Bar = "div";
 import * as _$ from "@marko/runtime-tags/debug/html";
-import _foo from "./components/foo.marko";
+import _foo from "./tags/foo.marko";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   _$.write("<div></div>");

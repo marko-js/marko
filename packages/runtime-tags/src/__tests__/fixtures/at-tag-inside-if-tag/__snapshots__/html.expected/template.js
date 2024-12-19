@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-import _customTag from "./components/custom-tag/index.marko";
+import _customTag from "./tags/custom-tag/index.marko";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   const {

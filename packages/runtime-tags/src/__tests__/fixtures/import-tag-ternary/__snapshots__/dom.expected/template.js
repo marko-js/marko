@@ -1,7 +1,7 @@
 export const _template_ = "<!><!><!>";
 export const _walks_ = /* replace, over(1) */"D%bD";
-import baz from "./components/baz.marko";
-import foo from "./components/foo.marko";
+import baz from "./tags/baz.marko";
+import foo from "./tags/foo.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _x1BazFoo_input = _$.dynamicTagAttrs("#text/0");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _x1BazFoo_input(_scope, () => ({})), () => _x1BazFoo_input);

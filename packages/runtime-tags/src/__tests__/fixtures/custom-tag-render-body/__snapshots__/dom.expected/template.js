@@ -1,6 +1,6 @@
 export const _template_ = `${_child_template}<!>`;
 export const _walks_ = /* beginChild, _child_walks, endChild */`/${_child_walks}&D`;
-import { _setup_ as _child, _content_ as _child_input_content, _name_ as _child_input_name, _template_ as _child_template, _walks_ as _child_walks } from "./components/child/index.marko";
+import { _setup_ as _child, _content_ as _child_input_content, _name_ as _child_input_name, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child/index.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _child_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("This is the body content", ""));
 export function _setup_(_scope) {

@@ -1,6 +1,6 @@
 export const _template_ = "<!><!><button class=reset>reset</button>";
 export const _walks_ = /* replace, over(1), get, over(1) */"D%b b";
-import Counter from "./components/counter.marko";
+import Counter from "./tags/counter.marko";
 const getCounter = _getCounter;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _getCounter_input = _$.dynamicTagAttrs("#text/0");

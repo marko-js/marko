@@ -1,6 +1,6 @@
 export const _template_ = "<button>Count: <!></button><!><div>Parent: <!></div>";
 export const _walks_ = /* get, next(1), over(1), replace, out(1), replace, over(1), next(1), over(1), replace, out(1) */" Db%l%bDb%l";
-import customTag from './components/custom-tag.marko';
+import customTag from './tags/custom-tag.marko';
 const tags = [customTag];
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _tags0_input = _$.dynamicTagAttrs("#text/2");

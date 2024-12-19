@@ -1,7 +1,7 @@
 export const _template_ = "<button>Toggle</button><div></div><!><!>";
 export const _walks_ = /* get, over(1), get, over(1), replace, over(1) */" b b%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _child, _write_ as _child_input_write, _name_ as _child_input_name, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
+import { _setup_ as _child, _write_ as _child_input_write, _name_ as _child_input_name, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child.marko";
 const _write$for_content = /* @__PURE__ */_$.closure("write", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), void 0, () => _$.inChild("#childScope/0", _child_input_write));
 const _item$for_content = /* @__PURE__ */_$.value("item", (_scope, item) => _child_input_name(_scope["#childScope/0"], item), () => _$.inChild("#childScope/0", _child_input_name));
 const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _item$for_content(_scope, _params_2[0]), () => _item$for_content);

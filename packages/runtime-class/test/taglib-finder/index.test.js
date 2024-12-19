@@ -25,13 +25,15 @@ autotest("fixtures", (fixture) => {
       }
 
       var finderDir = resolve(test.dir);
-      var found = taglibFinder.find(finderDir, []).map((taglib) => {
-        if (taglib.path.startsWith(dir)) {
-          return taglib.path.substring(dir.length).replace(/[\\]/g, "/");
-        } else {
-          return "BAD:" + taglib.path;
-        }
-      });
+      var found = taglibFinder
+        .find(finderDir, [], ["components"])
+        .map((taglib) => {
+          if (taglib.path.startsWith(dir)) {
+            return taglib.path.substring(dir.length).replace(/[\\]/g, "/");
+          } else {
+            return "BAD:" + taglib.path;
+          }
+        });
 
       snapshot(found, ".json");
 
