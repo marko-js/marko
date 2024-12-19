@@ -2,6 +2,7 @@ import type { types as t } from "@marko/compiler";
 import { getTagDef } from "@marko/compiler/babel-utils";
 import { taglibs as taglibs6 } from "@marko/runtime-tags/translator";
 import { taglibs as taglibs5 } from "marko/translator";
+import { sep } from "path";
 
 import { buildAggregateError } from "./build-aggregate-error";
 
@@ -30,8 +31,8 @@ export function isTagsAPI(path: t.NodePath) {
 
     if (file.opts.filename) {
       const filename = file.opts.filename;
-      const tagsIndex = filename.lastIndexOf("/tags/");
-      const componentsIndex = filename.lastIndexOf("/components/");
+      const tagsIndex = filename.lastIndexOf(sep + "tags" + sep);
+      const componentsIndex = filename.lastIndexOf(sep + "components" + sep);
       if (tagsIndex > componentsIndex) {
         forceTags = true;
       }
