@@ -1,11 +1,11 @@
 // size: 325 (min) 205 (brotli)
-const _count$htmlStyleBody = _$.registerSubscriber(
+const _count$htmlStyle_content = _$.registerSubscriber(
   "a1",
   _$.dynamicClosure(1, 0),
 );
 _$.register(
   "a2",
-  _$.createRendererWithOwner("", "", void 0, () => [_count$htmlStyleBody]),
+  _$.createRendererWithOwner("", "", void 0, () => [_count$htmlStyle_content]),
 );
 const _count_effect = _$.effect("a3", (_scope, { 1: count }) =>
     _$.on(_scope[0], "click", function () {

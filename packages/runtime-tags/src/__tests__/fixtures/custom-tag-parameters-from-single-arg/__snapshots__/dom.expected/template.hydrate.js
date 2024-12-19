@@ -1,12 +1,12 @@
 // size: 383 (min) 247 (brotli)
-const _inputRenderBody_input = _$.dynamicTagAttrs(2),
+const _inputContent_input = _$.dynamicTagAttrs(2),
   _expr_Text_x = _$.intersection(
     2,
     (_scope) => {
       const { 6: x } = _scope;
-      _inputRenderBody_input(_scope, () => x);
+      _inputContent_input(_scope, () => x);
     },
-    () => _inputRenderBody_input,
+    () => _inputContent_input,
   ),
   _x_effect = _$.effect("a0", (_scope, { 6: x }) =>
     _$.on(_scope[0], "click", function () {
@@ -20,11 +20,11 @@ const _inputRenderBody_input = _$.dynamicTagAttrs(2),
     },
     () => _expr_Text_x,
   ),
-  _count$customTagBody = _$.value(2, (_scope, count) =>
+  _count$customTag_content = _$.value(2, (_scope, count) =>
     _$.data(_scope[0], count),
   ),
-  _params_2$customTagBody = _$.value(1, (_scope, _params_2) =>
-    _count$customTagBody(_scope, _params_2[0]),
+  _params_2$customTag_content = _$.value(1, (_scope, _params_2) =>
+    _count$customTag_content(_scope, _params_2[0]),
   );
 _$.register(
   "b0",
@@ -33,7 +33,7 @@ _$.register(
     "Db%",
     void 0,
     void 0,
-    () => _params_2$customTagBody,
+    () => _params_2$customTag_content,
   ),
 ),
   init();

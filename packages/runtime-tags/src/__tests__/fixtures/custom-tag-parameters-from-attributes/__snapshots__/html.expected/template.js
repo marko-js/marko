@@ -5,7 +5,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _childScope = _$.peekNextScope();
   _customTag({
     name: "hello",
-    renderBody: _$.register(/* @__PURE__ */_$.createRenderer(({
+    content: _$.register(/* @__PURE__ */_$.createRenderer(({
       count,
       name
     }) => {

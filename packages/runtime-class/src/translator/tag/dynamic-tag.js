@@ -9,7 +9,8 @@ export default function (path) {
     node,
     hub: { file },
   } = path;
-  const tagProperties = (path.node.extra && path.node.extra.properties) || [];
+  const extra = path.node.extra || {};
+  const tagProperties = extra.properties || [];
   const { key, arguments: args } = node;
   const foundAttrs = getAttrs(path, true);
   let renderBodyProp;
@@ -34,8 +35,10 @@ export default function (path) {
   }
 
   if (t.isObjectExpression(foundAttrs)) {
+    const renderBodyKey =
+      extra.featureType === "tags" ? "content" : "renderBody";
     const renderBodyIndex = foundAttrs.properties.findIndex(
-      (prop) => prop.key && prop.key.value === "renderBody",
+      (prop) => prop.key && prop.key.value === renderBodyKey,
     );
 
     attrsLen = foundAttrs.properties.length;

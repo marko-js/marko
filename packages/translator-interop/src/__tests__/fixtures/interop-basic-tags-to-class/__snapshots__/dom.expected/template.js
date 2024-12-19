@@ -1,3 +1,4 @@
+import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 export const _template_ = "<button id=tags> </button><!><!>";
 export const _walks_ = /* get, next(1), get, out(1), replace, over(1) */" D l%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";

@@ -21,7 +21,12 @@
       "$_name": "b",
       "$_input_": "k",
       "$_expr_item_write$forBody": "D",
-      "$_items_effect": "h"
+      "$_items_effect": "h",
+      "$_write$for_content": "A",
+      "$_item$for_content": "C",
+      "$_params_2$for_content": "S",
+      "$_setup$for_content": "$",
+      "$_for_content": "y"
     }
   }
 }

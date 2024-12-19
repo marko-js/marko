@@ -2,7 +2,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   const MyTag = {
-    renderBody: _$.register(/* @__PURE__ */_$.createRenderer(({
+    content: _$.register(/* @__PURE__ */_$.createRenderer(({
       name
     }) => {
       const _scope1_id = _$.nextScopeId();

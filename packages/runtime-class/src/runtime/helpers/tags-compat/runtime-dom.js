@@ -160,27 +160,29 @@ exports.p = function (domCompat) {
     const componentsContext = ___getComponentsContext(out);
     const globalComponentsContext = componentsContext.___globalContext;
     let customEvents;
+    let normalizedInput;
     globalComponentsContext.___rerenderComponent = existingComponent;
     out.sync();
     if (renderer) {
       const [rawInput] = input;
-      const normalizedInput = {};
+      normalizedInput = {};
 
       for (const key in rawInput) {
-        let value = rawInput[key];
-        if (key.startsWith("on")) {
-          const c = key[2];
-          customEvents = customEvents || {};
-          customEvents[(c === "-" ? "" : c.toLowerCase()) + key.slice(3)] = [
-            value,
-          ];
+        const value = rawInput[key];
+        if (/^on[-A-Z]/.test(key)) {
+          if (typeof value === "function") {
+            (customEvents || (customEvents = {}))[
+              key[2] === "-" ? key.slice(3) : key.slice(2).toLowerCase()
+            ] = [value];
+          }
         } else {
-          normalizedInput[key] = rawInput[key];
+          normalizedInput[key === "content" ? "renderBody" : key] = value;
         }
       }
 
       renderer(normalizedInput, out);
     } else {
+      normalizedInput = input[0];
       RenderBodyComponent({ renderBody, args: input }, out);
     }
 
@@ -192,7 +194,7 @@ exports.p = function (domCompat) {
       );
       const component = componentDefs[0].___component;
       component.___rootNode = rootNode;
-      component.___input = input[0];
+      component.___input = normalizedInput;
       component.___customEvents = customEvents;
       scope.___marko5Component = component;
     });

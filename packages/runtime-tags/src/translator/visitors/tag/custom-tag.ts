@@ -52,7 +52,7 @@ import {
 } from "../../util/to-property-name";
 import {
   addDynamicAttrTagStatements,
-  getTranslatedRenderBodyProperty,
+  getTranslatedBodyContentProperty,
   propsToExpression,
   translateAttrs,
 } from "../../util/translate-attrs";
@@ -189,23 +189,23 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       };
 
   if (node.extra!.tagNameNullable) {
-    const renderBodyProp = getTranslatedRenderBodyProperty(properties);
-    let renderBodyId: t.Identifier | undefined = undefined;
+    const contentProp = getTranslatedBodyContentProperty(properties);
+    let contentId: t.Identifier | undefined = undefined;
 
-    if (renderBodyProp) {
-      const renderBodyExpression = renderBodyProp.value;
-      renderBodyProp.value = renderBodyId =
-        tag.scope.generateUidIdentifier("renderBody");
-      const [renderBodyPath] = tag.insertBefore(
+    if (contentProp) {
+      const contentExpression = contentProp.value;
+      contentProp.value = contentId =
+        tag.scope.generateUidIdentifier("content");
+      const [contentPath] = tag.insertBefore(
         t.variableDeclaration("const", [
           t.variableDeclarator(
-            renderBodyId,
+            contentId,
             // TODO: only register if needed (child template analysis)
-            renderBodyExpression,
+            contentExpression,
           ),
         ]),
       );
-      renderBodyPath.skip();
+      contentPath.skip();
     }
 
     let renderTagExpr: t.Expression = callExpression(
@@ -222,7 +222,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       t.ifStatement(
         tagIdentifier,
         t.expressionStatement(renderTagExpr),
-        renderBodyId && callStatement(renderBodyId),
+        contentId && callStatement(contentId),
       ),
     );
   } else if (tagVar) {
@@ -658,25 +658,25 @@ function writeAttrsToExports(
   }
 
   const bodySection = tag.node.body.extra?.section;
-  if (bodySection && !seen.has("renderBody")) {
-    seen.add("renderBody");
-    if (templateExport.props.renderBody) {
-      const renderBodyExportIdentifier = importNamed(
+  if (bodySection && !seen.has("content")) {
+    seen.add("content");
+    if (templateExport.props.content) {
+      const contentExportIdentifier = importNamed(
         tag.hub.file,
         info.relativePath,
-        templateExport.props.renderBody.id,
-        `${importAlias}_renderBody`,
+        templateExport.props.content.id,
+        `${importAlias}_content`,
       );
       addValue(
         info.tagSection,
-        undefined, // TODO: pretty sure renderBody needs to have the reference group of it's param defaults.
-        identifierToSignal(renderBodyExportIdentifier),
+        undefined, // TODO: pretty sure content needs to have the reference group of it's param defaults.
+        identifierToSignal(contentExportIdentifier),
         t.callExpression(t.identifier(bodySection.name), [scopeIdentifier]),
         createScopeReadExpression(info.tagSection, info.childScopeBinding),
         callRuntime(
           "inChild",
           getScopeAccessorLiteral(info.childScopeBinding),
-          t.identifier(renderBodyExportIdentifier.name),
+          t.identifier(contentExportIdentifier.name),
         ),
       );
     }

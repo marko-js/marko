@@ -10,7 +10,9 @@
       "$_ifBody": "a",
       "$_if": "c",
       "$_show_effect": "s",
-      "$_show": "m"
+      "$_show": "m",
+      "$_setup$if_content": "d",
+      "$_if_content": "f"
     }
   }
 }

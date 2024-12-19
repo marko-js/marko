@@ -41,7 +41,7 @@ import {
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import {
-  getTranslatedRenderBodyProperty,
+  getTranslatedBodyContentProperty,
   propsToExpression,
   translateAttrs,
 } from "../../util/translate-attrs";
@@ -96,10 +96,9 @@ export default {
       const extra = node.extra!;
       const nodeRef = extra[kDOMBinding]!;
       const section = getSection(tag);
+      const isClassAPI = extra.featureType === "class";
       let tagExpression = node.name;
 
-      // This is the interop layer leaking into the translator
-      // We use the dynamic tag when a custom tag from the class runtime is used
       if (t.isStringLiteral(tagExpression)) {
         tagExpression = importDefault(
           tag.hub.file,
@@ -108,7 +107,9 @@ export default {
         );
       }
 
-      if (extra.featureType === "class") {
+      if (isClassAPI) {
+        // This is the interop layer leaking into the translator
+        // We use the dynamic tag when a custom tag from the class runtime is used
         const compatRuntimeFile = getCompatRuntimeFile(tag.hub.file.markoOpts);
         importDefault(tag.hub.file, compatRuntimeFile);
 
@@ -139,7 +140,12 @@ export default {
         }
       }
 
-      const { properties, statements } = translateAttrs(tag);
+      const { properties, statements } = translateAttrs(
+        tag,
+        undefined,
+        undefined,
+        isClassAPI ? "renderBody" : "content",
+      );
       const args: (t.Expression | t.SpreadElement)[] = [];
       let hasMultipleArgs = false;
 
@@ -154,10 +160,10 @@ export default {
             node.arguments.length > 1 || t.isSpreadElement(node.arguments[0]);
         }
       } else {
-        const renderBodyProp = getTranslatedRenderBodyProperty(properties);
-        if (renderBodyProp) {
-          properties.splice(properties.indexOf(renderBodyProp), 1);
-          args.push(propsToExpression(properties), renderBodyProp.value);
+        const contentProp = getTranslatedBodyContentProperty(properties);
+        if (contentProp) {
+          properties.splice(properties.indexOf(contentProp), 1);
+          args.push(propsToExpression(properties), contentProp.value);
         } else {
           args.push(propsToExpression(properties));
         }

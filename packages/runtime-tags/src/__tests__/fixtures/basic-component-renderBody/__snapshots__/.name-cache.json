@@ -7,7 +7,8 @@
       "$_onClick_": "i",
       "$_onClick": "n",
       "$_clickCount$myButtonBody": "s",
-      "$_clickCount": "o"
+      "$_clickCount": "o",
+      "$_clickCount$myButton_content": "a"
     }
   }
 }

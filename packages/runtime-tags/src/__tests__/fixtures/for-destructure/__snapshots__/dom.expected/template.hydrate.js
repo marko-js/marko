@@ -1,26 +1,26 @@
-// size: 498 (min) 257 (brotli)
-const _description$forBody = _$.value(5, (_scope, description) =>
+// size: 498 (min) 249 (brotli)
+const _description$for_content = _$.value(5, (_scope, description) =>
     _$.data(_scope[1], description),
   ),
-  _name$forBody = _$.value(4, (_scope, name) => _$.data(_scope[0], name)),
-  _pattern_$forBody = _$.value(3, (_scope, _pattern_) => {
-    _name$forBody(_scope, _pattern_.name),
-      _description$forBody(_scope, _pattern_.description);
+  _name$for_content = _$.value(4, (_scope, name) => _$.data(_scope[0], name)),
+  _pattern_$for_content = _$.value(3, (_scope, _pattern_) => {
+    _name$for_content(_scope, _pattern_.name),
+      _description$for_content(_scope, _pattern_.description);
   }),
-  _params_2$forBody = _$.value(2, (_scope, _params_2) =>
-    _pattern_$forBody(_scope, _params_2?.[0]),
+  _params_2$for_content = _$.value(2, (_scope, _params_2) =>
+    _pattern_$for_content(_scope, _params_2?.[0]),
   ),
-  _forBody = _$.register(
+  _for_content = _$.register(
     "a0",
     _$.createRenderer(
       "<div><!>: <!></div>",
       "D%c%",
       void 0,
       void 0,
-      () => _params_2$forBody,
+      () => _params_2$for_content,
     ),
   ),
-  _for = _$.loopOf(0, _forBody),
+  _for = _$.loopOf(0, _for_content),
   _items_effect = _$.effect("a1", (_scope, { 3: items }) => {
     _$.on(_scope[1], "click", function () {
       _items(_scope, [

@@ -8,7 +8,10 @@
       "$_x_effect": "a",
       "$_x": "i",
       "$_count$customTagBody": "n",
-      "$_params_2$customTagBody": "m"
+      "$_params_2$customTagBody": "m",
+      "$_inputContent_input": "d",
+      "$_count$customTag_content": "c",
+      "$_params_2$customTag_content": "s"
     }
   }
 }

@@ -1,14 +1,14 @@
-// size: 508 (min) 275 (brotli)
-const _inputThingRenderBody_input = _$.dynamicTagAttrs(1),
+// size: 502 (min) 275 (brotli)
+const _inputThingContent_input = _$.dynamicTagAttrs(1),
   _dynamicTagName = _$.conditional(
     1,
-    (_scope) => _inputThingRenderBody_input(_scope, () => ({})),
-    () => _inputThingRenderBody_input,
+    (_scope) => _inputThingContent_input(_scope, () => ({})),
+    () => _inputThingContent_input,
   ),
-  _input_thing_renderBody_ = _$.value(
+  _input_thing_content_ = _$.value(
     6,
-    (_scope, input_thing_renderBody) =>
-      _dynamicTagName(_scope, input_thing_renderBody),
+    (_scope, input_thing_content) =>
+      _dynamicTagName(_scope, input_thing_content),
     () => _dynamicTagName,
   ),
   _input_thing_selected_ = _$.value(5, (_scope, input_thing_selected) =>
@@ -18,11 +18,11 @@ const _inputThingRenderBody_input = _$.dynamicTagAttrs(1),
     4,
     (_scope, input_thing) => {
       _input_thing_selected_(_scope, input_thing?.selected),
-        _input_thing_renderBody_(_scope, input_thing?.renderBody);
+        _input_thing_content_(_scope, input_thing?.content);
     },
-    () => _input_thing_renderBody_,
+    () => _input_thing_content_,
   ),
-  _defineBody = _$.register(
+  _define_content = _$.register(
     "b0",
     _$.createRendererWithOwner("<span>The thing</span>", ""),
   ),
@@ -42,7 +42,7 @@ const _inputThingRenderBody_input = _$.dynamicTagAttrs(1),
       _selected_effect(_scope),
         _myThing(_scope, {
           selected: selected,
-          renderBody: _defineBody(_scope),
+          content: _define_content(_scope),
         });
     },
     () => _myThing,

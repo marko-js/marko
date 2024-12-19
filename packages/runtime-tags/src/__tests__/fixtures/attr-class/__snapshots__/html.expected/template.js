@@ -32,7 +32,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
         b: c,
         d
       }],
-      renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+      content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
         const _scope1_id = _$.nextScopeId();
         _$.write("Hello");
       }), "__tests__/template.marko_1_renderer", _scope0_id)

@@ -11,7 +11,10 @@
       "$_for": "i",
       "$_items_effect": "s",
       "$_items": "m",
-      "$_id": "f"
+      "$_id": "f",
+      "$_item$for_content": "d",
+      "$_params_2$for_content": "l",
+      "$_for_content": "u"
     }
   }
 }

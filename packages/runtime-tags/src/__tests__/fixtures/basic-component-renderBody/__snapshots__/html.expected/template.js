@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     onClick: _$.register(function () {
       clickCount++;
     }, "__tests__/template.marko_0/onClick", _scope0_id),
-    renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+    content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
       const _scope1_id = _$.nextScopeId();
       _$.write(`${_$.escapeXML(clickCount)}${_$.markResumeNode(_scope1_id, "#text/0")}`);
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_clickCount/subscriber");

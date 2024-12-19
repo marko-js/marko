@@ -1,8 +1,10 @@
 import { types as t } from "@marko/compiler";
 import {
   computeNode,
+  findParentTag,
   getTagDef,
   importNamed,
+  isAttributeTag,
 } from "@marko/compiler/babel-utils";
 import classToString from "marko/src/runtime/helpers/class-value";
 import styleToString from "marko/src/runtime/helpers/style-value";
@@ -22,6 +24,8 @@ export function getAttrs(path, preserveNames, isAttrTag) {
   const tagDef = getTagDef(path);
   const foundProperties = {};
   const hasAttributeTags = !!attributeTags.length;
+  const isTagsAPI = findRootTag(path)?.node.extra?.featureType === "tags";
+  const renderBodyKey = isTagsAPI ? "content" : "renderBody";
 
   for (let i = 0; i < attrsLen; i++) {
     const { name, value } = attributes[i];
@@ -78,7 +82,7 @@ export function getAttrs(path, preserveNames, isAttrTag) {
   if (childLen && !hasAttributeTags) {
     properties.push(
       t.objectProperty(
-        t.stringLiteral("renderBody"),
+        t.stringLiteral(renderBodyKey),
         t.arrowFunctionExpression(
           [t.identifier("out"), ...params],
           t.blockStatement(body),
@@ -243,4 +247,14 @@ function mergeSpread(properties, value) {
   } else {
     properties.push(t.spreadElement(value));
   }
+}
+
+function findRootTag(tag) {
+  let cur = tag;
+
+  while (isAttributeTag(cur)) {
+    cur = findParentTag(cur);
+  }
+
+  return cur;
 }

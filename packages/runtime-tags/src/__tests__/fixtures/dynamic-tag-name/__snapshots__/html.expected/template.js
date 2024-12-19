@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   const {
-    renderBody,
+    content,
     x,
     show,
     showTagA,
@@ -14,7 +14,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     other
   } = input;
   const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope, renderBody, {
+  _$.dynamicTagInput(_dynamicScope, content, {
     class: ["a", "b"],
     other: other
   });
@@ -53,15 +53,15 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   });
   const _tagName4 = showTagA && tagA;
   const _childScope2 = _$.peekNextScope();
-  const _renderBody = _$.register(/* @__PURE__ */_$.createRenderer(() => {
+  const _content = _$.register(/* @__PURE__ */_$.createRenderer(() => {
     const _scope1_id = _$.nextScopeId();
     _$.write("Body content");
   }), "__tests__/template.marko_1_renderer", _scope0_id);
   if (_tagName4) _tagName4({
     class: ["a", "b"],
     other: other,
-    renderBody: _renderBody
-  });else _renderBody();
+    content: _content
+  });else _content();
   const _dynamicScope5 = _$.peekNextScope();
   _$.dynamicTagInput(_dynamicScope5, tag || tagA, {
     class: ["a", "b"],
@@ -84,7 +84,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.writeScope(_scope0_id, {
     "other": other,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.normalizeDynamicRenderer(renderBody),
+    "#text/0(": _$.normalizeDynamicRenderer(content),
     "#text/1!": _$.writeExistingScope(_dynamicScope2),
     "#text/1(": _$.normalizeDynamicRenderer(x),
     "#text/4!": _$.writeExistingScope(_dynamicScope3),

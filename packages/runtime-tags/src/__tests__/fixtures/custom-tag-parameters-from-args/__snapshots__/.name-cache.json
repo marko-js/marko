@@ -11,7 +11,11 @@
       "$_x": "s",
       "$_count2$customTagBody": "c",
       "$_count$customTagBody": "d",
-      "$_params_2$customTagBody": "m"
+      "$_params_2$customTagBody": "m",
+      "$_inputContent_input": "v",
+      "$_count2$customTag_content": "u",
+      "$_count$customTag_content": "f",
+      "$_params_2$customTag_content": "g"
     }
   }
 }

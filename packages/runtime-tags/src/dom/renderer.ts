@@ -90,7 +90,7 @@ export function initRenderer(renderer: Renderer, scope: Scope) {
 
 export function dynamicTagAttrs(
   nodeAccessor: Accessor,
-  getRenderBody?: (scope: Scope) => Renderer,
+  getContent?: (scope: Scope) => Renderer,
   inputIsArgs?: boolean,
 ) {
   return (
@@ -110,18 +110,18 @@ export function dynamicTagAttrs(
       return (renderer as Renderer).___args?.(childScope, attrsOrOp);
     }
 
-    const renderBody = getRenderBody?.(scope);
+    const content = getContent?.(scope);
     if (typeof renderer === "string") {
       // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
       const nodeAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
 
-      if (MARKO_DEBUG && renderer === "textarea" && renderBody) {
+      if (MARKO_DEBUG && renderer === "textarea" && content) {
         throw new Error(
-          "A dynamic tag rendering a `<textarea>` cannot have a `renderBody` and must use the `value` attribute instead.",
+          "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
         );
       }
 
-      setConditionalRendererOnlyChild(childScope, nodeAccessor, renderBody);
+      setConditionalRendererOnlyChild(childScope, nodeAccessor, content);
       attrs(childScope, nodeAccessor, attrsOrOp());
     } else if (renderer.___args) {
       const attributes = attrsOrOp();
@@ -130,10 +130,10 @@ export function dynamicTagAttrs(
         inputIsArgs
           ? attributes
           : [
-              renderBody
+              content
                 ? {
                     ...attributes,
-                    renderBody,
+                    content,
                   }
                 : attributes,
             ],

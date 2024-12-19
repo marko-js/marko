@@ -8,7 +8,9 @@
       "$_if": "a",
       "$_message": "r",
       "$_show_effect": "i",
-      "$_show": "s"
+      "$_show": "s",
+      "$_message$if_content": "m",
+      "$_if_content": "c"
     }
   }
 }

@@ -3,7 +3,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   const x = 1;
   const MyTag = {
-    renderBody: _$.register(/* @__PURE__ */_$.createRenderer((a, b, c) => {
+    content: _$.register(/* @__PURE__ */_$.createRenderer((a, b, c) => {
       const _scope1_id = _$.nextScopeId();
       _$.write(`<div>${_$.escapeXML(a)}${_$.markResumeNode(_scope1_id, "#text/0")}|<!>${_$.escapeXML(b)}${_$.markResumeNode(_scope1_id, "#text/1")}|<!>${_$.escapeXML(c)}${_$.markResumeNode(_scope1_id, "#text/2")}</div>`);
     }), "__tests__/template.marko_1_renderer", _scope0_id)

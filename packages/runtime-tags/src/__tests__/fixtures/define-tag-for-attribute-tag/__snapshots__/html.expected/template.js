@@ -5,7 +5,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const selected = false;
   const myThing = {
     selected: selected,
-    renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+    content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
       const _scope1_id = _$.nextScopeId();
       _$.write("<span>The thing</span>");
     }), "__tests__/template.marko_1_renderer", _scope0_id)

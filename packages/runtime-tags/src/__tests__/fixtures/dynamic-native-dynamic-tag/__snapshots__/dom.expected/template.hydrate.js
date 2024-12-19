@@ -1,9 +1,9 @@
 // size: 341 (min) 225 (brotli)
-const _tagNameBody = _$.register(
+const _tagName_content = _$.register(
     "a0",
     _$.createRendererWithOwner("body content", ""),
   ),
-  _tagName_input = _$.dynamicTagAttrs(0, _tagNameBody),
+  _tagName_input = _$.dynamicTagAttrs(0, _tagName_content),
   _expr_Text_className = _$.intersection(
     2,
     (_scope) => {
@@ -22,7 +22,7 @@ const _tagNameBody = _$.register(
     2,
     (_scope, tagName) => {
       _tagName_effect(_scope),
-        _dynamicTagName(_scope, tagName || _tagNameBody(_scope));
+        _dynamicTagName(_scope, tagName || _tagName_content(_scope));
     },
     () => _dynamicTagName,
   );

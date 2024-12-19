@@ -4,7 +4,7 @@ const _onClick__effect = _$.effect("a0", (_scope, { 4: onClick }) =>
     _$.on(_scope[0], "click", onClick),
   ),
   _onClick_ = _$.value(4, (_scope, onClick) => _onClick__effect(_scope)),
-  _clickCount$myButtonBody = _$.registerSubscriber(
+  _clickCount$myButton_content = _$.registerSubscriber(
     "b1",
     _$.dynamicClosure(1, (_scope, clickCount) =>
       _$.data(_scope[0], clickCount),
@@ -13,7 +13,7 @@ const _onClick__effect = _$.effect("a0", (_scope, { 4: onClick }) =>
 _$.register(
   "b2",
   _$.createRendererWithOwner(" ", " ", void 0, () => [
-    _clickCount$myButtonBody,
+    _clickCount$myButton_content,
   ]),
 );
 const _clickCount = _$.state(

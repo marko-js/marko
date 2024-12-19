@@ -17,7 +17,17 @@
       "$_params_2$childBody": "v",
       "$_setup$childBody": "b",
       "$_x_effect": "g",
-      "$_x": "f"
+      "$_x": "f",
+      "$_content_input": "h",
+      "$_content_": "y",
+      "$_inner$child_content": "C",
+      "$_outer$child_content": "k",
+      "$_params_3$child_content": "S",
+      "$_child_content2": "p",
+      "$_y$child_content": "w",
+      "$_outer$child_content2": "D",
+      "$_params_2$child_content": "O",
+      "$_setup$child_content": "R"
     }
   }
 }

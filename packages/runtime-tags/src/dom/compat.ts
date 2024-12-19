@@ -75,7 +75,7 @@ export const compat = {
     renderer.___clone = clone;
     return renderer;
   },
-  render(out: any, component: any, renderer: Renderer, input: any) {
+  render(out: any, component: any, renderer: Renderer, args: any) {
     let scope: Scope = component.scope;
 
     if (!scope) {
@@ -86,8 +86,15 @@ export const compat = {
       }
     }
 
-    const args = renderer.___args || noop;
+    const applyArgs = renderer.___args || noop;
     let existing = false;
+    if (typeof args[0] === "object" && "renderBody" in args[0]) {
+      const input = args[0];
+      const normalizedInput = (args[0] = {} as any);
+      for (const key in input) {
+        normalizedInput[key === "renderBody" ? "content" : key] = input[key];
+      }
+    }
 
     component.effects = prepareEffects(() => {
       if (!scope) {
@@ -99,10 +106,10 @@ export const compat = {
           }
         }
       } else {
-        args(scope, MARK);
+        applyArgs(scope, MARK);
         existing = true;
       }
-      args(scope, input);
+      applyArgs(scope, args);
     });
 
     if (!existing) {

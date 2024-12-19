@@ -8,7 +8,10 @@
       "$_ifBody": "o",
       "$_if": "i",
       "$_show_effect": "a",
-      "$_show": "m"
+      "$_show": "m",
+      "$_setup$if_content_effect": "d",
+      "$_setup$if_content": "c",
+      "$_if_content": "s"
     }
   }
 }

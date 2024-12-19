@@ -92,6 +92,7 @@ export const analyze = {
     const tagDef = getTagDef(tag);
     // Check if tag uses stateful tag params.
     const meta = tag.hub.file.metadata.marko;
+    let relativePath;
 
     if (tagDef) {
       if (tagDef.html && !tagDef.template && !tagDef.renderer) {
@@ -106,23 +107,41 @@ export const analyze = {
             );
           }
         }
-      } else if (tag.get("name").isStringLiteral()) {
-        const relativePath = resolveRelativeTagEntry(file, tagDef);
-
-        if (relativePath) {
-          tag.node.extra = tag.node.extra || {};
-          tag.node.extra.relativePath = relativePath;
-
-          if (!meta.tags.includes(relativePath)) {
-            meta.tags.push(relativePath);
-          }
-        }
+      } else if (t.isStringLiteral(tag.node.name)) {
+        relativePath = resolveRelativeTagEntry(file, tagDef);
       }
 
       if (tagDef.translator && tagDef.translator.path) {
         if (!meta.watchFiles.includes(tagDef.translator.path)) {
           meta.watchFiles.push(tagDef.translator.path);
         }
+      }
+    }
+
+    if (!relativePath && t.isStringLiteral(tag.node.name)) {
+      const tagName = tag.node.name.value;
+      const binding =
+        /^[A-Z][a-zA-Z0-9_$]*$/.test(tagName) && tag.scope.getBinding(tagName);
+      if (binding && binding.kind === "module" && binding.identifier.loc) {
+        const importSource = binding.path.parent.source.value;
+        relativePath = resolveTagImport(tag, importSource) || importSource;
+        tag.node.extra = tag.node.extra || {};
+        tag.node.extra.tagNameImported = relativePath;
+      }
+    }
+
+    if (relativePath) {
+      tag.node.extra = tag.node.extra || {};
+      tag.node.extra.relativePath = relativePath;
+
+      if (!meta.tags.includes(relativePath)) {
+        meta.tags.push(relativePath);
+      }
+
+      const childFile = loadFileForTag(tag);
+      if (childFile?.ast.program.extra?.featureType === "tags") {
+        tag.node.extra.featureType = "tags";
+        (file.path.node.extra ??= {}).needsCompat = true;
       }
     }
 
@@ -311,6 +330,15 @@ export const translate = {
       path.unshiftContainer(
         "body",
         [
+          path.node.extra?.needsCompat &&
+            t.importDeclaration(
+              [],
+              t.stringLiteral(
+                `marko/${markoOpts.optimize ? "dist" : "src"}/runtime/helpers/tags-compat/${
+                  markoOpts.output === "html" ? "html" : "dom"
+                }${markoOpts.optimize ? "" : "-debug"}.${markoOpts.modules === "esm" ? "mjs" : "js"}`,
+              ),
+            ),
           t.importDeclaration(
             [t.importSpecifier(runtimeTemplateIdentifier, t.identifier("t"))],
             t.stringLiteral(

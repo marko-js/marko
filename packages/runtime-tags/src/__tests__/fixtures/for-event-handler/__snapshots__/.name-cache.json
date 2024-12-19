@@ -9,7 +9,12 @@
       "$_num$forBody": "a",
       "$_forBody": "i",
       "$_for": "c",
-      "$_num": "m"
+      "$_num": "m",
+      "$_i$for_content": "s",
+      "$_params_2$for_content": "u",
+      "$_num$for_content_effect": "d",
+      "$_num$for_content": "f",
+      "$_for_content": "l"
     }
   }
 }

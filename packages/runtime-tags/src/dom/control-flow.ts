@@ -15,10 +15,10 @@ import {
 } from "./scope";
 import {
   CLEAN,
+  contentClosures,
   DIRTY,
   type IntersectionSignal,
   MARK,
-  renderBodyClosures,
   type SignalOp,
   type ValueSignal,
 } from "./signals";
@@ -65,7 +65,7 @@ export let conditional = function conditional(
       }
     }
     intersection?.(scope, op);
-    renderBodyClosures(currentRenderer, scope[childScopeAccessor], op);
+    contentClosures(currentRenderer, scope[childScopeAccessor], op);
   };
 };
 
@@ -158,7 +158,7 @@ export let conditionalOnlyChild = function conditional(
       }
     }
     intersection?.(scope, op);
-    renderBodyClosures(currentRenderer, scope[childScopeAccessor], op);
+    contentClosures(currentRenderer, scope[childScopeAccessor], op);
   };
 };
 

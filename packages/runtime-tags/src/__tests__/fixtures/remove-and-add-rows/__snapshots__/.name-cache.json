@@ -4,7 +4,10 @@
       "$_$": "e",
       "$_child_text$forBody": "a",
       "$_child$forBody": "r",
-      "$_params_2$forBody": "t"
+      "$_params_2$forBody": "t",
+      "$_child_text$for_content": "o",
+      "$_child$for_content": "d",
+      "$_params_2$for_content": "i"
     }
   }
 }

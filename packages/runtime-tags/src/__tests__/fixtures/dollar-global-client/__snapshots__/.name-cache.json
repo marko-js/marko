@@ -10,7 +10,11 @@
       "$_if2": "s",
       "$_if": "i",
       "$_show_effect": "l",
-      "$_show": "c"
+      "$_show": "c",
+      "$_setup$if_content2": "d",
+      "$_if_content2": "m",
+      "$_setup$if_content": "g",
+      "$_if_content": "p"
     }
   }
 }

@@ -76,5 +76,5 @@ export function alphaEncode(num: number): string {
 export function normalizeDynamicRenderer<Renderer>(
   value: any,
 ): Renderer | string | undefined {
-  if (value) return value.renderBody || value.default || value;
+  if (value) return value.content || value.default || value;
 }

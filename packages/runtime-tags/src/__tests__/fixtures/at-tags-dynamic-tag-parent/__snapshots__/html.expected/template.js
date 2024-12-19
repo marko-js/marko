@@ -8,14 +8,14 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.dynamicTagInput(_dynamicScope, x, {
     footer: _$.attrTag({
       class: "my-footer",
-      renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+      content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
         const _scope3_id = _$.nextScopeId();
         _$.write("Footer content");
       }), "__tests__/template.marko_3_renderer", _scope0_id)
     }),
     header: _$.attrTag({
       class: "my-header",
-      renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+      content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
         const _scope2_id = _$.nextScopeId();
         _$.write("Header content");
       }), "__tests__/template.marko_2_renderer", _scope0_id)

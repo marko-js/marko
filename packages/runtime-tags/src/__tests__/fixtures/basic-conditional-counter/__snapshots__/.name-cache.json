@@ -9,7 +9,9 @@
       "$_count_effect": "a",
       "$_count": "c",
       "$_show_effect": "i",
-      "$_show": "s"
+      "$_show": "s",
+      "$_count$if_content": "m",
+      "$_if_content": "f"
     }
   }
 }

@@ -6,7 +6,10 @@
       "$_c$customTagBody": "t",
       "$_b$customTagBody": "a",
       "$_setup$customTagBody": "i",
-      "$_c": "c"
+      "$_c": "c",
+      "$_c$customTag_content": "s",
+      "$_b$customTag_content": "m",
+      "$_setup$customTag_content": "o"
     }
   }
 }

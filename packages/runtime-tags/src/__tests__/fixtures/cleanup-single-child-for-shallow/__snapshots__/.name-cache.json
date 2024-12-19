@@ -17,7 +17,12 @@
       "$_for": "f",
       "$_items_length": "g",
       "$_items": "v",
-      "$_items_effect": "b"
+      "$_items_effect": "b",
+      "$_write$for_content": "h",
+      "$_item$for_content": "k",
+      "$_params_2$for_content": "p",
+      "$_setup$for_content": "A",
+      "$_for_content": "C"
     }
   }
 }

@@ -6,6 +6,7 @@ import {
   resolveTagImport,
 } from "@marko/compiler/babel-utils";
 
+import { currentProgramPath } from "../visitors/program";
 import withPreviousLocation from "./with-previous-location";
 
 declare module "@marko/compiler/dist/types" {
@@ -78,6 +79,7 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
       } else if (childFile.ast.program.extra!.featureType === "class") {
         extra.tagNameType = TagNameType.DynamicTag;
         extra.featureType = "class";
+        (currentProgramPath.node.extra ??= {}).needsCompat = true;
       }
     }
   }

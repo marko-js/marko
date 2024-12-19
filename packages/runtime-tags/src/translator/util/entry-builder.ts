@@ -5,6 +5,7 @@ import runtimeInfo from "./runtime-info";
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
+    needsCompat?: boolean;
     isInteractive?: boolean;
     hasInteractiveChild?: boolean;
   }

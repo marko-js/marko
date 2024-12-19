@@ -6,7 +6,8 @@
       "$_ifBody": "o",
       "$_if": "e",
       "$_show_effect": "n",
-      "$_show": "a"
+      "$_show": "a",
+      "$_if_content": "i"
     }
   }
 }

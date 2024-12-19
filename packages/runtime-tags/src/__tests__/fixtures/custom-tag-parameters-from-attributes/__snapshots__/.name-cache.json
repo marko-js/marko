@@ -10,7 +10,12 @@
       "$_name$customTagBody": "i",
       "$_count$customTagBody": "c",
       "$_pattern_$customTagBody": "m",
-      "$_params_2$customTagBody": "d"
+      "$_params_2$customTagBody": "d",
+      "$_inputContent_input": "u",
+      "$_name$customTag_content": "s",
+      "$_count$customTag_content": "v",
+      "$_pattern_$customTag_content": "f",
+      "$_params_2$customTag_content": "l"
     }
   }
 }

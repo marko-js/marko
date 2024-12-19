@@ -10,7 +10,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   if (x) {
     _thing = _$.attrTag({
       x: 1,
-      renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+      content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
         const _scope1_id = _$.nextScopeId();
         _$.write("Hello");
       }), "__tests__/template.marko_1_renderer", _scope0_id)
@@ -18,7 +18,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   } else {
     _thing = _$.attrTag({
       x: 2,
-      renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+      content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
         const _scope2_id = _$.nextScopeId();
         _$.write("Goodbye");
       }), "__tests__/template.marko_2_renderer", _scope0_id)

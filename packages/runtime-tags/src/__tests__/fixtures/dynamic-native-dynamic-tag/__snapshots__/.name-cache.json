@@ -8,7 +8,8 @@
       "$_expr_Text_className": "e",
       "$_dynamicTagName": "a",
       "$_tagName_effect": "i",
-      "$_tagName": "s"
+      "$_tagName": "s",
+      "$_tagName_content": "c"
     }
   }
 }

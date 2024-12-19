@@ -33,7 +33,7 @@ declare global {
       $global?: Global;
     };
 
-    /** Body content created from by a component, typically held in an object with a renderBody property. */
+    /** Body content created by a template. */
     export interface Body<
       in Params extends readonly any[] = [],
       out Return = void,
@@ -41,16 +41,16 @@ declare global {
 
     /** Valid data types which can be passed in as a <${dynamic}/> tag name. */
     export type Renderable =
-      | { renderBody: Body<any, any> | Template | string }
+      | { content: Body<any, any> | Template | string }
       | Body<any, any>
       | Template
       | string;
 
-    /** Extract the return tag type from a renderBody. */
+    /** Extract the return tag type from body content. */
     export type BodyReturnType<B> =
       B extends Body<any, infer Return> ? Return : never;
 
-    /** Extract the tag parameter types received by a renderBody. */
+    /** Extract the tag parameter types received by body content. */
     export type BodyParameters<B> =
       B extends Body<infer Params, any> ? Params : never;
 

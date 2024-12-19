@@ -37,10 +37,7 @@ for (const entry of args.positionals) {
       configFile: false,
       babelrc: false,
     },
-    translator:
-      args.values.translator === "class"
-        ? "marko/translator"
-        : "@marko/runtime-tags/translator",
+    translator: args.values.translator || "@marko/runtime-tags/translator",
   });
 
   fs.writeFileSync(outputFileName, code);

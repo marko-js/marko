@@ -36,7 +36,27 @@
       "$_getStringBy": "E",
       "$_anonymous": "F",
       "$_getFunctionBy": "G",
-      "$_getMissingBy": "H"
+      "$_getMissingBy": "H",
+      "$_text$for_content5": "I",
+      "$_pattern_5$for_content": "J",
+      "$_params_6$for_content": "K",
+      "$_for_content5": "L",
+      "$_text$for_content4": "M",
+      "$_pattern_4$for_content": "N",
+      "$_params_5$for_content": "P",
+      "$_for_content4": "Q",
+      "$_text$for_content3": "S",
+      "$_pattern_3$for_content": "T",
+      "$_params_4$for_content": "U",
+      "$_for_content3": "V",
+      "$_text$for_content2": "W",
+      "$_pattern_2$for_content": "X",
+      "$_params_3$for_content": "Y",
+      "$_for_content2": "Z",
+      "$_text$for_content": "$",
+      "$_pattern_$for_content": "_",
+      "$_params_2$for_content": "ee",
+      "$_for_content": "re"
     }
   }
 }

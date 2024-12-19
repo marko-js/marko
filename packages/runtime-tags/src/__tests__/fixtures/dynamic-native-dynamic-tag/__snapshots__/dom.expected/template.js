@@ -1,8 +1,8 @@
 export const _template_ = "<!><!><button></button>";
 export const _walks_ = /* replace, over(1), get, over(1) */"D%b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _tagNameBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("body content", ""));
-const _tagName_input = _$.dynamicTagAttrs("#text/0", _tagNameBody);
+const _tagName_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("body content", ""));
+const _tagName_input = _$.dynamicTagAttrs("#text/0", _tagName_content);
 const _expr_Text_className = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     className
@@ -20,7 +20,7 @@ const _tagName_effect = _$.effect("__tests__/template.marko_0_tagName", (_scope,
 }));
 const _tagName = /* @__PURE__ */_$.state("tagName", (_scope, tagName) => {
   _tagName_effect(_scope);
-  _dynamicTagName(_scope, tagName || _tagNameBody(_scope));
+  _dynamicTagName(_scope, tagName || _tagName_content(_scope));
 }, () => _dynamicTagName);
 export function _setup_(_scope) {
   _tagName(_scope, "span");

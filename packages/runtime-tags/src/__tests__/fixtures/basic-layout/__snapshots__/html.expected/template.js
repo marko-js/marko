@@ -7,7 +7,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   } = input;
   const _childScope = _$.peekNextScope();
   _layout({
-    renderBody: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+    content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
       const _scope1_id = _$.nextScopeId();
       _$.write(`<h1>Hello <!>${_$.escapeXML(name)}${_$.markResumeNode(_scope1_id, "#text/0")}</h1>`);
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_name/subscriber");

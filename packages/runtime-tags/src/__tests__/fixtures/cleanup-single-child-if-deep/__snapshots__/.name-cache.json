@@ -26,7 +26,20 @@
       "$_showMiddle_effect": "D",
       "$_showMiddle": "S",
       "$_showOuter_effect": "h",
-      "$_showOuter": "R"
+      "$_showOuter": "R",
+      "$_write$if_content3": "A",
+      "$_setup$if_content3": "M",
+      "$_if_content3": "$",
+      "$_if$if_content": "H",
+      "$_write$if_content2": "I",
+      "$_showInner$if_content": "L",
+      "$_setup$if_content2": "O",
+      "$_if_content2": "T",
+      "$_if$if_content2": "j",
+      "$_write$if_content": "q",
+      "$_showMiddle$if_content": "w",
+      "$_setup$if_content": "x",
+      "$_if_content": "z"
     }
   }
 }

@@ -2,9 +2,9 @@ export const _template_ = "<div></div>";
 export const _walks_ = /* get, over(1) */" b";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _n$forBody = /* @__PURE__ */_$.value("n", (_scope, n) => _$.data(_scope["#text/0"], n));
-const _params_2$forBody = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _n$forBody(_scope, _params_2[0]));
-const _forBody = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<!>, ", /* replace */"%", void 0, void 0, () => _params_2$forBody));
+const _n$for_content = /* @__PURE__ */_$.value("n", (_scope, n) => _$.data(_scope["#text/0"], n));
+const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _n$for_content(_scope, _params_2[0]));
+const _for_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<!>, ", /* replace */"%", void 0, void 0, () => _params_2$for_content));
 const _expr_input_from_input_to_input_step = /* @__PURE__ */_$.intersection(3, _scope => {
   const {
     input_from,
@@ -13,7 +13,7 @@ const _expr_input_from_input_to_input_step = /* @__PURE__ */_$.intersection(3, _
   } = _scope;
   _for(_scope, [input_to, input_from, input_step]);
 });
-const _for = /* @__PURE__ */_$.loopTo("#div/0", _forBody);
+const _for = /* @__PURE__ */_$.loopTo("#div/0", _for_content);
 export const _input_step_ = /* @__PURE__ */_$.value("input_step", 0, () => _expr_input_from_input_to_input_step);
 export const _input_to_ = /* @__PURE__ */_$.value("input_to", 0, () => _expr_input_from_input_to_input_step);
 export const _input_from_ = /* @__PURE__ */_$.value("input_from", 0, () => _expr_input_from_input_to_input_step);

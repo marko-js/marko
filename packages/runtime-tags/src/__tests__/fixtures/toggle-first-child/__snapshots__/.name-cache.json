@@ -2,7 +2,8 @@
   "vars": {
     "props": {
       "$_$": "r",
-      "$_value$ifBody": "a"
+      "$_value$ifBody": "a",
+      "$_value$if_content": "e"
     }
   }
 }
