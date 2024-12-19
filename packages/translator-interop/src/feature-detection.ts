@@ -55,19 +55,29 @@ export function isTagsAPI(path: t.NodePath) {
   return featureType === FeatureType.Tags;
 }
 
+const PATH_SEPARATOR_REGEX = /\/|\\/;
+const TAGS_LENGTH = "tags".length;
+const COMPONENTS_LENGTH = "components".length;
 function isTagsAPIFromFileName(filename: string) {
-  for (let end = filename.length, i = end; --i; ) {
-    switch (filename[i]) {
-      case "/":
-      case "\\":
-        if (filename.startsWith("tags" + filename[i], i + 1)) {
-          return true;
-        } else if (filename.startsWith("components" + filename[i], i + 1)) {
-          return false;
+  const pathSeparator = PATH_SEPARATOR_REGEX.exec(filename)?.[0];
+  if (pathSeparator) {
+    let previousIndex = filename.length - 1;
+    while (previousIndex > 0) {
+      const index = filename.lastIndexOf(pathSeparator, previousIndex);
+      switch (previousIndex - index) {
+        case TAGS_LENGTH: {
+          if (filename.startsWith("tags", index + 1)) {
+            return true;
+          }
+          break;
         }
-
-        end = i;
-        break;
+        case COMPONENTS_LENGTH: {
+          if (filename.startsWith("components", index + 1)) {
+            return false;
+          }
+        }
+      }
+      previousIndex = index - 1;
     }
   }
   return false;
