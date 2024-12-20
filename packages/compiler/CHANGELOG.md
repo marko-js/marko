@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.7
+
+### Patch Changes
+
+- [#2438](https://github.com/marko-js/marko/pull/2438) [`4b6c613`](https://github.com/marko-js/marko/commit/4b6c6135badad6db7e4a8f0f59fb005ed66b04fa) Thanks [@mlrawlings](https://github.com/mlrawlings)! - use tags/ instead of components/ for runtime-tags
+
 ## 5.39.6
 
 ### Patch Changes
