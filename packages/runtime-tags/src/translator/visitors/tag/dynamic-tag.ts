@@ -1,7 +1,8 @@
-import { type Config, types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
 import {
   assertAttributesOrArgs,
   importDefault,
+  importEffect,
   importNamed,
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
@@ -20,7 +21,11 @@ import {
   trackParamsReferences,
   trackVarReferences,
 } from "../../util/references";
-import { callRuntime, importRuntime } from "../../util/runtime";
+import {
+  callRuntime,
+  getCompatRuntimeFile,
+  importRuntime,
+} from "../../util/runtime";
 import { getScopeExpression } from "../../util/scope-read";
 import {
   getOrCreateSection,
@@ -110,8 +115,8 @@ export default {
       if (isClassAPI) {
         // This is the interop layer leaking into the translator
         // We use the dynamic tag when a custom tag from the class runtime is used
-        const compatRuntimeFile = getCompatRuntimeFile(tag.hub.file.markoOpts);
-        importDefault(tag.hub.file, compatRuntimeFile);
+        const compatRuntimeFile = getCompatRuntimeFile();
+        importEffect(tag.hub.file, compatRuntimeFile);
 
         if (isOutputHTML()) {
           currentProgramPath.pushContainer(
@@ -371,8 +376,3 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.MarkoTag>;
-function getCompatRuntimeFile(markoOpts: Required<Config>) {
-  return `marko/src/runtime/helpers/tags-compat/${
-    isOutputHTML() ? "html" : "dom"
-  }${markoOpts.optimize ? "" : "-debug"}.${markoOpts.modules === "esm" ? "mjs" : "js"}`;
-}

@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 import {
+  importEffect,
   loadFileForImport,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
@@ -18,6 +19,7 @@ import {
   finalizeReferences,
   trackParamsReferences,
 } from "../../util/references";
+import { getCompatRuntimeFile } from "../../util/runtime";
 import { startSection } from "../../util/sections";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
@@ -142,18 +144,10 @@ export default {
       }
 
       if (program.node.extra?.needsCompat) {
-        const { markoOpts } = program.hub.file;
-        program.unshiftContainer(
-          "body",
-          t.importDeclaration(
-            [],
-            t.stringLiteral(
-              `marko/${markoOpts.optimize ? "dist" : "src"}/runtime/helpers/tags-compat/${
-                markoOpts.output === "html" ? "html" : "dom"
-              }${markoOpts.optimize ? "" : "-debug"}.${markoOpts.modules === "esm" ? "mjs" : "js"}`,
-            ),
-          ),
-        );
+        const compatRuntimeFile = getCompatRuntimeFile();
+        const compatImport = importEffect(program.hub.file, compatRuntimeFile);
+        program.unshiftContainer("body", t.clone(compatImport.node));
+        compatImport.remove();
       }
       currentProgramPath = previousProgramPath.get(currentProgramPath)!;
     },
