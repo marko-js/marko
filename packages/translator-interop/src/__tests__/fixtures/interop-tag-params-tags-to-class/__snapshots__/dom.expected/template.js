@@ -3,7 +3,6 @@ export const _template_ = "<!><!><!>";
 export const _walks_ = /* replace, over(1) */"D%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import _classLayout from "./components/class-layout.marko";
-import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 _$.register("__tests__/components/class-layout.marko", _classLayout);
 const _expr_multiplier_baseCount$classLayout_content = /* @__PURE__ */_$.intersection(2, _scope => {
   const {

@@ -1,6 +1,5 @@
-import "marko/src/runtime/helpers/tags-compat/html-debug.mjs";
-import _classCounter from "./components/class-counter.marko";
 import { s as _s } from "marko/src/runtime/helpers/tags-compat/html-debug.mjs";
+import _classCounter from "./components/class-counter.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
