@@ -1,9 +1,9 @@
 export const _template_ = `<!><!><!><${show ? "div" : null} class="a b"></${show ? "div" : null}><${show && "div"} class="a b"></${show && "div"}><!><!>${_tag_template}${_tag_template}<!><!><${global.x = "a" + "b"} class="a b"></${global.x = "a" + "b"}><${"h" + level} class="a b"></${"h" + level}><h${level} class="a b"></h${level}><${tagConstA} class="a b"></${tagConstA}><${tagConstB} class="a b"></${tagConstB}><!>`;
 export const _walks_ = /* replace, over(1), replace, over(1), get, over(1), get, over(1), replace, over(1), replace, over(1), beginChild, _tag_walks, endChild, beginChild, _tag_walks, endChild, replace, over(1), replace, over(1), get, over(1), get, over(1), get, over(1), get, over(1), get, over(1) */`D%b%b b b%b%b/${_tag_walks}&/${_tag_walks}&%b%b b b b b bD`;
-import tagA from "./components/tag-a/index.marko";
-import tagB from "./components/tag-b/index.marko";
+import tagA from "./tags/tag-a/index.marko";
+import tagB from "./tags/tag-b/index.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _tag, _className_ as _tag_input_class, _other_ as _tag_input_other, _content_ as _tag_input_content, _template_ as _tag_template, _walks_ as _tag_walks } from "./components/tag-a/index.marko";
+import { _setup_ as _tag, _className_ as _tag_input_class, _other_ as _tag_input_other, _content_ as _tag_input_content, _template_ as _tag_template, _walks_ as _tag_walks } from "./tags/tag-a/index.marko";
 const _showTagATagA_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Body content", ""));
 const _largeHeadingH2_input = _$.dynamicTagAttrs("#text/9");
 const _expr_Text_other6 = /* @__PURE__ */_$.intersection(2, _scope => {

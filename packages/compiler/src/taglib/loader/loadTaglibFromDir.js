@@ -5,10 +5,10 @@ var DependencyChain = require("./DependencyChain");
 var scanTagsDir = require("./scanTagsDir");
 var types = require("./types");
 
-function loadFromDir(dir) {
+function loadFromDir(dir, tagDiscoveryDir) {
   ok(dir, '"dir" is required');
 
-  var componentsPath = nodePath.join(dir, "components");
+  var componentsPath = nodePath.join(dir, tagDiscoveryDir);
   var taglib = cache.get(componentsPath);
 
   // Only load a taglib once by caching the loaded taglibs using the file
@@ -19,7 +19,7 @@ function loadFromDir(dir) {
     scanTagsDir(
       componentsPath,
       dir,
-      "components",
+      tagDiscoveryDir,
       taglib,
       new DependencyChain([componentsPath]),
     );

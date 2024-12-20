@@ -3,7 +3,7 @@ export const _walks_ = /* over(1), beginChild, _foo_walks, endChild, replace, ov
 const div = "span";
 const foo = "div";
 const Bar = "div";
-import { _setup_ as _foo, _template_ as _foo_template, _walks_ as _foo_walks } from "./components/foo.marko";
+import { _setup_ as _foo, _template_ as _foo_template, _walks_ as _foo_walks } from "./tags/foo.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _Bar_input = _$.dynamicTagAttrs("#text/1");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/1", _scope => _Bar_input(_scope, () => ({})), () => _Bar_input);

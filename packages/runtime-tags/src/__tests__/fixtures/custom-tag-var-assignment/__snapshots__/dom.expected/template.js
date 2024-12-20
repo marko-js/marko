@@ -1,6 +1,6 @@
 export const _template_ = `${_counter_template}<button class=inc-parent> </button><button class=reset>reset</button>`;
 export const _walks_ = /* beginChild, _counter_walks, endChild, get, next(1), get, out(1), get, over(1) */`/${_counter_walks}& D l b`;
-import { _setup_ as _counter, _template_ as _counter_template, _walks_ as _counter_walks } from "./components/counter.marko";
+import { _setup_ as _counter, _template_ as _counter_template, _walks_ as _counter_walks } from "./tags/counter.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
   count

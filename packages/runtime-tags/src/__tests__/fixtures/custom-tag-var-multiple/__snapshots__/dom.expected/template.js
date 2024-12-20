@@ -1,6 +1,6 @@
 export const _template_ = `${_child_template}<div> </div>`;
 export const _walks_ = /* beginChild, _child_walks, endChild, next(1), get, out(1) */`/${_child_walks}&D l`;
-import { _setup_ as _child, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
+import { _setup_ as _child, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _data = _$.registerBoundSignal("__tests__/template.marko_0_data/var", /* @__PURE__ */_$.value("data", (_scope, data) => _$.data(_scope["#text/1"], data)));
 export function _setup_(_scope) {

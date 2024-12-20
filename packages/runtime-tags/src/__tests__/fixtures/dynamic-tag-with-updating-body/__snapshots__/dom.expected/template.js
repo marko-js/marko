@@ -1,6 +1,6 @@
 export const _template_ = "<!><!><button id=changeTag></button>";
 export const _walks_ = /* replace, over(1), get, over(1) */"D%b b";
-import { _setup_ as _counter, _template_ as _counter_template, _walks_ as _counter_walks } from "./components/counter.marko";
+import { _setup_ as _counter, _template_ as _counter_template, _walks_ as _counter_walks } from "./tags/counter.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _setup$tagName_content = _scope => {
   _counter(_scope["#childScope/0"]);

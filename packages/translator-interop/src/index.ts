@@ -39,6 +39,7 @@ const CANONICAL_TAGDEF_KEYS = {
 };
 const VISITOR_TAGDEF_KEYS = ["parse", "migrate", "transform", "translate"];
 
+export const tagDiscoveryDirs = ["tags", "components"];
 export const taglibs = mergeTaglibs(
   taglib.resolveOptionalTaglibs(optionalTaglibs5).concat(taglibs5),
   taglibs6,

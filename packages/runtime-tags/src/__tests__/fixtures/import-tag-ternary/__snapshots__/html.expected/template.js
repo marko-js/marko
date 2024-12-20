@@ -1,5 +1,5 @@
-import baz from "./components/baz.marko";
-import foo from "./components/foo.marko";
+import baz from "./tags/baz.marko";
+import foo from "./tags/foo.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();

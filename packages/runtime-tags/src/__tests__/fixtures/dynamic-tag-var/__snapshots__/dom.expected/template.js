@@ -1,7 +1,7 @@
 export const _template_ = `<!>${_child_template}${_child_template}<!><${input.show && "div"}></${input.show && "div"}><!>`;
 export const _walks_ = /* beginChild, _child_walks, endChild, beginChild, _child_walks, endChild, replace, over(1), get, over(1) */`D/${_child_walks}&/${_child_walks}&%b bD`;
-import child from "./components/child/index.marko";
-import { _setup_ as _child, _template_ as _child_template, _walks_ as _child_walks } from "./components/child/index.marko";
+import child from "./tags/child/index.marko";
+import { _setup_ as _child, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child/index.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _inputDynamic_input = _$.dynamicTagAttrs("#text/2");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", _scope => {

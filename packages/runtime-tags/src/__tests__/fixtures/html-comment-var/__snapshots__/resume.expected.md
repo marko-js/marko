@@ -16,7 +16,7 @@
       <!--M_*0 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={},"#childScope/2":_.c={}},1:_.b,2:_.c},_.b["/"]=_._["__tests__/template.marko_0_divName/var"](_.a),_.c["/"]=_._["__tests__/template.marko_0_spanName/var"](_.a),_.d),1,"__tests__/components/parent-el.marko_0",2,"__tests__/components/parent-el.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={},"#childScope/2":_.c={}},1:_.b,2:_.c},_.b["/"]=_._["__tests__/template.marko_0_divName/var"](_.a),_.c["/"]=_._["__tests__/template.marko_0_spanName/var"](_.a),_.d),1,"__tests__/tags/parent-el.marko_0",2,"__tests__/tags/parent-el.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -46,7 +46,7 @@
       <!--M_*0 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={},"#childScope/2":_.c={}},1:_.b,2:_.c},_.b["/"]=_._["__tests__/template.marko_0_divName/var"](_.a),_.c["/"]=_._["__tests__/template.marko_0_spanName/var"](_.a),_.d),1,"__tests__/components/parent-el.marko_0",2,"__tests__/components/parent-el.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={},"#childScope/2":_.c={}},1:_.b,2:_.c},_.b["/"]=_._["__tests__/template.marko_0_divName/var"](_.a),_.c["/"]=_._["__tests__/template.marko_0_spanName/var"](_.a),_.d),1,"__tests__/tags/parent-el.marko_0",2,"__tests__/tags/parent-el.marko_0",0];M._.w()
     </script>
   </body>
 </html>

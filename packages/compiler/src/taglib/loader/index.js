@@ -12,8 +12,8 @@ function loadTaglibFromFile(filePath, isFromPackageJson) {
   return loaders.loadTaglibFromFile(filePath, isFromPackageJson);
 }
 
-function loadTaglibFromDir(filePath) {
-  return loaders.loadTaglibFromDir(filePath);
+function loadTaglibFromDir(filePath, tagDiscoveryDir) {
+  return loaders.loadTaglibFromDir(filePath, tagDiscoveryDir);
 }
 
 function clearCache() {

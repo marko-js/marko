@@ -1,6 +1,6 @@
 export const _template_ = `<!>${_customTag_template}`;
 export const _walks_ = /* beginChild, _customTag_walks, endChild */`D/${_customTag_walks}&`;
-import { _setup_ as _customTag, _pattern__ as _customTag_input_thing, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag/index.marko";
+import { _setup_ as _customTag, _pattern__ as _customTag_input_thing, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./tags/custom-tag/index.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _thing_content2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRendererWithOwner("Goodbye", ""));
 const _thing_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello", ""));

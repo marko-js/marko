@@ -1,4 +1,4 @@
-import _myButton from "./components/my-button.marko";
+import _myButton from "./tags/my-button.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();

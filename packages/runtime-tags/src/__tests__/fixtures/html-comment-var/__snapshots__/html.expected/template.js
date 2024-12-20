@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-import _parentEl from "./components/parent-el.marko";
+import _parentEl from "./tags/parent-el.marko";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   _$.write("<div>");

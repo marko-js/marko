@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-import _FancyButton from "./components/FancyButton.marko";
+import _FancyButton from "./tags/FancyButton.marko";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   const clickCount = 0;

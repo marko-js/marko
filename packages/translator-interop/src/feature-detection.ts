@@ -23,21 +23,64 @@ const DEFAULT_FEATURE_TYPE = FeatureType.Class;
 
 export function isTagsAPI(path: t.NodePath) {
   const { file } = path.hub;
+  let featureType = file.path.node.extra?.featureType;
 
-  if ((file as any).___compileStage === "parse") {
-    return false; // can't analyze the entire program for parse hooks
-  }
-
-  const program = file.path;
-  let featureType = program.node.extra?.featureType;
   if (!featureType) {
-    const state = {} as FeatureState;
-    program.node.extra ??= {};
-    program.traverse(featureDetectionVisitor, state);
-    featureType = program.node.extra.featureType =
-      state.feature?.type || DEFAULT_FEATURE_TYPE;
+    const forceTags = isTagsAPIFromFileName(file.opts.filename);
+
+    if ((file as any).___compileStage === "parse") {
+      featureType = forceTags ? FeatureType.Tags : DEFAULT_FEATURE_TYPE;
+    } else {
+      const program = file.path;
+      const state = {} as FeatureState;
+      program.node.extra ??= {};
+      program.traverse(featureDetectionVisitor, state);
+
+      if (forceTags) {
+        if (state.feature?.type === FeatureType.Class) {
+          throw buildAggregateError(
+            path.hub.file,
+            'Cannot use "class api" features under a "tags/" directory',
+            [state.feature.name, state.feature.path],
+          );
+        }
+      }
+
+      featureType = program.node.extra.featureType = forceTags
+        ? FeatureType.Tags
+        : state.feature?.type || DEFAULT_FEATURE_TYPE;
+    }
   }
+
   return featureType === FeatureType.Tags;
+}
+
+const PATH_SEPARATOR_REGEX = /\/|\\/;
+const TAGS_LENGTH = "tags".length;
+const COMPONENTS_LENGTH = "components".length;
+function isTagsAPIFromFileName(filename: string) {
+  const pathSeparator = PATH_SEPARATOR_REGEX.exec(filename)?.[0];
+  if (pathSeparator) {
+    let previousIndex = filename.length - 1;
+    while (previousIndex > 0) {
+      const index = filename.lastIndexOf(pathSeparator, previousIndex);
+      switch (previousIndex - index) {
+        case TAGS_LENGTH: {
+          if (filename.startsWith("tags", index + 1)) {
+            return true;
+          }
+          break;
+        }
+        case COMPONENTS_LENGTH: {
+          if (filename.startsWith("components", index + 1)) {
+            return false;
+          }
+        }
+      }
+      previousIndex = index - 1;
+    }
+  }
+  return false;
 }
 
 const featureDetectionVisitor = {

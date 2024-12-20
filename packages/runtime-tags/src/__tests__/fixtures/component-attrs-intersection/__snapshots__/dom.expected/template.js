@@ -1,6 +1,6 @@
 export const _template_ = `${_displayIntersection_template}<button></button>`;
 export const _walks_ = /* beginChild, _displayIntersection_walks, endChild, get, over(1) */`/${_displayIntersection_walks}& b`;
-import { _setup_ as _displayIntersection, _value_ as _displayIntersection_input_value, _template_ as _displayIntersection_template, _walks_ as _displayIntersection_walks } from "./components/display-intersection.marko";
+import { _setup_ as _displayIntersection, _value_ as _displayIntersection_input_value, _template_ as _displayIntersection_template, _walks_ as _displayIntersection_walks } from "./tags/display-intersection.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
   count

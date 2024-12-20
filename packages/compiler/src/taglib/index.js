@@ -45,7 +45,11 @@ export function buildLookup(dirname, requestedTranslator, onError) {
   }
 
   runAndCatchErrors(() => {
-    taglibsForDir = finder.find(dirname, taglibsForDir);
+    taglibsForDir = finder.find(
+      dirname,
+      taglibsForDir,
+      translator.tagDiscoveryDirs,
+    );
   }, onError);
 
   const cacheKey = taglibsForDir

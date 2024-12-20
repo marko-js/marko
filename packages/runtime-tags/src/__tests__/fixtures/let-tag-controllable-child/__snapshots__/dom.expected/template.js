@@ -1,6 +1,6 @@
 export const _template_ = `${_child_template}source=<!>`;
 export const _walks_ = /* beginChild, _child_walks, endChild, over(1), replace, over(1) */`/${_child_walks}&b%b`;
-import { _setup_ as _child, _input_ as _child_input, _template_ as _child_template, _walks_ as _child_walks } from "./components/child.marko";
+import { _setup_ as _child, _input_ as _child_input, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _source = /* @__PURE__ */_$.state("source", (_scope, source) => {
   _$.data(_scope["#text/1"], source);

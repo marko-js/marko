@@ -2,7 +2,7 @@ export const _template_ = `<button></button>${_customTag_template}<div><!></div>
 export const _walks_ = /* get, over(1), beginChild, _customTag_walks, endChild, next(1), replace, out(1) */` b/${_customTag_walks}&D%l`;
 const a = 1;
 import * as _$ from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _customTag, _input_content_ as _customTag_input_content, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./components/custom-tag.marko";
+import { _setup_ as _customTag, _input_content_ as _customTag_input_content, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./tags/custom-tag.marko";
 const _c$if_content = _$.registerSubscriber("__tests__/template.marko_3_c/subscriber", /* @__PURE__ */_$.dynamicClosure("c", (_scope, c) => _$.data(_scope["#text/2"], c), _scope => _scope._._));
 const _b$if_content = /* @__PURE__ */_$.dynamicClosure("b", (_scope, b) => _$.data(_scope["#text/1"], b), _scope => _scope._._);
 const _setup$if_content = _scope => {

@@ -1,0 +1,7 @@
+Cannot use "class api" features under a "tags/" directory:
+
+<class> tag at packages/translator-interop/src/__tests__/fixtures/error-class-tags-dir/tags/hello.marko(1,1):
+> 1 | class {}
+    | ^^^^^
+  2 |
+  3 | <h1>Hello world</h1>

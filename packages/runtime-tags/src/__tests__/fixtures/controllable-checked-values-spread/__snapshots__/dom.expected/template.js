@@ -1,6 +1,6 @@
 export const _template_ = `${_checkbox_template}${_checkbox_template}${_checkbox_template}<span> </span>`;
 export const _walks_ = /* beginChild, _checkbox_walks, endChild, beginChild, _checkbox_walks, endChild, beginChild, _checkbox_walks, endChild, next(1), get, out(1) */`/${_checkbox_walks}&/${_checkbox_walks}&/${_checkbox_walks}&D l`;
-import { _setup_ as _checkbox, _input_ as _checkbox_input, _template_ as _checkbox_template, _walks_ as _checkbox_walks } from "./components/checkbox.marko";
+import { _setup_ as _checkbox, _input_ as _checkbox_input, _template_ as _checkbox_template, _walks_ as _checkbox_walks } from "./tags/checkbox.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _checkedValue = /* @__PURE__ */_$.state("checkedValue", (_scope, checkedValue) => {
   _$.data(_scope["#text/3"], checkedValue);

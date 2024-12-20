@@ -1,7 +1,7 @@
 export const _template_ = _FancyButton_template;
 export const _walks_ = /* beginChild, _FancyButton_walks, endChild */`/${_FancyButton_walks}&`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _FancyButton, _input_ as _FancyButton_input, _template_ as _FancyButton_template, _walks_ as _FancyButton_walks } from "./components/FancyButton.marko";
+import { _setup_ as _FancyButton, _input_ as _FancyButton_input, _template_ as _FancyButton_template, _walks_ as _FancyButton_walks } from "./tags/FancyButton.marko";
 const _clickCount$FancyButton_content = _$.registerSubscriber("__tests__/template.marko_1_clickCount/subscriber", /* @__PURE__ */_$.dynamicClosure("clickCount", (_scope, clickCount) => _$.data(_scope["#text/0"], clickCount)));
 const _FancyButton_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner(" ", /* get */" ", void 0, () => [_clickCount$FancyButton_content]));
 const _clickCount = /* @__PURE__ */_$.state("clickCount", (_scope, clickCount) => _FancyButton_input(_scope["#childScope/0"], {

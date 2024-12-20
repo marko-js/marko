@@ -1,4 +1,4 @@
-import child from "./components/child/index.marko";
+import child from "./tags/child/index.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
