@@ -11,7 +11,7 @@ import {
   toString,
 } from "../../html";
 import { currentProgramPath } from "../visitors/program";
-import { getMarkoOpts } from "./marko-config";
+import { getMarkoOpts, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
 import { toMemberExpression } from "./to-property-name";
 
@@ -89,4 +89,11 @@ function filterArguments<A>(args: (A | Falsy)[]) {
     }
   }
   return filteredArgs as A[];
+}
+
+export function getCompatRuntimeFile() {
+  const markoOpts = getMarkoOpts();
+  return `marko/src/runtime/helpers/tags-compat/${
+    isOutputHTML() ? "html" : "dom"
+  }${markoOpts.optimize ? "" : "-debug"}.${markoOpts.modules === "esm" ? "mjs" : "js"}`;
 }

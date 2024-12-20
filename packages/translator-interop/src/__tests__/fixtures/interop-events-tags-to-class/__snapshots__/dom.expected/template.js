@@ -2,7 +2,6 @@ import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 export const _template_ = "<!><!><div id=tags-api> </div>";
 export const _walks_ = /* replace, over(1), next(1), get, out(1) */"D%bD l";
 import _classCounter from "./components/class-counter.marko";
-import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 _$.register("__tests__/components/class-counter.marko", _classCounter);
 const _classCounter_input = _$.dynamicTagAttrs("#text/0");

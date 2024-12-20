@@ -3,7 +3,6 @@ export const _template_ = "<button id=tags> </button><!><!>";
 export const _walks_ = /* get, next(1), get, out(1), replace, over(1) */" D l%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import _classCounter from "./components/class-counter.marko";
-import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 _$.register("__tests__/components/class-counter.marko", _classCounter);
 const _classCounter_input = _$.dynamicTagAttrs("#text/2");
 const _expr_Text_count = /* @__PURE__ */_$.intersection(2, _scope => {
