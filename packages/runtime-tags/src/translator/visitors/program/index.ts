@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
 import {
-  importEffect,
   loadFileForImport,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
@@ -144,10 +143,22 @@ export default {
       }
 
       if (program.node.extra?.needsCompat) {
-        const compatRuntimeFile = getCompatRuntimeFile();
-        const compatImport = importEffect(program.hub.file, compatRuntimeFile);
-        program.unshiftContainer("body", t.clone(compatImport.node));
-        compatImport.remove();
+        const compatFile = getCompatRuntimeFile();
+        const body: [undefined | t.Statement, ...t.Statement[]] = [undefined];
+
+        for (const child of program.node.body) {
+          if (
+            child.type === "ImportDeclaration" &&
+            child.source.value === compatFile
+          ) {
+            body[0] = child;
+          } else {
+            body.push(child);
+          }
+        }
+
+        body[0] ??= t.importDeclaration([], t.stringLiteral(compatFile));
+        program.node.body = body as t.Statement[];
       }
       currentProgramPath = previousProgramPath.get(currentProgramPath)!;
     },

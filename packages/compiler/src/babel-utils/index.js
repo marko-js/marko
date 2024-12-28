@@ -18,7 +18,6 @@ export {
 } from "./diagnostics";
 export {
   importDefault,
-  importEffect,
   importNamed,
   importStar,
   resolveRelativePath,

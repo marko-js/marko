@@ -20,23 +20,6 @@ export function resolveRelativePath(file, request) {
   return request;
 }
 
-export function importEffect(file, request) {
-  const imports = getImports(file);
-  request = resolveRelativePath(file, request);
-  let importDeclaration = imports.get(request);
-
-  if (!importDeclaration) {
-    imports.set(
-      request,
-      (importDeclaration = file.path.unshiftContainer(
-        "body",
-        t.importDeclaration([], t.stringLiteral(request)),
-      )[0]),
-    );
-  }
-  return importDeclaration;
-}
-
 export function importDefault(file, request, nameHint) {
   const imports = getImports(file);
   request = resolveRelativePath(file, request);

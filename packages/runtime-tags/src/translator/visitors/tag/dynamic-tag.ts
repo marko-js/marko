@@ -2,7 +2,6 @@ import { types as t } from "@marko/compiler";
 import {
   assertAttributesOrArgs,
   importDefault,
-  importEffect,
   importNamed,
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
@@ -115,15 +114,13 @@ export default {
       if (isClassAPI) {
         // This is the interop layer leaking into the translator
         // We use the dynamic tag when a custom tag from the class runtime is used
-        const compatRuntimeFile = getCompatRuntimeFile();
-        importEffect(tag.hub.file, compatRuntimeFile);
 
         if (isOutputHTML()) {
           currentProgramPath.pushContainer(
             "body",
             t.expressionStatement(
               t.callExpression(
-                importNamed(tag.hub.file, compatRuntimeFile, "s"),
+                importNamed(tag.hub.file, getCompatRuntimeFile(), "s"),
                 [
                   t.identifier((tagExpression as t.Identifier).name),
                   t.stringLiteral(loadFileForTag(tag)!.metadata.marko.id),
