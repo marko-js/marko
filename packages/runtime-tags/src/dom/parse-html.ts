@@ -1,4 +1,4 @@
-const fallback = document.createTextNode("");
+const fallback = /* @__PURE__ */ document.createTextNode("");
 const parser = /* @__PURE__ */ new Range();
 
 export function parseHTML(html: string) {
