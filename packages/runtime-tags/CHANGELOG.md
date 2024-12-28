@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.15
+
+### Patch Changes
+
+- [#2441](https://github.com/marko-js/marko/pull/2441) [`cfd6906`](https://github.com/marko-js/marko/commit/cfd6906752eea9ea1b8f274668baf324ee186890) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Release Marko 6 beta with `next` prefix for easier semver targeting.
+
 ## 0.3.14
 
 ### Patch Changes
