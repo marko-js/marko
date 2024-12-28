@@ -9,7 +9,7 @@ const originalPkgSource = fs.readFileSync(runtimeTagsPkgFile, "utf-8");
 const pkg = JSON.parse(originalPkgSource);
 
 pkg.name = "marko";
-pkg.version = "6.0.0-" + pkg.version.replace(/^(0\.)+/, "");
+pkg.version = "6.0.0-next." + pkg.version.replace(/^(0\.)+/, "");
 
 try {
   fs.writeFileSync(runtimeTagsPkgFile, JSON.stringify(pkg, null, 2) + "\n");
