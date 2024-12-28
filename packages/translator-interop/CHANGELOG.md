@@ -1,5 +1,17 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.6
+
+### Patch Changes
+
+- [#2438](https://github.com/marko-js/marko/pull/2438) [`4b6c613`](https://github.com/marko-js/marko/commit/4b6c6135badad6db7e4a8f0f59fb005ed66b04fa) Thanks [@mlrawlings](https://github.com/mlrawlings)! - use tags/ instead of components/ for runtime-tags
+
+- [#2436](https://github.com/marko-js/marko/pull/2436) [`a364d1e`](https://github.com/marko-js/marko/commit/a364d1ebd85d0a71c49018c614ca9424fc7e5976) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Rename renderBody to content for tags api.
+
+- Updated dependencies [[`4b6c613`](https://github.com/marko-js/marko/commit/4b6c6135badad6db7e4a8f0f59fb005ed66b04fa), [`8ebe566`](https://github.com/marko-js/marko/commit/8ebe566854179ad8cf8cfca7858d607ab208c01e), [`a364d1e`](https://github.com/marko-js/marko/commit/a364d1ebd85d0a71c49018c614ca9424fc7e5976)]:
+  - marko@5.37.8
+  - @marko/runtime-tags@0.3.14
+
 ## 0.2.5
 
 ### Patch Changes
