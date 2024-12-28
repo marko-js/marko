@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.39.7
+
+### Patch Changes
+
+- [#2438](https://github.com/marko-js/marko/pull/2438) [`4b6c613`](https://github.com/marko-js/marko/commit/4b6c6135badad6db7e4a8f0f59fb005ed66b04fa) Thanks [@mlrawlings](https://github.com/mlrawlings)! - use tags/ instead of components/ for runtime-tags
+
+- [#2439](https://github.com/marko-js/marko/pull/2439) [`8ebe566`](https://github.com/marko-js/marko/commit/8ebe566854179ad8cf8cfca7858d607ab208c01e) Thanks [@mlrawlings](https://github.com/mlrawlings)! - fix: remove duplicate imports of compat runtime
+
 ## 5.39.6
 
 ### Patch Changes
