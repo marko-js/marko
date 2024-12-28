@@ -288,10 +288,6 @@ export function parseTemplateLiteral(
 ): t.TemplateLiteral;
 
 export function resolveRelativePath(file: t.BabelFile, request: string): string;
-export function importEffect(
-  file: t.BabelFile,
-  request: string,
-): t.NodePath<t.ImportDeclaration>;
 export function importDefault(
   file: t.BabelFile,
   request: string,
