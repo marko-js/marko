@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.16
+
+### Patch Changes
+
+- [#2443](https://github.com/marko-js/marko/pull/2443) [`c0232bc`](https://github.com/marko-js/marko/commit/c0232bc85edd86fa7ad68dede34af3fbfe892052) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add missing PURE comment to dom runtime.
+
 ## 0.3.15
 
 ### Patch Changes
