@@ -1,5 +1,14 @@
 # @marko/runtime-tags
 
+## 0.3.17
+
+### Patch Changes
+
+- [#2445](https://github.com/marko-js/marko/pull/2445) [`b12d7a9`](https://github.com/marko-js/marko/commit/b12d7a9b76dd9fca89ed717b8491b08d5e927fe0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add engines field to package.json
+
+- Updated dependencies [[`b12d7a9`](https://github.com/marko-js/marko/commit/b12d7a9b76dd9fca89ed717b8491b08d5e927fe0)]:
+  - @marko/compiler@5.39.8
+
 ## 0.3.16
 
 ### Patch Changes
