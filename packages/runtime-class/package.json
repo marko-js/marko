@@ -85,6 +85,9 @@
     "self-closing-tags": "^1.0.1",
     "warp10": "^2.1.0"
   },
+  "engines": {
+    "node": "18 || 20 || >=22"
+  },
   "logo": {
     "url": "https://raw.githubusercontent.com/marko-js/branding/master/marko-logo-small.png"
   }
