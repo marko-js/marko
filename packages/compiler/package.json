@@ -88,6 +88,9 @@
   "devDependencies": {
     "marko": "^5.37.8"
   },
+  "engines": {
+    "node": "18 || 20 || >=22"
+  },
   "publishConfig": {
     "access": "public"
   },

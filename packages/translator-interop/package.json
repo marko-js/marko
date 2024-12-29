@@ -36,5 +36,8 @@
   "peerDependencies": {
     "@marko/compiler": "^5.23.0"
   },
+  "engines": {
+    "node": "18 || 20 || >=22"
+  },
   "main:override": "dist/index.js"
 }
