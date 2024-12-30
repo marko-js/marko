@@ -15,7 +15,7 @@ var types = require("./types");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function resolveRelative(dirname, value) {
-  return value[0] === "." ? resolveFrom(dirname, value) : value;
+  return value[0] === "." ? resolveFrom(dirname, value) || value : value;
 }
 
 function normalizeHook(dirname, value) {
