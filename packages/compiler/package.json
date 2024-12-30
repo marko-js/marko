@@ -52,6 +52,7 @@
     "modules.js",
     "index.d.ts",
     "babel-types.d.ts",
+    "babel-utils.js",
     "babel-utils.d.ts",
     "register.js",
     "register.d.ts"
