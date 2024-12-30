@@ -66,8 +66,76 @@ class ServerComponent {
   onCreate() {}
   onInput() {}
   onRender() {}
+
+  isDestroyed() {
+    return false;
+  }
+
+  setState(name, value) {
+    if (typeof name == "object") {
+      if (this.___state) {
+        Object.assign(this.___state, name);
+      } else {
+        this.___state = name;
+      }
+    } else {
+      this.___state[name] = value;
+    }
+  }
+
+  setStateDirty(name, value) {
+    if (typeof name == "object") {
+      if (this.___state) {
+        Object.assign(this.___state, name);
+      } else {
+        this.___state = name;
+      }
+    } else {
+      this.___state[name] = value;
+    }
+  }
+
+  replaceState(newState) {
+    this.___state = newState;
+  }
+
+  subscribeTo() {
+    notImplemented("subscribeTo");
+  }
+
+  emit() {
+    notImplemented("emit");
+  }
+
+  getEl() {
+    notImplemented("getEl");
+  }
+
+  getEls() {
+    notImplemented("getEls");
+  }
+
+  getComponent() {
+    notImplemented("getComponent");
+  }
+
+  getComponents() {
+    notImplemented("getComponents");
+  }
+
+  forceUpdate() {
+    notImplemented("forceUpdate");
+  }
+
+  update() {
+    notImplemented("update");
+  }
 }
 
 ServerComponent.prototype.getElId = ServerComponent.prototype.elId;
 
 module.exports = ServerComponent;
+
+function notImplemented(name) {
+  throw new Error(name + " method not supported during SSR.");
+}
