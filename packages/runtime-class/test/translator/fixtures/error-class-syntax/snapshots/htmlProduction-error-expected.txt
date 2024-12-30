@@ -1,0 +1,18 @@
+CompileErrors: 
+    at __tests__/template.marko:7:9
+       5 |     }};
+       6 |     
+    >  7 |     this.hello = {
+         |         ^ Unexpected token
+       8 |     	world: true
+       9 |     };
+      10 |   }
+
+    at __tests__/template.marko:11:3
+       9 |     };
+      10 |   }
+    > 11 |   onFoo() {
+         |   ^ Line has extra indentation at the beginning
+      12 |     console.log("bar")
+      13 |   }
+      14 | }
