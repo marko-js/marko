@@ -13,7 +13,7 @@ var types = require("./types");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function resolveRelative(dirname, value) {
-  return value[0] === "." ? resolveFrom(dirname, value) : value;
+  return value[0] === "." ? resolveFrom(dirname, value) || value : value;
 }
 
 function resolveWithMarkoExt(dirname, value) {
@@ -25,7 +25,7 @@ function resolveWithMarkoExt(dirname, value) {
   ) {
     markoModules.require.extensions[".marko"] = undefined;
     try {
-      return resolveFrom(dirname, value);
+      return resolveFrom(dirname, value) || value;
     } finally {
       delete markoModules.require.extensions[".marko"];
     }
