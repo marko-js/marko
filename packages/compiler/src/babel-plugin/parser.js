@@ -12,6 +12,8 @@ import {
 import { createParser, TagType } from "htmljs-parser";
 
 import * as t from "../babel-types";
+import { buildCodeFrameError } from "../util/build-code-frame";
+import throwAggregateError from "../util/merge-errors";
 
 const noop = () => {};
 const emptyRange = (part) => part.start === part.end;
@@ -124,7 +126,33 @@ export function parseMarko(file) {
 
   const parser = createParser({
     onError(part) {
-      throw file.buildCodeFrameError({ loc: locationAt(part) }, part.message);
+      const err = buildCodeFrameError(
+        file.opts.filename,
+        file.code,
+        locationAt(part),
+        part.message,
+      );
+
+      if (!file.___hasParseErrors) {
+        throw err;
+      }
+
+      const errors = [];
+      t.traverseFast(file.path.node, (node) => {
+        if (node.type === "MarkoParseError") {
+          errors.push(
+            buildCodeFrameError(
+              file.opts.filename,
+              file.code,
+              node.errorLoc || node.loc,
+              node.label,
+            ),
+          );
+        }
+      });
+
+      errors.push(err);
+      throwAggregateError(errors);
     },
     onText(part) {
       const rawValue = parser.read(part);

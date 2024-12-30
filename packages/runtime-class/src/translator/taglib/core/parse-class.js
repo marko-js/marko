@@ -14,7 +14,8 @@ export default function (path) {
   } = path;
   const {
     rawValue: code,
-    name: { start, end },
+    name: { start },
+    end,
   } = node;
   const meta = file.metadata.marko;
 
@@ -40,7 +41,9 @@ export default function (path) {
 
   const parsed = parseExpression(file, code.replace(/;\s*$/, ""), start, end);
   if (parsed.type === "MarkoParseError") {
-    path.replaceWith(t.markoClass([t.expressionStatement(parsed)]));
+    const replacement = t.markoClass(t.classBody([]));
+    replacement.body.body.push(parsed);
+    path.replaceWith(replacement);
     return;
   }
 
