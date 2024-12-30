@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.10
+
+### Patch Changes
+
+- [#2453](https://github.com/marko-js/marko/pull/2453) [`b4d73b0`](https://github.com/marko-js/marko/commit/b4d73b0ab2ca2e07ec27172015ce7dd68ad1312f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose @marko/compiler/babel-utils as a top level file for legacy resolvers.
+
 ## 5.39.9
 
 ### Patch Changes
