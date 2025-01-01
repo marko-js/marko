@@ -191,7 +191,7 @@ export function trackParamsReferences(
         body.scope,
         section,
         paramsBinding,
-        undefined,
+        upstreamExpression,
         i + "",
       );
     }
