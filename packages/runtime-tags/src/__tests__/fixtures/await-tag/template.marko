@@ -1,0 +1,22 @@
+import { resolveAfter } from "../../utils/resolve";
+
+<let/count = 0/>
+<div>
+  <await|value|=Promise.resolve("a")>
+    Got: ${value} ${count}
+  </await>
+
+  <await|value|=resolveAfter("b", 2)>
+    Got: ${value} ${count}
+  </await>
+
+  <await|value|=resolveAfter("c", 1)>
+    Got: ${value} ${count}
+  </await>
+
+  <button onClick() {
+    count++
+  }>
+    Inc
+  </button>
+</div>

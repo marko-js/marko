@@ -1,5 +1,6 @@
 import runtimeInfo from "../util/runtime-info";
 import AttrsTag from "./attrs";
+import AwaitTag from "./await";
 import ClientTag from "./client";
 import ConstTag from "./const";
 import DebugTag from "./debug";
@@ -25,6 +26,7 @@ import StyleTag from "./style";
 export default {
   taglibId: runtimeInfo.taglibId,
   "<attrs>": AttrsTag,
+  "<await>": AwaitTag,
   "<client>": ClientTag,
   "<const>": ConstTag,
   "<debug>": DebugTag,
