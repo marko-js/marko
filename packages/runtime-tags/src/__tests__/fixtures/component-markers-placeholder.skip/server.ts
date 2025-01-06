@@ -21,7 +21,7 @@ const firstComponent = () => {
       write("d");
     },
     () => {
-      write("e...");
+      write("_A_");
     },
   );
   write("e");
@@ -30,18 +30,18 @@ const firstComponent = () => {
 };
 
 const secondComponent = () => {
-  write("v");
+  write("1");
   tryPlaceholder(
     () => {
-      write("w");
-      fork(resolveAfter("x", 2), write);
-      write("y");
+      write("2");
+      fork(resolveAfter("3", 2), write);
+      write("4");
     },
     () => {
-      write("z...");
+      write("_B_");
     },
   );
-  write("z");
+  write("5");
 };
 
 export default createTemplate("", renderer);

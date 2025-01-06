@@ -13,15 +13,15 @@ const renderer = () => {
     () => {
       write("b");
       fork(rejectAfter(new Error("ERROR!"), 2), write);
-      write("d");
+      write("c");
     },
     (err) => {
       write((err as Error).message);
     },
   );
-  write("e");
-  fork(resolveAfter("f", 1), write);
-  write("g");
+  write("d");
+  fork(resolveAfter("e", 1), write);
+  write("f");
 };
 
 export default createTemplate("", renderer);

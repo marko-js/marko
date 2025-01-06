@@ -16,12 +16,12 @@ const renderer = () => {
       write("d");
     },
     () => {
-      write("e...");
+      write("_A_");
     },
   );
-  write("f");
-  fork(resolveAfter("g", 1), write);
-  write("h");
+  write("e");
+  fork(resolveAfter("f", 1), write);
+  write("g");
 };
 
 export default createTemplate("", renderer);
