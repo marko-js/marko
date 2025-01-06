@@ -14,12 +14,12 @@ const renderer = () => {
       write("b");
     },
     () => {
-      write("c...");
+      write("_A_");
     },
   );
-  write("d");
-  fork(resolveAfter("e", 1), write);
-  write("f");
+  write("c");
+  fork(resolveAfter("d", 1), write);
+  write("e");
 };
 
 export default createTemplate("", renderer);

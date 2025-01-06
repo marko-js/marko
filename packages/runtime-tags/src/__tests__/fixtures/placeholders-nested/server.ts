@@ -21,17 +21,17 @@ const renderer = () => {
           write("g");
         },
         () => {
-          write("h...");
+          write("_A_");
         },
       );
     },
     () => {
-      write("i...");
+      write("_B_");
     },
   );
+  write("h");
+  fork(resolveAfter("i", 1), write);
   write("j");
-  fork(resolveAfter("k", 1), write);
-  write("l");
 };
 
 export default createTemplate("", renderer);

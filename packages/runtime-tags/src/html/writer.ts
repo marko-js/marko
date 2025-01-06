@@ -610,7 +610,6 @@ export function prepareChunk(chunk: Chunk) {
 
     for (const reorderedChunk of state.writeReorders) {
       const { reorderId } = reorderedChunk;
-      let isSync = true;
       let reorderHTML = "";
       let reorderEffects = "";
       let reorderScripts = "";
@@ -618,7 +617,9 @@ export function prepareChunk(chunk: Chunk) {
       reorderedChunk.reorderId = null;
 
       for (;;) {
+        const { next } = cur;
         cur.flushPlaceholder();
+        cur.consumed = true;
         reorderHTML += cur.html;
         reorderEffects = concatEffects(reorderEffects, cur.effects);
         reorderScripts = concatScripts(reorderScripts, cur.scripts);
@@ -629,11 +630,11 @@ export function prepareChunk(chunk: Chunk) {
             (cur.reorderId = state.nextReorderId()),
           );
           cur.html = cur.effects = cur.scripts = "";
-          isSync = false;
+          cur.next = null;
         }
 
-        if (cur.next) {
-          cur = cur.next;
+        if (next) {
+          cur = next;
         } else {
           break;
         }
@@ -668,7 +669,6 @@ export function prepareChunk(chunk: Chunk) {
 
       html +=
         "<t " +
-        (isSync ? "c " : "") +
         state.commentPrefix +
         "=" +
         reorderId +

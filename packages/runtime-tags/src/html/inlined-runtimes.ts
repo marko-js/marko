@@ -1,5 +1,5 @@
 export const WALKER_RUNTIME_CODE = MARKO_DEBUG
-  ? `((runtimeId) =>
+  ? /* js */ `((runtimeId) =>
 (self[runtimeId] =
   self[runtimeId] ||
   ((renderId) => {
@@ -36,13 +36,12 @@ export const WALKER_RUNTIME_CODE = MARKO_DEBUG
       }),
       prefix = renderId.length;
   })))`
-  : `(e=>self[e]=self[e]||(l=>{let t,d={},f=[],s=document,a=s.createTreeWalker(s,129),r=self[e][l]={i:l=e+l,d:s,l:d,v:f,x(){},w(e){for(;e=a.nextNode();)this.x(r=(r=e.data)&&!r.indexOf(l)&&(d[t=r.slice(x+1)]=e,r[x]),t,e),r>"#"&&f.push(e)}},x=l.length}))`;
+  : `(e=>self[e]=self[e]||(l=>{let t,d={},s=[],f=document,i=f.createTreeWalker(f,129),n=self[e][l]={i:l=e+l,d:f,l:d,v:s,x(){},w(e){for(;e=i.nextNode();)this.x(n=(n=e.data)&&!n.indexOf(l)&&(d[t=n.slice(x+1)]=e,n[x]),t,e),n>"#"&&s.push(e)}},x=l.length}))`;
 export const REORDER_RUNTIME_CODE = MARKO_DEBUG
-  ? `((runtime) => {
-let insertOne,
+  ? /* js */ `((runtime) => {
+let onNextSibling,
   placeholder,
   nextSibling,
-  previousSibling,
   placeholders = {},
   replace = (marker, container) => {
     marker.replaceWith(...container.childNodes);
@@ -53,21 +52,19 @@ runtime.d.head.append(
 );
 runtime.j = {};
 runtime.x = (op, id, node, start, placeholderCallback) => {
-  // "node" and "end" are all closed over and can't be repurposed. "start" is too but only in the new placeholder case
-
   if (op == "#") {
     (placeholders[id] = placeholder).i++;
   } else if (node == nextSibling) {
-    insertOne();
+    onNextSibling();
   }
 
   if (node.tagName == "T" && (id = node.getAttribute(runtime.i))) {
     start = runtime.l["^" + id];
 
     if (start) {
-      placeholder = placeholders[id] = {
-        i: 0,
-        c(end = runtime.l[id] || previousSibling || node) {
+      placeholders[id] = {
+        i: 1,
+        c(end = runtime.l[id] || node) {
           while (end.parentNode !== start.parentNode) {
             end = end.parentNode;
           }
@@ -80,27 +77,23 @@ runtime.x = (op, id, node, start, placeholderCallback) => {
           replace(start, node);
         },
       };
-    } else {
-      insertOne = () => {
-        previousSibling = node.previousSibling;
-        replace(runtime.l[id], node);
-        if (!--start.i) {
-          start.c();
-        }
-      };
-
-      // repurpose "start" to hold this placeholder
-      start = placeholder = placeholders[id];
-      nextSibling = node.nextElementSibling || insertOne();
     }
 
-    // repurpose "op" for callbacks ...carefully
-    placeholderCallback = placeholder.c;
-    (op = runtime.j[id]) &&
-      (placeholder.c = () => placeholderCallback() + op(runtime));
+    nextSibling = node.nextSibling;
+    placeholder = placeholders[id];
+    onNextSibling = () => {
+      start || replace(runtime.l[id], node);
+      if (!--placeholder.i) {
+        placeholder.c();
+      }
+    };
 
-    if (node.attributes.c) placeholder.c();
+    // repurpose "op" for callbacks ...carefully
+    if (op = runtime.j[id]) {
+      placeholderCallback = placeholder.c;
+      placeholder.c = () => placeholderCallback() + op(runtime);
+    }
   }
 };
 })`
-  : `(e=>{let i,t,r,l,d={},n=(e,i)=>{e.replaceWith(...i.childNodes),i.remove()};e.d.head.append(e.d.querySelector("style["+e.i+"]")||""),e.j={},e.x=(o,a,c,p,b)=>{"#"==o?(d[a]=t).i++:c==r&&i(),"T"==c.tagName&&(a=c.getAttribute(e.i))&&((p=e.l["^"+a])?t=d[a]={i:0,c(i=e.l[a]||l||c){for(;i.parentNode!==p.parentNode;)i=i.parentNode;for(;i!=r;(r=p.nextSibling).remove());n(p,c)}}:(i=()=>{l=c.previousSibling,n(e.l[a],c),--p.i||p.c()},p=t=d[a],r=c.nextElementSibling||i()),b=t.c,(o=e.j[a])&&(t.c=()=>b()+o(e)),c.attributes.c&&t.c())}})`;
+  : `(e=>{let i,t,r,l={},o=(e,i)=>{e.replaceWith(...i.childNodes),i.remove()};e.d.head.append(e.d.querySelector("style["+e.i+"]")||""),e.j={},e.x=(d,n,a,c,p)=>{"#"==d?(l[n]=t).i++:a==r&&i(),"T"==a.tagName&&(n=a.getAttribute(e.i))&&((c=e.l["^"+n])&&(l[n]={i:1,c(i=e.l[n]||a){for(;i.parentNode!==c.parentNode;)i=i.parentNode;for(;i!=r;(r=c.nextSibling).remove());o(c,a)}}),r=a.nextSibling,t=l[n],i=()=>{c||o(e.l[n],a),--t.i||t.c()},(d=e.j[n])&&(p=t.c,t.c=()=>p()+d(e)))}})`;
