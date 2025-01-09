@@ -22,6 +22,7 @@ import ScriptTag from "./script";
 import ServerTag from "./server";
 import StaticTag from "./static";
 import StyleTag from "./style";
+import TryTag from "./try";
 
 export default {
   taglibId: runtimeInfo.taglibId,
@@ -50,4 +51,5 @@ export default {
   "<server>": ServerTag,
   "<static>": StaticTag,
   "<style>": StyleTag,
+  "<try>": TryTag,
 };

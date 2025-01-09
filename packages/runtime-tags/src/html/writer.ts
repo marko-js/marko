@@ -224,7 +224,36 @@ export function fork<T>(promise: Promise<T> | T, content: (value: T) => void) {
   );
 }
 
-export function tryPlaceholder(content: () => void, placeholder: () => void) {
+export function tryContent(input: {
+  content?(): void;
+  placeholder?: {
+    content?(): void;
+  };
+  catch?: {
+    content?(err: unknown): void;
+  };
+}) {
+  const content = input.content;
+
+  if (content) {
+    const catchContent = input.catch?.content;
+    const placeholderContent = input.placeholder?.content;
+    if (catchContent) {
+      tryCatch(
+        placeholderContent
+          ? () => tryPlaceholder(content, placeholderContent)
+          : content,
+        catchContent,
+      );
+    } else if (placeholderContent) {
+      tryPlaceholder(content, placeholderContent);
+    } else {
+      content();
+    }
+  }
+}
+
+function tryPlaceholder(content: () => void, placeholder: () => void) {
   const chunk = $chunk;
   const { boundary } = chunk;
   const body = new Chunk(boundary, null, chunk.context);
@@ -239,10 +268,7 @@ export function tryPlaceholder(content: () => void, placeholder: () => void) {
   chunk.placeholderRender = placeholder;
 }
 
-export function tryCatch(
-  content: () => void,
-  catchContent: (err: unknown) => void,
-) {
+function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
   const chunk = $chunk;
   const { boundary } = chunk;
   const { state } = boundary;

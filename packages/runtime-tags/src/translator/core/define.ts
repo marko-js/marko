@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import { assertNoArgs, type Tag } from "@marko/compiler/babel-utils";
 
 import { isOutputHTML } from "../util/marko-config";
+import { analyzeAttributeTags } from "../util/nested-attribute-tags";
 import {
   BindingType,
   getAllTagReferenceNodes,
@@ -35,6 +36,7 @@ export default {
     trackVarReferences(tag, BindingType.derived);
     // TODO: should determine if var bindings are nullable based on attrs.
     trackParamsReferences(tagBody, BindingType.param);
+    analyzeAttributeTags(tag);
     mergeReferences(
       getOrCreateSection(tag),
       tag.node,

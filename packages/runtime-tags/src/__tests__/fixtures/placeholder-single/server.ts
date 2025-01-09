@@ -1,7 +1,7 @@
 import {
   createTemplate,
   fork,
-  tryPlaceholder,
+  tryContent,
   write,
 } from "@marko/runtime-tags/html";
 
@@ -9,15 +9,18 @@ import { resolveAfter } from "../../utils/resolve";
 
 const renderer = () => {
   write("a");
-  tryPlaceholder(
-    () => {
+  tryContent({
+    content() {
       write("b");
       fork(resolveAfter("c", 2), write);
       write("d");
     },
-    () => {
-      write("_A_");
-    },
+    placeholder: {
+      content() {
+        write("_A_");
+      }
+    }
+  },
   );
   write("e");
   fork(resolveAfter("f", 1), write);

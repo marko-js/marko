@@ -4,7 +4,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const arrA = [1, 2, 3];
   _$.forOf(arrA, (val, i) => {
     const _scope1_id = _$.nextScopeId();
-    _$.write(`<div>${_$.escapeXML(i)}${_$.markResumeNode(_scope1_id, "#text/0")}: <!>${_$.escapeXML(val)}${_$.markResumeNode(_scope1_id, "#text/1")}</div>`);
+    _$.write(`<div>${_$.escapeXML(i)}: ${_$.escapeXML(val)}</div>`);
   });
   const arrB = [1, 2, 3];
   const _forScopeIds = [],

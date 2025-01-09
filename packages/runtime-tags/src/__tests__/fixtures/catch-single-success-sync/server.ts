@@ -1,15 +1,17 @@
-import { createTemplate, tryCatch, write } from "@marko/runtime-tags/html";
+import { createTemplate, tryContent, write } from "@marko/runtime-tags/html";
 
 const renderer = () => {
   write("a");
-  tryCatch(
-    () => {
+  tryContent({
+    content() {
       write("b");
     },
-    () => {
-      write("ERROR!");
+    catch: {
+      content() {
+        write("ERROR!");
+      }
     },
-  );
+  });
   write("c");
 };
 

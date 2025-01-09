@@ -4,7 +4,7 @@ export const WALKER_RUNTIME_CODE = MARKO_DEBUG
   self[runtimeId] ||
   ((renderId) => {
     let id,
-      markers = {},
+      lookup = {},
       visits = [],
       doc = document,
       walker = doc.createTreeWalker(
@@ -14,7 +14,7 @@ export const WALKER_RUNTIME_CODE = MARKO_DEBUG
       op = (self[runtimeId][renderId] = {
         i: (renderId = runtimeId + renderId),
         d: doc,
-        l: markers,
+        l: lookup,
         v: visits,
         x() {},
         w(node) {
@@ -23,7 +23,7 @@ export const WALKER_RUNTIME_CODE = MARKO_DEBUG
               (op =
                 (op = node.data) &&
                 !op.indexOf(renderId) &&
-                ((markers[(id = op.slice(prefix + 1))] = node), op[prefix])),
+                ((lookup[(id = op.slice(prefix + 1))] = node), op[prefix])),
               id,
               node,
             );
