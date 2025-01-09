@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 0.3.19
+
+### Patch Changes
+
+- [#2458](https://github.com/marko-js/marko/pull/2458) [`76b3083`](https://github.com/marko-js/marko/commit/76b3083a06741f2a636cf3c21fb53fd7c22290eb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add basic ssr try tag.
+
+- [#2456](https://github.com/marko-js/marko/pull/2456) [`5cc3648`](https://github.com/marko-js/marko/commit/5cc3648eb5cc20df621c3a89e31ae84014d0a078) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix async runtime placeholder duplication and race condition.
+
+- [#2458](https://github.com/marko-js/marko/pull/2458) [`491413d`](https://github.com/marko-js/marko/commit/491413d2ec93ae136c6417dd19b339f7f1cd2afd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add await tag ssr.
+
 ## 0.3.18
 
 ### Patch Changes
