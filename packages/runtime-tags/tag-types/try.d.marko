@@ -1,0 +1,7 @@
+/** File for types only, not actual implementation **/
+
+export interface Input {
+  content: Marko.Body,
+  placeholder?: Marko.AttrTag<{ content?: Marko.Body }>,
+  catch?: Marko.AttrTag<{ content?: Marko.Body<[unknown]> }>,
+}

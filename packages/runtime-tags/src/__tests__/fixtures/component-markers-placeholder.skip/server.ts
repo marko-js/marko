@@ -1,7 +1,7 @@
 import {
   createTemplate,
   fork,
-  tryPlaceholder,
+  tryContent,
   write,
 } from "@marko/runtime-tags/html";
 
@@ -14,16 +14,18 @@ const renderer = () => {
 
 const firstComponent = () => {
   write("a");
-  tryPlaceholder(
-    () => {
+  tryContent({
+    content() {
       write("b");
       fork(resolveAfter("c", 2), write);
       write("d");
     },
-    () => {
-      write("_A_");
+    placeholder: {
+      content() {
+        write("_A_");
+      }
     },
-  );
+  });
   write("e");
   fork(resolveAfter("f", 1), write);
   write("g");
@@ -31,16 +33,18 @@ const firstComponent = () => {
 
 const secondComponent = () => {
   write("1");
-  tryPlaceholder(
-    () => {
+  tryContent({
+    content() {
       write("2");
       fork(resolveAfter("3", 2), write);
       write("4");
     },
-    () => {
-      write("_B_");
+    placeholder: {
+      content() {
+        write("_B_");
+      }
     },
-  );
+  });
   write("5");
 };
 

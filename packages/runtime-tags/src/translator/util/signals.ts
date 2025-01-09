@@ -407,7 +407,6 @@ export function buildSignalIntersections(signal: Signal) {
     }
   }
   if (signal.hasDynamicSubscribers) {
-    signal.hasDynamicSubscribers = true;
     intersections = push(
       intersections,
       callRuntime("dynamicSubscribers", signal.valueAccessor),

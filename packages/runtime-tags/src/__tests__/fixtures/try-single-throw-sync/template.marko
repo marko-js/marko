@@ -1,0 +1,8 @@
+-- Before
+try
+  -- Inside
+  -- ${(() => { throw new Error("ERROR!") })()}
+  @catch|err|
+    -- ${err.message}
+
+-- After

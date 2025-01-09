@@ -5,62 +5,50 @@
   <body>
     <button>
       1
-      <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
     <button>
       2
-      <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
     <button>
       3
-      <!--M_*3 #text/1-->
     </button>
     <!--M_*3 #button/0-->
     <button>
       4
-      <!--M_*4 #text/1-->
     </button>
     <!--M_*4 #button/0-->
     <button>
       5
-      <!--M_*5 #text/1-->
     </button>
     <!--M_*5 #button/0-->
     <button>
       6
-      <!--M_*6 #text/1-->
     </button>
     <!--M_*6 #button/0-->
     <button>
       7
-      <!--M_*7 #text/1-->
     </button>
     <!--M_*7 #button/0-->
     <button>
       8
-      <!--M_*8 #text/1-->
     </button>
     <!--M_*8 #button/0-->
     <button>
       9
-      <!--M_*9 #text/1-->
     </button>
     <!--M_*9 #button/0-->
     <button>
       10
-      <!--M_*10 #text/1-->
     </button>
     <!--M_*10 #button/0-->
     <button>
       11
-      <!--M_*11 #text/1-->
     </button>
     <!--M_*11 #button/0-->
     <button>
       12
-      <!--M_*12 #text/1-->
     </button>
     <!--M_*12 #button/0-->
     <script>
@@ -85,7 +73,6 @@ c => click(c, 2)
   <body>
     <button>
       1
-      <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
     <button
@@ -93,67 +80,56 @@ c => click(c, 2)
       data-selected=""
     >
       2
-      <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
     <button>
       3
-      <!--M_*3 #text/1-->
     </button>
     <!--M_*3 #button/0-->
     <button
       data-multiple=""
     >
       4
-      <!--M_*4 #text/1-->
     </button>
     <!--M_*4 #button/0-->
     <button>
       5
-      <!--M_*5 #text/1-->
     </button>
     <!--M_*5 #button/0-->
     <button
       data-multiple=""
     >
       6
-      <!--M_*6 #text/1-->
     </button>
     <!--M_*6 #button/0-->
     <button>
       7
-      <!--M_*7 #text/1-->
     </button>
     <!--M_*7 #button/0-->
     <button
       data-multiple=""
     >
       8
-      <!--M_*8 #text/1-->
     </button>
     <!--M_*8 #button/0-->
     <button>
       9
-      <!--M_*9 #text/1-->
     </button>
     <!--M_*9 #button/0-->
     <button
       data-multiple=""
     >
       10
-      <!--M_*10 #text/1-->
     </button>
     <!--M_*10 #button/0-->
     <button>
       11
-      <!--M_*11 #text/1-->
     </button>
     <!--M_*11 #button/0-->
     <button
       data-multiple=""
     >
       12
-      <!--M_*12 #text/1-->
     </button>
     <!--M_*12 #button/0-->
     <script>
@@ -184,12 +160,10 @@ c => click(c, 3)
   <body>
     <button>
       1
-      <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
     <button>
       2
-      <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
     <button
@@ -197,58 +171,48 @@ c => click(c, 3)
       data-selected=""
     >
       3
-      <!--M_*3 #text/1-->
     </button>
     <!--M_*3 #button/0-->
     <button>
       4
-      <!--M_*4 #text/1-->
     </button>
     <!--M_*4 #button/0-->
     <button>
       5
-      <!--M_*5 #text/1-->
     </button>
     <!--M_*5 #button/0-->
     <button
       data-multiple=""
     >
       6
-      <!--M_*6 #text/1-->
     </button>
     <!--M_*6 #button/0-->
     <button>
       7
-      <!--M_*7 #text/1-->
     </button>
     <!--M_*7 #button/0-->
     <button>
       8
-      <!--M_*8 #text/1-->
     </button>
     <!--M_*8 #button/0-->
     <button
       data-multiple=""
     >
       9
-      <!--M_*9 #text/1-->
     </button>
     <!--M_*9 #button/0-->
     <button>
       10
-      <!--M_*10 #text/1-->
     </button>
     <!--M_*10 #button/0-->
     <button>
       11
-      <!--M_*11 #text/1-->
     </button>
     <!--M_*11 #button/0-->
     <button
       data-multiple=""
     >
       12
-      <!--M_*12 #text/1-->
     </button>
     <!--M_*12 #button/0-->
     <script>
@@ -280,22 +244,18 @@ c => click(c, 5)
   <body>
     <button>
       1
-      <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
     <button>
       2
-      <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
     <button>
       3
-      <!--M_*3 #text/1-->
     </button>
     <!--M_*3 #button/0-->
     <button>
       4
-      <!--M_*4 #text/1-->
     </button>
     <!--M_*4 #button/0-->
     <button
@@ -303,44 +263,36 @@ c => click(c, 5)
       data-selected=""
     >
       5
-      <!--M_*5 #text/1-->
     </button>
     <!--M_*5 #button/0-->
     <button>
       6
-      <!--M_*6 #text/1-->
     </button>
     <!--M_*6 #button/0-->
     <button>
       7
-      <!--M_*7 #text/1-->
     </button>
     <!--M_*7 #button/0-->
     <button>
       8
-      <!--M_*8 #text/1-->
     </button>
     <!--M_*8 #button/0-->
     <button>
       9
-      <!--M_*9 #text/1-->
     </button>
     <!--M_*9 #button/0-->
     <button
       data-multiple=""
     >
       10
-      <!--M_*10 #text/1-->
     </button>
     <!--M_*10 #button/0-->
     <button>
       11
-      <!--M_*11 #text/1-->
     </button>
     <!--M_*11 #button/0-->
     <button>
       12
-      <!--M_*12 #text/1-->
     </button>
     <!--M_*12 #button/0-->
     <script>
