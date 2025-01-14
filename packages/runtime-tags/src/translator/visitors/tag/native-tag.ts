@@ -280,7 +280,7 @@ export default {
           for (const ref of tag.scope.getBinding(node.var.name)!
             .referencePaths) {
             setReferencesScope(ref);
-            if (!ref.parentPath?.isCallExpression()) {
+            if (!isInvokedFunction(ref)) {
               tagExtra[kGetterId] = getRegisterUID(section, bindingName);
               break;
             }
@@ -357,7 +357,7 @@ export default {
 
           for (const reference of references) {
             const referenceSection = getSection(reference);
-            if (reference.parentPath?.isCallExpression()) {
+            if (isInvokedFunction(reference)) {
               reference.parentPath.replaceWith(
                 t.expressionStatement(
                   createScopeReadExpression(referenceSection, nodeRef!),
@@ -801,4 +801,12 @@ function isChangeHandler(propName: string) {
 
 function buildUndefined() {
   return t.unaryExpression("void", t.numericLiteral(0));
+}
+
+function isInvokedFunction(expr: t.NodePath<t.Node>): expr is typeof expr & {
+  parent: t.CallExpression;
+  parentPath: t.NodePath<t.CallExpression>;
+} {
+  const { parent, node } = expr;
+  return parent.type === "CallExpression" && parent.callee === node;
 }
