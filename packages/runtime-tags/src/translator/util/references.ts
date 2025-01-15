@@ -915,6 +915,7 @@ function getMemberExpressionPropString(expr: t.MemberExpression) {
     case "NumericLiteral":
       return "" + expr.property.value;
     case "Identifier":
+      if (expr.computed) return;
       return expr.property.name;
   }
 }
