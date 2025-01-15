@@ -14,5 +14,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "input_value": input.value,
     "a": a
   });
+  _$.markResumeCleanup(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

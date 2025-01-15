@@ -7,11 +7,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   let _ifScopeId, _ifRenderer;
   if (show) {
     const _scope1_id = _$.nextScopeId();
-    _$.write(`<div>child</div>${_$.markResumeCleanup(_scope1_id)}`);
+    _$.write("<div>child</div>");
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1");
     _$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
+    _$.markResumeCleanup(_scope1_id);
     _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
@@ -22,5 +23,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/2(": _ifRenderer,
     "#text/2!": _$.getScopeById(_ifScopeId)
   });
+  _$.markResumeCleanup(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

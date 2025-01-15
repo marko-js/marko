@@ -16,6 +16,7 @@
       <!--M_*0 #text/1-->
     </button>
     <!--M_*0 #button/0-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{m5c:"s0-1",count:0}}),0,"$compat_setScope",0,"__tests__/components/tags-counter.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
     </script>
@@ -26,17 +27,17 @@
 # Mutations
 ```
 inserted #document/html0/body1/#text0
-inserted #document/html0/body1/#text8
+inserted #document/html0/body1/#text9
 removed #comment before #document/html0/body1/#text0
-removed #comment after #document/html0/body1/#text8
+removed #comment after #document/html0/body1/#text9
 inserted #document/html0/body1/#text2
-inserted #document/html0/body1/#text7
+inserted #document/html0/body1/#text8
 inserted #document/html0/body1/#text3
-inserted #document/html0/body1/#text6
-removed #comment after #document/html0/body1/#text3
-removed #comment after #document/html0/body1/#comment5
-removed #document/html0/body1/#text7 after #document/html0/body1/#text6
 inserted #document/html0/body1/#text7
+removed #comment after #document/html0/body1/#text3
+removed #comment after #document/html0/body1/#comment6
+removed #document/html0/body1/#text8 after #document/html0/body1/#text7
+inserted #document/html0/body1/#text8
 ```
 
 
@@ -60,6 +61,7 @@ container.querySelector("#tags").click()
       <!--M_*0 #text/1-->
     </button>
     <!--M_*0 #button/0-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{m5c:"s0-1",count:0}}),0,"$compat_setScope",0,"__tests__/components/tags-counter.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
     </script>
@@ -93,6 +95,7 @@ container.querySelector("#class").click()
       <!--M_*0 #text/1-->
     </button>
     <!--M_*0 #button/0-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{m5c:"s0-1",count:0}}),0,"$compat_setScope",0,"__tests__/components/tags-counter.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
     </script>
@@ -127,6 +130,7 @@ container.querySelector("#tags").click()
       <!--M_*0 #text/1-->
     </button>
     <!--M_*0 #button/0-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{m5c:"s0-1",count:0}}),0,"$compat_setScope",0,"__tests__/components/tags-counter.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
     </script>
@@ -160,6 +164,7 @@ container.querySelector("#class").click()
       <!--M_*0 #text/1-->
     </button>
     <!--M_*0 #button/0-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{m5c:"s0-1",count:0}}),0,"$compat_setScope",0,"__tests__/components/tags-counter.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
     </script>
@@ -194,6 +199,7 @@ container.querySelector("#tags").click()
       <!--M_*0 #text/1-->
     </button>
     <!--M_*0 #button/0-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{m5c:"s0-1",count:0}}),0,"$compat_setScope",0,"__tests__/components/tags-counter.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
     </script>

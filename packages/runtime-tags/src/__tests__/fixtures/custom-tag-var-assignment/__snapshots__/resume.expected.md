@@ -10,6 +10,7 @@
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
+    <!--M_$1-->
     <button
       class="inc-parent"
     >
@@ -50,6 +51,7 @@ container.querySelector("button.inc-child").click()
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
+    <!--M_$1-->
     <button
       class="inc-parent"
     >
@@ -73,7 +75,7 @@ container.querySelector("button.inc-child").click()
 # Mutations
 ```
 #document/html0/body1/button0/#text0: "1" => "2"
-#document/html0/body1/button2/#text0: "1" => "2"
+#document/html0/body1/button3/#text0: "1" => "2"
 ```
 
 
@@ -91,6 +93,7 @@ container.querySelector("button.inc-parent").click()
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
+    <!--M_$1-->
     <button
       class="inc-parent"
     >
@@ -114,7 +117,7 @@ container.querySelector("button.inc-parent").click()
 # Mutations
 ```
 #document/html0/body1/button0/#text0: "2" => "3"
-#document/html0/body1/button2/#text0: "2" => "3"
+#document/html0/body1/button3/#text0: "2" => "3"
 ```
 
 
@@ -132,6 +135,7 @@ container.querySelector("button.reset").click()
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
+    <!--M_$1-->
     <button
       class="inc-parent"
     >
@@ -155,5 +159,5 @@ container.querySelector("button.reset").click()
 # Mutations
 ```
 #document/html0/body1/button0/#text0: "3" => "0"
-#document/html0/body1/button2/#text0: "3" => "0"
+#document/html0/body1/button3/#text0: "3" => "0"
 ```

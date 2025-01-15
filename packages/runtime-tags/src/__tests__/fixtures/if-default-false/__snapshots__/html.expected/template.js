@@ -18,5 +18,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/1(": _ifRenderer,
     "#text/1!": _$.getScopeById(_ifScopeId)
   });
+  _$.markResumeCleanup(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

@@ -13,7 +13,7 @@ import { forEachIdentifier } from "./for-each-identifier";
 import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
 import { isStatefulReferences } from "./is-stateful";
 import { isOutputHTML } from "./marko-config";
-import { forEach, type Opt, push } from "./optional";
+import { find, forEach, type Opt, push } from "./optional";
 import {
   type Binding,
   BindingType,
@@ -1002,6 +1002,20 @@ export function writeHTMLResumeStatements(
           scopeIdIdentifier,
           t.objectExpression(serializedProperties),
         ),
+      ),
+    );
+  }
+
+  const needsControlFlowOwner =
+    section.hasCleanup ||
+    !!section.closures ||
+    !!find(section.bindings, (binding) => binding.type === BindingType.let);
+
+  if (needsControlFlowOwner) {
+    path.pushContainer(
+      "body",
+      t.expressionStatement(
+        callRuntime("markResumeCleanup", scopeIdIdentifier),
       ),
     );
   }

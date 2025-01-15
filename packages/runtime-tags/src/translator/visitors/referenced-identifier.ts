@@ -3,15 +3,10 @@ import { types as t } from "@marko/compiler";
 import { getExprRoot } from "../util/get-root";
 import { isOutputHTML } from "../util/marko-config";
 import { setReferencesScope } from "../util/references";
-import { callRuntime, importRuntime } from "../util/runtime";
-import {
-  getScopeIdIdentifier,
-  getSection,
-  type Section,
-} from "../util/sections";
+import { importRuntime } from "../util/runtime";
+import { getOrCreateSection, getSection, type Section } from "../util/sections";
 import { addStatement } from "../util/signals";
 import type { TemplateVisitor } from "../util/visitors";
-import * as writer from "../util/writer";
 import { scopeIdentifier } from "./program";
 
 const abortIdsByExpressionForSection = new WeakMap<
@@ -42,7 +37,11 @@ export default {
   analyze(identifier) {
     const { name } = identifier.node;
     if (identifier.scope.hasBinding(name)) return;
-    if (name === "$global" || name === "$signal") {
+    if (name === "$global") {
+      setReferencesScope(identifier);
+    } else if (name === "$signal") {
+      const section = getOrCreateSection(identifier);
+      section.hasCleanup = true;
       setReferencesScope(identifier);
     }
   },
@@ -63,14 +62,6 @@ export default {
         break;
       case "$signal":
         if (isOutputHTML()) {
-          const section = getSection(identifier);
-          if (!section.hasCleanup) {
-            section.hasCleanup = true;
-            const exprRoot = getExprRoot(identifier);
-            const write = writer.writeTo(exprRoot);
-            write`${callRuntime("markResumeCleanup", getScopeIdIdentifier(section))}`;
-          }
-
           identifier.replaceWith(
             t.callExpression(
               t.arrowFunctionExpression(

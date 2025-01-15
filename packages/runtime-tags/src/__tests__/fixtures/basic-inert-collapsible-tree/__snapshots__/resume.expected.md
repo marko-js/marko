@@ -32,12 +32,15 @@
             <!--M_|5 #text/4 -->
           </li>
           <!--M_*5 #li/0-->
+          <!--M_$5-->
           <!--M_|4 #ul/0 5-->
         </ul>
         <!--M_*4 #ul/0-->
+        <!--M_$3-->
         <!--M_|2 #text/4 3-->
       </li>
       <!--M_*2 #li/0-->
+      <!--M_$2-->
       <li
         id="c-1"
       >
@@ -53,6 +56,7 @@
         <!--M_|6 #text/4 -->
       </li>
       <!--M_*6 #li/0-->
+      <!--M_$6-->
       <!--M_|1 #ul/0 2,6-->
     </ul>
     <!--M_*1 #ul/0-->
@@ -106,12 +110,15 @@ container.querySelector(`#c-${id} > button`).click()
             <!--M_|5 #text/4 -->
           </li>
           <!--M_*5 #li/0-->
+          <!--M_$5-->
           <!--M_|4 #ul/0 5-->
         </ul>
         <!--M_*4 #ul/0-->
+        <!--M_$3-->
         <!--M_|2 #text/4 3-->
       </li>
       <!--M_*2 #li/0-->
+      <!--M_$2-->
       <li
         id="c-1"
       >
@@ -127,6 +134,7 @@ container.querySelector(`#c-${id} > button`).click()
         <!--M_|6 #text/4 -->
       </li>
       <!--M_*6 #li/0-->
+      <!--M_$6-->
       <!--M_|1 #ul/0 2,6-->
     </ul>
     <!--M_*1 #ul/0-->
@@ -180,12 +188,15 @@ container.querySelector(`#c-${id} > button`).click()
             <!--M_|5 #text/4 -->
           </li>
           <!--M_*5 #li/0-->
+          <!--M_$5-->
           <!--M_|4 #ul/0 5-->
         </ul>
         <!--M_*4 #ul/0-->
+        <!--M_$3-->
         <!--M_|2 #text/4 3-->
       </li>
       <!--M_*2 #li/0-->
+      <!--M_$2-->
       <li
         id="c-1"
       >
@@ -201,6 +212,7 @@ container.querySelector(`#c-${id} > button`).click()
         <!--M_|6 #text/4 -->
       </li>
       <!--M_*6 #li/0-->
+      <!--M_$6-->
       <!--M_|1 #ul/0 2,6-->
     </ul>
     <!--M_*1 #ul/0-->
@@ -255,12 +267,15 @@ container.querySelector(`#c-${id} > button`).click()
             <!--M_|5 #text/4 -->
           </li>
           <!--M_*5 #li/0-->
+          <!--M_$5-->
           <!--M_|4 #ul/0 5-->
         </ul>
         <!--M_*4 #ul/0-->
+        <!--M_$3-->
         <!--M_|2 #text/4 3-->
       </li>
       <!--M_*2 #li/0-->
+      <!--M_$2-->
       <li
         id="c-1"
       >
@@ -276,6 +291,7 @@ container.querySelector(`#c-${id} > button`).click()
         <!--M_|6 #text/4 -->
       </li>
       <!--M_*6 #li/0-->
+      <!--M_$6-->
       <!--M_|1 #ul/0 2,6-->
     </ul>
     <!--M_*1 #ul/0-->
@@ -330,12 +346,15 @@ container.querySelector(`#c-${id} > button`).click()
             <!--M_|5 #text/4 -->
           </li>
           <!--M_*5 #li/0-->
+          <!--M_$5-->
           <!--M_|4 #ul/0 5-->
         </ul>
         <!--M_*4 #ul/0-->
+        <!--M_$3-->
         <!--M_|2 #text/4 3-->
       </li>
       <!--M_*2 #li/0-->
+      <!--M_$2-->
       <li
         hidden=""
         id="c-1"
@@ -352,6 +371,7 @@ container.querySelector(`#c-${id} > button`).click()
         <!--M_|6 #text/4 -->
       </li>
       <!--M_*6 #li/0-->
+      <!--M_$6-->
       <!--M_|1 #ul/0 2,6-->
     </ul>
     <!--M_*1 #ul/0-->
@@ -364,6 +384,6 @@ container.querySelector(`#c-${id} > button`).click()
 
 # Mutations
 ```
-#document/html0/body1/ul0/li2: attr(hidden) null => ""
-#document/html0/body1/ul0/li2/button1/#text0: "[-]" => "[+]"
+#document/html0/body1/ul0/li3: attr(hidden) null => ""
+#document/html0/body1/ul0/li3/button1/#text0: "[-]" => "[+]"
 ```

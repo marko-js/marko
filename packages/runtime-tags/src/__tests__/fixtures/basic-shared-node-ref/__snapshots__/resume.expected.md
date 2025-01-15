@@ -31,6 +31,7 @@
       Reverse
     </button>
     <!--M_*0 #button/2-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={0:{open:!0,list:[1,2,3],"#ul/0(":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},1:_.b,2:_.c,3:_.d}),0,"__tests__/template.marko_0_list",0,"__tests__/template.marko_0_open",0];M._.w()
     </script>
@@ -81,6 +82,7 @@ container.querySelector("#toggle").click()
       Reverse
     </button>
     <!--M_*0 #button/2-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={0:{open:!0,list:[1,2,3],"#ul/0(":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},1:_.b,2:_.c,3:_.d}),0,"__tests__/template.marko_0_list",0,"__tests__/template.marko_0_open",0];M._.w()
     </script>
@@ -129,6 +131,7 @@ container.querySelector("#toggle").click()
       Reverse
     </button>
     <!--M_*0 #button/2-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={0:{open:!0,list:[1,2,3],"#ul/0(":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},1:_.b,2:_.c,3:_.d}),0,"__tests__/template.marko_0_list",0,"__tests__/template.marko_0_open",0];M._.w()
     </script>
@@ -177,6 +180,7 @@ container.querySelector("#reverse").click()
       Reverse
     </button>
     <!--M_*0 #button/2-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={0:{open:!0,list:[1,2,3],"#ul/0(":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},1:_.b,2:_.c,3:_.d}),0,"__tests__/template.marko_0_list",0,"__tests__/template.marko_0_open",0];M._.w()
     </script>

@@ -19,6 +19,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       _$.writeScope(_scope2_id, {
         "_": _$.ensureScopeWithId(_scope1_id)
       });
+      _$.markResumeCleanup(_scope2_id);
       _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_2_renderer");
       _ifScopeId = _scope2_id;
     }
@@ -31,6 +32,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       _$.writeScope(_scope3_id, {
         "_": _$.ensureScopeWithId(_scope1_id)
       });
+      _$.markResumeCleanup(_scope3_id);
       _$.register(_ifRenderer2 = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_3_renderer");
       _ifScopeId2 = _scope3_id;
     }
@@ -42,6 +44,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       "#text/1(": _ifRenderer2,
       "#text/1!": _$.getScopeById(_ifScopeId2)
     });
+    _$.markResumeCleanup(_scope1_id);
     _$.register(_ifRenderer3 = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_1_renderer");
     _ifScopeId3 = _scope1_id;
   }

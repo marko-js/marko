@@ -11,10 +11,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       "num": num,
       "_": _$.ensureScopeWithId(_scope0_id)
     });
+    _$.markResumeCleanup(_scope1_id);
     _scope1_.set(_index, _$.getScopeById(_scope1_id));
   });
   _$.writeScope(_scope0_id, {
     "#text/0(": _scope1_.size ? _scope1_ : undefined
   });
+  _$.markResumeCleanup(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

@@ -9,5 +9,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.writeScope(_scope0_id, {
     "checked": checked
   });
+  _$.markResumeCleanup(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

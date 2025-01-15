@@ -24,6 +24,7 @@
       <!--M_*0 #text/5-->
     </button>
     <!--M_*0 #button/4-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0}}),0,"__tests__/template.marko_0_count",0];M._.w()
     </script>
@@ -65,6 +66,7 @@ container.querySelector("#addTwo").click()
       <!--M_*0 #text/5-->
     </button>
     <!--M_*0 #button/4-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0}}),0,"__tests__/template.marko_0_count",0];M._.w()
     </script>
@@ -108,6 +110,7 @@ container.querySelector("#triple").click()
       <!--M_*0 #text/5-->
     </button>
     <!--M_*0 #button/4-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0}}),0,"__tests__/template.marko_0_count",0];M._.w()
     </script>
@@ -151,6 +154,7 @@ container.querySelector("#cube").click()
       <!--M_*0 #text/5-->
     </button>
     <!--M_*0 #button/4-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0}}),0,"__tests__/template.marko_0_count",0];M._.w()
     </script>

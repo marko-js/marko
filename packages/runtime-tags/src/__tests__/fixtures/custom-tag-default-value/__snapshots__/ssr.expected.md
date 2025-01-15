@@ -1,5 +1,5 @@
 # Write
-  <!>3<!--M_*1 #text/0--> <!>y<!--M_*2 #text/0--> <script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:{"#childScope/0":_.a={},"#childScope/1":_.b={}},1:_.a,2:_.b}),0]</script>
+  <!>3<!--M_*1 #text/0--> <!>y<!--M_*2 #text/0--> <!--M_$0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:{"#childScope/0":_.a={},"#childScope/1":_.b={}},1:_.a,2:_.b}),0]</script>
 
 
 # Render "End"
@@ -15,6 +15,7 @@
     y
     <!--M_*2 #text/0-->
      
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{"#childScope/0":_.a={},"#childScope/1":_.b={}},1:_.a,2:_.b}),0]
     </script>
@@ -35,6 +36,7 @@ inserted #document/html1/body1/#comment3
 inserted #document/html1/body1/#text4
 inserted #document/html1/body1/#comment5
 inserted #document/html1/body1/#text6
-inserted #document/html1/body1/script7
-inserted #document/html1/body1/script7/#text0
+inserted #document/html1/body1/#comment7
+inserted #document/html1/body1/script8
+inserted #document/html1/body1/script8/#text0
 ```

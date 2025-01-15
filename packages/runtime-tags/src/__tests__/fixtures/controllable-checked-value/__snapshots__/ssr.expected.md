@@ -1,5 +1,5 @@
 # Write
-  <input value=a checked type=radio><!--M_*0 #input/0--><input value=b type=radio><!--M_*0 #input/1--><input value=c type=radio><!--M_*0 #input/2--><span>a<!--M_*0 #text/3--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={"#input/0=":1,"#input/1=":1,"#input/2=":1,checkedValue:"a"}},_.a["#input/0;"]=_._["__tests__/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()</script>
+  <input value=a checked type=radio><!--M_*0 #input/0--><input value=b type=radio><!--M_*0 #input/1--><input value=c type=radio><!--M_*0 #input/2--><span>a<!--M_*0 #text/3--></span><!--M_$0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={"#input/0=":1,"#input/1=":1,"#input/2=":1,checkedValue:"a"}},_.a["#input/0;"]=_._["__tests__/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()</script>
 
 
 # Render "End"
@@ -27,6 +27,7 @@
       a
       <!--M_*0 #text/3-->
     </span>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#input/0=":1,"#input/1=":1,"#input/2=":1,checkedValue:"a"}},_.a["#input/0;"]=_._["__tests__/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()
     </script>
@@ -48,6 +49,7 @@ inserted #document/html0/body1/#comment5
 inserted #document/html0/body1/span6
 inserted #document/html0/body1/span6/#text0
 inserted #document/html0/body1/span6/#comment1
-inserted #document/html0/body1/script7
-inserted #document/html0/body1/script7/#text0
+inserted #document/html0/body1/#comment7
+inserted #document/html0/body1/script8
+inserted #document/html0/body1/script8/#text0
 ```

@@ -141,7 +141,7 @@ export function markResumeControlSingleNodeEnd(
 }
 
 export function markResumeCleanup(scopeId: number) {
-  return $chunk.boundary.state.mark(Mark.Cleanup, "" + scopeId);
+  $chunk.writeHTML($chunk.boundary.state.mark(Mark.Cleanup, "" + scopeId));
 }
 
 export function writeScope(scopeId: number, partialScope: PartialScope) {

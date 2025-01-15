@@ -36,6 +36,7 @@
       </pre>
     </button>
     <!--M_*0 #button/0-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[0,"__tests__/template.marko_0",0];M._.w()
     </script>
@@ -89,6 +90,7 @@ container?.querySelector("button").click()
       </pre>
     </button>
     <!--M_*0 #button/0-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[0,"__tests__/template.marko_0",0];M._.w()
     </script>

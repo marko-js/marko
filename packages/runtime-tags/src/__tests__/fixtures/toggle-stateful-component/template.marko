@@ -1,0 +1,11 @@
+<let/show=true/>
+<const/onCount(count) {
+show = count < 1 
+}/>
+<div>
+  <if=show>
+    <div>
+      <counter onCount=onCount />
+    </div>
+  </if>
+</div>

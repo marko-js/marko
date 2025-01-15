@@ -24,6 +24,7 @@
       0
       <!--M_*0 #text/4-->
     </div>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{a:0,b:0}}),0,"__tests__/template.marko_0",0];M._.w()
     </script>
@@ -65,6 +66,7 @@ container.querySelector("button.a").click()
       10
       <!--M_*0 #text/4-->
     </div>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{a:0,b:0}}),0,"__tests__/template.marko_0",0];M._.w()
     </script>
@@ -107,6 +109,7 @@ container.querySelector("button.b").click()
       15
       <!--M_*0 #text/4-->
     </div>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{a:0,b:0}}),0,"__tests__/template.marko_0",0];M._.w()
     </script>

@@ -12,6 +12,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
+    _$.markResumeCleanup(_scope1_id);
     _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_1_renderer");
     _ifScopeId = _scope1_id;
   }
