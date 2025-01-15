@@ -28,6 +28,7 @@ mounted 3
       <!--M_*2 #text/2-->
     </p>
     <!--M_$2-->
+    <!--M_$1-->
     <!--M_[3 1-->
     <div>
       2
@@ -42,6 +43,7 @@ mounted 3
       <!--M_*4 #text/2-->
     </p>
     <!--M_$4-->
+    <!--M_$3-->
     <!--M_[5 2-->
     <div>
       3
@@ -56,7 +58,9 @@ mounted 3
       <!--M_*6 #text/2-->
     </p>
     <!--M_$6-->
+    <!--M_$5-->
     <!--M_]0 #text/2-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={0:_.a={items:[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1}}],[1,_.g={"#childScope/0":_.d={name:2}}],[2,_.h={"#childScope/0":_.e={name:3}}]])},1:_.f,2:_.c,3:_.g,4:_.d,5:_.h,6:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),2,"__tests__/tags/child.marko_0_name_write",4,"__tests__/tags/child.marko_0_name_write",6,"__tests__/tags/child.marko_0_name_write",0,"__tests__/template.marko_0_items",0];M._.w()
     </script>
@@ -107,6 +111,7 @@ destroyed 3
       <!--M_*2 #text/2-->
     </p>
     <!--M_$2-->
+    <!--M_$1-->
     <!--M_[3 1-->
     <div>
       2
@@ -121,8 +126,11 @@ destroyed 3
       <!--M_*4 #text/2-->
     </p>
     <!--M_$4-->
+    <!--M_$3-->
     <!--M_$6-->
+    <!--M_$5-->
     <!--M_]0 #text/2-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={0:_.a={items:[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1}}],[1,_.g={"#childScope/0":_.d={name:2}}],[2,_.h={"#childScope/0":_.e={name:3}}]])},1:_.f,2:_.c,3:_.g,4:_.d,5:_.h,6:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),2,"__tests__/tags/child.marko_0_name_write",4,"__tests__/tags/child.marko_0_name_write",6,"__tests__/tags/child.marko_0_name_write",0,"__tests__/template.marko_0_items",0];M._.w()
     </script>
@@ -134,10 +142,10 @@ destroyed 3
 ```
 removed #text in #document/html0/body1/div2
 inserted #document/html0/body1/div2/#text0
-removed #comment after #document/html0/body1/#comment13
-removed div after #document/html0/body1/#comment13
-removed span after #document/html0/body1/#comment13
-removed p after #document/html0/body1/#comment13
+removed #comment after #document/html0/body1/#comment15
+removed div after #document/html0/body1/#comment15
+removed span after #document/html0/body1/#comment15
+removed p after #document/html0/body1/#comment15
 ```
 
 
@@ -175,9 +183,13 @@ destroyed 2
       <!--M_*2 #text/2-->
     </p>
     <!--M_$2-->
+    <!--M_$1-->
     <!--M_$4-->
+    <!--M_$3-->
     <!--M_$6-->
+    <!--M_$5-->
     <!--M_]0 #text/2-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={0:_.a={items:[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1}}],[1,_.g={"#childScope/0":_.d={name:2}}],[2,_.h={"#childScope/0":_.e={name:3}}]])},1:_.f,2:_.c,3:_.g,4:_.d,5:_.h,6:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),2,"__tests__/tags/child.marko_0_name_write",4,"__tests__/tags/child.marko_0_name_write",6,"__tests__/tags/child.marko_0_name_write",0,"__tests__/template.marko_0_items",0];M._.w()
     </script>
@@ -189,10 +201,10 @@ destroyed 2
 ```
 removed #text in #document/html0/body1/div2
 inserted #document/html0/body1/div2/#text0
-removed #comment after #document/html0/body1/#comment8
-removed div after #document/html0/body1/#comment8
-removed span after #document/html0/body1/#comment8
-removed p after #document/html0/body1/#comment8
+removed #comment after #document/html0/body1/#comment9
+removed div after #document/html0/body1/#comment9
+removed span after #document/html0/body1/#comment9
+removed p after #document/html0/body1/#comment9
 ```
 
 
@@ -219,8 +231,12 @@ destroyed 1
     <!--M_*0 #div/1-->
     <!--M_]0 #text/2-->
     <!--M_$2-->
+    <!--M_$1-->
     <!--M_$4-->
+    <!--M_$3-->
     <!--M_$6-->
+    <!--M_$5-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={0:_.a={items:[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1}}],[1,_.g={"#childScope/0":_.d={name:2}}],[2,_.h={"#childScope/0":_.e={name:3}}]])},1:_.f,2:_.c,3:_.g,4:_.d,5:_.h,6:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),2,"__tests__/tags/child.marko_0_name_write",4,"__tests__/tags/child.marko_0_name_write",6,"__tests__/tags/child.marko_0_name_write",0,"__tests__/template.marko_0_items",0];M._.w()
     </script>
@@ -230,7 +246,7 @@ destroyed 1
 
 # Mutations
 ```
-removed #document/html0/body1/#comment4 after #document/html0/body1/#comment7
+removed #document/html0/body1/#comment4 after #document/html0/body1/#comment10
 inserted #document/html0/body1/#comment4
 removed #text in #document/html0/body1/div2
 inserted #document/html0/body1/div2/#text0
@@ -293,8 +309,12 @@ mounted 3
       3
     </p>
     <!--M_$2-->
+    <!--M_$1-->
     <!--M_$4-->
+    <!--M_$3-->
     <!--M_$6-->
+    <!--M_$5-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={0:_.a={items:[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1}}],[1,_.g={"#childScope/0":_.d={name:2}}],[2,_.h={"#childScope/0":_.e={name:3}}]])},1:_.f,2:_.c,3:_.g,4:_.d,5:_.h,6:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),2,"__tests__/tags/child.marko_0_name_write",4,"__tests__/tags/child.marko_0_name_write",6,"__tests__/tags/child.marko_0_name_write",0,"__tests__/template.marko_0_items",0];M._.w()
     </script>

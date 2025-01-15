@@ -31,6 +31,7 @@
       </button>
       <!--M_*0 #button/6-->
     </div>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0,_count:0,_count2:0,_count3:0}}),0,"__tests__/template.marko_0__count3",0,"__tests__/template.marko_0__count2",0,"__tests__/template.marko_0__count",0,"__tests__/template.marko_0_count",0];M._.w()
     </script>
@@ -79,6 +80,7 @@ container.querySelectorAll("button")[buttonNum++].click()
       </button>
       <!--M_*0 #button/6-->
     </div>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0,_count:0,_count2:0,_count3:0}}),0,"__tests__/template.marko_0__count3",0,"__tests__/template.marko_0__count2",0,"__tests__/template.marko_0__count",0,"__tests__/template.marko_0_count",0];M._.w()
     </script>
@@ -127,6 +129,7 @@ container.querySelectorAll("button")[buttonNum++].click()
       </button>
       <!--M_*0 #button/6-->
     </div>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0,_count:0,_count2:0,_count3:0}}),0,"__tests__/template.marko_0__count3",0,"__tests__/template.marko_0__count2",0,"__tests__/template.marko_0__count",0,"__tests__/template.marko_0_count",0];M._.w()
     </script>
@@ -175,6 +178,7 @@ container.querySelectorAll("button")[buttonNum++].click()
       </button>
       <!--M_*0 #button/6-->
     </div>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0,_count:0,_count2:0,_count3:0}}),0,"__tests__/template.marko_0__count3",0,"__tests__/template.marko_0__count2",0,"__tests__/template.marko_0__count",0,"__tests__/template.marko_0_count",0];M._.w()
     </script>
@@ -223,6 +227,7 @@ container.querySelectorAll("button")[buttonNum++].click()
       </button>
       <!--M_*0 #button/6-->
     </div>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0,_count:0,_count2:0,_count3:0}}),0,"__tests__/template.marko_0__count3",0,"__tests__/template.marko_0__count2",0,"__tests__/template.marko_0__count",0,"__tests__/template.marko_0_count",0];M._.w()
     </script>
@@ -271,6 +276,7 @@ buttonNum = 0
       </button>
       <!--M_*0 #button/6-->
     </div>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0,_count:0,_count2:0,_count3:0}}),0,"__tests__/template.marko_0__count3",0,"__tests__/template.marko_0__count2",0,"__tests__/template.marko_0__count",0,"__tests__/template.marko_0_count",0];M._.w()
     </script>

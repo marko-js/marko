@@ -1,0 +1,18 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "n",
+      "$_expr_input_onCount_clickCount_effect": "o",
+      "$_expr_input_onCount_clickCount": "e",
+      "$_clickCount": "r",
+      "$_input_onCount_": "i",
+      "$_setup$if_content": "a",
+      "$_if_content": "c",
+      "$_if": "u",
+      "$_show": "m",
+      "$_onCount": "s",
+      "$_onCount$if_content": "l"
+    }
+  }
+}

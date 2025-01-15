@@ -30,6 +30,7 @@
       b
       <!--M_*0 #text/1-->
     </span>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{value:"b","#text/0!":_.a={"#select/0=":3,"#select/0:":"b"},"#text/0(":"select"},1:_.a}),2,"__tests__/template.marko_1",0];M._.w()
     </script>
@@ -83,6 +84,7 @@ bubbles: true
       b
       <!--M_*0 #text/1-->
     </span>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{value:"b","#text/0!":_.a={"#select/0=":3,"#select/0:":"b"},"#text/0(":"select"},1:_.a}),2,"__tests__/template.marko_1",0];M._.w()
     </script>

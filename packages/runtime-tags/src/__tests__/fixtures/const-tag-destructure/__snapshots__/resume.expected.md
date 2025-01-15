@@ -9,6 +9,7 @@
     </div>
     2
     <!--M_*0 #text/1-->
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_")
     </script>

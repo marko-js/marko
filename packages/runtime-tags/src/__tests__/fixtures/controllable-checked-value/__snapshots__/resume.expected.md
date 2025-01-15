@@ -23,6 +23,7 @@
       a
       <!--M_*0 #text/3-->
     </span>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#input/0=":1,"#input/1=":1,"#input/2=":1,checkedValue:"a"}},_.a["#input/0;"]=_._["__tests__/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()
     </script>
@@ -63,6 +64,7 @@ container.querySelectorAll(`input`)[1].click()
       b
       <!--M_*0 #text/3-->
     </span>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#input/0=":1,"#input/1=":1,"#input/2=":1,checkedValue:"a"}},_.a["#input/0;"]=_._["__tests__/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()
     </script>
@@ -103,6 +105,7 @@ container.querySelectorAll(`input`)[2].click()
       c
       <!--M_*0 #text/3-->
     </span>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#input/0=":1,"#input/1=":1,"#input/2=":1,checkedValue:"a"}},_.a["#input/0;"]=_._["__tests__/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()
     </script>
@@ -143,6 +146,7 @@ container.querySelectorAll(`input`)[0].click()
       a
       <!--M_*0 #text/3-->
     </span>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#input/0=":1,"#input/1=":1,"#input/2=":1,checkedValue:"a"}},_.a["#input/0;"]=_._["__tests__/template.marko_0/checkedValueChange"](_.a),_.a["#input/1;"]=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.a["#input/2;"]=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()
     </script>

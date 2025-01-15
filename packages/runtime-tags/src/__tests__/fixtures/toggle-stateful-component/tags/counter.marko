@@ -1,0 +1,6 @@
+<let/clickCount = 0/>
+<button onClick() {
+  input.onCount(++clickCount)
+}>${(() => {
+  if (clickCount > 0) throw new Error("This should not have executed since the parent removes this component when the count is greater than 0")
+})(), clickCount}</button>

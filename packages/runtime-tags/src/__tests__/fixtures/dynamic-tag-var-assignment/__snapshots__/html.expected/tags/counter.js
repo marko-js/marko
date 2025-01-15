@@ -12,6 +12,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       x = _new_x;
     }, "__tests__/tags/counter.marko_0/valueChange", _scope0_id)
   });
+  _$.markResumeCleanup(_scope0_id);
   return _return;
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/counter.marko", _renderer);

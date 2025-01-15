@@ -23,6 +23,7 @@
       0
       <!--M_*0 #text/3-->
     </div>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0,multiplier:1}}),0,"__tests__/template.marko_0_count",0,"__tests__/template.marko_0_multiplier",0];M._.w()
     </script>
@@ -63,6 +64,7 @@ container.querySelector("button#count").click()
       1
       <!--M_*0 #text/3-->
     </div>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0,multiplier:1}}),0,"__tests__/template.marko_0_count",0,"__tests__/template.marko_0_multiplier",0];M._.w()
     </script>
@@ -103,6 +105,7 @@ container.querySelector("button#count").click()
       2
       <!--M_*0 #text/3-->
     </div>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0,multiplier:1}}),0,"__tests__/template.marko_0_count",0,"__tests__/template.marko_0_multiplier",0];M._.w()
     </script>
@@ -143,6 +146,7 @@ container.querySelector("button#multiplier").click()
       4
       <!--M_*0 #text/3-->
     </div>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{count:0,multiplier:1}}),0,"__tests__/template.marko_0_count",0,"__tests__/template.marko_0_multiplier",0];M._.w()
     </script>

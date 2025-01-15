@@ -20,5 +20,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.writeScope(_scope0_id, {
     "#text/1(": _scope2_.size ? _scope2_ : undefined
   });
+  _$.markResumeCleanup(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

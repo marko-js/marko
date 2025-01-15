@@ -34,6 +34,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
         "#childScope/0": _$.writeExistingScope(_childScope2),
         "_": _$.ensureScopeWithId(_scope1_id)
       });
+      _$.markResumeCleanup(_scope2_id);
       _scope2_.set(_index, _$.getScopeById(_scope2_id));
     });
     _forScopeIds2.push(_scope1_id);
@@ -44,6 +45,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       "#text/1(": _scope2_.size ? _scope2_ : undefined,
       "_": _$.ensureScopeWithId(_scope0_id)
     });
+    _$.markResumeCleanup(_scope1_id);
     _scope1_.set(_index2, _$.getScopeById(_scope1_id));
   });
   _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/2", _forScopeIds2));
@@ -53,5 +55,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "write": write,
     "#text/2(": _scope1_.size ? _scope1_ : undefined
   });
+  _$.markResumeCleanup(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

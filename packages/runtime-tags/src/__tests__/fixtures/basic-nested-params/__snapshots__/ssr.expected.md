@@ -1,5 +1,5 @@
 # Write
-  <button>Inc</button><!--M_*0 #button/0--><div><!--M_[2--><div><!--M_[4--><div>1<!--M_*4 #text/0-->.<!>2<!--M_*4 #text/1--></div><!--M_]3 #text/0--></div><!--M_]1 #text/0--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.f={0:_.d={x:1,y:2,"#childScope/1":_.e={value:1,"#text/0!":_.a={outer:1,"#childScope/0":_.c={value:2,"#text/0!":_.b={}}}}},1:_.e,2:_.a,3:_.c,4:_.b},_.b._=_.a,_.c["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.a),_.a._=_.d,_.e["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.d),_.f),4,"__tests__/template.marko_2_outer/subscriber",2,"__tests__/template.marko_1_y/subscriber",0,"__tests__/template.marko_0_x",0];M._.w()</script>
+  <button>Inc</button><!--M_*0 #button/0--><div><!--M_[2--><div><!--M_[4--><div>1<!--M_*4 #text/0-->.<!>2<!--M_*4 #text/1--></div><!--M_$4--><!--M_]3 #text/0--></div><!--M_$2--><!--M_]1 #text/0--></div><!--M_$0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.f={0:_.d={x:1,y:2,"#childScope/1":_.e={value:1,"#text/0!":_.a={outer:1,"#childScope/0":_.c={value:2,"#text/0!":_.b={}}}}},1:_.e,2:_.a,3:_.c,4:_.b},_.b._=_.a,_.c["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.a),_.a._=_.d,_.e["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.d),_.f),4,"__tests__/template.marko_2_outer/subscriber",2,"__tests__/template.marko_1_y/subscriber",0,"__tests__/template.marko_0_x",0];M._.w()</script>
 
 
 # Render "End"
@@ -23,10 +23,13 @@
           2
           <!--M_*4 #text/1-->
         </div>
+        <!--M_$4-->
         <!--M_]3 #text/0-->
       </div>
+      <!--M_$2-->
       <!--M_]1 #text/0-->
     </div>
+    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={0:_.d={x:1,y:2,"#childScope/1":_.e={value:1,"#text/0!":_.a={outer:1,"#childScope/0":_.c={value:2,"#text/0!":_.b={}}}}},1:_.e,2:_.a,3:_.c,4:_.b},_.b._=_.a,_.c["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.a),_.a._=_.d,_.e["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.d),_.f),4,"__tests__/template.marko_2_outer/subscriber",2,"__tests__/template.marko_1_y/subscriber",0,"__tests__/template.marko_0_x",0];M._.w()
     </script>
@@ -54,7 +57,10 @@ inserted #document/html0/body1/div2/div1/div1/#comment3
 inserted #document/html0/body1/div2/div1/div1/#text4
 inserted #document/html0/body1/div2/div1/div1/#comment5
 inserted #document/html0/body1/div2/div1/#comment2
+inserted #document/html0/body1/div2/div1/#comment3
 inserted #document/html0/body1/div2/#comment2
-inserted #document/html0/body1/script3
-inserted #document/html0/body1/script3/#text0
+inserted #document/html0/body1/div2/#comment3
+inserted #document/html0/body1/#comment3
+inserted #document/html0/body1/script4
+inserted #document/html0/body1/script4/#text0
 ```
