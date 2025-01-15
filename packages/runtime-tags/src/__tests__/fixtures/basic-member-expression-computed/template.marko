@@ -1,0 +1,11 @@
+let/items=["a", "b", "c"]
+let/index=0
+
+div -- ${items[0]}
+div -- ${items[index]}
+
+button onClick() {
+  const newItems = items.slice(1);
+  items = newItems;
+  index = (index + 1) % newItems.length;
+} -- Update

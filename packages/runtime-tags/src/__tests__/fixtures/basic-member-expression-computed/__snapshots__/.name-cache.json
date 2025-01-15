@@ -1,0 +1,14 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "a",
+      "$_foo": "o",
+      "$_expr_items_index_effect": "e",
+      "$_expr_items_index": "n",
+      "$_index": "m",
+      "$_items_": "s",
+      "$_items": "c"
+    }
+  }
+}
