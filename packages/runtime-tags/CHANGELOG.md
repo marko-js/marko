@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.21
+
+### Patch Changes
+
+- [#2464](https://github.com/marko-js/marko/pull/2464) [`68b904f`](https://github.com/marko-js/marko/commit/68b904f6a1751b1648421447abb8b438af3c22b3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue reading custom tag var closures.
+
 ## 0.3.20
 
 ### Patch Changes
