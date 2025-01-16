@@ -73,6 +73,7 @@ export const analyze = {
         ) {
           meta.component = file.opts.filename;
         } else if (meta.hasStringEventHandlers) {
+          meta.implicitSplitComponent = true;
           meta.component = componentFiles.componentBrowserFile =
             "marko/src/runtime/helpers/empty-component.js";
           meta.hasComponentBrowser = true;
@@ -388,7 +389,7 @@ export const translate = {
                   componentTypeIdentifier,
                   t.arrowFunctionExpression(
                     [],
-                    componentBrowserFile
+                    componentBrowserFile && !meta.implicitSplitComponent
                       ? importDefault(
                           file,
                           resolveRelativePath(file, componentBrowserFile),
