@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 0.3.20
+
+### Patch Changes
+
+- [#2460](https://github.com/marko-js/marko/pull/2460) [`d9cc4e7`](https://github.com/marko-js/marko/commit/d9cc4e723abb53a5d5a6c090935facd7745146c2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with attempting to hoist a member expression that was a computed identifier.
+
+- [#2461](https://github.com/marko-js/marko/pull/2461) [`e6ffdbe`](https://github.com/marko-js/marko/commit/e6ffdbe6781385bd3ae7cfab9e16d349eda7cb0c) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix adjacent bound values
+
+- [#2459](https://github.com/marko-js/marko/pull/2459) [`1722472`](https://github.com/marko-js/marko/commit/172247289a195c1e3fd43ff1bbcb548ed53ff3cf) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix element references when used as the argument of a call expression.
+
 ## 0.3.19
 
 ### Patch Changes
