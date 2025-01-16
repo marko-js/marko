@@ -300,9 +300,9 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       node.var.extra!.binding!,
     );
     source.register = true;
-    source.buildAssignment = (_valueSection, value) => {
+    source.buildAssignment = (valueSection, value) => {
       return t.callExpression(importRuntime("tagVarSignalChange"), [
-        createScopeReadExpression(source.section, childScopeBinding),
+        createScopeReadExpression(valueSection, childScopeBinding),
         value,
       ]);
     };
