@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.11
+
+### Patch Changes
+
+- [#2462](https://github.com/marko-js/marko/pull/2462) [`631ad47`](https://github.com/marko-js/marko/commit/631ad47da4f6accbe802b374334b7b0c03e752da) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where implicit split components (those with no class/component that have event handlers) were not getting the client side render apis.
+
 ## 5.37.10
 
 ### Patch Changes
