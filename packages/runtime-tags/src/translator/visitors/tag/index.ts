@@ -31,7 +31,7 @@ export default {
           }
 
           tag.node.attributes.splice(
-            ++i,
+            i + 1,
             0,
             t.markoAttribute(attr.node.name + "Change", changeValue),
           );
