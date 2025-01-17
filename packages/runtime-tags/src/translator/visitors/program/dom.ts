@@ -1,6 +1,8 @@
 import { types as t } from "@marko/compiler";
+import { importDefault } from "@marko/compiler/babel-utils";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
+import getStyleFile from "../../util/get-style-file";
 import { map } from "../../util/optional";
 import { callRuntime } from "../../util/runtime";
 import {
@@ -37,6 +39,11 @@ export default {
         paramsBinding && bindingHasDownstreamExpressions(paramsBinding)
           ? initValue(paramsBinding)
           : undefined;
+
+      const styleFile = getStyleFile(program.hub.file);
+      if (styleFile) {
+        importDefault(program.hub.file, styleFile);
+      }
 
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
