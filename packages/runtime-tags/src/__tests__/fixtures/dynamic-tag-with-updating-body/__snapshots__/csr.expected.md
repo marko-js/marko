@@ -64,6 +64,7 @@ container.querySelector("#changeTag").click()
 inserted span1
 removed div after span1
 inserted span1/button0
+span1/button0/#text0: " " => "0"
 ```
 
 

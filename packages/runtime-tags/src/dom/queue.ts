@@ -1,6 +1,7 @@
 import type { Scope } from "../common/types";
 import { schedule } from "./schedule";
-import { MARK, type ValueSignal } from "./signals";
+import { finishPendingScopes } from "./scope";
+import { MARK, type Signal } from "./signals";
 
 const enum PendingEffectOffset {
   Scope = 0,
@@ -11,21 +12,30 @@ const enum PendingEffectOffset {
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
 type PendingSignal = {
   ___scope: Scope;
-  ___signal: ValueSignal;
+  ___signal: Signal<any>;
   ___value: unknown;
   ___next: PendingSignal | undefined;
 };
 
 let pendingSignal: PendingSignal["___next"] = undefined;
-let pendingEffects: unknown[] = [];
+export let pendingEffects: unknown[] = [];
 export let rendering = false;
 
-export function queueSource<T>(scope: Scope, signal: ValueSignal, value: T) {
+export function queueSource<T>(scope: Scope, signal: Signal<T>, value: T) {
   schedule();
+  const prevRendering = rendering;
   rendering = true;
   signal(scope, MARK);
-  rendering = false;
+  rendering = prevRendering;
+  queueRender(scope, signal, value);
+  return value;
+}
 
+export function queueRender(
+  scope: Scope,
+  signal: Signal<any>,
+  value?: unknown,
+) {
   const nextSignal: PendingSignal = {
     ___scope: scope,
     ___signal: signal,
@@ -38,6 +48,11 @@ export function queueSource<T>(scope: Scope, signal: ValueSignal, value: T) {
   } else if (
     sortScopeByDOMPosition(pendingSignal.___scope, nextSignal.___scope) < 0
   ) {
+    if (MARKO_DEBUG && rendering) {
+      throw new Error(
+        "attempted to queue a render before the currently executing render",
+      );
+    }
     nextSignal.___next = pendingSignal;
     pendingSignal = nextSignal;
   } else {
@@ -47,14 +62,13 @@ export function queueSource<T>(scope: Scope, signal: ValueSignal, value: T) {
       sortScopeByDOMPosition(
         currentSignal.___next.___scope,
         nextSignal.___scope,
-      ) <= 0
+      ) >= 0
     ) {
       currentSignal = currentSignal.___next;
     }
     nextSignal.___next = currentSignal.___next;
     currentSignal.___next = nextSignal;
   }
-  return value;
 }
 
 export function queueEffect<S extends Scope, T extends ExecFn<S>>(
@@ -109,9 +123,11 @@ function runSignals() {
     }
     pendingSignal = pendingSignal.___next;
   }
+  finishPendingScopes();
 }
 
 function scopeIsConnected(scope: Scope) {
+  if (scope.___pending) return true;
   const start = ownerStartNode(scope);
   return start ? start.isConnected : true;
 }

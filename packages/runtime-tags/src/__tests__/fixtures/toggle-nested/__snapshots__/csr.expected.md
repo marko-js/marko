@@ -32,9 +32,9 @@ inserted div0/#comment3
 removed #text after div0/#comment3
 inserted div0/span1
 removed #text after div0/span1
-div0/span1/#text0: " " => "Hello"
 inserted div0/span2
 removed #text after div0/span2
+div0/span1/#text0: " " => "Hello"
 div0/span2/#text0: " " => "World"
 ```
 

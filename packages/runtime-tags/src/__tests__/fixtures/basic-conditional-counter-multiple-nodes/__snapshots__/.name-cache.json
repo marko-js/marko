@@ -11,7 +11,8 @@
       "$_show_effect": "a",
       "$_show": "s",
       "$_count$if_content": "m",
-      "$_if_content": "f"
+      "$_if_content": "f",
+      "$_setup$if_content": "l"
     }
   }
 }

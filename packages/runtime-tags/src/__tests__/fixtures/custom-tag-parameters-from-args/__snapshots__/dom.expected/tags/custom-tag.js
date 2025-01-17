@@ -33,4 +33,4 @@ export function _setup_(_scope) {
   _x(_scope, 1);
   _y(_scope, 10);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/custom-tag.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/custom-tag.marko", _template_, _walks_, _setup_, () => _params__);

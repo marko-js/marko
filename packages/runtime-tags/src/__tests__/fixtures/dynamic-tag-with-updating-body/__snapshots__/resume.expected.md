@@ -104,6 +104,7 @@ inserted #document/html0/body1/span0
 removed #comment after #document/html0/body1/span0
 removed div after #document/html0/body1/span0
 inserted #document/html0/body1/span0/button0
+#document/html0/body1/span0/button0/#text0: " " => "0"
 ```
 
 

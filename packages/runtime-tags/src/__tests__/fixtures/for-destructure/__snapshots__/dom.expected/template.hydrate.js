@@ -1,4 +1,4 @@
-// size: 498 (min) 249 (brotli)
+// size: 491 (min) 247 (brotli)
 const _description$for_content = _$.value(5, (_scope, description) =>
     _$.data(_scope[1], description),
   ),
@@ -15,7 +15,6 @@ const _description$for_content = _$.value(5, (_scope, description) =>
     _$.createRenderer(
       "<div><!>: <!></div>",
       "D%c%",
-      void 0,
       void 0,
       () => _params_2$for_content,
     ),

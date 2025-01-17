@@ -14,7 +14,8 @@
       "$_params_2$for_content": "u",
       "$_num$for_content_effect": "d",
       "$_num$for_content": "f",
-      "$_for_content": "l"
+      "$_for_content": "l",
+      "$_setup$for_content": "p"
     }
   }
 }

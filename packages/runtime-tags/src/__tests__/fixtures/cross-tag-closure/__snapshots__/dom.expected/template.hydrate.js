@@ -1,4 +1,4 @@
-// size: 490 (min) 265 (brotli)
+// size: 480 (min) 263 (brotli)
 const _value = _$.state(
   3,
   (_scope, value) => _$.tagVarSignal(_scope, value),
@@ -22,15 +22,16 @@ const _count$myTag_content_effect = _$.effect(
     _$.dynamicClosure(2, (_scope, count) => {
       _$.data(_scope[1], count), _count$myTag_content_effect(_scope);
     }),
-  );
+  ),
+  _setup$myTag_content = (_scope) => {
+    _count$myTag_content._(_scope, _scope._[2]);
+  };
 _$.register(
   "c2",
-  _$.createRendererWithOwner("<button> </button>", " D ", void 0, () => [
-    _count$myTag_content,
-  ]),
+  _$.createRendererWithOwner("<button> </button>", " D ", _setup$myTag_content),
 ),
   _$.registerBoundSignal(
     "c3",
-    _$.value(2, 0, () => _$.dynamicSubscribers(2)),
+    _$.value(2, (_scope, count) => _count$myTag_content(_scope, count)),
   ),
   init();

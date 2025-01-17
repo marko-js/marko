@@ -7,8 +7,10 @@ const _c$if_content = _$.registerSubscriber("__tests__/template.marko_3_c/subscr
 const _b$if_content = /* @__PURE__ */_$.dynamicClosure("b", (_scope, b) => _$.data(_scope["#text/1"], b), _scope => _scope._._);
 const _setup$if_content = _scope => {
   _$.data(_scope["#text/0"], a);
+  _b$if_content._(_scope, _scope._._["b"]);
+  _c$if_content._(_scope, _scope._._["c"]);
 };
-const _if_content2 = /* @__PURE__ */_$.createRenderer("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$if_content, () => [_c$if_content, _b$if_content]);
+const _if_content2 = /* @__PURE__ */_$.createRenderer("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$if_content);
 const _if$if_content = /* @__PURE__ */_$.conditional("#text/0", 0);
 const _setup$if_content2 = _scope => {
   _if$if_content(_scope, Math.random() ? _if_content2 : null);
@@ -18,11 +20,16 @@ const _c$customTag_content = _$.registerSubscriber("__tests__/template.marko_1_c
 const _b$customTag_content = /* @__PURE__ */_$.dynamicClosure("b", (_scope, b) => _$.data(_scope["#text/1"], b));
 const _setup$customTag_content = _scope => {
   _$.data(_scope["#text/0"], a);
+  _b$customTag_content._(_scope, _scope._["b"]);
+  _c$customTag_content._(_scope, _scope._["c"]);
 };
-const _customTag_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$customTag_content, () => [_c$customTag_content, _b$customTag_content]));
+const _customTag_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$customTag_content));
 const _if = /* @__PURE__ */_$.conditional("#text/2", 0);
-const _c = /* @__PURE__ */_$.state("c", 0, () => _$.dynamicSubscribers("c"));
-const _b = /* @__PURE__ */_$.value("b", 0, () => _$.dynamicSubscribers("b"));
+const _c = /* @__PURE__ */_$.state("c", (_scope, c) => {
+  _c$customTag_content(_scope, c);
+  _c$if_content(_scope, c);
+});
+const _b = /* @__PURE__ */_$.value("b", 0);
 const _setup__effect = _$.effect("__tests__/template.marko_0", _scope => _$.on(_scope["#button/0"], "click", function () {
   _c(_scope, 4);
 }));

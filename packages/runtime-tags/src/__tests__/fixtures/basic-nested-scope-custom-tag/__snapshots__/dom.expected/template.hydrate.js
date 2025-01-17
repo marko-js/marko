@@ -1,4 +1,4 @@
-// size: 328 (min) 209 (brotli)
+// size: 318 (min) 207 (brotli)
 _$.dynamicTagAttrs(0);
 const _count$child_content_effect = _$.effect(
     "b0",
@@ -12,12 +12,15 @@ const _count$child_content_effect = _$.effect(
     _$.dynamicClosure(1, (_scope, count) => {
       _$.data(_scope[1], count), _count$child_content_effect(_scope);
     }),
-  );
+  ),
+  _setup$child_content = (_scope) => {
+    _count$child_content._(_scope, _scope._[1]);
+  };
 _$.register(
   "b2",
-  _$.createRendererWithOwner("<button> </button>", " D ", void 0, () => [
-    _count$child_content,
-  ]),
+  _$.createRendererWithOwner("<button> </button>", " D ", _setup$child_content),
 );
-const _count = _$.state(1, 0, () => _$.dynamicSubscribers(1));
+const _count = _$.state(1, (_scope, count) =>
+  _count$child_content(_scope, count),
+);
 init();

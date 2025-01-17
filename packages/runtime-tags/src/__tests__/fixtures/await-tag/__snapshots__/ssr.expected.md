@@ -1,5 +1,5 @@
 # Write
-  <div>Got: a <!>0<!--M_*1 #text/1--><!--M_$1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={count:0},1:{_:_.a}})]</script>
+  <div>Got: a <!>0<!--M_*1 #text/1--><!--M_$1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={count:0},1:{_:_.a}}),1,"__tests__/template.marko_1_count/subscriber"];M._.w()</script>
 
 
 # Write
@@ -7,7 +7,7 @@
 
 
 # Write
-  Got: b <!>0<!--M_*3 #text/1--><!--M_$3-->Got: c <!>0<!--M_*2 #text/1--><!--M_$2--><button>Inc</button><!--M_*0 #button/0--></div><!--M_$0--><script>M._.r.push(_=>(_.d={3:{_:_.a}}),0,"__tests__/template.marko_0_count",0);M._.w()</script>
+  Got: b <!>0<!--M_*3 #text/1--><!--M_$3-->Got: c <!>0<!--M_*2 #text/1--><!--M_$2--><button>Inc</button><!--M_*0 #button/0--></div><!--M_$0--><script>M._.r.push(_=>(_.d={3:{_:_.a}}),3,"__tests__/template.marko_2_count/subscriber"2,"__tests__/template.marko_3_count/subscriber",0,"__tests__/template.marko_0_count",0);M._.w()</script>
 
 
 # Render "End"
@@ -22,7 +22,7 @@
       <!--M_*1 #text/1-->
       <!--M_$1-->
       <script>
-        WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={count:0},1:{_:_.a}})]
+        WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={count:0},1:{_:_.a}}),1,"__tests__/template.marko_1_count/subscriber"];M._.w()
       </script>
       <script>
         M._.r.push(_=&gt;(_.c={2:{_:_.a}}))
@@ -44,7 +44,7 @@
     </div>
     <!--M_$0-->
     <script>
-      M._.r.push(_=&gt;(_.d={3:{_:_.a}}),0,"__tests__/template.marko_0_count",0);M._.w()
+      M._.r.push(_=&gt;(_.d={3:{_:_.a}}),3,"__tests__/template.marko_2_count/subscriber"2,"__tests__/template.marko_3_count/subscriber",0,"__tests__/template.marko_0_count",0);M._.w()
     </script>
   </body>
 </html>

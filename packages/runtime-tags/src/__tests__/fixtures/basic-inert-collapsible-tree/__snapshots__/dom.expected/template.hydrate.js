@@ -1,4 +1,4 @@
-// size: 1206 (min) 546 (brotli)
+// size: 1148 (min) 531 (brotli)
 const _expr_comment_comments_id$if_content = _$.intersection(
     2,
     (_scope) => {
@@ -9,39 +9,34 @@ const _expr_comment_comments_id$if_content = _$.intersection(
     },
     () => _$.inChild(0, _input_),
   ),
-  _id$if_content = _$.closure(
-    10,
+  _id$if_content = _$.conditionalClosure(
+    4,
+    () => _if_content,
     0,
-    void 0,
     () => _expr_comment_comments_id$if_content,
   ),
-  _comment_comments$if_content = _$.closure(
-    8,
+  _comment_comments$if_content = _$.conditionalClosure(
+    4,
+    () => _if_content,
     0,
-    void 0,
     () => _expr_comment_comments_id$if_content,
   ),
   _setup$if_content = (_scope) => {
-    _scope[0];
+    _comment_comments$if_content._(_scope, _scope._[8]),
+      _id$if_content._(_scope, _scope._[10]),
+      _scope[0];
   },
   _if_content = _$.register(
     "a0",
-    _$.createRenderer("<ul></ul>", "/ b&", _setup$if_content, () => [
-      _id$if_content,
-      _comment_comments$if_content,
-    ]),
+    _$.createRenderer("<ul></ul>", "/ b&", _setup$if_content),
   ),
-  _expr_input_path_i$for_content = _$.intersection(
-    2,
-    (_scope) => {
-      const {
-        _: { 4: input_path },
-        9: i,
-      } = _scope;
-      _id$for_content(_scope, `${input_path || "c"}-${i}`);
-    },
-    () => _id$for_content,
-  ),
+  _expr_input_path_i$for_content = _$.intersection(2, (_scope) => {
+    const {
+      _: { 4: input_path },
+      9: i,
+    } = _scope;
+    _id$for_content(_scope, `${input_path || "c"}-${i}`);
+  }),
   _if$for_content = _$.conditional(4, 0),
   _open$for_content_effect = _$.effect("a1", (_scope, { 11: open }) =>
     _$.on(_scope[2], "click", function () {
@@ -53,21 +48,17 @@ const _expr_comment_comments_id$if_content = _$.intersection(
       _$.data(_scope[3], open ? "[-]" : "[+]"),
       _open$for_content_effect(_scope);
   }),
-  _id$for_content = _$.value(
-    10,
-    (_scope, id) => _$.attr(_scope[0], "id", id),
-    () => _$.inConditionalScope(_id$if_content, 4),
-  ),
+  _id$for_content = _$.value(10, (_scope, id) => {
+    _$.attr(_scope[0], "id", id), _id$if_content(_scope, id);
+  }),
   _i$for_content = _$.value(9, 0, () => _expr_input_path_i$for_content),
   _comment_comments$for_content = _$.value(
     8,
-    (_scope, comment_comments) =>
+    (_scope, comment_comments) => {
       _if$for_content(_scope, comment_comments ? _if_content : null),
-    () =>
-      _$.intersections([
-        _if$for_content,
-        _$.inConditionalScope(_comment_comments$if_content, 4),
-      ]),
+        _comment_comments$if_content(_scope, comment_comments);
+    },
+    () => _if$for_content,
   ),
   _comment_text$for_content = _$.value(7, (_scope, comment_text) =>
     _$.data(_scope[1], comment_text),
@@ -88,14 +79,14 @@ const _expr_comment_comments_id$if_content = _$.intersection(
     },
     () => _$.intersections([_comment$for_content, _i$for_content]),
   ),
-  _input_path$for_content = _$.closure(
-    4,
+  _input_path$for_content = _$.loopClosure(
     0,
-    void 0,
+    0,
     () => _expr_input_path_i$for_content,
   ),
   _setup$for_content = (_scope) => {
-    _open$for_content(_scope, !0);
+    _input_path$for_content._(_scope, _scope._[4]),
+      _open$for_content(_scope, !0);
   },
   _for_content = _$.register(
     "a2",
@@ -103,13 +94,12 @@ const _expr_comment_comments_id$if_content = _$.intersection(
       "<li><span> </span><button> </button><!></li>",
       " E l D l%",
       _setup$for_content,
-      () => [_input_path$for_content],
       () => _params_2$for_content,
     ),
   ),
   _for = _$.loopOf(0, _for_content),
-  _input_path_ = _$.value(4, 0, () =>
-    _$.inLoopScope(_input_path$for_content, 0),
+  _input_path_ = _$.value(4, (_scope, input_path) =>
+    _input_path$for_content(_scope, input_path),
   ),
   _input_comments_ = _$.value(
     3,
@@ -122,6 +112,6 @@ const _expr_comment_comments_id$if_content = _$.intersection(
       _input_comments_(_scope, input.comments),
         _input_path_(_scope, input.path);
     },
-    () => _$.intersections([_input_comments_, _input_path_]),
+    () => _input_comments_,
   );
 init();

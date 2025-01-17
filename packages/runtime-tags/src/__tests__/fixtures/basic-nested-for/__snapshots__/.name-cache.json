@@ -31,7 +31,8 @@
       "$_outer$for_content2": "_",
       "$_items$for_content": "j",
       "$_params_2$for_content": "q",
-      "$_for_content": "w"
+      "$_for_content": "w",
+      "$_setup$for_content2": "x"
     }
   }
 }

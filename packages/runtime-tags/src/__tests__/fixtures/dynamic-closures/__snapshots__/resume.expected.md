@@ -70,6 +70,6 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/div2/#text3: "3" => "4"
 #document/html0/body1/div3/#text2: "3" => "4"
+#document/html0/body1/div2/#text3: "3" => "4"
 ```

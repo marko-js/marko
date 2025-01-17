@@ -22,6 +22,7 @@ type TestConfig = {
   skip_html?: boolean;
   skip_csr?: boolean;
   skip_ssr?: boolean;
+  skip_equivalent?: boolean;
   skip_resume?: boolean;
   manual_csr?: boolean;
   manual_ssr?: boolean;
@@ -117,6 +118,7 @@ describe("runtime-tags/translator", () => {
           config.skip_resume ||
           skipSSR ||
           skipCSR);
+      const skipEquivalent = config.skip_equivalent || skipCSR || skipResume;
       const stripFixtureDir = async (str: string | Promise<string>) =>
         (await str).replaceAll(relativeFixtureDir, "__tests__");
       const snapMD = (fn: () => Promise<string>) =>
@@ -426,7 +428,7 @@ describe("runtime-tags/translator", () => {
           await snapMD(async () => (await csr()).tracker.getLogs(true));
         });
 
-        (skipCSR || skipResume ? it.skip : it)("equivalent", async () => {
+        (skipEquivalent ? it.skip : it)("equivalent", async () => {
           const resumeLogs = (await resume()).tracker.getRawLogs(true);
           // when the steps for a test contains more than one input,
           // the updates are not run for the resume test

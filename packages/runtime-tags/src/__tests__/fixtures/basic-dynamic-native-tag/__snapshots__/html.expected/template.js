@@ -4,6 +4,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const {
     tagName
   } = input;
+  debugger;
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_dynamicScope, tagName, {
     class: ["a", "b"]

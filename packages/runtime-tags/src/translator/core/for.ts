@@ -37,8 +37,8 @@ import {
   addValue,
   getSerializedScopeProperties,
   getSignal,
+  setClosureSignalBuilder,
   setForceResumeScope,
-  setSubscriberBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { toMemberExpression } from "../util/to-property-name";
@@ -323,7 +323,7 @@ export default {
         writer.flushInto(tag);
         // TODO: this is a hack to get around the fact that we don't have a way to
         // know if a scope requires dynamic subscriptions
-        setSubscriberBuilder(tag, (() => {}) as any);
+        setClosureSignalBuilder(tag, (() => {}) as any);
         writeHTMLResumeStatements(tagBody);
 
         if (keyExpression && (isStateful || hasStatefulClosures)) {
@@ -386,11 +386,12 @@ export default {
         const nodeRef = isOnlyChildInParent(tag)
           ? getParentTag(tag)!.node.extra![kNativeTagBinding]!
           : tag.node.extra![kForMarkerBinding]!;
-        setSubscriberBuilder(tag, (signal: t.Expression) => {
+        setClosureSignalBuilder(tag, (_closureSignal, render, intersection) => {
           return callRuntime(
-            "inLoopScope",
-            signal,
+            "loopClosure",
             getScopeAccessorLiteral(nodeRef),
+            render,
+            intersection,
           );
         });
 

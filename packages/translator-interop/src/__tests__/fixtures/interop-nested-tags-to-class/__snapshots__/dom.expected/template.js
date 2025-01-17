@@ -15,10 +15,13 @@ const _count$classLayout_content = _$.registerSubscriber("__tests__/template.mar
   _$.data(_scope["#text/1"], count);
   _count$classLayout_content_effect(_scope);
 }));
-const _classLayout_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<button id=tags> </button>", /* get, next(1), get */" D ", void 0, () => [_count$classLayout_content]));
+const _setup$classLayout_content = _scope => {
+  _count$classLayout_content._(_scope, _scope._["count"]);
+};
+const _classLayout_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<button id=tags> </button>", /* get, next(1), get */" D ", _setup$classLayout_content));
 const _classLayout_input = _$.dynamicTagAttrs("#text/0", _classLayout_content);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _classLayout_input(_scope, () => ({})), () => _classLayout_input);
-const _count = /* @__PURE__ */_$.state("count", 0, () => _$.dynamicSubscribers("count"));
+const _count = /* @__PURE__ */_$.state("count", (_scope, count) => _count$classLayout_content(_scope, count));
 export function _setup_(_scope) {
   _count(_scope, 0);
   _dynamicTagName(_scope, _classLayout || _classLayout_content(_scope));

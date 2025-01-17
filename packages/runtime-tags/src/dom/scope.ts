@@ -1,17 +1,29 @@
 import type { Scope } from "../common/types";
 
+let pendingScopes: Scope[] = [];
 let debugID = 0;
 
 export function createScope($global: Scope["$global"]): Scope {
   const scope = {
-    ___client: 1,
+    ___pending: 1,
     $global,
   } as Scope;
 
   if (MARKO_DEBUG) {
     scope.___debugId = debugID++;
   }
+
+  pendingScopes.push(scope);
+
   return scope;
+}
+
+export function finishPendingScopes() {
+  for (const scope of pendingScopes) {
+    scope.___pending = 0;
+  }
+
+  pendingScopes = [];
 }
 
 const emptyScope = createScope({});
@@ -25,18 +37,11 @@ export function destroyScope(scope: Scope) {
 
   scope.___cleanupOwner?.___cleanup?.delete(scope);
 
-  const closureSignals = scope.___renderer?.___closureSignals;
-  if (closureSignals) {
-    for (const signal of closureSignals) {
-      signal.___unsubscribe?.(scope);
-    }
-  }
   return scope;
 }
 
 function _destroyScope(scope: Scope) {
   scope.___cleanup?.forEach(_destroyScope);
-
   const controllers = scope.___abortControllers;
   if (controllers) {
     for (const ctrl of controllers.values()) {

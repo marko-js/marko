@@ -9,7 +9,8 @@
       "$_count": "i",
       "$_count$falseChild_content_effect": "a",
       "$_count$falseChild_content": "m",
-      "$_falseChild_content": "s"
+      "$_falseChild_content": "s",
+      "$_setup$falseChild_content": "c"
     }
   }
 }

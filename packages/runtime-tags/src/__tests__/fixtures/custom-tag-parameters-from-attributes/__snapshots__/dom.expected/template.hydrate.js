@@ -1,4 +1,4 @@
-// size: 500 (min) 287 (brotli)
+// size: 493 (min) 285 (brotli)
 const _inputContent_input = _$.dynamicTagAttrs(2),
   _expr_Text_input_name_x = _$.intersection(
     3,
@@ -38,7 +38,6 @@ _$.register(
   _$.createRendererWithOwner(
     "<div>Count (<!>): <!></div>",
     "Db%c%",
-    void 0,
     void 0,
     () => _params_2$customTag_content,
   ),

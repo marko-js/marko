@@ -115,4 +115,4 @@ export function _setup_(_scope) {
   _tag_input_class(_scope["#childScope/7"], ["a", "b"]);
   _tagConstA(_scope, "a");
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, () => _params__);

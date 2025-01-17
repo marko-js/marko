@@ -25,7 +25,11 @@ import {
   type ReferencedBindings,
 } from "./references";
 import { callRuntime } from "./runtime";
-import { createScopeReadPattern, getScopeExpression } from "./scope-read";
+import {
+  createScopeReadExpression,
+  createScopeReadPattern,
+  getScopeExpression,
+} from "./scope-read";
 import {
   getScopeIdIdentifier,
   getSectionForBody,
@@ -40,7 +44,11 @@ import {
 import { toMemberExpression } from "./to-property-name";
 import { traverseContains, traverseReplace } from "./traverse";
 
-export type subscribeBuilder = (subscriber: t.Expression) => t.Expression;
+export type closureSignalBuilder = (
+  signal: Signal,
+  render: t.Expression,
+  intersection?: t.Expression,
+) => t.Expression;
 export type registerScopeBuilder = (scope: t.Expression) => t.Expression;
 
 export type Signal = {
@@ -82,14 +90,14 @@ const [getSignals] = createSectionState<Map<unknown, Signal>>(
   "signals",
   () => new Map(),
 );
-const [getSubscribeBuilder, _setSubscribeBuilder] = createSectionState<
-  subscribeBuilder | undefined
+const [getClosureSignalBuilder, _setClosureSignalBuilder] = createSectionState<
+  closureSignalBuilder | undefined
 >("queue");
-export function setSubscriberBuilder(
+export function setClosureSignalBuilder(
   tag: t.NodePath<t.MarkoTag>,
-  builder: subscribeBuilder,
+  builder: closureSignalBuilder,
 ) {
-  _setSubscribeBuilder(getSectionForBody(tag.get("body"))!, builder);
+  _setClosureSignalBuilder(getSectionForBody(tag.get("body"))!, builder);
 }
 
 const [forceResumeScope, _setForceResumeScope] = createSectionState<
@@ -139,9 +147,8 @@ export function getSignal(
         subscribers: [],
         closures: new Map(),
         hasDownstreamIntersections: () => {
-          let hasDownstreamIntersections: boolean = !!(
-            signal.intersection || signal.closures.size
-          );
+          let hasDownstreamIntersections: boolean =
+            !!(signal.intersection /* || signal.closures.size */);
           if (!hasDownstreamIntersections) {
             for (const value of signal.values) {
               if (value.signal.hasDownstreamIntersections()) {
@@ -196,29 +203,46 @@ export function getSignal(
         signal,
       );
       signal.build = () => {
-        const builder = getSubscribeBuilder(section);
+        const builder = getClosureSignalBuilder(section);
         const ownerScope = getScopeExpression(
           section,
           referencedBindings.section,
         );
         const isImmediateOwner =
           (ownerScope as t.MemberExpression).object === scopeIdentifier;
-        const isDynamicClosure = (signal.isDynamicClosure = !(
-          isImmediateOwner && builder
-        ));
-        return callRuntime(
-          isDynamicClosure ? "dynamicClosure" : "closure",
-          getScopeAccessorLiteral(referencedBindings),
-          getSignalFn(signal, [
-            scopeIdentifier,
-            t.identifier(referencedBindings.name),
-          ]),
-          isImmediateOwner
-            ? null
-            : t.arrowFunctionExpression([scopeIdentifier], ownerScope),
-          buildSignalIntersections(signal),
-        );
+        const isDynamicClosure = !isImmediateOwner || !builder;
+        const render = getSignalFn(signal, [
+          scopeIdentifier,
+          t.identifier(referencedBindings.name),
+        ]);
+        signal.isDynamicClosure = isDynamicClosure;
+        const intersection = buildSignalIntersections(signal);
+        return isDynamicClosure
+          ? callRuntime(
+              "dynamicClosure",
+              getScopeAccessorLiteral(referencedBindings),
+              render,
+              isImmediateOwner
+                ? null
+                : t.arrowFunctionExpression([scopeIdentifier], ownerScope),
+              intersection,
+            )
+          : builder(signal, render, intersection);
       };
+      addStatement(
+        "render",
+        section,
+        undefined,
+        t.expressionStatement(
+          t.callExpression(
+            t.memberExpression(signal.identifier, t.identifier("_")),
+            [
+              scopeIdentifier,
+              createScopeReadExpression(section, referencedBindings),
+            ],
+          ),
+        ),
+      );
     }
   }
   return signal;
@@ -274,12 +298,14 @@ export function getSignalFn(
 ) {
   const section = signal.section;
   const binding = signal.referencedBindings;
+  const [scopeIdentifier, valueIdentifier] = params as [
+    t.Identifier,
+    t.Identifier,
+  ];
+  const isValueSignal =
+    binding && !Array.isArray(binding) && binding.section === section;
 
-  if (binding && !Array.isArray(binding) && binding.section === section) {
-    const [scopeIdentifier, valueIdentifier] = params as [
-      t.Identifier,
-      t.Identifier,
-    ];
+  if (isValueSignal) {
     for (const alias of binding.aliases) {
       const aliasSignal = getSignal(alias.section, alias);
       signal.render.push(
@@ -319,6 +345,24 @@ export function getSignalFn(
     );
   }
 
+  if (isValueSignal) {
+    const closureEntries = Array.from(signal.closures.entries()).sort(
+      ([a], [b]) => a.id - b.id,
+    );
+    for (const [_closureSection, closureSignal] of closureEntries) {
+      if (isStatefulReferences(closureSignal.referencedBindings)) {
+        signal.render.push(
+          t.expressionStatement(
+            t.callExpression(closureSignal.identifier, [
+              scopeIdentifier,
+              valueIdentifier,
+            ]),
+          ),
+        );
+      }
+    }
+  }
+
   if (referencedBindings) {
     signal.render.unshift(
       t.variableDeclaration("const", [
@@ -349,7 +393,6 @@ function getTranslatedExtraArgs(signal: { extraArgs?: t.Expression[] }) {
 }
 
 export function buildSignalIntersections(signal: Signal) {
-  const section = signal.section;
   let intersections = signal.intersection;
   const binding = signal.referencedBindings;
 
@@ -389,28 +432,6 @@ export function buildSignalIntersections(signal: Signal) {
             : t.identifier(value.signal.identifier.name)),
       );
     }
-  }
-
-  // In order to ensure correct topological ordering, closures must be called last
-  // with closures higher in the tree called before calling closures lower in the tree
-  // TODO: use a repeatable of signals sorted by section
-  const closureEntries = Array.from(signal.closures.entries()).sort(
-    ([a], [b]) => a.id - b.id,
-  );
-  for (const [closureSection, closureSignal] of closureEntries) {
-    const builder = getSubscribeBuilder(closureSection);
-    const isImmediateOwner = closureSection.parent === section;
-    if (builder && isImmediateOwner) {
-      intersections = push(intersections, builder(closureSignal.identifier));
-    } else if (!signal.hasDynamicSubscribers) {
-      signal.hasDynamicSubscribers = true;
-    }
-  }
-  if (signal.hasDynamicSubscribers) {
-    intersections = push(
-      intersections,
-      callRuntime("dynamicSubscribers", signal.valueAccessor),
-    );
   }
 
   return (
@@ -925,11 +946,11 @@ export function writeHTMLResumeStatements(
       }
       setForceResumeScope(closure.section);
       const isImmediateOwner = section.parent?.id === closure.section.id;
-      // TODO: getSubscribeBuilder is not the right check
+      // TODO: getClosureSignalBuilder is not the right check
       // the builder shouldn't get set for the HTML output
       // we're setting it to an empty builder from if/for purely for this check
       const isDynamicClosure =
-        !getSubscribeBuilder(section) || !isImmediateOwner;
+        !getClosureSignalBuilder(section) || !isImmediateOwner;
       if (isDynamicClosure) {
         path.pushContainer(
           "body",

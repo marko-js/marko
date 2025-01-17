@@ -4,7 +4,7 @@ export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _n$for_content = /* @__PURE__ */_$.value("n", (_scope, n) => _$.data(_scope["#text/0"], n));
 const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _n$for_content(_scope, _params_2[0]));
-const _for_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<!>, ", /* replace */"%", void 0, void 0, () => _params_2$for_content));
+const _for_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<!>, ", /* replace */"%", void 0, () => _params_2$for_content));
 const _expr_input_from_input_to_input_step = /* @__PURE__ */_$.intersection(3, _scope => {
   const {
     input_from,
@@ -23,4 +23,4 @@ export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_step_(_scope, input.step);
 }, () => _$.intersections([_input_from_, _input_to_, _input_step_]));
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, () => _params__);

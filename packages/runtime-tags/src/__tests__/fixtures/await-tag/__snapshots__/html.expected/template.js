@@ -7,6 +7,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.fork(Promise.resolve("a"), value => {
     const _scope1_id = _$.nextScopeId();
     _$.write(`Got: ${_$.escapeXML(value)} <!>${_$.escapeXML(count)}${_$.markResumeNode(_scope1_id, "#text/1")}`);
+    _$.writeEffect(_scope1_id, "__tests__/template.marko_1_count/subscriber");
     _$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
@@ -15,6 +16,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.fork(resolveAfter("b", 2), value => {
     const _scope2_id = _$.nextScopeId();
     _$.write(`Got: ${_$.escapeXML(value)} <!>${_$.escapeXML(count)}${_$.markResumeNode(_scope2_id, "#text/1")}`);
+    _$.writeEffect(_scope2_id, "__tests__/template.marko_2_count/subscriber");
     _$.writeScope(_scope2_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
@@ -23,6 +25,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.fork(resolveAfter("c", 1), value => {
     const _scope3_id = _$.nextScopeId();
     _$.write(`Got: ${_$.escapeXML(value)} <!>${_$.escapeXML(count)}${_$.markResumeNode(_scope3_id, "#text/1")}`);
+    _$.writeEffect(_scope3_id, "__tests__/template.marko_3_count/subscriber");
     _$.writeScope(_scope3_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });

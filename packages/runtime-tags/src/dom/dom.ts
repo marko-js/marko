@@ -81,7 +81,8 @@ export function attrs(
   nextAttrs: Record<string, unknown>,
 ) {
   const el = scope[nodeAccessor] as Element;
-  for (const { name } of el.attributes) {
+  for (let i = el.attributes.length; i--; ) {
+    const { name } = el.attributes.item(i)!;
     if (
       !(nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs)))
     ) {
@@ -113,7 +114,8 @@ export function partialAttrs(
   const el = scope[nodeAccessor] as Element;
   const partial: Partial<typeof nextAttrs> = {};
 
-  for (const { name } of el.attributes) {
+  for (let i = el.attributes.length; i--; ) {
+    const { name } = el.attributes.item(i)!;
     if (!skip[name] && !(nextAttrs && name in nextAttrs)) {
       el.removeAttribute(name);
     }

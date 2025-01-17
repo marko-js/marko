@@ -1,4 +1,4 @@
-// size: 175 (min) 112 (brotli)
+// size: 168 (min) 109 (brotli)
 const _child_text$for_content = _$.value(3, (_scope, child_text) =>
     _$.data(_scope[0], child_text),
   ),
@@ -10,5 +10,5 @@ const _child_text$for_content = _$.value(3, (_scope, child_text) =>
   );
 _$.register(
   "a0",
-  _$.createRenderer(" ", " ", void 0, void 0, () => _params_2$for_content),
+  _$.createRenderer(" ", " ", void 0, () => _params_2$for_content),
 );

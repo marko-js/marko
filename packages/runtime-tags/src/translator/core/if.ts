@@ -35,8 +35,8 @@ import {
   getSerializedScopeProperties,
   getSignal,
   getSignalFn,
+  setClosureSignalBuilder,
   setForceResumeScope,
-  setSubscriberBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
@@ -150,7 +150,7 @@ export const IfTag = {
           writer.flushInto(tag);
           // TODO: this is a hack to get around the fact that we don't have a way to
           // know if a scope requires dynamic subscriptions
-          setSubscriberBuilder(tag, (() => {}) as any);
+          setClosureSignalBuilder(tag, (() => {}) as any);
           writeHTMLResumeStatements(tagBody);
         }
 
@@ -307,14 +307,21 @@ export const IfTag = {
               ? t.identifier(branchBodySection.name)
               : t.numericLiteral(0);
 
-            setSubscriberBuilder(branchTag, (subscriber) => {
-              return callRuntime(
-                "inConditionalScope",
-                subscriber,
-                getScopeAccessorLiteral(nodeRef),
-                /*t.identifier(section.name)*/
-              );
-            });
+            setClosureSignalBuilder(
+              branchTag,
+              (_closureSignal, render, intersection) => {
+                return callRuntime(
+                  "conditionalClosure",
+                  getScopeAccessorLiteral(nodeRef),
+                  t.arrowFunctionExpression(
+                    [],
+                    t.identifier(branchBodySection!.name),
+                  ),
+                  render,
+                  intersection,
+                );
+              },
+            );
 
             branchTag.remove();
             expr = testAttr

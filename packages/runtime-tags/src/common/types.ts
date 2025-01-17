@@ -11,7 +11,7 @@ export type Scope<
   ___startNode: Node & ChildNode;
   ___endNode: Node & ChildNode;
   ___cleanup: Set<Scope> | undefined;
-  ___client: 1 | undefined;
+  ___pending: 1 | 0 | undefined;
   ___bound: Map<unknown, unknown> | undefined;
   ___renderer: ClientRenderer | undefined;
   ___abortControllers: Map<string | number, AbortController> | undefined;

@@ -1,4 +1,4 @@
-// size: 425 (min) 241 (brotli)
+// size: 397 (min) 233 (brotli)
 _$.dynamicTagAttrs(1);
 const _onClick__effect = _$.effect("a0", (_scope, { 4: onClick }) =>
     _$.on(_scope[0], "click", onClick),
@@ -9,17 +9,21 @@ const _onClick__effect = _$.effect("a0", (_scope, { 4: onClick }) =>
     _$.dynamicClosure(1, (_scope, clickCount) =>
       _$.data(_scope[0], clickCount),
     ),
-  );
+  ),
+  _setup$myButton_content = (_scope) => {
+    _clickCount$myButton_content._(_scope, _scope._[1]);
+  };
 _$.register(
   "b2",
-  _$.createRendererWithOwner(" ", " ", void 0, () => [
-    _clickCount$myButton_content,
-  ]),
+  _$.createRendererWithOwner(" ", " ", _setup$myButton_content),
 );
 const _clickCount = _$.state(
   1,
-  (_scope, clickCount) => _onClick_(_scope[0], _onClick(_scope)),
-  () => _$.intersections([_$.inChild(0, _onClick_), _$.dynamicSubscribers(1)]),
+  (_scope, clickCount) => {
+    _onClick_(_scope[0], _onClick(_scope)),
+      _clickCount$myButton_content(_scope, clickCount);
+  },
+  () => _$.inChild(0, _onClick_),
 );
 function _onClick(_scope, { 1: clickCount } = _scope) {
   return function () {

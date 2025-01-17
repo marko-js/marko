@@ -36,4 +36,4 @@ export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_y_(_scope, input.y);
 }, () => _$.intersections([_input_a_, _input_b_, _input_x_, _input_y_]));
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, () => _params__);

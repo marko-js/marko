@@ -6,7 +6,7 @@ import {
 } from "../common/types";
 import { attr, normalizeAttrValue } from "./dom";
 import { createDelegator } from "./event";
-import { run } from "./queue";
+import { pendingEffects, run } from "./queue";
 import { resolveCursorPosition } from "./resolve-cursor-position";
 import { isResuming } from "./resume";
 
@@ -178,10 +178,12 @@ export function controllable_select_value(
     scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
   }
 
-  setSelectOptions(
-    scope[nodeAccessor] as HTMLSelectElement,
-    value,
-    valueChange,
+  pendingEffects.unshift(scope, () =>
+    setSelectOptions(
+      scope[nodeAccessor] as HTMLSelectElement,
+      value,
+      valueChange,
+    ),
   );
 }
 export function controllable_select_value_effect(
