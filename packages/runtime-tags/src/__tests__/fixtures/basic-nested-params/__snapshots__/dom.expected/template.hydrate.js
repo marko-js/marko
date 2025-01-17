@@ -1,4 +1,4 @@
-// size: 857 (min) 388 (brotli)
+// size: 843 (min) 378 (brotli)
 const _content_input = _$.dynamicTagAttrs(0),
   _expr_Text_value = _$.intersection(
     2,
@@ -25,13 +25,15 @@ const _content_input = _$.dynamicTagAttrs(0),
   _params_3$child_content = _$.value(2, (_scope, _params_3) =>
     _inner$child_content(_scope, _params_3[0]),
   ),
+  _setup$child_content = (_scope) => {
+    _outer$child_content._(_scope, _scope._[2]);
+  },
   _child_content2 = _$.register(
     "b1",
     _$.createRendererWithOwner(
       "<div><!>.<!></div>",
       "D%c%",
-      void 0,
-      () => [_outer$child_content],
+      _setup$child_content,
       () => _params_3$child_content,
     ),
   ),
@@ -44,22 +46,23 @@ const _content_input = _$.dynamicTagAttrs(0),
       () => _$.inChild(0, _value_),
     ),
   ),
-  _outer$child_content2 = _$.value(2, 0, () => _$.dynamicSubscribers(2)),
-  _params_2$child_content = _$.value(
-    1,
-    (_scope, _params_2) => _outer$child_content2(_scope, _params_2[0]),
-    () => _outer$child_content2,
+  _outer$child_content2 = _$.value(2, (_scope, outer) =>
+    _outer$child_content(_scope, outer),
   ),
-  _setup$child_content = (_scope) => {
-    _scope[0], _content_(_scope[0], _child_content2(_scope));
+  _params_2$child_content = _$.value(1, (_scope, _params_2) =>
+    _outer$child_content2(_scope, _params_2[0]),
+  ),
+  _setup$child_content2 = (_scope) => {
+    _y$child_content._(_scope, _scope._[3]),
+      _scope[0],
+      _content_(_scope[0], _child_content2(_scope));
   };
 _$.register(
   "b3",
   _$.createRendererWithOwner(
     "<div><!></div>",
     "/D%l&",
-    _setup$child_content,
-    () => [_y$child_content],
+    _setup$child_content2,
     () => _params_2$child_content,
   ),
 );

@@ -6,8 +6,6 @@ export { compat } from "./dom/compat";
 export {
   conditional,
   conditionalOnlyChild,
-  inConditionalScope,
-  inLoopScope,
   loopIn,
   loopOf,
   loopTo,
@@ -55,14 +53,13 @@ export {
 } from "./dom/resume";
 export { createScope } from "./dom/scope";
 export {
-  childClosures,
-  closure,
+  conditionalClosure,
   dynamicClosure,
-  dynamicSubscribers,
   effect,
   inChild,
   intersection,
   intersections,
+  loopClosure,
   nextTagId,
   setTagVar,
   setTagVarChange,

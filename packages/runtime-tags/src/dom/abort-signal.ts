@@ -7,7 +7,7 @@ export function resetAbortSignal(scope: Scope, id: string | number) {
   if (controllers) {
     const ctrl = controllers.get(id);
     if (ctrl) {
-      queueEffect(null as any as Scope, () => ctrl.abort());
+      queueEffect(ctrl as any, abort as any);
       controllers.delete(id);
     }
   }
@@ -22,4 +22,8 @@ export function getAbortSignal(scope: Scope, id: string | number) {
   }
 
   return controller.signal;
+}
+
+function abort(ctrl: AbortController) {
+  ctrl.abort();
 }

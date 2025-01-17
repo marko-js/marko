@@ -38,6 +38,7 @@ inserted div0/span0
 removed #text after div0/span0
 inserted div0/#text1
 removed span after div0/#text1
+div0/span0/#text0: " " => "1"
 ```
 
 
@@ -63,6 +64,7 @@ inserted div0/#text0
 removed span after div0/#text0
 inserted div0/span1
 removed #text after div0/span1
+div0/span1/#text0: " " => "1"
 ```
 
 
@@ -86,4 +88,5 @@ inserted div0/span0
 removed #text after div0/span0
 inserted div0/#text1
 removed span after div0/#text1
+div0/span0/#text0: " " => "1"
 ```

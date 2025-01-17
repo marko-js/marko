@@ -1,4 +1,4 @@
-// size: 353 (min) 218 (brotli)
+// size: 343 (min) 218 (brotli)
 _$.dynamicTagAttrs(0);
 const _count$falseChild_content_effect = _$.effect(
     "b0",
@@ -13,12 +13,19 @@ const _count$falseChild_content_effect = _$.effect(
       _$.data(_scope[1], count), _count$falseChild_content_effect(_scope);
     }),
   ),
+  _setup$falseChild_content = (_scope) => {
+    _count$falseChild_content._(_scope, _scope._[1]);
+  },
   _falseChild_content = _$.register(
     "b2",
-    _$.createRendererWithOwner("<button> </button>", " D ", void 0, () => [
-      _count$falseChild_content,
-    ]),
+    _$.createRendererWithOwner(
+      "<button> </button>",
+      " D ",
+      _setup$falseChild_content,
+    ),
   );
 _$.dynamicTagAttrs(0, _falseChild_content);
-const _count = _$.state(1, 0, () => _$.dynamicSubscribers(1));
+const _count = _$.state(1, (_scope, count) =>
+  _count$falseChild_content(_scope, count),
+);
 init();

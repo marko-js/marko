@@ -3,7 +3,9 @@
     "props": {
       "$_$": "r",
       "$_value$ifBody": "a",
-      "$_value$if_content": "e"
+      "$_value$if_content": "e",
+      "$_setup$if_content": "o",
+      "$_if_content": "t"
     }
   }
 }

@@ -5,7 +5,8 @@
       "$init": "t",
       "$_value": "a",
       "$_count$myTag_content_effect": "e",
-      "$_count$myTag_content": "n"
+      "$_count$myTag_content": "n",
+      "$_setup$myTag_content": "i"
     }
   }
 }

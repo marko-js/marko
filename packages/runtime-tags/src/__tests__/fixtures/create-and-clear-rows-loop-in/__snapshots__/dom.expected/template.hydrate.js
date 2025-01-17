@@ -1,17 +1,11 @@
-// size: 354 (min) 156 (brotli)
+// size: 340 (min) 159 (brotli)
 const _key$for_content2 = _$.value(2, (_scope, key) => _$.data(_scope[0], key)),
   _params_3$for_content = _$.value(1, (_scope, _params_3) =>
     _key$for_content2(_scope, _params_3[0]),
   );
 _$.register(
   "a0",
-  _$.createRenderer(
-    "<p> </p>",
-    "D ",
-    void 0,
-    void 0,
-    () => _params_3$for_content,
-  ),
+  _$.createRenderer("<p> </p>", "D ", void 0, () => _params_3$for_content),
 );
 const _text$for_content = _$.value(4, (_scope, text) =>
     _$.data(_scope[1], text),
@@ -26,7 +20,6 @@ _$.register(
   _$.createRenderer(
     "<p><!>: <!></p>",
     "D%c%",
-    void 0,
     void 0,
     () => _params_2$for_content,
   ),

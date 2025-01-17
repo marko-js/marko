@@ -1,4 +1,4 @@
-// size: 445 (min) 245 (brotli)
+// size: 438 (min) 245 (brotli)
 const _item$for_content = _$.value(2, (_scope, item) =>
     _$.data(_scope[0], item),
   ),
@@ -7,7 +7,7 @@ const _item$for_content = _$.value(2, (_scope, item) =>
   ),
   _for_content = _$.register(
     "a0",
-    _$.createRenderer(" ", " ", void 0, void 0, () => _params_2$for_content),
+    _$.createRenderer(" ", " ", void 0, () => _params_2$for_content),
   ),
   _expr_id_items_effect = _$.effect("a1", (_scope, { 3: id, 4: items }) =>
     _$.on(_scope[1], "click", function () {

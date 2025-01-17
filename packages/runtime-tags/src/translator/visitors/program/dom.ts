@@ -3,18 +3,15 @@ import { importDefault } from "@marko/compiler/babel-utils";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import getStyleFile from "../../util/get-style-file";
-import { map } from "../../util/optional";
 import { callRuntime } from "../../util/runtime";
 import {
   forEachSectionReverse,
   getSectionForBody,
   getSectionParentIsOwner,
   isStatefulSection,
-  type Section,
 } from "../../util/sections";
 import {
   getResumeRegisterId,
-  getSignal,
   initValue,
   writeRegisteredFns,
   writeSignals,
@@ -33,7 +30,6 @@ export default {
       const templateIdentifier = t.identifier(domExports.template);
       const walksIdentifier = t.identifier(domExports.walks);
       const setupIdentifier = t.identifier(domExports.setup);
-      const closuresIdentifier = t.identifier(domExports.closures);
       const paramsBinding = program.node.extra.binding;
       const programParamsSignal =
         paramsBinding && bindingHasDownstreamExpressions(paramsBinding)
@@ -50,7 +46,6 @@ export default {
           const tagParamsSignal =
             childSection.params && initValue(childSection.params);
           const { walks, writes, setup } = writer.getSectionMeta(childSection);
-          const closures = getSectionClosuresExpr(childSection);
           const identifier = t.identifier(childSection.name);
           const renderer = callRuntime(
             getSectionParentIsOwner(childSection)
@@ -59,7 +54,6 @@ export default {
             writes,
             walks,
             setup,
-            closures && t.arrowFunctionExpression([], closures),
             tagParamsSignal?.identifier &&
               t.arrowFunctionExpression([], tagParamsSignal.identifier),
           );
@@ -82,8 +76,6 @@ export default {
           );
         }
       });
-
-      const closures = getSectionClosuresExpr(section);
 
       writeSignals(section);
       writeRegisteredFns();
@@ -117,16 +109,6 @@ export default {
         ),
       );
 
-      if (closures) {
-        program.node.body.push(
-          t.exportNamedDeclaration(
-            t.variableDeclaration("const", [
-              t.variableDeclarator(closuresIdentifier, closures),
-            ]),
-          ),
-        );
-      }
-
       program.node.body.push(
         t.exportDefaultDeclaration(
           callRuntime(
@@ -135,7 +117,6 @@ export default {
             templateIdentifier,
             walksIdentifier,
             setupIdentifier,
-            closures && t.arrowFunctionExpression([], closuresIdentifier),
             programParamsSignal?.identifier &&
               t.arrowFunctionExpression([], programParamsSignal.identifier),
           ),
@@ -144,14 +125,3 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.Program>;
-
-function getSectionClosuresExpr(section: Section) {
-  if (section.closures) {
-    return t.arrayExpression(
-      map(
-        section.closures,
-        (closure) => getSignal(section, closure).identifier,
-      ).reverse(),
-    );
-  }
-}

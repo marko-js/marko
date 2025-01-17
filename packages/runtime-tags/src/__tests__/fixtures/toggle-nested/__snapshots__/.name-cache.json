@@ -17,7 +17,11 @@
       "$_if$if_content2": "g",
       "$_if$if_content": "b",
       "$_value2$if_content2": "p",
-      "$_value1$if_content2": "v"
+      "$_value1$if_content2": "v",
+      "$_setup$if_content3": "_",
+      "$_setup$if_content": "C",
+      "$_setup$if_content2": "D",
+      "$_if_content": "R"
     }
   }
 }

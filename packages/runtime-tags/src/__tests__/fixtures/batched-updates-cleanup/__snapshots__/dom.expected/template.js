@@ -1,10 +1,13 @@
 export const _template_ = "<button></button><!><!>";
 export const _walks_ = /* get, over(1), replace, over(1) */" b%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _message$if_content = /* @__PURE__ */_$.closure("message", (_scope, message) => _$.data(_scope["#text/0"], message));
-const _if_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", void 0, () => [_message$if_content]));
+const _message$if_content = /* @__PURE__ */_$.conditionalClosure("#text/1", () => _if_content, (_scope, message) => _$.data(_scope["#text/0"], message));
+const _setup$if_content = _scope => {
+  _message$if_content._(_scope, _scope._["message"]);
+};
+const _if_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", _setup$if_content));
 const _if = /* @__PURE__ */_$.conditional("#text/1", 0);
-const _message = /* @__PURE__ */_$.state("message", 0, () => _$.inConditionalScope(_message$if_content, "#text/1"));
+const _message = /* @__PURE__ */_$.state("message", (_scope, message) => _message$if_content(_scope, message));
 const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
   show
 }) => _$.on(_scope["#button/0"], "click", function () {

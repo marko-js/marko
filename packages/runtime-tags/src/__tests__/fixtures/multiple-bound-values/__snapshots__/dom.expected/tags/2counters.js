@@ -45,4 +45,4 @@ export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_count2Change_(_scope, input.count2Change);
 }, () => _$.intersections([_input_count1_, _input_count1Change_, _input_count2_, _input_count2Change_]));
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/2counters.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/2counters.marko", _template_, _walks_, _setup_, () => _params__);

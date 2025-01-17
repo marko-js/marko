@@ -15,7 +15,8 @@
       "$_content_input": "u",
       "$_content_": "b",
       "$_clickCount$FancyButton_content": "f",
-      "$_FancyButton_content": "g"
+      "$_FancyButton_content": "g",
+      "$_setup$FancyButton_content": "l"
     }
   }
 }

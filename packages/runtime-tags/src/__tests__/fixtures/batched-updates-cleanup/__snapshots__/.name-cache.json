@@ -10,7 +10,8 @@
       "$_show_effect": "i",
       "$_show": "s",
       "$_message$if_content": "m",
-      "$_if_content": "c"
+      "$_if_content": "c",
+      "$_setup$if_content": "d"
     }
   }
 }

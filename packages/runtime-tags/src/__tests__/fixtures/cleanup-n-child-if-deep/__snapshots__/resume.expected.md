@@ -517,10 +517,19 @@ inserted #document/html0/body1/div8
 removed #comment after #document/html0/body1/div8
 inserted #document/html0/body1/div8/div3
 removed #text after #document/html0/body1/div8/div3
+#document/html0/body1/div8/div0/#text0: "" => "Outer"
+#document/html0/body1/div8/span1/#text0: "" => "Outer"
+#document/html0/body1/div8/p2/#text0: "" => "Outer"
 inserted #document/html0/body1/div8/div3/div3
 inserted #document/html0/body1/div8/div3/span4
 inserted #document/html0/body1/div8/div3/p5
 removed #text after #document/html0/body1/div8/div3/p5
+#document/html0/body1/div8/div3/div0/#text0: "" => "Middle"
+#document/html0/body1/div8/div3/span1/#text0: "" => "Middle"
+#document/html0/body1/div8/div3/p2/#text0: "" => "Middle"
+#document/html0/body1/div8/div3/div3/#text0: "" => "Inner"
+#document/html0/body1/div8/div3/span4/#text0: "" => "Inner"
+#document/html0/body1/div8/div3/p5/#text0: "" => "Inner"
 removed #text in #document/html0/body1/pre6
 inserted #text
 removed #text in #document/html0/body1/pre6
@@ -566,9 +575,9 @@ Outer destroyed
 Outer mounted
 Middle mounted
 Inner mounted
-Outer destroyed
-Middle destroyed
 Inner destroyed
+Middle destroyed
+Outer destroyed
     </pre>
     <!--M_*0 #pre/3-->
     <!--M_|0 #text/4 1-->

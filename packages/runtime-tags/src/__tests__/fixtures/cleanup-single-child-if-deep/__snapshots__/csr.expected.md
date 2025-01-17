@@ -307,8 +307,11 @@ inserted div4
 removed #text after div4
 inserted div4/div1
 removed #text after div4/div1
+div4/p0/#text0: " " => "Outer"
 inserted div4/div1/p1
 removed #text after div4/div1/p1
+div4/div1/p0/#text0: " " => "Middle"
+div4/div1/p1/#text0: " " => "Inner"
 removed #text in pre3
 inserted #text
 removed #text in pre3
@@ -348,9 +351,9 @@ Outer destroyed
 Outer mounted
 Middle mounted
 Inner mounted
-Outer destroyed
-Middle destroyed
 Inner destroyed
+Middle destroyed
+Outer destroyed
 </pre>
 <!---->
 ```

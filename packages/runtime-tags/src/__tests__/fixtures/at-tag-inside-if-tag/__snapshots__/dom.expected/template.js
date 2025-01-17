@@ -24,4 +24,4 @@ export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) 
 export function _setup_(_scope) {
   _customTag(_scope["#childScope/0"]);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, () => _params__);

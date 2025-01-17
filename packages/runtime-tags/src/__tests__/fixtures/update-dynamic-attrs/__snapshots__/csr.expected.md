@@ -50,23 +50,22 @@ div1: attr(c) null => "3"
 
 # Render {"value":{}}
 ```html
+<div />
 <div
-  c="3"
+  a="0"
 />
 <div
   a="0"
-  c="3"
-/>
-<div
-  a="0"
-  c="3"
 />
 ```
 
 # Mutations
 ```
+div0: attr(c) "3" => null
 div0: attr(b) "2" => null
+div2: attr(c) "3" => null
 div2: attr(b) "2" => null
+div1: attr(c) "3" => null
 div1: attr(b) "2" => null
 ```
 
@@ -84,9 +83,7 @@ div1: attr(b) "2" => null
 
 # Mutations
 ```
-div0: attr(c) "3" => null
-div2: attr(c) "3" => null
-div1: attr(c) "3" => null
+
 ```
 
 

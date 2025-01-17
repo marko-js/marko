@@ -1,4 +1,4 @@
-// size: 1316 (min) 397 (brotli)
+// size: 1281 (min) 396 (brotli)
 const getStringBy = _getStringBy,
   getFunctionBy = _getFunctionBy,
   getMissingBy = _getMissingBy,
@@ -11,7 +11,7 @@ const getStringBy = _getStringBy,
   ),
   _for_content5 = _$.register(
     "a4",
-    _$.createRenderer(" ", " ", void 0, void 0, () => _params_6$for_content),
+    _$.createRenderer(" ", " ", void 0, () => _params_6$for_content),
   ),
   _text$for_content4 = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
   _pattern_4$for_content = _$.value(2, (_scope, _pattern_4) =>
@@ -22,7 +22,7 @@ const getStringBy = _getStringBy,
   ),
   _for_content4 = _$.register(
     "a5",
-    _$.createRenderer(" ", " ", void 0, void 0, () => _params_5$for_content),
+    _$.createRenderer(" ", " ", void 0, () => _params_5$for_content),
   ),
   _text$for_content3 = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
   _pattern_3$for_content = _$.value(2, (_scope, _pattern_3) =>
@@ -33,7 +33,7 @@ const getStringBy = _getStringBy,
   ),
   _for_content3 = _$.register(
     "a6",
-    _$.createRenderer(" ", " ", void 0, void 0, () => _params_4$for_content),
+    _$.createRenderer(" ", " ", void 0, () => _params_4$for_content),
   ),
   _text$for_content2 = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
   _pattern_2$for_content = _$.value(2, (_scope, _pattern_2) =>
@@ -44,7 +44,7 @@ const getStringBy = _getStringBy,
   ),
   _for_content2 = _$.register(
     "a7",
-    _$.createRenderer(" ", " ", void 0, void 0, () => _params_3$for_content),
+    _$.createRenderer(" ", " ", void 0, () => _params_3$for_content),
   ),
   _text$for_content = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
   _pattern_$for_content = _$.value(2, (_scope, _pattern_) =>
@@ -55,7 +55,7 @@ const getStringBy = _getStringBy,
   ),
   _for_content = _$.register(
     "a8",
-    _$.createRenderer(" ", " ", void 0, void 0, () => _params_2$for_content),
+    _$.createRenderer(" ", " ", void 0, () => _params_2$for_content),
   ),
   _for5 = _$.loopOf(4, _for_content5),
   _for4 = _$.loopOf(3, _for_content4),

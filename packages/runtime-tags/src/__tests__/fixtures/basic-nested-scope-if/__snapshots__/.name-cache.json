@@ -14,7 +14,9 @@
       "$_else_content": "m",
       "$_clickCount$if_content_effect": "u",
       "$_clickCount$if_content": "l",
-      "$_if_content": "p"
+      "$_if_content": "p",
+      "$_setup$else_content": "_",
+      "$_setup$if_content": "f"
     }
   }
 }

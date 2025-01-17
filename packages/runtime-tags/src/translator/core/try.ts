@@ -17,10 +17,7 @@ import {
   getSectionForBody,
   setSectionParentIsOwner,
 } from "../util/sections";
-import {
-  setSubscriberBuilder,
-  writeHTMLResumeStatements,
-} from "../util/signals";
+import { writeHTMLResumeStatements } from "../util/signals";
 import { propsToExpression, translateAttrs } from "../util/translate-attrs";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
@@ -105,8 +102,5 @@ function setAllSectionsParentIsOwner(tag: t.NodePath<t.MarkoTag>) {
   const bodySection = getSectionForBody(tag.get("body"));
   if (bodySection) {
     setSectionParentIsOwner(bodySection, true);
-    // TODO: this is a hack to get around the fact that we don't have a way to
-    // know if a scope requires dynamic subscriptions
-    setSubscriberBuilder(tag, (signal) => signal);
   }
 }

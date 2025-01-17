@@ -1,7 +1,7 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import { ResumeSymbol, type Scope } from "../common/types";
 import { onDestroy } from "./scope";
-import type { IntersectionSignal, SignalOp, ValueSignal } from "./signals";
+import type { Signal, SignalOp } from "./signals";
 
 interface Renders {
   (renderId: string): Render | RenderData;
@@ -196,7 +196,7 @@ export function register<T>(id: string, obj: T): T {
   return obj;
 }
 
-export function registerBoundSignal<T extends ValueSignal>(
+export function registerBoundSignal<T extends Signal<unknown>>(
   id: string,
   signal: T,
 ): T {
@@ -256,7 +256,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 
 export function registerSubscriber(
   id: string,
-  signal: IntersectionSignal,
+  signal: Signal<never>,
   // ownerValueAccessor: string | number,
   // getOwnerScope = (scope: Scope) => scope._!
 ) {

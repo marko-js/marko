@@ -11,18 +11,22 @@ const _expr_outer_inner$for_content = /* @__PURE__ */_$.intersection(2, _scope =
   } = _scope;
   _child_input_name(_scope["#childScope/0"], `${outer}.${inner}`);
 }, () => _$.inChild("#childScope/0", _child_input_name));
-const _outer$for_content = /* @__PURE__ */_$.closure("outer", 0, void 0, () => _expr_outer_inner$for_content);
+const _outer$for_content = /* @__PURE__ */_$.loopClosure("#text/0", 0, () => _expr_outer_inner$for_content);
 const _inner$for_content = /* @__PURE__ */_$.value("inner", 0, () => _expr_outer_inner$for_content);
 const _params_3$for_content = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _inner$for_content(_scope, _params_3[0]), () => _inner$for_content);
 const _setup$for_content = _scope => {
+  _outer$for_content._(_scope, _scope._["outer"]);
   _child(_scope["#childScope/0"]);
 };
-const _for_content2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$for_content, () => [_outer$for_content], () => _params_3$for_content));
+const _for_content2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$for_content, () => _params_3$for_content));
 const _for$for_content = /* @__PURE__ */_$.loopOf("#text/0", _for_content2);
-const _outer$for_content2 = /* @__PURE__ */_$.value("outer", 0, () => _$.inLoopScope(_outer$for_content, "#text/0"));
-const _items$for_content = /* @__PURE__ */_$.closure("items", (_scope, items) => _for$for_content(_scope, [items]), void 0, () => _for$for_content);
-const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outer$for_content2(_scope, _params_2[0]), () => _outer$for_content2);
-const _for_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", void 0, () => [_items$for_content], () => _params_2$for_content));
+const _outer$for_content2 = /* @__PURE__ */_$.value("outer", (_scope, outer) => _outer$for_content(_scope, outer));
+const _items$for_content = /* @__PURE__ */_$.loopClosure("#text/1", (_scope, items) => _for$for_content(_scope, [items]), () => _for$for_content);
+const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outer$for_content2(_scope, _params_2[0]));
+const _setup$for_content2 = _scope => {
+  _items$for_content._(_scope, _scope._["items"]);
+};
+const _for_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", _setup$for_content2, () => _params_2$for_content));
 const _for = /* @__PURE__ */_$.loopOf("#text/1", _for_content);
 const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {
   items
@@ -32,7 +36,8 @@ const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {
 const _items = /* @__PURE__ */_$.state("items", (_scope, items) => {
   _items_effect(_scope);
   _for(_scope, [items]);
-}, () => _$.intersections([_for, _$.inLoopScope(_items$for_content, "#text/1")]));
+  _items$for_content(_scope, items);
+}, () => _for);
 export function _setup_(_scope) {
   _items(_scope, [0, 1]);
 }

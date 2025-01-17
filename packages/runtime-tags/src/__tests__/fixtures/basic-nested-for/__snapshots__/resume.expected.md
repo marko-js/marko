@@ -112,10 +112,15 @@ container.querySelector("button").click()
 inserted #document/html0/body1/#comment13
 inserted #text
 inserted #document/html0/body1/#comment17
-inserted #document/html0/body1/div5
-inserted #document/html0/body1/div12
 inserted #document/html0/body1/div14
 inserted #document/html0/body1/div15
 inserted #document/html0/body1/div16
 removed #text after #document/html0/body1/#comment13
+inserted #document/html0/body1/div5
+#document/html0/body1/div5/#text0: " " => "0.2"
+inserted #document/html0/body1/div12
+#document/html0/body1/div12/#text0: " " => "1.2"
+#document/html0/body1/div14/#text0: " " => "2.0"
+#document/html0/body1/div15/#text0: " " => "2.1"
+#document/html0/body1/div16/#text0: " " => "2.2"
 ```

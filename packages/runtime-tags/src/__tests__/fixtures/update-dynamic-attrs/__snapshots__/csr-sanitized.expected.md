@@ -36,16 +36,12 @@
 
 # Render {"value":{}}
 ```html
+<div />
 <div
-  c="3"
+  a="0"
 />
 <div
   a="0"
-  c="3"
-/>
-<div
-  a="0"
-  c="3"
 />
 ```
 

@@ -335,8 +335,8 @@ Outer destroyed
 Outer mounted
 Middle mounted
 Inner mounted
-Outer destroyed
-Middle destroyed
 Inner destroyed
+Middle destroyed
+Outer destroyed
 </pre>
 ```

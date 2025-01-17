@@ -1,4 +1,4 @@
-// size: 1233 (min) 522 (brotli)
+// size: 1198 (min) 504 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 3: name, 4: write }) =>
@@ -32,10 +32,9 @@ const _expr_name_write_effect = _$.effect(
     (_scope) => _scope._._,
     () => _$.inChild(0, _write_),
   ),
-  _outerItem$for_content2 = _$.closure(
-    3,
+  _outerItem$for_content2 = _$.loopClosure(
+    1,
     0,
-    void 0,
     () => _expr_outerItem_middleItem$for_content,
   ),
   _middleItem$for_content = _$.value(
@@ -49,7 +48,9 @@ const _expr_name_write_effect = _$.effect(
     () => _middleItem$for_content,
   ),
   _setup$for_content2 = (_scope) => {
-    _scope[0];
+    _write$for_content2._(_scope, _scope._._[4]),
+      _outerItem$for_content2._(_scope, _scope._[3]),
+      _scope[0];
   },
   _for_content2 = _$.register(
     "b1",
@@ -57,30 +58,26 @@ const _expr_name_write_effect = _$.effect(
       "<div><div> </div></div>",
       "D/D l&",
       _setup$for_content2,
-      () => [_write$for_content2, _outerItem$for_content2],
       () => _params_3$for_content,
     ),
   ),
   _for$for_content = _$.loopOf(1, _for_content2),
-  _write$for_content = _$.closure(
-    4,
+  _write$for_content = _$.loopClosure(
+    2,
     (_scope, write) => _write_(_scope[0], write),
-    void 0,
     () => _$.inChild(0, _write_),
   ),
   _outerItem$for_content = _$.value(
     3,
-    (_scope, outerItem) => _name_(_scope[0], `${outerItem}`),
-    () =>
-      _$.intersections([
-        _$.inChild(0, _name_),
-        _$.inLoopScope(_outerItem$for_content2, 1),
-      ]),
+    (_scope, outerItem) => {
+      _name_(_scope[0], `${outerItem}`),
+        _outerItem$for_content2(_scope, outerItem);
+    },
+    () => _$.inChild(0, _name_),
   ),
-  _items$for_content = _$.closure(
-    3,
+  _items$for_content = _$.loopClosure(
+    2,
     (_scope, items) => _for$for_content(_scope, [items]),
-    void 0,
     () => _for$for_content,
   ),
   _params_2$for_content = _$.value(
@@ -89,7 +86,9 @@ const _expr_name_write_effect = _$.effect(
     () => _outerItem$for_content,
   ),
   _setup$for_content = (_scope) => {
-    _scope[0];
+    _write$for_content._(_scope, _scope._[4]),
+      _scope[0],
+      _items$for_content._(_scope, _scope._[3]);
   },
   _for_content = _$.register(
     "b2",
@@ -97,7 +96,6 @@ const _expr_name_write_effect = _$.effect(
       "<div><div> </div><!></div>",
       "D/D l&%",
       _setup$for_content,
-      () => [_write$for_content, _items$for_content],
       () => _params_2$for_content,
     ),
   ),
@@ -110,9 +108,11 @@ const _expr_name_write_effect = _$.effect(
   _items = _$.state(
     3,
     (_scope, items) => {
-      _items_effect(_scope), _for(_scope, [items]);
+      _items_effect(_scope),
+        _for(_scope, [items]),
+        _items$for_content(_scope, items);
     },
-    () => _$.intersections([_for, _$.inLoopScope(_items$for_content, 2)]),
+    () => _for,
   );
 _$.register("b0", function (_scope) {
   return function (msg) {

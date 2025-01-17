@@ -69,13 +69,18 @@ function walkInternal(
         walker.nextNode();
       }
     } else if (value === WalkCode.BeginChild) {
+      const childScope = (scope[
+        MARKO_DEBUG
+          ? getDebugKey(currentScopeIndex++, "#childScope")
+          : currentScopeIndex++
+      ] = createScope(scope.$global));
+      // TODO: shouldn't need startNode here only for direct children of controlflow.
+      // We need this currently because the scope in which the controlflow owner resides is returned
+      // we should change it to return the scope _controlled_ by the controlflow
+      childScope.___startNode = walker.currentNode as ChildNode;
       currentWalkIndex = walkInternal(
         walkCodes,
-        (scope[
-          MARKO_DEBUG
-            ? getDebugKey(currentScopeIndex++, "#childScope")
-            : currentScopeIndex++
-        ] = createScope(scope.$global)),
+        childScope,
         cleanupOwnerScope,
         currentWalkIndex,
       )!;

@@ -1,4 +1,4 @@
-// size: 787 (min) 404 (brotli)
+// size: 788 (min) 404 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 5: name, 6: write }) => {
@@ -21,10 +21,9 @@ const _expr_name_write_effect = _$.effect(
     },
     () => _expr_name_write,
   ),
-  _write$for_content = _$.closure(
-    4,
+  _write$for_content = _$.loopClosure(
+    2,
     (_scope, write) => _write_(_scope[0], write),
-    void 0,
     () => _$.inChild(0, _write_),
   ),
   _item$for_content = _$.value(
@@ -38,7 +37,7 @@ const _expr_name_write_effect = _$.effect(
     () => _item$for_content,
   ),
   _setup$for_content = (_scope) => {
-    _scope[0];
+    _write$for_content._(_scope, _scope._[4]), _scope[0];
   },
   _for_content = _$.register(
     "b1",
@@ -46,7 +45,6 @@ const _expr_name_write_effect = _$.effect(
       "<div> </div><span> </span><p> </p>",
       "/D lD lD l&",
       _setup$for_content,
-      () => [_write$for_content],
       () => _params_2$for_content,
     ),
   ),

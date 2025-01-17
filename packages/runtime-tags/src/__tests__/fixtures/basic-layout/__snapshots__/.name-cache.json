@@ -3,7 +3,8 @@
     "props": {
       "$_$": "r",
       "$_name$layoutBody": "e",
-      "$_name$layout_content": "t"
+      "$_name$layout_content": "t",
+      "$_setup$layout_content": "a"
     }
   }
 }

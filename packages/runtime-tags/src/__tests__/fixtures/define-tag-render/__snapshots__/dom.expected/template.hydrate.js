@@ -1,4 +1,4 @@
-// size: 399 (min) 247 (brotli)
+// size: 392 (min) 243 (brotli)
 const _y$define_content_effect = _$.effect("a0", (_scope, { 7: y }) =>
     _$.on(_scope[2], "click", function () {
       _y$define_content(_scope, y + 1);
@@ -27,7 +27,6 @@ _$.register(
     "<div>Hello <!> <!></div><button> </button>",
     "Db%c%l D ",
     _setup$define_content,
-    void 0,
     () => _params_2$define_content,
   ),
 ),

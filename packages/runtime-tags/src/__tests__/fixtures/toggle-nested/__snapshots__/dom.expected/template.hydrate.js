@@ -1,4 +1,4 @@
-// size: 551 (min) 216 (brotli)
+// size: 611 (min) 226 (brotli)
 const _value2$if_content = _$.registerSubscriber(
     "a0",
     _$.dynamicClosure(
@@ -7,11 +7,12 @@ const _value2$if_content = _$.registerSubscriber(
       (_scope) => _scope._._,
     ),
   ),
+  _setup$if_content3 = (_scope) => {
+    _value2$if_content._(_scope, _scope._._[5]);
+  },
   _if_content3 = _$.register(
     "a1",
-    _$.createRenderer("<span> </span>", "D ", void 0, () => [
-      _value2$if_content,
-    ]),
+    _$.createRenderer("<span> </span>", "D ", _setup$if_content3),
   ),
   _value1$if_content = _$.registerSubscriber(
     "a2",
@@ -21,30 +22,32 @@ const _value2$if_content = _$.registerSubscriber(
       (_scope) => _scope._._,
     ),
   ),
+  _setup$if_content = (_scope) => {
+    _value1$if_content._(_scope, _scope._._[4]);
+  },
   _if_content2 = _$.register(
     "a3",
-    _$.createRenderer("<span> </span>", "D ", void 0, () => [
-      _value1$if_content,
-    ]),
+    _$.createRenderer("<span> </span>", "D ", _setup$if_content),
   ),
   _if$if_content2 = _$.conditional(1, 0),
   _if$if_content = _$.conditional(0, 0),
-  _value2$if_content2 = _$.closure(
-    5,
+  _value2$if_content2 = _$.conditionalClosure(
+    0,
+    () => _if_content,
     (_scope, value2) => _if$if_content2(_scope, value2 ? _if_content3 : null),
-    void 0,
     () => _if$if_content2,
   ),
-  _value1$if_content2 = _$.closure(
-    4,
+  _value1$if_content2 = _$.conditionalClosure(
+    0,
+    () => _if_content,
     (_scope, value1) => _if$if_content(_scope, value1 ? _if_content2 : null),
-    void 0,
     () => _if$if_content,
+  ),
+  _setup$if_content2 = (_scope) => {
+    _value1$if_content2._(_scope, _scope._[4]),
+      _value2$if_content2._(_scope, _scope._[5]);
+  },
+  _if_content = _$.register(
+    "a4",
+    _$.createRenderer("<!><!><!><!>", "D%b%D", _setup$if_content2),
   );
-_$.register(
-  "a4",
-  _$.createRenderer("<!><!><!><!>", "D%b%D", void 0, () => [
-    _value2$if_content2,
-    _value1$if_content2,
-  ]),
-);

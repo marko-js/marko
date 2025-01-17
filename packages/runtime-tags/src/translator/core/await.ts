@@ -20,7 +20,6 @@ import {
 } from "../util/sections";
 import {
   setForceResumeScope,
-  setSubscriberBuilder,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { toFirstExpressionOrBlock } from "../util/to-first-expression-or-block";
@@ -107,9 +106,6 @@ export default {
         }
 
         writer.flushInto(tag);
-        // TODO: this is a hack to get around the fact that we don't have a way to
-        // know if a scope requires dynamic subscriptions
-        setSubscriberBuilder(tag, (() => {}) as any);
         writeHTMLResumeStatements(tagBody);
 
         tag
@@ -139,9 +135,6 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
-        // TODO: this is a hack to get around the fact that we don't have a way to
-        // know if a scope requires dynamic subscriptions
-        setSubscriberBuilder(tag, (signal) => signal);
       },
       exit(tag) {
         tag.remove();

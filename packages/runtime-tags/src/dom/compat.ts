@@ -65,13 +65,7 @@ export const compat = {
     clone: Renderer["___clone"],
     args: Renderer["___args"],
   ) {
-    const renderer = createRenderer(
-      "",
-      undefined,
-      setup,
-      undefined,
-      args && (() => args),
-    );
+    const renderer = createRenderer("", undefined, setup, args && (() => args));
     renderer.___clone = clone;
     return renderer;
   },
@@ -99,12 +93,6 @@ export const compat = {
     component.effects = prepareEffects(() => {
       if (!scope) {
         scope = component.scope = createScopeWithRenderer(renderer, out.global);
-        const closures = renderer.___closureSignals;
-        if (closures) {
-          for (const signal of closures) {
-            signal(component.scope, CLEAN);
-          }
-        }
       } else {
         applyArgs(scope, MARK);
         existing = true;

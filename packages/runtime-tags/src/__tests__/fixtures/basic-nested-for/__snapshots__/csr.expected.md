@@ -76,10 +76,15 @@ container.querySelector("button").click()
 inserted #comment11
 inserted #text
 inserted #comment15
-inserted div4
-inserted div9
 inserted div12
 inserted div13
 inserted div14
 removed #text after #comment11
+inserted div4
+inserted div9
+div4/#text0: " " => "0.2"
+div9/#text0: " " => "1.2"
+div12/#text0: " " => "2.0"
+div13/#text0: " " => "2.1"
+div14/#text0: " " => "2.2"
 ```

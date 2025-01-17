@@ -10,6 +10,9 @@ export default function createMutationTracker(
   window: JSDOM["window"],
   container: ParentNode,
 ) {
+  window.addEventListener("error", console.error);
+  window.addEventListener("unhandledrejection", console.error);
+
   let connected = true;
   const result: string[] = [];
   const sanitizedResult: string[] = [];

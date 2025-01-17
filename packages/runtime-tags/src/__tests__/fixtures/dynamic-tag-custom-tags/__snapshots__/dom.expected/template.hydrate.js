@@ -1,4 +1,4 @@
-// size: 655 (min) 285 (brotli)
+// size: 641 (min) 280 (brotli)
 const _setup_$1 = () => {},
   _value_$1 = _$.value(3, (_scope, value) => _$.data(_scope[0], value)),
   _input_$1 = _$.value(2, (_scope, input) => _value_$1(_scope, input.value)),
@@ -10,7 +10,6 @@ var child1 = _$.createTemplate(
   "<div>Child 1 has <!></div>",
   "Db%l",
   _setup_$1,
-  void 0,
   () => _params__$1,
 );
 const _setup_ = () => {},
@@ -22,7 +21,6 @@ var child2 = _$.createTemplate(
   "<div>Child 2 has <!></div>",
   "Db%l",
   _setup_,
-  void 0,
   () => _params__,
 );
 const _tagName_input = _$.dynamicTagAttrs(0),

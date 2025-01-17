@@ -8,7 +8,8 @@
       "$_onClick": "n",
       "$_clickCount$myButtonBody": "s",
       "$_clickCount": "o",
-      "$_clickCount$myButton_content": "a"
+      "$_clickCount$myButton_content": "a",
+      "$_setup$myButton_content": "m"
     }
   }
 }

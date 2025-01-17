@@ -13,8 +13,11 @@ const _count$child_content = _$.registerSubscriber("__tests__/template.marko_1_c
   _$.data(_scope["#text/1"], count);
   _count$child_content_effect(_scope);
 }));
-const _child_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<button> </button>", /* get, next(1), get */" D ", void 0, () => [_count$child_content]));
-const _count = /* @__PURE__ */_$.state("count", 0, () => _$.dynamicSubscribers("count"));
+const _setup$child_content = _scope => {
+  _count$child_content._(_scope, _scope._["count"]);
+};
+const _child_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<button> </button>", /* get, next(1), get */" D ", _setup$child_content));
+const _count = /* @__PURE__ */_$.state("count", (_scope, count) => _count$child_content(_scope, count));
 export function _setup_(_scope) {
   _child(_scope["#childScope/0"]);
   _count(_scope, 0);

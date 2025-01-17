@@ -363,10 +363,19 @@ inserted div4
 removed #text after div4
 inserted div4/div3
 removed #text after div4/div3
+div4/div0/#text0: "" => "Outer"
+div4/span1/#text0: "" => "Outer"
+div4/p2/#text0: "" => "Outer"
 inserted div4/div3/div3
 inserted div4/div3/span4
 inserted div4/div3/p5
 removed #text after div4/div3/p5
+div4/div3/div0/#text0: "" => "Middle"
+div4/div3/span1/#text0: "" => "Middle"
+div4/div3/p2/#text0: "" => "Middle"
+div4/div3/div3/#text0: "" => "Inner"
+div4/div3/span4/#text0: "" => "Inner"
+div4/div3/p5/#text0: "" => "Inner"
 removed #text in pre3
 inserted #text
 removed #text in pre3
@@ -406,9 +415,9 @@ Outer destroyed
 Outer mounted
 Middle mounted
 Inner mounted
-Outer destroyed
-Middle destroyed
 Inner destroyed
+Middle destroyed
+Outer destroyed
 </pre>
 <!---->
 ```

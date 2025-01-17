@@ -7,15 +7,9 @@ import {
 import { setConditionalRendererOnlyChild } from "./control-flow";
 import { attrs } from "./dom";
 import { parseHTMLOrSingleNode as parseHTMLFragmentOrFirstNode } from "./parse-html";
+import { queueRender } from "./queue";
 import { createScope } from "./scope";
-import {
-  CLEAN,
-  DIRTY,
-  type IntersectionSignal,
-  MARK,
-  type SignalOp,
-  type ValueSignal,
-} from "./signals";
+import { CLEAN, DIRTY, MARK, type Signal, type SignalOp } from "./signals";
 import { trimWalkString, walk } from "./walker";
 
 export type Renderer = {
@@ -23,10 +17,9 @@ export type Renderer = {
   ___template: string;
   ___walks: string;
   ___setup: SetupFn | undefined;
-  ___closureSignals: Set<IntersectionSignal>;
   ___clone: () => Node;
   ___sourceNode: Node | undefined;
-  ___args: ValueSignal | undefined;
+  ___args: Signal<unknown> | undefined;
   ___owner: Scope | undefined;
 };
 
@@ -41,11 +34,6 @@ export function createScopeWithRenderer(
   newScope._ = newScope.___cleanupOwner = renderer.___owner || ownerScope;
   newScope.___renderer = renderer;
   initRenderer(renderer, newScope);
-  if (renderer.___closureSignals) {
-    for (const signal of renderer.___closureSignals) {
-      signal.___subscribe?.(newScope);
-    }
-  }
   return newScope;
 }
 
@@ -83,7 +71,7 @@ export function initRenderer(renderer: Renderer, scope: Scope) {
       ? dom.lastChild!
       : (dom as ChildNode);
   if (renderer.___setup) {
-    renderer.___setup(scope);
+    queueRender(scope, renderer.___setup);
   }
   return dom;
 }
@@ -146,11 +134,9 @@ export function createRendererWithOwner(
   template: string,
   rawWalks?: string,
   setup?: SetupFn,
-  getClosureSignals?: () => IntersectionSignal[],
-  getArgs?: () => ValueSignal,
+  getArgs?: () => Signal<unknown>,
 ) {
-  let args: ValueSignal | undefined;
-  let closureSignals: Set<IntersectionSignal> | undefined;
+  let args: Signal<unknown> | undefined;
   const id = MARKO_DEBUG ? Symbol("Marko Renderer") : ({} as any as symbol);
   const walks = rawWalks ? /* @__PURE__ */ trimWalkString(rawWalks) : " ";
   return (owner?: Scope): Renderer => {
@@ -165,9 +151,6 @@ export function createRendererWithOwner(
       get ___args() {
         return (args ||= getArgs?.());
       },
-      get ___closureSignals() {
-        return (closureSignals ||= new Set(getClosureSignals?.()));
-      },
     };
   };
 }
@@ -176,16 +159,9 @@ export function createRenderer(
   template: string,
   walks?: string,
   setup?: SetupFn,
-  getClosureSignals?: () => IntersectionSignal[],
-  getArgs?: () => ValueSignal,
+  getArgs?: () => Signal<unknown>,
 ) {
-  return createRendererWithOwner(
-    template,
-    walks,
-    setup,
-    getClosureSignals,
-    getArgs,
-  )();
+  return createRendererWithOwner(template, walks, setup, getArgs)();
 }
 
 function _clone(this: Renderer) {

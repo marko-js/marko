@@ -62,6 +62,7 @@ removed #comment after #document/html0/body1/div0/span0
 removed #document/html0/body1/div0/#comment1 after span
 inserted #document/html0/body1/div0/#comment1
 removed span after #document/html0/body1/div0/#comment1
+#document/html0/body1/div0/span0/#text0: " " => "1"
 ```
 
 
@@ -98,6 +99,7 @@ inserted #document/html0/body1/div0/#comment0
 removed span after #document/html0/body1/div0/#comment0
 inserted #document/html0/body1/div0/span1
 removed #comment after #document/html0/body1/div0/span1
+#document/html0/body1/div0/span1/#text0: " " => "1"
 ```
 
 
@@ -132,4 +134,5 @@ inserted #document/html0/body1/div0/span0
 removed #comment after #document/html0/body1/div0/span0
 inserted #document/html0/body1/div0/#comment1
 removed span after #document/html0/body1/div0/#comment1
+#document/html0/body1/div0/span0/#text0: " " => "1"
 ```

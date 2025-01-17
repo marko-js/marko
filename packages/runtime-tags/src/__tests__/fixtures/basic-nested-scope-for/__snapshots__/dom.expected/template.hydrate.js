@@ -1,4 +1,4 @@
-// size: 277 (min) 180 (brotli)
+// size: 263 (min) 174 (brotli)
 const _expr_selected_num$for_content = _$.intersection(2, (_scope) => {
   const {
     _: { 1: selected },
@@ -12,11 +12,12 @@ _$.effect("a0", (_scope, { 3: num }) =>
     _selected(_scope._, num);
   }),
 );
-const _selected$for_content = _$.closure(
-    1,
+const _selected$for_content = _$.loopClosure(
     0,
-    void 0,
+    0,
     () => _expr_selected_num$for_content,
   ),
-  _selected = _$.state(1, 0, () => _$.inLoopScope(_selected$for_content, 0));
+  _selected = _$.state(1, (_scope, selected) =>
+    _selected$for_content(_scope, selected),
+  );
 init();

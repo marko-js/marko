@@ -14,4 +14,4 @@ function _valueChange(_scope) {
   };
 }
 _$.register("__tests__/tags/my-let.marko_0/valueChange", _valueChange);
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-let.marko", _template_, _walks_, _setup_, void 0, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-let.marko", _template_, _walks_, _setup_, () => _params__);

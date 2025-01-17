@@ -5,16 +5,20 @@ import { _setup_ as _child, _content_ as _child_input_content, _value_ as _child
 const _inner$child_content = /* @__PURE__ */_$.value("inner", (_scope, inner) => _$.data(_scope["#text/1"], inner));
 const _outer$child_content = _$.registerSubscriber("__tests__/template.marko_2_outer/subscriber", /* @__PURE__ */_$.dynamicClosure("outer", (_scope, outer) => _$.data(_scope["#text/0"], outer)));
 const _params_3$child_content = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _inner$child_content(_scope, _params_3[0]));
-const _child_content2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div><!>.<!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, () => [_outer$child_content], () => _params_3$child_content));
-const _y$child_content = _$.registerSubscriber("__tests__/template.marko_1_y/subscriber", /* @__PURE__ */_$.dynamicClosure("y", (_scope, y) => _child_input_value(_scope["#childScope/0"], y), void 0, () => _$.inChild("#childScope/0", _child_input_value)));
-const _outer$child_content2 = /* @__PURE__ */_$.value("outer", 0, () => _$.dynamicSubscribers("outer"));
-const _params_2$child_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outer$child_content2(_scope, _params_2[0]), () => _outer$child_content2);
 const _setup$child_content = _scope => {
+  _outer$child_content._(_scope, _scope._["outer"]);
+};
+const _child_content2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div><!>.<!></div>", /* next(1), replace, over(2), replace */"D%c%", _setup$child_content, () => _params_3$child_content));
+const _y$child_content = _$.registerSubscriber("__tests__/template.marko_1_y/subscriber", /* @__PURE__ */_$.dynamicClosure("y", (_scope, y) => _child_input_value(_scope["#childScope/0"], y), void 0, () => _$.inChild("#childScope/0", _child_input_value)));
+const _outer$child_content2 = /* @__PURE__ */_$.value("outer", (_scope, outer) => _outer$child_content(_scope, outer));
+const _params_2$child_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outer$child_content2(_scope, _params_2[0]));
+const _setup$child_content2 = _scope => {
+  _y$child_content._(_scope, _scope._["y"]);
   _child(_scope["#childScope/0"]);
   _child_input_content(_scope["#childScope/0"], _child_content2(_scope));
 };
-const _child_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$child_content, () => [_y$child_content], () => _params_2$child_content));
-const _y = /* @__PURE__ */_$.state("y", 0, () => _$.dynamicSubscribers("y"));
+const _child_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$child_content2, () => _params_2$child_content));
+const _y = /* @__PURE__ */_$.state("y", (_scope, y) => _y$child_content(_scope, y));
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
   x
 }) => _$.on(_scope["#button/0"], "click", function () {
