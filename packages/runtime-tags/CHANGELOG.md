@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.22
+
+### Patch Changes
+
+- [#2466](https://github.com/marko-js/marko/pull/2466) [`34e85cc`](https://github.com/marko-js/marko/commit/34e85ccd4f1944372ac6ed0a0911fdd9be2eac6c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure external style files are imported for tags api component.
+
 ## 0.3.21
 
 ### Patch Changes
