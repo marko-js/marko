@@ -382,36 +382,36 @@ declare global {
          * Fires after printing the document.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-afterprint
          */
-        onAfterprint?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-afterprint"?: this["onAfterprint"];
+        onAfterPrint?: AttrEventHandler<Event, HTMLBodyElement>;
+        "on-afterprint"?: this["onAfterPrint"];
 
         /**
          * Fires before printing the document.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforeprint
          */
-        onBeforeprint?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-beforeprint"?: this["onBeforeprint"];
+        onBeforePrint?: AttrEventHandler<Event, HTMLBodyElement>;
+        "on-beforeprint"?: this["onBeforePrint"];
 
         /**
          * Fired when the page is about to be unloaded, in case the page would like to show a warning prompt.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforeunload
          */
-        onBeforeunload?: AttrEventHandler<BeforeUnloadEvent, HTMLBodyElement>;
-        "on-beforeunload"?: this["onBeforeunload"];
+        onBeforeUnload?: AttrEventHandler<BeforeUnloadEvent, HTMLBodyElement>;
+        "on-beforeunload"?: this["onBeforeUnload"];
 
         /**
          * Fired when the fragment part of the document's URL changes.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-hashchange
          */
-        onHashchange?: AttrEventHandler<HashChangeEvent, HTMLBodyElement>;
-        "on-hashchange"?: this["onHashchange"];
+        onHashChange?: AttrEventHandler<HashChangeEvent, HTMLBodyElement>;
+        "on-hashchange"?: this["onHashChange"];
 
         /**
          * Fired when the user's preferred languages change.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-languagechange
          */
-        onLanguagechange?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-languagechange"?: this["onLanguagechange"];
+        onLanguageChange?: AttrEventHandler<Event, HTMLBodyElement>;
+        "on-languagechange"?: this["onLanguageChange"];
 
         /**
          * Fired when the window receives a message.
@@ -424,8 +424,8 @@ declare global {
          * Fired when the window receives an error message.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-messageerror
          */
-        onMessageerror?: AttrEventHandler<MessageEvent, HTMLBodyElement>;
-        "on-messageerror"?: this["onMessageerror"];
+        onMessageError?: AttrEventHandler<MessageEvent, HTMLBodyElement>;
+        "on-messageerror"?: this["onMessageError"];
 
         /**
          * Fired when the network connection is lost.
@@ -445,29 +445,29 @@ declare global {
          * Fired when the page's session history entry stops being the active entry.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-pagehide
          */
-        onPagehide?: AttrEventHandler<PageTransitionEvent, HTMLBodyElement>;
-        "on-pagehide"?: this["onPagehide"];
+        onPageHide?: AttrEventHandler<PageTransitionEvent, HTMLBodyElement>;
+        "on-pagehide"?: this["onPageHide"];
 
         /**
          * Fired when the page's session history entry becomes the active entry.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-pageshow
          */
-        onPageshow?: AttrEventHandler<PageTransitionEvent, HTMLBodyElement>;
-        "on-pageshow"?: this["onPageshow"];
+        onPageShow?: AttrEventHandler<PageTransitionEvent, HTMLBodyElement>;
+        "on-pageshow"?: this["onPageShow"];
 
         /**
          * Fired when the window's session history is popped.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-popstate
          */
-        onPopstate?: AttrEventHandler<PopStateEvent, HTMLBodyElement>;
-        "on-popstate"?: this["onPopstate"];
+        onPopState?: AttrEventHandler<PopStateEvent, HTMLBodyElement>;
+        "on-popstate"?: this["onPopState"];
 
         /**
          * Fires when a previously-unhandled promise rejection becomes handled.
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-rejectionhandled
          */
-        onRejectionhandled?: AttrEventHandler<Event, HTMLBodyElement>;
-        "on-rejectionhandled"?: this["onRejectionhandled"];
+        onRejectionHandled?: AttrEventHandler<Event, HTMLBodyElement>;
+        "on-rejectionhandled"?: this["onRejectionHandled"];
 
         /**
          * Fired when the corresponding localStorage or sessionStorage storage areas change.
@@ -845,8 +845,8 @@ declare global {
          * Fired at a form element when it is constructing the entry list
          * @see https://html.spec.whatwg.org/multipage/indices.html#event-formdata
          */
-        onFormdata?: AttrEventHandler<FormDataEvent, HTMLFormElement>;
-        "on-formdata"?: this["onFormdata"];
+        onFormData?: AttrEventHandler<FormDataEvent, HTMLFormElement>;
+        "on-formdata"?: this["onFormData"];
 
         /**
          * Fired when a form is submitted, either by user interaction or through a script.
@@ -2663,61 +2663,61 @@ declare global {
        * Fired when an Animation unexpectedly aborts.
        * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationcancel
        */
-      onAnimationcancel?: AttrEventHandler<AnimationEvent, T>;
-      "on-animationcancel"?: this["onAnimationcancel"];
+      onAnimationCancel?: AttrEventHandler<AnimationEvent, T>;
+      "on-animationcancel"?: this["onAnimationCancel"];
 
       /**
        * Fired when an animation has completed.
        * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationend
        */
-      onAnimationend?: AttrEventHandler<AnimationEvent, T>;
-      "on-animationend"?: this["onAnimationend"];
+      onAnimationEnd?: AttrEventHandler<AnimationEvent, T>;
+      "on-animationend"?: this["onAnimationEnd"];
 
       /**
        * Fired at the end of each iteration of an animation, except when an animationend event would fire at the same time.
        * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationiteration
        */
-      onAnimationiteration?: AttrEventHandler<AnimationEvent, T>;
-      "on-animationiteration"?: this["onAnimationiteration"];
+      onAnimationIteration?: AttrEventHandler<AnimationEvent, T>;
+      "on-animationiteration"?: this["onAnimationIteration"];
 
       /**
        * Fired when an animation has started.
        * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationstart
        */
-      onAnimationstart?: AttrEventHandler<AnimationEvent, T>;
-      "on-animationstart"?: this["onAnimationstart"];
+      onAnimationStart?: AttrEventHandler<AnimationEvent, T>;
+      "on-animationstart"?: this["onAnimationStart"];
 
       /**
        * Fired when a non-primary pointing device button (any mouse button other than the primary—usually leftmost—button)
        * has been pressed and released both within the same element.
        * @see https://w3c.github.io/uievents/#event-type-auxclick
        */
-      onAuxclick?: AttrEventHandler<PointerEvent, T>;
-      "on-auxclick"?: this["onAuxclick"];
+      onAuxClick?: AttrEventHandler<PointerEvent, T>;
+      "on-auxclick"?: this["onAuxClick"];
       onauxclick?: AttrString;
 
       /**
        * Fires when the value of an <input>, or <textarea> element is about to be modified.
        * @see https://w3c.github.io/uievents/#event-type-beforeinput
        */
-      onBeforeinput?: AttrEventHandler<InputEvent, T>;
-      "on-beforeinput"?: this["onBeforeinput"];
+      onBeforeInput?: AttrEventHandler<InputEvent, T>;
+      "on-beforeinput"?: this["onBeforeInput"];
       onbeforeinput?: AttrString;
 
       /**
        * Fired on elements with the hidden=until-found attribute before they are revealed.
        * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforematch
        */
-      onBeforematch?: AttrEventHandler<Event, T>;
-      "on-beforematch"?: this["onBeforematch"];
+      onBeforeMatch?: AttrEventHandler<Event, T>;
+      "on-beforematch"?: this["onBeforeMatch"];
       onbeforematch?: AttrString;
 
       /**
        * Fired on elements with the popover attribute when they are transitioning between showing and hidden
        * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforetoggle
        */
-      onBeforetoggle?: AttrEventHandler<Event, T>;
-      "on-beforetoggle"?: this["onBeforetoggle"];
+      onBeforeToggle?: AttrEventHandler<Event, T>;
+      "on-beforetoggle"?: this["onBeforeToggle"];
       onbeforetoggle?: AttrString;
 
       /**
@@ -2742,16 +2742,16 @@ declare global {
        * playback rate up to its end without having to stop for further buffering of content.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-canplay
        */
-      onCanplay?: AttrEventHandler<Event, T>;
-      "on-canplay"?: this["onCanplay"];
+      onCanPlay?: AttrEventHandler<Event, T>;
+      "on-canplay"?: this["onCanPlay"];
       oncanplay?: AttrString;
 
       /**
        * Fires when the user agent can play through the media data without having to stop for further buffering of content.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-canplaythrough
        */
-      onCanplaythrough?: AttrEventHandler<Event, T>;
-      "on-canplaythrough"?: this["onCanplaythrough"];
+      onCanPlayThrough?: AttrEventHandler<Event, T>;
+      "on-canplaythrough"?: this["onCanPlayThrough"];
       oncanplaythrough?: AttrString;
 
       /**
@@ -2783,30 +2783,30 @@ declare global {
        * Fired when a text composition system such as an input method editor completes or cancels the current composition session.
        * @see https://w3c.github.io/uievents/#event-type-compositionend
        */
-      onCompositionend?: AttrEventHandler<CompositionEvent, T>;
-      "on-compositionend"?: this["onCompositionend"];
+      onCompositionEnd?: AttrEventHandler<CompositionEvent, T>;
+      "on-compositionend"?: this["onCompositionEnd"];
 
       /**
        * Fired when a text composition system such as an input method editor starts a new composition session.
        * @see https://w3c.github.io/uievents/#event-type-compositionstart
        */
-      onCompositionstart?: AttrEventHandler<CompositionEvent, T>;
-      "on-compositionstart"?: this["onCompositionstart"];
+      onCompositionStart?: AttrEventHandler<CompositionEvent, T>;
+      "on-compositionstart"?: this["onCompositionStart"];
 
       /**
        * Fired when a new character is received in the context of a text composition session controlled by a text
        * composition system such as an input method editor.
        * @see https://w3c.github.io/uievents/#event-type-compositionupdate
        */
-      onCompositionupdate?: AttrEventHandler<CompositionEvent, T>;
-      "on-compositionupdate"?: this["onCompositionupdate"];
+      onCompositionUpdate?: AttrEventHandler<CompositionEvent, T>;
+      "on-compositionupdate"?: this["onCompositionUpdate"];
 
       /**
        * Fired when the corresponding CanvasRenderingContext2D or OffscreenCanvasRenderingContext2D is lost
        * @see https://html.spec.whatwg.org/multipage/indices.html#event-contextlost
        */
-      onContextlost?: AttrEventHandler<Event, T>;
-      "on-contextlost"?: this["onContextlost"];
+      onContextLost?: AttrEventHandler<Event, T>;
+      "on-contextlost"?: this["onContextLost"];
       oncontextlost?: AttrString;
 
       /**
@@ -2814,16 +2814,16 @@ declare global {
        * This event is typically triggered by clicking the right mouse button, or by pressing the context menu key.
        * @see https://w3c.github.io/uievents/#event-type-contextmenu
        */
-      onContextmenu?: AttrEventHandler<PointerEvent, T>;
-      "on-contextmenu"?: this["onContextmenu"];
+      onContextMenu?: AttrEventHandler<PointerEvent, T>;
+      "on-contextmenu"?: this["onContextMenu"];
       oncontextmenu?: AttrString;
 
       /**
        * Fired when the corresponding CanvasRenderingContext2D or OffscreenCanvasRenderingContext2D is restored after being lost
        * @see https://html.spec.whatwg.org/multipage/indices.html#event-contextrestored
        */
-      onContextrestored?: AttrEventHandler<Event, T>;
-      "on-contextrestored"?: this["onContextrestored"];
+      onContextRestored?: AttrEventHandler<Event, T>;
+      "on-contextrestored"?: this["onContextRestored"];
       oncontextrestored?: AttrString;
 
       /**
@@ -2838,8 +2838,8 @@ declare global {
        * Fired when one or more cues in the track have become active or stopped being active.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-cuechange
        */
-      onCuechange?: AttrEventHandler<Event, T>;
-      "on-cuechange"?: this["onCuechange"];
+      onCueChange?: AttrEventHandler<Event, T>;
+      "on-cuechange"?: this["onCueChange"];
       oncuechange?: AttrString;
 
       /**
@@ -2854,8 +2854,8 @@ declare global {
        * Fired when the user double-clicks on an element.
        * @see https://w3c.github.io/uievents/#event-type-dblclick
        */
-      onDblclick?: AttrEventHandler<MouseEvent, T>;
-      "on-dblclick"?: this["onDblclick"];
+      onDblClick?: AttrEventHandler<MouseEvent, T>;
+      "on-dblclick"?: this["onDblClick"];
       ondblclick?: AttrString;
 
       /**
@@ -2870,40 +2870,40 @@ declare global {
        * Fired when a drag operation is being ended (by releasing a mouse button or hitting the escape key).
        * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragend
        */
-      onDragend?: AttrEventHandler<DragEvent, T>;
-      "on-dragend"?: this["onDragend"];
+      onDragEnd?: AttrEventHandler<DragEvent, T>;
+      "on-dragend"?: this["onDragEnd"];
       ondragend?: AttrString;
 
       /**
        * Fired when a drag operation is being ended (by releasing a mouse button or hitting the escape key).
        * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragenter
        */
-      onDragenter?: AttrEventHandler<DragEvent, T>;
-      "on-dragenter"?: this["onDragenter"];
+      onDragEnter?: AttrEventHandler<DragEvent, T>;
+      "on-dragenter"?: this["onDragEnter"];
       ondragenter?: AttrString;
 
       /**
        * Fired when a dragged element or text selection leaves a valid drop target.
        * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragleave
        */
-      onDragleave?: AttrEventHandler<DragEvent, T>;
-      "on-dragleave"?: this["onDragleave"];
+      onDragLeave?: AttrEventHandler<DragEvent, T>;
+      "on-dragleave"?: this["onDragLeave"];
       ondragleave?: AttrString;
 
       /**
        * Fired an element or text selection is being dragged over a valid drop target (every few hundred milliseconds).
        * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragover
        */
-      onDragover?: AttrEventHandler<DragEvent, T>;
-      "on-dragover"?: this["onDragover"];
+      onDragOver?: AttrEventHandler<DragEvent, T>;
+      "on-dragover"?: this["onDragOver"];
       ondragover?: AttrString;
 
       /**
        * Fired when an element or text selection has started being dragged.
        * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragstart
        */
-      onDragstart?: AttrEventHandler<DragEvent, T>;
-      "on-dragstart"?: this["onDragstart"];
+      onDragStart?: AttrEventHandler<DragEvent, T>;
+      "on-dragstart"?: this["onDragStart"];
       ondragstart?: AttrString;
 
       /**
@@ -2918,8 +2918,8 @@ declare global {
        * Fired when the duration attribute of a media element has just been updated.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-durationchange
        */
-      onDurationchange?: AttrEventHandler<Event, T>;
-      "on-durationchange"?: this["onDurationchange"];
+      onDurationChange?: AttrEventHandler<Event, T>;
+      "on-durationchange"?: this["onDurationChange"];
       ondurationchange?: AttrString;
 
       /**
@@ -2966,38 +2966,38 @@ declare global {
        * @see HTMLAttributes.onFocus
        * @see https://w3c.github.io/uievents/#event-type-focusin
        */
-      onFocusin?: AttrEventHandler<FocusEvent, T>;
-      "on-focusin"?: this["onFocusin"];
+      onFocusIn?: AttrEventHandler<FocusEvent, T>;
+      "on-focusin"?: this["onFocusIn"];
 
       /**
        * Fires when an element has lost focus, after the blur event. The two events differ in that focusout bubbles, while blur does not.
        * @see HTMLAttributes.onBlur
        * @see https://w3c.github.io/uievents/#event-type-focusout
        */
-      onFocusout?: AttrEventHandler<FocusEvent, T>;
-      "on-focusout"?: this["onFocusout"];
+      onFocusOut?: AttrEventHandler<FocusEvent, T>;
+      "on-focusout"?: this["onFocusOut"];
 
       /**
        * Fired at a form element when it is constructing the entry list
        * @see https://html.spec.whatwg.org/multipage/indices.html#event-formdata
        */
-      onFormdata?: AttrEventHandler<FormDataEvent, T>;
-      "on-formdata"?: this["onFormdata"];
+      onFormData?: AttrEventHandler<FormDataEvent, T>;
+      "on-formdata"?: this["onFormData"];
       onformdata?: AttrString;
 
       /**
        * Fired immediately after an Element switches into or out of fullscreen mode.
        * @see https://fullscreen.spec.whatwg.org/#handler-document-onfullscreenchange
        */
-      onFullscreenchange?: AttrEventHandler<Event, T>;
-      "on-fullscreenchange"?: this["onFullscreenchange"];
+      onFullscreenChange?: AttrEventHandler<Event, T>;
+      "on-fullscreenchange"?: this["onFullscreenChange"];
 
       /**
        * Fired when the browser cannot switch to fullscreen mode.
        * @see https://fullscreen.spec.whatwg.org/#handler-document-onfullscreenerror
        */
-      onFullscreenerror?: AttrEventHandler<Event, T>;
-      "on-fullscreenerror"?: this["onFullscreenerror"];
+      onFullscreenError?: AttrEventHandler<Event, T>;
+      "on-fullscreenerror"?: this["onFullscreenError"];
 
       /**
        * Fired when an element captures a pointer using setPointerCapture().
@@ -3005,8 +3005,8 @@ declare global {
        * @see Element.setPointerCapture
        * @see https://w3c.github.io/pointerevents/#the-gotpointercapture-event
        */
-      onGotpointercapture?: AttrEventHandler<PointerEvent, T>;
-      "on-gotpointercapture"?: this["onGotpointercapture"];
+      onGotPointerCapture?: AttrEventHandler<PointerEvent, T>;
+      "on-gotpointercapture"?: this["onGotPointerCapture"];
 
       /**
        * Fired when the form element's value changes, as a result of user input.
@@ -3028,24 +3028,24 @@ declare global {
        * Fired when a key is first pressed down.
        * @see https://w3c.github.io/uievents/#event-type-keydown
        */
-      onKeydown?: AttrEventHandler<KeyboardEvent, T>;
-      "on-keydown"?: this["onKeydown"];
+      onKeyDown?: AttrEventHandler<KeyboardEvent, T>;
+      "on-keydown"?: this["onKeyDown"];
       onkeydown?: AttrString;
 
       /**
        * Fired when a key is pressed down and then released, while the element has focus.
        * @see https://w3c.github.io/uievents/#event-type-keypress
        */
-      onKeypress?: AttrEventHandler<KeyboardEvent, T>;
-      "on-keypress"?: this["onKeypress"];
+      onKeyPress?: AttrEventHandler<KeyboardEvent, T>;
+      "on-keypress"?: this["onKeyPress"];
       onkeypress?: AttrString;
 
       /**
        * Fired when a key is released after being pressed down.
        * @see https://w3c.github.io/uievents/#event-type-keyup
        */
-      onKeyup?: AttrEventHandler<KeyboardEvent, T>;
-      "on-keyup"?: this["onKeyup"];
+      onKeyUp?: AttrEventHandler<KeyboardEvent, T>;
+      "on-keyup"?: this["onKeyUp"];
       onkeyup?: AttrString;
 
       /**
@@ -3060,87 +3060,87 @@ declare global {
        * Fired when the user agent can render the media data at the current playback position for the first time.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadeddata
        */
-      onLoadeddata?: AttrEventHandler<Event, T>;
-      "on-loadeddata"?: this["onLoadeddata"];
+      onLoadedData?: AttrEventHandler<Event, T>;
+      "on-loadeddata"?: this["onLoadedData"];
       onloadeddata?: AttrString;
 
       /**
        * Fired when the user agent has just determined the duration and dimensions of the media resource.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadedmetadata
        */
-      onLoadedmetadata?: AttrEventHandler<Event, T>;
-      "on-loadedmetadata"?: this["onLoadedmetadata"];
+      onLoadedMetadata?: AttrEventHandler<Event, T>;
+      "on-loadedmetadata"?: this["onLoadedMetadata"];
       onloadedmetadata?: AttrString;
 
       /**
        * Fired when the user agent begins looking for media data, before the media has begun to load.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadstart
        */
-      onLoadstart?: AttrEventHandler<Event, T>;
-      "on-loadstart"?: this["onLoadstart"];
+      onLoadStart?: AttrEventHandler<Event, T>;
+      "on-loadstart"?: this["onLoadStart"];
       onloadstart?: AttrString;
 
       /**
        * Fired when a captured pointer is released.
        * @see https://w3c.github.io/pointerevents/#dfn-lostpointercapture
        */
-      onLostpointercapture?: AttrEventHandler<PointerEvent, T>;
-      "on-lostpointercapture"?: this["onLostpointercapture"];
+      onLostPointerCapture?: AttrEventHandler<PointerEvent, T>;
+      "on-lostpointercapture"?: this["onLostPointerCapture"];
 
       /**
        * Fired when a pointing device button is pressed down over an element.
        * @see https://w3c.github.io/uievents/#event-type-mousedown
        */
-      onMousedown?: AttrEventHandler<MouseEvent, T>;
-      "on-mousedown"?: this["onMousedown"];
+      onMouseDown?: AttrEventHandler<MouseEvent, T>;
+      "on-mousedown"?: this["onMouseDown"];
       onmousedown?: AttrString;
 
       /**
        * Fired when a pointing device is moved onto the element.
        * @see https://w3c.github.io/uievents/#event-type-mouseenter
        */
-      onMouseenter?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseenter"?: this["onMouseenter"];
+      onMouseEnter?: AttrEventHandler<MouseEvent, T>;
+      "on-mouseenter"?: this["onMouseEnter"];
       onmouseenter?: AttrString;
 
       /**
        * Fired when a pointing device is moved off the element.
        * @see https://w3c.github.io/uievents/#event-type-mouseleave
        */
-      onMouseleave?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseleave"?: this["onMouseleave"];
+      onMouseLeave?: AttrEventHandler<MouseEvent, T>;
+      "on-mouseleave"?: this["onMouseLeave"];
       onmouseleave?: AttrString;
 
       /**
        * Fired when a pointing device is moved over an element.
        * @see https://w3c.github.io/uievents/#event-type-mousemove
        */
-      onMousemove?: AttrEventHandler<MouseEvent, T>;
-      "on-mousemove"?: this["onMousemove"];
+      onMouseMove?: AttrEventHandler<MouseEvent, T>;
+      "on-mousemove"?: this["onMouseMove"];
       onmousemove?: AttrString;
 
       /**
        * Fired when a pointing device is moved off the element or off one of its children.
        * @see https://w3c.github.io/uievents/#event-type-mouseout
        */
-      onMouseout?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseout"?: this["onMouseout"];
+      onMouseOut?: AttrEventHandler<MouseEvent, T>;
+      "on-mouseout"?: this["onMouseOut"];
       onmouseout?: AttrString;
 
       /**
        * Fired when a pointing device is moved onto the element or onto one of its children.
        * @see https://w3c.github.io/uievents/#event-type-mouseover
        */
-      onMouseover?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseover"?: this["onMouseover"];
+      onMouseOver?: AttrEventHandler<MouseEvent, T>;
+      "on-mouseover"?: this["onMouseOver"];
       onmouseover?: AttrString;
 
       /**
        * Fired when a pointing device button is released over an element.
        * @see https://w3c.github.io/uievents/#event-type-mouseup
        */
-      onMouseup?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseup"?: this["onMouseup"];
+      onMouseUp?: AttrEventHandler<MouseEvent, T>;
+      "on-mouseup"?: this["onMouseUp"];
       onmouseup?: AttrString;
 
       /**
@@ -3179,57 +3179,57 @@ declare global {
        * Fired when the pointing device's hardware triggers a cancellation of the pointer event, such as due to a system event.
        * @see https://w3c.github.io/pointerevents/#the-pointercancel-event
        */
-      onPointercancel?: AttrEventHandler<PointerEvent, T>;
-      "on-pointercancel"?: this["onPointercancel"];
+      onPointerCancel?: AttrEventHandler<PointerEvent, T>;
+      "on-pointercancel"?: this["onPointerCancel"];
 
       /**
        * Fired when a pointing device's button is pressed down on an element.
        * @see https://w3c.github.io/pointerevents/#the-pointerdown-event
        */
-      onPointerdown?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerdown"?: this["onPointerdown"];
+      onPointerDown?: AttrEventHandler<PointerEvent, T>;
+      "on-pointerdown"?: this["onPointerDown"];
 
       /**
        * Fired when a pointing device is moved onto the element.
        * @see https://w3c.github.io/pointerevents/#the-pointerenter-event
        */
-      onPointerenter?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerenter"?: this["onPointerenter"];
+      onPointerEnter?: AttrEventHandler<PointerEvent, T>;
+      "on-pointerenter"?: this["onPointerEnter"];
 
       /**
        * Fired when a pointing device is moved off the element.
        * @see https://w3c.github.io/pointerevents/#the-pointerleave-event
        */
-      onPointerleave?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerleave"?: this["onPointerleave"];
+      onPointerLeave?: AttrEventHandler<PointerEvent, T>;
+      "on-pointerleave"?: this["onPointerLeave"];
 
       /**
        * Fired when a pointing device is moved over an element.
        * @see https://w3c.github.io/pointerevents/#the-pointermove-event
        */
-      onPointermove?: AttrEventHandler<PointerEvent, T>;
-      "on-pointermove"?: this["onPointermove"];
+      onPointerMove?: AttrEventHandler<PointerEvent, T>;
+      "on-pointermove"?: this["onPointerMove"];
 
       /**
        * Fired when a pointing device is moved off the element or off one of its children.
        * @see https://w3c.github.io/pointerevents/#the-pointerout-event
        */
-      onPointerout?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerout"?: this["onPointerout"];
+      onPointerOut?: AttrEventHandler<PointerEvent, T>;
+      "on-pointerout"?: this["onPointerOut"];
 
       /**
        * Fired when a pointing device is moved onto the element or onto one of its children.
        * @see https://w3c.github.io/pointerevents/#the-pointerover-event
        */
-      onPointerover?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerover"?: this["onPointerover"];
+      onPointerOver?: AttrEventHandler<PointerEvent, T>;
+      "on-pointerover"?: this["onPointerOver"];
 
       /**
        * Fired when a pointing device's button is released over an element.
        * @see https://w3c.github.io/pointerevents/#the-pointerup-event
        */
-      onPointerup?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerup"?: this["onPointerup"];
+      onPointerUp?: AttrEventHandler<PointerEvent, T>;
+      "on-pointerup"?: this["onPointerUp"];
 
       /**
        * Fired when the user agent is downloading media data or resources, to indicate progress.
@@ -3243,8 +3243,8 @@ declare global {
        * Fired when the playback rate of a media element has changed.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-ratechange
        */
-      onRatechange?: AttrEventHandler<Event, T>;
-      "on-ratechange"?: this["onRatechange"];
+      onRateChange?: AttrEventHandler<Event, T>;
+      "on-ratechange"?: this["onRateChange"];
       onratechange?: AttrString;
 
       /**
@@ -3275,8 +3275,8 @@ declare global {
        * Fired when element scrolling has completed. Scrolling is considered completed when the scroll position has no more pending updates and the user has completed their gesture.
        * @see https://drafts.csswg.org/cssom-view/#eventdef-document-scrollend
        */
-      onScrollend?: AttrEventHandler<Event, T>;
-      "on-scrollend"?: this["onScrollend"];
+      onScrollEnd?: AttrEventHandler<Event, T>;
+      "on-scrollend"?: this["onScrollEnd"];
       onscrollend?: AttrString;
 
       /**
@@ -3318,8 +3318,8 @@ declare global {
        * Fired when a <slot> element's distributed nodes change.
        * @see https://dom.spec.whatwg.org/#eventdef-htmlslotelement-slotchange
        */
-      onSlotchange?: AttrEventHandler<Event, T>;
-      "on-slotchange"?: this["onSlotchange"];
+      onSlotChange?: AttrEventHandler<Event, T>;
+      "on-slotchange"?: this["onSlotChange"];
       onslotchange?: AttrString;
 
       /**
@@ -3350,8 +3350,8 @@ declare global {
        * Fired when the current playback position of a media element changes as part of normal playback or due to a seek operation.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-timeupdate
        */
-      onTimeupdate?: AttrEventHandler<Event, T>;
-      "on-timeupdate"?: this["onTimeupdate"];
+      onTimeUpdate?: AttrEventHandler<Event, T>;
+      "on-timeupdate"?: this["onTimeUpdate"];
       ontimeupdate?: AttrString;
 
       /**
@@ -3366,64 +3366,64 @@ declare global {
        * Fired when a touch event is interrupted, such as by a modal window or an incoming phone call.
        * @see https://w3c.github.io/touch-events/#event-touchcancel
        */
-      onTouchcancel?: AttrEventHandler<TouchEvent, T>;
-      "on-touchcancel"?: this["onTouchcancel"];
+      onTouchCancel?: AttrEventHandler<TouchEvent, T>;
+      "on-touchcancel"?: this["onTouchCancel"];
 
       /**
        * Fired when a finger is lifted from a touch surface.
        * @see https://w3c.github.io/touch-events/#event-touchend
        */
-      onTouchend?: AttrEventHandler<TouchEvent, T>;
-      "on-touchend"?: this["onTouchend"];
+      onTouchEnd?: AttrEventHandler<TouchEvent, T>;
+      "on-touchend"?: this["onTouchEnd"];
 
       /**
        * Fired when a finger is moved along a touch surface.
        * @see https://w3c.github.io/touch-events/#event-touchmove
        */
-      onTouchmove?: AttrEventHandler<TouchEvent, T>;
-      "on-touchmove"?: this["onTouchmove"];
+      onTouchMove?: AttrEventHandler<TouchEvent, T>;
+      "on-touchmove"?: this["onTouchMove"];
 
       /**
        * Fired when a finger is placed on a touch surface.
        * @see https://w3c.github.io/touch-events/#event-touchstart
        */
-      onTouchstart?: AttrEventHandler<TouchEvent, T>;
-      "on-touchstart"?: this["onTouchstart"];
+      onTouchStart?: AttrEventHandler<TouchEvent, T>;
+      "on-touchstart"?: this["onTouchStart"];
 
       /**
        * Fired when a CSS transition is canceled.
        * @see https://drafts.csswg.org/css-transitions/#transitioncancel
        */
-      onTransitioncancel?: AttrEventHandler<TransitionEvent, T>;
-      "on-transitioncancel"?: this["onTransitioncancel"];
+      onTransitionCancel?: AttrEventHandler<TransitionEvent, T>;
+      "on-transitioncancel"?: this["onTransitionCancel"];
 
       /**
        * Fired when a CSS transition has completed.
        * @see https://drafts.csswg.org/css-transitions/#transitionend
        */
-      onTransitionend?: AttrEventHandler<TransitionEvent, T>;
-      "on-transitionend"?: this["onTransitionend"];
+      onTransitionEnd?: AttrEventHandler<TransitionEvent, T>;
+      "on-transitionend"?: this["onTransitionEnd"];
 
       /**
        * Fired when a CSS transition is first created, i.e. before any transition-delay has begun.
        * @see https://drafts.csswg.org/css-transitions/#transitionrun
        */
-      onTransitionrun?: AttrEventHandler<TransitionEvent, T>;
-      "on-transitionrun"?: this["onTransitionrun"];
+      onTransitionRun?: AttrEventHandler<TransitionEvent, T>;
+      "on-transitionrun"?: this["onTransitionRun"];
 
       /**
        * Fired when a CSS transition has actually started, i.e., after any transition-delay has ended.
        * @see https://drafts.csswg.org/css-transitions/#transitionstart
        */
-      onTransitionstart?: AttrEventHandler<TransitionEvent, T>;
-      "on-transitionstart"?: this["onTransitionstart"];
+      onTransitionStart?: AttrEventHandler<TransitionEvent, T>;
+      "on-transitionstart"?: this["onTransitionStart"];
 
       /**
        * Fired when the volume level or muted state of a media element changes.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-volumechange
        */
-      onVolumechange?: AttrEventHandler<Event, T>;
-      "on-volumechange"?: this["onVolumechange"];
+      onVolumeChange?: AttrEventHandler<Event, T>;
+      "on-volumechange"?: this["onVolumeChange"];
       onvolumechange?: AttrString;
 
       /**
