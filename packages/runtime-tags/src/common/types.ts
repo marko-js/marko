@@ -1,25 +1,27 @@
 import type { Renderer as ClientRenderer } from "../dom/renderer";
 
 export type CommentWalker = TreeWalker & Record<string, Comment>;
-
-export type Scope<
-  T extends { [x: string | number]: unknown } = {
-    [x: string | number]: unknown;
-  },
-> = [...unknown[]] & {
+export interface BranchScope extends Scope {
+  ___parentBranch: BranchScope | undefined;
+  ___destroyed: 1 | undefined;
+  ___abortScopes: Set<Scope> | undefined;
+  ___branchScopes: Set<BranchScope> | undefined;
+}
+export interface Scope {
+  $global: Record<string, unknown>;
+  _: Scope | undefined;
   ___args: unknown;
   ___startNode: Node & ChildNode;
   ___endNode: Node & ChildNode;
-  ___cleanup: Set<Scope> | undefined;
   ___pending: 1 | 0 | undefined;
-  ___bound: Map<unknown, unknown> | undefined;
   ___renderer: ClientRenderer | undefined;
-  ___abortControllers: Map<string | number, AbortController> | undefined;
-  ___cleanupOwner: Scope | undefined;
-  $global: Record<string, unknown>;
-  _: Scope | undefined;
+  ___abortControllers:
+    | Record<string | number, AbortController | void>
+    | undefined;
+  ___closestBranch: BranchScope | undefined;
+
   [x: string | number]: any;
-} & T;
+}
 
 // TODO: SectionSiblings that is both a SectionStart and a SectionEnd (<for> siblings)
 //       NODE that doesn't have a sectionId and uses the previous sectionId
@@ -28,7 +30,7 @@ export enum ResumeSymbol {
   SectionEnd = "]",
   SectionSingleNodesEnd = "|",
   Node = "*",
-  Cleanup = "$",
+  ParentBranch = "$",
 }
 
 export enum AccessorChar {

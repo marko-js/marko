@@ -1,52 +1,52 @@
-import type { Scope } from "../common/types";
-import { insertBefore, removeAndDestroyScope } from "./scope";
+import type { BranchScope } from "../common/types";
+import { insertBefore, removeAndDestroyBranch } from "./scope";
 
 const WRONG_POS = 2147483647;
 
 export function reconcile(
   parent: Node & ParentNode,
-  oldScopes: Scope[],
-  newScopes: Scope[],
+  oldBranches: BranchScope[],
+  newBranches: BranchScope[],
   afterReference: Node | null,
 ): void {
   let oldStart = 0;
   let newStart = 0;
-  let oldEnd = oldScopes.length - 1;
-  let newEnd = newScopes.length - 1;
-  let oldStartScope = oldScopes[oldStart];
-  let newStartScope = newScopes[newStart];
-  let oldEndScope = oldScopes[oldEnd];
-  let newEndScope = newScopes[newEnd];
+  let oldEnd = oldBranches.length - 1;
+  let newEnd = newBranches.length - 1;
+  let oldStartBranch = oldBranches[oldStart];
+  let newStartBranch = newBranches[newStart];
+  let oldEndBranch = oldBranches[oldEnd];
+  let newEndBranch = newBranches[newEnd];
   let i: number;
   let j: number | undefined;
   let k: number;
   let nextSibling: Node | null;
-  let oldScope: Scope | null;
-  let newScope: Scope;
+  let oldBranch: BranchScope | null;
+  let newBranch: BranchScope;
 
   // Step 1
   // tslint:disable-next-line: label-position
   outer: {
     // Skip nodes with the same key at the beginning.
-    while (oldStartScope === newStartScope) {
+    while (oldStartBranch === newStartBranch) {
       ++oldStart;
       ++newStart;
       if (oldStart > oldEnd || newStart > newEnd) {
         break outer;
       }
-      oldStartScope = oldScopes[oldStart];
-      newStartScope = newScopes[newStart];
+      oldStartBranch = oldBranches[oldStart];
+      newStartBranch = newBranches[newStart];
     }
 
     // Skip nodes with the same key at the end.
-    while (oldEndScope === newEndScope) {
+    while (oldEndBranch === newEndBranch) {
       --oldEnd;
       --newEnd;
       if (oldStart > oldEnd || newStart > newEnd) {
         break outer;
       }
-      oldEndScope = oldScopes[oldEnd];
-      newEndScope = newScopes[newEnd];
+      oldEndBranch = oldBranches[oldEnd];
+      newEndBranch = newBranches[newEnd];
     }
   }
 
@@ -55,22 +55,22 @@ export function reconcile(
     if (newStart <= newEnd) {
       k = newEnd + 1;
       nextSibling =
-        k < newScopes.length ? newScopes[k].___startNode : afterReference;
+        k < newBranches.length ? newBranches[k].___startNode : afterReference;
       do {
-        insertBefore(newScopes[newStart++], parent, nextSibling);
+        insertBefore(newBranches[newStart++], parent, nextSibling);
       } while (newStart <= newEnd);
     }
   } else if (newStart > newEnd) {
     // All new nodes are in the correct place, remove the remaining old nodes.
     do {
-      removeAndDestroyScope(oldScopes[oldStart++]);
+      removeAndDestroyBranch(oldBranches[oldStart++]);
     } while (oldStart <= oldEnd);
   } else {
     // Step 2
     const oldLength = oldEnd - oldStart + 1;
     const newLength = newEnd - newStart + 1;
 
-    const aNullable = oldScopes as Array<Scope | null>; // will be removed by js optimizing compilers.
+    const aNullable = oldBranches as Array<BranchScope | null>; // will be removed by js optimizing compilers.
     // Mark all nodes as inserted.
     const sources = new Array(newLength);
     for (i = 0; i < newLength; ++i) {
@@ -83,37 +83,37 @@ export function reconcile(
 
     const keyIndex: Map<unknown, number> = new Map();
     for (j = newStart; j <= newEnd; ++j) {
-      keyIndex.set(newScopes[j], j);
+      keyIndex.set(newBranches[j], j);
     }
 
     for (i = oldStart; i <= oldEnd && synced < newLength; ++i) {
-      oldScope = oldScopes[i];
-      j = keyIndex.get(oldScope);
+      oldBranch = oldBranches[i];
+      j = keyIndex.get(oldBranch);
       if (j !== undefined) {
         pos = pos > j ? WRONG_POS : j;
         ++synced;
-        newScope = newScopes[j];
+        newBranch = newBranches[j];
         sources[j - newStart] = i;
         aNullable[i] = null;
       }
     }
 
-    if (oldLength === oldScopes.length && synced === 0) {
+    if (oldLength === oldBranches.length && synced === 0) {
       // None of the newNodes already exist in the DOM
       // All newNodes need to be inserted
       for (; newStart < newLength; ++newStart) {
-        insertBefore(newScopes[newStart], parent, afterReference);
+        insertBefore(newBranches[newStart], parent, afterReference);
       }
       // All oldNodes need to be removed
       for (; oldStart < oldLength; ++oldStart) {
-        removeAndDestroyScope(oldScopes[oldStart]);
+        removeAndDestroyBranch(oldBranches[oldStart]);
       }
     } else {
       i = oldLength - synced;
       while (i > 0) {
-        oldScope = aNullable[oldStart++];
-        if (oldScope !== null) {
-          removeAndDestroyScope(oldScope);
+        oldBranch = aNullable[oldStart++];
+        if (oldBranch !== null) {
+          removeAndDestroyBranch(oldBranch);
           i--;
         }
       }
@@ -122,35 +122,35 @@ export function reconcile(
       if (pos === WRONG_POS) {
         const seq = longestIncreasingSubsequence(sources);
         j = seq.length - 1;
-        k = newScopes.length;
+        k = newBranches.length;
         for (i = newLength - 1; i >= 0; --i) {
           if (sources[i] === -1) {
             pos = i + newStart;
-            newScope = newScopes[pos++];
+            newBranch = newBranches[pos++];
             nextSibling =
-              pos < k ? newScopes[pos].___startNode : afterReference;
-            insertBefore(newScope, parent, nextSibling);
+              pos < k ? newBranches[pos].___startNode : afterReference;
+            insertBefore(newBranch, parent, nextSibling);
           } else {
             if (j < 0 || i !== seq[j]) {
               pos = i + newStart;
-              newScope = newScopes[pos++];
+              newBranch = newBranches[pos++];
               nextSibling =
-                pos < k ? newScopes[pos].___startNode : afterReference;
-              insertBefore(newScope, parent, nextSibling);
+                pos < k ? newBranches[pos].___startNode : afterReference;
+              insertBefore(newBranch, parent, nextSibling);
             } else {
               --j;
             }
           }
         }
       } else if (synced !== newLength) {
-        k = newScopes.length;
+        k = newBranches.length;
         for (i = newLength - 1; i >= 0; --i) {
           if (sources[i] === -1) {
             pos = i + newStart;
-            newScope = newScopes[pos++];
+            newBranch = newBranches[pos++];
             nextSibling =
-              pos < k ? newScopes[pos].___startNode : afterReference;
-            insertBefore(newScope, parent, nextSibling);
+              pos < k ? newBranches[pos].___startNode : afterReference;
+            insertBefore(newBranch, parent, nextSibling);
           }
         }
       }

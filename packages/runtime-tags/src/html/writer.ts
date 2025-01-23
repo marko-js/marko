@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
-import type { $Global, Accessor } from "../common/types";
+import { type $Global, type Accessor, ResumeSymbol } from "../common/types";
 import { escapeAttrValue } from "./attrs";
 import { REORDER_RUNTIME_CODE, WALKER_RUNTIME_CODE } from "./inlined-runtimes";
 import { register as serializerRegister, Serializer } from "./serializer";
@@ -17,11 +17,6 @@ enum Mark {
   Placeholder = "!^",
   PlaceholderEnd = "!",
   ReorderMarker = "#",
-  SectionStart = "[",
-  SectionEnd = "]",
-  SectionSingleNodesEnd = "|",
-  Node = "*",
-  Cleanup = "$",
 }
 
 enum RuntimeKey {
@@ -105,7 +100,7 @@ export function getScopeById(scopeId: number | undefined) {
 export function markResumeNode(scopeId: number, accessor: Accessor) {
   const { state } = $chunk.boundary;
   state.needsMainRuntime = true;
-  return state.mark(Mark.Node, scopeId + " " + accessor);
+  return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
 }
 
 export function nodeRef(scopeId: number, id?: string) {
@@ -120,13 +115,16 @@ export function nodeRef(scopeId: number, id?: string) {
 
 export function markResumeScopeStart(scopeId: number, index?: number) {
   return $chunk.boundary.state.mark(
-    Mark.SectionStart,
+    ResumeSymbol.SectionStart,
     scopeId + (index ? " " + index : ""),
   );
 }
 
 export function markResumeControlEnd(scopeId: number, accessor: Accessor) {
-  return $chunk.boundary.state.mark(Mark.SectionEnd, scopeId + " " + accessor);
+  return $chunk.boundary.state.mark(
+    ResumeSymbol.SectionEnd,
+    scopeId + " " + accessor,
+  );
 }
 
 export function markResumeControlSingleNodeEnd(
@@ -135,13 +133,15 @@ export function markResumeControlSingleNodeEnd(
   childScopeIds?: number | number[],
 ) {
   return $chunk.boundary.state.mark(
-    Mark.SectionSingleNodesEnd,
+    ResumeSymbol.SectionSingleNodesEnd,
     scopeId + " " + accessor + " " + (childScopeIds ?? ""),
   );
 }
 
 export function markResumeCleanup(scopeId: number) {
-  $chunk.writeHTML($chunk.boundary.state.mark(Mark.Cleanup, "" + scopeId));
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(ResumeSymbol.ParentBranch, "" + scopeId),
+  );
 }
 
 export function writeScope(scopeId: number, partialScope: PartialScope) {
@@ -404,7 +404,7 @@ export class State {
     return id;
   }
 
-  mark(code: Mark, str: string) {
+  mark(code: ResumeSymbol | Mark, str: string) {
     return "<!--" + this.commentPrefix + code + str + "-->";
   }
 }

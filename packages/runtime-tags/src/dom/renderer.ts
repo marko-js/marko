@@ -1,6 +1,7 @@
 import {
   type Accessor,
   AccessorChar,
+  type BranchScope,
   NodeType,
   type Scope,
 } from "../common/types";
@@ -25,34 +26,60 @@ export type Renderer = {
 
 type SetupFn = (scope: Scope) => void;
 
-export function createScopeWithRenderer(
+export function createBranchScopeWithRenderer(
   renderer: Renderer,
-  $global: Scope["___global"],
-  ownerScope?: Scope, // This is only needed when creating a renderer without an owner (template and control flow)
+  $global: Scope["$global"],
+  parentScope: Scope,
 ) {
-  const newScope = createScope($global);
-  newScope._ = newScope.___cleanupOwner = renderer.___owner || ownerScope;
-  newScope.___renderer = renderer;
-  initRenderer(renderer, newScope);
-  return newScope;
+  const branch = createBranch(
+    $global,
+    renderer.___owner || parentScope,
+    parentScope,
+  );
+  if (MARKO_DEBUG) {
+    branch.___renderer = renderer;
+  }
+  initRenderer(renderer, branch);
+  return branch;
 }
 
-export function createScopeWithTagNameOrRenderer(
+export function createBranchScopeWithTagNameOrRenderer(
   tagNameOrRenderer: Renderer | string,
-  $global: Scope["___global"],
-  ownerScope?: Scope,
+  $global: Scope["$global"],
+  parentScope: Scope,
 ) {
   if (typeof tagNameOrRenderer !== "string") {
-    return createScopeWithRenderer(tagNameOrRenderer, $global, ownerScope);
+    return createBranchScopeWithRenderer(
+      tagNameOrRenderer,
+      $global,
+      parentScope,
+    );
   }
 
-  const newScope = createScope($global);
-  newScope._ = newScope.___cleanupOwner = ownerScope;
-  newScope[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : 0] =
-    newScope.___startNode =
-    newScope.___endNode =
+  const branch = createBranch($global, parentScope, parentScope);
+  branch[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : 0] =
+    branch.___startNode =
+    branch.___endNode =
       document.createElement(tagNameOrRenderer);
-  return newScope;
+  return branch;
+}
+
+function createBranch(
+  $global: Scope["$global"],
+  ownerScope: Scope,
+  parentScope: Scope,
+) {
+  const branch = createScope($global) as BranchScope;
+  const parentBranch = parentScope.___closestBranch;
+  branch._ = ownerScope;
+  branch.___closestBranch = branch;
+
+  if (parentBranch) {
+    branch.___parentBranch = parentBranch;
+    (parentBranch.___branchScopes ||= new Set()).add(branch);
+  }
+
+  return branch;
 }
 
 export function initRenderer(renderer: Renderer, scope: Scope) {

@@ -1,4 +1,4 @@
-import type { Scope } from "../common/types";
+import type { BranchScope, Scope } from "../common/types";
 
 let pendingScopes: Scope[] = [];
 let debugID = 0;
@@ -10,7 +10,7 @@ export function createScope($global: Scope["$global"]): Scope {
   } as Scope;
 
   if (MARKO_DEBUG) {
-    scope.___debugId = debugID++;
+    scope.___debugId = "client-" + debugID++;
   }
 
   pendingScopes.push(scope);
@@ -32,37 +32,23 @@ export function getEmptyScope(marker: Comment) {
   return emptyScope;
 }
 
-export function destroyScope(scope: Scope) {
-  _destroyScope(scope);
+export function destroyBranch(branch: BranchScope) {
+  branch.___destroyed = 1;
+  branch.___branchScopes?.forEach(destroyBranch);
 
-  scope.___cleanupOwner?.___cleanup?.delete(scope);
-
-  return scope;
-}
-
-function _destroyScope(scope: Scope) {
-  scope.___cleanup?.forEach(_destroyScope);
-  const controllers = scope.___abortControllers;
-  if (controllers) {
-    for (const ctrl of controllers.values()) {
-      ctrl.abort();
+  if (branch.___abortScopes) {
+    for (const scope of branch.___abortScopes) {
+      for (const id in scope.___abortControllers) {
+        scope.___abortControllers[id]?.abort();
+      }
     }
   }
 }
 
-export function onDestroy(scope: Scope) {
-  let parentScope = scope.___cleanupOwner;
-  while (parentScope && !parentScope.___cleanup?.has(scope)) {
-    (parentScope.___cleanup ||= new Set()).add(scope);
-    scope = parentScope;
-    parentScope = scope.___cleanupOwner;
-  }
-}
-
-export function removeAndDestroyScope(scope: Scope) {
-  destroyScope(scope);
-  let current = scope.___startNode;
-  const stop = scope.___endNode.nextSibling;
+export function removeAndDestroyBranch(branch: BranchScope) {
+  destroyBranch(branch);
+  let current = branch.___startNode;
+  const stop = branch.___endNode.nextSibling;
   while (current !== stop) {
     const next = current.nextSibling;
     current.remove();

@@ -1,27 +1,21 @@
 import type { Scope } from "../common/types";
 import { queueEffect } from "./queue";
-import { onDestroy } from "./scope";
 
 export function resetAbortSignal(scope: Scope, id: string | number) {
-  const controllers = scope.___abortControllers;
-  if (controllers) {
-    const ctrl = controllers.get(id);
-    if (ctrl) {
-      queueEffect(ctrl as any, abort as any);
-      controllers.delete(id);
-    }
+  const ctrl = scope.___abortControllers?.[id];
+  if (ctrl) {
+    queueEffect(ctrl as any, abort as any);
+    scope.___abortControllers![id] = undefined;
   }
 }
 
 export function getAbortSignal(scope: Scope, id: string | number) {
-  const controllers = (scope.___abortControllers ||= new Map());
-  let controller = controllers.get(id);
-  if (!controller) {
-    onDestroy(scope);
-    controllers.set(id, (controller = new AbortController()));
+  if (scope.___closestBranch) {
+    (scope.___closestBranch.___abortScopes ||= new Set()).add(scope);
   }
 
-  return controller.signal;
+  return ((scope.___abortControllers ||= {})[id] ||= new AbortController())
+    .signal;
 }
 
 function abort(ctrl: AbortController) {

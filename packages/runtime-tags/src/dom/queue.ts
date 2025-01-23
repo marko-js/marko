@@ -118,18 +118,12 @@ export function runEffects(effects: unknown[] = pendingEffects) {
 
 function runSignals() {
   while (pendingSignal) {
-    if (scopeIsConnected(pendingSignal.___scope)) {
+    if (!pendingSignal.___scope.___closestBranch?.___destroyed) {
       pendingSignal.___signal(pendingSignal.___scope, pendingSignal.___value);
     }
     pendingSignal = pendingSignal.___next;
   }
   finishPendingScopes();
-}
-
-function scopeIsConnected(scope: Scope) {
-  if (scope.___pending) return true;
-  const start = ownerStartNode(scope);
-  return start ? start.isConnected : true;
 }
 
 function sortScopeByDOMPosition(a: Scope, b: Scope) {
@@ -148,5 +142,5 @@ function sortScopeByDOMPosition(a: Scope, b: Scope) {
 }
 
 function ownerStartNode(scope: Scope): (Node & ChildNode) | undefined {
-  return (scope.___cleanupOwner || scope).___startNode;
+  return (scope.___closestBranch || scope).___startNode;
 }

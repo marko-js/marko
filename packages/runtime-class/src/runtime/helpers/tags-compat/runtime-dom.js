@@ -62,6 +62,7 @@ exports.p = function (domCompat) {
       {
         onMount: domCompat.runComponentEffects,
         onUpdate: domCompat.runComponentEffects,
+        onDestroy: domCompat.runComponentDestroy,
       },
       TagsCompat,
     ),

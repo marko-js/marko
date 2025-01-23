@@ -1,6 +1,5 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
-import { ResumeSymbol, type Scope } from "../common/types";
-import { onDestroy } from "./scope";
+import { type BranchScope, ResumeSymbol, type Scope } from "../common/types";
 import type { Signal, SignalOp } from "./signals";
 
 interface Renders {
@@ -13,7 +12,7 @@ interface RenderData {
   // Marked nodes to visit
   v: Comment[];
   // Resumes
-  r?: (string | number | ((ctx: object) => Record<number | string, Scope>))[];
+  r?: (string | number | ((ctx: object) => Record<string, Scope>))[];
   w(): void;
 }
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
@@ -24,13 +23,13 @@ class Render implements RenderData {
   declare i: RenderData["i"];
   declare v: RenderData["v"];
   declare r?: RenderData["r"];
-  declare private ___currentScopeId: number | undefined;
+  declare private ___currentScopeId: string | undefined;
   declare private ___data: RenderData;
   declare private ___renders: Renders;
   declare private ___runtimeId: string;
   declare private ___renderId: string;
-  private ___scopeStack: number[] = [];
-  private ___scopeLookup: Record<number | string, Scope> = {};
+  private ___scopeStack: string[] = [];
+  private ___scopeLookup: Record<string, Scope> = {};
   private ___serializeContext: Record<string, unknown> = {
     _: registeredValues,
   };
@@ -50,20 +49,24 @@ class Render implements RenderData {
     const serializeContext = this.___serializeContext;
     const scopeLookup = this.___scopeLookup;
     const visits = data.v;
-    const cleanupOwners = new Map<string, number>();
+    const branchIds = new Set<string>();
+    const parentBranchIds = new Map<string, string>();
 
     if (visits.length) {
       const commentPrefix = data.i;
       const commentPrefixLen = commentPrefix.length;
-      const cleanupMarkers = new Map<number, Comment>();
+      const parentBranchMarkers = new Map<string, Comment>();
       data.v = [];
 
       const sectionEnd = (
         visit: Comment,
-        scopeId: number = this.___currentScopeId!,
+        scopeId: string = this.___currentScopeId!,
         curNode: ChildNode = visit,
       ) => {
-        const scope = (scopeLookup[scopeId] ||= {} as Scope);
+        const scope = (scopeLookup[scopeId] ||=
+          {} as BranchScope) as BranchScope;
+        branchIds.add(scopeId);
+
         let endNode = curNode;
         while (
           (endNode = endNode.previousSibling!).nodeType ===
@@ -72,34 +75,37 @@ class Render implements RenderData {
         scope.___endNode = endNode;
         const startNode = (scope.___startNode ||= endNode);
 
-        let len = cleanupMarkers.size;
-        for (const [markerScopeId, markerNode] of cleanupMarkers) {
+        let len = parentBranchMarkers.size;
+        for (const [markerScopeId, markerNode] of parentBranchMarkers) {
           if (!len--) break;
           if (
             markerScopeId !== scopeId &&
             startNode.compareDocumentPosition(markerNode) & 4 /* FOLLOWING */ &&
             curNode.compareDocumentPosition(markerNode) & 2 /* PRECEDING */
           ) {
-            cleanupOwners.set("" + markerScopeId, scopeId);
-            cleanupMarkers.delete(markerScopeId);
+            parentBranchIds.set(markerScopeId, scopeId);
+            parentBranchMarkers.delete(markerScopeId);
           }
         }
-        cleanupMarkers.set(scopeId, visit);
+        parentBranchMarkers.set(scopeId, visit);
         return scope;
       };
 
       for (const visit of visits) {
         const commentText = visit.data!;
-        const token = commentText[commentPrefixLen];
-        const scopeId = parseInt(commentText.slice(commentPrefixLen + 1));
-        const scope = (scopeLookup[scopeId] ||= {} as Scope);
         const dataIndex = commentText.indexOf(" ") + 1;
+        const scopeId = commentText.slice(
+          commentPrefixLen + 1,
+          dataIndex ? dataIndex - 1 : commentText.length,
+        );
+        const scope = (scopeLookup[scopeId] ||= {} as Scope);
         const data = dataIndex ? commentText.slice(dataIndex) : "";
+        const token = commentText[commentPrefixLen];
 
         if (token === ResumeSymbol.Node) {
           scope[data] = visit.previousSibling;
-        } else if (token === ResumeSymbol.Cleanup) {
-          cleanupMarkers.set(scopeId, visit);
+        } else if (token === ResumeSymbol.ParentBranch) {
+          parentBranchMarkers.set(scopeId, visit);
         } else if (token === ResumeSymbol.SectionStart) {
           if (this.___currentScopeId) {
             if (data) {
@@ -129,7 +135,11 @@ class Render implements RenderData {
           );
           let curNode: ChildNode = visit;
           for (let i = childScopeIds.length - 1; i >= 0; i--) {
-            curNode = sectionEnd(visit, childScopeIds[i], curNode).___endNode;
+            curNode = sectionEnd(
+              visit,
+              childScopeIds[i] + "",
+              curNode,
+            ).___endNode;
           }
         }
       }
@@ -166,10 +176,25 @@ class Render implements RenderData {
                   ) as Scope;
                 }
 
-                const cleanupOwnerId = cleanupOwners.get(scopeId);
-                if (cleanupOwnerId) {
-                  scope.___cleanupOwner = scopes[cleanupOwnerId];
-                  onDestroy(scope);
+                const parentBranchId = parentBranchIds.get(scopeId);
+                if (parentBranchId) {
+                  scope.___closestBranch = scopes[
+                    parentBranchId
+                  ] as BranchScope;
+                }
+
+                if (branchIds.has(scopeId)) {
+                  const branch = scope as BranchScope;
+                  const parentBranch = branch.___closestBranch;
+                  scope.___closestBranch = branch;
+                  if (parentBranch) {
+                    branch.___parentBranch = parentBranch;
+                    (parentBranch.___branchScopes ||= new Set()).add(branch);
+                  }
+                }
+
+                if (MARKO_DEBUG) {
+                  scope.___debugId = "server-" + scopeId;
                 }
               }
             }

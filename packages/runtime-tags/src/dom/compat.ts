@@ -2,15 +2,12 @@ import {
   RENDERER_REGISTER_ID,
   SET_SCOPE_REGISTER_ID,
 } from "../common/compat-meta";
-import type { Scope } from "../dom";
+import { createScope, type Scope } from "../dom";
 import { patchConditionals } from "./control-flow";
 import { prepareEffects, queueEffect, runEffects } from "./queue";
-import {
-  createRenderer,
-  createScopeWithRenderer,
-  type Renderer,
-} from "./renderer";
+import { createRenderer, initRenderer, type Renderer } from "./renderer";
 import { getRegisteredWithScope, register } from "./resume";
+import { destroyBranch } from "./scope";
 import { CLEAN, DIRTY, MARK } from "./signals";
 const classIdToScope = new Map<string, Scope>();
 
@@ -40,6 +37,11 @@ export const compat = {
   },
   runComponentEffects(this: any) {
     runEffects(this.effects);
+  },
+  runComponentDestroy(this: any) {
+    if (this.scope) {
+      destroyBranch(this.scope);
+    }
   },
   resolveRegistered(
     value: any,
@@ -92,7 +94,9 @@ export const compat = {
 
     component.effects = prepareEffects(() => {
       if (!scope) {
-        scope = component.scope = createScopeWithRenderer(renderer, out.global);
+        scope = component.scope = createScope(out.global);
+        scope._ = renderer.___owner;
+        initRenderer(renderer, scope);
       } else {
         applyArgs(scope, MARK);
         existing = true;
