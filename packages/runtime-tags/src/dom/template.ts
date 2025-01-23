@@ -1,6 +1,6 @@
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import type {
-  Scope,
+  BranchScope,
   Template,
   TemplateInput,
   TemplateInstance,
@@ -8,7 +8,7 @@ import type {
 import { prepareEffects, runEffects } from "./queue";
 import { createRenderer, initRenderer, type Renderer } from "./renderer";
 import { register } from "./resume";
-import { createScope, removeAndDestroyScope } from "./scope";
+import { createScope, removeAndDestroyBranch } from "./scope";
 import { MARK } from "./signals";
 
 export const createTemplate = (
@@ -35,7 +35,7 @@ function mount(
   reference: ParentNode & Node,
   position?: InsertPosition,
 ): TemplateInstance {
-  let scope!: Scope, dom!: Node;
+  let branch!: BranchScope, dom!: Node;
   let { $global } = input;
   if ($global) {
     ({ $global, ...input } = input);
@@ -53,10 +53,10 @@ function mount(
 
   const args = this.___args;
   const effects = prepareEffects(() => {
-    scope = createScope($global);
-    dom = initRenderer(this, scope);
+    branch = createScope($global) as BranchScope;
+    dom = initRenderer(this, branch);
     if (args) {
-      args(scope, [input]);
+      args(branch, [input]);
     }
   });
 
@@ -92,14 +92,14 @@ function mount(
       if (args) {
         runEffects(
           prepareEffects(() => {
-            args(scope, MARK);
-            args(scope, [newInput]);
+            args(branch, MARK);
+            args(branch, [newInput]);
           }),
         );
       }
     },
     destroy: () => {
-      removeAndDestroyScope(scope);
+      removeAndDestroyBranch(branch);
     },
   };
 }

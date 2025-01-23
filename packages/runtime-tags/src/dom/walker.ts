@@ -25,24 +25,19 @@ export function trimWalkString(walkString: string): string {
 
 export function walk(startNode: Node, walkCodes: string, scope: Scope) {
   walker.currentNode = startNode;
-  walkInternal(walkCodes, scope, scope, 0);
-  walker.currentNode = document.documentElement;
+  walkInternal(walkCodes, scope, 0);
+  walker.currentNode = document;
 }
 
 function walkInternal(
   walkCodes: string,
   scope: Scope,
-  cleanupOwnerScope: Scope,
   currentWalkIndex: number,
 ) {
   let value: number;
   let storedMultiplier = 0;
   let currentMultiplier = 0;
   let currentScopeIndex = 0;
-
-  if (cleanupOwnerScope !== scope) {
-    scope.___cleanupOwner = cleanupOwnerScope;
-  }
 
   while ((value = walkCodes.charCodeAt(currentWalkIndex++))) {
     currentMultiplier = storedMultiplier;
@@ -78,12 +73,8 @@ function walkInternal(
       // We need this currently because the scope in which the controlflow owner resides is returned
       // we should change it to return the scope _controlled_ by the controlflow
       childScope.___startNode = walker.currentNode as ChildNode;
-      currentWalkIndex = walkInternal(
-        walkCodes,
-        childScope,
-        cleanupOwnerScope,
-        currentWalkIndex,
-      )!;
+      childScope.___closestBranch = scope.___closestBranch;
+      currentWalkIndex = walkInternal(walkCodes, childScope, currentWalkIndex)!;
     } else if (value === WalkCode.EndChild) {
       return currentWalkIndex;
     } else if (value === WalkCode.Get) {

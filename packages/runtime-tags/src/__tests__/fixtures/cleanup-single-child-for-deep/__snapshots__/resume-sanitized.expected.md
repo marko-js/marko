@@ -76,10 +76,10 @@ container.querySelector("button").click()
 </button>
 <div>
   
-destroyed 3
 destroyed 3.1
 destroyed 3.2
 destroyed 3.3
+destroyed 3
 destroyed 1.3
 destroyed 2.3
 </div>
