@@ -13,7 +13,6 @@
       <!--M_*1 #text/0-->
     </div>
     <!--M_]0 #text/1-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["__tests__/tags/child.marko"],"#text/1!":_.a={},"#text/1(":_._["__tests__/tags/child.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()
     </script>
@@ -40,7 +39,6 @@ container.querySelector("button").click()
       id="dynamic"
     />
     <!--M_]0 #text/1-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["__tests__/tags/child.marko"],"#text/1!":_.a={},"#text/1(":_._["__tests__/tags/child.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()
     </script>
@@ -70,7 +68,6 @@ container.querySelector("button").click()
       Id is dynamic
     </div>
     <!--M_]0 #text/1-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["__tests__/tags/child.marko"],"#text/1!":_.a={},"#text/1(":_._["__tests__/tags/child.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()
     </script>

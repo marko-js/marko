@@ -1,5 +1,5 @@
 # Write
-  <div>0: 1</div><div>1: 2</div><div>2: 3</div><div>0<!--M_*4 #text/0-->: <!>1<!--M_*4 #text/1--></div><div>1<!--M_*5 #text/0-->: <!>2<!--M_*5 #text/1--></div><div>2<!--M_*6 #text/0-->: <!>3<!--M_*6 #text/1--></div><!--M_|0 #text/1 6 5 4--><!--M_$0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.e={0:{"#text/1(":new Map(_.a=[[0,_.b={}],[1,_.c={}],[2,_.d={}]])},4:_.b,5:_.c,6:_.d}),0]</script>
+  <div>0: 1</div><div>1: 2</div><div>2: 3</div><div>0<!--M_*4 #text/0-->: <!>1<!--M_*4 #text/1--></div><div>1<!--M_*5 #text/0-->: <!>2<!--M_*5 #text/1--></div><div>2<!--M_*6 #text/0-->: <!>3<!--M_*6 #text/1--></div><!--M_|0 #text/1 6 5 4--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.e={0:{"#text/1(":new Map(_.a=[[0,_.b={}],[1,_.c={}],[2,_.d={}]])},4:_.b,5:_.c,6:_.d}),0]</script>
 
 
 # Render "End"
@@ -41,7 +41,6 @@
       <!--M_*6 #text/1-->
     </div>
     <!--M_|0 #text/1 6 5 4-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={0:{"#text/1(":new Map(_.a=[[0,_.b={}],[1,_.c={}],[2,_.d={}]])},4:_.b,5:_.c,6:_.d}),0]
     </script>
@@ -82,7 +81,6 @@ inserted #document/html0/body1/div5/#comment3
 inserted #document/html0/body1/div5/#text4
 inserted #document/html0/body1/div5/#comment5
 inserted #document/html0/body1/#comment6
-inserted #document/html0/body1/#comment7
-inserted #document/html0/body1/script8
-inserted #document/html0/body1/script8/#text0
+inserted #document/html0/body1/script7
+inserted #document/html0/body1/script7/#text0
 ```

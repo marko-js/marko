@@ -26,7 +26,6 @@
       </button>
       <!--M_*0 #button/2-->
     </div>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map(_.a=[[0,_.b={}]])},1:_.b}),0,"__tests__/template.marko_0_items",0];M._.w()
     </script>
@@ -73,7 +72,6 @@ container.querySelector("#add").click()
       </button>
       <!--M_*0 #button/2-->
     </div>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map(_.a=[[0,_.b={}]])},1:_.b}),0,"__tests__/template.marko_0_items",0];M._.w()
     </script>
@@ -117,7 +115,6 @@ container.querySelector("#remove").click()
       </button>
       <!--M_*0 #button/2-->
     </div>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map(_.a=[[0,_.b={}]])},1:_.b}),0,"__tests__/template.marko_0_items",0];M._.w()
     </script>
@@ -153,7 +150,6 @@ container.querySelector("#remove").click()
       </button>
       <!--M_*0 #button/2-->
     </div>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map(_.a=[[0,_.b={}]])},1:_.b}),0,"__tests__/template.marko_0_items",0];M._.w()
     </script>
@@ -193,7 +189,6 @@ container.querySelector("#add").click()
       </button>
       <!--M_*0 #button/2-->
     </div>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:{items:[{name:"Marko",description:"HTML Reimagined"}],"#text/0(":new Map(_.a=[[0,_.b={}]])},1:_.b}),0,"__tests__/template.marko_0_items",0];M._.w()
     </script>

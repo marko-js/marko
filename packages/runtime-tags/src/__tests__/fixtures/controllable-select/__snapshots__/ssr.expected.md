@@ -1,5 +1,5 @@
 # Write
-  <select><option value=a>A</option><option value=b selected>B</option><option value=c>C</option></select><!--M_*0 #select/0--><span>b<!--M_*0 #text/1--></span><!--M_$0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={"#select/0=":3,"#select/0:":"b",value:"b"}},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()</script>
+  <select><option value=a>A</option><option value=b selected>B</option><option value=c>C</option></select><!--M_*0 #select/0--><span>b<!--M_*0 #text/1--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={"#select/0=":3,"#select/0:":"b",value:"b"}},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()</script>
 
 
 # Render "End"
@@ -30,7 +30,6 @@
       b
       <!--M_*0 #text/1-->
     </span>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#select/0=":3,"#select/0:":"b",value:"b"}},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()
     </script>
@@ -54,7 +53,6 @@ inserted #document/html0/body1/#comment1
 inserted #document/html0/body1/span2
 inserted #document/html0/body1/span2/#text0
 inserted #document/html0/body1/span2/#comment1
-inserted #document/html0/body1/#comment3
-inserted #document/html0/body1/script4
-inserted #document/html0/body1/script4/#text0
+inserted #document/html0/body1/script3
+inserted #document/html0/body1/script3/#text0
 ```

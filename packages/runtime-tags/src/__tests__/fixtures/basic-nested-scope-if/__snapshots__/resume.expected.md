@@ -9,10 +9,8 @@
         <!--M_*1 #text/1-->
       </button>
       <!--M_*1 #button/0-->
-      <!--M_$1-->
       <!--M_|0 #text/0 1-->
     </div>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_1_clickCount",0];M._.w()
     </script>
@@ -39,10 +37,8 @@ container.querySelector("button").click()
         <!--M_*1 #text/1-->
       </button>
       <!--M_*1 #button/0-->
-      <!--M_$1-->
       <!--M_|0 #text/0 1-->
     </div>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_1_clickCount",0];M._.w()
     </script>
@@ -69,10 +65,8 @@ container.querySelector("button").click()
         <!--M_*1 #text/1-->
       </button>
       <!--M_*1 #button/0-->
-      <!--M_$1-->
       <!--M_|0 #text/0 1-->
     </div>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_1_clickCount",0];M._.w()
     </script>
@@ -98,10 +92,8 @@ container.querySelector("button").click()
         The button was clicked 3 times.
       </span>
       <!--M_*1 #button/0-->
-      <!--M_$1-->
       <!--M_|0 #text/0 1-->
     </div>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={clickCount:0,"#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_1_clickCount",0];M._.w()
     </script>

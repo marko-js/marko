@@ -11,7 +11,6 @@
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
-    <!--M_$1-->
     <!--M_]0 #text/0-->
     <button
       class="reset"
@@ -48,7 +47,6 @@ container.querySelector("button.inc").click()
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
-    <!--M_$1-->
     <!--M_]0 #text/0-->
     <button
       class="reset"
@@ -84,7 +82,6 @@ container.querySelector("button.inc").click()
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
-    <!--M_$1-->
     <!--M_]0 #text/0-->
     <button
       class="reset"
@@ -120,7 +117,6 @@ container.querySelector("button.reset").click()
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
-    <!--M_$1-->
     <!--M_]0 #text/0-->
     <button
       class="reset"
@@ -156,7 +152,6 @@ container.querySelector("button.inc").click()
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
-    <!--M_$1-->
     <!--M_]0 #text/0-->
     <button
       class="reset"

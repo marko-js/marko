@@ -18,7 +18,6 @@
       0
       <!--M_*0 #text/3-->
     </span>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"__tests__/template.marko_0_clickCount",0];M._.w()
     </script>
@@ -54,7 +53,6 @@ container.querySelector("button").click()
       0
       <!--M_*0 #text/3-->
     </span>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"__tests__/template.marko_0_clickCount",0];M._.w()
     </script>
@@ -90,7 +88,6 @@ container.querySelector("button").click()
       1
       <!--M_*0 #text/3-->
     </span>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"__tests__/template.marko_0_clickCount",0];M._.w()
     </script>
@@ -128,7 +125,6 @@ container.querySelector("button").click()
       2
       <!--M_*0 #text/3-->
     </span>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"__tests__/template.marko_0_clickCount",0];M._.w()
     </script>

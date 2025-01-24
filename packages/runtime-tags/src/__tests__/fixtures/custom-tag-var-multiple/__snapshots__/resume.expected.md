@@ -6,7 +6,6 @@
     <span>
       child
     </span>
-    <!--M_$1-->
     <div>
       3
       <!--M_*0 #text/1-->

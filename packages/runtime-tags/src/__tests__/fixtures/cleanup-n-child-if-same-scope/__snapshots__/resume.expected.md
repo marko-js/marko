@@ -22,9 +22,7 @@ mounted
     <p>
       c
     </p>
-    <!--M_$1-->
     <!--M_]0 #text/2-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,"#text/2(":_._["__tests__/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_1",0,"__tests__/template.marko_0_show",0];M._.w()
     </script>
@@ -56,8 +54,6 @@ destroyed
     </pre>
     <!--M_*0 #pre/1-->
     <!--M_]0 #text/2-->
-    <!--M_$1-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,"#text/2(":_._["__tests__/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_1",0,"__tests__/template.marko_0_show",0];M._.w()
     </script>
@@ -67,7 +63,7 @@ destroyed
 
 # Mutations
 ```
-removed #document/html0/body1/#comment4 after #document/html0/body1/#comment5
+removed #document/html0/body1/#comment4 after p
 inserted #document/html0/body1/#comment4
 removed #text in #document/html0/body1/pre2
 inserted #document/html0/body1/pre2/#text0
@@ -105,8 +101,6 @@ mounted
     <p>
       c
     </p>
-    <!--M_$1-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,"#text/2(":_._["__tests__/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_1",0,"__tests__/template.marko_0_show",0];M._.w()
     </script>
@@ -145,8 +139,6 @@ destroyed
     </pre>
     <!--M_*0 #pre/1-->
     <!--M_]0 #text/2-->
-    <!--M_$1-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,"#text/2(":_._["__tests__/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_1",0,"__tests__/template.marko_0_show",0];M._.w()
     </script>

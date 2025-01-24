@@ -120,9 +120,12 @@ export function nodeRef(scopeId: number, id?: string) {
 }
 
 export function markResumeParentBranch(scopeId: number) {
-  $chunk.writeHTML(
-    $chunk.boundary.state.mark(ResumeSymbol.ParentBranch, "" + scopeId),
-  );
+  const branchId = $chunk.context?.[branchIdKey];
+  if (branchId !== undefined && branchId !== scopeId) {
+    $chunk.writeHTML(
+      $chunk.boundary.state.mark(ResumeSymbol.ParentBranch, "" + scopeId),
+    );
+  }
 }
 
 const branchIdKey = Symbol();
