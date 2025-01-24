@@ -13,7 +13,6 @@ const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
   _count(_scope, count + 1), count;
 }));
 const _count = /* @__PURE__ */_$.state("count", (_scope, count) => {
-  debugger;
   _count_effect(_scope);
   _count$if_content(_scope, count);
 });

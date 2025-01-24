@@ -7,8 +7,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   } = input;
   _$.write("<button>");
   const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope, content, {});
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/1")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
+  _$.dynamicTagInput(_scope0_id, "#text/1", content, {});
+  _$.write(`</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   _$.writeEffect(_scope0_id, "__tests__/tags/my-button.marko_0_onClick");
   _$.writeScope(_scope0_id, {
     "onClick": onClick,

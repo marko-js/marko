@@ -2,15 +2,14 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   _$.write("<div>");
-  let _k = 0;
   const _scope1_ = new Map();
-  _$.forTo(input.to, input.from, input.step, n => {
+  _$.resumeForTo(input.to, input.from, input.step, n => {
     const _scope1_id = _$.nextScopeId();
-    _$.write(`${_$.markResumeScopeStart(_scope1_id, _k++)}${_$.escapeXML(n)}${_$.markResumeNode(_scope1_id, "#text/0")}, `);
+    _scope1_.set(n, _$.ensureScopeWithId(_scope1_id));
+    _$.write(`${_$.escapeXML(n)}${_$.markResumeNode(_scope1_id, "#text/0")}, `);
     _$.writeScope(_scope1_id, {});
-    _scope1_.set(n, _$.getScopeById(_scope1_id));
-  });
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#div/0")}</div>${_$.markResumeNode(_scope0_id, "#div/0")}`);
+  }, _scope0_id, "#div/0");
+  _$.write(`</div>${_$.markResumeNode(_scope0_id, "#div/0")}`);
   _$.writeScope(_scope0_id, {
     "input_from": input.from,
     "input_to": input.to,

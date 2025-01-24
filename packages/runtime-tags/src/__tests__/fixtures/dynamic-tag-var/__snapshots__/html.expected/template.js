@@ -9,9 +9,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   let data2 = void 0;
   if (_tagName) data2 = _tagName({});
   const _dynamicScope = _$.peekNextScope();
-  const data3 = _$.dynamicTagInput(_dynamicScope, input.dynamic, {}, void 0, _$.register(() => {}, "__tests__/template.marko_0_data3/var", _scope0_id));
+  const data3 = _$.dynamicTagInput(_scope0_id, "#text/2", input.dynamic, {}, void 0, _$.register(() => {}, "__tests__/template.marko_0_data3/var", _scope0_id));
   const _tagName2 = input.show && "div";
-  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/2"));
   const el1 = _$.nodeRef();
   if (_tagName2) _$.write(`<${_tagName2}>`);
   if (_tagName2) _$.write(`</${_tagName2}>`);

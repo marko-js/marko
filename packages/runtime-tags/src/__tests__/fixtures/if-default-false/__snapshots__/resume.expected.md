@@ -5,7 +5,7 @@
   <body>
     <button />
     <!--M_*0 #button/0-->
-    <!--M_|0 #text/1 -->
+    <!--M_|0 #text/1-->
     <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{show:!1}}),0,"__tests__/template.marko_0_show",0];M._.w()
@@ -54,7 +54,7 @@ container.querySelector("button").click()
   <body>
     <button />
     <!--M_*0 #button/0-->
-    <!--M_|0 #text/1 -->
+    <!--M_|0 #text/1-->
     <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{show:!1}}),0,"__tests__/template.marko_0_show",0];M._.w()

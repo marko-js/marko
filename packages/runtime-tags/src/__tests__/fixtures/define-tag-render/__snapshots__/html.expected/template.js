@@ -12,14 +12,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       _$.writeScope(_scope1_id, {
         "y": y
       });
-      _$.markResumeCleanup(_scope1_id);
+      _$.markResumeParentBranch(_scope1_id);
     }), "__tests__/template.marko_1_renderer", _scope0_id)
   };
   const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope, MyTag, {
+  _$.dynamicTagInput(_scope0_id, "#text/0", MyTag, {
     name: "Ryan"
   });
-  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/0"));
   _$.writeScope(_scope0_id, {
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(MyTag)

@@ -13,7 +13,7 @@
         <!--M_*2 #text/0-->
         third
         <!--M_*3 #text/0-->
-        <!--M_|0 #div/0 1,2,3-->
+        <!--M_|0 #div/0 3 2 1-->
       </div>
       <!--M_*0 #div/0-->
       <div
@@ -25,7 +25,7 @@
         <!--M_*5 #text/0-->
         third
         <!--M_*6 #text/0-->
-        <!--M_|0 #div/1 4,5,6-->
+        <!--M_|0 #div/1 6 5 4-->
       </div>
       <!--M_*0 #div/1-->
       <div
@@ -37,7 +37,7 @@
         <!--M_*8 #text/0-->
         third
         <!--M_*9 #text/0-->
-        <!--M_|0 #div/2 7,8,9-->
+        <!--M_|0 #div/2 9 8 7-->
       </div>
       <!--M_*0 #div/2-->
       <div
@@ -49,7 +49,7 @@
         <!--M_*11 #text/0-->
         third
         <!--M_*12 #text/0-->
-        <!--M_|0 #div/3 10,11,12-->
+        <!--M_|0 #div/3 12 11 10-->
       </div>
       <!--M_*0 #div/3-->
       <div
@@ -61,7 +61,7 @@
         <!--M_*14 #text/0-->
         third
         <!--M_*15 #text/0-->
-        <!--M_|0 #div/4 13,14,15-->
+        <!--M_|0 #div/4 15 14 13-->
       </div>
       <!--M_*0 #div/4-->
       <button>
@@ -99,7 +99,7 @@ container.querySelector("button").click()
         <!--M_*2 #text/0-->
         third
         <!--M_*3 #text/0-->
-        <!--M_|0 #div/0 1,2,3-->
+        <!--M_|0 #div/0 3 2 1-->
         first
       </div>
       <!--M_*0 #div/0-->
@@ -111,7 +111,7 @@ container.querySelector("button").click()
         <!--M_*5 #text/0-->
         third
         <!--M_*6 #text/0-->
-        <!--M_|0 #div/1 4,5,6-->
+        <!--M_|0 #div/1 6 5 4-->
         first
       </div>
       <!--M_*0 #div/1-->
@@ -123,7 +123,7 @@ container.querySelector("button").click()
         <!--M_*8 #text/0-->
         third
         <!--M_*9 #text/0-->
-        <!--M_|0 #div/2 7,8,9-->
+        <!--M_|0 #div/2 9 8 7-->
         first
       </div>
       <!--M_*0 #div/2-->
@@ -135,7 +135,7 @@ container.querySelector("button").click()
         <!--M_*11 #text/0-->
         third
         <!--M_*12 #text/0-->
-        <!--M_|0 #div/3 10,11,12-->
+        <!--M_|0 #div/3 12 11 10-->
         first
       </div>
       <!--M_*0 #div/3-->
@@ -148,7 +148,7 @@ container.querySelector("button").click()
         <!--M_*14 #text/0-->
         first
         <!--M_*15 #text/0-->
-        <!--M_|0 #div/4 13,14,15-->
+        <!--M_|0 #div/4 15 14 13-->
       </div>
       <!--M_*0 #div/4-->
       <button>
@@ -195,7 +195,7 @@ container.querySelector("button").click()
         <!--M_*2 #text/0-->
         third
         <!--M_*3 #text/0-->
-        <!--M_|0 #div/0 1,2,3-->
+        <!--M_|0 #div/0 3 2 1-->
         firstsecond
       </div>
       <!--M_*0 #div/0-->
@@ -206,7 +206,7 @@ container.querySelector("button").click()
         <!--M_*5 #text/0-->
         third
         <!--M_*6 #text/0-->
-        <!--M_|0 #div/1 4,5,6-->
+        <!--M_|0 #div/1 6 5 4-->
         firstsecond
       </div>
       <!--M_*0 #div/1-->
@@ -217,7 +217,7 @@ container.querySelector("button").click()
         <!--M_*8 #text/0-->
         third
         <!--M_*9 #text/0-->
-        <!--M_|0 #div/2 7,8,9-->
+        <!--M_|0 #div/2 9 8 7-->
         firstsecond
       </div>
       <!--M_*0 #div/2-->
@@ -228,7 +228,7 @@ container.querySelector("button").click()
         <!--M_*11 #text/0-->
         third
         <!--M_*12 #text/0-->
-        <!--M_|0 #div/3 10,11,12-->
+        <!--M_|0 #div/3 12 11 10-->
         firstsecond
       </div>
       <!--M_*0 #div/3-->
@@ -241,7 +241,7 @@ container.querySelector("button").click()
         <!--M_*14 #text/0-->
         second
         <!--M_*15 #text/0-->
-        <!--M_|0 #div/4 13,14,15-->
+        <!--M_|0 #div/4 15 14 13-->
       </div>
       <!--M_*0 #div/4-->
       <button>
@@ -287,7 +287,7 @@ container.querySelector("button").click()
         <!--M_*1 #text/0-->
         <!--M_*2 #text/0-->
         <!--M_*3 #text/0-->
-        <!--M_|0 #div/0 1,2,3-->
+        <!--M_|0 #div/0 3 2 1-->
         firstsecondthird
       </div>
       <!--M_*0 #div/0-->
@@ -297,7 +297,7 @@ container.querySelector("button").click()
         <!--M_*4 #text/0-->
         <!--M_*5 #text/0-->
         <!--M_*6 #text/0-->
-        <!--M_|0 #div/1 4,5,6-->
+        <!--M_|0 #div/1 6 5 4-->
         firstsecondthird
       </div>
       <!--M_*0 #div/1-->
@@ -307,7 +307,7 @@ container.querySelector("button").click()
         <!--M_*7 #text/0-->
         <!--M_*8 #text/0-->
         <!--M_*9 #text/0-->
-        <!--M_|0 #div/2 7,8,9-->
+        <!--M_|0 #div/2 9 8 7-->
         firstsecondthird
       </div>
       <!--M_*0 #div/2-->
@@ -317,7 +317,7 @@ container.querySelector("button").click()
         <!--M_*10 #text/0-->
         <!--M_*11 #text/0-->
         <!--M_*12 #text/0-->
-        <!--M_|0 #div/3 10,11,12-->
+        <!--M_|0 #div/3 12 11 10-->
         firstsecondthird
       </div>
       <!--M_*0 #div/3-->
@@ -330,7 +330,7 @@ container.querySelector("button").click()
         <!--M_*14 #text/0-->
         third
         <!--M_*15 #text/0-->
-        <!--M_|0 #div/4 13,14,15-->
+        <!--M_|0 #div/4 15 14 13-->
       </div>
       <!--M_*0 #div/4-->
       <button>

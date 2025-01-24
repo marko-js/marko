@@ -11,7 +11,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
-    _$.markResumeCleanup(_scope1_id);
+    _$.markResumeParentBranch(_scope1_id);
   });
   _$.fork(resolveAfter("b", 2), value => {
     const _scope2_id = _$.nextScopeId();
@@ -20,7 +20,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.writeScope(_scope2_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
-    _$.markResumeCleanup(_scope2_id);
+    _$.markResumeParentBranch(_scope2_id);
   });
   _$.fork(resolveAfter("c", 1), value => {
     const _scope3_id = _$.nextScopeId();
@@ -29,13 +29,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.writeScope(_scope3_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
-    _$.markResumeCleanup(_scope3_id);
+    _$.markResumeParentBranch(_scope3_id);
   });
   _$.write(`<button>Inc</button>${_$.markResumeNode(_scope0_id, "#button/0")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope(_scope0_id, {
     "count": count
   });
-  _$.markResumeCleanup(_scope0_id);
+  _$.markResumeParentBranch(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

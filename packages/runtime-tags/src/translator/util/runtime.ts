@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { importStar } from "@marko/compiler/babel-utils";
 
+import type { Falsy } from "../../common/types";
 import {
   attr,
   classAttr,
@@ -14,8 +15,6 @@ import { currentProgramPath } from "../visitors/program";
 import { getMarkoOpts, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
 import { toMemberExpression } from "./to-property-name";
-
-type Falsy = false | 0 | "" | null | undefined;
 
 const pureFunctions: Array<keyof typeof import("../../dom")> = [
   "createTemplate",

@@ -8,29 +8,26 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     el().innerHTML += '\n' + msg;
   }, "__tests__/template.marko_0/write", _scope0_id);
   _$.write(`<button>Toggle</button>${_$.markResumeNode(_scope0_id, "#button/0")}<div></div>${_$.markResumeNode(_scope0_id, "#div/1")}`);
-  const _forScopeIds = [],
-    _scope1_ = new Map();
-  _$.forOf(items, (item, _index) => {
+  const _scope1_ = new Map();
+  _$.resumeSingleNodeForOf(items, (item, _index) => {
     const _scope1_id = _$.nextScopeId();
     const _childScope = _$.peekNextScope();
     _child({
       write: write,
       name: item
     });
-    _forScopeIds.push(_scope1_id);
+    _scope1_.set(_index, _$.ensureScopeWithId(_scope1_id));
     _$.writeScope(_scope1_id, {
       "#childScope/0": _$.writeExistingScope(_childScope)
     });
-    _$.markResumeCleanup(_scope1_id);
-    _scope1_.set(_index, _$.getScopeById(_scope1_id));
-  });
-  _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/2", _forScopeIds));
+    _$.markResumeParentBranch(_scope1_id);
+  }, _scope0_id, "#text/2");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope(_scope0_id, {
     "items": items,
     "write": write,
     "#text/2(": _scope1_.size ? _scope1_ : undefined
   });
-  _$.markResumeCleanup(_scope0_id);
+  _$.markResumeParentBranch(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

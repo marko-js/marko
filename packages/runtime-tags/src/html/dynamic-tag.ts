@@ -1,3 +1,4 @@
+import type { Accessor } from "../common/types";
 import { normalizeDynamicRenderer } from "../html";
 import {
   attrs,
@@ -6,12 +7,10 @@ import {
 } from "./attrs";
 import type { ServerRenderer } from "./template";
 import {
-  getScopeId,
-  markResumeScopeStart,
   nextScopeId,
-  type PartialScope,
+  resumeConditional,
+  resumeSingleNodeConditional,
   write,
-  writeScope,
 } from "./writer";
 
 const voidElementsReg =
@@ -22,61 +21,70 @@ interface BodyContentObject {
 }
 
 export function dynamicTagInput(
-  scope: PartialScope,
+  scopeId: number,
+  accessor: Accessor,
   tag: unknown | string | ServerRenderer | BodyContentObject,
   input: Record<string, unknown>,
   content?: () => void,
   tagVar?: unknown,
 ) {
-  if (!tag && !content) return undefined;
+  if (!tag && !content) {
+    nextScopeId();
+    return;
+  }
 
-  const scopeId = getScopeId(scope)!;
-  write(`${markResumeScopeStart(scopeId)}`);
-  writeScope(scopeId, scope);
   if (!tag) {
-    return content!();
+    resumeConditional(content!, scopeId, accessor);
+    return;
   }
 
   if (typeof tag === "string") {
-    nextScopeId();
-    write(
-      `<${tag}${attrs(input, MARKO_DEBUG ? `#${tag}/0` : 0, scopeId, tag)}>`,
-    );
+    resumeSingleNodeConditional(
+      () => {
+        nextScopeId();
+        write(`<${tag}${attrs(input, accessor, scopeId, tag)}>`);
 
-    if (!voidElementsReg.test(tag)) {
-      if (tag === "textarea") {
-        if (MARKO_DEBUG && content) {
-          throw new Error(
-            "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
-          );
+        if (!voidElementsReg.test(tag)) {
+          if (tag === "textarea") {
+            if (MARKO_DEBUG && content) {
+              throw new Error(
+                "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
+              );
+            }
+            write(
+              controllable_textarea_value(
+                scopeId,
+                accessor,
+                input.value,
+                input.valueChange,
+              ),
+            );
+          } else if (content) {
+            if (
+              tag === "select" &&
+              ("value" in input || "valueChange" in input)
+            ) {
+              controllable_select_value(
+                scopeId,
+                accessor,
+                input.value,
+                input.valueChange,
+                content,
+              );
+            } else {
+              content();
+            }
+          }
+          write(`</${tag}>`);
+        } else if (MARKO_DEBUG && content) {
+          throw new Error(`Body content is not supported for a "${tag}" tag.`);
         }
-        write(
-          controllable_textarea_value(
-            scopeId,
-            MARKO_DEBUG ? `#${tag}/0` : 0,
-            input.value,
-            input.valueChange,
-          ),
-        );
-      } else if (content) {
-        if (tag === "select" && ("value" in input || "valueChange" in input)) {
-          controllable_select_value(
-            scopeId,
-            MARKO_DEBUG ? `#${tag}/0` : 0,
-            input.value,
-            input.valueChange,
-            content,
-          );
-        } else {
-          content();
-        }
-      }
-      write(`</${tag}>`);
-    } else if (MARKO_DEBUG && content) {
-      throw new Error(`Body content is not supported for a "${tag}" tag.`);
-    }
+      },
+      scopeId,
+      accessor,
+    );
     // TODO: this needs to return the element getter
-    return null;
+    return;
   }
 
   const renderer = getDynamicRenderer(tag) as ServerRenderer;
@@ -87,32 +95,45 @@ export function dynamicTagInput(
     }
   }
 
-  return renderer(content ? { ...input, content } : input, tagVar);
+  let result;
+  resumeConditional(
+    () => {
+      result = renderer(content ? { ...input, content } : input, tagVar);
+    },
+    scopeId,
+    accessor,
+  );
+  return result;
 }
 
 export function dynamicTagArgs(
-  scope: PartialScope,
+  scopeId: number,
+  accessor: Accessor,
   tag: unknown | string | ServerRenderer | BodyContentObject,
   args: unknown[],
 ) {
-  if (!tag) return undefined;
-
-  const scopeId = getScopeId(scope)!;
-  write(`${markResumeScopeStart(scopeId)}`);
-  writeScope(scopeId, scope);
+  if (!tag) {
+    nextScopeId();
+    return;
+  }
 
   if (typeof tag === "string") {
-    nextScopeId();
-    write(
-      `<${tag}${attrs(args[0] as Record<string, unknown>, MARKO_DEBUG ? `#${tag}/0` : 0, scopeId, tag)}>`,
+    resumeSingleNodeConditional(
+      () => {
+        nextScopeId();
+        write(
+          `<${tag}${attrs(args[0] as Record<string, unknown>, accessor, scopeId, tag)}>`,
+        );
+
+        if (!voidElementsReg.test(tag)) {
+          write(`</${tag}>`);
+        }
+      },
+      scopeId,
+      accessor,
     );
-
-    if (!voidElementsReg.test(tag)) {
-      write(`</${tag}>`);
-    }
-
     // TODO: this needs to return the element getter
-    return undefined;
+    return;
   }
 
   const renderer = getDynamicRenderer(tag) as ServerRenderer;
@@ -123,7 +144,15 @@ export function dynamicTagArgs(
     }
   }
 
-  return renderer(...args);
+  let result;
+  resumeConditional(
+    () => {
+      result = renderer(...args);
+    },
+    scopeId,
+    accessor,
+  );
+  return result;
 }
 
 let getDynamicRenderer = normalizeDynamicRenderer<ServerRenderer>;

@@ -5,7 +5,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     x
   } = input;
   const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope, x, {
+  _$.dynamicTagInput(_scope0_id, "#text/0", x, {
     footer: _$.attrTag({
       class: "my-footer",
       content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
@@ -24,7 +24,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     const _scope1_id = _$.nextScopeId();
     _$.write("Body content");
   }), "__tests__/template.marko_1_renderer", _scope0_id));
-  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/0"));
   _$.writeScope(_scope0_id, {
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(x)

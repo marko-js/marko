@@ -1,4 +1,4 @@
-// size: 17946 (min) 6566 (brotli)
+// size: 17938 (min) 6553 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -180,7 +180,7 @@ var registeredValues = {},
         let commentPrefixLen = data2.i.length,
           parentBranchMarkers = new Map();
         data2.v = [];
-        let sectionEnd = (visit, scopeId = this.g, curNode = visit) => {
+        let sectionEnd = (scopeId, visit, curNode) => {
           let scope = (scopeLookup[scopeId] ||= {});
           branchIds.add(scopeId);
           let endNode = curNode;
@@ -211,26 +211,29 @@ var registeredValues = {},
           if ("*" === token) scope[data3] = visit.previousSibling;
           else if ("$" === token) parentBranchMarkers.set(scopeId, visit);
           else if ("[" === token)
-            this.g && (data3 && sectionEnd(visit), this.o.push(this.g)),
+            this.g &&
+              (dataIndex && sectionEnd(this.g, visit, visit),
+              this.o.push(this.g)),
               (this.g = scopeId),
               (scope.a = visit);
           else if ("]" === token) {
-            if (((scope[data3] = visit), scopeId < this.g)) {
-              let currParent = visit.parentNode,
-                startNode = sectionEnd(visit).a;
-              currParent &&
-                currParent !== startNode.parentNode &&
-                currParent.prepend(startNode),
-                (this.g = this.o.pop());
-            }
+            scope[data3] = visit;
+            let curParent = visit.parentNode,
+              startNode = sectionEnd(this.g, visit, visit).a;
+            curParent !== startNode.parentNode && curParent.prepend(startNode),
+              (this.g = this.o.pop());
           } else if ("|" === token) {
-            scope[parseInt(data3)] = visit;
-            let childScopeIds = JSON.parse(
-                "[" + data3.slice(data3.indexOf(" ") + 1) + "]",
-              ),
-              curNode = visit;
-            for (let i = childScopeIds.length - 1; i >= 0; i--)
-              curNode = sectionEnd(visit, childScopeIds[i] + "", curNode).c;
+            let next = data3.indexOf(" "),
+              curNode = (scope[~next ? data3.slice(0, next) : data3] = visit);
+            for (; ~next; ) {
+              let start = next + 1;
+              (next = data3.indexOf(" ", start)),
+                (curNode = sectionEnd(
+                  data3.slice(start, ~next ? next : data3.length),
+                  visit,
+                  curNode,
+                ).c);
+            }
           }
         }
       }

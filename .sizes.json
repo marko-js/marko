@@ -7,8 +7,8 @@
     {
       "name": "*",
       "total": {
-        "min": 17946,
-        "brotli": 6566
+        "min": 17938,
+        "brotli": 6553
       }
     },
     {
@@ -33,12 +33,12 @@
         "brotli": 100
       },
       "runtime": {
-        "min": 3553,
-        "brotli": 1622
+        "min": 3545,
+        "brotli": 1609
       },
       "total": {
-        "min": 3664,
-        "brotli": 1722
+        "min": 3656,
+        "brotli": 1709
       }
     },
     {
@@ -63,12 +63,12 @@
         "brotli": 478
       },
       "runtime": {
-        "min": 8729,
-        "brotli": 3580
+        "min": 8721,
+        "brotli": 3559
       },
       "total": {
-        "min": 9677,
-        "brotli": 4058
+        "min": 9669,
+        "brotli": 4037
       }
     }
   ]

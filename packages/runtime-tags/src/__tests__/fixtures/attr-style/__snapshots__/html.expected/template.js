@@ -26,7 +26,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     style: "color: green"
   });
   const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope, test, {
+  _$.dynamicTagInput(_scope0_id, "#text/4", test, {
     style: {
       color: "green"
     },
@@ -40,7 +40,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       }), "__tests__/template.marko_1_renderer", _scope0_id)
     })
   });
-  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/4"));
   _$.writeScope(_scope0_id, {
     "#childScope/1": _$.writeExistingScope(_childScope),
     "#childScope/2": _$.writeExistingScope(_childScope2),

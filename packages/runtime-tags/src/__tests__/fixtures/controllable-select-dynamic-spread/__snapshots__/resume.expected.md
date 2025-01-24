@@ -3,7 +3,6 @@
 <html>
   <head />
   <body>
-    <!--M_[1-->
     <select>
       <option
         value="a"
@@ -25,14 +24,14 @@
       </option>
       <!--M_*2 #option/2-->
     </select>
-    <!--M_]0 #text/0-->
+    <!--M_|0 #text/0 1-->
     <span>
       b
       <!--M_*0 #text/1-->
     </span>
     <!--M_$0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{value:"b","#text/0!":_.a={"#select/0=":3,"#select/0:":"b"},"#text/0(":"select"},1:_.a}),2,"__tests__/template.marko_1",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{"#text/0=":3,"#text/0:":"b",value:"b","#text/0!":_.a={},"#text/0(":"select"},1:_.a}),2,"__tests__/template.marko_1",0];M._.w()
     </script>
   </body>
 </html>
@@ -40,8 +39,7 @@
 
 # Mutations
 ```
-removed #document/html0/body1/#comment0 before #document/html0
-inserted #document/html0/body1/#comment0
+
 ```
 
 
@@ -57,7 +55,6 @@ bubbles: true
 <html>
   <head />
   <body>
-    <!--M_[1-->
     <select>
       <option
         value="a"
@@ -79,14 +76,14 @@ bubbles: true
       </option>
       <!--M_*2 #option/2-->
     </select>
-    <!--M_]0 #text/0-->
+    <!--M_|0 #text/0 1-->
     <span>
       b
       <!--M_*0 #text/1-->
     </span>
     <!--M_$0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{value:"b","#text/0!":_.a={"#select/0=":3,"#select/0:":"b"},"#text/0(":"select"},1:_.a}),2,"__tests__/template.marko_1",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{"#text/0=":3,"#text/0:":"b",value:"b","#text/0!":_.a={},"#text/0(":"select"},1:_.a}),2,"__tests__/template.marko_1",0];M._.w()
     </script>
   </body>
 </html>

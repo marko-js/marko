@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/no-this-alias */
-import { type $Global, type Accessor, ResumeSymbol } from "../common/types";
+import { forIn, forOf, forTo } from "../common/for";
+import {
+  type $Global,
+  type Accessor,
+  type Falsy,
+  ResumeSymbol,
+} from "../common/types";
 import { escapeAttrValue } from "./attrs";
 import { REORDER_RUNTIME_CODE, WALKER_RUNTIME_CODE } from "./inlined-runtimes";
 import { register as serializerRegister, Serializer } from "./serializer";
@@ -113,34 +119,192 @@ export function nodeRef(scopeId: number, id?: string) {
   return id ? register(getter, id, scopeId) : getter;
 }
 
-export function markResumeScopeStart(scopeId: number, index?: number) {
-  return $chunk.boundary.state.mark(
-    ResumeSymbol.SectionStart,
-    scopeId + (index ? " " + index : ""),
-  );
-}
-
-export function markResumeControlEnd(scopeId: number, accessor: Accessor) {
-  return $chunk.boundary.state.mark(
-    ResumeSymbol.SectionEnd,
-    scopeId + " " + accessor,
-  );
-}
-
-export function markResumeControlSingleNodeEnd(
-  scopeId: number,
-  accessor: Accessor,
-  childScopeIds?: number | number[],
-) {
-  return $chunk.boundary.state.mark(
-    ResumeSymbol.SectionSingleNodesEnd,
-    scopeId + " " + accessor + " " + (childScopeIds ?? ""),
-  );
-}
-
-export function markResumeCleanup(scopeId: number) {
+export function markResumeParentBranch(scopeId: number) {
   $chunk.writeHTML(
     $chunk.boundary.state.mark(ResumeSymbol.ParentBranch, "" + scopeId),
+  );
+}
+
+const branchIdKey = Symbol();
+
+export function resumeForOf(
+  list: Falsy | Iterable<unknown>,
+  cb: (item: unknown, index: number) => void,
+  scopeId: number,
+  accessor: Accessor,
+): void {
+  forOf(list, (item, i) => {
+    const branchId = peekNextScopeId();
+    $chunk.writeHTML(
+      $chunk.boundary.state.mark(
+        ResumeSymbol.SectionStart,
+        branchId + (i ? " " : ""),
+      ),
+    );
+
+    withContext(branchIdKey, branchId, () => cb(item, i));
+  });
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(
+      ResumeSymbol.SectionEnd,
+      scopeId + " " + accessor,
+    ),
+  );
+}
+export function resumeSingleNodeForOf(
+  list: Falsy | Iterable<unknown>,
+  cb: (item: unknown, index: number) => void,
+  scopeId: number,
+  accessor: Accessor,
+): void {
+  let branchIds = "";
+  forOf(list, (item, index) => {
+    const branchId = peekNextScopeId();
+    branchIds = " " + branchId + branchIds;
+    withContext(branchIdKey, branchId, () => cb(item, index));
+  });
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(
+      ResumeSymbol.SectionSingleNodesEnd,
+      scopeId + " " + accessor + branchIds,
+    ),
+  );
+}
+
+export function resumeForIn(
+  obj: Falsy | {},
+  cb: (key: string, value: unknown) => void,
+  scopeId: number,
+  accessor: Accessor,
+): void {
+  let sep = "";
+  forIn(obj, (key, value) => {
+    const branchId = peekNextScopeId();
+    $chunk.writeHTML(
+      $chunk.boundary.state.mark(ResumeSymbol.SectionStart, branchId + sep),
+    );
+    sep = " ";
+    withContext(branchIdKey, branchId, () => cb(key, value));
+  });
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(
+      ResumeSymbol.SectionEnd,
+      scopeId + " " + accessor,
+    ),
+  );
+}
+export function resumeSingleNodeForIn(
+  obj: Falsy | {},
+  cb: (key: string, value: unknown) => void,
+  scopeId: number,
+  accessor: Accessor,
+): void {
+  let branchIds = "";
+  forIn(obj, (key, value) => {
+    const branchId = peekNextScopeId();
+    branchIds = " " + branchId + branchIds;
+    withContext(branchIdKey, branchId, () => cb(key, value));
+  });
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(
+      ResumeSymbol.SectionSingleNodesEnd,
+      scopeId + " " + accessor + branchIds,
+    ),
+  );
+}
+
+export function resumeForTo(
+  to: number,
+  from: number | Falsy,
+  step: number | Falsy,
+  cb: (index: number) => void,
+  scopeId: number,
+  accessor: Accessor,
+): void {
+  let sep = "";
+  forTo(to, from, step, (index) => {
+    const branchId = peekNextScopeId();
+    $chunk.writeHTML(
+      $chunk.boundary.state.mark(ResumeSymbol.SectionStart, branchId + sep),
+    );
+    sep = " ";
+    withContext(branchIdKey, branchId, () => cb(index));
+  });
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(
+      ResumeSymbol.SectionEnd,
+      scopeId + " " + accessor,
+    ),
+  );
+}
+export function resumeSingleNodeForTo(
+  to: number,
+  from: number | Falsy,
+  step: number | Falsy,
+  cb: (index: number) => void,
+  scopeId: number,
+  accessor: Accessor,
+): void {
+  let branchIds = "";
+  forTo(to, from, step, (index) => {
+    const branchId = peekNextScopeId();
+    branchIds = " " + branchId + branchIds;
+    withContext(branchIdKey, branchId, () => cb(index));
+  });
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(
+      ResumeSymbol.SectionSingleNodesEnd,
+      scopeId + " " + accessor + branchIds,
+    ),
+  );
+}
+
+export function resumeConditional(
+  cb: () => void | number,
+  scopeId: number,
+  accessor: Accessor,
+) {
+  const branchId = peekNextScopeId();
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(ResumeSymbol.SectionStart, branchId + ""),
+  );
+  withContext(branchIdKey, branchId, cb);
+
+  const rendered = peekNextScopeId() !== branchId;
+  if (rendered) {
+    writeScope(branchId, {});
+  } else {
+    nextScopeId();
+  }
+
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(
+      ResumeSymbol.SectionEnd,
+      scopeId + " " + accessor,
+    ),
+  );
+}
+
+export function resumeSingleNodeConditional(
+  cb: () => void | number,
+  scopeId: number,
+  accessor: Accessor,
+) {
+  const branchId = peekNextScopeId();
+  withContext(branchIdKey, branchId, cb);
+
+  const rendered = peekNextScopeId() !== branchId;
+  if (rendered) {
+    writeScope(branchId, {});
+  } else {
+    nextScopeId();
+  }
+
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(
+      ResumeSymbol.SectionSingleNodesEnd,
+      scopeId + " " + accessor + (rendered ? " " + branchId : ""),
+    ),
   );
 }
 

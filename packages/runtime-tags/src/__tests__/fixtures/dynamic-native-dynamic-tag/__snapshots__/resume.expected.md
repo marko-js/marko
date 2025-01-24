@@ -3,13 +3,12 @@
 <html>
   <head />
   <body>
-    <!--M_[1-->
     <span
       class="A"
     >
       body content
     </span>
-    <!--M_]0 #text/0-->
+    <!--M_|0 #text/0 1-->
     <button />
     <!--M_*0 #button/1-->
     <!--M_$0-->
@@ -22,8 +21,7 @@
 
 # Mutations
 ```
-removed #document/html0/body1/#comment0 before #document/html0
-inserted #document/html0/body1/#comment0
+
 ```
 
 
@@ -39,7 +37,7 @@ container.querySelector("button").click()
     >
       body content
     </div>
-    <!--M_]0 #text/0-->
+    <!--M_|0 #text/0 1-->
     <button />
     <!--M_*0 #button/1-->
     <!--M_$0-->
@@ -53,7 +51,6 @@ container.querySelector("button").click()
 # Mutations
 ```
 inserted #document/html0/body1/div0
-removed #comment after #document/html0/body1/div0
 removed span after #document/html0/body1/div0
 inserted #document/html0/body1/div0/#text0
 #document/html0/body1/div0: attr(class) null => "A"
@@ -72,7 +69,7 @@ container.querySelector("button").click()
     >
       body content
     </span>
-    <!--M_]0 #text/0-->
+    <!--M_|0 #text/0 1-->
     <button />
     <!--M_*0 #button/1-->
     <!--M_$0-->

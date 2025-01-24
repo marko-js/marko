@@ -1,5 +1,5 @@
 import type { Renderer as ClientRenderer } from "../dom/renderer";
-
+export type Falsy = undefined | null | false | 0 | "";
 export type CommentWalker = TreeWalker & Record<string, Comment>;
 export interface BranchScope extends Scope {
   ___parentBranch: BranchScope | undefined;

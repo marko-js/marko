@@ -53,12 +53,10 @@ import {
 
 type ForType = "in" | "of" | "to";
 const kForMarkerBinding = Symbol("for marker binding");
-const kForScopeStartIndex = Symbol("for scope start index");
 const kOnlyChildInParent = Symbol("only child in parent");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kForMarkerBinding]?: Binding;
-    [kForScopeStartIndex]?: t.Identifier;
     [kOnlyChildInParent]?: boolean;
   }
 }
@@ -139,8 +137,6 @@ export default {
           return;
         }
 
-        const tagExtra = tag.node.extra!;
-        const isStateful = isStatefulReferences(tagExtra.referencedBindings);
         setSectionParentIsOwner(bodySection, true);
 
         if (!isOnlyChildInParent(tag)) {
@@ -149,14 +145,6 @@ export default {
         }
 
         writer.flushBefore(tag);
-        if (isStateful && !bodySection.content?.singleChild) {
-          tagExtra[kForScopeStartIndex] = tag.scope.generateUidIdentifier("k");
-          writer.writeTo(tagBody)`${callRuntime(
-            "markResumeScopeStart",
-            getScopeIdIdentifier(bodySection),
-            t.updateExpression("++", tagExtra[kForScopeStartIndex]),
-          )}`;
-        }
       },
       exit(tag) {
         if (tag.node.body.attributeTags) return;
@@ -177,26 +165,15 @@ export default {
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
         const hasStatefulClosures = checkStatefulClosures(bodySection, true);
+        const singleNodeOptimization =
+          bodySection.content === null || bodySection.content.singleChild;
         let keyExpression: t.Expression | undefined;
 
         if (isStateful && isOnlyChildInParent(tag)) {
           parentTag!.node.extra![kSerializeMarker] = true;
         }
 
-        if (tagExtra[kForScopeStartIndex]) {
-          statements.push(
-            t.variableDeclaration("let", [
-              t.variableDeclarator(
-                tagExtra[kForScopeStartIndex],
-                t.numericLiteral(0),
-              ),
-            ]),
-          );
-        }
-
         if (isStateful || hasStatefulClosures) {
-          const singleNodeOptimization =
-            bodySection.content === null || bodySection.content.singleChild;
           const defaultParamNames = (
             {
               of: ["list", "index"],
@@ -257,56 +234,36 @@ export default {
             keyExpression = params[defaultByParamIndex] as t.Identifier;
           }
 
-          const write = writer.writeTo(tag);
-          const forScopeIdsIdentifier =
-            tag.scope.generateUidIdentifier("forScopeIds");
           const forScopesIdentifier = getScopeIdentifier(bodySection);
-
           statements.push(
-            t.variableDeclaration(
-              "const",
-              [
-                isStateful &&
-                  singleNodeOptimization &&
-                  t.variableDeclarator(
-                    forScopeIdsIdentifier,
-                    t.arrayExpression([]),
-                  ),
-                t.variableDeclarator(
-                  forScopesIdentifier,
-                  t.newExpression(t.identifier("Map"), []),
-                ),
-              ].filter(Boolean) as t.VariableDeclarator[],
-            ),
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                forScopesIdentifier,
+                t.newExpression(t.identifier("Map"), []),
+              ),
+            ]),
           );
 
-          if (isStateful) {
-            if (singleNodeOptimization) {
-              bodyStatements.push(
-                t.expressionStatement(
-                  t.callExpression(
-                    t.memberExpression(
-                      forScopeIdsIdentifier,
-                      t.identifier("push"),
-                    ),
-                    [getScopeIdIdentifier(bodySection)],
+          if (keyExpression && (isStateful || hasStatefulClosures)) {
+            bodyStatements.push(
+              t.expressionStatement(
+                t.callExpression(
+                  t.memberExpression(
+                    getScopeIdentifier(bodySection),
+                    t.identifier("set"),
                   ),
+                  [
+                    keyExpression,
+                    callRuntime(
+                      "ensureScopeWithId",
+                      getScopeIdIdentifier(bodySection),
+                    ),
+                  ],
                 ),
-              );
-              write`${callRuntime(
-                "markResumeControlSingleNodeEnd",
-                getScopeIdIdentifier(tagSection),
-                getScopeAccessorLiteral(nodeRef),
-                forScopeIdsIdentifier,
-              )}`;
-            } else {
-              write`${callRuntime(
-                "markResumeControlEnd",
-                getScopeIdIdentifier(tagSection),
-                getScopeAccessorLiteral(nodeRef),
-              )}`;
-            }
+              ),
+            );
           }
+
           getSerializedScopeProperties(tagSection).set(
             t.stringLiteral(
               getScopeAccessorLiteral(nodeRef).value +
@@ -326,28 +283,23 @@ export default {
         setClosureSignalBuilder(tag, (() => {}) as any);
         writeHTMLResumeStatements(tagBody);
 
-        if (keyExpression && (isStateful || hasStatefulClosures)) {
-          bodyStatements.push(
-            t.expressionStatement(
-              t.callExpression(
-                t.memberExpression(
-                  getScopeIdentifier(bodySection),
-                  t.identifier("set"),
-                ),
-                [
-                  keyExpression,
-                  callRuntime(
-                    "getScopeById",
-                    getScopeIdIdentifier(bodySection),
-                  ),
-                ],
-              ),
-            ),
+        const forTagArgs = getBaseArgsInForTag(forType, forAttrs);
+        const forTagHTMLRuntime = isStateful
+          ? forTypeToHTMLResumeRuntime(forType, singleNodeOptimization)
+          : forTypeToRuntime(forType);
+        forTagArgs.push(
+          t.arrowFunctionExpression(params, t.blockStatement(bodyStatements)),
+        );
+
+        if (isStateful) {
+          forTagArgs.push(
+            getScopeIdIdentifier(tagSection),
+            getScopeAccessorLiteral(nodeRef),
           );
         }
 
         statements.push(
-          buildForRuntimeCall(forType, forAttrs, params, bodyStatements),
+          t.expressionStatement(callRuntime(forTagHTMLRuntime, ...forTagArgs)),
         );
 
         for (const replacement of tag.replaceWithMultiple(statements)) {
@@ -550,6 +502,31 @@ function forTypeToRuntime(type: ForType) {
       return "forIn";
     case "to":
       return "forTo";
+  }
+}
+
+function forTypeToHTMLResumeRuntime(
+  type: ForType,
+  singleNodeOptimization: boolean,
+) {
+  if (singleNodeOptimization) {
+    switch (type) {
+      case "of":
+        return "resumeSingleNodeForOf";
+      case "in":
+        return "resumeSingleNodeForIn";
+      case "to":
+        return "resumeSingleNodeForTo";
+    }
+  } else {
+    switch (type) {
+      case "of":
+        return "resumeForOf";
+      case "in":
+        return "resumeForIn";
+      case "to":
+        return "resumeForTo";
+    }
   }
 }
 
