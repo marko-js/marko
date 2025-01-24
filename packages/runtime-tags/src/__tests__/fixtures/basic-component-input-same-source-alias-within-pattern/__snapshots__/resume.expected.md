@@ -21,7 +21,6 @@
       <!--M_*2 #text/2-->
     </button>
     <!--M_*2 #button/0-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={clickCount:0,"#childScope/0":_.b={},"#childScope/1":_.c={}},1:_.b,2:_.c},_.b.onClick=_._["__tests__/template.marko_0/onClick"](_.a),_.c.onClick=_._["__tests__/template.marko_0/onClick_0"](_.a),_.d),1,"__tests__/tags/my-button.marko_0_onClick",2,"__tests__/tags/my-button.marko_0_onClick",0];M._.w()
     </script>
@@ -60,7 +59,6 @@ container.querySelector("button").click()
       <!--M_*2 #text/2-->
     </button>
     <!--M_*2 #button/0-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={clickCount:0,"#childScope/0":_.b={},"#childScope/1":_.c={}},1:_.b,2:_.c},_.b.onClick=_._["__tests__/template.marko_0/onClick"](_.a),_.c.onClick=_._["__tests__/template.marko_0/onClick_0"](_.a),_.d),1,"__tests__/tags/my-button.marko_0_onClick",2,"__tests__/tags/my-button.marko_0_onClick",0];M._.w()
     </script>
@@ -102,7 +100,6 @@ container.querySelector("button").click()
       <!--M_*2 #text/2-->
     </button>
     <!--M_*2 #button/0-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={clickCount:0,"#childScope/0":_.b={},"#childScope/1":_.c={}},1:_.b,2:_.c},_.b.onClick=_._["__tests__/template.marko_0/onClick"](_.a),_.c.onClick=_._["__tests__/template.marko_0/onClick_0"](_.a),_.d),1,"__tests__/tags/my-button.marko_0_onClick",2,"__tests__/tags/my-button.marko_0_onClick",0];M._.w()
     </script>

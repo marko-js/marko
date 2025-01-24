@@ -1,5 +1,5 @@
 # Write
-  <button><pre>a    1    <!>0<!--M_*0 #text/1--></pre><pre>b    2    <!>0<!--M_*0 #text/2--></pre><pre>c  {c:4}  <!>{}<!--M_*0 #text/3--></pre><pre>d    7    <!>0<!--M_*0 #text/4--></pre><pre>f   [9]   <!>[]<!--M_*0 #text/5--></pre></button><!--M_*0 #button/0--><!--M_$0--><script>WALKER_RUNTIME("M")("_");M._.r=[0,"__tests__/template.marko_0",0];M._.w()</script>
+  <button><pre>a    1    <!>0<!--M_*0 #text/1--></pre><pre>b    2    <!>0<!--M_*0 #text/2--></pre><pre>c  {c:4}  <!>{}<!--M_*0 #text/3--></pre><pre>d    7    <!>0<!--M_*0 #text/4--></pre><pre>f   [9]   <!>[]<!--M_*0 #text/5--></pre></button><!--M_*0 #button/0--><script>WALKER_RUNTIME("M")("_");M._.r=[0,"__tests__/template.marko_0",0];M._.w()</script>
 
 
 # Render "End"
@@ -40,7 +40,6 @@
       </pre>
     </button>
     <!--M_*0 #button/0-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[0,"__tests__/template.marko_0",0];M._.w()
     </script>
@@ -80,7 +79,6 @@ inserted #document/html0/body1/button0/pre4/#comment1
 inserted #document/html0/body1/button0/pre4/#text2
 inserted #document/html0/body1/button0/pre4/#comment3
 inserted #document/html0/body1/#comment1
-inserted #document/html0/body1/#comment2
-inserted #document/html0/body1/script3
-inserted #document/html0/body1/script3/#text0
+inserted #document/html0/body1/script2
+inserted #document/html0/body1/script2/#text0
 ```

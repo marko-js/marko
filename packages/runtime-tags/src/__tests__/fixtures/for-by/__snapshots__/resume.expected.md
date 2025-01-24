@@ -69,7 +69,6 @@
       </button>
       <!--M_*0 #button/5-->
     </div>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.u={0:{items:[{id:0,text:"first"},{id:1,text:"second"},{id:2,text:"third"}],"#div/0(":new Map(_.a=[[0,_.f={}],[1,_.g={}],[2,_.h={}]]),"#div/1(":new Map(_.b=[[0,_.i={}],[1,_.j={}],[2,_.k={}]]),"#div/2(":new Map(_.c=[[0,_.l={}],[1,_.m={}],[2,_.n={}]]),"#div/3(":new Map(_.d=[[0,_.o={}],[1,_.p={}],[2,_.q={}]]),"#div/4(":new Map(_.e=[[0,_.r={}],[1,_.s={}],[2,_.t={}]])},1:_.f,2:_.g,3:_.h,4:_.i,5:_.j,6:_.k,7:_.l,8:_.m,9:_.n,10:_.o,11:_.p,12:_.q,13:_.r,14:_.s,15:_.t}),0,"__tests__/template.marko_0_items",0];M._.w()
     </script>
@@ -156,7 +155,6 @@ container.querySelector("button").click()
       </button>
       <!--M_*0 #button/5-->
     </div>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.u={0:{items:[{id:0,text:"first"},{id:1,text:"second"},{id:2,text:"third"}],"#div/0(":new Map(_.a=[[0,_.f={}],[1,_.g={}],[2,_.h={}]]),"#div/1(":new Map(_.b=[[0,_.i={}],[1,_.j={}],[2,_.k={}]]),"#div/2(":new Map(_.c=[[0,_.l={}],[1,_.m={}],[2,_.n={}]]),"#div/3(":new Map(_.d=[[0,_.o={}],[1,_.p={}],[2,_.q={}]]),"#div/4(":new Map(_.e=[[0,_.r={}],[1,_.s={}],[2,_.t={}]])},1:_.f,2:_.g,3:_.h,4:_.i,5:_.j,6:_.k,7:_.l,8:_.m,9:_.n,10:_.o,11:_.p,12:_.q,13:_.r,14:_.s,15:_.t}),0,"__tests__/template.marko_0_items",0];M._.w()
     </script>
@@ -249,7 +247,6 @@ container.querySelector("button").click()
       </button>
       <!--M_*0 #button/5-->
     </div>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.u={0:{items:[{id:0,text:"first"},{id:1,text:"second"},{id:2,text:"third"}],"#div/0(":new Map(_.a=[[0,_.f={}],[1,_.g={}],[2,_.h={}]]),"#div/1(":new Map(_.b=[[0,_.i={}],[1,_.j={}],[2,_.k={}]]),"#div/2(":new Map(_.c=[[0,_.l={}],[1,_.m={}],[2,_.n={}]]),"#div/3(":new Map(_.d=[[0,_.o={}],[1,_.p={}],[2,_.q={}]]),"#div/4(":new Map(_.e=[[0,_.r={}],[1,_.s={}],[2,_.t={}]])},1:_.f,2:_.g,3:_.h,4:_.i,5:_.j,6:_.k,7:_.l,8:_.m,9:_.n,10:_.o,11:_.p,12:_.q,13:_.r,14:_.s,15:_.t}),0,"__tests__/template.marko_0_items",0];M._.w()
     </script>
@@ -338,7 +335,6 @@ container.querySelector("button").click()
       </button>
       <!--M_*0 #button/5-->
     </div>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.u={0:{items:[{id:0,text:"first"},{id:1,text:"second"},{id:2,text:"third"}],"#div/0(":new Map(_.a=[[0,_.f={}],[1,_.g={}],[2,_.h={}]]),"#div/1(":new Map(_.b=[[0,_.i={}],[1,_.j={}],[2,_.k={}]]),"#div/2(":new Map(_.c=[[0,_.l={}],[1,_.m={}],[2,_.n={}]]),"#div/3(":new Map(_.d=[[0,_.o={}],[1,_.p={}],[2,_.q={}]]),"#div/4(":new Map(_.e=[[0,_.r={}],[1,_.s={}],[2,_.t={}]])},1:_.f,2:_.g,3:_.h,4:_.i,5:_.j,6:_.k,7:_.l,8:_.m,9:_.n,10:_.o,11:_.p,12:_.q,13:_.r,14:_.s,15:_.t}),0,"__tests__/template.marko_0_items",0];M._.w()
     </script>

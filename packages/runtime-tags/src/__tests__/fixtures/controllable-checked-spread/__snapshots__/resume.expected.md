@@ -11,7 +11,6 @@
       false
       <!--M_*0 #text/1-->
     </span>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#input/0=":0,input:_.c={checked:!1}}},1:_.b},_.b["#input/0;"]=_.c.checkedChange=_._["__tests__/template.marko_0/checkedChange"](_.a),_.d),1,"__tests__/tags/checkbox.marko_0_input",0];M._.w()
     </script>
@@ -41,7 +40,6 @@ container.querySelector("input").click()
       true
       <!--M_*0 #text/1-->
     </span>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#input/0=":0,input:_.c={checked:!1}}},1:_.b},_.b["#input/0;"]=_.c.checkedChange=_._["__tests__/template.marko_0/checkedChange"](_.a),_.d),1,"__tests__/tags/checkbox.marko_0_input",0];M._.w()
     </script>
@@ -70,7 +68,6 @@ container.querySelector("input").click()
       false
       <!--M_*0 #text/1-->
     </span>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#input/0=":0,input:_.c={checked:!1}}},1:_.b},_.b["#input/0;"]=_.c.checkedChange=_._["__tests__/template.marko_0/checkedChange"](_.a),_.d),1,"__tests__/tags/checkbox.marko_0_input",0];M._.w()
     </script>
@@ -100,7 +97,6 @@ container.querySelector("input").click()
       true
       <!--M_*0 #text/1-->
     </span>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#input/0=":0,input:_.c={checked:!1}}},1:_.b},_.b["#input/0;"]=_.c.checkedChange=_._["__tests__/template.marko_0/checkedChange"](_.a),_.d),1,"__tests__/tags/checkbox.marko_0_input",0];M._.w()
     </script>

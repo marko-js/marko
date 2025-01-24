@@ -1,5 +1,5 @@
 # Write
-  <button>0<!--M_*0 #text/1--></button><!--M_*0 #button/0-->used to be <span>0<!--M_*0 #text/2--></span> which should be the same as <span>0<!--M_*0 #text/3--></span><!--M_$0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{clickCount:0}}),0,"__tests__/template.marko_0_clickCount",0];M._.w()</script>
+  <button>0<!--M_*0 #text/1--></button><!--M_*0 #button/0-->used to be <span>0<!--M_*0 #text/2--></span> which should be the same as <span>0<!--M_*0 #text/3--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{clickCount:0}}),0,"__tests__/template.marko_0_clickCount",0];M._.w()</script>
 
 
 # Render "End"
@@ -22,7 +22,6 @@
       0
       <!--M_*0 #text/3-->
     </span>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"__tests__/template.marko_0_clickCount",0];M._.w()
     </script>
@@ -47,7 +46,6 @@ inserted #document/html0/body1/#text4
 inserted #document/html0/body1/span5
 inserted #document/html0/body1/span5/#text0
 inserted #document/html0/body1/span5/#comment1
-inserted #document/html0/body1/#comment6
-inserted #document/html0/body1/script7
-inserted #document/html0/body1/script7/#text0
+inserted #document/html0/body1/script6
+inserted #document/html0/body1/script6/#text0
 ```

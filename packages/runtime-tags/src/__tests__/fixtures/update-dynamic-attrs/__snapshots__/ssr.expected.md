@@ -1,5 +1,5 @@
 # Write
-  <div a=1 b=2></div><!--M_*0 #div/0--><div a=1 b=2></div><!--M_*0 #div/1--><div a=0 b=2></div><!--M_*0 #div/2--><!--M_$0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{input_value:{a:1,b:2},a:0}}),0,"__tests__/template.marko_0_input_value_a",0,"__tests__/template.marko_0_input_value",0];M._.w()</script>
+  <div a=1 b=2></div><!--M_*0 #div/0--><div a=1 b=2></div><!--M_*0 #div/1--><div a=0 b=2></div><!--M_*0 #div/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{input_value:{a:1,b:2},a:0}}),0,"__tests__/template.marko_0_input_value_a",0,"__tests__/template.marko_0_input_value",0];M._.w()</script>
 
 
 # Render "End"
@@ -22,7 +22,6 @@
       b="2"
     />
     <!--M_*0 #div/2-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{input_value:{a:1,b:2},a:0}}),0,"__tests__/template.marko_0_input_value_a",0,"__tests__/template.marko_0_input_value",0];M._.w()
     </script>
@@ -41,7 +40,6 @@ inserted #document/html0/body1/div2
 inserted #document/html0/body1/#comment3
 inserted #document/html0/body1/div4
 inserted #document/html0/body1/#comment5
-inserted #document/html0/body1/#comment6
-inserted #document/html0/body1/script7
-inserted #document/html0/body1/script7/#text0
+inserted #document/html0/body1/script6
+inserted #document/html0/body1/script6/#text0
 ```

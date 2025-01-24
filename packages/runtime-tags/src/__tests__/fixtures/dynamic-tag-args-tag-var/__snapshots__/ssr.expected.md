@@ -1,5 +1,5 @@
 # Write
-  <button>Count: <!>1<!--M_*0 #text/1--></button><!--M_*0 #button/0--><!--M_[1--><div>Child: <!>1<!--M_*1 #text/0--></div><!--M_]0 #text/2--><div>Parent: <!>1<!--M_*0 #text/3--></div><!--M_$0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:_.a={x:1,"#text/2!":_.b={},"#text/2(":_._["__tests__/tags/custom-tag.marko"]},1:_.b},_.b["/"]=_._["__tests__/template.marko_0_y/var"](_.a),_.c),0,"__tests__/template.marko_0_x",0];M._.w()</script>
+  <button>Count: <!>1<!--M_*0 #text/1--></button><!--M_*0 #button/0--><!--M_[1--><div>Child: <!>1<!--M_*1 #text/0--></div><!--M_]0 #text/2--><div>Parent: <!>1<!--M_*0 #text/3--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:_.a={x:1,"#text/2!":_.b={},"#text/2(":_._["__tests__/tags/custom-tag.marko"]},1:_.b},_.b["/"]=_._["__tests__/template.marko_0_y/var"](_.a),_.c),0,"__tests__/template.marko_0_x",0];M._.w()</script>
 
 
 # Render "End"
@@ -28,7 +28,6 @@
       1
       <!--M_*0 #text/3-->
     </div>
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={x:1,"#text/2!":_.b={},"#text/2(":_._["__tests__/tags/custom-tag.marko"]},1:_.b},_.b["/"]=_._["__tests__/template.marko_0_y/var"](_.a),_.c),0,"__tests__/template.marko_0_x",0];M._.w()
     </script>
@@ -59,7 +58,6 @@ inserted #document/html0/body1/div5/#text0
 inserted #document/html0/body1/div5/#comment1
 inserted #document/html0/body1/div5/#text2
 inserted #document/html0/body1/div5/#comment3
-inserted #document/html0/body1/#comment6
-inserted #document/html0/body1/script7
-inserted #document/html0/body1/script7/#text0
+inserted #document/html0/body1/script6
+inserted #document/html0/body1/script6/#text0
 ```

@@ -8,7 +8,6 @@
         Hello
         <!--M_*1 #text/0-->
       </span>
-      <!--M_$1-->
       <!--M_|0 #text/0 1-->
       <span />
       <span />

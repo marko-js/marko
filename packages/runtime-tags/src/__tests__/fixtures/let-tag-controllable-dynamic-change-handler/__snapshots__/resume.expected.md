@@ -20,7 +20,6 @@
       toggle
     </button>
     <!--M_*0 #button/3-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),0,"__tests__/template.marko_0",0,"__tests__/template.marko_0_y",0];M._.w()
     </script>
@@ -58,7 +57,6 @@ container.querySelector("#inc").click()
       toggle
     </button>
     <!--M_*0 #button/3-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),0,"__tests__/template.marko_0",0,"__tests__/template.marko_0_y",0];M._.w()
     </script>
@@ -97,7 +95,6 @@ container.querySelector("#inc").click()
       toggle
     </button>
     <!--M_*0 #button/3-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),0,"__tests__/template.marko_0",0,"__tests__/template.marko_0_y",0];M._.w()
     </script>
@@ -136,7 +133,6 @@ container.querySelector("#toggle").click()
       toggle
     </button>
     <!--M_*0 #button/3-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),0,"__tests__/template.marko_0",0,"__tests__/template.marko_0_y",0];M._.w()
     </script>
@@ -174,7 +170,6 @@ container.querySelector("#inc").click()
       toggle
     </button>
     <!--M_*0 #button/3-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),0,"__tests__/template.marko_0",0,"__tests__/template.marko_0_y",0];M._.w()
     </script>
@@ -212,7 +207,6 @@ container.querySelector("#inc").click()
       toggle
     </button>
     <!--M_*0 #button/3-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),0,"__tests__/template.marko_0",0,"__tests__/template.marko_0_y",0];M._.w()
     </script>
