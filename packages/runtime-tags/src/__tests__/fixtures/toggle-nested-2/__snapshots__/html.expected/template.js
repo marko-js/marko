@@ -20,7 +20,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
           _$.writeScope(_scope2_id, {
             "_": _$.ensureScopeWithId(_scope1_id)
           });
-          _$.markResumeParentBranch(_scope2_id);
           _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_2_renderer");
           _ifScopeId = _scope2_id;
         }
@@ -31,7 +30,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
         "#text/1(": _ifRenderer,
         "#text/1!": _$.getScopeById(_ifScopeId)
       });
-      _$.markResumeParentBranch(_scope1_id);
       _$.register(_ifRenderer2 = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_1_renderer");
       _ifScopeId2 = _scope1_id;
     }
@@ -45,6 +43,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/1(": _ifRenderer2,
     "#text/1!": _$.getScopeById(_ifScopeId2)
   });
-  _$.markResumeParentBranch(_scope0_id);
+  _$.resumeClosestBranch(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

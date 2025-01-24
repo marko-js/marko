@@ -11,12 +11,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
-    _$.markResumeParentBranch(_scope1_id);
   }, _scope0_id, "#text/0");
   _$.writeScope(_scope0_id, {
     "num": num,
     "#text/0(": _scope1_.size ? _scope1_ : undefined
   });
-  _$.markResumeParentBranch(_scope0_id);
+  _$.resumeClosestBranch(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

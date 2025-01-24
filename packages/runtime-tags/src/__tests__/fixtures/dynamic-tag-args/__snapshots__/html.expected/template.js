@@ -13,6 +13,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/2!": _$.writeExistingScope(_dynamicScope),
     "#text/2(": _$.normalizeDynamicRenderer(tags[0])
   });
-  _$.markResumeParentBranch(_scope0_id);
+  _$.resumeClosestBranch(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

@@ -1,4 +1,4 @@
-// size: 17938 (min) 6553 (brotli)
+// size: 17899 (min) 6554 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -178,25 +178,23 @@ var registeredValues = {},
         parentBranchIds = new Map();
       if (visits.length) {
         let commentPrefixLen = data2.i.length,
-          parentBranchMarkers = new Map();
+          closestBranchMarkers = new Map();
         data2.v = [];
-        let sectionEnd = (scopeId, visit, curNode) => {
-          let scope = (scopeLookup[scopeId] ||= {});
-          branchIds.add(scopeId);
-          let endNode = curNode;
+        let branchEnd = (branchId, visit, curNode) => {
+          let branch = (scopeLookup[branchId] ||= {}),
+            endNode = curNode;
           for (; 8 === (endNode = endNode.previousSibling).nodeType; );
-          scope.c = endNode;
-          let startNode = (scope.a ||= endNode),
-            len = parentBranchMarkers.size;
-          for (let [markerScopeId, markerNode] of parentBranchMarkers) {
-            if (!len--) break;
-            markerScopeId !== scopeId &&
-              4 & startNode.compareDocumentPosition(markerNode) &&
+          (branch.c = endNode), (branch.a ||= endNode);
+          for (let [markerScopeId, markerNode] of closestBranchMarkers)
+            4 & branch.a.compareDocumentPosition(markerNode) &&
               2 & curNode.compareDocumentPosition(markerNode) &&
-              (parentBranchIds.set(markerScopeId, scopeId),
-              parentBranchMarkers.delete(markerScopeId));
-          }
-          return parentBranchMarkers.set(scopeId, visit), scope;
+              (parentBranchIds.set(markerScopeId, branchId),
+              closestBranchMarkers.delete(markerScopeId));
+          return (
+            branchIds.add(branchId),
+            closestBranchMarkers.set(branchId, visit),
+            branch
+          );
         };
         for (let visit of visits) {
           let commentText = visit.data,
@@ -209,17 +207,17 @@ var registeredValues = {},
             data3 = dataIndex ? commentText.slice(dataIndex) : "",
             token = commentText[commentPrefixLen];
           if ("*" === token) scope[data3] = visit.previousSibling;
-          else if ("$" === token) parentBranchMarkers.set(scopeId, visit);
+          else if ("$" === token) closestBranchMarkers.set(scopeId, visit);
           else if ("[" === token)
             this.g &&
-              (dataIndex && sectionEnd(this.g, visit, visit),
+              (dataIndex && branchEnd(this.g, visit, visit),
               this.o.push(this.g)),
               (this.g = scopeId),
               (scope.a = visit);
           else if ("]" === token) {
             scope[data3] = visit;
             let curParent = visit.parentNode,
-              startNode = sectionEnd(this.g, visit, visit).a;
+              startNode = branchEnd(this.g, visit, visit).a;
             curParent !== startNode.parentNode && curParent.prepend(startNode),
               (this.g = this.o.pop());
           } else if ("|" === token) {
@@ -228,7 +226,7 @@ var registeredValues = {},
             for (; ~next; ) {
               let start = next + 1;
               (next = data3.indexOf(" ", start)),
-                (curNode = sectionEnd(
+                (curNode = branchEnd(
                   data3.slice(start, ~next ? next : data3.length),
                   visit,
                   curNode,

@@ -30,7 +30,8 @@ export interface Section {
   closures: ReferencedBindings;
   bindings: ReferencedBindings;
   upstreamExpression: t.NodeExtra | undefined;
-  hasCleanup: boolean;
+  hasAbortSignal: boolean;
+  isBranch: boolean;
   content: null | {
     startType: ContentType;
     endType: ContentType;
@@ -85,7 +86,8 @@ export function startSection(
       bindings: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
-      hasCleanup: false,
+      hasAbortSignal: false,
+      isBranch: false,
     };
     sections.push(section);
   }

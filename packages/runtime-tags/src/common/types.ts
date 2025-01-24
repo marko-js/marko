@@ -23,14 +23,12 @@ export interface Scope {
   [x: string | number]: any;
 }
 
-// TODO: SectionSiblings that is both a SectionStart and a SectionEnd (<for> siblings)
-//       NODE that doesn't have a sectionId and uses the previous sectionId
 export enum ResumeSymbol {
-  SectionStart = "[",
-  SectionEnd = "]",
-  SectionSingleNodesEnd = "|",
   Node = "*",
-  ParentBranch = "$",
+  BranchStart = "[",
+  BranchEnd = "]",
+  BranchSingleNode = "|",
+  ClosestBranch = "$",
 }
 
 export enum AccessorChar {

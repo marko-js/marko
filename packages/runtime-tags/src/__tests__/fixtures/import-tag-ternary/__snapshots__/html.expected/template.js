@@ -10,6 +10,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(x === 1 ? baz : foo)
   });
-  _$.markResumeParentBranch(_scope0_id);
+  _$.resumeClosestBranch(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

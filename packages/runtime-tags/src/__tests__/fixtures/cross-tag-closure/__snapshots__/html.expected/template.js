@@ -17,7 +17,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       _$.writeScope(_scope1_id, {
         "_": _$.ensureScopeWithId(_scope0_id)
       });
-      _$.markResumeParentBranch(_scope1_id);
+      _$.resumeClosestBranch(_scope1_id);
     }), "__tests__/template.marko_1_renderer", _scope0_id)
   });
   _$.writeScope(_scope0_id, {
