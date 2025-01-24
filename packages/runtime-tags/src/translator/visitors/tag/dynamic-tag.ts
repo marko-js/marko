@@ -174,7 +174,6 @@ export default {
       if (isOutputHTML()) {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
-        const write = writer.writeTo(tag);
 
         if (node.var) {
           if (!hasMultipleArgs && args.length === 1) {
@@ -202,13 +201,15 @@ export default {
         const dynamicTagExpr = hasMultipleArgs
           ? callRuntime(
               "dynamicTagArgs",
-              dynamicScopeIdentifier,
+              getScopeIdIdentifier(section),
+              getScopeAccessorLiteral(nodeRef),
               tagExpression,
               t.arrayExpression(args),
             )
           : callRuntime(
               "dynamicTagInput",
-              dynamicScopeIdentifier,
+              getScopeIdIdentifier(section),
+              getScopeAccessorLiteral(nodeRef),
               tagExpression,
               ...args,
             );
@@ -228,12 +229,6 @@ export default {
               ])
             : t.expressionStatement(dynamicTagExpr),
         );
-
-        write`${callRuntime(
-          "markResumeControlEnd",
-          getScopeIdIdentifier(section),
-          getScopeAccessorLiteral(nodeRef),
-        )}`;
 
         getSerializedScopeProperties(section).set(
           t.stringLiteral(

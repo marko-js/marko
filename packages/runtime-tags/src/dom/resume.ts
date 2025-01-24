@@ -59,9 +59,9 @@ class Render implements RenderData {
       data.v = [];
 
       const sectionEnd = (
+        scopeId: string,
         visit: Comment,
-        scopeId: string = this.___currentScopeId!,
-        curNode: ChildNode = visit,
+        curNode: ChildNode,
       ) => {
         const scope = (scopeLookup[scopeId] ||=
           {} as BranchScope) as BranchScope;
@@ -102,14 +102,16 @@ class Render implements RenderData {
         const data = dataIndex ? commentText.slice(dataIndex) : "";
         const token = commentText[commentPrefixLen];
 
+        // TODO: switch?
         if (token === ResumeSymbol.Node) {
+          // TODO: could we use attr marker?
           scope[data] = visit.previousSibling;
         } else if (token === ResumeSymbol.ParentBranch) {
           parentBranchMarkers.set(scopeId, visit);
         } else if (token === ResumeSymbol.SectionStart) {
           if (this.___currentScopeId) {
-            if (data) {
-              sectionEnd(visit);
+            if (dataIndex) {
+              sectionEnd(this.___currentScopeId, visit, visit);
             }
             this.___scopeStack.push(this.___currentScopeId);
           }
@@ -117,29 +119,25 @@ class Render implements RenderData {
           scope.___startNode = visit;
         } else if (token === ResumeSymbol.SectionEnd) {
           scope[data] = visit;
-          if (scopeId < this.___currentScopeId!) {
-            const currParent = visit.parentNode!;
-            const startNode = sectionEnd(visit).___startNode;
-            if (currParent && currParent !== startNode.parentNode) {
-              currParent.prepend(startNode);
-            }
-            this.___currentScopeId = this.___scopeStack.pop();
+          const curParent = visit.parentNode!;
+          const startNode = sectionEnd(
+            this.___currentScopeId!,
+            visit,
+            visit,
+          ).___startNode;
+          if (curParent !== startNode.parentNode) {
+            curParent.prepend(startNode);
           }
+          this.___currentScopeId = this.___scopeStack.pop();
         } else if (token === ResumeSymbol.SectionSingleNodesEnd) {
-          scope[
-            MARKO_DEBUG ? data.slice(0, data.indexOf(" ")) : parseInt(data)
-          ] = visit;
-          // https://jsben.ch/dR7uk
-          const childScopeIds = JSON.parse(
-            "[" + data.slice(data.indexOf(" ") + 1) + "]",
-          );
-          let curNode: ChildNode = visit;
-          for (let i = childScopeIds.length - 1; i >= 0; i--) {
-            curNode = sectionEnd(
-              visit,
-              childScopeIds[i] + "",
-              curNode,
-            ).___endNode;
+          let next = data.indexOf(" ");
+          let curNode: ChildNode = (scope[~next ? data.slice(0, next) : data] =
+            visit);
+          while (~next) {
+            const start = next + 1;
+            next = data.indexOf(" ", start);
+            const childScopeId = data.slice(start, ~next ? next : data.length);
+            curNode = sectionEnd(childScopeId, visit, curNode).___endNode;
           }
         }
       }

@@ -3,7 +3,6 @@
 <html>
   <head />
   <body>
-    <!--M_[1-->
     <div>
       <button
         id="count"
@@ -14,7 +13,7 @@
       <!--M_*3 #button/0-->
       <!--M_$3-->
     </div>
-    <!--M_]0 #text/0-->
+    <!--M_|0 #text/0 1-->
     <button
       id="changeTag"
     />
@@ -29,8 +28,7 @@
 
 # Mutations
 ```
-removed #document/html0/body1/#comment0 before #document/html0
-inserted #document/html0/body1/#comment0
+
 ```
 
 
@@ -41,7 +39,6 @@ container.querySelector("#count").click()
 <html>
   <head />
   <body>
-    <!--M_[1-->
     <div>
       <button
         id="count"
@@ -52,7 +49,7 @@ container.querySelector("#count").click()
       <!--M_*3 #button/0-->
       <!--M_$3-->
     </div>
-    <!--M_]0 #text/0-->
+    <!--M_|0 #text/0 1-->
     <button
       id="changeTag"
     />
@@ -67,7 +64,7 @@ container.querySelector("#count").click()
 
 # Mutations
 ```
-#document/html0/body1/div1/button0/#text0: "0" => "1"
+#document/html0/body1/div0/button0/#text0: "0" => "1"
 ```
 
 
@@ -85,7 +82,7 @@ container.querySelector("#changeTag").click()
         0
       </button>
     </span>
-    <!--M_]0 #text/0-->
+    <!--M_|0 #text/0 1-->
     <button
       id="changeTag"
     />
@@ -101,7 +98,6 @@ container.querySelector("#changeTag").click()
 # Mutations
 ```
 inserted #document/html0/body1/span0
-removed #comment after #document/html0/body1/span0
 removed div after #document/html0/body1/span0
 inserted #document/html0/body1/span0/button0
 #document/html0/body1/span0/button0/#text0: " " => "0"
@@ -122,7 +118,7 @@ container.querySelector("#count").click()
         1
       </button>
     </span>
-    <!--M_]0 #text/0-->
+    <!--M_|0 #text/0 1-->
     <button
       id="changeTag"
     />

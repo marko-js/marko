@@ -7,8 +7,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   } = input;
   _$.write(`<!>${_$.escapeXML(name)}${_$.markResumeNode(_scope0_id, "#text/0")}`);
   const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope, content, {});
-  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/1"));
+  _$.dynamicTagInput(_scope0_id, "#text/1", content, {});
   _$.writeScope(_scope0_id, {
     "#text/1!": _$.writeExistingScope(_dynamicScope),
     "#text/1(": _$.normalizeDynamicRenderer(content)

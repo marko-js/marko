@@ -20,7 +20,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
           _$.writeScope(_scope2_id, {
             "_": _$.ensureScopeWithId(_scope1_id)
           });
-          _$.markResumeCleanup(_scope2_id);
+          _$.markResumeParentBranch(_scope2_id);
         }), "__tests__/template.marko_2_renderer", _scope1_id)
       });
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_y/subscriber");
@@ -29,7 +29,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
         "#childScope/0": _$.writeExistingScope(_childScope),
         "_": _$.ensureScopeWithId(_scope0_id)
       });
-      _$.markResumeCleanup(_scope1_id);
+      _$.markResumeParentBranch(_scope1_id);
     }), "__tests__/template.marko_1_renderer", _scope0_id)
   });
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
@@ -38,6 +38,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "y": y,
     "#childScope/1": _$.writeExistingScope(_childScope2)
   });
-  _$.markResumeCleanup(_scope0_id);
+  _$.markResumeParentBranch(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

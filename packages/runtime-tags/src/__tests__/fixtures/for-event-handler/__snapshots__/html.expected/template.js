@@ -2,24 +2,21 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   const num = 0;
-  const _forScopeIds = [],
-    _scope1_ = new Map();
-  _$.forTo(num, 0, 1, i => {
+  const _scope1_ = new Map();
+  _$.resumeSingleNodeForTo(num, 0, 1, i => {
     const _scope1_id = _$.nextScopeId();
-    _forScopeIds.push(_scope1_id);
+    _scope1_.set(i, _$.ensureScopeWithId(_scope1_id));
     _$.write(`<button>${_$.escapeXML(i)}${_$.markResumeNode(_scope1_id, "#text/1")}</button>${_$.markResumeNode(_scope1_id, "#button/0")}`);
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1_num");
     _$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
     });
-    _$.markResumeCleanup(_scope1_id);
-    _scope1_.set(i, _$.getScopeById(_scope1_id));
-  });
-  _$.write(_$.markResumeControlSingleNodeEnd(_scope0_id, "#text/0", _forScopeIds));
+    _$.markResumeParentBranch(_scope1_id);
+  }, _scope0_id, "#text/0");
   _$.writeScope(_scope0_id, {
     "num": num,
     "#text/0(": _scope1_.size ? _scope1_ : undefined
   });
-  _$.markResumeCleanup(_scope0_id);
+  _$.markResumeParentBranch(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

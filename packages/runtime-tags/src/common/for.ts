@@ -1,16 +1,17 @@
-type Falsy = undefined | null | false | 0 | "";
-export function forIn<V extends {}>(
-  obj: Falsy | V,
-  cb: <K extends keyof V>(key: K, value: V[K]) => void,
+import type { Falsy } from "./types";
+
+export function forIn(
+  obj: Falsy | {},
+  cb: (key: string, value: unknown) => void,
 ) {
-  for (const key in obj as V) {
-    cb(key, (obj as V)[key]);
+  for (const key in obj as any) {
+    cb(key, (obj as any)[key]);
   }
 }
 
-export function forOf<T, V extends Iterable<T>>(
-  list: Falsy | V,
-  cb: (item: T, index: number) => void,
+export function forOf(
+  list: Falsy | Iterable<unknown>,
+  cb: (item: unknown, index: number) => void,
 ) {
   if (list) {
     let i = 0;

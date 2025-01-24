@@ -4,7 +4,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const value = "b";
   const tag = "select";
   const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope, tag ? "select" : {}, {
+  _$.dynamicTagInput(_scope0_id, "#text/0", tag ? "select" : {}, {
     value,
     valueChange(v) {
       value = v;
@@ -20,12 +20,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     }, "#option/2", _scope1_id, "option")}>C</option>${_$.markResumeNode(_scope1_id, "#option/2")}`);
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1");
   }), "__tests__/template.marko_1_renderer", _scope0_id));
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/0")}<span>${_$.escapeXML(value)}${_$.markResumeNode(_scope0_id, "#text/1")}</span>`);
+  _$.write(`<span>${_$.escapeXML(value)}${_$.markResumeNode(_scope0_id, "#text/1")}</span>`);
   _$.writeScope(_scope0_id, {
     "value": value,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(tag ? "select" : {})
   });
-  _$.markResumeCleanup(_scope0_id);
+  _$.markResumeParentBranch(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

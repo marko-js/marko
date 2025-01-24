@@ -16,6 +16,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "count1@": input.count1Change,
     "count2@": input.count2Change
   });
-  _$.markResumeCleanup(_scope0_id);
+  _$.markResumeParentBranch(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/2counters.marko", _renderer);

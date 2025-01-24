@@ -32,7 +32,7 @@ mounted 3
     </div>
     <!--M_$6-->
     <!--M_$5-->
-    <!--M_|0 #text/2 1,3,5-->
+    <!--M_|0 #text/2 5 3 1-->
     <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={0:_.a={items:[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1}}],[1,_.g={"#childScope/0":_.d={name:2}}],[2,_.h={"#childScope/0":_.e={name:3}}]])},1:_.f,2:_.c,3:_.g,4:_.d,5:_.h,6:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),2,"__tests__/tags/child.marko_0_name_write",4,"__tests__/tags/child.marko_0_name_write",6,"__tests__/tags/child.marko_0_name_write",0,"__tests__/template.marko_0_items",0];M._.w()
@@ -84,7 +84,7 @@ destroyed 3
     <!--M_$3-->
     <!--M_$6-->
     <!--M_$5-->
-    <!--M_|0 #text/2 1,3,5-->
+    <!--M_|0 #text/2 5 3 1-->
     <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={0:_.a={items:[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1}}],[1,_.g={"#childScope/0":_.d={name:2}}],[2,_.h={"#childScope/0":_.e={name:3}}]])},1:_.f,2:_.c,3:_.g,4:_.d,5:_.h,6:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),2,"__tests__/tags/child.marko_0_name_write",4,"__tests__/tags/child.marko_0_name_write",6,"__tests__/tags/child.marko_0_name_write",0,"__tests__/template.marko_0_items",0];M._.w()
@@ -131,7 +131,7 @@ destroyed 2
     <!--M_$3-->
     <!--M_$6-->
     <!--M_$5-->
-    <!--M_|0 #text/2 1,3,5-->
+    <!--M_|0 #text/2 5 3 1-->
     <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={0:_.a={items:[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1}}],[1,_.g={"#childScope/0":_.d={name:2}}],[2,_.h={"#childScope/0":_.e={name:3}}]])},1:_.f,2:_.c,3:_.g,4:_.d,5:_.h,6:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),2,"__tests__/tags/child.marko_0_name_write",4,"__tests__/tags/child.marko_0_name_write",6,"__tests__/tags/child.marko_0_name_write",0,"__tests__/template.marko_0_items",0];M._.w()
@@ -169,7 +169,7 @@ destroyed 2
 destroyed 1
     </div>
     <!--M_*0 #div/1-->
-    <!--M_|0 #text/2 1,3,5-->
+    <!--M_|0 #text/2 5 3 1-->
     <!--M_$2-->
     <!--M_$1-->
     <!--M_$4-->

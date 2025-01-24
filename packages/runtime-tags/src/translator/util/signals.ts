@@ -1036,7 +1036,7 @@ export function writeHTMLResumeStatements(
     path.pushContainer(
       "body",
       t.expressionStatement(
-        callRuntime("markResumeCleanup", scopeIdIdentifier),
+        callRuntime("markResumeParentBranch", scopeIdIdentifier),
       ),
     );
   }

@@ -107,9 +107,6 @@ export const IfTag = {
 
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody);
-        const rootExtra = getRoot(tag).node.extra!;
-        const isStateful = isStatefulReferences(rootExtra.referencedBindings);
-        const singleNodeOptimization = rootExtra.singleNodeOptimization;
 
         if (isRoot(tag)) {
           walks.visit(tag, WalkCode.Replace);
@@ -120,13 +117,6 @@ export const IfTag = {
 
         if (bodySection) {
           setSectionParentIsOwner(bodySection, true);
-
-          if (isStateful && !singleNodeOptimization) {
-            writer.writeTo(tagBody)`${callRuntime(
-              "markResumeScopeStart",
-              getScopeIdIdentifier(bodySection),
-            )}`;
-          }
         }
       },
       exit(tag) {
@@ -155,7 +145,6 @@ export const IfTag = {
         }
 
         if (isLast) {
-          const write = writer.writeTo(tag);
           const nextTag = tag.getNextSibling();
           const ifScopeIdIdentifier =
             tag.scope.generateUidIdentifier("ifScopeId");
@@ -225,6 +214,35 @@ export const IfTag = {
           if (!(isStateful || hasStatefulClosures)) {
             nextTag.insertBefore(statement!);
           } else {
+            if (isStateful) {
+              getSerializedScopeProperties(section).set(
+                t.stringLiteral(
+                  getScopeAccessorLiteral(nodeRef).value +
+                    AccessorChar.ConditionalRenderer,
+                ),
+                ifRendererIdentifier,
+              );
+              const cbNode = t.arrowFunctionExpression(
+                [],
+                t.blockStatement([statement!]),
+              );
+              statement = t.expressionStatement(
+                singleNodeOptimization
+                  ? callRuntime(
+                      "resumeSingleNodeConditional",
+                      cbNode,
+                      getScopeIdIdentifier(section),
+                      getScopeAccessorLiteral(nodeRef),
+                    )
+                  : callRuntime(
+                      "resumeConditional",
+                      cbNode,
+                      getScopeIdIdentifier(section),
+                      getScopeAccessorLiteral(nodeRef),
+                    ),
+              );
+            }
+
             nextTag.insertBefore([
               t.variableDeclaration(
                 "let",
@@ -235,29 +253,6 @@ export const IfTag = {
               ),
               statement!,
             ]);
-            if (isStateful) {
-              if (singleNodeOptimization) {
-                write`${callRuntime(
-                  "markResumeControlSingleNodeEnd",
-                  getScopeIdIdentifier(section),
-                  getScopeAccessorLiteral(nodeRef),
-                  ifScopeIdIdentifier,
-                )}`;
-              } else {
-                write`${callRuntime(
-                  "markResumeControlEnd",
-                  getScopeIdIdentifier(section),
-                  getScopeAccessorLiteral(nodeRef),
-                )}`;
-              }
-              getSerializedScopeProperties(section).set(
-                t.stringLiteral(
-                  getScopeAccessorLiteral(nodeRef).value +
-                    AccessorChar.ConditionalRenderer,
-                ),
-                ifRendererIdentifier,
-              );
-            }
             getSerializedScopeProperties(section).set(
               t.stringLiteral(
                 getScopeAccessorLiteral(nodeRef).value +
@@ -493,10 +488,6 @@ function getBranches(
   }
 
   return [isLast, branches] as const;
-}
-
-function getRoot(tag: t.NodePath<t.MarkoTag>) {
-  return isRoot(tag) ? tag : BRANCHES_LOOKUP.get(tag)![0][0];
 }
 
 function isRoot(tag: t.NodePath<t.MarkoTag>) {

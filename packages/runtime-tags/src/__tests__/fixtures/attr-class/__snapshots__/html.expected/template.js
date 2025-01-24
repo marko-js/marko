@@ -22,7 +22,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     class: ["a", false, "b"]
   });
   const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope, input.test, {
+  _$.dynamicTagInput(_scope0_id, "#text/3", input.test, {
     class: ["a", {
       b: c,
       d
@@ -38,7 +38,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       }), "__tests__/template.marko_1_renderer", _scope0_id)
     })
   });
-  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/3"));
   _$.writeScope(_scope0_id, {
     "c": c,
     "d": d,

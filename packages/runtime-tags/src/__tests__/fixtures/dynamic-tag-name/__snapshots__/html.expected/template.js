@@ -14,18 +14,16 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     other
   } = input;
   const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope, content, {
+  _$.dynamicTagInput(_scope0_id, "#text/0", content, {
     class: ["a", "b"],
     other: other
   });
-  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/0"));
   const _dynamicScope2 = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope2, x, {
+  _$.dynamicTagInput(_scope0_id, "#text/1", x, {
     class: ["a", "b"],
     other: other
   });
   const _tagName = show ? "div" : null;
-  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/1"));
   if (_tagName) _$.write(`<${_tagName} class="a b"${_$.attr("other", other)}>`);
   if (_tagName) _$.write(`</${_tagName}>`);
   const _tagName2 = show && "div";
@@ -34,18 +32,16 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   if (_tagName2) _$.write(`</${_tagName2}>`);
   _$.write(_$.markResumeNode(_scope0_id, "#showDiv/3"));
   const _dynamicScope3 = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope3, isLarge ? "h1" : "h2", {
+  _$.dynamicTagInput(_scope0_id, "#text/4", isLarge ? "h1" : "h2", {
     class: ["a", "b"],
     other: other
   });
-  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/4"));
   const _dynamicScope4 = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope4, showTagA ? tagA : tagB, {
+  _$.dynamicTagInput(_scope0_id, "#text/5", showTagA ? tagA : tagB, {
     class: ["a", "b"],
     other: other
   });
   const _tagName3 = showTagA && tagA;
-  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/5"));
   const _childScope = _$.peekNextScope();
   if (_tagName3) _tagName3({
     class: ["a", "b"],
@@ -63,21 +59,20 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     content: _content
   });else _content();
   const _dynamicScope5 = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope5, tag || tagA, {
+  _$.dynamicTagInput(_scope0_id, "#text/8", tag || tagA, {
     class: ["a", "b"],
     other: other
   });
   const largeHeading = isLarge && "h1";
   const _tagName5 = largeHeading || "h2";
-  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/8"));
   const _dynamicScope6 = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope6, _tagName5, {
+  _$.dynamicTagInput(_scope0_id, "#text/9", _tagName5, {
     class: ["a", "b"],
     other: other
   });
   const tagConstA = "a";
   const tagConstB = show ? "div" : null;
-  _$.write(`${_$.markResumeControlEnd(_scope0_id, "#text/9")}<${global.x = "a" + "b"} class="a b"${_$.attr("other", other)}></${global.x = "a" + "b"}>${_$.markResumeNode(_scope0_id, "#globalXAB/10")}<${"h" + level} class="a b"${_$.attr("other", other)}></${"h" + level}>${_$.markResumeNode(_scope0_id, "#hLevel/11")}<h${level} class="a b"${_$.attr("other", other)}></h${level}>${_$.markResumeNode(_scope0_id, "#h$Level/12")}<${tagConstA} class="a b"${_$.attr("other", other)}></${tagConstA}>${_$.markResumeNode(_scope0_id, "#tagConstA/13")}`);
+  _$.write(`<${global.x = "a" + "b"} class="a b"${_$.attr("other", other)}></${global.x = "a" + "b"}>${_$.markResumeNode(_scope0_id, "#globalXAB/10")}<${"h" + level} class="a b"${_$.attr("other", other)}></${"h" + level}>${_$.markResumeNode(_scope0_id, "#hLevel/11")}<h${level} class="a b"${_$.attr("other", other)}></h${level}>${_$.markResumeNode(_scope0_id, "#h$Level/12")}<${tagConstA} class="a b"${_$.attr("other", other)}></${tagConstA}>${_$.markResumeNode(_scope0_id, "#tagConstA/13")}`);
   if (tagConstB) _$.write(`<${tagConstB} class="a b"${_$.attr("other", other)}>`);
   if (tagConstB) _$.write(`</${tagConstB}>`);
   _$.write(_$.markResumeNode(_scope0_id, "#tagConstB/14"));

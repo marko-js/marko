@@ -1,6 +1,5 @@
 # Render {"tagName":"h1"}
 ```html
-<!--M_[1-->
 <html>
   <head />
   <body>
@@ -9,7 +8,7 @@
     >
       Hello World
     </h1>
-    <!--M_]0 #text/0-->
+    <!--M_|0 #text/0 1-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{"#text/0!":_.a={},"#text/0(":"h1"},1:_.a}),0]
     </script>
