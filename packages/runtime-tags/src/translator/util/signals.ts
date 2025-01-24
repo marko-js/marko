@@ -1027,16 +1027,17 @@ export function writeHTMLResumeStatements(
     );
   }
 
-  const needsControlFlowOwner =
-    section.hasCleanup ||
-    !!section.closures ||
-    !!find(section.bindings, (binding) => binding.type === BindingType.let);
+  const resumeClosestBranch =
+    !section.isBranch &&
+    (section.hasAbortSignal ||
+      !!section.closures ||
+      !!find(section.bindings, (binding) => binding.type === BindingType.let));
 
-  if (needsControlFlowOwner) {
+  if (resumeClosestBranch) {
     path.pushContainer(
       "body",
       t.expressionStatement(
-        callRuntime("markResumeParentBranch", scopeIdIdentifier),
+        callRuntime("resumeClosestBranch", scopeIdIdentifier),
       ),
     );
   }

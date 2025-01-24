@@ -20,7 +20,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.writeScope(_scope1_id, {
       "#childScope/0": _$.writeExistingScope(_childScope)
     });
-    _$.markResumeParentBranch(_scope1_id);
   }, _scope0_id, "#text/2");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope(_scope0_id, {
@@ -28,6 +27,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "write": write,
     "#text/2(": _scope1_.size ? _scope1_ : undefined
   });
-  _$.markResumeParentBranch(_scope0_id);
+  _$.resumeClosestBranch(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

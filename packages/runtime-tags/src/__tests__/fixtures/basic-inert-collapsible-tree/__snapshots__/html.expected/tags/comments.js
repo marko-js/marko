@@ -21,7 +21,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
           "#childScope/0": _$.writeExistingScope(_childScope),
           "_": _$.ensureScopeWithId(_scope1_id)
         });
-        _$.markResumeParentBranch(_scope2_id);
         _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/tags/comments.marko_2_renderer");
         _ifScopeId = _scope2_id;
       }
@@ -38,7 +37,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       "#text/4!": _$.getScopeById(_ifScopeId),
       "_": _$.ensureScopeWithId(_scope0_id)
     });
-    _$.markResumeParentBranch(_scope1_id);
   }, _scope0_id, "#ul/0");
   _$.write(`</ul>${_$.markResumeNode(_scope0_id, "#ul/0")}`);
   _$.writeScope(_scope0_id, {

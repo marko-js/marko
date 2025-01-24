@@ -41,7 +41,7 @@ export default {
       setReferencesScope(identifier);
     } else if (name === "$signal") {
       const section = getOrCreateSection(identifier);
-      section.hasCleanup = true;
+      section.hasAbortSignal = true;
       setReferencesScope(identifier);
     }
   },

@@ -1,5 +1,5 @@
 # Write
-  <!--M#s0--><!--F#0--><button id=tags>0<!--M_*0 #text/1--></button><!--M_*0 #button/0--><div><!--M_[1--><h1>hello</h1><button id=class>1 * 0 = 0</button><!--M_]0 #text/2--></div><!--M_$0--><!--F/--><!--M/--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a}),0,"$compat_setScope",0,"__tests__/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})</script>
+  <!--M#s0--><!--F#0--><button id=tags>0<!--M_*0 #text/1--></button><!--M_*0 #button/0--><div><!--M_[1--><h1>hello</h1><button id=class>1 * 0 = 0</button><!--M_]0 #text/2--></div><!--F/--><!--M/--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{m5c:"s0-0",count:0,"#text/2!":_.a={}},1:_.a}),0,"$compat_setScope",0,"__tests__/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})</script>
 
 
 # Render "End"
@@ -28,7 +28,6 @@
       </button>
       <!--M_]0 #text/2-->
     </div>
-    <!--M_$0-->
     <!--F/-->
     <!--M/-->
     <script>
@@ -58,7 +57,6 @@ inserted #document/html0/body1/div4/button2/#text0
 inserted #document/html0/body1/div4/#comment3
 inserted #document/html0/body1/#comment5
 inserted #document/html0/body1/#comment6
-inserted #document/html0/body1/#comment7
-inserted #document/html0/body1/script8
-inserted #document/html0/body1/script8/#text0
+inserted #document/html0/body1/script7
+inserted #document/html0/body1/script7/#text0
 ```

@@ -71,6 +71,7 @@ export const IfTag = {
 
       for (const [branchTag, branchBodySection] of branches) {
         if (branchBodySection) {
+          branchBodySection.isBranch = true;
           branchBodySection.upstreamExpression = rootExtra;
 
           if (

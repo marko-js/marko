@@ -4,9 +4,8 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _scope0_id = _$.nextScopeId();
   const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_dynamicScope, _helloInternal, {});
+  _$.dynamicTagInput(_scope0_id, "#text/0", _helloInternal, {});
   _s(_helloInternal, "__tests__/tags/components/hello-internal.marko");
-  _$.write(_$.markResumeControlEnd(_scope0_id, "#text/0"));
   _$.writeScope(_scope0_id, {
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(_helloInternal)

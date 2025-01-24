@@ -9,7 +9,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.writeScope(_scope0_id, {
     "/": _tagVar
   });
-  _$.markResumeParentBranch(_scope0_id);
+  _$.resumeClosestBranch(_scope0_id);
   return _return;
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/parent-el.marko", _renderer);

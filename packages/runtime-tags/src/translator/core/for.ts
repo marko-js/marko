@@ -102,6 +102,8 @@ export default {
       return;
     }
 
+    bodySection.isBranch = true;
+
     const section = getOrCreateSection(tag);
 
     if (isOnlyChildInParent(tag)) {

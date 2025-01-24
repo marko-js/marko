@@ -55,40 +55,38 @@ class Render implements RenderData {
     if (visits.length) {
       const commentPrefix = data.i;
       const commentPrefixLen = commentPrefix.length;
-      const parentBranchMarkers = new Map<string, Comment>();
+      const closestBranchMarkers = new Map<string, Comment>();
       data.v = [];
 
-      const sectionEnd = (
-        scopeId: string,
+      const branchEnd = (
+        branchId: string,
         visit: Comment,
         curNode: ChildNode,
       ) => {
-        const scope = (scopeLookup[scopeId] ||=
+        const branch = (scopeLookup[branchId] ||=
           {} as BranchScope) as BranchScope;
-        branchIds.add(scopeId);
-
         let endNode = curNode;
         while (
           (endNode = endNode.previousSibling!).nodeType ===
           8 /* Node.COMMENT_NODE */
         );
-        scope.___endNode = endNode;
-        const startNode = (scope.___startNode ||= endNode);
+        branch.___endNode = endNode;
+        branch.___startNode ||= endNode;
 
-        let len = parentBranchMarkers.size;
-        for (const [markerScopeId, markerNode] of parentBranchMarkers) {
-          if (!len--) break;
+        for (const [markerScopeId, markerNode] of closestBranchMarkers) {
           if (
-            markerScopeId !== scopeId &&
-            startNode.compareDocumentPosition(markerNode) & 4 /* FOLLOWING */ &&
+            branch.___startNode.compareDocumentPosition(markerNode) &
+              4 /* FOLLOWING */ &&
             curNode.compareDocumentPosition(markerNode) & 2 /* PRECEDING */
           ) {
-            parentBranchIds.set(markerScopeId, scopeId);
-            parentBranchMarkers.delete(markerScopeId);
+            parentBranchIds.set(markerScopeId, branchId);
+            closestBranchMarkers.delete(markerScopeId);
           }
         }
-        parentBranchMarkers.set(scopeId, visit);
-        return scope;
+
+        branchIds.add(branchId);
+        closestBranchMarkers.set(branchId, visit);
+        return branch;
       };
 
       for (const visit of visits) {
@@ -106,21 +104,21 @@ class Render implements RenderData {
         if (token === ResumeSymbol.Node) {
           // TODO: could we use attr marker?
           scope[data] = visit.previousSibling;
-        } else if (token === ResumeSymbol.ParentBranch) {
-          parentBranchMarkers.set(scopeId, visit);
-        } else if (token === ResumeSymbol.SectionStart) {
+        } else if (token === ResumeSymbol.ClosestBranch) {
+          closestBranchMarkers.set(scopeId, visit);
+        } else if (token === ResumeSymbol.BranchStart) {
           if (this.___currentScopeId) {
             if (dataIndex) {
-              sectionEnd(this.___currentScopeId, visit, visit);
+              branchEnd(this.___currentScopeId, visit, visit);
             }
             this.___scopeStack.push(this.___currentScopeId);
           }
           this.___currentScopeId = scopeId;
           scope.___startNode = visit;
-        } else if (token === ResumeSymbol.SectionEnd) {
+        } else if (token === ResumeSymbol.BranchEnd) {
           scope[data] = visit;
           const curParent = visit.parentNode!;
-          const startNode = sectionEnd(
+          const startNode = branchEnd(
             this.___currentScopeId!,
             visit,
             visit,
@@ -129,7 +127,7 @@ class Render implements RenderData {
             curParent.prepend(startNode);
           }
           this.___currentScopeId = this.___scopeStack.pop();
-        } else if (token === ResumeSymbol.SectionSingleNodesEnd) {
+        } else if (token === ResumeSymbol.BranchSingleNode) {
           let next = data.indexOf(" ");
           let curNode: ChildNode = (scope[~next ? data.slice(0, next) : data] =
             visit);
@@ -137,7 +135,7 @@ class Render implements RenderData {
             const start = next + 1;
             next = data.indexOf(" ", start);
             const childScopeId = data.slice(start, ~next ? next : data.length);
-            curNode = sectionEnd(childScopeId, visit, curNode).___endNode;
+            curNode = branchEnd(childScopeId, visit, curNode).___endNode;
           }
         }
       }

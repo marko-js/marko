@@ -29,10 +29,8 @@
         <!--M_*1 #text/4-->
       </button>
       <!--M_*1 #button/1-->
-      <!--M_$1-->
     </div>
     <!--M_]0 #text/0-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={multiplier:1,"#text/0!":_.b={m5c:"s0-2",baseCount:0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},1:_.b,2:{m5c:"s0"}},_.b._=_.a,_.c),1,"$compat_setScope",1,"__tests__/template.marko_1_multiplier/subscriber",1,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",0]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={0:_.a}),2,"$compat_setScope",0);M._.w()
     </script>
@@ -47,13 +45,13 @@ inserted #document/html0/body1/#text4
 removed #comment after #document/html0/body1/#comment0
 removed #comment after #document/html0/body1/#text4
 inserted #document/html0/body1/div3/#text0
-inserted #document/html0/body1/div3/#text7
-inserted #document/html0/body1/div3/#text1
 inserted #document/html0/body1/div3/#text6
+inserted #document/html0/body1/div3/#text1
+inserted #document/html0/body1/div3/#text5
 removed #comment after #document/html0/body1/div3/#text1
-removed #comment after #document/html0/body1/div3/#comment5
-removed #document/html0/body1/div3/#text7 after #document/html0/body1/div3/#text6
-inserted #document/html0/body1/div3/#text7
+removed #comment after #document/html0/body1/div3/#comment4
+removed #document/html0/body1/div3/#text6 after #document/html0/body1/div3/#text5
+inserted #document/html0/body1/div3/#text6
 ```
 
 
@@ -90,10 +88,8 @@ container.querySelector("#tags").click()
         <!--M_*1 #text/4-->
       </button>
       <!--M_*1 #button/1-->
-      <!--M_$1-->
     </div>
     <!--M_]0 #text/0-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={multiplier:1,"#text/0!":_.b={m5c:"s0-2",baseCount:0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},1:_.b,2:{m5c:"s0"}},_.b._=_.a,_.c),1,"$compat_setScope",1,"__tests__/template.marko_1_multiplier/subscriber",1,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",0]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={0:_.a}),2,"$compat_setScope",0);M._.w()
     </script>
@@ -140,10 +136,8 @@ container.querySelector("#class").click()
         <!--M_*1 #text/4-->
       </button>
       <!--M_*1 #button/1-->
-      <!--M_$1-->
     </div>
     <!--M_]0 #text/0-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={multiplier:1,"#text/0!":_.b={m5c:"s0-2",baseCount:0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},1:_.b,2:{m5c:"s0"}},_.b._=_.a,_.c),1,"$compat_setScope",1,"__tests__/template.marko_1_multiplier/subscriber",1,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",0]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={0:_.a}),2,"$compat_setScope",0);M._.w()
     </script>
@@ -192,10 +186,8 @@ container.querySelector("#tags").click()
         <!--M_*1 #text/4-->
       </button>
       <!--M_*1 #button/1-->
-      <!--M_$1-->
     </div>
     <!--M_]0 #text/0-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={multiplier:1,"#text/0!":_.b={m5c:"s0-2",baseCount:0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},1:_.b,2:{m5c:"s0"}},_.b._=_.a,_.c),1,"$compat_setScope",1,"__tests__/template.marko_1_multiplier/subscriber",1,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",0]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={0:_.a}),2,"$compat_setScope",0);M._.w()
     </script>
@@ -243,10 +235,8 @@ container.querySelector("#class").click()
         <!--M_*1 #text/4-->
       </button>
       <!--M_*1 #button/1-->
-      <!--M_$1-->
     </div>
     <!--M_]0 #text/0-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={multiplier:1,"#text/0!":_.b={m5c:"s0-2",baseCount:0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},1:_.b,2:{m5c:"s0"}},_.b._=_.a,_.c),1,"$compat_setScope",1,"__tests__/template.marko_1_multiplier/subscriber",1,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",0]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={0:_.a}),2,"$compat_setScope",0);M._.w()
     </script>
@@ -295,10 +285,8 @@ container.querySelector("#tags").click()
         <!--M_*1 #text/4-->
       </button>
       <!--M_*1 #button/1-->
-      <!--M_$1-->
     </div>
     <!--M_]0 #text/0-->
-    <!--M_$0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={multiplier:1,"#text/0!":_.b={m5c:"s0-2",baseCount:0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},1:_.b,2:{m5c:"s0"}},_.b._=_.a,_.c),1,"$compat_setScope",1,"__tests__/template.marko_1_multiplier/subscriber",1,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",0]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={0:_.a}),2,"$compat_setScope",0);M._.w()
     </script>
