@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div>
   <button>
@@ -23,9 +23,10 @@
 ```
 
 
-# Render 
-container.querySelectorAll("button")[buttonNum++].click()
-
+# Render
+```js
+container.querySelectorAll("button")[buttonNum++].click();
+```
 ```html
 <div>
   <button>
@@ -50,9 +51,10 @@ container.querySelectorAll("button")[buttonNum++].click()
 ```
 
 
-# Render 
-container.querySelectorAll("button")[buttonNum++].click()
-
+# Render
+```js
+container.querySelectorAll("button")[buttonNum++].click();
+```
 ```html
 <div>
   <button>
@@ -77,9 +79,10 @@ container.querySelectorAll("button")[buttonNum++].click()
 ```
 
 
-# Render 
-container.querySelectorAll("button")[buttonNum++].click()
-
+# Render
+```js
+container.querySelectorAll("button")[buttonNum++].click();
+```
 ```html
 <div>
   <button>
@@ -104,9 +107,10 @@ container.querySelectorAll("button")[buttonNum++].click()
 ```
 
 
-# Render 
-container.querySelectorAll("button")[buttonNum++].click()
-
+# Render
+```js
+container.querySelectorAll("button")[buttonNum++].click();
+```
 ```html
 <div>
   <button>
@@ -131,9 +135,10 @@ container.querySelectorAll("button")[buttonNum++].click()
 ```
 
 
-# Render 
-buttonNum = 0
-
+# Render
+```js
+buttonNum = 0;
+```
 ```html
 <div>
   <button>

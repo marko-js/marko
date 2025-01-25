@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   hide
@@ -9,13 +9,13 @@ hi
 
 # Mutations
 ```
-inserted button0, #text1, #comment2
+INSERT button, #text, #comment
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   hide
@@ -25,6 +25,6 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #text1
-removed #text after #text1
+INSERT #text
+REMOVE #text after #text
 ```

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <input
   checked=""
@@ -20,13 +20,13 @@
 
 # Mutations
 ```
-inserted input0, input1, input2, span3
+INSERT input0, input1, input2, span
 ```
 
-
-# Render 
-container.querySelectorAll(`input`)[1].click()
-
+# Render
+```js
+container.querySelectorAll(`input`)[1].click();
+```
 ```html
 <input
   type="radio"
@@ -48,13 +48,13 @@ container.querySelectorAll(`input`)[1].click()
 
 # Mutations
 ```
-span3/#text0: "a" => "b"
+UPDATE span/#text "a" => "b"
 ```
 
-
-# Render 
-container.querySelectorAll(`input`)[2].click()
-
+# Render
+```js
+container.querySelectorAll(`input`)[2].click();
+```
 ```html
 <input
   type="radio"
@@ -76,13 +76,13 @@ container.querySelectorAll(`input`)[2].click()
 
 # Mutations
 ```
-span3/#text0: "b" => "c"
+UPDATE span/#text "b" => "c"
 ```
 
-
-# Render 
-container.querySelectorAll(`input`)[0].click()
-
+# Render
+```js
+container.querySelectorAll(`input`)[0].click();
+```
 ```html
 <input
   checked=""
@@ -104,5 +104,5 @@ container.querySelectorAll(`input`)[0].click()
 
 # Mutations
 ```
-span3/#text0: "c" => "a"
+UPDATE span/#text "c" => "a"
 ```

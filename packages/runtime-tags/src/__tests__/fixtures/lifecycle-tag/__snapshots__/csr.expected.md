@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div
   id="ref"
@@ -14,14 +14,14 @@
 
 # Mutations
 ```
-inserted div0, button1
-inserted div0/#text0
+INSERT div, button
+INSERT div/#text
 ```
 
-
-# Render 
-container.querySelector("#increment")?.click()
-
+# Render
+```js
+container.querySelector("#increment")?.click();
+```
 ```html
 <div
   id="ref"
@@ -37,14 +37,14 @@ container.querySelector("#increment")?.click()
 
 # Mutations
 ```
-removed #text in div0
-inserted div0/#text0
+REMOVE #text in div
+INSERT div/#text
 ```
 
-
-# Render 
-container.querySelector("#increment")?.click()
-
+# Render
+```js
+container.querySelector("#increment")?.click();
+```
 ```html
 <div
   id="ref"
@@ -60,6 +60,6 @@ container.querySelector("#increment")?.click()
 
 # Mutations
 ```
-removed #text in div0
-inserted div0/#text0
+REMOVE #text in div
+INSERT div/#text
 ```

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <input
   disabled=""
@@ -10,13 +10,13 @@
 
 # Mutations
 ```
-inserted input0, button1
+INSERT input, button
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <input />
 <button>
@@ -26,14 +26,14 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-input0: attr(disabled) "" => null
-button1/#text0: "enable" => "disable"
+UPDATE input[disabled] "" => null
+UPDATE button/#text "enable" => "disable"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <input
   disabled=""
@@ -45,14 +45,14 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-input0: attr(disabled) null => ""
-button1/#text0: "disable" => "enable"
+UPDATE input[disabled] null => ""
+UPDATE button/#text "disable" => "enable"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <input />
 <button>
@@ -62,6 +62,6 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-input0: attr(disabled) "" => null
-button1/#text0: "enable" => "disable"
+UPDATE input[disabled] "" => null
+UPDATE button/#text "enable" => "disable"
 ```

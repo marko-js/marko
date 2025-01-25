@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div>
   <button
@@ -13,9 +13,10 @@
 ```
 
 
-# Render 
-container.querySelector("#count").click()
-
+# Render
+```js
+container.querySelector("#count").click();
+```
 ```html
 <div>
   <button
@@ -30,9 +31,10 @@ container.querySelector("#count").click()
 ```
 
 
-# Render 
-container.querySelector("#changeTag").click()
-
+# Render
+```js
+container.querySelector("#changeTag").click();
+```
 ```html
 <span>
   <button
@@ -47,9 +49,10 @@ container.querySelector("#changeTag").click()
 ```
 
 
-# Render 
-container.querySelector("#count").click()
-
+# Render
+```js
+container.querySelector("#count").click();
+```
 ```html
 <span>
   <button

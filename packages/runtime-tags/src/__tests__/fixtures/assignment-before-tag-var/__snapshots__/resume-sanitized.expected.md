@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   +
@@ -9,9 +9,10 @@
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   +
@@ -22,9 +23,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   +
@@ -35,9 +37,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   +

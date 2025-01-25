@@ -1,4 +1,5 @@
-# Render {"value":1}
+# Render `{"value":1}`
+
 ```html
 <div
   a="0"

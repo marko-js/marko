@@ -1,4 +1,5 @@
-# Render {"tagName":"h1"}
+# Render `{"tagName":"h1"}`
+
 ```html
 <!---->
 <h1
@@ -11,5 +12,5 @@
 
 # Mutations
 ```
-inserted #comment0, h11, #comment2
+INSERT #comment0, h1, #comment1
 ```

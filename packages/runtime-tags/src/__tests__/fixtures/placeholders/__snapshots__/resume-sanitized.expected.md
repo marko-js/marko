@@ -1,4 +1,5 @@
-# Render {"x":"replaced"}
+# Render `{"x":"replaced"}`
+
 ```html
 replaced
 <span>

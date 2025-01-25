@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   0
@@ -15,13 +15,13 @@ which should be the same as
 
 # Mutations
 ```
-inserted button0, #text1, span2, #text3, span4
+INSERT button, #text0, span0, #text1, span1
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   1
@@ -38,13 +38,13 @@ which should be the same as
 
 # Mutations
 ```
-button0/#text0: "0" => "1"
+UPDATE button/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   2
@@ -61,15 +61,15 @@ which should be the same as
 
 # Mutations
 ```
-button0/#text0: "1" => "2"
-span2/#text0: "0" => "1"
-span4/#text0: "0" => "1"
+UPDATE button/#text "1" => "2"
+UPDATE span0/#text "0" => "1"
+UPDATE span1/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   3
@@ -86,7 +86,7 @@ which should be the same as
 
 # Mutations
 ```
-button0/#text0: "2" => "3"
-span2/#text0: "1" => "2"
-span4/#text0: "1" => "2"
+UPDATE button/#text "2" => "3"
+UPDATE span0/#text "1" => "2"
+UPDATE span1/#text "1" => "2"
 ```

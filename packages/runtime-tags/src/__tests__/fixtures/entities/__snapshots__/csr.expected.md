@@ -1,9 +1,9 @@
-# Render undefined
+# Render
 ```html
 Hello John & Suzy Invalid Entity: &b ; Valid Numeric Entity: " Valid Hexadecimal Entity: ¢
 ```
 
 # Mutations
 ```
-inserted #text0
+INSERT #text
 ```

@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 <div
   id="ref"
@@ -9,7 +9,7 @@
 
 # Mutations
 ```
-inserted div0
-removed #text in div0
-inserted div0/#text0
+INSERT div
+REMOVE #text in div
+INSERT div/#text
 ```

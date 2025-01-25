@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <input
   disabled=""
@@ -9,9 +9,10 @@
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <input />
 <button>
@@ -20,9 +21,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <input
   disabled=""
@@ -33,9 +35,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <input />
 <button>

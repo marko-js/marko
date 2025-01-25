@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <!---->
 <button>
@@ -42,13 +42,13 @@
 
 # Mutations
 ```
-inserted #comment0, button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button11, button12, #comment13
+INSERT #comment0, button0, button1, button2, button3, button4, button5, button6, button7, button8, button9, button10, button11, #comment1
 ```
 
-
-# Render 
-c => click(c, 2)
-
+# Render
+```js
+click(c, 2);
+```
 ```html
 <!---->
 <button>
@@ -105,19 +105,19 @@ c => click(c, 2)
 
 # Mutations
 ```
-button2: attr(data-selected) null => ""
-button2: attr(data-multiple) null => ""
-button4: attr(data-multiple) null => ""
-button6: attr(data-multiple) null => ""
-button8: attr(data-multiple) null => ""
-button10: attr(data-multiple) null => ""
-button12: attr(data-multiple) null => ""
+UPDATE button1[data-selected] null => ""
+UPDATE button1[data-multiple] null => ""
+UPDATE button3[data-multiple] null => ""
+UPDATE button5[data-multiple] null => ""
+UPDATE button7[data-multiple] null => ""
+UPDATE button9[data-multiple] null => ""
+UPDATE button11[data-multiple] null => ""
 ```
 
-
-# Render 
-c => click(c, 3)
-
+# Render
+```js
+click(c, 3);
+```
 ```html
 <!---->
 <button>
@@ -170,20 +170,20 @@ c => click(c, 3)
 
 # Mutations
 ```
-button2: attr(data-selected) "" => null
-button2: attr(data-multiple) "" => null
-button3: attr(data-selected) null => ""
-button3: attr(data-multiple) null => ""
-button4: attr(data-multiple) "" => null
-button8: attr(data-multiple) "" => null
-button9: attr(data-multiple) null => ""
-button10: attr(data-multiple) "" => null
+UPDATE button1[data-selected] "" => null
+UPDATE button1[data-multiple] "" => null
+UPDATE button2[data-selected] null => ""
+UPDATE button2[data-multiple] null => ""
+UPDATE button3[data-multiple] "" => null
+UPDATE button7[data-multiple] "" => null
+UPDATE button8[data-multiple] null => ""
+UPDATE button9[data-multiple] "" => null
 ```
 
-
-# Render 
-c => click(c, 5)
-
+# Render
+```js
+click(c, 5);
+```
 ```html
 <!---->
 <button>
@@ -232,12 +232,12 @@ c => click(c, 5)
 
 # Mutations
 ```
-button3: attr(data-selected) "" => null
-button3: attr(data-multiple) "" => null
-button5: attr(data-selected) null => ""
-button5: attr(data-multiple) null => ""
-button6: attr(data-multiple) "" => null
-button9: attr(data-multiple) "" => null
-button10: attr(data-multiple) null => ""
-button12: attr(data-multiple) "" => null
+UPDATE button2[data-selected] "" => null
+UPDATE button2[data-multiple] "" => null
+UPDATE button4[data-selected] null => ""
+UPDATE button4[data-multiple] null => ""
+UPDATE button5[data-multiple] "" => null
+UPDATE button8[data-multiple] "" => null
+UPDATE button9[data-multiple] null => ""
+UPDATE button11[data-multiple] "" => null
 ```

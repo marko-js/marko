@@ -1,4 +1,5 @@
-# Render {"x":1}
+# Render `{"x":1}`
+
 ```html
 <div>
   <span>

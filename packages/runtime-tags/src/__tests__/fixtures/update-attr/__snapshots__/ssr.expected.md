@@ -1,8 +1,9 @@
 # Write
+```html
   <div a=0 b=1></div><!--M_*0 #div/0--><script>WALKER_RUNTIME("M")("_")</script>
+```
 
-
-# Render "End"
+# Render End
 ```html
 <html>
   <head />
@@ -21,11 +22,11 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/body1
-inserted #document/html0/body1/div0
-inserted #document/html0/body1/#comment1
-inserted #document/html0/body1/script2
-inserted #document/html0/body1/script2/#text0
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/div
+INSERT html/body/#comment
+INSERT html/body/script
+INSERT html/body/script/#text
 ```

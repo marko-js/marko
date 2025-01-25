@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -59,17 +59,17 @@ Inner mounted
 
 # Mutations
 ```
-inserted #text
-removed #text in #document/html0/body1/pre6
-inserted #text
-removed #text in #document/html0/body1/pre6
-inserted #document/html0/body1/pre6/#text0
+INSERT #text
+REMOVE #text in html/body/pre
+INSERT #text
+REMOVE #text in html/body/pre
+INSERT html/body/pre/#text
 ```
 
-
-# Render 
-container.querySelector("button#inner").click()
-
+# Render
+```js
+container.querySelector("button#inner").click();
+```
 ```html
 <html>
   <head />
@@ -127,17 +127,17 @@ Inner destroyed
 
 # Mutations
 ```
-removed #document/html0/body1/div8/div2/#comment2 after #document/html0/body1/div8/div2/#comment3
-inserted #document/html0/body1/div8/div2/#comment2
-removed #text in #document/html0/body1/pre6
-inserted #document/html0/body1/pre6/#text0
-removed p after #document/html0/body1/div8/div2/#comment2
+REMOVE html/body/div/div/#comment1 after html/body/div/div/#comment2
+INSERT html/body/div/div/#comment1
+REMOVE #text in html/body/pre
+INSERT html/body/pre/#text
+REMOVE p after html/body/div/div/#comment1
 ```
 
-
-# Render 
-container.querySelector("button#middle").click()
-
+# Render
+```js
+container.querySelector("button#middle").click();
+```
 ```html
 <html>
   <head />
@@ -187,17 +187,17 @@ Middle destroyed
 
 # Mutations
 ```
-removed #document/html0/body1/div8/#comment2 after div
-inserted #document/html0/body1/div8/#comment2
-removed #text in #document/html0/body1/pre6
-inserted #document/html0/body1/pre6/#text0
-removed div after #document/html0/body1/div8/#comment2
+REMOVE html/body/div/#comment1 after div
+INSERT html/body/div/#comment1
+REMOVE #text in html/body/pre
+INSERT html/body/pre/#text
+REMOVE div after html/body/div/#comment1
 ```
 
-
-# Render 
-container.querySelector("button#outer").click()
-
+# Render
+```js
+container.querySelector("button#outer").click();
+```
 ```html
 <html>
   <head />
@@ -240,17 +240,17 @@ Outer destroyed
 
 # Mutations
 ```
-removed #document/html0/body1/#comment8 after div
-inserted #document/html0/body1/#comment8
-removed #text in #document/html0/body1/pre6
-inserted #document/html0/body1/pre6/#text0
-removed div after #document/html0/body1/#comment8
+REMOVE html/body/#comment4 after div
+INSERT html/body/#comment4
+REMOVE #text in html/body/pre
+INSERT html/body/pre/#text
+REMOVE div after html/body/#comment4
 ```
 
-
-# Render 
-container.querySelector("button#inner").click()
-
+# Render
+```js
+container.querySelector("button#inner").click();
+```
 ```html
 <html>
   <head />
@@ -291,15 +291,11 @@ Outer destroyed
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button#middle").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button#middle").click()
-
 ```html
 <html>
   <head />
@@ -340,15 +336,11 @@ Outer destroyed
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button#outer").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button#outer").click()
-
 ```html
 <html>
   <head />
@@ -406,27 +398,27 @@ Inner mounted
 
 # Mutations
 ```
-inserted #document/html0/body1/div8
-removed #comment after #document/html0/body1/div8
-inserted #document/html0/body1/div8/div1
-removed #text after #document/html0/body1/div8/div1
-#document/html0/body1/div8/p0/#text0: " " => "Outer"
-inserted #document/html0/body1/div8/div1/p1
-removed #text after #document/html0/body1/div8/div1/p1
-#document/html0/body1/div8/div1/p0/#text0: " " => "Middle"
-#document/html0/body1/div8/div1/p1/#text0: " " => "Inner"
-removed #text in #document/html0/body1/pre6
-inserted #text
-removed #text in #document/html0/body1/pre6
-inserted #text
-removed #text in #document/html0/body1/pre6
-inserted #document/html0/body1/pre6/#text0
+INSERT html/body/div
+REMOVE #comment after html/body/div
+INSERT html/body/div/div
+REMOVE #text after html/body/div/div
+UPDATE html/body/div/p/#text " " => "Outer"
+INSERT html/body/div/div/p1
+REMOVE #text after html/body/div/div/p1
+UPDATE html/body/div/div/p0/#text " " => "Middle"
+UPDATE html/body/div/div/p1/#text " " => "Inner"
+REMOVE #text in html/body/pre
+INSERT #text
+REMOVE #text in html/body/pre
+INSERT #text
+REMOVE #text in html/body/pre
+INSERT html/body/pre/#text
 ```
 
-
-# Render 
-container.querySelector("button#outer").click()
-
+# Render
+```js
+container.querySelector("button#outer").click();
+```
 ```html
 <html>
   <head />
@@ -475,12 +467,12 @@ Outer destroyed
 
 # Mutations
 ```
-inserted #document/html0/body1/#comment8
-removed #text in #document/html0/body1/pre6
-inserted #text
-removed #text in #document/html0/body1/pre6
-inserted #text
-removed #text in #document/html0/body1/pre6
-inserted #document/html0/body1/pre6/#text0
-removed div after #document/html0/body1/#comment8
+INSERT html/body/#comment4
+REMOVE #text in html/body/pre
+INSERT #text
+REMOVE #text in html/body/pre
+INSERT #text
+REMOVE #text in html/body/pre
+INSERT html/body/pre/#text
+REMOVE div after html/body/#comment4
 ```

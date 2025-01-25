@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <span
   class="A"
@@ -9,9 +9,10 @@
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div
   class="A"
@@ -22,9 +23,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <span
   class="A"

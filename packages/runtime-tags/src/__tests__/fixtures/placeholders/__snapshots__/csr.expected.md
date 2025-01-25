@@ -1,4 +1,5 @@
-# Render {"x":"replaced"}
+# Render `{"x":"replaced"}`
+
 ```html
 replaced
 <span>
@@ -28,5 +29,5 @@ replaced
 
 # Mutations
 ```
-inserted #text0, span1, div2
+INSERT #text, span, div
 ```

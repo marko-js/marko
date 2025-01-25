@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   Toggle
@@ -41,63 +41,18 @@ mounted 3
 
 # Mutations
 ```
-inserted button0, div1, div2, span3, p4, div5, span6, p7, div8, span9, p10, #comment11
-inserted #text
-removed #text in div1
-inserted #text
-removed #text in div1
-inserted div1/#text0
+INSERT button, div0, div1, span0, p0, div2, span1, p1, div3, span2, p2, #comment
+INSERT #text
+REMOVE #text in div0
+INSERT #text
+REMOVE #text in div0
+INSERT div0/#text
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
-```html
-<button>
-  Toggle
-</button>
-<div>
-  
-mounted 1
-mounted 2
-mounted 3
-destroyed 3
-</div>
-<div>
-  1
-</div>
-<span>
-  1
-</span>
-<p>
-  1
-</p>
-<div>
-  2
-</div>
-<span>
-  2
-</span>
-<p>
-  2
-</p>
-<!---->
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-# Mutations
-```
-removed #text in div1
-inserted div1/#text0
-removed div after p7
-removed span after p7
-removed p after p7
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <button>
   Toggle
@@ -108,7 +63,6 @@ mounted 1
 mounted 2
 mounted 3
 destroyed 3
-destroyed 2
 </div>
 <div>
   1
@@ -119,22 +73,31 @@ destroyed 2
 <p>
   1
 </p>
+<div>
+  2
+</div>
+<span>
+  2
+</span>
+<p>
+  2
+</p>
 <!---->
 ```
 
 # Mutations
 ```
-removed #text in div1
-inserted div1/#text0
-removed div after p4
-removed span after p4
-removed p after p4
+REMOVE #text in div0
+INSERT div0/#text
+REMOVE div after p1
+REMOVE span after p1
+REMOVE p after p1
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -146,25 +109,32 @@ mounted 2
 mounted 3
 destroyed 3
 destroyed 2
-destroyed 1
 </div>
+<div>
+  1
+</div>
+<span>
+  1
+</span>
+<p>
+  1
+</p>
 <!---->
 ```
 
 # Mutations
 ```
-inserted #text2
-removed #text in div1
-inserted div1/#text0
-removed div after div1
-removed span after div1
-removed p after div1
+REMOVE #text in div0
+INSERT div0/#text
+REMOVE div after p
+REMOVE span after p
+REMOVE p after p
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -177,6 +147,36 @@ mounted 3
 destroyed 3
 destroyed 2
 destroyed 1
+</div>
+<!---->
+```
+
+# Mutations
+```
+INSERT #text
+REMOVE #text in div
+INSERT div/#text
+REMOVE div after div
+REMOVE span after div
+REMOVE p after div
+```
+
+# Render
+```js
+container.querySelector("button").click();
+```
+```html
+<button>
+  Toggle
+</button>
+<div>
+  
+mounted 1
+mounted 2
+mounted 3
+destroyed 3
+destroyed 2
+destroyed 1
 mounted 1
 mounted 2
 mounted 3
@@ -213,20 +213,20 @@ mounted 3
 
 # Mutations
 ```
-inserted div2
-inserted span3
-inserted p4
-inserted div5
-inserted span6
-inserted p7
-inserted div8
-inserted span9
-inserted p10
-removed #text after div1
-removed #text in div1
-inserted #text
-removed #text in div1
-inserted #text
-removed #text in div1
-inserted div1/#text0
+INSERT div1
+INSERT span0
+INSERT p0
+INSERT div2
+INSERT span1
+INSERT p1
+INSERT div3
+INSERT span2
+INSERT p2
+REMOVE #text after div0
+REMOVE #text in div0
+INSERT #text
+REMOVE #text in div0
+INSERT #text
+REMOVE #text in div0
+INSERT div0/#text
 ```

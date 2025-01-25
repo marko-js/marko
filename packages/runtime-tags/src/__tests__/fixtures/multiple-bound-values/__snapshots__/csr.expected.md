@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   0
@@ -13,13 +13,13 @@
 
 # Mutations
 ```
-inserted button0, button1, div2
+INSERT button0, button1, div
 ```
 
-
-# Render 
-container.querySelectorAll("button").forEach(item => item.click())
-
+# Render
+```js
+container.querySelectorAll("button").forEach(item => item.click());
+```
 ```html
 <button>
   1
@@ -34,16 +34,16 @@ container.querySelectorAll("button").forEach(item => item.click())
 
 # Mutations
 ```
-div2/#text0: "0" => "1"
-button0/#text0: "0" => "1"
-div2/#text2: "0" => "1"
-button1/#text0: "0" => "1"
+UPDATE div/#text0 "0" => "1"
+UPDATE button0/#text "0" => "1"
+UPDATE div/#text2 "0" => "1"
+UPDATE button1/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelectorAll("button").forEach(item => item.click())
-
+# Render
+```js
+container.querySelectorAll("button").forEach(item => item.click());
+```
 ```html
 <button>
   2
@@ -58,16 +58,16 @@ container.querySelectorAll("button").forEach(item => item.click())
 
 # Mutations
 ```
-div2/#text0: "1" => "2"
-button0/#text0: "1" => "2"
-div2/#text2: "1" => "2"
-button1/#text0: "1" => "2"
+UPDATE div/#text0 "1" => "2"
+UPDATE button0/#text "1" => "2"
+UPDATE div/#text2 "1" => "2"
+UPDATE button1/#text "1" => "2"
 ```
 
-
-# Render 
-container.querySelectorAll("button").forEach(item => item.click())
-
+# Render
+```js
+container.querySelectorAll("button").forEach(item => item.click());
+```
 ```html
 <button>
   3
@@ -82,8 +82,8 @@ container.querySelectorAll("button").forEach(item => item.click())
 
 # Mutations
 ```
-div2/#text0: "2" => "3"
-button0/#text0: "2" => "3"
-div2/#text2: "2" => "3"
-button1/#text0: "2" => "3"
+UPDATE div/#text0 "2" => "3"
+UPDATE button0/#text "2" => "3"
+UPDATE div/#text2 "2" => "3"
+UPDATE button1/#text "2" => "3"
 ```

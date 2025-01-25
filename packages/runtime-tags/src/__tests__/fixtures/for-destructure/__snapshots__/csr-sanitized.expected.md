@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div>
   <div>
@@ -18,9 +18,10 @@
 ```
 
 
-# Render 
-container.querySelector("#add").click()
-
+# Render
+```js
+container.querySelector("#add").click();
+```
 ```html
 <div>
   <div>
@@ -43,9 +44,10 @@ container.querySelector("#add").click()
 ```
 
 
-# Render 
-container.querySelector("#remove").click()
-
+# Render
+```js
+container.querySelector("#remove").click();
+```
 ```html
 <div>
   <div>
@@ -65,9 +67,10 @@ container.querySelector("#remove").click()
 ```
 
 
-# Render 
-container.querySelector("#remove").click()
-
+# Render
+```js
+container.querySelector("#remove").click();
+```
 ```html
 <div>
   <button
@@ -84,9 +87,10 @@ container.querySelector("#remove").click()
 ```
 
 
-# Render 
-container.querySelector("#add").click()
-
+# Render
+```js
+container.querySelector("#add").click();
+```
 ```html
 <div>
   <div>

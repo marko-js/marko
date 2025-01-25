@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <select>
   <option
@@ -25,18 +25,18 @@
 
 # Mutations
 ```
-inserted select0, span1
+INSERT select, span
 ```
 
-
-# Render 
+# Render
+```js
 const select = container.querySelector(`select`);
-  const window = select.ownerDocument.defaultView;
-  select.value = "c";
-  select.dispatchEvent(new window.Event("input", {
-bubbles: true
-  }))
-
+const window = select.ownerDocument.defaultView;
+select.value = "c";
+select.dispatchEvent(new window.Event("input", {
+  bubbles: true
+}));
+```
 ```html
 <select>
   <option
@@ -63,5 +63,5 @@ bubbles: true
 
 # Mutations
 ```
-span1/#text0: "b" => "c"
+UPDATE span/#text "b" => "c"
 ```

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div>
   <div
@@ -34,13 +34,13 @@
 
 # Mutations
 ```
-inserted div0
+INSERT div
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div>
   <div
@@ -76,23 +76,23 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-removed div0/div0/#text2 before div0/div0/#text0
-inserted div0/div0/#text2
-removed div0/div1/#text2 before div0/div1/#text0
-inserted div0/div1/#text2
-removed div0/div2/#text2 before div0/div2/#text0
-inserted div0/div2/#text2
-removed div0/div3/#text2 before div0/div3/#text0
-inserted div0/div3/#text2
-div0/div4/#text0: "first" => "second"
-div0/div4/#text1: "second" => "third"
-div0/div4/#text2: "third" => "first"
+REMOVE div/div0/#text2 before div/div0/#text0
+INSERT div/div0/#text2
+REMOVE div/div1/#text2 before div/div1/#text0
+INSERT div/div1/#text2
+REMOVE div/div2/#text2 before div/div2/#text0
+INSERT div/div2/#text2
+REMOVE div/div3/#text2 before div/div3/#text0
+INSERT div/div3/#text2
+UPDATE div/div4/#text0 "first" => "second"
+UPDATE div/div4/#text1 "second" => "third"
+UPDATE div/div4/#text2 "third" => "first"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div>
   <div
@@ -128,23 +128,23 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-removed div0/div0/#text2 before div0/div0/#text0
-inserted div0/div0/#text2
-removed div0/div1/#text2 before div0/div1/#text0
-inserted div0/div1/#text2
-removed div0/div2/#text2 before div0/div2/#text0
-inserted div0/div2/#text2
-removed div0/div3/#text2 before div0/div3/#text0
-inserted div0/div3/#text2
-div0/div4/#text0: "second" => "third"
-div0/div4/#text1: "third" => "first"
-div0/div4/#text2: "first" => "second"
+REMOVE div/div0/#text2 before div/div0/#text0
+INSERT div/div0/#text2
+REMOVE div/div1/#text2 before div/div1/#text0
+INSERT div/div1/#text2
+REMOVE div/div2/#text2 before div/div2/#text0
+INSERT div/div2/#text2
+REMOVE div/div3/#text2 before div/div3/#text0
+INSERT div/div3/#text2
+UPDATE div/div4/#text0 "second" => "third"
+UPDATE div/div4/#text1 "third" => "first"
+UPDATE div/div4/#text2 "first" => "second"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div>
   <div
@@ -180,15 +180,15 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-removed div0/div0/#text2 before div0/div0/#text0
-inserted div0/div0/#text2
-removed div0/div1/#text2 before div0/div1/#text0
-inserted div0/div1/#text2
-removed div0/div2/#text2 before div0/div2/#text0
-inserted div0/div2/#text2
-removed div0/div3/#text2 before div0/div3/#text0
-inserted div0/div3/#text2
-div0/div4/#text0: "third" => "first"
-div0/div4/#text1: "first" => "second"
-div0/div4/#text2: "second" => "third"
+REMOVE div/div0/#text2 before div/div0/#text0
+INSERT div/div0/#text2
+REMOVE div/div1/#text2 before div/div1/#text0
+INSERT div/div1/#text2
+REMOVE div/div2/#text2 before div/div2/#text0
+INSERT div/div2/#text2
+REMOVE div/div3/#text2 before div/div3/#text0
+INSERT div/div3/#text2
+UPDATE div/div4/#text0 "third" => "first"
+UPDATE div/div4/#text1 "first" => "second"
+UPDATE div/div4/#text2 "second" => "third"
 ```

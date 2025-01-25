@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -31,15 +31,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelectorAll(`input`)[1].click();
 ```
-
-```
-
-
-# Render 
-container.querySelectorAll(`input`)[1].click()
-
 ```html
 <html>
   <head />
@@ -73,13 +69,13 @@ container.querySelectorAll(`input`)[1].click()
 
 # Mutations
 ```
-#document/html0/body1/span6/#text0: "a,b" => "a"
+UPDATE html/body/span/#text "a,b" => "a"
 ```
 
-
-# Render 
-container.querySelectorAll(`input`)[2].click()
-
+# Render
+```js
+container.querySelectorAll(`input`)[2].click();
+```
 ```html
 <html>
   <head />
@@ -114,13 +110,13 @@ container.querySelectorAll(`input`)[2].click()
 
 # Mutations
 ```
-#document/html0/body1/span6/#text0: "a" => "a,c"
+UPDATE html/body/span/#text "a" => "a,c"
 ```
 
-
-# Render 
-container.querySelectorAll(`input`)[0].click()
-
+# Render
+```js
+container.querySelectorAll(`input`)[0].click();
+```
 ```html
 <html>
   <head />
@@ -154,5 +150,5 @@ container.querySelectorAll(`input`)[0].click()
 
 # Mutations
 ```
-#document/html0/body1/span6/#text0: "a,c" => "c"
+UPDATE html/body/span/#text "a,c" => "c"
 ```

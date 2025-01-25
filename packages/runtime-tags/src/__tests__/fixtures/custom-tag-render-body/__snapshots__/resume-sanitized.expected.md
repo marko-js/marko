@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 WorldThis is the body content
 ```

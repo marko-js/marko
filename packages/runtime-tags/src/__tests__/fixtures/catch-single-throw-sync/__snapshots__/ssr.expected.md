@@ -1,8 +1,9 @@
 # Write
+```html
   aERROR!d
+```
 
-
-# Render "End"
+# Render End
 ```html
 <html>
   <head />
@@ -14,8 +15,8 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/body1
-inserted #document/html0/body1/#text0
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/#text
 ```

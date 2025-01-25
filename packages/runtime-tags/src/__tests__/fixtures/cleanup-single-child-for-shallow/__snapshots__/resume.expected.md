@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -39,17 +39,17 @@ mounted 3
 
 # Mutations
 ```
-inserted #text
-removed #text in #document/html0/body1/div2
-inserted #text
-removed #text in #document/html0/body1/div2
-inserted #document/html0/body1/div2/#text0
+INSERT #text
+REMOVE #text in html/body/div0
+INSERT #text
+REMOVE #text in html/body/div0
+INSERT html/body/div0/#text
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -87,15 +87,15 @@ destroyed 3
 
 # Mutations
 ```
-removed #text in #document/html0/body1/div2
-inserted #document/html0/body1/div2/#text0
-removed div after #document/html0/body1/#comment7
+REMOVE #text in html/body/div0
+INSERT html/body/div0/#text
+REMOVE div after html/body/#comment3
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -130,15 +130,15 @@ destroyed 2
 
 # Mutations
 ```
-removed #text in #document/html0/body1/div2
-inserted #document/html0/body1/div2/#text0
-removed div after #document/html0/body1/#comment5
+REMOVE #text in html/body/div0
+INSERT html/body/div0/#text
+REMOVE div after html/body/#comment2
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -170,17 +170,17 @@ destroyed 1
 
 # Mutations
 ```
-removed #document/html0/body1/#comment4 after #document/html0/body1/#comment7
-inserted #document/html0/body1/#comment4
-removed #text in #document/html0/body1/div2
-inserted #document/html0/body1/div2/#text0
-removed div after #document/html0/body1/#comment3
+REMOVE html/body/#comment2 after html/body/#comment5
+INSERT html/body/#comment2
+REMOVE #text in html/body/div
+INSERT html/body/div/#text
+REMOVE div after html/body/#comment1
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -223,14 +223,14 @@ mounted 3
 
 # Mutations
 ```
-inserted #document/html0/body1/div4
-inserted #document/html0/body1/div5
-inserted #document/html0/body1/div6
-removed #comment after #document/html0/body1/#comment3
-removed #text in #document/html0/body1/div2
-inserted #text
-removed #text in #document/html0/body1/div2
-inserted #text
-removed #text in #document/html0/body1/div2
-inserted #document/html0/body1/div2/#text0
+INSERT html/body/div1
+INSERT html/body/div2
+INSERT html/body/div3
+REMOVE #comment after html/body/#comment1
+REMOVE #text in html/body/div0
+INSERT #text
+REMOVE #text in html/body/div0
+INSERT #text
+REMOVE #text in html/body/div0
+INSERT html/body/div0/#text
 ```

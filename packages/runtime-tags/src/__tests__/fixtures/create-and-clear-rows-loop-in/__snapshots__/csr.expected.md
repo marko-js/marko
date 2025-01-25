@@ -1,4 +1,5 @@
-# Render {"children":{"1":"a","2":"b","3":"c"}}
+# Render `{"children":{"1":"a","2":"b","3":"c"}}`
+
 ```html
 <div>
   <p>
@@ -24,29 +25,29 @@
 
 # Mutations
 ```
-inserted div0
+INSERT div
 ```
 
+# Render `{"children":{}}`
 
-# Render {"children":{}}
 ```html
 <div />
 ```
 
 # Mutations
 ```
-inserted div0/#text0
-removed p before p
-removed p before p
-removed p before div0/#text0
-inserted div0/#text1
-removed p after div0/#text0
-removed p after div0/#text0
-removed p after div0/#text0
+INSERT div/#text0
+REMOVE p before p
+REMOVE p before p
+REMOVE p before div/#text0
+INSERT div/#text1
+REMOVE p after div/#text0
+REMOVE p after div/#text0
+REMOVE p after div/#text0
 ```
 
+# Render `{"children":{"1":"a","2":"b","3":"c"}}`
 
-# Render {"children":{"1":"a","2":"b","3":"c"}}
 ```html
 <div>
   <p>
@@ -72,12 +73,12 @@ removed p after div0/#text0
 
 # Mutations
 ```
-inserted div0/p0
-inserted div0/p1
-inserted div0/p2
-removed #text before div0/p0
-inserted div0/p3
-inserted div0/p4
-inserted div0/p5
-removed #text after div0/p2
+INSERT div/p0
+INSERT div/p1
+INSERT div/p2
+REMOVE #text before div/p0
+INSERT div/p3
+INSERT div/p4
+INSERT div/p5
+REMOVE #text after div/p2
 ```

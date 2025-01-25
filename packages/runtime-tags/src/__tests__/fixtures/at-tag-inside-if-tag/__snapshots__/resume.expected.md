@@ -1,4 +1,5 @@
-# Render {"x":true}
+# Render `{"x":true}`
+
 ```html
 <!--M_[2-->
 <html>
@@ -15,9 +16,4 @@
     </script>
   </body>
 </html>
-```
-
-# Mutations
-```
-
 ```

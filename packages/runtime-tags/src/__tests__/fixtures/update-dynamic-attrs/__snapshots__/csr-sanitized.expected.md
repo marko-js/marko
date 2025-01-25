@@ -1,4 +1,5 @@
-# Render {"value":{"a":1,"b":2}}
+# Render `{"value":{"a":1,"b":2}}`
+
 ```html
 <div
   a="1"
@@ -15,7 +16,8 @@
 ```
 
 
-# Render {"value":{"b":2,"c":3}}
+# Render `{"value":{"b":2,"c":3}}`
+
 ```html
 <div
   b="2"
@@ -34,19 +36,8 @@
 ```
 
 
-# Render {"value":{}}
-```html
-<div />
-<div
-  a="0"
-/>
-<div
-  a="0"
-/>
-```
+# Render `{"value":{}}`
 
-
-# Render {"value":null}
 ```html
 <div />
 <div
@@ -58,7 +49,21 @@
 ```
 
 
-# Render {"value":{"a":1}}
+# Render `{"value":null}`
+
+```html
+<div />
+<div
+  a="0"
+/>
+<div
+  a="0"
+/>
+```
+
+
+# Render `{"value":{"a":1}}`
+
 ```html
 <div
   a="1"

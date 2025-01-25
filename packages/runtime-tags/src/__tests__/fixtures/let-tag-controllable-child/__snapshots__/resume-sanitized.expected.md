@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   1|1
@@ -10,9 +10,10 @@ source=1
 ```
 
 
-# Render 
-container.querySelectorAll("button").forEach(item => item.click())
-
+# Render
+```js
+container.querySelectorAll("button").forEach(item => item.click());
+```
 ```html
 <button>
   2|2
@@ -24,9 +25,10 @@ source=2
 ```
 
 
-# Render 
-container.querySelectorAll("button").forEach(item => item.click())
-
+# Render
+```js
+container.querySelectorAll("button").forEach(item => item.click());
+```
 ```html
 <button>
   3|3
@@ -38,9 +40,10 @@ source=3
 ```
 
 
-# Render 
-container.querySelectorAll("button").forEach(item => item.click())
-
+# Render
+```js
+container.querySelectorAll("button").forEach(item => item.click());
+```
 ```html
 <button>
   4|4

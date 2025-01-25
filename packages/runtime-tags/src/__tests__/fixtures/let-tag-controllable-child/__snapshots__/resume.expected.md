@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -32,15 +32,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelectorAll("button").forEach(item => item.click());
 ```
-
-```
-
-
-# Render 
-container.querySelectorAll("button").forEach(item => item.click())
-
 ```html
 <html>
   <head />
@@ -76,17 +72,17 @@ container.querySelectorAll("button").forEach(item => item.click())
 
 # Mutations
 ```
-#document/html0/body1/#text6: "1" => "2"
-#document/html0/body1/button0/#text0: "1" => "2"
-#document/html0/body1/button2/#text0: "1" => "2"
-#document/html0/body1/button0/#text4: "1" => "2"
-#document/html0/body1/button2/#text4: "1" => "2"
+UPDATE html/body/#text1 "1" => "2"
+UPDATE html/body/button0/#text0 "1" => "2"
+UPDATE html/body/button1/#text0 "1" => "2"
+UPDATE html/body/button0/#text2 "1" => "2"
+UPDATE html/body/button1/#text2 "1" => "2"
 ```
 
-
-# Render 
-container.querySelectorAll("button").forEach(item => item.click())
-
+# Render
+```js
+container.querySelectorAll("button").forEach(item => item.click());
+```
 ```html
 <html>
   <head />
@@ -122,17 +118,17 @@ container.querySelectorAll("button").forEach(item => item.click())
 
 # Mutations
 ```
-#document/html0/body1/#text6: "2" => "3"
-#document/html0/body1/button0/#text0: "2" => "3"
-#document/html0/body1/button2/#text0: "2" => "3"
-#document/html0/body1/button0/#text4: "2" => "3"
-#document/html0/body1/button2/#text4: "2" => "3"
+UPDATE html/body/#text1 "2" => "3"
+UPDATE html/body/button0/#text0 "2" => "3"
+UPDATE html/body/button1/#text0 "2" => "3"
+UPDATE html/body/button0/#text2 "2" => "3"
+UPDATE html/body/button1/#text2 "2" => "3"
 ```
 
-
-# Render 
-container.querySelectorAll("button").forEach(item => item.click())
-
+# Render
+```js
+container.querySelectorAll("button").forEach(item => item.click());
+```
 ```html
 <html>
   <head />
@@ -168,9 +164,9 @@ container.querySelectorAll("button").forEach(item => item.click())
 
 # Mutations
 ```
-#document/html0/body1/#text6: "3" => "4"
-#document/html0/body1/button0/#text0: "3" => "4"
-#document/html0/body1/button2/#text0: "3" => "4"
-#document/html0/body1/button0/#text4: "3" => "4"
-#document/html0/body1/button2/#text4: "3" => "4"
+UPDATE html/body/#text1 "3" => "4"
+UPDATE html/body/button0/#text0 "3" => "4"
+UPDATE html/body/button1/#text0 "3" => "4"
+UPDATE html/body/button0/#text2 "3" => "4"
+UPDATE html/body/button1/#text2 "3" => "4"
 ```

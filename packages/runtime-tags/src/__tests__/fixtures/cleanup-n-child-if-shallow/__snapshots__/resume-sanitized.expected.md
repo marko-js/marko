@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   Toggle
@@ -18,9 +18,10 @@
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -31,9 +32,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -53,9 +55,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle

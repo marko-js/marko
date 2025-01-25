@@ -1,4 +1,5 @@
-# Render {"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}
+# Render `{"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}`
+
 ```html
 <div>
   abc
@@ -7,11 +8,11 @@
 
 # Mutations
 ```
-inserted div0
+INSERT div
 ```
 
+# Render `{"children":[{"id":2,"text":"b"},{"id":3,"text":"c"},{"id":1,"text":"a"}]}`
 
-# Render {"children":[{"id":2,"text":"b"},{"id":3,"text":"c"},{"id":1,"text":"a"}]}
 ```html
 <div>
   bca
@@ -20,17 +21,17 @@ inserted div0
 
 # Mutations
 ```
-removed div0/#text2 before div0/#text0
-inserted div0/#text2
+REMOVE div/#text2 before div/#text0
+INSERT div/#text2
 ```
 
+# Render `{"children":[]}`
 
-# Render {"children":[]}
 ```html
 <div />
 ```
 
 # Mutations
 ```
-removed #text, #text, #text in div0
+REMOVE #text, #text, #text in div
 ```

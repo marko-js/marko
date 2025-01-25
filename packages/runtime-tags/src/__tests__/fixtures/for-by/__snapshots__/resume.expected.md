@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -76,15 +76,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <html>
   <head />
@@ -164,23 +160,23 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-removed #document/html0/body1/div0/div0/#text6 before #document/html0/body1/div0/div0/#comment0
-inserted #document/html0/body1/div0/div0/#text6
-removed #document/html0/body1/div0/div2/#text6 before #document/html0/body1/div0/div2/#comment0
-inserted #document/html0/body1/div0/div2/#text6
-removed #document/html0/body1/div0/div4/#text6 before #document/html0/body1/div0/div4/#comment0
-inserted #document/html0/body1/div0/div4/#text6
-removed #document/html0/body1/div0/div6/#text6 before #document/html0/body1/div0/div6/#comment0
-inserted #document/html0/body1/div0/div6/#text6
-#document/html0/body1/div0/div8/#text0: "first" => "second"
-#document/html0/body1/div0/div8/#text2: "second" => "third"
-#document/html0/body1/div0/div8/#text4: "third" => "first"
+REMOVE html/body/div/div0/#text2 before html/body/div/div0/#comment0
+INSERT html/body/div/div0/#text2
+REMOVE html/body/div/div1/#text2 before html/body/div/div1/#comment0
+INSERT html/body/div/div1/#text2
+REMOVE html/body/div/div2/#text2 before html/body/div/div2/#comment0
+INSERT html/body/div/div2/#text2
+REMOVE html/body/div/div3/#text2 before html/body/div/div3/#comment0
+INSERT html/body/div/div3/#text2
+UPDATE html/body/div/div4/#text0 "first" => "second"
+UPDATE html/body/div/div4/#text1 "second" => "third"
+UPDATE html/body/div/div4/#text2 "third" => "first"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -256,23 +252,23 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-removed #document/html0/body1/div0/div0/#text6 after #document/html0/body1/div0/div0/#comment0
-inserted #document/html0/body1/div0/div0/#text6
-removed #document/html0/body1/div0/div2/#text6 after #document/html0/body1/div0/div2/#comment0
-inserted #document/html0/body1/div0/div2/#text6
-removed #document/html0/body1/div0/div4/#text6 after #document/html0/body1/div0/div4/#comment0
-inserted #document/html0/body1/div0/div4/#text6
-removed #document/html0/body1/div0/div6/#text6 after #document/html0/body1/div0/div6/#comment0
-inserted #document/html0/body1/div0/div6/#text6
-#document/html0/body1/div0/div8/#text0: "second" => "third"
-#document/html0/body1/div0/div8/#text2: "third" => "first"
-#document/html0/body1/div0/div8/#text4: "first" => "second"
+REMOVE html/body/div/div0/#text2 after html/body/div/div0/#comment0
+INSERT html/body/div/div0/#text2
+REMOVE html/body/div/div1/#text2 after html/body/div/div1/#comment0
+INSERT html/body/div/div1/#text2
+REMOVE html/body/div/div2/#text2 after html/body/div/div2/#comment0
+INSERT html/body/div/div2/#text2
+REMOVE html/body/div/div3/#text2 after html/body/div/div3/#comment0
+INSERT html/body/div/div3/#text2
+UPDATE html/body/div/div4/#text0 "second" => "third"
+UPDATE html/body/div/div4/#text1 "third" => "first"
+UPDATE html/body/div/div4/#text2 "first" => "second"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -344,15 +340,15 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-removed #document/html0/body1/div0/div0/#text6 after #document/html0/body1/div0/div0/#comment1
-inserted #document/html0/body1/div0/div0/#text6
-removed #document/html0/body1/div0/div2/#text6 after #document/html0/body1/div0/div2/#comment1
-inserted #document/html0/body1/div0/div2/#text6
-removed #document/html0/body1/div0/div4/#text6 after #document/html0/body1/div0/div4/#comment1
-inserted #document/html0/body1/div0/div4/#text6
-removed #document/html0/body1/div0/div6/#text6 after #document/html0/body1/div0/div6/#comment1
-inserted #document/html0/body1/div0/div6/#text6
-#document/html0/body1/div0/div8/#text0: "third" => "first"
-#document/html0/body1/div0/div8/#text2: "first" => "second"
-#document/html0/body1/div0/div8/#text4: "second" => "third"
+REMOVE html/body/div/div0/#text2 after html/body/div/div0/#comment1
+INSERT html/body/div/div0/#text2
+REMOVE html/body/div/div1/#text2 after html/body/div/div1/#comment1
+INSERT html/body/div/div1/#text2
+REMOVE html/body/div/div2/#text2 after html/body/div/div2/#comment1
+INSERT html/body/div/div2/#text2
+REMOVE html/body/div/div3/#text2 after html/body/div/div3/#comment1
+INSERT html/body/div/div3/#text2
+UPDATE html/body/div/div4/#text0 "third" => "first"
+UPDATE html/body/div/div4/#text1 "first" => "second"
+UPDATE html/body/div/div4/#text2 "second" => "third"
 ```

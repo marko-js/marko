@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div>
   <button
@@ -18,13 +18,13 @@
 
 # Mutations
 ```
-inserted div0
+INSERT div
 ```
 
-
-# Render 
-container.querySelector("#count").click()
-
+# Render
+```js
+container.querySelector("#count").click();
+```
 ```html
 <div>
   <button
@@ -44,13 +44,13 @@ container.querySelector("#count").click()
 
 # Mutations
 ```
-div0/button2/#text0: "0" => "1"
+UPDATE div/button2/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("#count").click()
-
+# Render
+```js
+container.querySelector("#count").click();
+```
 ```html
 <div>
   <button
@@ -70,13 +70,13 @@ container.querySelector("#count").click()
 
 # Mutations
 ```
-div0/button2/#text0: "1" => "2"
+UPDATE div/button2/#text "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("#inner").click()
-
+# Render
+```js
+container.querySelector("#inner").click();
+```
 ```html
 <div>
   <button
@@ -91,14 +91,14 @@ container.querySelector("#inner").click()
 
 # Mutations
 ```
-inserted div0/#text2
-removed button after div0/#text2
+INSERT div/#text
+REMOVE button after div/#text
 ```
 
-
-# Render 
-container.querySelector("#inner").click()
-
+# Render
+```js
+container.querySelector("#inner").click();
+```
 ```html
 <div>
   <button
@@ -118,15 +118,15 @@ container.querySelector("#inner").click()
 
 # Mutations
 ```
-inserted div0/button2
-removed #text after div0/button2
-div0/button2/#text0: " " => "2"
+INSERT div/button2
+REMOVE #text after div/button2
+UPDATE div/button2/#text " " => "2"
 ```
 
-
-# Render 
-container.querySelector("#count").click()
-
+# Render
+```js
+container.querySelector("#count").click();
+```
 ```html
 <div>
   <button
@@ -146,13 +146,13 @@ container.querySelector("#count").click()
 
 # Mutations
 ```
-div0/button2/#text0: "2" => "3"
+UPDATE div/button2/#text "2" => "3"
 ```
 
-
-# Render 
-container.querySelector("#outer").click()
-
+# Render
+```js
+container.querySelector("#outer").click();
+```
 ```html
 <div>
   <button
@@ -163,16 +163,16 @@ container.querySelector("#outer").click()
 
 # Mutations
 ```
-inserted div0/#text1
-removed button after div0/#text1
-removed button after div0/#text1
-removed #comment after div0/#text1
+INSERT div/#text
+REMOVE button after div/#text
+REMOVE button after div/#text
+REMOVE #comment after div/#text
 ```
 
-
-# Render 
-container.querySelector("#outer").click()
-
+# Render
+```js
+container.querySelector("#outer").click();
+```
 ```html
 <div>
   <button
@@ -192,19 +192,19 @@ container.querySelector("#outer").click()
 
 # Mutations
 ```
-inserted div0/button1
-inserted #text
-inserted div0/#comment3
-removed #text after div0/#comment3
-inserted div0/button2
-removed #text after div0/button2
-div0/button2/#text0: " " => "3"
+INSERT div/button1
+INSERT #text
+INSERT div/#comment
+REMOVE #text after div/#comment
+INSERT div/button2
+REMOVE #text after div/button2
+UPDATE div/button2/#text " " => "3"
 ```
 
-
-# Render 
-container.querySelector("#count").click()
-
+# Render
+```js
+container.querySelector("#count").click();
+```
 ```html
 <div>
   <button
@@ -224,5 +224,5 @@ container.querySelector("#count").click()
 
 # Mutations
 ```
-div0/button2/#text0: "3" => "4"
+UPDATE div/button2/#text "3" => "4"
 ```

@@ -1,8 +1,9 @@
 # Write
+```html
   <button>1<!--M_*0 #text/1-->|<!>1<!--M_*0 #text/2--></button><!--M_*0 #button/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={y:1}},_.a["y@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),0,"__tests__/template.marko_0_y",0];M._.w()</script>
+```
 
-
-# Render "End"
+# Render End
 ```html
 <html>
   <head />
@@ -25,17 +26,17 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/body1
-inserted #document/html0/body1/button0
-inserted #document/html0/body1/button0/#text0
-inserted #document/html0/body1/button0/#comment1
-inserted #document/html0/body1/button0/#text2
-inserted #document/html0/body1/button0/#comment3
-inserted #document/html0/body1/button0/#text4
-inserted #document/html0/body1/button0/#comment5
-inserted #document/html0/body1/#comment1
-inserted #document/html0/body1/script2
-inserted #document/html0/body1/script2/#text0
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/button
+INSERT html/body/button/#text0
+INSERT html/body/button/#comment0
+INSERT html/body/button/#text1
+INSERT html/body/button/#comment1
+INSERT html/body/button/#text2
+INSERT html/body/button/#comment2
+INSERT html/body/#comment
+INSERT html/body/script
+INSERT html/body/script/#text
 ```

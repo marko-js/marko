@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <!---->
 <button
@@ -18,21 +18,21 @@
 
 # Mutations
 ```
-inserted #comment0, #text1, #text4, #comment5
-inserted button2
-inserted button2/#text0
-inserted div3
-inserted div3/#text0
-inserted div3/#text4
-inserted div3/#text1
-inserted div3/#text3
-inserted div3/button2
+INSERT #comment0, #text0, #text1, #comment1
+INSERT button
+INSERT button/#text
+INSERT div
+INSERT div/#text0
+INSERT div/#text3
+INSERT div/#text1
+INSERT div/#text2
+INSERT div/button
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <!---->
 <button
@@ -52,13 +52,13 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-div3/button2/#text0: "0" => "1"
+UPDATE div/button/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("#class").click()
-
+# Render
+```js
+container.querySelector("#class").click();
+```
 ```html
 <!---->
 <button
@@ -78,13 +78,13 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-button2/#text0: "0" => "1"
+UPDATE button/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <!---->
 <button
@@ -104,13 +104,13 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-div3/button2/#text0: "1" => "2"
+UPDATE div/button/#text "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("#class").click()
-
+# Render
+```js
+container.querySelector("#class").click();
+```
 ```html
 <!---->
 <button
@@ -130,13 +130,13 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-button2/#text0: "1" => "2"
+UPDATE button/#text "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <!---->
 <button
@@ -156,5 +156,5 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-div3/button2/#text0: "2" => "3"
+UPDATE div/button/#text "2" => "3"
 ```

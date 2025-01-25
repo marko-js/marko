@@ -1,4 +1,5 @@
-# Render {"to":3}
+# Render `{"to":3}`
+
 ```html
 <div>
   0, 1, 2, 3, 
@@ -6,7 +7,8 @@
 ```
 
 
-# Render {"from":4,"to":6}
+# Render `{"from":4,"to":6}`
+
 ```html
 <div>
   4, 5, 6, 
@@ -14,7 +16,8 @@
 ```
 
 
-# Render {"from":7,"to":16,"step":3}
+# Render `{"from":7,"to":16,"step":3}`
+
 ```html
 <div>
   7, 10, 13, 16, 
@@ -22,7 +25,8 @@
 ```
 
 
-# Render {"from":0,"to":-1,"step":-0.3}
+# Render `{"from":0,"to":-1,"step":-0.3}`
+
 ```html
 <div>
   0, -0.3, -0.6, -0.8999999999999999, 
@@ -30,7 +34,8 @@
 ```
 
 
-# Render {"from":0,"to":3,"step":0.5}
+# Render `{"from":0,"to":3,"step":0.5}`
+
 ```html
 <div>
   0, 0.5, 1, 1.5, 2, 2.5, 3, 

@@ -1,4 +1,5 @@
-# Render {"x":true}
+# Render `{"x":true}`
+
 ```html
 Hello
 <div>

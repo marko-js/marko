@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -33,15 +33,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <html>
   <head />
@@ -95,18 +91,18 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/#comment9
-inserted #text
-inserted #document/html0/body1/#comment13
-inserted #document/html0/body1/div4
-inserted #document/html0/body1/div8
-inserted #document/html0/body1/div10
-inserted #document/html0/body1/div11
-inserted #document/html0/body1/div12
-removed #text after #document/html0/body1/#comment9
-#document/html0/body1/div4/#text0: " " => "0.2"
-#document/html0/body1/div8/#text0: " " => "1.2"
-#document/html0/body1/div10/#text0: " " => "2.0"
-#document/html0/body1/div11/#text0: " " => "2.1"
-#document/html0/body1/div12/#text0: " " => "2.2"
+INSERT html/body/#comment2
+INSERT #text
+INSERT html/body/#comment3
+INSERT html/body/div2
+INSERT html/body/div5
+INSERT html/body/div6
+INSERT html/body/div7
+INSERT html/body/div8
+REMOVE #text after html/body/#comment2
+UPDATE html/body/div2/#text " " => "0.2"
+UPDATE html/body/div5/#text " " => "1.2"
+UPDATE html/body/div6/#text " " => "2.0"
+UPDATE html/body/div7/#text " " => "2.1"
+UPDATE html/body/div8/#text " " => "2.2"
 ```

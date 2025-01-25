@@ -1,10 +1,12 @@
-# Render {"show":false,"value1":"Hello","value2":"World"}
+# Render `{"show":false,"value1":"Hello","value2":"World"}`
+
 ```html
 <div />
 ```
 
 
-# Render {"show":true,"value1":"Hello","value2":"World"}
+# Render `{"show":true,"value1":"Hello","value2":"World"}`
+
 ```html
 <div>
   <span>
@@ -17,7 +19,8 @@
 ```
 
 
-# Render {"show":true,"value1":false,"value2":"World"}
+# Render `{"show":true,"value1":false,"value2":"World"}`
+
 ```html
 <div>
   <span>
@@ -27,7 +30,8 @@
 ```
 
 
-# Render {"show":true,"value1":"Goodbye","value2":"World"}
+# Render `{"show":true,"value1":"Goodbye","value2":"World"}`
+
 ```html
 <div>
   <span>
@@ -40,7 +44,8 @@
 ```
 
 
-# Render {"show":false,"value1":"Goodbye","value2":"World"}
+# Render `{"show":false,"value1":"Goodbye","value2":"World"}`
+
 ```html
 <div />
 ```

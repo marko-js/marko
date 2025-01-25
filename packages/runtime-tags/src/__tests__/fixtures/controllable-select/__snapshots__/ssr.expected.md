@@ -1,8 +1,9 @@
 # Write
+```html
   <select><option value=a>A</option><option value=b selected>B</option><option value=c>C</option></select><!--M_*0 #select/0--><span>b<!--M_*0 #text/1--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={"#select/0=":3,"#select/0:":"b",value:"b"}},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()</script>
+```
 
-
-# Render "End"
+# Render End
 ```html
 <html>
   <head />
@@ -39,20 +40,20 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/body1
-inserted #document/html0/body1/select0
-inserted #document/html0/body1/select0/option0
-inserted #document/html0/body1/select0/option0/#text0
-inserted #document/html0/body1/select0/option1
-inserted #document/html0/body1/select0/option1/#text0
-inserted #document/html0/body1/select0/option2
-inserted #document/html0/body1/select0/option2/#text0
-inserted #document/html0/body1/#comment1
-inserted #document/html0/body1/span2
-inserted #document/html0/body1/span2/#text0
-inserted #document/html0/body1/span2/#comment1
-inserted #document/html0/body1/script3
-inserted #document/html0/body1/script3/#text0
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/select
+INSERT html/body/select/option0
+INSERT html/body/select/option0/#text
+INSERT html/body/select/option1
+INSERT html/body/select/option1/#text
+INSERT html/body/select/option2
+INSERT html/body/select/option2/#text
+INSERT html/body/#comment
+INSERT html/body/span
+INSERT html/body/span/#text
+INSERT html/body/span/#comment
+INSERT html/body/script
+INSERT html/body/script/#text
 ```

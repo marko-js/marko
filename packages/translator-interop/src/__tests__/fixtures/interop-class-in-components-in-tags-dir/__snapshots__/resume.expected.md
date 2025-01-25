@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 <html>
   <head />
@@ -17,8 +17,8 @@
 
 # Mutations
 ```
-inserted #document/html0/body1/#text1
-inserted #document/html0/body1/#text3
-removed #comment after #document/html0/body1/#comment0
-removed #comment after #document/html0/body1/#text3
+INSERT html/body/#text0
+INSERT html/body/#text1
+REMOVE #comment after html/body/#comment0
+REMOVE #comment after html/body/#text1
 ```

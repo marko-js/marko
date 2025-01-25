@@ -1,8 +1,7 @@
 # Write
   <!--M#s0--><button>0</button><!--M/-->
 
-
-# Render "End"
+# Render End
 ```html
 <html>
   <head />
@@ -18,11 +17,11 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/body1
-inserted #document/html0/body1/#comment0
-inserted #document/html0/body1/button1
-inserted #document/html0/body1/button1/#text0
-inserted #document/html0/body1/#comment2
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/#comment0
+INSERT html/body/button
+INSERT html/body/button/#text
+INSERT html/body/#comment1
 ```

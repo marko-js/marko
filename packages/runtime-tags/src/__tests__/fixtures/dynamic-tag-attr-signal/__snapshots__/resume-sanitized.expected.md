@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <p
   class="A"
@@ -9,9 +9,10 @@
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <p
   class="B"
@@ -22,9 +23,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <p
   class="A"

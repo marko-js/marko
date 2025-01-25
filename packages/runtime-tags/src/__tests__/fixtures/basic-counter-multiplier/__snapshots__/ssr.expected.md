@@ -1,8 +1,9 @@
 # Write
+```html
   <button id=multiplier>increase multiplier (<!>1<!--M_*0 #text/1-->)</button><!--M_*0 #button/0--><button id=count>increase count</button><!--M_*0 #button/2--><div>0<!--M_*0 #text/3--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{count:0,multiplier:1}}),0,"__tests__/template.marko_0_count",0,"__tests__/template.marko_0_multiplier",0];M._.w()</script>
+```
 
-
-# Render "End"
+# Render End
 ```html
 <html>
   <head />
@@ -36,22 +37,22 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/body1
-inserted #document/html0/body1/button0
-inserted #document/html0/body1/button0/#text0
-inserted #document/html0/body1/button0/#comment1
-inserted #document/html0/body1/button0/#text2
-inserted #document/html0/body1/button0/#comment3
-inserted #document/html0/body1/button0/#text4
-inserted #document/html0/body1/#comment1
-inserted #document/html0/body1/button2
-inserted #document/html0/body1/button2/#text0
-inserted #document/html0/body1/#comment3
-inserted #document/html0/body1/div4
-inserted #document/html0/body1/div4/#text0
-inserted #document/html0/body1/div4/#comment1
-inserted #document/html0/body1/script5
-inserted #document/html0/body1/script5/#text0
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/button0
+INSERT html/body/button0/#text0
+INSERT html/body/button0/#comment0
+INSERT html/body/button0/#text1
+INSERT html/body/button0/#comment1
+INSERT html/body/button0/#text2
+INSERT html/body/#comment0
+INSERT html/body/button1
+INSERT html/body/button1/#text
+INSERT html/body/#comment1
+INSERT html/body/div
+INSERT html/body/div/#text
+INSERT html/body/div/#comment
+INSERT html/body/script
+INSERT html/body/script/#text
 ```

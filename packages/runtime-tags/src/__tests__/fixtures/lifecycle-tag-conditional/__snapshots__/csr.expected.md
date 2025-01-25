@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <!---->
 <div
@@ -20,14 +20,14 @@
 
 # Mutations
 ```
-inserted #comment0, #text1, div2, button3, button4
-inserted div2/#text0
+INSERT #comment, #text, div, button0, button1
+INSERT div/#text
 ```
 
-
-# Render 
-container.querySelector("#increment")?.click()
-
+# Render
+```js
+container.querySelector("#increment")?.click();
+```
 ```html
 <!---->
 <div
@@ -49,14 +49,14 @@ container.querySelector("#increment")?.click()
 
 # Mutations
 ```
-removed #text in div2
-inserted div2/#text0
+REMOVE #text in div
+INSERT div/#text
 ```
 
-
-# Render 
-container.querySelector("#toggle")?.click()
-
+# Render
+```js
+container.querySelector("#toggle")?.click();
+```
 ```html
 <!---->
 <div
@@ -78,16 +78,16 @@ container.querySelector("#toggle")?.click()
 
 # Mutations
 ```
-inserted #text1
-removed #text in div2
-inserted div2/#text0
-removed #text after #text1
+INSERT #text
+REMOVE #text in div
+INSERT div/#text
+REMOVE #text after #text
 ```
 
-
-# Render 
-container.querySelector("#increment")?.click()
-
+# Render
+```js
+container.querySelector("#increment")?.click();
+```
 ```html
 <!---->
 <div
@@ -107,15 +107,11 @@ container.querySelector("#increment")?.click()
 </button>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("#toggle")?.click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("#toggle")?.click()
-
 ```html
 <!---->
 <div
@@ -137,8 +133,8 @@ container.querySelector("#toggle")?.click()
 
 # Mutations
 ```
-inserted #text1
-removed #text after #text1
-removed #text in div2
-inserted div2/#text0
+INSERT #text
+REMOVE #text after #text
+REMOVE #text in div
+INSERT div/#text
 ```

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head>
@@ -18,15 +18,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("style").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("style").click()
-
 ```html
 <html>
   <head>
@@ -48,14 +44,14 @@ container.querySelector("style").click()
 
 # Mutations
 ```
-removed #text in #document/html0/head0/style0
-inserted #document/html0/head0/style0/#text0
+REMOVE #text in html/head/style
+INSERT html/head/style/#text
 ```
 
-
-# Render 
-container.querySelector("style").click()
-
+# Render
+```js
+container.querySelector("style").click();
+```
 ```html
 <html>
   <head>
@@ -77,14 +73,14 @@ container.querySelector("style").click()
 
 # Mutations
 ```
-removed #text in #document/html0/head0/style0
-inserted #document/html0/head0/style0/#text0
+REMOVE #text in html/head/style
+INSERT html/head/style/#text
 ```
 
-
-# Render 
-container.querySelector("style").click()
-
+# Render
+```js
+container.querySelector("style").click();
+```
 ```html
 <html>
   <head>
@@ -106,6 +102,6 @@ container.querySelector("style").click()
 
 # Mutations
 ```
-removed #text in #document/html0/head0/style0
-inserted #document/html0/head0/style0/#text0
+REMOVE #text in html/head/style
+INSERT html/head/style/#text
 ```

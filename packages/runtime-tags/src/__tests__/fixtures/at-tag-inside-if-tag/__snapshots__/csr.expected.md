@@ -1,4 +1,5 @@
-# Render {"x":true}
+# Render `{"x":true}`
+
 ```html
 <!---->
 <!---->
@@ -10,11 +11,11 @@ Hello
 
 # Mutations
 ```
-inserted #comment0, #comment1, #text2, div3
+INSERT #comment0, #comment1, #text, div
 ```
 
+# Render `{"x":false}`
 
-# Render {"x":false}
 ```html
 <!---->
 <!---->
@@ -26,13 +27,13 @@ Goodbye
 
 # Mutations
 ```
-div3/#text0: "1" => "2"
-inserted #text2
-removed #text after #text2
+UPDATE div/#text "1" => "2"
+INSERT #text
+REMOVE #text after #text
 ```
 
+# Render `{"x":true}`
 
-# Render {"x":true}
 ```html
 <!---->
 <!---->
@@ -44,7 +45,7 @@ Hello
 
 # Mutations
 ```
-div3/#text0: "2" => "1"
-inserted #text2
-removed #text after #text2
+UPDATE div/#text "2" => "1"
+INSERT #text
+REMOVE #text after #text
 ```

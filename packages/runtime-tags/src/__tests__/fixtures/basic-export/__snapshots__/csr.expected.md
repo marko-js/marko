@@ -1,4 +1,5 @@
-# Render {"value":123}
+# Render `{"value":123}`
+
 ```html
 <div>
   123
@@ -7,5 +8,5 @@
 
 # Mutations
 ```
-inserted div0
+INSERT div
 ```

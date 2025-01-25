@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -38,15 +38,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("#toggle").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("#toggle").click()
-
 ```html
 <html>
   <head />
@@ -90,13 +86,13 @@ container.querySelector("#toggle").click()
 
 # Mutations
 ```
-#document/html0/body1/ul0: attr(hidden) null => ""
+UPDATE html/body/ul[hidden] null => ""
 ```
 
-
-# Render 
-container.querySelector("#toggle").click()
-
+# Render
+```js
+container.querySelector("#toggle").click();
+```
 ```html
 <html>
   <head />
@@ -138,13 +134,13 @@ container.querySelector("#toggle").click()
 
 # Mutations
 ```
-#document/html0/body1/ul0: attr(hidden) "" => null
+UPDATE html/body/ul[hidden] "" => null
 ```
 
-
-# Render 
-container.querySelector("#reverse").click()
-
+# Render
+```js
+container.querySelector("#reverse").click();
+```
 ```html
 <html>
   <head />
@@ -186,8 +182,8 @@ container.querySelector("#reverse").click()
 
 # Mutations
 ```
-removed #document/html0/body1/ul0/li1 after #document/html0/body1/ul0/li2
-inserted #document/html0/body1/ul0/li1
-removed #document/html0/body1/ul0/li0 after #document/html0/body1/ul0/li2
-inserted #document/html0/body1/ul0/li0
+REMOVE html/body/ul/li1 after html/body/ul/li2
+INSERT html/body/ul/li1
+REMOVE html/body/ul/li0 after html/body/ul/li2
+INSERT html/body/ul/li0
 ```

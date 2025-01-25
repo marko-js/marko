@@ -1,28 +1,19 @@
-# Render {}
-```html
+# Render
 
+
+# Render
+```js
+container.querySelector("style").click();
 ```
 
 
-# Render 
-container.querySelector("style").click()
-
-```html
-
+# Render
+```js
+container.querySelector("style").click();
 ```
 
 
-# Render 
-container.querySelector("style").click()
-
-```html
-
-```
-
-
-# Render 
-container.querySelector("style").click()
-
-```html
-
+# Render
+```js
+container.querySelector("style").click();
 ```

@@ -1,4 +1,5 @@
-# Render {"value":"Hello"}
+# Render `{"value":"Hello"}`
+
 ```html
 <div>
   <span>
@@ -10,7 +11,8 @@
 ```
 
 
-# Render {"value":false}
+# Render `{"value":false}`
+
 ```html
 <div>
   <span />
@@ -19,7 +21,8 @@
 ```
 
 
-# Render {"value":"World"}
+# Render `{"value":"World"}`
+
 ```html
 <div>
   <span>
@@ -31,7 +34,8 @@
 ```
 
 
-# Render {"value":"!"}
+# Render `{"value":"!"}`
+
 ```html
 <div>
   <span>

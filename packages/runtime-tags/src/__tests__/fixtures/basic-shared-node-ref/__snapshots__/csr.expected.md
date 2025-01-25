@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <ul>
   <li>
@@ -25,13 +25,13 @@
 
 # Mutations
 ```
-inserted ul0, button1, button2
+INSERT ul, button0, button1
 ```
 
-
-# Render 
-container.querySelector("#toggle").click()
-
+# Render
+```js
+container.querySelector("#toggle").click();
+```
 ```html
 <ul
   hidden=""
@@ -60,13 +60,13 @@ container.querySelector("#toggle").click()
 
 # Mutations
 ```
-ul0: attr(hidden) null => ""
+UPDATE ul[hidden] null => ""
 ```
 
-
-# Render 
-container.querySelector("#toggle").click()
-
+# Render
+```js
+container.querySelector("#toggle").click();
+```
 ```html
 <ul>
   <li>
@@ -93,13 +93,13 @@ container.querySelector("#toggle").click()
 
 # Mutations
 ```
-ul0: attr(hidden) "" => null
+UPDATE ul[hidden] "" => null
 ```
 
-
-# Render 
-container.querySelector("#reverse").click()
-
+# Render
+```js
+container.querySelector("#reverse").click();
+```
 ```html
 <ul>
   <li>
@@ -126,8 +126,8 @@ container.querySelector("#reverse").click()
 
 # Mutations
 ```
-removed ul0/li1 after ul0/li2
-inserted ul0/li1
-removed ul0/li0 after ul0/li2
-inserted ul0/li0
+REMOVE ul/li1 after ul/li2
+INSERT ul/li1
+REMOVE ul/li0 after ul/li2
+INSERT ul/li0
 ```

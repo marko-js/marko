@@ -1,15 +1,16 @@
-# Render {"show":false,"value1":"Hello","value2":"World"}
+# Render `{"show":false,"value1":"Hello","value2":"World"}`
+
 ```html
 <div />
 ```
 
 # Mutations
 ```
-inserted div0
+INSERT div
 ```
 
+# Render `{"show":true,"value1":"Hello","value2":"World"}`
 
-# Render {"show":true,"value1":"Hello","value2":"World"}
 ```html
 <div>
   <!---->
@@ -25,21 +26,21 @@ inserted div0
 
 # Mutations
 ```
-inserted div0/#comment0
-inserted #text
-inserted #text
-inserted div0/#comment3
-removed #text after div0/#comment3
-inserted div0/span1
-removed #text after div0/span1
-inserted div0/span2
-removed #text after div0/span2
-div0/span1/#text0: " " => "Hello"
-div0/span2/#text0: " " => "World"
+INSERT div/#comment0
+INSERT #text
+INSERT #text
+INSERT div/#comment1
+REMOVE #text after div/#comment1
+INSERT div/span0
+REMOVE #text after div/span0
+INSERT div/span1
+REMOVE #text after div/span1
+UPDATE div/span0/#text " " => "Hello"
+UPDATE div/span1/#text " " => "World"
 ```
 
+# Render `{"show":true,"value1":false,"value2":"World"}`
 
-# Render {"show":true,"value1":false,"value2":"World"}
 ```html
 <div>
   <!---->
@@ -52,12 +53,12 @@ div0/span2/#text0: " " => "World"
 
 # Mutations
 ```
-inserted div0/#text1
-removed span after div0/#text1
+INSERT div/#text
+REMOVE span after div/#text
 ```
 
+# Render `{"show":true,"value1":"Goodbye","value2":"World"}`
 
-# Render {"show":true,"value1":"Goodbye","value2":"World"}
 ```html
 <div>
   <!---->
@@ -73,22 +74,22 @@ removed span after div0/#text1
 
 # Mutations
 ```
-inserted div0/span1
-removed #text after div0/span1
-div0/span1/#text0: " " => "Goodbye"
+INSERT div/span0
+REMOVE #text after div/span0
+UPDATE div/span0/#text " " => "Goodbye"
 ```
 
+# Render `{"show":false,"value1":"Goodbye","value2":"World"}`
 
-# Render {"show":false,"value1":"Goodbye","value2":"World"}
 ```html
 <div />
 ```
 
 # Mutations
 ```
-inserted div0/#text0
-removed #comment after div0/#text0
-removed span after div0/#text0
-removed span after div0/#text0
-removed #comment after div0/#text0
+INSERT div/#text
+REMOVE #comment after div/#text
+REMOVE span after div/#text
+REMOVE span after div/#text
+REMOVE #comment after div/#text
 ```

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   $0.00
@@ -10,13 +10,13 @@
 
 # Mutations
 ```
-inserted button0, button1
+INSERT button0, button1
 ```
 
-
-# Render 
-container.querySelectorAll("button").forEach(button => button.click())
-
+# Render
+```js
+container.querySelectorAll("button").forEach(button => button.click());
+```
 ```html
 <button>
   $1.00
@@ -28,6 +28,6 @@ container.querySelectorAll("button").forEach(button => button.click())
 
 # Mutations
 ```
-button0/#text0: "$0.00" => "$1.00"
-button1/#text0: "$0.00" => "$1.00"
+UPDATE button0/#text "$0.00" => "$1.00"
+UPDATE button1/#text "$0.00" => "$1.00"
 ```

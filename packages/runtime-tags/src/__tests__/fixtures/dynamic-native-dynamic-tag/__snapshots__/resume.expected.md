@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -18,15 +18,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <html>
   <head />
@@ -48,16 +44,16 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/div0
-removed span after #document/html0/body1/div0
-inserted #document/html0/body1/div0/#text0
-#document/html0/body1/div0: attr(class) null => "A"
+INSERT html/body/div
+REMOVE span after html/body/div
+INSERT html/body/div/#text
+UPDATE html/body/div[class] null => "A"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -79,8 +75,8 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/span0
-removed div after #document/html0/body1/span0
-inserted #document/html0/body1/span0/#text0
-#document/html0/body1/span0: attr(class) null => "A"
+INSERT html/body/span
+REMOVE div after html/body/span
+INSERT html/body/span/#text
+UPDATE html/body/span[class] null => "A"
 ```

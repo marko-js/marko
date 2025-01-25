@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <section>
   <span>
@@ -12,5 +12,5 @@
 
 # Mutations
 ```
-inserted section0, div1
+INSERT section, div
 ```

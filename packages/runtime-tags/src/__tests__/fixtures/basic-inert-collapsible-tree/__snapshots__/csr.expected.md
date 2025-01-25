@@ -1,4 +1,5 @@
-# Render {"comments":[{"text":"Hello World","comments":[{"text":"testing 123"}]},{"text":"Goodbye World"}]}
+# Render `{"comments":[{"text":"Hello World","comments":[{"text":"testing 123"}]},{"text":"Goodbye World"}]}`
+
 ```html
 <ul>
   <li
@@ -38,13 +39,13 @@
 
 # Mutations
 ```
-inserted ul0
+INSERT ul
 ```
 
-
-# Render 
-container.querySelector(`#c-${id} > button`).click()
-
+# Render
+```js
+container.querySelector(`#c-${id} > button`).click();
+```
 ```html
 <ul>
   <li
@@ -85,14 +86,14 @@ container.querySelector(`#c-${id} > button`).click()
 
 # Mutations
 ```
-ul0/li0: attr(hidden) null => ""
-ul0/li0/button1/#text0: "[-]" => "[+]"
+UPDATE ul/li0[hidden] null => ""
+UPDATE ul/li0/button/#text "[-]" => "[+]"
 ```
 
-
-# Render 
-container.querySelector(`#c-${id} > button`).click()
-
+# Render
+```js
+container.querySelector(`#c-${id} > button`).click();
+```
 ```html
 <ul>
   <li
@@ -132,14 +133,14 @@ container.querySelector(`#c-${id} > button`).click()
 
 # Mutations
 ```
-ul0/li0: attr(hidden) "" => null
-ul0/li0/button1/#text0: "[+]" => "[-]"
+UPDATE ul/li0[hidden] "" => null
+UPDATE ul/li0/button/#text "[+]" => "[-]"
 ```
 
-
-# Render 
-container.querySelector(`#c-${id} > button`).click()
-
+# Render
+```js
+container.querySelector(`#c-${id} > button`).click();
+```
 ```html
 <ul>
   <li
@@ -180,14 +181,14 @@ container.querySelector(`#c-${id} > button`).click()
 
 # Mutations
 ```
-ul0/li0/ul2/li0: attr(hidden) null => ""
-ul0/li0/ul2/li0/button1/#text0: "[-]" => "[+]"
+UPDATE ul/li0/ul/li[hidden] null => ""
+UPDATE ul/li0/ul/li/button/#text "[-]" => "[+]"
 ```
 
-
-# Render 
-container.querySelector(`#c-${id} > button`).click()
-
+# Render
+```js
+container.querySelector(`#c-${id} > button`).click();
+```
 ```html
 <ul>
   <li
@@ -229,6 +230,6 @@ container.querySelector(`#c-${id} > button`).click()
 
 # Mutations
 ```
-ul0/li1: attr(hidden) null => ""
-ul0/li1/button1/#text0: "[-]" => "[+]"
+UPDATE ul/li1[hidden] null => ""
+UPDATE ul/li1/button/#text "[-]" => "[+]"
 ```

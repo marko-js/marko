@@ -1,4 +1,5 @@
-# Render {"a":2}
+# Render `{"a":2}`
+
 ```html
 <html>
   <head />
@@ -20,15 +21,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <html>
   <head />
@@ -52,5 +49,5 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/#text6: "4" => "5"
+UPDATE html/body/#text2 "4" => "5"
 ```

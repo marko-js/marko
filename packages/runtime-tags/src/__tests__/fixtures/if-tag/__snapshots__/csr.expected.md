@@ -1,4 +1,5 @@
-# Render {"a":1,"b":2,"x":false,"y":true}
+# Render `{"a":1,"b":2,"x":false,"y":true}`
+
 ```html
 <!---->
 HelloWorld
@@ -9,5 +10,5 @@ HelloWorld
 
 # Mutations
 ```
-inserted #comment0, #text1, #text2, div3
+INSERT #comment, #text0, #text1, div
 ```

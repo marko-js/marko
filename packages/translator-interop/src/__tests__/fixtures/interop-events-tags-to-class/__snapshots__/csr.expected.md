@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <!---->
 <button
@@ -15,15 +15,15 @@
 
 # Mutations
 ```
-inserted #comment0, #text1, #text3, div4
-inserted button2
-inserted button2/#text0
+INSERT #comment, #text0, #text1, div
+INSERT button
+INSERT button/#text
 ```
 
-
-# Render 
-container.querySelector("#class-api").click()
-
+# Render
+```js
+container.querySelector("#class-api").click();
+```
 ```html
 <!---->
 <button
@@ -40,14 +40,14 @@ container.querySelector("#class-api").click()
 
 # Mutations
 ```
-div4/#text0: "0" => "1"
-button2/#text0: "0" => "1"
+UPDATE div/#text "0" => "1"
+UPDATE button/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("#class-api").click()
-
+# Render
+```js
+container.querySelector("#class-api").click();
+```
 ```html
 <!---->
 <button
@@ -64,6 +64,6 @@ container.querySelector("#class-api").click()
 
 # Mutations
 ```
-div4/#text0: "1" => "2"
-button2/#text0: "1" => "2"
+UPDATE div/#text "1" => "2"
+UPDATE button/#text "1" => "2"
 ```

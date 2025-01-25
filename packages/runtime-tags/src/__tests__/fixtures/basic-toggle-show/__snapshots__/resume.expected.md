@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -18,15 +18,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <html>
   <head />
@@ -47,15 +43,15 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-removed #document/html0/body1/div0/#comment0 after #text
-inserted #document/html0/body1/div0/#comment0
-removed #text after #document/html0/body1/div0/#comment0
+REMOVE html/body/div/#comment0 after #text
+INSERT html/body/div/#comment0
+REMOVE #text after html/body/div/#comment0
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -76,14 +72,14 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/div0/#text0
-removed #comment after #document/html0/body1/div0/#text0
+INSERT html/body/div/#text
+REMOVE #comment after html/body/div/#text
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -104,6 +100,6 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/div0/#comment0
-removed #text after #document/html0/body1/div0/#comment0
+INSERT html/body/div/#comment0
+REMOVE #text after html/body/div/#comment0
 ```

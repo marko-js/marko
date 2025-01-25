@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div>
   x=
@@ -16,13 +16,13 @@
 
 # Mutations
 ```
-inserted div0, button1
+INSERT div, button
 ```
 
-
-# Render 
-container.querySelector("#increment")?.click()
-
+# Render
+```js
+container.querySelector("#increment")?.click();
+```
 ```html
 <div>
   x=
@@ -40,14 +40,14 @@ container.querySelector("#increment")?.click()
 
 # Mutations
 ```
-div0/span1/#text0: "0" => "1"
-div0/#text3: "‍" => "0"
+UPDATE div/span/#text "0" => "1"
+UPDATE div/#text2 "‍" => "0"
 ```
 
-
-# Render 
-container.querySelector("#increment")?.click()
-
+# Render
+```js
+container.querySelector("#increment")?.click();
+```
 ```html
 <div>
   x=
@@ -65,27 +65,5 @@ container.querySelector("#increment")?.click()
 
 # Mutations
 ```
-div0/span1/#text0: "1" => "2"
-```
-
-
-# Render "ASYNC"
-```html
-<div>
-  x=
-  <span>
-    2
-  </span>
-  , was=1
-</div>
-<button
-  id="increment"
->
-  Increment
-</button>
-```
-
-# Mutations
-```
-div0/#text3: "0" => "1"
+UPDATE div/span/#text "1" => "2"
 ```

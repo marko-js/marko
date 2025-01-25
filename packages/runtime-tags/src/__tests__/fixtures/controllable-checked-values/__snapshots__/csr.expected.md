@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <input
   checked=""
@@ -21,13 +21,13 @@
 
 # Mutations
 ```
-inserted input0, input1, input2, span3
+INSERT input0, input1, input2, span
 ```
 
-
-# Render 
-container.querySelectorAll(`input`)[1].click()
-
+# Render
+```js
+container.querySelectorAll(`input`)[1].click();
+```
 ```html
 <input
   checked=""
@@ -49,13 +49,13 @@ container.querySelectorAll(`input`)[1].click()
 
 # Mutations
 ```
-span3/#text0: "a,b" => "a"
+UPDATE span/#text "a,b" => "a"
 ```
 
-
-# Render 
-container.querySelectorAll(`input`)[2].click()
-
+# Render
+```js
+container.querySelectorAll(`input`)[2].click();
+```
 ```html
 <input
   checked=""
@@ -78,13 +78,13 @@ container.querySelectorAll(`input`)[2].click()
 
 # Mutations
 ```
-span3/#text0: "a" => "a,c"
+UPDATE span/#text "a" => "a,c"
 ```
 
-
-# Render 
-container.querySelectorAll(`input`)[0].click()
-
+# Render
+```js
+container.querySelectorAll(`input`)[0].click();
+```
 ```html
 <input
   type="checkbox"
@@ -106,5 +106,5 @@ container.querySelectorAll(`input`)[0].click()
 
 # Mutations
 ```
-span3/#text0: "a,c" => "c"
+UPDATE span/#text "a,c" => "c"
 ```

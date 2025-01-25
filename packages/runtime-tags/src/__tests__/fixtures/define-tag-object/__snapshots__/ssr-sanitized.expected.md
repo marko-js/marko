@@ -1,4 +1,4 @@
-# Render "End"
+# Render End
 ```html
 <div>
   {"foo":1,"bar":2}

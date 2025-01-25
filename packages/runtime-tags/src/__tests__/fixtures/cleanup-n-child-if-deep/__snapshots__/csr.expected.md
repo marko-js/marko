@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button
   id="outer"
@@ -57,18 +57,18 @@ Inner mounted
 
 # Mutations
 ```
-inserted button0, button1, button2, pre3, div4, #comment5
-inserted #text
-removed #text in pre3
-inserted #text
-removed #text in pre3
-inserted pre3/#text0
+INSERT button0, button1, button2, pre, div, #comment
+INSERT #text
+REMOVE #text in pre
+INSERT #text
+REMOVE #text in pre
+INSERT pre/#text
 ```
 
-
-# Render 
-container.querySelector("button#inner").click()
-
+# Render
+```js
+container.querySelector("button#inner").click();
+```
 ```html
 <button
   id="outer"
@@ -119,18 +119,18 @@ Inner destroyed
 
 # Mutations
 ```
-inserted div4/div3/#text3
-removed #text in pre3
-inserted pre3/#text0
-removed div after div4/div3/#text3
-removed span after div4/div3/#text3
-removed p after div4/div3/#text3
+INSERT div/div1/#text
+REMOVE #text in pre
+INSERT pre/#text
+REMOVE div after div/div1/#text
+REMOVE span after div/div1/#text
+REMOVE p after div/div1/#text
 ```
 
-
-# Render 
-container.querySelector("button#middle").click()
-
+# Render
+```js
+container.querySelector("button#middle").click();
+```
 ```html
 <button
   id="outer"
@@ -171,16 +171,16 @@ Middle destroyed
 
 # Mutations
 ```
-inserted div4/#text3
-removed #text in pre3
-inserted pre3/#text0
-removed div after div4/#text3
+INSERT div/#text
+REMOVE #text in pre
+INSERT pre/#text
+REMOVE div after div/#text
 ```
 
-
-# Render 
-container.querySelector("button#outer").click()
-
+# Render
+```js
+container.querySelector("button#outer").click();
+```
 ```html
 <button
   id="outer"
@@ -211,16 +211,16 @@ Outer destroyed
 
 # Mutations
 ```
-inserted #text4
-removed #text in pre3
-inserted pre3/#text0
-removed div after #text4
+INSERT #text
+REMOVE #text in pre
+INSERT pre/#text
+REMOVE div after #text
 ```
 
-
-# Render 
-container.querySelector("button#inner").click()
-
+# Render
+```js
+container.querySelector("button#inner").click();
+```
 ```html
 <button
   id="outer"
@@ -249,15 +249,11 @@ Outer destroyed
 <!---->
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button#middle").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button#middle").click()
-
 ```html
 <button
   id="outer"
@@ -286,15 +282,11 @@ Outer destroyed
 <!---->
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button#outer").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button#outer").click()
-
 ```html
 <button
   id="outer"
@@ -359,35 +351,35 @@ Inner mounted
 
 # Mutations
 ```
-inserted div4
-removed #text after div4
-inserted div4/div3
-removed #text after div4/div3
-div4/div0/#text0: "" => "Outer"
-div4/span1/#text0: "" => "Outer"
-div4/p2/#text0: "" => "Outer"
-inserted div4/div3/div3
-inserted div4/div3/span4
-inserted div4/div3/p5
-removed #text after div4/div3/p5
-div4/div3/div0/#text0: "" => "Middle"
-div4/div3/span1/#text0: "" => "Middle"
-div4/div3/p2/#text0: "" => "Middle"
-div4/div3/div3/#text0: "" => "Inner"
-div4/div3/span4/#text0: "" => "Inner"
-div4/div3/p5/#text0: "" => "Inner"
-removed #text in pre3
-inserted #text
-removed #text in pre3
-inserted #text
-removed #text in pre3
-inserted pre3/#text0
+INSERT div
+REMOVE #text after div
+INSERT div/div1
+REMOVE #text after div/div1
+UPDATE div/div0/#text0 "" => "Outer"
+UPDATE div/span/#text0 "" => "Outer"
+UPDATE div/p/#text0 "" => "Outer"
+INSERT div/div1/div1
+INSERT div/div1/span1
+INSERT div/div1/p1
+REMOVE #text after div/div1/p1
+UPDATE div/div1/div0/#text0 "" => "Middle"
+UPDATE div/div1/span0/#text0 "" => "Middle"
+UPDATE div/div1/p0/#text0 "" => "Middle"
+UPDATE div/div1/div1/#text0 "" => "Inner"
+UPDATE div/div1/span1/#text0 "" => "Inner"
+UPDATE div/div1/p1/#text0 "" => "Inner"
+REMOVE #text in pre
+INSERT #text
+REMOVE #text in pre
+INSERT #text
+REMOVE #text in pre
+INSERT pre/#text
 ```
 
-
-# Render 
-container.querySelector("button#outer").click()
-
+# Render
+```js
+container.querySelector("button#outer").click();
+```
 ```html
 <button
   id="outer"
@@ -424,12 +416,12 @@ Outer destroyed
 
 # Mutations
 ```
-inserted #text4
-removed #text in pre3
-inserted #text
-removed #text in pre3
-inserted #text
-removed #text in pre3
-inserted pre3/#text0
-removed div after #text4
+INSERT #text
+REMOVE #text in pre
+INSERT #text
+REMOVE #text in pre
+INSERT #text
+REMOVE #text in pre
+INSERT pre/#text
+REMOVE div after #text
 ```

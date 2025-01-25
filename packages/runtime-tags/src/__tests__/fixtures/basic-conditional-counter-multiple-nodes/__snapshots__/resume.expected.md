@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -24,15 +24,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button.inc").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button.inc").click()
-
 ```html
 <html>
   <head />
@@ -60,13 +56,13 @@ container.querySelector("button.inc").click()
 
 # Mutations
 ```
-#document/html0/body1/#text7: "0" => "1"
+UPDATE html/body/#text1 "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("button.toggle").click()
-
+# Render
+```js
+container.querySelector("button.toggle").click();
+```
 ```html
 <html>
   <head />
@@ -90,18 +86,18 @@ container.querySelector("button.toggle").click()
 
 # Mutations
 ```
-removed #document/html0/body1/#comment4 after #document/html0/body1/#comment5
-inserted #document/html0/body1/#comment4
-removed #comment after #document/html0/body1/#comment4
-removed #text after #document/html0/body1/#comment4
-removed #comment after #document/html0/body1/#comment4
-removed #text after #document/html0/body1/#comment4
+REMOVE html/body/#comment2 after html/body/#comment3
+INSERT html/body/#comment2
+REMOVE #comment after html/body/#comment2
+REMOVE #text after html/body/#comment2
+REMOVE #comment after html/body/#comment2
+REMOVE #text after html/body/#comment2
 ```
 
-
-# Render 
-container.querySelector("button.inc").click()
-
+# Render
+```js
+container.querySelector("button.inc").click();
+```
 ```html
 <html>
   <head />
@@ -123,15 +119,11 @@ container.querySelector("button.inc").click()
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button.toggle").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button.toggle").click()
-
 ```html
 <html>
   <head />
@@ -155,16 +147,16 @@ container.querySelector("button.toggle").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/#text4
-inserted #document/html0/body1/#text5
-removed #comment after #document/html0/body1/#text5
-#document/html0/body1/#text5: "" => "2"
+INSERT html/body/#text0
+INSERT html/body/#text1
+REMOVE #comment after html/body/#text1
+UPDATE html/body/#text1 "" => "2"
 ```
 
-
-# Render 
-container.querySelector("button.inc").click()
-
+# Render
+```js
+container.querySelector("button.inc").click();
+```
 ```html
 <html>
   <head />
@@ -188,5 +180,5 @@ container.querySelector("button.inc").click()
 
 # Mutations
 ```
-#document/html0/body1/#text5: "2" => "3"
+UPDATE html/body/#text1 "2" => "3"
 ```

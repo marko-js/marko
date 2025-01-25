@@ -1,25 +1,21 @@
-export function getNodePath(node: Node) {
+export function getNodePath(
+  node: Node,
+  container: Node | null = node.ownerDocument,
+) {
   const parts: string[] = [];
   let cur: Node | null = node;
   while (cur) {
     const { parentNode } = cur;
-
-    let name = getTypeName(cur);
-    const index = parentNode
-      ? (Array.from(parentNode.childNodes) as Node[]).indexOf(cur)
-      : -1;
+    const index = indexByTypeInParent(cur);
+    let name = cur.nodeName.toLowerCase();
 
     if (index !== -1) {
       name += `${index}`;
     }
 
-    // if ((cur as any).data) {
-    //   name += `(${(cur as any).data})`;
-    // }
-
     parts.unshift(name);
 
-    if (!parentNode || (parentNode as any).TEST_ROOT) {
+    if (!parentNode || parentNode === container) {
       break;
     }
 
@@ -29,6 +25,28 @@ export function getNodePath(node: Node) {
   return parts.join("/");
 }
 
-export function getTypeName(node: Node) {
-  return node.nodeName.toLowerCase();
+function indexByTypeInParent(node: Node) {
+  const { nodeName, parentNode } = node;
+  if (!parentNode) return -1;
+
+  let i = 0;
+  let child = parentNode.firstChild;
+  while (child) {
+    if (child === node) {
+      if (i !== 0) return i;
+      while ((child = child.nextSibling)) {
+        if (nodeName === child.nodeName) {
+          return 0;
+        }
+      }
+
+      return -1;
+    } else if (nodeName === child.nodeName) {
+      i++;
+    }
+
+    child = child.nextSibling;
+  }
+
+  return -1;
 }

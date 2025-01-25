@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -27,14 +27,14 @@
 
 # Mutations
 ```
-removed #document/html0/body1/#comment0 before #document/html0
-inserted #document/html0/body1/#comment0
+REMOVE html/body/#comment0 before html
+INSERT html/body/#comment0
 ```
 
-
-# Render 
-container.querySelector("button.inc").click()
-
+# Render
+```js
+container.querySelector("button.inc").click();
+```
 ```html
 <html>
   <head />
@@ -63,13 +63,13 @@ container.querySelector("button.inc").click()
 
 # Mutations
 ```
-#document/html0/body1/button1/#text0: "1" => "2"
+UPDATE html/body/button0/#text "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("button.inc").click()
-
+# Render
+```js
+container.querySelector("button.inc").click();
+```
 ```html
 <html>
   <head />
@@ -98,13 +98,13 @@ container.querySelector("button.inc").click()
 
 # Mutations
 ```
-#document/html0/body1/button1/#text0: "2" => "3"
+UPDATE html/body/button0/#text "2" => "3"
 ```
 
-
-# Render 
-container.querySelector("button.reset").click()
-
+# Render
+```js
+container.querySelector("button.reset").click();
+```
 ```html
 <html>
   <head />
@@ -133,13 +133,13 @@ container.querySelector("button.reset").click()
 
 # Mutations
 ```
-#document/html0/body1/button1/#text0: "3" => "0"
+UPDATE html/body/button0/#text "3" => "0"
 ```
 
-
-# Render 
-container.querySelector("button.inc").click()
-
+# Render
+```js
+container.querySelector("button.inc").click();
+```
 ```html
 <html>
   <head />
@@ -168,5 +168,5 @@ container.querySelector("button.inc").click()
 
 # Mutations
 ```
-#document/html0/body1/button1/#text0: "0" => "1"
+UPDATE html/body/button0/#text "0" => "1"
 ```

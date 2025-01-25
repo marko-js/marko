@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <textarea>
   hello
@@ -10,18 +10,18 @@
 
 # Mutations
 ```
-inserted textarea0, span1
+INSERT textarea, span
 ```
 
-
-# Render 
+# Render
+```js
 const textarea = container.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
 textarea.dispatchEvent(new window.Event("input", {
   bubbles: true
-}))
-
+}));
+```
 ```html
 <textarea>
   w
@@ -33,18 +33,18 @@ textarea.dispatchEvent(new window.Event("input", {
 
 # Mutations
 ```
-span1/#text0: "hello" => "w"
+UPDATE span/#text "hello" => "w"
 ```
 
-
-# Render 
+# Render
+```js
 const textarea = container.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
 textarea.dispatchEvent(new window.Event("input", {
   bubbles: true
-}))
-
+}));
+```
 ```html
 <textarea>
   wor
@@ -56,18 +56,18 @@ textarea.dispatchEvent(new window.Event("input", {
 
 # Mutations
 ```
-span1/#text0: "w" => "wor"
+UPDATE span/#text "w" => "wor"
 ```
 
-
-# Render 
+# Render
+```js
 const textarea = container.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
 textarea.dispatchEvent(new window.Event("input", {
   bubbles: true
-}))
-
+}));
+```
 ```html
 <textarea>
   world
@@ -79,5 +79,5 @@ textarea.dispatchEvent(new window.Event("input", {
 
 # Mutations
 ```
-span1/#text0: "wor" => "world"
+UPDATE span/#text "wor" => "world"
 ```

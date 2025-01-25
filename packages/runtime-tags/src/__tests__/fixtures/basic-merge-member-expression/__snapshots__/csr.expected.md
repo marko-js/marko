@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div />
 <div />
@@ -9,13 +9,13 @@
 
 # Mutations
 ```
-inserted div0, div1, button2
+INSERT div0, div1, button
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div
   class="baz"
@@ -30,6 +30,6 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-div0: attr(class) null => "baz"
-div1: attr(class) null => "baz"
+UPDATE div0[class] null => "baz"
+UPDATE div1[class] null => "baz"
 ```

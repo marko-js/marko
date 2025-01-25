@@ -1,8 +1,9 @@
 # Write
+```html
   <span>child</span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{"#childScope/0":_.a={}},1:_.a}),0]</script>
+```
 
-
-# Render "End"
+# Render End
 ```html
 <html>
   <head />
@@ -19,11 +20,11 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/body1
-inserted #document/html0/body1/span0
-inserted #document/html0/body1/span0/#text0
-inserted #document/html0/body1/script1
-inserted #document/html0/body1/script1/#text0
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/span
+INSERT html/body/span/#text
+INSERT html/body/script
+INSERT html/body/script/#text
 ```

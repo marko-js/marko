@@ -1,4 +1,5 @@
-# Render {"comments":[{"text":"Hello World","comments":[{"text":"testing 123"}]},{"text":"Goodbye World"}]}
+# Render `{"comments":[{"text":"Hello World","comments":[{"text":"testing 123"}]},{"text":"Goodbye World"}]}`
+
 ```html
 <ul>
   <li
@@ -37,9 +38,10 @@
 ```
 
 
-# Render 
-container.querySelector(`#c-${id} > button`).click()
-
+# Render
+```js
+container.querySelector(`#c-${id} > button`).click();
+```
 ```html
 <ul>
   <li
@@ -79,9 +81,10 @@ container.querySelector(`#c-${id} > button`).click()
 ```
 
 
-# Render 
-container.querySelector(`#c-${id} > button`).click()
-
+# Render
+```js
+container.querySelector(`#c-${id} > button`).click();
+```
 ```html
 <ul>
   <li
@@ -120,9 +123,10 @@ container.querySelector(`#c-${id} > button`).click()
 ```
 
 
-# Render 
-container.querySelector(`#c-${id} > button`).click()
-
+# Render
+```js
+container.querySelector(`#c-${id} > button`).click();
+```
 ```html
 <ul>
   <li
@@ -162,9 +166,10 @@ container.querySelector(`#c-${id} > button`).click()
 ```
 
 
-# Render 
-container.querySelector(`#c-${id} > button`).click()
-
+# Render
+```js
+container.querySelector(`#c-${id} > button`).click();
+```
 ```html
 <ul>
   <li

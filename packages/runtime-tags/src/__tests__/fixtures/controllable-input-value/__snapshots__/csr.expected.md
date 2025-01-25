@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <input
   type="text"
@@ -11,18 +11,18 @@
 
 # Mutations
 ```
-inserted input0, span1
+INSERT input, span
 ```
 
-
-# Render 
+# Render
+```js
 const input = container.querySelector("input");
 const window = input.ownerDocument.defaultView;
 input.value = value;
 input.dispatchEvent(new window.Event("input", {
   bubbles: true
-}))
-
+}));
+```
 ```html
 <input
   type="text"
@@ -35,18 +35,18 @@ input.dispatchEvent(new window.Event("input", {
 
 # Mutations
 ```
-span1/#text0: "hello" => "w"
+UPDATE span/#text "hello" => "w"
 ```
 
-
-# Render 
+# Render
+```js
 const input = container.querySelector("input");
 const window = input.ownerDocument.defaultView;
 input.value = value;
 input.dispatchEvent(new window.Event("input", {
   bubbles: true
-}))
-
+}));
+```
 ```html
 <input
   type="text"
@@ -59,18 +59,18 @@ input.dispatchEvent(new window.Event("input", {
 
 # Mutations
 ```
-span1/#text0: "w" => "wor"
+UPDATE span/#text "w" => "wor"
 ```
 
-
-# Render 
+# Render
+```js
 const input = container.querySelector("input");
 const window = input.ownerDocument.defaultView;
 input.value = value;
 input.dispatchEvent(new window.Event("input", {
   bubbles: true
-}))
-
+}));
+```
 ```html
 <input
   type="text"
@@ -83,5 +83,5 @@ input.dispatchEvent(new window.Event("input", {
 
 # Mutations
 ```
-span1/#text0: "wor" => "world"
+UPDATE span/#text "wor" => "world"
 ```

@@ -1,4 +1,5 @@
-# Render {"value":"Hello"}
+# Render `{"value":"Hello"}`
+
 ```html
 <div>
   <span>

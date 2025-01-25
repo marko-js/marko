@@ -1,4 +1,5 @@
-# Render {"value":0}
+# Render `{"value":0}`
+
 ```html
 <div>
   0 0
@@ -7,11 +8,10 @@
 
 # Mutations
 ```
-inserted div0
+INSERT div
 ```
 
-
-# Render "ASYNC"
+# Render ASYNC
 ```html
 <div>
   1 0
@@ -20,24 +20,19 @@ inserted div0
 
 # Mutations
 ```
-div0/#text0: "0" => "1"
+UPDATE div/#text0 "0" => "1"
 ```
 
+# Render `{"value":1}`
 
-# Render {"value":1}
 ```html
 <div>
   1 0
 </div>
 ```
 
-# Mutations
-```
 
-```
-
-
-# Render "ASYNC"
+# Render ASYNC
 ```html
 <div>
   2 1
@@ -46,6 +41,6 @@ div0/#text0: "0" => "1"
 
 # Mutations
 ```
-div0/#text2: "0" => "1"
-div0/#text0: "1" => "2"
+UPDATE div/#text2 "0" => "1"
+UPDATE div/#text0 "1" => "2"
 ```

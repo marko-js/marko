@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   Toggle
@@ -13,9 +13,10 @@ mounted
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -28,9 +29,10 @@ destroyed
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -47,9 +49,10 @@ mounted
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle

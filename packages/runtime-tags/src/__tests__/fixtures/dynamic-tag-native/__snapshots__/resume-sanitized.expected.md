@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 <p
   class="par"

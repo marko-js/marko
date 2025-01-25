@@ -1,4 +1,5 @@
-# Render {"name":"Marko"}
+# Render `{"name":"Marko"}`
+
 ```html
 <div
   foo="Hello Marko"
@@ -7,5 +8,5 @@
 
 # Mutations
 ```
-inserted div0
+INSERT div
 ```

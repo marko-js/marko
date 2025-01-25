@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div>
   <!--Body Text-->
@@ -12,11 +12,10 @@
 
 # Mutations
 ```
-inserted div0, span1
+INSERT div, span
 ```
 
-
-# Render "ASYNC"
+# Render ASYNC
 ```html
 <div>
   <!--Body Text-->
@@ -30,6 +29,6 @@ inserted div0, span1
 
 # Mutations
 ```
-div0/#text1: "‍" => "DIV"
-span1/#text1: "‍" => "SPAN"
+UPDATE div/#text "‍" => "DIV"
+UPDATE span/#text "‍" => "SPAN"
 ```

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <textarea>
   hello
@@ -9,14 +9,15 @@
 ```
 
 
-# Render 
+# Render
+```js
 const textarea = container.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
 textarea.dispatchEvent(new window.Event("input", {
   bubbles: true
-}))
-
+}));
+```
 ```html
 <textarea>
   w
@@ -27,14 +28,15 @@ textarea.dispatchEvent(new window.Event("input", {
 ```
 
 
-# Render 
+# Render
+```js
 const textarea = container.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
 textarea.dispatchEvent(new window.Event("input", {
   bubbles: true
-}))
-
+}));
+```
 ```html
 <textarea>
   wor
@@ -45,14 +47,15 @@ textarea.dispatchEvent(new window.Event("input", {
 ```
 
 
-# Render 
+# Render
+```js
 const textarea = container.querySelector("textarea");
 const window = textarea.ownerDocument.defaultView;
 textarea.value = value;
 textarea.dispatchEvent(new window.Event("input", {
   bubbles: true
-}))
-
+}));
+```
 ```html
 <textarea>
   world

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div
   id="ref"
@@ -8,7 +8,7 @@
 ```
 
 
-# Render "ASYNC"
+# Render ASYNC
 ```html
 <div
   id="ref"

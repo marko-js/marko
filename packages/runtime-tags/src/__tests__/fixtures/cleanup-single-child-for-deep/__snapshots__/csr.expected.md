@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   Toggle
@@ -69,13 +69,13 @@
 
 # Mutations
 ```
-inserted button0, div1, div2, div3, div4, #comment5
+INSERT button, div0, div1, div2, div3, #comment
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -124,18 +124,18 @@ destroyed 2.3
 
 # Mutations
 ```
-inserted #text
-removed #text in div1
-inserted #text
-removed #text in div1
-inserted #text
-removed #text in div1
-inserted #text
-removed div after div3
-removed #text in div1
-inserted #text
-removed div after div2/div2
-removed #text in div1
-inserted div1/#text0
-removed div after div3/div2
+INSERT #text
+REMOVE #text in div0
+INSERT #text
+REMOVE #text in div0
+INSERT #text
+REMOVE #text in div0
+INSERT #text
+REMOVE div after div2
+REMOVE #text in div0
+INSERT #text
+REMOVE div after div1/div2
+REMOVE #text in div0
+INSERT div0/#text
+REMOVE div after div2/div2
 ```

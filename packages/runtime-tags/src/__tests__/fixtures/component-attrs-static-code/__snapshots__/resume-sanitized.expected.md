@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   $0.00
@@ -9,9 +9,10 @@
 ```
 
 
-# Render 
-container.querySelectorAll("button").forEach(button => button.click())
-
+# Render
+```js
+container.querySelectorAll("button").forEach(button => button.click());
+```
 ```html
 <button>
   $1.00

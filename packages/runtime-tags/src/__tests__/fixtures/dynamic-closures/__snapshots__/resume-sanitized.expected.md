@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button />
 <div>
@@ -10,9 +10,10 @@
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button />
 <div>

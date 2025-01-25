@@ -1,8 +1,9 @@
 # Write
+```html
   <div><div>1</div><div>2</div><div>3</div></div><div><div>1</div><div>2</div><div>3</div><div></div></div>
+```
 
-
-# Render "End"
+# Render End
 ```html
 <html>
   <head />
@@ -36,22 +37,22 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/body1
-inserted #document/html0/body1/div0
-inserted #document/html0/body1/div0/div0
-inserted #document/html0/body1/div0/div0/#text0
-inserted #document/html0/body1/div0/div1
-inserted #document/html0/body1/div0/div1/#text0
-inserted #document/html0/body1/div0/div2
-inserted #document/html0/body1/div0/div2/#text0
-inserted #document/html0/body1/div1
-inserted #document/html0/body1/div1/div0
-inserted #document/html0/body1/div1/div0/#text0
-inserted #document/html0/body1/div1/div1
-inserted #document/html0/body1/div1/div1/#text0
-inserted #document/html0/body1/div1/div2
-inserted #document/html0/body1/div1/div2/#text0
-inserted #document/html0/body1/div1/div3
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/div0
+INSERT html/body/div0/div0
+INSERT html/body/div0/div0/#text
+INSERT html/body/div0/div1
+INSERT html/body/div0/div1/#text
+INSERT html/body/div0/div2
+INSERT html/body/div0/div2/#text
+INSERT html/body/div1
+INSERT html/body/div1/div0
+INSERT html/body/div1/div0/#text
+INSERT html/body/div1/div1
+INSERT html/body/div1/div1/#text
+INSERT html/body/div1/div2
+INSERT html/body/div1/div2/#text
+INSERT html/body/div1/div3
 ```

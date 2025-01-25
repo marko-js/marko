@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button />
 <span>
@@ -9,13 +9,13 @@
 
 # Mutations
 ```
-inserted button0, span1, #comment2
+INSERT button, span, #comment
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button />
 <!---->
@@ -23,6 +23,6 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #text1
-removed span after #text1
+INSERT #text
+REMOVE span after #text
 ```

@@ -1,13 +1,14 @@
-# Render {}
+# Render
 ```html
 Body Content
 <button />
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div>
   Body Content
@@ -16,9 +17,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 Body Content
 <button />

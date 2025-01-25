@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -20,15 +20,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <html>
   <head />
@@ -48,16 +44,16 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/div2
-removed #comment after #document/html0/body1/div2
-removed div after #document/html0/body1/div2
-#document/html0/body1/div2: attr(id) null => "dynamic"
+INSERT html/body/div
+REMOVE #comment after html/body/div
+REMOVE div after html/body/div
+UPDATE html/body/div[id] null => "dynamic"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -77,7 +73,7 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/div2
-removed div after #document/html0/body1/div2
-#document/html0/body1/div2/#text1: "" => "dynamic"
+INSERT html/body/div
+REMOVE div after html/body/div
+UPDATE html/body/div/#text1 "" => "dynamic"
 ```

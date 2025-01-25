@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -17,15 +17,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <html>
   <head />
@@ -45,7 +41,7 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-removed #document/html0/body1/#comment2 after #document/html0/body1/#comment3
-inserted #document/html0/body1/#comment2
-removed #text after #document/html0/body1/#comment2
+REMOVE html/body/#comment1 after html/body/#comment2
+INSERT html/body/#comment1
+REMOVE #text after html/body/#comment1
 ```

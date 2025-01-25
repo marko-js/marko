@@ -1,8 +1,9 @@
 # Write
+```html
   <input value=a checked type=checkbox><!--M_*1 #input/0--><input value=b checked type=checkbox><!--M_*2 #input/0--><input value=c type=checkbox><!--M_*3 #input/0--><span>a,b<!--M_*0 #text/3--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.i={0:_.a={"#childScope/0":_.b={"#input/0=":1,"#input/0:":_.c=["a","b"],input:_.d={checkedValue:_.c,value:"a"}},"#childScope/1":_.e={"#input/0=":1,"#input/0:":_.c,input:_.f={checkedValue:_.c,value:"b"}},"#childScope/2":_.g={"#input/0=":1,"#input/0:":_.c,input:_.h={checkedValue:_.c,value:"c"}}},1:_.b,2:_.e,3:_.g},_.b["#input/0;"]=_.d.checkedValueChange=_._["__tests__/template.marko_0/checkedValueChange"](_.a),_.e["#input/0;"]=_.f.checkedValueChange=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.g["#input/0;"]=_.h.checkedValueChange=_._["__tests__/template.marko_0/checkedValueChange_0"](_.a),_.i),1,"__tests__/tags/checkbox.marko_0_input",2,"__tests__/tags/checkbox.marko_0_input",3,"__tests__/tags/checkbox.marko_0_input",0];M._.w()</script>
+```
 
-
-# Render "End"
+# Render End
 ```html
 <html>
   <head />
@@ -37,18 +38,18 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/body1
-inserted #document/html0/body1/input0
-inserted #document/html0/body1/#comment1
-inserted #document/html0/body1/input2
-inserted #document/html0/body1/#comment3
-inserted #document/html0/body1/input4
-inserted #document/html0/body1/#comment5
-inserted #document/html0/body1/span6
-inserted #document/html0/body1/span6/#text0
-inserted #document/html0/body1/span6/#comment1
-inserted #document/html0/body1/script7
-inserted #document/html0/body1/script7/#text0
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/input0
+INSERT html/body/#comment0
+INSERT html/body/input1
+INSERT html/body/#comment1
+INSERT html/body/input2
+INSERT html/body/#comment2
+INSERT html/body/span
+INSERT html/body/span/#text
+INSERT html/body/span/#comment
+INSERT html/body/script
+INSERT html/body/script/#text
 ```

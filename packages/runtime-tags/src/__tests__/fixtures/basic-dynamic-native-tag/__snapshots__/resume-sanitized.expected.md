@@ -1,4 +1,5 @@
-# Render {"tagName":"h1"}
+# Render `{"tagName":"h1"}`
+
 ```html
 <h1
   class="a b"

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <!---->
 <select>
@@ -26,18 +26,18 @@
 
 # Mutations
 ```
-inserted #comment0, select1, span2
+INSERT #comment, select, span
 ```
 
-
-# Render 
+# Render
+```js
 const select = container.querySelector(`select`);
-  const window = select.ownerDocument.defaultView;
-  select.value = "c";
-  select.dispatchEvent(new window.Event("input", {
-bubbles: true
-  }))
-
+const window = select.ownerDocument.defaultView;
+select.value = "c";
+select.dispatchEvent(new window.Event("input", {
+  bubbles: true
+}));
+```
 ```html
 <!---->
 <select>
@@ -61,9 +61,4 @@ bubbles: true
 <span>
   b
 </span>
-```
-
-# Mutations
-```
-
 ```

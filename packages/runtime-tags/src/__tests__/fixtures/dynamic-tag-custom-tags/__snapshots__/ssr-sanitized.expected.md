@@ -1,4 +1,4 @@
-# Render "End"
+# Render End
 ```html
 <div>
   Child 1 has 3

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div>
   6

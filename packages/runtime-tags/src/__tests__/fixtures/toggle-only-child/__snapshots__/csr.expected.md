@@ -1,4 +1,5 @@
-# Render {"value":"Hello"}
+# Render `{"value":"Hello"}`
+
 ```html
 <div>
   <span>
@@ -9,23 +10,23 @@
 
 # Mutations
 ```
-inserted div0
+INSERT div
 ```
 
+# Render `{"value":false}`
 
-# Render {"value":false}
 ```html
 <div />
 ```
 
 # Mutations
 ```
-inserted div0/#text0
-removed span after div0/#text0
+INSERT div/#text
+REMOVE span after div/#text
 ```
 
+# Render `{"value":"World"}`
 
-# Render {"value":"World"}
 ```html
 <div>
   <span>
@@ -36,13 +37,13 @@ removed span after div0/#text0
 
 # Mutations
 ```
-inserted div0/span0
-removed #text after div0/span0
-div0/span0/#text0: " " => "World"
+INSERT div/span
+REMOVE #text after div/span
+UPDATE div/span/#text " " => "World"
 ```
 
+# Render `{"value":"!"}`
 
-# Render {"value":"!"}
 ```html
 <div>
   <span>
@@ -53,5 +54,5 @@ div0/span0/#text0: " " => "World"
 
 # Mutations
 ```
-div0/span0/#text0: "World" => "!"
+UPDATE div/span/#text "World" => "!"
 ```

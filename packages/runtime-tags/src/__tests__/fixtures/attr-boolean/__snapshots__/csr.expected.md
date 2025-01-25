@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 <input
   checked=""
@@ -7,5 +7,5 @@
 
 # Mutations
 ```
-inserted input0
+INSERT input
 ```

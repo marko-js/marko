@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button
   id="tags"
@@ -19,23 +19,23 @@
 
 # Mutations
 ```
-inserted #text0, #text1, #text2, button3, div4, #text5, #text6, #text7
-inserted div4/#text1
-inserted div4/#text4
-inserted div4/h12
-inserted div4/h12/#text0
-inserted div4/button3
-inserted div4/button3/#text0
-inserted div4/button3/#text1
-inserted div4/button3/#text2
-inserted div4/button3/#text3
-inserted div4/button3/#text4
+INSERT #text0, #text1, #text2, button, div, #text3, #text4, #text5
+INSERT div/#text1
+INSERT div/#text2
+INSERT div/h1
+INSERT div/h1/#text
+INSERT div/button
+INSERT div/button/#text0
+INSERT div/button/#text1
+INSERT div/button/#text2
+INSERT div/button/#text3
+INSERT div/button/#text4
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <button
   id="tags"
@@ -56,15 +56,15 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-button3/#text0: "0" => "1"
-div4/button3/#text2: "0" => "1"
-div4/button3/#text4: "0" => "1"
+UPDATE button/#text "0" => "1"
+UPDATE div/button/#text2 "0" => "1"
+UPDATE div/button/#text4 "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("#class").click()
-
+# Render
+```js
+container.querySelector("#class").click();
+```
 ```html
 <button
   id="tags"
@@ -85,30 +85,30 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-inserted div4/#text0
-inserted div4/#text5
-removed #text after div4/#text5
-removed #text after div4/#text5
-removed h1 after div4/#text5
-removed button after div4/#text5
-removed #text after div4/#text5
-removed #text after div4/#text5
-inserted div4/#text1
-inserted div4/#text4
-inserted div4/h12
-inserted div4/h12/#text0
-inserted div4/button3
-inserted div4/button3/#text0
-inserted div4/button3/#text1
-inserted div4/button3/#text2
-inserted div4/button3/#text3
-inserted div4/button3/#text4
+INSERT div/#text0
+INSERT div/#text3
+REMOVE #text after div/#text3
+REMOVE #text after div/#text3
+REMOVE h1 after div/#text3
+REMOVE button after div/#text3
+REMOVE #text after div/#text3
+REMOVE #text after div/#text3
+INSERT div/#text1
+INSERT div/#text2
+INSERT div/h1
+INSERT div/h1/#text
+INSERT div/button
+INSERT div/button/#text0
+INSERT div/button/#text1
+INSERT div/button/#text2
+INSERT div/button/#text3
+INSERT div/button/#text4
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <button
   id="tags"
@@ -129,15 +129,15 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-button3/#text0: "1" => "2"
-div4/button3/#text2: "1" => "2"
-div4/button3/#text4: "2" => "4"
+UPDATE button/#text "1" => "2"
+UPDATE div/button/#text2 "1" => "2"
+UPDATE div/button/#text4 "2" => "4"
 ```
 
-
-# Render 
-container.querySelector("#class").click()
-
+# Render
+```js
+container.querySelector("#class").click();
+```
 ```html
 <button
   id="tags"
@@ -158,30 +158,30 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-inserted div4/#text0
-inserted div4/#text5
-removed #text after div4/#text5
-removed #text after div4/#text5
-removed h1 after div4/#text5
-removed button after div4/#text5
-removed #text after div4/#text5
-removed #text after div4/#text5
-inserted div4/#text1
-inserted div4/#text4
-inserted div4/h12
-inserted div4/h12/#text0
-inserted div4/button3
-inserted div4/button3/#text0
-inserted div4/button3/#text1
-inserted div4/button3/#text2
-inserted div4/button3/#text3
-inserted div4/button3/#text4
+INSERT div/#text0
+INSERT div/#text3
+REMOVE #text after div/#text3
+REMOVE #text after div/#text3
+REMOVE h1 after div/#text3
+REMOVE button after div/#text3
+REMOVE #text after div/#text3
+REMOVE #text after div/#text3
+INSERT div/#text1
+INSERT div/#text2
+INSERT div/h1
+INSERT div/h1/#text
+INSERT div/button
+INSERT div/button/#text0
+INSERT div/button/#text1
+INSERT div/button/#text2
+INSERT div/button/#text3
+INSERT div/button/#text4
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <button
   id="tags"
@@ -202,7 +202,7 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-button3/#text0: "2" => "3"
-div4/button3/#text2: "2" => "3"
-div4/button3/#text4: "6" => "9"
+UPDATE button/#text "2" => "3"
+UPDATE div/button/#text2 "2" => "3"
+UPDATE div/button/#text4 "6" => "9"
 ```

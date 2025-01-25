@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 <html>
   <head />
@@ -552,9 +552,4 @@
     HelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHello
   </body>
 </html>
-```
-
-# Mutations
-```
-
 ```

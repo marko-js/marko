@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button
   class="inc-child"
@@ -19,13 +19,13 @@
 
 # Mutations
 ```
-inserted button0, button1, button2
+INSERT button0, button1, button2
 ```
 
-
-# Render 
-container.querySelector("button.inc-child").click()
-
+# Render
+```js
+container.querySelector("button.inc-child").click();
+```
 ```html
 <button
   class="inc-child"
@@ -46,14 +46,14 @@ container.querySelector("button.inc-child").click()
 
 # Mutations
 ```
-button0/#text0: "1" => "2"
-button1/#text0: "1" => "2"
+UPDATE button0/#text "1" => "2"
+UPDATE button1/#text "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("button.inc-parent").click()
-
+# Render
+```js
+container.querySelector("button.inc-parent").click();
+```
 ```html
 <button
   class="inc-child"
@@ -74,14 +74,14 @@ container.querySelector("button.inc-parent").click()
 
 # Mutations
 ```
-button0/#text0: "2" => "3"
-button1/#text0: "2" => "3"
+UPDATE button0/#text "2" => "3"
+UPDATE button1/#text "2" => "3"
 ```
 
-
-# Render 
-container.querySelector("button.reset").click()
-
+# Render
+```js
+container.querySelector("button.reset").click();
+```
 ```html
 <button
   class="inc-child"
@@ -102,6 +102,6 @@ container.querySelector("button.reset").click()
 
 # Mutations
 ```
-button0/#text0: "3" => "0"
-button1/#text0: "3" => "0"
+UPDATE button0/#text "3" => "0"
+UPDATE button1/#text "3" => "0"
 ```

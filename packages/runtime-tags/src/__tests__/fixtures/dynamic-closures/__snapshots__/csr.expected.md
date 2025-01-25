@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button />
 <div>
@@ -13,13 +13,13 @@
 
 # Mutations
 ```
-inserted button0, div1, div2
+INSERT button, div0, div1
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button />
 <div>
@@ -34,6 +34,6 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-div1/#text4: "3" => "4"
-div2/#text5: "3" => "4"
+UPDATE div0/#text4 "3" => "4"
+UPDATE div1/#text4 "3" => "4"
 ```

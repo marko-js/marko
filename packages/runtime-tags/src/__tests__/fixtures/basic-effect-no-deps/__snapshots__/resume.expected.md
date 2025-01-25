@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 <html>
   <head>
@@ -14,5 +14,5 @@
 
 # Mutations
 ```
-#document/html0/body1: attr(class) null => "no-deps"
+UPDATE html/body[class] null => "no-deps"
 ```

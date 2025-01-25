@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   Toggle
@@ -21,14 +21,14 @@ mounted
 
 # Mutations
 ```
-inserted button0, pre1, div2, span3, p4, #comment5
-inserted pre1/#text0
+INSERT button, pre, div, span, p, #comment
+INSERT pre/#text
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -43,18 +43,18 @@ destroyed
 
 # Mutations
 ```
-inserted #text2
-removed #text in pre1
-inserted pre1/#text0
-removed div after #text2
-removed span after #text2
-removed p after #text2
+INSERT #text
+REMOVE #text in pre
+INSERT pre/#text
+REMOVE div after #text
+REMOVE span after #text
+REMOVE p after #text
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -79,18 +79,18 @@ mounted
 
 # Mutations
 ```
-inserted div2
-inserted span3
-inserted p4
-removed #text after p4
-removed #text in pre1
-inserted pre1/#text0
+INSERT div
+INSERT span
+INSERT p
+REMOVE #text after p
+REMOVE #text in pre
+INSERT pre/#text
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -107,10 +107,10 @@ destroyed
 
 # Mutations
 ```
-inserted #text2
-removed #text in pre1
-inserted pre1/#text0
-removed div after #text2
-removed span after #text2
-removed p after #text2
+INSERT #text
+REMOVE #text in pre
+INSERT pre/#text
+REMOVE div after #text
+REMOVE span after #text
+REMOVE p after #text
 ```

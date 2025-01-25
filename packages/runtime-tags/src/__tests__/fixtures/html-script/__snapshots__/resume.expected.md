@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head>
@@ -22,15 +22,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("script").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("script").click()
-
 ```html
 <html>
   <head>
@@ -56,14 +52,14 @@ container.querySelector("script").click()
 
 # Mutations
 ```
-removed #text in #document/html0/head0/script0
-inserted #document/html0/head0/script0/#text0
+REMOVE #text in html/head/script0
+INSERT html/head/script0/#text
 ```
 
-
-# Render 
-container.querySelector("script").click()
-
+# Render
+```js
+container.querySelector("script").click();
+```
 ```html
 <html>
   <head>
@@ -89,14 +85,14 @@ container.querySelector("script").click()
 
 # Mutations
 ```
-removed #text in #document/html0/head0/script0
-inserted #document/html0/head0/script0/#text0
+REMOVE #text in html/head/script0
+INSERT html/head/script0/#text
 ```
 
-
-# Render 
-container.querySelector("script").click()
-
+# Render
+```js
+container.querySelector("script").click();
+```
 ```html
 <html>
   <head>
@@ -122,6 +118,6 @@ container.querySelector("script").click()
 
 # Mutations
 ```
-removed #text in #document/html0/head0/script0
-inserted #document/html0/head0/script0/#text0
+REMOVE #text in html/head/script0
+INSERT html/head/script0/#text
 ```

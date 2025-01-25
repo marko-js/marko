@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <!---->
 <p
@@ -11,13 +11,13 @@
 
 # Mutations
 ```
-inserted #comment0, p1, button2
+INSERT #comment, p, button
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <!---->
 <p
@@ -30,13 +30,13 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-p1: attr(class) "A" => "B"
+UPDATE p[class] "A" => "B"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <!---->
 <p
@@ -49,5 +49,5 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-p1: attr(class) "B" => "A"
+UPDATE p[class] "B" => "A"
 ```

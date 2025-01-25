@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div
   id="ref"
@@ -18,9 +18,10 @@
 ```
 
 
-# Render 
-container.querySelector("#increment")?.click()
-
+# Render
+```js
+container.querySelector("#increment")?.click();
+```
 ```html
 <div
   id="ref"
@@ -40,9 +41,10 @@ container.querySelector("#increment")?.click()
 ```
 
 
-# Render 
-container.querySelector("#toggle")?.click()
-
+# Render
+```js
+container.querySelector("#toggle")?.click();
+```
 ```html
 <div
   id="ref"
@@ -62,9 +64,10 @@ container.querySelector("#toggle")?.click()
 ```
 
 
-# Render 
-container.querySelector("#increment")?.click()
-
+# Render
+```js
+container.querySelector("#increment")?.click();
+```
 ```html
 <div
   id="ref"
@@ -84,9 +87,10 @@ container.querySelector("#increment")?.click()
 ```
 
 
-# Render 
-container.querySelector("#toggle")?.click()
-
+# Render
+```js
+container.querySelector("#toggle")?.click();
+```
 ```html
 <div
   id="ref"

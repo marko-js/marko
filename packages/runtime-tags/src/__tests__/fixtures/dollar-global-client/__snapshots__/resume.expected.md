@@ -1,4 +1,5 @@
-# Render {"$global":{"x":1,"serializedGlobals":["x"]}}
+# Render `{"$global":{"x":1,"serializedGlobals":["x"]}}`
+
 ```html
 <html>
   <head />
@@ -23,15 +24,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <html>
   <head />
@@ -55,18 +52,18 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/div0/span0
-removed #comment after #document/html0/body1/div0/span0
-removed #document/html0/body1/div0/#comment1 after span
-inserted #document/html0/body1/div0/#comment1
-removed span after #document/html0/body1/div0/#comment1
-#document/html0/body1/div0/span0/#text0: " " => "1"
+INSERT html/body/div/span
+REMOVE #comment after html/body/div/span
+REMOVE html/body/div/#comment0 after span
+INSERT html/body/div/#comment0
+REMOVE span after html/body/div/#comment0
+UPDATE html/body/div/span/#text " " => "1"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -92,17 +89,17 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/div0/#comment0
-removed span after #document/html0/body1/div0/#comment0
-inserted #document/html0/body1/div0/span1
-removed #comment after #document/html0/body1/div0/span1
-#document/html0/body1/div0/span1/#text0: " " => "1"
+INSERT html/body/div/#comment0
+REMOVE span after html/body/div/#comment0
+INSERT html/body/div/span
+REMOVE #comment after html/body/div/span
+UPDATE html/body/div/span/#text " " => "1"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -126,9 +123,9 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/div0/span0
-removed #comment after #document/html0/body1/div0/span0
-inserted #document/html0/body1/div0/#comment1
-removed span after #document/html0/body1/div0/#comment1
-#document/html0/body1/div0/span0/#text0: " " => "1"
+INSERT html/body/div/span
+REMOVE #comment after html/body/div/span
+INSERT html/body/div/#comment0
+REMOVE span after html/body/div/#comment0
+UPDATE html/body/div/span/#text " " => "1"
 ```

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -13,15 +13,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <html>
   <head />
@@ -38,14 +34,14 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/#text2
-removed #comment after #document/html0/body1/#text2
+INSERT html/body/#text
+REMOVE #comment after html/body/#text
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -62,14 +58,14 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/#comment2
-removed #text after #document/html0/body1/#comment2
+INSERT html/body/#comment1
+REMOVE #text after html/body/#comment1
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -86,6 +82,6 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/#text2
-removed #comment after #document/html0/body1/#text2
+INSERT html/body/#text
+REMOVE #comment after html/body/#text
 ```

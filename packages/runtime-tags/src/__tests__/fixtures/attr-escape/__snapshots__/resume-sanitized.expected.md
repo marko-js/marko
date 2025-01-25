@@ -1,4 +1,5 @@
-# Render {"foo":"c","bar":"d"}
+# Render `{"foo":"c","bar":"d"}`
+
 ```html
 <div
   bar="a d b"
