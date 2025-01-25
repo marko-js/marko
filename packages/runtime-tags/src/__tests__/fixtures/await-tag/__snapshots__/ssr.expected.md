@@ -7,7 +7,7 @@
 
 
 # Write
-  Got: b <!>0<!--M_*3 #text/1-->Got: c <!>0<!--M_*2 #text/1--><button>Inc</button><!--M_*0 #button/0--></div><script>M._.r.push(_=>(_.d={3:{_:_.a}}),3,"__tests__/template.marko_2_count/subscriber"2,"__tests__/template.marko_3_count/subscriber",0,"__tests__/template.marko_0_count",0);M._.w()</script>
+  Got: b <!>0<!--M_*3 #text/1-->Got: c <!>0<!--M_*2 #text/1--><button>Inc</button><!--M_*0 #button/0--></div><script>M._.r.push(_=>(_.d={3:{_:_.a}}),3,"__tests__/template.marko_2_count/subscriber",2,"__tests__/template.marko_3_count/subscriber",0,"__tests__/template.marko_0_count",0);M._.w()</script>
 
 
 # Render "End"
@@ -40,7 +40,7 @@
       <!--M_*0 #button/0-->
     </div>
     <script>
-      M._.r.push(_=&gt;(_.d={3:{_:_.a}}),3,"__tests__/template.marko_2_count/subscriber"2,"__tests__/template.marko_3_count/subscriber",0,"__tests__/template.marko_0_count",0);M._.w()
+      M._.r.push(_=&gt;(_.d={3:{_:_.a}}),3,"__tests__/template.marko_2_count/subscriber",2,"__tests__/template.marko_3_count/subscriber",0,"__tests__/template.marko_0_count",0);M._.w()
     </script>
   </body>
 </html>

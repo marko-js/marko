@@ -701,7 +701,7 @@ export class Chunk {
       do {
         cur.flushPlaceholder();
         html += cur.html;
-        effects += cur.effects;
+        effects = concatEffects(effects, cur.effects);
         scripts = concatScripts(scripts, cur.scripts);
         cur.consumed = true;
         cur = cur.next;
