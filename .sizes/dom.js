@@ -1,4 +1,4 @@
-// size: 17899 (min) 6554 (brotli)
+// size: 17895 (min) 6539 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -50,7 +50,7 @@ function triggerMacroTask() {
 }
 var pendingScopes = [];
 function createScope($global) {
-  let scope = { h: 1, $global: $global };
+  let scope = { g: 1, $global: $global };
   return pendingScopes.push(scope), scope;
 }
 var emptyScope = createScope({});
@@ -59,7 +59,7 @@ function getEmptyScope(marker) {
 }
 function destroyBranch(branch) {
   if (((branch.y = 1), branch.m?.forEach(destroyBranch), branch.n))
-    for (let scope of branch.n) for (let id in scope.j) scope.j[id]?.abort();
+    for (let scope of branch.n) for (let id in scope.h) scope.h[id]?.abort();
 }
 function removeAndDestroyBranch(branch) {
   destroyBranch(branch);
@@ -209,17 +209,17 @@ var registeredValues = {},
           if ("*" === token) scope[data3] = visit.previousSibling;
           else if ("$" === token) closestBranchMarkers.set(scopeId, visit);
           else if ("[" === token)
-            this.g &&
-              (dataIndex && branchEnd(this.g, visit, visit),
-              this.o.push(this.g)),
-              (this.g = scopeId),
+            this.f &&
+              (dataIndex && branchEnd(this.f, visit, visit),
+              this.o.push(this.f)),
+              (this.f = scopeId),
               (scope.a = visit);
           else if ("]" === token) {
             scope[data3] = visit;
             let curParent = visit.parentNode,
-              startNode = branchEnd(this.g, visit, visit).a;
+              startNode = branchEnd(this.f, visit, visit).a;
             curParent !== startNode.parentNode && curParent.prepend(startNode),
-              (this.g = this.o.pop());
+              (this.f = this.o.pop());
           } else if ("|" === token) {
             let next = data3.indexOf(" "),
               curNode = (scope[~next ? data3.slice(0, next) : data3] = visit);
@@ -915,7 +915,7 @@ function createRendererWithOwner(template, rawWalks, setup, getArgs) {
     id = {},
     walks = rawWalks ? trimWalkString(rawWalks) : " ";
   return (owner) => ({
-    k: id,
+    j: id,
     F: template,
     E: walks,
     x: setup,
@@ -1229,7 +1229,7 @@ function byFirstArg(name) {
   return name;
 }
 function isDifferentRenderer(a, b) {
-  return a !== b && (a?.k || 0) !== b?.k;
+  return a !== b && (a?.j || 0) !== b?.j;
 }
 var MARK = {},
   CLEAN = {},
@@ -1320,7 +1320,7 @@ function loopClosure(ownerLoopNodeAccessor, fn, getIntersection) {
         [];
       if (loopScopes !== emptyMarkerArray)
         for (let scope of loopScopes)
-          scope.h || queueSource(scope, signal, value2);
+          scope.g || queueSource(scope, signal, value2);
     };
   return (helperSignal._ = signal), helperSignal;
 }
@@ -1336,8 +1336,8 @@ function conditionalClosure(
     helperSignal = (scope, value2) => {
       let conditionalScope = scope[scopeAccessor];
       conditionalScope &&
-        !conditionalScope.h &&
-        scope[rendererAccessor]?.k === getRenderer().k &&
+        !conditionalScope.g &&
+        scope[rendererAccessor]?.j === getRenderer().j &&
         queueSource(conditionalScope, signal, value2);
     };
   return (helperSignal._ = signal), helperSignal;
@@ -1355,7 +1355,7 @@ function dynamicClosure(
       let subscribers = ownerScope[ownerSubscribersAccessor];
       if (subscribers)
         for (let subscriber of subscribers)
-          subscriber.h || queueSource(subscriber, _signal, value2);
+          subscriber.g || queueSource(subscriber, _signal, value2);
     },
     subscribe = (scope) => {
       (getOwnerScope(scope)[ownerSubscribersAccessor] ||= new Set()).add(scope),
@@ -1405,7 +1405,7 @@ function effect(id, fn) {
     }
   );
 }
-var pendingSignal,
+var pendingRender,
   pendingEffects = [],
   rendering = !1;
 function queueSource(scope, signal, value2) {
@@ -1420,22 +1420,21 @@ function queueSource(scope, signal, value2) {
   );
 }
 function queueRender(scope, signal, value2) {
-  let nextSignal = { f: scope, H: signal, I: value2, d: void 0 };
-  if (pendingSignal)
-    if (sortScopeByDOMPosition(pendingSignal.f, nextSignal.f) < 0)
-      (nextSignal.d = pendingSignal), (pendingSignal = nextSignal);
+  let nextRender = { k: scope, H: signal, I: value2, d: void 0 };
+  if (pendingRender)
+    if (comparePendingRenders(pendingRender, nextRender) < 0)
+      (nextRender.d = pendingRender), (pendingRender = nextRender);
     else {
-      let currentSignal = pendingSignal;
+      let curRender = pendingRender;
       for (
         ;
-        currentSignal.d &&
-        sortScopeByDOMPosition(currentSignal.d.f, nextSignal.f) >= 0;
+        curRender.d && comparePendingRenders(curRender.d, nextRender) >= 0;
 
       )
-        currentSignal = currentSignal.d;
-      (nextSignal.d = currentSignal.d), (currentSignal.d = nextSignal);
+        curRender = curRender.d;
+      (nextRender.d = curRender.d), (curRender.d = nextRender);
     }
-  else pendingSignal = nextSignal;
+  else pendingRender = nextRender;
 }
 function queueEffect(scope, fn) {
   pendingEffects.push(scope, fn);
@@ -1443,21 +1442,22 @@ function queueEffect(scope, fn) {
 function run() {
   let effects = pendingEffects;
   try {
-    (rendering = !0), runSignals();
+    (rendering = !0), runRenders();
   } finally {
-    (pendingSignal = void 0), (rendering = !1);
+    (pendingRender = void 0), (rendering = !1);
   }
   (pendingEffects = []), runEffects(effects);
 }
 function prepareEffects(fn) {
-  let prevSignals = pendingSignal,
+  let prevRender = pendingRender,
     prevEffects = pendingEffects,
     preparedEffects = (pendingEffects = []);
+  pendingRender = void 0;
   try {
-    (rendering = !0), (pendingSignal = void 0), fn(), runSignals();
+    (rendering = !0), fn(), runRenders();
   } finally {
     (rendering = !1),
-      (pendingSignal = prevSignals),
+      (pendingRender = prevRender),
       (pendingEffects = prevEffects);
   }
   return preparedEffects;
@@ -1468,18 +1468,18 @@ function runEffects(effects = pendingEffects) {
     (0, effects[i + 1])(scope, scope);
   }
 }
-function runSignals() {
-  for (; pendingSignal; )
-    pendingSignal.f.b?.y || pendingSignal.H(pendingSignal.f, pendingSignal.I),
-      (pendingSignal = pendingSignal.d);
+function runRenders() {
+  for (; pendingRender; )
+    pendingRender.k.b?.y || pendingRender.H(pendingRender.k, pendingRender.I),
+      (pendingRender = pendingRender.d);
   !(function () {
-    for (let scope of pendingScopes) scope.h = 0;
+    for (let scope of pendingScopes) scope.g = 0;
     pendingScopes = [];
   })();
 }
-function sortScopeByDOMPosition(a, b) {
-  let aStart = ownerStartNode(a),
-    bStart = ownerStartNode(b);
+function comparePendingRenders(a, b) {
+  let aStart = ownerStartNode(a.k),
+    bStart = ownerStartNode(b.k);
   return aStart === bStart
     ? 0
     : aStart
@@ -1494,13 +1494,13 @@ function ownerStartNode(scope) {
   return (scope.b || scope).a;
 }
 function resetAbortSignal(scope, id) {
-  let ctrl = scope.j?.[id];
-  ctrl && (queueEffect(ctrl, abort), (scope.j[id] = void 0));
+  let ctrl = scope.h?.[id];
+  ctrl && (queueEffect(ctrl, abort), (scope.h[id] = void 0));
 }
 function getAbortSignal(scope, id) {
   return (
     scope.b && (scope.b.n ||= new Set()).add(scope),
-    ((scope.j ||= {})[id] ||= new AbortController()).signal
+    ((scope.h ||= {})[id] ||= new AbortController()).signal
   );
 }
 function abort(ctrl) {
