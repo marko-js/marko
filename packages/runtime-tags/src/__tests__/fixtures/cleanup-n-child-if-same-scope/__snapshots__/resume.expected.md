@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -32,13 +32,13 @@ mounted
 
 # Mutations
 ```
-inserted #document/html0/body1/pre2/#text0
+INSERT html/body/pre/#text
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -63,20 +63,20 @@ destroyed
 
 # Mutations
 ```
-removed #document/html0/body1/#comment4 after p
-inserted #document/html0/body1/#comment4
-removed #text in #document/html0/body1/pre2
-inserted #document/html0/body1/pre2/#text0
-removed #comment after #document/html0/body1/#comment4
-removed div after #document/html0/body1/#comment4
-removed span after #document/html0/body1/#comment4
-removed p after #document/html0/body1/#comment4
+REMOVE html/body/#comment2 after p
+INSERT html/body/#comment2
+REMOVE #text in html/body/pre
+INSERT html/body/pre/#text
+REMOVE #comment after html/body/#comment2
+REMOVE div after html/body/#comment2
+REMOVE span after html/body/#comment2
+REMOVE p after html/body/#comment2
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -110,18 +110,18 @@ mounted
 
 # Mutations
 ```
-inserted #document/html0/body1/div4
-inserted #document/html0/body1/span5
-inserted #document/html0/body1/p6
-removed #comment after #document/html0/body1/p6
-removed #text in #document/html0/body1/pre2
-inserted #document/html0/body1/pre2/#text0
+INSERT html/body/div
+INSERT html/body/span
+INSERT html/body/p
+REMOVE #comment after html/body/p
+REMOVE #text in html/body/pre
+INSERT html/body/pre/#text
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -148,10 +148,10 @@ destroyed
 
 # Mutations
 ```
-inserted #document/html0/body1/#comment4
-removed #text in #document/html0/body1/pre2
-inserted #document/html0/body1/pre2/#text0
-removed div after #document/html0/body1/#comment4
-removed span after #document/html0/body1/#comment4
-removed p after #document/html0/body1/#comment4
+INSERT html/body/#comment2
+REMOVE #text in html/body/pre
+INSERT html/body/pre/#text
+REMOVE div after html/body/#comment2
+REMOVE span after html/body/#comment2
+REMOVE p after html/body/#comment2
 ```

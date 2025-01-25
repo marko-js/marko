@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <section>
   <span>

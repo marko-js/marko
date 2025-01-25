@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <style>
   
@@ -11,13 +11,13 @@
 
 # Mutations
 ```
-inserted style0
+INSERT style
 ```
 
-
-# Render 
-container.querySelector("style").click()
-
+# Render
+```js
+container.querySelector("style").click();
+```
 ```html
 <style>
   
@@ -30,14 +30,14 @@ container.querySelector("style").click()
 
 # Mutations
 ```
-removed #text in style0
-inserted style0/#text0
+REMOVE #text in style
+INSERT style/#text
 ```
 
-
-# Render 
-container.querySelector("style").click()
-
+# Render
+```js
+container.querySelector("style").click();
+```
 ```html
 <style>
   
@@ -50,14 +50,14 @@ container.querySelector("style").click()
 
 # Mutations
 ```
-removed #text in style0
-inserted style0/#text0
+REMOVE #text in style
+INSERT style/#text
 ```
 
-
-# Render 
-container.querySelector("style").click()
-
+# Render
+```js
+container.querySelector("style").click();
+```
 ```html
 <style>
   
@@ -70,6 +70,6 @@ container.querySelector("style").click()
 
 # Mutations
 ```
-removed #text in style0
-inserted style0/#text0
+REMOVE #text in style
+INSERT style/#text
 ```

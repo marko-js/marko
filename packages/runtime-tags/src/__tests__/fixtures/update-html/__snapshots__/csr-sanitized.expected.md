@@ -1,4 +1,5 @@
-# Render {"value":"Hello <strong>World</strong>"}
+# Render `{"value":"Hello <strong>World</strong>"}`
+
 ```html
 <em>
   Testing
@@ -10,7 +11,8 @@ Hello
 ```
 
 
-# Render {"value":"Some content"}
+# Render `{"value":"Some content"}`
+
 ```html
 <em>
   Testing
@@ -19,7 +21,8 @@ Some content
 ```
 
 
-# Render {"value":"<div/>"}
+# Render `{"value":"<div/>"}`
+
 ```html
 <em>
   Testing

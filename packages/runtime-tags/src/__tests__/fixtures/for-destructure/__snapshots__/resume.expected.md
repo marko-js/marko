@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -33,15 +33,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("#add").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("#add").click()
-
 ```html
 <html>
   <head />
@@ -81,13 +77,13 @@ container.querySelector("#add").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/div0/div1
+INSERT html/body/div/div1
 ```
 
-
-# Render 
-container.querySelector("#remove").click()
-
+# Render
+```js
+container.querySelector("#remove").click();
+```
 ```html
 <html>
   <head />
@@ -124,13 +120,13 @@ container.querySelector("#remove").click()
 
 # Mutations
 ```
-removed div after #document/html0/body1/div0/div0
+REMOVE div after html/body/div/div
 ```
 
-
-# Render 
-container.querySelector("#remove").click()
-
+# Render
+```js
+container.querySelector("#remove").click();
+```
 ```html
 <html>
   <head />
@@ -159,15 +155,15 @@ container.querySelector("#remove").click()
 
 # Mutations
 ```
-removed #document/html0/body1/div0/#comment0 after div
-inserted #document/html0/body1/div0/#comment0
-removed div before #document/html0/body1/div0/#comment0
+REMOVE html/body/div/#comment0 after div
+INSERT html/body/div/#comment0
+REMOVE div before html/body/div/#comment0
 ```
 
-
-# Render 
-container.querySelector("#add").click()
-
+# Render
+```js
+container.querySelector("#add").click();
+```
 ```html
 <html>
   <head />
@@ -198,6 +194,6 @@ container.querySelector("#add").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/div0/div0
-removed #comment before #document/html0/body1/div0/div0
+INSERT html/body/div/div
+REMOVE #comment before html/body/div/div
 ```

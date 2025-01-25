@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   hide
@@ -7,9 +7,10 @@ hi
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   hide

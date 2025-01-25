@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <!---->
 <button>
@@ -9,13 +9,13 @@
 
 # Mutations
 ```
-inserted #comment0, button1, #comment2
+INSERT #comment0, button, #comment1
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <!---->
 <button>
@@ -29,13 +29,13 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted button2
+INSERT button1
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <!---->
 <button>
@@ -52,13 +52,13 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted button3
+INSERT button2
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <!---->
 <button>
@@ -78,13 +78,13 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted button4
+INSERT button3
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <!---->
 <button>
@@ -107,13 +107,13 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted button5
+INSERT button4
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <!---->
 <button>
@@ -139,5 +139,5 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted button6
+INSERT button5
 ```

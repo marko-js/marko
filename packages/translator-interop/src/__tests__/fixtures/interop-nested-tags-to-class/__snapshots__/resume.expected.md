@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -28,24 +28,24 @@
 
 # Mutations
 ```
-inserted #document/html0/body1/#text1
-inserted #document/html0/body1/#text4
-removed #comment after #document/html0/body1/#comment0
-removed #comment after #document/html0/body1/#text4
-inserted #document/html0/body1/div3/#text0
-inserted #document/html0/body1/div3/#text5
-inserted #document/html0/body1/div3/#text1
-inserted #document/html0/body1/div3/#text4
-removed #comment after #document/html0/body1/div3/#text1
-removed #comment after #document/html0/body1/div3/#comment3
-removed #document/html0/body1/div3/#text5 after #document/html0/body1/div3/#text4
-inserted #document/html0/body1/div3/#text5
+INSERT html/body/#text0
+INSERT html/body/#text1
+REMOVE #comment after html/body/#comment0
+REMOVE #comment after html/body/#text1
+INSERT html/body/div/#text0
+INSERT html/body/div/#text3
+INSERT html/body/div/#text1
+INSERT html/body/div/#text2
+REMOVE #comment after html/body/div/#text1
+REMOVE #comment after html/body/div/#comment
+REMOVE html/body/div/#text3 after html/body/div/#text2
+INSERT html/body/div/#text3
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <html>
   <head />
@@ -75,13 +75,13 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-#document/html0/body1/div3/button2/#text0: "0" => "1"
+UPDATE html/body/div/button/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("#class").click()
-
+# Render
+```js
+container.querySelector("#class").click();
+```
 ```html
 <html>
   <head />
@@ -111,13 +111,13 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-#document/html0/body1/button2/#text0: "0" => "1"
+UPDATE html/body/button/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <html>
   <head />
@@ -147,13 +147,13 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-#document/html0/body1/div3/button2/#text0: "1" => "2"
+UPDATE html/body/div/button/#text "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("#class").click()
-
+# Render
+```js
+container.querySelector("#class").click();
+```
 ```html
 <html>
   <head />
@@ -183,13 +183,13 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-#document/html0/body1/button2/#text0: "1" => "2"
+UPDATE html/body/button/#text "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <html>
   <head />
@@ -219,5 +219,5 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-#document/html0/body1/div3/button2/#text0: "2" => "3"
+UPDATE html/body/div/button/#text "2" => "3"
 ```

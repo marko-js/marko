@@ -1,4 +1,4 @@
-# Render "End"
+# Render End
 ```html
 <h1>
   Hello World

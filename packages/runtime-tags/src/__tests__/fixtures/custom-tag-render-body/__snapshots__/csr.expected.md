@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 WorldThis is the body content
 <!---->
@@ -7,5 +7,5 @@ WorldThis is the body content
 
 # Mutations
 ```
-inserted #text0, #text1, #comment2, #comment3
+INSERT #text0, #text1, #comment0, #comment1
 ```

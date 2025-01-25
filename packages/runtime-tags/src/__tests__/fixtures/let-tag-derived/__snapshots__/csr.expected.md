@@ -1,4 +1,5 @@
-# Render {"a":2}
+# Render `{"a":2}`
+
 ```html
 <button>
   Increment
@@ -8,13 +9,13 @@
 
 # Mutations
 ```
-inserted button0, #text1, #text2, #text3
+INSERT button, #text0, #text1, #text2
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Increment
@@ -24,11 +25,11 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#text3: "4" => "5"
+UPDATE #text2 "4" => "5"
 ```
 
+# Render `{"a":3}`
 
-# Render {"a":3}
 ```html
 <button>
   Increment
@@ -38,13 +39,13 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#text1: "2" => "3"
+UPDATE #text0 "2" => "3"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Increment
@@ -54,5 +55,5 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#text3: "5" => "6"
+UPDATE #text2 "5" => "6"
 ```

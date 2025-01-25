@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div>
   ‍
@@ -7,11 +7,10 @@
 
 # Mutations
 ```
-inserted div0
+INSERT div
 ```
 
-
-# Render "ASYNC"
+# Render ASYNC
 ```html
 <div>
   Client Only
@@ -20,5 +19,5 @@ inserted div0
 
 # Mutations
 ```
-div0/#text0: "‍" => "Client Only"
+UPDATE div/#text "‍" => "Client Only"
 ```

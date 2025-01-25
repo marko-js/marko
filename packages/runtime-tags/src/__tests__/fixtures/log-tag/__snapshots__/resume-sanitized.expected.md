@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 {"identifier":true,"tag var":true,"static var":true}
 ```

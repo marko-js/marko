@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <span>
   1
@@ -10,11 +10,10 @@
 
 # Mutations
 ```
-inserted span0, span1
+INSERT span0, span1
 ```
 
-
-# Render "ASYNC"
+# Render ASYNC
 ```html
 <span>
   2
@@ -26,12 +25,11 @@ inserted span0, span1
 
 # Mutations
 ```
-span1/#text0: "0" => "1"
-span0/#text0: "1" => "2"
+UPDATE span1/#text "0" => "1"
+UPDATE span0/#text "1" => "2"
 ```
 
-
-# Render "ASYNC"
+# Render ASYNC
 ```html
 <span>
   2
@@ -43,5 +41,5 @@ span0/#text0: "1" => "2"
 
 # Mutations
 ```
-span1/#text0: "1" => "2"
+UPDATE span1/#text "1" => "2"
 ```

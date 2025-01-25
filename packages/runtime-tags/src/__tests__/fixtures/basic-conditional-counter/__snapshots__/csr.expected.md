@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button
   class="inc"
@@ -14,13 +14,13 @@
 
 # Mutations
 ```
-inserted button0, button1, span2, #comment3
+INSERT button0, button1, span, #comment
 ```
 
-
-# Render 
-container.querySelector("button.inc").click()
-
+# Render
+```js
+container.querySelector("button.inc").click();
+```
 ```html
 <button
   class="inc"
@@ -36,13 +36,13 @@ container.querySelector("button.inc").click()
 
 # Mutations
 ```
-span2/#text0: "0" => "1"
+UPDATE span/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("button.toggle").click()
-
+# Render
+```js
+container.querySelector("button.toggle").click();
+```
 ```html
 <button
   class="inc"
@@ -55,14 +55,14 @@ container.querySelector("button.toggle").click()
 
 # Mutations
 ```
-inserted #text2
-removed span after #text2
+INSERT #text
+REMOVE span after #text
 ```
 
-
-# Render 
-container.querySelector("button.inc").click()
-
+# Render
+```js
+container.querySelector("button.inc").click();
+```
 ```html
 <button
   class="inc"
@@ -73,15 +73,11 @@ container.querySelector("button.inc").click()
 <!---->
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button.toggle").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button.toggle").click()
-
 ```html
 <button
   class="inc"
@@ -97,15 +93,15 @@ container.querySelector("button.toggle").click()
 
 # Mutations
 ```
-inserted span2
-removed #text after span2
-span2/#text0: " " => "2"
+INSERT span
+REMOVE #text after span
+UPDATE span/#text " " => "2"
 ```
 
-
-# Render 
-container.querySelector("button.inc").click()
-
+# Render
+```js
+container.querySelector("button.inc").click();
+```
 ```html
 <button
   class="inc"
@@ -121,5 +117,5 @@ container.querySelector("button.inc").click()
 
 # Mutations
 ```
-span2/#text0: "2" => "3"
+UPDATE span/#text "2" => "3"
 ```

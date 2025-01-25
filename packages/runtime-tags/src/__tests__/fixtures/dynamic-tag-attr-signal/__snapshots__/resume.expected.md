@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -18,15 +18,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <html>
   <head />
@@ -48,13 +44,13 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/p0: attr(class) "A" => "B"
+UPDATE html/body/p[class] "A" => "B"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -76,5 +72,5 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/p0: attr(class) "B" => "A"
+UPDATE html/body/p[class] "B" => "A"
 ```

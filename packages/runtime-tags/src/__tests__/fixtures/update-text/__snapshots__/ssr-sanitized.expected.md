@@ -1,4 +1,4 @@
-# Render "End"
+# Render End
 ```html
 Static Dynamic 1
 ```

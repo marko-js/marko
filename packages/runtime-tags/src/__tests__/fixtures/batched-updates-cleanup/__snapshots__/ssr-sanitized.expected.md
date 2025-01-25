@@ -1,4 +1,4 @@
-# Render "End"
+# Render End
 ```html
 <button />
 <span>

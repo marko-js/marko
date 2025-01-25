@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 <div>
   hello
@@ -7,6 +7,6 @@
 
 # Mutations
 ```
-inserted div0
-inserted div0/#text0
+INSERT div
+INSERT div/#text
 ```

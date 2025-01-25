@@ -1,4 +1,5 @@
-# Render {"value":"Dynamic 1"}
+# Render `{"value":"Dynamic 1"}`
+
 ```html
 <html>
   <head />
@@ -12,9 +13,4 @@
     </script>
   </body>
 </html>
-```
-
-# Mutations
-```
-
 ```

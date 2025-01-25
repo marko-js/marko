@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button
   id="inc"
@@ -13,9 +13,10 @@
 ```
 
 
-# Render 
-container.querySelector("#inc").click()
-
+# Render
+```js
+container.querySelector("#inc").click();
+```
 ```html
 <button
   id="inc"
@@ -30,9 +31,10 @@ container.querySelector("#inc").click()
 ```
 
 
-# Render 
-container.querySelector("#inc").click()
-
+# Render
+```js
+container.querySelector("#inc").click();
+```
 ```html
 <button
   id="inc"
@@ -47,9 +49,10 @@ container.querySelector("#inc").click()
 ```
 
 
-# Render 
-container.querySelector("#toggle").click()
-
+# Render
+```js
+container.querySelector("#toggle").click();
+```
 ```html
 <button
   id="inc"
@@ -64,9 +67,10 @@ container.querySelector("#toggle").click()
 ```
 
 
-# Render 
-container.querySelector("#inc").click()
-
+# Render
+```js
+container.querySelector("#inc").click();
+```
 ```html
 <button
   id="inc"
@@ -81,9 +85,10 @@ container.querySelector("#inc").click()
 ```
 
 
-# Render 
-container.querySelector("#inc").click()
-
+# Render
+```js
+container.querySelector("#inc").click();
+```
 ```html
 <button
   id="inc"

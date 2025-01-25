@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -58,15 +58,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+click(c, 2);
 ```
-
-```
-
-
-# Render 
-c => click(c, 2)
-
 ```html
 <html>
   <head />
@@ -141,19 +137,19 @@ c => click(c, 2)
 
 # Mutations
 ```
-#document/html0/body1/button2: attr(data-selected) null => ""
-#document/html0/body1/button2: attr(data-multiple) null => ""
-#document/html0/body1/button6: attr(data-multiple) null => ""
-#document/html0/body1/button10: attr(data-multiple) null => ""
-#document/html0/body1/button14: attr(data-multiple) null => ""
-#document/html0/body1/button18: attr(data-multiple) null => ""
-#document/html0/body1/button22: attr(data-multiple) null => ""
+UPDATE html/body/button1[data-selected] null => ""
+UPDATE html/body/button1[data-multiple] null => ""
+UPDATE html/body/button3[data-multiple] null => ""
+UPDATE html/body/button5[data-multiple] null => ""
+UPDATE html/body/button7[data-multiple] null => ""
+UPDATE html/body/button9[data-multiple] null => ""
+UPDATE html/body/button11[data-multiple] null => ""
 ```
 
-
-# Render 
-c => click(c, 3)
-
+# Render
+```js
+click(c, 3);
+```
 ```html
 <html>
   <head />
@@ -224,20 +220,20 @@ c => click(c, 3)
 
 # Mutations
 ```
-#document/html0/body1/button2: attr(data-selected) "" => null
-#document/html0/body1/button2: attr(data-multiple) "" => null
-#document/html0/body1/button4: attr(data-selected) null => ""
-#document/html0/body1/button4: attr(data-multiple) null => ""
-#document/html0/body1/button6: attr(data-multiple) "" => null
-#document/html0/body1/button14: attr(data-multiple) "" => null
-#document/html0/body1/button16: attr(data-multiple) null => ""
-#document/html0/body1/button18: attr(data-multiple) "" => null
+UPDATE html/body/button1[data-selected] "" => null
+UPDATE html/body/button1[data-multiple] "" => null
+UPDATE html/body/button2[data-selected] null => ""
+UPDATE html/body/button2[data-multiple] null => ""
+UPDATE html/body/button3[data-multiple] "" => null
+UPDATE html/body/button7[data-multiple] "" => null
+UPDATE html/body/button8[data-multiple] null => ""
+UPDATE html/body/button9[data-multiple] "" => null
 ```
 
-
-# Render 
-c => click(c, 5)
-
+# Render
+```js
+click(c, 5);
+```
 ```html
 <html>
   <head />
@@ -304,12 +300,12 @@ c => click(c, 5)
 
 # Mutations
 ```
-#document/html0/body1/button4: attr(data-selected) "" => null
-#document/html0/body1/button4: attr(data-multiple) "" => null
-#document/html0/body1/button8: attr(data-selected) null => ""
-#document/html0/body1/button8: attr(data-multiple) null => ""
-#document/html0/body1/button10: attr(data-multiple) "" => null
-#document/html0/body1/button16: attr(data-multiple) "" => null
-#document/html0/body1/button18: attr(data-multiple) null => ""
-#document/html0/body1/button22: attr(data-multiple) "" => null
+UPDATE html/body/button2[data-selected] "" => null
+UPDATE html/body/button2[data-multiple] "" => null
+UPDATE html/body/button4[data-selected] null => ""
+UPDATE html/body/button4[data-multiple] null => ""
+UPDATE html/body/button5[data-multiple] "" => null
+UPDATE html/body/button8[data-multiple] "" => null
+UPDATE html/body/button9[data-multiple] null => ""
+UPDATE html/body/button11[data-multiple] "" => null
 ```

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   0
@@ -7,5 +7,5 @@
 
 # Mutations
 ```
-inserted #text0, button1, #text2
+INSERT #text0, button, #text1
 ```

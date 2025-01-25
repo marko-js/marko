@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button
   id="multiplier"
@@ -17,13 +17,13 @@
 
 # Mutations
 ```
-inserted button0, button1, div2
+INSERT button0, button1, div
 ```
 
-
-# Render 
-container.querySelector("button#count").click()
-
+# Render
+```js
+container.querySelector("button#count").click();
+```
 ```html
 <button
   id="multiplier"
@@ -42,13 +42,13 @@ container.querySelector("button#count").click()
 
 # Mutations
 ```
-div2/#text0: "0" => "1"
+UPDATE div/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("button#count").click()
-
+# Render
+```js
+container.querySelector("button#count").click();
+```
 ```html
 <button
   id="multiplier"
@@ -67,13 +67,13 @@ container.querySelector("button#count").click()
 
 # Mutations
 ```
-div2/#text0: "1" => "2"
+UPDATE div/#text "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("button#multiplier").click()
-
+# Render
+```js
+container.querySelector("button#multiplier").click();
+```
 ```html
 <button
   id="multiplier"
@@ -92,6 +92,6 @@ container.querySelector("button#multiplier").click()
 
 # Mutations
 ```
-button0/#text1: "1" => "2"
-div2/#text0: "2" => "4"
+UPDATE button0/#text1 "1" => "2"
+UPDATE div/#text "2" => "4"
 ```

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <input
   checked=""
@@ -19,9 +19,10 @@
 ```
 
 
-# Render 
-container.querySelectorAll(`input`)[1].click()
-
+# Render
+```js
+container.querySelectorAll(`input`)[1].click();
+```
 ```html
 <input
   type="radio"
@@ -42,9 +43,10 @@ container.querySelectorAll(`input`)[1].click()
 ```
 
 
-# Render 
-container.querySelectorAll(`input`)[2].click()
-
+# Render
+```js
+container.querySelectorAll(`input`)[2].click();
+```
 ```html
 <input
   type="radio"
@@ -65,9 +67,10 @@ container.querySelectorAll(`input`)[2].click()
 ```
 
 
-# Render 
-container.querySelectorAll(`input`)[0].click()
-
+# Render
+```js
+container.querySelectorAll(`input`)[0].click();
+```
 ```html
 <input
   checked=""

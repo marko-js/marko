@@ -1,4 +1,5 @@
-# Render {"x":true}
+# Render `{"x":true}`
+
 ```html
 Hello
 <div>
@@ -7,7 +8,8 @@ Hello
 ```
 
 
-# Render {"x":false}
+# Render `{"x":false}`
+
 ```html
 Goodbye
 <div>
@@ -16,7 +18,8 @@ Goodbye
 ```
 
 
-# Render {"x":true}
+# Render `{"x":true}`
+
 ```html
 Hello
 <div>

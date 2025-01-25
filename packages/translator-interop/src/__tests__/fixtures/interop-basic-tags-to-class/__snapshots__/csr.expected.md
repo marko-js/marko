@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button
   id="tags"
@@ -16,15 +16,15 @@
 
 # Mutations
 ```
-inserted button0, #text1, #text3, #comment4
-inserted button2
-inserted button2/#text0
+INSERT button0, #text0, #text1, #comment
+INSERT button1
+INSERT button1/#text
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <button
   id="tags"
@@ -42,14 +42,14 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-button0/#text0: "0" => "1"
-button2: attr(data-parent) "0" => "1"
+UPDATE button0/#text "0" => "1"
+UPDATE button1[data-parent] "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("#class").click()
-
+# Render
+```js
+container.querySelector("#class").click();
+```
 ```html
 <button
   id="tags"
@@ -67,13 +67,13 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-button2/#text0: "0" => "1"
+UPDATE button1/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <button
   id="tags"
@@ -91,14 +91,14 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-button0/#text0: "1" => "2"
-button2: attr(data-parent) "1" => "2"
+UPDATE button0/#text "1" => "2"
+UPDATE button1[data-parent] "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("#class").click()
-
+# Render
+```js
+container.querySelector("#class").click();
+```
 ```html
 <button
   id="tags"
@@ -116,13 +116,13 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-button2/#text0: "1" => "2"
+UPDATE button1/#text "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <button
   id="tags"
@@ -140,6 +140,6 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-button0/#text0: "2" => "3"
-button2: attr(data-parent) "2" => "3"
+UPDATE button0/#text "2" => "3"
+UPDATE button1[data-parent] "2" => "3"
 ```

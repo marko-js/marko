@@ -1,8 +1,9 @@
 # Write
+```html
   <input checked>
+```
 
-
-# Render "End"
+# Render End
 ```html
 <html>
   <head />
@@ -16,8 +17,8 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/body1
-inserted #document/html0/body1/input0
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/input
 ```

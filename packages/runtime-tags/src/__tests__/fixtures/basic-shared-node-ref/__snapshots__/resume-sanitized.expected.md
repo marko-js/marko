@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <ul>
   <li>
@@ -24,9 +24,10 @@
 ```
 
 
-# Render 
-container.querySelector("#toggle").click()
-
+# Render
+```js
+container.querySelector("#toggle").click();
+```
 ```html
 <ul
   hidden=""
@@ -54,9 +55,10 @@ container.querySelector("#toggle").click()
 ```
 
 
-# Render 
-container.querySelector("#toggle").click()
-
+# Render
+```js
+container.querySelector("#toggle").click();
+```
 ```html
 <ul>
   <li>
@@ -82,9 +84,10 @@ container.querySelector("#toggle").click()
 ```
 
 
-# Render 
-container.querySelector("#reverse").click()
-
+# Render
+```js
+container.querySelector("#reverse").click();
+```
 ```html
 <ul>
   <li>

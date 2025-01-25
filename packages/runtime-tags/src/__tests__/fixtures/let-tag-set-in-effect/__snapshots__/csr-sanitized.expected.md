@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <span>
   1
@@ -9,7 +9,7 @@
 ```
 
 
-# Render "ASYNC"
+# Render ASYNC
 ```html
 <span>
   2
@@ -20,7 +20,7 @@
 ```
 
 
-# Render "ASYNC"
+# Render ASYNC
 ```html
 <span>
   2

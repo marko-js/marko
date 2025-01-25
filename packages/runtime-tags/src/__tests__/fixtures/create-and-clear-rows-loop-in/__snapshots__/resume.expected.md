@@ -1,4 +1,5 @@
-# Render {"children":{"1":"a","2":"b","3":"c"}}
+# Render `{"children":{"1":"a","2":"b","3":"c"}}`
+
 ```html
 <html>
   <head />
@@ -48,9 +49,4 @@
     </script>
   </body>
 </html>
-```
-
-# Mutations
-```
-
 ```

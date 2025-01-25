@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 <!---->
 <div />
@@ -8,5 +8,5 @@
 
 # Mutations
 ```
-inserted #comment0, div1, div2, #comment3
+INSERT #comment0, div0, div1, #comment1
 ```

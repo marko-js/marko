@@ -1,8 +1,9 @@
 # Write
+```html
   <input type=checkbox><!--M_*0 #input/0--><span>false<!--M_*0 #text/1--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:_.a={"#input/0=":0,checked:!1}},_.a["#input/0;"]=_._["__tests__/template.marko_0/checkedChange"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()</script>
+```
 
-
-# Render "End"
+# Render End
 ```html
 <html>
   <head />
@@ -24,14 +25,14 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/body1
-inserted #document/html0/body1/input0
-inserted #document/html0/body1/#comment1
-inserted #document/html0/body1/span2
-inserted #document/html0/body1/span2/#text0
-inserted #document/html0/body1/span2/#comment1
-inserted #document/html0/body1/script3
-inserted #document/html0/body1/script3/#text0
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/input
+INSERT html/body/#comment
+INSERT html/body/span
+INSERT html/body/span/#text
+INSERT html/body/span/#comment
+INSERT html/body/script
+INSERT html/body/script/#text
 ```

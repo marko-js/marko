@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button
   id="multiplier"
@@ -16,9 +16,10 @@
 ```
 
 
-# Render 
-container.querySelector("button#count").click()
-
+# Render
+```js
+container.querySelector("button#count").click();
+```
 ```html
 <button
   id="multiplier"
@@ -36,9 +37,10 @@ container.querySelector("button#count").click()
 ```
 
 
-# Render 
-container.querySelector("button#count").click()
-
+# Render
+```js
+container.querySelector("button#count").click();
+```
 ```html
 <button
   id="multiplier"
@@ -56,9 +58,10 @@ container.querySelector("button#count").click()
 ```
 
 
-# Render 
-container.querySelector("button#multiplier").click()
-
+# Render
+```js
+container.querySelector("button#multiplier").click();
+```
 ```html
 <button
   id="multiplier"

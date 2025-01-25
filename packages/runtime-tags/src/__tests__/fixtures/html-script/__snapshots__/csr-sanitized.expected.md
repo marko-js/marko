@@ -1,28 +1,19 @@
-# Render {}
-```html
+# Render
 
+
+# Render
+```js
+container.querySelector("script").click();
 ```
 
 
-# Render 
-container.querySelector("script").click()
-
-```html
-
+# Render
+```js
+container.querySelector("script").click();
 ```
 
 
-# Render 
-container.querySelector("script").click()
-
-```html
-
-```
-
-
-# Render 
-container.querySelector("script").click()
-
-```html
-
+# Render
+```js
+container.querySelector("script").click();
 ```

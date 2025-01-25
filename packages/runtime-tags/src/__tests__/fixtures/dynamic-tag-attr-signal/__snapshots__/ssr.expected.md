@@ -1,8 +1,9 @@
 # Write
+```html
   <p class=A>paragraph</p><!--M_*0 #p/0--><button></button><!--M_*0 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{className:"A"}}),0,"__tests__/template.marko_0_className",0];M._.w()</script>
+```
 
-
-# Render "End"
+# Render End
 ```html
 <html>
   <head />
@@ -24,14 +25,14 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/body1
-inserted #document/html0/body1/p0
-inserted #document/html0/body1/p0/#text0
-inserted #document/html0/body1/#comment1
-inserted #document/html0/body1/button2
-inserted #document/html0/body1/#comment3
-inserted #document/html0/body1/script4
-inserted #document/html0/body1/script4/#text0
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/p
+INSERT html/body/p/#text
+INSERT html/body/#comment0
+INSERT html/body/button
+INSERT html/body/#comment1
+INSERT html/body/script
+INSERT html/body/script/#text
 ```

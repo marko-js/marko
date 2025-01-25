@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -30,39 +30,39 @@
 
 # Mutations
 ```
-inserted #document/html0/body1/#text0
-inserted #document/html0/body1/#text8
-removed #comment before #document/html0/body1/#text0
-removed #comment after #document/html0/body1/#text8
-inserted #document/html0/body1/div5/#text0
-inserted #document/html0/body1/div5/#text5
-removed #comment after #document/html0/body1/div5/#text5
-removed h1 after #document/html0/body1/div5/#text5
-removed button after #document/html0/body1/div5/#text5
-inserted #document/html0/body1/#text1
-inserted #document/html0/body1/#text7
-inserted #document/html0/body1/#text2
-inserted #document/html0/body1/#text6
-removed #comment after #document/html0/body1/#text2
-removed #comment after #document/html0/body1/div5
-removed #document/html0/body1/#text7 after #document/html0/body1/#text6
-inserted #document/html0/body1/#text7
-inserted #document/html0/body1/div5/#text1
-inserted #document/html0/body1/div5/#text4
-inserted #document/html0/body1/div5/h12
-inserted #document/html0/body1/div5/h12/#text0
-inserted #document/html0/body1/div5/button3
-inserted #document/html0/body1/div5/button3/#text0
-inserted #document/html0/body1/div5/button3/#text1
-inserted #document/html0/body1/div5/button3/#text2
-inserted #document/html0/body1/div5/button3/#text3
-inserted #document/html0/body1/div5/button3/#text4
+INSERT html/body/#text0
+INSERT html/body/#text5
+REMOVE #comment before html/body/#text0
+REMOVE #comment after html/body/#text5
+INSERT html/body/div/#text0
+INSERT html/body/div/#text3
+REMOVE #comment after html/body/div/#text3
+REMOVE h1 after html/body/div/#text3
+REMOVE button after html/body/div/#text3
+INSERT html/body/#text1
+INSERT html/body/#text4
+INSERT html/body/#text2
+INSERT html/body/#text3
+REMOVE #comment after html/body/#text2
+REMOVE #comment after html/body/div
+REMOVE html/body/#text4 after html/body/#text3
+INSERT html/body/#text4
+INSERT html/body/div/#text1
+INSERT html/body/div/#text2
+INSERT html/body/div/h1
+INSERT html/body/div/h1/#text
+INSERT html/body/div/button
+INSERT html/body/div/button/#text0
+INSERT html/body/div/button/#text1
+INSERT html/body/div/button/#text2
+INSERT html/body/div/button/#text3
+INSERT html/body/div/button/#text4
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <html>
   <head />
@@ -94,15 +94,15 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-#document/html0/body1/button3/#text0: "0" => "1"
-#document/html0/body1/div5/button3/#text2: "0" => "1"
-#document/html0/body1/div5/button3/#text4: "0" => "1"
+UPDATE html/body/button/#text "0" => "1"
+UPDATE html/body/div/button/#text2 "0" => "1"
+UPDATE html/body/div/button/#text4 "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("#class").click()
-
+# Render
+```js
+container.querySelector("#class").click();
+```
 ```html
 <html>
   <head />
@@ -134,30 +134,30 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/div5/#text0
-inserted #document/html0/body1/div5/#text5
-removed #text after #document/html0/body1/div5/#text5
-removed #text after #document/html0/body1/div5/#text5
-removed h1 after #document/html0/body1/div5/#text5
-removed button after #document/html0/body1/div5/#text5
-removed #text after #document/html0/body1/div5/#text5
-removed #text after #document/html0/body1/div5/#text5
-inserted #document/html0/body1/div5/#text1
-inserted #document/html0/body1/div5/#text4
-inserted #document/html0/body1/div5/h12
-inserted #document/html0/body1/div5/h12/#text0
-inserted #document/html0/body1/div5/button3
-inserted #document/html0/body1/div5/button3/#text0
-inserted #document/html0/body1/div5/button3/#text1
-inserted #document/html0/body1/div5/button3/#text2
-inserted #document/html0/body1/div5/button3/#text3
-inserted #document/html0/body1/div5/button3/#text4
+INSERT html/body/div/#text0
+INSERT html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+REMOVE h1 after html/body/div/#text3
+REMOVE button after html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+INSERT html/body/div/#text1
+INSERT html/body/div/#text2
+INSERT html/body/div/h1
+INSERT html/body/div/h1/#text
+INSERT html/body/div/button
+INSERT html/body/div/button/#text0
+INSERT html/body/div/button/#text1
+INSERT html/body/div/button/#text2
+INSERT html/body/div/button/#text3
+INSERT html/body/div/button/#text4
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <html>
   <head />
@@ -189,15 +189,15 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-#document/html0/body1/button3/#text0: "1" => "2"
-#document/html0/body1/div5/button3/#text2: "1" => "2"
-#document/html0/body1/div5/button3/#text4: "2" => "4"
+UPDATE html/body/button/#text "1" => "2"
+UPDATE html/body/div/button/#text2 "1" => "2"
+UPDATE html/body/div/button/#text4 "2" => "4"
 ```
 
-
-# Render 
-container.querySelector("#class").click()
-
+# Render
+```js
+container.querySelector("#class").click();
+```
 ```html
 <html>
   <head />
@@ -229,30 +229,30 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/div5/#text0
-inserted #document/html0/body1/div5/#text5
-removed #text after #document/html0/body1/div5/#text5
-removed #text after #document/html0/body1/div5/#text5
-removed h1 after #document/html0/body1/div5/#text5
-removed button after #document/html0/body1/div5/#text5
-removed #text after #document/html0/body1/div5/#text5
-removed #text after #document/html0/body1/div5/#text5
-inserted #document/html0/body1/div5/#text1
-inserted #document/html0/body1/div5/#text4
-inserted #document/html0/body1/div5/h12
-inserted #document/html0/body1/div5/h12/#text0
-inserted #document/html0/body1/div5/button3
-inserted #document/html0/body1/div5/button3/#text0
-inserted #document/html0/body1/div5/button3/#text1
-inserted #document/html0/body1/div5/button3/#text2
-inserted #document/html0/body1/div5/button3/#text3
-inserted #document/html0/body1/div5/button3/#text4
+INSERT html/body/div/#text0
+INSERT html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+REMOVE h1 after html/body/div/#text3
+REMOVE button after html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+INSERT html/body/div/#text1
+INSERT html/body/div/#text2
+INSERT html/body/div/h1
+INSERT html/body/div/h1/#text
+INSERT html/body/div/button
+INSERT html/body/div/button/#text0
+INSERT html/body/div/button/#text1
+INSERT html/body/div/button/#text2
+INSERT html/body/div/button/#text3
+INSERT html/body/div/button/#text4
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <html>
   <head />
@@ -284,7 +284,7 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-#document/html0/body1/button3/#text0: "2" => "3"
-#document/html0/body1/div5/button3/#text2: "2" => "3"
-#document/html0/body1/div5/button3/#text4: "6" => "9"
+UPDATE html/body/button/#text "2" => "3"
+UPDATE html/body/div/button/#text2 "2" => "3"
+UPDATE html/body/div/button/#text4 "6" => "9"
 ```

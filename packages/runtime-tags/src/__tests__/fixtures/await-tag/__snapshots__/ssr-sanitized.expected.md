@@ -1,4 +1,4 @@
-# Render "End"
+# Render End
 ```html
 <div>
   Got: a 0Got: b 0Got: c 0

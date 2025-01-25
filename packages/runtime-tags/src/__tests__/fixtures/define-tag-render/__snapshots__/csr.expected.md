@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <!---->
 <div>
@@ -12,13 +12,13 @@
 
 # Mutations
 ```
-inserted #comment0, div1, button2, #comment3
+INSERT #comment0, div, button, #comment1
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <!---->
 <div>
@@ -32,14 +32,14 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-div1/#text3: "1" => "2"
-button2/#text0: "1" => "2"
+UPDATE div/#text3 "1" => "2"
+UPDATE button/#text "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <!---->
 <div>
@@ -53,14 +53,14 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-div1/#text3: "2" => "3"
-button2/#text0: "2" => "3"
+UPDATE div/#text3 "2" => "3"
+UPDATE button/#text "2" => "3"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <!---->
 <div>
@@ -74,6 +74,6 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-div1/#text3: "3" => "4"
-button2/#text0: "3" => "4"
+UPDATE div/#text3 "3" => "4"
+UPDATE button/#text "3" => "4"
 ```

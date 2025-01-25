@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   Toggle
@@ -23,18 +23,18 @@ mounted 3
 
 # Mutations
 ```
-inserted button0, div1, div2, div3, div4, #comment5
-inserted #text
-removed #text in div1
-inserted #text
-removed #text in div1
-inserted div1/#text0
+INSERT button, div0, div1, div2, div3, #comment
+INSERT #text
+REMOVE #text in div0
+INSERT #text
+REMOVE #text in div0
+INSERT div0/#text
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -57,15 +57,15 @@ destroyed 3
 
 # Mutations
 ```
-removed #text in div1
-inserted div1/#text0
-removed div after div3
+REMOVE #text in div0
+INSERT div0/#text
+REMOVE div after div2
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -86,15 +86,15 @@ destroyed 2
 
 # Mutations
 ```
-removed #text in div1
-inserted div1/#text0
-removed div after div2
+REMOVE #text in div0
+INSERT div0/#text
+REMOVE div after div1
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -113,16 +113,16 @@ destroyed 1
 
 # Mutations
 ```
-inserted #text2
-removed #text in div1
-inserted div1/#text0
-removed div after div1
+INSERT #text
+REMOVE #text in div
+INSERT div/#text
+REMOVE div after div
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -153,14 +153,14 @@ mounted 3
 
 # Mutations
 ```
-inserted div2
-inserted div3
-inserted div4
-removed #text after div1
-removed #text in div1
-inserted #text
-removed #text in div1
-inserted #text
-removed #text in div1
-inserted div1/#text0
+INSERT div1
+INSERT div2
+INSERT div3
+REMOVE #text after div0
+REMOVE #text in div0
+INSERT #text
+REMOVE #text in div0
+INSERT #text
+REMOVE #text in div0
+INSERT div0/#text
 ```

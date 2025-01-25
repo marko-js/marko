@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div />
 <div />
@@ -8,9 +8,10 @@
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div
   class="baz"

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -19,15 +19,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <html>
   <head />
@@ -50,14 +46,14 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/button1/#text0: "1" => "2"
-#document/html0/body1/div0/#text0: "{\"foo\":1,\"bar\":2}" => "{\"foo\":1,\"bar\":3}"
+UPDATE html/body/button/#text "1" => "2"
+UPDATE html/body/div/#text "{\"foo\":1,\"bar\":2}" => "{\"foo\":1,\"bar\":3}"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -80,14 +76,14 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/button1/#text0: "2" => "3"
-#document/html0/body1/div0/#text0: "{\"foo\":1,\"bar\":3}" => "{\"foo\":1,\"bar\":4}"
+UPDATE html/body/button/#text "2" => "3"
+UPDATE html/body/div/#text "{\"foo\":1,\"bar\":3}" => "{\"foo\":1,\"bar\":4}"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -110,6 +106,6 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/button1/#text0: "3" => "4"
-#document/html0/body1/div0/#text0: "{\"foo\":1,\"bar\":4}" => "{\"foo\":1,\"bar\":5}"
+UPDATE html/body/button/#text "3" => "4"
+UPDATE html/body/div/#text "{\"foo\":1,\"bar\":4}" => "{\"foo\":1,\"bar\":5}"
 ```

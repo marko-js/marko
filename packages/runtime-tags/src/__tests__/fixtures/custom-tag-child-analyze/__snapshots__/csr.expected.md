@@ -1,9 +1,9 @@
-# Render undefined
+# Render
 ```html
 Hello Frank
 ```
 
 # Mutations
 ```
-inserted #text0
+INSERT #text
 ```

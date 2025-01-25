@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <h1>
   Hello world
@@ -7,5 +7,5 @@
 
 # Mutations
 ```
-inserted h10
+INSERT h1
 ```

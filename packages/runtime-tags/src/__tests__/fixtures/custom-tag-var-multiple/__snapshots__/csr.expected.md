@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 <span>
   child
@@ -10,5 +10,5 @@
 
 # Mutations
 ```
-inserted span0, div1
+INSERT span, div
 ```

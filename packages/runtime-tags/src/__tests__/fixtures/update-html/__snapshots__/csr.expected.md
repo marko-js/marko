@@ -1,4 +1,5 @@
-# Render {"value":"Hello <strong>World</strong>"}
+# Render `{"value":"Hello <strong>World</strong>"}`
+
 ```html
 <em>
   Testing
@@ -11,11 +12,11 @@ Hello
 
 # Mutations
 ```
-inserted em0, #text1, #text2, strong3
+INSERT em, #text0, #text1, strong
 ```
 
+# Render `{"value":"Some content"}`
 
-# Render {"value":"Some content"}
 ```html
 <em>
   Testing
@@ -25,13 +26,13 @@ Some content
 
 # Mutations
 ```
-inserted #text2
-removed #text after #text2
-removed strong after #text2
+INSERT #text1
+REMOVE #text after #text1
+REMOVE strong after #text1
 ```
 
+# Render `{"value":"<div/>"}`
 
-# Render {"value":"<div/>"}
 ```html
 <em>
   Testing
@@ -41,6 +42,6 @@ removed strong after #text2
 
 # Mutations
 ```
-inserted div2
-removed #text after div2
+INSERT div
+REMOVE #text after div
 ```

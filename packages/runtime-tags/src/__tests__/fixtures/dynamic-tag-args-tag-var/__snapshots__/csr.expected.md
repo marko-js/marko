@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   Count: 1
@@ -13,13 +13,13 @@
 
 # Mutations
 ```
-inserted button0, div1, div2
+INSERT button, div0, div1
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Count: 2
@@ -34,15 +34,15 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-button0/#text1: "1" => "2"
-div1/#text1: "1" => "2"
-div2/#text1: "1" => "2"
+UPDATE button/#text1 "1" => "2"
+UPDATE div0/#text1 "1" => "2"
+UPDATE div1/#text1 "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Count: 3
@@ -57,15 +57,15 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-button0/#text1: "2" => "3"
-div1/#text1: "2" => "3"
-div2/#text1: "2" => "3"
+UPDATE button/#text1 "2" => "3"
+UPDATE div0/#text1 "2" => "3"
+UPDATE div1/#text1 "2" => "3"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Count: 4
@@ -80,7 +80,7 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-button0/#text1: "3" => "4"
-div1/#text1: "3" => "4"
-div2/#text1: "3" => "4"
+UPDATE button/#text1 "3" => "4"
+UPDATE div0/#text1 "3" => "4"
+UPDATE div1/#text1 "3" => "4"
 ```

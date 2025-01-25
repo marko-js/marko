@@ -1,4 +1,5 @@
-# Render {"value":0}
+# Render `{"value":0}`
+
 ```html
 <div>
   0 0
@@ -6,7 +7,7 @@
 ```
 
 
-# Render "ASYNC"
+# Render ASYNC
 ```html
 <div>
   1 0

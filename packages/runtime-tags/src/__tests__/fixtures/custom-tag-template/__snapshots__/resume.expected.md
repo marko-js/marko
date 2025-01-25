@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 <html>
   <head />
@@ -13,9 +13,4 @@
     </script>
   </body>
 </html>
-```
-
-# Mutations
-```
-
 ```

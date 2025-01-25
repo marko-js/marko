@@ -1,4 +1,5 @@
-# Render {"comments":[{"text":"Hello World","comments":[{"text":"testing 123"}]},{"text":"Goodbye World"}]}
+# Render `{"comments":[{"text":"Hello World","comments":[{"text":"testing 123"}]},{"text":"Goodbye World"}]}`
+
 ```html
 <html>
   <head />
@@ -63,15 +64,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector(`#c-${id} > button`).click();
 ```
-
-```
-
-
-# Render 
-container.querySelector(`#c-${id} > button`).click()
-
 ```html
 <html>
   <head />
@@ -139,14 +136,14 @@ container.querySelector(`#c-${id} > button`).click()
 
 # Mutations
 ```
-#document/html0/body1/ul0/li0: attr(hidden) null => ""
-#document/html0/body1/ul0/li0/button1/#text0: "[-]" => "[+]"
+UPDATE html/body/ul/li0[hidden] null => ""
+UPDATE html/body/ul/li0/button/#text "[-]" => "[+]"
 ```
 
-
-# Render 
-container.querySelector(`#c-${id} > button`).click()
-
+# Render
+```js
+container.querySelector(`#c-${id} > button`).click();
+```
 ```html
 <html>
   <head />
@@ -213,14 +210,14 @@ container.querySelector(`#c-${id} > button`).click()
 
 # Mutations
 ```
-#document/html0/body1/ul0/li0: attr(hidden) "" => null
-#document/html0/body1/ul0/li0/button1/#text0: "[+]" => "[-]"
+UPDATE html/body/ul/li0[hidden] "" => null
+UPDATE html/body/ul/li0/button/#text "[+]" => "[-]"
 ```
 
-
-# Render 
-container.querySelector(`#c-${id} > button`).click()
-
+# Render
+```js
+container.querySelector(`#c-${id} > button`).click();
+```
 ```html
 <html>
   <head />
@@ -288,14 +285,14 @@ container.querySelector(`#c-${id} > button`).click()
 
 # Mutations
 ```
-#document/html0/body1/ul0/li0/ul3/li0: attr(hidden) null => ""
-#document/html0/body1/ul0/li0/ul3/li0/button1/#text0: "[-]" => "[+]"
+UPDATE html/body/ul/li0/ul/li[hidden] null => ""
+UPDATE html/body/ul/li0/ul/li/button/#text "[-]" => "[+]"
 ```
 
-
-# Render 
-container.querySelector(`#c-${id} > button`).click()
-
+# Render
+```js
+container.querySelector(`#c-${id} > button`).click();
+```
 ```html
 <html>
   <head />
@@ -364,6 +361,6 @@ container.querySelector(`#c-${id} > button`).click()
 
 # Mutations
 ```
-#document/html0/body1/ul0/li2: attr(hidden) null => ""
-#document/html0/body1/ul0/li2/button1/#text0: "[-]" => "[+]"
+UPDATE html/body/ul/li1[hidden] null => ""
+UPDATE html/body/ul/li1/button/#text "[-]" => "[+]"
 ```

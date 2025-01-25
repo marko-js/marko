@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button
   id="outer"
@@ -39,18 +39,18 @@ Inner mounted
 
 # Mutations
 ```
-inserted button0, button1, button2, pre3, div4, #comment5
-inserted #text
-removed #text in pre3
-inserted #text
-removed #text in pre3
-inserted pre3/#text0
+INSERT button0, button1, button2, pre, div, #comment
+INSERT #text
+REMOVE #text in pre
+INSERT #text
+REMOVE #text in pre
+INSERT pre/#text
 ```
 
-
-# Render 
-container.querySelector("button#inner").click()
-
+# Render
+```js
+container.querySelector("button#inner").click();
+```
 ```html
 <button
   id="outer"
@@ -89,16 +89,16 @@ Inner destroyed
 
 # Mutations
 ```
-inserted div4/div1/#text1
-removed #text in pre3
-inserted pre3/#text0
-removed p after div4/div1/#text1
+INSERT div/div/#text
+REMOVE #text in pre
+INSERT pre/#text
+REMOVE p after div/div/#text
 ```
 
-
-# Render 
-container.querySelector("button#middle").click()
-
+# Render
+```js
+container.querySelector("button#middle").click();
+```
 ```html
 <button
   id="outer"
@@ -133,16 +133,16 @@ Middle destroyed
 
 # Mutations
 ```
-inserted div4/#text1
-removed #text in pre3
-inserted pre3/#text0
-removed div after div4/#text1
+INSERT div/#text
+REMOVE #text in pre
+INSERT pre/#text
+REMOVE div after div/#text
 ```
 
-
-# Render 
-container.querySelector("button#outer").click()
-
+# Render
+```js
+container.querySelector("button#outer").click();
+```
 ```html
 <button
   id="outer"
@@ -173,16 +173,16 @@ Outer destroyed
 
 # Mutations
 ```
-inserted #text4
-removed #text in pre3
-inserted pre3/#text0
-removed div after #text4
+INSERT #text
+REMOVE #text in pre
+INSERT pre/#text
+REMOVE div after #text
 ```
 
-
-# Render 
-container.querySelector("button#inner").click()
-
+# Render
+```js
+container.querySelector("button#inner").click();
+```
 ```html
 <button
   id="outer"
@@ -211,15 +211,11 @@ Outer destroyed
 <!---->
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button#middle").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button#middle").click()
-
 ```html
 <button
   id="outer"
@@ -248,15 +244,11 @@ Outer destroyed
 <!---->
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button#outer").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button#outer").click()
-
 ```html
 <button
   id="outer"
@@ -303,27 +295,27 @@ Inner mounted
 
 # Mutations
 ```
-inserted div4
-removed #text after div4
-inserted div4/div1
-removed #text after div4/div1
-div4/p0/#text0: " " => "Outer"
-inserted div4/div1/p1
-removed #text after div4/div1/p1
-div4/div1/p0/#text0: " " => "Middle"
-div4/div1/p1/#text0: " " => "Inner"
-removed #text in pre3
-inserted #text
-removed #text in pre3
-inserted #text
-removed #text in pre3
-inserted pre3/#text0
+INSERT div
+REMOVE #text after div
+INSERT div/div
+REMOVE #text after div/div
+UPDATE div/p/#text " " => "Outer"
+INSERT div/div/p1
+REMOVE #text after div/div/p1
+UPDATE div/div/p0/#text " " => "Middle"
+UPDATE div/div/p1/#text " " => "Inner"
+REMOVE #text in pre
+INSERT #text
+REMOVE #text in pre
+INSERT #text
+REMOVE #text in pre
+INSERT pre/#text
 ```
 
-
-# Render 
-container.querySelector("button#outer").click()
-
+# Render
+```js
+container.querySelector("button#outer").click();
+```
 ```html
 <button
   id="outer"
@@ -360,12 +352,12 @@ Outer destroyed
 
 # Mutations
 ```
-inserted #text4
-removed #text in pre3
-inserted #text
-removed #text in pre3
-inserted #text
-removed #text in pre3
-inserted pre3/#text0
-removed div after #text4
+INSERT #text
+REMOVE #text in pre
+INSERT #text
+REMOVE #text in pre
+INSERT #text
+REMOVE #text in pre
+INSERT pre/#text
+REMOVE div after #text
 ```

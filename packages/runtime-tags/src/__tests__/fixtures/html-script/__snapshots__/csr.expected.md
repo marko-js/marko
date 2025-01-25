@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <script
   type="importmap"
@@ -15,13 +15,13 @@
 
 # Mutations
 ```
-inserted script0
+INSERT script
 ```
 
-
-# Render 
-container.querySelector("script").click()
-
+# Render
+```js
+container.querySelector("script").click();
+```
 ```html
 <script
   type="importmap"
@@ -38,14 +38,14 @@ container.querySelector("script").click()
 
 # Mutations
 ```
-removed #text in script0
-inserted script0/#text0
+REMOVE #text in script
+INSERT script/#text
 ```
 
-
-# Render 
-container.querySelector("script").click()
-
+# Render
+```js
+container.querySelector("script").click();
+```
 ```html
 <script
   type="importmap"
@@ -62,14 +62,14 @@ container.querySelector("script").click()
 
 # Mutations
 ```
-removed #text in script0
-inserted script0/#text0
+REMOVE #text in script
+INSERT script/#text
 ```
 
-
-# Render 
-container.querySelector("script").click()
-
+# Render
+```js
+container.querySelector("script").click();
+```
 ```html
 <script
   type="importmap"
@@ -86,6 +86,6 @@ container.querySelector("script").click()
 
 # Mutations
 ```
-removed #text in script0
-inserted script0/#text0
+REMOVE #text in script
+INSERT script/#text
 ```

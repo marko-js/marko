@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 <div
   d="0"

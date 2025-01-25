@@ -1,4 +1,5 @@
-# Render {"value":1}
+# Render `{"value":1}`
+
 ```html
 <div
   a="0"
@@ -8,11 +9,11 @@
 
 # Mutations
 ```
-inserted div0
+INSERT div
 ```
 
+# Render `{"value":"1"}`
 
-# Render {"value":"1"}
 ```html
 <div
   a="0"
@@ -20,13 +21,9 @@ inserted div0
 />
 ```
 
-# Mutations
-```
 
-```
+# Render `{"value":"2"}`
 
-
-# Render {"value":"2"}
 ```html
 <div
   a="0"
@@ -36,11 +33,11 @@ inserted div0
 
 # Mutations
 ```
-div0: attr(b) "1" => "2"
+UPDATE div[b] "1" => "2"
 ```
 
+# Render `{"value":null}`
 
-# Render {"value":null}
 ```html
 <div
   a="0"
@@ -49,11 +46,11 @@ div0: attr(b) "1" => "2"
 
 # Mutations
 ```
-div0: attr(b) "2" => null
+UPDATE div[b] "2" => null
 ```
 
+# Render `{"value":"1"}`
 
-# Render {"value":"1"}
 ```html
 <div
   a="0"
@@ -63,11 +60,11 @@ div0: attr(b) "2" => null
 
 # Mutations
 ```
-div0: attr(b) null => "1"
+UPDATE div[b] null => "1"
 ```
 
+# Render `{"value":false}`
 
-# Render {"value":false}
 ```html
 <div
   a="0"
@@ -76,5 +73,5 @@ div0: attr(b) null => "1"
 
 # Mutations
 ```
-div0: attr(b) "1" => null
+UPDATE div[b] "1" => null
 ```

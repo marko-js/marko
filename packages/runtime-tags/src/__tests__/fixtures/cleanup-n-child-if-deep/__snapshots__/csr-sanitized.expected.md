@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button
   id="outer"
@@ -55,9 +55,10 @@ Inner mounted
 ```
 
 
-# Render 
-container.querySelector("button#inner").click()
-
+# Render
+```js
+container.querySelector("button#inner").click();
+```
 ```html
 <button
   id="outer"
@@ -106,9 +107,10 @@ Inner destroyed
 ```
 
 
-# Render 
-container.querySelector("button#middle").click()
-
+# Render
+```js
+container.querySelector("button#middle").click();
+```
 ```html
 <button
   id="outer"
@@ -147,9 +149,10 @@ Middle destroyed
 ```
 
 
-# Render 
-container.querySelector("button#outer").click()
-
+# Render
+```js
+container.querySelector("button#outer").click();
+```
 ```html
 <button
   id="outer"
@@ -178,9 +181,10 @@ Outer destroyed
 ```
 
 
-# Render 
-container.querySelector("button#inner").click()
-
+# Render
+```js
+container.querySelector("button#inner").click();
+```
 ```html
 <button
   id="outer"
@@ -209,9 +213,10 @@ Outer destroyed
 ```
 
 
-# Render 
-container.querySelector("button#middle").click()
-
+# Render
+```js
+container.querySelector("button#middle").click();
+```
 ```html
 <button
   id="outer"
@@ -240,9 +245,10 @@ Outer destroyed
 ```
 
 
-# Render 
-container.querySelector("button#outer").click()
-
+# Render
+```js
+container.querySelector("button#outer").click();
+```
 ```html
 <button
   id="outer"
@@ -305,9 +311,10 @@ Inner mounted
 ```
 
 
-# Render 
-container.querySelector("button#outer").click()
-
+# Render
+```js
+container.querySelector("button#outer").click();
+```
 ```html
 <button
   id="outer"

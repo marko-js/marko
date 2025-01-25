@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -14,13 +14,8 @@
 </html>
 ```
 
-# Mutations
-```
 
-```
-
-
-# Render "ASYNC"
+# Render ASYNC
 ```html
 <html>
   <head />
@@ -38,5 +33,5 @@
 
 # Mutations
 ```
-#document/html0/body1/div0/#text0: "1" => "2"
+UPDATE html/body/div/#text "1" => "2"
 ```

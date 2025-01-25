@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -25,15 +25,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <html>
   <head />
@@ -62,16 +58,16 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/button0/#text0: "1" => "2"
-#document/html0/body1/#text2: "2" => "3"
-#document/html0/body1/#text6: "3" => "4"
-#document/html0/body1/#text10: "5" => "7"
+UPDATE html/body/button/#text "1" => "2"
+UPDATE html/body/#text0 "2" => "3"
+UPDATE html/body/#text2 "3" => "4"
+UPDATE html/body/#text4 "5" => "7"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -100,16 +96,16 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/button0/#text0: "2" => "3"
-#document/html0/body1/#text2: "3" => "4"
-#document/html0/body1/#text6: "4" => "5"
-#document/html0/body1/#text10: "7" => "9"
+UPDATE html/body/button/#text "2" => "3"
+UPDATE html/body/#text0 "3" => "4"
+UPDATE html/body/#text2 "4" => "5"
+UPDATE html/body/#text4 "7" => "9"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <html>
   <head />
@@ -138,8 +134,8 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/button0/#text0: "3" => "4"
-#document/html0/body1/#text2: "4" => "5"
-#document/html0/body1/#text6: "5" => "6"
-#document/html0/body1/#text10: "9" => "11"
+UPDATE html/body/button/#text "3" => "4"
+UPDATE html/body/#text0 "4" => "5"
+UPDATE html/body/#text2 "5" => "6"
+UPDATE html/body/#text4 "9" => "11"
 ```

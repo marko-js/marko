@@ -1,16 +1,16 @@
-# Render {"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}
+# Render `{"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}`
+
 ```html
 abc
 ```
 
 
-# Render {"children":[]}
-```html
-
-```
+# Render `{"children":[]}`
 
 
-# Render {"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}
+
+# Render `{"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}`
+
 ```html
 abc
 ```

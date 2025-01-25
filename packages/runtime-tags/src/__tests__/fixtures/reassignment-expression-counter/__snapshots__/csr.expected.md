@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button
   id="addTwo"
@@ -19,13 +19,13 @@
 
 # Mutations
 ```
-inserted button0, button1, button2
+INSERT button0, button1, button2
 ```
 
-
-# Render 
-container.querySelector("#addTwo").click()
-
+# Render
+```js
+container.querySelector("#addTwo").click();
+```
 ```html
 <button
   id="addTwo"
@@ -46,15 +46,15 @@ container.querySelector("#addTwo").click()
 
 # Mutations
 ```
-button0/#text0: "0" => "2"
-button1/#text0: "0" => "2"
-button2/#text0: "0" => "2"
+UPDATE button0/#text "0" => "2"
+UPDATE button1/#text "0" => "2"
+UPDATE button2/#text "0" => "2"
 ```
 
-
-# Render 
-container.querySelector("#triple").click()
-
+# Render
+```js
+container.querySelector("#triple").click();
+```
 ```html
 <button
   id="addTwo"
@@ -75,15 +75,15 @@ container.querySelector("#triple").click()
 
 # Mutations
 ```
-button0/#text0: "2" => "6"
-button1/#text0: "2" => "6"
-button2/#text0: "2" => "6"
+UPDATE button0/#text "2" => "6"
+UPDATE button1/#text "2" => "6"
+UPDATE button2/#text "2" => "6"
 ```
 
-
-# Render 
-container.querySelector("#cube").click()
-
+# Render
+```js
+container.querySelector("#cube").click();
+```
 ```html
 <button
   id="addTwo"
@@ -104,7 +104,7 @@ container.querySelector("#cube").click()
 
 # Mutations
 ```
-button0/#text0: "6" => "216"
-button1/#text0: "6" => "216"
-button2/#text0: "6" => "216"
+UPDATE button0/#text "6" => "216"
+UPDATE button1/#text "6" => "216"
+UPDATE button2/#text "6" => "216"
 ```

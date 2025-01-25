@@ -1,4 +1,5 @@
-# Render {"$global":{"x":1,"serializedGlobals":["x"]}}
+# Render `{"$global":{"x":1,"serializedGlobals":["x"]}}`
+
 ```html
 <div>
   <span
@@ -13,9 +14,10 @@
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div>
   <span>
@@ -28,9 +30,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div>
   <span
@@ -45,9 +48,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div>
   <span>

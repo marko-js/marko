@@ -1,4 +1,5 @@
-# Render {"a":2}
+# Render `{"a":2}`
+
 ```html
 <button>
   Increment
@@ -7,9 +8,10 @@
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Increment
@@ -18,7 +20,8 @@ container.querySelector("button").click()
 ```
 
 
-# Render {"a":3}
+# Render `{"a":3}`
+
 ```html
 <button>
   Increment
@@ -27,9 +30,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Increment

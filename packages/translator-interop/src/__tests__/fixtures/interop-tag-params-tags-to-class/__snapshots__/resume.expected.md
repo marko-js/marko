@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -40,24 +40,24 @@
 
 # Mutations
 ```
-inserted #document/html0/body1/#text1
-inserted #document/html0/body1/#text4
-removed #comment after #document/html0/body1/#comment0
-removed #comment after #document/html0/body1/#text4
-inserted #document/html0/body1/div3/#text0
-inserted #document/html0/body1/div3/#text6
-inserted #document/html0/body1/div3/#text1
-inserted #document/html0/body1/div3/#text5
-removed #comment after #document/html0/body1/div3/#text1
-removed #comment after #document/html0/body1/div3/#comment4
-removed #document/html0/body1/div3/#text6 after #document/html0/body1/div3/#text5
-inserted #document/html0/body1/div3/#text6
+INSERT html/body/#text0
+INSERT html/body/#text1
+REMOVE #comment after html/body/#comment0
+REMOVE #comment after html/body/#text1
+INSERT html/body/div/#text0
+INSERT html/body/div/#text3
+INSERT html/body/div/#text1
+INSERT html/body/div/#text2
+REMOVE #comment after html/body/div/#text1
+REMOVE #comment after html/body/div/#comment
+REMOVE html/body/div/#text3 after html/body/div/#text2
+INSERT html/body/div/#text3
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <html>
   <head />
@@ -99,13 +99,13 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-#document/html0/body1/div3/button3/#text0: "1" => "2"
+UPDATE html/body/div/button/#text0 "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("#class").click()
-
+# Render
+```js
+container.querySelector("#class").click();
+```
 ```html
 <html>
   <head />
@@ -147,15 +147,15 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-#document/html0/body1/div3/button3/#text4: "0" => "1"
-#document/html0/body1/div3/button3/#text8: "0" => "2"
-#document/html0/body1/button2/#text0: "0" => "1"
+UPDATE html/body/div/button/#text2 "0" => "1"
+UPDATE html/body/div/button/#text4 "0" => "2"
+UPDATE html/body/button/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <html>
   <head />
@@ -197,14 +197,14 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-#document/html0/body1/div3/button3/#text0: "2" => "3"
-#document/html0/body1/div3/button3/#text8: "2" => "3"
+UPDATE html/body/div/button/#text0 "2" => "3"
+UPDATE html/body/div/button/#text4 "2" => "3"
 ```
 
-
-# Render 
-container.querySelector("#class").click()
-
+# Render
+```js
+container.querySelector("#class").click();
+```
 ```html
 <html>
   <head />
@@ -246,15 +246,15 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-#document/html0/body1/div3/button3/#text4: "1" => "2"
-#document/html0/body1/div3/button3/#text8: "3" => "6"
-#document/html0/body1/button2/#text0: "1" => "2"
+UPDATE html/body/div/button/#text2 "1" => "2"
+UPDATE html/body/div/button/#text4 "3" => "6"
+UPDATE html/body/button/#text "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <html>
   <head />
@@ -296,6 +296,6 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-#document/html0/body1/div3/button3/#text0: "3" => "4"
-#document/html0/body1/div3/button3/#text8: "6" => "8"
+UPDATE html/body/div/button/#text0 "3" => "4"
+UPDATE html/body/div/button/#text4 "6" => "8"
 ```

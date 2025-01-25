@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   1
@@ -39,9 +39,10 @@
 ```
 
 
-# Render 
-c => click(c, 2)
-
+# Render
+```js
+click(c, 2);
+```
 ```html
 <button>
   1
@@ -95,9 +96,10 @@ c => click(c, 2)
 ```
 
 
-# Render 
-c => click(c, 3)
-
+# Render
+```js
+click(c, 3);
+```
 ```html
 <button>
   1
@@ -147,9 +149,10 @@ c => click(c, 3)
 ```
 
 
-# Render 
-c => click(c, 5)
-
+# Render
+```js
+click(c, 5);
+```
 ```html
 <button>
   1

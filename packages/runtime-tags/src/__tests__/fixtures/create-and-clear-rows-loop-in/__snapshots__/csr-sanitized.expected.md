@@ -1,4 +1,5 @@
-# Render {"children":{"1":"a","2":"b","3":"c"}}
+# Render `{"children":{"1":"a","2":"b","3":"c"}}`
+
 ```html
 <div>
   <p>
@@ -23,13 +24,15 @@
 ```
 
 
-# Render {"children":{}}
+# Render `{"children":{}}`
+
 ```html
 <div />
 ```
 
 
-# Render {"children":{"1":"a","2":"b","3":"c"}}
+# Render `{"children":{"1":"a","2":"b","3":"c"}}`
+
 ```html
 <div>
   <p>

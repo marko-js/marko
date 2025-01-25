@@ -1,12 +1,13 @@
 # Write
+```html
   <!>replaced<!--M_*0 #text/0--><span>replaced<!--M_*0 #text/1--><div></div></span><div><div>a</div>replaced<!--M_*0 #text/2-->Hello Text &lt;a/><!>replaced<!--M_*0 #text/3-->Hello HTML <span>hi</span><script>
       'Hello <b> \x3C/script>'
     </script><!--M_*0 #script/5--><style>
       .test { content: 'Hello <b> \3C/style>' }
     </style><!--M_*0 #style/6--></div><script>WALKER_RUNTIME("M")("_")</script>
+```
 
-
-# Render "End"
+# Render End
 ```html
 <!---->
 <html>
@@ -55,34 +56,34 @@
 
 # Mutations
 ```
-inserted #document/#comment0
-inserted #document/html1
-inserted #document/html1/head0
-inserted #document/html1/body1
-inserted #document/html1/body1/#text0
-inserted #document/html1/body1/#comment1
-inserted #document/html1/body1/span2
-inserted #document/html1/body1/span2/#text0
-inserted #document/html1/body1/span2/#comment1
-inserted #document/html1/body1/span2/div2
-inserted #document/html1/body1/div3
-inserted #document/html1/body1/div3/div0
-inserted #document/html1/body1/div3/div0/#text0
-inserted #document/html1/body1/div3/#text1
-inserted #document/html1/body1/div3/#comment2
-inserted #document/html1/body1/div3/#text3
-inserted #document/html1/body1/div3/#comment4
-inserted #document/html1/body1/div3/#text5
-inserted #document/html1/body1/div3/#comment6
-inserted #document/html1/body1/div3/#text7
-inserted #document/html1/body1/div3/span8
-inserted #document/html1/body1/div3/span8/#text0
-inserted #document/html1/body1/div3/script9
-inserted #document/html1/body1/div3/script9/#text0
-inserted #document/html1/body1/div3/#comment10
-inserted #document/html1/body1/div3/style11
-inserted #document/html1/body1/div3/style11/#text0
-inserted #document/html1/body1/div3/#comment12
-inserted #document/html1/body1/script4
-inserted #document/html1/body1/script4/#text0
+INSERT #comment
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/#text
+INSERT html/body/#comment
+INSERT html/body/span
+INSERT html/body/span/#text
+INSERT html/body/span/#comment
+INSERT html/body/span/div
+INSERT html/body/div
+INSERT html/body/div/div
+INSERT html/body/div/div/#text
+INSERT html/body/div/#text0
+INSERT html/body/div/#comment0
+INSERT html/body/div/#text1
+INSERT html/body/div/#comment1
+INSERT html/body/div/#text2
+INSERT html/body/div/#comment2
+INSERT html/body/div/#text3
+INSERT html/body/div/span
+INSERT html/body/div/span/#text
+INSERT html/body/div/script
+INSERT html/body/div/script/#text
+INSERT html/body/div/#comment3
+INSERT html/body/div/style
+INSERT html/body/div/style/#text
+INSERT html/body/div/#comment4
+INSERT html/body/script
+INSERT html/body/script/#text
 ```

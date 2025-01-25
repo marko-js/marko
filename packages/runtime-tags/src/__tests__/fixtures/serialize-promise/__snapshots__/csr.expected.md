@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div
   id="ref"
@@ -9,11 +9,10 @@
 
 # Mutations
 ```
-inserted div0
+INSERT div
 ```
 
-
-# Render "ASYNC"
+# Render ASYNC
 ```html
 <div
   id="ref"
@@ -24,6 +23,6 @@ inserted div0
 
 # Mutations
 ```
-removed #text in div0
-inserted div0/#text0
+REMOVE #text in div
+INSERT div/#text
 ```

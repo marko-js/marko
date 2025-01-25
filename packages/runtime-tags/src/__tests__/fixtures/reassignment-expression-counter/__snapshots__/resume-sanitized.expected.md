@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button
   id="addTwo"
@@ -18,9 +18,10 @@
 ```
 
 
-# Render 
-container.querySelector("#addTwo").click()
-
+# Render
+```js
+container.querySelector("#addTwo").click();
+```
 ```html
 <button
   id="addTwo"
@@ -40,9 +41,10 @@ container.querySelector("#addTwo").click()
 ```
 
 
-# Render 
-container.querySelector("#triple").click()
-
+# Render
+```js
+container.querySelector("#triple").click();
+```
 ```html
 <button
   id="addTwo"
@@ -62,9 +64,10 @@ container.querySelector("#triple").click()
 ```
 
 
-# Render 
-container.querySelector("#cube").click()
-
+# Render
+```js
+container.querySelector("#cube").click();
+```
 ```html
 <button
   id="addTwo"

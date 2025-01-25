@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <!---->
 <button
@@ -21,21 +21,21 @@
 
 # Mutations
 ```
-inserted #comment0, #text1, #text4, #comment5
-inserted button2
-inserted button2/#text0
-inserted div3
-inserted div3/#text0
-inserted div3/#text5
-inserted div3/#text1
-inserted div3/#text4
-inserted div3/h12, div3/button3
+INSERT #comment0, #text0, #text1, #comment1
+INSERT button
+INSERT button/#text
+INSERT div
+INSERT div/#text0
+INSERT div/#text3
+INSERT div/#text1
+INSERT div/#text2
+INSERT div/h1, div/button
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <!---->
 <button
@@ -58,13 +58,13 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-div3/button3/#text0: "1" => "2"
+UPDATE div/button/#text0 "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("#class").click()
-
+# Render
+```js
+container.querySelector("#class").click();
+```
 ```html
 <!---->
 <button
@@ -87,15 +87,15 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-div3/button3/#text2: "0" => "1"
-div3/button3/#text4: "0" => "2"
-button2/#text0: "0" => "1"
+UPDATE div/button/#text2 "0" => "1"
+UPDATE div/button/#text4 "0" => "2"
+UPDATE button/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <!---->
 <button
@@ -118,14 +118,14 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-div3/button3/#text0: "2" => "3"
-div3/button3/#text4: "2" => "3"
+UPDATE div/button/#text0 "2" => "3"
+UPDATE div/button/#text4 "2" => "3"
 ```
 
-
-# Render 
-container.querySelector("#class").click()
-
+# Render
+```js
+container.querySelector("#class").click();
+```
 ```html
 <!---->
 <button
@@ -148,15 +148,15 @@ container.querySelector("#class").click()
 
 # Mutations
 ```
-div3/button3/#text2: "1" => "2"
-div3/button3/#text4: "3" => "6"
-button2/#text0: "1" => "2"
+UPDATE div/button/#text2 "1" => "2"
+UPDATE div/button/#text4 "3" => "6"
+UPDATE button/#text "1" => "2"
 ```
 
-
-# Render 
-container.querySelector("#tags").click()
-
+# Render
+```js
+container.querySelector("#tags").click();
+```
 ```html
 <!---->
 <button
@@ -179,6 +179,6 @@ container.querySelector("#tags").click()
 
 # Mutations
 ```
-div3/button3/#text0: "3" => "4"
-div3/button3/#text4: "6" => "8"
+UPDATE div/button/#text0 "3" => "4"
+UPDATE div/button/#text4 "6" => "8"
 ```

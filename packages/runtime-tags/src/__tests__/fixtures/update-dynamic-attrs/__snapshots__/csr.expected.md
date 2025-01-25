@@ -1,4 +1,5 @@
-# Render {"value":{"a":1,"b":2}}
+# Render `{"value":{"a":1,"b":2}}`
+
 ```html
 <div
   a="1"
@@ -16,11 +17,11 @@
 
 # Mutations
 ```
-inserted div0, div1, div2
+INSERT div0, div1, div2
 ```
 
+# Render `{"value":{"b":2,"c":3}}`
 
-# Render {"value":{"b":2,"c":3}}
 ```html
 <div
   b="2"
@@ -40,15 +41,15 @@ inserted div0, div1, div2
 
 # Mutations
 ```
-div0: attr(a) "1" => null
-div0: attr(c) null => "3"
-div2: attr(c) null => "3"
-div1: attr(a) "1" => "0"
-div1: attr(c) null => "3"
+UPDATE div0[a] "1" => null
+UPDATE div0[c] null => "3"
+UPDATE div2[c] null => "3"
+UPDATE div1[a] "1" => "0"
+UPDATE div1[c] null => "3"
 ```
 
+# Render `{"value":{}}`
 
-# Render {"value":{}}
 ```html
 <div />
 <div
@@ -61,16 +62,16 @@ div1: attr(c) null => "3"
 
 # Mutations
 ```
-div0: attr(c) "3" => null
-div0: attr(b) "2" => null
-div2: attr(c) "3" => null
-div2: attr(b) "2" => null
-div1: attr(c) "3" => null
-div1: attr(b) "2" => null
+UPDATE div0[c] "3" => null
+UPDATE div0[b] "2" => null
+UPDATE div2[c] "3" => null
+UPDATE div2[b] "2" => null
+UPDATE div1[c] "3" => null
+UPDATE div1[b] "2" => null
 ```
 
+# Render `{"value":null}`
 
-# Render {"value":null}
 ```html
 <div />
 <div
@@ -81,13 +82,9 @@ div1: attr(b) "2" => null
 />
 ```
 
-# Mutations
-```
 
-```
+# Render `{"value":{"a":1}}`
 
-
-# Render {"value":{"a":1}}
 ```html
 <div
   a="1"
@@ -102,6 +99,6 @@ div1: attr(b) "2" => null
 
 # Mutations
 ```
-div0: attr(a) null => "1"
-div1: attr(a) "0" => "1"
+UPDATE div0[a] null => "1"
+UPDATE div1[a] "0" => "1"
 ```

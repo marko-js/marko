@@ -1,4 +1,5 @@
-# Render {"x":"replaced"}
+# Render `{"x":"replaced"}`
+
 ```html
 <!---->
 <html>
@@ -43,9 +44,4 @@
     </script>
   </body>
 </html>
-```
-
-# Mutations
-```
-
 ```

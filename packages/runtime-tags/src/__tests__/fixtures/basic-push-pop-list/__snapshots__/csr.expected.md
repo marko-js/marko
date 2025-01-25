@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div>
   <button
@@ -16,13 +16,13 @@
 
 # Mutations
 ```
-inserted div0
+INSERT div
 ```
 
-
-# Render 
-container.querySelector("#add").click()
-
+# Render
+```js
+container.querySelector("#add").click();
+```
 ```html
 <div>
   1
@@ -41,14 +41,14 @@ container.querySelector("#add").click()
 
 # Mutations
 ```
-inserted div0/#text0
-removed #text before div0/#text0
+INSERT div/#text
+REMOVE #text before div/#text
 ```
 
-
-# Render 
-container.querySelector("#add").click()
-
+# Render
+```js
+container.querySelector("#add").click();
+```
 ```html
 <div>
   12
@@ -67,13 +67,13 @@ container.querySelector("#add").click()
 
 # Mutations
 ```
-inserted div0/#text1
+INSERT div/#text1
 ```
 
-
-# Render 
-container.querySelector("#remove").click()
-
+# Render
+```js
+container.querySelector("#remove").click();
+```
 ```html
 <div>
   1
@@ -92,13 +92,13 @@ container.querySelector("#remove").click()
 
 # Mutations
 ```
-removed #text after div0/#text0
+REMOVE #text after div/#text
 ```
 
-
-# Render 
-container.querySelector("#add").click()
-
+# Render
+```js
+container.querySelector("#add").click();
+```
 ```html
 <div>
   13
@@ -117,5 +117,5 @@ container.querySelector("#add").click()
 
 # Mutations
 ```
-inserted div0/#text1
+INSERT div/#text1
 ```

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div>
   Child 1 has 3
@@ -7,9 +7,10 @@
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div>
   Child 2 has 3
@@ -18,9 +19,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div>
   Child 1 has 3

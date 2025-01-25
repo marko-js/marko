@@ -1,4 +1,5 @@
 # Write
+```html
   <script type=importmap>
     {
       "imports": {
@@ -6,9 +7,9 @@
       }
     }
   </script><!--M_*0 #script/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{count:0}}),0,"__tests__/template.marko_0_count",0];M._.w()</script>
+```
 
-
-# Render "End"
+# Render End
 ```html
 <html>
   <head>
@@ -34,12 +35,12 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/head0/script0
-inserted #document/html0/head0/script0/#text0
-inserted #document/html0/head0/#comment1
-inserted #document/html0/head0/script2
-inserted #document/html0/head0/script2/#text0
-inserted #document/html0/body1
+INSERT html
+INSERT html/head
+INSERT html/head/script0
+INSERT html/head/script0/#text
+INSERT html/head/#comment
+INSERT html/head/script1
+INSERT html/head/script1/#text
+INSERT html/body
 ```

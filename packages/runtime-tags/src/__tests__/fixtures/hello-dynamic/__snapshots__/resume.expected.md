@@ -1,4 +1,5 @@
-# Render {"name":"Marko"}
+# Render `{"name":"Marko"}`
+
 ```html
 <html>
   <head />
@@ -20,9 +21,4 @@
     </script>
   </body>
 </html>
-```
-
-# Mutations
-```
-
 ```

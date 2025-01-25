@@ -1,8 +1,9 @@
 # Write
+```html
   <div></div><!--M_*0 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={1:{_:{}}}),1,"__tests__/template.marko_1",0];M._.w()</script>
+```
 
-
-# Render "End"
+# Render End
 ```html
 <html>
   <head />
@@ -18,11 +19,11 @@
 
 # Mutations
 ```
-inserted #document/html0
-inserted #document/html0/head0
-inserted #document/html0/body1
-inserted #document/html0/body1/div0
-inserted #document/html0/body1/#comment1
-inserted #document/html0/body1/script2
-inserted #document/html0/body1/script2/#text0
+INSERT html
+INSERT html/head
+INSERT html/body
+INSERT html/body/div
+INSERT html/body/#comment
+INSERT html/body/script
+INSERT html/body/script/#text
 ```

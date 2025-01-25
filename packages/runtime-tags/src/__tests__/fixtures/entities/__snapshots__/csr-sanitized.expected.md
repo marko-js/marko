@@ -1,4 +1,4 @@
-# Render undefined
+# Render
 ```html
 Hello John & Suzy Invalid Entity: &b ; Valid Numeric Entity: " Valid Hexadecimal Entity: ¢
 ```

@@ -1,4 +1,5 @@
-# Render {"value":"Hello <strong>World</strong>"}
+# Render `{"value":"Hello <strong>World</strong>"}`
+
 ```html
 <html>
   <head />
@@ -18,9 +19,4 @@
     </script>
   </body>
 </html>
-```
-
-# Mutations
-```
-
 ```

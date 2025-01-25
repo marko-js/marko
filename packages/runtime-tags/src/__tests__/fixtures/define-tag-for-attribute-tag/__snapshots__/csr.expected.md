@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div>
   <span>
@@ -12,13 +12,13 @@
 
 # Mutations
 ```
-inserted div0, button1
+INSERT div, button
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div
   class="selected"
@@ -34,13 +34,13 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-div0: attr(class) null => "selected"
+UPDATE div[class] null => "selected"
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div>
   <span>
@@ -54,13 +54,13 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-div0: attr(class) "selected" => null
+UPDATE div[class] "selected" => null
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <div
   class="selected"
@@ -76,5 +76,5 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-div0: attr(class) null => "selected"
+UPDATE div[class] null => "selected"
 ```

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <input
   checked=""
@@ -20,9 +20,10 @@
 ```
 
 
-# Render 
-container.querySelector("input").click()
-
+# Render
+```js
+container.querySelector("input").click();
+```
 ```html
 <input
   type="checkbox"
@@ -43,9 +44,10 @@ container.querySelector("input").click()
 ```
 
 
-# Render 
-container.querySelector("input").click()
-
+# Render
+```js
+container.querySelector("input").click();
+```
 ```html
 <input
   checked=""
@@ -67,9 +69,10 @@ container.querySelector("input").click()
 ```
 
 
-# Render 
-container.querySelector("input").click()
-
+# Render
+```js
+container.querySelector("input").click();
+```
 ```html
 <input
   type="checkbox"

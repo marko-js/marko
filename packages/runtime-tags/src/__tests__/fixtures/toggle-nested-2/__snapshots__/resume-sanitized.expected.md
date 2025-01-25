@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div>
   <button
@@ -16,9 +16,10 @@
 ```
 
 
-# Render 
-container.querySelector("#count").click()
-
+# Render
+```js
+container.querySelector("#count").click();
+```
 ```html
 <div>
   <button
@@ -36,9 +37,10 @@ container.querySelector("#count").click()
 ```
 
 
-# Render 
-container.querySelector("#count").click()
-
+# Render
+```js
+container.querySelector("#count").click();
+```
 ```html
 <div>
   <button
@@ -56,9 +58,10 @@ container.querySelector("#count").click()
 ```
 
 
-# Render 
-container.querySelector("#inner").click()
-
+# Render
+```js
+container.querySelector("#inner").click();
+```
 ```html
 <div>
   <button
@@ -71,9 +74,10 @@ container.querySelector("#inner").click()
 ```
 
 
-# Render 
-container.querySelector("#inner").click()
-
+# Render
+```js
+container.querySelector("#inner").click();
+```
 ```html
 <div>
   <button
@@ -91,9 +95,10 @@ container.querySelector("#inner").click()
 ```
 
 
-# Render 
-container.querySelector("#count").click()
-
+# Render
+```js
+container.querySelector("#count").click();
+```
 ```html
 <div>
   <button
@@ -111,9 +116,10 @@ container.querySelector("#count").click()
 ```
 
 
-# Render 
-container.querySelector("#outer").click()
-
+# Render
+```js
+container.querySelector("#outer").click();
+```
 ```html
 <div>
   <button
@@ -123,9 +129,10 @@ container.querySelector("#outer").click()
 ```
 
 
-# Render 
-container.querySelector("#outer").click()
-
+# Render
+```js
+container.querySelector("#outer").click();
+```
 ```html
 <div>
   <button
@@ -143,9 +150,10 @@ container.querySelector("#outer").click()
 ```
 
 
-# Render 
-container.querySelector("#count").click()
-
+# Render
+```js
+container.querySelector("#count").click();
+```
 ```html
 <div>
   <button

@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -104,15 +104,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <html>
   <head />
@@ -185,18 +181,18 @@ destroyed 2.3
 
 # Mutations
 ```
-inserted #text
-removed #text in #document/html0/body1/div2
-inserted #text
-removed #text in #document/html0/body1/div2
-inserted #text
-removed #text in #document/html0/body1/div2
-inserted #text
-removed div after #document/html0/body1/div5
-removed #text in #document/html0/body1/div2
-inserted #text
-removed div after #document/html0/body1/div4/div3
-removed #text in #document/html0/body1/div2
-inserted #document/html0/body1/div2/#text0
-removed div after #document/html0/body1/div5/div3
+INSERT #text
+REMOVE #text in html/body/div0
+INSERT #text
+REMOVE #text in html/body/div0
+INSERT #text
+REMOVE #text in html/body/div0
+INSERT #text
+REMOVE div after html/body/div2
+REMOVE #text in html/body/div0
+INSERT #text
+REMOVE div after html/body/div1/div2
+REMOVE #text in html/body/div0
+INSERT html/body/div0/#text
+REMOVE div after html/body/div2/div2
 ```

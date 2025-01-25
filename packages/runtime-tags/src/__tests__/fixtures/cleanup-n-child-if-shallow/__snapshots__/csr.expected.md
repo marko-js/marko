@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button>
   Toggle
@@ -20,14 +20,14 @@
 
 # Mutations
 ```
-inserted button0, div1, div2, span3, p4, #comment5
-inserted div1/#text0
+INSERT button, div0, div1, span, p, #comment
+INSERT div0/#text
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -40,18 +40,18 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #text2
-removed #text in div1
-inserted div1/#text0
-removed div after #text2
-removed span after #text2
-removed p after #text2
+INSERT #text
+REMOVE #text in div
+INSERT div/#text
+REMOVE div after #text
+REMOVE span after #text
+REMOVE p after #text
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -73,18 +73,18 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted div2
-inserted span3
-inserted p4
-removed #text after p4
-removed #text in div1
-inserted div1/#text0
+INSERT div1
+INSERT span
+INSERT p
+REMOVE #text after p
+REMOVE #text in div0
+INSERT div0/#text
 ```
 
-
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button>
   Toggle
@@ -97,10 +97,10 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-inserted #text2
-removed #text in div1
-inserted div1/#text0
-removed div after #text2
-removed span after #text2
-removed p after #text2
+INSERT #text
+REMOVE #text in div
+INSERT div/#text
+REMOVE div after #text
+REMOVE span after #text
+REMOVE p after #text
 ```

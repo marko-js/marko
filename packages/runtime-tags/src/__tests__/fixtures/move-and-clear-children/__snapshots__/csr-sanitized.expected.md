@@ -1,4 +1,5 @@
-# Render {"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}
+# Render `{"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}`
+
 ```html
 <div>
   abc
@@ -6,7 +7,8 @@
 ```
 
 
-# Render {"children":[{"id":2,"text":"b"},{"id":3,"text":"c"},{"id":1,"text":"a"}]}
+# Render `{"children":[{"id":2,"text":"b"},{"id":3,"text":"c"},{"id":1,"text":"a"}]}`
+
 ```html
 <div>
   bca
@@ -14,7 +16,8 @@
 ```
 
 
-# Render {"children":[]}
+# Render `{"children":[]}`
+
 ```html
 <div />
 ```

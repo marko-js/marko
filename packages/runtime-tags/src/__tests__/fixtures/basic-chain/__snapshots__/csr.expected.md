@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <div>
   6
@@ -7,5 +7,5 @@
 
 # Mutations
 ```
-inserted div0
+INSERT div
 ```

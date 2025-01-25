@@ -1,4 +1,5 @@
-# Render {"value":{"a":1,"b":2}}
+# Render `{"value":{"a":1,"b":2}}`
+
 ```html
 <div
   a="1"

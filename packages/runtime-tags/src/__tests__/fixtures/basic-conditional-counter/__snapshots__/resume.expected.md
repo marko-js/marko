@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -23,15 +23,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button.inc").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button.inc").click()
-
 ```html
 <html>
   <head />
@@ -58,13 +54,13 @@ container.querySelector("button.inc").click()
 
 # Mutations
 ```
-#document/html0/body1/span4/#text0: "0" => "1"
+UPDATE html/body/span/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelector("button.toggle").click()
-
+# Render
+```js
+container.querySelector("button.toggle").click();
+```
 ```html
 <html>
   <head />
@@ -87,15 +83,15 @@ container.querySelector("button.toggle").click()
 
 # Mutations
 ```
-removed #document/html0/body1/#comment4 after span
-inserted #document/html0/body1/#comment4
-removed span after #document/html0/body1/#comment4
+REMOVE html/body/#comment2 after span
+INSERT html/body/#comment2
+REMOVE span after html/body/#comment2
 ```
 
-
-# Render 
-container.querySelector("button.inc").click()
-
+# Render
+```js
+container.querySelector("button.inc").click();
+```
 ```html
 <html>
   <head />
@@ -116,15 +112,11 @@ container.querySelector("button.inc").click()
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button.toggle").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button.toggle").click()
-
 ```html
 <html>
   <head />
@@ -149,15 +141,15 @@ container.querySelector("button.toggle").click()
 
 # Mutations
 ```
-inserted #document/html0/body1/span4
-removed #comment after #document/html0/body1/span4
-#document/html0/body1/span4/#text0: " " => "2"
+INSERT html/body/span
+REMOVE #comment after html/body/span
+UPDATE html/body/span/#text " " => "2"
 ```
 
-
-# Render 
-container.querySelector("button.inc").click()
-
+# Render
+```js
+container.querySelector("button.inc").click();
+```
 ```html
 <html>
   <head />
@@ -182,5 +174,5 @@ container.querySelector("button.inc").click()
 
 # Mutations
 ```
-#document/html0/body1/span4/#text0: "2" => "3"
+UPDATE html/body/span/#text "2" => "3"
 ```

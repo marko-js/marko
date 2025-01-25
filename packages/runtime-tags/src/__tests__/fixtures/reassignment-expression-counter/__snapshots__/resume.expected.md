@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -31,15 +31,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("#addTwo").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("#addTwo").click()
-
 ```html
 <html>
   <head />
@@ -74,15 +70,15 @@ container.querySelector("#addTwo").click()
 
 # Mutations
 ```
-#document/html0/body1/button0/#text0: "0" => "2"
-#document/html0/body1/button2/#text0: "0" => "2"
-#document/html0/body1/button4/#text0: "0" => "2"
+UPDATE html/body/button0/#text "0" => "2"
+UPDATE html/body/button1/#text "0" => "2"
+UPDATE html/body/button2/#text "0" => "2"
 ```
 
-
-# Render 
-container.querySelector("#triple").click()
-
+# Render
+```js
+container.querySelector("#triple").click();
+```
 ```html
 <html>
   <head />
@@ -117,15 +113,15 @@ container.querySelector("#triple").click()
 
 # Mutations
 ```
-#document/html0/body1/button0/#text0: "2" => "6"
-#document/html0/body1/button2/#text0: "2" => "6"
-#document/html0/body1/button4/#text0: "2" => "6"
+UPDATE html/body/button0/#text "2" => "6"
+UPDATE html/body/button1/#text "2" => "6"
+UPDATE html/body/button2/#text "2" => "6"
 ```
 
-
-# Render 
-container.querySelector("#cube").click()
-
+# Render
+```js
+container.querySelector("#cube").click();
+```
 ```html
 <html>
   <head />
@@ -160,7 +156,7 @@ container.querySelector("#cube").click()
 
 # Mutations
 ```
-#document/html0/body1/button0/#text0: "6" => "216"
-#document/html0/body1/button2/#text0: "6" => "216"
-#document/html0/body1/button4/#text0: "6" => "216"
+UPDATE html/body/button0/#text "6" => "216"
+UPDATE html/body/button1/#text "6" => "216"
+UPDATE html/body/button2/#text "6" => "216"
 ```

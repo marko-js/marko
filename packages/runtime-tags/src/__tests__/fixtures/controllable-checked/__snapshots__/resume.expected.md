@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -18,15 +18,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("input").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("input").click()
-
 ```html
 <html>
   <head />
@@ -49,13 +45,13 @@ container.querySelector("input").click()
 
 # Mutations
 ```
-#document/html0/body1/span2/#text0: "false" => "true"
+UPDATE html/body/span/#text "false" => "true"
 ```
 
-
-# Render 
-container.querySelector("input").click()
-
+# Render
+```js
+container.querySelector("input").click();
+```
 ```html
 <html>
   <head />
@@ -77,13 +73,13 @@ container.querySelector("input").click()
 
 # Mutations
 ```
-#document/html0/body1/span2/#text0: "true" => "false"
+UPDATE html/body/span/#text "true" => "false"
 ```
 
-
-# Render 
-container.querySelector("input").click()
-
+# Render
+```js
+container.querySelector("input").click();
+```
 ```html
 <html>
   <head />
@@ -106,5 +102,5 @@ container.querySelector("input").click()
 
 # Mutations
 ```
-#document/html0/body1/span2/#text0: "false" => "true"
+UPDATE html/body/span/#text "false" => "true"
 ```

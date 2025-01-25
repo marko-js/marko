@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <button
   class="inc"
@@ -11,9 +11,10 @@
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button
   class="inc"
@@ -26,9 +27,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button
   class="inc"
@@ -41,9 +43,10 @@ container.querySelector("button").click()
 ```
 
 
-# Render 
-container.querySelector("button").click()
-
+# Render
+```js
+container.querySelector("button").click();
+```
 ```html
 <button
   class="inc"

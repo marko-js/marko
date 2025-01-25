@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -38,15 +38,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelectorAll("button")[buttonNum++].click();
 ```
-
-```
-
-
-# Render 
-container.querySelectorAll("button")[buttonNum++].click()
-
 ```html
 <html>
   <head />
@@ -88,13 +84,13 @@ container.querySelectorAll("button")[buttonNum++].click()
 
 # Mutations
 ```
-#document/html0/body1/div0/button0/#text0: "0" => "1"
+UPDATE html/body/div0/button/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelectorAll("button")[buttonNum++].click()
-
+# Render
+```js
+container.querySelectorAll("button")[buttonNum++].click();
+```
 ```html
 <html>
   <head />
@@ -136,13 +132,13 @@ container.querySelectorAll("button")[buttonNum++].click()
 
 # Mutations
 ```
-#document/html0/body1/div0/div2/button0/#text0: "0" => "1"
+UPDATE html/body/div0/div/button/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelectorAll("button")[buttonNum++].click()
-
+# Render
+```js
+container.querySelectorAll("button")[buttonNum++].click();
+```
 ```html
 <html>
   <head />
@@ -184,13 +180,13 @@ container.querySelectorAll("button")[buttonNum++].click()
 
 # Mutations
 ```
-#document/html0/body1/div0/div2/div2/button0/#text0: "0" => "1"
+UPDATE html/body/div0/div/div/button/#text "0" => "1"
 ```
 
-
-# Render 
-container.querySelectorAll("button")[buttonNum++].click()
-
+# Render
+```js
+container.querySelectorAll("button")[buttonNum++].click();
+```
 ```html
 <html>
   <head />
@@ -232,13 +228,13 @@ container.querySelectorAll("button")[buttonNum++].click()
 
 # Mutations
 ```
-#document/html0/body1/div1/button0/#text0: "0" => "1"
+UPDATE html/body/div1/button/#text "0" => "1"
 ```
 
-
-# Render 
-buttonNum = 0
-
+# Render
+```js
+buttonNum = 0;
+```
 ```html
 <html>
   <head />
@@ -276,9 +272,4 @@ buttonNum = 0
     </script>
   </body>
 </html>
-```
-
-# Mutations
-```
-
 ```

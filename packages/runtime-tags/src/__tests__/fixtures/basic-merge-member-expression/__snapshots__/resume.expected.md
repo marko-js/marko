@@ -1,4 +1,4 @@
-# Render {}
+# Render
 ```html
 <html>
   <head />
@@ -18,15 +18,11 @@
 </html>
 ```
 
-# Mutations
+
+# Render
+```js
+container.querySelector("button").click();
 ```
-
-```
-
-
-# Render 
-container.querySelector("button").click()
-
 ```html
 <html>
   <head />
@@ -52,6 +48,6 @@ container.querySelector("button").click()
 
 # Mutations
 ```
-#document/html0/body1/div0: attr(class) null => "baz"
-#document/html0/body1/div2: attr(class) null => "baz"
+UPDATE html/body/div0[class] null => "baz"
+UPDATE html/body/div1[class] null => "baz"
 ```

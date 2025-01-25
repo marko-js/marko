@@ -1,4 +1,5 @@
-# Render {"tagName":"h1"}
+# Render `{"tagName":"h1"}`
+
 ```html
 <html>
   <head />
@@ -14,9 +15,4 @@
     </script>
   </body>
 </html>
-```
-
-# Mutations
-```
-
 ```

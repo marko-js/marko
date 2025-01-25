@@ -1,4 +1,5 @@
-# Render {"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}
+# Render `{"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}`
+
 ```html
 <!---->
 abc
@@ -7,11 +8,11 @@ abc
 
 # Mutations
 ```
-inserted #comment0, #text1, #text2, #text3, #comment4
+INSERT #comment0, #text0, #text1, #text2, #comment1
 ```
 
+# Render `{"children":[]}`
 
-# Render {"children":[]}
 ```html
 <!---->
 <!---->
@@ -19,14 +20,14 @@ inserted #comment0, #text1, #text2, #text3, #comment4
 
 # Mutations
 ```
-inserted #text1
-removed #text after #comment0
-removed #text after #comment0
-removed #text after #comment0
+INSERT #text
+REMOVE #text after #comment0
+REMOVE #text after #comment0
+REMOVE #text after #comment0
 ```
 
+# Render `{"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}`
 
-# Render {"children":[{"id":1,"text":"a"},{"id":2,"text":"b"},{"id":3,"text":"c"}]}
 ```html
 <!---->
 abc
@@ -35,8 +36,8 @@ abc
 
 # Mutations
 ```
-inserted #text1
-inserted #text2
-inserted #text3
-removed #text after #comment0
+INSERT #text0
+INSERT #text1
+INSERT #text2
+REMOVE #text after #comment0
 ```
