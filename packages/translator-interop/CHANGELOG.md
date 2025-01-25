@@ -1,5 +1,19 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.9
+
+### Patch Changes
+
+- [#2470](https://github.com/marko-js/marko/pull/2470) [`218c436`](https://github.com/marko-js/marko/commit/218c43674e478062cdbc0fcbaef0dc13cd79107f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where code within a control flow could execute after the control flow was removed.
+
+- [#2469](https://github.com/marko-js/marko/pull/2469) [`f99d363`](https://github.com/marko-js/marko/commit/f99d363cd0597be495d486f48395192842da7262) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Edit TypeScript names for event handlers
+
+- [#2470](https://github.com/marko-js/marko/pull/2470) [`218c436`](https://github.com/marko-js/marko/commit/218c43674e478062cdbc0fcbaef0dc13cd79107f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve tags / class api interop layer for destroyed tags.
+
+- Updated dependencies [[`218c436`](https://github.com/marko-js/marko/commit/218c43674e478062cdbc0fcbaef0dc13cd79107f), [`f99d363`](https://github.com/marko-js/marko/commit/f99d363cd0597be495d486f48395192842da7262), [`2762924`](https://github.com/marko-js/marko/commit/276292455b16bbbd2869f465b7af5f891f88fa6d), [`218c436`](https://github.com/marko-js/marko/commit/218c43674e478062cdbc0fcbaef0dc13cd79107f)]:
+  - @marko/runtime-tags@0.3.23
+  - marko@5.37.12
+
 ## 0.2.8
 
 ### Patch Changes

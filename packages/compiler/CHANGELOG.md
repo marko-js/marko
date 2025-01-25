@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.11
+
+### Patch Changes
+
+- [#2470](https://github.com/marko-js/marko/pull/2470) [`218c436`](https://github.com/marko-js/marko/commit/218c43674e478062cdbc0fcbaef0dc13cd79107f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve tags / class api interop layer for destroyed tags.
+
 ## 5.39.10
 
 ### Patch Changes
