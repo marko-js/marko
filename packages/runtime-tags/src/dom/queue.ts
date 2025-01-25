@@ -10,14 +10,14 @@ const enum PendingEffectOffset {
 }
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
-type PendingSignal = {
+type PendingRender = {
   ___scope: Scope;
   ___signal: Signal<any>;
   ___value: unknown;
-  ___next: PendingSignal | undefined;
+  ___next: PendingRender | undefined;
 };
 
-let pendingSignal: PendingSignal["___next"] = undefined;
+let pendingRender: PendingRender | undefined;
 export let pendingEffects: unknown[] = [];
 export let rendering = false;
 
@@ -36,38 +36,33 @@ export function queueRender(
   signal: Signal<any>,
   value?: unknown,
 ) {
-  const nextSignal: PendingSignal = {
+  const nextRender: PendingRender = {
     ___scope: scope,
     ___signal: signal,
     ___value: value,
     ___next: undefined,
   };
 
-  if (!pendingSignal) {
-    pendingSignal = nextSignal;
-  } else if (
-    sortScopeByDOMPosition(pendingSignal.___scope, nextSignal.___scope) < 0
-  ) {
+  if (!pendingRender) {
+    pendingRender = nextRender;
+  } else if (comparePendingRenders(pendingRender, nextRender) < 0) {
     if (MARKO_DEBUG && rendering) {
       throw new Error(
         "attempted to queue a render before the currently executing render",
       );
     }
-    nextSignal.___next = pendingSignal;
-    pendingSignal = nextSignal;
+    nextRender.___next = pendingRender;
+    pendingRender = nextRender;
   } else {
-    let currentSignal = pendingSignal;
+    let curRender = pendingRender;
     while (
-      currentSignal.___next &&
-      sortScopeByDOMPosition(
-        currentSignal.___next.___scope,
-        nextSignal.___scope,
-      ) >= 0
+      curRender.___next &&
+      comparePendingRenders(curRender.___next, nextRender) >= 0
     ) {
-      currentSignal = currentSignal.___next;
+      curRender = curRender.___next;
     }
-    nextSignal.___next = currentSignal.___next;
-    currentSignal.___next = nextSignal;
+    nextRender.___next = curRender.___next;
+    curRender.___next = nextRender;
   }
 }
 
@@ -82,9 +77,9 @@ export function run() {
   const effects = pendingEffects;
   try {
     rendering = true;
-    runSignals();
+    runRenders();
   } finally {
-    pendingSignal = undefined;
+    pendingRender = undefined;
     rendering = false;
   }
   pendingEffects = [];
@@ -92,17 +87,18 @@ export function run() {
 }
 
 export function prepareEffects(fn: () => void): unknown[] {
-  const prevSignals = pendingSignal;
+  const prevRender = pendingRender;
   const prevEffects = pendingEffects;
   const preparedEffects = (pendingEffects = []);
+  pendingRender = undefined;
+
   try {
     rendering = true;
-    pendingSignal = undefined;
     fn();
-    runSignals();
+    runRenders();
   } finally {
     rendering = false;
-    pendingSignal = prevSignals;
+    pendingRender = prevRender;
     pendingEffects = prevEffects;
   }
   return preparedEffects;
@@ -116,19 +112,19 @@ export function runEffects(effects: unknown[] = pendingEffects) {
   }
 }
 
-function runSignals() {
-  while (pendingSignal) {
-    if (!pendingSignal.___scope.___closestBranch?.___destroyed) {
-      pendingSignal.___signal(pendingSignal.___scope, pendingSignal.___value);
+function runRenders() {
+  while (pendingRender) {
+    if (!pendingRender.___scope.___closestBranch?.___destroyed) {
+      pendingRender.___signal(pendingRender.___scope, pendingRender.___value);
     }
-    pendingSignal = pendingSignal.___next;
+    pendingRender = pendingRender.___next;
   }
   finishPendingScopes();
 }
 
-function sortScopeByDOMPosition(a: Scope, b: Scope) {
-  const aStart = ownerStartNode(a);
-  const bStart = ownerStartNode(b);
+function comparePendingRenders(a: PendingRender, b: PendingRender) {
+  const aStart = ownerStartNode(a.___scope);
+  const bStart = ownerStartNode(b.___scope);
   return aStart === bStart
     ? 0
     : aStart
