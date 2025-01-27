@@ -123,6 +123,7 @@ function runRenders() {
 }
 
 function comparePendingRenders(a: PendingRender, b: PendingRender) {
+  if (a.___scope.___pending || b.___scope.___pending) return 0;
   const aStart = ownerStartNode(a.___scope);
   const bStart = ownerStartNode(b.___scope);
   return aStart === bStart
