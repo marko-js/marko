@@ -88,7 +88,7 @@ function walkInternal(
         MARKO_DEBUG
           ? getDebugKey(currentScopeIndex++, "#text")
           : currentScopeIndex++
-      ] = document.createTextNode(""));
+      ] = new Text());
       const current = walker.currentNode;
       const parentNode = current.parentNode!;
       if (MARKO_DEBUG && value !== WalkCode.Replace) {

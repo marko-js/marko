@@ -69,16 +69,15 @@ function mount(
     </reference>
     <!-- afterend -->
   */
-
   switch (position) {
+    case "beforebegin":
+      reference.parentNode!.insertBefore(dom, reference);
+      break;
     case "afterbegin":
       reference.insertBefore(dom, reference.firstChild);
       break;
     case "afterend":
-      reference.parentElement!.insertBefore(dom, reference.nextSibling);
-      break;
-    case "beforebegin":
-      reference.parentElement!.insertBefore(dom, reference);
+      reference.parentNode!.insertBefore(dom, reference.nextSibling);
       break;
     default:
       reference.appendChild(dom);

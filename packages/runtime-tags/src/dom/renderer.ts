@@ -7,7 +7,7 @@ import {
 } from "../common/types";
 import { setConditionalRendererOnlyChild } from "./control-flow";
 import { attrs } from "./dom";
-import { parseHTMLOrSingleNode as parseHTMLFragmentOrFirstNode } from "./parse-html";
+import { parseHTMLOrSingleNode } from "./parse-html";
 import { queueRender } from "./queue";
 import { createScope } from "./scope";
 import { CLEAN, DIRTY, MARK, type Signal, type SignalOp } from "./signals";
@@ -192,7 +192,7 @@ export function createRenderer(
 }
 
 function _clone(this: Renderer) {
-  return (this.___sourceNode ||= parseHTMLFragmentOrFirstNode(
+  return (this.___sourceNode ||= parseHTMLOrSingleNode(
     this.___template,
   )).cloneNode(true);
 }
