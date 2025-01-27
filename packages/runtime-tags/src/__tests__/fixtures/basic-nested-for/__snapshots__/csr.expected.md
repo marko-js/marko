@@ -76,15 +76,15 @@ container.querySelector("button").click();
 INSERT #comment4
 INSERT #text
 INSERT #comment5
-INSERT div2
-INSERT div5
 INSERT div6
 INSERT div7
 INSERT div8
 REMOVE #text after #comment4
-UPDATE div2/#text " " => "0.2"
-UPDATE div5/#text " " => "1.2"
+INSERT div2
+INSERT div5
 UPDATE div6/#text " " => "2.0"
 UPDATE div7/#text " " => "2.1"
 UPDATE div8/#text " " => "2.2"
+UPDATE div2/#text " " => "0.2"
+UPDATE div5/#text " " => "1.2"
 ```
