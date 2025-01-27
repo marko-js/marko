@@ -1,4 +1,4 @@
-// size: 17895 (min) 6539 (brotli)
+// size: 17933 (min) 6546 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -147,7 +147,7 @@ function handleDelegated(ev) {
   if (target) {
     let handlersByElement = elementHandlersByEvent.get(ev.type);
     if ((handlersByElement.get(target)?.(ev, target), ev.bubbles))
-      for (; (target = target.parentElement) && !ev.cancelBubble; )
+      for (; (target = target.parentNode) && !ev.cancelBubble; )
         handlersByElement.get(target)?.(ev, target);
   }
 }
@@ -575,10 +575,10 @@ function normalizeBoolProp(value2) {
 function toValueProp(it) {
   return it.value;
 }
-var fallback = document.createTextNode(""),
-  parser = new Range();
+var fallback = new Text(),
+  parser = document.createElement("template");
 function parseHTML(html2) {
-  return parser.createContextualFragment(html2);
+  return (parser.innerHTML = html2), parser.content;
 }
 function attr(element, name, value2) {
   setAttribute(element, name, normalizeAttrValue(value2));
@@ -834,8 +834,7 @@ function walkInternal(walkCodes, scope, currentWalkIndex) {
       if (38 === value2) return currentWalkIndex;
       if (32 === value2) scope[currentScopeIndex++] = walker.currentNode;
       else {
-        let newNode = (scope[currentScopeIndex++] =
-            document.createTextNode("")),
+        let newNode = (scope[currentScopeIndex++] = new Text()),
           current = walker.currentNode;
         current.parentNode.replaceChild(newNode, current),
           (walker.currentNode = newNode);
@@ -933,12 +932,16 @@ function createRenderer(template, walks, setup, getArgs) {
 function _clone() {
   return (this.G ||= (function (html2) {
     let content = parseHTML(html2);
-    return content.firstChild
-      ? content.firstChild === content.lastChild &&
+    if (content.firstChild) {
+      if (
+        content.firstChild === content.lastChild &&
         8 !== content.firstChild.nodeType
-        ? content.firstChild
-        : content
-      : fallback;
+      )
+        return content.firstChild;
+      let fragment = new DocumentFragment();
+      return fragment.appendChild(content), fragment;
+    }
+    return fallback;
   })(this.F)).cloneNode(!0);
 }
 var conditional = function (nodeAccessor, fn, getIntersection) {
@@ -1605,14 +1608,14 @@ function mount(input = {}, reference, position) {
         args && args(branch, [input]);
     });
   switch (position) {
+    case "beforebegin":
+      reference.parentNode.insertBefore(dom, reference);
+      break;
     case "afterbegin":
       reference.insertBefore(dom, reference.firstChild);
       break;
     case "afterend":
-      reference.parentElement.insertBefore(dom, reference.nextSibling);
-      break;
-    case "beforebegin":
-      reference.parentElement.insertBefore(dom, reference);
+      reference.parentNode.insertBefore(dom, reference.nextSibling);
       break;
     default:
       reference.appendChild(dom);

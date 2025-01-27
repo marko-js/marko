@@ -2,7 +2,7 @@ type EventNames = keyof GlobalEventHandlersEventMap;
 
 const elementHandlersByEvent = new Map<
   string,
-  WeakMap<Element, undefined | ((...args: any[]) => void)>
+  WeakMap<ParentNode, undefined | ((...args: any[]) => void)>
 >();
 
 const defaultDelegator = createDelegator();
@@ -50,13 +50,13 @@ export function createDelegator() {
 }
 
 function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
-  let target = ev.target as Element | null;
+  let target = ev.target as ParentNode | null;
   if (target) {
     const handlersByElement = elementHandlersByEvent.get(ev.type)!;
     handlersByElement.get(target)?.(ev, target);
 
     if (ev.bubbles) {
-      while ((target = target.parentElement) && !ev.cancelBubble) {
+      while ((target = target.parentNode) && !ev.cancelBubble) {
         handlersByElement.get(target)?.(ev, target);
       }
     }
