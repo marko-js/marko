@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.25
+
+### Patch Changes
+
+- [#2474](https://github.com/marko-js/marko/pull/2474) [`52d26c3`](https://github.com/marko-js/marko/commit/52d26c36c8cb8340c36a4ea42f816084ecb47a74) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with incorrect render sorting for newly created scopes.
+
 ## 0.3.24
 
 ### Patch Changes
