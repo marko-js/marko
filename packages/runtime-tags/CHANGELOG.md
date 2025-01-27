@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.24
+
+### Patch Changes
+
+- [#2472](https://github.com/marko-js/marko/pull/2472) [`4608c46`](https://github.com/marko-js/marko/commit/4608c4689cad67a55719f5a5e57fd1845c69d68c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Switch back to HTMLTemplateElement for parsing client side html content to avoid automatic tag insertions from the document range api.
+
 ## 0.3.23
 
 ### Patch Changes
