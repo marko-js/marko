@@ -233,7 +233,6 @@ function loop<T extends unknown[] = unknown[]>(
     let afterReference: Node | null;
     let parentNode: Node & ParentNode;
     let needsReconciliation = true;
-
     forEach(valueOrOp, (key, args) => {
       let branch = oldMap.get(key);
       if (!branch) {

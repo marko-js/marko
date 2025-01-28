@@ -14,10 +14,10 @@ type PendingRender = {
   ___scope: Scope;
   ___signal: Signal<any>;
   ___value: unknown;
-  ___next: PendingRender | undefined;
+  ___index: number;
 };
 
-let pendingRender: PendingRender | undefined;
+let pendingRenders: PendingRender[] = [];
 export let pendingEffects: unknown[] = [];
 export let rendering = false;
 
@@ -36,34 +36,24 @@ export function queueRender(
   signal: Signal<any>,
   value?: unknown,
 ) {
-  const nextRender: PendingRender = {
+  let i = pendingRenders.length;
+  const render: PendingRender = {
     ___scope: scope,
     ___signal: signal,
     ___value: value,
-    ___next: undefined,
+    ___index: i,
   };
 
-  if (!pendingRender) {
-    pendingRender = nextRender;
-  } else if (comparePendingRenders(pendingRender, nextRender) < 0) {
-    if (MARKO_DEBUG && rendering) {
-      throw new Error(
-        "attempted to queue a render before the currently executing render",
-      );
-    }
-    nextRender.___next = pendingRender;
-    pendingRender = nextRender;
-  } else {
-    let curRender = pendingRender;
-    while (
-      curRender.___next &&
-      comparePendingRenders(curRender.___next, nextRender) >= 0
-    ) {
-      curRender = curRender.___next;
-    }
-    nextRender.___next = curRender.___next;
-    curRender.___next = nextRender;
+  pendingRenders.push(render);
+  while (i) {
+    const parentIndex = (i - 1) >> 1;
+    const parent = pendingRenders[parentIndex];
+    if (comparePendingRenders(render, parent) >= 0) break;
+    pendingRenders[i] = parent;
+    i = parentIndex;
   }
+
+  pendingRenders[i] = render;
 }
 
 export function queueEffect<S extends Scope, T extends ExecFn<S>>(
@@ -79,18 +69,18 @@ export function run() {
     rendering = true;
     runRenders();
   } finally {
-    pendingRender = undefined;
+    pendingRenders = [];
+    pendingEffects = [];
     rendering = false;
   }
-  pendingEffects = [];
   runEffects(effects);
 }
 
 export function prepareEffects(fn: () => void): unknown[] {
-  const prevRender = pendingRender;
+  const prevRenders = pendingRenders;
   const prevEffects = pendingEffects;
   const preparedEffects = (pendingEffects = []);
-  pendingRender = undefined;
+  pendingRenders = [];
 
   try {
     rendering = true;
@@ -98,7 +88,7 @@ export function prepareEffects(fn: () => void): unknown[] {
     runRenders();
   } finally {
     rendering = false;
-    pendingRender = prevRender;
+    pendingRenders = prevRenders;
     pendingEffects = prevEffects;
   }
   return preparedEffects;
@@ -113,31 +103,52 @@ export function runEffects(effects: unknown[] = pendingEffects) {
 }
 
 function runRenders() {
-  while (pendingRender) {
-    if (!pendingRender.___scope.___closestBranch?.___destroyed) {
-      pendingRender.___signal(pendingRender.___scope, pendingRender.___value);
+  while (pendingRenders.length) {
+    const render = pendingRenders[0];
+    const next = pendingRenders.pop()!;
+
+    if (render !== next) {
+      let i = 0;
+      const mid = pendingRenders.length >> 1;
+      const item = (pendingRenders[0] = next);
+
+      while (i < mid) {
+        let bestChild = (i << 1) + 1;
+        const right = bestChild + 1;
+
+        if (
+          right < pendingRenders.length &&
+          comparePendingRenders(
+            pendingRenders[right],
+            pendingRenders[bestChild],
+          ) < 0
+        ) {
+          bestChild = right;
+        }
+
+        if (comparePendingRenders(pendingRenders[bestChild], item) >= 0) {
+          break;
+        } else {
+          pendingRenders[i] = pendingRenders[bestChild];
+          i = bestChild;
+        }
+      }
+
+      pendingRenders[i] = item;
     }
-    pendingRender = pendingRender.___next;
+
+    if (!render.___scope.___closestBranch?.___destroyed) {
+      render.___signal(render.___scope, render.___value);
+    }
   }
+
   finishPendingScopes();
 }
 
 function comparePendingRenders(a: PendingRender, b: PendingRender) {
-  if (a.___scope.___pending || b.___scope.___pending) return 0;
-  const aStart = ownerStartNode(a.___scope);
-  const bStart = ownerStartNode(b.___scope);
-  return aStart === bStart
-    ? 0
-    : aStart
-      ? bStart
-        ? aStart.compareDocumentPosition(bStart) &
-          2 /* Node.DOCUMENT_POSITION_PRECEDING */
-          ? -1
-          : 1
-        : -1
-      : 1;
+  return getBranchDepth(a) - getBranchDepth(b) || a.___index - b.___index;
 }
 
-function ownerStartNode(scope: Scope): (Node & ChildNode) | undefined {
-  return (scope.___closestBranch || scope).___startNode;
+function getBranchDepth(render: PendingRender) {
+  return render.___scope.___closestBranch?.___branchDepth || 0;
 }

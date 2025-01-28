@@ -75,8 +75,11 @@ function createBranch(
   branch.___closestBranch = branch;
 
   if (parentBranch) {
+    branch.___branchDepth = parentBranch.___branchDepth + 1;
     branch.___parentBranch = parentBranch;
     (parentBranch.___branchScopes ||= new Set()).add(branch);
+  } else {
+    branch.___branchDepth = 1;
   }
 
   return branch;
