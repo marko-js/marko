@@ -8,7 +8,7 @@
       a="0"
       b="1"
     />
-    <!--M_*0 #div/0-->
+    <!--M_*1 #div/0-->
     <script>
       WALKER_RUNTIME("M")("_")
     </script>

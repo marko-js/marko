@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>Toggle</button><!--M_*0 #button/0--><pre></pre><!--M_*0 #pre/1--><!--M_[1--><div>a</div><span>b</span><p>c</p><!--M_]0 #text/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:_.a={show:!0,"#text/2(":_._["__tests__/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_1",0,"__tests__/template.marko_0_show",0];M._.w()</script>
+  <button>Toggle</button><!--M_*1 #button/0--><pre></pre><!--M_*1 #pre/1--><!--M_[2--><div>a</div><span>b</span><p>c</p><!--M_]1 #text/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={1:_.a={show:!0,"#text/2(":_._["__tests__/template.marko_1_renderer"],"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),2,"__tests__/template.marko_1",1,"__tests__/template.marko_0_show",0];M._.w()</script>
 ```
 
 # Render End
@@ -11,10 +11,10 @@
     <button>
       Toggle
     </button>
-    <!--M_*0 #button/0-->
+    <!--M_*1 #button/0-->
     <pre />
-    <!--M_*0 #pre/1-->
-    <!--M_[1-->
+    <!--M_*1 #pre/1-->
+    <!--M_[2-->
     <div>
       a
     </div>
@@ -24,9 +24,9 @@
     <p>
       c
     </p>
-    <!--M_]0 #text/2-->
+    <!--M_]1 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={show:!0,"#text/2(":_._["__tests__/template.marko_1_renderer"],"#text/2!":_.b={}},1:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_1",0,"__tests__/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,"#text/2(":_._["__tests__/template.marko_1_renderer"],"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),2,"__tests__/template.marko_1",1,"__tests__/template.marko_0_show",0];M._.w()
     </script>
   </body>
 </html>

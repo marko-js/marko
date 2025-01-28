@@ -7,21 +7,21 @@
       id="inc"
     >
       1
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
       |
       <!---->
       1
-      <!--M_*0 #text/2-->
+      <!--M_*1 #text/2-->
     </button>
-    <!--M_*0 #button/0-->
+    <!--M_*1 #button/0-->
     <button
       id="toggle"
     >
       toggle
     </button>
-    <!--M_*0 #button/3-->
+    <!--M_*1 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),0,"__tests__/template.marko_0",0,"__tests__/template.marko_0_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),1,"__tests__/template.marko_0",1,"__tests__/template.marko_0_y",0];M._.w()
     </script>
   </body>
 </html>
@@ -40,21 +40,21 @@ container.querySelector("#inc").click();
       id="inc"
     >
       3
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
       |
       <!---->
       3
-      <!--M_*0 #text/2-->
+      <!--M_*1 #text/2-->
     </button>
-    <!--M_*0 #button/0-->
+    <!--M_*1 #button/0-->
     <button
       id="toggle"
     >
       toggle
     </button>
-    <!--M_*0 #button/3-->
+    <!--M_*1 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),0,"__tests__/template.marko_0",0,"__tests__/template.marko_0_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),1,"__tests__/template.marko_0",1,"__tests__/template.marko_0_y",0];M._.w()
     </script>
   </body>
 </html>
@@ -78,21 +78,21 @@ container.querySelector("#inc").click();
       id="inc"
     >
       5
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
       |
       <!---->
       5
-      <!--M_*0 #text/2-->
+      <!--M_*1 #text/2-->
     </button>
-    <!--M_*0 #button/0-->
+    <!--M_*1 #button/0-->
     <button
       id="toggle"
     >
       toggle
     </button>
-    <!--M_*0 #button/3-->
+    <!--M_*1 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),0,"__tests__/template.marko_0",0,"__tests__/template.marko_0_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),1,"__tests__/template.marko_0",1,"__tests__/template.marko_0_y",0];M._.w()
     </script>
   </body>
 </html>
@@ -116,21 +116,21 @@ container.querySelector("#toggle").click();
       id="inc"
     >
       5
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
       |
       <!---->
       5
-      <!--M_*0 #text/2-->
+      <!--M_*1 #text/2-->
     </button>
-    <!--M_*0 #button/0-->
+    <!--M_*1 #button/0-->
     <button
       id="toggle"
     >
       toggle
     </button>
-    <!--M_*0 #button/3-->
+    <!--M_*1 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),0,"__tests__/template.marko_0",0,"__tests__/template.marko_0_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),1,"__tests__/template.marko_0",1,"__tests__/template.marko_0_y",0];M._.w()
     </script>
   </body>
 </html>
@@ -149,21 +149,21 @@ container.querySelector("#inc").click();
       id="inc"
     >
       5
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
       |
       <!---->
       6
-      <!--M_*0 #text/2-->
+      <!--M_*1 #text/2-->
     </button>
-    <!--M_*0 #button/0-->
+    <!--M_*1 #button/0-->
     <button
       id="toggle"
     >
       toggle
     </button>
-    <!--M_*0 #button/3-->
+    <!--M_*1 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),0,"__tests__/template.marko_0",0,"__tests__/template.marko_0_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),1,"__tests__/template.marko_0",1,"__tests__/template.marko_0_y",0];M._.w()
     </script>
   </body>
 </html>
@@ -186,21 +186,21 @@ container.querySelector("#inc").click();
       id="inc"
     >
       5
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
       |
       <!---->
       7
-      <!--M_*0 #text/2-->
+      <!--M_*1 #text/2-->
     </button>
-    <!--M_*0 #button/0-->
+    <!--M_*1 #button/0-->
     <button
       id="toggle"
     >
       toggle
     </button>
-    <!--M_*0 #button/3-->
+    <!--M_*1 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),0,"__tests__/template.marko_0",0,"__tests__/template.marko_0_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={x:1,y:1}},_.a.yChange=_.a["y@"]=_._["__tests__/template.marko_0/yChange"](_.a),_.b),1,"__tests__/template.marko_0",1,"__tests__/template.marko_0_y",0];M._.w()
     </script>
   </body>
 </html>

@@ -1,6 +1,6 @@
 # Write
 ```html
-  BeforeERROR!<!--M_*2 #text/0-->After<script>WALKER_RUNTIME("M")("_")</script>
+  BeforeERROR!<!--M_*3 #text/0-->After<script>WALKER_RUNTIME("M")("_")</script>
 ```
 
 # Render End
@@ -9,7 +9,7 @@
   <head />
   <body>
     BeforeERROR!
-    <!--M_*2 #text/0-->
+    <!--M_*3 #text/0-->
     After
     <script>
       WALKER_RUNTIME("M")("_")

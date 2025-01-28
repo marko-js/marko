@@ -5,14 +5,14 @@
   <body>
     <div>
       Hello!
-      <!--M_|0 #text/0 1-->
+      <!--M_|1 #text/0 2-->
       <button>
         Toggle
       </button>
-      <!--M_*0 #button/1-->
+      <!--M_*1 #button/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{show:!0,"#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.a={}},1:_.a}),0,"__tests__/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{show:!0,"#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.a={}},2:_.a}),1,"__tests__/template.marko_0_show",0];M._.w()
     </script>
   </body>
 </html>
@@ -28,14 +28,14 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      <!--M_|0 #text/0 1-->
+      <!--M_|1 #text/0 2-->
       <button>
         Toggle
       </button>
-      <!--M_*0 #button/1-->
+      <!--M_*1 #button/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{show:!0,"#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.a={}},1:_.a}),0,"__tests__/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{show:!0,"#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.a={}},2:_.a}),1,"__tests__/template.marko_0_show",0];M._.w()
     </script>
   </body>
 </html>
@@ -61,10 +61,10 @@ container.querySelector("button").click();
       <button>
         Toggle
       </button>
-      <!--M_*0 #button/1-->
+      <!--M_*1 #button/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{show:!0,"#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.a={}},1:_.a}),0,"__tests__/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{show:!0,"#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.a={}},2:_.a}),1,"__tests__/template.marko_0_show",0];M._.w()
     </script>
   </body>
 </html>
@@ -85,14 +85,14 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      <!--M_|0 #text/0 1-->
+      <!--M_|1 #text/0 2-->
       <button>
         Toggle
       </button>
-      <!--M_*0 #button/1-->
+      <!--M_*1 #button/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{show:!0,"#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.a={}},1:_.a}),0,"__tests__/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{show:!0,"#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.a={}},2:_.a}),1,"__tests__/template.marko_0_show",0];M._.w()
     </script>
   </body>
 </html>

@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div><span>Hello<!--M_*1 #text/0--></span><!--M_|0 #text/0 1--><span></span><span></span></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={0:_.a={value:"Hello","#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.b={}},1:_.b},_.b._=_.a,_.c),0]</script>
+  <div><span>Hello<!--M_*2 #text/0--></span><!--M_|1 #text/0 2--><span></span><span></span></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={1:_.a={value:"Hello","#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.b={}},2:_.b},_.b._=_.a,_.c),0]</script>
 ```
 
 # Render End
@@ -11,14 +11,14 @@
     <div>
       <span>
         Hello
-        <!--M_*1 #text/0-->
+        <!--M_*2 #text/0-->
       </span>
-      <!--M_|0 #text/0 1-->
+      <!--M_|1 #text/0 2-->
       <span />
       <span />
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={value:"Hello","#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.b={}},1:_.b},_.b._=_.a,_.c),0]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={value:"Hello","#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.b={}},2:_.b},_.b._=_.a,_.c),0]
     </script>
   </body>
 </html>

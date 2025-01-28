@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0--><!--M_|0 #text/0 1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d={0:_.b={num:0,"#text/0(":new Map(_.a=[[0,_.c={}]])},1:_.c},_.c._=_.b,_.d),1,"__tests__/template.marko_1_num",0];M._.w()</script>
+  <button>0<!--M_*2 #text/1--></button><!--M_*2 #button/0--><!--M_|1 #text/0 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d={1:_.b={num:0,"#text/0(":new Map(_.a=[[0,_.c={}]])},2:_.c},_.c._=_.b,_.d),2,"__tests__/template.marko_1_num",0];M._.w()</script>
 ```
 
 # Render End
@@ -10,12 +10,12 @@
   <body>
     <button>
       0
-      <!--M_*1 #text/1-->
+      <!--M_*2 #text/1-->
     </button>
-    <!--M_*1 #button/0-->
-    <!--M_|0 #text/0 1-->
+    <!--M_*2 #button/0-->
+    <!--M_|1 #text/0 2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.b={num:0,"#text/0(":new Map(_.a=[[0,_.c={}]])},1:_.c},_.c._=_.b,_.d),1,"__tests__/template.marko_1_num",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.b={num:0,"#text/0(":new Map(_.a=[[0,_.c={}]])},2:_.c},_.c._=_.b,_.d),2,"__tests__/template.marko_1_num",0];M._.w()
     </script>
   </body>
 </html>

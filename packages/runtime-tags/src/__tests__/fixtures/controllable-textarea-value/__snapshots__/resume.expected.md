@@ -6,13 +6,13 @@
     <textarea>
       hello
     </textarea>
-    <!--M_*0 #textarea/0-->
+    <!--M_*1 #textarea/0-->
     <span>
       hello
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#textarea/0=":2,value:"hello"}},_.a["#textarea/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={"#textarea/0=":2,value:"hello"}},_.a["#textarea/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -35,13 +35,13 @@ textarea.dispatchEvent(new window.Event("input", {
     <textarea>
       w
     </textarea>
-    <!--M_*0 #textarea/0-->
+    <!--M_*1 #textarea/0-->
     <span>
       w
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#textarea/0=":2,value:"hello"}},_.a["#textarea/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={"#textarea/0=":2,value:"hello"}},_.a["#textarea/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -68,13 +68,13 @@ textarea.dispatchEvent(new window.Event("input", {
     <textarea>
       wor
     </textarea>
-    <!--M_*0 #textarea/0-->
+    <!--M_*1 #textarea/0-->
     <span>
       wor
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#textarea/0=":2,value:"hello"}},_.a["#textarea/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={"#textarea/0=":2,value:"hello"}},_.a["#textarea/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -101,13 +101,13 @@ textarea.dispatchEvent(new window.Event("input", {
     <textarea>
       world
     </textarea>
-    <!--M_*0 #textarea/0-->
+    <!--M_*1 #textarea/0-->
     <span>
       world
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:_.a={"#textarea/0=":2,value:"hello"}},_.a["#textarea/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),0,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={"#textarea/0=":2,value:"hello"}},_.a["#textarea/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

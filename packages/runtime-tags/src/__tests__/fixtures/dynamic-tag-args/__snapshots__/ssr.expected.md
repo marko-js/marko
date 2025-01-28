@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>Count: <!>1<!--M_*0 #text/1--></button><!--M_*0 #button/0--><!--M_[1--><div>1<!--M_*1 #text/0--></div><!--M_]0 #text/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{x:1,"#text/2!":_.a={},"#text/2(":_._["__tests__/tags/custom-tag.marko"]},1:_.a}),0,"__tests__/template.marko_0_x",0];M._.w()</script>
+  <button>Count: <!>1<!--M_*1 #text/1--></button><!--M_*1 #button/0--><!--M_[2--><div>1<!--M_*2 #text/0--></div><!--M_]1 #text/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:{x:1,"#text/2!":_.a={},"#text/2(":_._["__tests__/tags/custom-tag.marko"]},2:_.a}),1,"__tests__/template.marko_0_x",0];M._.w()</script>
 ```
 
 # Render End
@@ -12,17 +12,17 @@
       Count: 
       <!---->
       1
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
     </button>
-    <!--M_*0 #button/0-->
-    <!--M_[1-->
+    <!--M_*1 #button/0-->
+    <!--M_[2-->
     <div>
       1
-      <!--M_*1 #text/0-->
+      <!--M_*2 #text/0-->
     </div>
-    <!--M_]0 #text/2-->
+    <!--M_]1 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{x:1,"#text/2!":_.a={},"#text/2(":_._["__tests__/tags/custom-tag.marko"]},1:_.a}),0,"__tests__/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{x:1,"#text/2!":_.a={},"#text/2(":_._["__tests__/tags/custom-tag.marko"]},2:_.a}),1,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

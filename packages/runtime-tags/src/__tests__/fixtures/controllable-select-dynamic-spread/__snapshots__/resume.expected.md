@@ -9,28 +9,28 @@
       >
         A
       </option>
-      <!--M_*2 #option/0-->
+      <!--M_*3 #option/0-->
       <option
         selected=""
         value="b"
       >
         B
       </option>
-      <!--M_*2 #option/1-->
+      <!--M_*3 #option/1-->
       <option
         value="c"
       >
         C
       </option>
-      <!--M_*2 #option/2-->
+      <!--M_*3 #option/2-->
     </select>
-    <!--M_|0 #text/0 1-->
+    <!--M_|1 #text/0 2-->
     <span>
       b
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{"#text/0=":3,"#text/0:":"b",value:"b","#text/0!":_.a={},"#text/0(":"select"},1:_.a}),2,"__tests__/template.marko_1",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0=":3,"#text/0:":"b",value:"b","#text/0!":_.a={},"#text/0(":"select"},2:_.a}),3,"__tests__/template.marko_1",0];M._.w()
     </script>
   </body>
 </html>
@@ -56,28 +56,28 @@ select.dispatchEvent(new window.Event("input", {
       >
         A
       </option>
-      <!--M_*2 #option/0-->
+      <!--M_*3 #option/0-->
       <option
         value="b"
       >
         B
       </option>
-      <!--M_*2 #option/1-->
+      <!--M_*3 #option/1-->
       <option
         selected=""
         value="c"
       >
         C
       </option>
-      <!--M_*2 #option/2-->
+      <!--M_*3 #option/2-->
     </select>
-    <!--M_|0 #text/0 1-->
+    <!--M_|1 #text/0 2-->
     <span>
       b
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{"#text/0=":3,"#text/0:":"b",value:"b","#text/0!":_.a={},"#text/0(":"select"},1:_.a}),2,"__tests__/template.marko_1",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0=":3,"#text/0:":"b",value:"b","#text/0!":_.a={},"#text/0(":"select"},2:_.a}),3,"__tests__/template.marko_1",0];M._.w()
     </script>
   </body>
 </html>

@@ -5,7 +5,7 @@
   <body>
     <div>
       6
-      <!--M_*0 #text/0-->
+      <!--M_*1 #text/0-->
     </div>
     <script>
       WALKER_RUNTIME("M")("_")

@@ -1,11 +1,11 @@
 # Write
 ```html
-  a<!--M_!^a-->b
+  a<!--M_!^b-->b
 ```
 
 # Write
 ```html
-  <!--M_!a-->def<style M_>t{display:none}</style><t M_=a>ERROR!</t><script>WALKER_RUNTIME("M")("_");REORDER_RUNTIME(M._);M._.w()</script>
+  <!--M_!b-->def<style M_>t{display:none}</style><t M_=b>ERROR!</t><script>WALKER_RUNTIME("M")("_");REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Render End

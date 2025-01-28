@@ -1,11 +1,11 @@
 # Write
 ```html
-  <!--M_[1--><div>Child 1 has <!>3<!--M_*1 #text/0--></div><!--M_]0 #text/0--><button></button><!--M_*0 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{tagName:_._["__tests__/tags/child1.marko"],val:3,"#text/0!":_.a={},"#text/0(":_._["__tests__/tags/child1.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()</script>
+  <!--M_[2--><div>Child 1 has <!>3<!--M_*2 #text/0--></div><!--M_]1 #text/0--><button></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:{tagName:_._["__tests__/tags/child1.marko"],val:3,"#text/0!":_.a={},"#text/0(":_._["__tests__/tags/child1.marko"]},2:_.a}),1,"__tests__/template.marko_0_tagName",0];M._.w()</script>
 ```
 
 # Render End
 ```html
-<!--M_[1-->
+<!--M_[2-->
 <html>
   <head />
   <body>
@@ -13,13 +13,13 @@
       Child 1 has 
       <!---->
       3
-      <!--M_*1 #text/0-->
+      <!--M_*2 #text/0-->
     </div>
-    <!--M_]0 #text/0-->
+    <!--M_]1 #text/0-->
     <button />
-    <!--M_*0 #button/1-->
+    <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["__tests__/tags/child1.marko"],val:3,"#text/0!":_.a={},"#text/0(":_._["__tests__/tags/child1.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{tagName:_._["__tests__/tags/child1.marko"],val:3,"#text/0!":_.a={},"#text/0(":_._["__tests__/tags/child1.marko"]},2:_.a}),1,"__tests__/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>

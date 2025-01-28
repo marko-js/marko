@@ -1,5 +1,5 @@
 # Write
-  <!--M#s0--><button id=class>0</button><!--F#1--><button id=tags data-parent=0>0<!--M_*0 #text/1--></button><!--M_*0 #button/0--><!--F/--><!--M/--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={0:{m5c:"s0-1",count:0}}),0,"$compat_setScope",0,"__tests__/components/tags-counter.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})</script>
+  <!--M#s0--><button id=class>0</button><!--F#1--><button id=tags data-parent=0>0<!--M_*1 #text/1--></button><!--M_*1 #button/0--><!--F/--><!--M/--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={1:{m5c:"s0-1",count:0}}),1,"$compat_setScope",1,"__tests__/components/tags-counter.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})</script>
 
 # Render End
 ```html
@@ -18,13 +18,13 @@
       id="tags"
     >
       0
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
     </button>
-    <!--M_*0 #button/0-->
+    <!--M_*1 #button/0-->
     <!--F/-->
     <!--M/-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{m5c:"s0-1",count:0}}),0,"$compat_setScope",0,"__tests__/components/tags-counter.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{m5c:"s0-1",count:0}}),1,"$compat_setScope",1,"__tests__/components/tags-counter.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
     </script>
   </body>
 </html>

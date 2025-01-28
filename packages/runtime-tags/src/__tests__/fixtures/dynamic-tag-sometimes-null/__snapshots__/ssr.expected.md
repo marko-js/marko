@@ -1,20 +1,20 @@
 # Write
 ```html
-  <!--M_[1-->Body Content<!--M_]0 #text/0--><button></button><!--M_*0 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{x:null,"#text/0!":_.a={}},1:_.a}),0,"__tests__/template.marko_0_x",0];M._.w()</script>
+  <!--M_[2-->Body Content<!--M_]1 #text/0--><button></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:{x:null,"#text/0!":_.a={}},2:_.a}),1,"__tests__/template.marko_0_x",0];M._.w()</script>
 ```
 
 # Render End
 ```html
-<!--M_[1-->
+<!--M_[2-->
 <html>
   <head />
   <body>
     Body Content
-    <!--M_]0 #text/0-->
+    <!--M_]1 #text/0-->
     <button />
-    <!--M_*0 #button/1-->
+    <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{x:null,"#text/0!":_.a={}},1:_.a}),0,"__tests__/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{x:null,"#text/0!":_.a={}},2:_.a}),1,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

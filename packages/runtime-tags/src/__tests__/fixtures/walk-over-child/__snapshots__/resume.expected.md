@@ -10,10 +10,10 @@
     </section>
     <div>
       0
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{"#childScope/0":_.a={}},1:_.a}),0]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#childScope/0":_.a={}},2:_.a}),0]
     </script>
   </body>
 </html>

@@ -3,13 +3,13 @@
 <html>
   <head />
   <body>
-    <!--M_[1-->
+    <!--M_[2-->
     <h1>
       Hello world
     </h1>
-    <!--M_]0 #text/0-->
+    <!--M_]1 #text/0-->
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/tags/components/hello-internal.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{"#text/0!":_.a={m5c:"s0"},"#text/0(":_._.$compat_renderer(_._["__tests__/tags/components/hello-internal.marko"])},1:_.a}),1,"$compat_setScope",0];M._.w()
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/tags/components/hello-internal.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0!":_.a={m5c:"s0"},"#text/0(":_._.$compat_renderer(_._["__tests__/tags/components/hello-internal.marko"])},2:_.a}),2,"$compat_setScope",0];M._.w()
     </script>
   </body>
 </html>

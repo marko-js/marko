@@ -1,20 +1,20 @@
 # Write
 ```html
-  <!--M_[1--><div>baz</div><!--M_]0 #text/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{"#text/0!":_.a={},"#text/0(":_._["__tests__/tags/baz.marko"]},1:_.a}),0]</script>
+  <!--M_[2--><div>baz</div><!--M_]1 #text/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:{"#text/0!":_.a={},"#text/0(":_._["__tests__/tags/baz.marko"]},2:_.a}),0]</script>
 ```
 
 # Render End
 ```html
-<!--M_[1-->
+<!--M_[2-->
 <html>
   <head />
   <body>
     <div>
       baz
     </div>
-    <!--M_]0 #text/0-->
+    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{"#text/0!":_.a={},"#text/0(":_._["__tests__/tags/baz.marko"]},1:_.a}),0]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0!":_.a={},"#text/0(":_._["__tests__/tags/baz.marko"]},2:_.a}),0]
     </script>
   </body>
 </html>

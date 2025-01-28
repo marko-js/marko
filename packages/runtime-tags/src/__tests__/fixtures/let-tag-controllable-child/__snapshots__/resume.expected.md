@@ -5,28 +5,28 @@
   <body>
     <button>
       1
-      <!--M_*1 #text/1-->
+      <!--M_*2 #text/1-->
       |
       <!---->
       1
-      <!--M_*1 #text/2-->
+      <!--M_*2 #text/2-->
     </button>
-    <!--M_*1 #button/0-->
+    <!--M_*2 #button/0-->
     <button>
       1
-      <!--M_*1 #text/4-->
+      <!--M_*2 #text/4-->
       |
       <!---->
       1
-      <!--M_*1 #text/5-->
+      <!--M_*2 #text/5-->
     </button>
-    <!--M_*1 #button/3-->
+    <!--M_*2 #button/3-->
     source=
     <!---->
     1
-    <!--M_*0 #text/1-->
+    <!--M_*1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#childScope/0":_.b={input_value:1,state:1,otherState:1}},1:_.b},_.b.input_valueChange=_.b["state@"]=_.b["otherState@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),1,"__tests__/tags/child.marko_0_otherState",1,"__tests__/tags/child.marko_0_state",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={input_value:1,state:1,otherState:1}},2:_.b},_.b.input_valueChange=_.b["state@"]=_.b["otherState@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),2,"__tests__/tags/child.marko_0_otherState",2,"__tests__/tags/child.marko_0_state",0];M._.w()
     </script>
   </body>
 </html>
@@ -43,28 +43,28 @@ container.querySelectorAll("button").forEach(item => item.click());
   <body>
     <button>
       2
-      <!--M_*1 #text/1-->
+      <!--M_*2 #text/1-->
       |
       <!---->
       2
-      <!--M_*1 #text/2-->
+      <!--M_*2 #text/2-->
     </button>
-    <!--M_*1 #button/0-->
+    <!--M_*2 #button/0-->
     <button>
       2
-      <!--M_*1 #text/4-->
+      <!--M_*2 #text/4-->
       |
       <!---->
       2
-      <!--M_*1 #text/5-->
+      <!--M_*2 #text/5-->
     </button>
-    <!--M_*1 #button/3-->
+    <!--M_*2 #button/3-->
     source=
     <!---->
     2
-    <!--M_*0 #text/1-->
+    <!--M_*1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#childScope/0":_.b={input_value:1,state:1,otherState:1}},1:_.b},_.b.input_valueChange=_.b["state@"]=_.b["otherState@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),1,"__tests__/tags/child.marko_0_otherState",1,"__tests__/tags/child.marko_0_state",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={input_value:1,state:1,otherState:1}},2:_.b},_.b.input_valueChange=_.b["state@"]=_.b["otherState@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),2,"__tests__/tags/child.marko_0_otherState",2,"__tests__/tags/child.marko_0_state",0];M._.w()
     </script>
   </body>
 </html>
@@ -89,28 +89,28 @@ container.querySelectorAll("button").forEach(item => item.click());
   <body>
     <button>
       3
-      <!--M_*1 #text/1-->
+      <!--M_*2 #text/1-->
       |
       <!---->
       3
-      <!--M_*1 #text/2-->
+      <!--M_*2 #text/2-->
     </button>
-    <!--M_*1 #button/0-->
+    <!--M_*2 #button/0-->
     <button>
       3
-      <!--M_*1 #text/4-->
+      <!--M_*2 #text/4-->
       |
       <!---->
       3
-      <!--M_*1 #text/5-->
+      <!--M_*2 #text/5-->
     </button>
-    <!--M_*1 #button/3-->
+    <!--M_*2 #button/3-->
     source=
     <!---->
     3
-    <!--M_*0 #text/1-->
+    <!--M_*1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#childScope/0":_.b={input_value:1,state:1,otherState:1}},1:_.b},_.b.input_valueChange=_.b["state@"]=_.b["otherState@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),1,"__tests__/tags/child.marko_0_otherState",1,"__tests__/tags/child.marko_0_state",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={input_value:1,state:1,otherState:1}},2:_.b},_.b.input_valueChange=_.b["state@"]=_.b["otherState@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),2,"__tests__/tags/child.marko_0_otherState",2,"__tests__/tags/child.marko_0_state",0];M._.w()
     </script>
   </body>
 </html>
@@ -135,28 +135,28 @@ container.querySelectorAll("button").forEach(item => item.click());
   <body>
     <button>
       4
-      <!--M_*1 #text/1-->
+      <!--M_*2 #text/1-->
       |
       <!---->
       4
-      <!--M_*1 #text/2-->
+      <!--M_*2 #text/2-->
     </button>
-    <!--M_*1 #button/0-->
+    <!--M_*2 #button/0-->
     <button>
       4
-      <!--M_*1 #text/4-->
+      <!--M_*2 #text/4-->
       |
       <!---->
       4
-      <!--M_*1 #text/5-->
+      <!--M_*2 #text/5-->
     </button>
-    <!--M_*1 #button/3-->
+    <!--M_*2 #button/3-->
     source=
     <!---->
     4
-    <!--M_*0 #text/1-->
+    <!--M_*1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={"#childScope/0":_.b={input_value:1,state:1,otherState:1}},1:_.b},_.b.input_valueChange=_.b["state@"]=_.b["otherState@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),1,"__tests__/tags/child.marko_0_otherState",1,"__tests__/tags/child.marko_0_state",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={input_value:1,state:1,otherState:1}},2:_.b},_.b.input_valueChange=_.b["state@"]=_.b["otherState@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),2,"__tests__/tags/child.marko_0_otherState",2,"__tests__/tags/child.marko_0_state",0];M._.w()
     </script>
   </body>
 </html>

@@ -7,7 +7,7 @@
     <div
       foo="Hello Marko"
     />
-    <!--M_*0 #div/0-->
+    <!--M_*1 #div/0-->
     <script>
       WALKER_RUNTIME("M")("_")
     </script>

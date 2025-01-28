@@ -9,9 +9,9 @@
     >
       Hello World
     </h1>
-    <!--M_|0 #text/0 1-->
+    <!--M_|1 #text/0 2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{"#text/0!":_.a={},"#text/0(":"h1"},1:_.a}),0]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0!":_.a={},"#text/0(":"h1"},2:_.a}),0]
     </script>
   </body>
 </html>
