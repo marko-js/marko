@@ -6,11 +6,11 @@
   <body>
     <button>
       1
-      <!--M_*0 #text/0-->
+      <!--M_*1 #text/0-->
        
       <!---->
       1
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
     </button>
     <script>
       WALKER_RUNTIME("M")("_")

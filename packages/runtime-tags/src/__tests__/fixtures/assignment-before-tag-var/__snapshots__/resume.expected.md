@@ -6,17 +6,17 @@
     <button>
       +
     </button>
-    <!--M_*0 #button/0-->
+    <!--M_*1 #button/0-->
     <span>
       0
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
        was 
       <!---->
       ‍
-      <!--M_*0 #text/2-->
+      <!--M_*1 #text/2-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"__tests__/template.marko_0_clickCount",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{clickCount:0}}),1,"__tests__/template.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>
@@ -34,17 +34,17 @@ container.querySelector("button").click();
     <button>
       +
     </button>
-    <!--M_*0 #button/0-->
+    <!--M_*1 #button/0-->
     <span>
       1
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
        was 
       <!---->
       0
-      <!--M_*0 #text/2-->
+      <!--M_*1 #text/2-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"__tests__/template.marko_0_clickCount",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{clickCount:0}}),1,"__tests__/template.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>
@@ -67,17 +67,17 @@ container.querySelector("button").click();
     <button>
       +
     </button>
-    <!--M_*0 #button/0-->
+    <!--M_*1 #button/0-->
     <span>
       2
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
        was 
       <!---->
       1
-      <!--M_*0 #text/2-->
+      <!--M_*1 #text/2-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"__tests__/template.marko_0_clickCount",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{clickCount:0}}),1,"__tests__/template.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>
@@ -100,17 +100,17 @@ container.querySelector("button").click();
     <button>
       +
     </button>
-    <!--M_*0 #button/0-->
+    <!--M_*1 #button/0-->
     <span>
       3
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
        was 
       <!---->
       2
-      <!--M_*0 #text/2-->
+      <!--M_*1 #text/2-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{clickCount:0}}),0,"__tests__/template.marko_0_clickCount",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{clickCount:0}}),1,"__tests__/template.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>

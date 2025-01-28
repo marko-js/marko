@@ -5,14 +5,14 @@
   <body>
     <span>
       1
-      <!--M_*0 #text/0-->
+      <!--M_*1 #text/0-->
     </span>
     <span>
       0
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{x:1}}),0,"__tests__/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{x:1}}),1,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -26,14 +26,14 @@
   <body>
     <span>
       2
-      <!--M_*0 #text/0-->
+      <!--M_*1 #text/0-->
     </span>
     <span>
       1
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{x:1}}),0,"__tests__/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{x:1}}),1,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -52,14 +52,14 @@ UPDATE html/body/span0/#text "1" => "2"
   <body>
     <span>
       2
-      <!--M_*0 #text/0-->
+      <!--M_*1 #text/0-->
     </span>
     <span>
       2
-      <!--M_*0 #text/1-->
+      <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={0:{x:1}}),0,"__tests__/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{x:1}}),1,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

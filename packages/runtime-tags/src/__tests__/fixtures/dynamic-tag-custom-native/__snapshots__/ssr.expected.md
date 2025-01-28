@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button></button><!--M_*0 #button/0--><!--M_[1--><div>Id is <!>dynamic<!--M_*1 #text/0--></div><!--M_]0 #text/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{tagName:_._["__tests__/tags/child.marko"],"#text/1!":_.a={},"#text/1(":_._["__tests__/tags/child.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()</script>
+  <button></button><!--M_*1 #button/0--><!--M_[2--><div>Id is <!>dynamic<!--M_*2 #text/0--></div><!--M_]1 #text/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:{tagName:_._["__tests__/tags/child.marko"],"#text/1!":_.a={},"#text/1(":_._["__tests__/tags/child.marko"]},2:_.a}),1,"__tests__/template.marko_0_tagName",0];M._.w()</script>
 ```
 
 # Render End
@@ -9,17 +9,17 @@
   <head />
   <body>
     <button />
-    <!--M_*0 #button/0-->
-    <!--M_[1-->
+    <!--M_*1 #button/0-->
+    <!--M_[2-->
     <div>
       Id is 
       <!---->
       dynamic
-      <!--M_*1 #text/0-->
+      <!--M_*2 #text/0-->
     </div>
-    <!--M_]0 #text/1-->
+    <!--M_]1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{tagName:_._["__tests__/tags/child.marko"],"#text/1!":_.a={},"#text/1(":_._["__tests__/tags/child.marko"]},1:_.a}),0,"__tests__/template.marko_0_tagName",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{tagName:_._["__tests__/tags/child.marko"],"#text/1!":_.a={},"#text/1(":_._["__tests__/tags/child.marko"]},2:_.a}),1,"__tests__/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>

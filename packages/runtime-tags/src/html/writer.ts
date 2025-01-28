@@ -506,9 +506,9 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
 }
 
 export class State {
-  public tagId = 0;
-  public scopeId = 0;
-  public reorderId = 0;
+  public tagId = 1;
+  public scopeId = 1;
+  public reorderId = 1;
   public hasGlobals = false;
   public needsMainRuntime = false;
   public hasMainRuntime = false;

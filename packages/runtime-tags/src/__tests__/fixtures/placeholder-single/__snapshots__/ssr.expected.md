@@ -1,6 +1,6 @@
 # Write
 ```html
-  a<!--M_!^a-->_A_<!--M_!a-->e<style M_>t{display:none}</style><t M_=a>b<!--M_#b-->d</t><script>WALKER_RUNTIME("M")("_");REORDER_RUNTIME(M._);M._.w()</script>
+  a<!--M_!^b-->_A_<!--M_!b-->e<style M_>t{display:none}</style><t M_=b>b<!--M_#c-->d</t><script>WALKER_RUNTIME("M")("_");REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Write
@@ -10,7 +10,7 @@
 
 # Write
 ```html
-  <t M_=b>c</t><script>M._.w()</script>
+  <t M_=c>c</t><script>M._.w()</script>
 ```
 
 # Render End

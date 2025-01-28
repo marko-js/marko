@@ -1,18 +1,18 @@
 # Write
 ```html
-  <!--M_[2-->Foo!<!--M_]1 #text/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d={0:_.a={"#childScope/0":_.b={"#text/0!":_.c={}}},1:_.b,2:_.c},_.b["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d),0]</script>
+  <!--M_[3-->Foo!<!--M_]2 #text/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d={1:_.a={"#childScope/0":_.b={"#text/0!":_.c={}}},2:_.b,3:_.c},_.b["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d),0]</script>
 ```
 
 # Render End
 ```html
-<!--M_[2-->
+<!--M_[3-->
 <html>
   <head />
   <body>
     Foo!
-    <!--M_]1 #text/0-->
+    <!--M_]2 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={0:_.a={"#childScope/0":_.b={"#text/0!":_.c={}}},1:_.b,2:_.c},_.b["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d),0]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.a={"#childScope/0":_.b={"#text/0!":_.c={}}},2:_.b,3:_.c},_.b["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d),0]
     </script>
   </body>
 </html>

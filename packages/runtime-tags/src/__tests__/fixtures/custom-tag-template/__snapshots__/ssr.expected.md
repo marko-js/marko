@@ -1,6 +1,6 @@
 # Write
 ```html
-  Hello <!>Frank<!--M_*1 #text/0-->!<script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={0:{"#childScope/0":_.a={}},1:_.a}),0]</script>
+  Hello <!>Frank<!--M_*2 #text/0-->!<script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:{"#childScope/0":_.a={}},2:_.a}),0]</script>
 ```
 
 # Render End
@@ -11,10 +11,10 @@
     Hello 
     <!---->
     Frank
-    <!--M_*1 #text/0-->
+    <!--M_*2 #text/0-->
     !
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={0:{"#childScope/0":_.a={}},1:_.a}),0]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#childScope/0":_.a={}},2:_.a}),0]
     </script>
   </body>
 </html>

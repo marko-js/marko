@@ -10,55 +10,55 @@
       >
         <span>
           Hello World
-          <!--M_*2 #text/1-->
+          <!--M_*3 #text/1-->
         </span>
         <button>
           [-]
-          <!--M_*2 #text/3-->
+          <!--M_*3 #text/3-->
         </button>
-        <!--M_*2 #button/2-->
+        <!--M_*3 #button/2-->
         <ul>
           <li
             id="c-0-0"
           >
             <span>
               testing 123
-              <!--M_*5 #text/1-->
+              <!--M_*6 #text/1-->
             </span>
             <button>
               [-]
-              <!--M_*5 #text/3-->
+              <!--M_*6 #text/3-->
             </button>
-            <!--M_*5 #button/2-->
-            <!--M_|5 #text/4-->
+            <!--M_*6 #button/2-->
+            <!--M_|6 #text/4-->
           </li>
-          <!--M_*5 #li/0-->
-          <!--M_|4 #ul/0 5-->
+          <!--M_*6 #li/0-->
+          <!--M_|5 #ul/0 6-->
         </ul>
-        <!--M_*4 #ul/0-->
-        <!--M_|2 #text/4 3-->
+        <!--M_*5 #ul/0-->
+        <!--M_|3 #text/4 4-->
       </li>
-      <!--M_*2 #li/0-->
+      <!--M_*3 #li/0-->
       <li
         id="c-1"
       >
         <span>
           Goodbye World
-          <!--M_*7 #text/1-->
+          <!--M_*8 #text/1-->
         </span>
         <button>
           [-]
-          <!--M_*7 #text/3-->
+          <!--M_*8 #text/3-->
         </button>
-        <!--M_*7 #button/2-->
-        <!--M_|7 #text/4-->
+        <!--M_*8 #button/2-->
+        <!--M_|8 #text/4-->
       </li>
-      <!--M_*7 #li/0-->
-      <!--M_|1 #ul/0 7 2-->
+      <!--M_*8 #li/0-->
+      <!--M_|2 #ul/0 8 3-->
     </ul>
-    <!--M_*1 #ul/0-->
+    <!--M_*2 #ul/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={0:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},1:_.g,2:_.e,3:_.f,4:_.c,5:_.d,7:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),5,"__tests__/tags/comments.marko_1_open",2,"__tests__/tags/comments.marko_1_open",7,"__tests__/tags/comments.marko_1_open",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},2:_.g,3:_.e,4:_.f,5:_.c,6:_.d,8:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open",0];M._.w()
     </script>
   </body>
 </html>
@@ -80,55 +80,55 @@ container.querySelector(`#c-${id} > button`).click();
       >
         <span>
           Hello World
-          <!--M_*2 #text/1-->
+          <!--M_*3 #text/1-->
         </span>
         <button>
           [+]
-          <!--M_*2 #text/3-->
+          <!--M_*3 #text/3-->
         </button>
-        <!--M_*2 #button/2-->
+        <!--M_*3 #button/2-->
         <ul>
           <li
             id="c-0-0"
           >
             <span>
               testing 123
-              <!--M_*5 #text/1-->
+              <!--M_*6 #text/1-->
             </span>
             <button>
               [-]
-              <!--M_*5 #text/3-->
+              <!--M_*6 #text/3-->
             </button>
-            <!--M_*5 #button/2-->
-            <!--M_|5 #text/4-->
+            <!--M_*6 #button/2-->
+            <!--M_|6 #text/4-->
           </li>
-          <!--M_*5 #li/0-->
-          <!--M_|4 #ul/0 5-->
+          <!--M_*6 #li/0-->
+          <!--M_|5 #ul/0 6-->
         </ul>
-        <!--M_*4 #ul/0-->
-        <!--M_|2 #text/4 3-->
+        <!--M_*5 #ul/0-->
+        <!--M_|3 #text/4 4-->
       </li>
-      <!--M_*2 #li/0-->
+      <!--M_*3 #li/0-->
       <li
         id="c-1"
       >
         <span>
           Goodbye World
-          <!--M_*7 #text/1-->
+          <!--M_*8 #text/1-->
         </span>
         <button>
           [-]
-          <!--M_*7 #text/3-->
+          <!--M_*8 #text/3-->
         </button>
-        <!--M_*7 #button/2-->
-        <!--M_|7 #text/4-->
+        <!--M_*8 #button/2-->
+        <!--M_|8 #text/4-->
       </li>
-      <!--M_*7 #li/0-->
-      <!--M_|1 #ul/0 7 2-->
+      <!--M_*8 #li/0-->
+      <!--M_|2 #ul/0 8 3-->
     </ul>
-    <!--M_*1 #ul/0-->
+    <!--M_*2 #ul/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={0:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},1:_.g,2:_.e,3:_.f,4:_.c,5:_.d,7:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),5,"__tests__/tags/comments.marko_1_open",2,"__tests__/tags/comments.marko_1_open",7,"__tests__/tags/comments.marko_1_open",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},2:_.g,3:_.e,4:_.f,5:_.c,6:_.d,8:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open",0];M._.w()
     </script>
   </body>
 </html>
@@ -154,55 +154,55 @@ container.querySelector(`#c-${id} > button`).click();
       >
         <span>
           Hello World
-          <!--M_*2 #text/1-->
+          <!--M_*3 #text/1-->
         </span>
         <button>
           [-]
-          <!--M_*2 #text/3-->
+          <!--M_*3 #text/3-->
         </button>
-        <!--M_*2 #button/2-->
+        <!--M_*3 #button/2-->
         <ul>
           <li
             id="c-0-0"
           >
             <span>
               testing 123
-              <!--M_*5 #text/1-->
+              <!--M_*6 #text/1-->
             </span>
             <button>
               [-]
-              <!--M_*5 #text/3-->
+              <!--M_*6 #text/3-->
             </button>
-            <!--M_*5 #button/2-->
-            <!--M_|5 #text/4-->
+            <!--M_*6 #button/2-->
+            <!--M_|6 #text/4-->
           </li>
-          <!--M_*5 #li/0-->
-          <!--M_|4 #ul/0 5-->
+          <!--M_*6 #li/0-->
+          <!--M_|5 #ul/0 6-->
         </ul>
-        <!--M_*4 #ul/0-->
-        <!--M_|2 #text/4 3-->
+        <!--M_*5 #ul/0-->
+        <!--M_|3 #text/4 4-->
       </li>
-      <!--M_*2 #li/0-->
+      <!--M_*3 #li/0-->
       <li
         id="c-1"
       >
         <span>
           Goodbye World
-          <!--M_*7 #text/1-->
+          <!--M_*8 #text/1-->
         </span>
         <button>
           [-]
-          <!--M_*7 #text/3-->
+          <!--M_*8 #text/3-->
         </button>
-        <!--M_*7 #button/2-->
-        <!--M_|7 #text/4-->
+        <!--M_*8 #button/2-->
+        <!--M_|8 #text/4-->
       </li>
-      <!--M_*7 #li/0-->
-      <!--M_|1 #ul/0 7 2-->
+      <!--M_*8 #li/0-->
+      <!--M_|2 #ul/0 8 3-->
     </ul>
-    <!--M_*1 #ul/0-->
+    <!--M_*2 #ul/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={0:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},1:_.g,2:_.e,3:_.f,4:_.c,5:_.d,7:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),5,"__tests__/tags/comments.marko_1_open",2,"__tests__/tags/comments.marko_1_open",7,"__tests__/tags/comments.marko_1_open",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},2:_.g,3:_.e,4:_.f,5:_.c,6:_.d,8:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open",0];M._.w()
     </script>
   </body>
 </html>
@@ -228,13 +228,13 @@ container.querySelector(`#c-${id} > button`).click();
       >
         <span>
           Hello World
-          <!--M_*2 #text/1-->
+          <!--M_*3 #text/1-->
         </span>
         <button>
           [-]
-          <!--M_*2 #text/3-->
+          <!--M_*3 #text/3-->
         </button>
-        <!--M_*2 #button/2-->
+        <!--M_*3 #button/2-->
         <ul>
           <li
             hidden=""
@@ -242,42 +242,42 @@ container.querySelector(`#c-${id} > button`).click();
           >
             <span>
               testing 123
-              <!--M_*5 #text/1-->
+              <!--M_*6 #text/1-->
             </span>
             <button>
               [+]
-              <!--M_*5 #text/3-->
+              <!--M_*6 #text/3-->
             </button>
-            <!--M_*5 #button/2-->
-            <!--M_|5 #text/4-->
+            <!--M_*6 #button/2-->
+            <!--M_|6 #text/4-->
           </li>
-          <!--M_*5 #li/0-->
-          <!--M_|4 #ul/0 5-->
+          <!--M_*6 #li/0-->
+          <!--M_|5 #ul/0 6-->
         </ul>
-        <!--M_*4 #ul/0-->
-        <!--M_|2 #text/4 3-->
+        <!--M_*5 #ul/0-->
+        <!--M_|3 #text/4 4-->
       </li>
-      <!--M_*2 #li/0-->
+      <!--M_*3 #li/0-->
       <li
         id="c-1"
       >
         <span>
           Goodbye World
-          <!--M_*7 #text/1-->
+          <!--M_*8 #text/1-->
         </span>
         <button>
           [-]
-          <!--M_*7 #text/3-->
+          <!--M_*8 #text/3-->
         </button>
-        <!--M_*7 #button/2-->
-        <!--M_|7 #text/4-->
+        <!--M_*8 #button/2-->
+        <!--M_|8 #text/4-->
       </li>
-      <!--M_*7 #li/0-->
-      <!--M_|1 #ul/0 7 2-->
+      <!--M_*8 #li/0-->
+      <!--M_|2 #ul/0 8 3-->
     </ul>
-    <!--M_*1 #ul/0-->
+    <!--M_*2 #ul/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={0:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},1:_.g,2:_.e,3:_.f,4:_.c,5:_.d,7:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),5,"__tests__/tags/comments.marko_1_open",2,"__tests__/tags/comments.marko_1_open",7,"__tests__/tags/comments.marko_1_open",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},2:_.g,3:_.e,4:_.f,5:_.c,6:_.d,8:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open",0];M._.w()
     </script>
   </body>
 </html>
@@ -303,13 +303,13 @@ container.querySelector(`#c-${id} > button`).click();
       >
         <span>
           Hello World
-          <!--M_*2 #text/1-->
+          <!--M_*3 #text/1-->
         </span>
         <button>
           [-]
-          <!--M_*2 #text/3-->
+          <!--M_*3 #text/3-->
         </button>
-        <!--M_*2 #button/2-->
+        <!--M_*3 #button/2-->
         <ul>
           <li
             hidden=""
@@ -317,43 +317,43 @@ container.querySelector(`#c-${id} > button`).click();
           >
             <span>
               testing 123
-              <!--M_*5 #text/1-->
+              <!--M_*6 #text/1-->
             </span>
             <button>
               [+]
-              <!--M_*5 #text/3-->
+              <!--M_*6 #text/3-->
             </button>
-            <!--M_*5 #button/2-->
-            <!--M_|5 #text/4-->
+            <!--M_*6 #button/2-->
+            <!--M_|6 #text/4-->
           </li>
-          <!--M_*5 #li/0-->
-          <!--M_|4 #ul/0 5-->
+          <!--M_*6 #li/0-->
+          <!--M_|5 #ul/0 6-->
         </ul>
-        <!--M_*4 #ul/0-->
-        <!--M_|2 #text/4 3-->
+        <!--M_*5 #ul/0-->
+        <!--M_|3 #text/4 4-->
       </li>
-      <!--M_*2 #li/0-->
+      <!--M_*3 #li/0-->
       <li
         hidden=""
         id="c-1"
       >
         <span>
           Goodbye World
-          <!--M_*7 #text/1-->
+          <!--M_*8 #text/1-->
         </span>
         <button>
           [+]
-          <!--M_*7 #text/3-->
+          <!--M_*8 #text/3-->
         </button>
-        <!--M_*7 #button/2-->
-        <!--M_|7 #text/4-->
+        <!--M_*8 #button/2-->
+        <!--M_|8 #text/4-->
       </li>
-      <!--M_*7 #li/0-->
-      <!--M_|1 #ul/0 7 2-->
+      <!--M_*8 #li/0-->
+      <!--M_|2 #ul/0 8 3-->
     </ul>
-    <!--M_*1 #ul/0-->
+    <!--M_*2 #ul/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={0:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},1:_.g,2:_.e,3:_.f,4:_.c,5:_.d,7:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),5,"__tests__/tags/comments.marko_1_open",2,"__tests__/tags/comments.marko_1_open",7,"__tests__/tags/comments.marko_1_open",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},2:_.g,3:_.e,4:_.f,5:_.c,6:_.d,8:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open",0];M._.w()
     </script>
   </body>
 </html>

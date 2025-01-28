@@ -6,12 +6,12 @@
     <button>
       hide
     </button>
-    <!--M_*0 #button/0-->
+    <!--M_*1 #button/0-->
     hi
-    <!--M_*1 #text/0-->
-    <!--M_|0 #text/1 1-->
+    <!--M_*2 #text/0-->
+    <!--M_|1 #text/1 2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={message_text:"hi","#text/1(":_._["__tests__/template.marko_1_renderer"],"#text/1!":_.b={}},1:_.b},_.b._=_.a,_.c),0,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={message_text:"hi","#text/1(":_._["__tests__/template.marko_1_renderer"],"#text/1!":_.b={}},2:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -29,11 +29,11 @@ container.querySelector("button").click();
     <button>
       hide
     </button>
-    <!--M_*0 #button/0-->
-    <!--M_|0 #text/1 1-->
-    <!--M_*1 #text/0-->
+    <!--M_*1 #button/0-->
+    <!--M_|1 #text/1 2-->
+    <!--M_*2 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={0:_.a={message_text:"hi","#text/1(":_._["__tests__/template.marko_1_renderer"],"#text/1!":_.b={}},1:_.b},_.b._=_.a,_.c),0,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={message_text:"hi","#text/1(":_._["__tests__/template.marko_1_renderer"],"#text/1!":_.b={}},2:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

@@ -1,6 +1,6 @@
 # Write
 ```html
-  Static <!>Dynamic 1<!--M_*0 #text/0--><script>WALKER_RUNTIME("M")("_")</script>
+  Static <!>Dynamic 1<!--M_*1 #text/0--><script>WALKER_RUNTIME("M")("_")</script>
 ```
 
 # Render End
@@ -11,7 +11,7 @@
     Static 
     <!---->
     Dynamic 1
-    <!--M_*0 #text/0-->
+    <!--M_*1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_")
     </script>

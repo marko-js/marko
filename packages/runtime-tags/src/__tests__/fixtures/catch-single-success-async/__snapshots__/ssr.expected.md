@@ -1,11 +1,11 @@
 # Write
 ```html
-  a<!--M_!^a-->b
+  a<!--M_!^b-->b
 ```
 
 # Write
 ```html
-  cd<!--M_!a-->fgh
+  cd<!--M_!b-->fgh
 ```
 
 # Render End
@@ -14,9 +14,9 @@
   <head />
   <body>
     a
-    <!--M_!^a-->
+    <!--M_!^b-->
     bcd
-    <!--M_!a-->
+    <!--M_!b-->
     fgh
   </body>
 </html>
