@@ -81,16 +81,16 @@ export function nextTagId() {
   const state = $chunk.boundary.state;
   const { $global } = state;
   return (
-    "s" + $global.runtimeId + $global.renderId + (state.tagIndex++).toString(36)
+    "s" + $global.runtimeId + $global.renderId + (state.tagId++).toString(36)
   );
 }
 
 export function nextScopeId() {
-  return $chunk.boundary.state.scopeIndex++;
+  return $chunk.boundary.state.scopeId++;
 }
 
 export function peekNextScopeId() {
-  return $chunk.boundary.state.scopeIndex;
+  return $chunk.boundary.state.scopeId;
 }
 
 export function peekNextScope() {
@@ -506,9 +506,9 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
 }
 
 export class State {
-  public tagIndex = 0;
-  public scopeIndex = 0;
-  public reorderIndex = 0;
+  public tagId = 0;
+  public scopeId = 0;
+  public reorderId = 0;
   public hasGlobals = false;
   public needsMainRuntime = false;
   public hasMainRuntime = false;
@@ -557,7 +557,7 @@ export class State {
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
     const encodeLen = encodeChars.length;
     const encodeStartLen = encodeLen - 10; // Avoids chars that cannot start a property name.
-    let index = this.reorderIndex++;
+    let index = this.reorderId++;
     let mod = index % encodeStartLen;
     let id = encodeChars[mod];
     index = (index - mod) / encodeStartLen;

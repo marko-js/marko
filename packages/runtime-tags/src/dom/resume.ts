@@ -182,6 +182,7 @@ class Render implements RenderData {
                 if (branchIds.has(scopeId)) {
                   const branch = scope as BranchScope;
                   const parentBranch = branch.___closestBranch;
+                  branch.___branchDepth = +scopeId;
                   scope.___closestBranch = branch;
                   if (parentBranch) {
                     branch.___parentBranch = parentBranch;

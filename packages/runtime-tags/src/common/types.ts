@@ -3,6 +3,7 @@ export type Falsy = undefined | null | false | 0 | "";
 export type CommentWalker = TreeWalker & Record<string, Comment>;
 export interface BranchScope extends Scope {
   ___parentBranch: BranchScope | undefined;
+  ___branchDepth: number;
   ___destroyed: 1 | undefined;
   ___abortScopes: Set<Scope> | undefined;
   ___branchScopes: Set<BranchScope> | undefined;
