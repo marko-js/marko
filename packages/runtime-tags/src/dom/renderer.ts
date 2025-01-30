@@ -39,7 +39,7 @@ export function createBranchScopeWithRenderer(
   if (MARKO_DEBUG) {
     branch.___renderer = renderer;
   }
-  initRenderer(renderer, branch);
+  initBranch(renderer, branch);
   return branch;
 }
 
@@ -85,23 +85,23 @@ function createBranch(
   return branch;
 }
 
-export function initRenderer(renderer: Renderer, scope: Scope) {
+export function initBranch(renderer: Renderer, branch: BranchScope) {
   const dom = renderer.___clone();
   walk(
     dom.nodeType === NodeType.DocumentFragment ? dom.firstChild! : dom,
     renderer.___walks,
-    scope,
+    branch,
   );
-  scope.___startNode =
+  branch.___startNode =
     dom.nodeType === NodeType.DocumentFragment
       ? dom.firstChild!
       : (dom as ChildNode);
-  scope.___endNode =
+  branch.___endNode =
     dom.nodeType === NodeType.DocumentFragment
       ? dom.lastChild!
       : (dom as ChildNode);
   if (renderer.___setup) {
-    queueRender(scope, renderer.___setup);
+    queueRender(branch, renderer.___setup);
   }
   return dom;
 }

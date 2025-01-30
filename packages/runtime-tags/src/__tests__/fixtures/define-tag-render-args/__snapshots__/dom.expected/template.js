@@ -18,6 +18,7 @@ const _expr_Text_x = /* @__PURE__ */_$.intersection(2, _scope => {
   _MyTag_input(_scope, () => [1, "Hello", x]);
 }, () => _MyTag_input);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", 0, () => _expr_Text_x);
+const _MyTag = /* @__PURE__ */_$.value("MyTag", (_scope, MyTag) => _dynamicTagName(_scope, MyTag), () => _dynamicTagName);
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
   x
 }) => _$.on(_scope["#button/1"], "click", function () {
@@ -27,7 +28,6 @@ const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
   _$.data(_scope["#text/2"], x);
   _x_effect(_scope);
 }, () => _expr_Text_x);
-const _MyTag = /* @__PURE__ */_$.value("MyTag", (_scope, MyTag) => _dynamicTagName(_scope, MyTag), () => _dynamicTagName);
 export function _setup_(_scope) {
   _x(_scope, 1);
   _MyTag(_scope, {

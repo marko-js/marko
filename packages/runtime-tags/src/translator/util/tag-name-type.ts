@@ -7,7 +7,6 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { currentProgramPath } from "../visitors/program";
-import withPreviousLocation from "./with-previous-location";
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -26,7 +25,6 @@ export enum TagNameType {
 }
 
 const MARKO_FILE_REG = /^<.*>$|\.marko$/;
-const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
 
 export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
   const extra = (tag.node.extra ??= {});
@@ -41,25 +39,6 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
           : isNativeTag(tag)
             ? TagNameType.NativeTag
             : TagNameType.CustomTag;
-
-      if (extra.tagNameType === TagNameType.CustomTag) {
-        const bindingName = name.node.value;
-        const bindingIdentifier = tag.scope.getBinding(bindingName)?.identifier;
-        if (
-          bindingIdentifier &&
-          TAG_NAME_IDENTIFIER_REG.test(bindingIdentifier.name)
-        ) {
-          const tagIdentifier = withPreviousLocation(
-            t.identifier(bindingName),
-            name.node,
-          );
-          tagIdentifier.extra = {
-            referencedBindings: bindingIdentifier.extra?.binding,
-          };
-          analyzeExpressionTagName(name.replaceWith(tagIdentifier)[0], extra);
-        }
-      }
-
       extra.tagNameNullable = extra.tagNameNullable = false;
     } else {
       analyzeExpressionTagName(name, extra);

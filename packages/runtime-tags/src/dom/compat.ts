@@ -2,20 +2,21 @@ import {
   RENDERER_REGISTER_ID,
   SET_SCOPE_REGISTER_ID,
 } from "../common/compat-meta";
-import { createScope, type Scope } from "../dom";
+import type { BranchScope } from "../common/types";
+import { createScope } from "../dom";
 import { patchConditionals } from "./control-flow";
 import { prepareEffects, queueEffect, runEffects } from "./queue";
-import { createRenderer, initRenderer, type Renderer } from "./renderer";
+import { createRenderer, initBranch, type Renderer } from "./renderer";
 import { getRegisteredWithScope, register } from "./resume";
 import { destroyBranch } from "./scope";
 import { CLEAN, DIRTY, MARK } from "./signals";
-const classIdToScope = new Map<string, Scope>();
+const classIdToScope = new Map<string, BranchScope>();
 
 export const compat = {
   patchConditionals,
   queueEffect,
   init() {
-    register(SET_SCOPE_REGISTER_ID, (scope: Scope & { m5c: string }) => {
+    register(SET_SCOPE_REGISTER_ID, (scope: BranchScope & { m5c: string }) => {
       classIdToScope.set(scope.m5c, scope);
     });
   },
@@ -72,7 +73,7 @@ export const compat = {
     return renderer;
   },
   render(out: any, component: any, renderer: Renderer, args: any) {
-    let scope: Scope = component.scope;
+    let scope: BranchScope = component.scope;
 
     if (!scope) {
       scope = classIdToScope.get(component.id)!;
@@ -94,9 +95,10 @@ export const compat = {
 
     component.effects = prepareEffects(() => {
       if (!scope) {
-        scope = component.scope = createScope(out.global);
+        // TODO: this should be createBranch
+        scope = component.scope = createScope(out.global) as BranchScope;
         scope._ = renderer.___owner;
-        initRenderer(renderer, scope);
+        initBranch(renderer, scope);
       } else {
         applyArgs(scope, MARK);
         existing = true;

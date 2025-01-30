@@ -3,9 +3,10 @@
 <div />
 <span />
 <div />
+<!---->
 ```
 
 # Mutations
 ```
-INSERT div0, span, div1
+INSERT div0, span, div1, #comment
 ```

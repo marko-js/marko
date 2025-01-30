@@ -1,5 +1,5 @@
 import type { BranchScope } from "../common/types";
-import { insertBefore, removeAndDestroyBranch } from "./scope";
+import { insertBranchBefore, removeAndDestroyBranch } from "./scope";
 
 const WRONG_POS = 2147483647;
 
@@ -57,7 +57,7 @@ export function reconcile(
       nextSibling =
         k < newBranches.length ? newBranches[k].___startNode : afterReference;
       do {
-        insertBefore(newBranches[newStart++], parent, nextSibling);
+        insertBranchBefore(newBranches[newStart++], parent, nextSibling);
       } while (newStart <= newEnd);
     }
   } else if (newStart > newEnd) {
@@ -102,7 +102,7 @@ export function reconcile(
       // None of the newNodes already exist in the DOM
       // All newNodes need to be inserted
       for (; newStart < newLength; ++newStart) {
-        insertBefore(newBranches[newStart], parent, afterReference);
+        insertBranchBefore(newBranches[newStart], parent, afterReference);
       }
       // All oldNodes need to be removed
       for (; oldStart < oldLength; ++oldStart) {
@@ -129,14 +129,14 @@ export function reconcile(
             newBranch = newBranches[pos++];
             nextSibling =
               pos < k ? newBranches[pos].___startNode : afterReference;
-            insertBefore(newBranch, parent, nextSibling);
+            insertBranchBefore(newBranch, parent, nextSibling);
           } else {
             if (j < 0 || i !== seq[j]) {
               pos = i + newStart;
               newBranch = newBranches[pos++];
               nextSibling =
                 pos < k ? newBranches[pos].___startNode : afterReference;
-              insertBefore(newBranch, parent, nextSibling);
+              insertBranchBefore(newBranch, parent, nextSibling);
             } else {
               --j;
             }
@@ -150,7 +150,7 @@ export function reconcile(
             newBranch = newBranches[pos++];
             nextSibling =
               pos < k ? newBranches[pos].___startNode : afterReference;
-            insertBefore(newBranch, parent, nextSibling);
+            insertBranchBefore(newBranch, parent, nextSibling);
           }
         }
       }

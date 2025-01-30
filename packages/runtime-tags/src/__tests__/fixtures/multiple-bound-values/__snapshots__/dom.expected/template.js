@@ -1,6 +1,6 @@
 export const _template_ = `${_counters_template}<div><!> <!></div>`;
 export const _walks_ = /* beginChild, _counters_walks, endChild, next(1), replace, over(2), replace, out(1) */`/${_counters_walks}&D%c%l`;
-import { _setup_ as _counters, _input_count1_ as _counters_input_count, _input_count1Change_ as _counters_input_count1Change, _input_count2Change_ as _counters_input_count2Change, _input_count2_ as _counters_input_count2, _template_ as _counters_template, _walks_ as _counters_walks } from "./tags/2counters.marko";
+import { _setup_ as _counters, _input_count1_ as _counters_input_count, _input_count1Change_ as _counters_input_count1Change, _input_count2_ as _counters_input_count2, _input_count2Change_ as _counters_input_count2Change, _template_ as _counters_template, _walks_ as _counters_walks } from "./tags/2counters.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _count2 = /* @__PURE__ */_$.state("count2", (_scope, count2) => {
   _$.data(_scope["#text/2"], count2);
