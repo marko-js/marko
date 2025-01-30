@@ -3,13 +3,13 @@ export const _walks_ = /* get, over(1), beginChild, _child_walks, endChild */` b
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _child, _content_ as _child_input_content, _value_ as _child_input_value, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child.marko";
 const _inner$child_content = /* @__PURE__ */_$.value("inner", (_scope, inner) => _$.data(_scope["#text/1"], inner));
-const _outer$child_content = _$.registerSubscriber("__tests__/template.marko_2_outer/subscriber", /* @__PURE__ */_$.dynamicClosure("outer", (_scope, outer) => _$.data(_scope["#text/0"], outer)));
+const _outer$child_content = _$.registerSubscriber("__tests__/template.marko_2_outer/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, outer) => _$.data(_scope["#text/0"], outer)));
 const _params_3$child_content = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _inner$child_content(_scope, _params_3[0]));
 const _setup$child_content = _scope => {
   _outer$child_content._(_scope, _scope._["outer"]);
 };
 const _child_content2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div><!>.<!></div>", /* next(1), replace, over(2), replace */"D%c%", _setup$child_content, () => _params_3$child_content));
-const _y$child_content = _$.registerSubscriber("__tests__/template.marko_1_y/subscriber", /* @__PURE__ */_$.dynamicClosure("y", (_scope, y) => _child_input_value(_scope["#childScope/0"], y), void 0, () => _$.inChild("#childScope/0", _child_input_value)));
+const _y$child_content = _$.registerSubscriber("__tests__/template.marko_1_y/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, y) => _child_input_value(_scope["#childScope/0"], y), void 0, () => _$.inChild("#childScope/0", _child_input_value)));
 const _outer$child_content2 = /* @__PURE__ */_$.value("outer", (_scope, outer) => _outer$child_content(_scope, outer));
 const _params_2$child_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outer$child_content2(_scope, _params_2[0]));
 const _setup$child_content2 = _scope => {

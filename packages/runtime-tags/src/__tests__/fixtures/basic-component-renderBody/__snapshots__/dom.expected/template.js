@@ -2,7 +2,7 @@ export const _template_ = _myButton_template;
 export const _walks_ = /* beginChild, _myButton_walks, endChild */`/${_myButton_walks}&`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _myButton, _content_ as _myButton_input_content, _onClick_ as _myButton_input_onClick, _template_ as _myButton_template, _walks_ as _myButton_walks } from "./tags/my-button.marko";
-const _clickCount$myButton_content = _$.registerSubscriber("__tests__/template.marko_1_clickCount/subscriber", /* @__PURE__ */_$.dynamicClosure("clickCount", (_scope, clickCount) => _$.data(_scope["#text/0"], clickCount)));
+const _clickCount$myButton_content = _$.registerSubscriber("__tests__/template.marko_1_clickCount/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, clickCount) => _$.data(_scope["#text/0"], clickCount)));
 const _setup$myButton_content = _scope => {
   _clickCount$myButton_content._(_scope, _scope._["clickCount"]);
 };

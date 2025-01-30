@@ -1,7 +1,7 @@
 export const _template_ = "<!><!><button> </button>";
 export const _walks_ = /* replace, over(1), get, next(1), get, out(1) */"D%b D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _x$define_content = _$.registerSubscriber("__tests__/template.marko_1_x/subscriber", /* @__PURE__ */_$.dynamicClosure("x", (_scope, x) => _$.data(_scope["#text/0"], x)));
+const _x$define_content = _$.registerSubscriber("__tests__/template.marko_1_x/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, x) => _$.data(_scope["#text/0"], x)));
 const _setup$define_content = _scope => {
   _x$define_content._(_scope, _scope._["x"]);
 };

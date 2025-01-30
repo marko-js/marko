@@ -11,7 +11,7 @@ const _expr_outerItem_middleItem$for_content = /* @__PURE__ */_$.intersection(2,
   } = _scope;
   _child_input_name(_scope["#childScope/0"], `${outerItem}.${middleItem}`);
 }, () => _$.inChild("#childScope/0", _child_input_name));
-const _write$for_content2 = /* @__PURE__ */_$.dynamicClosure("write", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._, () => _$.inChild("#childScope/0", _child_input_write));
+const _write$for_content2 = /* @__PURE__ */_$.dynamicClosure((_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._, () => _$.inChild("#childScope/0", _child_input_write));
 const _outerItem$for_content2 = /* @__PURE__ */_$.loopClosure("#text/1", 0, () => _expr_outerItem_middleItem$for_content);
 const _middleItem$for_content = /* @__PURE__ */_$.value("middleItem", 0, () => _expr_outerItem_middleItem$for_content);
 const _params_3$for_content = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _middleItem$for_content(_scope, _params_3[0]), () => _middleItem$for_content);

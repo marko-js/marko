@@ -1,4 +1,4 @@
-// size: 1549 (min) 557 (brotli)
+// size: 1543 (min) 550 (brotli)
 const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _expr_name_write_effect = _$.effect("a0", (_scope, { 5: name, 6: write }) => {
     write(`${name} mounted`),
@@ -20,7 +20,6 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     () => _expr_name_write,
   ),
   _write$if_content3 = _$.dynamicClosure(
-    8,
     (_scope, write) => _write_(_scope[0], write),
     (_scope) => _scope._._._,
     () => _$.inChild(0, _write_),
@@ -36,7 +35,6 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   ),
   _if$if_content = _$.conditional(1, 0),
   _write$if_content2 = _$.dynamicClosure(
-    8,
     (_scope, write) => _write_(_scope[0], write),
     (_scope) => _scope._._,
     () => _$.inChild(0, _write_),
@@ -44,7 +42,6 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _showInner$if_content = _$.registerSubscriber(
     "b2",
     _$.dynamicClosure(
-      7,
       (_scope, showInner) =>
         _if$if_content(_scope, showInner ? _if_content3 : null),
       (_scope) => _scope._._,

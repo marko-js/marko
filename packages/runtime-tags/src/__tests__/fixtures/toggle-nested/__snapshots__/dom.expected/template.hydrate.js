@@ -1,8 +1,7 @@
-// size: 611 (min) 226 (brotli)
+// size: 607 (min) 221 (brotli)
 const _value2$if_content = _$.registerSubscriber(
     "a0",
     _$.dynamicClosure(
-      5,
       (_scope, value2) => _$.data(_scope[0], value2),
       (_scope) => _scope._._,
     ),
@@ -17,7 +16,6 @@ const _value2$if_content = _$.registerSubscriber(
   _value1$if_content = _$.registerSubscriber(
     "a2",
     _$.dynamicClosure(
-      4,
       (_scope, value1) => _$.data(_scope[0], value1),
       (_scope) => _scope._._,
     ),

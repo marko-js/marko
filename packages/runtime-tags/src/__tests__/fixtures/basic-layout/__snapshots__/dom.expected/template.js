@@ -2,7 +2,7 @@ export const _template_ = _layout_template;
 export const _walks_ = /* beginChild, _layout_walks, endChild */`/${_layout_walks}&`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _layout, _content_ as _layout_input_content, _template_ as _layout_template, _walks_ as _layout_walks } from "./tags/layout.marko";
-const _name$layout_content = _$.registerSubscriber("__tests__/template.marko_1_name/subscriber", /* @__PURE__ */_$.dynamicClosure("name", (_scope, name) => _$.data(_scope["#text/0"], name)));
+const _name$layout_content = _$.registerSubscriber("__tests__/template.marko_1_name/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, name) => _$.data(_scope["#text/0"], name)));
 const _setup$layout_content = _scope => {
   _name$layout_content._(_scope, _scope._["name"]);
 };

@@ -10,7 +10,7 @@ const _count$if_content_effect = _$.effect("__tests__/template.marko_2_count", (
 }) => _$.on(_scope["#button/0"], "click", function () {
   _count(_scope._._, count + 1), count;
 }));
-const _count$if_content = _$.registerSubscriber("__tests__/template.marko_2_count/subscriber", /* @__PURE__ */_$.dynamicClosure("count", (_scope, count) => {
+const _count$if_content = _$.registerSubscriber("__tests__/template.marko_2_count/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, count) => {
   _$.data(_scope["#text/1"], count);
   _count$if_content_effect(_scope);
 }, _scope => _scope._._));

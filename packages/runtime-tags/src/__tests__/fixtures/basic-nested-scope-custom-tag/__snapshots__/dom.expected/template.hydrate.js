@@ -1,4 +1,4 @@
-// size: 318 (min) 207 (brotli)
+// size: 316 (min) 211 (brotli)
 _$.dynamicTagAttrs(0);
 const _count$child_content_effect = _$.effect(
     "b0",
@@ -9,7 +9,7 @@ const _count$child_content_effect = _$.effect(
   ),
   _count$child_content = _$.registerSubscriber(
     "b1",
-    _$.dynamicClosure(1, (_scope, count) => {
+    _$.dynamicClosure((_scope, count) => {
       _$.data(_scope[1], count), _count$child_content_effect(_scope);
     }),
   ),

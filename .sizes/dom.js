@@ -1358,12 +1358,11 @@ function conditionalClosure(
 }
 var defaultGetOwnerScope = (scope) => scope._;
 function dynamicClosure(
-  ownerValueAccessor,
   fn,
   getOwnerScope = defaultGetOwnerScope,
   getIntersection,
 ) {
-  let ownerSubscribersAccessor = ownerValueAccessor + "*",
+  let ownerSubscribersAccessor = "?" + accessorId++,
     _signal = closure(fn, getIntersection),
     helperSignal = (ownerScope, value2) => {
       let subscribers = ownerScope[ownerSubscribersAccessor];

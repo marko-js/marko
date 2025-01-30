@@ -1,18 +1,17 @@
-// size: 456 (min) 221 (brotli)
+// size: 450 (min) 224 (brotli)
 _$.dynamicTagAttrs(0);
 const _c$if_content = _$.registerSubscriber(
     "b0",
     _$.dynamicClosure(
-      4,
       (_scope, c) => _$.data(_scope[2], c),
       (_scope) => _scope._._,
     ),
   ),
   _c$customTag_content = _$.registerSubscriber(
     "b1",
-    _$.dynamicClosure(4, (_scope, c) => _$.data(_scope[2], c)),
+    _$.dynamicClosure((_scope, c) => _$.data(_scope[2], c)),
   ),
-  _b$customTag_content = _$.dynamicClosure(3, (_scope, b) =>
+  _b$customTag_content = _$.dynamicClosure((_scope, b) =>
     _$.data(_scope[1], b),
   ),
   _setup$customTag_content = (_scope) => {

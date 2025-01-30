@@ -1,4 +1,4 @@
-// size: 843 (min) 378 (brotli)
+// size: 839 (min) 380 (brotli)
 const _content_input = _$.dynamicTagAttrs(0),
   _expr_Text_value = _$.intersection(
     2,
@@ -20,7 +20,7 @@ const _content_input = _$.dynamicTagAttrs(0),
   ),
   _outer$child_content = _$.registerSubscriber(
     "b0",
-    _$.dynamicClosure(2, (_scope, outer) => _$.data(_scope[0], outer)),
+    _$.dynamicClosure((_scope, outer) => _$.data(_scope[0], outer)),
   ),
   _params_3$child_content = _$.value(2, (_scope, _params_3) =>
     _inner$child_content(_scope, _params_3[0]),
@@ -40,7 +40,6 @@ const _content_input = _$.dynamicTagAttrs(0),
   _y$child_content = _$.registerSubscriber(
     "b2",
     _$.dynamicClosure(
-      3,
       (_scope, y) => _value_(_scope[0], y),
       void 0,
       () => _$.inChild(0, _value_),

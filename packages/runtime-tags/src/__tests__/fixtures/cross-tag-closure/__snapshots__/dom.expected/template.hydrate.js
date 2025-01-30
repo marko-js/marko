@@ -1,4 +1,4 @@
-// size: 480 (min) 263 (brotli)
+// size: 478 (min) 263 (brotli)
 const _value = _$.state(
   3,
   (_scope, value) => _$.tagVarSignal(_scope, value),
@@ -19,7 +19,7 @@ const _count$myTag_content_effect = _$.effect(
   ),
   _count$myTag_content = _$.registerSubscriber(
     "c1",
-    _$.dynamicClosure(2, (_scope, count) => {
+    _$.dynamicClosure((_scope, count) => {
       _$.data(_scope[1], count), _count$myTag_content_effect(_scope);
     }),
   ),

@@ -1,0 +1,17 @@
+<let/counts = [0, 0, 0]/>
+<for|count, i| of=counts>
+  <let/editing=false/>
+  <if=editing>
+    <button onClick() {
+      counts = counts.toSpliced(i, 1, count + 1);
+      editing = false;
+    }>
+      Confirm ${count + 1}
+    </button>
+  </if>
+  <else>
+    <button onClick() { editing = true; }>
+      Increment ${count}
+    </button>
+  </else>
+</for>

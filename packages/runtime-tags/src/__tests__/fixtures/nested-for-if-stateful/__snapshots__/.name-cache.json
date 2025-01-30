@@ -1,0 +1,32 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "o",
+      "$init": "t",
+      "$_expr_counts_count_i$for_content_effect": "e",
+      "$_expr_counts_count_i$for_content": "i",
+      "$_i$for_content": "r",
+      "$_count$for_content": "n",
+      "$_params_2$for_content": "a",
+      "$_counts$for_content": "c",
+      "$_for_content": "s",
+      "$_for": "m",
+      "$_counts": "u",
+      "$_visible$for_content": "l",
+      "$_setup$for_content": "d",
+      "$_count$else_content": "f",
+      "$_setup$else_content_effect": "b",
+      "$_setup$else_content": "_",
+      "$_else_content": "p",
+      "$_expr_counts_count_i$if_content_effect": "v",
+      "$_expr_counts_count_i$if_content": "S",
+      "$_i$if_content": "g",
+      "$_count$if_content": "C",
+      "$_counts$if_content": "k",
+      "$_if_content": "D",
+      "$_if$for_content": "R",
+      "$_editing$for_content": "y",
+      "$_setup$if_content": "I"
+    }
+  }
+}

@@ -1,4 +1,4 @@
-// size: 756 (min) 354 (brotli)
+// size: 754 (min) 325 (brotli)
 const _count$if_content_effect = _$.effect(
     "a0",
     (
@@ -16,7 +16,6 @@ const _count$if_content_effect = _$.effect(
   _count$if_content = _$.registerSubscriber(
     "a1",
     _$.dynamicClosure(
-      4,
       (_scope, count) => {
         _$.data(_scope[1], count), _count$if_content_effect(_scope);
       },

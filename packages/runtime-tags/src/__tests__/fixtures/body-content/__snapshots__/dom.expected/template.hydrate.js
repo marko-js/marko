@@ -1,4 +1,4 @@
-// size: 549 (min) 305 (brotli)
+// size: 547 (min) 305 (brotli)
 const _content_input = _$.dynamicTagAttrs(1),
   _dynamicTagName = _$.conditional(
     1,
@@ -23,9 +23,7 @@ const _content_input = _$.dynamicTagAttrs(1),
   ),
   _clickCount$FancyButton_content = _$.registerSubscriber(
     "b1",
-    _$.dynamicClosure(1, (_scope, clickCount) =>
-      _$.data(_scope[0], clickCount),
-    ),
+    _$.dynamicClosure((_scope, clickCount) => _$.data(_scope[0], clickCount)),
   ),
   _setup$FancyButton_content = (_scope) => {
     _clickCount$FancyButton_content._(_scope, _scope._[1]);

@@ -10,7 +10,7 @@ const _count$myTag_content_effect = _$.effect("__tests__/template.marko_1_count"
 }) => _$.on(_scope["#button/0"], "click", function () {
   _$.tagVarSignalChange(_scope._["#childScope/0"], count + 1), count;
 }));
-const _count$myTag_content = _$.registerSubscriber("__tests__/template.marko_1_count/subscriber", /* @__PURE__ */_$.dynamicClosure("count", (_scope, count) => {
+const _count$myTag_content = _$.registerSubscriber("__tests__/template.marko_1_count/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, count) => {
   _$.data(_scope["#text/1"], count);
   _count$myTag_content_effect(_scope);
 }));

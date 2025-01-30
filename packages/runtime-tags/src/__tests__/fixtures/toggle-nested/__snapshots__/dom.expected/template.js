@@ -2,12 +2,12 @@ export const _template_ = "<div><!></div>";
 export const _walks_ = /* next(1), replace, out(1) */"D%l";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _value2$if_content = _$.registerSubscriber("__tests__/template.marko_3_value2/subscriber", /* @__PURE__ */_$.dynamicClosure("value2", (_scope, value2) => _$.data(_scope["#text/0"], value2), _scope => _scope._._));
+const _value2$if_content = _$.registerSubscriber("__tests__/template.marko_3_value2/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, value2) => _$.data(_scope["#text/0"], value2), _scope => _scope._._));
 const _setup$if_content3 = _scope => {
   _value2$if_content._(_scope, _scope._._["value2"]);
 };
 const _if_content3 = _$.register("__tests__/template.marko_3_renderer", /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", _setup$if_content3));
-const _value1$if_content = _$.registerSubscriber("__tests__/template.marko_2_value1/subscriber", /* @__PURE__ */_$.dynamicClosure("value1", (_scope, value1) => _$.data(_scope["#text/0"], value1), _scope => _scope._._));
+const _value1$if_content = _$.registerSubscriber("__tests__/template.marko_2_value1/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, value1) => _$.data(_scope["#text/0"], value1), _scope => _scope._._));
 const _setup$if_content = _scope => {
   _value1$if_content._(_scope, _scope._._["value1"]);
 };
