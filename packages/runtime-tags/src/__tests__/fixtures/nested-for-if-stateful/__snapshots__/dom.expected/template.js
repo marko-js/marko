@@ -19,7 +19,7 @@ const _expr_counts_count_i$if_content_effect = _$.effect("__tests__/template.mar
     i
   }
 }) => _$.on(_scope["#button/0"], "click", function () {
-  _counts(_scope._._, counts.toSpliced(i, 1, count + 1));
+  _counts(_scope._._, [...counts.slice(0, i), count + 1, ...counts.slice(i + 1)]);
   _editing$for_content(_scope._, false);
 }));
 const _expr_counts_count_i$if_content = /* @__PURE__ */_$.intersection(3, _scope => {

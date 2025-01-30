@@ -3,7 +3,7 @@
   <let/editing=false/>
   <if=editing>
     <button onClick() {
-      counts = counts.toSpliced(i, 1, count + 1);
+      counts = [...counts.slice(0, i), count + 1, ...counts.slice(i + 1)];
       editing = false;
     }>
       Confirm ${count + 1}
