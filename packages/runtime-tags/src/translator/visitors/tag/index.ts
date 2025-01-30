@@ -9,35 +9,56 @@ import { isOutputHTML } from "../../util/marko-config";
 import * as hooks from "../../util/plugin-hooks";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
 import type { TemplateVisitor } from "../../util/visitors";
+import withPreviousLocation from "../../util/with-previous-location";
 import AttributeTag from "./attribute-tag";
 import CustomTag from "./custom-tag";
 import DynamicTag from "./dynamic-tag";
 import NativeTag from "./native-tag";
 
+const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
+
 export default {
   transform: {
     enter(tag) {
-      const attrs = tag.get("attributes");
+      const { node } = tag;
+      const { name, attributes } = tag.node;
+      let crawl = false;
 
-      for (let i = 0; i < attrs.length; i++) {
-        const attr = attrs[i];
-        if (t.isMarkoAttribute(attr.node) && attr.node.bound) {
-          attr.node.bound = false;
+      if (t.isStringLiteral(name)) {
+        const tagName = name.value;
+        if (
+          tag.scope.getBinding(tagName) &&
+          TAG_NAME_IDENTIFIER_REG.test(tagName)
+        ) {
+          node.name = withPreviousLocation(t.identifier(tagName), name);
+          crawl = true;
+        }
+      }
+
+      for (let i = 0; i < attributes.length; i++) {
+        const attr = attributes[i];
+        if (t.isMarkoAttribute(attr) && attr.bound) {
+          attr.bound = false;
           const changeValue = getChangeHandler(tag, attr);
           if (changeValue === null) {
-            throw attr.buildCodeFrameError(
+            throw tag.hub.buildError(
+              attr,
               "Attributes may only be bound to identifiers or member expressions",
             );
           }
 
-          tag.node.attributes.splice(
-            i + 1,
+          attributes.splice(
+            ++i,
             0,
-            t.markoAttribute(attr.node.name + "Change", changeValue),
+            t.markoAttribute(attr.name + "Change", changeValue),
           );
 
-          tag.scope.crawl();
+          crawl = true;
         }
+      }
+
+      if (crawl) {
+        tag.scope.crawl();
       }
     },
   },
@@ -187,31 +208,29 @@ export default {
 
 function getChangeHandler(
   tag: t.NodePath<t.MarkoTag>,
-  attr: t.NodePath<t.MarkoAttribute | t.MarkoSpreadAttribute>,
+  attr: t.MarkoAttribute | t.MarkoSpreadAttribute,
 ) {
-  if (t.isIdentifier(attr.node.value)) {
-    const valueId = tag.scope.generateUidIdentifier(
-      "new_" + attr.node.value.name,
-    );
+  if (t.isIdentifier(attr.value)) {
+    const valueId = tag.scope.generateUidIdentifier("new_" + attr.value.name);
     return t.arrowFunctionExpression(
       [valueId],
       t.blockStatement([
         t.expressionStatement(
-          t.assignmentExpression("=", t.cloneNode(attr.node.value), valueId),
+          t.assignmentExpression("=", t.cloneNode(attr.value), valueId),
         ),
       ]),
     );
-  } else if (t.isMemberExpression(attr.node.value)) {
-    const prop = attr.node.value.property;
+  } else if (t.isMemberExpression(attr.value)) {
+    const prop = attr.value.property;
     if (t.isPrivateName(prop)) return null;
     if (t.isIdentifier(prop)) {
       return t.memberExpression(
-        t.cloneNode(attr.node.value.object),
+        t.cloneNode(attr.value.object),
         t.identifier(prop.name + "Change"),
       );
     } else {
       return t.memberExpression(
-        t.cloneNode(attr.node.value.object),
+        t.cloneNode(attr.value.object),
         t.binaryExpression("+", t.cloneNode(prop), t.stringLiteral("Change")),
         true,
       );

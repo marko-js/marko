@@ -26,23 +26,25 @@ export function finishPendingScopes() {
   pendingScopes = [];
 }
 
-const emptyScope = createScope({});
-export function getEmptyScope(marker: Comment) {
-  emptyScope.___startNode = emptyScope.___endNode = marker;
-  return emptyScope;
+const emptyBranch = createScope({}) as BranchScope;
+export function getEmptyBranch(marker: Comment) {
+  emptyBranch.___startNode = emptyBranch.___endNode = marker;
+  return emptyBranch;
 }
 
 export function destroyBranch(branch: BranchScope) {
-  branch.___destroyed = 1;
-  branch.___branchScopes?.forEach(destroyBranch);
+  branch.___parentBranch?.___branchScopes?.delete(branch);
+  destroyNestedBranches(branch);
+}
 
-  if (branch.___abortScopes) {
-    for (const scope of branch.___abortScopes) {
-      for (const id in scope.___abortControllers) {
-        scope.___abortControllers[id]?.abort();
-      }
+function destroyNestedBranches(branch: BranchScope) {
+  branch.___destroyed = 1;
+  branch.___branchScopes?.forEach(destroyNestedBranches);
+  branch.___abortScopes?.forEach((scope) => {
+    for (const id in scope.___abortControllers) {
+      scope.___abortControllers[id]?.abort();
     }
-  }
+  });
 }
 
 export function removeAndDestroyBranch(branch: BranchScope) {
@@ -56,13 +58,13 @@ export function removeAndDestroyBranch(branch: BranchScope) {
   }
 }
 
-export function insertBefore(
-  scope: Scope,
+export function insertBranchBefore(
+  branch: BranchScope,
   parent: Node & ParentNode,
   nextSibling: Node | null,
 ) {
-  let current = scope.___startNode as Node;
-  const stop = scope.___endNode.nextSibling;
+  let current = branch.___startNode as Node;
+  const stop = branch.___endNode.nextSibling;
   while (current !== stop) {
     const next = current.nextSibling;
     parent.insertBefore(current, nextSibling);

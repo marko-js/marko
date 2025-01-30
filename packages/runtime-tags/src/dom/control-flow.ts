@@ -14,8 +14,8 @@ import {
 } from "./renderer";
 import {
   destroyBranch,
-  getEmptyScope,
-  insertBefore,
+  getEmptyBranch,
+  insertBranchBefore,
   removeAndDestroyBranch,
 } from "./scope";
 import { CLEAN, DIRTY, MARK, type Signal, type SignalOp } from "./signals";
@@ -52,6 +52,7 @@ export let conditional = function conditional(
       const normalizedRenderer =
         normalizeDynamicRenderer<Renderer>(newRendererOrOp);
       if (isDifferentRenderer(normalizedRenderer, currentRenderer)) {
+        scope[rendererAccessor] = normalizedRenderer;
         setConditionalRenderer(scope, nodeAccessor, normalizedRenderer);
         fn && fn(scope);
         op = DIRTY;
@@ -68,22 +69,20 @@ export function setConditionalRenderer(
   nodeAccessor: Accessor,
   newRenderer: Renderer | string | undefined,
 ) {
-  const newBranch = newRenderer
-    ? createBranchScopeWithTagNameOrRenderer(newRenderer, scope.$global, scope)
-    : undefined;
-
   const prevBranch =
     (scope[nodeAccessor + AccessorChar.ConditionalScope] as BranchScope) ||
-    getEmptyScope(scope[nodeAccessor] as Comment);
-  insertBefore(
-    newBranch || (getEmptyScope(scope[nodeAccessor] as Comment) as BranchScope),
+    getEmptyBranch(scope[nodeAccessor] as Comment);
+  const newBranch = newRenderer
+    ? createBranchScopeWithTagNameOrRenderer(newRenderer, scope.$global, scope)
+    : (getEmptyBranch(scope[nodeAccessor] as Comment) as BranchScope);
+  insertBranchBefore(
+    newBranch,
     prevBranch.___startNode.parentNode!,
     prevBranch.___startNode,
   );
   removeAndDestroyBranch(prevBranch);
-
-  scope[nodeAccessor + AccessorChar.ConditionalRenderer] = newRenderer;
-  scope[nodeAccessor + AccessorChar.ConditionalScope] = newBranch;
+  scope[nodeAccessor + AccessorChar.ConditionalScope] =
+    newRenderer && newBranch;
 }
 
 export let conditionalOnlyChild = function conditional(
@@ -141,7 +140,7 @@ export function setConditionalRendererOnlyChild(
   referenceNode.textContent = "";
 
   if (newBranch) {
-    insertBefore(newBranch, referenceNode, null);
+    insertBranchBefore(newBranch, referenceNode, null);
   }
 
   prevBranch && destroyBranch(prevBranch);
@@ -150,10 +149,10 @@ export function setConditionalRendererOnlyChild(
 }
 
 const emptyMarkerMap = new Map([
-  [Symbol(), getEmptyScope(undefined as any) as BranchScope],
+  [Symbol(), getEmptyBranch(undefined as any) as BranchScope],
 ]);
 export const emptyMarkerArray = [
-  /* @__PURE__ */ getEmptyScope(undefined as any) as BranchScope,
+  /* @__PURE__ */ getEmptyBranch(undefined as any) as BranchScope,
 ];
 const emptyMap = new Map();
 const emptyArray = [] as BranchScope[];
@@ -260,7 +259,7 @@ function loop<T extends unknown[] = unknown[]>(
       if (referenceIsMarker) {
         newMap = emptyMarkerMap;
         newArray = emptyMarkerArray;
-        getEmptyScope(referenceNode as Comment);
+        getEmptyBranch(referenceNode as Comment);
       } else {
         // TODO: we should be able to use child template analysis (or runtime analysis?) to know if its unnecessary to destroy these scopes
         oldArray.forEach(destroyBranch);
@@ -274,7 +273,7 @@ function loop<T extends unknown[] = unknown[]>(
     if (needsReconciliation) {
       if (referenceIsMarker) {
         if (oldMap === emptyMarkerMap) {
-          getEmptyScope(referenceNode as Comment);
+          getEmptyBranch(referenceNode as Comment);
         }
         const oldLastChild = oldArray[oldArray.length - 1];
         afterReference = oldLastChild.___endNode.nextSibling;

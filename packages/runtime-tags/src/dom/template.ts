@@ -6,7 +6,7 @@ import type {
   TemplateInstance,
 } from "../common/types";
 import { prepareEffects, runEffects } from "./queue";
-import { createRenderer, initRenderer, type Renderer } from "./renderer";
+import { createRenderer, initBranch, type Renderer } from "./renderer";
 import { register } from "./resume";
 import { createScope, removeAndDestroyBranch } from "./scope";
 import { MARK } from "./signals";
@@ -36,6 +36,8 @@ function mount(
   position?: InsertPosition,
 ): TemplateInstance {
   let branch!: BranchScope, dom!: Node;
+  let parentNode = reference as ParentNode;
+  let nextSibling: Node | null = null;
   let { $global } = input;
   if ($global) {
     ({ $global, ...input } = input);
@@ -50,40 +52,37 @@ function mount(
       renderId: DEFAULT_RENDER_ID,
     };
   }
-
-  const args = this.___args;
-  const effects = prepareEffects(() => {
-    branch = createScope($global) as BranchScope;
-    dom = initRenderer(this, branch);
-    if (args) {
-      args(branch, [input]);
-    }
-  });
-
   /*
     <!-- beforebegin -->
     <reference>
       <!-- afterbegin -->
       foo
-      <!-- beforeend -->
+      <!-- beforeend --> // default
     </reference>
     <!-- afterend -->
   */
   switch (position) {
     case "beforebegin":
-      reference.parentNode!.insertBefore(dom, reference);
+      parentNode = reference.parentNode!;
+      nextSibling = reference;
       break;
     case "afterbegin":
-      reference.insertBefore(dom, reference.firstChild);
+      nextSibling = reference.firstChild;
       break;
     case "afterend":
-      reference.parentNode!.insertBefore(dom, reference.nextSibling);
-      break;
-    default:
-      reference.appendChild(dom);
+      parentNode = reference.parentNode!;
+      nextSibling = reference.nextSibling;
       break;
   }
 
+  const args = this.___args;
+  const effects = prepareEffects(() => {
+    branch = createScope($global) as BranchScope;
+    dom = initBranch(this, branch);
+    args?.(branch, [input]);
+  });
+
+  parentNode.insertBefore(dom, nextSibling);
   runEffects(effects);
 
   return {

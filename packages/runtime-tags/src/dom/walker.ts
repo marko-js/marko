@@ -5,7 +5,7 @@ export const walker = /* @__PURE__ */ document.createTreeWalker(document);
 
 // Laws of the walks string:
 //  - Always prefer Get to Before to After, Inside, or Replace
-//    - Get must always be used to get a static node from clonable template if possible
+//    - Get must always be used to get a static node from cloneable template if possible
 //    - Replace must only be used to insert between two static text nodes
 //    - Inside must only be used to insert into elements with no static children
 //    - After must only be used to insert a last child or immediately following another action (if it makes the walks string smaller)
