@@ -1,5 +1,17 @@
 # @marko/runtime-tags
 
+## 0.3.26
+
+### Patch Changes
+
+- [#2479](https://github.com/marko-js/marko/pull/2479) [`87fdb82`](https://github.com/marko-js/marko/commit/87fdb82645ddefe9953c467d476fc6344ccd4d1d) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix nested branch scope signals
+
+- [#2476](https://github.com/marko-js/marko/pull/2476) [`36eab94`](https://github.com/marko-js/marko/commit/36eab947c870b98135a1e391acd56b6687def4f2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Start tag/scope/reorder ids at 1.
+
+- [#2476](https://github.com/marko-js/marko/pull/2476) [`f481b92`](https://github.com/marko-js/marko/commit/f481b92002f8faa44537a5e8ce45667f488e06e2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor render queue sorting.
+
+- [#2478](https://github.com/marko-js/marko/pull/2478) [`033332e`](https://github.com/marko-js/marko/commit/033332ed5fd7afbe2709cc2be91367c06dc4e531) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Minor refactoring.
+
 ## 0.3.25
 
 ### Patch Changes
