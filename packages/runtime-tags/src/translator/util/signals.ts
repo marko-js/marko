@@ -197,7 +197,10 @@ export function getSignal(
           buildSignalIntersections(signal),
         );
       };
-    } else if (referencedBindings.section !== section) {
+    } else if (
+      referencedBindings.section !== section &&
+      bindingUtil.find(section.closures, referencedBindings)
+    ) {
       getSignal(referencedBindings.section, referencedBindings).closures.set(
         section,
         signal,
@@ -220,7 +223,6 @@ export function getSignal(
         return isDynamicClosure
           ? callRuntime(
               "dynamicClosure",
-              getScopeAccessorLiteral(referencedBindings),
               render,
               isImmediateOwner
                 ? null

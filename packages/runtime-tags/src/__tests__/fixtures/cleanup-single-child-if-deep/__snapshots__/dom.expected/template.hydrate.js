@@ -1,4 +1,4 @@
-// size: 1465 (min) 525 (brotli)
+// size: 1459 (min) 524 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 3: name, 4: write }) => {
@@ -18,7 +18,6 @@ const _expr_name_write_effect = _$.effect(
     () => _expr_name_write,
   ),
   _write$if_content3 = _$.dynamicClosure(
-    8,
     (_scope, write) => _write_(_scope[0], write),
     (_scope) => _scope._._._,
     () => _$.inChild(0, _write_),
@@ -34,7 +33,6 @@ const _expr_name_write_effect = _$.effect(
   ),
   _if$if_content = _$.conditional(1, 0),
   _write$if_content2 = _$.dynamicClosure(
-    8,
     (_scope, write) => _write_(_scope[0], write),
     (_scope) => _scope._._,
     () => _$.inChild(0, _write_),
@@ -42,7 +40,6 @@ const _expr_name_write_effect = _$.effect(
   _showInner$if_content = _$.registerSubscriber(
     "b2",
     _$.dynamicClosure(
-      7,
       (_scope, showInner) =>
         _if$if_content(_scope, showInner ? _if_content3 : null),
       (_scope) => _scope._._,

@@ -192,14 +192,12 @@ export function conditionalClosure<T>(
 const defaultGetOwnerScope = (scope: Scope) => scope._ as Scope;
 
 export function dynamicClosure<T>(
-  ownerValueAccessor: Accessor,
   fn: Signal<T> | 0,
   getOwnerScope: (scope: Scope) => Scope = defaultGetOwnerScope,
   getIntersection?: () => Signal<never>,
 ): SignalFn<T> {
   //const getOwnerScope = _getOwnerScope || defaultGetOwnerScope; // Use this instead of default params to support passing `0`
-  const ownerSubscribersAccessor =
-    ownerValueAccessor + AccessorChar.Subscribers;
+  const ownerSubscribersAccessor = AccessorChar.Dynamic + accessorId++;
   const _signal = closure(fn, getIntersection);
   const helperSignal = (ownerScope: Scope, value: T) => {
     const subscribers = ownerScope[ownerSubscribersAccessor] as Set<Scope>;

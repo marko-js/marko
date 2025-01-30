@@ -3,8 +3,8 @@ export const _walks_ = /* get, over(1), beginChild, _customTag_walks, endChild, 
 const a = 1;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _customTag, _input_content_ as _customTag_input_content, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./tags/custom-tag.marko";
-const _c$if_content = _$.registerSubscriber("__tests__/template.marko_3_c/subscriber", /* @__PURE__ */_$.dynamicClosure("c", (_scope, c) => _$.data(_scope["#text/2"], c), _scope => _scope._._));
-const _b$if_content = /* @__PURE__ */_$.dynamicClosure("b", (_scope, b) => _$.data(_scope["#text/1"], b), _scope => _scope._._);
+const _c$if_content = _$.registerSubscriber("__tests__/template.marko_3_c/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, c) => _$.data(_scope["#text/2"], c), _scope => _scope._._));
+const _b$if_content = /* @__PURE__ */_$.dynamicClosure((_scope, b) => _$.data(_scope["#text/1"], b), _scope => _scope._._);
 const _setup$if_content = _scope => {
   _$.data(_scope["#text/0"], a);
   _b$if_content._(_scope, _scope._._["b"]);
@@ -16,8 +16,8 @@ const _setup$if_content2 = _scope => {
   _if$if_content(_scope, Math.random() ? _if_content2 : null);
 };
 const _if_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", _setup$if_content2);
-const _c$customTag_content = _$.registerSubscriber("__tests__/template.marko_1_c/subscriber", /* @__PURE__ */_$.dynamicClosure("c", (_scope, c) => _$.data(_scope["#text/2"], c)));
-const _b$customTag_content = /* @__PURE__ */_$.dynamicClosure("b", (_scope, b) => _$.data(_scope["#text/1"], b));
+const _c$customTag_content = _$.registerSubscriber("__tests__/template.marko_1_c/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, c) => _$.data(_scope["#text/2"], c)));
+const _b$customTag_content = /* @__PURE__ */_$.dynamicClosure((_scope, b) => _$.data(_scope["#text/1"], b));
 const _setup$customTag_content = _scope => {
   _$.data(_scope["#text/0"], a);
   _b$customTag_content._(_scope, _scope._["b"]);

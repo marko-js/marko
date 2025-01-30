@@ -26,7 +26,7 @@ const _multiplier$classLayout_content_effect = _$.effect("__tests__/template.mar
 }) => _$.on(_scope["#button/1"], "click", function () {
   _multiplier(_scope._, multiplier + 1), multiplier;
 }));
-const _multiplier$classLayout_content = _$.registerSubscriber("__tests__/template.marko_1_multiplier/subscriber", /* @__PURE__ */_$.dynamicClosure("multiplier", (_scope, multiplier) => {
+const _multiplier$classLayout_content = _$.registerSubscriber("__tests__/template.marko_1_multiplier/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, multiplier) => {
   _$.data(_scope["#text/2"], multiplier);
   _multiplier$classLayout_content_effect(_scope);
 }, void 0, () => _expr_multiplier_baseCount$classLayout_content));

@@ -1,4 +1,4 @@
-// size: 397 (min) 233 (brotli)
+// size: 395 (min) 232 (brotli)
 _$.dynamicTagAttrs(1);
 const _onClick__effect = _$.effect("a0", (_scope, { 4: onClick }) =>
     _$.on(_scope[0], "click", onClick),
@@ -6,9 +6,7 @@ const _onClick__effect = _$.effect("a0", (_scope, { 4: onClick }) =>
   _onClick_ = _$.value(4, (_scope, onClick) => _onClick__effect(_scope)),
   _clickCount$myButton_content = _$.registerSubscriber(
     "b1",
-    _$.dynamicClosure(1, (_scope, clickCount) =>
-      _$.data(_scope[0], clickCount),
-    ),
+    _$.dynamicClosure((_scope, clickCount) => _$.data(_scope[0], clickCount)),
   ),
   _setup$myButton_content = (_scope) => {
     _clickCount$myButton_content._(_scope, _scope._[1]);

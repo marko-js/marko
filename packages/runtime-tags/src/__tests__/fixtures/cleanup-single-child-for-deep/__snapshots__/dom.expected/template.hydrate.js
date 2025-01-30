@@ -1,4 +1,4 @@
-// size: 1198 (min) 504 (brotli)
+// size: 1196 (min) 503 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 3: name, 4: write }) =>
@@ -27,7 +27,6 @@ const _expr_name_write_effect = _$.effect(
     () => _$.inChild(0, _name_),
   ),
   _write$for_content2 = _$.dynamicClosure(
-    4,
     (_scope, write) => _write_(_scope[0], write),
     (_scope) => _scope._._,
     () => _$.inChild(0, _write_),

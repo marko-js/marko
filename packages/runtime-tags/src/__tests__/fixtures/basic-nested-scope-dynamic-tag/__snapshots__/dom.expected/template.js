@@ -9,7 +9,7 @@ const _count$falseChild_content_effect = _$.effect("__tests__/template.marko_1_c
 }) => _$.on(_scope["#button/0"], "click", function () {
   _count(_scope._, count + 1), count;
 }));
-const _count$falseChild_content = _$.registerSubscriber("__tests__/template.marko_1_count/subscriber", /* @__PURE__ */_$.dynamicClosure("count", (_scope, count) => {
+const _count$falseChild_content = _$.registerSubscriber("__tests__/template.marko_1_count/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, count) => {
   _$.data(_scope["#text/1"], count);
   _count$falseChild_content_effect(_scope);
 }));
