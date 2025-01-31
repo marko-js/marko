@@ -1,4 +1,10 @@
-import { NodeType, type Scope, WalkCode, WalkRangeSize } from "../common/types";
+import {
+  type BranchScope,
+  NodeType,
+  type Scope,
+  WalkCode,
+  WalkRangeSize,
+} from "../common/types";
 import { createScope } from "./scope";
 
 export const walker = /* @__PURE__ */ document.createTreeWalker(document);
@@ -23,9 +29,9 @@ export function trimWalkString(walkString: string): string {
   return walkString.slice(0, end + 1);
 }
 
-export function walk(startNode: Node, walkCodes: string, scope: Scope) {
+export function walk(startNode: Node, walkCodes: string, branch: BranchScope) {
   walker.currentNode = startNode;
-  walkInternal(walkCodes, scope, 0);
+  walkInternal(walkCodes, branch, 0);
   walker.currentNode = document;
 }
 
@@ -69,10 +75,6 @@ function walkInternal(
           ? getDebugKey(currentScopeIndex++, "#childScope")
           : currentScopeIndex++
       ] = createScope(scope.$global));
-      // TODO: shouldn't need startNode here only for direct children of controlflow.
-      // We need this currently because the scope in which the controlflow owner resides is returned
-      // we should change it to return the scope _controlled_ by the controlflow
-      childScope.___startNode = walker.currentNode as ChildNode;
       childScope.___closestBranch = scope.___closestBranch;
       currentWalkIndex = walkInternal(walkCodes, childScope, currentWalkIndex)!;
     } else if (value === WalkCode.EndChild) {

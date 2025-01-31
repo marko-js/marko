@@ -259,24 +259,20 @@ export function attrsEvents(scope: Scope, nodeAccessor: Accessor) {
   }
 }
 
-export function html(scope: Scope, value: unknown, index: Accessor) {
-  const firstChild = scope[index] as Node & ChildNode;
-  const lastChild = (scope[index + "-"] || firstChild) as Node & ChildNode;
-  const parentNode = firstChild.parentNode!;
-  const afterReference = lastChild.nextSibling;
-  const newContent = parseHTML(value || value === 0 ? value + "" : "<!>");
+export function html(scope: Scope, value: unknown, accessor: Accessor) {
+  const firstChild = scope[accessor] as ChildNode;
+  const lastChild = (scope[
+    accessor + AccessorChar.DynamicPlaceholderLastChild
+  ] || firstChild) as ChildNode;
+  const newContent = parseHTML(
+    value || value === 0 ? value + "" : "<!>", // TODO: is the comment needed
+  );
 
-  scope[index] = newContent.firstChild;
-  scope[index + AccessorChar.DynamicPlaceholderLastChild] =
+  scope[accessor] = newContent.firstChild;
+  scope[accessor + AccessorChar.DynamicPlaceholderLastChild] =
     newContent.lastChild;
-  parentNode.insertBefore(newContent, firstChild);
-
-  let current = firstChild;
-  while (current !== afterReference) {
-    const next = current.nextSibling;
-    current.remove();
-    current = next!;
-  }
+  firstChild.parentNode!.insertBefore(newContent, firstChild);
+  removeChildNodes(firstChild, lastChild);
 }
 
 export function props(scope: Scope, nodeIndex: number, index: number) {
@@ -328,5 +324,15 @@ export function lifecycle(
       scope,
       AccessorChar.LifecycleAbortController + index,
     ).onabort = () => thisObj.onDestroy?.();
+  }
+}
+
+export function removeChildNodes(startNode: ChildNode, endNode: ChildNode) {
+  const stop = endNode.nextSibling;
+  let current = startNode;
+  while (current !== stop) {
+    const next = current.nextSibling;
+    current.remove();
+    current = next!;
   }
 }

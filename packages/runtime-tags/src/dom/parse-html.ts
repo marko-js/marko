@@ -1,4 +1,3 @@
-const fallback = /* @__PURE__ */ new Text();
 const parser = /* @__PURE__ */ document.createElement("template");
 
 export function parseHTML(html: string) {
@@ -24,5 +23,5 @@ export function parseHTMLOrSingleNode(html: string) {
     return fragment;
   }
 
-  return fallback;
+  return new Text();
 }

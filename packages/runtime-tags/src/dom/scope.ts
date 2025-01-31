@@ -1,4 +1,5 @@
 import type { BranchScope, Scope } from "../common/types";
+import { removeChildNodes } from "./dom";
 
 let pendingScopes: Scope[] = [];
 let debugID = 0;
@@ -49,25 +50,19 @@ function destroyNestedBranches(branch: BranchScope) {
 
 export function removeAndDestroyBranch(branch: BranchScope) {
   destroyBranch(branch);
-  let current = branch.___startNode;
-  const stop = branch.___endNode.nextSibling;
-  while (current !== stop) {
-    const next = current.nextSibling;
-    current.remove();
-    current = next!;
-  }
+  removeChildNodes(branch.___startNode, branch.___endNode);
 }
 
 export function insertBranchBefore(
   branch: BranchScope,
-  parent: Node & ParentNode,
+  parentNode: ParentNode,
   nextSibling: Node | null,
 ) {
   let current = branch.___startNode as Node;
   const stop = branch.___endNode.nextSibling;
   while (current !== stop) {
     const next = current.nextSibling;
-    parent.insertBefore(current, nextSibling);
+    parentNode.insertBefore(current, nextSibling);
     current = next!;
   }
 }

@@ -114,7 +114,7 @@ class Render implements RenderData {
             this.___scopeStack.push(this.___currentScopeId);
           }
           this.___currentScopeId = scopeId;
-          scope.___startNode = visit;
+          (scope as BranchScope).___startNode = visit;
         } else if (token === ResumeSymbol.BranchEnd) {
           scope[data] = visit;
           const curParent = visit.parentNode!;

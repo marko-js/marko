@@ -10,14 +10,14 @@ import { createRenderer, initBranch, type Renderer } from "./renderer";
 import { getRegisteredWithScope, register } from "./resume";
 import { destroyBranch } from "./scope";
 import { CLEAN, DIRTY, MARK } from "./signals";
-const classIdToScope = new Map<string, BranchScope>();
+const classIdToBranch = new Map<string, BranchScope>();
 
 export const compat = {
   patchConditionals,
   queueEffect,
   init() {
-    register(SET_SCOPE_REGISTER_ID, (scope: BranchScope & { m5c: string }) => {
-      classIdToScope.set(scope.m5c, scope);
+    register(SET_SCOPE_REGISTER_ID, (branch: BranchScope & { m5c: string }) => {
+      classIdToBranch.set(branch.m5c, branch);
     });
   },
   registerRenderer(fn: any) {
@@ -29,12 +29,12 @@ export const compat = {
   isRenderer(renderer: any) {
     return renderer.___clone !== undefined;
   },
-  getStartNode(scope: any) {
-    return scope.___startNode;
+  getStartNode(branch: any) {
+    return branch.___startNode;
   },
-  setScopeNodes(scope: any, startNode: Node, endNode: Node) {
-    scope.___startNode = startNode;
-    scope.___endNode = endNode;
+  setScopeNodes(branch: any, startNode: Node, endNode: Node) {
+    branch.___startNode = startNode;
+    branch.___endNode = endNode;
   },
   runComponentEffects(this: any) {
     runEffects(this.effects);
@@ -73,13 +73,13 @@ export const compat = {
     return renderer;
   },
   render(out: any, component: any, renderer: Renderer, args: any) {
-    let scope: BranchScope = component.scope;
+    let branch: BranchScope = component.scope;
 
-    if (!scope) {
-      scope = classIdToScope.get(component.id)!;
-      if (scope) {
-        component.scope = scope;
-        classIdToScope.delete(component.id);
+    if (!branch) {
+      branch = classIdToBranch.get(component.id)!;
+      if (branch) {
+        component.scope = branch;
+        classIdToBranch.delete(component.id);
       }
     }
 
@@ -94,22 +94,22 @@ export const compat = {
     }
 
     component.effects = prepareEffects(() => {
-      if (!scope) {
+      if (!branch) {
         // TODO: this should be createBranch
-        scope = component.scope = createScope(out.global) as BranchScope;
-        scope._ = renderer.___owner;
-        initBranch(renderer, scope);
+        branch = component.scope = createScope(out.global) as BranchScope;
+        branch._ = renderer.___owner;
+        initBranch(renderer, branch);
       } else {
-        applyArgs(scope, MARK);
+        applyArgs(branch, MARK);
         existing = true;
       }
-      applyArgs(scope, args);
+      applyArgs(branch, args);
     });
 
     if (!existing) {
-      return scope.___startNode === scope.___endNode
-        ? scope.___startNode
-        : scope.___startNode.parentNode;
+      return branch.___startNode === branch.___endNode
+        ? branch.___startNode
+        : branch.___startNode.parentNode;
     }
   },
 };
