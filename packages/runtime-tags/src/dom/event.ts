@@ -1,3 +1,5 @@
+import { rendering } from "./queue";
+
 type EventNames = keyof GlobalEventHandlersEventMap;
 
 const elementHandlersByEvent = new Map<
@@ -50,7 +52,7 @@ export function createDelegator() {
 }
 
 function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
-  let target = ev.target as ParentNode | null;
+  let target = !rendering && (ev.target as ParentNode | null);
   if (target) {
     const handlersByElement = elementHandlersByEvent.get(ev.type)!;
     handlersByElement.get(target)?.(ev, target);

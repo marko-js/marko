@@ -1,4 +1,4 @@
-// size: 17998 (min) 6598 (brotli)
+// size: 18002 (min) 6598 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -113,7 +113,7 @@ function createDelegator() {
   };
 }
 function handleDelegated(ev) {
-  let target = ev.target;
+  let target = !rendering && ev.target;
   if (target) {
     let handlersByElement = elementHandlersByEvent.get(ev.type);
     if ((handlersByElement.get(target)?.(ev, target), ev.bubbles))
