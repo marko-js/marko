@@ -70,11 +70,11 @@ container.querySelector("#class").click();
 ```
 INSERT div/#text0
 INSERT div/#text3
-REMOVE #text after div/#text3
-REMOVE #text after div/#text3
-REMOVE button after div/#text3
-REMOVE #text after div/#text3
-REMOVE #text after div/#text3
+REMOVE #text before #text
+REMOVE #text before button
+REMOVE button before #text
+REMOVE #text before #text
+REMOVE #text before div/#text0
 INSERT div/#text1
 INSERT div/#text2
 INSERT div/button
@@ -128,11 +128,11 @@ container.querySelector("#class").click();
 ```
 INSERT div/#text0
 INSERT div/#text3
-REMOVE #text after div/#text3
-REMOVE #text after div/#text3
-REMOVE button after div/#text3
-REMOVE #text after div/#text3
-REMOVE #text after div/#text3
+REMOVE #text before #text
+REMOVE #text before button
+REMOVE button before #text
+REMOVE #text before #text
+REMOVE #text before div/#text0
 INSERT div/#text1
 INSERT div/#text2
 INSERT div/button

@@ -33,8 +33,8 @@ REMOVE #comment before html/body/#text0
 REMOVE #comment after html/body/#text5
 INSERT html/body/div/#text0
 INSERT html/body/div/#text3
-REMOVE #comment after html/body/div/#text3
-REMOVE button after html/body/div/#text3
+REMOVE #comment before button
+REMOVE button before html/body/div/#text0
 INSERT html/body/#text1
 INSERT html/body/#text4
 INSERT html/body/#text2
@@ -118,11 +118,11 @@ container.querySelector("#class").click();
 ```
 INSERT html/body/div/#text0
 INSERT html/body/div/#text3
-REMOVE #text after html/body/div/#text3
-REMOVE #text after html/body/div/#text3
-REMOVE button after html/body/div/#text3
-REMOVE #text after html/body/div/#text3
-REMOVE #text after html/body/div/#text3
+REMOVE #text before #text
+REMOVE #text before button
+REMOVE button before #text
+REMOVE #text before #text
+REMOVE #text before html/body/div/#text0
 INSERT html/body/div/#text1
 INSERT html/body/div/#text2
 INSERT html/body/div/button
@@ -198,11 +198,11 @@ container.querySelector("#class").click();
 ```
 INSERT html/body/div/#text0
 INSERT html/body/div/#text3
-REMOVE #text after html/body/div/#text3
-REMOVE #text after html/body/div/#text3
-REMOVE button after html/body/div/#text3
-REMOVE #text after html/body/div/#text3
-REMOVE #text after html/body/div/#text3
+REMOVE #text before #text
+REMOVE #text before button
+REMOVE button before #text
+REMOVE #text before #text
+REMOVE #text before html/body/div/#text0
 INSERT html/body/div/#text1
 INSERT html/body/div/#text2
 INSERT html/body/div/button

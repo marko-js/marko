@@ -23,6 +23,7 @@
 ```
 REMOVE html/body/#comment1 after html/body/#comment0
 INSERT html/body/#comment1
+INSERT html/body/#text
 REMOVE html/body/#comment0 before html
 INSERT html/body/#comment0
 ```

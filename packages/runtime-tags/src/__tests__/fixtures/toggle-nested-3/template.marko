@@ -1,0 +1,15 @@
+<let/outer = true/>
+<let/inner = true/>
+<let/count = 0/>
+<div>
+  <button id="outer" onClick(){ outer = !outer }/>
+  <if=outer>
+    <button id="inner" onClick(){ inner = !inner }/>
+    <if=inner>
+      <button id="count" onClick(){ count++ }>
+        ${count}
+      </button>
+    </if>
+  </if>
+  hello
+</div>

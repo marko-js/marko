@@ -45,8 +45,8 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/div
-REMOVE #comment after html/body/div
-REMOVE div after html/body/div
+REMOVE #comment after html/body/#comment0
+REMOVE div after html/body/#comment0
 UPDATE html/body/div[id] null => "dynamic"
 ```
 
@@ -74,6 +74,6 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/div
-REMOVE div after html/body/div
+REMOVE div after html/body/#comment0
 UPDATE html/body/div/#text1 "" => "dynamic"
 ```

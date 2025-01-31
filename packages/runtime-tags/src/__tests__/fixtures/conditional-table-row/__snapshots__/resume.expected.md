@@ -51,7 +51,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/table/tbody/tr
-REMOVE #comment after html/body/table/tbody/tr
+REMOVE #comment before html/body/table/tbody/tr
 ```
 
 # Render
@@ -81,7 +81,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/table/tbody/#comment
-REMOVE tr after html/body/table/tbody/#comment
+REMOVE tr before html/body/table/tbody/#comment
 ```
 
 # Render
@@ -115,5 +115,5 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/table/tbody/tr
-REMOVE #comment after html/body/table/tbody/tr
+REMOVE #comment before html/body/table/tbody/tr
 ```

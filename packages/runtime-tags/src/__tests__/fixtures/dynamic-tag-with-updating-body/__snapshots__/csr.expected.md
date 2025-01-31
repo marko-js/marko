@@ -62,7 +62,7 @@ container.querySelector("#changeTag").click();
 # Mutations
 ```
 INSERT span
-REMOVE div after span
+REMOVE div after #comment
 INSERT span/button
 UPDATE span/button/#text " " => "0"
 ```
