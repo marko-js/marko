@@ -17,7 +17,7 @@ static function getMissingBy() {
     <for|{ text }| of=items by="id">${text}</for>
   </>
 
-  <!-- <div.by-function>
+  <div.by-function>
     <for|{ text }| of=items by=item=> item.id>${text}</for>
   </div>
 
@@ -31,7 +31,7 @@ static function getMissingBy() {
 
   <div.by-unknown-missing>
     <for|{ text }| of=items by=getMissingBy()>${text}</for>
-  </div> -->
+  </div>
 
   <button onClick() { items = [...items.slice(1), items[0]]; }>Rotate</button>
 </div>

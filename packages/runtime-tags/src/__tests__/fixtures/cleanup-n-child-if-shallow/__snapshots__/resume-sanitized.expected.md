@@ -53,3 +53,17 @@ container.querySelector("button").click();
   c
 </p>
 ```
+
+
+# Render
+```js
+container.querySelector("button").click();
+```
+```html
+<button>
+  Toggle
+</button>
+<div>
+  destroyed
+</div>
+```

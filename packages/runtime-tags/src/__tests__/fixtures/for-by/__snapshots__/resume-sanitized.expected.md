@@ -6,6 +6,26 @@
   >
     firstsecondthird
   </div>
+  <div
+    class="by-function"
+  >
+    firstsecondthird
+  </div>
+  <div
+    class="by-unknown-string"
+  >
+    firstsecondthird
+  </div>
+  <div
+    class="by-unknown-function"
+  >
+    firstsecondthird
+  </div>
+  <div
+    class="by-unknown-missing"
+  >
+    firstsecondthird
+  </div>
   <button>
     Rotate
   </button>
@@ -21,6 +41,26 @@ container.querySelector("button").click();
 <div>
   <div
     class="by-string"
+  >
+    secondthirdfirst
+  </div>
+  <div
+    class="by-function"
+  >
+    secondthirdfirst
+  </div>
+  <div
+    class="by-unknown-string"
+  >
+    secondthirdfirst
+  </div>
+  <div
+    class="by-unknown-function"
+  >
+    secondthirdfirst
+  </div>
+  <div
+    class="by-unknown-missing"
   >
     secondthirdfirst
   </div>
@@ -42,6 +82,26 @@ container.querySelector("button").click();
   >
     thirdfirstsecond
   </div>
+  <div
+    class="by-function"
+  >
+    thirdfirstsecond
+  </div>
+  <div
+    class="by-unknown-string"
+  >
+    thirdfirstsecond
+  </div>
+  <div
+    class="by-unknown-function"
+  >
+    thirdfirstsecond
+  </div>
+  <div
+    class="by-unknown-missing"
+  >
+    thirdfirstsecond
+  </div>
   <button>
     Rotate
   </button>
@@ -57,6 +117,26 @@ container.querySelector("button").click();
 <div>
   <div
     class="by-string"
+  >
+    firstsecondthird
+  </div>
+  <div
+    class="by-function"
+  >
+    firstsecondthird
+  </div>
+  <div
+    class="by-unknown-string"
+  >
+    firstsecondthird
+  </div>
+  <div
+    class="by-unknown-function"
+  >
+    firstsecondthird
+  </div>
+  <div
+    class="by-unknown-missing"
   >
     firstsecondthird
   </div>
