@@ -32,7 +32,7 @@ export const createTemplate = (
 function mount(
   this: Template & Renderer,
   input: TemplateInput = {},
-  reference: ParentNode & Node,
+  reference: Node,
   position?: InsertPosition,
 ): TemplateInstance {
   let branch!: BranchScope, dom!: Node;

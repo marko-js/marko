@@ -82,7 +82,7 @@ declare global {
       /** Render and attach the template to a DOM node. */
       abstract mount(
         input: Marko.TemplateInput<Input>,
-        reference: ParentNode & Node,
+        reference: Node,
         position?: "afterbegin" | "afterend" | "beforebegin" | "beforeend",
       ): {
         update(input: Marko.TemplateInput<Input>): void;

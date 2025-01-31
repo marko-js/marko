@@ -4,7 +4,7 @@ import { insertBranchBefore, removeAndDestroyBranch } from "./scope";
 const WRONG_POS = 2147483647;
 
 export function reconcile(
-  parent: Node & ParentNode,
+  parent: ParentNode,
   oldBranches: BranchScope[],
   newBranches: BranchScope[],
   afterReference: Node | null,

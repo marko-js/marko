@@ -230,7 +230,7 @@ function loop<T extends unknown[] = unknown[]>(
     let newMap!: Map<unknown, BranchScope>;
     let newArray!: BranchScope[];
     let afterReference: Node | null;
-    let parentNode: Node & ParentNode;
+    let parentNode: ParentNode;
     let needsReconciliation = true;
     forEach(valueOrOp, (key, args) => {
       let branch = oldMap.get(key);

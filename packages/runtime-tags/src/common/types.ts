@@ -2,6 +2,8 @@ import type { Renderer as ClientRenderer } from "../dom/renderer";
 export type Falsy = undefined | null | false | 0 | "";
 export type CommentWalker = TreeWalker & Record<string, Comment>;
 export interface BranchScope extends Scope {
+  ___startNode: ChildNode;
+  ___endNode: ChildNode;
   ___parentBranch: BranchScope | undefined;
   ___branchDepth: number;
   ___destroyed: 1 | undefined;
@@ -12,8 +14,6 @@ export interface Scope {
   $global: Record<string, unknown>;
   _: Scope | undefined;
   ___args: unknown;
-  ___startNode: Node & ChildNode;
-  ___endNode: Node & ChildNode;
   ___pending: 1 | 0 | undefined;
   ___renderer: ClientRenderer | undefined;
   ___abortControllers:
@@ -111,7 +111,7 @@ export interface TemplateInput extends Input {
 export interface Template {
   mount(
     input: Input,
-    reference: ParentNode & Node,
+    reference: Node,
     position?: InsertPosition,
   ): TemplateInstance;
   render(input?: Input): RenderResult;
