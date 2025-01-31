@@ -1,4 +1,4 @@
-// size: 18002 (min) 6598 (brotli)
+// size: 18072 (min) 6619 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -147,17 +147,25 @@ var registeredValues = {},
         branchIds = new Set(),
         parentBranchIds = new Map();
       if (visits.length) {
-        let commentPrefixLen = data2.i.length,
-          closestBranchMarkers = new Map();
+        let lastEndNode,
+          commentPrefixLen = data2.i.length,
+          closestBranchMarkers = new Map(),
+          visitNodes = new Set(visits);
         data2.v = [];
-        let branchEnd = (branchId, visit, curNode) => {
+        let branchEnd = (branchId, visit, reference) => {
           let branch = (scopeLookup[branchId] ||= {}),
-            endNode = curNode;
-          for (; 8 === (endNode = endNode.previousSibling).nodeType; );
-          (branch.c = endNode), (branch.a ||= endNode);
+            endNode = reference;
+          for (; visitNodes.has((endNode = endNode.previousSibling)); );
+          endNode === lastEndNode &&
+            (endNode = reference.parentNode.insertBefore(
+              new Text(),
+              reference,
+            )),
+            (branch.b = lastEndNode = endNode),
+            (branch.a ||= endNode);
           for (let [markerScopeId, markerNode] of closestBranchMarkers)
             4 & branch.a.compareDocumentPosition(markerNode) &&
-              2 & curNode.compareDocumentPosition(markerNode) &&
+              2 & reference.compareDocumentPosition(markerNode) &&
               (parentBranchIds.set(markerScopeId, branchId),
               closestBranchMarkers.delete(markerScopeId));
           return (
@@ -200,7 +208,7 @@ var registeredValues = {},
                   data3.slice(start, ~next ? next : data3.length),
                   visit,
                   curNode,
-                ).c);
+                ).b);
             }
           }
         }
@@ -229,13 +237,13 @@ var registeredValues = {},
                       (scopeLookup[scopeId] = Object.assign(scope, prevScope));
                   let parentBranchId = parentBranchIds.get(scopeId);
                   if (
-                    (parentBranchId && (scope.b = scopes[parentBranchId]),
+                    (parentBranchId && (scope.c = scopes[parentBranchId]),
                     branchIds.has(scopeId))
                   ) {
                     let branch = scope,
-                      parentBranch = branch.b;
+                      parentBranch = branch.c;
                     (branch.f = +scopeId),
-                      (scope.b = branch),
+                      (scope.c = branch),
                       parentBranch &&
                         ((branch.t = parentBranch),
                         (parentBranch.k ||= new Set()).add(branch));
@@ -765,7 +773,7 @@ function createScope($global) {
 }
 var emptyBranch = createScope({});
 function getEmptyBranch(marker) {
-  return (emptyBranch.a = emptyBranch.c = marker), emptyBranch;
+  return (emptyBranch.a = emptyBranch.b = marker), emptyBranch;
 }
 function destroyBranch(branch) {
   branch.t?.k?.delete(branch), destroyNestedBranches(branch);
@@ -778,11 +786,11 @@ function destroyNestedBranches(branch) {
     });
 }
 function removeAndDestroyBranch(branch) {
-  destroyBranch(branch), removeChildNodes(branch.a, branch.c);
+  destroyBranch(branch), removeChildNodes(branch.a, branch.b);
 }
 function insertBranchBefore(branch, parentNode, nextSibling) {
   let current = branch.a,
-    stop = branch.c.nextSibling;
+    stop = branch.b.nextSibling;
   for (; current !== stop; ) {
     let next = current.nextSibling;
     parentNode.insertBefore(current, nextSibling), (current = next);
@@ -825,7 +833,7 @@ function walkInternal(walkCodes, scope, currentWalkIndex) {
       let childScope = (scope[currentScopeIndex++] = createScope(
         scope.$global,
       ));
-      (childScope.b = scope.b),
+      (childScope.c = scope.c),
         (currentWalkIndex = walkInternal(
           walkCodes,
           childScope,
@@ -862,17 +870,17 @@ function createBranchScopeWithTagNameOrRenderer(
   return (
     (branch[0] =
       branch.a =
-      branch.c =
+      branch.b =
         document.createElement(tagNameOrRenderer)),
     branch
   );
 }
 function createBranch($global, ownerScope, parentScope) {
   let branch = createScope($global),
-    parentBranch = parentScope.b;
+    parentBranch = parentScope.c;
   return (
     (branch._ = ownerScope),
-    (branch.b = branch),
+    (branch.c = branch),
     parentBranch
       ? ((branch.f = parentBranch.f + 1),
         (branch.t = parentBranch),
@@ -886,7 +894,7 @@ function initBranch(renderer, branch) {
   return (
     walk(11 === dom.nodeType ? dom.firstChild : dom, renderer.F, branch),
     (branch.a = 11 === dom.nodeType ? dom.firstChild : dom),
-    (branch.c = 11 === dom.nodeType ? dom.lastChild : dom),
+    (branch.b = 11 === dom.nodeType ? dom.lastChild : dom),
     renderer.x && queueRender(branch, renderer.x),
     dom
   );
@@ -974,8 +982,8 @@ var conditional = function (nodeAccessor, fn, getIntersection) {
                 : getEmptyBranch(scope[nodeAccessor]);
             insertBranchBefore(
               newBranch,
-              prevBranch.a.parentNode,
-              prevBranch.a,
+              prevBranch.b.parentNode,
+              prevBranch.b.nextSibling,
             ),
               removeAndDestroyBranch(prevBranch),
               (scope[nodeAccessor + "!"] = newRenderer && newBranch);
@@ -1104,7 +1112,7 @@ function loop(nodeAccessor, renderer, forEach) {
       if (referenceIsMarker) {
         oldMap === emptyMarkerMap && getEmptyBranch(referenceNode);
         let oldLastChild = oldArray[oldArray.length - 1];
-        (afterReference = oldLastChild.c.nextSibling),
+        (afterReference = oldLastChild.b.nextSibling),
           (parentNode = oldLastChild.a.parentNode);
       } else (afterReference = null), (parentNode = referenceNode);
       !(function (parent, oldBranches, newBranches, afterReference) {
@@ -1494,7 +1502,7 @@ function runRenders() {
       }
       pendingRenders[i] = item;
     }
-    render.m.b?.D || render.I(render.m, render.J);
+    render.m.c?.D || render.I(render.m, render.J);
   }
   !(function () {
     for (let scope of pendingScopes) scope.g = 0;
@@ -1505,7 +1513,7 @@ function comparePendingRenders(a, b) {
   return getBranchDepth(a) - getBranchDepth(b) || a.y - b.y;
 }
 function getBranchDepth(render) {
-  return render.m.b?.f || 0;
+  return render.m.c?.f || 0;
 }
 function resetAbortSignal(scope, id) {
   let ctrl = scope.h?.[id];
@@ -1513,7 +1521,7 @@ function resetAbortSignal(scope, id) {
 }
 function getAbortSignal(scope, id) {
   return (
-    scope.b && (scope.b.E ||= new Set()).add(scope),
+    scope.c && (scope.c.E ||= new Set()).add(scope),
     ((scope.h ||= {})[id] ||= new AbortController()).signal
   );
 }
@@ -1539,7 +1547,7 @@ var classIdToBranch = new Map(),
     isRenderer: (renderer) => void 0 !== renderer.l,
     getStartNode: (branch) => branch.a,
     setScopeNodes(branch, startNode, endNode) {
-      (branch.a = startNode), (branch.c = endNode);
+      (branch.a = startNode), (branch.b = endNode);
     },
     runComponentEffects() {
       runEffects(this.effects);
@@ -1592,7 +1600,7 @@ var classIdToBranch = new Map(),
         })),
         !existing)
       )
-        return branch.a === branch.c ? branch.a : branch.a.parentNode;
+        return branch.a === branch.b ? branch.a : branch.a.parentNode;
     },
   };
 function noop() {}

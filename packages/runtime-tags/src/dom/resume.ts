@@ -56,28 +56,33 @@ class Render implements RenderData {
       const commentPrefix = data.i;
       const commentPrefixLen = commentPrefix.length;
       const closestBranchMarkers = new Map<string, Comment>();
+      const visitNodes = new Set<ChildNode>(visits);
+      let lastEndNode: ChildNode | undefined;
+
       data.v = [];
 
       const branchEnd = (
         branchId: string,
         visit: Comment,
-        curNode: ChildNode,
+        reference: ChildNode,
       ) => {
         const branch = (scopeLookup[branchId] ||=
           {} as BranchScope) as BranchScope;
-        let endNode = curNode;
-        while (
-          (endNode = endNode.previousSibling!).nodeType ===
-          8 /* Node.COMMENT_NODE */
-        );
-        branch.___endNode = endNode;
+
+        let endNode = reference;
+        while (visitNodes.has((endNode = endNode.previousSibling!)));
+        if (endNode === lastEndNode) {
+          endNode = reference.parentNode!.insertBefore(new Text(), reference);
+        }
+
+        branch.___endNode = lastEndNode = endNode;
         branch.___startNode ||= endNode;
 
         for (const [markerScopeId, markerNode] of closestBranchMarkers) {
           if (
             branch.___startNode.compareDocumentPosition(markerNode) &
               4 /* FOLLOWING */ &&
-            curNode.compareDocumentPosition(markerNode) & 2 /* PRECEDING */
+            reference!.compareDocumentPosition(markerNode) & 2 /* PRECEDING */
           ) {
             parentBranchIds.set(markerScopeId, branchId);
             closestBranchMarkers.delete(markerScopeId);

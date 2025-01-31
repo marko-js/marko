@@ -88,10 +88,10 @@ container.querySelector("button.toggle").click();
 ```
 REMOVE html/body/#comment2 after html/body/#comment3
 INSERT html/body/#comment2
-REMOVE #comment after html/body/#comment2
-REMOVE #text after html/body/#comment2
-REMOVE #comment after html/body/#comment2
-REMOVE #text after html/body/#comment2
+REMOVE #comment after html/body/#comment1
+REMOVE #text after html/body/#comment1
+REMOVE #comment after html/body/#comment1
+REMOVE #text after html/body/#comment1
 ```
 
 # Render
@@ -149,7 +149,7 @@ container.querySelector("button.toggle").click();
 ```
 INSERT html/body/#text0
 INSERT html/body/#text1
-REMOVE #comment after html/body/#text1
+REMOVE #comment after html/body/#comment1
 UPDATE html/body/#text1 "" => "2"
 ```
 

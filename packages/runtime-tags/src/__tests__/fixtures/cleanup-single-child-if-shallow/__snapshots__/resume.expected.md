@@ -59,7 +59,7 @@ REMOVE html/body/#comment2 after html/body/#comment3
 INSERT html/body/#comment2
 REMOVE #text in html/body/div
 INSERT html/body/div/#text
-REMOVE div after html/body/#comment2
+REMOVE div after html/body/#comment1
 ```
 
 # Render
@@ -92,7 +92,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/div1
-REMOVE #comment after html/body/div1
+REMOVE #comment after html/body/#comment1
 REMOVE #text in html/body/div0
 INSERT html/body/div0/#text
 ```
@@ -127,5 +127,5 @@ container.querySelector("button").click();
 INSERT html/body/#comment2
 REMOVE #text in html/body/div
 INSERT html/body/div/#text
-REMOVE div after html/body/#comment2
+REMOVE div after html/body/#comment1
 ```

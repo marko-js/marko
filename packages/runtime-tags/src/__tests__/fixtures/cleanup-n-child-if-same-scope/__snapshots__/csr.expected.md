@@ -46,9 +46,9 @@ destroyed
 INSERT #text
 REMOVE #text in pre
 INSERT pre/#text
-REMOVE div after #text
-REMOVE span after #text
-REMOVE p after #text
+REMOVE div after pre
+REMOVE span after pre
+REMOVE p after pre
 ```
 
 # Render
@@ -82,7 +82,7 @@ mounted
 INSERT div
 INSERT span
 INSERT p
-REMOVE #text after p
+REMOVE #text after pre
 REMOVE #text in pre
 INSERT pre/#text
 ```
@@ -110,7 +110,7 @@ destroyed
 INSERT #text
 REMOVE #text in pre
 INSERT pre/#text
-REMOVE div after #text
-REMOVE span after #text
-REMOVE p after #text
+REMOVE div after pre
+REMOVE span after pre
+REMOVE p after pre
 ```

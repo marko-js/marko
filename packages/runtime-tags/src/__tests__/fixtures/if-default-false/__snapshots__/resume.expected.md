@@ -35,7 +35,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/#text
-REMOVE #comment after html/body/#text
+REMOVE #comment after html/body/#comment
 ```
 
 # Render
@@ -59,7 +59,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/#comment1
-REMOVE #text after html/body/#comment1
+REMOVE #text after html/body/#comment0
 ```
 
 # Render
@@ -83,5 +83,5 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/#text
-REMOVE #comment after html/body/#text
+REMOVE #comment after html/body/#comment
 ```

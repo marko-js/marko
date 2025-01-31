@@ -27,7 +27,7 @@ INSERT div
 # Mutations
 ```
 INSERT div/#text
-REMOVE span after div/#text
+REMOVE span before div/#text
 ```
 
 # Render `{"value":"World"}`
@@ -45,7 +45,7 @@ REMOVE span after div/#text
 # Mutations
 ```
 INSERT div/span0
-REMOVE #text after div/span0
+REMOVE #text before div/span0
 UPDATE div/span0/#text " " => "World"
 ```
 

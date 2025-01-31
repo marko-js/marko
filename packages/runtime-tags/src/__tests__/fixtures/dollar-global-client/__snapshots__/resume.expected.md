@@ -53,10 +53,10 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/div/span
-REMOVE #comment after html/body/div/span
+REMOVE #comment before html/body/div/span
 REMOVE html/body/div/#comment0 after span
 INSERT html/body/div/#comment0
-REMOVE span after html/body/div/#comment0
+REMOVE span after html/body/div/span
 UPDATE html/body/div/span/#text " " => "1"
 ```
 
@@ -90,9 +90,9 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/div/#comment0
-REMOVE span after html/body/div/#comment0
+REMOVE span before html/body/div/#comment0
 INSERT html/body/div/span
-REMOVE #comment after html/body/div/span
+REMOVE #comment after html/body/div/#comment0
 UPDATE html/body/div/span/#text " " => "1"
 ```
 
@@ -124,8 +124,8 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/div/span
-REMOVE #comment after html/body/div/span
+REMOVE #comment before html/body/div/span
 INSERT html/body/div/#comment0
-REMOVE span after html/body/div/#comment0
+REMOVE span after html/body/div/span
 UPDATE html/body/div/span/#text " " => "1"
 ```

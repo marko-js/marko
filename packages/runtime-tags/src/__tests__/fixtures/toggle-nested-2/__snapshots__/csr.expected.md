@@ -92,7 +92,7 @@ container.querySelector("#inner").click();
 # Mutations
 ```
 INSERT div/#text
-REMOVE button after div/#text
+REMOVE button after div/button1
 ```
 
 # Render
@@ -119,7 +119,7 @@ container.querySelector("#inner").click();
 # Mutations
 ```
 INSERT div/button2
-REMOVE #text after div/button2
+REMOVE #text after div/button1
 UPDATE div/button2/#text " " => "2"
 ```
 
@@ -164,9 +164,9 @@ container.querySelector("#outer").click();
 # Mutations
 ```
 INSERT div/#text
-REMOVE button after div/#text
-REMOVE button after div/#text
-REMOVE #comment after div/#text
+REMOVE button after div/button
+REMOVE button after div/button
+REMOVE #comment after div/button
 ```
 
 # Render
@@ -195,9 +195,9 @@ container.querySelector("#outer").click();
 INSERT div/button1
 INSERT #text
 INSERT div/#comment
-REMOVE #text after div/#comment
+REMOVE #text after div/button0
 INSERT div/button2
-REMOVE #text after div/button2
+REMOVE #text after div/button1
 UPDATE div/button2/#text " " => "3"
 ```
 

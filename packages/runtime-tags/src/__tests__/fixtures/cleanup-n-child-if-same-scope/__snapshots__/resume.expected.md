@@ -67,10 +67,10 @@ REMOVE html/body/#comment2 after p
 INSERT html/body/#comment2
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE #comment after html/body/#comment2
-REMOVE div after html/body/#comment2
-REMOVE span after html/body/#comment2
-REMOVE p after html/body/#comment2
+REMOVE #comment after html/body/#comment1
+REMOVE div after html/body/#comment1
+REMOVE span after html/body/#comment1
+REMOVE p after html/body/#comment1
 ```
 
 # Render
@@ -113,7 +113,7 @@ mounted
 INSERT html/body/div
 INSERT html/body/span
 INSERT html/body/p
-REMOVE #comment after html/body/p
+REMOVE #comment after html/body/#comment1
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
 ```
@@ -151,7 +151,7 @@ destroyed
 INSERT html/body/#comment2
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE div after html/body/#comment2
-REMOVE span after html/body/#comment2
-REMOVE p after html/body/#comment2
+REMOVE div after html/body/#comment1
+REMOVE span after html/body/#comment1
+REMOVE p after html/body/#comment1
 ```

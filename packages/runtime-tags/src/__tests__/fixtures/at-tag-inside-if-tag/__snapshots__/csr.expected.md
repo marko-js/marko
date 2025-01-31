@@ -29,7 +29,7 @@ Goodbye
 ```
 UPDATE div/#text "1" => "2"
 INSERT #text
-REMOVE #text after #text
+REMOVE #text after #comment1
 ```
 
 # Render `{"x":true}`
@@ -47,5 +47,5 @@ Hello
 ```
 UPDATE div/#text "2" => "1"
 INSERT #text
-REMOVE #text after #text
+REMOVE #text after #comment1
 ```

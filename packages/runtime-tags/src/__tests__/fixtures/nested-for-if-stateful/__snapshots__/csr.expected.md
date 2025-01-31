@@ -52,7 +52,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT button0
-REMOVE button after button0
+REMOVE button after #comment1
 UPDATE button0/#text1 "" => "1"
 ```
 
@@ -84,7 +84,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT button1
-REMOVE button after button1
+REMOVE button after #comment3
 UPDATE button1/#text1 "" => "1"
 ```
 
@@ -116,7 +116,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT button2
-REMOVE button after button2
+REMOVE button after #comment5
 UPDATE button2/#text1 "" => "1"
 ```
 
@@ -148,7 +148,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT button0
-REMOVE button after button0
+REMOVE button after #comment1
 UPDATE button0/#text1 "" => "1"
 ```
 
@@ -180,7 +180,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT button1
-REMOVE button after button1
+REMOVE button after #comment3
 UPDATE button1/#text1 "" => "1"
 ```
 
@@ -212,7 +212,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT button2
-REMOVE button after button2
+REMOVE button after #comment5
 UPDATE button2/#text1 "" => "1"
 ```
 
@@ -244,7 +244,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT button0
-REMOVE button after button0
+REMOVE button after #comment1
 UPDATE button0/#text1 "" => "2"
 ```
 
@@ -276,7 +276,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT button1
-REMOVE button after button1
+REMOVE button after #comment3
 UPDATE button1/#text1 "" => "2"
 ```
 
@@ -308,6 +308,6 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT button2
-REMOVE button after button2
+REMOVE button after #comment5
 UPDATE button2/#text1 "" => "2"
 ```

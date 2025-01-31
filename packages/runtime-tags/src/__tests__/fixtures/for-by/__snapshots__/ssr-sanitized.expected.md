@@ -6,26 +6,6 @@
   >
     firstsecondthird
   </div>
-  <div
-    class="by-function"
-  >
-    firstsecondthird
-  </div>
-  <div
-    class="by-unknown-string"
-  >
-    firstsecondthird
-  </div>
-  <div
-    class="by-unknown-function"
-  >
-    firstsecondthird
-  </div>
-  <div
-    class="by-unknown-missing"
-  >
-    firstsecondthird
-  </div>
   <button>
     Rotate
   </button>

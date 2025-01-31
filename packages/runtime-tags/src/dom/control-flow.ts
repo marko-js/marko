@@ -77,8 +77,8 @@ export function setConditionalRenderer(
     : (getEmptyBranch(scope[nodeAccessor] as Comment) as BranchScope);
   insertBranchBefore(
     newBranch,
-    prevBranch.___startNode.parentNode!,
-    prevBranch.___startNode,
+    prevBranch.___endNode.parentNode!,
+    prevBranch.___endNode.nextSibling,
   );
   removeAndDestroyBranch(prevBranch);
   scope[nodeAccessor + AccessorChar.ConditionalScope] =

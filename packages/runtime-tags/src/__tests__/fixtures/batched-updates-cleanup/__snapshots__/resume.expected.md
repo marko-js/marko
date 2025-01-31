@@ -40,5 +40,5 @@ container.querySelector("button").click();
 ```
 REMOVE html/body/#comment1 after span
 INSERT html/body/#comment1
-REMOVE span after html/body/#comment1
+REMOVE span after html/body/#comment0
 ```

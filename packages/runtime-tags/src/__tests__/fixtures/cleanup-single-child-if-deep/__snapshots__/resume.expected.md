@@ -131,7 +131,7 @@ REMOVE html/body/div/div/#comment1 after html/body/div/div/#comment2
 INSERT html/body/div/div/#comment1
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE p after html/body/div/div/#comment1
+REMOVE p after html/body/div/div/#comment0
 ```
 
 # Render
@@ -191,7 +191,7 @@ REMOVE html/body/div/#comment1 after div
 INSERT html/body/div/#comment1
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE div after html/body/div/#comment1
+REMOVE div after html/body/div/#comment0
 ```
 
 # Render
@@ -244,7 +244,7 @@ REMOVE html/body/#comment4 after div
 INSERT html/body/#comment4
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE div after html/body/#comment4
+REMOVE div after html/body/#comment3
 ```
 
 # Render
@@ -399,12 +399,12 @@ Inner mounted
 # Mutations
 ```
 INSERT html/body/div
-REMOVE #comment after html/body/div
+REMOVE #comment after html/body/#comment3
 INSERT html/body/div/div
-REMOVE #text after html/body/div/div
+REMOVE #text after html/body/div/p
 UPDATE html/body/div/p/#text " " => "Outer"
 INSERT html/body/div/div/p1
-REMOVE #text after html/body/div/div/p1
+REMOVE #text after html/body/div/div/p0
 UPDATE html/body/div/div/p0/#text " " => "Middle"
 UPDATE html/body/div/div/p1/#text " " => "Inner"
 REMOVE #text in html/body/pre
@@ -474,5 +474,5 @@ REMOVE #text in html/body/pre
 INSERT #text
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE div after html/body/#comment4
+REMOVE div after html/body/#comment3
 ```

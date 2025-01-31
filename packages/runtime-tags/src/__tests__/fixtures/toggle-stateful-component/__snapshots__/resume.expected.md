@@ -44,5 +44,5 @@ container.querySelector("button").click();
 ```
 REMOVE html/body/div/#comment after div
 INSERT html/body/div/#comment
-REMOVE div after html/body/div/#comment
+REMOVE div before html/body/div/#comment
 ```
