@@ -25,6 +25,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/1!": _$.getScopeById(_ifScopeId)
   }), "__tests__/template.marko", 0, {
     "message": "1:6",
+    "message_text": ["message.text", "1:6"],
     "show": "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);

@@ -293,7 +293,7 @@ class Reference {
 interface Debug {
   file: string;
   loc: string | 0;
-  vars: Record<string, string> | undefined;
+  vars: Record<string, string | [loc: string, name: string]> | undefined;
 }
 const DEBUG = new WeakMap<WeakKey, Debug>();
 export function debug(
@@ -1245,7 +1245,11 @@ function throwUnserializable(
       if (debug) {
         const varLoc = debug.vars?.[ref.accessor];
         if (varLoc) {
-          message += ` "${ref.accessor}" in ${debug.file}:${varLoc}`;
+          if (Array.isArray(varLoc)) {
+            message += ` "${varLoc[0]}" in ${debug.file}:${varLoc[1]}`;
+          } else {
+            message += ` "${ref.accessor}" in ${debug.file}:${varLoc}`;
+          }
         } else {
           message += ` ${JSON.stringify(ref.accessor)} in ${debug.file}`;
           if (debug.loc) {
@@ -1320,7 +1324,7 @@ function toObjectKey(name: string) {
   return name;
 }
 
-function toAccess(accessor: string) {
+export function toAccess(accessor: string) {
   const start = accessor[0];
   return start === '"' || (start >= "0" && start <= "9")
     ? "[" + accessor + "]"

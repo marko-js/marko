@@ -10,6 +10,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "index": index
   }), "__tests__/template.marko", 0, {
     "items": "1:5",
+    "items_0": ["items[0]", "1:5"],
     "index": "2:5"
   });
   _$.resumeClosestBranch(_scope0_id);
