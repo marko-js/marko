@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.37.13
+
+### Patch Changes
+
+- [#2485](https://github.com/marko-js/marko/pull/2485) [`09c0558`](https://github.com/marko-js/marko/commit/09c0558a1b26df2d828d56bd853f885a17683e38) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure Marko 5 renderBodies are serialized properly across the compat layer.
+
+- Updated dependencies [[`09c0558`](https://github.com/marko-js/marko/commit/09c0558a1b26df2d828d56bd853f885a17683e38)]:
+  - @marko/compiler@5.39.12
+
 ## 5.37.12
 
 ### Patch Changes
