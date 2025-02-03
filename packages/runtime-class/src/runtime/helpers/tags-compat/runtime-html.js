@@ -75,6 +75,9 @@ exports.p = function (htmlCompat) {
         tag.renderer;
       const renderBody5 = tag.renderBody || tag;
 
+      if (!renderer5 && renderBody5) {
+        htmlCompat.registerRenderBody(renderBody5);
+      }
       return (input, ...args) => {
         const out = defaultCreateOut();
         let customEvents;

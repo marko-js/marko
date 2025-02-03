@@ -1,0 +1,15 @@
+<define/Foo>
+  <const/unserializable = {
+    nested: {
+      thing: Buffer.from("")
+    }
+  }/>
+  <const/test() {
+    return unserializable;
+  }/>
+  <script>
+    test();
+  </script>
+</>
+
+<Foo/>

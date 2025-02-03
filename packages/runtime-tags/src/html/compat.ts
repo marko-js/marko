@@ -1,4 +1,5 @@
 import {
+  RENDER_BODY_ID,
   RENDERER_REGISTER_ID,
   SET_SCOPE_REGISTER_ID,
 } from "../common/compat-meta";
@@ -104,11 +105,16 @@ export const compat = {
           asyncOut.error(boundary.signal.reason);
         } else {
           queueMicrotask(() => {
-            const { scripts, html } = (head = prepareChunk(head));
-            asyncOut.script(scripts);
-            asyncOut.write(html);
-            asyncOut.end();
-            head.html = head.scripts = "";
+            head = prepareChunk(head);
+            // `prepareChunk` will call the serializer which could
+            // have new promises, the boundary may no longer be `done`.
+            if (boundary.done) {
+              const { scripts, html } = head;
+              asyncOut.script(scripts);
+              asyncOut.write(html);
+              asyncOut.end();
+              head.html = head.scripts = "";
+            }
           });
         }
       }
@@ -120,5 +126,8 @@ export const compat = {
       renderer,
       register(id, () => {}),
     );
+  },
+  registerRenderBody(fn: any) {
+    register(RENDER_BODY_ID, fn);
   },
 };

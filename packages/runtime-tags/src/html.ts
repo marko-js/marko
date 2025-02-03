@@ -22,6 +22,7 @@ export {
   dynamicTagInput,
 } from "./html/dynamic-tag";
 export { forIn, forInBy, forOf, forOfBy, forTo, forToBy } from "./html/for";
+export { debug } from "./html/serializer";
 export { createTemplate } from "./html/template";
 export {
   $global,

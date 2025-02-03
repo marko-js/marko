@@ -1,4 +1,5 @@
 import {
+  RENDER_BODY_ID,
   RENDERER_REGISTER_ID,
   SET_SCOPE_REGISTER_ID,
 } from "../common/compat-meta";
@@ -15,10 +16,12 @@ const classIdToBranch = new Map<string, BranchScope>();
 export const compat = {
   patchConditionals,
   queueEffect,
-  init() {
+  init(warp10Noop: any) {
     register(SET_SCOPE_REGISTER_ID, (branch: BranchScope & { m5c: string }) => {
       classIdToBranch.set(branch.m5c, branch);
     });
+
+    register(RENDER_BODY_ID, warp10Noop);
   },
   registerRenderer(fn: any) {
     register(RENDERER_REGISTER_ID, fn);

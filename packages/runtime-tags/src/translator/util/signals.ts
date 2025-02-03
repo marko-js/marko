@@ -12,7 +12,7 @@ import {
 import { forEachIdentifier } from "./for-each-identifier";
 import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
 import { isStatefulReferences } from "./is-stateful";
-import { isOutputHTML } from "./marko-config";
+import { isOptimize, isOutputHTML } from "./marko-config";
 import { find, forEach, type Opt, push } from "./optional";
 import {
   type Binding,
@@ -1017,16 +1017,40 @@ export function writeHTMLResumeStatements(
   }
 
   if (serializedProperties.length || forceResumeScope(section)) {
-    path.pushContainer(
-      "body",
-      t.expressionStatement(
-        callRuntime(
-          "writeScope",
-          scopeIdIdentifier,
-          t.objectExpression(serializedProperties),
-        ),
-      ),
+    let writeScope = callRuntime(
+      "writeScope",
+      scopeIdIdentifier,
+      t.objectExpression(serializedProperties),
     );
+
+    if (!isOptimize()) {
+      let debugVars: t.ObjectProperty[] | undefined;
+      forEach(section.bindings, (binding) => {
+        if (binding.loc) {
+          (debugVars ||= []).push(
+            t.objectProperty(
+              getScopeAccessorLiteral(binding),
+              t.stringLiteral(
+                `${binding.loc.start.line}:${binding.loc.start.column + 1}`,
+              ),
+            ),
+          );
+        }
+      });
+
+      writeScope = callRuntime(
+        "debug",
+        writeScope,
+        t.stringLiteral(path.hub.file.opts.filenameRelative as string),
+        section.loc && section.loc.start.line != null
+          ? t.stringLiteral(
+              `${section.loc.start.line}:${section.loc.start.column + 1}`,
+            )
+          : t.numericLiteral(0),
+        debugVars && t.objectExpression(debugVars),
+      );
+    }
+    path.pushContainer("body", t.expressionStatement(writeScope));
   }
 
   const resumeClosestBranch =

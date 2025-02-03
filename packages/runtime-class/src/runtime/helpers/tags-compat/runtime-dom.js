@@ -144,7 +144,7 @@ exports.p = function (domCompat) {
   }
 
   domCompat.registerRenderer(create5to6Renderer);
-  domCompat.init();
+  domCompat.init(require("../serialize-noop").___noop);
 
   function renderAndMorph(scope, renderer, renderBody, input) {
     const out = defaultCreateOut();

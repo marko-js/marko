@@ -55,7 +55,9 @@ export default {
           : markoRoot.node.name
         : t.isVariableDeclarator(fn.parent) && t.isIdentifier(fn.parent.id)
           ? fn.parent.id.name
-          : "anonymous"));
+          : t.isObjectMethod(node) && t.isIdentifier(node.key)
+            ? node.key.name
+            : "anonymous"));
 
     if (
       isMarkoAttribute(markoRoot) &&
@@ -103,12 +105,14 @@ function isFunction(
 ): fn is
   | t.NodePath<t.FunctionDeclaration>
   | t.NodePath<t.FunctionExpression>
-  | t.NodePath<t.ArrowFunctionExpression> {
+  | t.NodePath<t.ArrowFunctionExpression>
+  | t.NodePath<t.ObjectMethod> {
   switch (fn.node.type) {
     case "FunctionDeclaration":
       return isStatic && !fn.node.declare;
     case "FunctionExpression":
     case "ArrowFunctionExpression":
+    case "ObjectMethod":
       return true;
     default:
       return false;

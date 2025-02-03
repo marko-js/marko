@@ -37,6 +37,7 @@ export type Binding = {
   id: number;
   name: string;
   type: BindingType;
+  loc: t.SourceLocation | null;
   section: Section;
   serialize: boolean | Set<Binding>;
   aliases: Set<Binding>;
@@ -93,6 +94,7 @@ export function createBinding(
   upstreamAlias?: Binding["upstreamAlias"],
   upstreamExpression?: Binding["upstreamExpression"],
   property?: string,
+  loc: t.SourceLocation | null = null,
   declared = false,
 ): Binding {
   const id = getNextBindingId();
@@ -100,6 +102,7 @@ export function createBinding(
     id,
     name,
     type,
+    loc,
     section,
     property,
     declared,
@@ -256,9 +259,9 @@ function createBindingsAndTrackReferences(
   type: BindingType,
   scope: t.Scope,
   section: Section,
-  upstreamAlias?: Binding["upstreamAlias"],
-  upstreamExpression?: Binding["upstreamExpression"],
-  property?: string,
+  upstreamAlias: Binding["upstreamAlias"] | undefined,
+  upstreamExpression: Binding["upstreamExpression"] | undefined,
+  property: string | undefined,
 ) {
   switch (lVal.type) {
     case "Identifier":
@@ -269,6 +272,7 @@ function createBindingsAndTrackReferences(
         upstreamAlias,
         upstreamExpression,
         property,
+        lVal.loc,
         true,
       );
       trackReferencesForBinding(scope.getBinding(lVal.name)!);
@@ -285,6 +289,7 @@ function createBindingsAndTrackReferences(
           upstreamAlias,
           undefined,
           property,
+          lVal.loc,
         ));
 
       for (const prop of lVal.properties) {
@@ -337,6 +342,7 @@ function createBindingsAndTrackReferences(
           upstreamAlias,
           undefined,
           property,
+          lVal.loc,
         ));
 
       let i = -1;
