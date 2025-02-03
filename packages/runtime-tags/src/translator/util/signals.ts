@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import { getTemplateId } from "@marko/compiler/babel-utils";
 
 import { AccessorChar } from "../../common/types";
+import { toAccess } from "../../html/serializer";
 import { returnId } from "../core/return";
 import {
   cleanIdentifier,
@@ -1026,13 +1027,28 @@ export function writeHTMLResumeStatements(
     if (!isOptimize()) {
       let debugVars: t.ObjectProperty[] | undefined;
       forEach(section.bindings, (binding) => {
-        if (binding.loc) {
+        let root = binding;
+        let access = "";
+        while (!root.loc && root.upstreamAlias) {
+          if (root.property !== undefined) {
+            access = toAccess(root.property) + access;
+          }
+          root = root.upstreamAlias;
+        }
+
+        if (root.loc) {
+          const locStr = t.stringLiteral(
+            `${root.loc.start.line}:${root.loc.start.column + 1}`,
+          );
           (debugVars ||= []).push(
             t.objectProperty(
               getScopeAccessorLiteral(binding),
-              t.stringLiteral(
-                `${binding.loc.start.line}:${binding.loc.start.column + 1}`,
-              ),
+              root !== binding
+                ? t.arrayExpression([
+                    t.stringLiteral(root.name + access),
+                    locStr,
+                  ])
+                : locStr,
             ),
           );
         }

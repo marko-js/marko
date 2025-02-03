@@ -38,6 +38,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       "_": _$.ensureScopeWithId(_scope0_id)
     }), "__tests__/tags/comments.marko", "2:4", {
       "comment": "2:8",
+      "comment_text": ["comment.text", "2:8"],
+      "comment_comments": ["comment.comments", "2:8"],
       "i": "2:17",
       "id": "3:12",
       "open": "4:10"

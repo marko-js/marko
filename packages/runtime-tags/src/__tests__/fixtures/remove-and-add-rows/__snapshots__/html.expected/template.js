@@ -14,7 +14,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _scope1_.set(_by(child, _index), _$.ensureScopeWithId(_scope1_id));
     _$.write(`${_$.escapeXML(child.text)}${_$.markResumeNode(_scope1_id, "#text/0")}`);
     _$.debug(_$.writeScope(_scope1_id, {}), "__tests__/template.marko", "3:4", {
-      "child": "3:8"
+      "child": "3:8",
+      "child_text": ["child.text", "3:8"]
     });
   }, _scope0_id, "#div/0");
   _$.write(`</div>${_$.markResumeNode(_scope0_id, "#div/0")}`);
