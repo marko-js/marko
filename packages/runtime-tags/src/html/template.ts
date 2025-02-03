@@ -91,23 +91,24 @@ class ServerRenderResult implements RenderResult {
         done = true;
         if (resolve) {
           resolve({ value, done: !value });
+          value = "";
         }
       },
     );
 
     return {
       next() {
-        if (value) {
+        if (aborted) {
+          return Promise.reject(reason);
+        } else if (value) {
           const result = { value, done: false };
           value = "";
           return Promise.resolve(result);
+        } else if (done) {
+          return Promise.resolve({ value: "", done });
+        } else {
+          return new Promise(exec);
         }
-
-        return done
-          ? Promise.resolve({ value: "", done })
-          : aborted
-            ? Promise.reject(reason)
-            : new Promise(exec);
       },
       throw(error: unknown) {
         if (!(done || aborted)) {
@@ -221,12 +222,15 @@ class ServerRenderResult implements RenderResult {
 
       const { boundary } = head;
       (boundary.onNext = () => {
-        if (boundary.done) {
-          if (boundary.signal.aborted) {
-            reject(boundary.signal.reason);
-          } else {
-            head = prepareChunk(head);
-            if (boundary.done) resolve(flushChunk(head, true));
+        if (boundary.signal.aborted) {
+          boundary.onNext = NOOP;
+          reject(boundary.signal.reason);
+        } else if (boundary.done) {
+          head = prepareChunk(head);
+          // `prepareChunk` will call the serializer which could
+          // have new promises, the boundary may no longer be `done`.
+          if (boundary.done) {
+            resolve(flushChunk(head, true));
           }
         }
       })();
@@ -249,28 +253,30 @@ class ServerRenderResult implements RenderResult {
 
     const { boundary } = head;
     const onNext = (boundary.onNext = (write?: boolean) => {
-      if (write || boundary.done) {
-        if (boundary.signal.aborted) {
-          if (!tick) offTick(onNext);
-          onAbort(boundary.signal.reason);
-          return;
+      if (boundary.signal.aborted) {
+        if (!tick) offTick(onNext);
+        boundary.onNext = NOOP;
+        onAbort(boundary.signal.reason);
+      } else {
+        if (write || boundary.done) {
+          head = prepareChunk(head);
         }
 
-        head = prepareChunk(head);
-      }
-
-      if (write || boundary.done) {
-        const html = flushChunk(head, boundary.done);
-        if (html) onWrite(html);
-        if (boundary.done) {
-          if (!tick) offTick(onNext);
-          onClose();
-        } else {
-          tick = true;
+        // `prepareChunk` will call the serializer which could
+        // have new promises, the boundary may no longer be `done`.
+        if (write || boundary.done) {
+          const html = flushChunk(head, boundary.done);
+          if (html) onWrite(html);
+          if (boundary.done) {
+            if (!tick) offTick(onNext);
+            onClose();
+          } else {
+            tick = true;
+          }
+        } else if (tick) {
+          tick = false;
+          queueTick(onNext);
         }
-      } else if (tick) {
-        tick = false;
-        queueTick(onNext);
       }
     });
 
@@ -286,3 +292,5 @@ class ServerRenderResult implements RenderResult {
     return flushChunk(prepareChunk(head), true);
   }
 }
+
+function NOOP() {}

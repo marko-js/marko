@@ -1,4 +1,4 @@
-// size: 18072 (min) 6619 (brotli)
+// size: 18085 (min) 6624 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1535,10 +1535,11 @@ var classIdToBranch = new Map(),
         (conditionalOnlyChild = fn(conditionalOnlyChild));
     },
     queueEffect: queueEffect,
-    init() {
+    init(warp10Noop) {
       register("$C_s", (branch) => {
         classIdToBranch.set(branch.m5c, branch);
-      });
+      }),
+        register("$C_b", warp10Noop);
     },
     registerRenderer(fn) {
       register("$C_r", fn);

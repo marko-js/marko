@@ -24,6 +24,7 @@ export enum ContentType {
 export interface Section {
   id: number;
   name: string;
+  loc: t.SourceLocation | undefined;
   depth: number;
   parent: Section | undefined;
   params: undefined | Binding;
@@ -79,6 +80,7 @@ export function startSection(
     section = extra.section = {
       id: sections.length,
       name: sectionName,
+      loc: sectionNamePath?.node.loc || undefined,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
       params: undefined,

@@ -272,6 +272,7 @@ class State {
 }
 
 class Reference {
+  declare debug?: Debug;
   public init = "";
   public assigns = "";
   constructor(
@@ -287,6 +288,29 @@ class Reference {
     this.pos = pos;
     this.id = id;
   }
+}
+
+interface Debug {
+  file: string;
+  loc: string | 0;
+  vars: Record<string, string> | undefined;
+}
+const DEBUG = new WeakMap<WeakKey, Debug>();
+export function debug(
+  obj: WeakKey,
+  file: string,
+  loc: string | 0,
+  vars?: Record<string, string>,
+) {
+  if (MARKO_DEBUG) {
+    DEBUG.set(obj, {
+      file,
+      loc,
+      vars,
+    });
+  }
+
+  return obj;
 }
 
 export class Serializer {
@@ -420,6 +444,7 @@ function writeProp(
       return writeObject(state, val, parent, accessor);
 
     default:
+      MARKO_DEBUG && throwUnserializable(state, val, parent, accessor);
       return false;
   }
 }
@@ -459,6 +484,11 @@ function writeReferenceOr(
     val,
     (ref = new Reference(parent, accessor, state.flush, state.buf.length)),
   );
+
+  if (MARKO_DEBUG) {
+    ref.debug = DEBUG.get(val);
+  }
+
   if (write(state, val, ref)) return true;
 
   state.refs.delete(ref);
@@ -567,7 +597,8 @@ function writeUnknownSymbol(state: State) {
   return true;
 }
 
-function writeNever() {
+function writeNever(state: State, val: unknown, ref: Reference) {
+  MARKO_DEBUG && throwUnserializable(state, val, ref);
   return false;
 }
 
@@ -658,6 +689,8 @@ function writeUnknownObject(state: State, val: object, ref: Reference) {
     case globalThis.Response:
       return writeResponse(state, val as Response, ref);
   }
+
+  MARKO_DEBUG && throwUnserializable(state, val, ref);
   return false;
 }
 
@@ -1196,6 +1229,51 @@ function writeAsyncCall(
   }
   state.buf.push(")");
   boundary.endAsync();
+}
+
+function throwUnserializable(
+  state: State,
+  cause: unknown,
+  ref: Reference | null = null,
+  accessor: string = "",
+) {
+  if (cause !== undefined && state.boundary?.abort) {
+    let message = "Unable to serialize";
+    let access = "";
+    while (ref?.accessor) {
+      const debug = ref.parent?.debug;
+      if (debug) {
+        const varLoc = debug.vars?.[ref.accessor];
+        if (varLoc) {
+          message += ` "${ref.accessor}" in ${debug.file}:${varLoc}`;
+        } else {
+          message += ` ${JSON.stringify(ref.accessor)} in ${debug.file}`;
+          if (debug.loc) {
+            message += `:${debug.loc}`;
+          }
+        }
+        break;
+      }
+      access = toAccess(ref.accessor) + access;
+      ref = ref.parent;
+    }
+
+    if (accessor) {
+      access = toAccess(accessor) + access;
+    }
+
+    if (access[0] === ".") {
+      access = access.slice(1);
+    }
+
+    if (access) {
+      message += ` (reading ${access})`;
+    }
+
+    const err = new TypeError(message, { cause });
+    err.stack = undefined;
+    state.boundary.abort(err);
+  }
 }
 
 function isCircular(
