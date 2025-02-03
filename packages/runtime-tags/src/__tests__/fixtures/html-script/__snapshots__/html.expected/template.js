@@ -10,8 +10,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   }
 </script>${_$.markResumeNode(_scope0_id, "#script/0")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "count": count
+  }), "__tests__/template.marko", 0, {
+    "count": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

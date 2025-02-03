@@ -10,16 +10,18 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.write(`<button id=tags>${_$.escapeXML(count)}${_$.markResumeNode(_scope1_id, "#text/1")}</button>${_$.markResumeNode(_scope1_id, "#button/0")}`);
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1_count/subscriber");
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1_count");
-    _$.writeScope(_scope1_id, {
+    _$.debug(_$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
-    });
+    }), "__tests__/template.marko", "2:2");
     _$.resumeClosestBranch(_scope1_id);
   }), "__tests__/template.marko_1_renderer", _scope0_id));
   _s(_classLayout, "__tests__/components/class-layout.marko");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "count": count,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(_classLayout)
+  }), "__tests__/template.marko", 0, {
+    "count": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

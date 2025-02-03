@@ -6,9 +6,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/0", _helloInternal, {});
   _s(_helloInternal, "__tests__/tags/components/hello-internal.marko");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(_helloInternal)
-  });
+  }), "__tests__/tags/hello.marko", 0);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/hello.marko", _renderer);

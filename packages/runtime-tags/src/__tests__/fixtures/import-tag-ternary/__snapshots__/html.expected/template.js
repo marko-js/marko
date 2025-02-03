@@ -6,9 +6,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const x = 1;
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/0", x === 1 ? baz : foo, {});
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(x === 1 ? baz : foo)
+  }), "__tests__/template.marko", 0, {
+    "x": "3:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

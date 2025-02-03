@@ -9,9 +9,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _childScope2 = _$.peekNextScope();
   const spanName = _parentEl({}, _$.register(() => {}, "__tests__/template.marko_0_spanName/var", _scope0_id));
   _$.write(`${_$.escapeXML(spanName)}${_$.markResumeNode(_scope0_id, "#text/3")}</span>`);
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "#childScope/0": _$.writeExistingScope(_childScope),
     "#childScope/2": _$.writeExistingScope(_childScope2)
+  }), "__tests__/template.marko", 0, {
+    "divName": "2:16",
+    "spanName": "7:16"
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

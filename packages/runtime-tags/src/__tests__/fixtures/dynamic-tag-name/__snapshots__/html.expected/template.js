@@ -76,7 +76,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   if (tagConstB) _$.write(`<${tagConstB} class="a b"${_$.attr("other", other)}>`);
   if (tagConstB) _$.write(`</${tagConstB}>`);
   _$.write(_$.markResumeNode(_scope0_id, "#tagConstB/14"));
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "other": other,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(content),
@@ -92,6 +92,18 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     "#text/8(": _$.normalizeDynamicRenderer(tag || tagA),
     "#text/9!": _$.writeExistingScope(_dynamicScope6),
     "#text/9(": _$.normalizeDynamicRenderer(_tagName5)
+  }), "__tests__/template.marko", 0, {
+    "content": "4:10",
+    "x": "4:19",
+    "show": "4:22",
+    "showTagA": "4:28",
+    "isLarge": "4:38",
+    "tag": "4:47",
+    "level": "4:52",
+    "other": "4:59",
+    "largeHeading": "22:8",
+    "tagConstA": "29:8",
+    "tagConstB": "32:8"
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

@@ -11,8 +11,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     }, "__tests__/template.marko_0/valueChange", _scope0_id)
   });
   _$.write(`source=<!>${_$.escapeXML(source)}${_$.markResumeNode(_scope0_id, "#text/1")}`);
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "#childScope/0": _$.writeExistingScope(_childScope)
+  }), "__tests__/template.marko", 0, {
+    "source": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

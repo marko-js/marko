@@ -10,9 +10,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   }, "#div/2", _scope0_id, "div")}></div>${_$.markResumeNode(_scope0_id, "#div/2")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_input_value_a");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_input_value");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "input_value": input.value,
     "a": a
+  }), "__tests__/template.marko", 0, {
+    "a": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

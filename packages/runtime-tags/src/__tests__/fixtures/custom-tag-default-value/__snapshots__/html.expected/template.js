@@ -11,9 +11,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _child({
     value: x
   });
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "#childScope/0": _$.writeExistingScope(_childScope),
     "#childScope/1": _$.writeExistingScope(_childScope2)
+  }), "__tests__/template.marko", 0, {
+    "x": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

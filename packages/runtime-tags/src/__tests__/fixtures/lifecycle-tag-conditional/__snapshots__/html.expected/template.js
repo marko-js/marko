@@ -8,9 +8,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     if (show) {
       const _scope1_id = _$.nextScopeId();
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_x");
-      _$.writeScope(_scope1_id, {
+      _$.debug(_$.writeScope(_scope1_id, {
         "_": _$.ensureScopeWithId(_scope0_id)
-      });
+      }), "__tests__/template.marko", "3:2");
       _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_1_renderer");
       _ifScopeId = _scope1_id;
     }
@@ -18,11 +18,14 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.write(`<div id=ref></div><button id=increment>Increment</button>${_$.markResumeNode(_scope0_id, "#button/1")}<button id=toggle>Toggle</button>${_$.markResumeNode(_scope0_id, "#button/2")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_show");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "x": x,
     "show": show,
     "#text/0(": _ifRenderer,
     "#text/0!": _$.getScopeById(_ifScopeId)
+  }), "__tests__/template.marko", 0, {
+    "x": "1:6",
+    "show": "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

@@ -9,8 +9,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   });
   _$.write(`${_$.markResumeNode(_scope0_id, "#select/0")}<span>${_$.escapeXML(value)}${_$.markResumeNode(_scope0_id, "#text/1")}</span>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "value": value
+  }), "__tests__/template.marko", 0, {
+    "value": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

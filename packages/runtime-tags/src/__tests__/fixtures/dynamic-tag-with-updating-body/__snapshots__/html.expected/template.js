@@ -8,16 +8,18 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     const _scope1_id = _$.nextScopeId();
     const _childScope = _$.peekNextScope();
     _counter({});
-    _$.writeScope(_scope1_id, {
+    _$.debug(_$.writeScope(_scope1_id, {
       "#childScope/0": _$.writeExistingScope(_childScope)
-    });
+    }), "__tests__/template.marko", "3:4");
   }), "__tests__/template.marko_1_renderer", _scope0_id));
   _$.write(`<button id=changeTag></button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_tagName");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "tagName": tagName,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(tagName)
+  }), "__tests__/template.marko", 0, {
+    "tagName": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

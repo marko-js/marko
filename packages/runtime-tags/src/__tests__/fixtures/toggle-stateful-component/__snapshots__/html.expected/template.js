@@ -17,18 +17,21 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
         onCount: onCount
       });
       _$.write("</div>");
-      _$.writeScope(_scope1_id, {
+      _$.debug(_$.writeScope(_scope1_id, {
         "#childScope/0": _$.writeExistingScope(_childScope)
-      });
+      }), "__tests__/template.marko", "6:4");
       _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_1_renderer");
       _ifScopeId = _scope1_id;
     }
   }, _scope0_id, "#text/0");
   _$.write("</div>");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "onCount": onCount,
     "#text/0(": _ifRenderer,
     "#text/0!": _$.getScopeById(_ifScopeId)
+  }), "__tests__/template.marko", 0, {
+    "show": "1:6",
+    "onCount": "2:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

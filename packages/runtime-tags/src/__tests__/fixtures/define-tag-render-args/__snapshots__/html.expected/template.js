@@ -12,10 +12,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.dynamicTagArgs(_scope0_id, "#text/0", MyTag, [1, "Hello", x]);
   _$.write(`<button>${_$.escapeXML(x)}${_$.markResumeNode(_scope0_id, "#text/2")}</button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "x": x,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(MyTag)
+  }), "__tests__/template.marko", 0, {
+    "x": "1:6",
+    "MyTag": "2:9"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

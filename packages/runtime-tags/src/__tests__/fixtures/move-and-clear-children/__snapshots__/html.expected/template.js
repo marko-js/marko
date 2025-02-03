@@ -13,11 +13,15 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     const _scope1_id = _$.nextScopeId();
     _scope1_.set(_by(child, _index), _$.ensureScopeWithId(_scope1_id));
     _$.write(`${_$.escapeXML(child.text)}${_$.markResumeNode(_scope1_id, "#text/0")}`);
-    _$.writeScope(_scope1_id, {});
+    _$.debug(_$.writeScope(_scope1_id, {}), "__tests__/template.marko", "3:4", {
+      "child": "3:8"
+    });
   }, _scope0_id, "#div/0");
   _$.write(`</div>${_$.markResumeNode(_scope0_id, "#div/0")}`);
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "#div/0(": _scope1_.size ? _scope1_ : undefined
+  }), "__tests__/template.marko", 0, {
+    "children": "1:10"
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

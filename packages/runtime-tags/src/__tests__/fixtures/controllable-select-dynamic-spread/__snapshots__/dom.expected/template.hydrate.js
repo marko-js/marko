@@ -1,5 +1,5 @@
-// size: 314 (min) 165 (brotli)
-const _setup$tagSelect_content_effect = _$.effect("a0", (_scope) => {
+// size: 491 (min) 255 (brotli)
+const _setup$tagSelect_content_effect = _$.effect("a1", (_scope) => {
     _$.attrsEvents(_scope, 0),
       _$.attrsEvents(_scope, 1),
       _$.attrsEvents(_scope, 2);
@@ -11,11 +11,31 @@ const _setup$tagSelect_content_effect = _$.effect("a0", (_scope) => {
       _setup$tagSelect_content_effect(_scope);
   },
   _tagSelect_content = _$.register(
-    "a1",
+    "a2",
     _$.createRendererWithOwner(
       "<option>A</option><option>B</option><option>C</option>",
       " b b ",
       _setup$tagSelect_content,
     ),
+  ),
+  _tagSelect_input = _$.dynamicTagAttrs(0, _tagSelect_content),
+  _expr_Text_value = _$.intersection(
+    2,
+    (_scope) => {
+      const { 2: value } = _scope;
+      _tagSelect_input(_scope, () => ({
+        value: value,
+        valueChange: _valueChange,
+      }));
+    },
+    () => _tagSelect_input,
+  ),
+  _value = _$.state(
+    2,
+    (_scope, value) => _$.data(_scope[1], value),
+    () => _expr_Text_value,
   );
-_$.dynamicTagAttrs(0, _tagSelect_content), init();
+function _valueChange(v) {
+  _value(_scope, v);
+}
+_$.register("a0", _valueChange), init();
