@@ -6,9 +6,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/0", tag ? "select" : {}, {
     value,
-    valueChange(v) {
+    valueChange: _$.register(function (v) {
       value = v;
-    }
+    }, "__tests__/template.marko_0/valueChange")
   }, _$.register(/* @__PURE__ */_$.createRenderer(() => {
     const _scope1_id = _$.nextScopeId();
     _$.write(`<option${_$.attrs({
@@ -21,10 +21,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1");
   }), "__tests__/template.marko_1_renderer", _scope0_id));
   _$.write(`<span>${_$.escapeXML(value)}${_$.markResumeNode(_scope0_id, "#text/1")}</span>`);
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "value": value,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(tag ? "select" : {})
+  }), "__tests__/template.marko", 0, {
+    "value": "1:6",
+    "tag": "2:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

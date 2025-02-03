@@ -10,8 +10,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     checkedValue = _new_checkedValue3;
   }, "__tests__/template.marko_0/checkedValueChange_0", _scope0_id), "c")} type=radio>${_$.markResumeNode(_scope0_id, "#input/2")}<span>${_$.escapeXML(checkedValue)}${_$.markResumeNode(_scope0_id, "#text/3")}</span>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "checkedValue": checkedValue
+  }), "__tests__/template.marko", 0, {
+    "checkedValue": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

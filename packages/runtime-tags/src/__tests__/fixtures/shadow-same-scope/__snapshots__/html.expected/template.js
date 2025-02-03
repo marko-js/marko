@@ -10,11 +10,16 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0__count2");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0__count");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "count": count,
     "_count": _count,
     "_count2": _count2,
     "_count3": _count3
+  }), "__tests__/template.marko", 0, {
+    "count": "1:6",
+    "_count": "5:10",
+    "_count2": "8:12",
+    "_count3": "14:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

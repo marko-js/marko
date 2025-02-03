@@ -10,8 +10,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       _$.write("This is the body content");
     }), "__tests__/template.marko_1_renderer", _scope0_id)
   });
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "#childScope/0": _$.writeExistingScope(_childScope)
-  });
+  }), "__tests__/template.marko", 0);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

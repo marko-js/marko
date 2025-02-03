@@ -17,26 +17,33 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
           const _scope2_id = _$.nextScopeId();
           _$.write(`<div>${_$.escapeXML(outer)}${_$.markResumeNode(_scope2_id, "#text/0")}.<!>${_$.escapeXML(inner)}${_$.markResumeNode(_scope2_id, "#text/1")}</div>`);
           _$.writeEffect(_scope2_id, "__tests__/template.marko_2_outer/subscriber");
-          _$.writeScope(_scope2_id, {
+          _$.debug(_$.writeScope(_scope2_id, {
             "_": _$.ensureScopeWithId(_scope1_id)
+          }), "__tests__/template.marko", "7:6", {
+            "inner": "7:12"
           });
           _$.resumeClosestBranch(_scope2_id);
         }), "__tests__/template.marko_2_renderer", _scope1_id)
       });
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_y/subscriber");
-      _$.writeScope(_scope1_id, {
+      _$.debug(_$.writeScope(_scope1_id, {
         "outer": outer,
         "#childScope/0": _$.writeExistingScope(_childScope),
         "_": _$.ensureScopeWithId(_scope0_id)
+      }), "__tests__/template.marko", "6:2", {
+        "outer": "6:8"
       });
       _$.resumeClosestBranch(_scope1_id);
     }), "__tests__/template.marko_1_renderer", _scope0_id)
   });
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "x": x,
     "y": y,
     "#childScope/1": _$.writeExistingScope(_childScope2)
+  }), "__tests__/template.marko", 0, {
+    "x": "1:6",
+    "y": "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

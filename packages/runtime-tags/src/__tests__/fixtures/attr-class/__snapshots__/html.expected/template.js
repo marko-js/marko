@@ -38,13 +38,16 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
       }), "__tests__/template.marko_1_renderer", _scope0_id)
     })
   });
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "c": c,
     "d": d,
     "#childScope/1": _$.writeExistingScope(_childScope),
     "#childScope/2": _$.writeExistingScope(_childScope2),
     "#text/3!": _$.writeExistingScope(_dynamicScope),
     "#text/3(": _$.normalizeDynamicRenderer(input.test)
+  }), "__tests__/template.marko", 0, {
+    "c": "2:10",
+    "d": "2:13"
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

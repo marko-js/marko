@@ -11,10 +11,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   });
   _s(_classCounter, "__tests__/components/class-counter.marko");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "count": count,
     "#text/2!": _$.writeExistingScope(_dynamicScope),
     "#text/2(": _$.normalizeDynamicRenderer(_classCounter)
+  }), "__tests__/template.marko", 0, {
+    "count": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

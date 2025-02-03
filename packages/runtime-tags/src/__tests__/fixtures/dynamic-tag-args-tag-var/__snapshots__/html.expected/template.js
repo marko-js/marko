@@ -9,10 +9,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const y = _$.dynamicTagInput(_scope0_id, "#text/2", tags[0], x, void 0, _$.register(() => {}, "__tests__/template.marko_0_y/var", _scope0_id));
   _$.write(`<div>Parent: <!>${_$.escapeXML(y)}${_$.markResumeNode(_scope0_id, "#text/3")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "x": x,
     "#text/2!": _$.writeExistingScope(_dynamicScope),
     "#text/2(": _$.normalizeDynamicRenderer(tags[0])
+  }), "__tests__/template.marko", 0, {
+    "x": "3:6",
+    "y": "5:16"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

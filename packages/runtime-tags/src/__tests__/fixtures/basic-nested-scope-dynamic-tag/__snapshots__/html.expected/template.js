@@ -9,15 +9,17 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.write(`<button>${_$.escapeXML(count)}${_$.markResumeNode(_scope1_id, "#text/1")}</button>${_$.markResumeNode(_scope1_id, "#button/0")}`);
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1_count/subscriber");
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1_count");
-    _$.writeScope(_scope1_id, {
+    _$.debug(_$.writeScope(_scope1_id, {
       "_": _$.ensureScopeWithId(_scope0_id)
-    });
+    }), "__tests__/template.marko", "4:4");
     _$.resumeClosestBranch(_scope1_id);
   }), "__tests__/template.marko_1_renderer", _scope0_id));
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "count": count,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(false || Child)
+  }), "__tests__/template.marko", 0, {
+    "count": "3:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

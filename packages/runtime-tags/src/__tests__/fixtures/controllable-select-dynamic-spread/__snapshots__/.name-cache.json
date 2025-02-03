@@ -8,7 +8,11 @@
       "$_tagSelectBody": "e",
       "$_setup$tagSelect_content_effect": "n",
       "$_setup$tagSelect_content": "s",
-      "$_tagSelect_content": "i"
+      "$_tagSelect_content": "i",
+      "$_tagSelect_input": "m",
+      "$_expr_Text_value": "c",
+      "$_value": "p",
+      "$_valueChange": "u"
     }
   }
 }

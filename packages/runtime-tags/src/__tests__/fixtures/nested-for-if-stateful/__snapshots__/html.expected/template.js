@@ -13,34 +13,40 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
         _$.write(`<button>Confirm <!>${_$.escapeXML(count + 1)}${_$.markResumeNode(_scope2_id, "#text/1")}</button>${_$.markResumeNode(_scope2_id, "#button/0")}`);
         _$.writeEffect(_scope2_id, "__tests__/template.marko_2_counts/subscriber");
         _$.writeEffect(_scope2_id, "__tests__/template.marko_2_counts_count_i");
-        _$.writeScope(_scope2_id, {
+        _$.debug(_$.writeScope(_scope2_id, {
           "_": _$.ensureScopeWithId(_scope1_id)
-        });
+        }), "__tests__/template.marko", "4:4");
         _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_2_renderer");
         _ifScopeId = _scope2_id;
       } else {
         const _scope3_id = _$.nextScopeId();
         _$.write(`<button>Increment <!>${_$.escapeXML(count)}${_$.markResumeNode(_scope3_id, "#text/1")}</button>${_$.markResumeNode(_scope3_id, "#button/0")}`);
         _$.writeEffect(_scope3_id, "__tests__/template.marko_3");
-        _$.writeScope(_scope3_id, {
+        _$.debug(_$.writeScope(_scope3_id, {
           "_": _$.ensureScopeWithId(_scope1_id)
-        });
+        }), "__tests__/template.marko", "12:4");
         _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_3_renderer");
         _ifScopeId = _scope3_id;
       }
     }, _scope1_id, "#text/0");
     _scope1_.set(i, _$.ensureScopeWithId(_scope1_id));
-    _$.writeScope(_scope1_id, {
+    _$.debug(_$.writeScope(_scope1_id, {
       "count": count,
       "i": i,
       "_": _$.ensureScopeWithId(_scope0_id),
       "#text/0(": _ifRenderer,
       "#text/0!": _$.getScopeById(_ifScopeId)
+    }), "__tests__/template.marko", "2:2", {
+      "count": "2:6",
+      "i": "2:13",
+      "editing": "3:8"
     });
   }, _scope0_id, "#text/0");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "counts": counts,
     "#text/0(": _scope1_.size ? _scope1_ : undefined
+  }), "__tests__/template.marko", 0, {
+    "counts": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

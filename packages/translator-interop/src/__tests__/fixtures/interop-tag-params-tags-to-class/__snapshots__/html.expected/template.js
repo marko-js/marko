@@ -10,17 +10,22 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
     _$.write(`<h1>${_$.escapeXML(message)}${_$.markResumeNode(_scope1_id, "#text/0")}</h1><button id=tags>${_$.escapeXML(multiplier)}${_$.markResumeNode(_scope1_id, "#text/2")} * <!>${_$.escapeXML(baseCount)}${_$.markResumeNode(_scope1_id, "#text/3")} = <!>${_$.escapeXML(multiplier * baseCount)}${_$.markResumeNode(_scope1_id, "#text/4")}</button>${_$.markResumeNode(_scope1_id, "#button/1")}`);
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1_multiplier/subscriber");
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1_multiplier");
-    _$.writeScope(_scope1_id, {
+    _$.debug(_$.writeScope(_scope1_id, {
       "baseCount": baseCount,
       "_": _$.ensureScopeWithId(_scope0_id)
+    }), "__tests__/template.marko", "2:2", {
+      "baseCount": "2:15",
+      "message": "2:26"
     });
     _$.resumeClosestBranch(_scope1_id);
   }), "__tests__/template.marko_1_renderer", _scope0_id));
   _s(_classLayout, "__tests__/components/class-layout.marko");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "multiplier": multiplier,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(_classLayout)
+  }), "__tests__/template.marko", 0, {
+    "multiplier": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

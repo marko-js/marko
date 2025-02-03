@@ -6,10 +6,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/2", input.content, x);
   _$.writeEffect(_scope0_id, "__tests__/tags/custom-tag.marko_0_x");
-  _$.writeScope(_scope0_id, {
+  _$.debug(_$.writeScope(_scope0_id, {
     "x": x,
     "#text/2!": _$.writeExistingScope(_dynamicScope),
     "#text/2(": _$.normalizeDynamicRenderer(input.content)
+  }), "__tests__/tags/custom-tag.marko", 0, {
+    "x": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });
