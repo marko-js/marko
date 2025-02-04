@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.31
+
+### Patch Changes
+
+- [#2492](https://github.com/marko-js/marko/pull/2492) [`64e53bb`](https://github.com/marko-js/marko/commit/64e53bb979c133a03999ceb18e6f277a0f6549d4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with generating code for static repeated attribute tags.
+
 ## 0.3.30
 
 ### Patch Changes
