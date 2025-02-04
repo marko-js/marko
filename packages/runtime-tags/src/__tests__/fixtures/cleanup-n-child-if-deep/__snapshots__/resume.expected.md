@@ -493,9 +493,7 @@ REMOVE #text after html/body/div/p
 UPDATE html/body/div/div0/#text0 "" => "Outer"
 UPDATE html/body/div/span/#text0 "" => "Outer"
 UPDATE html/body/div/p/#text0 "" => "Outer"
-INSERT html/body/div/div1/div1
-INSERT html/body/div/div1/span1
-INSERT html/body/div/div1/p1
+INSERT html/body/div/div1/div1, html/body/div/div1/span1, html/body/div/div1/p1
 REMOVE #text after html/body/div/div1/p0
 UPDATE html/body/div/div1/div0/#text0 "" => "Middle"
 UPDATE html/body/div/div1/span0/#text0 "" => "Middle"

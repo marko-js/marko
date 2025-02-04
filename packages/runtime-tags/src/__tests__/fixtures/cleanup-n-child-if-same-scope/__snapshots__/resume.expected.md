@@ -110,9 +110,7 @@ mounted
 
 # Mutations
 ```
-INSERT html/body/div
-INSERT html/body/span
-INSERT html/body/p
+INSERT html/body/div, html/body/span, html/body/p
 REMOVE #comment after html/body/#comment1
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text

@@ -88,8 +88,7 @@ The count is 2
 
 # Mutations
 ```
-INSERT #text0
-INSERT #text1
+INSERT #text0, #text1
 REMOVE #text after button1
 UPDATE #text1 "" => "2"
 ```

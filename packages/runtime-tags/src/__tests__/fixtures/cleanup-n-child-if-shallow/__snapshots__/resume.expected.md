@@ -107,9 +107,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-INSERT html/body/div1
-INSERT html/body/span
-INSERT html/body/p
+INSERT html/body/div1, html/body/span, html/body/p
 REMOVE #comment after html/body/#comment1
 REMOVE #text in html/body/div0
 INSERT html/body/div0/#text

@@ -91,9 +91,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-INSERT html/body/#comment2
-INSERT #text
-INSERT html/body/#comment3
+INSERT html/body/#comment2, #text, html/body/#comment3
 INSERT html/body/div6
 INSERT html/body/div7
 INSERT html/body/div8

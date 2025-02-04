@@ -192,9 +192,7 @@ container.querySelector("#outer").click();
 
 # Mutations
 ```
-INSERT div/button1
-INSERT #text
-INSERT div/#comment
+INSERT div/button1, #text, div/#comment
 REMOVE #text after div/button0
 INSERT div/button2
 REMOVE #text after div/button1

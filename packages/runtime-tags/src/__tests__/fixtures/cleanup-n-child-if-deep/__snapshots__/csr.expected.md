@@ -358,9 +358,7 @@ REMOVE #text after div/p
 UPDATE div/div0/#text0 "" => "Outer"
 UPDATE div/span/#text0 "" => "Outer"
 UPDATE div/p/#text0 "" => "Outer"
-INSERT div/div1/div1
-INSERT div/div1/span1
-INSERT div/div1/p1
+INSERT div/div1/div1, div/div1/span1, div/div1/p1
 REMOVE #text after div/div1/p0
 UPDATE div/div1/div0/#text0 "" => "Middle"
 UPDATE div/div1/span0/#text0 "" => "Middle"

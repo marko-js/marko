@@ -21,12 +21,9 @@ INSERT div
 
 # Mutations
 ```
-INSERT div/#text0
-INSERT div/#text1
-INSERT div/#text2
-INSERT div/#text3
-INSERT div/#text4
-INSERT div/#text5
+INSERT div/#text0, div/#text1
+INSERT div/#text2, div/#text3
+INSERT div/#text4, div/#text5
 REMOVE #text before #text
 REMOVE #text before #text
 REMOVE #text before #text
@@ -47,14 +44,10 @@ REMOVE #text before div/#text0
 
 # Mutations
 ```
-INSERT div/#text0
-INSERT div/#text1
-INSERT div/#text2
-INSERT div/#text3
-INSERT div/#text4
-INSERT div/#text5
-INSERT div/#text6
-INSERT div/#text7
+INSERT div/#text0, div/#text1
+INSERT div/#text2, div/#text3
+INSERT div/#text4, div/#text5
+INSERT div/#text6, div/#text7
 REMOVE #text before #text
 REMOVE #text before #text
 REMOVE #text before #text
@@ -73,14 +66,10 @@ REMOVE #text before div/#text0
 
 # Mutations
 ```
-INSERT div/#text0
-INSERT div/#text1
-INSERT div/#text2
-INSERT div/#text3
-INSERT div/#text4
-INSERT div/#text5
-INSERT div/#text6
-INSERT div/#text7
+INSERT div/#text0, div/#text1
+INSERT div/#text2, div/#text3
+INSERT div/#text4, div/#text5
+INSERT div/#text6, div/#text7
 REMOVE #text before #text
 REMOVE #text before #text
 REMOVE #text before #text
@@ -107,16 +96,10 @@ REMOVE #text after div/#text1
 REMOVE #text after div/#text1
 REMOVE #text after div/#text1
 REMOVE #text after div/#text1
-INSERT div/#text12
-INSERT div/#text13
-INSERT div/#text10
-INSERT div/#text11
-INSERT div/#text8
-INSERT div/#text9
-INSERT div/#text6
-INSERT div/#text7
-INSERT div/#text4
-INSERT div/#text5
-INSERT div/#text2
-INSERT div/#text3
+INSERT div/#text12, div/#text13
+INSERT div/#text10, div/#text11
+INSERT div/#text8, div/#text9
+INSERT div/#text6, div/#text7
+INSERT div/#text4, div/#text5
+INSERT div/#text2, div/#text3
 ```

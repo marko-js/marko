@@ -79,9 +79,7 @@ mounted
 
 # Mutations
 ```
-INSERT div
-INSERT span
-INSERT p
+INSERT div, span, p
 REMOVE #text after pre
 REMOVE #text in pre
 INSERT pre/#text
