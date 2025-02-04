@@ -5,6 +5,7 @@ import type {
   TemplateInput,
   TemplateInstance,
 } from "../common/types";
+import { insertChildNodes } from "./dom";
 import { prepareEffects, runEffects } from "./queue";
 import { createRenderer, initBranch, type Renderer } from "./renderer";
 import { register } from "./resume";
@@ -35,7 +36,7 @@ function mount(
   reference: Node,
   position?: InsertPosition,
 ): TemplateInstance {
-  let branch!: BranchScope, dom!: Node;
+  let branch!: BranchScope;
   let parentNode = reference as ParentNode;
   let nextSibling: Node | null = null;
   let { $global } = input;
@@ -78,11 +79,16 @@ function mount(
   const args = this.___args;
   const effects = prepareEffects(() => {
     branch = createScope($global) as BranchScope;
-    dom = initBranch(this, branch);
+    initBranch(this, branch, parentNode);
     args?.(branch, [input]);
   });
 
-  parentNode.insertBefore(dom, nextSibling);
+  insertChildNodes(
+    parentNode,
+    nextSibling,
+    branch.___startNode,
+    branch.___endNode,
+  );
   runEffects(effects);
 
   return {

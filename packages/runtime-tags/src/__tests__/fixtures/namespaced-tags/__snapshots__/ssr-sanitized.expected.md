@@ -1,0 +1,40 @@
+# Render End
+```html
+<div>
+  <svg>
+    <a
+      href="#"
+    />
+    <a
+      href="#bar"
+    >
+      Hi
+    </a>
+  </svg>
+  <math>
+    <a
+      href="#"
+    />
+    <a
+      href="#bar"
+    >
+      Hi
+    </a>
+  </math>
+  <div>
+    <a
+      href="#"
+    />
+  </div>
+  <button
+    class="toggle-parent"
+  >
+    Toggle Parent
+  </button>
+  <button
+    class="toggle-child"
+  >
+    Toggle Child
+  </button>
+</div>
+```

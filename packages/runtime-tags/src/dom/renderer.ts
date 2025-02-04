@@ -6,8 +6,8 @@ import {
   type Scope,
 } from "../common/types";
 import { setConditionalRendererOnlyChild } from "./control-flow";
-import { attrs } from "./dom";
-import { parseHTMLOrSingleNode } from "./parse-html";
+import { attrs, insertChildNodes } from "./dom";
+import { parseHTML } from "./parse-html";
 import { queueRender } from "./queue";
 import { createScope } from "./scope";
 import { CLEAN, DIRTY, MARK, type Signal, type SignalOp } from "./signals";
@@ -18,7 +18,7 @@ export type Renderer = {
   ___template: string;
   ___walks: string;
   ___setup: SetupFn | undefined;
-  ___clone: () => Node;
+  ___clone: (ns: string) => ChildNode;
   ___sourceNode: Node | undefined;
   ___args: Signal<unknown> | undefined;
   ___owner: Scope | undefined;
@@ -30,6 +30,7 @@ export function createBranchScopeWithRenderer(
   renderer: Renderer,
   $global: Scope["$global"],
   parentScope: Scope,
+  parentNode: ParentNode,
 ) {
   const branch = createBranch(
     $global,
@@ -39,7 +40,7 @@ export function createBranchScopeWithRenderer(
   if (MARKO_DEBUG) {
     branch.___renderer = renderer;
   }
-  initBranch(renderer, branch);
+  initBranch(renderer, branch, parentNode);
   return branch;
 }
 
@@ -47,12 +48,14 @@ export function createBranchScopeWithTagNameOrRenderer(
   tagNameOrRenderer: Renderer | string,
   $global: Scope["$global"],
   parentScope: Scope,
+  parentNode: ParentNode,
 ) {
   if (typeof tagNameOrRenderer !== "string") {
     return createBranchScopeWithRenderer(
       tagNameOrRenderer,
       $global,
       parentScope,
+      parentNode,
     );
   }
 
@@ -60,7 +63,14 @@ export function createBranchScopeWithTagNameOrRenderer(
   branch[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : 0] =
     branch.___startNode =
     branch.___endNode =
-      document.createElement(tagNameOrRenderer);
+      document.createElementNS(
+        tagNameOrRenderer === "svg"
+          ? "http://www.w3.org/2000/svg"
+          : tagNameOrRenderer === "math"
+            ? "http://www.w3.org/1998/Math/MathML"
+            : (parentNode as Element).namespaceURI,
+        tagNameOrRenderer,
+      );
   return branch;
 }
 
@@ -85,25 +95,19 @@ function createBranch(
   return branch;
 }
 
-export function initBranch(renderer: Renderer, branch: BranchScope) {
-  const dom = renderer.___clone();
-  walk(
-    dom.nodeType === NodeType.DocumentFragment ? dom.firstChild! : dom,
-    renderer.___walks,
-    branch,
-  );
-  branch.___startNode =
-    dom.nodeType === NodeType.DocumentFragment
-      ? dom.firstChild!
-      : (dom as ChildNode);
-  branch.___endNode =
-    dom.nodeType === NodeType.DocumentFragment
-      ? dom.lastChild!
-      : (dom as ChildNode);
+export function initBranch(
+  renderer: Renderer,
+  branch: BranchScope,
+  parentNode: ParentNode,
+) {
+  const clone = renderer.___clone((parentNode as Element).namespaceURI!);
+  const cloneParent = clone.parentNode;
+  walk(cloneParent?.firstChild || clone, renderer.___walks, branch);
+  branch.___startNode = cloneParent?.firstChild || (clone as ChildNode);
+  branch.___endNode = cloneParent?.lastChild || (clone as ChildNode);
   if (renderer.___setup) {
     queueRender(branch, renderer.___setup);
   }
-  return dom;
 }
 
 export function dynamicTagAttrs(
@@ -194,8 +198,26 @@ export function createRenderer(
   return createRendererWithOwner(template, walks, setup, getArgs)();
 }
 
-function _clone(this: Renderer) {
-  return (this.___sourceNode ||= parseHTMLOrSingleNode(
+function _clone(this: Renderer, ns: string) {
+  return ((cloneCache[ns] ||= {})[this.___template] ||= createCloneableHTML(
     this.___template,
-  )).cloneNode(true);
+    ns,
+  ))();
+}
+
+const cloneCache: Partial<
+  Record<string, Record<string, ReturnType<typeof createCloneableHTML>>>
+> = {};
+function createCloneableHTML(html: string, ns: string) {
+  const { firstChild, lastChild } = parseHTML(html, ns);
+  const parent = document.createElementNS(ns, "t") as ParentNode & {
+    firstChild: ChildNode;
+    lastChild: ChildNode;
+  };
+  insertChildNodes(parent, null, firstChild, lastChild);
+  return (
+    firstChild === lastChild && firstChild!.nodeType < NodeType.Comment
+      ? () => firstChild.cloneNode(true)
+      : () => parent.cloneNode(true).firstChild
+  ) as () => ChildNode;
 }

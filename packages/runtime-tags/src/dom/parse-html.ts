@@ -1,27 +1,12 @@
-const parser = /* @__PURE__ */ document.createElement("template");
-
-export function parseHTML(html: string) {
-  parser.innerHTML = html;
-  return parser.content;
-}
-
-export function parseHTMLOrSingleNode(html: string) {
-  const content = parseHTML(html);
-  if (content.firstChild) {
-    if (
-      content.firstChild === content.lastChild &&
-      // If the firstChild is a comment it's possible its
-      // a single replaced node, in which case the walker can't replace
-      // the node itself.
-      content.firstChild.nodeType !== 8 /* Node.COMMENT_NODE */
-    ) {
-      return content.firstChild;
-    }
-
-    const fragment = new DocumentFragment();
-    fragment.appendChild(content);
-    return fragment;
-  }
-
-  return new Text();
+const parsers: Record<string, Element> = {};
+export function parseHTML(html: string, ns: string) {
+  const parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
+  const content =
+    ((parser.innerHTML = html),
+    (parser as HTMLTemplateElement).content || parser);
+  if (!content.firstChild) content.appendChild(new Text());
+  return content as (DocumentFragment | Element) & {
+    firstChild: ChildNode;
+    lastChild: ChildNode;
+  };
 }
