@@ -73,9 +73,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-INSERT #comment4
-INSERT #text
-INSERT #comment5
+INSERT #comment4, #text, #comment5
 INSERT div6
 INSERT div7
 INSERT div8

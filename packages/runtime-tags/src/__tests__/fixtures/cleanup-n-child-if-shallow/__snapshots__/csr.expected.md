@@ -73,9 +73,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-INSERT div1
-INSERT span
-INSERT p
+INSERT div1, span, p
 REMOVE #text after div0
 REMOVE #text in div0
 INSERT div0/#text

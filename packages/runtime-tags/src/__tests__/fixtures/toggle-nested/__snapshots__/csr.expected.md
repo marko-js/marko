@@ -26,10 +26,7 @@ INSERT div
 
 # Mutations
 ```
-INSERT div/#comment0
-INSERT #text
-INSERT #text
-INSERT div/#comment1
+INSERT div/#comment0, #text, #text, div/#comment1
 REMOVE #text before div/#comment0
 INSERT div/span0
 REMOVE #text after div/#comment0

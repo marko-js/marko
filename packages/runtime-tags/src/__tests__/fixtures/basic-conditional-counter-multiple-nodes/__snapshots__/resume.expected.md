@@ -147,8 +147,7 @@ container.querySelector("button.toggle").click();
 
 # Mutations
 ```
-INSERT html/body/#text0
-INSERT html/body/#text1
+INSERT html/body/#text0, html/body/#text1
 REMOVE #comment after html/body/#comment1
 UPDATE html/body/#text1 "" => "2"
 ```

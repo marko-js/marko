@@ -303,9 +303,7 @@ container.querySelector("#outer").click();
 
 # Mutations
 ```
-INSERT html/body/div/button1
-INSERT #text
-INSERT html/body/div/#comment1
+INSERT html/body/div/button1, #text, html/body/div/#comment1
 REMOVE #comment after html/body/div/#comment0
 INSERT html/body/div/button2
 REMOVE #text after html/body/div/button1

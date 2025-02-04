@@ -304,15 +304,9 @@ mounted 3
 
 # Mutations
 ```
-INSERT html/body/div1
-INSERT html/body/span0
-INSERT html/body/p0
-INSERT html/body/div2
-INSERT html/body/span1
-INSERT html/body/p1
-INSERT html/body/div3
-INSERT html/body/span2
-INSERT html/body/p2
+INSERT html/body/div1, html/body/span0, html/body/p0
+INSERT html/body/div2, html/body/span1, html/body/p1
+INSERT html/body/div3, html/body/span2, html/body/p2
 REMOVE #comment after html/body/#comment1
 REMOVE #text in html/body/div0
 INSERT #text

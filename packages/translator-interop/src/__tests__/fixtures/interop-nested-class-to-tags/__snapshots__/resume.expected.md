@@ -31,8 +31,7 @@ INSERT html/body/#text0
 INSERT html/body/#text5
 REMOVE #comment before html/body/#text0
 REMOVE #comment after html/body/#text5
-INSERT html/body/div/#text0
-INSERT html/body/div/#text3
+INSERT html/body/div/#text0, html/body/div/#text3
 REMOVE #comment before button
 REMOVE button before html/body/div/#text0
 INSERT html/body/#text1
@@ -116,8 +115,7 @@ container.querySelector("#class").click();
 
 # Mutations
 ```
-INSERT html/body/div/#text0
-INSERT html/body/div/#text3
+INSERT html/body/div/#text0, html/body/div/#text3
 REMOVE #text before #text
 REMOVE #text before button
 REMOVE button before #text
@@ -196,8 +194,7 @@ container.querySelector("#class").click();
 
 # Mutations
 ```
-INSERT html/body/div/#text0
-INSERT html/body/div/#text3
+INSERT html/body/div/#text0, html/body/div/#text3
 REMOVE #text before #text
 REMOVE #text before button
 REMOVE button before #text
