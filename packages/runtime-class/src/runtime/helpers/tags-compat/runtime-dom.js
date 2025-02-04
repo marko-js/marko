@@ -121,20 +121,13 @@ exports.p = function (domCompat) {
             };
           }
           newRenderer = domCompat.createRenderer(
-            (scope) => {
-              if (skipAttrs) {
-                renderAndMorph(scope, rendererFromAnywhere, renderer, {});
-              }
-            },
-            () => {
-              const realFragment = document.createDocumentFragment();
-              ___createFragmentNode(null, null, realFragment);
-              return realFragment;
-            },
-            (scope, input) => {
-              if (domCompat.isOp(input)) return;
-              renderAndMorph(scope, rendererFromAnywhere, renderer, input);
-            },
+            (scope) =>
+              skipAttrs &&
+              renderAndMorph(scope, rendererFromAnywhere, renderer, {}),
+            () => ___createFragmentNode().startNode,
+            (scope, input) =>
+              domCompat.isOp(input) ||
+              renderAndMorph(scope, rendererFromAnywhere, renderer, input),
           );
           rendererCache.set(renderer, newRenderer);
         }

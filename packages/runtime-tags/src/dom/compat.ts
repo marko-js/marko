@@ -4,12 +4,12 @@ import {
   SET_SCOPE_REGISTER_ID,
 } from "../common/compat-meta";
 import type { BranchScope } from "../common/types";
-import { createScope } from "../dom";
 import { patchConditionals } from "./control-flow";
+import { toInsertNode } from "./dom";
 import { prepareEffects, queueEffect, runEffects } from "./queue";
 import { createRenderer, initBranch, type Renderer } from "./renderer";
 import { getRegisteredWithScope, register } from "./resume";
-import { destroyBranch } from "./scope";
+import { createScope, destroyBranch } from "./scope";
 import { CLEAN, DIRTY, MARK } from "./signals";
 const classIdToBranch = new Map<string, BranchScope>();
 
@@ -101,7 +101,7 @@ export const compat = {
         // TODO: this should be createBranch
         branch = component.scope = createScope(out.global) as BranchScope;
         branch._ = renderer.___owner;
-        initBranch(renderer, branch);
+        initBranch(renderer, branch, document.body);
       } else {
         applyArgs(branch, MARK);
         existing = true;
@@ -110,9 +110,7 @@ export const compat = {
     });
 
     if (!existing) {
-      return branch.___startNode === branch.___endNode
-        ? branch.___startNode
-        : branch.___startNode.parentNode;
+      return toInsertNode(branch.___startNode, branch.___endNode);
     }
   },
 };

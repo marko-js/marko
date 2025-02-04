@@ -1,0 +1,30 @@
+let/Parent = "div"
+let/Child = "a"
+div/el
+  svg
+    -- $!{input.value}
+    Child href="#bar" -- Hi
+
+  math
+    -- $!{input.value}
+    Child href="#bar" -- Hi
+
+  Parent --
+    $!{input.value}
+
+  button.toggle-parent onClick() {
+    Parent = Parent === "div" ? "svg" : "div";
+  } -- Toggle Parent
+
+  button.toggle-child onClick() {
+    Child = Child === "a" ? null : "a";
+  } -- Toggle Child
+
+script --
+  Parent;
+  Child;
+  for (const node of el().querySelectorAll("a")) {
+    if (node.getAttribute("ns") !== node.namespaceURI) {
+      node.setAttribute("ns", node.namespaceURI!);
+    }
+  }

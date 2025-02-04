@@ -8,7 +8,6 @@ import {
   type Accessor,
   AccessorChar,
   ControlledType,
-  NodeType,
   type Scope,
 } from "../common/types";
 import { getAbortSignal } from "./abort-signal";
@@ -27,10 +26,6 @@ import {
 } from "./controllable";
 import { on } from "./event";
 import { parseHTML } from "./parse-html";
-
-export function isDocumentFragment(node: Node): node is DocumentFragment {
-  return node.nodeType === NodeType.DocumentFragment;
-}
 
 export function attr(element: Element, name: string, value: unknown) {
   setAttribute(element, name, normalizeAttrValue(value));
@@ -261,17 +256,22 @@ export function attrsEvents(scope: Scope, nodeAccessor: Accessor) {
 
 export function html(scope: Scope, value: unknown, accessor: Accessor) {
   const firstChild = scope[accessor] as ChildNode;
+  const parentNode = firstChild.parentNode!;
   const lastChild = (scope[
     accessor + AccessorChar.DynamicPlaceholderLastChild
   ] || firstChild) as ChildNode;
   const newContent = parseHTML(
-    value || value === 0 ? value + "" : "<!>", // TODO: is the comment needed
+    value || value === 0 ? value + "" : "",
+    (parentNode as Element).namespaceURI!,
   );
 
-  scope[accessor] = newContent.firstChild;
-  scope[accessor + AccessorChar.DynamicPlaceholderLastChild] =
-    newContent.lastChild;
-  firstChild.parentNode!.insertBefore(newContent, firstChild);
+  insertChildNodes(
+    parentNode,
+    firstChild,
+    (scope[accessor] = newContent.firstChild),
+    (scope[accessor + AccessorChar.DynamicPlaceholderLastChild] =
+      newContent.lastChild),
+  );
   removeChildNodes(firstChild, lastChild);
 }
 
@@ -335,4 +335,27 @@ export function removeChildNodes(startNode: ChildNode, endNode: ChildNode) {
     current.remove();
     current = next!;
   }
+}
+
+export function insertChildNodes(
+  parentNode: ParentNode,
+  referenceNode: Node | null,
+  startNode: Node,
+  endNode: Node,
+) {
+  parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+}
+
+export function toInsertNode(startNode: Node, endNode: Node) {
+  if (startNode === endNode) return startNode;
+  const parent = new DocumentFragment();
+  const stop = endNode.nextSibling;
+  let current = startNode;
+  while (current !== stop) {
+    const next = current.nextSibling;
+    parent.appendChild(current);
+    current = next!;
+  }
+
+  return parent;
 }

@@ -1,5 +1,5 @@
 import type { BranchScope, Scope } from "../common/types";
-import { removeChildNodes } from "./dom";
+import { insertChildNodes, removeChildNodes } from "./dom";
 
 let pendingScopes: Scope[] = [];
 let debugID = 0;
@@ -58,11 +58,10 @@ export function insertBranchBefore(
   parentNode: ParentNode,
   nextSibling: Node | null,
 ) {
-  let current = branch.___startNode as Node;
-  const stop = branch.___endNode.nextSibling;
-  while (current !== stop) {
-    const next = current.nextSibling;
-    parentNode.insertBefore(current, nextSibling);
-    current = next!;
-  }
+  insertChildNodes(
+    parentNode,
+    nextSibling,
+    branch.___startNode,
+    branch.___endNode,
+  );
 }

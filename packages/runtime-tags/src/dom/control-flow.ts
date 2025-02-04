@@ -4,6 +4,7 @@ import {
   type Accessor,
   AccessorChar,
   type BranchScope,
+  NodeType,
   type Scope,
 } from "../common/types";
 import { reconcile } from "./reconcile";
@@ -73,7 +74,12 @@ export function setConditionalRenderer(
     (scope[nodeAccessor + AccessorChar.ConditionalScope] as BranchScope) ||
     getEmptyBranch(scope[nodeAccessor] as Comment);
   const newBranch = newRenderer
-    ? createBranchScopeWithTagNameOrRenderer(newRenderer, scope.$global, scope)
+    ? createBranchScopeWithTagNameOrRenderer(
+        newRenderer,
+        scope.$global,
+        scope,
+        prevBranch.___endNode.parentNode!,
+      )
     : (getEmptyBranch(scope[nodeAccessor] as Comment) as BranchScope);
   insertBranchBefore(
     newBranch,
@@ -134,7 +140,12 @@ export function setConditionalRendererOnlyChild(
   ] as BranchScope;
   const referenceNode = scope[nodeAccessor] as Element;
   const newBranch = newRenderer
-    ? createBranchScopeWithTagNameOrRenderer(newRenderer, scope.$global, scope)
+    ? createBranchScopeWithTagNameOrRenderer(
+        newRenderer,
+        scope.$global,
+        scope,
+        referenceNode,
+      )
     : undefined;
 
   referenceNode.textContent = "";
@@ -214,10 +225,7 @@ function loop<T extends unknown[] = unknown[]>(
     }
 
     const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
-    // TODO: compiler should use only comment so the text check can be removed
-    const referenceIsMarker =
-      referenceNode.nodeType === 8 /* Comment */ ||
-      referenceNode.nodeType === 3; /* Text */
+    const referenceIsMarker = referenceNode.nodeType > NodeType.Element;
     const oldMap =
       (scope[nodeAccessor + AccessorChar.LoopScopeMap] as Map<
         unknown,
@@ -226,16 +234,25 @@ function loop<T extends unknown[] = unknown[]>(
     const oldArray =
       (scope[nodeAccessor + AccessorChar.LoopScopeArray] as BranchScope[]) ||
       Array.from(oldMap.values());
+    const parentNode = (
+      referenceIsMarker
+        ? referenceNode.parentNode || oldArray[0].___startNode.parentNode
+        : referenceNode
+    ) as Element;
 
     let newMap!: Map<unknown, BranchScope>;
     let newArray!: BranchScope[];
     let afterReference: Node | null;
-    let parentNode: ParentNode;
     let needsReconciliation = true;
     forEach(valueOrOp, (key, args) => {
       let branch = oldMap.get(key);
       if (!branch) {
-        branch = createBranchScopeWithRenderer(renderer, scope.$global, scope);
+        branch = createBranchScopeWithRenderer(
+          renderer,
+          scope.$global,
+          scope,
+          parentNode,
+        );
         // TODO: once we can track moves
         // needsReconciliation = true;
       } else {
@@ -277,10 +294,8 @@ function loop<T extends unknown[] = unknown[]>(
         }
         const oldLastChild = oldArray[oldArray.length - 1];
         afterReference = oldLastChild.___endNode.nextSibling;
-        parentNode = oldLastChild.___startNode.parentNode!;
       } else {
         afterReference = null;
-        parentNode = referenceNode as Element;
       }
       reconcile(parentNode, oldArray, newArray!, afterReference);
     }
