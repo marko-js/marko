@@ -1,4 +1,4 @@
-// size: 18364 (min) 6749 (brotli)
+// size: 18373 (min) 6749 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -446,7 +446,8 @@ function controllable_detailsOrDialog_open(
 ) {
   (scope[nodeAccessor + ";"] = openChange),
     (scope[nodeAccessor + "="] = openChange ? 4 : 5),
-    (scope[nodeAccessor].open = normalizeBoolProp(open));
+    (scope[nodeAccessor].open = scope[nodeAccessor + ":"] =
+      normalizeBoolProp(open));
 }
 function controllable_detailsOrDialog_open_effect(scope, nodeAccessor) {
   let el = scope[nodeAccessor],

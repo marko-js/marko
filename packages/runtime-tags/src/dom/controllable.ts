@@ -259,7 +259,9 @@ export function controllable_detailsOrDialog_open(
     scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
   }
 
-  (scope[nodeAccessor] as HTMLDetailsElement).open = normalizeBoolProp(open);
+  (scope[nodeAccessor] as HTMLDetailsElement).open = scope[
+    nodeAccessor + AccessorChar.ControlledValue
+  ] = normalizeBoolProp(open);
 }
 export function controllable_detailsOrDialog_open_effect(
   scope: Scope,
