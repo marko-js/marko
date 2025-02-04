@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.30
+
+### Patch Changes
+
+- [#2490](https://github.com/marko-js/marko/pull/2490) [`07f97f1`](https://github.com/marko-js/marko/commit/07f97f187a320d6476fb77eef520a2d2f6ca2a73) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where details and dialog elements were incorrectly running change handlers when the value had not changed.
+
 ## 0.3.29
 
 ### Patch Changes
