@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.29
+
+### Patch Changes
+
+- [#2488](https://github.com/marko-js/marko/pull/2488) [`c6f9927`](https://github.com/marko-js/marko/commit/c6f99275327489709b4934326075586baee5ad39) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support namespaced tags (svg/math).
+
 ## 0.3.28
 
 ### Patch Changes

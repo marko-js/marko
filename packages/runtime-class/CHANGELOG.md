@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.14
+
+### Patch Changes
+
+- [#2488](https://github.com/marko-js/marko/pull/2488) [`c6f9927`](https://github.com/marko-js/marko/commit/c6f99275327489709b4934326075586baee5ad39) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update tags api compat layer.
+
 ## 5.37.13
 
 ### Patch Changes

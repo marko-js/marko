@@ -1,6 +1,6 @@
 {
   "name": "@marko/runtime-tags",
-  "version": "0.3.28",
+  "version": "0.3.29",
   "description": "Optimized runtime for Marko templates.",
   "keywords": [
     "api",
