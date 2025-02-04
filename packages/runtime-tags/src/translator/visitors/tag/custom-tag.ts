@@ -285,6 +285,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       tagSection,
       relativePath,
       childScopeBinding,
+      attrTagCallsByTag: undefined,
     });
   }
 
@@ -484,6 +485,15 @@ function writeAttrsToExports(
     tagSection: Section;
     relativePath: string;
     childScopeBinding: Binding;
+    attrTagCallsByTag:
+      | undefined
+      | Map<
+          t.NodePath<t.MarkoTag>,
+          Map<
+            string,
+            t.ParenthesizedExpression & { expression: t.CallExpression }
+          >
+        >;
   },
 ) {
   if (tag.node.arguments?.length) {
@@ -536,7 +546,44 @@ function writeAttrsToExports(
 
     let translatedProps = propsToExpression(translatedAttrs.properties);
     if (isAttributeTag(tag)) {
-      translatedProps = callRuntime("attrTag", translatedProps);
+      const attrTagName = getTagName(tag);
+      const parentTag = tag.parentPath as t.NodePath<t.MarkoTag>;
+      const repeated = analyzeAttributeTags(parentTag)?.[attrTagName]?.repeated;
+
+      if (repeated) {
+        let attrTagCallsForTag = (info.attrTagCallsByTag ||= new Map()).get(
+          parentTag,
+        );
+        if (!attrTagCallsForTag) {
+          info.attrTagCallsByTag.set(
+            parentTag,
+            (attrTagCallsForTag = new Map()),
+          );
+        }
+
+        const attrTagCall = attrTagCallsForTag.get(attrTagName);
+        if (attrTagCall) {
+          attrTagCall.expression = callRuntime(
+            "attrTags",
+            attrTagCall.expression,
+            translatedProps,
+          );
+          return;
+        } else {
+          // Uses parenthesized expressions since they are simple to mutate after the fact
+          // and do not impact the output.
+          attrTagCallsForTag.set(
+            attrTagName,
+            (translatedProps = t.parenthesizedExpression(
+              callRuntime("attrTag", translatedProps),
+            ) as t.ParenthesizedExpression & {
+              expression: t.CallExpression;
+            }),
+          );
+        }
+      } else {
+        translatedProps = callRuntime("attrTag", translatedProps);
+      }
     }
 
     addValue(

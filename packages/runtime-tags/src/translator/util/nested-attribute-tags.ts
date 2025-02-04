@@ -59,6 +59,7 @@ export function analyzeAttributeTags(tag: t.NodePath<t.MarkoTag>) {
       if (isAttributeTag(child)) {
         const name = getTagName(child);
         lookup[name] ||= createAttrTagMeta(name, [name]);
+        (attrTagNodesByName[name] ||= []).push(child);
         analyzeAttributeTags(child);
       } else {
         const isRepeated = isLoopTag(child);
