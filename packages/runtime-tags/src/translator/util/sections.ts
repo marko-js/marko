@@ -30,6 +30,7 @@ export interface Section {
   params: undefined | Binding;
   closures: ReferencedBindings;
   bindings: ReferencedBindings;
+  assignments: ReferencedBindings;
   upstreamExpression: t.NodeExtra | undefined;
   hasAbortSignal: boolean;
   isBranch: boolean;
@@ -44,12 +45,6 @@ declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     section?: Section;
     sections?: Section[];
-    assignments?: [
-      valueSection: Section,
-      assignment:
-        | t.NodePath<t.UpdateExpression>
-        | t.NodePath<t.AssignmentExpression>,
-    ][];
   }
 
   export interface MarkoTagBodyExtra {
@@ -86,6 +81,7 @@ export function startSection(
       params: undefined,
       closures: undefined,
       bindings: undefined,
+      assignments: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
       hasAbortSignal: false,

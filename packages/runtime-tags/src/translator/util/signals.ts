@@ -935,6 +935,19 @@ export function writeHTMLResumeStatements(
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
 
+  forEach(section.assignments, (assignment) => {
+    let currentSection = section;
+    while (currentSection !== assignment.section) {
+      getSerializedScopeProperties(currentSection).set(
+        t.stringLiteral("_"),
+        callRuntime(
+          "ensureScopeWithId",
+          getScopeIdIdentifier((currentSection = currentSection.parent!)),
+        ),
+      );
+    }
+  });
+
   forEach(section.closures, (closure) => {
     if (isStatefulReferences(closure)) {
       let currentSection = section;
