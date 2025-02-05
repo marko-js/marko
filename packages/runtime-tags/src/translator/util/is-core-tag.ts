@@ -52,3 +52,21 @@ export function isConditionTag(
 
   return false;
 }
+
+export function isControlFlowTag(
+  tag: t.NodePath,
+): tag is t.NodePath<t.MarkoTag & { name: t.StringLiteral }> {
+  if (isCoreTag(tag)) {
+    switch (getTagName(tag)) {
+      case "if":
+      case "else-if":
+      case "else":
+      case "for":
+      case "await":
+      case "try":
+        return true;
+    }
+  }
+
+  return false;
+}

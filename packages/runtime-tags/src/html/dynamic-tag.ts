@@ -26,7 +26,6 @@ export function dynamicTagInput(
   tag: unknown | string | ServerRenderer | BodyContentObject,
   input: Record<string, unknown>,
   content?: () => void,
-  tagVar?: unknown,
 ) {
   if (!tag && !content) {
     nextScopeId();
@@ -98,7 +97,7 @@ export function dynamicTagInput(
   let result;
   resumeConditional(
     () => {
-      result = renderer(content ? { ...input, content } : input, tagVar);
+      result = renderer(content ? { ...input, content } : input);
     },
     scopeId,
     accessor,

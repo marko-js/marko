@@ -1,9 +1,8 @@
 import { types as t } from "@marko/compiler";
 import { getTemplateId } from "@marko/compiler/babel-utils";
 
-import { AccessorChar } from "../../common/types";
 import { toAccess } from "../../html/serializer";
-import { returnId } from "../core/return";
+import { getSectionReturnValueIdentifier } from "../core/return";
 import {
   cleanIdentifier,
   currentProgramPath,
@@ -927,7 +926,6 @@ export function addHTMLEffectCall(
 
 export function writeHTMLResumeStatements(
   path: t.NodePath<t.MarkoTagBody | t.Program>,
-  tagVarIdentifier?: t.Identifier,
 ) {
   const section = getSectionForBody(path);
   if (!section) return;
@@ -1012,14 +1010,6 @@ export function writeHTMLResumeStatements(
       accessors.add(accessor.value);
     }
   });
-  if (tagVarIdentifier && returnId(section) !== undefined) {
-    serializedProperties.push(
-      t.objectProperty(
-        t.stringLiteral(AccessorChar.TagVariable),
-        tagVarIdentifier,
-      ),
-    );
-  }
 
   for (const [key, value] of additionalProperties) {
     if (!accessors.has(key.value)) {
@@ -1104,6 +1094,11 @@ export function writeHTMLResumeStatements(
         t.variableDeclarator(scopeIdIdentifier, callRuntime("nextScopeId")),
       ]),
     );
+  }
+
+  const returnIdentifier = getSectionReturnValueIdentifier(section);
+  if (returnIdentifier !== undefined) {
+    path.pushContainer("body", t.returnStatement(returnIdentifier));
   }
 }
 

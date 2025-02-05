@@ -179,21 +179,6 @@ export default {
           if (!hasMultipleArgs && args.length === 1) {
             args.push(t.unaryExpression("void", t.numericLiteral(0)));
           }
-
-          args.push(
-            callRuntime(
-              "register",
-              t.arrowFunctionExpression([], t.blockStatement([])),
-              t.stringLiteral(
-                getResumeRegisterId(
-                  section,
-                  (node.var as t.Identifier).extra?.binding, // TODO: node.var is not always an identifier.
-                  "var",
-                ),
-              ),
-              getScopeIdIdentifier(section),
-            ),
-          );
         }
 
         const dynamicScopeIdentifier =
@@ -222,13 +207,30 @@ export default {
             ),
           ]),
         );
-        statements.push(
-          node.var
-            ? t.variableDeclaration("const", [
-                t.variableDeclarator(node.var, dynamicTagExpr),
-              ])
-            : t.expressionStatement(dynamicTagExpr),
-        );
+
+        if (node.var) {
+          statements.push(
+            t.expressionStatement(
+              callRuntime(
+                "setTagVar",
+                getScopeIdIdentifier(section),
+                dynamicScopeIdentifier,
+                t.stringLiteral(
+                  getResumeRegisterId(
+                    section,
+                    (node.var as t.Identifier).extra?.binding, // TODO: node.var is not always an identifier.
+                    "var",
+                  ),
+                ),
+              ),
+            ),
+            t.variableDeclaration("const", [
+              t.variableDeclarator(node.var, dynamicTagExpr),
+            ]),
+          );
+        } else {
+          statements.push(t.expressionStatement(dynamicTagExpr));
+        }
 
         getSerializedScopeProperties(section).set(
           t.stringLiteral(

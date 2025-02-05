@@ -188,6 +188,25 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         statements: [],
       };
 
+  if (tagVar) {
+    statements.push(
+      t.expressionStatement(
+        callRuntime(
+          "setTagVar",
+          getScopeIdIdentifier(section),
+          peekScopeId,
+          t.stringLiteral(
+            getResumeRegisterId(
+              section,
+              (node.var as t.Identifier).extra?.binding, // TODO: node.var is not always an identifier.
+              "var",
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   if (node.extra!.tagNameNullable) {
     const contentProp = getTranslatedBodyContentProperty(properties);
     let contentId: t.Identifier | undefined = undefined;
@@ -228,22 +247,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   } else if (tagVar) {
     translateVar(
       tag,
-      callExpression(
-        tagIdentifier,
-        propsToExpression(properties),
-        callRuntime(
-          "register",
-          t.arrowFunctionExpression([], t.blockStatement([])),
-          t.stringLiteral(
-            getResumeRegisterId(
-              section,
-              (node.var as t.Identifier).extra?.binding, // TODO: node.var is not always an identifier.
-              "var",
-            ),
-          ),
-          getScopeIdIdentifier(section),
-        ),
-      ),
+      callExpression(tagIdentifier, propsToExpression(properties)),
     );
     setForceResumeScope(section);
   } else {

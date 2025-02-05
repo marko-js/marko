@@ -1,0 +1,27 @@
+define/Once|{ value }|
+  let/call = 1
+  return() {
+    if (call) {
+      call--;
+      value();
+    }
+  }
+let/clickOnceCount = 0;
+Once/onClickOnce() {
+  clickOnceCount++;
+}
+button.once onClick=onClickOnce -- ${clickOnceCount}
+
+define/Twice|{ value }|
+  let/call = 2
+  return() {
+    if (call) {
+      call--;
+      value();
+    }
+  }
+let/clickTwiceCount = 0;
+Twice/onClickTwice() {
+  clickTwiceCount++;
+}
+button.twice onClick=onClickTwice -- ${clickTwiceCount}
