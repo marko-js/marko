@@ -1,7 +1,8 @@
 
-    at packages/runtime-tags/src/__tests__/fixtures/error-return-if-else/template.marko:5:4
+    at packages/runtime-tags/src/__tests__/fixtures/error-return-if-else/template.marko:2:4
+      1 | <if=input.show>
+    > 2 |   <return=1/>
+        |    ^^^^^^ The `return` tag can not be used under an `"if"` tag.
       3 | </if>
       4 | <else>
-    > 5 |   <return=2/>
-        |    ^^^^^^ The `return` tag can only be used once per template.
-      6 | </else>
+      5 |   <return=2/>

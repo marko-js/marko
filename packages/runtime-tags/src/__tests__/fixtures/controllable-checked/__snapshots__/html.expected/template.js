@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   const checked = false;
   _$.write(`<input${_$.controllable_input_checked(_scope0_id, "#input/0", checked, _$.register(_new_checked => {

@@ -1,7 +1,7 @@
 const a = 1;
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _customTag from "./tags/custom-tag.marko";
-const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   const b = 2;
   const c = 3;

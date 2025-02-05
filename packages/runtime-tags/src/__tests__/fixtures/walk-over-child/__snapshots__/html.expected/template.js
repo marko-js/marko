@@ -1,6 +1,6 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
-const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   const count = 0;
   _$.write("<section>");

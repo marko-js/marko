@@ -1,7 +1,7 @@
 function noop(_) {}
 _$.register(noop, "__tests__/template.marko_0/noop");
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   const a = 0;
   const b = 0;

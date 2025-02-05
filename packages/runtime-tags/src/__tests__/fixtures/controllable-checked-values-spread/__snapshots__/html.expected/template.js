@@ -1,6 +1,6 @@
 import _checkbox from "./tags/checkbox.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   const checkedValue = ["a", "b"];
   const _childScope = _$.peekNextScope();
