@@ -240,6 +240,7 @@ function trackAssignment(
   forEachIdentifier(assignment.node, (id) => {
     if (id.name === binding.name) {
       const extra = (id.extra ??= {});
+      section.assignments = bindingUtil.add(section.assignments, binding);
       extra.assignment = binding;
       extra.section = section;
     }
