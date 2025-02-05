@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.33
+
+### Patch Changes
+
+- [#2496](https://github.com/marko-js/marko/pull/2496) [`536081d`](https://github.com/marko-js/marko/commit/536081d43069e78ecf198af93f66fa000218e13e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix resuming tag vars.
+
 ## 0.3.32
 
 ### Patch Changes
