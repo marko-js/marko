@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.32
+
+### Patch Changes
+
+- [#2494](https://github.com/marko-js/marko/pull/2494) [`7101f5b`](https://github.com/marko-js/marko/commit/7101f5ba83d2ca097187c3a381959f42a885cdf7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with owner scope for assignments to closures not being serialized.
+
 ## 0.3.31
 
 ### Patch Changes
