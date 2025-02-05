@@ -1,6 +1,6 @@
 import child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   const tagName = child;
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/0")}`);

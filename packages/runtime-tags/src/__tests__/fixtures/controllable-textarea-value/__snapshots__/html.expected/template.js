@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   const value = "hello";
   _$.write(`<textarea>${_$.controllable_textarea_value(_scope0_id, "#textarea/0", value, _$.register(_new_value => {

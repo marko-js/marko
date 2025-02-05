@@ -1,7 +1,7 @@
 import testLog from "./test-log";
 const staticVar = "static var";
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   console.log("identifier");
   const tagVar = "tag var";

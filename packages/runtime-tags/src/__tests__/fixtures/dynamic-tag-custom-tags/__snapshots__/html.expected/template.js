@@ -1,7 +1,7 @@
 import child1 from "./tags/child1.marko";
 import child2 from "./tags/child2.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   const tagName = child1;
   const val = 3;

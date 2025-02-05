@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
+const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   const x = 1;
   const y = 2;
@@ -7,8 +7,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer((input, _tagVar) => {
   const _return = x + y;
   _$.debug(_$.writeScope(_scope0_id, {
     "x": x,
-    "y": y,
-    "/": _tagVar
+    "y": y
   }), "__tests__/tags/child.marko", 0, {
     "x": "1:6",
     "y": "2:6"
