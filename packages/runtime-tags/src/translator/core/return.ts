@@ -4,26 +4,26 @@ import {
   assertNoArgs,
   assertNoParams,
   assertNoVar,
+  isNativeTag,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
 import { AccessorChar } from "../../common/types";
 import { assertNoBodyContent } from "../util/assert";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
+import { getParentTag } from "../util/get-parent-tag";
+import { isControlFlowTag } from "../util/is-core-tag";
 import { importRuntime } from "../util/runtime";
 import { getSection } from "../util/sections";
 import { addValue, getSerializedScopeProperties } from "../util/signals";
 import { createSectionState } from "../util/state";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
-import { currentProgramPath } from "../visitors/program";
 
-const [returnId, _setReturnId] = createSectionState<t.Identifier | undefined>(
-  "returnId",
-);
-export { returnId };
-
-const usedTag = new WeakSet<t.Hub>();
+const tagsWithReturn = new WeakSet<t.NodePath>();
+const [getSectionReturnValueIdentifier, setReturnValueIdentifier] =
+  createSectionState<t.Identifier | undefined>("returnValue");
+export { getSectionReturnValueIdentifier };
 
 export default {
   analyze(tag) {
@@ -33,14 +33,32 @@ export default {
     assertNoBodyContent(tag);
     assertAllowedAttributes(tag, ["value", "valueChange"]);
 
-    if (usedTag.has(tag.hub)) {
+    const parentTag = getParentTag(tag);
+    if (parentTag) {
+      if (isNativeTag(parentTag)) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            "The `return` tag can not be used in a native tag.",
+          );
+      } else if (isControlFlowTag(parentTag)) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError(
+            `The \`return\` tag can not be used under an \`${parentTag.get("name").toString()}\` tag.`,
+          );
+      }
+    }
+
+    if (tagsWithReturn.has(tag.parentPath)) {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The `return` tag can only be used once per template.",
+          `Cannot have multiple \`return\` tags ${tag.parent.type === "Program" ? "for the template" : "within a tag's body content"}.`,
         );
+    } else {
+      tagsWithReturn.add(tag.parentPath);
     }
-    usedTag.add(tag.hub);
 
     if (!getKnownAttrValues(tag.node).value) {
       throw tag
@@ -64,10 +82,8 @@ export default {
         }
 
         if (attrs.value) {
-          const returnId =
-            currentProgramPath.scope.generateUidIdentifier("return");
-          _setReturnId(section, returnId);
-
+          const returnId = tag.scope.generateUidIdentifier("return");
+          setReturnValueIdentifier(section, returnId);
           tag
             .replaceWith(
               t.variableDeclaration("const", [

@@ -512,21 +512,29 @@ function writeRegistered(
     );
     state.refs.set(val, fnRef);
     if (scopeRef) {
-      const scopeId = ensureId(state, scopeRef);
       if (isCircular(parent, scopeRef)) {
         state.assigned.add(fnRef);
-        fnRef.init = access + "(" + scopeId + ")";
+        fnRef.init = access + "(" + ensureId(state, scopeRef) + ")";
         fnRef.assigns += ensureId(state, parent) + toAccess(accessor) + "=";
         return false;
       }
 
-      state.buf.push(access + "(" + scopeId + ")");
+      state.buf.push(access + "(" + ensureId(state, scopeRef) + ")");
     } else {
-      state.buf.push(access + "(");
+      const pos = state.buf.push("");
+      const assigns = state.assigned.size;
       writeProp(state, scope, parent, "");
-      const scopeRef = state.refs.get(scope);
-      if (scopeRef) ensureId(state, scopeRef);
-      state.buf.push(")");
+      const scopeRef = parent && state.refs.get(scope);
+      const scopeId = scopeRef && ensureId(state, scopeRef);
+
+      if (scopeId && assigns !== state.assigned.size) {
+        state.assigned.add(fnRef);
+        fnRef.init = access + "(" + scopeId + ")";
+        fnRef.assigns += ensureId(state, parent) + toAccess(accessor) + "=";
+      } else {
+        state.buf[pos - 2] += access + "(";
+        state.buf.push(")");
+      }
     }
   } else {
     state.buf.push(access);

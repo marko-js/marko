@@ -3,6 +3,7 @@ import { forIn, forOf, forTo } from "../common/for";
 import {
   type $Global,
   type Accessor,
+  AccessorChar,
   type Falsy,
   ResumeSymbol,
 } from "../common/types";
@@ -65,6 +66,18 @@ export function withContext(key: PropertyKey, value: unknown, cb: () => void) {
     ctx[kPendingContexts]--;
     ctx[key] = prev;
   }
+}
+
+export function setTagVar(
+  parentScopeId: number,
+  childScope: PartialScope,
+  registryId: string,
+) {
+  childScope[AccessorChar.TagVariable] = register(
+    {},
+    registryId,
+    parentScopeId,
+  );
 }
 
 export function register<T extends WeakKey>(

@@ -44,6 +44,7 @@ export {
   resumeSingleNodeForIn,
   resumeSingleNodeForOf,
   resumeSingleNodeForTo,
+  setTagVar,
   tryContent,
   write,
   writeEffect,

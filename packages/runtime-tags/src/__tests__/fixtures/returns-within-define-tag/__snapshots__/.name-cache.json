@@ -1,0 +1,32 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "e",
+      "$init": "t",
+      "$_expr_value_call$define_content2": "a",
+      "$_call$define_content2": "r",
+      "$_value$define_content2": "n",
+      "$_pattern_2$define_content": "i",
+      "$_params_3$define_content": "o",
+      "$_setup$define_content2": "c",
+      "$_expr_value_call$define_content": "g",
+      "$_call$define_content": "l",
+      "$_value$define_content": "s",
+      "$_pattern_$define_content": "u",
+      "$_params_2$define_content": "f",
+      "$_setup$define_content": "m",
+      "$_onClickTwice_effect": "v",
+      "$_onClickOnce_effect": "d",
+      "$_return": "k",
+      "$_return2": "S",
+      "$_Twice_input": "V",
+      "$_expr_Text_clickTwiceCount": "h",
+      "$_Once_input": "p",
+      "$_expr_Text_clickOnceCount": "w",
+      "$_clickTwiceCount": "y",
+      "$_clickOnceCount": "A",
+      "$_onClickTwice2": "B",
+      "$_onClickOnce2": "O"
+    }
+  }
+}
