@@ -4,7 +4,7 @@ export const _walks_ = /* replace, over(1) */"D%bD";
 import _helloInternal from "./components/hello-internal.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 _$.register("__tests__/tags/components/hello-internal.marko", _helloInternal);
-const _helloInternal_input = _$.dynamicTagAttrs("#text/0");
+const _helloInternal_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _helloInternal_input(_scope, () => ({})), () => _helloInternal_input);
 export function _setup_(_scope) {
   _dynamicTagName(_scope, _helloInternal);

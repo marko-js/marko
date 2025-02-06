@@ -27,13 +27,13 @@ const _expr_Parent_Child = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _expr_Parent_Child_effect(_scope);
 });
-const _Parent_input = _$.dynamicTagAttrs("#text/5", _Parent_content);
+const _Parent_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/5", _Parent_content);
 const _dynamicTagName3 = /* @__PURE__ */_$.conditional("#text/5", _scope => _Parent_input(_scope, () => ({})), () => _Parent_input);
-const _Child_input2 = _$.dynamicTagAttrs("#text/4", _Child_content2);
+const _Child_input2 = /* @__PURE__ */_$.dynamicTagAttrs("#text/4", _Child_content2);
 const _dynamicTagName2 = /* @__PURE__ */_$.conditional("#text/4", _scope => _Child_input2(_scope, () => ({
   href: "#bar"
 })), () => _Child_input2);
-const _Child_input = _$.dynamicTagAttrs("#text/2", _Child_content);
+const _Child_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/2", _Child_content);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", _scope => _Child_input(_scope, () => ({
   href: "#bar"
 })), () => _Child_input);

@@ -1,5 +1,4 @@
-// size: 450 (min) 224 (brotli)
-_$.dynamicTagAttrs(0);
+// size: 429 (min) 212 (brotli)
 const _c$if_content = _$.registerSubscriber(
     "b0",
     _$.dynamicClosure(

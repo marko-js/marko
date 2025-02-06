@@ -17,19 +17,22 @@ import runtimeInfo from "./runtime-info";
 import { toMemberExpression } from "./to-property-name";
 
 const pureFunctions: Array<keyof typeof import("../../dom")> = [
-  "createTemplate",
+  "conditional",
+  "conditionalClosure",
+  "conditionalOnlyChild",
   "createRenderer",
   "createRendererWithOwner",
-  "value",
-  "state",
+  "createTemplate",
+  "dynamicClosure",
+  "dynamicTagAttrs",
+  "inChild",
   "intersection",
   "loopClosure",
-  "conditionalClosure",
-  "dynamicClosure",
-  "loopOf",
   "loopIn",
+  "loopOf",
   "loopTo",
-  "conditional",
+  "state",
+  "value",
 ];
 
 export function importRuntime(

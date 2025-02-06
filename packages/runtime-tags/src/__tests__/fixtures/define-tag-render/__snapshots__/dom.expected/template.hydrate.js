@@ -1,4 +1,4 @@
-// size: 392 (min) 243 (brotli)
+// size: 371 (min) 229 (brotli)
 const _y$define_content_effect = _$.effect("a0", (_scope, { 7: y }) =>
     _$.on(_scope[2], "click", function () {
       _y$define_content(_scope, y + 1);
@@ -30,5 +30,4 @@ _$.register(
     () => _params_2$define_content,
   ),
 ),
-  _$.dynamicTagAttrs(0),
   init();

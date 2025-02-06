@@ -18,7 +18,7 @@ export const _x_ = /* @__PURE__ */_$.value("x", (_scope, x) => {
     });
   }
   _customTag_input_thing(_scope["#childScope/0"], _thing);
-}, () => _$.inChild("#childScope/0", _customTag_input_thing));
+}, () => /* @__PURE__ */_$.inChild("#childScope/0", _customTag_input_thing));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _x_(_scope, input.x), () => _x_);
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
 export function _setup_(_scope) {

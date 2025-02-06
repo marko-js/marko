@@ -6,7 +6,7 @@ const _setup$define_content = _scope => {
   _x$define_content._(_scope, _scope._["x"]);
 };
 const _define_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div> </div>", /* next(1), get */"D ", _setup$define_content));
-const _MyTag_input = _$.dynamicTagAttrs("#text/0");
+const _MyTag_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _MyTag_input(_scope, () => ({})), () => _MyTag_input);
 const _MyTag = /* @__PURE__ */_$.value("MyTag", (_scope, MyTag) => _dynamicTagName(_scope, MyTag), () => _dynamicTagName);
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {

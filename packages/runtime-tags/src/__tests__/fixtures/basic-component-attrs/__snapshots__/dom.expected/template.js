@@ -5,7 +5,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _clickCount = /* @__PURE__ */_$.state("clickCount", (_scope, clickCount) => {
   _myButton_input_text(_scope["#childScope/0"], clickCount);
   _myButton_input_onClick(_scope["#childScope/0"], _onClick(_scope));
-}, () => _$.intersections([_$.inChild("#childScope/0", _myButton_input_text), _$.inChild("#childScope/0", _myButton_input_onClick)]));
+}, () => _$.intersections([/* @__PURE__ */_$.inChild("#childScope/0", _myButton_input_text), /* @__PURE__ */_$.inChild("#childScope/0", _myButton_input_onClick)]));
 export function _setup_(_scope) {
   _myButton(_scope["#childScope/0"]);
   _clickCount(_scope, 0);

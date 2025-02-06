@@ -10,7 +10,7 @@ const _params_2$define_content = /* @__PURE__ */_$.value("_params_2", (_scope, _
   _c$define_content(_scope, _params_2[2]);
 });
 const _define_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div><!>|<!>|<!></div>", /* next(1), replace, over(2), replace, over(2), replace */"D%c%c%", void 0, () => _params_2$define_content));
-const _MyTag_input = _$.dynamicTagAttrs("#text/0", void 0, 1);
+const _MyTag_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0", void 0, 1);
 const _expr_Text_x = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     x

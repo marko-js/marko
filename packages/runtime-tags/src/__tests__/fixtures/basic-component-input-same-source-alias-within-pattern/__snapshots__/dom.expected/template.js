@@ -9,7 +9,7 @@ const _clickCount = /* @__PURE__ */_$.state("clickCount", (_scope, clickCount) =
   _myButton_input_onClick(_scope["#childScope/0"], _onClick(_scope));
   _myButton_input_value_text(_scope["#childScope/1"], clickCount);
   _myButton_input_onClick(_scope["#childScope/1"], _onClick2(_scope));
-}, () => _$.intersections([_$.inChild("#childScope/0", _myButton_input_value), _$.inChild("#childScope/0", _myButton_input_onClick), _$.inChild("#childScope/1", _myButton_input_value_text), _$.inChild("#childScope/1", _myButton_input_onClick)]));
+}, () => _$.intersections([/* @__PURE__ */_$.inChild("#childScope/0", _myButton_input_value), /* @__PURE__ */_$.inChild("#childScope/0", _myButton_input_onClick), /* @__PURE__ */_$.inChild("#childScope/1", _myButton_input_value_text), /* @__PURE__ */_$.inChild("#childScope/1", _myButton_input_onClick)]));
 export function _setup_(_scope) {
   _myButton(_scope["#childScope/0"]);
   _myButton(_scope["#childScope/1"]);

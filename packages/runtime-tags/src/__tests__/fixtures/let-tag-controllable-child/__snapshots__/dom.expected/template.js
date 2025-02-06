@@ -8,7 +8,7 @@ const _source = /* @__PURE__ */_$.state("source", (_scope, source) => {
     value: source,
     valueChange: _valueChange(_scope)
   });
-}, () => _$.inChild("#childScope/0", _child_input));
+}, () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input));
 export function _setup_(_scope) {
   _child(_scope["#childScope/0"]);
   _source(_scope, 1);

@@ -1,7 +1,7 @@
 export const _template_ = "<button id=tags> </button><div><!></div>";
 export const _walks_ = /* get, next(1), get, out(1), next(1), replace, out(1) */" D lD%l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _inputContent_input = _$.dynamicTagAttrs("#text/2", void 0, 1);
+const _inputContent_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/2", void 0, 1);
 const _expr_Text_count = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     count

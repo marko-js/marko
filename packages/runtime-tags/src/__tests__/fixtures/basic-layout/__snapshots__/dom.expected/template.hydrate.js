@@ -1,5 +1,4 @@
-// size: 192 (min) 139 (brotli)
-_$.dynamicTagAttrs(0);
+// size: 171 (min) 132 (brotli)
 const _name$layout_content = _$.registerSubscriber(
     "b0",
     _$.dynamicClosure((_scope, name) => _$.data(_scope[0], name)),

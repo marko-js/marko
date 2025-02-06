@@ -2,7 +2,7 @@ export const _template_ = "<body><!></body>";
 export const _walks_ = /* next(1), replace, out(1) */"D%l";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _content_input = _$.dynamicTagAttrs("#text/0");
+const _content_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _content_input(_scope, () => ({})), () => _content_input);
 export const _content_ = /* @__PURE__ */_$.value("content", (_scope, content) => _dynamicTagName(_scope, content), () => _dynamicTagName);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _content_(_scope, input.content), () => _content_);

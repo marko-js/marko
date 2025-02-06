@@ -3,7 +3,7 @@ export const _walks_ = /* get, next(1), over(1), replace, out(1), replace, over(
 import customTag from './tags/custom-tag.marko';
 const tags = [customTag];
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _tags0_input = _$.dynamicTagAttrs("#text/2");
+const _tags0_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/2");
 const _expr_Text_x = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     x

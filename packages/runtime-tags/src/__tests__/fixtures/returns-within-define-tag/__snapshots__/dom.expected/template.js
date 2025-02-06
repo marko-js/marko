@@ -31,7 +31,7 @@ const _setup$define_content = _scope => {
   _call$define_content(_scope, 1);
 };
 const _define_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("", "", _setup$define_content, () => _params_2$define_content));
-const _Twice_input = _$.dynamicTagAttrs("#text/3");
+const _Twice_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/3");
 const _expr_Text_clickTwiceCount = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     clickTwiceCount
@@ -40,7 +40,7 @@ const _expr_Text_clickTwiceCount = /* @__PURE__ */_$.intersection(2, _scope => {
     value: _onClickTwice2(_scope)
   }));
 }, () => _Twice_input);
-const _Once_input = _$.dynamicTagAttrs("#text/0");
+const _Once_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0");
 const _expr_Text_clickOnceCount = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     clickOnceCount

@@ -3,7 +3,7 @@ export const _walks_ = /* replace, over(1), get, over(1) */"D%b b";
 import Counter from "./tags/counter.marko";
 const getCounter = _getCounter;
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _getCounter_input = _$.dynamicTagAttrs("#text/0");
+const _getCounter_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => {
   _$.setTagVar(_scope, "#text/0!", _count);
   _getCounter_input(_scope, () => ({}));

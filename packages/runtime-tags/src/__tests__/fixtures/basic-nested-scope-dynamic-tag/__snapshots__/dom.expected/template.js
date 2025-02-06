@@ -17,7 +17,7 @@ const _setup$falseChild_content = _scope => {
   _count$falseChild_content._(_scope, _scope._["count"]);
 };
 const _falseChild_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<button> </button>", /* get, next(1), get */" D ", _setup$falseChild_content));
-const _falseChild_input = _$.dynamicTagAttrs("#text/0", _falseChild_content);
+const _falseChild_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0", _falseChild_content);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _falseChild_input(_scope, () => ({})), () => _falseChild_input);
 const _count = /* @__PURE__ */_$.state("count", (_scope, count) => _count$falseChild_content(_scope, count));
 export function _setup_(_scope) {

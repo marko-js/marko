@@ -10,7 +10,7 @@ const _expr_outer_inner$for_content = /* @__PURE__ */_$.intersection(2, _scope =
     inner
   } = _scope;
   _child_input_name(_scope["#childScope/0"], `${outer}.${inner}`);
-}, () => _$.inChild("#childScope/0", _child_input_name));
+}, () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_name));
 const _outer$for_content = /* @__PURE__ */_$.loopClosure("#text/0", 0, () => _expr_outer_inner$for_content);
 const _inner$for_content = /* @__PURE__ */_$.value("inner", 0, () => _expr_outer_inner$for_content);
 const _params_3$for_content = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _inner$for_content(_scope, _params_3[0]), () => _inner$for_content);

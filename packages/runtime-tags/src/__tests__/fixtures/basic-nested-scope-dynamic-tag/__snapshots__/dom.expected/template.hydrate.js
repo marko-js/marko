@@ -1,5 +1,4 @@
-// size: 341 (min) 217 (brotli)
-_$.dynamicTagAttrs(0);
+// size: 295 (min) 198 (brotli)
 const _count$falseChild_content_effect = _$.effect(
     "b0",
     (_scope, { _: { 1: count } }) =>
@@ -15,16 +14,15 @@ const _count$falseChild_content_effect = _$.effect(
   ),
   _setup$falseChild_content = (_scope) => {
     _count$falseChild_content._(_scope, _scope._[1]);
-  },
-  _falseChild_content = _$.register(
-    "b2",
-    _$.createRendererWithOwner(
-      "<button> </button>",
-      " D ",
-      _setup$falseChild_content,
-    ),
-  );
-_$.dynamicTagAttrs(0, _falseChild_content);
+  };
+_$.register(
+  "b2",
+  _$.createRendererWithOwner(
+    "<button> </button>",
+    " D ",
+    _setup$falseChild_content,
+  ),
+);
 const _count = _$.state(1, (_scope, count) =>
   _count$falseChild_content(_scope, count),
 );

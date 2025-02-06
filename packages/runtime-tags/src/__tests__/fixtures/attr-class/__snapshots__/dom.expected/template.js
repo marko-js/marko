@@ -3,7 +3,7 @@ export const _walks_ = /* get, over(3), beginChild, _customTag_walks, endChild, 
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _customTag, _className_ as _customTag_input_class, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./tags/custom-tag.marko";
 const _test_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello", ""));
-const _inputTest_input = _$.dynamicTagAttrs("#text/3");
+const _inputTest_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/3");
 const _expr_Text_c_d = /* @__PURE__ */_$.intersection(3, _scope => {
   const {
     c,
@@ -36,7 +36,7 @@ const _expr_c_d = /* @__PURE__ */_$.intersection(2, _scope => {
     b: c,
     d
   }]);
-}, () => _$.inChild("#childScope/1", _customTag_input_class));
+}, () => /* @__PURE__ */_$.inChild("#childScope/1", _customTag_input_class));
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/3", 0, () => _expr_Text_c_d);
 export const _d_ = /* @__PURE__ */_$.value("d", 0, () => _$.intersections([_expr_c_d, _expr_Text_c_d]));
 export const _c_ = /* @__PURE__ */_$.value("c", 0, () => _$.intersections([_expr_c_d, _expr_Text_c_d]));
