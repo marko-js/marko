@@ -6,11 +6,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/0", tagName, {}, _$.register(/* @__PURE__ */_$.createRenderer(() => {
     const _scope1_id = _$.nextScopeId();
-    const _childScope = _$.peekNextScope();
     _counter({});
-    _$.debug(_$.writeScope(_scope1_id, {
-      "#childScope/0": _$.writeExistingScope(_childScope)
-    }), "__tests__/template.marko", "3:4");
   }), "__tests__/template.marko_1_renderer", _scope0_id));
   _$.write(`<button id=changeTag></button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_tagName");

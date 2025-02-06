@@ -37,6 +37,7 @@ import {
   addStatement,
   getRegisterUID,
   getSerializedScopeProperties,
+  setForceResumeScope,
 } from "../../util/signals";
 import { toObjectProperty } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
@@ -324,6 +325,7 @@ export default {
             }
           }
 
+          setForceResumeScope(section);
           translateVar(
             tag,
             callRuntime(

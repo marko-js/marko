@@ -74,7 +74,10 @@ export default {
       currentProgramPath = program;
       startSection(program);
       trackParamsReferences(program, BindingType.input);
-      program.node.params[0].extra!.binding!.nullable = false;
+
+      if (program.node.params[0]?.extra?.binding) {
+        program.node.params[0].extra!.binding!.nullable = false;
+      }
 
       const { scope } = program;
       // TODO: make any exports undefined if they are noops/empty

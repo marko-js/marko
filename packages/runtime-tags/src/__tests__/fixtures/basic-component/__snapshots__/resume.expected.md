@@ -11,7 +11,7 @@
       <!--M_*2 #button/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#childScope/0":_.a={clickCount:0}},2:_.a}),2,"__tests__/tags/counter.marko_0_clickCount",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={2:{clickCount:0}}),2,"__tests__/tags/counter.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>
@@ -34,7 +34,7 @@ container.querySelector("button").click();
       <!--M_*2 #button/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#childScope/0":_.a={clickCount:0}},2:_.a}),2,"__tests__/tags/counter.marko_0_clickCount",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={2:{clickCount:0}}),2,"__tests__/tags/counter.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>

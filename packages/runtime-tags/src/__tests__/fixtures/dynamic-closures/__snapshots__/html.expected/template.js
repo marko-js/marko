@@ -6,7 +6,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const b = 2;
   const c = 3;
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
-  const _childScope = _$.peekNextScope();
   _customTag({
     content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
       const _scope1_id = _$.nextScopeId();
@@ -37,8 +36,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.debug(_$.writeScope(_scope0_id, {
     "b": b,
-    "c": c,
-    "#childScope/1": _$.writeExistingScope(_childScope)
+    "c": c
   }), "__tests__/template.marko", 0, {
     "b": "2:7",
     "c": "3:5"

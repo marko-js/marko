@@ -19,7 +19,7 @@
     />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:{tagName:"div","#text/0!":_.a={},"#text/0(":"div"},2:_.a,3:{"#childScope/0":_.b={count:0}},4:_.b}),4,"__tests__/tags/counter.marko_0_count",1,"__tests__/template.marko_0_tagName",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{tagName:"div","#text/0!":_.a={},"#text/0(":"div"},2:_.a,4:{count:0}}),4,"__tests__/tags/counter.marko_0_count",1,"__tests__/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>
@@ -50,7 +50,7 @@ container.querySelector("#count").click();
     />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:{tagName:"div","#text/0!":_.a={},"#text/0(":"div"},2:_.a,3:{"#childScope/0":_.b={count:0}},4:_.b}),4,"__tests__/tags/counter.marko_0_count",1,"__tests__/template.marko_0_tagName",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{tagName:"div","#text/0!":_.a={},"#text/0(":"div"},2:_.a,4:{count:0}}),4,"__tests__/tags/counter.marko_0_count",1,"__tests__/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>
@@ -82,7 +82,7 @@ container.querySelector("#changeTag").click();
     />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:{tagName:"div","#text/0!":_.a={},"#text/0(":"div"},2:_.a,3:{"#childScope/0":_.b={count:0}},4:_.b}),4,"__tests__/tags/counter.marko_0_count",1,"__tests__/template.marko_0_tagName",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{tagName:"div","#text/0!":_.a={},"#text/0(":"div"},2:_.a,4:{count:0}}),4,"__tests__/tags/counter.marko_0_count",1,"__tests__/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>
@@ -117,7 +117,7 @@ container.querySelector("#count").click();
     />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:{tagName:"div","#text/0!":_.a={},"#text/0(":"div"},2:_.a,3:{"#childScope/0":_.b={count:0}},4:_.b}),4,"__tests__/tags/counter.marko_0_count",1,"__tests__/template.marko_0_tagName",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{tagName:"div","#text/0!":_.a={},"#text/0(":"div"},2:_.a,4:{count:0}}),4,"__tests__/tags/counter.marko_0_count",1,"__tests__/template.marko_0_tagName",0];M._.w()
     </script>
   </body>
 </html>

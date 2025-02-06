@@ -17,7 +17,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       d
     }]
   });
-  const _childScope2 = _$.peekNextScope();
   _customTag({
     class: ["a", false, "b"]
   });
@@ -42,7 +41,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     "c": c,
     "d": d,
     "#childScope/1": _$.writeExistingScope(_childScope),
-    "#childScope/2": _$.writeExistingScope(_childScope2),
     "#text/3!": _$.writeExistingScope(_dynamicScope),
     "#text/3(": _$.normalizeDynamicRenderer(input.test)
   }), "__tests__/template.marko", 0, {

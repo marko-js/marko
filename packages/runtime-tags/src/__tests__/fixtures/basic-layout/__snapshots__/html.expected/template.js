@@ -5,7 +5,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const {
     name
   } = input;
-  const _childScope = _$.peekNextScope();
   _layout({
     content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
       const _scope1_id = _$.nextScopeId();
@@ -18,8 +17,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     }), "__tests__/template.marko_1_renderer", _scope0_id)
   });
   _$.debug(_$.writeScope(_scope0_id, {
-    "name": name,
-    "#childScope/0": _$.writeExistingScope(_childScope)
+    "name": name
   }), "__tests__/template.marko", 0, {
     "name": "1:10"
   });

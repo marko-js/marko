@@ -8,7 +8,7 @@
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[1,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{}}),1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

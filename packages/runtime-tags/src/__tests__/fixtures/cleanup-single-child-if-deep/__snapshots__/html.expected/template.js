@@ -15,7 +15,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     if (showOuter) {
       const _scope1_id = _$.nextScopeId();
       _$.write("<div>");
-      const _childScope = _$.peekNextScope();
       _child({
         write: write,
         name: "Outer"
@@ -25,7 +24,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
         if (showMiddle) {
           const _scope2_id = _$.nextScopeId();
           _$.write("<div>");
-          const _childScope2 = _$.peekNextScope();
           _child({
             write: write,
             name: "Middle"
@@ -34,14 +32,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
           _$.resumeSingleNodeConditional(() => {
             if (showInner) {
               const _scope3_id = _$.nextScopeId();
-              const _childScope3 = _$.peekNextScope();
               _child({
                 write: write,
                 name: "Inner"
               });
-              _$.debug(_$.writeScope(_scope3_id, {
-                "#childScope/0": _$.writeExistingScope(_childScope3)
-              }), "__tests__/template.marko", "17:10");
+              _$.debug(_$.writeScope(_scope3_id, {}), "__tests__/template.marko", "17:10");
               _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_3_renderer");
               _ifScopeId = _scope3_id;
             }
@@ -49,7 +44,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
           _$.write("</div>");
           _$.writeEffect(_scope2_id, "__tests__/template.marko_2_showInner/subscriber");
           _$.debug(_$.writeScope(_scope2_id, {
-            "#childScope/0": _$.writeExistingScope(_childScope2),
             "#text/1(": _ifRenderer,
             "#text/1!": _$.getScopeById(_ifScopeId),
             "_": _$.ensureScopeWithId(_scope1_id)
@@ -60,7 +54,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       }, _scope1_id, "#text/1");
       _$.write("</div>");
       _$.debug(_$.writeScope(_scope1_id, {
-        "#childScope/0": _$.writeExistingScope(_childScope),
         "_": _$.ensureScopeWithId(_scope0_id),
         "#text/1(": _ifRenderer2,
         "#text/1!": _$.getScopeById(_ifScopeId2)
