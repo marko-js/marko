@@ -26,7 +26,7 @@ const _expr_Text_value = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _tagSelect_input(_scope, () => ({
     value,
-    valueChange: _valueChange
+    valueChange: _valueChange(_scope)
   }));
 }, () => _tagSelect_input);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", 0, () => _expr_Text_value);
@@ -36,8 +36,10 @@ export function _setup_(_scope) {
   _value(_scope, "b");
   _tag(_scope, "select");
 }
-function _valueChange(v) {
-  _value(_scope, v);
+function _valueChange(_scope) {
+  return function (v) {
+    _value(_scope, v);
+  };
 }
 _$.register("__tests__/template.marko_0/valueChange", _valueChange);
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

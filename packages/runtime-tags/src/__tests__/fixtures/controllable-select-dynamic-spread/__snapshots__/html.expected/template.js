@@ -8,7 +8,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     value,
     valueChange: _$.register(function (v) {
       value = v;
-    }, "__tests__/template.marko_0/valueChange")
+    }, "__tests__/template.marko_0/valueChange", _scope0_id)
   }, _$.register(/* @__PURE__ */_$.createRenderer(() => {
     const _scope1_id = _$.nextScopeId();
     _$.write(`<option${_$.attrs({

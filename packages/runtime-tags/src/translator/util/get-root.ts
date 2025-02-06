@@ -26,14 +26,29 @@ export function getExprRoot(path: t.NodePath<t.Node>) {
 
 export function getFnRoot(path: t.NodePath<t.Node>) {
   let curPath = path;
+  let fnPath:
+    | undefined
+    | t.NodePath<
+        t.FunctionExpression | t.ArrowFunctionExpression | t.ObjectMember
+      >;
   if (curPath.isProgram()) return;
 
-  while (!isFunctionExpression(curPath)) {
-    if (isMarko(curPath)) return;
+  while (!isMarko(curPath)) {
+    if (isFunction(curPath)) {
+      fnPath = curPath;
+    } else {
+      switch (curPath.type) {
+        case "CallExpression":
+        case "NewExpression":
+          fnPath = undefined;
+          break;
+      }
+    }
+
     curPath = (curPath as t.NodePath<t.Node>).parentPath!;
   }
 
-  return curPath;
+  return fnPath;
 }
 
 export function isMarko(path: t.NodePath<any>): path is MarkoExprRootPath {
@@ -50,12 +65,17 @@ export function isMarko(path: t.NodePath<any>): path is MarkoExprRootPath {
   }
 }
 
-function isFunctionExpression(
+function isFunction(
   path: t.NodePath<any>,
-): path is t.NodePath<t.FunctionExpression | t.ArrowFunctionExpression> {
+): path is t.NodePath<
+  t.FunctionExpression | t.ArrowFunctionExpression | t.ObjectMember
+> {
   switch (path.type) {
+    case "FunctionDeclaration":
+      return !(path.node as t.FunctionDeclaration).declare;
     case "FunctionExpression":
     case "ArrowFunctionExpression":
+    case "ObjectMethod":
       return true;
     default:
       return false;

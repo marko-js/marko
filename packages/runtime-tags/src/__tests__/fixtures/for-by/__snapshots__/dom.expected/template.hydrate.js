@@ -1,4 +1,4 @@
-// size: 1281 (min) 396 (brotli)
+// size: 1242 (min) 373 (brotli)
 const getStringBy = _getStringBy,
   getFunctionBy = _getFunctionBy,
   getMissingBy = _getMissingBy,
@@ -10,7 +10,7 @@ const getStringBy = _getStringBy,
     _pattern_5$for_content(_scope, _params_6?.[0]),
   ),
   _for_content5 = _$.register(
-    "a4",
+    "a3",
     _$.createRenderer(" ", " ", void 0, () => _params_6$for_content),
   ),
   _text$for_content4 = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
@@ -21,7 +21,7 @@ const getStringBy = _getStringBy,
     _pattern_4$for_content(_scope, _params_5?.[0]),
   ),
   _for_content4 = _$.register(
-    "a5",
+    "a4",
     _$.createRenderer(" ", " ", void 0, () => _params_5$for_content),
   ),
   _text$for_content3 = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
@@ -32,7 +32,7 @@ const getStringBy = _getStringBy,
     _pattern_3$for_content(_scope, _params_4?.[0]),
   ),
   _for_content3 = _$.register(
-    "a6",
+    "a5",
     _$.createRenderer(" ", " ", void 0, () => _params_4$for_content),
   ),
   _text$for_content2 = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
@@ -43,7 +43,7 @@ const getStringBy = _getStringBy,
     _pattern_2$for_content(_scope, _params_3?.[0]),
   ),
   _for_content2 = _$.register(
-    "a7",
+    "a6",
     _$.createRenderer(" ", " ", void 0, () => _params_3$for_content),
   ),
   _text$for_content = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
@@ -54,7 +54,7 @@ const getStringBy = _getStringBy,
     _pattern_$for_content(_scope, _params_2?.[0]),
   ),
   _for_content = _$.register(
-    "a8",
+    "a7",
     _$.createRenderer(" ", " ", void 0, () => _params_2$for_content),
   ),
   _for5 = _$.loopOf(4, _for_content5),
@@ -62,7 +62,7 @@ const getStringBy = _getStringBy,
   _for3 = _$.loopOf(2, _for_content3),
   _for2 = _$.loopOf(1, _for_content2),
   _for = _$.loopOf(0, _for_content),
-  _items_effect = _$.effect("a9", (_scope, { 6: items }) =>
+  _items_effect = _$.effect("a8", (_scope, { 6: items }) =>
     _$.on(_scope[5], "click", function () {
       _items(_scope, [...items.slice(1), items[0]]);
     }),
@@ -78,15 +78,11 @@ const getStringBy = _getStringBy,
 function _getStringBy() {
   return "id";
 }
-function _anonymous(item) {
-  return item.id;
-}
 function _getFunctionBy() {
-  return _anonymous;
+  return (item) => item.id;
 }
 function _getMissingBy() {}
 _$.register("a0", _getStringBy),
-  _$.register("a2", _anonymous),
   _$.register("a1", _getFunctionBy),
-  _$.register("a3", _getMissingBy),
+  _$.register("a2", _getMissingBy),
   init();
