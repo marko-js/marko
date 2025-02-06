@@ -31,7 +31,7 @@ function _checkedValueChange3(_scope) {
     _checkedValue(_scope, _new_checkedValue);
   };
 }
-_$.register("__tests__/template.marko_0/checkedValueChange_0", _checkedValueChange);
+_$.register("__tests__/template.marko_0/checkedValueChange_1", _checkedValueChange);
 _$.register("__tests__/template.marko_0/checkedValueChange_0", _checkedValueChange2);
 _$.register("__tests__/template.marko_0/checkedValueChange", _checkedValueChange3);
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

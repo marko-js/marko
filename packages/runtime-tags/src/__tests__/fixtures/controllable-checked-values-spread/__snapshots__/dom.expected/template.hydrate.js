@@ -1,4 +1,4 @@
-// size: 558 (min) 238 (brotli)
+// size: 558 (min) 240 (brotli)
 const _input__effect = _$.effect("a0", (_scope) => _$.attrsEvents(_scope, 0)),
   _input_ = _$.value(2, (_scope, input) => {
     _$.attrs(_scope, 0, { type: "checkbox", ...input }), _input__effect(_scope);
@@ -47,5 +47,5 @@ function _checkedValueChange3(_scope) {
 }
 _$.register("b0", _checkedValueChange),
   _$.register("b1", _checkedValueChange2),
-  _$.register("b1", _checkedValueChange3),
+  _$.register("b2", _checkedValueChange3),
   init();

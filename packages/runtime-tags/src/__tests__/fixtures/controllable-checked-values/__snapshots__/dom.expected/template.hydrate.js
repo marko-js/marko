@@ -1,4 +1,4 @@
-// size: 515 (min) 163 (brotli)
+// size: 515 (min) 165 (brotli)
 const _checkedValue = _$.state(4, (_scope, checkedValue) => {
   _$.controllable_input_checkedValue(
     _scope,
@@ -38,12 +38,12 @@ function _checkedValueChange3(_scope) {
     _checkedValue(_scope, _new_checkedValue);
   };
 }
-_$.effect("a2", (_scope) => {
+_$.effect("a3", (_scope) => {
   _$.controllable_input_checkedValue_effect(_scope, 0),
     _$.controllable_input_checkedValue_effect(_scope, 1),
     _$.controllable_input_checkedValue_effect(_scope, 2);
 }),
-  _$.register("a1", _checkedValueChange),
+  _$.register("a2", _checkedValueChange),
   _$.register("a1", _checkedValueChange2),
   _$.register("a0", _checkedValueChange3),
   init();
