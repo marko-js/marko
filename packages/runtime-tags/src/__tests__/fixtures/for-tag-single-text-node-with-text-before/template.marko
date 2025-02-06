@@ -1,0 +1,13 @@
+<let/children = [1]/>
+<div data-children=children.length>
+  Before
+  <for of=children>
+    Child
+  </for>
+</div>
+
+<script>
+  if (children.length === 1) {
+    children = [...children, 2];
+  }
+</>
