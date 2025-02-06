@@ -24,7 +24,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     checkedValue: checkedValue,
     checkedValueChange: _$.register(_new_checkedValue3 => {
       checkedValue = _new_checkedValue3;
-    }, "__tests__/template.marko_0/checkedValueChange_0", _scope0_id),
+    }, "__tests__/template.marko_0/checkedValueChange_1", _scope0_id),
     value: "c"
   });
   _$.write(`<span>${_$.escapeXML(checkedValue)}${_$.markResumeNode(_scope0_id, "#text/3")}</span>`);

@@ -87,6 +87,7 @@ export default {
     if (index === undefined) {
       functionNameCounts.set(name, 0);
     } else {
+      functionNameCounts.set(name, index + 1);
       id = `_${index}`;
     }
 
