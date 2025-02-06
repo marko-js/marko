@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 0.3.34
+
+### Patch Changes
+
+- [#2498](https://github.com/marko-js/marko/pull/2498) [`48a9cfb`](https://github.com/marko-js/marko/commit/48a9cfba5021e72ee54270731359e1bc9c9b1121) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure function analysis is applied to the root function only and not closures.
+
+- [#2498](https://github.com/marko-js/marko/pull/2498) [`48a9cfb`](https://github.com/marko-js/marko/commit/48a9cfba5021e72ee54270731359e1bc9c9b1121) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid hoisting functions under a call/new expression.
+
 ## 0.3.33
 
 ### Patch Changes
