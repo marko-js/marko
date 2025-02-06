@@ -41,6 +41,18 @@ export default {
       return;
     }
 
+    if (
+      isMarkoAttribute(markoRoot) &&
+      ((isNativeTag(markoRoot.parentPath) &&
+        /^on[A-Z-]/.test(markoRoot.node.name)) ||
+        isCoreTagName(markoRoot.parentPath, "script") ||
+        isCoreTagName(markoRoot.parentPath, "lifecycle") ||
+        isCoreTagName(markoRoot.parentPath, "for"))
+    ) {
+      // Native tags, effects, lifecycles, and for loops aren't registered here since handle pulling in the function themselves.
+      return;
+    }
+
     const { node } = fn;
     const extra = (node.extra ??= {});
     const name = (extra.name =
@@ -58,18 +70,6 @@ export default {
           : t.isObjectMethod(node) && t.isIdentifier(node.key)
             ? node.key.name
             : "anonymous"));
-
-    if (
-      isMarkoAttribute(markoRoot) &&
-      ((isNativeTag(markoRoot.parentPath) &&
-        /^on[A-Z-]/.test(markoRoot.node.name)) ||
-        isCoreTagName(markoRoot.parentPath, "script") ||
-        isCoreTagName(markoRoot.parentPath, "lifecycle") ||
-        isCoreTagName(markoRoot.parentPath, "for"))
-    ) {
-      // Native tags, effects, lifecycles, and for loops aren't registered here since handle pulling in the function themselves.
-      return;
-    }
 
     const {
       markoOpts,
