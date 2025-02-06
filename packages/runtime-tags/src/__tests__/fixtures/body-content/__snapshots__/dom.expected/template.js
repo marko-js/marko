@@ -13,7 +13,7 @@ const _clickCount = /* @__PURE__ */_$.state("clickCount", (_scope, clickCount) =
     content: _FancyButton_content(_scope)
   });
   _clickCount$FancyButton_content(_scope, clickCount);
-}, () => _$.inChild("#childScope/0", _FancyButton_input));
+}, () => /* @__PURE__ */_$.inChild("#childScope/0", _FancyButton_input));
 export function _setup_(_scope) {
   _FancyButton(_scope["#childScope/0"]);
   _clickCount(_scope, 0);

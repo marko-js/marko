@@ -3,7 +3,7 @@ export const _walks_ = /* beginChild, _child_walks, endChild, beginChild, _child
 import child from "./tags/child/index.marko";
 import { _setup_ as _child, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child/index.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _inputDynamic_input = _$.dynamicTagAttrs("#text/2");
+const _inputDynamic_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/2");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", _scope => {
   _$.setTagVar(_scope, "#text/2!", _data3);
   _inputDynamic_input(_scope, () => ({}));

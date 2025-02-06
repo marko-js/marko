@@ -1,5 +1,4 @@
-// size: 395 (min) 232 (brotli)
-_$.dynamicTagAttrs(1);
+// size: 374 (min) 226 (brotli)
 const _onClick__effect = _$.effect("a0", (_scope, { 4: onClick }) =>
     _$.on(_scope[0], "click", onClick),
   ),

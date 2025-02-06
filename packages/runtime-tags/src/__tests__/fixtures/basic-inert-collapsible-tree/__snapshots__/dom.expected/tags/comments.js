@@ -14,7 +14,7 @@ const _expr_comment_comments_id$if_content = /* @__PURE__ */_$.intersection(2, _
     comments: comment_comments,
     path: id
   });
-}, () => _$.inChild("#childScope/0", _input_));
+}, () => /* @__PURE__ */_$.inChild("#childScope/0", _input_));
 const _id$if_content = /* @__PURE__ */_$.conditionalClosure("#text/4", () => _if_content, 0, () => _expr_comment_comments_id$if_content);
 const _comment_comments$if_content = /* @__PURE__ */_$.conditionalClosure("#text/4", () => _if_content, 0, () => _expr_comment_comments_id$if_content);
 const _setup$if_content = _scope => {

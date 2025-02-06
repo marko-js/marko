@@ -1,4 +1,4 @@
-// size: 520 (min) 271 (brotli)
+// size: 499 (min) 261 (brotli)
 const _x_effect = _$.effect("a1", (_scope, { 2: x }) =>
     _$.on(_scope[0], "click", function () {
       _x(_scope, x + 1);
@@ -26,8 +26,7 @@ var Counter = _$.createTemplate(
   " D l",
   _setup_,
 );
-_$.dynamicTagAttrs(0),
-  _$.registerBoundSignal("b1", (_scope, count) => {}),
+_$.registerBoundSignal("b1", (_scope, count) => {}),
   _$.effect("b2", (_scope) =>
     _$.on(_scope[1], "click", function () {
       _$.tagVarSignalChange(_scope["0!"], 0);

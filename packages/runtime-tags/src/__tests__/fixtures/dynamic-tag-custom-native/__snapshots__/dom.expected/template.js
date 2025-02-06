@@ -2,7 +2,7 @@ export const _template_ = "<button></button><!><!>";
 export const _walks_ = /* get, over(1), replace, over(1) */" b%bD";
 import child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _tagName_input = _$.dynamicTagAttrs("#text/1");
+const _tagName_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/1");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/1", _scope => _tagName_input(_scope, () => ({
   id: "dynamic"
 })), () => _tagName_input);

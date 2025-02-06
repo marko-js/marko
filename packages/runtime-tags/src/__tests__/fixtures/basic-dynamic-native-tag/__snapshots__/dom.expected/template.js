@@ -3,7 +3,7 @@ export const _walks_ = /* replace, over(1) */"D%bD";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _tagName_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello World", ""));
-const _tagName_input = _$.dynamicTagAttrs("#text/0", _tagName_content);
+const _tagName_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0", _tagName_content);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _tagName_input(_scope, () => ({
   class: ["a", "b"]
 })), () => _tagName_input);

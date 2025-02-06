@@ -10,7 +10,7 @@ const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
 const _count = /* @__PURE__ */_$.state("count", (_scope, count) => {
   _count_effect(_scope);
   _displayIntersection_input_value(_scope["#childScope/0"], count);
-}, () => _$.inChild("#childScope/0", _displayIntersection_input_value));
+}, () => /* @__PURE__ */_$.inChild("#childScope/0", _displayIntersection_input_value));
 export function _setup_(_scope) {
   _displayIntersection(_scope["#childScope/0"]);
   _count(_scope, 0);

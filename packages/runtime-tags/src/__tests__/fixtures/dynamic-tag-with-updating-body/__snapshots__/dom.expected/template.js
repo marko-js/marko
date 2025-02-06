@@ -6,7 +6,7 @@ const _setup$tagName_content = _scope => {
   _counter(_scope["#childScope/0"]);
 };
 const _tagName_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner(_counter_template, /* beginChild, _counter_walks, endChild */`/${_counter_walks}&`, _setup$tagName_content));
-const _tagName_input = _$.dynamicTagAttrs("#text/0", _tagName_content);
+const _tagName_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0", _tagName_content);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _tagName_input(_scope, () => ({})), () => _tagName_input);
 const _tagName_effect = _$.effect("__tests__/template.marko_0_tagName", (_scope, {
   tagName

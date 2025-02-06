@@ -10,7 +10,7 @@ const _myButton_content = _$.register("__tests__/template.marko_1_renderer", /* 
 const _clickCount = /* @__PURE__ */_$.state("clickCount", (_scope, clickCount) => {
   _myButton_input_onClick(_scope["#childScope/0"], _onClick(_scope));
   _clickCount$myButton_content(_scope, clickCount);
-}, () => _$.inChild("#childScope/0", _myButton_input_onClick));
+}, () => /* @__PURE__ */_$.inChild("#childScope/0", _myButton_input_onClick));
 export function _setup_(_scope) {
   _myButton(_scope["#childScope/0"]);
   _clickCount(_scope, 0);

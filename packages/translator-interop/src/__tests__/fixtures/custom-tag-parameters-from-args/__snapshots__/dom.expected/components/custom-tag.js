@@ -1,7 +1,7 @@
 export const _template_ = "<button class=inc><!>,<!></button><!><!>";
 export const _walks_ = /* get, next(1), replace, over(2), replace, out(1), replace, over(1) */" D%c%l%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _inputContent_input = _$.dynamicTagAttrs("#text/3", void 0, 1);
+const _inputContent_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/3", void 0, 1);
 const _expr_Text_x_y = /* @__PURE__ */_$.intersection(3, _scope => {
   const {
     x,

@@ -34,7 +34,7 @@ const _setup$classLayout_content = _scope => {
   _multiplier$classLayout_content._(_scope, _scope._["multiplier"]);
 };
 const _classLayout_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<h1> </h1><button id=tags><!> * <!> = <!></button>", /* next(1), get, out(1), get, next(1), replace, over(2), replace, over(2), replace */"D l D%c%c%", _setup$classLayout_content, () => _params_2$classLayout_content));
-const _classLayout_input = _$.dynamicTagAttrs("#text/0", _classLayout_content);
+const _classLayout_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0", _classLayout_content);
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _classLayout_input(_scope, () => ({})), () => _classLayout_input);
 const _multiplier = /* @__PURE__ */_$.state("multiplier", (_scope, multiplier) => _multiplier$classLayout_content(_scope, multiplier));
 export function _setup_(_scope) {

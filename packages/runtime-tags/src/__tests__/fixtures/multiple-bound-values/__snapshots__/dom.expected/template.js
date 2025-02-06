@@ -5,11 +5,11 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _count2 = /* @__PURE__ */_$.state("count2", (_scope, count2) => {
   _$.data(_scope["#text/2"], count2);
   _counters_input_count2(_scope["#childScope/0"], count2);
-}, () => _$.inChild("#childScope/0", _counters_input_count2));
+}, () => /* @__PURE__ */_$.inChild("#childScope/0", _counters_input_count2));
 const _count = /* @__PURE__ */_$.state("count1", (_scope, count1) => {
   _$.data(_scope["#text/1"], count1);
   _counters_input_count(_scope["#childScope/0"], count1);
-}, () => _$.inChild("#childScope/0", _counters_input_count));
+}, () => /* @__PURE__ */_$.inChild("#childScope/0", _counters_input_count));
 export function _setup_(_scope) {
   _counters(_scope["#childScope/0"]);
   _count(_scope, 0);

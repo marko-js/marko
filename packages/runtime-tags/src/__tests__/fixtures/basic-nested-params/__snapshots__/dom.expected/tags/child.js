@@ -2,7 +2,7 @@ export const _template_ = "<div><!></div>";
 export const _walks_ = /* next(1), replace, out(1) */"D%l";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _content_input = _$.dynamicTagAttrs("#text/0");
+const _content_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0");
 const _expr_Text_value = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     value

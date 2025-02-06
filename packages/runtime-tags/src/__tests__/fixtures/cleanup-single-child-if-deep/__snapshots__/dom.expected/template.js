@@ -2,7 +2,7 @@ export const _template_ = "<button id=outer>Toggle Outer</button><button id=midd
 export const _walks_ = /* get, over(1), get, over(1), get, over(1), get, over(1), replace, over(1) */" b b b b%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _child, _write_ as _child_input_write, _name_ as _child_input_name, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child.marko";
-const _write$if_content3 = /* @__PURE__ */_$.dynamicClosure((_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._._, () => _$.inChild("#childScope/0", _child_input_write));
+const _write$if_content3 = /* @__PURE__ */_$.dynamicClosure((_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._._, () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_write));
 const _setup$if_content3 = _scope => {
   _write$if_content3._(_scope, _scope._._._["write"]);
   _child(_scope["#childScope/0"]);
@@ -10,7 +10,7 @@ const _setup$if_content3 = _scope => {
 };
 const _if_content3 = _$.register("__tests__/template.marko_3_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$if_content3));
 const _if$if_content = /* @__PURE__ */_$.conditional("#text/1", 0);
-const _write$if_content2 = /* @__PURE__ */_$.dynamicClosure((_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._, () => _$.inChild("#childScope/0", _child_input_write));
+const _write$if_content2 = /* @__PURE__ */_$.dynamicClosure((_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._, () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_write));
 const _showInner$if_content = _$.registerSubscriber("__tests__/template.marko_2_showInner/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, showInner) => _if$if_content(_scope, showInner ? _if_content3 : null), _scope => _scope._._, () => _if$if_content));
 const _setup$if_content2 = _scope => {
   _write$if_content2._(_scope, _scope._._["write"]);
@@ -20,7 +20,7 @@ const _setup$if_content2 = _scope => {
 };
 const _if_content2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$if_content2));
 const _if$if_content2 = /* @__PURE__ */_$.conditional("#text/1", 0);
-const _write$if_content = /* @__PURE__ */_$.conditionalClosure("#text/4", () => _if_content, (_scope, write) => _child_input_write(_scope["#childScope/0"], write), () => _$.inChild("#childScope/0", _child_input_write));
+const _write$if_content = /* @__PURE__ */_$.conditionalClosure("#text/4", () => _if_content, (_scope, write) => _child_input_write(_scope["#childScope/0"], write), () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_write));
 const _showMiddle$if_content = /* @__PURE__ */_$.conditionalClosure("#text/4", () => _if_content, (_scope, showMiddle) => _if$if_content2(_scope, showMiddle ? _if_content2 : null), () => _if$if_content2);
 const _setup$if_content = _scope => {
   _write$if_content._(_scope, _scope._["write"]);

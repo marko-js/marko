@@ -10,8 +10,8 @@ const _expr_outerItem_middleItem$for_content = /* @__PURE__ */_$.intersection(2,
     middleItem
   } = _scope;
   _child_input_name(_scope["#childScope/0"], `${outerItem}.${middleItem}`);
-}, () => _$.inChild("#childScope/0", _child_input_name));
-const _write$for_content2 = /* @__PURE__ */_$.dynamicClosure((_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._, () => _$.inChild("#childScope/0", _child_input_write));
+}, () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_name));
+const _write$for_content2 = /* @__PURE__ */_$.dynamicClosure((_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._, () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_write));
 const _outerItem$for_content2 = /* @__PURE__ */_$.loopClosure("#text/1", 0, () => _expr_outerItem_middleItem$for_content);
 const _middleItem$for_content = /* @__PURE__ */_$.value("middleItem", 0, () => _expr_outerItem_middleItem$for_content);
 const _params_3$for_content = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _middleItem$for_content(_scope, _params_3[0]), () => _middleItem$for_content);
@@ -22,11 +22,11 @@ const _setup$for_content2 = _scope => {
 };
 const _for_content2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer(`<div>${_child_template}</div>`, /* next(1), beginChild, _child_walks, endChild */`D/${_child_walks}&`, _setup$for_content2, () => _params_3$for_content));
 const _for$for_content = /* @__PURE__ */_$.loopOf("#text/1", _for_content2);
-const _write$for_content = /* @__PURE__ */_$.loopClosure("#text/2", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), () => _$.inChild("#childScope/0", _child_input_write));
+const _write$for_content = /* @__PURE__ */_$.loopClosure("#text/2", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_write));
 const _outerItem$for_content = /* @__PURE__ */_$.value("outerItem", (_scope, outerItem) => {
   _child_input_name(_scope["#childScope/0"], `${outerItem}`);
   _outerItem$for_content2(_scope, outerItem);
-}, () => _$.inChild("#childScope/0", _child_input_name));
+}, () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_name));
 const _items$for_content = /* @__PURE__ */_$.loopClosure("#text/2", (_scope, items) => _for$for_content(_scope, [items]), () => _for$for_content);
 const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outerItem$for_content(_scope, _params_2[0]), () => _outerItem$for_content);
 const _setup$for_content = _scope => {

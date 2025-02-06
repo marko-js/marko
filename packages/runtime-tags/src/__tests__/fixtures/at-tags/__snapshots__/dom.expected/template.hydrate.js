@@ -1,3 +1,2 @@
-// size: 75 (min) 70 (brotli)
-_$.dynamicTagAttrs(0),
-  _$.register("b0", _$.createRendererWithOwner("Foo!", ""));
+// size: 54 (min) 56 (brotli)
+_$.register("b0", _$.createRendererWithOwner("Foo!", ""));

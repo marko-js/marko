@@ -4,7 +4,7 @@ export const _walks_ = /* replace, over(1), next(1), get, out(1) */"D%bD l";
 import _classCounter from "./components/class-counter.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 _$.register("__tests__/components/class-counter.marko", _classCounter);
-const _classCounter_input = _$.dynamicTagAttrs("#text/0");
+const _classCounter_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0");
 const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _classCounter_input(_scope, () => ({
   onCount: _onCount(_scope)
 })), () => _classCounter_input);

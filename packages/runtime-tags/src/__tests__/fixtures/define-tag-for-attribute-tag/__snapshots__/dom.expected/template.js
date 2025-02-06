@@ -3,7 +3,7 @@ export const _walks_ = /* beginChild, _child_walks, endChild, get, over(1) */`/$
 import { _setup_ as _child, _input_thing_ as _child_input_thing, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _define_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<span>The thing</span>", ""));
-const _myThing = /* @__PURE__ */_$.value("myThing", (_scope, myThing) => _child_input_thing(_scope["#childScope/0"], myThing), () => _$.inChild("#childScope/0", _child_input_thing));
+const _myThing = /* @__PURE__ */_$.value("myThing", (_scope, myThing) => _child_input_thing(_scope["#childScope/0"], myThing), () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_thing));
 const _selected_effect = _$.effect("__tests__/template.marko_0_selected", (_scope, {
   selected
 }) => _$.on(_scope["#button/1"], "click", function () {

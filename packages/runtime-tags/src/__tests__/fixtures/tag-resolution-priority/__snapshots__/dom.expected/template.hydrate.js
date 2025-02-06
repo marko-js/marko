@@ -1,2 +1,1 @@
-// size: 21 (min) 25 (brotli)
-_$.dynamicTagAttrs(1);
+// size: 0

@@ -1,5 +1,4 @@
-// size: 316 (min) 211 (brotli)
-_$.dynamicTagAttrs(0);
+// size: 295 (min) 198 (brotli)
 const _count$child_content_effect = _$.effect(
     "b0",
     (_scope, { _: { 1: count } }) =>
