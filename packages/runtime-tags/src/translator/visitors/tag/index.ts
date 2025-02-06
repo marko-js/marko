@@ -5,6 +5,7 @@ import {
   type Plugin,
 } from "@marko/compiler/babel-utils";
 
+import { getMarkoRoot, isMarko } from "../../util/get-root";
 import { isOutputHTML } from "../../util/marko-config";
 import * as hooks from "../../util/plugin-hooks";
 import analyzeTagNameType, { TagNameType } from "../../util/tag-name-type";
@@ -16,6 +17,10 @@ import DynamicTag from "./dynamic-tag";
 import NativeTag from "./native-tag";
 
 const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
+const BINDING_CHANGE_HANDLER = new WeakMap<
+  t.Identifier,
+  t.MarkoAttribute | t.Identifier
+>();
 
 export default {
   transform: {
@@ -39,19 +44,7 @@ export default {
         const attr = attributes[i];
         if (t.isMarkoAttribute(attr) && attr.bound) {
           attr.bound = false;
-          const changeValue = getChangeHandler(tag, attr);
-          if (changeValue === null) {
-            throw tag.hub.buildError(
-              attr,
-              "Attributes may only be bound to identifiers or member expressions",
-            );
-          }
-
-          attributes.splice(
-            ++i,
-            0,
-            t.markoAttribute(attr.name + "Change", changeValue),
-          );
+          attributes.splice(++i, 0, getChangeHandler(tag, attr));
 
           crawl = true;
         }
@@ -208,33 +201,109 @@ export default {
 
 function getChangeHandler(
   tag: t.NodePath<t.MarkoTag>,
-  attr: t.MarkoAttribute | t.MarkoSpreadAttribute,
-) {
+  attr: t.MarkoAttribute,
+): t.MarkoAttribute {
+  const attrName = attr.name;
+  const changeAttrName = attrName + "Change";
+
   if (t.isIdentifier(attr.value)) {
-    const valueId = tag.scope.generateUidIdentifier("new_" + attr.value.name);
-    return t.arrowFunctionExpression(
-      [valueId],
-      t.blockStatement([
-        t.expressionStatement(
-          t.assignmentExpression("=", t.cloneNode(attr.value), valueId),
+    const binding = tag.scope.getBinding(attr.value.name);
+    if (!binding)
+      return t.markoAttribute(
+        changeAttrName,
+        buildChangeHandlerFunction(attr.value),
+      );
+
+    const existingChangedAttr = BINDING_CHANGE_HANDLER.get(binding.identifier);
+
+    if (!existingChangedAttr) {
+      const changeHandlerAttr = t.markoAttribute(
+        changeAttrName,
+        buildChangeHandlerFunction(attr.value),
+      );
+      BINDING_CHANGE_HANDLER.set(binding.identifier, changeHandlerAttr);
+      return changeHandlerAttr;
+    }
+
+    if (existingChangedAttr.type === "Identifier") {
+      return t.markoAttribute(
+        changeAttrName,
+        withPreviousLocation(
+          t.identifier(existingChangedAttr.name),
+          attr.value,
         ),
-      ]),
+      );
+    }
+
+    const markoRoot = isMarko(binding.path)
+      ? binding.path
+      : getMarkoRoot(binding.path);
+
+    if (!(markoRoot?.isMarkoTag() || markoRoot?.isMarkoTagBody())) {
+      throw tag.hub.buildError(attr.value, "Unable to bind to value.");
+    }
+
+    const changeHandlerId = markoRoot.scope.generateUid(changeAttrName);
+    const changeHandlerConst = t.markoTag(
+      t.stringLiteral("const"),
+      [t.markoAttribute("value", existingChangedAttr.value, null, null, true)],
+      t.markoTagBody([]),
+      null,
+      t.identifier(changeHandlerId),
+    );
+    BINDING_CHANGE_HANDLER.set(
+      binding.identifier,
+      (existingChangedAttr.value = t.identifier(changeHandlerId)),
+    );
+
+    if (markoRoot.isMarkoTag()) {
+      markoRoot.insertAfter(changeHandlerConst);
+    } else {
+      markoRoot.unshiftContainer("body", changeHandlerConst);
+    }
+
+    return t.markoAttribute(
+      changeAttrName,
+      withPreviousLocation(t.identifier(changeHandlerId), attr.value),
     );
   } else if (t.isMemberExpression(attr.value)) {
     const prop = attr.value.property;
-    if (t.isPrivateName(prop)) return null;
-    if (t.isIdentifier(prop)) {
-      return t.memberExpression(
-        t.cloneNode(attr.value.object),
-        t.identifier(prop.name + "Change"),
-      );
-    } else {
-      return t.memberExpression(
-        t.cloneNode(attr.value.object),
-        t.binaryExpression("+", t.cloneNode(prop), t.stringLiteral("Change")),
-        true,
+    if (!t.isPrivateName(attr.value.property)) {
+      return t.markoAttribute(
+        changeAttrName,
+        t.memberExpression(
+          t.cloneNode(attr.value.object),
+          prop.type === "Identifier"
+            ? withPreviousLocation(t.identifier(prop.name + "Change"), prop)
+            : t.binaryExpression(
+                "+",
+                t.cloneNode(prop),
+                t.stringLiteral("Change"),
+              ),
+          prop.type !== "Identifier",
+        ),
       );
     }
   }
-  return null;
+
+  throw tag.hub.buildError(
+    attr.value,
+    "Attributes may only be bound to identifiers or member expressions",
+  );
+}
+
+function buildChangeHandlerFunction(id: t.Identifier) {
+  const newId = "_new_" + id.name;
+  return t.arrowFunctionExpression(
+    [withPreviousLocation(t.identifier(newId), id)],
+    t.blockStatement([
+      t.expressionStatement(
+        t.assignmentExpression(
+          "=",
+          withPreviousLocation(t.identifier(id.name), id),
+          withPreviousLocation(t.identifier(newId), id),
+        ),
+      ),
+    ]),
+  );
 }

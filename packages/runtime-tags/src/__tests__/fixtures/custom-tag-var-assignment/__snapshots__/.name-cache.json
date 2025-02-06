@@ -5,7 +5,9 @@
       "$init": "a",
       "$_x_effect": "n",
       "$_x": "r",
-      "$_count_effect": "i"
+      "$_count_effect": "i",
+      "$_x2_effect": "o",
+      "$_x2": "e"
     }
   }
 }

@@ -40,8 +40,8 @@ const _expr_input_count2_input_count2Change = _$.intersection(2, (_scope) => {
     () => _$.inChild(0, _input_count1_),
   );
 _$.register("b0", function (_scope) {
-  return (_new_count) => {
-    _count(_scope, _new_count);
+  return (_new_count1) => {
+    _count(_scope, _new_count1);
   };
 }),
   _$.register("b1", function (_scope) {

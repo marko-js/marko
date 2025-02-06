@@ -7,7 +7,11 @@
       "$_x_effect": "r",
       "$_x": "e",
       "$_setup_": "i",
-      "$Counter": "o"
+      "$Counter": "o",
+      "$_xChange2": "c",
+      "$_x2_effect": "g",
+      "$_x2": "u",
+      "$_xChange3": "f"
     }
   }
 }

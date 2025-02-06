@@ -18,8 +18,8 @@ export function _setup_(_scope) {
   _counters_input_count2Change(_scope["#childScope/0"], _count2Change(_scope));
 }
 function _count1Change(_scope) {
-  return _new_count => {
-    _count(_scope, _new_count);
+  return _new_count1 => {
+    _count(_scope, _new_count1);
   };
 }
 function _count2Change(_scope) {

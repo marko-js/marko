@@ -6,7 +6,8 @@
       "$_value": "a",
       "$_count$myTag_content_effect": "e",
       "$_count$myTag_content": "n",
-      "$_setup$myTag_content": "i"
+      "$_setup$myTag_content": "i",
+      "$_value2": "o"
     }
   }
 }

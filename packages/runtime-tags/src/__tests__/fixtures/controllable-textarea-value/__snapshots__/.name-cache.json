@@ -4,7 +4,9 @@
       "$_$": "t",
       "$init": "a",
       "$_valueChange": "e",
-      "$_value": "o"
+      "$_value": "o",
+      "$_expr_value__valueChange": "r",
+      "$_value2": "n"
     }
   }
 }

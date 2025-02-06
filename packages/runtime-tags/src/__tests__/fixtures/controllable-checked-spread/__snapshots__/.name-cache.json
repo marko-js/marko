@@ -6,7 +6,9 @@
       "$_input__effect": "a",
       "$_input_": "r",
       "$_checkedChange": "o",
-      "$_checked": "m"
+      "$_checked": "m",
+      "$_expr_checked__checkedChange": "n",
+      "$_checked2": "c"
     }
   }
 }
