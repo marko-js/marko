@@ -21,6 +21,7 @@ import {
 import { callRuntime } from "../util/runtime";
 import {
   checkStatefulClosures,
+  ContentType,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
@@ -77,7 +78,8 @@ export const IfTag = {
           if (
             !(
               branchBodySection.content === null ||
-              branchBodySection.content?.singleChild
+              (branchBodySection.content?.singleChild &&
+                branchBodySection.content.startType !== ContentType.Text)
             )
           ) {
             singleNodeOptimization = false;

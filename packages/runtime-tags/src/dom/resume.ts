@@ -132,10 +132,16 @@ class Render implements RenderData {
             curParent.prepend(startNode);
           }
           this.___currentScopeId = this.___scopeStack.pop();
-        } else if (token === ResumeSymbol.BranchSingleNode) {
+        } else if (
+          token === ResumeSymbol.BranchSingleNode ||
+          token === ResumeSymbol.BranchSingleNodeOnlyChildInParent
+        ) {
           let next = data.indexOf(" ");
-          let curNode: ChildNode = (scope[~next ? data.slice(0, next) : data] =
-            visit);
+          let curNode: ChildNode = visit;
+          scope[~next ? data.slice(0, next) : data] =
+            token === ResumeSymbol.BranchSingleNodeOnlyChildInParent
+              ? visit.parentNode
+              : visit;
           while (~next) {
             const start = next + 1;
             next = data.indexOf(" ", start);

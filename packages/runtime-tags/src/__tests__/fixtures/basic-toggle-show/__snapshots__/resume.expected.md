@@ -4,8 +4,9 @@
   <head />
   <body>
     <div>
+      <!--M_[2-->
       Hello!
-      <!--M_|1 #text/0 2-->
+      <!--M_]1 #text/0-->
       <button>
         Toggle
       </button>
@@ -28,7 +29,7 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      <!--M_|1 #text/0 2-->
+      <!--M_]1 #text/0-->
       <button>
         Toggle
       </button>
@@ -45,6 +46,7 @@ container.querySelector("button").click();
 ```
 REMOVE html/body/div/#comment0 after #text
 INSERT html/body/div/#comment0
+REMOVE #comment before #text
 REMOVE #text before html/body/div/#comment0
 ```
 
@@ -85,7 +87,7 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      <!--M_|1 #text/0 2-->
+      <!--M_]1 #text/0-->
       <button>
         Toggle
       </button>

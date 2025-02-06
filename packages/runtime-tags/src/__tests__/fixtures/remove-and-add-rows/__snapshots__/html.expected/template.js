@@ -17,8 +17,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       "child": "3:8",
       "child_text": ["child.text", "3:8"]
     });
-  }, _scope0_id, "#div/0");
-  _$.write(`</div>${_$.markResumeNode(_scope0_id, "#div/0")}`);
+  }, _scope0_id, "#div/0", 1);
+  _$.write("</div>");
   _$.debug(_$.writeScope(_scope0_id, {
     "#div/0(": _scope1_.size ? _scope1_ : undefined
   }), "__tests__/template.marko", 0, {

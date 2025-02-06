@@ -44,8 +44,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       "id": "3:12",
       "open": "4:10"
     });
-  }, _scope0_id, "#ul/0");
-  _$.write(`</ul>${_$.markResumeNode(_scope0_id, "#ul/0")}`);
+  }, _scope0_id, "#ul/0", 1);
+  _$.write("</ul>");
   _$.debug(_$.writeScope(_scope0_id, {
     "input_path": input.path,
     "#ul/0(": _scope1_.size ? _scope1_ : undefined

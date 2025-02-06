@@ -172,6 +172,7 @@ export function resumeSingleNodeForOf(
   cb: (item: unknown, index: number) => void,
   scopeId: number,
   accessor: Accessor,
+  onlyChildInParent?: 1,
 ): void {
   let branchIds = "";
   forOf(list, (item, index) => {
@@ -181,7 +182,9 @@ export function resumeSingleNodeForOf(
   });
   $chunk.writeHTML(
     $chunk.boundary.state.mark(
-      ResumeSymbol.BranchSingleNode,
+      onlyChildInParent
+        ? ResumeSymbol.BranchSingleNodeOnlyChildInParent
+        : ResumeSymbol.BranchSingleNode,
       scopeId + " " + accessor + branchIds,
     ),
   );
@@ -214,6 +217,7 @@ export function resumeSingleNodeForIn(
   cb: (key: string, value: unknown) => void,
   scopeId: number,
   accessor: Accessor,
+  onlyChild?: 1,
 ): void {
   let branchIds = "";
   forIn(obj, (key, value) => {
@@ -223,7 +227,9 @@ export function resumeSingleNodeForIn(
   });
   $chunk.writeHTML(
     $chunk.boundary.state.mark(
-      ResumeSymbol.BranchSingleNode,
+      onlyChild
+        ? ResumeSymbol.BranchSingleNodeOnlyChildInParent
+        : ResumeSymbol.BranchSingleNode,
       scopeId + " " + accessor + branchIds,
     ),
   );
@@ -260,6 +266,7 @@ export function resumeSingleNodeForTo(
   cb: (index: number) => void,
   scopeId: number,
   accessor: Accessor,
+  onlyChild?: 1,
 ): void {
   let branchIds = "";
   forTo(to, from, step, (index) => {
@@ -269,7 +276,9 @@ export function resumeSingleNodeForTo(
   });
   $chunk.writeHTML(
     $chunk.boundary.state.mark(
-      ResumeSymbol.BranchSingleNode,
+      onlyChild
+        ? ResumeSymbol.BranchSingleNodeOnlyChildInParent
+        : ResumeSymbol.BranchSingleNode,
       scopeId + " " + accessor + branchIds,
     ),
   );
@@ -305,6 +314,7 @@ export function resumeSingleNodeConditional(
   cb: () => void | number,
   scopeId: number,
   accessor: Accessor,
+  onlyChild?: 1,
 ) {
   const branchId = peekNextScopeId();
   withContext(branchIdKey, branchId, cb);
@@ -318,7 +328,9 @@ export function resumeSingleNodeConditional(
 
   $chunk.writeHTML(
     $chunk.boundary.state.mark(
-      ResumeSymbol.BranchSingleNode,
+      onlyChild
+        ? ResumeSymbol.BranchSingleNodeOnlyChildInParent
+        : ResumeSymbol.BranchSingleNode,
       scopeId + " " + accessor + (rendered ? " " + branchId : ""),
     ),
   );

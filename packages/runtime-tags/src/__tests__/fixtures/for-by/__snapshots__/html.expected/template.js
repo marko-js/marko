@@ -36,8 +36,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       "_pattern_": "17:10",
       "text": "17:12"
     });
-  }, _scope0_id, "#div/0");
-  _$.write(`</div>${_$.markResumeNode(_scope0_id, "#div/0")}<div class=by-function>`);
+  }, _scope0_id, "#div/0", 1);
+  _$.write("</div><div class=by-function>");
   const _by = item => item.id;
   const _scope2_ = new Map();
   _$.resumeSingleNodeForOf(items, (_list2, _index2) => {
@@ -51,8 +51,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       "_pattern_2": "21:10",
       "text": "21:12"
     });
-  }, _scope0_id, "#div/1");
-  _$.write(`</div>${_$.markResumeNode(_scope0_id, "#div/1")}<div class=by-unknown-string>`);
+  }, _scope0_id, "#div/1", 1);
+  _$.write("</div><div class=by-unknown-string>");
   const _scope3_ = new Map();
   _$.resumeSingleNodeForOf(items, (_list3, _index3) => {
     const _scope3_id = _$.nextScopeId();
@@ -65,8 +65,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       "_pattern_3": "25:10",
       "text": "25:12"
     });
-  }, _scope0_id, "#div/2");
-  _$.write(`</div>${_$.markResumeNode(_scope0_id, "#div/2")}<div class=by-unknown-function>`);
+  }, _scope0_id, "#div/2", 1);
+  _$.write("</div><div class=by-unknown-function>");
   const _scope4_ = new Map();
   _$.resumeSingleNodeForOf(items, (_list4, _index4) => {
     const _scope4_id = _$.nextScopeId();
@@ -79,8 +79,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       "_pattern_4": "29:10",
       "text": "29:12"
     });
-  }, _scope0_id, "#div/3");
-  _$.write(`</div>${_$.markResumeNode(_scope0_id, "#div/3")}<div class=by-unknown-missing>`);
+  }, _scope0_id, "#div/3", 1);
+  _$.write("</div><div class=by-unknown-missing>");
   const _scope5_ = new Map();
   _$.resumeSingleNodeForOf(items, (_list5, _index5) => {
     const _scope5_id = _$.nextScopeId();
@@ -93,8 +93,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       "_pattern_5": "33:10",
       "text": "33:12"
     });
-  }, _scope0_id, "#div/4");
-  _$.write(`</div>${_$.markResumeNode(_scope0_id, "#div/4")}<button>Rotate</button>${_$.markResumeNode(_scope0_id, "#button/5")}</div>`);
+  }, _scope0_id, "#div/4", 1);
+  _$.write(`</div><button>Rotate</button>${_$.markResumeNode(_scope0_id, "#button/5")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
   _$.debug(_$.writeScope(_scope0_id, {
     "items": items,

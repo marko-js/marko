@@ -1,4 +1,4 @@
-// size: 18373 (min) 6749 (brotli)
+// size: 18404 (min) 6761 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -198,10 +198,15 @@ var registeredValues = {},
               startNode = branchEnd(this.e, visit, visit).a;
             curParent !== startNode.parentNode && curParent.prepend(startNode),
               (this.e = this.n.pop());
-          } else if ("|" === token) {
+          } else if ("|" === token || "=" === token) {
             let next = data3.indexOf(" "),
-              curNode = (scope[~next ? data3.slice(0, next) : data3] = visit);
-            for (; ~next; ) {
+              curNode = visit;
+            for (
+              scope[~next ? data3.slice(0, next) : data3] =
+                "=" === token ? visit.parentNode : visit;
+              ~next;
+
+            ) {
               let start = next + 1;
               (next = data3.indexOf(" ", start)),
                 (curNode = branchEnd(

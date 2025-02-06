@@ -2,7 +2,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   let _ifScopeId, _ifRenderer;
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (input.a + input.b) {
       const _scope1_id = _$.nextScopeId();
       _$.write("Hello");
@@ -12,7 +12,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     }
   }, _scope0_id, "#text/0");
   let _ifScopeId2, _ifRenderer2;
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (input.a, input.b) {
       const _scope2_id = _$.nextScopeId();
       _$.write("World");
@@ -23,7 +23,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }, _scope0_id, "#text/1");
   _$.write("<div>");
   let _ifScopeId3, _ifRenderer3;
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (input.x) {
       const _scope3_id = _$.nextScopeId();
       _$.write("A");
