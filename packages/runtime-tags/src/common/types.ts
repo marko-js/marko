@@ -29,6 +29,7 @@ export enum ResumeSymbol {
   BranchStart = "[",
   BranchEnd = "]",
   BranchSingleNode = "|",
+  BranchSingleNodeOnlyChildInParent = "=",
   ClosestBranch = "$",
 }
 

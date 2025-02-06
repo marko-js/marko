@@ -15,8 +15,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     _$.debug(_$.writeScope(_scope1_id, {}), "__tests__/template.marko", "4:4", {
       "x": "4:8"
     });
-  }, _scope0_id, "#ul/0");
-  _$.write(`</ul>${_$.markResumeNode(_scope0_id, "#ul/0")}<button id=toggle>Toggle</button>${_$.markResumeNode(_scope0_id, "#button/1")}<button id=reverse>Reverse</button>${_$.markResumeNode(_scope0_id, "#button/2")}`);
+  }, _scope0_id, "#ul/0", 1);
+  _$.write(`</ul><button id=toggle>Toggle</button>${_$.markResumeNode(_scope0_id, "#button/1")}<button id=reverse>Reverse</button>${_$.markResumeNode(_scope0_id, "#button/2")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_list");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_open");
   _$.debug(_$.writeScope(_scope0_id, {

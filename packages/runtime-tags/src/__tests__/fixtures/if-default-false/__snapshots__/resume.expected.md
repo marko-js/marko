@@ -5,7 +5,8 @@
   <body>
     <button />
     <!--M_*1 #button/0-->
-    <!--M_|1 #text/1-->
+    <!--M_[2-->
+    <!--M_]1 #text/1-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{show:!1}}),1,"__tests__/template.marko_0_show",0];M._.w()
     </script>
@@ -24,6 +25,7 @@ container.querySelector("button").click();
   <body>
     <button />
     <!--M_*1 #button/0-->
+    <!--M_[2-->
     hi
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{show:!1}}),1,"__tests__/template.marko_0_show",0];M._.w()
@@ -35,7 +37,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/#text
-REMOVE #comment after html/body/#comment
+REMOVE #comment after html/body/#comment1
 ```
 
 # Render
@@ -48,7 +50,8 @@ container.querySelector("button").click();
   <body>
     <button />
     <!--M_*1 #button/0-->
-    <!--M_|1 #text/1-->
+    <!--M_[2-->
+    <!--M_]1 #text/1-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{show:!1}}),1,"__tests__/template.marko_0_show",0];M._.w()
     </script>
@@ -58,8 +61,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-INSERT html/body/#comment1
-REMOVE #text after html/body/#comment0
+INSERT html/body/#comment2
+REMOVE #text after html/body/#comment1
 ```
 
 # Render
@@ -72,6 +75,7 @@ container.querySelector("button").click();
   <body>
     <button />
     <!--M_*1 #button/0-->
+    <!--M_[2-->
     hi
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{show:!1}}),1,"__tests__/template.marko_0_show",0];M._.w()
@@ -83,5 +87,5 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/#text
-REMOVE #comment after html/body/#comment
+REMOVE #comment after html/body/#comment1
 ```

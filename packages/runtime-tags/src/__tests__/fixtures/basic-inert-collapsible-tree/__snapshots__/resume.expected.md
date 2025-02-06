@@ -33,9 +33,8 @@
             <!--M_|6 #text/4-->
           </li>
           <!--M_*6 #li/0-->
-          <!--M_|5 #ul/0 6-->
+          <!--M_=5 #ul/0 6-->
         </ul>
-        <!--M_*5 #ul/0-->
         <!--M_|3 #text/4 4-->
       </li>
       <!--M_*3 #li/0-->
@@ -54,9 +53,8 @@
         <!--M_|8 #text/4-->
       </li>
       <!--M_*8 #li/0-->
-      <!--M_|2 #ul/0 8 3-->
+      <!--M_=2 #ul/0 8 3-->
     </ul>
-    <!--M_*2 #ul/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},2:_.g,3:_.e,4:_.f,5:_.c,6:_.d,8:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open",0];M._.w()
     </script>
@@ -103,9 +101,8 @@ container.querySelector(`#c-${id} > button`).click();
             <!--M_|6 #text/4-->
           </li>
           <!--M_*6 #li/0-->
-          <!--M_|5 #ul/0 6-->
+          <!--M_=5 #ul/0 6-->
         </ul>
-        <!--M_*5 #ul/0-->
         <!--M_|3 #text/4 4-->
       </li>
       <!--M_*3 #li/0-->
@@ -124,9 +121,8 @@ container.querySelector(`#c-${id} > button`).click();
         <!--M_|8 #text/4-->
       </li>
       <!--M_*8 #li/0-->
-      <!--M_|2 #ul/0 8 3-->
+      <!--M_=2 #ul/0 8 3-->
     </ul>
-    <!--M_*2 #ul/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},2:_.g,3:_.e,4:_.f,5:_.c,6:_.d,8:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open",0];M._.w()
     </script>
@@ -177,9 +173,8 @@ container.querySelector(`#c-${id} > button`).click();
             <!--M_|6 #text/4-->
           </li>
           <!--M_*6 #li/0-->
-          <!--M_|5 #ul/0 6-->
+          <!--M_=5 #ul/0 6-->
         </ul>
-        <!--M_*5 #ul/0-->
         <!--M_|3 #text/4 4-->
       </li>
       <!--M_*3 #li/0-->
@@ -198,9 +193,8 @@ container.querySelector(`#c-${id} > button`).click();
         <!--M_|8 #text/4-->
       </li>
       <!--M_*8 #li/0-->
-      <!--M_|2 #ul/0 8 3-->
+      <!--M_=2 #ul/0 8 3-->
     </ul>
-    <!--M_*2 #ul/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},2:_.g,3:_.e,4:_.f,5:_.c,6:_.d,8:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open",0];M._.w()
     </script>
@@ -252,9 +246,8 @@ container.querySelector(`#c-${id} > button`).click();
             <!--M_|6 #text/4-->
           </li>
           <!--M_*6 #li/0-->
-          <!--M_|5 #ul/0 6-->
+          <!--M_=5 #ul/0 6-->
         </ul>
-        <!--M_*5 #ul/0-->
         <!--M_|3 #text/4 4-->
       </li>
       <!--M_*3 #li/0-->
@@ -273,9 +266,8 @@ container.querySelector(`#c-${id} > button`).click();
         <!--M_|8 #text/4-->
       </li>
       <!--M_*8 #li/0-->
-      <!--M_|2 #ul/0 8 3-->
+      <!--M_=2 #ul/0 8 3-->
     </ul>
-    <!--M_*2 #ul/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},2:_.g,3:_.e,4:_.f,5:_.c,6:_.d,8:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open",0];M._.w()
     </script>
@@ -327,9 +319,8 @@ container.querySelector(`#c-${id} > button`).click();
             <!--M_|6 #text/4-->
           </li>
           <!--M_*6 #li/0-->
-          <!--M_|5 #ul/0 6-->
+          <!--M_=5 #ul/0 6-->
         </ul>
-        <!--M_*5 #ul/0-->
         <!--M_|3 #text/4 4-->
       </li>
       <!--M_*3 #li/0-->
@@ -349,9 +340,8 @@ container.querySelector(`#c-${id} > button`).click();
         <!--M_|8 #text/4-->
       </li>
       <!--M_*8 #li/0-->
-      <!--M_|2 #ul/0 8 3-->
+      <!--M_=2 #ul/0 8 3-->
     </ul>
-    <!--M_*2 #ul/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:{"#childScope/0":_.g={"#ul/0(":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"#text/4(":_._["__tests__/tags/comments.marko_2_renderer"],"#text/4!":_.f={"#childScope/0":_.c={input_path:"c-0","#ul/0(":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},2:_.g,3:_.e,4:_.f,5:_.c,6:_.d,8:_.h},_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open",0];M._.w()
     </script>

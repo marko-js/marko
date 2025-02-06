@@ -159,7 +159,8 @@ export default {
         const tagExtra = node.extra!;
         const isStateful = isStatefulReferences(tagExtra.referencedBindings);
         const parentTag = getParentTag(tag);
-        const nodeRef = isOnlyChildInParent(tag)
+        const onlyChildInParentOptimization = isOnlyChildInParent(tag);
+        const nodeRef = onlyChildInParentOptimization
           ? parentTag!.node.extra![kNativeTagBinding]!
           : tag.node.extra![kForMarkerBinding]!;
         const forAttrs = getKnownAttrValues(node);
@@ -174,8 +175,8 @@ export default {
             bodySection.content.startType !== ContentType.Text);
         let keyExpression: t.Expression | undefined;
 
-        if (isStateful && isOnlyChildInParent(tag)) {
-          parentTag!.node.extra![kSerializeMarker] = true;
+        if (singleNodeOptimization && onlyChildInParentOptimization) {
+          parentTag!.node.extra![kSerializeMarker] = false;
         }
 
         if (isStateful || hasStatefulClosures) {
@@ -301,6 +302,10 @@ export default {
             getScopeIdIdentifier(tagSection),
             getScopeAccessorLiteral(nodeRef),
           );
+        }
+
+        if (singleNodeOptimization && onlyChildInParentOptimization) {
+          forTagArgs.push(t.numericLiteral(1));
         }
 
         statements.push(

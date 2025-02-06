@@ -270,7 +270,9 @@ export default {
             : t.toIdentifier(tag.get("name"));
         const tagExtra = (node.extra ??= {});
         const bindingName = "#" + tagName;
-        tagExtra[kSerializeMarker] = hasEventHandlers || !!node.var;
+        if (hasEventHandlers || node.var) {
+          tagExtra[kSerializeMarker] = true;
+        }
         tagExtra[kNativeTagBinding] = createBinding(
           bindingName,
           BindingType.dom,
@@ -693,10 +695,11 @@ export default {
       if (
         nodeRef &&
         (extra[kSerializeMarker] ||
-          isStatefulReferences(extra.referencedBindings) ||
-          tag.node.attributes.some((attr) =>
-            isStatefulReferences(attr.value.extra?.referencedBindings),
-          ))
+          (extra[kSerializeMarker] === undefined &&
+            (isStatefulReferences(extra.referencedBindings) ||
+              tag.node.attributes.some((attr) =>
+                isStatefulReferences(attr.value.extra?.referencedBindings),
+              ))))
       ) {
         writer.markNode(tag, nodeRef);
       }

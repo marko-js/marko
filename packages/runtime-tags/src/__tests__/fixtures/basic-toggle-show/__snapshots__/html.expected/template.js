@@ -4,7 +4,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const show = true;
   _$.write("<div>");
   let _ifScopeId, _ifRenderer;
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (show) {
       const _scope1_id = _$.nextScopeId();
       _$.write("Hello!");

@@ -11,7 +11,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       "n": "2:8"
     });
   }, _scope0_id, "#div/0");
-  _$.write(`</div>${_$.markResumeNode(_scope0_id, "#div/0")}`);
+  _$.write("</div>");
   _$.debug(_$.writeScope(_scope0_id, {
     "input_from": input.from,
     "input_to": input.to,

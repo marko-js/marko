@@ -4,7 +4,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const show = false;
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   let _ifScopeId, _ifRenderer;
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (show) {
       const _scope1_id = _$.nextScopeId();
       _$.write("hi");
