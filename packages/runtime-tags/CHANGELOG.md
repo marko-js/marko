@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 0.3.35
+
+### Patch Changes
+
+- [#2500](https://github.com/marko-js/marko/pull/2500) [`e8f7931`](https://github.com/marko-js/marko/commit/e8f793150a922ef78b39aa5a087e6d3f34670965) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid serializing child scope references unless using a tag var or providing stateful attrs.
+
+- [#2500](https://github.com/marko-js/marko/pull/2500) [`e8f7931`](https://github.com/marko-js/marko/commit/e8f793150a922ef78b39aa5a087e6d3f34670965) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix compilation error when passing input to a template which doesn't use input at all.
+
 ## 0.3.34
 
 ### Patch Changes
