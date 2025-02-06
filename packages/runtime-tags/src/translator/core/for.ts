@@ -25,6 +25,7 @@ import {
 import { callRuntime } from "../util/runtime";
 import {
   checkStatefulClosures,
+  ContentType,
   getOrCreateSection,
   getScopeIdentifier,
   getScopeIdIdentifier,
@@ -168,7 +169,9 @@ export default {
         const bodyStatements = node.body.body as t.Statement[];
         const hasStatefulClosures = checkStatefulClosures(bodySection, true);
         const singleNodeOptimization =
-          bodySection.content === null || bodySection.content.singleChild;
+          bodySection.content === null ||
+          (bodySection.content.singleChild &&
+            bodySection.content.startType !== ContentType.Text);
         let keyExpression: t.Expression | undefined;
 
         if (isStateful && isOnlyChildInParent(tag)) {
