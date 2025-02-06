@@ -248,10 +248,9 @@ function trackAssignment(
 }
 
 export function setReferencesScope(path: t.NodePath<any>) {
-  let fnRoot = getFnRoot(path);
-  while (fnRoot) {
+  const fnRoot = getFnRoot(path);
+  if (fnRoot) {
     (fnRoot.node.extra ??= {}).referencesScope = true;
-    fnRoot = getFnRoot(fnRoot.parentPath);
   }
 }
 

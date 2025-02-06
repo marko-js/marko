@@ -27,11 +27,11 @@ declare module "@marko/compiler/dist/types" {
 
 export default {
   analyze(fn) {
-    const fnRoot = getFnRoot(fn.parentPath);
-    const markoRoot = getMarkoRoot(fnRoot || fn);
-    const isStatic = !markoRoot || markoRoot.isMarkoScriptlet({ static: true });
-    if (fnRoot || !isFunction(fn, isStatic)) return;
+    if (fn !== getFnRoot(fn)) {
+      return;
+    }
 
+    const markoRoot = getMarkoRoot(fn);
     if (
       markoRoot &&
       (markoRoot.isMarkoPlaceholder() ||
@@ -98,26 +98,6 @@ export default {
     );
   },
 } satisfies TemplateVisitor<t.Function>;
-
-function isFunction(
-  fn: t.NodePath<t.Node>,
-  isStatic: boolean,
-): fn is
-  | t.NodePath<t.FunctionDeclaration>
-  | t.NodePath<t.FunctionExpression>
-  | t.NodePath<t.ArrowFunctionExpression>
-  | t.NodePath<t.ObjectMethod> {
-  switch (fn.node.type) {
-    case "FunctionDeclaration":
-      return isStatic && !fn.node.declare;
-    case "FunctionExpression":
-    case "ArrowFunctionExpression":
-    case "ObjectMethod":
-      return true;
-    default:
-      return false;
-  }
-}
 
 function isMarkoAttribute(
   path: t.NodePath | undefined | null,

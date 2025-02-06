@@ -57,17 +57,13 @@ export function _setup_(_scope) {
 function _getStringBy() {
   return "id";
 }
-function _anonymous(item) {
-  return item.id;
-}
 function _getFunctionBy() {
-  return _anonymous;
+  return item => item.id;
 }
 function _getMissingBy() {
   return undefined;
 }
 _$.register("__tests__/template.marko_0/getStringBy", _getStringBy);
-_$.register("__tests__/template.marko_0/anonymous", _anonymous);
 _$.register("__tests__/template.marko_0/getFunctionBy", _getFunctionBy);
 _$.register("__tests__/template.marko_0/getMissingBy", _getMissingBy);
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

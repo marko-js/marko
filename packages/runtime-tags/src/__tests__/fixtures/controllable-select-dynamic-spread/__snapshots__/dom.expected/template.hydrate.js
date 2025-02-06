@@ -1,4 +1,4 @@
-// size: 491 (min) 255 (brotli)
+// size: 509 (min) 262 (brotli)
 const _setup$tagSelect_content_effect = _$.effect("a1", (_scope) => {
     _$.attrsEvents(_scope, 0),
       _$.attrsEvents(_scope, 1),
@@ -25,7 +25,7 @@ const _setup$tagSelect_content_effect = _$.effect("a1", (_scope) => {
       const { 2: value } = _scope;
       _tagSelect_input(_scope, () => ({
         value: value,
-        valueChange: _valueChange,
+        valueChange: _valueChange(_scope),
       }));
     },
     () => _tagSelect_input,
@@ -35,7 +35,9 @@ const _setup$tagSelect_content_effect = _$.effect("a1", (_scope) => {
     (_scope, value) => _$.data(_scope[1], value),
     () => _expr_Text_value,
   );
-function _valueChange(v) {
-  _value(_scope, v);
+function _valueChange(_scope) {
+  return function (v) {
+    _value(_scope, v);
+  };
 }
 _$.register("a0", _valueChange), init();

@@ -3,7 +3,7 @@ function getStringBy() {
 }
 _$.register(getStringBy, "__tests__/template.marko_0/getStringBy");
 function getFunctionBy() {
-  return _$.register(item => item.id, "__tests__/template.marko_0/anonymous");
+  return item => item.id;
 }
 _$.register(getFunctionBy, "__tests__/template.marko_0/getFunctionBy");
 function getMissingBy() {
