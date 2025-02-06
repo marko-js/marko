@@ -15,13 +15,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       color: color
     }
   });
-  const _childScope2 = _$.peekNextScope();
   _customTag({
     style: {
       width: 100
     }
   });
-  const _childScope3 = _$.peekNextScope();
   _customTag({
     style: "color: green"
   });
@@ -42,8 +40,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   });
   _$.debug(_$.writeScope(_scope0_id, {
     "#childScope/1": _$.writeExistingScope(_childScope),
-    "#childScope/2": _$.writeExistingScope(_childScope2),
-    "#childScope/3": _$.writeExistingScope(_childScope3),
     "#text/4!": _$.writeExistingScope(_dynamicScope),
     "#text/4(": _$.normalizeDynamicRenderer(test)
   }), "__tests__/template.marko", 0, {

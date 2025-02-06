@@ -3,7 +3,6 @@ import _child from "./tags/child.marko";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   const count = 0;
-  const _childScope = _$.peekNextScope();
   _child({
     content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
       const _scope1_id = _$.nextScopeId();
@@ -17,8 +16,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     }), "__tests__/template.marko_1_renderer", _scope0_id)
   });
   _$.debug(_$.writeScope(_scope0_id, {
-    "count": count,
-    "#childScope/0": _$.writeExistingScope(_childScope)
+    "count": count
   }), "__tests__/template.marko", 0, {
     "count": "1:6"
   });

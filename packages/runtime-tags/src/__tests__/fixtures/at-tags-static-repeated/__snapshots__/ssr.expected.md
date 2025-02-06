@@ -1,6 +1,6 @@
 # Write
 ```html
-  <!--M_[4-->Hello<!--M_]3 #text/0--><!--M_[6-->Again<!--M_]5 #text/0--><!--M_|2 #text/0 5 3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.h={1:_.b={"#childScope/0":_.e={"#text/0(":new Map(_.a=[[0,_.c={"#text/0!":_.f={}}],[1,_.d={"#text/0!":_.g={}}]])}},2:_.e,3:_.c,4:_.f,5:_.d,6:_.g},_.c["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.b),_.d["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.b),_.h),0]</script>
+  <!--M_[4-->Hello<!--M_]3 #text/0--><!--M_[6-->Again<!--M_]5 #text/0--><!--M_|2 #text/0 5 3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.g={2:{"#text/0(":new Map(_.a=[[0,_.c={"#text/0!":_.d={},"#text/0(":_._["__tests__/template.marko_1_renderer"](_.b={})}],[1,_.e={"#text/0!":_.f={},"#text/0(":_._["__tests__/template.marko_2_renderer"](_.b)}]])},3:_.c,4:_.d,5:_.e,6:_.f}),0]</script>
 ```
 
 # Render End
@@ -16,7 +16,7 @@
     <!--M_]5 #text/0-->
     <!--M_|2 #text/0 5 3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.h={1:_.b={"#childScope/0":_.e={"#text/0(":new Map(_.a=[[0,_.c={"#text/0!":_.f={}}],[1,_.d={"#text/0!":_.g={}}]])}},2:_.e,3:_.c,4:_.f,5:_.d,6:_.g},_.c["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.b),_.d["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.b),_.h),0]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g={2:{"#text/0(":new Map(_.a=[[0,_.c={"#text/0!":_.d={},"#text/0(":_._["__tests__/template.marko_1_renderer"](_.b={})}],[1,_.e={"#text/0!":_.f={},"#text/0(":_._["__tests__/template.marko_2_renderer"](_.b)}]])},3:_.c,4:_.d,5:_.e,6:_.f}),0]
     </script>
   </body>
 </html>

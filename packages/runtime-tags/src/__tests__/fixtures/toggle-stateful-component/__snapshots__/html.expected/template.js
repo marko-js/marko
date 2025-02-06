@@ -12,14 +12,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     if (show) {
       const _scope1_id = _$.nextScopeId();
       _$.write("<div>");
-      const _childScope = _$.peekNextScope();
       _counter({
         onCount: onCount
       });
       _$.write("</div>");
-      _$.debug(_$.writeScope(_scope1_id, {
-        "#childScope/0": _$.writeExistingScope(_childScope)
-      }), "__tests__/template.marko", "6:4");
+      _$.debug(_$.writeScope(_scope1_id, {}), "__tests__/template.marko", "6:4");
       _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_1_renderer");
       _ifScopeId = _scope1_id;
     }

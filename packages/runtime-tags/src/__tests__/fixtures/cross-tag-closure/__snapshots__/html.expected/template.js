@@ -8,7 +8,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     value: 0
   });
   _$.setTagVar(_scope0_id, _childScope, "__tests__/template.marko_0_count/var");
-  const _childScope2 = _$.peekNextScope();
   _myTag({
     content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
       const _scope1_id = _$.nextScopeId();
@@ -23,8 +22,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   });
   _$.debug(_$.writeScope(_scope0_id, {
     "count": count,
-    "#childScope/0": _$.writeExistingScope(_childScope),
-    "#childScope/1": _$.writeExistingScope(_childScope2)
+    "#childScope/0": _$.writeExistingScope(_childScope)
   }), "__tests__/template.marko", 0, {
     "count": "1:8"
   });

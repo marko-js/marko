@@ -9,15 +9,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.resumeSingleNodeConditional(() => {
     if (show) {
       const _scope1_id = _$.nextScopeId();
-      const _childScope = _$.peekNextScope();
       _child({
         write: _$.register(function (state) {
           el().innerHTML = state;
         }, "__tests__/template.marko_1/write", _scope1_id)
       });
       _$.debug(_$.writeScope(_scope1_id, {
-        "_": _$.ensureScopeWithId(_scope0_id),
-        "#childScope/0": _$.writeExistingScope(_childScope)
+        "_": _$.ensureScopeWithId(_scope0_id)
       }), "__tests__/template.marko", "6:2");
       _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_1_renderer");
       _ifScopeId = _scope1_id;

@@ -11,6 +11,7 @@ import {
 import path from "path";
 
 import { getTagName } from "../../util/get-tag-name";
+import { isStatefulReferences } from "../../util/is-stateful";
 import { isOutputHTML } from "../../util/marko-config";
 import {
   analyzeAttributeTags,
@@ -24,6 +25,7 @@ import {
   dropReferences,
   getAllTagReferenceNodes,
   getScopeAccessorLiteral,
+  isReferencedExtra,
   mergeReferences,
   trackParamsReferences,
   trackVarReferences,
@@ -69,10 +71,12 @@ import {
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
 const kChildScopeBinding = Symbol("custom tag child scope");
+const kChildAttrExprs = Symbol("custom tag child attribute expressions");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kChildScopeBinding]?: Binding;
+    [kChildAttrExprs]?: Set<t.NodeExtra>;
   }
 }
 
@@ -111,6 +115,7 @@ export default {
         undefined,
         tagExtra,
       );
+      tagExtra[kChildAttrExprs] = new Set([tagExtra]);
 
       const childFile = loadFileForTag(tag)!;
       if (childFile.opts.filename === tag.hub.file.opts.filename) {
@@ -118,6 +123,7 @@ export default {
       } else {
         const childProgramExtra = childFile.ast.program.extra;
         analyzeAttrs(
+          tagExtra,
           section,
           tag,
           childProgramExtra?.domExports!.params?.props?.[0],
@@ -166,19 +172,6 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 
   const tagVar = node.var;
   const section = getSection(tag);
-  const childScopeBinding = node.extra![kChildScopeBinding]!;
-  const peekScopeId = tag.scope.generateUidIdentifier(childScopeBinding?.name);
-  tag.insertBefore(
-    t.variableDeclaration("const", [
-      t.variableDeclarator(peekScopeId, callRuntime("peekNextScope")),
-    ]),
-  );
-
-  getSerializedScopeProperties(section).set(
-    getScopeAccessorLiteral(childScopeBinding),
-    callRuntime("writeExistingScope", peekScopeId),
-  );
-
   const inputExport =
     loadFileForTag(tag)?.ast.program.extra?.domExports?.params?.props?.[0];
   const { properties, statements } = inputExport
@@ -187,24 +180,52 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         properties: [],
         statements: [],
       };
+  let providesStatefulAttrs = false;
 
-  if (tagVar) {
-    statements.push(
-      t.expressionStatement(
-        callRuntime(
-          "setTagVar",
-          getScopeIdIdentifier(section),
-          peekScopeId,
-          t.stringLiteral(
-            getResumeRegisterId(
-              section,
-              (node.var as t.Identifier).extra?.binding, // TODO: node.var is not always an identifier.
-              "var",
+  for (const expr of tag.node.extra![kChildAttrExprs]!) {
+    if (
+      isReferencedExtra(expr) &&
+      isStatefulReferences(expr.referencedBindings)
+    ) {
+      providesStatefulAttrs = true;
+      break;
+    }
+  }
+
+  if (providesStatefulAttrs || tagVar) {
+    const childScopeBinding = node.extra![kChildScopeBinding]!;
+    const peekScopeId = tag.scope.generateUidIdentifier(
+      childScopeBinding?.name,
+    );
+    tag.insertBefore(
+      t.variableDeclaration("const", [
+        t.variableDeclarator(peekScopeId, callRuntime("peekNextScope")),
+      ]),
+    );
+
+    getSerializedScopeProperties(section).set(
+      getScopeAccessorLiteral(childScopeBinding),
+      callRuntime("writeExistingScope", peekScopeId),
+    );
+
+    if (tagVar) {
+      statements.push(
+        t.expressionStatement(
+          callRuntime(
+            "setTagVar",
+            getScopeIdIdentifier(section),
+            peekScopeId,
+            t.stringLiteral(
+              getResumeRegisterId(
+                section,
+                (node.var as t.Identifier).extra?.binding, // TODO: node.var is not always an identifier.
+                "var",
+              ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   if (node.extra!.tagNameNullable) {
@@ -370,6 +391,7 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
 }
 
 function analyzeAttrs(
+  rootTagExtra: t.MarkoTagExtra,
   section: Section,
   tag: t.NodePath<t.MarkoTag>,
   templateExport: TemplateExport | undefined,
@@ -423,7 +445,7 @@ function analyzeAttrs(
           const childAttrExports = templateExport.props[attrTagMeta.name];
           if (childAttrExports) {
             if (childAttrExports.props && !attrTagMeta.dynamic) {
-              analyzeAttrs(section, child, childAttrExports);
+              analyzeAttrs(rootTagExtra, section, child, childAttrExports);
             } else {
               analyzeDynamicChildGroup(attrTagMeta.group, child);
             }
@@ -449,8 +471,12 @@ function analyzeAttrs(
       }
     }
 
-    for (const { firstTag, referenceNodes } of nodeReferencesByGroup.values()) {
-      mergeReferences(section, firstTag.node, referenceNodes);
+    for (const {
+      firstTag: { node },
+      referenceNodes,
+    } of nodeReferencesByGroup.values()) {
+      mergeReferences(section, node, referenceNodes);
+      rootTagExtra[kChildAttrExprs]!.add(node.extra!);
     }
   }
 
@@ -472,6 +498,8 @@ function analyzeAttrs(
       spreadReferenceNodes.push(attr.value);
     } else if (t.isMarkoSpreadAttribute(attr)) {
       spreadReferenceNodes = [attr.value];
+    } else {
+      rootTagExtra[kChildAttrExprs]!.add((attr.value.extra ??= {}));
     }
   }
 
