@@ -1,5 +1,14 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.14
+
+### Patch Changes
+
+- [#2502](https://github.com/marko-js/marko/pull/2502) [`a072aba`](https://github.com/marko-js/marko/commit/a072abac6d21d70f6dde0e23fd00681736fb9134) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update list of pure functions.
+
+- Updated dependencies [[`a072aba`](https://github.com/marko-js/marko/commit/a072abac6d21d70f6dde0e23fd00681736fb9134)]:
+  - @marko/runtime-tags@0.3.36
+
 ## 0.2.13
 
 ### Patch Changes
