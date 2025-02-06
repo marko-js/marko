@@ -1,49 +1,41 @@
-// size: 515 (min) 165 (brotli)
-const _checkedValue = _$.state(4, (_scope, checkedValue) => {
-  _$.controllable_input_checkedValue(
-    _scope,
-    0,
-    checkedValue,
-    _checkedValueChange3(_scope),
-    "a",
-  ),
+// size: 451 (min) 178 (brotli)
+const _expr_checkedValue__checkedValueChange = _$.intersection(2, (_scope) => {
+    const { 4: checkedValue, 5: _checkedValueChange } = _scope;
     _$.controllable_input_checkedValue(
       _scope,
-      1,
+      0,
       checkedValue,
-      _checkedValueChange2(_scope),
-      "b",
+      _checkedValueChange,
+      "a",
     ),
-    _$.controllable_input_checkedValue(
-      _scope,
-      2,
-      checkedValue,
-      _checkedValueChange(_scope),
-      "c",
-    ),
-    _$.data(_scope[3], checkedValue);
-});
-function _checkedValueChange(_scope) {
-  return (_new_checkedValue3) => {
-    _checkedValue(_scope, _new_checkedValue3);
-  };
-}
-function _checkedValueChange2(_scope) {
-  return (_new_checkedValue2) => {
-    _checkedValue(_scope, _new_checkedValue2);
-  };
-}
-function _checkedValueChange3(_scope) {
-  return (_new_checkedValue) => {
-    _checkedValue(_scope, _new_checkedValue);
-  };
-}
-_$.effect("a3", (_scope) => {
+      _$.controllable_input_checkedValue(
+        _scope,
+        1,
+        checkedValue,
+        _checkedValueChange,
+        "b",
+      ),
+      _$.controllable_input_checkedValue(
+        _scope,
+        2,
+        checkedValue,
+        _checkedValueChange,
+        "c",
+      );
+  }),
+  _checkedValue = _$.state(
+    4,
+    (_scope, checkedValue) => _$.data(_scope[3], checkedValue),
+    () => _expr_checkedValue__checkedValueChange,
+  );
+_$.effect("a1", (_scope) => {
   _$.controllable_input_checkedValue_effect(_scope, 0),
     _$.controllable_input_checkedValue_effect(_scope, 1),
     _$.controllable_input_checkedValue_effect(_scope, 2);
 }),
-  _$.register("a2", _checkedValueChange),
-  _$.register("a1", _checkedValueChange2),
-  _$.register("a0", _checkedValueChange3),
+  _$.register("a0", function (_scope) {
+    return (_new_checkedValue) => {
+      _checkedValue(_scope, _new_checkedValue);
+    };
+  }),
   init();

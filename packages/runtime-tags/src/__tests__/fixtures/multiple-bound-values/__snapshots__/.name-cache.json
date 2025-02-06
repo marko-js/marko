@@ -14,7 +14,8 @@
       "$_count2$1": "f",
       "$_input_count2_": "u",
       "$_expr_input_count2Change_input_count": "d",
-      "$_expr_input_count1Change_input_count": "l"
+      "$_expr_input_count1Change_input_count": "l",
+      "$_count3": "g"
     }
   }
 }

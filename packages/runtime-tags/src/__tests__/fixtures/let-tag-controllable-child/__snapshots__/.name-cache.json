@@ -18,7 +18,9 @@
       "$_source": "d",
       "$_expr_input_value_input_valueChange": "g",
       "$_otherState_effect": "h",
-      "$_state_effect": "k"
+      "$_state_effect": "k",
+      "$_expr_source__sourceChange": "C",
+      "$_source2": "p"
     }
   }
 }

@@ -1,25 +1,25 @@
-// size: 558 (min) 240 (brotli)
+// size: 494 (min) 238 (brotli)
 const _input__effect = _$.effect("a0", (_scope) => _$.attrsEvents(_scope, 0)),
   _input_ = _$.value(2, (_scope, input) => {
     _$.attrs(_scope, 0, { type: "checkbox", ...input }), _input__effect(_scope);
   }),
-  _checkedValue = _$.state(
-    4,
-    (_scope, checkedValue) => {
-      _$.data(_scope[3], checkedValue),
-        _input_(_scope[0], {
-          checkedValue: checkedValue,
-          checkedValueChange: _checkedValueChange(_scope),
-          value: "a",
-        }),
+  _expr_checkedValue__checkedValueChange = _$.intersection(
+    2,
+    (_scope) => {
+      const { 4: checkedValue, 5: _checkedValueChange } = _scope;
+      _input_(_scope[0], {
+        checkedValue: checkedValue,
+        checkedValueChange: _checkedValueChange,
+        value: "a",
+      }),
         _input_(_scope[1], {
           checkedValue: checkedValue,
-          checkedValueChange: _checkedValueChange2(_scope),
+          checkedValueChange: _checkedValueChange,
           value: "b",
         }),
         _input_(_scope[2], {
           checkedValue: checkedValue,
-          checkedValueChange: _checkedValueChange3(_scope),
+          checkedValueChange: _checkedValueChange,
           value: "c",
         });
     },
@@ -29,23 +29,15 @@ const _input__effect = _$.effect("a0", (_scope) => _$.attrsEvents(_scope, 0)),
         _$.inChild(1, _input_),
         _$.inChild(2, _input_),
       ]),
+  ),
+  _checkedValue = _$.state(
+    4,
+    (_scope, checkedValue) => _$.data(_scope[3], checkedValue),
+    () => _expr_checkedValue__checkedValueChange,
   );
-function _checkedValueChange(_scope) {
+_$.register("b0", function (_scope) {
   return (_new_checkedValue) => {
     _checkedValue(_scope, _new_checkedValue);
   };
-}
-function _checkedValueChange2(_scope) {
-  return (_new_checkedValue2) => {
-    _checkedValue(_scope, _new_checkedValue2);
-  };
-}
-function _checkedValueChange3(_scope) {
-  return (_new_checkedValue3) => {
-    _checkedValue(_scope, _new_checkedValue3);
-  };
-}
-_$.register("b0", _checkedValueChange),
-  _$.register("b1", _checkedValueChange2),
-  _$.register("b2", _checkedValueChange3),
+}),
   init();

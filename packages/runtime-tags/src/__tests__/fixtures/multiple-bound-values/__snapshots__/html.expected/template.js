@@ -7,8 +7,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _childScope = _$.peekNextScope();
   _counters({
     count1: count1,
-    count1Change: _$.register(_new_count => {
-      count1 = _new_count;
+    count1Change: _$.register(_new_count1 => {
+      count1 = _new_count1;
     }, "__tests__/template.marko_0/count1Change", _scope0_id),
     count2: count2,
     count2Change: _$.register(_new_count2 => {
