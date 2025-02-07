@@ -1,16 +1,16 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
+  let _ifScopeId2, _ifRenderer2;
   const outer = true;
   const inner = true;
   const count = 0;
   _$.write(`<div><button id=outer></button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
-  let _ifScopeId2, _ifRenderer2;
   _$.resumeConditional(() => {
     if (outer) {
       const _scope1_id = _$.nextScopeId();
-      _$.write(`<button id=inner></button>${_$.markResumeNode(_scope1_id, "#button/0")}`);
       let _ifScopeId, _ifRenderer;
+      _$.write(`<button id=inner></button>${_$.markResumeNode(_scope1_id, "#button/0")}`);
       _$.resumeSingleNodeConditional(() => {
         if (inner) {
           const _scope2_id = _$.nextScopeId();

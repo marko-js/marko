@@ -1,9 +1,9 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
+  const _scope1_ = new Map();
   const children = [1];
   _$.write(`<div${_$.attr("data-children", children.length)}>Before `);
-  const _scope1_ = new Map();
   _$.resumeForOf(children, (_list, _index) => {
     const _scope1_id = _$.nextScopeId();
     _scope1_.set(_index, _$.ensureScopeWithId(_scope1_id));

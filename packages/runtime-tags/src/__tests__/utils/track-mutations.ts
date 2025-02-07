@@ -11,7 +11,7 @@ export default function createMutationTracker(
   container: ParentNode = window.document,
 ) {
   let cleaned = false;
-  let pendingRecords: null | MutationRecord[];
+  let pendingRecords: undefined | MutationRecord[];
   const logs: string[] = [];
   const sanitizedLogs: string[] = [];
   const errors: Set<Error> = new Set();
@@ -61,6 +61,7 @@ export default function createMutationTracker(
       }
 
       const records = [...(pendingRecords || []), ...observer.takeRecords()];
+      pendingRecords = undefined;
       if (records.length || !optional) {
         logRecords(update, records);
       }

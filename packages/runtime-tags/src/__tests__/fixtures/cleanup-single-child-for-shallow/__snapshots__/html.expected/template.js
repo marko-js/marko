@@ -2,13 +2,13 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
+  const _scope1_ = new Map();
   const items = [1, 2, 3];
   const el = _$.nodeRef();
   const write = _$.register(function (msg) {
     el().innerHTML += '\n' + msg;
   }, "__tests__/template.marko_0/write", _scope0_id);
   _$.write(`<button>Toggle</button>${_$.markResumeNode(_scope0_id, "#button/0")}<div></div>${_$.markResumeNode(_scope0_id, "#div/1")}`);
-  const _scope1_ = new Map();
   _$.resumeSingleNodeForOf(items, (item, _index) => {
     const _scope1_id = _$.nextScopeId();
     const _childScope = _$.peekNextScope();

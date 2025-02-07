@@ -1,8 +1,8 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
-  const hide = undefined;
   let _ifScopeId, _ifRenderer;
+  const hide = undefined;
   _$.resumeSingleNodeConditional(() => {
     if (!hide) {
       const _scope1_id = _$.nextScopeId();

@@ -139,14 +139,14 @@ export function setConditionalRendererOnlyChild(
     nodeAccessor + AccessorChar.ConditionalScope
   ] as BranchScope;
   const referenceNode = scope[nodeAccessor] as Element;
-  const newBranch = newRenderer
-    ? createBranchScopeWithTagNameOrRenderer(
-        newRenderer,
-        scope.$global,
-        scope,
-        referenceNode,
-      )
-    : undefined;
+  const newBranch =
+    newRenderer &&
+    createBranchScopeWithTagNameOrRenderer(
+      newRenderer,
+      scope.$global,
+      scope,
+      referenceNode,
+    );
 
   referenceNode.textContent = "";
 
@@ -160,10 +160,10 @@ export function setConditionalRendererOnlyChild(
 }
 
 const emptyMarkerMap = new Map([
-  [Symbol(), getEmptyBranch(undefined as any) as BranchScope],
+  [Symbol(), /* @__PURE__ */ getEmptyBranch(0 as any) as BranchScope],
 ]);
 export const emptyMarkerArray = [
-  /* @__PURE__ */ getEmptyBranch(undefined as any) as BranchScope,
+  /* @__PURE__ */ getEmptyBranch(0 as any) as BranchScope,
 ];
 const emptyMap = new Map();
 const emptyArray = [] as BranchScope[];

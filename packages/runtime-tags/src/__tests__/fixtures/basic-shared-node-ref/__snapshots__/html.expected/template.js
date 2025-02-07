@@ -1,13 +1,13 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
+  const _scope1_ = new Map();
   const open = true;
   const list = [1, 2, 3];
   _$.write(`<ul${_$.attr("hidden", !open)}>`);
   const _by = function (x) {
     return x;
   };
-  const _scope1_ = new Map();
   _$.resumeSingleNodeForOf(list, (x, _index) => {
     const _scope1_id = _$.nextScopeId();
     _scope1_.set(_by(x, _index), _$.ensureScopeWithId(_scope1_id));

@@ -1,10 +1,10 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
+  let _ifScopeId, _ifRenderer;
   const show = true;
   const message = "hi";
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
-  let _ifScopeId, _ifRenderer;
   _$.resumeSingleNodeConditional(() => {
     if (show) {
       const _scope1_id = _$.nextScopeId();

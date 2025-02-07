@@ -32,6 +32,7 @@ import {
 } from "../util/sections";
 import {
   addValue,
+  getHTMLSectionStatements,
   getResumeRegisterId,
   getSerializedScopeProperties,
   getSignal,
@@ -246,7 +247,8 @@ export const IfTag = {
               );
             }
 
-            nextTag.insertBefore([
+            nextTag.insertBefore(statement!);
+            getHTMLSectionStatements(section).push(
               t.variableDeclaration(
                 "let",
                 [
@@ -254,8 +256,7 @@ export const IfTag = {
                   isStateful && t.variableDeclarator(ifRendererIdentifier),
                 ].filter(Boolean) as t.VariableDeclarator[],
               ),
-              statement!,
-            ]);
+            );
             getSerializedScopeProperties(section).set(
               t.stringLiteral(
                 getScopeAccessorLiteral(nodeRef).value +

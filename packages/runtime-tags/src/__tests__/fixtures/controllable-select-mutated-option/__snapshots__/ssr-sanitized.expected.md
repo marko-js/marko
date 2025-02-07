@@ -1,0 +1,41 @@
+# Render End
+```html
+<form>
+  <select>
+    <option
+      selected=""
+      value="1"
+    >
+      1
+    </option>
+    <option
+      value="2"
+    >
+      2
+    </option>
+    <option
+      value="3"
+    >
+      3
+    </option>
+  </select>
+  <button
+    type="reset"
+  >
+    reset
+  </button>
+</form>
+<div>
+  1
+</div>
+<button
+  class="remove"
+>
+  Remove option
+</button>
+<button
+  class="add"
+>
+  Add option
+</button>
+```

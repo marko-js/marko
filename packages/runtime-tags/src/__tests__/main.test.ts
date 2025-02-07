@@ -320,6 +320,7 @@ describe("runtime-tags/translator", () => {
               }
             } else {
               run();
+              await 1; // allow a microtask before we log the update in order to catch mutation observers.
               tracker.logUpdate(update);
             }
           } else {
@@ -364,6 +365,7 @@ describe("runtime-tags/translator", () => {
             tracker.beginUpdate();
             await update(document.documentElement);
             run();
+            await 1; // allow a microtask before we log the update in order to catch mutation observers
             tracker.logUpdate(update);
           } else {
             // if new input is detected, stop testing

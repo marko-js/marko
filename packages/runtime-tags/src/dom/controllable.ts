@@ -191,7 +191,7 @@ export function controllable_select_value_effect(
   nodeAccessor: Accessor,
 ) {
   const el = scope[nodeAccessor] as HTMLSelectElement;
-  syncControllable(el, "input", hasSelectChanged, () => {
+  const onChange = () => {
     const valueChange = scope[nodeAccessor + AccessorChar.ControlledHandler] as
       | undefined
       | ((value: unknown) => unknown);
@@ -216,7 +216,26 @@ export function controllable_select_value_effect(
         );
       }
     }
-  });
+  };
+
+  if (!controllableHandlers.has(el)) {
+    new MutationObserver(() => {
+      const value = scope[nodeAccessor + AccessorChar.ControlledValue];
+      if (
+        Array.isArray(value)
+          ? value.length !== el.selectedOptions.length ||
+            value.some((value, i) => value != el.selectedOptions[i].value)
+          : el.value != value
+      ) {
+        onChange();
+      }
+    }).observe(el, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  syncControllable(el, "input", hasSelectChanged, onChange);
 }
 
 function setSelectOptions(
@@ -334,33 +353,35 @@ function setCheckboxValue(
   }
 }
 
-const delegateFormControl = createDelegator();
-const formChangeHandlers = new WeakMap<Element, (ev?: Event) => void>();
+const controllableDelegate = createDelegator();
+const controllableHandlers = new WeakMap<Element, (ev?: Event) => void>();
 function syncControllable<T extends Element>(
   el: T,
   event: "input" | "close" | "toggle",
   hasChanged: (el: T) => boolean | undefined,
   onChange: (ev?: Event) => void,
 ) {
-  formChangeHandlers.set(el, onChange);
-  delegateFormControl(el, event, onFormChange);
-  if ((el as any).form) {
-    delegateFormControl((el as any).form!, "reset", onFormReset);
-  }
+  if (!controllableHandlers.has(el)) {
+    controllableDelegate(el, event, handleChange);
+    if ((el as any).form) {
+      controllableDelegate((el as any).form!, "reset", handleFormReset);
+    }
 
-  if (isResuming && hasChanged(el)) {
-    queueMicrotask(onChange);
+    if (isResuming && hasChanged(el)) {
+      queueMicrotask(onChange);
+    }
   }
+  controllableHandlers.set(el, onChange);
 }
 
-function onFormChange(ev: Event) {
-  formChangeHandlers.get(ev.target as Element)?.(ev);
+function handleChange(ev: Event) {
+  controllableHandlers.get(ev.target as Element)?.(ev);
 }
 
-function onFormReset(ev: Event) {
+function handleFormReset(ev: Event) {
   const handlers: (() => void)[] = [];
   for (const el of (ev.target as HTMLFormElement).elements) {
-    const handler = formChangeHandlers.get(el);
+    const handler = controllableHandlers.get(el);
     if (handler && hasFormElementChanged(el)) {
       handlers.push(handler);
     }

@@ -1,4 +1,4 @@
-// size: 18404 (min) 6761 (brotli)
+// size: 18554 (min) 6850 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -99,17 +99,14 @@ function on(element, type, handler) {
     elementHandlersByEvent.set(type, (handlersByElement = new WeakMap())),
     handlersByElement.has(element) ||
       defaultDelegator(element, type, handleDelegated),
-    handlersByElement.set(element, handler || void 0);
+    handlersByElement.set(element, handler || null);
 }
 function createDelegator() {
-  let delegatedEventsByRoot = new WeakMap();
+  let kEvents = Symbol();
   return function (node, type, handler) {
-    let root = node.getRootNode(),
-      delegatedEvents = delegatedEventsByRoot.get(root);
-    delegatedEvents ||
-      delegatedEventsByRoot.set(root, (delegatedEvents = new Set())),
-      delegatedEvents.has(type) ||
-        (delegatedEvents.add(type), root.addEventListener(type, handler, !0));
+    let root = node.getRootNode();
+    (root[kEvents] ||= {})[type] ||=
+      (root.addEventListener(type, handler, !0), 1);
   };
 }
 function handleDelegated(ev) {
@@ -412,20 +409,29 @@ function controllable_select_value(scope, nodeAccessor, value2, valueChange) {
     );
 }
 function controllable_select_value_effect(scope, nodeAccessor) {
-  let el = scope[nodeAccessor];
-  syncControllable(el, "input", hasSelectChanged, () => {
-    let valueChange = scope[nodeAccessor + ";"];
-    valueChange &&
-      ((scope[nodeAccessor + "="] = 6),
-      valueChange(
-        Array.isArray(scope[nodeAccessor + ":"])
-          ? Array.from(el.selectedOptions, toValueProp)
-          : el.value,
-      ),
-      run(),
-      6 === scope[nodeAccessor + "="] &&
-        setSelectOptions(el, scope[nodeAccessor + ":"], valueChange));
-  });
+  let el = scope[nodeAccessor],
+    onChange = () => {
+      let valueChange = scope[nodeAccessor + ";"];
+      valueChange &&
+        ((scope[nodeAccessor + "="] = 6),
+        valueChange(
+          Array.isArray(scope[nodeAccessor + ":"])
+            ? Array.from(el.selectedOptions, toValueProp)
+            : el.value,
+        ),
+        run(),
+        6 === scope[nodeAccessor + "="] &&
+          setSelectOptions(el, scope[nodeAccessor + ":"], valueChange));
+    };
+  controllableHandlers.has(el) ||
+    new MutationObserver(() => {
+      let value2 = scope[nodeAccessor + ":"];
+      (Array.isArray(value2)
+        ? value2.length !== el.selectedOptions.length ||
+          value2.some((value3, i) => value3 != el.selectedOptions[i].value)
+        : el.value != value2) && onChange();
+    }).observe(el, { childList: !0, subtree: !0 }),
+    syncControllable(el, "input", hasSelectChanged, onChange);
 }
 function setSelectOptions(el, value2, valueChange) {
   if (Array.isArray(value2))
@@ -515,21 +521,22 @@ function setCheckboxValue(scope, nodeAccessor, type, checked, checkedChange) {
       : ((scope[nodeAccessor + "="] = 5),
         (scope[nodeAccessor].defaultChecked = checked));
 }
-var delegateFormControl = createDelegator(),
-  formChangeHandlers = new WeakMap();
+var controllableDelegate = createDelegator(),
+  controllableHandlers = new WeakMap();
 function syncControllable(el, event, hasChanged, onChange) {
-  formChangeHandlers.set(el, onChange),
-    delegateFormControl(el, event, onFormChange),
-    el.form && delegateFormControl(el.form, "reset", onFormReset),
-    isResuming && hasChanged(el) && queueMicrotask(onChange);
+  controllableHandlers.has(el) ||
+    (controllableDelegate(el, event, handleChange),
+    el.form && controllableDelegate(el.form, "reset", handleFormReset),
+    isResuming && hasChanged(el) && queueMicrotask(onChange)),
+    controllableHandlers.set(el, onChange);
 }
-function onFormChange(ev) {
-  formChangeHandlers.get(ev.target)?.(ev);
+function handleChange(ev) {
+  controllableHandlers.get(ev.target)?.(ev);
 }
-function onFormReset(ev) {
+function handleFormReset(ev) {
   let handlers = [];
   for (let el of ev.target.elements) {
-    let handler = formChangeHandlers.get(el);
+    let handler = controllableHandlers.get(el);
     handler && hasFormElementChanged(el) && handlers.push(handler);
   }
   requestAnimationFrame(() => {
@@ -968,7 +975,6 @@ function createRendererWithOwner(template, rawWalks, setup, getArgs) {
     x: setup,
     l: _clone,
     u: owner,
-    J: void 0,
     get d() {
       return (args ||= getArgs?.());
     },
@@ -1058,21 +1064,21 @@ var conditionalOnlyChild = function (nodeAccessor, fn, getIntersection) {
 function setConditionalRendererOnlyChild(scope, nodeAccessor, newRenderer) {
   let prevBranch = scope[nodeAccessor + "!"],
     referenceNode = scope[nodeAccessor],
-    newBranch = newRenderer
-      ? createBranchScopeWithTagNameOrRenderer(
-          newRenderer,
-          scope.$global,
-          scope,
-          referenceNode,
-        )
-      : void 0;
+    newBranch =
+      newRenderer &&
+      createBranchScopeWithTagNameOrRenderer(
+        newRenderer,
+        scope.$global,
+        scope,
+        referenceNode,
+      );
   (referenceNode.textContent = ""),
     newBranch && insertBranchBefore(newBranch, referenceNode, null),
     prevBranch && destroyBranch(prevBranch),
     (scope[nodeAccessor + "!"] = newBranch);
 }
-var emptyMarkerMap = new Map([[Symbol(), getEmptyBranch(void 0)]]),
-  emptyMarkerArray = [getEmptyBranch(void 0)],
+var emptyMarkerMap = new Map([[Symbol(), getEmptyBranch(0)]]),
+  emptyMarkerArray = [getEmptyBranch(0)],
   emptyMap = new Map(),
   emptyArray = [];
 function loopOf(nodeAccessor, renderer) {
@@ -1589,7 +1595,7 @@ var classIdToBranch = new Map(),
       register("$C_r", fn);
     },
     isOp: (value2) => value2 === MARK || value2 === CLEAN || value2 === DIRTY,
-    isRenderer: (renderer) => void 0 !== renderer.l,
+    isRenderer: (renderer) => renderer.l,
     getStartNode: (branch) => branch.a,
     setScopeNodes(branch, startNode, endNode) {
       (branch.a = startNode), (branch.b = endNode);
@@ -1617,7 +1623,7 @@ var classIdToBranch = new Map(),
           )
         : value2,
     createRenderer(setup, clone, args) {
-      let renderer = createRenderer("", void 0, setup, args && (() => args));
+      let renderer = createRenderer("", 0, setup, args && (() => args));
       return (renderer.l = clone), renderer;
     },
     render(out, component, renderer, args) {

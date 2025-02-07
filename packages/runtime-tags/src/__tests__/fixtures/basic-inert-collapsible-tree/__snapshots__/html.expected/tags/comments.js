@@ -1,14 +1,14 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
-  _$.write("<ul>");
   const _scope1_ = new Map();
+  _$.write("<ul>");
   _$.resumeSingleNodeForOf(input.comments, (comment, i) => {
     const _scope1_id = _$.nextScopeId();
+    let _ifScopeId, _ifRenderer;
     const id = `${input.path || "c"}-${i}`;
     const open = true;
     _$.write(`<li${_$.attr("id", id)}${_$.attr("hidden", !open)}><span>${_$.escapeXML(comment.text)}${_$.markResumeNode(_scope1_id, "#text/1")}</span><button>${_$.escapeXML(open ? "[-]" : "[+]")}${_$.markResumeNode(_scope1_id, "#text/3")}</button>${_$.markResumeNode(_scope1_id, "#button/2")}`);
-    let _ifScopeId, _ifRenderer;
     _$.resumeSingleNodeConditional(() => {
       if (comment.comments) {
         const _scope2_id = _$.nextScopeId();

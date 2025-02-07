@@ -1,9 +1,9 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
+  let _ifScopeId, _ifRenderer;
   const clickCount = 0;
   _$.write("<div>");
-  let _ifScopeId, _ifRenderer;
   _$.resumeSingleNodeConditional(() => {
     if (clickCount < 3) {
       const _scope1_id = _$.nextScopeId();

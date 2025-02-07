@@ -1,8 +1,9 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
-  _$.write("<div>");
   const _scope1_ = new Map();
+  const _scope2_ = new Map();
+  _$.write("<div>");
   _$.resumeSingleNodeForIn(input.children, (key, text) => {
     const _scope1_id = _$.nextScopeId();
     _scope1_.set(key, _$.ensureScopeWithId(_scope1_id));
@@ -12,7 +13,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       "text": "2:13"
     });
   }, _scope0_id, "#text/0");
-  const _scope2_ = new Map();
   _$.resumeSingleNodeForIn(input.children, key => {
     const _scope2_id = _$.nextScopeId();
     _scope2_.set(key, _$.ensureScopeWithId(_scope2_id));

@@ -4,7 +4,7 @@ type EventNames = keyof GlobalEventHandlersEventMap;
 
 const elementHandlersByEvent = new Map<
   string,
-  WeakMap<ParentNode, undefined | ((...args: any[]) => void)>
+  WeakMap<ParentNode, null | ((...args: any[]) => void)>
 >();
 
 const defaultDelegator = createDelegator();
@@ -27,27 +27,19 @@ export function on<
     defaultDelegator(element, type, handleDelegated);
   }
 
-  handlersByElement.set(element, handler || undefined);
+  handlersByElement.set(element, handler || null);
 }
 
 export function createDelegator() {
-  const delegatedEventsByRoot = new WeakMap<Node, Set<string>>();
+  const kEvents = Symbol();
   return function ensureDelegated(
     node: Node,
     type: string,
     handler: EventListener,
   ) {
     const root = node.getRootNode();
-    let delegatedEvents = delegatedEventsByRoot.get(root);
-
-    if (!delegatedEvents) {
-      delegatedEventsByRoot.set(root, (delegatedEvents = new Set()));
-    }
-
-    if (!delegatedEvents.has(type)) {
-      delegatedEvents.add(type);
-      root.addEventListener(type, handler, true);
-    }
+    ((root as any)[kEvents] ||= {})[type] ||=
+      (root.addEventListener(type, handler, true), 1);
   };
 }
 

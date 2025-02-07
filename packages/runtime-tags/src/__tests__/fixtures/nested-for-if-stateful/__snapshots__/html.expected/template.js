@@ -1,12 +1,12 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
-  const counts = [0, 0, 0];
   const _scope1_ = new Map();
+  const counts = [0, 0, 0];
   _$.resumeSingleNodeForOf(counts, (count, i) => {
     const _scope1_id = _$.nextScopeId();
-    const editing = false;
     let _ifScopeId, _ifRenderer;
+    const editing = false;
     _$.resumeSingleNodeConditional(() => {
       if (editing) {
         const _scope2_id = _$.nextScopeId();

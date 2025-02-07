@@ -1,8 +1,8 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
-  const num = 0;
   const _scope1_ = new Map();
+  const num = 0;
   _$.resumeSingleNodeForTo(num, 0, 1, i => {
     const _scope1_id = _$.nextScopeId();
     _scope1_.set(i, _$.ensureScopeWithId(_scope1_id));

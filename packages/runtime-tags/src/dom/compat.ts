@@ -30,7 +30,7 @@ export const compat = {
     return value === MARK || value === CLEAN || value === DIRTY;
   },
   isRenderer(renderer: any) {
-    return renderer.___clone !== undefined;
+    return renderer.___clone;
   },
   getStartNode(branch: any) {
     return branch.___startNode;
@@ -71,7 +71,7 @@ export const compat = {
     clone: Renderer["___clone"],
     args: Renderer["___args"],
   ) {
-    const renderer = createRenderer("", undefined, setup, args && (() => args));
+    const renderer = createRenderer("", 0, setup, args && (() => args));
     renderer.___clone = clone;
     return renderer;
   },

@@ -1,9 +1,9 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
+  let _ifScopeId;
   const a = 0;
   const b = 0;
-  let _ifScopeId;
   if (true) {
     const _scope1_id = _$.nextScopeId();
     _$.write(`${_$.escapeXML(a + b)}${_$.markResumeNode(_scope1_id, "#text/0")}`);

@@ -67,3 +67,24 @@ container.querySelector("#increment")?.click();
 ```
 UPDATE div/span/#text "1" => "2"
 ```
+
+# Render ASYNC
+```html
+<div>
+  x=
+  <span>
+    2
+  </span>
+  , was=1
+</div>
+<button
+  id="increment"
+>
+  Increment
+</button>
+```
+
+# Mutations
+```
+UPDATE div/#text2 "0" => "1"
+```

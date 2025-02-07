@@ -17,9 +17,8 @@ export type Renderer = {
   ___id: symbol;
   ___template: string;
   ___walks: string;
-  ___setup: SetupFn | undefined;
+  ___setup: SetupFn | undefined | 0;
   ___clone: (ns: string) => ChildNode;
-  ___sourceNode: Node | undefined;
   ___args: Signal<unknown> | undefined;
   ___owner: Scope | undefined;
 };
@@ -166,8 +165,8 @@ export function dynamicTagAttrs(
 
 export function createRendererWithOwner(
   template: string,
-  rawWalks?: string,
-  setup?: SetupFn,
+  rawWalks?: string | 0,
+  setup?: SetupFn | 0,
   getArgs?: () => Signal<unknown>,
 ) {
   let args: Signal<unknown> | undefined;
@@ -181,7 +180,6 @@ export function createRendererWithOwner(
       ___setup: setup,
       ___clone: _clone,
       ___owner: owner,
-      ___sourceNode: undefined,
       get ___args() {
         return (args ||= getArgs?.());
       },
@@ -191,8 +189,8 @@ export function createRendererWithOwner(
 
 export function createRenderer(
   template: string,
-  walks?: string,
-  setup?: SetupFn,
+  walks?: string | 0,
+  setup?: SetupFn | 0,
   getArgs?: () => Signal<unknown>,
 ) {
   return createRendererWithOwner(template, walks, setup, getArgs)();
