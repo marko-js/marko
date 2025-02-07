@@ -53,3 +53,20 @@ container.querySelector("#increment")?.click();
   Increment
 </button>
 ```
+
+
+# Render ASYNC
+```html
+<div>
+  x=
+  <span>
+    2
+  </span>
+  , was=1
+</div>
+<button
+  id="increment"
+>
+  Increment
+</button>
+```

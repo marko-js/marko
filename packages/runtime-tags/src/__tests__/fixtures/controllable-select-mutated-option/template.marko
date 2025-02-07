@@ -1,0 +1,18 @@
+<let/options = [1,2,3]/>
+<let/value=options[0]/>
+<form>
+  <select value:=value onChange=console.log onInput=console.log>
+    <for|opt| of=options by=v=>v>
+      <option value=opt>${opt}</>
+    </>
+  </select>
+  <button type="reset">reset</>
+</form>
+<div>${value}</div>
+<button.remove onClick() {
+  options = options.slice(1)
+}>Remove option</>
+
+<button.add onClick() {
+  options = [options.length ? options[0] - 1 : 3, ...options];
+}>Add option</>

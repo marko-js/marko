@@ -1,8 +1,8 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
-  _$.write("<div>");
   let _ifScopeId, _ifRenderer;
+  _$.write("<div>");
   _$.resumeSingleNodeConditional(() => {
     if (input.value) {
       const _scope1_id = _$.nextScopeId();

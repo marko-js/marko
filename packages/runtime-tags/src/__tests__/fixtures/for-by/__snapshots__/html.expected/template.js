@@ -13,6 +13,11 @@ _$.register(getMissingBy, "__tests__/template.marko_0/getMissingBy");
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
+  const _scope1_ = new Map();
+  const _scope2_ = new Map();
+  const _scope3_ = new Map();
+  const _scope4_ = new Map();
+  const _scope5_ = new Map();
   const items = [{
     id: 0,
     text: "first"
@@ -24,7 +29,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     text: "third"
   }];
   _$.write("<div><div class=by-string>");
-  const _scope1_ = new Map();
   _$.resumeSingleNodeForOf(items, (_list, _index) => {
     const _scope1_id = _$.nextScopeId();
     let {
@@ -39,7 +43,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }, _scope0_id, "#div/0", 1);
   _$.write("</div><div class=by-function>");
   const _by = item => item.id;
-  const _scope2_ = new Map();
   _$.resumeSingleNodeForOf(items, (_list2, _index2) => {
     const _scope2_id = _$.nextScopeId();
     let {
@@ -53,7 +56,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     });
   }, _scope0_id, "#div/1", 1);
   _$.write("</div><div class=by-unknown-string>");
-  const _scope3_ = new Map();
   _$.resumeSingleNodeForOf(items, (_list3, _index3) => {
     const _scope3_id = _$.nextScopeId();
     let {
@@ -67,7 +69,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     });
   }, _scope0_id, "#div/2", 1);
   _$.write("</div><div class=by-unknown-function>");
-  const _scope4_ = new Map();
   _$.resumeSingleNodeForOf(items, (_list4, _index4) => {
     const _scope4_id = _$.nextScopeId();
     let {
@@ -81,7 +82,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     });
   }, _scope0_id, "#div/3", 1);
   _$.write("</div><div class=by-unknown-missing>");
-  const _scope5_ = new Map();
   _$.resumeSingleNodeForOf(items, (_list5, _index5) => {
     const _scope5_id = _$.nextScopeId();
     let {

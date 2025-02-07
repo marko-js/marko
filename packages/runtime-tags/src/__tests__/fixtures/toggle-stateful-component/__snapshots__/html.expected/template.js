@@ -2,12 +2,12 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 import _counter from "./tags/counter.marko";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
+  let _ifScopeId, _ifRenderer;
   const show = true;
   const onCount = _$.register(function (count) {
     show = count < 1;
   }, "__tests__/template.marko_0/onCount", _scope0_id);
   _$.write("<div>");
-  let _ifScopeId, _ifRenderer;
   _$.resumeSingleNodeConditional(() => {
     if (show) {
       const _scope1_id = _$.nextScopeId();

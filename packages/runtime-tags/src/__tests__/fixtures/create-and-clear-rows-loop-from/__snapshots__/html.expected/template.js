@@ -1,8 +1,8 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
-  _$.write("<div>");
   const _scope1_ = new Map();
+  _$.write("<div>");
   _$.resumeForTo(input.to, input.from, input.step, n => {
     const _scope1_id = _$.nextScopeId();
     _scope1_.set(n, _$.ensureScopeWithId(_scope1_id));

@@ -1,6 +1,7 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
+  const _scope1_ = new Map();
   const {
     children
   } = input;
@@ -8,7 +9,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _by = function (c) {
     return c.id;
   };
-  const _scope1_ = new Map();
   _$.resumeSingleNodeForOf(children, (child, _index) => {
     const _scope1_id = _$.nextScopeId();
     _scope1_.set(_by(child, _index), _$.ensureScopeWithId(_scope1_id));

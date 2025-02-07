@@ -2,6 +2,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
+  let _ifScopeId3, _ifRenderer3;
   const showOuter = true;
   const showMiddle = true;
   const showInner = true;
@@ -10,25 +11,24 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     el().innerHTML += '\n' + msg;
   }, "__tests__/template.marko_0/write", _scope0_id);
   _$.write(`<button id=outer>Toggle Outer</button>${_$.markResumeNode(_scope0_id, "#button/0")}<button id=middle>Toggle Middle</button>${_$.markResumeNode(_scope0_id, "#button/1")}<button id=inner>Toggle Inner</button>${_$.markResumeNode(_scope0_id, "#button/2")}<pre></pre>${_$.markResumeNode(_scope0_id, "#pre/3")}`);
-  let _ifScopeId3, _ifRenderer3;
   _$.resumeSingleNodeConditional(() => {
     if (showOuter) {
       const _scope1_id = _$.nextScopeId();
+      let _ifScopeId2, _ifRenderer2;
       _$.write("<div>");
       _child({
         write: write,
         name: "Outer"
       });
-      let _ifScopeId2, _ifRenderer2;
       _$.resumeSingleNodeConditional(() => {
         if (showMiddle) {
           const _scope2_id = _$.nextScopeId();
+          let _ifScopeId, _ifRenderer;
           _$.write("<div>");
           _child({
             write: write,
             name: "Middle"
           });
-          let _ifScopeId, _ifRenderer;
           _$.resumeSingleNodeConditional(() => {
             if (showInner) {
               const _scope3_id = _$.nextScopeId();

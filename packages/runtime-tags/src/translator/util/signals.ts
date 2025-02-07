@@ -110,6 +110,11 @@ export const [getSerializedScopeProperties] = createSectionState<
   Map<t.StringLiteral | t.NumericLiteral, t.Expression>
 >("serializedScopeProperties", () => new Map());
 
+export const [getHTMLSectionStatements] = createSectionState<t.Statement[]>(
+  "htmlScopeStatements",
+  () => [],
+);
+
 const unimplementedBuild = () => {
   return t.stringLiteral("SIGNAL NOT INITIALIZED");
 };
@@ -1087,13 +1092,14 @@ export function writeHTMLResumeStatements(
     );
   }
 
-  if (path.get("body").length) {
-    path.unshiftContainer(
-      "body",
+  const additionalStatements = getHTMLSectionStatements(section);
+  if (path.get("body").length || additionalStatements.length) {
+    path.unshiftContainer("body", [
       t.variableDeclaration("const", [
         t.variableDeclarator(scopeIdIdentifier, callRuntime("nextScopeId")),
       ]),
-    );
+      ...additionalStatements,
+    ]);
   }
 
   const returnIdentifier = getSectionReturnValueIdentifier(section);

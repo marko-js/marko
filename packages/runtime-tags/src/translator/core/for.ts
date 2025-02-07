@@ -36,6 +36,7 @@ import {
 } from "../util/sections";
 import {
   addValue,
+  getHTMLSectionStatements,
   getSerializedScopeProperties,
   getSignal,
   setClosureSignalBuilder,
@@ -241,7 +242,7 @@ export default {
           }
 
           const forScopesIdentifier = getScopeIdentifier(bodySection);
-          statements.push(
+          getHTMLSectionStatements(tagSection).push(
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 forScopesIdentifier,

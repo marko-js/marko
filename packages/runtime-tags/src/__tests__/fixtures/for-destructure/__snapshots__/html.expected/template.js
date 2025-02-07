@@ -1,13 +1,13 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
+  const _scope1_ = new Map();
   const id = 0;
   const items = [{
     name: "Marko",
     description: "HTML Reimagined"
   }];
   _$.write("<div>");
-  const _scope1_ = new Map();
   _$.resumeSingleNodeForOf(items, (_list, _index) => {
     const _scope1_id = _$.nextScopeId();
     let {
