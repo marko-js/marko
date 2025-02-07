@@ -1,5 +1,19 @@
 # @marko/runtime-tags
 
+## 0.3.37
+
+### Patch Changes
+
+- [#2504](https://github.com/marko-js/marko/pull/2504) [`edcb4e9`](https://github.com/marko-js/marko/commit/edcb4e9d0ecbf9d25ab214d1732c5dcf26be21d0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with a for loop with a single text node inside, and before.
+
+- [#2507](https://github.com/marko-js/marko/pull/2507) [`9d1ea70`](https://github.com/marko-js/marko/commit/9d1ea70068b502a88db31f39c531cef285aa3b59) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with for/if html scope information being output to the wrong block.
+
+- [#2506](https://github.com/marko-js/marko/pull/2506) [`e69c13e`](https://github.com/marko-js/marko/commit/e69c13eabffded618787df93e678d7724ff56bc8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - When using the bound attribute syntax, prefer to create a simple shared function that assigns to the bound variable.
+
+- [#2507](https://github.com/marko-js/marko/pull/2507) [`9d1ea70`](https://github.com/marko-js/marko/commit/9d1ea70068b502a88db31f39c531cef285aa3b59) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Handle mutations to select options when in controlled mode.
+
+- [#2506](https://github.com/marko-js/marko/pull/2506) [`14ffe18`](https://github.com/marko-js/marko/commit/14ffe18ddf76e4d6108e4eb8218b26f552ee3866) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where function registry ids were not unique.
+
 ## 0.3.36
 
 ### Patch Changes
