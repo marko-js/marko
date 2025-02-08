@@ -8,7 +8,8 @@
       "$_dynamicTagName": "e",
       "$_x_effect": "a",
       "$_x": "i",
-      "$_x_content": "m"
+      "$_x_content": "m",
+      "$_dynamicTag": "c"
     }
   }
 }

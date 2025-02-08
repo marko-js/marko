@@ -1,8 +1,6 @@
-// size: 1023 (min) 442 (brotli)
-const _count$else_content = _$.conditionalClosure(
-    0,
-    () => _else_content,
-    (_scope, count) => _$.data(_scope[1], count),
+// size: 956 (min) 428 (brotli)
+const _count$else_content = _$.conditionalClosure(0, 1, (_scope, count) =>
+    _$.data(_scope[1], count),
   ),
   _setup$else_content_effect = _$.effect("a0", (_scope) =>
     _$.on(_scope[0], "click", function () {
@@ -13,16 +11,13 @@ const _count$else_content = _$.conditionalClosure(
     _count$else_content._(_scope, _scope._[2]),
       _setup$else_content_effect(_scope);
   },
-  _else_content = _$.register(
-    "a1",
-    _$.createRenderer(
-      "<button>Increment <!></button>",
-      " Db%",
-      _setup$else_content,
-    ),
+  _else_content = _$.createRenderer(
+    "<button>Increment <!></button>",
+    " Db%",
+    _setup$else_content,
   ),
   _expr_counts_count_i$if_content_effect = _$.effect(
-    "a2",
+    "a1",
     (
       _scope,
       {
@@ -47,18 +42,18 @@ const _count$else_content = _$.conditionalClosure(
   }),
   _i$if_content = _$.conditionalClosure(
     0,
-    () => _if_content,
+    0,
     0,
     () => _expr_counts_count_i$if_content,
   ),
   _count$if_content = _$.conditionalClosure(
     0,
-    () => _if_content,
+    0,
     (_scope, count) => _$.data(_scope[1], count + 1),
     () => _expr_counts_count_i$if_content,
   ),
   _counts$if_content = _$.registerSubscriber(
-    "a3",
+    "a2",
     _$.dynamicClosure(
       0,
       (_scope) => _scope._._,
@@ -70,19 +65,15 @@ const _count$else_content = _$.conditionalClosure(
       _count$if_content._(_scope, _scope._[2]),
       _i$if_content._(_scope, _scope._[3]);
   },
-  _if_content = _$.register(
-    "a4",
-    _$.createRenderer(
-      "<button>Confirm <!></button>",
-      " Db%",
-      _setup$if_content,
-    ),
+  _if_content = _$.createRenderer(
+    "<button>Confirm <!></button>",
+    " Db%",
+    _setup$if_content,
   ),
-  _if$for_content = _$.conditional(0, 0),
+  _if$for_content = _$.conditional(0, _if_content, _else_content),
   _editing$for_content = _$.state(
     4,
-    (_scope, editing) =>
-      _if$for_content(_scope, editing ? _if_content : _else_content),
+    (_scope, editing) => _if$for_content(_scope, editing ? 0 : 1),
     () => _if$for_content,
   ),
   _i$for_content = _$.value(3, (_scope, i) => _i$if_content(_scope, i)),
@@ -96,14 +87,11 @@ const _count$else_content = _$.conditionalClosure(
   _setup$for_content = (_scope) => {
     _editing$for_content(_scope, !1);
   },
-  _for_content = _$.register(
-    "a5",
-    _$.createRenderer(
-      "<!><!><!>",
-      "D%D",
-      _setup$for_content,
-      () => _params_2$for_content,
-    ),
+  _for_content = _$.createRenderer(
+    "<!><!><!>",
+    "D%D",
+    _setup$for_content,
+    () => _params_2$for_content,
   ),
   _for = _$.loopOf(0, _for_content),
   _counts = _$.state(1, (_scope, counts) => {

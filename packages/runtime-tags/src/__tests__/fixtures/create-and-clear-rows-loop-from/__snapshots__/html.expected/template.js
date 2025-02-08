@@ -10,7 +10,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     _$.debug(_$.writeScope(_scope1_id, {}), "__tests__/template.marko", "2:4", {
       "n": "2:8"
     });
-  }, _scope0_id, "#div/0");
+  }, _scope0_id, "#div/0", 1);
   _$.write("</div>");
   _$.debug(_$.writeScope(_scope0_id, {
     "input_from": input.from,

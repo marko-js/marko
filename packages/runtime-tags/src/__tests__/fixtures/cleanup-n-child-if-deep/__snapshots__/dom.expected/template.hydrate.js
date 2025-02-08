@@ -1,4 +1,4 @@
-// size: 1543 (min) 550 (brotli)
+// size: 1471 (min) 544 (brotli)
 const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _expr_name_write_effect = _$.effect("a0", (_scope, { 5: name, 6: write }) => {
     write(`${name} mounted`),
@@ -29,21 +29,21 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
       _scope[0],
       _name_(_scope[0], "Inner");
   },
-  _if_content3 = _$.register(
-    "b1",
-    _$.createRenderer(_template_, "/D%lD%lD%l&", _setup$if_content3),
+  _if_content3 = _$.createRenderer(
+    _template_,
+    "/D%lD%lD%l&",
+    _setup$if_content3,
   ),
-  _if$if_content = _$.conditional(1, 0),
+  _if$if_content = _$.conditional(1, _if_content3),
   _write$if_content2 = _$.dynamicClosure(
     (_scope, write) => _write_(_scope[0], write),
     (_scope) => _scope._._,
     () => _$.inChild(0, _write_),
   ),
   _showInner$if_content = _$.registerSubscriber(
-    "b2",
+    "b1",
     _$.dynamicClosure(
-      (_scope, showInner) =>
-        _if$if_content(_scope, showInner ? _if_content3 : null),
+      (_scope, showInner) => _if$if_content(_scope, showInner ? 0 : 1),
       (_scope) => _scope._._,
       () => _if$if_content,
     ),
@@ -54,26 +54,22 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
       _showInner$if_content._(_scope, _scope._._[7]),
       _name_(_scope[0], "Middle");
   },
-  _if_content2 = _$.register(
-    "b3",
-    _$.createRenderer(
-      `<div>${_template_}<!></div>`,
-      "D/D%lD%lD%l&%",
-      _setup$if_content2,
-    ),
+  _if_content2 = _$.createRenderer(
+    `<div>${_template_}<!></div>`,
+    "D/D%lD%lD%l&%",
+    _setup$if_content2,
   ),
-  _if$if_content2 = _$.conditional(1, 0),
+  _if$if_content2 = _$.conditional(1, _if_content2),
   _write$if_content = _$.conditionalClosure(
     4,
-    () => _if_content,
+    0,
     (_scope, write) => _write_(_scope[0], write),
     () => _$.inChild(0, _write_),
   ),
   _showMiddle$if_content = _$.conditionalClosure(
     4,
-    () => _if_content,
-    (_scope, showMiddle) =>
-      _if$if_content2(_scope, showMiddle ? _if_content2 : null),
+    0,
+    (_scope, showMiddle) => _if$if_content2(_scope, showMiddle ? 0 : 1),
     () => _if$if_content2,
   ),
   _setup$if_content = (_scope) => {
@@ -82,16 +78,13 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
       _showMiddle$if_content._(_scope, _scope._[6]),
       _name_(_scope[0], "Outer");
   },
-  _if_content = _$.register(
-    "b4",
-    _$.createRenderer(
-      `<div>${_template_}<!></div>`,
-      "D/D%lD%lD%l&%",
-      _setup$if_content,
-    ),
+  _if_content = _$.createRenderer(
+    `<div>${_template_}<!></div>`,
+    "D/D%lD%lD%l&%",
+    _setup$if_content,
   ),
-  _if = _$.conditional(4, 0),
-  _showInner_effect = _$.effect("b5", (_scope, { 7: showInner }) =>
+  _if = _$.conditional(4, _if_content),
+  _showInner_effect = _$.effect("b2", (_scope, { 7: showInner }) =>
     _$.on(_scope[2], "click", function () {
       _showInner(_scope, !showInner);
     }),
@@ -99,7 +92,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _showInner = _$.state(7, (_scope, showInner) => {
     _showInner_effect(_scope), _showInner$if_content(_scope, showInner);
   }),
-  _showMiddle_effect = _$.effect("b6", (_scope, { 6: showMiddle }) =>
+  _showMiddle_effect = _$.effect("b3", (_scope, { 6: showMiddle }) =>
     _$.on(_scope[1], "click", function () {
       _showMiddle(_scope, !showMiddle);
     }),
@@ -107,7 +100,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _showMiddle = _$.state(6, (_scope, showMiddle) => {
     _showMiddle_effect(_scope), _showMiddle$if_content(_scope, showMiddle);
   }),
-  _showOuter_effect = _$.effect("b7", (_scope, { 5: showOuter }) =>
+  _showOuter_effect = _$.effect("b4", (_scope, { 5: showOuter }) =>
     _$.on(_scope[0], "click", function () {
       _showOuter(_scope, !showOuter);
     }),
@@ -115,7 +108,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _showOuter = _$.state(
     5,
     (_scope, showOuter) => {
-      _showOuter_effect(_scope), _if(_scope, showOuter ? _if_content : null);
+      _showOuter_effect(_scope), _if(_scope, showOuter ? 0 : 1);
     },
     () => _if,
   );

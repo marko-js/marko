@@ -13,10 +13,10 @@
     <div>
       <!--M_[4-->
       B
-      <!--M_]1 #text/2-->
+      <!--M_]1 #div/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:{input_a:1,input_b:2,input_x:!1,input_y:!0,"#text/0(":_._["__tests__/template.marko_1_renderer"],"#text/0!":_.a={},"#text/1(":_._["__tests__/template.marko_2_renderer"],"#text/1!":_.b={},"#text/2(":_._["__tests__/template.marko_4_renderer"],"#text/2!":_.c={}},2:_.a,3:_.b,4:_.c}),0]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:{input_a:1,input_b:2,input_x:!1,input_y:!0,"#text/0(":0,"#text/0!":_.a={},"#text/1(":0,"#text/1!":_.b={},"#div/2(":1,"#div/2!":_.c={}},2:_.a,3:_.b,4:_.c}),0]
     </script>
   </body>
 </html>

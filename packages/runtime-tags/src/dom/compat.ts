@@ -4,7 +4,7 @@ import {
   SET_SCOPE_REGISTER_ID,
 } from "../common/compat-meta";
 import type { BranchScope } from "../common/types";
-import { patchConditionals } from "./control-flow";
+import { patchDynamicTag } from "./control-flow";
 import { toInsertNode } from "./dom";
 import { prepareEffects, queueEffect, runEffects } from "./queue";
 import { createRenderer, initBranch, type Renderer } from "./renderer";
@@ -14,7 +14,7 @@ import { CLEAN, DIRTY, MARK } from "./signals";
 const classIdToBranch = new Map<string, BranchScope>();
 
 export const compat = {
-  patchConditionals,
+  patchConditionals: patchDynamicTag,
   queueEffect,
   init(warp10Noop: any) {
     register(SET_SCOPE_REGISTER_ID, (branch: BranchScope & { m5c: string }) => {

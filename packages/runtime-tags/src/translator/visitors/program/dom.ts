@@ -62,7 +62,7 @@ export default {
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 identifier,
-                isStatefulSection(childSection)
+                !childSection.isBranch && isStatefulSection(childSection)
                   ? callRuntime(
                       "register",
                       t.stringLiteral(

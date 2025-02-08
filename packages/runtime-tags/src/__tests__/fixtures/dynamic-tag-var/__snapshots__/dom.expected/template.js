@@ -4,12 +4,12 @@ import child from "./tags/child/index.marko";
 import { _setup_ as _child, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child/index.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _inputDynamic_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/2");
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", _scope => {
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", _scope => {
   _$.setTagVar(_scope, "#text/2!", _data3);
   _inputDynamic_input(_scope, () => ({}));
 }, () => _inputDynamic_input);
 const _data3 = _$.registerBoundSignal("__tests__/template.marko_0_data3/var", (_scope, data3) => {});
-export const _input_dynamic_ = /* @__PURE__ */_$.value("input_dynamic", (_scope, input_dynamic) => _dynamicTagName(_scope, input_dynamic), () => _dynamicTagName);
+export const _input_dynamic_ = /* @__PURE__ */_$.value("input_dynamic", (_scope, input_dynamic) => _dynamicTag(_scope, input_dynamic), () => _dynamicTag);
 const _data2 = _$.registerBoundSignal("__tests__/template.marko_0_data2/var", (_scope, data2) => {});
 export const _input_show_ = /* @__PURE__ */_$.value("input_show", 0);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {

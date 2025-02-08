@@ -1,4 +1,4 @@
-// size: 18554 (min) 6850 (brotli)
+// size: 18464 (min) 6856 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -88,9 +88,6 @@ function isEventHandler(name) {
 function getEventHandlerName(name) {
   return "-" === name[2] ? name.slice(3) : name.slice(2).toLowerCase();
 }
-function normalizeDynamicRenderer(value2) {
-  if (value2) return value2.content || value2.default || value2;
-}
 var elementHandlersByEvent = new Map(),
   defaultDelegator = createDelegator();
 function on(element, type, handler) {
@@ -123,23 +120,23 @@ function stripSpacesAndPunctuation(str) {
 }
 var registeredValues = {},
   Render = class {
-    n = [];
-    o = {};
+    m = [];
+    n = {};
     A = { _: registeredValues };
     constructor(renders, runtimeId, renderId) {
       (this.B = renders),
         (this.C = runtimeId),
-        (this.p = renderId),
-        (this.q = renders[renderId]),
-        this.s();
+        (this.o = renderId),
+        (this.p = renders[renderId]),
+        this.q();
     }
     w() {
-      this.q.w(), this.s();
+      this.p.w(), this.q();
     }
-    s() {
-      let data2 = this.q,
+    q() {
+      let data2 = this.p,
         serializeContext = this.A,
-        scopeLookup = this.o,
+        scopeLookup = this.n,
         visits = data2.v,
         branchIds = new Set(),
         parentBranchIds = new Map();
@@ -186,7 +183,7 @@ var registeredValues = {},
           else if ("[" === token)
             this.e &&
               (dataIndex && branchEnd(this.e, visit, visit),
-              this.n.push(this.e)),
+              this.m.push(this.e)),
               (this.e = scopeId),
               (scope.a = visit);
           else if ("]" === token) {
@@ -194,7 +191,7 @@ var registeredValues = {},
             let curParent = visit.parentNode,
               startNode = branchEnd(this.e, visit, visit).a;
             curParent !== startNode.parentNode && curParent.prepend(startNode),
-              (this.e = this.n.pop());
+              (this.e = this.m.pop());
           } else if ("|" === token || "=" === token) {
             let next = data3.indexOf(" "),
               curNode = visit;
@@ -229,7 +226,7 @@ var registeredValues = {},
               $global ||
                 ((scopeLookup.$global = $global = scopes.$ || {}),
                 ($global.runtimeId = this.C),
-                ($global.renderId = this.p));
+                ($global.renderId = this.o));
               for (let scopeId in scopes)
                 if ("$" !== scopeId) {
                   let scope = scopes[scopeId],
@@ -247,13 +244,13 @@ var registeredValues = {},
                     (branch.f = +scopeId),
                       (scope.c = branch),
                       parentBranch &&
-                        ((branch.t = parentBranch),
-                        (parentBranch.k ||= new Set()).add(branch));
+                        ((branch.s = parentBranch),
+                        (parentBranch.j ||= new Set()).add(branch));
                   }
                 }
             } else
               i === len || "string" != typeof resumes[i]
-                ? delete this.B[this.p]
+                ? delete this.B[this.o]
                 : registeredValues[resumes[i++]](
                     scopeLookup[resumeData],
                     scopeLookup[resumeData],
@@ -812,11 +809,11 @@ function getEmptyBranch(marker) {
   return (emptyBranch.a = emptyBranch.b = marker), emptyBranch;
 }
 function destroyBranch(branch) {
-  branch.t?.k?.delete(branch), destroyNestedBranches(branch);
+  branch.s?.j?.delete(branch), destroyNestedBranches(branch);
 }
 function destroyNestedBranches(branch) {
   (branch.E = 1),
-    branch.k?.forEach(destroyNestedBranches),
+    branch.j?.forEach(destroyNestedBranches),
     branch.F?.forEach((scope) => {
       for (let id in scope.h) scope.h[id]?.abort();
     });
@@ -888,7 +885,7 @@ function createBranchScopeWithRenderer(
   parentScope,
   parentNode,
 ) {
-  let branch = createBranch($global, renderer.u || parentScope, parentScope);
+  let branch = createBranch($global, renderer.t || parentScope, parentScope);
   return initBranch(renderer, branch, parentNode), branch;
 }
 function createBranchScopeWithTagNameOrRenderer(
@@ -928,19 +925,19 @@ function createBranch($global, ownerScope, parentScope) {
     (branch.c = branch),
     parentBranch
       ? ((branch.f = parentBranch.f + 1),
-        (branch.t = parentBranch),
-        (parentBranch.k ||= new Set()).add(branch))
+        (branch.s = parentBranch),
+        (parentBranch.j ||= new Set()).add(branch))
       : (branch.f = 1),
     branch
   );
 }
 function initBranch(renderer, branch, parentNode) {
-  let clone = renderer.l(parentNode.namespaceURI),
+  let clone = renderer.k(parentNode.namespaceURI),
     cloneParent = clone.parentNode;
   walk(cloneParent?.firstChild || clone, renderer.G, branch),
     (branch.a = cloneParent?.firstChild || clone),
     (branch.b = cloneParent?.lastChild || clone),
-    renderer.x && queueRender(branch, renderer.x);
+    renderer.u && queueRender(branch, renderer.u);
 }
 function dynamicTagAttrs(nodeAccessor, getContent, inputIsArgs) {
   return (scope, attrsOrOp) => {
@@ -969,12 +966,12 @@ function createRendererWithOwner(template, rawWalks, setup, getArgs) {
     id = {},
     walks = rawWalks ? trimWalkString(rawWalks) : " ";
   return (owner) => ({
-    j: id,
+    x: id,
     y: template,
     G: walks,
-    x: setup,
-    l: _clone,
-    u: owner,
+    u: setup,
+    k: _clone,
+    t: owner,
     get d() {
       return (args ||= getArgs?.());
     },
@@ -996,7 +993,23 @@ function _clone(ns) {
   })(this.y, ns))();
 }
 var cloneCache = {};
-var conditional = function (nodeAccessor, fn, getIntersection) {
+function conditional(nodeAccessor, ...branches) {
+  let branchAccessor = nodeAccessor + "(";
+  return (scope, newBranchIndexOrOp) => {
+    newBranchIndexOrOp !== scope[branchAccessor] &&
+      newBranchIndexOrOp !== DIRTY &&
+      newBranchIndexOrOp !== MARK &&
+      newBranchIndexOrOp !== CLEAN &&
+      (scope[nodeAccessor].nodeType > 1
+        ? setConditionalRenderer
+        : setConditionalRendererOnlyChild)(
+        scope,
+        nodeAccessor,
+        branches[(scope[branchAccessor] = newBranchIndexOrOp)],
+      );
+  };
+}
+var dynamicTag = function (nodeAccessor, fn, getIntersection) {
   let rendererAccessor = nodeAccessor + "(",
     intersection2 =
       getIntersection &&
@@ -1006,61 +1019,40 @@ var conditional = function (nodeAccessor, fn, getIntersection) {
     let currentRenderer = scope[rendererAccessor],
       op = newRendererOrOp;
     if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
-      let normalizedRenderer = normalizeDynamicRenderer(newRendererOrOp);
-      isDifferentRenderer(normalizedRenderer, currentRenderer)
+      let normalizedRenderer = (function (value2) {
+        if (value2) return value2.content || value2.default || value2;
+      })(newRendererOrOp);
+      (a = normalizedRenderer) !== (b = currentRenderer) && (a?.x || 0) !== b?.x
         ? ((scope[rendererAccessor] = normalizedRenderer),
-          (function (scope, nodeAccessor, newRenderer) {
-            let prevBranch =
-                scope[nodeAccessor + "!"] ||
-                getEmptyBranch(scope[nodeAccessor]),
-              newBranch = newRenderer
-                ? createBranchScopeWithTagNameOrRenderer(
-                    newRenderer,
-                    scope.$global,
-                    scope,
-                    prevBranch.b.parentNode,
-                  )
-                : getEmptyBranch(scope[nodeAccessor]);
-            insertBranchBefore(
-              newBranch,
-              prevBranch.b.parentNode,
-              prevBranch.b.nextSibling,
-            ),
-              removeAndDestroyBranch(prevBranch),
-              (scope[nodeAccessor + "!"] = newRenderer && newBranch);
-          })(scope, nodeAccessor, normalizedRenderer),
+          setConditionalRenderer(scope, nodeAccessor, normalizedRenderer),
           fn && fn(scope),
           (op = DIRTY))
         : (op = CLEAN);
     }
+    var a, b;
     intersection2?.(scope, op);
   };
 };
-var conditionalOnlyChild = function (nodeAccessor, fn, getIntersection) {
-  let rendererAccessor = nodeAccessor + "(",
-    intersection2 =
-      getIntersection &&
-      ((scope, op) => (intersection2 = getIntersection())(scope, op));
-  return (scope, newRendererOrOp) => {
-    if (newRendererOrOp === DIRTY) return;
-    let currentRenderer = scope[rendererAccessor],
-      op = newRendererOrOp;
-    if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
-      let normalizedRenderer = normalizeDynamicRenderer(newRendererOrOp);
-      isDifferentRenderer(normalizedRenderer, currentRenderer)
-        ? ((currentRenderer = scope[rendererAccessor] = normalizedRenderer),
-          setConditionalRendererOnlyChild(
-            scope,
-            nodeAccessor,
-            normalizedRenderer,
-          ),
-          fn && fn(scope),
-          (op = DIRTY))
-        : (op = CLEAN);
-    }
-    intersection2?.(scope, op);
-  };
-};
+function setConditionalRenderer(scope, nodeAccessor, newRenderer) {
+  let prevBranch =
+      scope[nodeAccessor + "!"] || getEmptyBranch(scope[nodeAccessor]),
+    newBranch = newRenderer
+      ? createBranchScopeWithTagNameOrRenderer(
+          newRenderer,
+          scope.$global,
+          scope,
+          prevBranch.b.parentNode,
+        )
+      : getEmptyBranch(scope[nodeAccessor]);
+  prevBranch !== newBranch &&
+    (insertBranchBefore(
+      newBranch,
+      prevBranch.b.parentNode,
+      prevBranch.b.nextSibling,
+    ),
+    removeAndDestroyBranch(prevBranch),
+    (scope[nodeAccessor + "!"] = newRenderer && newBranch));
+}
 function setConditionalRendererOnlyChild(scope, nodeAccessor, newRenderer) {
   let prevBranch = scope[nodeAccessor + "!"],
     referenceNode = scope[nodeAccessor],
@@ -1294,9 +1286,6 @@ function bySecondArg(_item, index) {
 function byFirstArg(name) {
   return name;
 }
-function isDifferentRenderer(a, b) {
-  return a !== b && (a?.j || 0) !== b?.j;
-}
 var MARK = {},
   CLEAN = {},
   DIRTY = {};
@@ -1392,19 +1381,19 @@ function loopClosure(ownerLoopNodeAccessor, fn, getIntersection) {
 }
 function conditionalClosure(
   ownerConditionalNodeAccessor,
-  getRenderer,
+  branch,
   fn,
   getIntersection,
 ) {
   let signal = closure(fn, getIntersection),
     scopeAccessor = ownerConditionalNodeAccessor + "!",
-    rendererAccessor = ownerConditionalNodeAccessor + "(",
+    branchAccessor = ownerConditionalNodeAccessor + "(",
     helperSignal = (scope, value2) => {
-      let conditionalScope = scope[scopeAccessor];
-      conditionalScope &&
-        !conditionalScope.g &&
-        scope[rendererAccessor]?.j === getRenderer().j &&
-        queueSource(conditionalScope, signal, value2);
+      let ifScope = scope[scopeAccessor];
+      ifScope &&
+        !ifScope.g &&
+        scope[branchAccessor] === branch &&
+        queueSource(ifScope, signal, value2);
     };
   return (helperSignal._ = signal), helperSignal;
 }
@@ -1486,7 +1475,7 @@ function queueSource(scope, signal, value2) {
 }
 function queueRender(scope, signal, value2) {
   let i = pendingRenders.length,
-    render = { m: scope, H: signal, I: value2, z: i };
+    render = { l: scope, H: signal, I: value2, z: i };
   for (pendingRenders.push(render); i; ) {
     let parentIndex = (i - 1) >> 1,
       parent = pendingRenders[parentIndex];
@@ -1552,7 +1541,7 @@ function runRenders() {
       }
       pendingRenders[i] = item;
     }
-    render.m.c?.E || render.H(render.m, render.I);
+    render.l.c?.E || render.H(render.l, render.I);
   }
   !(function () {
     for (let scope of pendingScopes) scope.g = 0;
@@ -1563,7 +1552,7 @@ function comparePendingRenders(a, b) {
   return getBranchDepth(a) - getBranchDepth(b) || a.z - b.z;
 }
 function getBranchDepth(render) {
-  return render.m.c?.f || 0;
+  return render.l.c?.f || 0;
 }
 function resetAbortSignal(scope, id) {
   let ctrl = scope.h?.[id];
@@ -1581,8 +1570,7 @@ function abort(ctrl) {
 var classIdToBranch = new Map(),
   compat = {
     patchConditionals: function (fn) {
-      (conditional = fn(conditional)),
-        (conditionalOnlyChild = fn(conditionalOnlyChild));
+      dynamicTag = fn(dynamicTag);
     },
     queueEffect: queueEffect,
     init(warp10Noop) {
@@ -1595,7 +1583,7 @@ var classIdToBranch = new Map(),
       register("$C_r", fn);
     },
     isOp: (value2) => value2 === MARK || value2 === CLEAN || value2 === DIRTY,
-    isRenderer: (renderer) => renderer.l,
+    isRenderer: (renderer) => renderer.k,
     getStartNode: (branch) => branch.a,
     setScopeNodes(branch, startNode, endNode) {
       (branch.a = startNode), (branch.b = endNode);
@@ -1619,12 +1607,12 @@ var classIdToBranch = new Map(),
             2 === value2.length &&
               window[runtimeId]?.[
                 "s" === componentIdPrefix ? "_" : componentIdPrefix
-              ]?.o[value2[1]],
+              ]?.n[value2[1]],
           )
         : value2,
     createRenderer(setup, clone, args) {
       let renderer = createRenderer("", 0, setup, args && (() => args));
-      return (renderer.l = clone), renderer;
+      return (renderer.k = clone), renderer;
     },
     render(out, component, renderer, args) {
       let branch = component.scope;
@@ -1645,7 +1633,7 @@ var classIdToBranch = new Map(),
           branch
             ? (applyArgs(branch, MARK), (existing = !0))
             : ((branch = component.scope = createScope(out.global)),
-              (branch._ = renderer.u),
+              (branch._ = renderer.t),
               initBranch(renderer, branch, document.body)),
             applyArgs(branch, args);
         })),

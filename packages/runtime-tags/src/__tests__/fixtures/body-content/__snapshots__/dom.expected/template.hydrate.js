@@ -1,6 +1,6 @@
-// size: 547 (min) 305 (brotli)
+// size: 546 (min) 308 (brotli)
 const _content_input = _$.dynamicTagAttrs(1),
-  _dynamicTagName = _$.conditional(
+  _dynamicTag = _$.dynamicTag(
     1,
     (_scope) => _content_input(_scope, () => ({})),
     () => _content_input,
@@ -8,8 +8,8 @@ const _content_input = _$.dynamicTagAttrs(1),
   _attrs__effect = _$.effect("a0", (_scope) => _$.attrsEvents(_scope, 0)),
   _content_ = _$.value(
     4,
-    (_scope, content) => _dynamicTagName(_scope, content),
-    () => _dynamicTagName,
+    (_scope, content) => _dynamicTag(_scope, content),
+    () => _dynamicTag,
   ),
   _input_ = _$.value(
     3,

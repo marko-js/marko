@@ -19,7 +19,10 @@
       "$_Child_effect": "h",
       "$_Child": "b",
       "$_Parent_effect": "y",
-      "$_Parent": "A"
+      "$_Parent": "A",
+      "$_dynamicTag3": "T",
+      "$_dynamicTag2": "R",
+      "$_dynamicTag": "k"
     }
   }
 }

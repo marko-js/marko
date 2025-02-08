@@ -19,7 +19,7 @@ import { toMemberExpression } from "./to-property-name";
 const pureFunctions: Array<keyof typeof import("../../dom")> = [
   "conditional",
   "conditionalClosure",
-  "conditionalOnlyChild",
+  "dynamicTag",
   "createRenderer",
   "createRendererWithOwner",
   "createTemplate",

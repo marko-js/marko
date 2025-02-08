@@ -12,7 +12,7 @@ const _expr_Text_input_name_x = /* @__PURE__ */_$.intersection(3, _scope => {
     name: input_name
   }));
 }, () => _inputContent_input);
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", 0, () => _expr_Text_input_name_x);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", 0, () => _expr_Text_input_name_x);
 const _x_effect = _$.effect("__tests__/tags/custom-tag.marko_0_x", (_scope, {
   x
 }) => _$.on(_scope["#button/0"], "click", function () {
@@ -23,7 +23,7 @@ const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
   _x_effect(_scope);
 }, () => _expr_Text_input_name_x);
 export const _input_name_ = /* @__PURE__ */_$.value("input_name", 0, () => _expr_Text_input_name_x);
-export const _input_content_ = /* @__PURE__ */_$.value("input_content", (_scope, input_content) => _dynamicTagName(_scope, input_content), () => _dynamicTagName);
+export const _input_content_ = /* @__PURE__ */_$.value("input_content", (_scope, input_content) => _dynamicTag(_scope, input_content), () => _dynamicTag);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_content_(_scope, input.content);
   _input_name_(_scope, input.name);

@@ -27,7 +27,6 @@ INSERT div
 # Mutations
 ```
 INSERT div/#comment0, #text, #text, div/#comment1
-REMOVE #text before div/#comment0
 INSERT div/span0
 REMOVE #text after div/#comment0
 INSERT div/span1
@@ -84,9 +83,5 @@ UPDATE div/span0/#text " " => "Goodbye"
 
 # Mutations
 ```
-INSERT div/#text
-REMOVE #comment before span
-REMOVE span before span
-REMOVE span before #comment
-REMOVE #comment before div/#text
+REMOVE #comment, span, span, #comment in div
 ```

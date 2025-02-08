@@ -11,7 +11,7 @@ const _expr_Text_className = /* @__PURE__ */_$.intersection(2, _scope => {
     class: className
   }));
 }, () => _tagName_input);
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", 0, () => _expr_Text_className);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => _expr_Text_className);
 const _className = /* @__PURE__ */_$.state("className", 0, () => _expr_Text_className);
 const _tagName_effect = _$.effect("__tests__/template.marko_0_tagName", (_scope, {
   tagName
@@ -20,8 +20,8 @@ const _tagName_effect = _$.effect("__tests__/template.marko_0_tagName", (_scope,
 }));
 const _tagName = /* @__PURE__ */_$.state("tagName", (_scope, tagName) => {
   _tagName_effect(_scope);
-  _dynamicTagName(_scope, tagName || _tagName_content(_scope));
-}, () => _dynamicTagName);
+  _dynamicTag(_scope, tagName || _tagName_content(_scope));
+}, () => _dynamicTag);
 export function _setup_(_scope) {
   _tagName(_scope, "span");
   _className(_scope, "A");
