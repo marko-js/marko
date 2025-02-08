@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.38
+
+### Patch Changes
+
+- [#2508](https://github.com/marko-js/marko/pull/2508) [`bd59c96`](https://github.com/marko-js/marko/commit/bd59c96a0d8d96d4e98d55ba33a0def98f7bc507) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor if client side runtime to avoid registraion and employ the same optimizations as `for`.
+
 ## 0.3.37
 
 ### Patch Changes
