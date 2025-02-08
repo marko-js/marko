@@ -142,7 +142,12 @@ export function dynamicTagAttrs(
         );
       }
 
-      setConditionalRendererOnlyChild(childScope, nodeAccessor, content);
+      setConditionalRendererOnlyChild(
+        childScope,
+        nodeAccessor,
+        content,
+        createBranchScopeWithTagNameOrRenderer,
+      );
       attrs(childScope, nodeAccessor, attrsOrOp());
     } else if (renderer.___args) {
       const attributes = attrsOrOp();

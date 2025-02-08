@@ -1,4 +1,4 @@
-// size: 18464 (min) 6856 (brotli)
+// size: 18475 (min) 6856 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -948,7 +948,12 @@ function dynamicTagAttrs(nodeAccessor, getContent, inputIsArgs) {
       return renderer.d?.(childScope, attrsOrOp);
     let content = getContent?.(scope);
     if ("string" == typeof renderer)
-      setConditionalRendererOnlyChild(childScope, 0, content),
+      setConditionalRendererOnlyChild(
+        childScope,
+        0,
+        content,
+        createBranchScopeWithTagNameOrRenderer,
+      ),
         attrs(childScope, 0, attrsOrOp());
     else if (renderer.d) {
       let attributes = attrsOrOp();
@@ -1006,6 +1011,7 @@ function conditional(nodeAccessor, ...branches) {
         scope,
         nodeAccessor,
         branches[(scope[branchAccessor] = newBranchIndexOrOp)],
+        createBranchScopeWithRenderer,
       );
   };
 }
@@ -1024,7 +1030,12 @@ var dynamicTag = function (nodeAccessor, fn, getIntersection) {
       })(newRendererOrOp);
       (a = normalizedRenderer) !== (b = currentRenderer) && (a?.x || 0) !== b?.x
         ? ((scope[rendererAccessor] = normalizedRenderer),
-          setConditionalRenderer(scope, nodeAccessor, normalizedRenderer),
+          setConditionalRenderer(
+            scope,
+            nodeAccessor,
+            normalizedRenderer,
+            createBranchScopeWithTagNameOrRenderer,
+          ),
           fn && fn(scope),
           (op = DIRTY))
         : (op = CLEAN);
@@ -1033,11 +1044,16 @@ var dynamicTag = function (nodeAccessor, fn, getIntersection) {
     intersection2?.(scope, op);
   };
 };
-function setConditionalRenderer(scope, nodeAccessor, newRenderer) {
+function setConditionalRenderer(
+  scope,
+  nodeAccessor,
+  newRenderer,
+  createBranch2,
+) {
   let prevBranch =
       scope[nodeAccessor + "!"] || getEmptyBranch(scope[nodeAccessor]),
     newBranch = newRenderer
-      ? createBranchScopeWithTagNameOrRenderer(
+      ? createBranch2(
           newRenderer,
           scope.$global,
           scope,
@@ -1053,17 +1069,17 @@ function setConditionalRenderer(scope, nodeAccessor, newRenderer) {
     removeAndDestroyBranch(prevBranch),
     (scope[nodeAccessor + "!"] = newRenderer && newBranch));
 }
-function setConditionalRendererOnlyChild(scope, nodeAccessor, newRenderer) {
+function setConditionalRendererOnlyChild(
+  scope,
+  nodeAccessor,
+  newRenderer,
+  createBranch2,
+) {
   let prevBranch = scope[nodeAccessor + "!"],
     referenceNode = scope[nodeAccessor],
     newBranch =
       newRenderer &&
-      createBranchScopeWithTagNameOrRenderer(
-        newRenderer,
-        scope.$global,
-        scope,
-        referenceNode,
-      );
+      createBranch2(newRenderer, scope.$global, scope, referenceNode);
   (referenceNode.textContent = ""),
     newBranch && insertBranchBefore(newBranch, referenceNode, null),
     prevBranch && destroyBranch(prevBranch),

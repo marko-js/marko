@@ -39,6 +39,7 @@ export function conditional(
         scope,
         nodeAccessor,
         branches[(scope[branchAccessor] = newBranchIndexOrOp)],
+        createBranchScopeWithRenderer,
       );
     }
   };
@@ -74,7 +75,12 @@ export let dynamicTag = function dynamicTag(
         normalizeDynamicRenderer<Renderer>(newRendererOrOp);
       if (isDifferentRenderer(normalizedRenderer, currentRenderer)) {
         scope[rendererAccessor] = normalizedRenderer;
-        setConditionalRenderer(scope, nodeAccessor, normalizedRenderer);
+        setConditionalRenderer(
+          scope,
+          nodeAccessor,
+          normalizedRenderer,
+          createBranchScopeWithTagNameOrRenderer,
+        );
         fn && fn(scope);
         op = DIRTY;
       } else {
@@ -85,16 +91,22 @@ export let dynamicTag = function dynamicTag(
   };
 };
 
-function setConditionalRenderer(
+function setConditionalRenderer<T>(
   scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: Renderer | string | undefined,
+  newRenderer: T,
+  createBranch: (
+    renderer: NonNullable<T>,
+    $global: Scope["$global"],
+    parentScope: Scope,
+    parentNode: ParentNode,
+  ) => BranchScope,
 ) {
   const prevBranch =
     (scope[nodeAccessor + AccessorChar.ConditionalScope] as BranchScope) ||
     getEmptyBranch(scope[nodeAccessor] as Comment);
   const newBranch = newRenderer
-    ? createBranchScopeWithTagNameOrRenderer(
+    ? createBranch(
         newRenderer,
         scope.$global,
         scope,
@@ -114,10 +126,16 @@ function setConditionalRenderer(
   }
 }
 
-export function setConditionalRendererOnlyChild(
+export function setConditionalRendererOnlyChild<T>(
   scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: Renderer | string | undefined,
+  newRenderer: T,
+  createBranch: (
+    renderer: NonNullable<T>,
+    $global: Scope["$global"],
+    parentScope: Scope,
+    parentNode: ParentNode,
+  ) => BranchScope,
 ) {
   const prevBranch = scope[
     nodeAccessor + AccessorChar.ConditionalScope
@@ -125,12 +143,7 @@ export function setConditionalRendererOnlyChild(
   const referenceNode = scope[nodeAccessor] as Element;
   const newBranch =
     newRenderer &&
-    createBranchScopeWithTagNameOrRenderer(
-      newRenderer,
-      scope.$global,
-      scope,
-      referenceNode,
-    );
+    createBranch(newRenderer, scope.$global, scope, referenceNode);
 
   referenceNode.textContent = "";
 
