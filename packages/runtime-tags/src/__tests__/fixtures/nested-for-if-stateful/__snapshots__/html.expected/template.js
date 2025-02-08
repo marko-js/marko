@@ -5,7 +5,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const counts = [0, 0, 0];
   _$.resumeSingleNodeForOf(counts, (count, i) => {
     const _scope1_id = _$.nextScopeId();
-    let _ifScopeId, _ifRenderer;
+    let _ifScopeId, _ifBranch;
     const editing = false;
     _$.resumeSingleNodeConditional(() => {
       if (editing) {
@@ -16,7 +16,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
         _$.debug(_$.writeScope(_scope2_id, {
           "_": _$.ensureScopeWithId(_scope1_id)
         }), "__tests__/template.marko", "4:4");
-        _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_2_renderer");
+        _ifBranch = 0;
         _ifScopeId = _scope2_id;
       } else {
         const _scope3_id = _$.nextScopeId();
@@ -25,7 +25,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
         _$.debug(_$.writeScope(_scope3_id, {
           "_": _$.ensureScopeWithId(_scope1_id)
         }), "__tests__/template.marko", "12:4");
-        _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/template.marko_3_renderer");
+        _ifBranch = 1;
         _ifScopeId = _scope3_id;
       }
     }, _scope1_id, "#text/0");
@@ -34,7 +34,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       "count": count,
       "i": i,
       "_": _$.ensureScopeWithId(_scope0_id),
-      "#text/0(": _ifRenderer,
+      "#text/0(": _ifBranch,
       "#text/0!": _$.getScopeById(_ifScopeId)
     }), "__tests__/template.marko", "2:2", {
       "count": "2:6",

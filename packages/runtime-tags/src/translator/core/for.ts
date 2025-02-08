@@ -3,7 +3,6 @@ import {
   assertAllowedAttributes,
   assertNoArgs,
   assertNoVar,
-  getTagDef,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
@@ -11,11 +10,13 @@ import { AccessorChar, WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
+import {
+  getOptimizedOnlyChildNodeRef,
+  isOnlyChildInParent,
+} from "../util/is-only-child-in-parent";
 import { isStatefulReferences } from "../util/is-stateful";
 import {
-  type Binding,
   BindingType,
-  createBinding,
   dropReferences,
   getAllTagReferenceNodes,
   getScopeAccessorLiteral,
@@ -48,20 +49,9 @@ import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { currentProgramPath } from "../visitors/program";
-import {
-  kNativeTagBinding,
-  kSerializeMarker,
-} from "../visitors/tag/native-tag";
+import { kSerializeMarker } from "../visitors/tag/native-tag";
 
 type ForType = "in" | "of" | "to";
-const kForMarkerBinding = Symbol("for marker binding");
-const kOnlyChildInParent = Symbol("only child in parent");
-declare module "@marko/compiler/dist/types" {
-  export interface NodeExtra {
-    [kForMarkerBinding]?: Binding;
-    [kOnlyChildInParent]?: boolean;
-  }
-}
 
 export default {
   analyze(tag) {
@@ -104,29 +94,12 @@ export default {
       return;
     }
 
-    bodySection.isBranch = true;
-
     const section = getOrCreateSection(tag);
-
-    if (isOnlyChildInParent(tag)) {
-      const parentTag = getParentTag(tag)!.node;
-      const parentTagName = (parentTag.name as t.StringLiteral)?.value;
-      (parentTag.extra ??= {})[kNativeTagBinding] ??= createBinding(
-        "#" + parentTagName,
-        BindingType.dom,
-        section,
-      );
-    } else {
-      tagExtra[kForMarkerBinding] = createBinding(
-        "#text",
-        BindingType.dom,
-        section,
-      );
-    }
-
     trackParamsReferences(tagBody, BindingType.param, undefined, tagExtra);
     mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
+    getOptimizedOnlyChildNodeRef(tag, section);
     bodySection.upstreamExpression = tagExtra;
+    bodySection.isBranch = true;
   },
   translate: translateByTarget({
     html: {
@@ -159,11 +132,8 @@ export default {
         const { node } = tag;
         const tagExtra = node.extra!;
         const isStateful = isStatefulReferences(tagExtra.referencedBindings);
-        const parentTag = getParentTag(tag);
         const onlyChildInParentOptimization = isOnlyChildInParent(tag);
-        const nodeRef = onlyChildInParentOptimization
-          ? parentTag!.node.extra![kNativeTagBinding]!
-          : tag.node.extra![kForMarkerBinding]!;
+        const nodeRef = getOptimizedOnlyChildNodeRef(tag, tagSection);
         const forAttrs = getKnownAttrValues(node);
         const forType = getForType(node)!;
         const params = node.body.params;
@@ -176,8 +146,8 @@ export default {
             bodySection.content.startType !== ContentType.Text);
         let keyExpression: t.Expression | undefined;
 
-        if (singleNodeOptimization && onlyChildInParentOptimization) {
-          parentTag!.node.extra![kSerializeMarker] = false;
+        if (onlyChildInParentOptimization) {
+          getParentTag(tag)!.node.extra![kSerializeMarker] = false;
         }
 
         if (isStateful || hasStatefulClosures) {
@@ -305,7 +275,7 @@ export default {
           );
         }
 
-        if (singleNodeOptimization && onlyChildInParentOptimization) {
+        if (onlyChildInParentOptimization) {
           forTagArgs.push(t.numericLiteral(1));
         }
 
@@ -346,9 +316,7 @@ export default {
         const { node } = tag;
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
-        const nodeRef = isOnlyChildInParent(tag)
-          ? getParentTag(tag)!.node.extra![kNativeTagBinding]!
-          : tag.node.extra![kForMarkerBinding]!;
+        const nodeRef = getOptimizedOnlyChildNodeRef(tag, tagSection);
         setClosureSignalBuilder(tag, (_closureSignal, render, intersection) => {
           return callRuntime(
             "loopClosure",
@@ -579,18 +547,4 @@ function getBaseArgsInForTag(
         attrs.step || t.numericLiteral(1),
       ];
   }
-}
-
-function isOnlyChildInParent(tag: t.NodePath<t.MarkoTag>) {
-  const extra = tag.node.extra!;
-  if (extra[kOnlyChildInParent] !== undefined) {
-    return extra[kOnlyChildInParent];
-  }
-
-  const parentTag = getParentTag(tag);
-  if (parentTag && getTagDef(parentTag)?.html) {
-    return (extra[kOnlyChildInParent] =
-      (tag.parent as t.MarkoTagBody).body.length === 1);
-  }
-  return (extra[kOnlyChildInParent] = false);
 }

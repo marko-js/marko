@@ -11,7 +11,8 @@
       "$_tagName_input": "n",
       "$_dynamicTagName": "r",
       "$_tagName_effect": "c",
-      "$_tagName": "s"
+      "$_tagName": "s",
+      "$_dynamicTag": "v"
     }
   }
 }

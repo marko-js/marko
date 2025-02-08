@@ -1,4 +1,4 @@
-// size: 353 (min) 221 (brotli)
+// size: 336 (min) 218 (brotli)
 const _i$for_content = _$.value(3, (_scope, i) => _$.data(_scope[1], i)),
   _params_2$for_content = _$.value(2, (_scope, _params_2) =>
     _i$for_content(_scope, _params_2[0]),
@@ -14,14 +14,11 @@ const _i$for_content = _$.value(3, (_scope, i) => _$.data(_scope[1], i)),
   _setup$for_content = (_scope) => {
     _num$for_content._(_scope, _scope._[1]);
   },
-  _for_content = _$.register(
-    "a1",
-    _$.createRenderer(
-      "<button> </button>",
-      " D ",
-      _setup$for_content,
-      () => _params_2$for_content,
-    ),
+  _for_content = _$.createRenderer(
+    "<button> </button>",
+    " D ",
+    _setup$for_content,
+    () => _params_2$for_content,
   ),
   _for = _$.loopTo(0, _for_content),
   _num = _$.state(

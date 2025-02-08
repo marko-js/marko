@@ -21,16 +21,37 @@ import {
 } from "./scope";
 import { CLEAN, DIRTY, MARK, type Signal, type SignalOp } from "./signals";
 
-export function patchConditionals(
-  fn: <T extends typeof conditional | typeof conditionalOnlyChild>(
-    cond: T,
-  ) => T,
-) {
-  conditional = fn(conditional);
-  conditionalOnlyChild = fn(conditionalOnlyChild);
+export function conditional(
+  nodeAccessor: Accessor,
+  ...branches: Renderer[]
+): Signal<number> {
+  const branchAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
+  return (scope, newBranchIndexOrOp) => {
+    if (
+      newBranchIndexOrOp !== (scope[branchAccessor] as number) &&
+      newBranchIndexOrOp !== DIRTY &&
+      newBranchIndexOrOp !== MARK &&
+      newBranchIndexOrOp !== CLEAN
+    ) {
+      (scope[nodeAccessor].nodeType > NodeType.Element
+        ? setConditionalRenderer
+        : setConditionalRendererOnlyChild)(
+        scope,
+        nodeAccessor,
+        branches[(scope[branchAccessor] = newBranchIndexOrOp)],
+        createBranchScopeWithRenderer,
+      );
+    }
+  };
 }
 
-export let conditional = function conditional(
+export function patchDynamicTag(
+  fn: <T extends typeof dynamicTag>(cond: T) => T,
+) {
+  // Injection point for compat layer.
+  dynamicTag = fn(dynamicTag);
+}
+export let dynamicTag = function dynamicTag(
   nodeAccessor: Accessor,
   fn?: ((scope: Scope) => void) | 0,
   getIntersection?: () => Signal<never>,
@@ -54,71 +75,11 @@ export let conditional = function conditional(
         normalizeDynamicRenderer<Renderer>(newRendererOrOp);
       if (isDifferentRenderer(normalizedRenderer, currentRenderer)) {
         scope[rendererAccessor] = normalizedRenderer;
-        setConditionalRenderer(scope, nodeAccessor, normalizedRenderer);
-        fn && fn(scope);
-        op = DIRTY;
-      } else {
-        op = CLEAN;
-      }
-    }
-    intersection?.(scope, op);
-  };
-};
-
-export function setConditionalRenderer(
-  scope: Scope,
-  nodeAccessor: Accessor,
-  newRenderer: Renderer | string | undefined,
-) {
-  const prevBranch =
-    (scope[nodeAccessor + AccessorChar.ConditionalScope] as BranchScope) ||
-    getEmptyBranch(scope[nodeAccessor] as Comment);
-  const newBranch = newRenderer
-    ? createBranchScopeWithTagNameOrRenderer(
-        newRenderer,
-        scope.$global,
-        scope,
-        prevBranch.___endNode.parentNode!,
-      )
-    : (getEmptyBranch(scope[nodeAccessor] as Comment) as BranchScope);
-  insertBranchBefore(
-    newBranch,
-    prevBranch.___endNode.parentNode!,
-    prevBranch.___endNode.nextSibling,
-  );
-  removeAndDestroyBranch(prevBranch);
-  scope[nodeAccessor + AccessorChar.ConditionalScope] =
-    newRenderer && newBranch;
-}
-
-export let conditionalOnlyChild = function conditional(
-  nodeAccessor: Accessor,
-  fn?: ((scope: Scope) => void) | 0,
-  getIntersection?: () => Signal<never>,
-): Signal<Renderer | string | undefined> {
-  const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
-  let intersection: Signal<never> | undefined =
-    getIntersection &&
-    ((scope, op) => (intersection = getIntersection!())(scope, op));
-
-  return (scope, newRendererOrOp) => {
-    if (newRendererOrOp === DIRTY) return;
-
-    let currentRenderer = scope[rendererAccessor] as
-      | Renderer
-      | string
-      | undefined;
-    let op = newRendererOrOp as SignalOp;
-
-    if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
-      const normalizedRenderer =
-        normalizeDynamicRenderer<Renderer>(newRendererOrOp);
-      if (isDifferentRenderer(normalizedRenderer, currentRenderer)) {
-        currentRenderer = scope[rendererAccessor] = normalizedRenderer;
-        setConditionalRendererOnlyChild(
+        setConditionalRenderer(
           scope,
           nodeAccessor,
           normalizedRenderer,
+          createBranchScopeWithTagNameOrRenderer,
         );
         fn && fn(scope);
         op = DIRTY;
@@ -130,10 +91,51 @@ export let conditionalOnlyChild = function conditional(
   };
 };
 
-export function setConditionalRendererOnlyChild(
+function setConditionalRenderer<T>(
   scope: Scope,
   nodeAccessor: Accessor,
-  newRenderer: Renderer | string | undefined,
+  newRenderer: T,
+  createBranch: (
+    renderer: NonNullable<T>,
+    $global: Scope["$global"],
+    parentScope: Scope,
+    parentNode: ParentNode,
+  ) => BranchScope,
+) {
+  const prevBranch =
+    (scope[nodeAccessor + AccessorChar.ConditionalScope] as BranchScope) ||
+    getEmptyBranch(scope[nodeAccessor] as Comment);
+  const newBranch = newRenderer
+    ? createBranch(
+        newRenderer,
+        scope.$global,
+        scope,
+        prevBranch.___endNode.parentNode!,
+      )
+    : (getEmptyBranch(scope[nodeAccessor] as Comment) as BranchScope);
+
+  if (prevBranch !== newBranch) {
+    insertBranchBefore(
+      newBranch,
+      prevBranch.___endNode.parentNode!,
+      prevBranch.___endNode.nextSibling,
+    );
+    removeAndDestroyBranch(prevBranch);
+    scope[nodeAccessor + AccessorChar.ConditionalScope] =
+      newRenderer && newBranch;
+  }
+}
+
+export function setConditionalRendererOnlyChild<T>(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  newRenderer: T,
+  createBranch: (
+    renderer: NonNullable<T>,
+    $global: Scope["$global"],
+    parentScope: Scope,
+    parentNode: ParentNode,
+  ) => BranchScope,
 ) {
   const prevBranch = scope[
     nodeAccessor + AccessorChar.ConditionalScope
@@ -141,12 +143,7 @@ export function setConditionalRendererOnlyChild(
   const referenceNode = scope[nodeAccessor] as Element;
   const newBranch =
     newRenderer &&
-    createBranchScopeWithTagNameOrRenderer(
-      newRenderer,
-      scope.$global,
-      scope,
-      referenceNode,
-    );
+    createBranch(newRenderer, scope.$global, scope, referenceNode);
 
   referenceNode.textContent = "";
 

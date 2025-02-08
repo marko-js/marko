@@ -1,4 +1,4 @@
-// size: 641 (min) 280 (brotli)
+// size: 640 (min) 297 (brotli)
 const _setup_$1 = () => {},
   _value_$1 = _$.value(3, (_scope, value) => _$.data(_scope[0], value)),
   _input_$1 = _$.value(2, (_scope, input) => _value_$1(_scope, input.value)),
@@ -32,7 +32,7 @@ const _tagName_input = _$.dynamicTagAttrs(0),
     },
     () => _tagName_input,
   ),
-  _dynamicTagName = _$.conditional(0, 0, () => _expr_Text_val),
+  _dynamicTag = _$.dynamicTag(0, 0, () => _expr_Text_val),
   _tagName_effect = _$.effect("c0", (_scope, { 2: tagName }) =>
     _$.on(_scope[1], "click", function () {
       _tagName(_scope, tagName === child1 ? child2 : child1);
@@ -41,8 +41,8 @@ const _tagName_input = _$.dynamicTagAttrs(0),
   _tagName = _$.state(
     2,
     (_scope, tagName) => {
-      _tagName_effect(_scope), _dynamicTagName(_scope, tagName);
+      _tagName_effect(_scope), _dynamicTag(_scope, tagName);
     },
-    () => _dynamicTagName,
+    () => _dynamicTag,
   );
 init();

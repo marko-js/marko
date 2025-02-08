@@ -5,7 +5,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write("<ul>");
   _$.resumeSingleNodeForOf(input.comments, (comment, i) => {
     const _scope1_id = _$.nextScopeId();
-    let _ifScopeId, _ifRenderer;
+    let _ifScopeId, _ifBranch;
     const id = `${input.path || "c"}-${i}`;
     const open = true;
     _$.write(`<li${_$.attr("id", id)}${_$.attr("hidden", !open)}><span>${_$.escapeXML(comment.text)}${_$.markResumeNode(_scope1_id, "#text/1")}</span><button>${_$.escapeXML(open ? "[-]" : "[+]")}${_$.markResumeNode(_scope1_id, "#text/3")}</button>${_$.markResumeNode(_scope1_id, "#button/2")}`);
@@ -21,7 +21,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
           "#childScope/0": _$.writeExistingScope(_childScope),
           "_": _$.ensureScopeWithId(_scope1_id)
         }), "__tests__/tags/comments.marko", "10:8");
-        _$.register(_ifRenderer = /* @__PURE__ */_$.createRenderer(() => {}), "__tests__/tags/comments.marko_2_renderer");
+        _ifBranch = 0;
         _ifScopeId = _scope2_id;
       }
     }, _scope1_id, "#text/4");
@@ -33,7 +33,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       "i": i,
       "id": id,
       "open": open,
-      "#text/4(": _ifRenderer,
+      "#text/4(": _ifBranch,
       "#text/4!": _$.getScopeById(_ifScopeId),
       "_": _$.ensureScopeWithId(_scope0_id)
     }), "__tests__/tags/comments.marko", "2:4", {

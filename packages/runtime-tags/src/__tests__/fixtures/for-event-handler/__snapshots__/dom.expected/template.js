@@ -14,7 +14,7 @@ const _num$for_content = /* @__PURE__ */_$.loopClosure("#text/0", (_scope, num) 
 const _setup$for_content = _scope => {
   _num$for_content._(_scope, _scope._["num"]);
 };
-const _for_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("<button> </button>", /* get, next(1), get */" D ", _setup$for_content, () => _params_2$for_content));
+const _for_content = /* @__PURE__ */_$.createRenderer("<button> </button>", /* get, next(1), get */" D ", _setup$for_content, () => _params_2$for_content);
 const _for = /* @__PURE__ */_$.loopTo("#text/0", _for_content);
 const _num = /* @__PURE__ */_$.state("num", (_scope, num) => {
   _for(_scope, [num, 0, 1]);

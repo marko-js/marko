@@ -1,15 +1,14 @@
-// size: 502 (min) 275 (brotli)
+// size: 501 (min) 262 (brotli)
 const _inputThingContent_input = _$.dynamicTagAttrs(1),
-  _dynamicTagName = _$.conditional(
+  _dynamicTag = _$.dynamicTag(
     1,
     (_scope) => _inputThingContent_input(_scope, () => ({})),
     () => _inputThingContent_input,
   ),
   _input_thing_content_ = _$.value(
     6,
-    (_scope, input_thing_content) =>
-      _dynamicTagName(_scope, input_thing_content),
-    () => _dynamicTagName,
+    (_scope, input_thing_content) => _dynamicTag(_scope, input_thing_content),
+    () => _dynamicTag,
   ),
   _input_thing_selected_ = _$.value(5, (_scope, input_thing_selected) =>
     _$.classAttr(_scope[0], { selected: input_thing_selected }),

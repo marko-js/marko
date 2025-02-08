@@ -1,10 +1,10 @@
-// size: 278 (min) 194 (brotli)
+// size: 277 (min) 192 (brotli)
 const _x_content = _$.register(
     "a0",
     _$.createRendererWithOwner("Body Content", ""),
   ),
   _x_input = _$.dynamicTagAttrs(0, _x_content),
-  _dynamicTagName = _$.conditional(
+  _dynamicTag = _$.dynamicTag(
     0,
     (_scope) => _x_input(_scope, () => ({})),
     () => _x_input,
@@ -17,8 +17,8 @@ const _x_content = _$.register(
   _x = _$.state(
     2,
     (_scope, x) => {
-      _x_effect(_scope), _dynamicTagName(_scope, x || _x_content(_scope));
+      _x_effect(_scope), _dynamicTag(_scope, x || _x_content(_scope));
     },
-    () => _dynamicTagName,
+    () => _dynamicTag,
   );
 init();

@@ -4,7 +4,7 @@ export { getAbortSignal, resetAbortSignal } from "./dom/abort-signal";
 export { compat } from "./dom/compat";
 export {
   conditional,
-  conditionalOnlyChild,
+  dynamicTag,
   loopIn,
   loopOf,
   loopTo,

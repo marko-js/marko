@@ -1,4 +1,4 @@
-// size: 403 (min) 245 (brotli)
+// size: 402 (min) 242 (brotli)
 const _setup_ = () => {},
   _id_ = _$.value(3, (_scope, id) => _$.data(_scope[0], id)),
   _input_ = _$.value(2, (_scope, input) => _id_(_scope, input.id)),
@@ -11,7 +11,7 @@ var child = _$.createTemplate(
   () => _params__,
 );
 const _tagName_input = _$.dynamicTagAttrs(1),
-  _dynamicTagName = _$.conditional(
+  _dynamicTag = _$.dynamicTag(
     1,
     (_scope) => _tagName_input(_scope, () => ({ id: "dynamic" })),
     () => _tagName_input,
@@ -24,8 +24,8 @@ const _tagName_input = _$.dynamicTagAttrs(1),
   _tagName = _$.state(
     2,
     (_scope, tagName) => {
-      _tagName_effect(_scope), _dynamicTagName(_scope, tagName);
+      _tagName_effect(_scope), _dynamicTag(_scope, tagName);
     },
-    () => _dynamicTagName,
+    () => _dynamicTag,
   );
 init();

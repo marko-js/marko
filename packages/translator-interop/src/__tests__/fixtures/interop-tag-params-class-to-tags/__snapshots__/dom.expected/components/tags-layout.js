@@ -8,7 +8,7 @@ const _expr_Text_count = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _inputContent_input(_scope, () => [count, "hello"]);
 }, () => _inputContent_input);
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", 0, () => _expr_Text_count);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", 0, () => _expr_Text_count);
 const _count_effect = _$.effect("__tests__/components/tags-layout.marko_0_count", (_scope, {
   count
 }) => _$.on(_scope["#button/0"], "click", function () {
@@ -18,7 +18,7 @@ const _count = /* @__PURE__ */_$.state("count", (_scope, count) => {
   _$.data(_scope["#text/1"], count);
   _count_effect(_scope);
 }, () => _expr_Text_count);
-export const _input_content_ = /* @__PURE__ */_$.value("input_content", (_scope, input_content) => _dynamicTagName(_scope, input_content), () => _dynamicTagName);
+export const _input_content_ = /* @__PURE__ */_$.value("input_content", (_scope, input_content) => _dynamicTag(_scope, input_content), () => _dynamicTag);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_content_(_scope, input.content), () => _input_content_);
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
 export function _setup_(_scope) {

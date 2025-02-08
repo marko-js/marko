@@ -1,4 +1,4 @@
-// size: 341 (min) 225 (brotli)
+// size: 340 (min) 223 (brotli)
 const _tagName_content = _$.register(
     "a0",
     _$.createRendererWithOwner("body content", ""),
@@ -12,7 +12,7 @@ const _tagName_content = _$.register(
     },
     () => _tagName_input,
   ),
-  _dynamicTagName = _$.conditional(0, 0, () => _expr_Text_className),
+  _dynamicTag = _$.dynamicTag(0, 0, () => _expr_Text_className),
   _tagName_effect = _$.effect("a1", (_scope, { 2: tagName }) =>
     _$.on(_scope[1], "click", function () {
       _tagName(_scope, "span" === tagName ? "div" : "span");
@@ -22,8 +22,8 @@ const _tagName_content = _$.register(
     2,
     (_scope, tagName) => {
       _tagName_effect(_scope),
-        _dynamicTagName(_scope, tagName || _tagName_content(_scope));
+        _dynamicTag(_scope, tagName || _tagName_content(_scope));
     },
-    () => _dynamicTagName,
+    () => _dynamicTag,
   );
 init();

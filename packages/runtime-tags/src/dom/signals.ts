@@ -2,7 +2,6 @@ import { type Accessor, AccessorChar, type Scope } from "../common/types";
 import { getAbortSignal } from "./abort-signal";
 import { emptyMarkerArray } from "./control-flow";
 import { queueEffect, queueSource, rendering } from "./queue";
-import type { Renderer } from "./renderer";
 import { register } from "./resume";
 
 export const MARK: unique symbol = MARKO_DEBUG ? Symbol("mark") : ({} as any);
@@ -166,23 +165,19 @@ export function loopClosure<T>(
 
 export function conditionalClosure<T>(
   ownerConditionalNodeAccessor: Accessor,
-  getRenderer: () => Renderer,
+  branch: number,
   fn: SignalFn<T> | 0,
   getIntersection?: () => Signal<never>,
 ): SignalFn<T> {
   const signal = closure(fn, getIntersection);
   const scopeAccessor =
     ownerConditionalNodeAccessor + AccessorChar.ConditionalScope;
-  const rendererAccessor =
+  const branchAccessor =
     ownerConditionalNodeAccessor + AccessorChar.ConditionalRenderer;
   const helperSignal = (scope: Scope, value: T) => {
-    const conditionalScope = scope[scopeAccessor];
-    if (
-      conditionalScope &&
-      !conditionalScope.___pending &&
-      (scope[rendererAccessor] as Renderer)?.___id === getRenderer().___id
-    ) {
-      queueSource(conditionalScope, signal, value);
+    const ifScope = scope[scopeAccessor];
+    if (ifScope && !ifScope.___pending && scope[branchAccessor] === branch) {
+      queueSource(ifScope, signal, value);
     }
   };
   helperSignal._ = signal;

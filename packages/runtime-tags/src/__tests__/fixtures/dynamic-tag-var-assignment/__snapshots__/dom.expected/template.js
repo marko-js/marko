@@ -4,7 +4,7 @@ import Counter from "./tags/counter.marko";
 const getCounter = _getCounter;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _getCounter_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0");
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => {
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _scope => {
   _$.setTagVar(_scope, "#text/0!", _count);
   _getCounter_input(_scope, () => ({}));
 }, () => _getCounter_input);
@@ -14,7 +14,7 @@ const _setup__effect = _$.effect("__tests__/template.marko_0", _scope => _$.on(_
 }));
 export function _setup_(_scope) {
   _setup__effect(_scope);
-  _dynamicTagName(_scope, getCounter());
+  _dynamicTag(_scope, getCounter());
 }
 function _getCounter() {
   return Counter; // breaks tag name analysis.

@@ -1,15 +1,17 @@
-// size: 438 (min) 245 (brotli)
+// size: 421 (min) 235 (brotli)
 const _item$for_content = _$.value(2, (_scope, item) =>
     _$.data(_scope[0], item),
   ),
   _params_2$for_content = _$.value(1, (_scope, _params_2) =>
     _item$for_content(_scope, _params_2[0]),
   ),
-  _for_content = _$.register(
-    "a0",
-    _$.createRenderer(" ", " ", void 0, () => _params_2$for_content),
+  _for_content = _$.createRenderer(
+    " ",
+    " ",
+    void 0,
+    () => _params_2$for_content,
   ),
-  _expr_id_items_effect = _$.effect("a1", (_scope, { 3: id, 4: items }) =>
+  _expr_id_items_effect = _$.effect("a0", (_scope, { 3: id, 4: items }) =>
     _$.on(_scope[1], "click", function () {
       const nextId = id + 1;
       _id(_scope, nextId), _items(_scope, [...items, nextId]);
@@ -19,7 +21,7 @@ const _item$for_content = _$.value(2, (_scope, item) =>
     _expr_id_items_effect(_scope);
   }),
   _for = _$.loopOf(0, _for_content),
-  _items_effect = _$.effect("a2", (_scope, { 4: items }) =>
+  _items_effect = _$.effect("a1", (_scope, { 4: items }) =>
     _$.on(_scope[2], "click", function () {
       _items(_scope, items.slice(0, -1));
     }),

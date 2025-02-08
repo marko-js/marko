@@ -14,7 +14,8 @@
       "$_selected": "l",
       "$_inputThingContent_input": "m",
       "$_input_thing_content_": "u",
-      "$_define_content": "f"
+      "$_define_content": "f",
+      "$_dynamicTag": "g"
     }
   }
 }

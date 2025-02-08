@@ -37,10 +37,10 @@ const _expr_c_d = /* @__PURE__ */_$.intersection(2, _scope => {
     d
   }]);
 }, () => /* @__PURE__ */_$.inChild("#childScope/1", _customTag_input_class));
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/3", 0, () => _expr_Text_c_d);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3", 0, () => _expr_Text_c_d);
 export const _d_ = /* @__PURE__ */_$.value("d", 0, () => _$.intersections([_expr_c_d, _expr_Text_c_d]));
 export const _c_ = /* @__PURE__ */_$.value("c", 0, () => _$.intersections([_expr_c_d, _expr_Text_c_d]));
-export const _input_test_ = /* @__PURE__ */_$.value("input_test", (_scope, input_test) => _dynamicTagName(_scope, input_test), () => _dynamicTagName);
+export const _input_test_ = /* @__PURE__ */_$.value("input_test", (_scope, input_test) => _dynamicTag(_scope, input_test), () => _dynamicTag);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_test_(_scope, input.test);
   _c_(_scope, input.c);

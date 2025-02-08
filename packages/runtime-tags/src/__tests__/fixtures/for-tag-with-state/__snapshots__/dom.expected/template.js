@@ -7,7 +7,7 @@ const _params_3$for_content = /* @__PURE__ */_$.value("_params_3", (_scope, _par
   _val$for_content2(_scope, _params_3[0]);
   _i$for_content2(_scope, _params_3[1]);
 });
-const _for_content2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, () => _params_3$for_content));
+const _for_content2 = /* @__PURE__ */_$.createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", void 0, () => _params_3$for_content);
 const _i$for_content = /* @__PURE__ */_$.value("i", (_scope, i) => _$.data(_scope["#text/0"], i));
 const _val$for_content = /* @__PURE__ */_$.value("val", (_scope, val) => _$.data(_scope["#text/1"], val));
 const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => {

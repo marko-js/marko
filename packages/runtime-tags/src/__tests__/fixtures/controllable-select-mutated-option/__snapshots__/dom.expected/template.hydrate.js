@@ -1,18 +1,15 @@
-// size: 683 (min) 324 (brotli)
+// size: 666 (min) 332 (brotli)
 const _opt$for_content = _$.value(3, (_scope, opt) => {
     _$.attr(_scope[0], "value", opt), _$.data(_scope[1], opt);
   }),
   _params_2$for_content = _$.value(2, (_scope, _params_2) =>
     _opt$for_content(_scope, _params_2[0]),
   ),
-  _for_content = _$.register(
-    "a1",
-    _$.createRenderer(
-      "<option> </option>",
-      " D ",
-      void 0,
-      () => _params_2$for_content,
-    ),
+  _for_content = _$.createRenderer(
+    "<option> </option>",
+    " D ",
+    void 0,
+    () => _params_2$for_content,
   ),
   _for = _$.loopOf(0, _for_content),
   _value = _$.state(6, (_scope, value) => {
@@ -20,7 +17,7 @@ const _opt$for_content = _$.value(3, (_scope, opt) => {
       _$.data(_scope[1], value);
   }),
   _options_ = _$.value(5, (_scope, options_0) => _value(_scope, options_0)),
-  _options_effect = _$.effect("a2", (_scope, { 4: options }) => {
+  _options_effect = _$.effect("a1", (_scope, { 4: options }) => {
     _$.on(_scope[2], "click", function () {
       _options(_scope, options.slice(1));
     }),
@@ -38,7 +35,7 @@ function _valueChange(_scope) {
     _value(_scope, _new_value);
   };
 }
-_$.effect("a3", (_scope) => {
+_$.effect("a2", (_scope) => {
   _$.controllable_select_value_effect(_scope, 0),
     _$.on(_scope[0], "change", console.log),
     _$.on(_scope[0], "input", console.log);

@@ -10,7 +10,7 @@ const _expr_Text_x = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _tags0_input(_scope, () => x);
 }, () => _tags0_input);
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/2", _scope => _$.setTagVar(_scope, "#text/2!", _y), () => _expr_Text_x);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", _scope => _$.setTagVar(_scope, "#text/2!", _y), () => _expr_Text_x);
 const _y = _$.registerBoundSignal("__tests__/template.marko_0_y/var", /* @__PURE__ */_$.value("y", (_scope, y) => _$.data(_scope["#text/3"], y)));
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
   x
@@ -23,6 +23,6 @@ const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
 }, () => _expr_Text_x);
 export function _setup_(_scope) {
   _x(_scope, 1);
-  _dynamicTagName(_scope, tags[0]);
+  _dynamicTag(_scope, tags[0]);
 }
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

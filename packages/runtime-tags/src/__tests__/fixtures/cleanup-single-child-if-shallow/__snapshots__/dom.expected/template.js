@@ -8,8 +8,8 @@ const _setup$if_content = _scope => {
     write: _write(_scope)
   });
 };
-const _if_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$if_content));
-const _if = /* @__PURE__ */_$.conditional("#text/2", 0);
+const _if_content = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$if_content);
+const _if = /* @__PURE__ */_$.conditional("#text/2", _if_content);
 const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
   show
 }) => _$.on(_scope["#button/0"], "click", function () {
@@ -17,7 +17,7 @@ const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
 }));
 const _show = /* @__PURE__ */_$.state("show", (_scope, show) => {
   _show_effect(_scope);
-  _if(_scope, show ? _if_content : null);
+  _if(_scope, show ? 0 : 1);
 });
 export function _setup_(_scope) {
   _show(_scope, true);

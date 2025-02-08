@@ -1,4 +1,4 @@
-// size: 1140 (min) 541 (brotli)
+// size: 1109 (min) 535 (brotli)
 const _expr_comment_comments_id$if_content = intersection(
     2,
     (_scope) => {
@@ -11,24 +11,21 @@ const _expr_comment_comments_id$if_content = intersection(
   ),
   _id$if_content = conditionalClosure(
     4,
-    () => _if_content,
+    0,
     0,
     () => _expr_comment_comments_id$if_content,
   ),
   _comment_comments$if_content = conditionalClosure(
     4,
-    () => _if_content,
+    0,
     0,
     () => _expr_comment_comments_id$if_content,
   ),
-  _if_content = register(
-    "a0",
-    createRenderer("<ul></ul>", "/ b&", (_scope) => {
-      _comment_comments$if_content._(_scope, _scope._[8]),
-        _id$if_content._(_scope, _scope._[10]),
-        _scope[0];
-    }),
-  ),
+  _if_content = createRenderer("<ul></ul>", "/ b&", (_scope) => {
+    _comment_comments$if_content._(_scope, _scope._[8]),
+      _id$if_content._(_scope, _scope._[10]),
+      _scope[0];
+  }),
   _expr_input_path_i$for_content = intersection(2, (_scope) => {
     const {
       _: { 4: input_path },
@@ -36,8 +33,8 @@ const _expr_comment_comments_id$if_content = intersection(
     } = _scope;
     _id$for_content(_scope, `${input_path || "c"}-${i}`);
   }),
-  _if$for_content = conditional(4),
-  _open$for_content_effect = effect("a1", (_scope, { 11: open }) =>
+  _if$for_content = conditional(4, _if_content),
+  _open$for_content_effect = effect("a0", (_scope, { 11: open }) =>
     on(_scope[2], "click", function () {
       _open$for_content(_scope, !open);
     }),
@@ -54,7 +51,7 @@ const _expr_comment_comments_id$if_content = intersection(
   _comment_comments$for_content = value(
     8,
     (_scope, comment_comments) => {
-      _if$for_content(_scope, comment_comments ? _if_content : null),
+      _if$for_content(_scope, comment_comments ? 0 : 1),
         _comment_comments$if_content(_scope, comment_comments);
     },
     () => _if$for_content,
@@ -85,17 +82,14 @@ const _expr_comment_comments_id$if_content = intersection(
   ),
   _for = loopOf(
     0,
-    register(
-      "a2",
-      createRenderer(
-        "<li><span> </span><button> </button><!></li>",
-        " E l D l%",
-        (_scope) => {
-          _input_path$for_content._(_scope, _scope._[4]),
-            _open$for_content(_scope, !0);
-        },
-        () => _params_2$for_content,
-      ),
+    createRenderer(
+      "<li><span> </span><button> </button><!></li>",
+      " E l D l%",
+      (_scope) => {
+        _input_path$for_content._(_scope, _scope._[4]),
+          _open$for_content(_scope, !0);
+      },
+      () => _params_2$for_content,
     ),
   ),
   _input_path_ = value(4, (_scope, input_path) =>

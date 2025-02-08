@@ -1,4 +1,4 @@
-// size: 788 (min) 404 (brotli)
+// size: 771 (min) 399 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 5: name, 6: write }) => {
@@ -39,17 +39,14 @@ const _expr_name_write_effect = _$.effect(
   _setup$for_content = (_scope) => {
     _write$for_content._(_scope, _scope._[4]), _scope[0];
   },
-  _for_content = _$.register(
-    "b1",
-    _$.createRenderer(
-      "<div> </div><span> </span><p> </p>",
-      "/D lD lD l&",
-      _setup$for_content,
-      () => _params_2$for_content,
-    ),
+  _for_content = _$.createRenderer(
+    "<div> </div><span> </span><p> </p>",
+    "/D lD lD l&",
+    _setup$for_content,
+    () => _params_2$for_content,
   ),
   _for = _$.loopOf(2, _for_content),
-  _items_effect = _$.effect("b2", (_scope, { 3: items }) =>
+  _items_effect = _$.effect("b1", (_scope, { 3: items }) =>
     _$.on(_scope[0], "click", function () {
       _items(_scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
     }),

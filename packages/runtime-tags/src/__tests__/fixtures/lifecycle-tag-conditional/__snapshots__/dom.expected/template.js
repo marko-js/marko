@@ -16,12 +16,12 @@ const _x$if_content_effect = _$.effect("__tests__/template.marko_1_x", (_scope, 
     document.getElementById("ref").textContent = "Destroy";
   }
 }));
-const _x$if_content = /* @__PURE__ */_$.conditionalClosure("#text/0", () => _if_content, (_scope, x) => _x$if_content_effect(_scope));
+const _x$if_content = /* @__PURE__ */_$.conditionalClosure("#text/0", 0, (_scope, x) => _x$if_content_effect(_scope));
 const _setup$if_content = _scope => {
   _x$if_content._(_scope, _scope._["x"]);
 };
-const _if_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("", "", _setup$if_content));
-const _if = /* @__PURE__ */_$.conditional("#text/0", 0);
+const _if_content = /* @__PURE__ */_$.createRenderer("", "", _setup$if_content);
+const _if = /* @__PURE__ */_$.conditional("#text/0", _if_content);
 const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
   show
 }) => _$.on(_scope["#button/2"], "click", function () {
@@ -29,7 +29,7 @@ const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
 }));
 const _show = /* @__PURE__ */_$.state("show", (_scope, show) => {
   _show_effect(_scope);
-  _if(_scope, show ? _if_content : null);
+  _if(_scope, show ? 0 : 1);
 }, () => _if);
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
   x
