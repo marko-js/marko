@@ -1,4 +1,4 @@
-// size: 1196 (min) 503 (brotli)
+// size: 1162 (min) 494 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 3: name, 4: write }) =>
@@ -51,14 +51,11 @@ const _expr_name_write_effect = _$.effect(
       _outerItem$for_content2._(_scope, _scope._[3]),
       _scope[0];
   },
-  _for_content2 = _$.register(
-    "b1",
-    _$.createRenderer(
-      "<div><div> </div></div>",
-      "D/D l&",
-      _setup$for_content2,
-      () => _params_3$for_content,
-    ),
+  _for_content2 = _$.createRenderer(
+    "<div><div> </div></div>",
+    "D/D l&",
+    _setup$for_content2,
+    () => _params_3$for_content,
   ),
   _for$for_content = _$.loopOf(1, _for_content2),
   _write$for_content = _$.loopClosure(
@@ -89,17 +86,14 @@ const _expr_name_write_effect = _$.effect(
       _scope[0],
       _items$for_content._(_scope, _scope._[3]);
   },
-  _for_content = _$.register(
-    "b2",
-    _$.createRenderer(
-      "<div><div> </div><!></div>",
-      "D/D l&%",
-      _setup$for_content,
-      () => _params_2$for_content,
-    ),
+  _for_content = _$.createRenderer(
+    "<div><div> </div><!></div>",
+    "D/D l&%",
+    _setup$for_content,
+    () => _params_2$for_content,
   ),
   _for = _$.loopOf(2, _for_content),
-  _items_effect = _$.effect("b3", (_scope, { 3: items }) =>
+  _items_effect = _$.effect("b1", (_scope, { 3: items }) =>
     _$.on(_scope[0], "click", function () {
       _items(_scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
     }),

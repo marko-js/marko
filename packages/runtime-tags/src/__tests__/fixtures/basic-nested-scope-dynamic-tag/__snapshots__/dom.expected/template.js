@@ -18,10 +18,10 @@ const _setup$falseChild_content = _scope => {
 };
 const _falseChild_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<button> </button>", /* get, next(1), get */" D ", _setup$falseChild_content));
 const _falseChild_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0", _falseChild_content);
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _falseChild_input(_scope, () => ({})), () => _falseChild_input);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _scope => _falseChild_input(_scope, () => ({})), () => _falseChild_input);
 const _count = /* @__PURE__ */_$.state("count", (_scope, count) => _count$falseChild_content(_scope, count));
 export function _setup_(_scope) {
   _count(_scope, 0);
-  _dynamicTagName(_scope, false || Child || _falseChild_content(_scope));
+  _dynamicTag(_scope, false || Child || _falseChild_content(_scope));
 }
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);

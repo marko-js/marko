@@ -29,8 +29,8 @@ const _expr_Text_value = /* @__PURE__ */_$.intersection(2, _scope => {
     valueChange: _valueChange(_scope)
   }));
 }, () => _tagSelect_input);
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", 0, () => _expr_Text_value);
-const _tag = /* @__PURE__ */_$.value("tag", (_scope, tag) => _dynamicTagName(_scope, (tag ? "select" : {}) || _tagSelect_content(_scope)), () => _dynamicTagName);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => _expr_Text_value);
+const _tag = /* @__PURE__ */_$.value("tag", (_scope, tag) => _dynamicTag(_scope, (tag ? "select" : {}) || _tagSelect_content(_scope)), () => _dynamicTag);
 const _value = /* @__PURE__ */_$.state("value", (_scope, value) => _$.data(_scope["#text/1"], value), () => _expr_Text_value);
 export function _setup_(_scope) {
   _value(_scope, "b");

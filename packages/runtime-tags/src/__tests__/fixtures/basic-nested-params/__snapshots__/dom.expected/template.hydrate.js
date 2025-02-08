@@ -1,4 +1,4 @@
-// size: 839 (min) 380 (brotli)
+// size: 838 (min) 396 (brotli)
 const _content_input = _$.dynamicTagAttrs(0),
   _expr_Text_value = _$.intersection(
     2,
@@ -8,12 +8,12 @@ const _content_input = _$.dynamicTagAttrs(0),
     },
     () => _content_input,
   ),
-  _dynamicTagName = _$.conditional(0, 0, () => _expr_Text_value),
+  _dynamicTag = _$.dynamicTag(0, 0, () => _expr_Text_value),
   _value_ = _$.value(4, 0, () => _expr_Text_value),
   _content_ = _$.value(
     3,
-    (_scope, content) => _dynamicTagName(_scope, content),
-    () => _dynamicTagName,
+    (_scope, content) => _dynamicTag(_scope, content),
+    () => _dynamicTag,
   ),
   _inner$child_content = _$.value(3, (_scope, inner) =>
     _$.data(_scope[1], inner),

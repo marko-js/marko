@@ -28,7 +28,8 @@
       "$_outer$child_content2": "D",
       "$_params_2$child_content": "O",
       "$_setup$child_content": "R",
-      "$_setup$child_content2": "_"
+      "$_setup$child_content2": "_",
+      "$_dynamicTag": "T"
     }
   }
 }

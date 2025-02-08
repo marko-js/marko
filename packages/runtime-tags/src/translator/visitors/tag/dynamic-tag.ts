@@ -258,10 +258,10 @@ export default {
       } else {
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"));
-        const signal = getSignal(section, nodeRef, "dynamicTagName");
+        const signal = getSignal(section, nodeRef, "dynamicTag");
         signal.build = () => {
           return callRuntime(
-            "conditional",
+            "dynamicTag",
             getScopeAccessorLiteral(nodeRef),
             getSignalFn(signal, [scopeIdentifier]),
             buildSignalIntersections(signal),

@@ -1,4 +1,4 @@
-// size: 1030 (min) 429 (brotli)
+// size: 1027 (min) 427 (brotli)
 const _Child_content2 = _$.register("a0", _$.createRendererWithOwner("Hi", "")),
   _Child_content = _$.register("a1", _$.createRendererWithOwner("Hi", "")),
   _input_value$Parent_content = _$.registerSubscriber(
@@ -24,19 +24,19 @@ const _Child_content2 = _$.register("a0", _$.createRendererWithOwner("Hi", "")),
     _expr_Parent_Child_effect(_scope);
   }),
   _Parent_input = _$.dynamicTagAttrs(5, _Parent_content),
-  _dynamicTagName3 = _$.conditional(
+  _dynamicTag3 = _$.dynamicTag(
     5,
     (_scope) => _Parent_input(_scope, () => ({})),
     () => _Parent_input,
   ),
   _Child_input2 = _$.dynamicTagAttrs(4, _Child_content2),
-  _dynamicTagName2 = _$.conditional(
+  _dynamicTag2 = _$.dynamicTag(
     4,
     (_scope) => _Child_input2(_scope, () => ({ href: "#bar" })),
     () => _Child_input2,
   ),
   _Child_input = _$.dynamicTagAttrs(2, _Child_content),
-  _dynamicTagName = _$.conditional(
+  _dynamicTag = _$.dynamicTag(
     2,
     (_scope) => _Child_input(_scope, () => ({ href: "#bar" })),
     () => _Child_input,
@@ -50,11 +50,10 @@ const _Child_content2 = _$.register("a0", _$.createRendererWithOwner("Hi", "")),
     12,
     (_scope, Child) => {
       _Child_effect(_scope),
-        _dynamicTagName(_scope, Child || _Child_content(_scope)),
-        _dynamicTagName2(_scope, Child || _Child_content2(_scope));
+        _dynamicTag(_scope, Child || _Child_content(_scope)),
+        _dynamicTag2(_scope, Child || _Child_content2(_scope));
     },
-    () =>
-      _$.intersections([_expr_Parent_Child, _dynamicTagName, _dynamicTagName2]),
+    () => _$.intersections([_expr_Parent_Child, _dynamicTag, _dynamicTag2]),
   ),
   _Parent_effect = _$.effect("a6", (_scope, { 11: Parent }) =>
     _$.on(_scope[6], "click", function () {
@@ -65,8 +64,8 @@ const _Child_content2 = _$.register("a0", _$.createRendererWithOwner("Hi", "")),
     11,
     (_scope, Parent) => {
       _Parent_effect(_scope),
-        _dynamicTagName3(_scope, Parent || _Parent_content(_scope));
+        _dynamicTag3(_scope, Parent || _Parent_content(_scope));
     },
-    () => _$.intersections([_expr_Parent_Child, _dynamicTagName3]),
+    () => _$.intersections([_expr_Parent_Child, _dynamicTag3]),
   );
 init();

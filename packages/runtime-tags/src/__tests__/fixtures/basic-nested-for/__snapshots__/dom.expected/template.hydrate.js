@@ -1,4 +1,4 @@
-// size: 685 (min) 371 (brotli)
+// size: 651 (min) 348 (brotli)
 const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
   _expr_outer_inner$for_content = _$.intersection(
     2,
@@ -25,14 +25,11 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
   _setup$for_content = (_scope) => {
     _outer$for_content._(_scope, _scope._[2]), _scope[0];
   },
-  _for_content2 = _$.register(
-    "b0",
-    _$.createRenderer(
-      "<div> </div>",
-      "/D l&",
-      _setup$for_content,
-      () => _params_3$for_content,
-    ),
+  _for_content2 = _$.createRenderer(
+    "<div> </div>",
+    "/D l&",
+    _setup$for_content,
+    () => _params_3$for_content,
   ),
   _for$for_content = _$.loopOf(0, _for_content2),
   _outer$for_content2 = _$.value(2, (_scope, outer) =>
@@ -49,17 +46,14 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
   _setup$for_content2 = (_scope) => {
     _items$for_content._(_scope, _scope._[2]);
   },
-  _for_content = _$.register(
-    "b1",
-    _$.createRenderer(
-      "<!><!><!>",
-      "D%D",
-      _setup$for_content2,
-      () => _params_2$for_content,
-    ),
+  _for_content = _$.createRenderer(
+    "<!><!><!>",
+    "D%D",
+    _setup$for_content2,
+    () => _params_2$for_content,
   ),
   _for = _$.loopOf(1, _for_content),
-  _items_effect = _$.effect("b2", (_scope, { 2: items }) =>
+  _items_effect = _$.effect("b0", (_scope, { 2: items }) =>
     _$.on(_scope[0], "click", function () {
       _items(_scope, [...items, items.length]);
     }),

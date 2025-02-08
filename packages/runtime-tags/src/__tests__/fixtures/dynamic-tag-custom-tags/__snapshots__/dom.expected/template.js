@@ -12,7 +12,7 @@ const _expr_Text_val = /* @__PURE__ */_$.intersection(2, _scope => {
     value: val
   }));
 }, () => _tagName_input);
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", 0, () => _expr_Text_val);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => _expr_Text_val);
 const _val = /* @__PURE__ */_$.state("val", 0, () => _expr_Text_val);
 const _tagName_effect = _$.effect("__tests__/template.marko_0_tagName", (_scope, {
   tagName
@@ -21,8 +21,8 @@ const _tagName_effect = _$.effect("__tests__/template.marko_0_tagName", (_scope,
 }));
 const _tagName = /* @__PURE__ */_$.state("tagName", (_scope, tagName) => {
   _tagName_effect(_scope);
-  _dynamicTagName(_scope, tagName);
-}, () => _dynamicTagName);
+  _dynamicTag(_scope, tagName);
+}, () => _dynamicTag);
 export function _setup_(_scope) {
   _tagName(_scope, child1);
   _val(_scope, 3);

@@ -8,16 +8,15 @@ import {
 
 import { AccessorChar, WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
-import { isStatefulReferences } from "../util/is-stateful";
 import {
-  type Binding,
-  BindingType,
-  createBinding,
-  getScopeAccessorLiteral,
-  mergeReferences,
-} from "../util/references";
+  getOptimizedOnlyChildNodeRef,
+  isOnlyChildInParent,
+} from "../util/is-only-child-in-parent";
+import { isStatefulReferences } from "../util/is-stateful";
+import { getScopeAccessorLiteral, mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import {
   checkStatefulClosures,
@@ -33,10 +32,8 @@ import {
 import {
   addValue,
   getHTMLSectionStatements,
-  getResumeRegisterId,
   getSerializedScopeProperties,
   getSignal,
-  getSignalFn,
   setClosureSignalBuilder,
   setForceResumeScope,
   writeHTMLResumeStatements,
@@ -45,19 +42,12 @@ import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
-import { scopeIdentifier } from "../visitors/program";
+import { kSerializeMarker } from "../visitors/tag/native-tag";
 
-const kBinding = Symbol("if node binding");
 const BRANCHES_LOOKUP = new WeakMap<
   t.NodePath<t.MarkoTag>,
   [tag: t.NodePath<t.MarkoTag>, bodySection: Section | undefined][]
 >();
-
-declare module "@marko/compiler/dist/types" {
-  export interface MarkoTagExtra {
-    [kBinding]?: Binding;
-  }
-}
 
 export const IfTag = {
   analyze(tag) {
@@ -70,6 +60,7 @@ export const IfTag = {
       const rootExtra = (rootTag.node.extra ??= {});
       const mergeReferenceNodes: t.Node[] = [];
       let singleNodeOptimization = true;
+      // TODO: remove all branches if none have body content.
 
       for (const [branchTag, branchBodySection] of branches) {
         if (branchBodySection) {
@@ -93,15 +84,9 @@ export const IfTag = {
       }
 
       const section = getOrCreateSection(tag);
-      rootExtra[kBinding] = createBinding(
-        "#text",
-        BindingType.dom,
-        section,
-        undefined,
-        rootExtra,
-      );
-      rootExtra.singleNodeOptimization = singleNodeOptimization;
       mergeReferences(section, rootTag.node, mergeReferenceNodes);
+      getOptimizedOnlyChildNodeRef(rootTag, section, branches.length);
+      rootExtra.singleNodeOptimization = singleNodeOptimization;
     }
   },
   translate: translateByTarget({
@@ -112,11 +97,11 @@ export const IfTag = {
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody);
 
-        if (isRoot(tag)) {
+        if (isRoot(tag) && !isOnlyChildInParent(tag)) {
           walks.visit(tag, WalkCode.Replace);
+          walks.enterShallow(tag);
         }
 
-        walks.enterShallow(tag);
         writer.flushBefore(tag);
 
         if (bodySection) {
@@ -130,8 +115,8 @@ export const IfTag = {
         const section = getSection(tag);
         const bodySection = getSectionForBody(tagBody);
         const [isLast, branches] = getBranches(tag, bodySection);
-        const rootExtra = branches[0][0].node.extra!;
-        const nodeRef = rootExtra[kBinding]!;
+        const [rootTag] = branches[0];
+        const rootExtra = rootTag.node.extra!;
         const isStateful = isStatefulReferences(rootExtra.referencedBindings);
         const singleNodeOptimization = rootExtra.singleNodeOptimization;
         const hasStatefulClosures =
@@ -149,13 +134,19 @@ export const IfTag = {
         }
 
         if (isLast) {
+          const nodeRef = getOptimizedOnlyChildNodeRef(rootTag, section);
+          const onlyChildInParentOptimization = isOnlyChildInParent(rootTag);
           const nextTag = tag.getNextSibling();
           const ifScopeIdIdentifier =
-            tag.scope.generateUidIdentifier("ifScopeId");
-          const ifRendererIdentifier =
-            tag.scope.generateUidIdentifier("ifRenderer");
-
+            rootTag.scope.generateUidIdentifier("ifScopeId");
+          const ifBranchIdentifier =
+            rootTag.scope.generateUidIdentifier("ifBranch");
           let statement: t.Statement | undefined;
+
+          if (onlyChildInParentOptimization) {
+            getParentTag(rootTag)!.node.extra![kSerializeMarker] = false;
+          }
+
           for (let i = branches.length; i--; ) {
             const [branchTag, branchBodySection] = branches[i];
             const bodyStatements = branchTag.node.body.body;
@@ -169,19 +160,10 @@ export const IfTag = {
               if (isStateful) {
                 bodyStatements.push(
                   t.expressionStatement(
-                    callRuntime(
-                      "register",
-                      t.assignmentExpression(
-                        "=",
-                        ifRendererIdentifier,
-                        callRuntime(
-                          "createRenderer",
-                          t.arrowFunctionExpression([], t.blockStatement([])),
-                        ),
-                      ),
-                      t.stringLiteral(
-                        getResumeRegisterId(branchBodySection, "renderer"),
-                      ),
+                    t.assignmentExpression(
+                      "=",
+                      ifBranchIdentifier,
+                      t.numericLiteral(i),
                     ),
                   ) as any,
                 );
@@ -224,7 +206,7 @@ export const IfTag = {
                   getScopeAccessorLiteral(nodeRef).value +
                     AccessorChar.ConditionalRenderer,
                 ),
-                ifRendererIdentifier,
+                ifBranchIdentifier,
               );
               const cbNode = t.arrowFunctionExpression(
                 [],
@@ -237,6 +219,7 @@ export const IfTag = {
                       cbNode,
                       getScopeIdIdentifier(section),
                       getScopeAccessorLiteral(nodeRef),
+                      onlyChildInParentOptimization && t.numericLiteral(1),
                     )
                   : callRuntime(
                       "resumeConditional",
@@ -253,7 +236,7 @@ export const IfTag = {
                 "let",
                 [
                   t.variableDeclarator(ifScopeIdIdentifier),
-                  isStateful && t.variableDeclarator(ifRendererIdentifier),
+                  isStateful && t.variableDeclarator(ifBranchIdentifier),
                 ].filter(Boolean) as t.VariableDeclarator[],
               ),
             );
@@ -279,11 +262,10 @@ export const IfTag = {
           setSectionParentIsOwner(bodySection, true);
         }
 
-        if (isRoot(tag)) {
+        if (isRoot(tag) && !isOnlyChildInParent(tag)) {
           walks.visit(tag, WalkCode.Replace);
+          walks.enterShallow(tag);
         }
-
-        walks.enterShallow(tag);
       },
       exit(tag) {
         if (tag.node.body.attributeTags) return;
@@ -294,33 +276,32 @@ export const IfTag = {
         );
 
         if (isLast) {
-          const section = getSection(tag);
+          const [rootTag] = branches[0];
+          const section = getSection(rootTag);
           const rootExtra = branches[0][0].node.extra!;
-          const nodeRef = rootExtra[kBinding]!;
-          let expr: t.Expression = t.nullLiteral();
+          const nodeRef = getOptimizedOnlyChildNodeRef(rootTag, section);
+          const rendererIdentifiers: t.Identifier[] = [];
+          let expr: t.Expression = t.numericLiteral(branches.length);
 
           for (let i = branches.length; i--; ) {
             const [branchTag, branchBodySection] = branches[i];
             const [testAttr] = branchTag.node.attributes;
-            const consequent = branchBodySection
-              ? t.identifier(branchBodySection.name)
-              : t.numericLiteral(0);
-
-            setClosureSignalBuilder(
-              branchTag,
-              (_closureSignal, render, intersection) => {
-                return callRuntime(
-                  "conditionalClosure",
-                  getScopeAccessorLiteral(nodeRef),
-                  t.arrowFunctionExpression(
-                    [],
-                    t.identifier(branchBodySection!.name),
-                  ),
-                  render,
-                  intersection,
-                );
-              },
-            );
+            const consequent = t.numericLiteral(branchBodySection ? i : -1);
+            if (branchBodySection) {
+              rendererIdentifiers.push(t.identifier(branchBodySection.name));
+              setClosureSignalBuilder(
+                branchTag,
+                (_closureSignal, render, intersection) => {
+                  return callRuntime(
+                    "conditionalClosure",
+                    getScopeAccessorLiteral(nodeRef),
+                    t.numericLiteral(i),
+                    render,
+                    intersection,
+                  );
+                },
+              );
+            }
 
             branchTag.remove();
             expr = testAttr
@@ -333,7 +314,7 @@ export const IfTag = {
             return callRuntime(
               "conditional",
               getScopeAccessorLiteral(nodeRef),
-              getSignalFn(signal, [scopeIdentifier]),
+              ...rendererIdentifiers.reverse(),
             );
           };
           signal.hasDownstreamIntersections = () =>

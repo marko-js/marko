@@ -49,20 +49,20 @@ const _expr_Text_clickOnceCount = /* @__PURE__ */_$.intersection(2, _scope => {
     value: _onClickOnce2(_scope)
   }));
 }, () => _Once_input);
-const _dynamicTagName2 = /* @__PURE__ */_$.conditional("#text/3", _scope => _$.setTagVar(_scope, "#text/3!", _onClickTwice), () => _expr_Text_clickTwiceCount);
-const _dynamicTagName = /* @__PURE__ */_$.conditional("#text/0", _scope => _$.setTagVar(_scope, "#text/0!", _onClickOnce), () => _expr_Text_clickOnceCount);
+const _dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/3", _scope => _$.setTagVar(_scope, "#text/3!", _onClickTwice), () => _expr_Text_clickTwiceCount);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _scope => _$.setTagVar(_scope, "#text/0!", _onClickOnce), () => _expr_Text_clickOnceCount);
 const _onClickTwice_effect = _$.effect("__tests__/template.marko_0_onClickTwice", (_scope, {
   onClickTwice
 }) => _$.on(_scope["#button/4"], "click", onClickTwice));
 const _onClickTwice = _$.registerBoundSignal("__tests__/template.marko_0_onClickTwice/var", /* @__PURE__ */_$.value("onClickTwice", (_scope, onClickTwice) => _onClickTwice_effect(_scope)));
 const _clickTwiceCount = /* @__PURE__ */_$.state("clickTwiceCount", (_scope, clickTwiceCount) => _$.data(_scope["#text/5"], clickTwiceCount), () => _expr_Text_clickTwiceCount);
-const _Twice = /* @__PURE__ */_$.value("Twice", (_scope, Twice) => _dynamicTagName2(_scope, Twice), () => _dynamicTagName2);
+const _Twice = /* @__PURE__ */_$.value("Twice", (_scope, Twice) => _dynamicTag2(_scope, Twice), () => _dynamicTag2);
 const _onClickOnce_effect = _$.effect("__tests__/template.marko_0_onClickOnce", (_scope, {
   onClickOnce
 }) => _$.on(_scope["#button/1"], "click", onClickOnce));
 const _onClickOnce = _$.registerBoundSignal("__tests__/template.marko_0_onClickOnce/var", /* @__PURE__ */_$.value("onClickOnce", (_scope, onClickOnce) => _onClickOnce_effect(_scope)));
 const _clickOnceCount = /* @__PURE__ */_$.state("clickOnceCount", (_scope, clickOnceCount) => _$.data(_scope["#text/2"], clickOnceCount), () => _expr_Text_clickOnceCount);
-const _Once = /* @__PURE__ */_$.value("Once", (_scope, Once) => _dynamicTagName(_scope, Once), () => _dynamicTagName);
+const _Once = /* @__PURE__ */_$.value("Once", (_scope, Once) => _dynamicTag(_scope, Once), () => _dynamicTag);
 export function _setup_(_scope) {
   _Once(_scope, {
     content: _define_content(_scope)

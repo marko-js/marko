@@ -1,18 +1,13 @@
-// size: 403 (min) 223 (brotli)
-const _count$if_content = _$.conditionalClosure(
-    2,
-    () => _if_content,
-    (_scope, count) => _$.data(_scope[0], count),
+// size: 377 (min) 209 (brotli)
+const _count$if_content = _$.conditionalClosure(2, 0, (_scope, count) =>
+    _$.data(_scope[0], count),
   ),
   _setup$if_content = (_scope) => {
     _count$if_content._(_scope, _scope._[4]);
   },
-  _if_content = _$.register(
-    "a0",
-    _$.createRenderer("The count is <!>", "b%", _setup$if_content),
-  ),
-  _if = _$.conditional(2, 0),
-  _count_effect = _$.effect("a1", (_scope, { 4: count }) =>
+  _if_content = _$.createRenderer("The count is <!>", "b%", _setup$if_content),
+  _if = _$.conditional(2, _if_content),
+  _count_effect = _$.effect("a0", (_scope, { 4: count }) =>
     _$.on(_scope[0], "click", function () {
       _count(_scope, count + 1);
     }),
@@ -20,7 +15,7 @@ const _count$if_content = _$.conditionalClosure(
   _count = _$.state(4, (_scope, count) => {
     _count_effect(_scope), _count$if_content(_scope, count);
   }),
-  _show_effect = _$.effect("a2", (_scope, { 3: show }) =>
+  _show_effect = _$.effect("a1", (_scope, { 3: show }) =>
     _$.on(_scope[1], "click", function () {
       _show(_scope, !show);
     }),
@@ -28,7 +23,7 @@ const _count$if_content = _$.conditionalClosure(
   _show = _$.state(
     3,
     (_scope, show) => {
-      _show_effect(_scope), _if(_scope, show ? _if_content : null);
+      _show_effect(_scope), _if(_scope, show ? 0 : 1);
     },
     () => _if,
   );
