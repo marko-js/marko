@@ -26,9 +26,9 @@ export function isStatefulBinding(binding: Binding): boolean {
     case BindingType.input:
       return true;
     default:
-      return (
-        !binding.upstreamExpression ||
-        isStatefulReferences(binding.upstreamExpression.referencedBindings)
-      );
+      return binding.upstreamAlias
+        ? isStatefulBinding(binding.upstreamAlias)
+        : !binding.upstreamExpression ||
+            isStatefulReferences(binding.upstreamExpression.referencedBindings);
   }
 }
