@@ -3,6 +3,7 @@ import { getAbortSignal } from "./abort-signal";
 import { emptyMarkerArray } from "./control-flow";
 import { queueEffect, queueSource, rendering } from "./queue";
 import { register } from "./resume";
+import { schedule } from "./schedule";
 
 export const MARK: unique symbol = MARKO_DEBUG ? Symbol("mark") : ({} as any);
 export const CLEAN: unique symbol = MARKO_DEBUG ? Symbol("clean") : ({} as any);
@@ -42,6 +43,7 @@ export function state<T>(
     } else if (scope[valueChangeAccessor]) {
       scope[valueChangeAccessor](valueOrOp as T);
     } else {
+      schedule();
       queueSource(scope, valueSignal, valueOrOp as T);
     }
     return valueOrOp;
@@ -109,7 +111,7 @@ export function intersection(
     } else if (--scope[markAccessor] === 0) {
       if (op === DIRTY || scope[dirtyAccessor]) {
         scope[dirtyAccessor] = false;
-        fn(scope, 0 as never);
+        (fn as any)(scope);
         intersection?.(scope, DIRTY);
       } else {
         intersection?.(scope, CLEAN);
