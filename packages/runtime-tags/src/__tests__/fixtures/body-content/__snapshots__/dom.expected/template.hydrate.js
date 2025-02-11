@@ -1,4 +1,4 @@
-// size: 546 (min) 308 (brotli)
+// size: 525 (min) 287 (brotli)
 const _content_input = _$.dynamicTagAttrs(1),
   _dynamicTag = _$.dynamicTag(
     1,
@@ -21,12 +21,13 @@ const _content_input = _$.dynamicTagAttrs(1),
     },
     () => _content_,
   ),
-  _clickCount$FancyButton_content = _$.registerSubscriber(
+  _clickCount$FancyButton_content = _$.registerDynamicClosure(
     "b1",
-    _$.dynamicClosure((_scope, clickCount) => _$.data(_scope[0], clickCount)),
+    1,
+    (_scope, clickCount) => _$.data(_scope[0], clickCount),
   ),
   _setup$FancyButton_content = (_scope) => {
-    _clickCount$FancyButton_content._(_scope, _scope._[1]);
+    _clickCount$FancyButton_content._(_scope);
   },
   _FancyButton_content = _$.register(
     "b2",
@@ -39,7 +40,7 @@ const _content_input = _$.dynamicTagAttrs(1),
         onClick: _onClick(_scope),
         content: _FancyButton_content(_scope),
       }),
-        _clickCount$FancyButton_content(_scope, clickCount);
+        _clickCount$FancyButton_content(_scope);
     },
     () => _$.inChild(0, _input_),
   );

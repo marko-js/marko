@@ -1,9 +1,9 @@
-// size: 375 (min) 208 (brotli)
-const _count$if_content = _$.conditionalClosure(2, 0, (_scope, count) =>
+// size: 368 (min) 202 (brotli)
+const _count$if_content = _$.conditionalClosure(4, 2, 0, (_scope, count) =>
     _$.data(_scope[0], count),
   ),
   _setup$if_content = (_scope) => {
-    _count$if_content._(_scope, _scope._[4]);
+    _count$if_content._(_scope);
   },
   _if_content = _$.createRenderer("<span> </span>", "D ", _setup$if_content),
   _if = _$.conditional(2, _if_content),
@@ -13,7 +13,7 @@ const _count$if_content = _$.conditionalClosure(2, 0, (_scope, count) =>
     }),
   ),
   _count = _$.state(4, (_scope, count) => {
-    _count_effect(_scope), _count$if_content(_scope, count);
+    _count_effect(_scope), _count$if_content(_scope);
   }),
   _show_effect = _$.effect("a1", (_scope, { 3: show }) =>
     _$.on(_scope[1], "click", function () {

@@ -11,7 +11,7 @@ const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", _scope => {
 const _data3 = _$.registerBoundSignal("__tests__/template.marko_0_data3/var", (_scope, data3) => {});
 export const _input_dynamic_ = /* @__PURE__ */_$.value("input_dynamic", (_scope, input_dynamic) => _dynamicTag(_scope, input_dynamic), () => _dynamicTag);
 const _data2 = _$.registerBoundSignal("__tests__/template.marko_0_data2/var", (_scope, data2) => {});
-export const _input_show_ = /* @__PURE__ */_$.value("input_show", 0);
+export const _input_show_ = /* @__PURE__ */_$.value("input_show");
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_show_(_scope, input.show);
   _input_dynamic_(_scope, input.dynamic);

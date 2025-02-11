@@ -21,7 +21,7 @@ let pendingRenders: PendingRender[] = [];
 export let pendingEffects: unknown[] = [];
 export let rendering = false;
 
-export function queueSource<T>(scope: Scope, signal: Signal<T>, value: T) {
+export function queueSource<T>(scope: Scope, signal: Signal<T>, value?: T) {
   const prevRendering = rendering;
   rendering = true;
   signal(scope, MARK);

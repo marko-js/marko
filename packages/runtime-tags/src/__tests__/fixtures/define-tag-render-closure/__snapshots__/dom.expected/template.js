@@ -1,9 +1,9 @@
 export const _template_ = "<!><!><button> </button>";
 export const _walks_ = /* replace, over(1), get, next(1), get, out(1) */"D%b D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _x$define_content = _$.registerSubscriber("__tests__/template.marko_1_x/subscriber", /* @__PURE__ */_$.dynamicClosure((_scope, x) => _$.data(_scope["#text/0"], x)));
+const _x$define_content = _$.registerDynamicClosure("__tests__/template.marko_1_x/subscriber", "x", (_scope, x) => _$.data(_scope["#text/0"], x));
 const _setup$define_content = _scope => {
-  _x$define_content._(_scope, _scope._["x"]);
+  _x$define_content._(_scope);
 };
 const _define_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div> </div>", /* next(1), get */"D ", _setup$define_content));
 const _MyTag_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0");
@@ -17,7 +17,7 @@ const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
 const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
   _$.data(_scope["#text/2"], x);
   _x_effect(_scope);
-  _x$define_content(_scope, x);
+  _x$define_content(_scope);
 });
 export function _setup_(_scope) {
   _x(_scope, 1);

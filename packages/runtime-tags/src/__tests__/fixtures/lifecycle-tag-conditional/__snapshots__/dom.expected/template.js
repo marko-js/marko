@@ -16,9 +16,9 @@ const _x$if_content_effect = _$.effect("__tests__/template.marko_1_x", (_scope, 
     document.getElementById("ref").textContent = "Destroy";
   }
 }));
-const _x$if_content = /* @__PURE__ */_$.conditionalClosure("#text/0", 0, (_scope, x) => _x$if_content_effect(_scope));
+const _x$if_content = /* @__PURE__ */_$.conditionalClosure("x", "#text/0", 0, (_scope, x) => _x$if_content_effect(_scope));
 const _setup$if_content = _scope => {
-  _x$if_content._(_scope, _scope._["x"]);
+  _x$if_content._(_scope);
 };
 const _if_content = /* @__PURE__ */_$.createRenderer("", "", _setup$if_content);
 const _if = /* @__PURE__ */_$.conditional("#text/0", _if_content);
@@ -38,7 +38,7 @@ const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
 }));
 const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
   _x_effect(_scope);
-  _x$if_content(_scope, x);
+  _x$if_content(_scope);
 });
 export function _setup_(_scope) {
   _x(_scope, 0);

@@ -21,13 +21,13 @@ const _num$for_content = /* @__PURE__ */_$.value("num", (_scope, num) => {
   _num$for_content_effect(_scope);
 }, () => _expr_selected_num$for_content);
 const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _num$for_content(_scope, _params_2[0]), () => _num$for_content);
-const _selected$for_content = /* @__PURE__ */_$.loopClosure("#text/0", 0, () => _expr_selected_num$for_content);
+const _selected$for_content = /* @__PURE__ */_$.loopClosure("selected", "#text/0", 0, () => _expr_selected_num$for_content);
 const _setup$for_content = _scope => {
-  _selected$for_content._(_scope, _scope._["selected"]);
+  _selected$for_content._(_scope);
 };
 const _for_content = /* @__PURE__ */_$.createRenderer("<button> </button>", /* get, next(1), get */" D ", _setup$for_content, () => _params_2$for_content);
 const _for = /* @__PURE__ */_$.loopOf("#text/0", _for_content);
-const _selected = /* @__PURE__ */_$.state("selected", (_scope, selected) => _selected$for_content(_scope, selected));
+const _selected = /* @__PURE__ */_$.state("selected", (_scope, selected) => _selected$for_content(_scope));
 export function _setup_(_scope) {
   _selected(_scope, 0);
   _for(_scope, [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]]);

@@ -1,4 +1,4 @@
-// size: 1109 (min) 535 (brotli)
+// size: 1088 (min) 529 (brotli)
 const _expr_comment_comments_id$if_content = intersection(
     2,
     (_scope) => {
@@ -10,21 +10,21 @@ const _expr_comment_comments_id$if_content = intersection(
     () => inChild(0, _input_$1),
   ),
   _id$if_content = conditionalClosure(
+    10,
     4,
     0,
     0,
     () => _expr_comment_comments_id$if_content,
   ),
   _comment_comments$if_content = conditionalClosure(
+    8,
     4,
     0,
     0,
     () => _expr_comment_comments_id$if_content,
   ),
   _if_content = createRenderer("<ul></ul>", "/ b&", (_scope) => {
-    _comment_comments$if_content._(_scope, _scope._[8]),
-      _id$if_content._(_scope, _scope._[10]),
-      _scope[0];
+    _comment_comments$if_content._(_scope), _id$if_content._(_scope), _scope[0];
   }),
   _expr_input_path_i$for_content = intersection(2, (_scope) => {
     const {
@@ -45,14 +45,14 @@ const _expr_comment_comments_id$if_content = intersection(
       _open$for_content_effect(_scope);
   }),
   _id$for_content = value(10, (_scope, id) => {
-    attr(_scope[0], "id", id), _id$if_content(_scope, id);
+    attr(_scope[0], "id", id), _id$if_content(_scope);
   }),
   _i$for_content = value(9, 0, () => _expr_input_path_i$for_content),
   _comment_comments$for_content = value(
     8,
     (_scope, comment_comments) => {
       _if$for_content(_scope, comment_comments ? 0 : 1),
-        _comment_comments$if_content(_scope, comment_comments);
+        _comment_comments$if_content(_scope);
     },
     () => _if$for_content,
   ),
@@ -76,6 +76,7 @@ const _expr_comment_comments_id$if_content = intersection(
     () => intersections([_comment$for_content, _i$for_content]),
   ),
   _input_path$for_content = loopClosure(
+    4,
     0,
     0,
     () => _expr_input_path_i$for_content,
@@ -86,14 +87,13 @@ const _expr_comment_comments_id$if_content = intersection(
       "<li><span> </span><button> </button><!></li>",
       " E l D l%",
       (_scope) => {
-        _input_path$for_content._(_scope, _scope._[4]),
-          _open$for_content(_scope, !0);
+        _input_path$for_content._(_scope), _open$for_content(_scope, !0);
       },
       () => _params_2$for_content,
     ),
   ),
   _input_path_ = value(4, (_scope, input_path) =>
-    _input_path$for_content(_scope, input_path),
+    _input_path$for_content(_scope),
   ),
   _input_comments_ = value(
     3,

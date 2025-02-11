@@ -1,5 +1,5 @@
-// size: 956 (min) 428 (brotli)
-const _count$else_content = _$.conditionalClosure(0, 1, (_scope, count) =>
+// size: 912 (min) 414 (brotli)
+const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
     _$.data(_scope[1], count),
   ),
   _setup$else_content_effect = _$.effect("a0", (_scope) =>
@@ -8,8 +8,7 @@ const _count$else_content = _$.conditionalClosure(0, 1, (_scope, count) =>
     }),
   ),
   _setup$else_content = (_scope) => {
-    _count$else_content._(_scope, _scope._[2]),
-      _setup$else_content_effect(_scope);
+    _count$else_content._(_scope), _setup$else_content_effect(_scope);
   },
   _else_content = _$.createRenderer(
     "<button>Increment <!></button>",
@@ -41,29 +40,30 @@ const _count$else_content = _$.conditionalClosure(0, 1, (_scope, count) =>
     _expr_counts_count_i$if_content_effect(_scope);
   }),
   _i$if_content = _$.conditionalClosure(
+    3,
     0,
     0,
     0,
     () => _expr_counts_count_i$if_content,
   ),
   _count$if_content = _$.conditionalClosure(
+    2,
     0,
     0,
     (_scope, count) => _$.data(_scope[1], count + 1),
     () => _expr_counts_count_i$if_content,
   ),
-  _counts$if_content = _$.registerSubscriber(
+  _counts$if_content = _$.registerDynamicClosure(
     "a2",
-    _$.dynamicClosure(
-      0,
-      (_scope) => _scope._._,
-      () => _expr_counts_count_i$if_content,
-    ),
+    1,
+    0,
+    () => _expr_counts_count_i$if_content,
+    (_scope) => _scope._._,
   ),
   _setup$if_content = (_scope) => {
-    _counts$if_content._(_scope, _scope._._[1]),
-      _count$if_content._(_scope, _scope._[2]),
-      _i$if_content._(_scope, _scope._[3]);
+    _counts$if_content._(_scope),
+      _count$if_content._(_scope),
+      _i$if_content._(_scope);
   },
   _if_content = _$.createRenderer(
     "<button>Confirm <!></button>",
@@ -76,9 +76,9 @@ const _count$else_content = _$.conditionalClosure(0, 1, (_scope, count) =>
     (_scope, editing) => _if$for_content(_scope, editing ? 0 : 1),
     () => _if$for_content,
   ),
-  _i$for_content = _$.value(3, (_scope, i) => _i$if_content(_scope, i)),
+  _i$for_content = _$.value(3, (_scope, i) => _i$if_content(_scope)),
   _count$for_content = _$.value(2, (_scope, count) => {
-    _count$if_content(_scope, count), _count$else_content(_scope, count);
+    _count$if_content(_scope), _count$else_content(_scope);
   }),
   _params_2$for_content = _$.value(1, (_scope, _params_2) => {
     _count$for_content(_scope, _params_2[0]),
@@ -95,6 +95,6 @@ const _count$else_content = _$.conditionalClosure(0, 1, (_scope, count) =>
   ),
   _for = _$.loopOf(0, _for_content),
   _counts = _$.state(1, (_scope, counts) => {
-    _for(_scope, [counts]), _counts$if_content(_scope, counts);
+    _for(_scope, [counts]), _counts$if_content(_scope);
   });
 init();

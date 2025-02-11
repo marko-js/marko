@@ -1,12 +1,13 @@
-// size: 1027 (min) 427 (brotli)
+// size: 1008 (min) 418 (brotli)
 const _Child_content2 = _$.register("a0", _$.createRendererWithOwner("Hi", "")),
   _Child_content = _$.register("a1", _$.createRendererWithOwner("Hi", "")),
-  _input_value$Parent_content = _$.registerSubscriber(
+  _input_value$Parent_content = _$.registerDynamicClosure(
     "a2",
-    _$.dynamicClosure((_scope, input_value) => _$.html(_scope, input_value, 0)),
+    10,
+    (_scope, input_value) => _$.html(_scope, input_value, 0),
   ),
   _setup$Parent_content = (_scope) => {
-    _input_value$Parent_content._(_scope, _scope._[10]);
+    _input_value$Parent_content._(_scope);
   },
   _Parent_content = _$.register(
     "a3",

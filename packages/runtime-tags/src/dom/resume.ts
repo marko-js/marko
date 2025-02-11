@@ -287,38 +287,6 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
   }
 }
 
-export function registerSubscriber(
-  id: string,
-  signal: Signal<never>,
-  // ownerValueAccessor: string | number,
-  // getOwnerScope = (scope: Scope) => scope._!
-) {
-  register(id, signal.___subscribe!);
-  return signal;
-
-  // TODO: we need to handle the async case - DO NOT REMOVE UNTIL WE DO
-  // const ownerMarkAccessor = ownerValueAccessor + AccessorChars.MARK;
-  // const ownerSubscribersAccessor =
-  //   ownerValueAccessor + AccessorChars.SUBSCRIBERS;
-
-  // register(id, (subscriberScope: Scope) => {
-  //   const ownerScope = getOwnerScope(subscriberScope);
-  //   const boundSignal = bindFunction(subscriberScope, signal);
-  //   const ownerMark = ownerScope[ownerMarkAccessor];
-  //   (ownerScope[ownerSubscribersAccessor] ||= new Set()).add(boundSignal);
-
-  //   // TODO: if the mark is not undefined, it means the value was updated clientside
-  //   // before this subscriber was flushed.
-  //   if (ownerMark === 0) {
-  //     // the value has finished updating
-  //     // we should trigger an update to `signal`
-  //   } else if (ownerMark >= 1) {
-  //     // the value is queued for update
-  //     // we should mark `signal` and let it be updated when the owner is updated
-  //   }
-  // });
-}
-
 export function nodeRef(id: string, key: string) {
   return register(id, (scope: Scope) => () => scope[key]);
 }

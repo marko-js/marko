@@ -1,4 +1,4 @@
-// size: 18443 (min) 6853 (brotli)
+// size: 18461 (min) 6879 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -275,9 +275,6 @@ function init(runtimeId = "M") {
         configurable: !0,
         set: setRenders,
       });
-}
-function registerSubscriber(id, signal) {
-  return register(id, signal.F), signal;
 }
 function nodeRef(id, key) {
   return register(id, (scope) => () => scope[key]);
@@ -796,9 +793,9 @@ function destroyBranch(branch) {
   branch.q?.j?.delete(branch), destroyNestedBranches(branch);
 }
 function destroyNestedBranches(branch) {
-  (branch.G = 1),
+  (branch.F = 1),
     branch.j?.forEach(destroyNestedBranches),
-    branch.H?.forEach((scope) => {
+    branch.G?.forEach((scope) => {
       for (let id in scope.h) scope.h[id]?.abort();
     });
 }
@@ -1328,118 +1325,142 @@ function state(valueAccessor, fn, getIntersection) {
   );
 }
 function value(valueAccessor, fn, getIntersection) {
-  let markAccessor = valueAccessor + "#",
-    intersection2 =
-      getIntersection &&
-      ((scope, op) => (intersection2 = getIntersection())(scope, op));
+  let intersection2,
+    markAccessor = valueAccessor + "#";
   return (scope, valueOrOp) => {
     if (valueOrOp === MARK)
       1 === (scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) &&
-        intersection2?.(scope, MARK);
+        getIntersection &&
+        (intersection2 ||= getIntersection())(scope, MARK);
     else if (valueOrOp !== DIRTY) {
       let existing = void 0 !== scope[markAccessor];
       1 === (scope[markAccessor] ||= 1) &&
         (valueOrOp === CLEAN || (existing && scope[valueAccessor] === valueOrOp)
-          ? intersection2?.(scope, CLEAN)
+          ? getIntersection &&
+            (intersection2 ||= getIntersection())(scope, CLEAN)
           : ((scope[valueAccessor] = valueOrOp),
             fn && fn(scope, valueOrOp),
-            intersection2?.(scope, DIRTY))),
+            getIntersection &&
+              (intersection2 ||= getIntersection())(scope, DIRTY))),
         scope[markAccessor]--;
     }
   };
 }
 var accessorId = 0;
 function intersection(count, fn, getIntersection) {
-  let dirtyAccessor = "?" + accessorId++,
-    markAccessor = dirtyAccessor + "#",
-    intersection2 =
-      getIntersection &&
-      ((scope, op) => (intersection2 = getIntersection())(scope, op));
+  let intersection2,
+    dirtyAccessor = "?" + accessorId++,
+    markAccessor = dirtyAccessor + "#";
   return (scope, op) => {
     op === MARK
       ? 1 === (scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) &&
-        intersection2?.(scope, MARK)
+        getIntersection &&
+        (intersection2 ||= getIntersection())(scope, MARK)
       : void 0 === scope[markAccessor]
         ? ((scope[markAccessor] = count - 1), (scope[dirtyAccessor] = !0))
         : 0 == --scope[markAccessor]
           ? op === DIRTY || scope[dirtyAccessor]
             ? ((scope[dirtyAccessor] = !1),
               fn(scope),
-              intersection2?.(scope, DIRTY))
-            : intersection2?.(scope, CLEAN)
+              getIntersection &&
+                (intersection2 ||= getIntersection())(scope, DIRTY))
+            : getIntersection &&
+              (intersection2 ||= getIntersection())(scope, CLEAN)
           : (scope[dirtyAccessor] ||= op === DIRTY);
   };
 }
-function closure(fn, getIntersection) {
-  let intersection2 =
-    getIntersection &&
-    ((scope, op) => (intersection2 = getIntersection())(scope, op));
-  return (scope, valueOrOp) => {
-    valueOrOp === MARK
-      ? intersection2?.(scope, MARK)
-      : (fn && fn(scope, valueOrOp), intersection2?.(scope, DIRTY));
-  };
-}
-function loopClosure(ownerLoopNodeAccessor, fn, getIntersection) {
-  let signal = closure(fn, getIntersection),
+function loopClosure(
+  valueAccessor,
+  ownerLoopNodeAccessor,
+  fn,
+  getIntersection,
+) {
+  let childSignal = closure(valueAccessor, fn, getIntersection),
     loopScopeAccessor = ownerLoopNodeAccessor + "!",
     loopScopeMapAccessor = ownerLoopNodeAccessor + "(",
-    helperSignal = (ownerScope, value2) => {
+    ownerSignal = (ownerScope) => {
       let loopScopes =
         ownerScope[loopScopeAccessor] ??
         ownerScope[loopScopeMapAccessor]?.values() ??
         [];
       if (loopScopes !== emptyMarkerArray)
         for (let scope of loopScopes)
-          scope.g || queueSource(scope, signal, value2);
+          scope.g || queueSource(scope, childSignal);
     };
-  return (helperSignal._ = signal), helperSignal;
+  return (ownerSignal._ = childSignal), ownerSignal;
 }
 function conditionalClosure(
+  valueAccessor,
   ownerConditionalNodeAccessor,
   branch,
   fn,
   getIntersection,
 ) {
-  let signal = closure(fn, getIntersection),
+  let childSignal = closure(valueAccessor, fn, getIntersection),
     scopeAccessor = ownerConditionalNodeAccessor + "!",
     branchAccessor = ownerConditionalNodeAccessor + "(",
-    helperSignal = (scope, value2) => {
+    ownerSignal = (scope) => {
       let ifScope = scope[scopeAccessor];
       ifScope &&
         !ifScope.g &&
         scope[branchAccessor] === branch &&
-        queueSource(ifScope, signal, value2);
+        queueSource(ifScope, childSignal);
     };
-  return (helperSignal._ = signal), helperSignal;
+  return (ownerSignal._ = childSignal), ownerSignal;
 }
-var defaultGetOwnerScope = (scope) => scope._;
-function dynamicClosure(
-  fn,
-  getOwnerScope = defaultGetOwnerScope,
-  getIntersection,
-) {
-  let ownerSubscribersAccessor = "?" + accessorId++,
-    _signal = closure(fn, getIntersection),
-    helperSignal = (ownerScope, value2) => {
-      let subscribers = ownerScope[ownerSubscribersAccessor];
+function dynamicClosure(valueAccessor, fn, getIntersection, getOwnerScope) {
+  let subscribersAccessor = "?" + accessorId++,
+    childSignal = closure(valueAccessor, fn, getIntersection, getOwnerScope),
+    ownerSignal = (ownerScope) => {
+      let subscribers = ownerScope[subscribersAccessor];
       if (subscribers)
         for (let subscriber of subscribers)
-          subscriber.g || queueSource(subscriber, _signal, value2);
+          subscriber.g || queueSource(subscriber, childSignal);
     },
     subscribe = (scope) => {
-      (getOwnerScope(scope)[ownerSubscribersAccessor] ||= new Set()).add(scope),
-        getAbortSignal(scope, -1).addEventListener("abort", () => {
-          getOwnerScope(scope)[ownerSubscribersAccessor].delete(scope);
-        });
+      let owner = getOwnerScope ? getOwnerScope(scope) : scope._,
+        subscribers = (owner[subscribersAccessor] ||= new Set());
+      subscribers.has(scope) ||
+        (subscribers.add(scope),
+        getAbortSignal(scope, -1).addEventListener("abort", () =>
+          owner[subscribersAccessor].delete(scope),
+        ));
     };
   return (
-    (helperSignal._ = (scope, value2) => {
-      _signal(scope, value2), subscribe(scope);
+    (ownerSignal.H = subscribe),
+    (ownerSignal._ = (scope) => {
+      childSignal(scope), subscribe(scope);
     }),
-    (helperSignal.F = subscribe),
-    helperSignal
+    ownerSignal
   );
+}
+function registerDynamicClosure(
+  id,
+  valueAccessor,
+  fn,
+  getIntersection,
+  getOwnerScope,
+) {
+  let signal = dynamicClosure(
+    valueAccessor,
+    fn,
+    getIntersection,
+    getOwnerScope,
+  );
+  return register(id, signal.H), signal;
+}
+function closure(valueAccessor, fn, getIntersection, getOwnerScope) {
+  let intersection2;
+  return (scope, op) => {
+    op ||
+      (fn &&
+        fn(
+          scope,
+          (getOwnerScope ? getOwnerScope(scope) : scope._)[valueAccessor],
+        )),
+      getIntersection &&
+        (intersection2 ||= getIntersection())(scope, op ? MARK : DIRTY);
+  };
 }
 function setTagVar(scope, childAccessor, tagVarSignal2) {
   scope[childAccessor]["/"] = (valueOrOp) => tagVarSignal2(scope, valueOrOp);
@@ -1553,7 +1574,7 @@ function runRenders() {
       }
       pendingRenders[i] = item;
     }
-    render.z.c?.G || render.I(render.z, render.J);
+    render.z.c?.F || render.I(render.z, render.J);
   }
   !(function () {
     for (let scope of pendingScopes) scope.g = 0;
@@ -1569,7 +1590,7 @@ function resetAbortSignal(scope, id) {
 }
 function getAbortSignal(scope, id) {
   return (
-    scope.c && (scope.c.H ||= new Set()).add(scope),
+    scope.c && (scope.c.G ||= new Set()).add(scope),
     ((scope.h ||= {})[id] ||= new AbortController()).signal
   );
 }

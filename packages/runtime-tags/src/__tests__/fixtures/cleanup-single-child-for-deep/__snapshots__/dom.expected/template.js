@@ -11,32 +11,32 @@ const _expr_outerItem_middleItem$for_content = /* @__PURE__ */_$.intersection(2,
   } = _scope;
   _child_input_name(_scope["#childScope/0"], `${outerItem}.${middleItem}`);
 }, () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_name));
-const _write$for_content2 = /* @__PURE__ */_$.dynamicClosure((_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._, () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_write));
-const _outerItem$for_content2 = /* @__PURE__ */_$.loopClosure("#text/1", 0, () => _expr_outerItem_middleItem$for_content);
+const _write$for_content2 = /* @__PURE__ */_$.dynamicClosure("write", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_write), _scope => _scope._._);
+const _outerItem$for_content2 = /* @__PURE__ */_$.loopClosure("outerItem", "#text/1", 0, () => _expr_outerItem_middleItem$for_content);
 const _middleItem$for_content = /* @__PURE__ */_$.value("middleItem", 0, () => _expr_outerItem_middleItem$for_content);
 const _params_3$for_content = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _middleItem$for_content(_scope, _params_3[0]), () => _middleItem$for_content);
 const _setup$for_content2 = _scope => {
-  _write$for_content2._(_scope, _scope._._["write"]);
-  _outerItem$for_content2._(_scope, _scope._["outerItem"]);
+  _write$for_content2._(_scope);
+  _outerItem$for_content2._(_scope);
   _child(_scope["#childScope/0"]);
 };
 const _for_content2 = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}</div>`, /* next(1), beginChild, _child_walks, endChild */`D/${_child_walks}&`, _setup$for_content2, () => _params_3$for_content);
 const _for$for_content = /* @__PURE__ */_$.loopOf("#text/1", _for_content2);
-const _write$for_content = /* @__PURE__ */_$.loopClosure("#text/2", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_write));
+const _write$for_content = /* @__PURE__ */_$.loopClosure("write", "#text/2", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_write));
 const _outerItem$for_content = /* @__PURE__ */_$.value("outerItem", (_scope, outerItem) => {
   _child_input_name(_scope["#childScope/0"], `${outerItem}`);
-  _outerItem$for_content2(_scope, outerItem);
+  _outerItem$for_content2(_scope);
 }, () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_name));
-const _items$for_content = /* @__PURE__ */_$.loopClosure("#text/2", (_scope, items) => _for$for_content(_scope, [items]), () => _for$for_content);
+const _items$for_content = /* @__PURE__ */_$.loopClosure("items", "#text/2", (_scope, items) => _for$for_content(_scope, [items]), () => _for$for_content);
 const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outerItem$for_content(_scope, _params_2[0]), () => _outerItem$for_content);
 const _setup$for_content = _scope => {
-  _write$for_content._(_scope, _scope._["write"]);
+  _write$for_content._(_scope);
   _child(_scope["#childScope/0"]);
-  _items$for_content._(_scope, _scope._["items"]);
+  _items$for_content._(_scope);
 };
 const _for_content = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$for_content, () => _params_2$for_content);
 const _for = /* @__PURE__ */_$.loopOf("#text/2", _for_content);
-const _write = /* @__PURE__ */_$.value("write", 0);
+const _write = /* @__PURE__ */_$.value("write");
 const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {
   items
 }) => _$.on(_scope["#button/0"], "click", function () {
@@ -45,7 +45,7 @@ const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {
 const _items = /* @__PURE__ */_$.state("items", (_scope, items) => {
   _items_effect(_scope);
   _for(_scope, [items]);
-  _items$for_content(_scope, items);
+  _items$for_content(_scope);
 }, () => _for);
 export function _setup_(_scope) {
   _items(_scope, [1, 2, 3]);
