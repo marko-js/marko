@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.39
+
+### Patch Changes
+
+- [#2511](https://github.com/marko-js/marko/pull/2511) [`993e6e0`](https://github.com/marko-js/marko/commit/993e6e08eeb13ff455bca98aabb61c5fec161b04) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure upstream aliases included in stateful ref checks.
+
 ## 0.3.38
 
 ### Patch Changes
