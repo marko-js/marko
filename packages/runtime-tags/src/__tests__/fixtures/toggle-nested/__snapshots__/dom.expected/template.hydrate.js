@@ -1,15 +1,15 @@
-// size: 160 (min) 73 (brotli)
-_$.registerSubscriber(
+// size: 140 (min) 78 (brotli)
+_$.registerDynamicClosure(
   "a0",
-  _$.dynamicClosure(
-    (_scope, value2) => _$.data(_scope[0], value2),
-    (_scope) => _scope._._,
-  ),
+  5,
+  (_scope, value2) => _$.data(_scope[0], value2),
+  0,
+  (_scope) => _scope._._,
 ),
-  _$.registerSubscriber(
+  _$.registerDynamicClosure(
     "a1",
-    _$.dynamicClosure(
-      (_scope, value1) => _$.data(_scope[0], value1),
-      (_scope) => _scope._._,
-    ),
+    4,
+    (_scope, value1) => _$.data(_scope[0], value1),
+    0,
+    (_scope) => _scope._._,
   );

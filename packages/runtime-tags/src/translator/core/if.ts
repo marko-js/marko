@@ -16,7 +16,11 @@ import {
   isOnlyChildInParent,
 } from "../util/is-only-child-in-parent";
 import { isStatefulReferences } from "../util/is-stateful";
-import { getScopeAccessorLiteral, mergeReferences } from "../util/references";
+import {
+  type Binding,
+  getScopeAccessorLiteral,
+  mergeReferences,
+} from "../util/references";
 import { callRuntime } from "../util/runtime";
 import {
   checkStatefulClosures,
@@ -291,9 +295,12 @@ export const IfTag = {
               rendererIdentifiers.push(t.identifier(branchBodySection.name));
               setClosureSignalBuilder(
                 branchTag,
-                (_closureSignal, render, intersection) => {
+                (closureSignal, render, intersection) => {
                   return callRuntime(
                     "conditionalClosure",
+                    getScopeAccessorLiteral(
+                      closureSignal.referencedBindings as Binding,
+                    ),
                     getScopeAccessorLiteral(nodeRef),
                     t.numericLiteral(i),
                     render,

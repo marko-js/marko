@@ -17,7 +17,7 @@ export type Signal<T> = ((scope: Scope, value: T | SignalOp) => void) & {
 
 export function state<T>(
   valueAccessor: Accessor,
-  fn: Signal<T>,
+  fn: 0 | undefined | Signal<T>,
   getIntersection?: () => Signal<never>,
 ) {
   const valueSignal = value<T>(valueAccessor, fn, getIntersection);
@@ -52,19 +52,17 @@ export function state<T>(
 
 export function value<T>(
   valueAccessor: Accessor,
-  fn: SignalFn<T> | 0,
+  fn: 0 | undefined | SignalFn<T>,
   getIntersection?: () => Signal<never>,
 ): Signal<T> {
   const markAccessor = valueAccessor + AccessorChar.Mark;
-  let intersection: Signal<never> | undefined =
-    getIntersection &&
-    ((scope, op) => (intersection = getIntersection!())(scope, op));
+  let intersection: undefined | Signal<never>;
 
   return (scope, valueOrOp) => {
     if (valueOrOp === MARK) {
       // TODO: this check is only necessary because `state` uses `value`
       if ((scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) === 1) {
-        intersection?.(scope, MARK);
+        getIntersection && (intersection ||= getIntersection())(scope, MARK);
       }
     } else if (valueOrOp !== DIRTY) {
       const existing = scope[markAccessor] !== undefined;
@@ -73,16 +71,16 @@ export function value<T>(
           valueOrOp === CLEAN ||
           (existing && scope[valueAccessor] === valueOrOp)
         ) {
-          intersection?.(scope, CLEAN);
+          getIntersection && (intersection ||= getIntersection())(scope, CLEAN);
         } else {
           scope[valueAccessor] = valueOrOp;
           fn && fn(scope, valueOrOp);
-          intersection?.(scope, DIRTY);
+          getIntersection && (intersection ||= getIntersection())(scope, DIRTY);
         }
       }
       // closure needs this to be called after the fn
       // so it is marked until all downstream have been called
-      scope[markAccessor]--;
+      scope[markAccessor]--; // TODO: still needed?
     }
   };
 }
@@ -96,14 +94,12 @@ export function intersection(
 ): Signal<never> {
   const dirtyAccessor = AccessorChar.Dynamic + accessorId++;
   const markAccessor = dirtyAccessor + AccessorChar.Mark;
-  let intersection: Signal<never> | undefined =
-    getIntersection &&
-    ((scope, op) => (intersection = getIntersection!())(scope, op));
+  let intersection: Signal<never> | undefined;
 
   return (scope, op) => {
     if (op === MARK) {
       if ((scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) === 1) {
-        intersection?.(scope, MARK);
+        getIntersection && (intersection ||= getIntersection())(scope, MARK);
       }
     } else if (scope[markAccessor] === undefined) {
       scope[markAccessor] = count - 1;
@@ -112,9 +108,9 @@ export function intersection(
       if (op === DIRTY || scope[dirtyAccessor]) {
         scope[dirtyAccessor] = false;
         (fn as any)(scope);
-        intersection?.(scope, DIRTY);
+        getIntersection && (intersection ||= getIntersection())(scope, DIRTY);
       } else {
-        intersection?.(scope, CLEAN);
+        getIntersection && (intersection ||= getIntersection())(scope, CLEAN);
       }
     } else {
       scope[dirtyAccessor] ||= op === DIRTY;
@@ -122,33 +118,17 @@ export function intersection(
   };
 }
 
-export function closure<T>(
-  fn: SignalFn<T> | 0,
-  getIntersection?: () => Signal<never>,
-): Signal<T> {
-  let intersection: Signal<never> | undefined =
-    getIntersection &&
-    ((scope, op) => (intersection = getIntersection!())(scope, op));
-  return (scope: Scope, valueOrOp: T | SignalOp) => {
-    if (valueOrOp === MARK) {
-      intersection?.(scope, MARK);
-    } else {
-      fn && fn(scope, valueOrOp as T);
-      intersection?.(scope, DIRTY);
-    }
-  };
-}
-
 export function loopClosure<T>(
+  valueAccessor: Accessor,
   ownerLoopNodeAccessor: Accessor,
-  fn: SignalFn<T> | 0,
-  getIntersection?: () => Signal<never>,
+  fn: 0 | SignalFn<T>,
+  getIntersection?: 0 | (() => Signal<never>),
 ): SignalFn<T> {
-  const signal = closure(fn, getIntersection);
+  const childSignal = closure(valueAccessor, fn, getIntersection);
   const loopScopeAccessor = ownerLoopNodeAccessor + AccessorChar.LoopScopeArray;
   const loopScopeMapAccessor =
     ownerLoopNodeAccessor + AccessorChar.LoopScopeMap;
-  const helperSignal = (ownerScope: Scope, value: T) => {
+  const ownerSignal = (ownerScope: Scope) => {
     const loopScopes =
       ownerScope[loopScopeAccessor] ??
       ownerScope[loopScopeMapAccessor]?.values() ??
@@ -156,69 +136,135 @@ export function loopClosure<T>(
     if (loopScopes !== emptyMarkerArray) {
       for (const scope of loopScopes) {
         if (!scope.___pending) {
-          queueSource(scope, signal, value);
+          queueSource(scope, childSignal);
         }
       }
     }
   };
-  helperSignal._ = signal;
-  return helperSignal;
+  ownerSignal._ = childSignal;
+  return ownerSignal;
 }
 
 export function conditionalClosure<T>(
+  valueAccessor: Accessor,
   ownerConditionalNodeAccessor: Accessor,
   branch: number,
-  fn: SignalFn<T> | 0,
-  getIntersection?: () => Signal<never>,
+  fn: 0 | SignalFn<T>,
+  getIntersection?: 0 | (() => Signal<never>),
 ): SignalFn<T> {
-  const signal = closure(fn, getIntersection);
+  const childSignal = closure(valueAccessor, fn, getIntersection);
   const scopeAccessor =
     ownerConditionalNodeAccessor + AccessorChar.ConditionalScope;
   const branchAccessor =
     ownerConditionalNodeAccessor + AccessorChar.ConditionalRenderer;
-  const helperSignal = (scope: Scope, value: T) => {
+  const ownerSignal = (scope: Scope) => {
     const ifScope = scope[scopeAccessor];
     if (ifScope && !ifScope.___pending && scope[branchAccessor] === branch) {
-      queueSource(ifScope, signal, value);
+      queueSource(ifScope, childSignal);
     }
   };
-  helperSignal._ = signal;
-  return helperSignal;
+  ownerSignal._ = childSignal;
+  return ownerSignal;
 }
 
-const defaultGetOwnerScope = (scope: Scope) => scope._ as Scope;
-
 export function dynamicClosure<T>(
-  fn: Signal<T> | 0,
-  getOwnerScope: (scope: Scope) => Scope = defaultGetOwnerScope,
-  getIntersection?: () => Signal<never>,
-): SignalFn<T> {
-  //const getOwnerScope = _getOwnerScope || defaultGetOwnerScope; // Use this instead of default params to support passing `0`
-  const ownerSubscribersAccessor = AccessorChar.Dynamic + accessorId++;
-  const _signal = closure(fn, getIntersection);
-  const helperSignal = (ownerScope: Scope, value: T) => {
-    const subscribers = ownerScope[ownerSubscribersAccessor] as Set<Scope>;
+  valueAccessor: Accessor,
+  fn: 0 | Signal<T>,
+  getIntersection?: 0 | (() => Signal<never>),
+  getOwnerScope?: (scope: Scope) => Scope,
+) {
+  const subscribersAccessor = AccessorChar.Dynamic + accessorId++;
+  const childSignal = closure(
+    valueAccessor,
+    fn,
+    getIntersection,
+    getOwnerScope,
+  );
+  const ownerSignal = (ownerScope: Scope) => {
+    const subscribers = ownerScope[subscribersAccessor] as Set<Scope>;
     if (subscribers) {
       for (const subscriber of subscribers) {
         if (!subscriber.___pending) {
-          queueSource(subscriber, _signal, value);
+          queueSource(subscriber, childSignal);
         }
       }
     }
   };
-  const setupSignal = (scope: Scope, value: T) => {
-    _signal(scope, value);
+  const subscribe = (scope: Scope) => {
+    const owner = getOwnerScope ? getOwnerScope(scope) : scope._!;
+    const subscribers = (owner[subscribersAccessor] ||= new Set());
+    if (!subscribers.has(scope)) {
+      subscribers.add(scope);
+      getAbortSignal(scope, -1).addEventListener("abort", () =>
+        owner[subscribersAccessor].delete(scope),
+      );
+    }
+  };
+
+  ownerSignal.___subscribe = subscribe;
+  ownerSignal._ = (scope: Scope) => {
+    childSignal(scope);
     subscribe(scope);
   };
-  const subscribe = (scope: Scope) => {
-    (getOwnerScope(scope)[ownerSubscribersAccessor] ||= new Set()).add(scope);
-    getAbortSignal(scope, -1).addEventListener("abort", () => {
-      getOwnerScope(scope)[ownerSubscribersAccessor].delete(scope);
-    });
+  return ownerSignal;
+}
+
+export function registerDynamicClosure<T>(
+  id: string,
+  valueAccessor: Accessor,
+  fn: 0 | Signal<T>,
+  getIntersection?: 0 | (() => Signal<never>),
+  getOwnerScope?: (scope: Scope) => Scope,
+) {
+  const signal = dynamicClosure(
+    valueAccessor,
+    fn,
+    getIntersection,
+    getOwnerScope,
+  );
+  register(id, signal.___subscribe);
+  return signal;
+
+  // TODO: we need to handle the async case - DO NOT REMOVE UNTIL WE DO
+  // const ownerMarkAccessor = ownerValueAccessor + AccessorChars.MARK;
+  // const ownerSubscribersAccessor =
+  //   ownerValueAccessor + AccessorChars.SUBSCRIBERS;
+
+  // register(id, (subscriberScope: Scope) => {
+  //   const ownerScope = getOwnerScope(subscriberScope);
+  //   const boundSignal = bindFunction(subscriberScope, signal);
+  //   const ownerMark = ownerScope[ownerMarkAccessor];
+  //   (ownerScope[ownerSubscribersAccessor] ||= new Set()).add(boundSignal);
+
+  //   // TODO: if the mark is not undefined, it means the value was updated clientside
+  //   // before this subscriber was flushed.
+  //   if (ownerMark === 0) {
+  //     // the value has finished updating
+  //     // we should trigger an update to `signal`
+  //   } else if (ownerMark >= 1) {
+  //     // the value is queued for update
+  //     // we should mark `signal` and let it be updated when the owner is updated
+  //   }
+  // });
+}
+
+function closure<T>(
+  valueAccessor: Accessor,
+  fn: 0 | undefined | SignalFn<T>,
+  getIntersection: 0 | undefined | (() => Signal<never>),
+  getOwnerScope?: (scope: Scope) => Scope,
+): (scope: Scope, op?: SignalOp) => void {
+  let intersection: Signal<never> | undefined;
+  return (scope, op) => {
+    op ||
+      (fn &&
+        fn(
+          scope,
+          (getOwnerScope ? getOwnerScope(scope) : scope._!)[valueAccessor],
+        ));
+    getIntersection &&
+      (intersection ||= getIntersection())(scope, op ? MARK : DIRTY);
   };
-  helperSignal._ = setupSignal;
-  helperSignal.___subscribe = subscribe;
-  return helperSignal;
 }
 
 export function setTagVar(

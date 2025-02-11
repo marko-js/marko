@@ -1,11 +1,12 @@
-// size: 310 (min) 197 (brotli)
+// size: 303 (min) 193 (brotli)
 const _message_text$if_content = _$.conditionalClosure(
+    3,
     1,
     0,
     (_scope, message_text) => _$.data(_scope[0], message_text),
   ),
   _setup$if_content = (_scope) => {
-    _message_text$if_content._(_scope, _scope._[3]);
+    _message_text$if_content._(_scope);
   },
   _if_content = _$.createRenderer(" ", " ", _setup$if_content),
   _if = _$.conditional(1, _if_content),
@@ -15,7 +16,7 @@ const _message_text$if_content = _$.conditionalClosure(
     () => _if,
   ),
   _message_text = _$.value(3, (_scope, message_text) =>
-    _message_text$if_content(_scope, message_text),
+    _message_text$if_content(_scope),
   ),
   _message = _$.state(2, (_scope, message) =>
     _message_text(_scope, message?.text),

@@ -1,4 +1,4 @@
-// size: 295 (min) 198 (brotli)
+// size: 274 (min) 188 (brotli)
 const _count$falseChild_content_effect = _$.effect(
     "b0",
     (_scope, { _: { 1: count } }) =>
@@ -6,14 +6,15 @@ const _count$falseChild_content_effect = _$.effect(
         _count(_scope._, count + 1);
       }),
   ),
-  _count$falseChild_content = _$.registerSubscriber(
+  _count$falseChild_content = _$.registerDynamicClosure(
     "b1",
-    _$.dynamicClosure((_scope, count) => {
+    1,
+    (_scope, count) => {
       _$.data(_scope[1], count), _count$falseChild_content_effect(_scope);
-    }),
+    },
   ),
   _setup$falseChild_content = (_scope) => {
-    _count$falseChild_content._(_scope, _scope._[1]);
+    _count$falseChild_content._(_scope);
   };
 _$.register(
   "b2",
@@ -24,6 +25,6 @@ _$.register(
   ),
 );
 const _count = _$.state(1, (_scope, count) =>
-  _count$falseChild_content(_scope, count),
+  _count$falseChild_content(_scope),
 );
 init();

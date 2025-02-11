@@ -71,8 +71,8 @@ const _dynamicTag4 = /* @__PURE__ */_$.dynamicTag("#text/5", 0, () => _expr_Text
 const _dynamicTag3 = /* @__PURE__ */_$.dynamicTag("#text/4", 0, () => _expr_Text_other3);
 const _dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/1", 0, () => _expr_Text_other2);
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => _expr_Text_other);
-const _tagConstB = /* @__PURE__ */_$.value("tagConstB", 0);
-const _tagConstA = /* @__PURE__ */_$.value("tagConstA", 0);
+const _tagConstB = /* @__PURE__ */_$.value("tagConstB");
+const _tagConstA = /* @__PURE__ */_$.value("tagConstA");
 const _largeHeading = /* @__PURE__ */_$.value("largeHeading", (_scope, largeHeading) => _dynamicTag6(_scope, largeHeading || "h2"), () => _dynamicTag6);
 export const _other_ = /* @__PURE__ */_$.value("other", (_scope, other) => {
   _$.attr(_scope["#showDivNull/2"], "other", other);
@@ -85,7 +85,7 @@ export const _other_ = /* @__PURE__ */_$.value("other", (_scope, other) => {
   _tag_input_other(_scope["#childScope/6"], other);
   _tag_input_other(_scope["#childScope/7"], other);
 }, () => _$.intersections([_expr_Text_other, _expr_Text_other2, _expr_Text_other3, _expr_Text_other4, _expr_Text_other5, _expr_Text_other6, /* @__PURE__ */_$.inChild("#childScope/6", _tag_input_other), /* @__PURE__ */_$.inChild("#childScope/7", _tag_input_other)]));
-export const _level_ = /* @__PURE__ */_$.value("level", 0);
+export const _level_ = /* @__PURE__ */_$.value("level");
 export const _tag_ = /* @__PURE__ */_$.value("tag", (_scope, tag) => _dynamicTag5(_scope, tag || tagA), () => _dynamicTag5);
 export const _isLarge_ = /* @__PURE__ */_$.value("isLarge", (_scope, isLarge) => {
   _dynamicTag3(_scope, isLarge ? "h1" : "h2");

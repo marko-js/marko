@@ -1,29 +1,28 @@
-// size: 429 (min) 212 (brotli)
-const _c$if_content = _$.registerSubscriber(
+// size: 391 (min) 204 (brotli)
+const _c$if_content = _$.registerDynamicClosure(
     "b0",
-    _$.dynamicClosure(
-      (_scope, c) => _$.data(_scope[2], c),
-      (_scope) => _scope._._,
-    ),
+    4,
+    (_scope, c) => _$.data(_scope[2], c),
+    0,
+    (_scope) => _scope._._,
   ),
-  _c$customTag_content = _$.registerSubscriber(
-    "b1",
-    _$.dynamicClosure((_scope, c) => _$.data(_scope[2], c)),
+  _c$customTag_content = _$.registerDynamicClosure("b1", 4, (_scope, c) =>
+    _$.data(_scope[2], c),
   ),
-  _b$customTag_content = _$.dynamicClosure((_scope, b) =>
+  _b$customTag_content = _$.dynamicClosure(3, (_scope, b) =>
     _$.data(_scope[1], b),
   ),
   _setup$customTag_content = (_scope) => {
     _$.data(_scope[0], 1),
-      _b$customTag_content._(_scope, _scope._[3]),
-      _c$customTag_content._(_scope, _scope._[4]);
+      _b$customTag_content._(_scope),
+      _c$customTag_content._(_scope);
   };
 _$.register(
   "b2",
   _$.createRendererWithOwner("<!> <!> <!>", "%c%c%", _setup$customTag_content),
 );
 const _c = _$.state(4, (_scope, c) => {
-  _c$customTag_content(_scope, c), _c$if_content(_scope, c);
+  _c$customTag_content(_scope), _c$if_content(_scope);
 });
 _$.effect("b3", (_scope) =>
   _$.on(_scope[0], "click", function () {

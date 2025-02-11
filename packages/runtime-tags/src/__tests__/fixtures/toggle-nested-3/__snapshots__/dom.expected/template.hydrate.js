@@ -1,4 +1,4 @@
-// size: 708 (min) 342 (brotli)
+// size: 680 (min) 328 (brotli)
 const _count$if_content_effect = _$.effect(
     "a0",
     (
@@ -13,17 +13,17 @@ const _count$if_content_effect = _$.effect(
         _count(_scope._._, count + 1);
       }),
   ),
-  _count$if_content = _$.registerSubscriber(
+  _count$if_content = _$.registerDynamicClosure(
     "a1",
-    _$.dynamicClosure(
-      (_scope, count) => {
-        _$.data(_scope[1], count), _count$if_content_effect(_scope);
-      },
-      (_scope) => _scope._._,
-    ),
+    4,
+    (_scope, count) => {
+      _$.data(_scope[1], count), _count$if_content_effect(_scope);
+    },
+    0,
+    (_scope) => _scope._._,
   ),
   _setup$if_content2 = (_scope) => {
-    _count$if_content._(_scope, _scope._._[4]);
+    _count$if_content._(_scope);
   },
   _if_content2 = _$.createRenderer(
     "<button id=count> </button>",
@@ -37,6 +37,7 @@ const _count$if_content_effect = _$.effect(
     }),
   ),
   _inner$if_content = _$.conditionalClosure(
+    3,
     1,
     0,
     (_scope, inner) => {
@@ -45,7 +46,7 @@ const _count$if_content_effect = _$.effect(
     () => _if$if_content,
   ),
   _setup$if_content = (_scope) => {
-    _inner$if_content._(_scope, _scope._[3]);
+    _inner$if_content._(_scope);
   },
   _if_content = _$.createRenderer(
     "<button id=inner></button><!><!>",
@@ -53,8 +54,8 @@ const _count$if_content_effect = _$.effect(
     _setup$if_content,
   ),
   _if = _$.conditional(1, _if_content),
-  _count = _$.state(4, (_scope, count) => _count$if_content(_scope, count)),
-  _inner = _$.state(3, (_scope, inner) => _inner$if_content(_scope, inner)),
+  _count = _$.state(4, (_scope, count) => _count$if_content(_scope)),
+  _inner = _$.state(3, (_scope, inner) => _inner$if_content(_scope)),
   _outer_effect = _$.effect("a3", (_scope, { 2: outer }) =>
     _$.on(_scope[0], "click", function () {
       _outer(_scope, !outer);

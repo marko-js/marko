@@ -16,6 +16,7 @@ import {
 } from "../util/is-only-child-in-parent";
 import { isStatefulReferences } from "../util/is-stateful";
 import {
+  type Binding,
   BindingType,
   dropReferences,
   getAllTagReferenceNodes,
@@ -317,9 +318,12 @@ export default {
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
         const nodeRef = getOptimizedOnlyChildNodeRef(tag, tagSection);
-        setClosureSignalBuilder(tag, (_closureSignal, render, intersection) => {
+        setClosureSignalBuilder(tag, (closureSignal, render, intersection) => {
           return callRuntime(
             "loopClosure",
+            getScopeAccessorLiteral(
+              closureSignal.referencedBindings as Binding,
+            ),
             getScopeAccessorLiteral(nodeRef),
             render,
             intersection,

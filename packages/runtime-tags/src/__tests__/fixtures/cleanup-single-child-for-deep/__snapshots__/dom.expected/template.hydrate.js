@@ -1,4 +1,4 @@
-// size: 1162 (min) 494 (brotli)
+// size: 1136 (min) 491 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 3: name, 4: write }) =>
@@ -27,11 +27,13 @@ const _expr_name_write_effect = _$.effect(
     () => _$.inChild(0, _name_),
   ),
   _write$for_content2 = _$.dynamicClosure(
+    4,
     (_scope, write) => _write_(_scope[0], write),
-    (_scope) => _scope._._,
     () => _$.inChild(0, _write_),
+    (_scope) => _scope._._,
   ),
   _outerItem$for_content2 = _$.loopClosure(
+    3,
     1,
     0,
     () => _expr_outerItem_middleItem$for_content,
@@ -47,9 +49,7 @@ const _expr_name_write_effect = _$.effect(
     () => _middleItem$for_content,
   ),
   _setup$for_content2 = (_scope) => {
-    _write$for_content2._(_scope, _scope._._[4]),
-      _outerItem$for_content2._(_scope, _scope._[3]),
-      _scope[0];
+    _write$for_content2._(_scope), _outerItem$for_content2._(_scope), _scope[0];
   },
   _for_content2 = _$.createRenderer(
     "<div><div> </div></div>",
@@ -59,6 +59,7 @@ const _expr_name_write_effect = _$.effect(
   ),
   _for$for_content = _$.loopOf(1, _for_content2),
   _write$for_content = _$.loopClosure(
+    4,
     2,
     (_scope, write) => _write_(_scope[0], write),
     () => _$.inChild(0, _write_),
@@ -66,12 +67,12 @@ const _expr_name_write_effect = _$.effect(
   _outerItem$for_content = _$.value(
     3,
     (_scope, outerItem) => {
-      _name_(_scope[0], `${outerItem}`),
-        _outerItem$for_content2(_scope, outerItem);
+      _name_(_scope[0], `${outerItem}`), _outerItem$for_content2(_scope);
     },
     () => _$.inChild(0, _name_),
   ),
   _items$for_content = _$.loopClosure(
+    3,
     2,
     (_scope, items) => _for$for_content(_scope, [items]),
     () => _for$for_content,
@@ -82,9 +83,7 @@ const _expr_name_write_effect = _$.effect(
     () => _outerItem$for_content,
   ),
   _setup$for_content = (_scope) => {
-    _write$for_content._(_scope, _scope._[4]),
-      _scope[0],
-      _items$for_content._(_scope, _scope._[3]);
+    _write$for_content._(_scope), _scope[0], _items$for_content._(_scope);
   },
   _for_content = _$.createRenderer(
     "<div><div> </div><!></div>",
@@ -101,9 +100,7 @@ const _expr_name_write_effect = _$.effect(
   _items = _$.state(
     3,
     (_scope, items) => {
-      _items_effect(_scope),
-        _for(_scope, [items]),
-        _items$for_content(_scope, items);
+      _items_effect(_scope), _for(_scope, [items]), _items$for_content(_scope);
     },
     () => _for,
   );

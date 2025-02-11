@@ -25,11 +25,7 @@ import {
   type ReferencedBindings,
 } from "./references";
 import { callRuntime } from "./runtime";
-import {
-  createScopeReadExpression,
-  createScopeReadPattern,
-  getScopeExpression,
-} from "./scope-read";
+import { createScopeReadPattern, getScopeExpression } from "./scope-read";
 import {
   getScopeIdIdentifier,
   getSectionForBody,
@@ -44,13 +40,6 @@ import {
 import { toMemberExpression } from "./to-property-name";
 import { traverseContains, traverseReplace } from "./traverse";
 
-export type closureSignalBuilder = (
-  signal: Signal,
-  render: t.Expression,
-  intersection?: t.Expression,
-) => t.Expression;
-export type registerScopeBuilder = (scope: t.Expression) => t.Expression;
-
 export type Signal = {
   identifier: t.Identifier;
   valueAccessor?: t.Expression;
@@ -58,7 +47,6 @@ export type Signal = {
   section: Section;
   build: () => t.Expression;
   register?: boolean;
-  isDynamicClosure?: boolean;
   values: Array<{
     signal: {
       identifier: t.Identifier | t.MemberExpression;
@@ -86,6 +74,11 @@ export type Signal = {
   ) => t.Expression;
 };
 
+type closureSignalBuilder = (
+  signal: Signal,
+  render: t.Expression,
+  intersection?: t.Expression,
+) => t.Expression;
 const [getSignals] = createSectionState<Map<unknown, Signal>>(
   "signals",
   () => new Map(),
@@ -223,17 +216,34 @@ export function getSignal(
           scopeIdentifier,
           t.identifier(referencedBindings.name),
         ]);
-        signal.isDynamicClosure = isDynamicClosure;
         const intersection = buildSignalIntersections(signal);
         return isDynamicClosure
-          ? callRuntime(
-              "dynamicClosure",
-              render,
-              isImmediateOwner
-                ? null
-                : t.arrowFunctionExpression([scopeIdentifier], ownerScope),
-              intersection,
-            )
+          ? isStatefulReferences(referencedBindings)
+            ? callRuntime(
+                "registerDynamicClosure",
+                t.stringLiteral(
+                  getResumeRegisterId(
+                    section,
+                    signal.referencedBindings,
+                    "subscriber",
+                  ),
+                ),
+                getScopeAccessorLiteral(referencedBindings),
+                render,
+                intersection,
+                isImmediateOwner
+                  ? undefined
+                  : t.arrowFunctionExpression([scopeIdentifier], ownerScope),
+              )
+            : callRuntime(
+                "dynamicClosure",
+                getScopeAccessorLiteral(referencedBindings),
+                render,
+                intersection,
+                isImmediateOwner
+                  ? undefined
+                  : t.arrowFunctionExpression([scopeIdentifier], ownerScope),
+              )
           : builder(signal, render, intersection);
       };
       addStatement(
@@ -243,10 +253,7 @@ export function getSignal(
         t.expressionStatement(
           t.callExpression(
             t.memberExpression(signal.identifier, t.identifier("_")),
-            [
-              scopeIdentifier,
-              createScopeReadExpression(section, referencedBindings),
-            ],
+            [scopeIdentifier],
           ),
         ),
       );
@@ -360,10 +367,7 @@ export function getSignalFn(
       if (isStatefulReferences(closureSignal.referencedBindings)) {
         signal.render.push(
           t.expressionStatement(
-            t.callExpression(closureSignal.identifier, [
-              scopeIdentifier,
-              valueIdentifier,
-            ]),
+            t.callExpression(closureSignal.identifier, [scopeIdentifier]),
           ),
         );
       }
@@ -572,7 +576,7 @@ function generateSignalName(referencedBindings?: ReferencedBindings) {
 }
 
 export function finalizeSignalArgs(args: t.Expression[]) {
-  for (let i = args.length - 1; i >= 0; i--) {
+  for (let i = args.length; i--; ) {
     const arg = args[i];
     if (t.isArrowFunctionExpression(arg) && t.isBlockStatement(arg.body)) {
       const body = arg.body.body;
@@ -581,10 +585,19 @@ export function finalizeSignalArgs(args: t.Expression[]) {
       } else if (body.length === 1 && t.isExpressionStatement(body[0])) {
         arg.body = toParenthesizedExpressionIfNeeded(body[0].expression);
       }
+    } else if (
+      t.isNullLiteral(arg) ||
+      (t.isUnaryExpression(arg) && arg.operator === "void")
+    ) {
+      args[i] = t.numericLiteral(0);
     }
   }
 
-  for (let i = args.length - 1; t.isNullLiteral(args[i]); ) {
+  for (
+    let i = args.length - 1;
+    t.isNumericLiteral(args[i]) && (args[i] as t.NumericLiteral).value === 0;
+
+  ) {
     args.length = i--;
   }
 }
@@ -764,19 +777,6 @@ export function writeSignals(section: Section) {
         "registerBoundSignal",
         t.stringLiteral(
           getResumeRegisterId(section, signal.referencedBindings, "var"),
-        ),
-        value,
-      );
-    }
-
-    if (
-      signal.isDynamicClosure &&
-      isStatefulReferences(signal.referencedBindings)
-    ) {
-      value = callRuntime(
-        "registerSubscriber",
-        t.stringLiteral(
-          getResumeRegisterId(section, signal.referencedBindings, "subscriber"),
         ),
         value,
       );

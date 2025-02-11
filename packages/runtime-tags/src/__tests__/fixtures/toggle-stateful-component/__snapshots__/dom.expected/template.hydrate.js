@@ -1,4 +1,4 @@
-// size: 632 (min) 345 (brotli)
+// size: 627 (min) 333 (brotli)
 const _expr_input_onCount_clickCount_effect = _$.effect(
     "a0",
     (_scope, { 4: input_onCount, 5: clickCount }) =>
@@ -26,13 +26,14 @@ const _expr_input_onCount_clickCount_effect = _$.effect(
   ),
   _input_onCount_ = _$.value(4, 0, () => _expr_input_onCount_clickCount);
 const _onCount$if_content = _$.conditionalClosure(
+    2,
     0,
     0,
     (_scope, onCount) => _input_onCount_(_scope[0], onCount),
     () => _$.inChild(0, _input_onCount_),
   ),
   _setup$if_content = (_scope) => {
-    _onCount$if_content._(_scope, _scope._[2]),
+    _onCount$if_content._(_scope),
       (function (_scope) {
         _clickCount(_scope, 0);
       })(_scope[0]);

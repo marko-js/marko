@@ -43,13 +43,7 @@ export {
   createRendererWithOwner,
   dynamicTagAttrs,
 } from "./dom/renderer";
-export {
-  init,
-  nodeRef,
-  register,
-  registerBoundSignal,
-  registerSubscriber,
-} from "./dom/resume";
+export { init, nodeRef, register, registerBoundSignal } from "./dom/resume";
 export {
   conditionalClosure,
   dynamicClosure,
@@ -59,6 +53,7 @@ export {
   intersections,
   loopClosure,
   nextTagId,
+  registerDynamicClosure,
   setTagVar,
   setTagVarChange,
   state,
