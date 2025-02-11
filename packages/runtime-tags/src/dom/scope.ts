@@ -4,9 +4,13 @@ import { insertChildNodes, removeChildNodes } from "./dom";
 let pendingScopes: Scope[] = [];
 let debugID = 0;
 
-export function createScope($global: Scope["$global"]): Scope {
+export function createScope(
+  $global: Scope["$global"],
+  closestBranch?: BranchScope,
+): Scope {
   const scope = {
     ___pending: 1,
+    ___closestBranch: closestBranch,
     $global,
   } as Scope;
 

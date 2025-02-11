@@ -101,9 +101,15 @@ export function initBranch(
 ) {
   const clone = renderer.___clone((parentNode as Element).namespaceURI!);
   const cloneParent = clone.parentNode;
-  walk(cloneParent?.firstChild || clone, renderer.___walks, branch);
-  branch.___startNode = cloneParent?.firstChild || (clone as ChildNode);
-  branch.___endNode = cloneParent?.lastChild || (clone as ChildNode);
+  if (cloneParent) {
+    walk(cloneParent.firstChild!, renderer.___walks, branch);
+    branch.___startNode = cloneParent.firstChild!;
+    branch.___endNode = cloneParent.lastChild!;
+  } else {
+    walk(clone, renderer.___walks, branch);
+    branch.___startNode = branch.___endNode = clone;
+  }
+
   if (renderer.___setup) {
     queueRender(branch, renderer.___setup);
   }

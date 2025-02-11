@@ -31,14 +31,14 @@ export function trimWalkString(walkString: string): string {
 
 export function walk(startNode: Node, walkCodes: string, branch: BranchScope) {
   walker.currentNode = startNode;
-  walkInternal(walkCodes, branch, 0);
+  walkInternal(0, walkCodes, branch);
   walker.currentNode = document;
 }
 
 function walkInternal(
+  currentWalkIndex: number,
   walkCodes: string,
   scope: Scope,
-  currentWalkIndex: number,
 ) {
   let value: number;
   let storedMultiplier = 0;
@@ -70,13 +70,15 @@ function walkInternal(
         walker.nextNode();
       }
     } else if (value === WalkCode.BeginChild) {
-      const childScope = (scope[
-        MARKO_DEBUG
-          ? getDebugKey(currentScopeIndex++, "#childScope")
-          : currentScopeIndex++
-      ] = createScope(scope.$global));
-      childScope.___closestBranch = scope.___closestBranch;
-      currentWalkIndex = walkInternal(walkCodes, childScope, currentWalkIndex)!;
+      currentWalkIndex = walkInternal(
+        currentWalkIndex,
+        walkCodes,
+        (scope[
+          MARKO_DEBUG
+            ? getDebugKey(currentScopeIndex++, "#childScope")
+            : currentScopeIndex++
+        ] = createScope(scope.$global, scope.___closestBranch)),
+      )!;
     } else if (value === WalkCode.EndChild) {
       return currentWalkIndex;
     } else if (value === WalkCode.Get) {

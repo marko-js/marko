@@ -1,5 +1,4 @@
 import type { Scope } from "../common/types";
-import { schedule } from "./schedule";
 import { finishPendingScopes } from "./scope";
 import { MARK, type Signal } from "./signals";
 
@@ -14,6 +13,7 @@ type PendingRender = {
   ___scope: Scope;
   ___signal: Signal<any>;
   ___value: unknown;
+  ___depth: number;
   ___index: number;
 };
 
@@ -22,13 +22,11 @@ export let pendingEffects: unknown[] = [];
 export let rendering = false;
 
 export function queueSource<T>(scope: Scope, signal: Signal<T>, value: T) {
-  schedule();
   const prevRendering = rendering;
   rendering = true;
   signal(scope, MARK);
   rendering = prevRendering;
   queueRender(scope, signal, value);
-  return value;
 }
 
 export function queueRender(
@@ -41,6 +39,7 @@ export function queueRender(
     ___scope: scope,
     ___signal: signal,
     ___value: value,
+    ___depth: scope.___closestBranch?.___branchDepth || 0,
     ___index: i,
   };
 
@@ -94,7 +93,7 @@ export function prepareEffects(fn: () => void): unknown[] {
   return preparedEffects;
 }
 
-export function runEffects(effects: unknown[] = pendingEffects) {
+export function runEffects(effects: unknown[]) {
   for (let i = 0; i < effects.length; i += PendingEffectOffset.Total) {
     const scope = effects[i] as Scope;
     const fn = effects[i + 1] as (a: Scope, b: Scope) => void;
@@ -146,9 +145,5 @@ function runRenders() {
 }
 
 function comparePendingRenders(a: PendingRender, b: PendingRender) {
-  return getBranchDepth(a) - getBranchDepth(b) || a.___index - b.___index;
-}
-
-function getBranchDepth(render: PendingRender) {
-  return render.___scope.___closestBranch?.___branchDepth || 0;
+  return a.___depth - b.___depth || a.___index - b.___index;
 }

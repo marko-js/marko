@@ -92,7 +92,7 @@ function mount(
   runEffects(effects);
 
   return {
-    update: (newInput: unknown) => {
+    update(newInput: unknown) {
       if (args) {
         runEffects(
           prepareEffects(() => {
@@ -102,7 +102,7 @@ function mount(
         );
       }
     },
-    destroy: () => {
+    destroy() {
       removeAndDestroyBranch(branch);
     },
   };
