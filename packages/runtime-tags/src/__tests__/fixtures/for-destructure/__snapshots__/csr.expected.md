@@ -128,6 +128,6 @@ container.querySelector("#add").click();
 
 # Mutations
 ```
+REMOVE #text before div/button0
 INSERT div/div
-REMOVE #text before div/div
 ```

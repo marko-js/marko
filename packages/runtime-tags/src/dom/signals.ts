@@ -1,6 +1,5 @@
 import { type Accessor, AccessorChar, type Scope } from "../common/types";
 import { getAbortSignal } from "./abort-signal";
-import { emptyMarkerArray } from "./control-flow";
 import { queueEffect, queueSource, rendering } from "./queue";
 import { register } from "./resume";
 import { schedule } from "./schedule";
@@ -129,15 +128,11 @@ export function loopClosure<T>(
   const loopScopeMapAccessor =
     ownerLoopNodeAccessor + AccessorChar.LoopScopeMap;
   const ownerSignal = (ownerScope: Scope) => {
-    const loopScopes =
-      ownerScope[loopScopeAccessor] ??
-      ownerScope[loopScopeMapAccessor]?.values() ??
-      [];
-    if (loopScopes !== emptyMarkerArray) {
-      for (const scope of loopScopes) {
-        if (!scope.___pending) {
-          queueSource(scope, childSignal);
-        }
+    for (const scope of ownerScope[loopScopeAccessor] ||
+      ownerScope[loopScopeMapAccessor]?.values() ||
+      []) {
+      if (!scope.___pending) {
+        queueSource(scope, childSignal);
       }
     }
   };
@@ -196,7 +191,7 @@ export function dynamicClosure<T>(
     if (!subscribers.has(scope)) {
       subscribers.add(scope);
       getAbortSignal(scope, -1).addEventListener("abort", () =>
-        owner[subscribersAccessor].delete(scope),
+        subscribers.delete(scope),
       );
     }
   };

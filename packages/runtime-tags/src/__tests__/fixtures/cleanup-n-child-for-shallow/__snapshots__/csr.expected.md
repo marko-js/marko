@@ -213,10 +213,10 @@ mounted 3
 
 # Mutations
 ```
+REMOVE #text after div0
 INSERT div1, span0, p0
 INSERT div2, span1, p1
 INSERT div3, span2, p2
-REMOVE #text after div0
 REMOVE #text in div0
 INSERT #text
 REMOVE #text in div0

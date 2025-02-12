@@ -74,10 +74,10 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT #comment4, #text, #comment5
+REMOVE #text after #comment4
 INSERT div6
 INSERT div7
 INSERT div8
-REMOVE #text after #comment4
 INSERT div2
 INSERT div5
 UPDATE div6/#text " " => "2.0"

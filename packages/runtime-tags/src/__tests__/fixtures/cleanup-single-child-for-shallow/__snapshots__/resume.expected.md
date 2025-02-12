@@ -223,10 +223,10 @@ mounted 3
 
 # Mutations
 ```
+REMOVE #comment after html/body/#comment1
 INSERT html/body/div1
 INSERT html/body/div2
 INSERT html/body/div3
-REMOVE #comment after html/body/#comment1
 REMOVE #text in html/body/div0
 INSERT #text
 REMOVE #text in html/body/div0
