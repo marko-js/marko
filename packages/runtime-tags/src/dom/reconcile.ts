@@ -160,8 +160,7 @@ export function reconcile(
 
 function longestIncreasingSubsequence(a: number[]): number[] {
   const p = a.slice();
-  const result: number[] = [];
-  result.push(0);
+  const result: number[] = [0];
   let u: number;
   let v: number;
 
@@ -181,7 +180,6 @@ function longestIncreasingSubsequence(a: number[]): number[] {
     v = result.length - 1;
 
     while (u < v) {
-      // tslint:disable-next-line:no-bitwise
       const c = ((u + v) / 2) | 0;
       if (a[result[c]] < a[i]) {
         u = c + 1;

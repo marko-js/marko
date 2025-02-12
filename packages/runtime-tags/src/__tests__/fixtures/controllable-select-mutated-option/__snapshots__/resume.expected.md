@@ -188,7 +188,12 @@ container.querySelector(".remove").click();
   <head />
   <body>
     <form>
-      <select />
+      <select>
+        <!--M_*2 #option/0-->
+        <!--M_*3 #option/0-->
+        <!--M_*4 #option/0-->
+        <!--M_=1 #select/0 4 3 2-->
+      </select>
       <button
         type="reset"
       >
@@ -220,7 +225,7 @@ container.querySelector(".remove").click();
 
 # Mutations
 ```
-REMOVE #comment, #comment, option, #comment, #comment in html/body/form/select
+REMOVE option after html/body/form/select/#comment1
 UPDATE html/body/div/#text "3" => "‍"
 ```
 
@@ -234,6 +239,10 @@ container.querySelector(".add").click();
   <body>
     <form>
       <select>
+        <!--M_*2 #option/0-->
+        <!--M_*3 #option/0-->
+        <!--M_*4 #option/0-->
+        <!--M_=1 #select/0 4 3 2-->
         <option
           selected=""
           value="3"
@@ -286,6 +295,10 @@ container.querySelector(".add").click();
   <body>
     <form>
       <select>
+        <!--M_*2 #option/0-->
+        <!--M_*3 #option/0-->
+        <!--M_*4 #option/0-->
+        <!--M_=1 #select/0 4 3 2-->
         <option
           value="2"
         >
@@ -342,6 +355,10 @@ container.querySelector(".add").click();
   <body>
     <form>
       <select>
+        <!--M_*2 #option/0-->
+        <!--M_*3 #option/0-->
+        <!--M_*4 #option/0-->
+        <!--M_=1 #select/0 4 3 2-->
         <option
           value="1"
         >

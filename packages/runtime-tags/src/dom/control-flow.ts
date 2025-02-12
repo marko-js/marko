@@ -156,15 +156,6 @@ export function setConditionalRendererOnlyChild<T>(
   scope[nodeAccessor + AccessorChar.ConditionalScope] = newBranch;
 }
 
-const emptyMarkerMap = new Map([
-  [Symbol(), /* @__PURE__ */ getEmptyBranch(0 as any) as BranchScope],
-]);
-export const emptyMarkerArray = [
-  /* @__PURE__ */ getEmptyBranch(0 as any) as BranchScope,
-];
-const emptyMap = new Map();
-const emptyArray = [] as BranchScope[];
-
 export function loopOf(nodeAccessor: Accessor, renderer: Renderer) {
   return loop<[all: unknown[], by?: (item: unknown, index: number) => unknown]>(
     nodeAccessor,
@@ -206,99 +197,67 @@ function loop<T extends unknown[] = unknown[]>(
   const loopScopeAccessor = nodeAccessor + AccessorChar.LoopScopeArray;
   const params = renderer.___args;
   return (scope: Scope, valueOrOp: T | SignalOp) => {
-    if (valueOrOp === DIRTY) return;
-    if (valueOrOp === MARK || valueOrOp === CLEAN) {
-      const loopBranches =
-        scope[loopScopeAccessor] ??
-        scope[nodeAccessor + AccessorChar.LoopScopeMap]?.values() ??
-        [];
-      if (loopBranches !== emptyMarkerArray) {
-        for (const branch of loopBranches) {
-          params?.(branch, valueOrOp);
+    if (valueOrOp === DIRTY) {
+      // ignore
+    } else if (valueOrOp === MARK || valueOrOp === CLEAN) {
+      if (params) {
+        for (const branch of scope[loopScopeAccessor] ||
+          scope[nodeAccessor + AccessorChar.LoopScopeMap]?.values() ||
+          []) {
+          params(branch, valueOrOp);
         }
       }
-
-      return;
-    }
-
-    const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
-    const referenceIsMarker = referenceNode.nodeType > NodeType.Element;
-    const oldMap =
-      (scope[nodeAccessor + AccessorChar.LoopScopeMap] as Map<
-        unknown,
-        BranchScope
-      >) || (referenceIsMarker ? emptyMarkerMap : emptyMap);
-    const oldArray =
-      (scope[nodeAccessor + AccessorChar.LoopScopeArray] as BranchScope[]) ||
-      Array.from(oldMap.values());
-    const parentNode = (
-      referenceIsMarker
-        ? referenceNode.parentNode || oldArray[0].___startNode.parentNode
-        : referenceNode
-    ) as Element;
-
-    let newMap!: Map<unknown, BranchScope>;
-    let newArray!: BranchScope[];
-    let afterReference: Node | null;
-    let needsReconciliation = true;
-    forEach(valueOrOp, (key, args) => {
-      let branch = oldMap.get(key);
-      if (!branch) {
-        branch = createBranchScopeWithRenderer(
-          renderer,
-          scope.$global,
-          scope,
-          parentNode,
-        );
-        // TODO: once we can track moves
-        // needsReconciliation = true;
-      } else {
-        // TODO: track if any childScope has changed index
-        // needsReconciliation ||= oldArray[index] !== childScope;
-      }
-      if (params) {
-        params(branch, args);
-      }
-
-      if (newMap) {
+    } else {
+      const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
+      const referenceIsMarker = referenceNode.nodeType > NodeType.Element;
+      const oldMap = scope[nodeAccessor + AccessorChar.LoopScopeMap] as
+        | Map<unknown, BranchScope>
+        | undefined;
+      const oldArray = oldMap
+        ? scope[nodeAccessor + AccessorChar.LoopScopeArray] || [
+            ...oldMap.values(),
+          ]
+        : [];
+      const parentNode = (
+        referenceIsMarker
+          ? referenceNode.parentNode || oldArray[0].___startNode.parentNode
+          : referenceNode
+      ) as Element;
+      const newMap: Map<unknown, BranchScope> = (scope[
+        nodeAccessor + AccessorChar.LoopScopeMap
+      ] = new Map());
+      const newArray: BranchScope[] = (scope[
+        nodeAccessor + AccessorChar.LoopScopeArray
+      ] = []);
+      forEach(valueOrOp, (key, args) => {
+        const branch =
+          oldMap?.get(key) ||
+          createBranchScopeWithRenderer(
+            renderer,
+            scope.$global,
+            scope,
+            parentNode,
+          );
+        params?.(branch, args);
         newMap.set(key, branch);
         newArray.push(branch);
-      } else {
-        newMap = new Map([[key, branch]]);
-        newArray = [branch];
-      }
-    });
+      });
 
-    if (!newMap) {
+      let afterReference: null | Node = null;
       if (referenceIsMarker) {
-        newMap = emptyMarkerMap;
-        newArray = emptyMarkerArray;
-        getEmptyBranch(referenceNode as Comment);
-      } else {
-        // TODO: we should be able to use child template analysis (or runtime analysis?) to know if its unnecessary to destroy these scopes
-        oldArray.forEach(destroyBranch);
-        referenceNode.textContent = "";
-        newMap = emptyMap;
-        newArray = emptyArray;
-        needsReconciliation = false;
-      }
-    }
-
-    if (needsReconciliation) {
-      if (referenceIsMarker) {
-        if (oldMap === emptyMarkerMap) {
-          getEmptyBranch(referenceNode as Comment);
+        if (oldArray.length) {
+          afterReference = oldArray[oldArray.length - 1].___endNode.nextSibling;
+          if (!newArray.length) {
+            parentNode.insertBefore(referenceNode, afterReference);
+          }
+        } else if (newArray.length) {
+          afterReference = referenceNode.nextSibling;
+          referenceNode.remove();
         }
-        const oldLastChild = oldArray[oldArray.length - 1];
-        afterReference = oldLastChild.___endNode.nextSibling;
-      } else {
-        afterReference = null;
       }
-      reconcile(parentNode, oldArray, newArray!, afterReference);
-    }
 
-    scope[nodeAccessor + AccessorChar.LoopScopeMap] = newMap;
-    scope[nodeAccessor + AccessorChar.LoopScopeArray] = newArray;
+      reconcile(parentNode, oldArray, newArray, afterReference);
+    }
   };
 }
 

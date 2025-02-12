@@ -1,4 +1,4 @@
-// size: 18261 (min) 6834 (brotli)
+// size: 18094 (min) 6775 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -794,478 +794,6 @@ function removeAndDestroyBranch(branch) {
 function insertBranchBefore(branch, parentNode, nextSibling) {
   insertChildNodes(parentNode, nextSibling, branch.a, branch.b);
 }
-var walker = document.createTreeWalker(document);
-function trimWalkString(walkString) {
-  let end = walkString.length;
-  for (; walkString.charCodeAt(--end) > 47; );
-  return walkString.slice(0, end + 1);
-}
-function walk(startNode, walkCodes, branch) {
-  (walker.currentNode = startNode), walkInternal(0, walkCodes, branch);
-}
-function walkInternal(currentWalkIndex, walkCodes, scope) {
-  let value2,
-    storedMultiplier = 0,
-    currentMultiplier = 0,
-    currentScopeIndex = 0;
-  for (; currentWalkIndex < walkCodes.length; )
-    if (
-      ((value2 = walkCodes.charCodeAt(currentWalkIndex++)),
-      (currentMultiplier = storedMultiplier),
-      (storedMultiplier = 0),
-      value2 >= 117)
-    )
-      storedMultiplier = 10 * currentMultiplier + value2 - 117;
-    else if (value2 >= 107) {
-      for (value2 = 10 * currentMultiplier + value2 - 107; value2--; )
-        walker.parentNode();
-      walker.nextSibling();
-    } else if (value2 >= 97)
-      for (value2 = 10 * currentMultiplier + value2 - 97; value2--; )
-        walker.nextSibling();
-    else if (value2 >= 67)
-      for (value2 = 20 * currentMultiplier + value2 - 67; value2--; )
-        walker.nextNode();
-    else if (47 === value2)
-      currentWalkIndex = walkInternal(
-        currentWalkIndex,
-        walkCodes,
-        (scope[currentScopeIndex++] = createScope(scope.$global, scope.c)),
-      );
-    else {
-      if (38 === value2) return currentWalkIndex;
-      32 === value2
-        ? (scope[currentScopeIndex++] = walker.currentNode)
-        : walker.currentNode.replaceWith(
-            (walker.currentNode = scope[currentScopeIndex++] = new Text()),
-          );
-    }
-}
-function createBranchScopeWithRenderer(
-  renderer,
-  $global,
-  parentScope,
-  parentNode,
-) {
-  let branch = createBranch($global, renderer.s || parentScope, parentScope);
-  return initBranch(renderer, branch, parentNode), branch;
-}
-function createBranchScopeWithTagNameOrRenderer(
-  tagNameOrRenderer,
-  $global,
-  parentScope,
-  parentNode,
-) {
-  if ("string" != typeof tagNameOrRenderer)
-    return createBranchScopeWithRenderer(
-      tagNameOrRenderer,
-      $global,
-      parentScope,
-      parentNode,
-    );
-  let branch = createBranch($global, parentScope, parentScope);
-  return (
-    (branch[0] =
-      branch.a =
-      branch.b =
-        document.createElementNS(
-          "svg" === tagNameOrRenderer
-            ? "http://www.w3.org/2000/svg"
-            : "math" === tagNameOrRenderer
-              ? "http://www.w3.org/1998/Math/MathML"
-              : parentNode.namespaceURI,
-          tagNameOrRenderer,
-        )),
-    branch
-  );
-}
-function createBranch($global, ownerScope, parentScope) {
-  let branch = createScope($global),
-    parentBranch = parentScope.c;
-  return (
-    (branch._ = ownerScope),
-    (branch.c = branch),
-    parentBranch
-      ? ((branch.f = parentBranch.f + 1),
-        (branch.q = parentBranch),
-        (parentBranch.j ||= new Set()).add(branch))
-      : (branch.f = 1),
-    branch
-  );
-}
-function initBranch(renderer, branch, parentNode) {
-  let clone = renderer.k(parentNode.namespaceURI),
-    cloneParent = clone.parentNode;
-  cloneParent
-    ? (walk(cloneParent.firstChild, renderer.t, branch),
-      (branch.a = cloneParent.firstChild),
-      (branch.b = cloneParent.lastChild))
-    : (walk(clone, renderer.t, branch), (branch.a = branch.b = clone)),
-    renderer.u && queueRender(branch, renderer.u);
-}
-function dynamicTagAttrs(nodeAccessor, getContent, inputIsArgs) {
-  return (scope, attrsOrOp) => {
-    let renderer = scope[nodeAccessor + "("];
-    if (!renderer || attrsOrOp === DIRTY) return;
-    let childScope = scope[nodeAccessor + "!"];
-    if (attrsOrOp === MARK || attrsOrOp === CLEAN)
-      return renderer.d?.(childScope, attrsOrOp);
-    let content = getContent?.(scope);
-    if ("string" == typeof renderer)
-      setConditionalRendererOnlyChild(
-        childScope,
-        0,
-        content,
-        createBranchScopeWithTagNameOrRenderer,
-      ),
-        attrs(childScope, 0, attrsOrOp());
-    else if (renderer.d) {
-      let attributes = attrsOrOp();
-      renderer.d(
-        childScope,
-        inputIsArgs
-          ? attributes
-          : [content ? { ...attributes, content: content } : attributes],
-      );
-    }
-  };
-}
-function createRendererWithOwner(template, rawWalks, setup, getArgs) {
-  let args,
-    id = {},
-    walks = rawWalks ? trimWalkString(rawWalks) : " ";
-  return (owner) => ({
-    x: id,
-    y: template,
-    t: walks,
-    u: setup,
-    k: _clone,
-    s: owner,
-    get d() {
-      return (args ||= getArgs?.());
-    },
-  });
-}
-function createRenderer(template, walks, setup, getArgs) {
-  return createRendererWithOwner(template, walks, setup, getArgs)();
-}
-function _clone(ns) {
-  return ((cloneCache[ns] ||= {})[this.y] ||= (function (html2, ns) {
-    let { firstChild: firstChild, lastChild: lastChild } = parseHTML(html2, ns),
-      parent = document.createElementNS(ns, "t");
-    return (
-      insertChildNodes(parent, null, firstChild, lastChild),
-      firstChild === lastChild && firstChild.nodeType < 8
-        ? () => firstChild.cloneNode(!0)
-        : () => parent.cloneNode(!0).firstChild
-    );
-  })(this.y, ns))();
-}
-var cloneCache = {};
-function conditional(nodeAccessor, ...branches) {
-  let branchAccessor = nodeAccessor + "(";
-  return (scope, newBranchIndexOrOp) => {
-    newBranchIndexOrOp !== scope[branchAccessor] &&
-      newBranchIndexOrOp !== DIRTY &&
-      newBranchIndexOrOp !== MARK &&
-      newBranchIndexOrOp !== CLEAN &&
-      (scope[nodeAccessor].nodeType > 1
-        ? setConditionalRenderer
-        : setConditionalRendererOnlyChild)(
-        scope,
-        nodeAccessor,
-        branches[(scope[branchAccessor] = newBranchIndexOrOp)],
-        createBranchScopeWithRenderer,
-      );
-  };
-}
-var dynamicTag = function (nodeAccessor, fn, getIntersection) {
-  let rendererAccessor = nodeAccessor + "(",
-    intersection2 =
-      getIntersection &&
-      ((scope, op) => (intersection2 = getIntersection())(scope, op));
-  return (scope, newRendererOrOp) => {
-    if (newRendererOrOp === DIRTY) return;
-    let currentRenderer = scope[rendererAccessor],
-      op = newRendererOrOp;
-    if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
-      let normalizedRenderer = (function (value2) {
-        if (value2) return value2.content || value2.default || value2;
-      })(newRendererOrOp);
-      (a = normalizedRenderer) !== (b = currentRenderer) && (a?.x || 0) !== b?.x
-        ? ((scope[rendererAccessor] = normalizedRenderer),
-          setConditionalRenderer(
-            scope,
-            nodeAccessor,
-            normalizedRenderer,
-            createBranchScopeWithTagNameOrRenderer,
-          ),
-          fn && fn(scope),
-          (op = DIRTY))
-        : (op = CLEAN);
-    }
-    var a, b;
-    intersection2?.(scope, op);
-  };
-};
-function setConditionalRenderer(
-  scope,
-  nodeAccessor,
-  newRenderer,
-  createBranch2,
-) {
-  let prevBranch =
-      scope[nodeAccessor + "!"] || getEmptyBranch(scope[nodeAccessor]),
-    newBranch = newRenderer
-      ? createBranch2(
-          newRenderer,
-          scope.$global,
-          scope,
-          prevBranch.b.parentNode,
-        )
-      : getEmptyBranch(scope[nodeAccessor]);
-  prevBranch !== newBranch &&
-    (insertBranchBefore(
-      newBranch,
-      prevBranch.b.parentNode,
-      prevBranch.b.nextSibling,
-    ),
-    removeAndDestroyBranch(prevBranch),
-    (scope[nodeAccessor + "!"] = newRenderer && newBranch));
-}
-function setConditionalRendererOnlyChild(
-  scope,
-  nodeAccessor,
-  newRenderer,
-  createBranch2,
-) {
-  let prevBranch = scope[nodeAccessor + "!"],
-    referenceNode = scope[nodeAccessor],
-    newBranch =
-      newRenderer &&
-      createBranch2(newRenderer, scope.$global, scope, referenceNode);
-  (referenceNode.textContent = ""),
-    newBranch && insertBranchBefore(newBranch, referenceNode, null),
-    prevBranch && destroyBranch(prevBranch),
-    (scope[nodeAccessor + "!"] = newBranch);
-}
-var emptyMarkerMap = new Map([[Symbol(), getEmptyBranch(0)]]),
-  emptyMarkerArray = [getEmptyBranch(0)],
-  emptyMap = new Map(),
-  emptyArray = [];
-function loopOf(nodeAccessor, renderer) {
-  return loop(nodeAccessor, renderer, ([all, by = bySecondArg], cb) => {
-    forOf(
-      all,
-      "string" == typeof by
-        ? (item, i) => cb(item[by], [item, i])
-        : (item, i) => cb(by(item, i), [item, i]),
-    );
-  });
-}
-function loopIn(nodeAccessor, renderer) {
-  return loop(nodeAccessor, renderer, ([obj, by = byFirstArg], cb) =>
-    forIn(obj, (key, value2) => cb(by(key, value2), [key, value2])),
-  );
-}
-function loopTo(nodeAccessor, renderer) {
-  return loop(nodeAccessor, renderer, ([to, from, step, by = byFirstArg], cb) =>
-    forTo(to, from, step, (v) => cb(by(v), [v])),
-  );
-}
-function loop(nodeAccessor, renderer, forEach) {
-  let loopScopeAccessor = nodeAccessor + "!",
-    params = renderer.d;
-  return (scope, valueOrOp) => {
-    if (valueOrOp === DIRTY) return;
-    if (valueOrOp === MARK || valueOrOp === CLEAN) {
-      let loopBranches =
-        scope[loopScopeAccessor] ?? scope[nodeAccessor + "("]?.values() ?? [];
-      if (loopBranches !== emptyMarkerArray)
-        for (let branch of loopBranches) params?.(branch, valueOrOp);
-      return;
-    }
-    let newMap,
-      newArray,
-      afterReference,
-      referenceNode = scope[nodeAccessor],
-      referenceIsMarker = referenceNode.nodeType > 1,
-      oldMap =
-        scope[nodeAccessor + "("] ||
-        (referenceIsMarker ? emptyMarkerMap : emptyMap),
-      oldArray = scope[nodeAccessor + "!"] || Array.from(oldMap.values()),
-      parentNode = referenceIsMarker
-        ? referenceNode.parentNode || oldArray[0].a.parentNode
-        : referenceNode,
-      needsReconciliation = !0;
-    forEach(valueOrOp, (key, args) => {
-      let branch = oldMap.get(key);
-      branch ||
-        (branch = createBranchScopeWithRenderer(
-          renderer,
-          scope.$global,
-          scope,
-          parentNode,
-        )),
-        params && params(branch, args),
-        newMap
-          ? (newMap.set(key, branch), newArray.push(branch))
-          : ((newMap = new Map([[key, branch]])), (newArray = [branch]));
-    }),
-      newMap ||
-        (referenceIsMarker
-          ? ((newMap = emptyMarkerMap),
-            (newArray = emptyMarkerArray),
-            getEmptyBranch(referenceNode))
-          : (oldArray.forEach(destroyBranch),
-            (referenceNode.textContent = ""),
-            (newMap = emptyMap),
-            (newArray = emptyArray),
-            (needsReconciliation = !1))),
-      needsReconciliation &&
-        (referenceIsMarker
-          ? (oldMap === emptyMarkerMap && getEmptyBranch(referenceNode),
-            (afterReference = oldArray[oldArray.length - 1].b.nextSibling))
-          : (afterReference = null),
-        (function (parent, oldBranches, newBranches, afterReference) {
-          let i,
-            j,
-            k,
-            nextSibling,
-            oldBranch,
-            newBranch,
-            oldStart = 0,
-            newStart = 0,
-            oldEnd = oldBranches.length - 1,
-            newEnd = newBranches.length - 1,
-            oldStartBranch = oldBranches[oldStart],
-            newStartBranch = newBranches[newStart],
-            oldEndBranch = oldBranches[oldEnd],
-            newEndBranch = newBranches[newEnd];
-          outer: {
-            for (; oldStartBranch === newStartBranch; ) {
-              if (
-                (++oldStart, ++newStart, oldStart > oldEnd || newStart > newEnd)
-              )
-                break outer;
-              (oldStartBranch = oldBranches[oldStart]),
-                (newStartBranch = newBranches[newStart]);
-            }
-            for (; oldEndBranch === newEndBranch; ) {
-              if ((--oldEnd, --newEnd, oldStart > oldEnd || newStart > newEnd))
-                break outer;
-              (oldEndBranch = oldBranches[oldEnd]),
-                (newEndBranch = newBranches[newEnd]);
-            }
-          }
-          if (oldStart > oldEnd) {
-            if (newStart <= newEnd) {
-              (k = newEnd + 1),
-                (nextSibling =
-                  k < newBranches.length ? newBranches[k].a : afterReference);
-              do {
-                insertBranchBefore(
-                  newBranches[newStart++],
-                  parent,
-                  nextSibling,
-                );
-              } while (newStart <= newEnd);
-            }
-          } else if (newStart > newEnd)
-            do {
-              removeAndDestroyBranch(oldBranches[oldStart++]);
-            } while (oldStart <= oldEnd);
-          else {
-            let oldLength = oldEnd - oldStart + 1,
-              newLength = newEnd - newStart + 1,
-              aNullable = oldBranches,
-              sources = new Array(newLength);
-            for (i = 0; i < newLength; ++i) sources[i] = -1;
-            let pos = 0,
-              synced = 0,
-              keyIndex = new Map();
-            for (j = newStart; j <= newEnd; ++j)
-              keyIndex.set(newBranches[j], j);
-            for (i = oldStart; i <= oldEnd && synced < newLength; ++i)
-              (oldBranch = oldBranches[i]),
-                (j = keyIndex.get(oldBranch)),
-                void 0 !== j &&
-                  ((pos = pos > j ? 2147483647 : j),
-                  ++synced,
-                  (newBranch = newBranches[j]),
-                  (sources[j - newStart] = i),
-                  (aNullable[i] = null));
-            if (oldLength === oldBranches.length && 0 === synced) {
-              for (; newStart < newLength; ++newStart)
-                insertBranchBefore(
-                  newBranches[newStart],
-                  parent,
-                  afterReference,
-                );
-              for (; oldStart < oldLength; ++oldStart)
-                removeAndDestroyBranch(oldBranches[oldStart]);
-            } else {
-              for (i = oldLength - synced; i > 0; )
-                (oldBranch = aNullable[oldStart++]),
-                  null !== oldBranch &&
-                    (removeAndDestroyBranch(oldBranch), i--);
-              if (2147483647 === pos) {
-                let seq = (function (a) {
-                  let u,
-                    v,
-                    p = a.slice(),
-                    result = [];
-                  result.push(0);
-                  for (let i = 0, il = a.length; i < il; ++i) {
-                    if (-1 === a[i]) continue;
-                    let j = result[result.length - 1];
-                    if (a[j] < a[i]) (p[i] = j), result.push(i);
-                    else {
-                      for (u = 0, v = result.length - 1; u < v; ) {
-                        let c = ((u + v) / 2) | 0;
-                        a[result[c]] < a[i] ? (u = c + 1) : (v = c);
-                      }
-                      a[i] < a[result[u]] &&
-                        (u > 0 && (p[i] = result[u - 1]), (result[u] = i));
-                    }
-                  }
-                  for (u = result.length, v = result[u - 1]; u-- > 0; )
-                    (result[u] = v), (v = p[v]);
-                  return result;
-                })(sources);
-                for (
-                  j = seq.length - 1, k = newBranches.length, i = newLength - 1;
-                  i >= 0;
-                  --i
-                )
-                  -1 === sources[i] || j < 0 || i !== seq[j]
-                    ? ((pos = i + newStart),
-                      (newBranch = newBranches[pos++]),
-                      (nextSibling =
-                        pos < k ? newBranches[pos].a : afterReference),
-                      insertBranchBefore(newBranch, parent, nextSibling))
-                    : --j;
-              } else if (synced !== newLength)
-                for (k = newBranches.length, i = newLength - 1; i >= 0; --i)
-                  -1 === sources[i] &&
-                    ((pos = i + newStart),
-                    (newBranch = newBranches[pos++]),
-                    (nextSibling =
-                      pos < k ? newBranches[pos].a : afterReference),
-                    insertBranchBefore(newBranch, parent, nextSibling));
-            }
-          }
-        })(parentNode, oldArray, newArray, afterReference)),
-      (scope[nodeAccessor + "("] = newMap),
-      (scope[nodeAccessor + "!"] = newArray);
-  };
-}
-function bySecondArg(_item, index) {
-  return index;
-}
-function byFirstArg(name) {
-  return name;
-}
 var isScheduled,
   port2 = (() => {
     let { port1: port1, port2: port22 } = new MessageChannel();
@@ -1364,13 +892,10 @@ function loopClosure(
     loopScopeAccessor = ownerLoopNodeAccessor + "!",
     loopScopeMapAccessor = ownerLoopNodeAccessor + "(",
     ownerSignal = (ownerScope) => {
-      let loopScopes =
-        ownerScope[loopScopeAccessor] ??
-        ownerScope[loopScopeMapAccessor]?.values() ??
-        [];
-      if (loopScopes !== emptyMarkerArray)
-        for (let scope of loopScopes)
-          scope.g || queueSource(scope, childSignal);
+      for (let scope of ownerScope[loopScopeAccessor] ||
+        ownerScope[loopScopeMapAccessor]?.values() ||
+        [])
+        scope.g || queueSource(scope, childSignal);
     };
   return (ownerSignal._ = childSignal), ownerSignal;
 }
@@ -1408,7 +933,7 @@ function dynamicClosure(valueAccessor, fn, getIntersection, getOwnerScope) {
       subscribers.has(scope) ||
         (subscribers.add(scope),
         getAbortSignal(scope, -1).addEventListener("abort", () =>
-          owner[subscribersAccessor].delete(scope),
+          subscribers.delete(scope),
         ));
     };
   return (
@@ -1493,7 +1018,7 @@ function queueSource(scope, signal, value2) {
 }
 function queueRender(scope, signal, value2) {
   let i = pendingRenders.length,
-    render = { z: scope, I: signal, J: value2, A: scope.c?.f || 0, B: i };
+    render = { s: scope, I: signal, J: value2, t: scope.c?.f || 0, u: i };
   for (pendingRenders.push(render); i; ) {
     let parentIndex = (i - 1) >> 1,
       parent = pendingRenders[parentIndex];
@@ -1559,7 +1084,7 @@ function runRenders() {
       }
       pendingRenders[i] = item;
     }
-    render.z.c?.F || render.I(render.z, render.J);
+    render.s.c?.F || render.I(render.s, render.J);
   }
   !(function () {
     for (let scope of pendingScopes) scope.g = 0;
@@ -1567,7 +1092,7 @@ function runRenders() {
   })();
 }
 function comparePendingRenders(a, b) {
-  return a.A - b.A || a.B - b.B;
+  return a.t - b.t || a.u - b.u;
 }
 function resetAbortSignal(scope, id) {
   let ctrl = scope.h?.[id];
@@ -1581,6 +1106,469 @@ function getAbortSignal(scope, id) {
 }
 function abort(ctrl) {
   ctrl.abort();
+}
+var walker = document.createTreeWalker(document);
+function trimWalkString(walkString) {
+  let end = walkString.length;
+  for (; walkString.charCodeAt(--end) > 47; );
+  return walkString.slice(0, end + 1);
+}
+function walk(startNode, walkCodes, branch) {
+  (walker.currentNode = startNode), walkInternal(0, walkCodes, branch);
+}
+function walkInternal(currentWalkIndex, walkCodes, scope) {
+  let value2,
+    storedMultiplier = 0,
+    currentMultiplier = 0,
+    currentScopeIndex = 0;
+  for (; currentWalkIndex < walkCodes.length; )
+    if (
+      ((value2 = walkCodes.charCodeAt(currentWalkIndex++)),
+      (currentMultiplier = storedMultiplier),
+      (storedMultiplier = 0),
+      32 === value2)
+    )
+      scope[currentScopeIndex++] = walker.currentNode;
+    else if (37 === value2)
+      walker.currentNode.replaceWith(
+        (walker.currentNode = scope[currentScopeIndex++] = new Text()),
+      );
+    else {
+      if (38 === value2) return currentWalkIndex;
+      if (47 === value2)
+        currentWalkIndex = walkInternal(
+          currentWalkIndex,
+          walkCodes,
+          (scope[currentScopeIndex++] = createScope(scope.$global, scope.c)),
+        );
+      else if (value2 < 92)
+        for (value2 = 20 * currentMultiplier + value2 - 67; value2--; )
+          walker.nextNode();
+      else if (value2 < 107)
+        for (value2 = 10 * currentMultiplier + value2 - 97; value2--; )
+          walker.nextSibling();
+      else if (value2 < 117) {
+        for (value2 = 10 * currentMultiplier + value2 - 107; value2--; )
+          walker.parentNode();
+        walker.nextSibling();
+      } else storedMultiplier = 10 * currentMultiplier + value2 - 117;
+    }
+}
+function createBranchScopeWithRenderer(
+  renderer,
+  $global,
+  parentScope,
+  parentNode,
+) {
+  let branch = createBranch($global, renderer.x || parentScope, parentScope);
+  return initBranch(renderer, branch, parentNode), branch;
+}
+function createBranchScopeWithTagNameOrRenderer(
+  tagNameOrRenderer,
+  $global,
+  parentScope,
+  parentNode,
+) {
+  if ("string" != typeof tagNameOrRenderer)
+    return createBranchScopeWithRenderer(
+      tagNameOrRenderer,
+      $global,
+      parentScope,
+      parentNode,
+    );
+  let branch = createBranch($global, parentScope, parentScope);
+  return (
+    (branch[0] =
+      branch.a =
+      branch.b =
+        document.createElementNS(
+          "svg" === tagNameOrRenderer
+            ? "http://www.w3.org/2000/svg"
+            : "math" === tagNameOrRenderer
+              ? "http://www.w3.org/1998/Math/MathML"
+              : parentNode.namespaceURI,
+          tagNameOrRenderer,
+        )),
+    branch
+  );
+}
+function createBranch($global, ownerScope, parentScope) {
+  let branch = createScope($global),
+    parentBranch = parentScope.c;
+  return (
+    (branch._ = ownerScope),
+    (branch.c = branch),
+    parentBranch
+      ? ((branch.f = parentBranch.f + 1),
+        (branch.q = parentBranch),
+        (parentBranch.j ||= new Set()).add(branch))
+      : (branch.f = 1),
+    branch
+  );
+}
+function initBranch(renderer, branch, parentNode) {
+  let clone = renderer.k(parentNode.namespaceURI),
+    cloneParent = clone.parentNode;
+  cloneParent
+    ? (walk(cloneParent.firstChild, renderer.y, branch),
+      (branch.a = cloneParent.firstChild),
+      (branch.b = cloneParent.lastChild))
+    : (walk(clone, renderer.y, branch), (branch.a = branch.b = clone)),
+    renderer.z && queueRender(branch, renderer.z);
+}
+function dynamicTagAttrs(nodeAccessor, getContent, inputIsArgs) {
+  return (scope, attrsOrOp) => {
+    let renderer = scope[nodeAccessor + "("];
+    if (!renderer || attrsOrOp === DIRTY) return;
+    let childScope = scope[nodeAccessor + "!"];
+    if (attrsOrOp === MARK || attrsOrOp === CLEAN)
+      return renderer.d?.(childScope, attrsOrOp);
+    let content = getContent?.(scope);
+    if ("string" == typeof renderer)
+      setConditionalRendererOnlyChild(
+        childScope,
+        0,
+        content,
+        createBranchScopeWithTagNameOrRenderer,
+      ),
+        attrs(childScope, 0, attrsOrOp());
+    else if (renderer.d) {
+      let attributes = attrsOrOp();
+      renderer.d(
+        childScope,
+        inputIsArgs
+          ? attributes
+          : [content ? { ...attributes, content: content } : attributes],
+      );
+    }
+  };
+}
+function createRendererWithOwner(template, rawWalks, setup, getArgs) {
+  let args,
+    id = {},
+    walks = rawWalks ? trimWalkString(rawWalks) : " ";
+  return (owner) => ({
+    A: id,
+    B: template,
+    y: walks,
+    z: setup,
+    k: _clone,
+    x: owner,
+    get d() {
+      return (args ||= getArgs?.());
+    },
+  });
+}
+function createRenderer(template, walks, setup, getArgs) {
+  return createRendererWithOwner(template, walks, setup, getArgs)();
+}
+function _clone(ns) {
+  return ((cloneCache[ns] ||= {})[this.B] ||= (function (html2, ns) {
+    let { firstChild: firstChild, lastChild: lastChild } = parseHTML(html2, ns),
+      parent = document.createElementNS(ns, "t");
+    return (
+      insertChildNodes(parent, null, firstChild, lastChild),
+      firstChild === lastChild && firstChild.nodeType < 8
+        ? () => firstChild.cloneNode(!0)
+        : () => parent.cloneNode(!0).firstChild
+    );
+  })(this.B, ns))();
+}
+var cloneCache = {};
+function conditional(nodeAccessor, ...branches) {
+  let branchAccessor = nodeAccessor + "(";
+  return (scope, newBranchIndexOrOp) => {
+    newBranchIndexOrOp !== scope[branchAccessor] &&
+      newBranchIndexOrOp !== DIRTY &&
+      newBranchIndexOrOp !== MARK &&
+      newBranchIndexOrOp !== CLEAN &&
+      (scope[nodeAccessor].nodeType > 1
+        ? setConditionalRenderer
+        : setConditionalRendererOnlyChild)(
+        scope,
+        nodeAccessor,
+        branches[(scope[branchAccessor] = newBranchIndexOrOp)],
+        createBranchScopeWithRenderer,
+      );
+  };
+}
+var dynamicTag = function (nodeAccessor, fn, getIntersection) {
+  let rendererAccessor = nodeAccessor + "(",
+    intersection2 =
+      getIntersection &&
+      ((scope, op) => (intersection2 = getIntersection())(scope, op));
+  return (scope, newRendererOrOp) => {
+    if (newRendererOrOp === DIRTY) return;
+    let currentRenderer = scope[rendererAccessor],
+      op = newRendererOrOp;
+    if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
+      let normalizedRenderer = (function (value2) {
+        if (value2) return value2.content || value2.default || value2;
+      })(newRendererOrOp);
+      (a = normalizedRenderer) !== (b = currentRenderer) && (a?.A || 0) !== b?.A
+        ? ((scope[rendererAccessor] = normalizedRenderer),
+          setConditionalRenderer(
+            scope,
+            nodeAccessor,
+            normalizedRenderer,
+            createBranchScopeWithTagNameOrRenderer,
+          ),
+          fn && fn(scope),
+          (op = DIRTY))
+        : (op = CLEAN);
+    }
+    var a, b;
+    intersection2?.(scope, op);
+  };
+};
+function setConditionalRenderer(
+  scope,
+  nodeAccessor,
+  newRenderer,
+  createBranch2,
+) {
+  let prevBranch =
+      scope[nodeAccessor + "!"] || getEmptyBranch(scope[nodeAccessor]),
+    newBranch = newRenderer
+      ? createBranch2(
+          newRenderer,
+          scope.$global,
+          scope,
+          prevBranch.b.parentNode,
+        )
+      : getEmptyBranch(scope[nodeAccessor]);
+  prevBranch !== newBranch &&
+    (insertBranchBefore(
+      newBranch,
+      prevBranch.b.parentNode,
+      prevBranch.b.nextSibling,
+    ),
+    removeAndDestroyBranch(prevBranch),
+    (scope[nodeAccessor + "!"] = newRenderer && newBranch));
+}
+function setConditionalRendererOnlyChild(
+  scope,
+  nodeAccessor,
+  newRenderer,
+  createBranch2,
+) {
+  let prevBranch = scope[nodeAccessor + "!"],
+    referenceNode = scope[nodeAccessor],
+    newBranch =
+      newRenderer &&
+      createBranch2(newRenderer, scope.$global, scope, referenceNode);
+  (referenceNode.textContent = ""),
+    newBranch && insertBranchBefore(newBranch, referenceNode, null),
+    prevBranch && destroyBranch(prevBranch),
+    (scope[nodeAccessor + "!"] = newBranch);
+}
+function loopOf(nodeAccessor, renderer) {
+  return loop(nodeAccessor, renderer, ([all, by = bySecondArg], cb) => {
+    forOf(
+      all,
+      "string" == typeof by
+        ? (item, i) => cb(item[by], [item, i])
+        : (item, i) => cb(by(item, i), [item, i]),
+    );
+  });
+}
+function loopIn(nodeAccessor, renderer) {
+  return loop(nodeAccessor, renderer, ([obj, by = byFirstArg], cb) =>
+    forIn(obj, (key, value2) => cb(by(key, value2), [key, value2])),
+  );
+}
+function loopTo(nodeAccessor, renderer) {
+  return loop(nodeAccessor, renderer, ([to, from, step, by = byFirstArg], cb) =>
+    forTo(to, from, step, (v) => cb(by(v), [v])),
+  );
+}
+function loop(nodeAccessor, renderer, forEach) {
+  let loopScopeAccessor = nodeAccessor + "!",
+    params = renderer.d;
+  return (scope, valueOrOp) => {
+    if (valueOrOp !== DIRTY)
+      if (valueOrOp === MARK || valueOrOp === CLEAN) {
+        if (params)
+          for (let branch of scope[loopScopeAccessor] ||
+            scope[nodeAccessor + "("]?.values() ||
+            [])
+            params(branch, valueOrOp);
+      } else {
+        let referenceNode = scope[nodeAccessor],
+          referenceIsMarker = referenceNode.nodeType > 1,
+          oldMap = scope[nodeAccessor + "("],
+          oldArray = oldMap
+            ? scope[nodeAccessor + "!"] || [...oldMap.values()]
+            : [],
+          parentNode = referenceIsMarker
+            ? referenceNode.parentNode || oldArray[0].a.parentNode
+            : referenceNode,
+          newMap = (scope[nodeAccessor + "("] = new Map()),
+          newArray = (scope[nodeAccessor + "!"] = []);
+        forEach(valueOrOp, (key, args) => {
+          let branch =
+            oldMap?.get(key) ||
+            createBranchScopeWithRenderer(
+              renderer,
+              scope.$global,
+              scope,
+              parentNode,
+            );
+          params?.(branch, args),
+            newMap.set(key, branch),
+            newArray.push(branch);
+        });
+        let afterReference = null;
+        referenceIsMarker &&
+          (oldArray.length
+            ? ((afterReference = oldArray[oldArray.length - 1].b.nextSibling),
+              newArray.length ||
+                parentNode.insertBefore(referenceNode, afterReference))
+            : newArray.length &&
+              ((afterReference = referenceNode.nextSibling),
+              referenceNode.remove())),
+          (function (parent, oldBranches, newBranches, afterReference) {
+            let i,
+              j,
+              k,
+              nextSibling,
+              oldBranch,
+              newBranch,
+              oldStart = 0,
+              newStart = 0,
+              oldEnd = oldBranches.length - 1,
+              newEnd = newBranches.length - 1,
+              oldStartBranch = oldBranches[oldStart],
+              newStartBranch = newBranches[newStart],
+              oldEndBranch = oldBranches[oldEnd],
+              newEndBranch = newBranches[newEnd];
+            outer: {
+              for (; oldStartBranch === newStartBranch; ) {
+                if (
+                  (++oldStart,
+                  ++newStart,
+                  oldStart > oldEnd || newStart > newEnd)
+                )
+                  break outer;
+                (oldStartBranch = oldBranches[oldStart]),
+                  (newStartBranch = newBranches[newStart]);
+              }
+              for (; oldEndBranch === newEndBranch; ) {
+                if (
+                  (--oldEnd, --newEnd, oldStart > oldEnd || newStart > newEnd)
+                )
+                  break outer;
+                (oldEndBranch = oldBranches[oldEnd]),
+                  (newEndBranch = newBranches[newEnd]);
+              }
+            }
+            if (oldStart > oldEnd) {
+              if (newStart <= newEnd) {
+                (k = newEnd + 1),
+                  (nextSibling =
+                    k < newBranches.length ? newBranches[k].a : afterReference);
+                do {
+                  insertBranchBefore(
+                    newBranches[newStart++],
+                    parent,
+                    nextSibling,
+                  );
+                } while (newStart <= newEnd);
+              }
+            } else if (newStart > newEnd)
+              do {
+                removeAndDestroyBranch(oldBranches[oldStart++]);
+              } while (oldStart <= oldEnd);
+            else {
+              let oldLength = oldEnd - oldStart + 1,
+                newLength = newEnd - newStart + 1,
+                aNullable = oldBranches,
+                sources = new Array(newLength);
+              for (i = 0; i < newLength; ++i) sources[i] = -1;
+              let pos = 0,
+                synced = 0,
+                keyIndex = new Map();
+              for (j = newStart; j <= newEnd; ++j)
+                keyIndex.set(newBranches[j], j);
+              for (i = oldStart; i <= oldEnd && synced < newLength; ++i)
+                (oldBranch = oldBranches[i]),
+                  (j = keyIndex.get(oldBranch)),
+                  void 0 !== j &&
+                    ((pos = pos > j ? 2147483647 : j),
+                    ++synced,
+                    (newBranch = newBranches[j]),
+                    (sources[j - newStart] = i),
+                    (aNullable[i] = null));
+              if (oldLength === oldBranches.length && 0 === synced) {
+                for (; newStart < newLength; ++newStart)
+                  insertBranchBefore(
+                    newBranches[newStart],
+                    parent,
+                    afterReference,
+                  );
+                for (; oldStart < oldLength; ++oldStart)
+                  removeAndDestroyBranch(oldBranches[oldStart]);
+              } else {
+                for (i = oldLength - synced; i > 0; )
+                  (oldBranch = aNullable[oldStart++]),
+                    null !== oldBranch &&
+                      (removeAndDestroyBranch(oldBranch), i--);
+                if (2147483647 === pos) {
+                  let seq = (function (a) {
+                    let u,
+                      v,
+                      p = a.slice(),
+                      result = [0];
+                    for (let i = 0, il = a.length; i < il; ++i) {
+                      if (-1 === a[i]) continue;
+                      let j = result[result.length - 1];
+                      if (a[j] < a[i]) (p[i] = j), result.push(i);
+                      else {
+                        for (u = 0, v = result.length - 1; u < v; ) {
+                          let c = ((u + v) / 2) | 0;
+                          a[result[c]] < a[i] ? (u = c + 1) : (v = c);
+                        }
+                        a[i] < a[result[u]] &&
+                          (u > 0 && (p[i] = result[u - 1]), (result[u] = i));
+                      }
+                    }
+                    for (u = result.length, v = result[u - 1]; u-- > 0; )
+                      (result[u] = v), (v = p[v]);
+                    return result;
+                  })(sources);
+                  for (
+                    j = seq.length - 1,
+                      k = newBranches.length,
+                      i = newLength - 1;
+                    i >= 0;
+                    --i
+                  )
+                    -1 === sources[i] || j < 0 || i !== seq[j]
+                      ? ((pos = i + newStart),
+                        (newBranch = newBranches[pos++]),
+                        (nextSibling =
+                          pos < k ? newBranches[pos].a : afterReference),
+                        insertBranchBefore(newBranch, parent, nextSibling))
+                      : --j;
+                } else if (synced !== newLength)
+                  for (k = newBranches.length, i = newLength - 1; i >= 0; --i)
+                    -1 === sources[i] &&
+                      ((pos = i + newStart),
+                      (newBranch = newBranches[pos++]),
+                      (nextSibling =
+                        pos < k ? newBranches[pos].a : afterReference),
+                      insertBranchBefore(newBranch, parent, nextSibling));
+              }
+            }
+          })(parentNode, oldArray, newArray, afterReference);
+      }
+  };
+}
+function bySecondArg(_item, index) {
+  return index;
+}
+function byFirstArg(name) {
+  return name;
 }
 var classIdToBranch = new Map(),
   compat = {
@@ -1648,7 +1636,7 @@ var classIdToBranch = new Map(),
           branch
             ? (applyArgs(branch, MARK), (existing = !0))
             : ((branch = component.scope = createScope(out.global)),
-              (branch._ = renderer.s),
+              (branch._ = renderer.x),
               initBranch(renderer, branch, document.body)),
             applyArgs(branch, args);
         })),

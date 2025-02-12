@@ -92,10 +92,10 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/#comment2, #text, html/body/#comment3
+REMOVE #text after html/body/#comment2
 INSERT html/body/div6
 INSERT html/body/div7
 INSERT html/body/div8
-REMOVE #text after html/body/#comment2
 INSERT html/body/div2
 UPDATE html/body/div6/#text " " => "2.0"
 UPDATE html/body/div7/#text " " => "2.1"

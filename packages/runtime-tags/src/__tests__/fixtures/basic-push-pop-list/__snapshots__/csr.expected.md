@@ -41,8 +41,8 @@ container.querySelector("#add").click();
 
 # Mutations
 ```
+REMOVE #text before div/button0
 INSERT div/#text
-REMOVE #text before div/#text
 ```
 
 # Render

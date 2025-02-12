@@ -73,12 +73,12 @@ REMOVE p after div/#text0
 
 # Mutations
 ```
+REMOVE #text before #text
 INSERT div/p0
 INSERT div/p1
 INSERT div/p2
-REMOVE #text before div/p0
+REMOVE #text after div/p2
 INSERT div/p3
 INSERT div/p4
 INSERT div/p5
-REMOVE #text after div/p2
 ```

@@ -36,8 +36,8 @@ abc
 
 # Mutations
 ```
+REMOVE #text after #comment0
 INSERT #text0
 INSERT #text1
 INSERT #text2
-REMOVE #text after #comment0
 ```

@@ -48,27 +48,24 @@ function walkInternal(
     value = walkCodes.charCodeAt(currentWalkIndex++);
     currentMultiplier = storedMultiplier;
     storedMultiplier = 0;
-    if (value >= WalkCode.Multiplier) {
-      storedMultiplier =
-        currentMultiplier * WalkRangeSize.Multiplier +
-        value -
-        WalkCode.Multiplier;
-    } else if (value >= WalkCode.Out) {
-      value = WalkRangeSize.Out * currentMultiplier + value - WalkCode.Out;
-      while (value--) {
-        walker.parentNode();
-      }
-      walker.nextSibling();
-    } else if (value >= WalkCode.Over) {
-      value = WalkRangeSize.Over * currentMultiplier + value - WalkCode.Over;
-      while (value--) {
-        walker.nextSibling();
-      }
-    } else if (value >= WalkCode.Next) {
-      value = WalkRangeSize.Next * currentMultiplier + value - WalkCode.Next;
-      while (value--) {
-        walker.nextNode();
-      }
+
+    if (value === WalkCode.Get) {
+      scope[
+        MARKO_DEBUG
+          ? getDebugKey(currentScopeIndex++, walker.currentNode)
+          : currentScopeIndex++
+      ] = walker.currentNode;
+    } else if (value === WalkCode.Replace) {
+      (walker.currentNode as ChildNode).replaceWith(
+        (walker.currentNode = scope[
+          MARKO_DEBUG
+            ? getDebugKey(currentScopeIndex++, "#text")
+            : currentScopeIndex++
+        ] =
+          new Text()),
+      );
+    } else if (value === WalkCode.EndChild) {
+      return currentWalkIndex;
     } else if (value === WalkCode.BeginChild) {
       currentWalkIndex = walkInternal(
         currentWalkIndex,
@@ -79,26 +76,33 @@ function walkInternal(
             : currentScopeIndex++
         ] = createScope(scope.$global, scope.___closestBranch)),
       )!;
-    } else if (value === WalkCode.EndChild) {
-      return currentWalkIndex;
-    } else if (value === WalkCode.Get) {
-      scope[
-        MARKO_DEBUG
-          ? getDebugKey(currentScopeIndex++, walker.currentNode)
-          : currentScopeIndex++
-      ] = walker.currentNode;
+    } else if (value < WalkCode.NextEnd + 1) {
+      value = WalkRangeSize.Next * currentMultiplier + value - WalkCode.Next;
+      while (value--) {
+        walker.nextNode();
+      }
+    } else if (value < WalkCode.OverEnd + 1) {
+      value = WalkRangeSize.Over * currentMultiplier + value - WalkCode.Over;
+      while (value--) {
+        walker.nextSibling();
+      }
+    } else if (value < WalkCode.OutEnd + 1) {
+      value = WalkRangeSize.Out * currentMultiplier + value - WalkCode.Out;
+      while (value--) {
+        walker.parentNode();
+      }
+      walker.nextSibling();
     } else {
-      if (MARKO_DEBUG && value !== WalkCode.Replace) {
+      if (
+        MARKO_DEBUG &&
+        (value < WalkCode.Multiplier || value > WalkCode.MultiplierEnd)
+      ) {
         throw new Error(`Unknown walk code: ${value}`);
       }
-      (walker.currentNode as ChildNode).replaceWith(
-        (walker.currentNode = scope[
-          MARKO_DEBUG
-            ? getDebugKey(currentScopeIndex++, "#text")
-            : currentScopeIndex++
-        ] =
-          new Text()),
-      );
+      storedMultiplier =
+        currentMultiplier * WalkRangeSize.Multiplier +
+        value -
+        WalkCode.Multiplier;
     }
   }
 }

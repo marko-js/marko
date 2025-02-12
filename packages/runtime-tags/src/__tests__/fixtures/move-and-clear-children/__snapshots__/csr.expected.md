@@ -33,5 +33,7 @@ INSERT div/#text2
 
 # Mutations
 ```
-REMOVE #text, #text, #text in div
+REMOVE #text before #text
+REMOVE #text before #text
+REMOVE #text in div
 ```
