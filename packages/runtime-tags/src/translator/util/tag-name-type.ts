@@ -31,7 +31,6 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
 
   if (extra.tagNameType === undefined) {
     const name = tag.get("name");
-
     if (name.isStringLiteral()) {
       extra.tagNameType =
         name.node.value[0] === "@"
@@ -40,11 +39,15 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
             ? TagNameType.NativeTag
             : TagNameType.CustomTag;
       extra.tagNameNullable = extra.tagNameNullable = false;
-    } else {
+    } else if (name.isIdentifier()) {
       analyzeExpressionTagName(name, extra);
-      // if (extra.tagNameType === TagNameType.NativeTag) {
-      //   extra.tagNameType = TagNameType.DynamicTag;
-      // }
+      if (extra.tagNameType === TagNameType.NativeTag) {
+        extra.tagNameType = TagNameType.DynamicTag;
+      }
+    } else if (name.isTemplateLiteral() && !name.node.expressions.length) {
+      extra.tagNameType = TagNameType.NativeTag;
+    } else {
+      extra.tagNameType = TagNameType.DynamicTag;
     }
 
     if (extra.tagNameType === undefined) {
