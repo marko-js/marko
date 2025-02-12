@@ -32,7 +32,6 @@ export function trimWalkString(walkString: string): string {
 export function walk(startNode: Node, walkCodes: string, branch: BranchScope) {
   walker.currentNode = startNode;
   walkInternal(0, walkCodes, branch);
-  walker.currentNode = document;
 }
 
 function walkInternal(
@@ -45,7 +44,8 @@ function walkInternal(
   let currentMultiplier = 0;
   let currentScopeIndex = 0;
 
-  while ((value = walkCodes.charCodeAt(currentWalkIndex++))) {
+  for (; currentWalkIndex < walkCodes.length; ) {
+    value = walkCodes.charCodeAt(currentWalkIndex++);
     currentMultiplier = storedMultiplier;
     storedMultiplier = 0;
     if (value >= WalkCode.Multiplier) {
@@ -88,22 +88,19 @@ function walkInternal(
           : currentScopeIndex++
       ] = walker.currentNode;
     } else {
-      const newNode = (scope[
-        MARKO_DEBUG
-          ? getDebugKey(currentScopeIndex++, "#text")
-          : currentScopeIndex++
-      ] = new Text());
-      const current = walker.currentNode;
-      const parentNode = current.parentNode!;
       if (MARKO_DEBUG && value !== WalkCode.Replace) {
         throw new Error(`Unknown walk code: ${value}`);
       }
-      parentNode.replaceChild(newNode, current);
-      walker.currentNode = newNode;
+      (walker.currentNode as ChildNode).replaceWith(
+        (walker.currentNode = scope[
+          MARKO_DEBUG
+            ? getDebugKey(currentScopeIndex++, "#text")
+            : currentScopeIndex++
+        ] =
+          new Text()),
+      );
     }
   }
-
-  return currentWalkIndex;
 }
 
 function getDebugKey(index: number, node: Node | string) {

@@ -1,4 +1,4 @@
-// size: 18461 (min) 6879 (brotli)
+// size: 18261 (min) 6834 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -72,32 +72,24 @@ function isEventHandler(name) {
 function getEventHandlerName(name) {
   return "-" === name[2] ? name.slice(3) : name.slice(2).toLowerCase();
 }
-var elementHandlersByEvent = new Map(),
-  defaultDelegator = createDelegator();
+var defaultDelegator = createDelegator();
 function on(element, type, handler) {
-  let handlersByElement = elementHandlersByEvent.get(type);
-  handlersByElement ||
-    elementHandlersByEvent.set(type, (handlersByElement = new WeakMap())),
-    handlersByElement.has(element) ||
-      defaultDelegator(element, type, handleDelegated),
-    handlersByElement.set(element, handler || null);
+  void 0 === element["$" + type] &&
+    defaultDelegator(element, type, handleDelegated),
+    (element["$" + type] = handler || null);
 }
 function createDelegator() {
   let kEvents = Symbol();
   return function (node, type, handler) {
-    let root = node.getRootNode();
-    (root[kEvents] ||= {})[type] ||=
-      (root.addEventListener(type, handler, !0), 1);
+    ((node = node.getRootNode())[kEvents] ||= {})[type] ||=
+      (node.addEventListener(type, handler, !0), 1);
   };
 }
 function handleDelegated(ev) {
   let target = !rendering && ev.target;
-  if (target) {
-    let handlersByElement = elementHandlersByEvent.get(ev.type);
-    if ((handlersByElement.get(target)?.(ev, target), ev.bubbles))
-      for (; (target = target.parentNode) && !ev.cancelBubble; )
-        handlersByElement.get(target)?.(ev, target);
-  }
+  for (; target; )
+    target["$" + ev.type]?.(ev, target),
+      (target = ev.bubbles && !ev.cancelBubble && target.parentNode);
 }
 function stripSpacesAndPunctuation(str) {
   return str.replace(/[^\p{L}\p{N}]/gu, "");
@@ -401,7 +393,7 @@ function controllable_select_value_effect(scope, nodeAccessor) {
         6 === scope[nodeAccessor + "="] &&
           setSelectOptions(el, scope[nodeAccessor + ":"], valueChange));
     };
-  controllableHandlers.has(el) ||
+  el._ ||
     new MutationObserver(() => {
       let value2 = scope[nodeAccessor + ":"];
       (Array.isArray(value2)
@@ -499,24 +491,21 @@ function setCheckboxValue(scope, nodeAccessor, type, checked, checkedChange) {
       : ((scope[nodeAccessor + "="] = 5),
         (scope[nodeAccessor].defaultChecked = checked));
 }
-var controllableDelegate = createDelegator(),
-  controllableHandlers = new WeakMap();
+var controllableDelegate = createDelegator();
 function syncControllable(el, event, hasChanged, onChange) {
-  controllableHandlers.has(el) ||
+  el._ ||
     (controllableDelegate(el, event, handleChange),
     el.form && controllableDelegate(el.form, "reset", handleFormReset),
     isResuming && hasChanged(el) && queueMicrotask(onChange)),
-    controllableHandlers.set(el, onChange);
+    (el._ = onChange);
 }
 function handleChange(ev) {
-  controllableHandlers.get(ev.target)?.(ev);
+  ev.target._?.(ev);
 }
 function handleFormReset(ev) {
   let handlers = [];
-  for (let el of ev.target.elements) {
-    let handler = controllableHandlers.get(el);
-    handler && hasFormElementChanged(el) && handlers.push(handler);
-  }
+  for (let el of ev.target.elements)
+    el._ && hasFormElementChanged(el) && handlers.push(el._);
   requestAnimationFrame(() => {
     if (!ev.defaultPrevented) for (let change of handlers) change();
   });
@@ -812,18 +801,17 @@ function trimWalkString(walkString) {
   return walkString.slice(0, end + 1);
 }
 function walk(startNode, walkCodes, branch) {
-  (walker.currentNode = startNode),
-    walkInternal(0, walkCodes, branch),
-    (walker.currentNode = document);
+  (walker.currentNode = startNode), walkInternal(0, walkCodes, branch);
 }
 function walkInternal(currentWalkIndex, walkCodes, scope) {
   let value2,
     storedMultiplier = 0,
     currentMultiplier = 0,
     currentScopeIndex = 0;
-  for (; (value2 = walkCodes.charCodeAt(currentWalkIndex++)); )
+  for (; currentWalkIndex < walkCodes.length; )
     if (
-      ((currentMultiplier = storedMultiplier),
+      ((value2 = walkCodes.charCodeAt(currentWalkIndex++)),
+      (currentMultiplier = storedMultiplier),
       (storedMultiplier = 0),
       value2 >= 117)
     )
@@ -846,15 +834,12 @@ function walkInternal(currentWalkIndex, walkCodes, scope) {
       );
     else {
       if (38 === value2) return currentWalkIndex;
-      if (32 === value2) scope[currentScopeIndex++] = walker.currentNode;
-      else {
-        let newNode = (scope[currentScopeIndex++] = new Text()),
-          current = walker.currentNode;
-        current.parentNode.replaceChild(newNode, current),
-          (walker.currentNode = newNode);
-      }
+      32 === value2
+        ? (scope[currentScopeIndex++] = walker.currentNode)
+        : walker.currentNode.replaceWith(
+            (walker.currentNode = scope[currentScopeIndex++] = new Text()),
+          );
     }
-  return currentWalkIndex;
 }
 function createBranchScopeWithRenderer(
   renderer,
