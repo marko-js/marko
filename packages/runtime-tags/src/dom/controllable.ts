@@ -218,7 +218,7 @@ export function controllable_select_value_effect(
     }
   };
 
-  if (!controllableHandlers.has(el)) {
+  if (!(el as any)._) {
     new MutationObserver(() => {
       const value = scope[nodeAccessor + AccessorChar.ControlledValue];
       if (
@@ -354,14 +354,13 @@ function setCheckboxValue(
 }
 
 const controllableDelegate = createDelegator();
-const controllableHandlers = new WeakMap<Element, (ev?: Event) => void>();
 function syncControllable<T extends Element>(
   el: T,
   event: "input" | "close" | "toggle",
   hasChanged: (el: T) => boolean | undefined,
   onChange: (ev?: Event) => void,
 ) {
-  if (!controllableHandlers.has(el)) {
+  if (!(el as any)._) {
     controllableDelegate(el, event, handleChange);
     if ((el as any).form) {
       controllableDelegate((el as any).form!, "reset", handleFormReset);
@@ -371,19 +370,19 @@ function syncControllable<T extends Element>(
       queueMicrotask(onChange);
     }
   }
-  controllableHandlers.set(el, onChange);
+
+  (el as any)._ = onChange;
 }
 
 function handleChange(ev: Event) {
-  controllableHandlers.get(ev.target as Element)?.(ev);
+  (ev.target as any)._?.(ev);
 }
 
 function handleFormReset(ev: Event) {
   const handlers: (() => void)[] = [];
   for (const el of (ev.target as HTMLFormElement).elements) {
-    const handler = controllableHandlers.get(el);
-    if (handler && hasFormElementChanged(el)) {
-      handlers.push(handler);
+    if ((el as any)._ && hasFormElementChanged(el)) {
+      handlers.push((el as any)._);
     }
   }
 

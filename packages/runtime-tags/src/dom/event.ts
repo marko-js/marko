@@ -1,12 +1,6 @@
 import { rendering } from "./queue";
 
 type EventNames = keyof GlobalEventHandlersEventMap;
-
-const elementHandlersByEvent = new Map<
-  string,
-  WeakMap<ParentNode, null | ((...args: any[]) => void)>
->();
-
 const defaultDelegator = createDelegator();
 
 export function on<
@@ -17,17 +11,11 @@ export function on<
     | undefined
     | ((ev: GlobalEventHandlersEventMap[T], target: Element) => void),
 >(element: Element, type: T, handler: H) {
-  let handlersByElement = elementHandlersByEvent.get(type);
-
-  if (!handlersByElement) {
-    elementHandlersByEvent.set(type, (handlersByElement = new WeakMap()));
-  }
-
-  if (!handlersByElement.has(element)) {
+  if ((element as any)["$" + type] === undefined) {
     defaultDelegator(element, type, handleDelegated);
   }
 
-  handlersByElement.set(element, handler || null);
+  (element as any)["$" + type] = handler || null;
 }
 
 export function createDelegator() {
@@ -37,22 +25,19 @@ export function createDelegator() {
     type: string,
     handler: EventListener,
   ) {
-    const root = node.getRootNode();
-    ((root as any)[kEvents] ||= {})[type] ||=
-      (root.addEventListener(type, handler, true), 1);
+    ((
+      (node = node.getRootNode()) as Document & {
+        [kEvents]?: Record<string, 1>;
+      }
+    )[kEvents] ||= {})[type] ||=
+      (node.addEventListener(type, handler, true), 1);
   };
 }
 
 function handleDelegated(ev: GlobalEventHandlersEventMap[EventNames]) {
   let target = !rendering && (ev.target as ParentNode | null);
-  if (target) {
-    const handlersByElement = elementHandlersByEvent.get(ev.type)!;
-    handlersByElement.get(target)?.(ev, target);
-
-    if (ev.bubbles) {
-      while ((target = target.parentNode) && !ev.cancelBubble) {
-        handlersByElement.get(target)?.(ev, target);
-      }
-    }
+  while (target) {
+    (target as any)["$" + ev.type]?.(ev, target);
+    target = ev.bubbles && !ev.cancelBubble && target.parentNode;
   }
 }
