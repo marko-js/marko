@@ -1,5 +1,6 @@
 import tagA from "./tags/tag-a/index.marko";
 import tagB from "<tag-b>";
+static const foo = '';
 
 <attrs/{ content, x, show, showTagA, isLarge, tag, level, other }/>
 
@@ -31,3 +32,8 @@ import tagB from "<tag-b>";
 
 <const/tagConstB = show ? "div" : null/>
 <${tagConstB} class=["a", "b"] other=other/>
+
+<${`h${1}`} />
+<${foo || 'div'} />
+<${foo + 'div'} />
+<${"d" + "iv"} />
