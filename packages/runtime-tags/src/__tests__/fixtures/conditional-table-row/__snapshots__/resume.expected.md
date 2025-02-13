@@ -30,6 +30,7 @@ container.querySelector("button").click();
   <body>
     <table>
       <tbody>
+        <!--M_=1 #tbody/0-->
         <tr>
           <td>
             Hi
@@ -50,7 +51,6 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-REMOVE #comment in html/body/table/tbody
 INSERT html/body/table/tbody/tr
 ```
 
@@ -78,7 +78,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-REMOVE tr in html/body/table/tbody
+REMOVE #comment, tr in html/body/table/tbody
 ```
 
 # Render

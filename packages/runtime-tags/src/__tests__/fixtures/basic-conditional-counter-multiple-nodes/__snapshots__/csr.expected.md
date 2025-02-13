@@ -52,8 +52,8 @@ container.querySelector("button.toggle").click();
 # Mutations
 ```
 INSERT #text
-REMOVE #text after button1
-REMOVE #text after button1
+REMOVE #text after #text
+REMOVE #text after #text
 ```
 
 # Render
@@ -89,7 +89,7 @@ The count is 2
 # Mutations
 ```
 INSERT #text0, #text1
-REMOVE #text after button1
+REMOVE #text after #text1
 UPDATE #text1 "" => "2"
 ```
 

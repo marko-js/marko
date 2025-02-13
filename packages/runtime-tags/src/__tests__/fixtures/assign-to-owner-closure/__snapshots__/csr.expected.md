@@ -22,5 +22,5 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT #text
-REMOVE button after #comment0
+REMOVE button after #text
 ```

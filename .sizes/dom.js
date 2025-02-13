@@ -1,4 +1,4 @@
-// size: 18094 (min) 6775 (brotli)
+// size: 17976 (min) 6741 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -774,10 +774,6 @@ function createScope($global, closestBranch) {
   let scope = { g: 1, c: closestBranch, $global: $global };
   return pendingScopes.push(scope), scope;
 }
-var emptyBranch = createScope({});
-function getEmptyBranch(marker) {
-  return (emptyBranch.a = emptyBranch.b = marker), emptyBranch;
-}
 function destroyBranch(branch) {
   branch.q?.j?.delete(branch), destroyNestedBranches(branch);
 }
@@ -1225,7 +1221,7 @@ function dynamicTagAttrs(nodeAccessor, getContent, inputIsArgs) {
       return renderer.d?.(childScope, attrsOrOp);
     let content = getContent?.(scope);
     if ("string" == typeof renderer)
-      setConditionalRendererOnlyChild(
+      setConditionalRenderer(
         childScope,
         0,
         content,
@@ -1282,9 +1278,7 @@ function conditional(nodeAccessor, ...branches) {
       newBranchIndexOrOp !== DIRTY &&
       newBranchIndexOrOp !== MARK &&
       newBranchIndexOrOp !== CLEAN &&
-      (scope[nodeAccessor].nodeType > 1
-        ? setConditionalRenderer
-        : setConditionalRendererOnlyChild)(
+      setConditionalRenderer(
         scope,
         nodeAccessor,
         branches[(scope[branchAccessor] = newBranchIndexOrOp)],
@@ -1301,24 +1295,25 @@ var dynamicTag = function (nodeAccessor, fn, getIntersection) {
     if (newRendererOrOp === DIRTY) return;
     let currentRenderer = scope[rendererAccessor],
       op = newRendererOrOp;
-    if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
-      let normalizedRenderer = (function (value2) {
-        if (value2) return value2.content || value2.default || value2;
-      })(newRendererOrOp);
-      (a = normalizedRenderer) !== (b = currentRenderer) && (a?.A || 0) !== b?.A
-        ? ((scope[rendererAccessor] = normalizedRenderer),
-          setConditionalRenderer(
+    var a, b;
+    newRendererOrOp !== MARK &&
+      newRendererOrOp !== CLEAN &&
+      ((a = currentRenderer),
+      (b = scope[rendererAccessor] =
+        (function (value2) {
+          if (value2) return value2.content || value2.default || value2;
+        })(newRendererOrOp)),
+      a !== b && (a?.A || 0) !== b?.A
+        ? (setConditionalRenderer(
             scope,
             nodeAccessor,
-            normalizedRenderer,
+            scope[rendererAccessor],
             createBranchScopeWithTagNameOrRenderer,
           ),
           fn && fn(scope),
           (op = DIRTY))
-        : (op = CLEAN);
-    }
-    var a, b;
-    intersection2?.(scope, op);
+        : (op = CLEAN)),
+      intersection2?.(scope, op);
   };
 };
 function setConditionalRenderer(
@@ -1327,40 +1322,27 @@ function setConditionalRenderer(
   newRenderer,
   createBranch2,
 ) {
-  let prevBranch =
-      scope[nodeAccessor + "!"] || getEmptyBranch(scope[nodeAccessor]),
-    newBranch = newRenderer
-      ? createBranch2(
-          newRenderer,
-          scope.$global,
-          scope,
-          prevBranch.b.parentNode,
-        )
-      : getEmptyBranch(scope[nodeAccessor]);
-  prevBranch !== newBranch &&
-    (insertBranchBefore(
-      newBranch,
-      prevBranch.b.parentNode,
-      prevBranch.b.nextSibling,
-    ),
-    removeAndDestroyBranch(prevBranch),
-    (scope[nodeAccessor + "!"] = newRenderer && newBranch));
-}
-function setConditionalRendererOnlyChild(
-  scope,
-  nodeAccessor,
-  newRenderer,
-  createBranch2,
-) {
-  let prevBranch = scope[nodeAccessor + "!"],
-    referenceNode = scope[nodeAccessor],
-    newBranch =
+  let referenceNode = scope[nodeAccessor],
+    prevBranch = scope[nodeAccessor + "!"],
+    parentNode =
+      referenceNode.nodeType > 1
+        ? (prevBranch?.a || referenceNode).parentNode
+        : referenceNode,
+    newBranch = (scope[nodeAccessor + "!"] =
       newRenderer &&
-      createBranch2(newRenderer, scope.$global, scope, referenceNode);
-  (referenceNode.textContent = ""),
-    newBranch && insertBranchBefore(newBranch, referenceNode, null),
-    prevBranch && destroyBranch(prevBranch),
-    (scope[nodeAccessor + "!"] = newBranch);
+      createBranch2(newRenderer, scope.$global, scope, parentNode));
+  referenceNode === parentNode
+    ? (prevBranch &&
+        (destroyBranch(prevBranch), (referenceNode.textContent = "")),
+      newBranch && insertBranchBefore(newBranch, parentNode, null))
+    : prevBranch
+      ? (newBranch
+          ? insertBranchBefore(newBranch, parentNode, prevBranch.a)
+          : parentNode.insertBefore(referenceNode, prevBranch.a),
+        removeAndDestroyBranch(prevBranch))
+      : newBranch &&
+        (insertBranchBefore(newBranch, parentNode, referenceNode),
+        referenceNode.remove());
 }
 function loopOf(nodeAccessor, renderer) {
   return loop(nodeAccessor, renderer, ([all, by = bySecondArg], cb) => {
@@ -1395,14 +1377,14 @@ function loop(nodeAccessor, renderer, forEach) {
             params(branch, valueOrOp);
       } else {
         let referenceNode = scope[nodeAccessor],
-          referenceIsMarker = referenceNode.nodeType > 1,
           oldMap = scope[nodeAccessor + "("],
           oldArray = oldMap
             ? scope[nodeAccessor + "!"] || [...oldMap.values()]
             : [],
-          parentNode = referenceIsMarker
-            ? referenceNode.parentNode || oldArray[0].a.parentNode
-            : referenceNode,
+          parentNode =
+            referenceNode.nodeType > 1
+              ? referenceNode.parentNode || oldArray[0].a.parentNode
+              : referenceNode,
           newMap = (scope[nodeAccessor + "("] = new Map()),
           newArray = (scope[nodeAccessor + "!"] = []);
         forEach(valueOrOp, (key, args) => {
@@ -1419,7 +1401,7 @@ function loop(nodeAccessor, renderer, forEach) {
             newArray.push(branch);
         });
         let afterReference = null;
-        referenceIsMarker &&
+        referenceNode !== parentNode &&
           (oldArray.length
             ? ((afterReference = oldArray[oldArray.length - 1].b.nextSibling),
               newArray.length ||

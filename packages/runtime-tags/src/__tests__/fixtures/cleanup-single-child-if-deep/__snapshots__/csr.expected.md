@@ -92,7 +92,7 @@ Inner destroyed
 INSERT div/div/#text
 REMOVE #text in pre
 INSERT pre/#text
-REMOVE p after div/div/p
+REMOVE p after div/div/#text
 ```
 
 # Render
@@ -136,7 +136,7 @@ Middle destroyed
 INSERT div/#text
 REMOVE #text in pre
 INSERT pre/#text
-REMOVE div after div/p
+REMOVE div after div/#text
 ```
 
 # Render
@@ -176,7 +176,7 @@ Outer destroyed
 INSERT #text
 REMOVE #text in pre
 INSERT pre/#text
-REMOVE div after pre
+REMOVE div after #text
 ```
 
 # Render
@@ -296,12 +296,12 @@ Inner mounted
 # Mutations
 ```
 INSERT div
-REMOVE #text after pre
+REMOVE #text after div
 INSERT div/div
-REMOVE #text after div/p
+REMOVE #text after div/div
 UPDATE div/p/#text " " => "Outer"
 INSERT div/div/p1
-REMOVE #text after div/div/p0
+REMOVE #text after div/div/p1
 UPDATE div/div/p0/#text " " => "Middle"
 UPDATE div/div/p1/#text " " => "Inner"
 REMOVE #text in pre
@@ -359,5 +359,5 @@ REMOVE #text in pre
 INSERT #text
 REMOVE #text in pre
 INSERT pre/#text
-REMOVE div after pre
+REMOVE div after #text
 ```

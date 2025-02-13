@@ -31,7 +31,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT div
-REMOVE span after #comment
+REMOVE span after div
 INSERT div/#text
 UPDATE div[class] null => "A"
 ```
@@ -53,7 +53,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT span
-REMOVE div after #comment
+REMOVE div after span
 INSERT span/#text
 UPDATE span[class] null => "A"
 ```

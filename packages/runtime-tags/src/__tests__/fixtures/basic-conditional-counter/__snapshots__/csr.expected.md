@@ -56,7 +56,7 @@ container.querySelector("button.toggle").click();
 # Mutations
 ```
 INSERT #text
-REMOVE span after button1
+REMOVE span after #text
 ```
 
 # Render
@@ -94,7 +94,7 @@ container.querySelector("button.toggle").click();
 # Mutations
 ```
 INSERT span
-REMOVE #text after button1
+REMOVE #text after span
 UPDATE span/#text " " => "2"
 ```
 

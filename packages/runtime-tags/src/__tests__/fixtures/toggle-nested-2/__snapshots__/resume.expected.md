@@ -148,7 +148,7 @@ container.querySelector("#inner").click();
 ```
 REMOVE html/body/div/#comment3 after html/body/div/#comment4
 INSERT html/body/div/#comment3
-REMOVE button after html/body/div/#comment2
+REMOVE button after html/body/div/#comment3
 ```
 
 # Render
@@ -187,7 +187,7 @@ container.querySelector("#inner").click();
 # Mutations
 ```
 INSERT html/body/div/button2
-REMOVE #comment after html/body/div/#comment2
+REMOVE #comment after html/body/div/button2
 UPDATE html/body/div/button2/#text " " => "2"
 ```
 
@@ -255,12 +255,12 @@ container.querySelector("#outer").click();
 ```
 REMOVE html/body/div/#comment1 after #text
 INSERT html/body/div/#comment1
-REMOVE #comment after html/body/div/#comment0
-REMOVE button after html/body/div/#comment0
-REMOVE #comment after html/body/div/#comment0
-REMOVE button after html/body/div/#comment0
-REMOVE #comment after html/body/div/#comment0
-REMOVE #text after html/body/div/#comment0
+REMOVE #comment after html/body/div/#comment1
+REMOVE button after html/body/div/#comment1
+REMOVE #comment after html/body/div/#comment1
+REMOVE button after html/body/div/#comment1
+REMOVE #comment after html/body/div/#comment1
+REMOVE #text after html/body/div/#comment1
 ```
 
 # Render
@@ -296,9 +296,9 @@ container.querySelector("#outer").click();
 # Mutations
 ```
 INSERT html/body/div/button1, #text, html/body/div/#comment1
-REMOVE #comment after html/body/div/#comment0
+REMOVE #comment after html/body/div/#comment1
 INSERT html/body/div/button2
-REMOVE #text after html/body/div/button1
+REMOVE #text after html/body/div/button2
 UPDATE html/body/div/button2/#text " " => "3"
 ```
 

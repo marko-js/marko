@@ -27,7 +27,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT div
-REMOVE div after button
+REMOVE div after div
 UPDATE div[id] null => "dynamic"
 ```
 
@@ -46,6 +46,6 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT div
-REMOVE div after button
+REMOVE div after div
 UPDATE div/#text1 "" => "dynamic"
 ```

@@ -22,7 +22,7 @@ hi
 # Mutations
 ```
 INSERT #text
-REMOVE #text after button
+REMOVE #text after #text
 ```
 
 # Render
@@ -37,7 +37,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT #text
-REMOVE #text after button
+REMOVE #text after #text
 ```
 
 # Render
@@ -53,5 +53,5 @@ hi
 # Mutations
 ```
 INSERT #text
-REMOVE #text after button
+REMOVE #text after #text
 ```

@@ -187,10 +187,10 @@ REMOVE html/body/div/div1/#comment1 after html/body/div/div1/#comment2
 INSERT html/body/div/div1/#comment1
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE #comment after html/body/div/div1/#comment0
-REMOVE div after html/body/div/div1/#comment0
-REMOVE span after html/body/div/div1/#comment0
-REMOVE p after html/body/div/div1/#comment0
+REMOVE #comment after html/body/div/div1/#comment1
+REMOVE div after html/body/div/div1/#comment1
+REMOVE span after html/body/div/div1/#comment1
+REMOVE p after html/body/div/div1/#comment1
 ```
 
 # Render
@@ -261,7 +261,7 @@ REMOVE html/body/div/#comment1 after div
 INSERT html/body/div/#comment1
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE div after html/body/div/#comment0
+REMOVE div after html/body/div/#comment1
 ```
 
 # Render
@@ -314,7 +314,7 @@ REMOVE html/body/#comment4 after div
 INSERT html/body/#comment4
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE div after html/body/#comment3
+REMOVE div after html/body/#comment4
 ```
 
 # Render
@@ -487,14 +487,14 @@ Inner mounted
 # Mutations
 ```
 INSERT html/body/div
-REMOVE #comment after html/body/#comment3
+REMOVE #comment after html/body/div
 INSERT html/body/div/div1
-REMOVE #text after html/body/div/p
+REMOVE #text after html/body/div/div1
 UPDATE html/body/div/div0/#text0 "" => "Outer"
 UPDATE html/body/div/span/#text0 "" => "Outer"
 UPDATE html/body/div/p/#text0 "" => "Outer"
 INSERT html/body/div/div1/div1, html/body/div/div1/span1, html/body/div/div1/p1
-REMOVE #text after html/body/div/div1/p0
+REMOVE #text after html/body/div/div1/p1
 UPDATE html/body/div/div1/div0/#text0 "" => "Middle"
 UPDATE html/body/div/div1/span0/#text0 "" => "Middle"
 UPDATE html/body/div/div1/p0/#text0 "" => "Middle"
@@ -568,5 +568,5 @@ REMOVE #text in html/body/pre
 INSERT #text
 REMOVE #text in html/body/pre
 INSERT html/body/pre/#text
-REMOVE div after html/body/#comment3
+REMOVE div after html/body/#comment4
 ```

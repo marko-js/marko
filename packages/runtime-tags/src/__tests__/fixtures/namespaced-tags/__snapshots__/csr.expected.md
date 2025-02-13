@@ -107,7 +107,7 @@ container.querySelector(".toggle-parent").click();
 # Mutations
 ```
 INSERT div/svg1
-REMOVE div after div/math
+REMOVE div after div/svg1
 INSERT #text
 INSERT div/svg1/a
 REMOVE #text after div/svg1/a
@@ -166,7 +166,7 @@ container.querySelector(".toggle-parent").click();
 # Mutations
 ```
 INSERT div/div
-REMOVE svg after div/math
+REMOVE svg after div/div
 INSERT #text
 INSERT div/div/a
 REMOVE #text after div/div/a
@@ -225,7 +225,7 @@ container.querySelector(".toggle-parent").click();
 # Mutations
 ```
 INSERT div/svg1
-REMOVE div after div/math
+REMOVE div after div/svg1
 INSERT #text
 INSERT div/svg1/a
 REMOVE #text after div/svg1/a
@@ -274,9 +274,9 @@ container.querySelector(".toggle-child").click();
 # Mutations
 ```
 INSERT div/svg0/#text
-REMOVE a after div/svg0/a
+REMOVE a after div/svg0/#text
 INSERT div/math/#text
-REMOVE a after div/math/a
+REMOVE a after div/math/#text
 ```
 
 # Render
@@ -331,11 +331,11 @@ container.querySelector(".toggle-child").click();
 # Mutations
 ```
 INSERT div/svg0/a1
-REMOVE #text after div/svg0/a0
+REMOVE #text after div/svg0/a1
 INSERT div/svg0/a1/#text
 UPDATE div/svg0/a1[href] null => "#bar"
 INSERT div/math/a1
-REMOVE #text after div/math/a0
+REMOVE #text after div/math/a1
 INSERT div/math/a1/#text
 UPDATE div/math/a1[href] null => "#bar"
 UPDATE div/svg0/a1[ns] null => "http://www.w3.org/2000/svg"
@@ -384,7 +384,7 @@ container.querySelector(".toggle-child").click();
 # Mutations
 ```
 INSERT div/svg0/#text
-REMOVE a after div/svg0/a
+REMOVE a after div/svg0/#text
 INSERT div/math/#text
-REMOVE a after div/math/a
+REMOVE a after div/math/#text
 ```

@@ -140,7 +140,7 @@ container.querySelector(".toggle-parent").click();
 # Mutations
 ```
 INSERT html/body/div/svg1
-REMOVE div after html/body/div/math
+REMOVE div after html/body/div/svg1
 INSERT #text
 INSERT html/body/div/svg1/a
 REMOVE #text after html/body/div/svg1/a
@@ -215,7 +215,7 @@ container.querySelector(".toggle-parent").click();
 # Mutations
 ```
 INSERT html/body/div/div
-REMOVE svg after html/body/div/math
+REMOVE svg after html/body/div/div
 INSERT #text
 INSERT html/body/div/div/a
 REMOVE #text after html/body/div/div/a
@@ -290,7 +290,7 @@ container.querySelector(".toggle-parent").click();
 # Mutations
 ```
 INSERT html/body/div/svg1
-REMOVE div after html/body/div/math
+REMOVE div after html/body/div/svg1
 INSERT #text
 INSERT html/body/div/svg1/a
 REMOVE #text after html/body/div/svg1/a
@@ -355,9 +355,9 @@ container.querySelector(".toggle-child").click();
 # Mutations
 ```
 INSERT html/body/div/svg0/#text
-REMOVE a after html/body/div/svg0/#comment0
+REMOVE a after html/body/div/svg0/#text
 INSERT html/body/div/math/#text
-REMOVE a after html/body/div/math/#comment0
+REMOVE a after html/body/div/math/#text
 ```
 
 # Render
@@ -428,11 +428,11 @@ container.querySelector(".toggle-child").click();
 # Mutations
 ```
 INSERT html/body/div/svg0/a1
-REMOVE #text after html/body/div/svg0/#comment0
+REMOVE #text after html/body/div/svg0/a1
 INSERT html/body/div/svg0/a1/#text
 UPDATE html/body/div/svg0/a1[href] null => "#bar"
 INSERT html/body/div/math/a1
-REMOVE #text after html/body/div/math/#comment0
+REMOVE #text after html/body/div/math/a1
 INSERT html/body/div/math/a1/#text
 UPDATE html/body/div/math/a1[href] null => "#bar"
 UPDATE html/body/div/svg0/a1[ns] null => "http://www.w3.org/2000/svg"
@@ -497,7 +497,7 @@ container.querySelector(".toggle-child").click();
 # Mutations
 ```
 INSERT html/body/div/svg0/#text
-REMOVE a after html/body/div/svg0/#comment0
+REMOVE a after html/body/div/svg0/#text
 INSERT html/body/div/math/#text
-REMOVE a after html/body/div/math/#comment0
+REMOVE a after html/body/div/math/#text
 ```

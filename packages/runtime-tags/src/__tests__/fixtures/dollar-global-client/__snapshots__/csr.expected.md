@@ -36,9 +36,9 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT div/span
-REMOVE #text before div/span
+REMOVE #text after div/span
 INSERT div/#text
-REMOVE span after div/span
+REMOVE span after div/#text
 UPDATE div/span/#text " " => "1"
 ```
 
@@ -62,9 +62,9 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT div/#text
-REMOVE span before div/#text
+REMOVE span after div/#text
 INSERT div/span
-REMOVE #text after div/#text
+REMOVE #text after div/span
 UPDATE div/span/#text " " => "1"
 ```
 
@@ -86,8 +86,8 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT div/span
-REMOVE #text before div/span
+REMOVE #text after div/span
 INSERT div/#text
-REMOVE span after div/span
+REMOVE span after div/#text
 UPDATE div/span/#text " " => "1"
 ```

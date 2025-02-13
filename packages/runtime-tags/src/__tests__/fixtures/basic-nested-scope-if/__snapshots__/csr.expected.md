@@ -61,6 +61,6 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT div/span
-REMOVE button before div/span
+REMOVE button after div/span
 UPDATE div/span/#text1 "" => "3"
 ```
