@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.40
+
+### Patch Changes
+
+- [#2515](https://github.com/marko-js/marko/pull/2515) [`baedba4`](https://github.com/marko-js/marko/commit/baedba443938085da5945ae88882715dd986f13d) Thanks [@rturnq](https://github.com/rturnq)! - De-opt to dynamic tag for all tag names which are not string literals or custom tag identifiers to fix DOM compilation of complex expressions.
+
 ## 0.3.39
 
 ### Patch Changes
