@@ -25,7 +25,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT div
-REMOVE #text after #comment
+REMOVE #text after div
 INSERT div/#text
 ```
 
@@ -42,5 +42,5 @@ Body Content
 # Mutations
 ```
 INSERT #text
-REMOVE div after #comment
+REMOVE div after #text
 ```

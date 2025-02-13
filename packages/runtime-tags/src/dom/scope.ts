@@ -31,12 +31,6 @@ export function finishPendingScopes() {
   pendingScopes = [];
 }
 
-const emptyBranch = createScope({}) as BranchScope;
-export function getEmptyBranch(marker: Comment) {
-  emptyBranch.___startNode = emptyBranch.___endNode = marker;
-  return emptyBranch;
-}
-
 export function destroyBranch(branch: BranchScope) {
   branch.___parentBranch?.___branchScopes?.delete(branch);
   destroyNestedBranches(branch);

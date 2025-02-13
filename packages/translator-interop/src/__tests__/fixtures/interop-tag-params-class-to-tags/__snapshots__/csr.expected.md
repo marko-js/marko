@@ -86,12 +86,12 @@ container.querySelector("#class").click();
 # Mutations
 ```
 INSERT div/#text0, div/#text3
-REMOVE #text before #text
-REMOVE #text before h1
-REMOVE h1 before button
-REMOVE button before #text
-REMOVE #text before #text
-REMOVE #text before div/#text0
+REMOVE #text after div/#text3
+REMOVE #text after div/#text3
+REMOVE h1 after div/#text3
+REMOVE button after div/#text3
+REMOVE #text after div/#text3
+REMOVE #text after div/#text3
 INSERT div/#text1
 INSERT div/#text2
 INSERT div/h1
@@ -158,12 +158,12 @@ container.querySelector("#class").click();
 # Mutations
 ```
 INSERT div/#text0, div/#text3
-REMOVE #text before #text
-REMOVE #text before h1
-REMOVE h1 before button
-REMOVE button before #text
-REMOVE #text before #text
-REMOVE #text before div/#text0
+REMOVE #text after div/#text3
+REMOVE #text after div/#text3
+REMOVE h1 after div/#text3
+REMOVE button after div/#text3
+REMOVE #text after div/#text3
+REMOVE #text after div/#text3
 INSERT div/#text1
 INSERT div/#text2
 INSERT div/h1

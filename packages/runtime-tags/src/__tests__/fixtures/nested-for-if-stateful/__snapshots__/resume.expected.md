@@ -81,7 +81,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT html/body/button0
-REMOVE button before html/body/button0
+REMOVE button after html/body/button0
 UPDATE html/body/button0/#text1 "" => "1"
 ```
 
@@ -123,7 +123,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT html/body/button1
-REMOVE button after html/body/#comment1
+REMOVE button after html/body/button1
 UPDATE html/body/button1/#text1 "" => "1"
 ```
 
@@ -162,7 +162,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT html/body/button2
-REMOVE button after html/body/#comment3
+REMOVE button after html/body/button2
 UPDATE html/body/button2/#text1 "" => "1"
 ```
 
@@ -201,7 +201,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT html/body/button0
-REMOVE button before html/body/button0
+REMOVE button after html/body/button0
 UPDATE html/body/button0/#text1 "" => "1"
 ```
 
@@ -240,7 +240,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT html/body/button1
-REMOVE button after html/body/#comment1
+REMOVE button after html/body/button1
 UPDATE html/body/button1/#text1 "" => "1"
 ```
 
@@ -279,7 +279,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT html/body/button2
-REMOVE button after html/body/#comment3
+REMOVE button after html/body/button2
 UPDATE html/body/button2/#text1 "" => "1"
 ```
 
@@ -318,7 +318,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT html/body/button0
-REMOVE button before html/body/button0
+REMOVE button after html/body/button0
 UPDATE html/body/button0/#text1 "" => "2"
 ```
 
@@ -357,7 +357,7 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT html/body/button1
-REMOVE button after html/body/#comment1
+REMOVE button after html/body/button1
 UPDATE html/body/button1/#text1 "" => "2"
 ```
 
@@ -396,6 +396,6 @@ buttonIndex = (buttonIndex + 1) % 3;
 # Mutations
 ```
 INSERT html/body/button2
-REMOVE button after html/body/#comment3
+REMOVE button after html/body/button2
 UPDATE html/body/button2/#text1 "" => "2"
 ```

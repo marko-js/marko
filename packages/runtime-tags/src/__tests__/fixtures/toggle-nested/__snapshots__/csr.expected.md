@@ -28,9 +28,9 @@ INSERT div
 ```
 INSERT div/#comment0, #text, #text, div/#comment1
 INSERT div/span0
-REMOVE #text after div/#comment0
-INSERT div/span1
 REMOVE #text after div/span0
+INSERT div/span1
+REMOVE #text after div/span1
 UPDATE div/span0/#text " " => "Hello"
 UPDATE div/span1/#text " " => "World"
 ```
@@ -50,7 +50,7 @@ UPDATE div/span1/#text " " => "World"
 # Mutations
 ```
 INSERT div/#text
-REMOVE span after div/#comment0
+REMOVE span after div/#text
 ```
 
 # Render `{"show":true,"value1":"Goodbye","value2":"World"}`
@@ -71,7 +71,7 @@ REMOVE span after div/#comment0
 # Mutations
 ```
 INSERT div/span0
-REMOVE #text after div/#comment0
+REMOVE #text after div/span0
 UPDATE div/span0/#text " " => "Goodbye"
 ```
 

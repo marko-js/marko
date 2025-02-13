@@ -85,7 +85,7 @@ container.querySelector("button.toggle").click();
 ```
 REMOVE html/body/#comment2 after span
 INSERT html/body/#comment2
-REMOVE span after html/body/#comment1
+REMOVE span after html/body/#comment2
 ```
 
 # Render
@@ -142,7 +142,7 @@ container.querySelector("button.toggle").click();
 # Mutations
 ```
 INSERT html/body/span
-REMOVE #comment after html/body/#comment1
+REMOVE #comment after html/body/span
 UPDATE html/body/span/#text " " => "2"
 ```
 

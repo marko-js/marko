@@ -45,7 +45,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/div
-REMOVE span before html/body/div
+REMOVE span after html/body/div
 INSERT html/body/div/#text
 UPDATE html/body/div[class] null => "A"
 ```
@@ -76,7 +76,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 INSERT html/body/span
-REMOVE div before html/body/span
+REMOVE div after html/body/span
 INSERT html/body/span/#text
 UPDATE html/body/span[class] null => "A"
 ```

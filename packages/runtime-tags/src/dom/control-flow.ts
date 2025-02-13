@@ -15,7 +15,6 @@ import {
 } from "./renderer";
 import {
   destroyBranch,
-  getEmptyBranch,
   insertBranchBefore,
   removeAndDestroyBranch,
 } from "./scope";
@@ -33,9 +32,7 @@ export function conditional(
       newBranchIndexOrOp !== MARK &&
       newBranchIndexOrOp !== CLEAN
     ) {
-      (scope[nodeAccessor].nodeType > NodeType.Element
-        ? setConditionalRenderer
-        : setConditionalRendererOnlyChild)(
+      setConditionalRenderer(
         scope,
         nodeAccessor,
         branches[(scope[branchAccessor] = newBranchIndexOrOp)],
@@ -71,14 +68,17 @@ export let dynamicTag = function dynamicTag(
     let op = newRendererOrOp as SignalOp;
 
     if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
-      const normalizedRenderer =
-        normalizeDynamicRenderer<Renderer>(newRendererOrOp);
-      if (isDifferentRenderer(normalizedRenderer, currentRenderer)) {
-        scope[rendererAccessor] = normalizedRenderer;
+      if (
+        isDifferentRenderer(
+          currentRenderer,
+          (scope[rendererAccessor] =
+            normalizeDynamicRenderer<Renderer>(newRendererOrOp)),
+        )
+      ) {
         setConditionalRenderer(
           scope,
           nodeAccessor,
-          normalizedRenderer,
+          scope[rendererAccessor],
           createBranchScopeWithTagNameOrRenderer,
         );
         fn && fn(scope);
@@ -91,7 +91,7 @@ export let dynamicTag = function dynamicTag(
   };
 };
 
-function setConditionalRenderer<T>(
+export function setConditionalRenderer<T>(
   scope: Scope,
   nodeAccessor: Accessor,
   newRenderer: T,
@@ -102,58 +102,37 @@ function setConditionalRenderer<T>(
     parentNode: ParentNode,
   ) => BranchScope,
 ) {
-  const prevBranch =
-    (scope[nodeAccessor + AccessorChar.ConditionalScope] as BranchScope) ||
-    getEmptyBranch(scope[nodeAccessor] as Comment);
-  const newBranch = newRenderer
-    ? createBranch(
-        newRenderer,
-        scope.$global,
-        scope,
-        prevBranch.___endNode.parentNode!,
-      )
-    : (getEmptyBranch(scope[nodeAccessor] as Comment) as BranchScope);
+  const referenceNode = scope[nodeAccessor] as Comment | Element;
+  const prevBranch = scope[nodeAccessor + AccessorChar.ConditionalScope] as
+    | BranchScope
+    | undefined;
+  const parentNode =
+    referenceNode.nodeType > NodeType.Element
+      ? (prevBranch?.___startNode || referenceNode).parentNode!
+      : (referenceNode as ParentNode);
+  const newBranch = (scope[nodeAccessor + AccessorChar.ConditionalScope] =
+    newRenderer && createBranch(newRenderer, scope.$global, scope, parentNode));
+  if (referenceNode === parentNode) {
+    if (prevBranch) {
+      destroyBranch(prevBranch);
+      referenceNode.textContent = "";
+    }
 
-  if (prevBranch !== newBranch) {
-    insertBranchBefore(
-      newBranch,
-      prevBranch.___endNode.parentNode!,
-      prevBranch.___endNode.nextSibling,
-    );
+    if (newBranch) {
+      insertBranchBefore(newBranch, parentNode, null);
+    }
+  } else if (prevBranch) {
+    if (newBranch) {
+      insertBranchBefore(newBranch, parentNode, prevBranch.___startNode);
+    } else {
+      parentNode.insertBefore(referenceNode, prevBranch.___startNode);
+    }
+
     removeAndDestroyBranch(prevBranch);
-    scope[nodeAccessor + AccessorChar.ConditionalScope] =
-      newRenderer && newBranch;
+  } else if (newBranch) {
+    insertBranchBefore(newBranch, parentNode, referenceNode);
+    referenceNode.remove();
   }
-}
-
-export function setConditionalRendererOnlyChild<T>(
-  scope: Scope,
-  nodeAccessor: Accessor,
-  newRenderer: T,
-  createBranch: (
-    renderer: NonNullable<T>,
-    $global: Scope["$global"],
-    parentScope: Scope,
-    parentNode: ParentNode,
-  ) => BranchScope,
-) {
-  const prevBranch = scope[
-    nodeAccessor + AccessorChar.ConditionalScope
-  ] as BranchScope;
-  const referenceNode = scope[nodeAccessor] as Element;
-  const newBranch =
-    newRenderer &&
-    createBranch(newRenderer, scope.$global, scope, referenceNode);
-
-  referenceNode.textContent = "";
-
-  if (newBranch) {
-    insertBranchBefore(newBranch, referenceNode, null);
-  }
-
-  prevBranch && destroyBranch(prevBranch);
-
-  scope[nodeAccessor + AccessorChar.ConditionalScope] = newBranch;
 }
 
 export function loopOf(nodeAccessor: Accessor, renderer: Renderer) {
@@ -209,7 +188,6 @@ function loop<T extends unknown[] = unknown[]>(
       }
     } else {
       const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
-      const referenceIsMarker = referenceNode.nodeType > NodeType.Element;
       const oldMap = scope[nodeAccessor + AccessorChar.LoopScopeMap] as
         | Map<unknown, BranchScope>
         | undefined;
@@ -219,7 +197,7 @@ function loop<T extends unknown[] = unknown[]>(
           ]
         : [];
       const parentNode = (
-        referenceIsMarker
+        referenceNode.nodeType > NodeType.Element
           ? referenceNode.parentNode || oldArray[0].___startNode.parentNode
           : referenceNode
       ) as Element;
@@ -244,7 +222,7 @@ function loop<T extends unknown[] = unknown[]>(
       });
 
       let afterReference: null | Node = null;
-      if (referenceIsMarker) {
+      if (referenceNode !== parentNode) {
         if (oldArray.length) {
           afterReference = oldArray[oldArray.length - 1].___endNode.nextSibling;
           if (!newArray.length) {

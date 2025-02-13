@@ -40,7 +40,7 @@ destroyed
 INSERT #text
 REMOVE #text in pre
 INSERT pre/#text
-REMOVE div after pre
+REMOVE div after #text
 ```
 
 # Render
@@ -66,7 +66,7 @@ mounted
 # Mutations
 ```
 INSERT div
-REMOVE #text after pre
+REMOVE #text after div
 REMOVE #text in pre
 INSERT pre/#text
 ```
@@ -94,5 +94,5 @@ destroyed
 INSERT #text
 REMOVE #text in pre
 INSERT pre/#text
-REMOVE div after pre
+REMOVE div after #text
 ```

@@ -5,7 +5,7 @@ import {
   NodeType,
   type Scope,
 } from "../common/types";
-import { setConditionalRendererOnlyChild } from "./control-flow";
+import { setConditionalRenderer } from "./control-flow";
 import { attrs, insertChildNodes } from "./dom";
 import { parseHTML } from "./parse-html";
 import { queueRender } from "./queue";
@@ -148,7 +148,7 @@ export function dynamicTagAttrs(
         );
       }
 
-      setConditionalRendererOnlyChild(
+      setConditionalRenderer(
         childScope,
         nodeAccessor,
         content,

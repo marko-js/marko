@@ -91,7 +91,7 @@ container.querySelector("#changeTag").click();
 # Mutations
 ```
 INSERT html/body/span
-REMOVE div before html/body/span
+REMOVE div after html/body/span
 INSERT html/body/span/button
 UPDATE html/body/span/button/#text " " => "0"
 ```
