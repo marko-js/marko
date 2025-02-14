@@ -93,7 +93,13 @@ export function controllable_input_checkedValue_effect(
         scope[nodeAccessor + AccessorChar.ControlledType] ===
         ControlledType.Pending
       ) {
-        el.checked = !el.checked;
+        const radioList =
+          el.name && el.type[0] === "r" && el.form?.elements.namedItem(el.name);
+        if (radioList && (radioList as RadioNodeList).length) {
+          (radioList as RadioNodeList).value = oldValue;
+        } else {
+          el.checked = !el.checked;
+        }
       }
     }
   });
