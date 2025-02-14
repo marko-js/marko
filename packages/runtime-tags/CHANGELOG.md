@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.41
+
+### Patch Changes
+
+- [#2518](https://github.com/marko-js/marko/pull/2518) [`ad31acf`](https://github.com/marko-js/marko/commit/ad31acf7ec4743d09248c31fbeaf1134da006d26) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issues related to controlled checkedValue input radios.
+
 ## 0.3.40
 
 ### Patch Changes
