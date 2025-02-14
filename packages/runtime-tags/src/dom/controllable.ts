@@ -93,7 +93,21 @@ export function controllable_input_checkedValue_effect(
         scope[nodeAccessor + AccessorChar.ControlledType] ===
         ControlledType.Pending
       ) {
-        el.checked = !el.checked;
+        if (el.name && el.type[0] === "r") {
+          for (const radio of (
+            el.getRootNode() as Document | ShadowRoot
+          ).querySelectorAll<HTMLInputElement>(
+            `[type=radio][name=${CSS.escape(el.name)}]`,
+          )) {
+            if (radio.form === el.form) {
+              radio.checked = Array.isArray(oldValue)
+                ? oldValue.includes(radio.value)
+                : oldValue === radio.value;
+            }
+          }
+        } else {
+          el.checked = !el.checked;
+        }
       }
     }
   });

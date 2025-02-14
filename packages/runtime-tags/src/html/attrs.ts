@@ -124,7 +124,7 @@ export function controllable_input_checkedValue(
       ControlledType.InputCheckedValue,
       scopeId,
       nodeAccessor,
-      multiple ? checkedValue : undefined,
+      checkedValue,
       checkedValueChange,
     );
   }
