@@ -1,4 +1,4 @@
-// size: 17976 (min) 6741 (brotli)
+// size: 18176 (min) 6819 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -321,7 +321,8 @@ function controllable_input_checkedValue_effect(scope, nodeAccessor) {
     let checkedValueChange = scope[nodeAccessor + ";"];
     if (checkedValueChange) {
       let oldValue = scope[nodeAccessor + ":"];
-      (scope[nodeAccessor + "="] = 6),
+      if (
+        ((scope[nodeAccessor + "="] = 6),
         checkedValueChange(
           Array.isArray(oldValue)
             ? (function (arr, val, push) {
@@ -338,7 +339,17 @@ function controllable_input_checkedValue_effect(scope, nodeAccessor) {
               : void 0,
         ),
         run(),
-        6 === scope[nodeAccessor + "="] && (el.checked = !el.checked);
+        6 === scope[nodeAccessor + "="])
+      )
+        if (el.name && "r" === el.type[0])
+          for (let radio of el
+            .getRootNode()
+            .querySelectorAll(`[type=radio][name=${CSS.escape(el.name)}]`))
+            radio.form === el.form &&
+              (radio.checked = Array.isArray(oldValue)
+                ? oldValue.includes(radio.value)
+                : oldValue === radio.value);
+        else el.checked = !el.checked;
     }
   });
 }
