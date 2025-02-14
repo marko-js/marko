@@ -34,16 +34,10 @@ export function controllable_input_checked_effect(
       nodeAccessor + AccessorChar.ControlledHandler
     ] as undefined | ((value: unknown) => unknown);
     if (checkedChange) {
-      scope[nodeAccessor + AccessorChar.ControlledType] =
-        ControlledType.Pending;
-      checkedChange(el.checked);
+      const newValue = el.checked;
+      el.checked = !newValue;
+      checkedChange(newValue);
       run();
-      if (
-        scope[nodeAccessor + AccessorChar.ControlledType] ===
-        ControlledType.Pending
-      ) {
-        el.checked = !el.checked;
-      }
     }
   });
 }
@@ -78,37 +72,29 @@ export function controllable_input_checkedValue_effect(
     ] as undefined | ((value: unknown) => unknown);
     if (checkedValueChange) {
       const oldValue = scope[nodeAccessor + AccessorChar.ControlledValue];
-      scope[nodeAccessor + AccessorChar.ControlledType] =
-        ControlledType.Pending;
-      checkedValueChange(
-        Array.isArray(oldValue)
-          ? updateList(oldValue, el.value, el.checked)
-          : el.checked
-            ? el.value
-            : undefined,
-      );
-      run();
+      const newValue = Array.isArray(oldValue)
+        ? updateList(oldValue, el.value, el.checked)
+        : el.checked
+          ? el.value
+          : undefined;
 
-      if (
-        scope[nodeAccessor + AccessorChar.ControlledType] ===
-        ControlledType.Pending
-      ) {
-        if (el.name && el.type[0] === "r") {
-          for (const radio of (
-            el.getRootNode() as Document | ShadowRoot
-          ).querySelectorAll<HTMLInputElement>(
-            `[type=radio][name=${CSS.escape(el.name)}]`,
-          )) {
-            if (radio.form === el.form) {
-              radio.checked = Array.isArray(oldValue)
-                ? oldValue.includes(radio.value)
-                : oldValue === radio.value;
-            }
+      if (el.name && el.type[0] === "r") {
+        for (const radio of (
+          el.getRootNode() as Document | ShadowRoot
+        ).querySelectorAll<HTMLInputElement>(
+          `[type=radio][name=${CSS.escape(el.name)}]`,
+        )) {
+          if (radio.form === el.form) {
+            radio.checked = Array.isArray(oldValue)
+              ? oldValue.includes(radio.value)
+              : oldValue === radio.value;
           }
-        } else {
-          el.checked = !el.checked;
         }
+      } else {
+        el.checked = !el.checked;
       }
+      checkedValueChange(newValue);
+      run();
     }
   });
 }
@@ -151,21 +137,14 @@ export function controllable_input_value_effect(
       | undefined
       | ((value: unknown) => unknown);
     if (valueChange) {
-      scope[nodeAccessor + AccessorChar.ControlledType] =
-        ControlledType.Pending;
-      if (ev) inputType = (ev as InputEvent).inputType;
-      valueChange(el.value);
+      const newValue = el.value;
+      inputType = (ev as InputEvent)?.inputType;
+      setValueAndUpdateSelection(
+        el,
+        scope[nodeAccessor + AccessorChar.ControlledValue],
+      );
+      valueChange(newValue);
       run();
-      if (
-        scope[nodeAccessor + AccessorChar.ControlledType] ===
-        ControlledType.Pending
-      ) {
-        setValueAndUpdateSelection(
-          el,
-          scope[nodeAccessor + AccessorChar.ControlledValue],
-        );
-      }
-
       inputType = "";
     }
   });
@@ -210,25 +189,18 @@ export function controllable_select_value_effect(
       | undefined
       | ((value: unknown) => unknown);
     if (valueChange) {
-      scope[nodeAccessor + AccessorChar.ControlledType] =
-        ControlledType.Pending;
-      valueChange(
-        Array.isArray(scope[nodeAccessor + AccessorChar.ControlledValue])
-          ? Array.from(el.selectedOptions, toValueProp)
-          : el.value,
+      const newValue = Array.isArray(
+        scope[nodeAccessor + AccessorChar.ControlledValue],
+      )
+        ? Array.from(el.selectedOptions, toValueProp)
+        : el.value;
+      setSelectOptions(
+        el,
+        scope[nodeAccessor + AccessorChar.ControlledValue],
+        valueChange,
       );
+      valueChange(newValue);
       run();
-
-      if (
-        scope[nodeAccessor + AccessorChar.ControlledType] ===
-        ControlledType.Pending
-      ) {
-        setSelectOptions(
-          el,
-          scope[nodeAccessor + AccessorChar.ControlledValue],
-          valueChange,
-        );
-      }
     }
   };
 
@@ -312,16 +284,10 @@ export function controllable_detailsOrDialog_open_effect(
         nodeAccessor + AccessorChar.ControlledHandler
       ] as undefined | ((value: unknown) => unknown);
       if (openChange && hasChanged()) {
-        scope[nodeAccessor + AccessorChar.ControlledType] =
-          ControlledType.Pending;
-        openChange(el.open);
+        const newValue = el.open;
+        el.open = !newValue;
+        openChange(newValue);
         run();
-        if (
-          scope[nodeAccessor + AccessorChar.ControlledType] ===
-          ControlledType.Pending
-        ) {
-          el.open = !el.open;
-        }
       }
     },
   );

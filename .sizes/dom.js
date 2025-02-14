@@ -1,4 +1,4 @@
-// size: 18176 (min) 6819 (brotli)
+// size: 18072 (min) 6823 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -289,11 +289,10 @@ function controllable_input_checked_effect(scope, nodeAccessor) {
   let el = scope[nodeAccessor];
   syncControllable(el, "input", hasCheckboxChanged, () => {
     let checkedChange = scope[nodeAccessor + ";"];
-    checkedChange &&
-      ((scope[nodeAccessor + "="] = 6),
-      checkedChange(el.checked),
-      run(),
-      6 === scope[nodeAccessor + "="] && (el.checked = !el.checked));
+    if (checkedChange) {
+      let newValue = el.checked;
+      (el.checked = !newValue), checkedChange(newValue), run();
+    }
   });
 }
 function controllable_input_checkedValue(
@@ -320,36 +319,30 @@ function controllable_input_checkedValue_effect(scope, nodeAccessor) {
   syncControllable(el, "input", hasCheckboxChanged, () => {
     let checkedValueChange = scope[nodeAccessor + ";"];
     if (checkedValueChange) {
-      let oldValue = scope[nodeAccessor + ":"];
-      if (
-        ((scope[nodeAccessor + "="] = 6),
-        checkedValueChange(
-          Array.isArray(oldValue)
-            ? (function (arr, val, push) {
-                let index = arr.indexOf(val);
-                return (
-                  (push
-                    ? !~index && [...arr, val]
-                    : ~index &&
-                      arr.slice(0, index).concat(arr.slice(index + 1))) || arr
-                );
-              })(oldValue, el.value, el.checked)
-            : el.checked
-              ? el.value
-              : void 0,
-        ),
-        run(),
-        6 === scope[nodeAccessor + "="])
-      )
-        if (el.name && "r" === el.type[0])
-          for (let radio of el
-            .getRootNode()
-            .querySelectorAll(`[type=radio][name=${CSS.escape(el.name)}]`))
-            radio.form === el.form &&
-              (radio.checked = Array.isArray(oldValue)
-                ? oldValue.includes(radio.value)
-                : oldValue === radio.value);
-        else el.checked = !el.checked;
+      let oldValue = scope[nodeAccessor + ":"],
+        newValue = Array.isArray(oldValue)
+          ? (function (arr, val, push) {
+              let index = arr.indexOf(val);
+              return (
+                (push
+                  ? !~index && [...arr, val]
+                  : ~index &&
+                    arr.slice(0, index).concat(arr.slice(index + 1))) || arr
+              );
+            })(oldValue, el.value, el.checked)
+          : el.checked
+            ? el.value
+            : void 0;
+      if (el.name && "r" === el.type[0])
+        for (let radio of el
+          .getRootNode()
+          .querySelectorAll(`[type=radio][name=${CSS.escape(el.name)}]`))
+          radio.form === el.form &&
+            (radio.checked = Array.isArray(oldValue)
+              ? oldValue.includes(radio.value)
+              : oldValue === radio.value);
+      else el.checked = !el.checked;
+      checkedValueChange(newValue), run();
     }
   });
 }
@@ -370,14 +363,14 @@ function controllable_input_value_effect(scope, nodeAccessor) {
   isResuming && (scope[nodeAccessor + ":"] = el.defaultValue),
     syncControllable(el, "input", hasValueChanged, (ev) => {
       let valueChange = scope[nodeAccessor + ";"];
-      valueChange &&
-        ((scope[nodeAccessor + "="] = 6),
-        ev && (inputType = ev.inputType),
-        valueChange(el.value),
-        run(),
-        6 === scope[nodeAccessor + "="] &&
+      if (valueChange) {
+        let newValue = el.value;
+        (inputType = ev?.inputType),
           setValueAndUpdateSelection(el, scope[nodeAccessor + ":"]),
-        (inputType = ""));
+          valueChange(newValue),
+          run(),
+          (inputType = "");
+      }
     });
 }
 function controllable_select_value(scope, nodeAccessor, value2, valueChange) {
@@ -393,16 +386,14 @@ function controllable_select_value_effect(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
     onChange = () => {
       let valueChange = scope[nodeAccessor + ";"];
-      valueChange &&
-        ((scope[nodeAccessor + "="] = 6),
-        valueChange(
-          Array.isArray(scope[nodeAccessor + ":"])
-            ? Array.from(el.selectedOptions, toValueProp)
-            : el.value,
-        ),
-        run(),
-        6 === scope[nodeAccessor + "="] &&
-          setSelectOptions(el, scope[nodeAccessor + ":"], valueChange));
+      if (valueChange) {
+        let newValue = Array.isArray(scope[nodeAccessor + ":"])
+          ? Array.from(el.selectedOptions, toValueProp)
+          : el.value;
+        setSelectOptions(el, scope[nodeAccessor + ":"], valueChange),
+          valueChange(newValue),
+          run();
+      }
     };
   el._ ||
     new MutationObserver(() => {
@@ -450,12 +441,10 @@ function controllable_detailsOrDialog_open_effect(scope, nodeAccessor) {
     hasChanged,
     () => {
       let openChange = scope[nodeAccessor + ";"];
-      openChange &&
-        hasChanged() &&
-        ((scope[nodeAccessor + "="] = 6),
-        openChange(el.open),
-        run(),
-        6 === scope[nodeAccessor + "="] && (el.open = !el.open));
+      if (openChange && hasChanged()) {
+        let newValue = el.open;
+        (el.open = !newValue), openChange(newValue), run();
+      }
     },
   );
 }
