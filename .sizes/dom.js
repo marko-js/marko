@@ -1,4 +1,4 @@
-// size: 18072 (min) 6823 (brotli)
+// size: 18061 (min) 6798 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -35,10 +35,9 @@ function forTo(to, from, step, cb) {
 function stringifyClassObject(name, value2) {
   return value2 ? name : "";
 }
-var NON_DIMENSIONAL = /^(--|ta|or|li|z)|n-c|i(do|nk|m|t)|w$|we/;
 function stringifyStyleObject(name, value2) {
   return value2 || 0 === value2
-    ? `${name}:${"number" == typeof value2 && value2 && !NON_DIMENSIONAL.test(name) ? value2 + "px" : value2}`
+    ? `${name}:${"number" == typeof value2 && value2 && !/^(--|ta|or|li|z)|cou|nk|it|ag|we|do|w$/.test(name) ? value2 + "px" : value2}`
     : "";
 }
 function toDelimitedString(val, delimiter, stringify) {

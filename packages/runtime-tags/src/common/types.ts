@@ -135,5 +135,4 @@ export enum ControlledType {
   SelectValue,
   DetailsOrDialogOpen,
   None,
-  Pending,
 }
