@@ -376,16 +376,11 @@ function writeRoot(state: State, root: unknown) {
   if (writeProp(state, root, null, "")) {
     const rootRef = state.refs.get(root as object);
     if (rootRef) {
-      ensureId(state, rootRef);
-    }
-
-    if (assigned.size) {
-      if (assigned.delete(rootRef!)) {
-        assigned.add(rootRef!);
+      const rootId = ensureId(state, rootRef);
+      if (assigned.size) {
+        assigned.delete(rootRef);
         writeAssigned(state);
-      } else {
-        writeAssigned(state);
-        buf.push("," + rootRef!.id!);
+        buf.push("," + rootRef.assigns + rootId);
       }
     }
 
@@ -410,8 +405,10 @@ function writeRoot(state: State, root: unknown) {
 
 function writeAssigned(state: State) {
   for (const valueRef of state.assigned) {
-    state.buf.push("," + valueRef.assigns + (valueRef.init || valueRef.id));
-    valueRef.init = "";
+    if (valueRef.assigns || valueRef.init) {
+      state.buf.push("," + valueRef.assigns + (valueRef.init || valueRef.id));
+      valueRef.init = "";
+    }
   }
 }
 
@@ -513,6 +510,10 @@ function writeRegistered(
     state.refs.set(val, fnRef);
     if (scopeRef) {
       if (isCircular(parent, scopeRef)) {
+        // TODO: adding parent here is is probably wrong, but is currently needed to ensure the
+        // parent of the function has it's assignments before the function so that when the
+        // function is called the parent is complete.
+        state.assigned.add(parent);
         state.assigned.add(fnRef);
         fnRef.init = access + "(" + ensureId(state, scopeRef) + ")";
         fnRef.assigns += ensureId(state, parent) + toAccess(accessor) + "=";
@@ -528,6 +529,10 @@ function writeRegistered(
       const scopeId = scopeRef && ensureId(state, scopeRef);
 
       if (scopeId && assigns !== state.assigned.size) {
+        // TODO: adding parent here is is probably wrong, but is currently needed to ensure the
+        // parent of the function has it's assignments before the function so that when the
+        // function is called the parent is complete.
+        state.assigned.add(parent);
         state.assigned.add(fnRef);
         fnRef.init = access + "(" + scopeId + ")";
         fnRef.assigns += ensureId(state, parent) + toAccess(accessor) + "=";
@@ -1186,28 +1191,35 @@ function writeObjectProps(state: State, val: object, ref: Reference) {
   }
 
   if (hasSymbolIterator(val)) {
-    state.buf.push(sep + "[Symbol.iterator]:");
-    sep = ",";
-    if (
-      !writeReferenceOr(
-        state,
-        writeNever,
-        val[Symbol.iterator],
-        ref,
-        "Symbol.iterator",
-      )
-    ) {
-      const arrayRef = new Reference(
-        ref,
-        null,
-        state.flush,
-        null,
-        nextRefAccess(state),
-      );
-      state.buf.push("(a=>()=>a.values())(" + arrayRef.id + "=");
-      writeArray(state, [...val], arrayRef);
-      state.buf.push(")");
+    const iterArr = [...val];
+    switch (iterArr.length) {
+      case 0:
+        state.buf.push(sep + "*[Symbol.iterator](){}");
+        break;
+      case 1:
+        state.buf.push(
+          sep +
+            "*[Symbol.iterator](){yield " +
+            (iterArr[0] === val ? "this" : ensureId(state, ref)) +
+            "}",
+        );
+        break;
+      default: {
+        const iterRef = new Reference(
+          ref,
+          null,
+          state.flush,
+          null,
+          nextRefAccess(state),
+        );
+        state.buf.push(sep + "*[(" + iterRef.id + "=");
+        writeArray(state, iterArr, iterRef);
+        state.buf.push(",Symbol.iterator)](){yield*" + iterRef.id + "}");
+        break;
+      }
     }
+
+    sep = ",";
   }
 
   return sep;

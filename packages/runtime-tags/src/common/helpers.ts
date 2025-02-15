@@ -10,10 +10,15 @@ export function styleValue(value: unknown) {
   return toDelimitedString(value, ";", stringifyStyleObject);
 }
 
-const NON_DIMENSIONAL = /^(--|ta|or|li|z)|n-c|i(do|nk|m|t)|w$|we/;
 function stringifyStyleObject(name: string, value: unknown) {
   return value || value === 0
-    ? `${name}:${typeof value === "number" && value && !NON_DIMENSIONAL.test(name) ? value + "px" : value}`
+    ? `${name}:${
+        typeof value === "number" &&
+        value &&
+        !/^(--|ta|or|li|z)|cou|nk|it|ag|we|do|w$/.test(name)
+          ? value + "px"
+          : value
+      }`
     : "";
 }
 

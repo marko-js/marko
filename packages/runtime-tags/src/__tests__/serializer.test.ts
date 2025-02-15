@@ -406,11 +406,28 @@ describe("serializer", () => {
 
       assertStringify(
         obj,
-        `{x:1,[Symbol.iterator]:(a=>()=>a.values())(_.a=[1,2,3])}`,
+        `{x:1,*[(_.a=[1,2,3],Symbol.iterator)](){yield*_.a}}`,
       );
     });
 
-    it("Symbol.iterator registered", () => {
+    it("Symbol.iterator circular", () => {
+      const obj = {
+        x: 1,
+        *[Symbol.iterator]() {
+          yield 1;
+          yield 2;
+          yield obj;
+        },
+      };
+
+      assertStringify(
+        obj,
+        `{x:1,*[(_.a=[1,2,],Symbol.iterator)](){yield*_.a}},_.a[2]=_.b`,
+      );
+    });
+
+    it.skip("Symbol.iterator registered", () => {
+      // Unsupported for now since we share the reference for iterators on attribute tags.
       const obj = {
         y: 2,
         [Symbol.iterator]: iterate,
