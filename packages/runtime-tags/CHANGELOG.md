@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 0.3.42
+
+### Patch Changes
+
+- [#2520](https://github.com/marko-js/marko/pull/2520) [`bc3189e`](https://github.com/marko-js/marko/commit/bc3189e97ecf9a3fc9d4933428d21edae68a86e6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Restore original native tag internal state before calling change handlers.
+
+- [#2522](https://github.com/marko-js/marko/pull/2522) [`2687edc`](https://github.com/marko-js/marko/commit/2687edc5a285bc32f1c2e55d290fa888c3c2b906) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue serializing attribute tag iterables.
+
+- [#2522](https://github.com/marko-js/marko/pull/2522) [`2687edc`](https://github.com/marko-js/marko/commit/2687edc5a285bc32f1c2e55d290fa888c3c2b906) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve non dimensional css property regexp (minor improvement to bundle size).
+
 ## 0.3.41
 
 ### Patch Changes
