@@ -15,28 +15,26 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
         name: `${outer}.${inner}`
       });
       _scope2_.set(_index, _$.ensureScopeWithId(_scope2_id));
-      _$.debug(_$.writeScope(_scope2_id, {
+      _$.writeScope(_scope2_id, {
         "#childScope/0": _$.writeExistingScope(_childScope),
-        "_": _$.ensureScopeWithId(_scope1_id)
-      }), "__tests__/template.marko", "5:4", {
-        "inner": "5:8"
-      });
+        _: _$.ensureScopeWithId(_scope1_id)
+      }, "__tests__/template.marko", "5:4");
     }, _scope1_id, "#text/0");
     _scope1_.set(_index2, _$.ensureScopeWithId(_scope1_id));
-    _$.debug(_$.writeScope(_scope1_id, {
-      "outer": outer,
+    _$.writeScope(_scope1_id, {
+      outer: outer,
       "#text/0(": _scope2_.size ? _scope2_ : undefined,
-      "_": _$.ensureScopeWithId(_scope0_id)
-    }), "__tests__/template.marko", "4:2", {
-      "outer": "4:6"
+      _: _$.ensureScopeWithId(_scope0_id)
+    }, "__tests__/template.marko", "4:2", {
+      outer: "4:6"
     });
   }, _scope0_id, "#text/1");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "items": items,
+  _$.writeScope(_scope0_id, {
+    items: items,
     "#text/1(": _scope1_.size ? _scope1_ : undefined
-  }), "__tests__/template.marko", 0, {
-    "items": "1:6"
+  }, "__tests__/template.marko", 0, {
+    items: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

@@ -293,24 +293,20 @@ class Reference {
 interface Debug {
   file: string;
   loc: string | 0;
-  vars: Record<string, string | [loc: string, name: string]> | undefined;
+  vars: Record<string, string | [name: string, loc?: string]> | undefined;
 }
 const DEBUG = new WeakMap<WeakKey, Debug>();
-export function debug(
+export function setDebugInfo(
   obj: WeakKey,
   file: string,
   loc: string | 0,
   vars?: Record<string, string>,
 ) {
-  if (MARKO_DEBUG) {
-    DEBUG.set(obj, {
-      file,
-      loc,
-      vars,
-    });
-  }
-
-  return obj;
+  DEBUG.set(obj, {
+    file,
+    loc,
+    vars,
+  });
 }
 
 export class Serializer {
@@ -1264,18 +1260,19 @@ function throwUnserializable(
       const debug = ref.parent?.debug;
       if (debug) {
         const varLoc = debug.vars?.[ref.accessor];
+        let debugAccess = ref.accessor;
+        let debugLoc = debug.loc;
         if (varLoc) {
           if (Array.isArray(varLoc)) {
-            message += ` "${varLoc[0]}" in ${debug.file}:${varLoc[1]}`;
+            debugAccess = varLoc[0];
+            if (varLoc[1]) debugLoc = varLoc[1];
           } else {
-            message += ` "${ref.accessor}" in ${debug.file}:${varLoc}`;
-          }
-        } else {
-          message += ` ${JSON.stringify(ref.accessor)} in ${debug.file}`;
-          if (debug.loc) {
-            message += `:${debug.loc}`;
+            debugLoc = varLoc;
           }
         }
+
+        message += ` ${JSON.stringify(debugAccess)} in ${debug.file}`;
+        if (debugLoc) message += `:${debugLoc}`;
         break;
       }
       access = toAccess(ref.accessor) + access;

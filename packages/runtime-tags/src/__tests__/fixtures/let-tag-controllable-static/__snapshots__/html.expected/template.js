@@ -5,14 +5,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const y = x;
   _$.write(`<button>${_$.escapeXML(x)}${_$.markResumeNode(_scope0_id, "#text/1")}|<!>${_$.escapeXML(y)}${_$.markResumeNode(_scope0_id, "#text/2")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_y");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "y": y,
+  _$.writeScope(_scope0_id, {
+    y: y,
     "y@": _$.register(function (newValue) {
       x = newValue + 1;
     }, "__tests__/template.marko_0/valueChange", _scope0_id)
-  }), "__tests__/template.marko", 0, {
-    "x": "1:6",
-    "y": "2:6"
+  }, "__tests__/template.marko", 0, {
+    y: "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

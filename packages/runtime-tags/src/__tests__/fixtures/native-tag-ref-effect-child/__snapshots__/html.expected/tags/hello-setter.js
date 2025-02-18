@@ -5,10 +5,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     el
   } = input;
   _$.writeEffect(_scope0_id, "__tests__/tags/hello-setter.marko_0_el");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "el": el
-  }), "__tests__/tags/hello-setter.marko", 0, {
-    "el": "1:10"
+  _$.writeScope(_scope0_id, {
+    el: el
+  }, "__tests__/tags/hello-setter.marko", 0, {
+    el: "1:10"
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/hello-setter.marko", _renderer);

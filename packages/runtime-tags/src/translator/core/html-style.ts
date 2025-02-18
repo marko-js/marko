@@ -34,7 +34,7 @@ import {
   addHTMLEffectCall,
   addStatement,
   getRegisterUID,
-  getSerializedScopeProperties,
+  setSerializedProperty,
 } from "../util/signals";
 import { toObjectProperty } from "../util/to-property-name";
 import { propsToExpression } from "../util/translate-attrs";
@@ -174,8 +174,9 @@ export default {
         for (const reference of references) {
           let currentSection = getSection(reference);
           while (currentSection !== section && currentSection.parent) {
-            getSerializedScopeProperties(currentSection).set(
-              t.stringLiteral("_"),
+            setSerializedProperty(
+              currentSection,
+              "_",
               callRuntime(
                 "ensureScopeWithId",
                 getScopeIdIdentifier((currentSection = currentSection.parent!)),

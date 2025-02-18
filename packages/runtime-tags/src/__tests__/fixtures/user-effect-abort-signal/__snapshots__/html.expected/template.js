@@ -5,11 +5,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const b = 0;
   _$.write(`<div>${_$.escapeXML(a)}${_$.markResumeNode(_scope0_id, "#text/0")} <!>${_$.escapeXML(b)}${_$.markResumeNode(_scope0_id, "#text/1")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_input_value");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "input_value": input.value
-  }), "__tests__/template.marko", 0, {
-    "a": "1:6",
-    "b": "2:6"
+  _$.writeScope(_scope0_id, {
+    input_value: input.value
+  }, "__tests__/template.marko", 0, {
+    input_value: ["input.value"]
   });
   _$.resumeClosestBranch(_scope0_id);
 });

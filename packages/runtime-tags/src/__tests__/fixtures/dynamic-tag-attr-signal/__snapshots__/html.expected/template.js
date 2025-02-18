@@ -4,10 +4,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const className = "A";
   _$.write(`<p${_$.classAttr(className)}>paragraph</p>${_$.markResumeNode(_scope0_id, "#p/0")}<button></button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_className");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "className": className
-  }), "__tests__/template.marko", 0, {
-    "className": "1:6"
+  _$.writeScope(_scope0_id, {
+    className: className
+  }, "__tests__/template.marko", 0, {
+    className: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

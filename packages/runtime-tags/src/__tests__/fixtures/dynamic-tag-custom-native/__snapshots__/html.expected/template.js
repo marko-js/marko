@@ -9,12 +9,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     id: "dynamic"
   });
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_tagName");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "tagName": tagName,
+  _$.writeScope(_scope0_id, {
+    tagName: tagName,
     "#text/1!": _$.writeExistingScope(_dynamicScope),
     "#text/1(": _$.normalizeDynamicRenderer(tagName)
-  }), "__tests__/template.marko", 0, {
-    "tagName": "3:6"
+  }, "__tests__/template.marko", 0, {
+    tagName: "3:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

@@ -91,6 +91,7 @@ function _return2(_scope, {
   return function () {
     if (call) {
       _call$define_content(_scope, call - 1), call;
+      debugger;
       value();
     }
   };

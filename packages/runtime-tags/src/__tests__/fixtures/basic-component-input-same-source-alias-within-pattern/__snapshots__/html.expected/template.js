@@ -21,12 +21,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       text: clickCount
     })
   });
-  _$.debug(_$.writeScope(_scope0_id, {
-    "clickCount": clickCount,
+  _$.writeScope(_scope0_id, {
+    clickCount: clickCount,
     "#childScope/0": _$.writeExistingScope(_childScope),
     "#childScope/1": _$.writeExistingScope(_childScope2)
-  }), "__tests__/template.marko", 0, {
-    "clickCount": "1:6"
+  }, "__tests__/template.marko", 0, {
+    clickCount: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

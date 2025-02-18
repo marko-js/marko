@@ -9,9 +9,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _foo({});
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/1", Bar, {});
-  _$.debug(_$.writeScope(_scope0_id, {
+  _$.writeScope(_scope0_id, {
     "#text/1!": _$.writeExistingScope(_dynamicScope),
     "#text/1(": _$.normalizeDynamicRenderer(Bar)
-  }), "__tests__/template.marko", 0);
+  }, "__tests__/template.marko", 0);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

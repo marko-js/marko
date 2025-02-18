@@ -17,20 +17,18 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       name: item
     });
     _scope1_.set(_index, _$.ensureScopeWithId(_scope1_id));
-    _$.debug(_$.writeScope(_scope1_id, {
+    _$.writeScope(_scope1_id, {
       "#childScope/0": _$.writeExistingScope(_childScope)
-    }), "__tests__/template.marko", "7:2", {
-      "item": "7:6"
-    });
+    }, "__tests__/template.marko", "7:2");
   }, _scope0_id, "#text/2");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "items": items,
-    "write": write,
+  _$.writeScope(_scope0_id, {
+    items: items,
+    write: write,
     "#text/2(": _scope1_.size ? _scope1_ : undefined
-  }), "__tests__/template.marko", 0, {
-    "items": "1:6",
-    "write": "5:8"
+  }, "__tests__/template.marko", 0, {
+    items: "1:6",
+    write: "5:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

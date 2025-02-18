@@ -7,13 +7,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<button id=multiplier>increase multiplier (<!>${_$.escapeXML(multiplier)}${_$.markResumeNode(_scope0_id, "#text/1")})</button>${_$.markResumeNode(_scope0_id, "#button/0")}<button id=count>increase count</button>${_$.markResumeNode(_scope0_id, "#button/2")}<div>${_$.escapeXML(multipliedCount)}${_$.markResumeNode(_scope0_id, "#text/3")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_multiplier");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "count": count,
-    "multiplier": multiplier
-  }), "__tests__/template.marko", 0, {
-    "count": "1:6",
-    "multiplier": "2:6",
-    "multipliedCount": "3:8"
+  _$.writeScope(_scope0_id, {
+    count: count,
+    multiplier: multiplier
+  }, "__tests__/template.marko", 0, {
+    count: "1:6",
+    multiplier: "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

@@ -1,7 +1,11 @@
 import { types as t } from "@marko/compiler";
 
+export function isValidPropertyIdentifier(name: string) {
+  return /^[a-z_$][a-z0-9_$]*$/i.test(name);
+}
+
 export function toPropertyName(name: string) {
-  if (/^[a-z_$][a-z0-9_$]*$/i.test(name)) {
+  if (isValidPropertyIdentifier(name)) {
     return t.identifier(name);
   } else if (/^(?:0|[1-9][0-9]*)$/.test(name)) {
     return t.numericLiteral(parseInt(name, 10));

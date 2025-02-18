@@ -14,17 +14,17 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       _$.write(`<button>${_$.escapeXML(count)}${_$.markResumeNode(_scope1_id, "#text/1")}</button>${_$.markResumeNode(_scope1_id, "#button/0")}`);
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_count/subscriber");
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_count");
-      _$.debug(_$.writeScope(_scope1_id, {
-        "_": _$.ensureScopeWithId(_scope0_id)
-      }), "__tests__/template.marko", "2:1");
+      _$.writeScope(_scope1_id, {
+        _: _$.ensureScopeWithId(_scope0_id)
+      }, "__tests__/template.marko", "2:1");
       _$.resumeClosestBranch(_scope1_id);
     }), "__tests__/template.marko_1_renderer", _scope0_id)
   });
-  _$.debug(_$.writeScope(_scope0_id, {
-    "count": count,
+  _$.writeScope(_scope0_id, {
+    count: count,
     "#childScope/0": _$.writeExistingScope(_childScope)
-  }), "__tests__/template.marko", 0, {
-    "count": "1:8"
+  }, "__tests__/template.marko", 0, {
+    count: "1:8"
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

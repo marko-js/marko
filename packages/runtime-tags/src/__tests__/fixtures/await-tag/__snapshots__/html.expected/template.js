@@ -8,41 +8,35 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     const _scope1_id = _$.nextScopeId();
     _$.write(`Got: ${_$.escapeXML(value)} <!>${_$.escapeXML(count)}${_$.markResumeNode(_scope1_id, "#text/1")}`);
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1_count/subscriber");
-    _$.debug(_$.writeScope(_scope1_id, {
-      "_": _$.ensureScopeWithId(_scope0_id)
-    }), "__tests__/template.marko", "5:4", {
-      "value": "5:10"
-    });
+    _$.writeScope(_scope1_id, {
+      _: _$.ensureScopeWithId(_scope0_id)
+    }, "__tests__/template.marko", "5:4");
     _$.resumeClosestBranch(_scope1_id);
   });
   _$.fork(resolveAfter("b", 2), value => {
     const _scope2_id = _$.nextScopeId();
     _$.write(`Got: ${_$.escapeXML(value)} <!>${_$.escapeXML(count)}${_$.markResumeNode(_scope2_id, "#text/1")}`);
     _$.writeEffect(_scope2_id, "__tests__/template.marko_2_count/subscriber");
-    _$.debug(_$.writeScope(_scope2_id, {
-      "_": _$.ensureScopeWithId(_scope0_id)
-    }), "__tests__/template.marko", "9:4", {
-      "value": "9:10"
-    });
+    _$.writeScope(_scope2_id, {
+      _: _$.ensureScopeWithId(_scope0_id)
+    }, "__tests__/template.marko", "9:4");
     _$.resumeClosestBranch(_scope2_id);
   });
   _$.fork(resolveAfter("c", 1), value => {
     const _scope3_id = _$.nextScopeId();
     _$.write(`Got: ${_$.escapeXML(value)} <!>${_$.escapeXML(count)}${_$.markResumeNode(_scope3_id, "#text/1")}`);
     _$.writeEffect(_scope3_id, "__tests__/template.marko_3_count/subscriber");
-    _$.debug(_$.writeScope(_scope3_id, {
-      "_": _$.ensureScopeWithId(_scope0_id)
-    }), "__tests__/template.marko", "13:4", {
-      "value": "13:10"
-    });
+    _$.writeScope(_scope3_id, {
+      _: _$.ensureScopeWithId(_scope0_id)
+    }, "__tests__/template.marko", "13:4");
     _$.resumeClosestBranch(_scope3_id);
   });
   _$.write(`<button>Inc</button>${_$.markResumeNode(_scope0_id, "#button/0")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "count": count
-  }), "__tests__/template.marko", 0, {
-    "count": "3:6"
+  _$.writeScope(_scope0_id, {
+    count: count
+  }, "__tests__/template.marko", 0, {
+    count: "3:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

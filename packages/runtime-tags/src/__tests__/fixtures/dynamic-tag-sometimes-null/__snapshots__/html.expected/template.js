@@ -9,12 +9,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }), "__tests__/template.marko_1_renderer", _scope0_id));
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "x": x,
+  _$.writeScope(_scope0_id, {
+    x: x,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(x)
-  }), "__tests__/template.marko", 0, {
-    "x": "1:6"
+  }, "__tests__/template.marko", 0, {
+    x: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

@@ -4,10 +4,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const x = 1;
   _$.write("<div id=ref>0</div>");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "x": x
-  }), "__tests__/template.marko", 0, {
-    "x": "1:6"
+  _$.writeScope(_scope0_id, {
+    x: x
+  }, "__tests__/template.marko", 0, {
+    x: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

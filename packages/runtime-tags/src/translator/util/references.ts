@@ -770,6 +770,16 @@ export function getScopeAccessorLiteral(binding: Binding) {
   );
 }
 
+export function getScopeAccessor(binding: Binding) {
+  if (isOptimize()) {
+    return binding.id + "";
+  }
+
+  return (
+    binding.name + (binding.type === BindingType.dom ? `/${binding.id}` : "")
+  );
+}
+
 export function getReadReplacement(node: t.Identifier | t.MemberExpression) {
   const { extra } = node;
   if (!extra) return;

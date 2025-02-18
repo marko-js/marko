@@ -19,6 +19,7 @@ import {
   BindingType,
   bindingUtil,
   getReadReplacement,
+  getScopeAccessor,
   getScopeAccessorLiteral,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
@@ -37,7 +38,7 @@ import {
   toFirstExpressionOrBlock,
   toParenthesizedExpressionIfNeeded,
 } from "./to-first-expression-or-block";
-import { toMemberExpression } from "./to-property-name";
+import { toMemberExpression, toObjectProperty } from "./to-property-name";
 import { traverseContains, traverseReplace } from "./traverse";
 
 export type Signal = {
@@ -99,10 +100,16 @@ const [forceResumeScope, _setForceResumeScope] = createSectionState<
 export function setForceResumeScope(section: Section) {
   _setForceResumeScope(section, true);
 }
-export const [getSerializedScopeProperties] = createSectionState<
-  Map<t.StringLiteral | t.NumericLiteral, t.Expression>
+const [getSerializedScopeProperties] = createSectionState<
+  Map<string, t.Expression>
 >("serializedScopeProperties", () => new Map());
-
+export function setSerializedProperty(
+  section: Section,
+  key: string,
+  value: t.Expression,
+) {
+  getSerializedScopeProperties(section).set(key, value);
+}
 export const [getHTMLSectionStatements] = createSectionState<t.Statement[]>(
   "htmlScopeStatements",
   () => [],
@@ -941,13 +948,17 @@ export function writeHTMLResumeStatements(
   forEach(section.assignments, (assignment) => {
     let currentSection = section;
     while (currentSection !== assignment.section) {
-      getSerializedScopeProperties(currentSection).set(
-        t.stringLiteral("_"),
-        callRuntime(
-          "ensureScopeWithId",
-          getScopeIdIdentifier((currentSection = currentSection.parent!)),
-        ),
-      );
+      const currentSerialized = getSerializedScopeProperties(currentSection);
+      currentSection = currentSection.parent!;
+      if (!currentSerialized.has("_")) {
+        currentSerialized.set(
+          "_",
+          callRuntime(
+            "ensureScopeWithId",
+            getScopeIdIdentifier(currentSection),
+          ),
+        );
+      }
     }
   });
 
@@ -955,13 +966,17 @@ export function writeHTMLResumeStatements(
     if (isStatefulReferences(closure)) {
       let currentSection = section;
       while (currentSection !== closure.section) {
-        getSerializedScopeProperties(currentSection).set(
-          t.stringLiteral("_"),
-          callRuntime(
-            "ensureScopeWithId",
-            getScopeIdIdentifier((currentSection = currentSection.parent!)),
-          ),
-        );
+        const currentSerialized = getSerializedScopeProperties(currentSection);
+        currentSection = currentSection.parent!;
+        if (!currentSerialized.has("_")) {
+          currentSerialized.set(
+            "_",
+            callRuntime(
+              "ensureScopeWithId",
+              getScopeIdIdentifier(currentSection),
+            ),
+          );
+        }
       }
       setForceResumeScope(closure.section);
       const isImmediateOwner = section.parent?.id === closure.section.id;
@@ -1003,78 +1018,78 @@ export function writeHTMLResumeStatements(
     }
   }
 
-  const accessors = new Set<string | number>();
-  const additionalProperties = getSerializedScopeProperties(section);
+  const serializedLookup = getSerializedScopeProperties(section);
   const serializedProperties: t.ObjectProperty[] = [];
   forEach(section.bindings, (binding) => {
     if (binding.serialize && binding.type !== BindingType.dom) {
-      const accessor = getScopeAccessorLiteral(binding);
+      const accessor = getScopeAccessor(binding);
+      serializedLookup.delete(accessor);
       serializedProperties.push(
-        t.objectProperty(accessor, getDeclaredBindingExpression(binding)),
+        toObjectProperty(accessor, getDeclaredBindingExpression(binding)),
       );
-      accessors.add(accessor.value);
     }
   });
 
-  for (const [key, value] of additionalProperties) {
-    if (!accessors.has(key.value)) {
-      serializedProperties.push(
-        t.objectProperty(key, value, !t.isLiteral(key)),
-      );
-      accessors.add(key.value);
-    }
+  for (const [key, value] of serializedLookup) {
+    serializedProperties.push(toObjectProperty(key, value));
   }
 
   if (serializedProperties.length || forceResumeScope(section)) {
-    let writeScope = callRuntime(
-      "writeScope",
+    const writeScopeArgs: t.Expression[] = [
       scopeIdIdentifier,
       t.objectExpression(serializedProperties),
-    );
+    ];
 
     if (!isOptimize()) {
       let debugVars: t.ObjectProperty[] | undefined;
       forEach(section.bindings, (binding) => {
+        if (!binding.serialize || binding.type === BindingType.dom) return;
+
         let root = binding;
         let access = "";
-        while (!root.loc && root.upstreamAlias) {
+        while (!(root.loc || root.declared) && root.upstreamAlias) {
           if (root.property !== undefined) {
             access = toAccess(root.property) + access;
           }
           root = root.upstreamAlias;
         }
 
-        if (root.loc) {
-          const locStr = t.stringLiteral(
+        const locExpr =
+          root.loc &&
+          t.stringLiteral(
             `${root.loc.start.line}:${root.loc.start.column + 1}`,
           );
-          (debugVars ||= []).push(
-            t.objectProperty(
-              getScopeAccessorLiteral(binding),
-              root !== binding
-                ? t.arrayExpression([
-                    t.stringLiteral(root.name + access),
-                    locStr,
-                  ])
-                : locStr,
-            ),
-          );
-        }
+        (debugVars ||= []).push(
+          toObjectProperty(
+            getScopeAccessor(binding),
+            root !== binding
+              ? t.arrayExpression(
+                  locExpr
+                    ? [t.stringLiteral(root.name + access), locExpr]
+                    : [t.stringLiteral(root.name + access)],
+                )
+              : locExpr || t.numericLiteral(0),
+          ),
+        );
       });
 
-      writeScope = callRuntime(
-        "debug",
-        writeScope,
+      writeScopeArgs.push(
         t.stringLiteral(path.hub.file.opts.filenameRelative as string),
         section.loc && section.loc.start.line != null
           ? t.stringLiteral(
               `${section.loc.start.line}:${section.loc.start.column + 1}`,
             )
           : t.numericLiteral(0),
-        debugVars && t.objectExpression(debugVars),
       );
+
+      if (debugVars) {
+        writeScopeArgs.push(t.objectExpression(debugVars));
+      }
     }
-    path.pushContainer("body", t.expressionStatement(writeScope));
+    path.pushContainer(
+      "body",
+      t.expressionStatement(callRuntime("writeScope", ...writeScopeArgs)),
+    );
   }
 
   const resumeClosestBranch =

@@ -24,6 +24,7 @@ import {
   createBinding,
   dropReferences,
   getAllTagReferenceNodes,
+  getScopeAccessor,
   getScopeAccessorLiteral,
   isReferencedExtra,
   mergeReferences,
@@ -43,9 +44,9 @@ import {
   addStatement,
   addValue,
   getResumeRegisterId,
-  getSerializedScopeProperties,
   initValue,
   setForceResumeScope,
+  setSerializedProperty,
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import {
@@ -203,8 +204,9 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       ]),
     );
 
-    getSerializedScopeProperties(section).set(
-      getScopeAccessorLiteral(childScopeBinding),
+    setSerializedProperty(
+      section,
+      getScopeAccessor(childScopeBinding),
       callRuntime("writeExistingScope", peekScopeId),
     );
 

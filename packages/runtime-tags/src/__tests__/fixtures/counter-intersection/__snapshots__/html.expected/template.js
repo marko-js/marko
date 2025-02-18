@@ -5,12 +5,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const b = 0;
   _$.write(`<div><button class=a>${_$.escapeXML(a)}${_$.markResumeNode(_scope0_id, "#text/1")}</button>${_$.markResumeNode(_scope0_id, "#button/0")} + <button class=b>${_$.escapeXML(b)}${_$.markResumeNode(_scope0_id, "#text/3")}</button>${_$.markResumeNode(_scope0_id, "#button/2")} = <!>${_$.escapeXML(a + b)}${_$.markResumeNode(_scope0_id, "#text/4")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "a": a,
-    "b": b
-  }), "__tests__/template.marko", 0, {
-    "a": "2:8",
-    "b": "3:8"
+  _$.writeScope(_scope0_id, {
+    a: a,
+    b: b
+  }, "__tests__/template.marko", 0, {
+    a: "2:8",
+    b: "3:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

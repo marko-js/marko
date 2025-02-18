@@ -10,11 +10,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       clickCount++;
     }, "__tests__/template.marko_0/onClick", _scope0_id)
   });
-  _$.debug(_$.writeScope(_scope0_id, {
-    "clickCount": clickCount,
+  _$.writeScope(_scope0_id, {
+    clickCount: clickCount,
     "#childScope/0": _$.writeExistingScope(_childScope)
-  }), "__tests__/template.marko", 0, {
-    "clickCount": "1:6"
+  }, "__tests__/template.marko", 0, {
+    clickCount: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

@@ -26,28 +26,29 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     const _scope1_id = _$.nextScopeId();
     _$.write(`${_$.toString(input.value)}${_$.markResumeNode(_scope1_id, "#text/0")}`);
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1_input_value/subscriber");
-    _$.debug(_$.writeScope(_scope1_id, {
-      "_": _$.ensureScopeWithId(_scope0_id)
-    }), "__tests__/template.marko", "12:3");
+    _$.writeScope(_scope1_id, {
+      _: _$.ensureScopeWithId(_scope0_id)
+    }, "__tests__/template.marko", "12:3");
     _$.resumeClosestBranch(_scope1_id);
   }), "__tests__/template.marko_1_renderer", _scope0_id));
   _$.write(`<button class=toggle-parent>Toggle Parent</button>${_$.markResumeNode(_scope0_id, "#button/6")}<button class=toggle-child>Toggle Child</button>${_$.markResumeNode(_scope0_id, "#button/7")}</div>${_$.markResumeNode(_scope0_id, "#div/0")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_Parent_Child");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_Child");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_Parent");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "input_value": input.value,
-    "Parent": Parent,
-    "Child": Child,
+  _$.writeScope(_scope0_id, {
+    input_value: input.value,
+    Parent: Parent,
+    Child: Child,
     "#text/2!": _$.writeExistingScope(_dynamicScope),
     "#text/2(": _$.normalizeDynamicRenderer(Child),
     "#text/4!": _$.writeExistingScope(_dynamicScope2),
     "#text/4(": _$.normalizeDynamicRenderer(Child),
     "#text/5!": _$.writeExistingScope(_dynamicScope3),
     "#text/5(": _$.normalizeDynamicRenderer(Parent)
-  }), "__tests__/template.marko", 0, {
-    "Parent": "1:5",
-    "Child": "2:5"
+  }, "__tests__/template.marko", 0, {
+    input_value: ["input.value"],
+    Parent: "1:5",
+    Child: "2:5"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

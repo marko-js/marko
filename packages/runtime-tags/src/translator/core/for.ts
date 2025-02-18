@@ -20,6 +20,7 @@ import {
   BindingType,
   dropReferences,
   getAllTagReferenceNodes,
+  getScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
   trackParamsReferences,
@@ -39,10 +40,10 @@ import {
 import {
   addValue,
   getHTMLSectionStatements,
-  getSerializedScopeProperties,
   getSignal,
   setClosureSignalBuilder,
   setForceResumeScope,
+  setSerializedProperty,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { toMemberExpression } from "../util/to-property-name";
@@ -242,11 +243,9 @@ export default {
             );
           }
 
-          getSerializedScopeProperties(tagSection).set(
-            t.stringLiteral(
-              getScopeAccessorLiteral(nodeRef).value +
-                AccessorChar.LoopScopeMap,
-            ),
+          setSerializedProperty(
+            tagSection,
+            getScopeAccessor(nodeRef) + AccessorChar.LoopScopeMap,
             t.conditionalExpression(
               t.memberExpression(forScopesIdentifier, t.identifier("size")),
               forScopesIdentifier,
