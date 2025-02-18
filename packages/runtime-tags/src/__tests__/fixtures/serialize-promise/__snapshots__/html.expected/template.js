@@ -4,10 +4,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const promise = Promise.resolve("hello");
   _$.write("<div id=ref>0</div>");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_promise");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "promise": promise
-  }), "__tests__/template.marko", 0, {
-    "promise": "1:8"
+  _$.writeScope(_scope0_id, {
+    promise: promise
+  }, "__tests__/template.marko", 0, {
+    promise: "1:8"
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

@@ -7,12 +7,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.dynamicTagInput(_scope0_id, "#text/2", input.stuff.content, {});
   _$.write("</div>");
   _$.writeEffect(_scope0_id, "__tests__/components/tags-layout.marko_0_count");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "count": count,
+  _$.writeScope(_scope0_id, {
+    count: count,
     "#text/2!": _$.writeExistingScope(_dynamicScope),
     "#text/2(": _$.normalizeDynamicRenderer(input.stuff.content)
-  }), "__tests__/components/tags-layout.marko", 0, {
-    "count": "1:6"
+  }, "__tests__/components/tags-layout.marko", 0, {
+    count: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

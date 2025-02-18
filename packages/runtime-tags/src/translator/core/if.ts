@@ -18,6 +18,7 @@ import {
 import { isStatefulReferences } from "../util/is-stateful";
 import {
   type Binding,
+  getScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
 } from "../util/references";
@@ -36,10 +37,10 @@ import {
 import {
   addValue,
   getHTMLSectionStatements,
-  getSerializedScopeProperties,
   getSignal,
   setClosureSignalBuilder,
   setForceResumeScope,
+  setSerializedProperty,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
@@ -205,11 +206,9 @@ export const IfTag = {
             nextTag.insertBefore(statement!);
           } else {
             if (isStateful) {
-              getSerializedScopeProperties(section).set(
-                t.stringLiteral(
-                  getScopeAccessorLiteral(nodeRef).value +
-                    AccessorChar.ConditionalRenderer,
-                ),
+              setSerializedProperty(
+                section,
+                getScopeAccessor(nodeRef) + AccessorChar.ConditionalRenderer,
                 ifBranchIdentifier,
               );
               const cbNode = t.arrowFunctionExpression(
@@ -244,11 +243,9 @@ export const IfTag = {
                 ].filter(Boolean) as t.VariableDeclarator[],
               ),
             );
-            getSerializedScopeProperties(section).set(
-              t.stringLiteral(
-                getScopeAccessorLiteral(nodeRef).value +
-                  AccessorChar.ConditionalScope,
-              ),
+            setSerializedProperty(
+              section,
+              getScopeAccessor(nodeRef) + AccessorChar.ConditionalScope,
               callRuntime("getScopeById", ifScopeIdIdentifier),
             );
           }

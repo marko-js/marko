@@ -8,12 +8,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/2", tags[0], x);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "x": x,
+  _$.writeScope(_scope0_id, {
+    x: x,
     "#text/2!": _$.writeExistingScope(_dynamicScope),
     "#text/2(": _$.normalizeDynamicRenderer(tags[0])
-  }), "__tests__/template.marko", 0, {
-    "x": "3:6"
+  }, "__tests__/template.marko", 0, {
+    x: "3:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

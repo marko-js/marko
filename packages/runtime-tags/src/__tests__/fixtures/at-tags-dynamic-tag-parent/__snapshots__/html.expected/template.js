@@ -24,11 +24,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     const _scope1_id = _$.nextScopeId();
     _$.write("Body content");
   }), "__tests__/template.marko_1_renderer", _scope0_id));
-  _$.debug(_$.writeScope(_scope0_id, {
+  _$.writeScope(_scope0_id, {
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(x)
-  }), "__tests__/template.marko", 0, {
-    "x": "1:10"
-  });
+  }, "__tests__/template.marko", 0);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

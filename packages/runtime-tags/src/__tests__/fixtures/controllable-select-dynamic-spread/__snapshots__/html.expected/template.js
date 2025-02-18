@@ -21,13 +21,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1");
   }), "__tests__/template.marko_1_renderer", _scope0_id));
   _$.write(`<span>${_$.escapeXML(value)}${_$.markResumeNode(_scope0_id, "#text/1")}</span>`);
-  _$.debug(_$.writeScope(_scope0_id, {
-    "value": value,
+  _$.writeScope(_scope0_id, {
+    value: value,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(tag ? "select" : {})
-  }), "__tests__/template.marko", 0, {
-    "value": "1:6",
-    "tag": "2:8"
+  }, "__tests__/template.marko", 0, {
+    value: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

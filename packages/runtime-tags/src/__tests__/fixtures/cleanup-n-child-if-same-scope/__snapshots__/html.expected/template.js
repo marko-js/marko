@@ -10,20 +10,20 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       const _scope1_id = _$.nextScopeId();
       _$.write("<div>a</div><span>b</span><p>c</p>");
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1");
-      _$.debug(_$.writeScope(_scope1_id, {
-        "_": _$.ensureScopeWithId(_scope0_id)
-      }), "__tests__/template.marko", "6:2");
+      _$.writeScope(_scope1_id, {
+        _: _$.ensureScopeWithId(_scope0_id)
+      }, "__tests__/template.marko", "6:2");
       _ifBranch = 0;
       _ifScopeId = _scope1_id;
     }
   }, _scope0_id, "#text/2");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_show");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "show": show,
+  _$.writeScope(_scope0_id, {
+    show: show,
     "#text/2(": _ifBranch,
     "#text/2!": _$.getScopeById(_ifScopeId)
-  }), "__tests__/template.marko", 0, {
-    "show": "1:6"
+  }, "__tests__/template.marko", 0, {
+    show: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

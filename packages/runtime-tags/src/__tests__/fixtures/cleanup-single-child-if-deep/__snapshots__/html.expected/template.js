@@ -36,28 +36,28 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
                 write: write,
                 name: "Inner"
               });
-              _$.debug(_$.writeScope(_scope3_id, {}), "__tests__/template.marko", "17:10");
+              _$.writeScope(_scope3_id, {}, "__tests__/template.marko", "17:10");
               _ifBranch = 0;
               _ifScopeId = _scope3_id;
             }
           }, _scope2_id, "#text/1");
           _$.write("</div>");
           _$.writeEffect(_scope2_id, "__tests__/template.marko_2_showInner/subscriber");
-          _$.debug(_$.writeScope(_scope2_id, {
+          _$.writeScope(_scope2_id, {
             "#text/1(": _ifBranch,
             "#text/1!": _$.getScopeById(_ifScopeId),
-            "_": _$.ensureScopeWithId(_scope1_id)
-          }), "__tests__/template.marko", "14:6");
+            _: _$.ensureScopeWithId(_scope1_id)
+          }, "__tests__/template.marko", "14:6");
           _ifBranch2 = 0;
           _ifScopeId2 = _scope2_id;
         }
       }, _scope1_id, "#text/1");
       _$.write("</div>");
-      _$.debug(_$.writeScope(_scope1_id, {
-        "_": _$.ensureScopeWithId(_scope0_id),
+      _$.writeScope(_scope1_id, {
+        _: _$.ensureScopeWithId(_scope0_id),
         "#text/1(": _ifBranch2,
         "#text/1!": _$.getScopeById(_ifScopeId2)
-      }), "__tests__/template.marko", "11:2");
+      }, "__tests__/template.marko", "11:2");
       _ifBranch3 = 0;
       _ifScopeId3 = _scope1_id;
     }
@@ -65,18 +65,18 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_showInner");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_showMiddle");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_showOuter");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "showOuter": showOuter,
-    "showMiddle": showMiddle,
-    "showInner": showInner,
-    "write": write,
+  _$.writeScope(_scope0_id, {
+    showOuter: showOuter,
+    showMiddle: showMiddle,
+    showInner: showInner,
+    write: write,
     "#text/4(": _ifBranch3,
     "#text/4!": _$.getScopeById(_ifScopeId3)
-  }), "__tests__/template.marko", 0, {
-    "showOuter": "1:6",
-    "showMiddle": "2:6",
-    "showInner": "3:6",
-    "write": "9:8"
+  }, "__tests__/template.marko", 0, {
+    showOuter: "1:6",
+    showMiddle: "2:6",
+    showInner: "3:6",
+    write: "9:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

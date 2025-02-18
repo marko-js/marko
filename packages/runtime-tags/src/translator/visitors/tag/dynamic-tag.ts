@@ -15,6 +15,7 @@ import {
   BindingType,
   createBinding,
   getAllTagReferenceNodes,
+  getScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
   trackParamsReferences,
@@ -38,10 +39,10 @@ import {
   addValue,
   buildSignalIntersections,
   getResumeRegisterId,
-  getSerializedScopeProperties,
   getSignal,
   getSignalFn,
   initValue,
+  setSerializedProperty,
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import {
@@ -97,10 +98,11 @@ export default {
     },
     exit(tag) {
       const { node } = tag;
-      const extra = node.extra!;
-      const nodeRef = extra[kDOMBinding]!;
+      const tagExtra = node.extra!;
+      const nodeRef = tagExtra[kDOMBinding]!;
       const section = getSection(tag);
-      const isClassAPI = extra.featureType === "class";
+      const isClassAPI = tagExtra.featureType === "class";
+      const tagNameReferences = node.name.extra?.referencedBindings;
       let tagExpression = node.name;
 
       if (t.isStringLiteral(tagExpression)) {
@@ -232,18 +234,15 @@ export default {
           statements.push(t.expressionStatement(dynamicTagExpr));
         }
 
-        getSerializedScopeProperties(section).set(
-          t.stringLiteral(
-            getScopeAccessorLiteral(nodeRef).value +
-              AccessorChar.ConditionalScope,
-          ),
+        setSerializedProperty(
+          section,
+          getScopeAccessor(nodeRef) + AccessorChar.ConditionalScope,
           callRuntime("writeExistingScope", dynamicScopeIdentifier),
         );
-        getSerializedScopeProperties(section).set(
-          t.stringLiteral(
-            getScopeAccessorLiteral(nodeRef).value +
-              AccessorChar.ConditionalRenderer,
-          ),
+
+        setSerializedProperty(
+          section,
+          getScopeAccessor(nodeRef) + AccessorChar.ConditionalRenderer,
           callRuntime(
             "normalizeDynamicRenderer",
             t.isIdentifier(tagExpression)
@@ -270,7 +269,7 @@ export default {
         signal.hasDownstreamIntersections = () => true;
         addValue(
           section,
-          node.name.extra?.referencedBindings,
+          tagNameReferences,
           signal,
           bodySection
             ? t.logicalExpression(
@@ -285,8 +284,7 @@ export default {
 
         if (tag.node.var) {
           const childScopeLiteral = t.stringLiteral(
-            getScopeAccessorLiteral(extra[kDOMBinding]!).value +
-              AccessorChar.ConditionalScope,
+            getScopeAccessor(nodeRef) + AccessorChar.ConditionalScope,
           );
           const source = initValue(
             // TODO: support destructuring
@@ -337,7 +335,7 @@ export default {
           let added = false;
           addValue(
             section,
-            node.extra?.referencedBindings,
+            tagExtra.referencedBindings,
             {
               get identifier() {
                 if (!added) {

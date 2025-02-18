@@ -3,9 +3,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   _$.write("<div>child</div>");
   _$.writeEffect(_scope0_id, "__tests__/tags/child.marko_0_input");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "input": input
-  }), "__tests__/tags/child.marko", 0);
+  _$.writeScope(_scope0_id, {
+    input: input
+  }, "__tests__/tags/child.marko", 0, {
+    input: 0
+  });
   _$.resumeClosestBranch(_scope0_id);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", _renderer);

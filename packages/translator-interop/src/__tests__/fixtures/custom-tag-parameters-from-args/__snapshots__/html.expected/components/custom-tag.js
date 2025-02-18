@@ -7,14 +7,14 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagArgs(_scope0_id, "#text/3", input.content, [x, y]);
   _$.writeEffect(_scope0_id, "__tests__/components/custom-tag.marko_0_x_y");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "x": x,
-    "y": y,
+  _$.writeScope(_scope0_id, {
+    x: x,
+    y: y,
     "#text/3!": _$.writeExistingScope(_dynamicScope),
     "#text/3(": _$.normalizeDynamicRenderer(input.content)
-  }), "__tests__/components/custom-tag.marko", 0, {
-    "x": "1:6",
-    "y": "2:6"
+  }, "__tests__/components/custom-tag.marko", 0, {
+    x: "1:6",
+    y: "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

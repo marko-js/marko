@@ -36,10 +36,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     } = _list;
     _scope1_.set(_list.id, _$.ensureScopeWithId(_scope1_id));
     _$.write(`${_$.escapeXML(text)}${_$.markResumeNode(_scope1_id, "#text/0")}`);
-    _$.debug(_$.writeScope(_scope1_id, {}), "__tests__/template.marko", "17:6", {
-      "_pattern_": "17:10",
-      "text": "17:12"
-    });
+    _$.writeScope(_scope1_id, {}, "__tests__/template.marko", "17:6");
   }, _scope0_id, "#div/0", 1);
   _$.write("</div><div class=by-function>");
   const _by = item => item.id;
@@ -50,10 +47,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     } = _list2;
     _scope2_.set(_by(_list2, _index2), _$.ensureScopeWithId(_scope2_id));
     _$.write(`${_$.escapeXML(text)}${_$.markResumeNode(_scope2_id, "#text/0")}`);
-    _$.debug(_$.writeScope(_scope2_id, {}), "__tests__/template.marko", "21:6", {
-      "_pattern_2": "21:10",
-      "text": "21:12"
-    });
+    _$.writeScope(_scope2_id, {}, "__tests__/template.marko", "21:6");
   }, _scope0_id, "#div/1", 1);
   _$.write("</div><div class=by-unknown-string>");
   _$.resumeSingleNodeForOf(items, (_list3, _index3) => {
@@ -63,10 +57,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     } = _list3;
     _scope3_.set(_$.forOfBy(getStringBy(), _list3, _index3), _$.ensureScopeWithId(_scope3_id));
     _$.write(`${_$.escapeXML(text)}${_$.markResumeNode(_scope3_id, "#text/0")}`);
-    _$.debug(_$.writeScope(_scope3_id, {}), "__tests__/template.marko", "25:6", {
-      "_pattern_3": "25:10",
-      "text": "25:12"
-    });
+    _$.writeScope(_scope3_id, {}, "__tests__/template.marko", "25:6");
   }, _scope0_id, "#div/2", 1);
   _$.write("</div><div class=by-unknown-function>");
   _$.resumeSingleNodeForOf(items, (_list4, _index4) => {
@@ -76,10 +67,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     } = _list4;
     _scope4_.set(_$.forOfBy(getFunctionBy(), _list4, _index4), _$.ensureScopeWithId(_scope4_id));
     _$.write(`${_$.escapeXML(text)}${_$.markResumeNode(_scope4_id, "#text/0")}`);
-    _$.debug(_$.writeScope(_scope4_id, {}), "__tests__/template.marko", "29:6", {
-      "_pattern_4": "29:10",
-      "text": "29:12"
-    });
+    _$.writeScope(_scope4_id, {}, "__tests__/template.marko", "29:6");
   }, _scope0_id, "#div/3", 1);
   _$.write("</div><div class=by-unknown-missing>");
   _$.resumeSingleNodeForOf(items, (_list5, _index5) => {
@@ -89,22 +77,19 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     } = _list5;
     _scope5_.set(_$.forOfBy(getMissingBy(), _list5, _index5), _$.ensureScopeWithId(_scope5_id));
     _$.write(`${_$.escapeXML(text)}${_$.markResumeNode(_scope5_id, "#text/0")}`);
-    _$.debug(_$.writeScope(_scope5_id, {}), "__tests__/template.marko", "33:6", {
-      "_pattern_5": "33:10",
-      "text": "33:12"
-    });
+    _$.writeScope(_scope5_id, {}, "__tests__/template.marko", "33:6");
   }, _scope0_id, "#div/4", 1);
   _$.write(`</div><button>Rotate</button>${_$.markResumeNode(_scope0_id, "#button/5")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "items": items,
+  _$.writeScope(_scope0_id, {
+    items: items,
     "#div/0(": _scope1_.size ? _scope1_ : undefined,
     "#div/1(": _scope2_.size ? _scope2_ : undefined,
     "#div/2(": _scope3_.size ? _scope3_ : undefined,
     "#div/3(": _scope4_.size ? _scope4_ : undefined,
     "#div/4(": _scope5_.size ? _scope5_ : undefined
-  }), "__tests__/template.marko", 0, {
-    "items": "14:8"
+  }, "__tests__/template.marko", 0, {
+    items: "14:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

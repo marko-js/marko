@@ -6,12 +6,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const lastCount2 = 0;
   _$.write(`<button>${_$.escapeXML(clickCount)}${_$.markResumeNode(_scope0_id, "#text/1")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}used to be <span>${_$.escapeXML(lastCount)}${_$.markResumeNode(_scope0_id, "#text/2")}</span> which should be the same as <span>${_$.escapeXML(lastCount2)}${_$.markResumeNode(_scope0_id, "#text/3")}</span>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_clickCount");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "clickCount": clickCount
-  }), "__tests__/template.marko", 0, {
-    "clickCount": "1:6",
-    "lastCount": "2:6",
-    "lastCount2": "3:6"
+  _$.writeScope(_scope0_id, {
+    clickCount: clickCount
+  }, "__tests__/template.marko", 0, {
+    clickCount: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

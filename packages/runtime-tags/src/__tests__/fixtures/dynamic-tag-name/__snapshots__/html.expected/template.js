@@ -103,8 +103,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.dynamicTagInput(_scope0_id, "#text/17", foo + 'div', {});
   const _dynamicScope19 = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/18", "d" + "iv", {});
-  _$.debug(_$.writeScope(_scope0_id, {
-    "other": other,
+  _$.writeScope(_scope0_id, {
+    other: other,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(content),
     "#text/1!": _$.writeExistingScope(_dynamicScope2),
@@ -143,18 +143,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     "#text/17(": _$.normalizeDynamicRenderer(foo + 'div'),
     "#text/18!": _$.writeExistingScope(_dynamicScope19),
     "#text/18(": _$.normalizeDynamicRenderer("d" + "iv")
-  }), "__tests__/template.marko", 0, {
-    "content": "5:10",
-    "x": "5:19",
-    "show": "5:22",
-    "showTagA": "5:28",
-    "isLarge": "5:38",
-    "tag": "5:47",
-    "level": "5:52",
-    "other": "5:59",
-    "largeHeading": "23:8",
-    "tagConstA": "30:8",
-    "tagConstB": "33:8"
+  }, "__tests__/template.marko", 0, {
+    other: "5:59"
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

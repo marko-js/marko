@@ -7,16 +7,18 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     const _scope1_id = _$.nextScopeId();
     _scope1_.set(n, _$.ensureScopeWithId(_scope1_id));
     _$.write(`${_$.escapeXML(n)}${_$.markResumeNode(_scope1_id, "#text/0")}, `);
-    _$.debug(_$.writeScope(_scope1_id, {}), "__tests__/template.marko", "2:4", {
-      "n": "2:8"
-    });
+    _$.writeScope(_scope1_id, {}, "__tests__/template.marko", "2:4");
   }, _scope0_id, "#div/0", 1);
   _$.write("</div>");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "input_from": input.from,
-    "input_to": input.to,
-    "input_step": input.step,
+  _$.writeScope(_scope0_id, {
+    input_from: input.from,
+    input_to: input.to,
+    input_step: input.step,
     "#div/0(": _scope1_.size ? _scope1_ : undefined
-  }), "__tests__/template.marko", 0);
+  }, "__tests__/template.marko", 0, {
+    input_from: ["input.from"],
+    input_to: ["input.to"],
+    input_step: ["input.step"]
+  });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

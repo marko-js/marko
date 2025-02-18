@@ -4,10 +4,11 @@ import { scopeIdentifier } from "../visitors/program";
 import { forEach } from "./optional";
 import {
   type Binding,
-  getScopeAccessorLiteral,
+  getScopeAccessor,
   type ReferencedBindings,
 } from "./references";
 import type { Section } from "./sections";
+import { isValidPropertyIdentifier, toPropertyName } from "./to-property-name";
 
 export function createScopeReadPattern(
   section: Section,
@@ -17,12 +18,11 @@ export function createScopeReadPattern(
   const rootPattern = t.objectPattern([]);
   let nestedPatterns: t.ObjectPattern[] | undefined;
   forEach(referencedBindings, (ref) => {
+    const propertyValue = ref.name;
     // TODO: need a better way to exclude internal references
-    if (ref.name.includes("#")) return;
-
-    const propertyKey = getScopeAccessorLiteral(ref);
-    const propertyValue = t.identifier(ref.name);
-    const isShorthand = propertyKey.value === propertyValue.name;
+    if (!isValidPropertyIdentifier(propertyValue)) return;
+    const propertyKey = getScopeAccessor(ref);
+    const isShorthand = propertyKey === propertyValue;
     let pattern: t.ObjectPattern = rootPattern;
     if (ref.section !== section) {
       if (!nestedPatterns) nestedPatterns = [rootPattern];
@@ -44,8 +44,8 @@ export function createScopeReadPattern(
 
     pattern.properties.push(
       t.objectProperty(
-        isShorthand ? propertyValue : propertyKey,
-        propertyValue,
+        toPropertyName(propertyKey),
+        t.identifier(propertyValue),
         false,
         isShorthand,
       ),
@@ -72,9 +72,10 @@ export function createScopeReadExpression(
   section: Section,
   reference: Binding,
 ) {
+  const propName = toPropertyName(getScopeAccessor(reference));
   return t.memberExpression(
     getScopeExpression(section, reference.section),
-    getScopeAccessorLiteral(reference),
-    true,
+    propName,
+    propName.type !== "Identifier",
   );
 }

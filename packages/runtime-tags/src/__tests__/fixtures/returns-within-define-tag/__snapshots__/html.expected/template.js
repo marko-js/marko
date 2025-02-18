@@ -10,16 +10,16 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       const _return = _$.register(function () {
         if (call) {
           call--;
+          debugger;
           value();
         }
       }, "__tests__/template.marko_1/_return", _scope1_id);
-      _$.debug(_$.writeScope(_scope1_id, {
-        "value": value,
-        "call": call
-      }), "__tests__/template.marko", "1:1", {
-        "_pattern_": "1:13",
-        "value": "1:15",
-        "call": "2:7"
+      _$.writeScope(_scope1_id, {
+        value: value,
+        call: call
+      }, "__tests__/template.marko", "1:1", {
+        value: "1:15",
+        call: "2:7"
       });
       _$.resumeClosestBranch(_scope1_id);
       return _return;
@@ -46,13 +46,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
           value();
         }
       }, "__tests__/template.marko_2/_return", _scope2_id);
-      _$.debug(_$.writeScope(_scope2_id, {
-        "value": value,
-        "call": call
-      }), "__tests__/template.marko", "15:1", {
-        "_pattern_2": "15:14",
-        "value": "15:16",
-        "call": "16:7"
+      _$.writeScope(_scope2_id, {
+        value: value,
+        call: call
+      }, "__tests__/template.marko", "16:1", {
+        value: "16:16",
+        call: "17:7"
       });
       _$.resumeClosestBranch(_scope2_id);
       return _return2;
@@ -69,22 +68,20 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<button class=twice>${_$.escapeXML(clickTwiceCount)}${_$.markResumeNode(_scope0_id, "#text/5")}</button>${_$.markResumeNode(_scope0_id, "#button/4")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_onClickTwice");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_onClickOnce");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "clickOnceCount": clickOnceCount,
-    "onClickOnce": onClickOnce,
-    "clickTwiceCount": clickTwiceCount,
-    "onClickTwice": onClickTwice,
+  _$.writeScope(_scope0_id, {
+    clickOnceCount: clickOnceCount,
+    onClickOnce: onClickOnce,
+    clickTwiceCount: clickTwiceCount,
+    onClickTwice: onClickTwice,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(Once),
     "#text/3!": _$.writeExistingScope(_dynamicScope2),
     "#text/3(": _$.normalizeDynamicRenderer(Twice)
-  }), "__tests__/template.marko", 0, {
-    "Once": "1:8",
-    "clickOnceCount": "9:5",
-    "onClickOnce": "10:6",
-    "Twice": "15:8",
-    "clickTwiceCount": "23:5",
-    "onClickTwice": "24:7"
+  }, "__tests__/template.marko", 0, {
+    clickOnceCount: "10:5",
+    onClickOnce: "11:6",
+    clickTwiceCount: "24:5",
+    onClickTwice: "25:7"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

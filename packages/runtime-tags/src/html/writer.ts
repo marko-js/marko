@@ -9,7 +9,11 @@ import {
 } from "../common/types";
 import { escapeAttrValue } from "./attrs";
 import { REORDER_RUNTIME_CODE, WALKER_RUNTIME_CODE } from "./inlined-runtimes";
-import { register as serializerRegister, Serializer } from "./serializer";
+import {
+  register as serializerRegister,
+  Serializer,
+  setDebugInfo,
+} from "./serializer";
 
 export type PartialScope = Record<Accessor, unknown>;
 type ScopeInternals = PartialScope & {
@@ -336,7 +340,7 @@ export function resumeSingleNodeConditional(
   );
 }
 
-export function writeScope(scopeId: number, partialScope: PartialScope) {
+let writeScope = (scopeId: number, partialScope: PartialScope) => {
   const { state } = $chunk.boundary;
   const { scopes } = state;
   let scope: ScopeInternals | undefined = scopes.get(scopeId);
@@ -363,7 +367,28 @@ export function writeScope(scopeId: number, partialScope: PartialScope) {
   }
 
   return scope;
+};
+
+if (MARKO_DEBUG) {
+  writeScope = (
+    (writeScope) =>
+    (
+      scopeId: number,
+      partialScope: PartialScope,
+      file?: string,
+      loc?: string | 0,
+      vars?: Record<string, string>,
+    ) => {
+      const scope = writeScope(scopeId, partialScope);
+      if (file && loc !== undefined) {
+        setDebugInfo(scope, file, loc, vars);
+      }
+      return scope;
+    }
+  )(writeScope) as typeof writeScope;
 }
+
+export { writeScope };
 
 export function writeExistingScope(scope: ScopeInternals) {
   return writeScope(scope[K_SCOPE_ID]!, scope);

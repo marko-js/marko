@@ -13,23 +13,20 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       const _scope1_id = _$.nextScopeId();
       _scope1_.set(_by(opt, _index), _$.ensureScopeWithId(_scope1_id));
       _$.write(`<option${_$.optionValueAttr(opt)}>${_$.escapeXML(opt)}${_$.markResumeNode(_scope1_id, "#text/1")}</option>${_$.markResumeNode(_scope1_id, "#option/0")}`);
-      _$.debug(_$.writeScope(_scope1_id, {}), "__tests__/template.marko", "5:6", {
-        "opt": "5:10"
-      });
+      _$.writeScope(_scope1_id, {}, "__tests__/template.marko", "5:6");
     }, _scope0_id, "#select/0", 1);
     _$.write("</select>");
   });
   _$.write(`<button type=reset>reset</button></form><div>${_$.escapeXML(value)}${_$.markResumeNode(_scope0_id, "#text/1")}</div><button class=remove>Remove option</button>${_$.markResumeNode(_scope0_id, "#button/2")}<button class=add>Add option</button>${_$.markResumeNode(_scope0_id, "#button/3")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_options");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "options": options,
-    "value": value,
+  _$.writeScope(_scope0_id, {
+    options: options,
+    value: value,
     "#select/0(": _scope1_.size ? _scope1_ : undefined
-  }), "__tests__/template.marko", 0, {
-    "options": "1:6",
-    "options_0": ["options[0]", "1:6"],
-    "value": "2:6"
+  }, "__tests__/template.marko", 0, {
+    options: "1:6",
+    value: "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

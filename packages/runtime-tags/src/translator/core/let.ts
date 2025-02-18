@@ -11,18 +11,14 @@ import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
 import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
-  getScopeAccessorLiteral,
+  getScopeAccessor,
   mergeReferences,
   trackVarReferences,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
-import {
-  addValue,
-  getSerializedScopeProperties,
-  initValue,
-} from "../util/signals";
+import { addValue, initValue, setSerializedProperty } from "../util/signals";
 import translateVar from "../util/translate-var";
 
 declare module "@marko/compiler/dist/types" {
@@ -130,11 +126,9 @@ export default {
         translateVar(tag, valueAttr.value);
 
         if (valueChangeAttr) {
-          getSerializedScopeProperties(section).set(
-            t.stringLiteral(
-              getScopeAccessorLiteral(binding).value +
-                AccessorChar.TagVariableChange,
-            ),
+          setSerializedProperty(
+            section,
+            getScopeAccessor(binding) + AccessorChar.TagVariableChange,
             valueChangeAttr.value,
           );
         }

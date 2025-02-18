@@ -15,7 +15,7 @@ import { getParentTag } from "../util/get-parent-tag";
 import { isControlFlowTag } from "../util/is-core-tag";
 import { importRuntime } from "../util/runtime";
 import { getSection } from "../util/sections";
-import { addValue, getSerializedScopeProperties } from "../util/signals";
+import { addValue, setSerializedProperty } from "../util/signals";
 import { createSectionState } from "../util/state";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
@@ -75,8 +75,9 @@ export default {
 
         if (attrs.valueChange) {
           // TODO: this should be based on the child actually mutating the tag variable.
-          getSerializedScopeProperties(section).set(
-            t.stringLiteral(AccessorChar.TagVariableChange),
+          setSerializedProperty(
+            section,
+            AccessorChar.TagVariableChange,
             attrs.valueChange,
           );
         }

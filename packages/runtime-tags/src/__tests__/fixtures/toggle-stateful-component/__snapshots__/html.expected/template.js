@@ -16,19 +16,18 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
         onCount: onCount
       });
       _$.write("</div>");
-      _$.debug(_$.writeScope(_scope1_id, {}), "__tests__/template.marko", "6:4");
+      _$.writeScope(_scope1_id, {}, "__tests__/template.marko", "6:4");
       _ifBranch = 0;
       _ifScopeId = _scope1_id;
     }
   }, _scope0_id, "#div/0", 1);
   _$.write("</div>");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "onCount": onCount,
+  _$.writeScope(_scope0_id, {
+    onCount: onCount,
     "#div/0(": _ifBranch,
     "#div/0!": _$.getScopeById(_ifScopeId)
-  }), "__tests__/template.marko", 0, {
-    "show": "1:6",
-    "onCount": "2:8"
+  }, "__tests__/template.marko", 0, {
+    onCount: "2:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

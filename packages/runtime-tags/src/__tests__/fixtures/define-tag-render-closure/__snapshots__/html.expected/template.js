@@ -7,9 +7,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       const _scope1_id = _$.nextScopeId();
       _$.write(`<div>${_$.escapeXML(x)}${_$.markResumeNode(_scope1_id, "#text/0")}</div>`);
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_x/subscriber");
-      _$.debug(_$.writeScope(_scope1_id, {
-        "_": _$.ensureScopeWithId(_scope0_id)
-      }), "__tests__/template.marko", "2:2");
+      _$.writeScope(_scope1_id, {
+        _: _$.ensureScopeWithId(_scope0_id)
+      }, "__tests__/template.marko", "2:2");
       _$.resumeClosestBranch(_scope1_id);
     }), "__tests__/template.marko_1_renderer", _scope0_id)
   };
@@ -17,13 +17,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.dynamicTagInput(_scope0_id, "#text/0", MyTag, {});
   _$.write(`<button>${_$.escapeXML(x)}${_$.markResumeNode(_scope0_id, "#text/2")}</button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "x": x,
+  _$.writeScope(_scope0_id, {
+    x: x,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(MyTag)
-  }), "__tests__/template.marko", 0, {
-    "x": "1:6",
-    "MyTag": "2:9"
+  }, "__tests__/template.marko", 0, {
+    x: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

@@ -5,13 +5,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<button class=inc>${_$.escapeXML(x)}${_$.markResumeNode(_scope0_id, "#text/1")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   const _return = x;
   _$.writeEffect(_scope0_id, "__tests__/tags/counter.marko_0_x");
-  _$.debug(_$.writeScope(_scope0_id, {
-    "x": x,
+  _$.writeScope(_scope0_id, {
+    x: x,
     "@": _$.register(_new_x => {
       x = _new_x;
     }, "__tests__/tags/counter.marko_0/valueChange", _scope0_id)
-  }), "__tests__/tags/counter.marko", 0, {
-    "x": "1:6"
+  }, "__tests__/tags/counter.marko", 0, {
+    x: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
   return _return;
