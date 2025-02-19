@@ -198,6 +198,7 @@ var proto = (AsyncStream.prototype = {
       writer.next = originalWriter.next;
       writer.state = this._state;
       writer.merge(originalWriter);
+      writer.scheduleFlush();
 
       this._state.stream = stream;
       this._state.writer = writer;
