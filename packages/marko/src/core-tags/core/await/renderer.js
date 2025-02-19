@@ -97,6 +97,7 @@ module.exports = function awaitTag(input, out) {
   };
 
   if (clientReorder) {
+    awaitInfo.parent = out;
     awaitInfo.after = input.showAfter;
 
     clientReorderContext =
@@ -106,8 +107,14 @@ module.exports = function awaitTag(input, out) {
         nextId: 0,
       });
 
-    var id = (awaitInfo.id = input.name || clientReorderContext.nextId++);
-    var placeholderIdAttrValue = "afph" + id;
+    /** SHOULD MATCH THE reorder-renderer.js IMPLEMENTATION */
+    var reorderFunctionId =
+      out.global.runtimeId !== "M" ? "af" + out.global.runtimeId : "af";
+
+    var id = (awaitInfo.id =
+      input.name ||
+      (out.global.componentIdPrefix || 0) + clientReorderContext.nextId++);
+    var placeholderIdAttrValue = reorderFunctionId + "ph" + id;
 
     if (placeholderRenderer) {
       out.write('<span id="' + placeholderIdAttrValue + '">');
@@ -211,7 +218,11 @@ function renderContents(err, data, input, out) {
   if (err) {
     if (input.catch) {
       if (errorRenderer) {
-        errorRenderer(out, err);
+        try {
+          errorRenderer(out, err);
+        } catch (err2) {
+          out.error(err2);
+        }
       }
     } else {
       out.error(err);

@@ -20,6 +20,7 @@ exports.checkEvents = function (events, snapshot) {
     expect(arg.out != null).to.equal(true);
 
     delete arg.out; // Not serializable
+    delete arg.parent; // Not serializable
     delete arg.asyncValue; // Not serializable
 
     return {
