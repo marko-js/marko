@@ -7,15 +7,11 @@ module.exports = function (helpers) {
   expect(renderTarget.innerHTML).to.equal("<div>Hello</div>A");
   component.toggle();
   component.update();
-  expect(renderTarget.innerHTML).to.equal(
-    "<div>Hello</div>A",
-  );
+  expect(renderTarget.innerHTML).to.equal("<div>Hello</div>A");
   component.toggle();
   component.update();
   expect(renderTarget.innerHTML).to.equal("<div>Hello</div>A");
   component.toggle();
   component.update();
-  expect(renderTarget.innerHTML).to.equal(
-    "<div>Hello</div>A",
-  );
+  expect(renderTarget.innerHTML).to.equal("<div>Hello</div>A");
 };

@@ -624,7 +624,7 @@ class CustomTag extends HtmlElement {
 
       if (isNestedTag) {
         renderTagNode = builder.functionCall(tagVar, tagArgs);
-        renderTagNode._isNestedTagCall = true
+        renderTagNode._isNestedTagCall = true;
       } else {
         renderTagNode = this.generateRenderTagCode(codegen, tagVar, tagArgs);
         renderTagNode._isTagCall = true;
@@ -656,7 +656,9 @@ class CustomTag extends HtmlElement {
         }
 
         if (renderBody.length) {
-          newBody.push(builder.returnStatement(builder.renderBodyFunction(renderBody)));
+          newBody.push(
+            builder.returnStatement(builder.renderBodyFunction(renderBody))
+          );
           body = newBody;
         }
       }

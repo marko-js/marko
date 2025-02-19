@@ -12,13 +12,15 @@ module.exports = function migrate(el, context) {
       return;
     }
 
-    context.createWalker({
-      enter(node) {
-        if (isWidgetMemberExpression(node)) {
-          node.object.name = "component";
-        }
-      },
-    }).walk(value);
+    context
+      .createWalker({
+        enter(node) {
+          if (isWidgetMemberExpression(node)) {
+            node.object.name = "component";
+          }
+        },
+      })
+      .walk(value);
   });
 };
 

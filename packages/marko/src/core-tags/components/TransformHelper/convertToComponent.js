@@ -116,7 +116,7 @@ module.exports = function handleComponentBind(options) {
       markoComponentVar = context.addStaticVar(
         "marko_component",
         builder.functionCall(context.helper("interopRequireDefault"), [
-          builder.require(builder.literal(rendererModule.requirePath))
+          builder.require(builder.literal(rendererModule.requirePath)),
         ])
       );
     }
