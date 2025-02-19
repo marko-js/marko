@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.28.8](https://github.com/marko-js/marko/compare/v4.28.7...v4.28.8) (2025-02-19)
+
+
+### Bug Fixes
+
+* backport await tag fixes ([44708e0](https://github.com/marko-js/marko/commit/44708e0440893de844f25d534b09508a8b562f57))
+
 ### [4.28.7](https://github.com/marko-js/marko/compare/v4.28.6...v4.28.7) (2024-09-20)
 
 
