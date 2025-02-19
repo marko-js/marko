@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 0.3.43
+
+### Patch Changes
+
+- [#2523](https://github.com/marko-js/marko/pull/2523) [`69581ba`](https://github.com/marko-js/marko/commit/69581baff368d6a17a980a1b746d8a96a6a9afbc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve serialization errors.
+
+- [#2523](https://github.com/marko-js/marko/pull/2523) [`69581ba`](https://github.com/marko-js/marko/commit/69581baff368d6a17a980a1b746d8a96a6a9afbc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor scope serialization compiler apis.
+
 ## 0.3.42
 
 ### Patch Changes
