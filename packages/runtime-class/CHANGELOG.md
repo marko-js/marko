@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.15
+
+### Patch Changes
+
+- [#2525](https://github.com/marko-js/marko/pull/2525) [`4c20455`](https://github.com/marko-js/marko/commit/4c204556a3055cd6439ecdd183f6dbfccc606934) Thanks [@rturnq](https://github.com/rturnq)! - Fix initial sync content not scheduled for flush
+
 ## 5.37.14
 
 ### Patch Changes

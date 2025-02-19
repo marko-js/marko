@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.15
+
+### Patch Changes
+
+- [#2523](https://github.com/marko-js/marko/pull/2523) [`69581ba`](https://github.com/marko-js/marko/commit/69581baff368d6a17a980a1b746d8a96a6a9afbc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve serialization errors.
+
+- Updated dependencies [[`69581ba`](https://github.com/marko-js/marko/commit/69581baff368d6a17a980a1b746d8a96a6a9afbc), [`69581ba`](https://github.com/marko-js/marko/commit/69581baff368d6a17a980a1b746d8a96a6a9afbc), [`4c20455`](https://github.com/marko-js/marko/commit/4c204556a3055cd6439ecdd183f6dbfccc606934)]:
+  - @marko/runtime-tags@0.3.43
+  - marko@5.37.15
+
 ## 0.2.14
 
 ### Patch Changes
