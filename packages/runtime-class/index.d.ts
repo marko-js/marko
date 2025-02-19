@@ -77,9 +77,11 @@ declare global {
       text(val: string | void): void;
     }
 
-    /** Body content created from by a component, typically held in an object with a renderBody property. */
+    /** @deprecated prefer `Marko.Content` */
+    export interface Body extends Content {}
 
-    export interface Body<
+    /** Body content created from by a component, typically held in an object with a `renderBody` property. */
+    export interface Content<
       in Params extends readonly any[] = [],
       out Return = void,
     > {}
