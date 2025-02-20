@@ -326,23 +326,22 @@ VElement.___morphAttrs = function (fromEl, vFromEl, toEl) {
   // them to the value in the old map. However, if the value is
   // null/undefined/false then we want to remove the attribute
   for (attrName in attrs) {
-    if (
-      !preserve[attrName] &&
-      normalizeValue(oldAttrs[attrName]) !==
-        (attrValue = normalizeValue(attrs[attrName]))
-    ) {
+    if (!preserve[attrName]) {
+      attrValue = normalizeValue(attrs[attrName]);
       if ((specialAttr = specialAttrs[attrName])) {
         specialAttr(fromEl, attrValue);
-      } else if (attrName === ATTR_XLINK_HREF) {
-        if (attrValue === undefined) {
-          fromEl.removeAttributeNS(NS_XLINK, ATTR_HREF);
+      } else if (normalizeValue(oldAttrs[attrName]) !== attrValue) {
+        if (attrName === ATTR_XLINK_HREF) {
+          if (attrValue === undefined) {
+            fromEl.removeAttributeNS(NS_XLINK, ATTR_HREF);
+          } else {
+            fromEl.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
+          }
+        } else if (attrValue === undefined) {
+          fromEl.removeAttribute(attrName);
         } else {
-          fromEl.setAttributeNS(NS_XLINK, ATTR_HREF, attrValue);
+          fromEl.setAttribute(attrName, attrValue);
         }
-      } else if (attrValue === undefined) {
-        fromEl.removeAttribute(attrName);
-      } else {
-        fromEl.setAttribute(attrName, attrValue);
       }
     }
   }
