@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.37.16
+
+### Patch Changes
+
+- [#2528](https://github.com/marko-js/marko/pull/2528) [`136bb14`](https://github.com/marko-js/marko/commit/136bb14afa1d77c41092ced77ded66702370de8a) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix special attrs
+
+- [#2530](https://github.com/marko-js/marko/pull/2530) [`d08be40`](https://github.com/marko-js/marko/commit/d08be4078fcfc276bab2ee5aded53c19e5b745e3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with nesting out of order awaits inside of in order awaits.
+
 ## 5.37.15
 
 ### Patch Changes
