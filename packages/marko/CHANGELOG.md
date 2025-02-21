@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.28.9](https://github.com/marko-js/marko/compare/v4.28.8...v4.28.9) (2025-02-21)
+
+
+### Bug Fixes
+
+* in/out of order await nesting ([b3b002b](https://github.com/marko-js/marko/commit/b3b002be940f2ee485d1f5c0dfb80c6876a9f8ae))
+
 ### [4.28.8](https://github.com/marko-js/marko/compare/v4.28.7...v4.28.8) (2025-02-19)
 
 
