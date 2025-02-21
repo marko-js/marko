@@ -113,6 +113,7 @@ module.exports = function awaitTag(input, out) {
     clientReorderContext =
       out.global.___clientReorderContext ||
       (out.global.___clientReorderContext = {
+        handleAwait: undefined,
         instances: [],
         nextId: 0,
       });
@@ -158,7 +159,9 @@ module.exports = function awaitTag(input, out) {
       oldEmit.apply(asyncOut, arguments);
     };
 
-    if (clientReorderContext.instances) {
+    if (clientReorderContext.handleAwait) {
+      clientReorderContext.handleAwait(awaitInfo);
+    } else {
       clientReorderContext.instances.push(awaitInfo);
     }
 
