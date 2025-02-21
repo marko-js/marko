@@ -143,14 +143,13 @@ module.exports = function (input, out) {
     }
 
     awaitContext.instances.forEach(handleAwait);
-
-    out.on("await:clientReorder", function (awaitInfo) {
+    awaitContext.handleAwait = function (awaitInfo) {
       remaining++;
       handleAwait(awaitInfo);
-    });
+    };
 
     // Now that we have a listener attached, we want to receive any additional
-    // out-of-sync instances via an event
-    delete awaitContext.instances;
+    // out-of-sync instances via the method
+    awaitContext.instances = undefined;
   });
 };
