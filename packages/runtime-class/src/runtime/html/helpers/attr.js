@@ -1,28 +1,24 @@
 "use strict";
 
-var escapeQuoteHelpers = require("./escape-quotes");
-var escapeDoubleQuotes = escapeQuoteHelpers.___escapeDoubleQuotes;
-var escapeSingleQuotes = escapeQuoteHelpers.___escapeSingleQuotes;
 // eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
 
-module.exports = maybeEmptyAttr;
+module.exports = attr;
 
-maybeEmptyAttr.___notEmptyAttr = notEmptyAttr;
-maybeEmptyAttr.___isEmptyAttrValue = isEmpty;
+attr.___notEmptyAttr = nonVoidAttr;
+attr.___isEmptyAttrValue = isVoid;
+attr.a = attrAssignment;
+attr.d = escapeDoubleQuotedAttrValue;
+attr.s = escapeSingleQuotedAttrValue;
 
-function maybeEmptyAttr(name, value) {
-  if (isEmpty(value)) {
-    return "";
-  }
-
-  return notEmptyAttr(name, value);
+function attr(name, value) {
+  return isVoid(value) ? "" : nonVoidAttr(name, value);
 }
 
-function notEmptyAttr(name, value) {
+function nonVoidAttr(name, value) {
   switch (typeof value) {
     case "string":
-      return " " + name + guessQuotes(value);
+      return " " + name + attrAssignment(value);
     case "boolean":
       return " " + name;
     case "number":
@@ -39,42 +35,61 @@ function notEmptyAttr(name, value) {
             );
           }
 
-          return " " + name + singleQuote(JSON.stringify(value), 2);
+          return (
+            " " +
+            name +
+            "='" +
+            escapeSingleQuotedAttrValue(JSON.stringify(value)) +
+            "'"
+          );
         case RegExp.prototype.toString:
-          return " " + name + guessQuotes(value.source);
+          return " " + name + attrAssignment(value.source);
       }
   }
 
-  return " " + name + guessQuotes(value + "");
+  return " " + name + attrAssignment(value + "");
 }
 
-function isEmpty(value) {
+function isVoid(value) {
   return value == null || value === false;
 }
 
-function doubleQuote(value, startPos) {
-  return '="' + escapeDoubleQuotes(value, startPos) + '"';
+var singleQuoteAttrReplacements = /'|&(?=#?\w+;)/g;
+var doubleQuoteAttrReplacements = /"|&(?=#?\w+;)/g;
+var needsQuotedAttr = /["'>\s]|&#?\w+;|\/$/g;
+function attrAssignment(value) {
+  return value
+    ? needsQuotedAttr.test(value)
+      ? value[needsQuotedAttr.lastIndex - 1] ===
+        ((needsQuotedAttr.lastIndex = 0), '"')
+        ? "='" + escapeSingleQuotedAttrValue(value) + "'"
+        : '="' + escapeDoubleQuotedAttrValue(value) + '"'
+      : "=" + value
+    : "";
 }
 
-function singleQuote(value, startPos) {
-  return "='" + escapeSingleQuotes(value, startPos) + "'";
+function escapeSingleQuotedAttrValue(value) {
+  return singleQuoteAttrReplacements.test(value)
+    ? value.replace(
+        singleQuoteAttrReplacements,
+        replaceUnsafeSingleQuoteAttrChar,
+      )
+    : value;
 }
 
-function guessQuotes(value) {
-  for (var i = 0, len = value.length; i < len; i++) {
-    switch (value[i]) {
-      case '"':
-        return singleQuote(value, i + 1);
-      case "'":
-      case ">":
-      case " ":
-      case "\t":
-      case "\n":
-      case "\r":
-      case "\f":
-        return doubleQuote(value, i + 1);
-    }
-  }
+function replaceUnsafeSingleQuoteAttrChar(match) {
+  return match === "'" ? "&#39;" : "&amp;";
+}
 
-  return value && "=" + (value[len - 1] === "/" ? value + " " : value);
+function escapeDoubleQuotedAttrValue(value) {
+  return doubleQuoteAttrReplacements.test(value)
+    ? value.replace(
+        doubleQuoteAttrReplacements,
+        replaceUnsafeDoubleQuoteAttrChar,
+      )
+    : value;
+}
+
+function replaceUnsafeDoubleQuoteAttrChar(match) {
+  return match === '"' ? "&#34;" : "&amp;";
 }

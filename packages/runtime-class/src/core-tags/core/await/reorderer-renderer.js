@@ -1,7 +1,6 @@
 "use strict";
 
-var escapeDoubleQuotes =
-  require("../../../runtime/html/helpers/escape-quotes").___escapeDoubleQuotes;
+var attrAssignment = require("../../../runtime/html/helpers/attr").a;
 
 module.exports = function (input, out) {
   // We cannot call beginSync() when using renderSync(). In this case we will
@@ -94,24 +93,24 @@ module.exports = function (input, out) {
 
         if (global.cspNonce) {
           asyncOut.write(
-            '<style nonce="' +
-              escapeDoubleQuotes(global.cspNonce) +
-              '">' +
-              `#${reorderFunctionId}` +
+            "<style nonce" +
+              attrAssignment(global.cspNonce) +
+              ">#" +
+              reorderFunctionId +
               awaitInfo.id +
-              "{display:none;}" +
-              "</style>" +
-              `<div id="${reorderFunctionId}` +
+              "{display:none}</style><div id=" +
+              reorderFunctionId +
               awaitInfo.id +
-              '">' +
+              ">" +
               result.toString() +
               "</div>",
           );
         } else {
           asyncOut.write(
-            `<div id="${reorderFunctionId}` +
+            "<div id=" +
+              reorderFunctionId +
               awaitInfo.id +
-              '" style="display:none">' +
+              " style=display:none>" +
               result.toString() +
               "</div>",
           );

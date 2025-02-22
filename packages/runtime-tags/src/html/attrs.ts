@@ -9,12 +9,12 @@ import { type Accessor, AccessorChar, ControlledType } from "../common/types";
 import { escapeTextAreaValue } from "./content";
 import { getChunk, withContext, writeScope } from "./writer";
 
-export function classAttr(val: unknown) {
-  return stringAttr("class", classValue(val));
+export function classAttr(value: unknown) {
+  return stringAttr("class", classValue(value));
 }
 
-export function styleAttr(val: unknown) {
-  return stringAttr("style", styleValue(val));
+export function styleAttr(value: unknown) {
+  return stringAttr("style", styleValue(value));
 }
 
 export function optionValueAttr(value: unknown) {
@@ -27,7 +27,7 @@ export function optionValueAttr(value: unknown) {
     (Array.isArray(value)
       ? selectedValue.includes(value)
       : selectedValue === value)
-      ? ` selected`
+      ? " selected"
       : "")
   );
 }
@@ -152,8 +152,8 @@ export function controllable_detailsOrDialog_open(
   return attr("open", open);
 }
 
-export function attr(name: string, val: unknown) {
-  return isVoid(val) ? "" : nonVoidAttr(name, val);
+export function attr(name: string, value: unknown) {
+  return isVoid(value) ? "" : nonVoidAttr(name, value);
 }
 
 export function attrs(
@@ -221,20 +221,20 @@ export function attrs(
   }
 
   for (const name in data) {
-    const val = data[name];
+    const value = data[name];
 
     switch (name) {
       case "class":
-        result += classAttr(val);
+        result += classAttr(value);
         break;
       case "style":
-        result += styleAttr(val);
+        result += styleAttr(value);
         break;
       case "":
       case "content":
         break;
       default:
-        if (!isVoid(val)) {
+        if (!isVoid(value)) {
           if (isEventHandler(name)) {
             if (!events) {
               events = {};
@@ -243,9 +243,9 @@ export function attrs(
               });
             }
 
-            events[getEventHandlerName(name)] = val;
+            events[getEventHandlerName(name)] = value;
           } else if (!skip.test(name)) {
-            result += nonVoidAttr(name, val);
+            result += nonVoidAttr(name, value);
           }
         }
         break;
@@ -283,42 +283,64 @@ function writeControlledScope(
   });
 }
 
-function stringAttr(name: string, val: string) {
-  return val && ` ${name}=${escapeAttrValue(val)}`;
+function stringAttr(name: string, value: string) {
+  return value && " " + name + attrAssignment(value);
 }
 
-function nonVoidAttr(name: string, val: unknown) {
-  switch (typeof val) {
+function nonVoidAttr(name: string, value: unknown) {
+  switch (typeof value) {
     case "string":
-      return ` ${name + attrAssignment(val)}`;
+      return " " + name + attrAssignment(value);
     case "boolean":
-      return ` ${name}`;
+      return " " + name;
     case "number":
-      return ` ${name}=${val}`;
+      return " " + name + "=" + value;
     case "object":
-      if (val instanceof RegExp) {
-        return ` ${name + attrAssignment(val.source)}`;
+      if (value instanceof RegExp) {
+        return " " + name + attrAssignment(value.source);
       }
       break;
   }
 
-  return ` ${name + attrAssignment(val + "")}`;
+  return " " + name + attrAssignment(value + "");
 }
 
-function attrAssignment(val: string) {
-  return val ? `=${escapeAttrValue(val)}` : "";
+const singleQuoteAttrReplacements = /'|&(?=#?\w+;)/g;
+const doubleQuoteAttrReplacements = /"|&(?=#?\w+;)/g;
+const needsQuotedAttr = /["'>\s]|&#?\w+;|\/$/g;
+export function attrAssignment(value: string) {
+  return value
+    ? needsQuotedAttr.test(value)
+      ? value[needsQuotedAttr.lastIndex - 1] ===
+        ((needsQuotedAttr.lastIndex = 0), '"')
+        ? "='" + escapeSingleQuotedAttrValue(value) + "'"
+        : '="' + escapeDoubleQuotedAttrValue(value) + '"'
+      : "=" + value
+    : "";
 }
 
-const unsafeAttrChars = /["'>\s]/g;
-export function escapeAttrValue(str: string) {
-  if (unsafeAttrChars.test(str)) {
-    const c = str[unsafeAttrChars.lastIndex - 1];
-    unsafeAttrChars.lastIndex = 0;
+export function escapeSingleQuotedAttrValue(value: string) {
+  return singleQuoteAttrReplacements.test(value)
+    ? value.replace(
+        singleQuoteAttrReplacements,
+        replaceUnsafeSingleQuoteAttrChar,
+      )
+    : value;
+}
 
-    return c === '"'
-      ? `'${str.replace(/'/g, "&#39;")}'`
-      : `"${str.replace(/"/g, "&#34;")}"`;
-  }
+function replaceUnsafeSingleQuoteAttrChar(match: string) {
+  return match === "'" ? "&#39;" : "&amp;";
+}
 
-  return str;
+export function escapeDoubleQuotedAttrValue(value: string) {
+  return doubleQuoteAttrReplacements.test(value)
+    ? value.replace(
+        doubleQuoteAttrReplacements,
+        replaceUnsafeDoubleQuoteAttrChar,
+      )
+    : value;
+}
+
+function replaceUnsafeDoubleQuoteAttrChar(match: string) {
+  return match === '"' ? "&#34;" : "&amp;";
 }

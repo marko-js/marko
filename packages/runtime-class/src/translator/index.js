@@ -548,7 +548,6 @@ export function getRuntimeEntryFiles(output, optimize) {
           `${base}runtime/html/helpers/attrs.js`,
           `${base}runtime/html/helpers/class-attr.js`,
           `${base}runtime/html/helpers/data-marko.js`,
-          `${base}runtime/html/helpers/escape-quotes.js`,
           `${base}runtime/html/helpers/escape-script-placeholder.js`,
           `${base}runtime/html/helpers/escape-style-placeholder.js`,
           `${base}runtime/html/helpers/escape-xml.js`,

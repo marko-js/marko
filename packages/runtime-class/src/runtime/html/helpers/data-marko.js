@@ -1,8 +1,8 @@
 "use strict";
 
-var escapeQuoteHelpers = require("./escape-quotes");
-var escapeSingleQuotes = escapeQuoteHelpers.___escapeSingleQuotes;
-var escapeDoubleQuotes = escapeQuoteHelpers.___escapeDoubleQuotes;
+var attr = require("./attr");
+var escapeSingleQuotes = attr.s;
+var escapeDoubleQuotes = attr.d;
 var FLAG_WILL_RERENDER_IN_BROWSER = 1;
 // var FLAG_HAS_RENDER_BODY = 2;
 
