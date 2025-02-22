@@ -5,7 +5,6 @@ import {
   normalizeTemplateString,
 } from "@marko/compiler/babel-utils";
 import attrHelper from "marko/src/runtime/html/helpers/attr";
-import { d as escapeDoubleQuotes } from "marko/src/runtime/html/helpers/escape-quotes";
 
 import { evaluateAttr } from "../util";
 
@@ -105,16 +104,18 @@ export default function (path, attrs) {
       for (let i = 0; i < value.expressions.length; i++) {
         const quasi = value.quasis[i];
         const expression = value.expressions[i];
-        curString += escapeDoubleQuotes(quasi.value.cooked);
+        curString += attrHelper.d(quasi.value.cooked);
         quasis.push(curString);
         curString = "";
         expressions.push(
           t.callExpression(
-            importNamed(
-              file,
-              "marko/src/runtime/html/helpers/escape-quotes.js",
-              "d",
-              "marko_escape_double_quotes",
+            t.memberExpression(
+              importDefault(
+                file,
+                "marko/src/runtime/html/helpers/attr.js",
+                "marko_attr",
+              ),
+              t.identifier("d"),
             ),
             [expression],
           ),
@@ -122,9 +123,7 @@ export default function (path, attrs) {
       }
 
       curString +=
-        escapeDoubleQuotes(
-          value.quasis[value.expressions.length].value.cooked,
-        ) + '"';
+        attrHelper.d(value.quasis[value.expressions.length].value.cooked) + '"';
     } else {
       quasis.push(curString);
       curString = "";

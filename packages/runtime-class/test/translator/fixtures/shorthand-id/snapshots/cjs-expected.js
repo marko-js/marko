@@ -4,7 +4,6 @@ exports.__esModule = true;
 exports.default = void 0;
 var _index = require("marko/src/runtime/html/index.js");
 var _attr = _interopRequireDefault(require("marko/src/runtime/html/helpers/attr.js"));
-var _escapeQuotes = require("marko/src/runtime/html/helpers/escape-quotes.js");
 var _renderer = _interopRequireDefault(require("marko/src/runtime/components/renderer.js"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { default: e }; }
 const _marko_componentType = "__tests__/template.marko",
@@ -14,7 +13,7 @@ const _marko_component = {};
 _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
   out.w("<div id=shorthand></div>");
   out.w(`<div${(0, _attr.default)("id", dynamic)}></div>`);
-  out.w(`<div id="partial-${(0, _escapeQuotes.d)(dynamic)}"></div>`);
+  out.w(`<div id="partial-${_attr.default.d(dynamic)}"></div>`);
 }, {
   t: _marko_componentType,
   i: true,

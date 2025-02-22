@@ -1,7 +1,6 @@
 "use strict";
 
-var escapeDoubleQuotes =
-  require("./helpers/escape-quotes").___escapeDoubleQuotes;
+var attrAssignment = require("./helpers/attr").a;
 
 function StringWriter() {
   this._content = "";
@@ -59,11 +58,8 @@ StringWriter.prototype = {
     this.state.events.emit("___toString", this);
     let str = this._content;
     if (this._scripts) {
-      const outGlobal = this.state.root.global;
-      const cspNonce = outGlobal.cspNonce;
-      const nonceAttr = cspNonce
-        ? ' nonce="' + escapeDoubleQuotes(cspNonce) + '"'
-        : "";
+      const cspNonce = this.state.root.global.cspNonce;
+      const nonceAttr = cspNonce ? " nonce" + attrAssignment(cspNonce) : "";
       str += `<script${nonceAttr}>${this._scripts}</script>`;
     }
     return str;

@@ -23,7 +23,14 @@ describe("runtime-tags/html/attrs", () => {
     });
 
     it("should quote invalid characters in html attributes", () => {
+      assert.equal(helpers.attr("foo", "bar/baz"), " foo=bar/baz"); // only escape slash at end.
+      assert.equal(helpers.attr("foo", "bar/"), ' foo="bar/"');
       assert.equal(helpers.attr("foo", 'bar"baz'), " foo='bar\"baz'");
+      assert.equal(helpers.attr("foo", "bar&baz"), " foo=bar&baz"); // only escape entity like ranges.
+      assert.equal(
+        helpers.attr("foo", "bar&quot;baz"),
+        ' foo="bar&amp;quot;baz"',
+      );
       assert.equal(helpers.attr("foo", "bar'baz"), ' foo="bar\'baz"');
       assert.equal(helpers.attr("foo", "bar>baz"), ' foo="bar>baz"');
       assert.equal(helpers.attr("foo", "bar baz"), ' foo="bar baz"');

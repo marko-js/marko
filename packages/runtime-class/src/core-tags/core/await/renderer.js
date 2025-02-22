@@ -128,11 +128,11 @@ module.exports = function awaitTag(input, out) {
     var placeholderIdAttrValue = reorderFunctionId + "ph" + id;
 
     if (placeholderRenderer) {
-      out.write('<span id="' + placeholderIdAttrValue + '">');
+      out.write("<span id=" + placeholderIdAttrValue + ">");
       placeholderRenderer(out);
       out.write("</span>");
     } else {
-      out.write('<noscript id="' + placeholderIdAttrValue + '"></noscript>');
+      out.write("<noscript id=" + placeholderIdAttrValue + "></noscript>");
     }
 
     // If `client-reorder` is enabled then we asynchronously render the await instance to a new

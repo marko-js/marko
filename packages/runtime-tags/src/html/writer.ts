@@ -7,7 +7,7 @@ import {
   type Falsy,
   ResumeSymbol,
 } from "../common/types";
-import { escapeAttrValue } from "./attrs";
+import { attrAssignment } from "./attrs";
 import { REORDER_RUNTIME_CODE, WALKER_RUNTIME_CODE } from "./inlined-runtimes";
 import {
   register as serializerRegister,
@@ -579,7 +579,7 @@ export class State {
   ) {
     this.$global = $global;
     if ($global.cspNonce) {
-      this.nonceAttr = " " + escapeAttrValue($global.cspNonce + "");
+      this.nonceAttr = " nonce" + attrAssignment($global.cspNonce);
     }
   }
 
