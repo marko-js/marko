@@ -11,7 +11,9 @@
       "$_params_2$customTagBody": "m",
       "$_inputContent_input": "d",
       "$_count$customTag_content": "c",
-      "$_params_2$customTag_content": "s"
+      "$_params_2$customTag_content": "s",
+      "$_expr_input_content_x": "u",
+      "$_dynamicTag": "f"
     }
   }
 }

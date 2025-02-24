@@ -27,16 +27,9 @@ const _expr_Parent_Child = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _expr_Parent_Child_effect(_scope);
 });
-const _Parent_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/5", _Parent_content);
-const _dynamicTag3 = /* @__PURE__ */_$.dynamicTag("#text/5", _scope => _Parent_input(_scope, () => ({})), () => _Parent_input);
-const _Child_input2 = /* @__PURE__ */_$.dynamicTagAttrs("#text/4", _Child_content2);
-const _dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/4", _scope => _Child_input2(_scope, () => ({
-  href: "#bar"
-})), () => _Child_input2);
-const _Child_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/2", _Child_content);
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", _scope => _Child_input(_scope, () => ({
-  href: "#bar"
-})), () => _Child_input);
+const _dynamicTag3 = /* @__PURE__ */_$.dynamicTag("#text/5", _Parent_content);
+const _dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/4", _Child_content2);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", _Child_content);
 const _Child_effect = _$.effect("__tests__/template.marko_0_Child", (_scope, {
   Child
 }) => _$.on(_scope["#button/7"], "click", function () {
@@ -44,8 +37,12 @@ const _Child_effect = _$.effect("__tests__/template.marko_0_Child", (_scope, {
 }));
 const _Child = /* @__PURE__ */_$.state("Child", (_scope, Child) => {
   _Child_effect(_scope);
-  _dynamicTag(_scope, Child || _Child_content(_scope));
-  _dynamicTag2(_scope, Child || _Child_content2(_scope));
+  _dynamicTag(_scope, Child, () => ({
+    href: "#bar"
+  }));
+  _dynamicTag2(_scope, Child, () => ({
+    href: "#bar"
+  }));
 }, () => _$.intersections([_expr_Parent_Child, _dynamicTag, _dynamicTag2]));
 const _Parent_effect = _$.effect("__tests__/template.marko_0_Parent", (_scope, {
   Parent
@@ -54,7 +51,7 @@ const _Parent_effect = _$.effect("__tests__/template.marko_0_Parent", (_scope, {
 }));
 const _Parent = /* @__PURE__ */_$.state("Parent", (_scope, Parent) => {
   _Parent_effect(_scope);
-  _dynamicTag3(_scope, Parent || _Parent_content(_scope));
+  _dynamicTag3(_scope, Parent);
 }, () => _$.intersections([_expr_Parent_Child, _dynamicTag3]));
 export const _input_value_ = /* @__PURE__ */_$.value("input_value", (_scope, input_value) => {
   _$.html(_scope, input_value, "#text/1");

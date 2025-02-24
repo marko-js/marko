@@ -5,8 +5,7 @@ const foo = "div";
 const Bar = "div";
 import { _setup_ as _foo, _template_ as _foo_template, _walks_ as _foo_walks } from "./tags/foo.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _Bar_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/1");
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1", _scope => _Bar_input(_scope, () => ({})), () => _Bar_input);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1");
 export function _setup_(_scope) {
   _foo(_scope["#childScope/0"]);
   _dynamicTag(_scope, Bar);

@@ -69,8 +69,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_onClickTwice");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_onClickOnce");
   _$.writeScope(_scope0_id, {
+    Once: Once,
     clickOnceCount: clickOnceCount,
     onClickOnce: onClickOnce,
+    Twice: Twice,
     clickTwiceCount: clickTwiceCount,
     onClickTwice: onClickTwice,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
@@ -78,8 +80,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     "#text/3!": _$.writeExistingScope(_dynamicScope2),
     "#text/3(": _$.normalizeDynamicRenderer(Twice)
   }, "__tests__/template.marko", 0, {
+    Once: "1:8",
     clickOnceCount: "10:5",
     onClickOnce: "11:6",
+    Twice: "16:8",
     clickTwiceCount: "24:5",
     onClickTwice: "25:7"
   });

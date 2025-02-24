@@ -10,7 +10,8 @@
       "$_tagName_effect": "i",
       "$_tagName": "s",
       "$_tagName_content": "c",
-      "$_dynamicTag": "m"
+      "$_dynamicTag": "m",
+      "$_expr_tagName_className": "d"
     }
   }
 }

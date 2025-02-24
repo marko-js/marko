@@ -26,7 +26,13 @@
       "$_clickTwiceCount": "y",
       "$_clickOnceCount": "A",
       "$_onClickTwice2": "B",
-      "$_onClickOnce2": "O"
+      "$_onClickOnce2": "O",
+      "$_expr_Twice_clickTwiceCount": "R",
+      "$_expr_Once_clickOnceCount": "T",
+      "$_dynamicTag2": "W",
+      "$_dynamicTag": "b",
+      "$_onClickTwice": "j",
+      "$_onClickOnce": "q"
     }
   }
 }

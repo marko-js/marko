@@ -1,4 +1,4 @@
-// size: 640 (min) 297 (brotli)
+// size: 603 (min) 267 (brotli)
 const _setup_$1 = () => {},
   _value_$1 = _$.value(3, (_scope, value) => _$.data(_scope[0], value)),
   _input_$1 = _$.value(2, (_scope, input) => _value_$1(_scope, input.value)),
@@ -23,16 +23,15 @@ var child2 = _$.createTemplate(
   _setup_,
   () => _params__,
 );
-const _tagName_input = _$.dynamicTagAttrs(0),
-  _expr_Text_val = _$.intersection(
+const _expr_tagName_val = _$.intersection(
     2,
     (_scope) => {
-      const { 3: val } = _scope;
-      _tagName_input(_scope, () => ({ value: val }));
+      const { 2: tagName, 3: val } = _scope;
+      _dynamicTag(_scope, tagName, () => ({ value: val }));
     },
-    () => _tagName_input,
+    () => _dynamicTag,
   ),
-  _dynamicTag = _$.dynamicTag(0, 0, () => _expr_Text_val),
+  _dynamicTag = _$.dynamicTag(),
   _tagName_effect = _$.effect("c0", (_scope, { 2: tagName }) =>
     _$.on(_scope[1], "click", function () {
       _tagName(_scope, tagName === child1 ? child2 : child1);
@@ -40,9 +39,7 @@ const _tagName_input = _$.dynamicTagAttrs(0),
   ),
   _tagName = _$.state(
     2,
-    (_scope, tagName) => {
-      _tagName_effect(_scope), _dynamicTag(_scope, tagName);
-    },
-    () => _dynamicTag,
+    (_scope, tagName) => _tagName_effect(_scope),
+    () => _expr_tagName_val,
   );
 init();

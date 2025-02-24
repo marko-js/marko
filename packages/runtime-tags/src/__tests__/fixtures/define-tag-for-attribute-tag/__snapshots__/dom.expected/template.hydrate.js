@@ -1,10 +1,5 @@
-// size: 501 (min) 262 (brotli)
-const _inputThingContent_input = _$.dynamicTagAttrs(1),
-  _dynamicTag = _$.dynamicTag(
-    1,
-    (_scope) => _inputThingContent_input(_scope, () => ({})),
-    () => _inputThingContent_input,
-  ),
+// size: 449 (min) 240 (brotli)
+const _dynamicTag = _$.dynamicTag(1),
   _input_thing_content_ = _$.value(
     6,
     (_scope, input_thing_content) => _dynamicTag(_scope, input_thing_content),

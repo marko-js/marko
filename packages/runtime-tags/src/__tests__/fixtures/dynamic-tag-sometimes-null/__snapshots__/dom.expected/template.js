@@ -2,8 +2,7 @@ export const _template_ = "<!><!><button></button>";
 export const _walks_ = /* replace, over(1), get, over(1) */"D%b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _x_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Body Content", ""));
-const _x_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0", _x_content);
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _scope => _x_input(_scope, () => ({})), () => _x_input);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _x_content);
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
   x
 }) => _$.on(_scope["#button/1"], "click", function () {
@@ -11,7 +10,7 @@ const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
 }));
 const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
   _x_effect(_scope);
-  _dynamicTag(_scope, x || _x_content(_scope));
+  _dynamicTag(_scope, x);
 }, () => _dynamicTag);
 export function _setup_(_scope) {
   _x(_scope, null);

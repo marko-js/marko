@@ -2,8 +2,7 @@ export const _template_ = "<button><!></button>";
 export const _walks_ = /* get, next(1), replace, out(1) */" D%l";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _content_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/1");
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1", _scope => _content_input(_scope, () => ({})), () => _content_input);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1");
 export const _content_ = /* @__PURE__ */_$.value("content", (_scope, content) => _dynamicTag(_scope, content), () => _dynamicTag);
 const _onClick__effect = _$.effect("__tests__/tags/my-button.marko_0_onClick", (_scope, {
   onClick

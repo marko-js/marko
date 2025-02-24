@@ -15,7 +15,9 @@
       "$_inputContent_input": "v",
       "$_count2$customTag_content": "u",
       "$_count$customTag_content": "f",
-      "$_params_2$customTag_content": "g"
+      "$_params_2$customTag_content": "g",
+      "$_expr_input_content_x_y": "l",
+      "$_dynamicTag": "k"
     }
   }
 }

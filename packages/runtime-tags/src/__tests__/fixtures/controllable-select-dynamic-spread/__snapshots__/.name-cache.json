@@ -12,7 +12,9 @@
       "$_tagSelect_input": "m",
       "$_expr_Text_value": "c",
       "$_value": "p",
-      "$_valueChange": "u"
+      "$_valueChange": "u",
+      "$_expr_value_tag": "v",
+      "$_dynamicTag": "f"
     }
   }
 }

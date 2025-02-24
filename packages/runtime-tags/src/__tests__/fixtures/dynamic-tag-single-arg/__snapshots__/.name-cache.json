@@ -6,7 +6,12 @@
       "$_tags0_input": "n",
       "$_expr_Text_x": "r",
       "$_x_effect": "m",
-      "$_x": "a"
+      "$_x": "a",
+      "$_input_": "e",
+      "$_params__": "i",
+      "$_setup_": "c",
+      "$tags": "l",
+      "$_dynamicTag": "d"
     }
   }
 }

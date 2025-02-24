@@ -2,8 +2,7 @@ export const _template_ = "<div><!></div>";
 export const _walks_ = /* get, next(1), replace, out(1) */" D%l";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _inputThingContent_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/1");
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1", _scope => _inputThingContent_input(_scope, () => ({})), () => _inputThingContent_input);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1");
 export const _input_thing_content_ = /* @__PURE__ */_$.value("input_thing_content", (_scope, input_thing_content) => _dynamicTag(_scope, input_thing_content), () => _dynamicTag);
 export const _input_thing_selected_ = /* @__PURE__ */_$.value("input_thing_selected", (_scope, input_thing_selected) => _$.classAttr(_scope["#div/0"], {
   "selected": input_thing_selected

@@ -30,7 +30,7 @@
       <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#text/0=":3,"#text/0:":"b",value:"b","#text/0!":_.b={},"#text/0(":"select"},2:_.b},_.a["#text/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),3,"__tests__/template.marko_1",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#text/0=":3,"#text/0:":"b",tag:"select","#text/0!":_.b={},"#text/0(":"select"},2:_.b},_.a["#text/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),3,"__tests__/template.marko_1",0];M._.w()
     </script>
   </body>
 </html>
@@ -77,7 +77,7 @@ select.dispatchEvent(new window.Event("input", {
       <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#text/0=":3,"#text/0:":"b",value:"b","#text/0!":_.b={},"#text/0(":"select"},2:_.b},_.a["#text/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),3,"__tests__/template.marko_1",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#text/0=":3,"#text/0:":"b",tag:"select","#text/0!":_.b={},"#text/0(":"select"},2:_.b},_.a["#text/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),3,"__tests__/template.marko_1",0];M._.w()
     </script>
   </body>
 </html>
