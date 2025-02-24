@@ -1,4 +1,4 @@
-// size: 18061 (min) 6798 (brotli)
+// size: 17986 (min) 6770 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -156,17 +156,17 @@ var registeredValues = {},
           if ("*" === token) scope[data3] = visit.previousSibling;
           else if ("$" === token) closestBranchMarkers.set(scopeId, visit);
           else if ("[" === token)
-            this.e &&
-              (dataIndex && branchEnd(this.e, visit, visit),
-              this.l.push(this.e)),
-              (this.e = scopeId),
+            this.d &&
+              (dataIndex && branchEnd(this.d, visit, visit),
+              this.l.push(this.d)),
+              (this.d = scopeId),
               (scope.a = visit);
           else if ("]" === token) {
             scope[data3] = visit;
             let curParent = visit.parentNode,
-              startNode = branchEnd(this.e, visit, visit).a;
+              startNode = branchEnd(this.d, visit, visit).a;
             curParent !== startNode.parentNode && curParent.prepend(startNode),
-              (this.e = this.l.pop());
+              (this.d = this.l.pop());
           } else if ("|" === token || "=" === token) {
             let next = data3.indexOf(" "),
               curNode = visit;
@@ -1211,33 +1211,6 @@ function initBranch(renderer, branch, parentNode) {
     : (walk(clone, renderer.y, branch), (branch.a = branch.b = clone)),
     renderer.z && queueRender(branch, renderer.z);
 }
-function dynamicTagAttrs(nodeAccessor, getContent, inputIsArgs) {
-  return (scope, attrsOrOp) => {
-    let renderer = scope[nodeAccessor + "("];
-    if (!renderer || attrsOrOp === DIRTY) return;
-    let childScope = scope[nodeAccessor + "!"];
-    if (attrsOrOp === MARK || attrsOrOp === CLEAN)
-      return renderer.d?.(childScope, attrsOrOp);
-    let content = getContent?.(scope);
-    if ("string" == typeof renderer)
-      setConditionalRenderer(
-        childScope,
-        0,
-        content,
-        createBranchScopeWithTagNameOrRenderer,
-      ),
-        attrs(childScope, 0, attrsOrOp());
-    else if (renderer.d) {
-      let attributes = attrsOrOp();
-      renderer.d(
-        childScope,
-        inputIsArgs
-          ? attributes
-          : [content ? { ...attributes, content: content } : attributes],
-      );
-    }
-  };
-}
 function createRendererWithOwner(template, rawWalks, setup, getArgs) {
   let args,
     id = {},
@@ -1249,7 +1222,7 @@ function createRendererWithOwner(template, rawWalks, setup, getArgs) {
     z: setup,
     k: _clone,
     x: owner,
-    get d() {
+    get e() {
       return (args ||= getArgs?.());
     },
   });
@@ -1285,34 +1258,62 @@ function conditional(nodeAccessor, ...branches) {
       );
   };
 }
-var dynamicTag = function (nodeAccessor, fn, getIntersection) {
-  let rendererAccessor = nodeAccessor + "(",
-    intersection2 =
-      getIntersection &&
-      ((scope, op) => (intersection2 = getIntersection())(scope, op));
-  return (scope, newRendererOrOp) => {
-    if (newRendererOrOp === DIRTY) return;
-    let currentRenderer = scope[rendererAccessor],
-      op = newRendererOrOp;
-    var a, b;
-    newRendererOrOp !== MARK &&
-      newRendererOrOp !== CLEAN &&
-      ((a = currentRenderer),
-      (b = scope[rendererAccessor] =
-        (function (value2) {
+var dynamicTag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
+  let childScopeAccessor = nodeAccessor + "!",
+    rendererAccessor = nodeAccessor + "(";
+  return (scope, newRendererOrOp, getInput) => {
+    if (newRendererOrOp !== DIRTY)
+      if (newRendererOrOp === MARK || newRendererOrOp === CLEAN)
+        scope[rendererAccessor]?.e?.(
+          scope[childScopeAccessor],
+          newRendererOrOp,
+        );
+      else {
+        let newRenderer = (function (value2) {
           if (value2) return value2.content || value2.default || value2;
-        })(newRendererOrOp)),
-      a !== b && (a?.A || 0) !== b?.A
-        ? (setConditionalRenderer(
-            scope,
-            nodeAccessor,
-            scope[rendererAccessor],
-            createBranchScopeWithTagNameOrRenderer,
-          ),
-          fn && fn(scope),
-          (op = DIRTY))
-        : (op = CLEAN)),
-      intersection2?.(scope, op);
+        })(newRendererOrOp);
+        if (
+          ((!(rendererAccessor in scope) ||
+            ((a = scope[rendererAccessor]) !== (b = newRenderer) &&
+              (a?.A || 0) !== b?.A)) &&
+            ((scope[rendererAccessor] = newRenderer),
+            setConditionalRenderer(
+              scope,
+              nodeAccessor,
+              newRenderer || (getContent ? getContent(scope) : void 0),
+              createBranchScopeWithTagNameOrRenderer,
+            ),
+            getTagVar && setTagVar(scope, childScopeAccessor, getTagVar()),
+            getContent &&
+              "string" == typeof newRenderer &&
+              setConditionalRenderer(
+                scope[childScopeAccessor],
+                0,
+                getContent(scope),
+                createBranchScopeWithRenderer,
+              )),
+          newRenderer)
+        ) {
+          let input = getInput?.();
+          "string" == typeof newRenderer
+            ? attrs(
+                scope[childScopeAccessor],
+                0,
+                (inputIsArgs ? input[0] : input) || {},
+              )
+            : newRenderer.e?.(
+                scope[childScopeAccessor],
+                inputIsArgs
+                  ? input
+                  : [
+                      getContent
+                        ? { ...input, content: getContent(scope) }
+                        : input || {},
+                    ],
+              );
+        }
+      }
+    var a, b;
   };
 };
 function setConditionalRenderer(
@@ -1365,7 +1366,7 @@ function loopTo(nodeAccessor, renderer) {
 }
 function loop(nodeAccessor, renderer, forEach) {
   let loopScopeAccessor = nodeAccessor + "!",
-    params = renderer.d;
+    params = renderer.e;
   return (scope, valueOrOp) => {
     if (valueOrOp !== DIRTY)
       if (valueOrOp === MARK || valueOrOp === CLEAN) {
@@ -1553,7 +1554,7 @@ function byFirstArg(name) {
 }
 var classIdToBranch = new Map(),
   compat = {
-    patchConditionals: function (fn) {
+    patchDynamicTag: function (fn) {
       dynamicTag = fn(dynamicTag);
     },
     queueEffect: queueEffect,
@@ -1594,8 +1595,8 @@ var classIdToBranch = new Map(),
               ]?.m[value2[1]],
           )
         : value2,
-    createRenderer(setup, clone, args) {
-      let renderer = createRenderer("", 0, setup, args && (() => args));
+    createRenderer(args, clone) {
+      let renderer = createRenderer("", 0, 0, () => args);
       return (renderer.k = clone), renderer;
     },
     render(out, component, renderer, args) {
@@ -1604,7 +1605,7 @@ var classIdToBranch = new Map(),
         ((branch = classIdToBranch.get(component.id)),
         branch &&
           ((component.scope = branch), classIdToBranch.delete(component.id)));
-      let applyArgs = renderer.d || noop,
+      let applyArgs = renderer.e || noop,
         existing = !1;
       if ("object" == typeof args[0] && "renderBody" in args[0]) {
         let input = args[0],
@@ -1657,7 +1658,7 @@ function mount(input = {}, reference, position) {
       (parentNode = reference.parentNode),
         (nextSibling = reference.nextSibling);
   }
-  let args = this.d,
+  let args = this.e,
     effects = prepareEffects(() => {
       (branch = createScope($global)),
         initBranch(this, branch, parentNode),

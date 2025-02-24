@@ -14,7 +14,7 @@ import { CLEAN, DIRTY, MARK } from "./signals";
 const classIdToBranch = new Map<string, BranchScope>();
 
 export const compat = {
-  patchConditionals: patchDynamicTag,
+  patchDynamicTag,
   queueEffect,
   init(warp10Noop: any) {
     register(SET_SCOPE_REGISTER_ID, (branch: BranchScope & { m5c: string }) => {
@@ -67,11 +67,10 @@ export const compat = {
     return value;
   },
   createRenderer(
-    setup: Renderer["___setup"],
+    args: NonNullable<Renderer["___args"]>,
     clone: Renderer["___clone"],
-    args: Renderer["___args"],
   ) {
-    const renderer = createRenderer("", 0, setup, args && (() => args));
+    const renderer = createRenderer("", 0, 0, () => args);
     renderer.___clone = clone;
     return renderer;
   },

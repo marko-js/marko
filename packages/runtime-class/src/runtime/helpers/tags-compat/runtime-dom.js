@@ -77,20 +77,20 @@ exports.p = function (domCompat) {
 
   const rendererCache = new WeakMap();
 
-  domCompat.patchConditionals((conditional) => (...args) => {
-    const signal = conditional(...args);
-    const skipAttrs = args.length <= 1;
-    return (scope, rendererOrOp) => {
+  domCompat.patchDynamicTag((dynamicTag) => (...args) => {
+    const signal = dynamicTag(...args);
+    return (scope, rendererOrOp, getInput) => {
       return signal(
         scope,
         domCompat.isOp(rendererOrOp)
           ? rendererOrOp
-          : create5to6Renderer(rendererOrOp, skipAttrs),
+          : create5to6Renderer(rendererOrOp),
+        getInput,
       );
     };
   });
 
-  function create5to6Renderer(renderer, skipAttrs) {
+  function create5to6Renderer(renderer) {
     let newRenderer = renderer;
     if (renderer && typeof renderer !== "string") {
       const rendererFromAnywhere =
@@ -121,13 +121,10 @@ exports.p = function (domCompat) {
             };
           }
           newRenderer = domCompat.createRenderer(
-            (scope) =>
-              skipAttrs &&
-              renderAndMorph(scope, rendererFromAnywhere, renderer, {}),
-            () => ___createFragmentNode().startNode,
             (scope, input) =>
               domCompat.isOp(input) ||
               renderAndMorph(scope, rendererFromAnywhere, renderer, input),
+            () => ___createFragmentNode().startNode,
           );
           rendererCache.set(renderer, newRenderer);
         }

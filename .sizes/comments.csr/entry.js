@@ -1,4 +1,4 @@
-// size: 1088 (min) 529 (brotli)
+// size: 1088 (min) 528 (brotli)
 const _expr_comment_comments_id$if_content = intersection(
     2,
     (_scope) => {

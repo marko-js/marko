@@ -670,6 +670,8 @@ export function getSourceBindings(binding: Binding): Set<Binding> {
         if (derived.has(curBinding)) return;
         derived.add(curBinding);
         forEach(curBinding.upstreamExpression.referencedBindings, crawl);
+      } else if (curBinding.type === BindingType.input) {
+        sources.add(binding);
       } else {
         sources.add(curBinding);
       }

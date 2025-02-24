@@ -24,7 +24,6 @@ const pureFunctions: Array<keyof typeof import("../../dom")> = [
   "createRendererWithOwner",
   "createTemplate",
   "dynamicClosure",
-  "dynamicTagAttrs",
   "inChild",
   "intersection",
   "loopClosure",
