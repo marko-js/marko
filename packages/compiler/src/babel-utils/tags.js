@@ -258,7 +258,6 @@ export function loadFileForTag(tag) {
   }
 
   const def = getTagDef(tag);
-  const fs = file.markoOpts.fileSystem;
   const filename = def && def.template;
 
   if (filename) {
@@ -276,7 +275,6 @@ export function loadFileForTag(tag) {
 }
 
 export function loadFileForImport(file, request) {
-  const fs = file.markoOpts.fileSystem;
   const relativeRequest = resolveTagImport(file.path, request);
 
   if (relativeRequest) {

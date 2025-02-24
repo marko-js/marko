@@ -10,7 +10,6 @@ import { AccessorChar, WalkCode } from "../../../common/types";
 import { isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import {
-  addReadToExpression,
   type Binding,
   BindingType,
   createBinding,
@@ -35,14 +34,12 @@ import {
   startSection,
 } from "../../util/sections";
 import {
-  addStatement,
   addValue,
-  buildSignalIntersections,
   getResumeRegisterId,
   getSignal,
-  getSignalFn,
   initValue,
   setSerializedProperty,
+  type Signal,
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import {
@@ -53,7 +50,7 @@ import {
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
-import { currentProgramPath, scopeIdentifier } from "../program";
+import { currentProgramPath } from "../program";
 import { getTagRelativePath } from "./custom-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
@@ -72,19 +69,21 @@ export default {
       const section = getOrCreateSection(tag);
       const tagExtra = (tag.node.extra ??= {});
       const tagBody = tag.get("body");
-      const domBinding = (tagExtra[kDOMBinding] = createBinding(
+      tagExtra[kDOMBinding] = createBinding(
         "#text",
         BindingType.dom,
         section,
         undefined,
         tagExtra,
-      ));
+      );
 
       startSection(tagBody);
       trackVarReferences(tag, BindingType.derived);
       trackParamsReferences(tagBody, BindingType.param);
-      mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
-      addReadToExpression(tag, domBinding);
+      mergeReferences(section, tag.node, [
+        tag.node.name,
+        ...getAllTagReferenceNodes(tag.node),
+      ]);
     },
   },
   translate: {
@@ -102,7 +101,7 @@ export default {
       const nodeRef = tagExtra[kDOMBinding]!;
       const section = getSection(tag);
       const isClassAPI = tagExtra.featureType === "class";
-      const tagNameReferences = node.name.extra?.referencedBindings;
+      const referencedBindings = tagExtra.referencedBindings;
       let tagExpression = node.name;
 
       if (t.isStringLiteral(tagExpression)) {
@@ -258,111 +257,62 @@ export default {
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"));
         const signal = getSignal(section, nodeRef, "dynamicTag");
-        signal.build = () => {
-          return callRuntime(
-            "dynamicTag",
-            getScopeAccessorLiteral(nodeRef),
-            getSignalFn(signal, [scopeIdentifier]),
-            buildSignalIntersections(signal),
-          );
-        };
-        signal.hasDownstreamIntersections = () => true;
-        addValue(
-          section,
-          tagNameReferences,
-          signal,
-          bodySection
-            ? t.logicalExpression(
-                "||",
-                tagExpression,
-                t.callExpression(t.identifier(bodySection.name), [
-                  scopeIdentifier,
-                ]),
-              )
-            : tagExpression,
-        );
-
+        let tagVarSignal: Signal | undefined;
         if (tag.node.var) {
-          const childScopeLiteral = t.stringLiteral(
-            getScopeAccessor(nodeRef) + AccessorChar.ConditionalScope,
-          );
-          const source = initValue(
+          tagVarSignal = initValue(
             // TODO: support destructuring
             tag.node.var.extra!.binding!,
           );
-          source.register = true;
-          source.buildAssignment = (valueSection, value) => {
+          tagVarSignal.register = true;
+          tagVarSignal.buildAssignment = (valueSection, value) => {
             return t.callExpression(importRuntime("tagVarSignalChange"), [
               t.memberExpression(
-                getScopeExpression(source.section, valueSection),
-                childScopeLiteral,
+                getScopeExpression(tagVarSignal!.section, valueSection),
+                t.stringLiteral(
+                  getScopeAccessor(nodeRef) + AccessorChar.ConditionalScope,
+                ),
                 true,
               ),
               value,
             ]);
           };
-
-          addStatement(
-            "render",
-            section,
-            nodeRef,
-            t.expressionStatement(
-              callRuntime(
-                "setTagVar",
-                scopeIdentifier,
-                childScopeLiteral,
-                source.identifier,
-              ),
-            ),
-          );
         }
+
+        signal.build = () => {
+          return callRuntime(
+            "dynamicTag",
+            getScopeAccessorLiteral(nodeRef),
+            bodySection && t.identifier(bodySection.name),
+            tagVarSignal
+              ? t.arrowFunctionExpression([], tagVarSignal.identifier)
+              : undefined,
+            hasMultipleArgs && t.numericLiteral(1),
+          );
+        };
 
         if (args.length) {
           const argsOrInput = hasMultipleArgs
             ? t.arrayExpression(args)
             : (args[0] as t.Expression);
-          const attrsGetter = t.arrowFunctionExpression(
-            [],
-            statements.length
-              ? t.blockStatement(
-                  statements.concat(t.returnStatement(argsOrInput)),
-                )
-              : argsOrInput,
-          );
-          const id = currentProgramPath.scope.generateUidIdentifier(
-            tag.get("name").toString() + "_input",
-          );
-          let added = false;
-          addValue(
-            section,
-            tagExtra.referencedBindings,
-            {
-              get identifier() {
-                if (!added) {
-                  currentProgramPath.pushContainer(
-                    "body",
-                    t.variableDeclaration("const", [
-                      t.variableDeclarator(
-                        id,
-                        callRuntime(
-                          "dynamicTagAttrs",
-                          getScopeAccessorLiteral(nodeRef),
-                          bodySection && t.identifier(bodySection.name),
-                          hasMultipleArgs && t.numericLiteral(1),
-                        ),
-                      ),
-                    ]),
-                  );
-                  added = true;
-                }
-                return id;
-              },
-              hasDownstreamIntersections: () => true,
-            },
-            attrsGetter,
-          );
+          if (
+            !t.isObjectExpression(argsOrInput) ||
+            argsOrInput.properties.length
+          ) {
+            signal.extraArgs = [
+              t.arrowFunctionExpression(
+                [],
+                statements.length
+                  ? t.blockStatement(
+                      statements.concat(t.returnStatement(argsOrInput)),
+                    )
+                  : argsOrInput,
+              ),
+            ];
+          }
         }
 
+        signal.hasDownstreamIntersections = () => true;
+        addValue(section, referencedBindings, signal, tagExpression);
         tag.remove();
       }
     },

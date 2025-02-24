@@ -7,6 +7,7 @@ import {
   NodeType,
   type Scope,
 } from "../common/types";
+import { attrs } from "./dom";
 import { reconcile } from "./reconcile";
 import {
   createBranchScopeWithRenderer,
@@ -18,7 +19,14 @@ import {
   insertBranchBefore,
   removeAndDestroyBranch,
 } from "./scope";
-import { CLEAN, DIRTY, MARK, type Signal, type SignalOp } from "./signals";
+import {
+  CLEAN,
+  DIRTY,
+  MARK,
+  setTagVar,
+  type Signal,
+  type SignalOp,
+} from "./signals";
 
 export function conditional(
   nodeAccessor: Accessor,
@@ -50,44 +58,72 @@ export function patchDynamicTag(
 }
 export let dynamicTag = function dynamicTag(
   nodeAccessor: Accessor,
-  fn?: ((scope: Scope) => void) | 0,
-  getIntersection?: () => Signal<never>,
+  getContent?: ((scope: Scope) => Renderer) | 0,
+  getTagVar?: (() => Signal<unknown>) | 0,
+  inputIsArgs?: 1,
 ): Signal<Renderer | string | undefined> {
+  const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
-  let intersection: Signal<never> | undefined =
-    getIntersection &&
-    ((scope, op) => (intersection = getIntersection!())(scope, op));
-
-  return (scope, newRendererOrOp) => {
+  return (scope, newRendererOrOp, getInput?: () => any) => {
     if (newRendererOrOp === DIRTY) return;
-
-    const currentRenderer = scope[rendererAccessor] as
-      | Renderer
-      | string
-      | undefined;
-    let op = newRendererOrOp as SignalOp;
-
-    if (newRendererOrOp !== MARK && newRendererOrOp !== CLEAN) {
+    if (newRendererOrOp === MARK || newRendererOrOp === CLEAN) {
+      scope[rendererAccessor]?.___args?.(
+        scope[childScopeAccessor],
+        newRendererOrOp,
+      );
+    } else {
+      const newRenderer = normalizeDynamicRenderer<Renderer>(newRendererOrOp);
       if (
-        isDifferentRenderer(
-          currentRenderer,
-          (scope[rendererAccessor] =
-            normalizeDynamicRenderer<Renderer>(newRendererOrOp)),
-        )
+        !(rendererAccessor in scope) ||
+        isDifferentRenderer(scope[rendererAccessor], newRenderer)
       ) {
+        scope[rendererAccessor] = newRenderer;
         setConditionalRenderer(
           scope,
           nodeAccessor,
-          scope[rendererAccessor],
+          newRenderer || (getContent ? getContent(scope) : undefined),
           createBranchScopeWithTagNameOrRenderer,
         );
-        fn && fn(scope);
-        op = DIRTY;
-      } else {
-        op = CLEAN;
+
+        if (getTagVar) {
+          setTagVar(scope, childScopeAccessor, getTagVar());
+        }
+
+        if (getContent && typeof newRenderer === "string") {
+          setConditionalRenderer(
+            scope[childScopeAccessor],
+            MARKO_DEBUG ? `#${newRenderer}/0` : 0,
+            getContent(scope),
+            createBranchScopeWithRenderer,
+          );
+        }
+      }
+
+      if (newRenderer) {
+        const input = getInput?.();
+        if (typeof newRenderer === "string") {
+          attrs(
+            scope[childScopeAccessor],
+            MARKO_DEBUG ? `#${newRenderer}/0` : 0,
+            (inputIsArgs ? input[0] : input) || {},
+          );
+        } else {
+          newRenderer.___args?.(
+            scope[childScopeAccessor],
+            inputIsArgs
+              ? input
+              : [
+                  getContent
+                    ? {
+                        ...input,
+                        content: getContent(scope),
+                      }
+                    : input || {},
+                ],
+          );
+        }
       }
     }
-    intersection?.(scope, op);
   };
 };
 

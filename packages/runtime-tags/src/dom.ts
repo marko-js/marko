@@ -38,11 +38,7 @@ export {
 } from "./dom/dom";
 export { on } from "./dom/event";
 export { run } from "./dom/queue";
-export {
-  createRenderer,
-  createRendererWithOwner,
-  dynamicTagAttrs,
-} from "./dom/renderer";
+export { createRenderer, createRendererWithOwner } from "./dom/renderer";
 export { init, nodeRef, register, registerBoundSignal } from "./dom/resume";
 export {
   conditionalClosure,

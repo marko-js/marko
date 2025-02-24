@@ -1,16 +1,9 @@
-import {
-  type Accessor,
-  AccessorChar,
-  type BranchScope,
-  NodeType,
-  type Scope,
-} from "../common/types";
-import { setConditionalRenderer } from "./control-flow";
-import { attrs, insertChildNodes } from "./dom";
+import { type BranchScope, NodeType, type Scope } from "../common/types";
+import { insertChildNodes } from "./dom";
 import { parseHTML } from "./parse-html";
 import { queueRender } from "./queue";
 import { createScope } from "./scope";
-import { CLEAN, DIRTY, MARK, type Signal, type SignalOp } from "./signals";
+import type { Signal } from "./signals";
 import { trimWalkString, walk } from "./walker";
 
 export type Renderer = {
@@ -113,65 +106,6 @@ export function initBranch(
   if (renderer.___setup) {
     queueRender(branch, renderer.___setup);
   }
-}
-
-export function dynamicTagAttrs(
-  nodeAccessor: Accessor,
-  getContent?: (scope: Scope) => Renderer,
-  inputIsArgs?: boolean,
-) {
-  return (
-    scope: Scope,
-    attrsOrOp: (() => Record<string, unknown>) | SignalOp,
-  ) => {
-    const renderer: Renderer | string | undefined =
-      scope[nodeAccessor + AccessorChar.ConditionalRenderer];
-
-    if (!renderer || attrsOrOp === DIRTY) {
-      return;
-    }
-
-    const childScope = scope[nodeAccessor + AccessorChar.ConditionalScope];
-
-    if (attrsOrOp === MARK || attrsOrOp === CLEAN) {
-      return (renderer as Renderer).___args?.(childScope, attrsOrOp);
-    }
-
-    const content = getContent?.(scope);
-    if (typeof renderer === "string") {
-      // This will always be 0 because in dynamicRenderer we used WalkCodes.Get
-      const nodeAccessor = MARKO_DEBUG ? `#${renderer}/0` : 0;
-
-      if (MARKO_DEBUG && renderer === "textarea" && content) {
-        throw new Error(
-          "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
-        );
-      }
-
-      setConditionalRenderer(
-        childScope,
-        nodeAccessor,
-        content,
-        createBranchScopeWithTagNameOrRenderer,
-      );
-      attrs(childScope, nodeAccessor, attrsOrOp());
-    } else if (renderer.___args) {
-      const attributes = attrsOrOp();
-      renderer.___args(
-        childScope,
-        inputIsArgs
-          ? attributes
-          : [
-              content
-                ? {
-                    ...attributes,
-                    content,
-                  }
-                : attributes,
-            ],
-      );
-    }
-  };
 }
 
 export function createRendererWithOwner(

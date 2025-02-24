@@ -518,7 +518,7 @@ function writeRegistered(
 
       state.buf.push(access + "(" + ensureId(state, scopeRef) + ")");
     } else {
-      const pos = state.buf.push("");
+      const pos = state.buf.push("") - 1;
       const assigns = state.assigned.size;
       writeProp(state, scope, parent, "");
       const scopeRef = parent && state.refs.get(scope);
@@ -533,7 +533,7 @@ function writeRegistered(
         fnRef.init = access + "(" + scopeId + ")";
         fnRef.assigns += ensureId(state, parent) + toAccess(accessor) + "=";
       } else {
-        state.buf[pos - 2] += access + "(";
+        state.buf[pos] = access + "(" + state.buf[pos];
         state.buf.push(")");
       }
     }
