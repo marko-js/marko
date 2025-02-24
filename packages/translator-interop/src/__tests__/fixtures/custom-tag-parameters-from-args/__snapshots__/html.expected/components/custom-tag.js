@@ -8,11 +8,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.dynamicTagArgs(_scope0_id, "#text/3", input.content, [x, y]);
   _$.writeEffect(_scope0_id, "__tests__/components/custom-tag.marko_0_x_y");
   _$.writeScope(_scope0_id, {
+    input_content: input.content,
     x: x,
     y: y,
     "#text/3!": _$.writeExistingScope(_dynamicScope),
     "#text/3(": _$.normalizeDynamicRenderer(input.content)
   }, "__tests__/components/custom-tag.marko", 0, {
+    input_content: ["input.content"],
     x: "1:6",
     y: "2:6"
   });

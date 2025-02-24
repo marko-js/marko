@@ -18,11 +18,10 @@ const _setup$define_content = _scope => {
   _y$define_content(_scope, 1);
 };
 const _define_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div>Hello <!> <!></div><button> </button>", /* next(1), over(1), replace, over(2), replace, out(1), get, next(1), get */"Db%c%l D ", _setup$define_content, () => _params_2$define_content));
-const _MyTag_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/0");
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _scope => _MyTag_input(_scope, () => ({
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
+const _MyTag = /* @__PURE__ */_$.value("MyTag", (_scope, MyTag) => _dynamicTag(_scope, MyTag, () => ({
   name: "Ryan"
-})), () => _MyTag_input);
-const _MyTag = /* @__PURE__ */_$.value("MyTag", (_scope, MyTag) => _dynamicTag(_scope, MyTag), () => _dynamicTag);
+})), () => _dynamicTag);
 export function _setup_(_scope) {
   _MyTag(_scope, {
     content: _define_content(_scope)

@@ -3,13 +3,13 @@ export const _walks_ = /* get, over(3), beginChild, _customTag_walks, endChild, 
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _customTag, _className_ as _customTag_input_class, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./tags/custom-tag.marko";
 const _test_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello", ""));
-const _inputTest_input = /* @__PURE__ */_$.dynamicTagAttrs("#text/3");
-const _expr_Text_c_d = /* @__PURE__ */_$.intersection(3, _scope => {
+const _expr_input_test_c_d = /* @__PURE__ */_$.intersection(3, _scope => {
   const {
+    input_test,
     c,
     d
   } = _scope;
-  _inputTest_input(_scope, () => ({
+  _dynamicTag(_scope, input_test, () => ({
     class: ["a", {
       b: c,
       d
@@ -22,7 +22,7 @@ const _expr_Text_c_d = /* @__PURE__ */_$.intersection(3, _scope => {
       content: _test_content(_scope)
     })
   }));
-}, () => _inputTest_input);
+}, () => _dynamicTag);
 const _expr_c_d = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     c,
@@ -37,10 +37,10 @@ const _expr_c_d = /* @__PURE__ */_$.intersection(2, _scope => {
     d
   }]);
 }, () => /* @__PURE__ */_$.inChild("#childScope/1", _customTag_input_class));
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3", 0, () => _expr_Text_c_d);
-export const _d_ = /* @__PURE__ */_$.value("d", 0, () => _$.intersections([_expr_c_d, _expr_Text_c_d]));
-export const _c_ = /* @__PURE__ */_$.value("c", 0, () => _$.intersections([_expr_c_d, _expr_Text_c_d]));
-export const _input_test_ = /* @__PURE__ */_$.value("input_test", (_scope, input_test) => _dynamicTag(_scope, input_test), () => _dynamicTag);
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3");
+export const _d_ = /* @__PURE__ */_$.value("d", 0, () => _$.intersections([_expr_c_d, _expr_input_test_c_d]));
+export const _c_ = /* @__PURE__ */_$.value("c", 0, () => _$.intersections([_expr_c_d, _expr_input_test_c_d]));
+export const _input_test_ = /* @__PURE__ */_$.value("input_test", 0, () => _expr_input_test_c_d);
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_test_(_scope, input.test);
   _c_(_scope, input.c);

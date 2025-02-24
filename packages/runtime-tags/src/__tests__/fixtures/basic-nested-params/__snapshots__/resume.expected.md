@@ -24,7 +24,7 @@
       <!--M_]2 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.d={x:1,y:2,"#childScope/1":_.e={value:1,"#text/0!":_.a={outer:1,"#childScope/0":_.c={value:2,"#text/0!":_.b={}}}}},2:_.e,3:_.a,4:_.c,5:_.b},_.b._=_.a,_.c["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.a),_.a._=_.d,_.e["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.d),_.f),5,"__tests__/template.marko_2_outer/subscriber",3,"__tests__/template.marko_1_y/subscriber",1,"__tests__/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={x:1,y:2,"#childScope/1":_.b={value:1,"#text/0!":_.c={outer:1,"#childScope/0":_.d={value:2,"#text/0!":_.e={}}}}},2:_.b,3:_.c,4:_.d,5:_.e},_.b.content=_.b["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d.content=_.d["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,_.f),5,"__tests__/template.marko_2_outer/subscriber",3,"__tests__/template.marko_1_y/subscriber",1,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -60,7 +60,7 @@ container.querySelector("button").click();
       <!--M_]2 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.d={x:1,y:2,"#childScope/1":_.e={value:1,"#text/0!":_.a={outer:1,"#childScope/0":_.c={value:2,"#text/0!":_.b={}}}}},2:_.e,3:_.a,4:_.c,5:_.b},_.b._=_.a,_.c["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.a),_.a._=_.d,_.e["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.d),_.f),5,"__tests__/template.marko_2_outer/subscriber",3,"__tests__/template.marko_1_y/subscriber",1,"__tests__/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={x:1,y:2,"#childScope/1":_.b={value:1,"#text/0!":_.c={outer:1,"#childScope/0":_.d={value:2,"#text/0!":_.e={}}}}},2:_.b,3:_.c,4:_.d,5:_.e},_.b.content=_.b["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d.content=_.d["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,_.f),5,"__tests__/template.marko_2_outer/subscriber",3,"__tests__/template.marko_1_y/subscriber",1,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -100,7 +100,7 @@ container.querySelector("button").click();
       <!--M_]2 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.d={x:1,y:2,"#childScope/1":_.e={value:1,"#text/0!":_.a={outer:1,"#childScope/0":_.c={value:2,"#text/0!":_.b={}}}}},2:_.e,3:_.a,4:_.c,5:_.b},_.b._=_.a,_.c["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.a),_.a._=_.d,_.e["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.d),_.f),5,"__tests__/template.marko_2_outer/subscriber",3,"__tests__/template.marko_1_y/subscriber",1,"__tests__/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={x:1,y:2,"#childScope/1":_.b={value:1,"#text/0!":_.c={outer:1,"#childScope/0":_.d={value:2,"#text/0!":_.e={}}}}},2:_.b,3:_.c,4:_.d,5:_.e},_.b.content=_.b["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d.content=_.d["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,_.f),5,"__tests__/template.marko_2_outer/subscriber",3,"__tests__/template.marko_1_y/subscriber",1,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -140,7 +140,7 @@ container.querySelector("button").click();
       <!--M_]2 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.d={x:1,y:2,"#childScope/1":_.e={value:1,"#text/0!":_.a={outer:1,"#childScope/0":_.c={value:2,"#text/0!":_.b={}}}}},2:_.e,3:_.a,4:_.c,5:_.b},_.b._=_.a,_.c["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.a),_.a._=_.d,_.e["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.d),_.f),5,"__tests__/template.marko_2_outer/subscriber",3,"__tests__/template.marko_1_y/subscriber",1,"__tests__/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={x:1,y:2,"#childScope/1":_.b={value:1,"#text/0!":_.c={outer:1,"#childScope/0":_.d={value:2,"#text/0!":_.e={}}}}},2:_.b,3:_.c,4:_.d,5:_.e},_.b.content=_.b["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d.content=_.d["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,_.f),5,"__tests__/template.marko_2_outer/subscriber",3,"__tests__/template.marko_1_y/subscriber",1,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

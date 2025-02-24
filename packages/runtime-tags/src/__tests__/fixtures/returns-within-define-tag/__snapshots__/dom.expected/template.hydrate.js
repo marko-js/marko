@@ -1,4 +1,4 @@
-// size: 1358 (min) 425 (brotli)
+// size: 1399 (min) 451 (brotli)
 const _expr_value_call$define_content2 = _$.intersection(
     2,
     (_scope) => {
@@ -69,46 +69,48 @@ _$.register(
     () => _params_2$define_content,
   ),
 );
-const _Twice_input = _$.dynamicTagAttrs(3),
-  _expr_Text_clickTwiceCount = _$.intersection(
+const _expr_Twice_clickTwiceCount = _$.intersection(
     2,
     (_scope) => {
-      _Twice_input(_scope, () => ({ value: _onClickTwice2(_scope) }));
+      const { 9: Twice, 10: clickTwiceCount } = _scope;
+      _dynamicTag2(_scope, Twice, () => ({ value: _onClickTwice2(_scope) }));
     },
-    () => _Twice_input,
+    () => _dynamicTag2,
   ),
-  _Once_input = _$.dynamicTagAttrs(0),
-  _expr_Text_clickOnceCount = _$.intersection(
+  _expr_Once_clickOnceCount = _$.intersection(
     2,
     (_scope) => {
-      _Once_input(_scope, () => ({ value: _onClickOnce2(_scope) }));
+      const { 6: Once, 7: clickOnceCount } = _scope;
+      _dynamicTag(_scope, Once, () => ({ value: _onClickOnce2(_scope) }));
     },
-    () => _Once_input,
+    () => _dynamicTag,
   ),
+  _dynamicTag2 = _$.dynamicTag(3, 0, () => _onClickTwice),
+  _dynamicTag = _$.dynamicTag(0, 0, () => _onClickOnce),
   _onClickTwice_effect = _$.effect("a6", (_scope, { 11: onClickTwice }) =>
     _$.on(_scope[4], "click", onClickTwice),
-  );
-_$.registerBoundSignal(
-  "a7",
-  _$.value(11, (_scope, onClickTwice) => _onClickTwice_effect(_scope)),
-);
-const _clickTwiceCount = _$.state(
+  ),
+  _onClickTwice = _$.registerBoundSignal(
+    "a7",
+    _$.value(11, (_scope, onClickTwice) => _onClickTwice_effect(_scope)),
+  ),
+  _clickTwiceCount = _$.state(
     10,
     (_scope, clickTwiceCount) => _$.data(_scope[5], clickTwiceCount),
-    () => _expr_Text_clickTwiceCount,
+    () => _expr_Twice_clickTwiceCount,
   ),
   _onClickOnce_effect = _$.effect("a8", (_scope, { 8: onClickOnce }) =>
     _$.on(_scope[1], "click", onClickOnce),
+  ),
+  _onClickOnce = _$.registerBoundSignal(
+    "a9",
+    _$.value(8, (_scope, onClickOnce) => _onClickOnce_effect(_scope)),
+  ),
+  _clickOnceCount = _$.state(
+    7,
+    (_scope, clickOnceCount) => _$.data(_scope[2], clickOnceCount),
+    () => _expr_Once_clickOnceCount,
   );
-_$.registerBoundSignal(
-  "a9",
-  _$.value(8, (_scope, onClickOnce) => _onClickOnce_effect(_scope)),
-);
-const _clickOnceCount = _$.state(
-  7,
-  (_scope, clickOnceCount) => _$.data(_scope[2], clickOnceCount),
-  () => _expr_Text_clickOnceCount,
-);
 function _return(_scope, { 2: value, 3: call } = _scope) {
   return function () {
     call && (_call$define_content2(_scope, call - 1), value());

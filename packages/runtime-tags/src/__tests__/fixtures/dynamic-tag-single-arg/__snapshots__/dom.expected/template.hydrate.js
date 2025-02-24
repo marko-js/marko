@@ -1,13 +1,13 @@
-// size: 218 (min) 164 (brotli)
-const _tags0_input = _$.dynamicTagAttrs(2),
-  _expr_Text_x = _$.intersection(
-    2,
-    (_scope) => {
-      const { 3: x } = _scope;
-      _tags0_input(_scope, () => x);
-    },
-    () => _tags0_input,
-  ),
+// size: 353 (min) 218 (brotli)
+const _input_ = _$.value(2, (_scope, input) => _$.data(_scope[0], input)),
+  _params__ = _$.value(1, (_scope, _params_) => _input_(_scope, _params_[0]));
+function _setup_(_scope) {
+  _$.tagVarSignal(_scope, "hello from other");
+}
+const tags = [
+    _$.createTemplate("a", "<div> </div>", "D l", _setup_, () => _params__),
+  ],
+  _dynamicTag = _$.dynamicTag(2),
   _x_effect = _$.effect("b0", (_scope, { 3: x }) =>
     _$.on(_scope[0], "click", function () {
       _x(_scope, x + 1);
@@ -16,8 +16,10 @@ const _tags0_input = _$.dynamicTagAttrs(2),
   _x = _$.state(
     3,
     (_scope, x) => {
-      _$.data(_scope[1], x), _x_effect(_scope);
+      _$.data(_scope[1], x),
+        _x_effect(_scope),
+        _dynamicTag(_scope, tags[0], () => x);
     },
-    () => _expr_Text_x,
+    () => _dynamicTag,
   );
 init();

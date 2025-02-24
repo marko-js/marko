@@ -18,7 +18,8 @@
       "$_dynamicTagName": "f",
       "$_tagName_effect": "h",
       "$_tagName": "p",
-      "$_dynamicTag": "g"
+      "$_dynamicTag": "g",
+      "$_expr_tagName_val": "b"
     }
   }
 }

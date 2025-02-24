@@ -1,10 +1,5 @@
-// size: 525 (min) 287 (brotli)
-const _content_input = _$.dynamicTagAttrs(1),
-  _dynamicTag = _$.dynamicTag(
-    1,
-    (_scope) => _content_input(_scope, () => ({})),
-    () => _content_input,
-  ),
+// size: 473 (min) 257 (brotli)
+const _dynamicTag = _$.dynamicTag(1),
   _attrs__effect = _$.effect("a0", (_scope) => _$.attrsEvents(_scope, 0)),
   _content_ = _$.value(
     4,

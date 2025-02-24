@@ -1,20 +1,15 @@
-// size: 791 (min) 377 (brotli)
-const _content_input = _$.dynamicTagAttrs(0),
-  _expr_Text_value = _$.intersection(
+// size: 749 (min) 364 (brotli)
+const _expr_content_value = _$.intersection(
     2,
     (_scope) => {
-      const { 4: value } = _scope;
-      _content_input(_scope, () => value);
+      const { 3: content, 4: value } = _scope;
+      _dynamicTag(_scope, content, () => value);
     },
-    () => _content_input,
-  ),
-  _dynamicTag = _$.dynamicTag(0, 0, () => _expr_Text_value),
-  _value_ = _$.value(4, 0, () => _expr_Text_value),
-  _content_ = _$.value(
-    3,
-    (_scope, content) => _dynamicTag(_scope, content),
     () => _dynamicTag,
   ),
+  _dynamicTag = _$.dynamicTag(),
+  _value_ = _$.value(4, 0, () => _expr_content_value),
+  _content_ = _$.value(3, 0, () => _expr_content_value),
   _inner$child_content = _$.value(3, (_scope, inner) =>
     _$.data(_scope[1], inner),
   ),
