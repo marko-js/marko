@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.37.17
+
+### Patch Changes
+
+- [#2531](https://github.com/marko-js/marko/pull/2531) [`6065ff2`](https://github.com/marko-js/marko/commit/6065ff2563335f622376bca1dafc94ed6e0b2aa6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure & is escaped for server side attributes to improve consistency with csr.
+
+- [#2532](https://github.com/marko-js/marko/pull/2532) [`5c8c549`](https://github.com/marko-js/marko/commit/5c8c549a324eedfed800a70b44de35bde3de7899) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update tags api interop.
+
 ## 5.37.16
 
 ### Patch Changes
