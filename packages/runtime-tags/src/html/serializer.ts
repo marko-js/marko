@@ -10,6 +10,13 @@ interface Registered {
   scope: unknown;
   getter: boolean;
 }
+interface Call {
+  value: unknown;
+  object: unknown;
+  method?: string;
+  spread?: boolean;
+}
+
 type TypedArray =
   | Int8Array
   | Uint8Array
@@ -274,6 +281,7 @@ class State {
   refs = new WeakMap<WeakKey, Reference>();
   assigned = new Set<Reference>();
   boundary: Boundary | undefined = undefined;
+  calls: Call[] = [];
 }
 
 class Reference {
@@ -325,7 +333,8 @@ export class Serializer {
       this.#state.boundary = boundary;
       return writeRoot(this.#state, val);
     } finally {
-      this.#flush();
+      this.#state.flush++;
+      this.#state.buf = [];
     }
   }
   nextId() {
@@ -336,10 +345,15 @@ export class Serializer {
     this.#state.refs.set(symbol, new Reference(null, null, 0, null, id));
     return symbol;
   }
-  #flush() {
-    this.#state.flush++;
-    this.#state.buf = [];
-    this.#state.assigned = new Set();
+  writeCall(
+    value: unknown,
+    object: unknown,
+    method?: string,
+    spread?: boolean,
+  ) {
+    const state = this.#state;
+    state.calls.push({ value, object, method, spread });
+    state.flushed = true;
   }
 }
 
@@ -386,7 +400,7 @@ export function stringify(val: unknown) {
 }
 
 function writeRoot(state: State, root: unknown) {
-  const { buf, assigned } = state;
+  const { buf, assigned, calls } = state;
   const hadBuf = buf.length !== 0;
   let result = "";
   if (hadBuf) {
@@ -397,8 +411,8 @@ function writeRoot(state: State, root: unknown) {
     const rootRef = state.refs.get(root as object);
     if (rootRef) {
       const rootId = ensureId(state, rootRef);
-      if (assigned.size) {
-        assigned.delete(rootRef);
+      if (assigned.size || calls.length) {
+        assigned.delete(rootRef!);
         writeAssigned(state);
         buf.push("," + rootRef.assigns + rootId);
       }
@@ -424,10 +438,55 @@ function writeRoot(state: State, root: unknown) {
 }
 
 function writeAssigned(state: State) {
-  for (const valueRef of state.assigned) {
-    if (valueRef.assigns || valueRef.init) {
-      state.buf.push("," + valueRef.assigns + (valueRef.init || valueRef.id));
-      valueRef.init = "";
+  if (state.assigned.size) {
+    for (const valueRef of state.assigned) {
+      if (valueRef.assigns || valueRef.init) {
+        state.buf.push("," + valueRef.assigns + (valueRef.init || valueRef.id));
+        valueRef.init = "";
+      }
+    }
+    state.assigned = new Set();
+  }
+  if (state.calls.length) {
+    for (const { value, object, method, spread } of state.calls) {
+      const objectStartIndex = state.buf.push(
+        state.buf.length === 0 ? "(" : ",(",
+      );
+
+      if (writeProp(state, object, null, "")) {
+        const objectRef = state.refs.get(object as object);
+        if (objectRef && !objectRef.id) {
+          objectRef.id = nextRefAccess(state);
+          state.buf[objectStartIndex] =
+            objectRef.id + "=" + state.buf[objectStartIndex];
+        }
+      } else {
+        state.buf.push("void 0");
+      }
+
+      const valueStartIndex = state.buf.push(
+        ")" +
+          (method === undefined ? "" : toAccess(toObjectKey(method))) +
+          "(" +
+          (spread ? "..." : ""),
+      );
+      if (writeProp(state, value, null, "")) {
+        const valueRef = state.refs.get(value as object);
+        if (valueRef && !valueRef.id) {
+          valueRef.id = nextRefAccess(state);
+          state.buf[valueStartIndex] =
+            valueRef.id + "=" + state.buf[valueStartIndex];
+        }
+      } else {
+        state.buf.push("void 0");
+      }
+
+      state.buf.push(")");
+    }
+    state.calls = [];
+
+    if (state.assigned.size) {
+      writeAssigned(state);
     }
   }
 }
