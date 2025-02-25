@@ -1,4 +1,4 @@
-// size: 1088 (min) 528 (brotli)
+// size: 1044 (min) 512 (brotli)
 const _expr_comment_comments_id$if_content = intersection(
     2,
     (_scope) => {
@@ -48,32 +48,24 @@ const _expr_comment_comments_id$if_content = intersection(
     attr(_scope[0], "id", id), _id$if_content(_scope);
   }),
   _i$for_content = value(9, 0, () => _expr_input_path_i$for_content),
-  _comment_comments$for_content = value(
-    8,
-    (_scope, comment_comments) => {
-      _if$for_content(_scope, comment_comments ? 0 : 1),
-        _comment_comments$if_content(_scope);
-    },
-    () => _if$for_content,
-  ),
+  _comment_comments$for_content = value(8, (_scope, comment_comments) => {
+    _if$for_content(_scope, comment_comments ? 0 : 1),
+      _comment_comments$if_content(_scope);
+  }),
   _comment_text$for_content = value(7, (_scope, comment_text) =>
     data(_scope[1], comment_text),
   ),
-  _comment$for_content = value(
-    6,
-    (_scope, comment) => {
-      _comment_text$for_content(_scope, comment?.text),
-        _comment_comments$for_content(_scope, comment?.comments);
-    },
-    () => _comment_comments$for_content,
-  ),
+  _comment$for_content = value(6, (_scope, comment) => {
+    _comment_text$for_content(_scope, comment?.text),
+      _comment_comments$for_content(_scope, comment?.comments);
+  }),
   _params_2$for_content = value(
     5,
     (_scope, _params_2) => {
       _comment$for_content(_scope, _params_2[0]),
         _i$for_content(_scope, _params_2[1]);
     },
-    () => intersections([_comment$for_content, _i$for_content]),
+    () => _i$for_content,
   ),
   _input_path$for_content = loopClosure(
     4,
@@ -95,19 +87,12 @@ const _expr_comment_comments_id$if_content = intersection(
   _input_path_ = value(4, (_scope, input_path) =>
     _input_path$for_content(_scope),
   ),
-  _input_comments_ = value(
-    3,
-    (_scope, input_comments) => _for(_scope, [input_comments]),
-    () => _for,
+  _input_comments_ = value(3, (_scope, input_comments) =>
+    _for(_scope, [input_comments]),
   ),
-  _input_$1 = value(
-    2,
-    (_scope, input) => {
-      _input_comments_(_scope, input.comments),
-        _input_path_(_scope, input.path);
-    },
-    () => _input_comments_,
-  ),
+  _input_$1 = value(2, (_scope, input) => {
+    _input_comments_(_scope, input.comments), _input_path_(_scope, input.path);
+  }),
   _input_ = value(
     2,
     (_scope, input) => {

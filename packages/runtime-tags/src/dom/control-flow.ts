@@ -28,22 +28,14 @@ import {
   type SignalOp,
 } from "./signals";
 
-export function conditional(
-  nodeAccessor: Accessor,
-  ...branches: Renderer[]
-): Signal<number> {
+export function conditional(nodeAccessor: Accessor, ...branches: Renderer[]) {
   const branchAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
-  return (scope, newBranchIndexOrOp) => {
-    if (
-      newBranchIndexOrOp !== (scope[branchAccessor] as number) &&
-      newBranchIndexOrOp !== DIRTY &&
-      newBranchIndexOrOp !== MARK &&
-      newBranchIndexOrOp !== CLEAN
-    ) {
+  return (scope: Scope, newBranch: number) => {
+    if (newBranch !== (scope[branchAccessor] as number)) {
       setConditionalRenderer(
         scope,
         nodeAccessor,
-        branches[(scope[branchAccessor] = newBranchIndexOrOp)],
+        branches[(scope[branchAccessor] = newBranch)],
         createBranchScopeWithRenderer,
       );
     }

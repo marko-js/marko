@@ -1,4 +1,4 @@
-// size: 370 (min) 210 (brotli)
+// size: 362 (min) 198 (brotli)
 const _count$if_content = _$.conditionalClosure(4, 2, 0, (_scope, count) =>
     _$.data(_scope[0], count),
   ),
@@ -20,11 +20,7 @@ const _count$if_content = _$.conditionalClosure(4, 2, 0, (_scope, count) =>
       _show(_scope, !show);
     }),
   ),
-  _show = _$.state(
-    3,
-    (_scope, show) => {
-      _show_effect(_scope), _if(_scope, show ? 0 : 1);
-    },
-    () => _if,
-  );
+  _show = _$.state(3, (_scope, show) => {
+    _show_effect(_scope), _if(_scope, show ? 0 : 1);
+  });
 init();

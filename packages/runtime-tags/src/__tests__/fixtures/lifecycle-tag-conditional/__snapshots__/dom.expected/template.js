@@ -30,7 +30,7 @@ const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
 const _show = /* @__PURE__ */_$.state("show", (_scope, show) => {
   _show_effect(_scope);
   _if(_scope, show ? 0 : 1);
-}, () => _if);
+});
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
   x
 }) => _$.on(_scope["#button/1"], "click", function () {

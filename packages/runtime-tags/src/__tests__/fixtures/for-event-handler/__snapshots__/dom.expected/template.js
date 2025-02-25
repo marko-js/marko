@@ -19,7 +19,7 @@ const _for = /* @__PURE__ */_$.loopTo("#text/0", _for_content);
 const _num = /* @__PURE__ */_$.state("num", (_scope, num) => {
   _for(_scope, [num, 0, 1]);
   _num$for_content(_scope);
-}, () => _for);
+});
 export function _setup_(_scope) {
   _num(_scope, 0);
 }

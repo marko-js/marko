@@ -1,4 +1,4 @@
-// size: 1420 (min) 528 (brotli)
+// size: 1398 (min) 525 (brotli)
 const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _expr_name_write_effect = _$.effect("a0", (_scope, { 5: name, 6: write }) => {
     write(`${name} mounted`),
@@ -44,7 +44,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     "b1",
     7,
     (_scope, showInner) => _if$if_content(_scope, showInner ? 0 : 1),
-    () => _if$if_content,
+    0,
     (_scope) => _scope._._,
   ),
   _setup$if_content2 = (_scope) => {
@@ -71,7 +71,6 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     4,
     0,
     (_scope, showMiddle) => _if$if_content2(_scope, showMiddle ? 0 : 1),
-    () => _if$if_content2,
   ),
   _setup$if_content = (_scope) => {
     _write$if_content._(_scope),
@@ -106,13 +105,9 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
       _showOuter(_scope, !showOuter);
     }),
   ),
-  _showOuter = _$.state(
-    5,
-    (_scope, showOuter) => {
-      _showOuter_effect(_scope), _if(_scope, showOuter ? 0 : 1);
-    },
-    () => _if,
-  );
+  _showOuter = _$.state(5, (_scope, showOuter) => {
+    _showOuter_effect(_scope), _if(_scope, showOuter ? 0 : 1);
+  });
 _$.register("b0", function (_scope) {
   return function (msg) {
     _scope[3].innerHTML += "\n" + msg;

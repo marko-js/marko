@@ -321,8 +321,6 @@ export const IfTag = {
               ...rendererIdentifiers.reverse(),
             );
           };
-          signal.hasDownstreamIntersections = () =>
-            branches.some(([, bodySection]) => bodySection?.closures);
           addValue(section, rootExtra.referencedBindings, signal, expr);
         }
       },

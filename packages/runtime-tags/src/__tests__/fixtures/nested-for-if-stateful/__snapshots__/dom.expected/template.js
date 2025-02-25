@@ -44,7 +44,7 @@ const _setup$if_content = _scope => {
 };
 const _if_content = /* @__PURE__ */_$.createRenderer("<button>Confirm <!></button>", /* get, next(1), over(1), replace */" Db%", _setup$if_content);
 const _if$for_content = /* @__PURE__ */_$.conditional("#text/0", _if_content, _else_content);
-const _editing$for_content = /* @__PURE__ */_$.state("editing", (_scope, editing) => _if$for_content(_scope, editing ? 0 : 1), () => _if$for_content);
+const _editing$for_content = /* @__PURE__ */_$.state("editing", (_scope, editing) => _if$for_content(_scope, editing ? 0 : 1));
 const _i$for_content = /* @__PURE__ */_$.value("i", (_scope, i) => _i$if_content(_scope));
 const _count$for_content = /* @__PURE__ */_$.value("count", (_scope, count) => {
   _count$if_content(_scope);

@@ -24,7 +24,7 @@ const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
 const _show = /* @__PURE__ */_$.state("show", (_scope, show) => {
   _show_effect(_scope);
   _if(_scope, show ? 0 : 1);
-}, () => _if);
+});
 export function _setup_(_scope) {
   _show(_scope, true);
   _count(_scope, 0);

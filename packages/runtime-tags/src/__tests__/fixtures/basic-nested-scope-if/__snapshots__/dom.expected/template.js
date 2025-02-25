@@ -26,7 +26,7 @@ const _clickCount = /* @__PURE__ */_$.state("clickCount", (_scope, clickCount) =
   _if(_scope, clickCount < 3 ? 0 : 1);
   _clickCount$if_content(_scope);
   _clickCount$else_content(_scope);
-}, () => _if);
+});
 export function _setup_(_scope) {
   _clickCount(_scope, 0);
 }

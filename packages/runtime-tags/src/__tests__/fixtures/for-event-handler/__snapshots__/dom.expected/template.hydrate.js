@@ -1,4 +1,4 @@
-// size: 329 (min) 212 (brotli)
+// size: 321 (min) 209 (brotli)
 const _i$for_content = _$.value(3, (_scope, i) => _$.data(_scope[1], i)),
   _params_2$for_content = _$.value(2, (_scope, _params_2) =>
     _i$for_content(_scope, _params_2[0]),
@@ -21,11 +21,7 @@ const _i$for_content = _$.value(3, (_scope, i) => _$.data(_scope[1], i)),
     () => _params_2$for_content,
   ),
   _for = _$.loopTo(0, _for_content),
-  _num = _$.state(
-    1,
-    (_scope, num) => {
-      _for(_scope, [num, 0, 1]), _num$for_content(_scope);
-    },
-    () => _for,
-  );
+  _num = _$.state(1, (_scope, num) => {
+    _for(_scope, [num, 0, 1]), _num$for_content(_scope);
+  });
 init();

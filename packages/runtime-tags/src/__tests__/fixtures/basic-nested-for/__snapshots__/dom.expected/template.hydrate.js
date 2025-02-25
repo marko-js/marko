@@ -1,4 +1,4 @@
-// size: 637 (min) 363 (brotli)
+// size: 629 (min) 360 (brotli)
 const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
   _expr_outer_inner$for_content = _$.intersection(
     2,
@@ -60,11 +60,7 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
       _items(_scope, [...items, items.length]);
     }),
   ),
-  _items = _$.state(
-    2,
-    (_scope, items) => {
-      _items_effect(_scope), _for(_scope, [items]), _items$for_content(_scope);
-    },
-    () => _for,
-  );
+  _items = _$.state(2, (_scope, items) => {
+    _items_effect(_scope), _for(_scope, [items]), _items$for_content(_scope);
+  });
 init();

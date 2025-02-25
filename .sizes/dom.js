@@ -1,4 +1,4 @@
-// size: 17986 (min) 6770 (brotli)
+// size: 17965 (min) 6763 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1245,15 +1245,12 @@ function _clone(ns) {
 var cloneCache = {};
 function conditional(nodeAccessor, ...branches) {
   let branchAccessor = nodeAccessor + "(";
-  return (scope, newBranchIndexOrOp) => {
-    newBranchIndexOrOp !== scope[branchAccessor] &&
-      newBranchIndexOrOp !== DIRTY &&
-      newBranchIndexOrOp !== MARK &&
-      newBranchIndexOrOp !== CLEAN &&
+  return (scope, newBranch) => {
+    newBranch !== scope[branchAccessor] &&
       setConditionalRenderer(
         scope,
         nodeAccessor,
-        branches[(scope[branchAccessor] = newBranchIndexOrOp)],
+        branches[(scope[branchAccessor] = newBranch)],
         createBranchScopeWithRenderer,
       );
   };
