@@ -29,7 +29,7 @@ const _inner$if_content_effect = _$.effect("__tests__/template.marko_1_inner", (
 const _inner$if_content = /* @__PURE__ */_$.conditionalClosure("inner", "#text/1", 0, (_scope, inner) => {
   _inner$if_content_effect(_scope);
   _if$if_content(_scope, inner ? 0 : 1);
-}, () => _if$if_content);
+});
 const _setup$if_content = _scope => {
   _inner$if_content._(_scope);
 };
@@ -45,7 +45,7 @@ const _outer_effect = _$.effect("__tests__/template.marko_0_outer", (_scope, {
 const _outer = /* @__PURE__ */_$.state("outer", (_scope, outer) => {
   _outer_effect(_scope);
   _if(_scope, outer ? 0 : 1);
-}, () => _if);
+});
 export function _setup_(_scope) {
   _outer(_scope, true);
   _inner(_scope, true);

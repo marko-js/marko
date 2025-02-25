@@ -1,4 +1,4 @@
-// size: 1336 (min) 499 (brotli)
+// size: 1314 (min) 496 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 3: name, 4: write }) => {
@@ -38,7 +38,7 @@ const _expr_name_write_effect = _$.effect(
     "b1",
     7,
     (_scope, showInner) => _if$if_content(_scope, showInner ? 0 : 1),
-    () => _if$if_content,
+    0,
     (_scope) => _scope._._,
   ),
   _setup$if_content2 = (_scope) => {
@@ -65,7 +65,6 @@ const _expr_name_write_effect = _$.effect(
     4,
     0,
     (_scope, showMiddle) => _if$if_content2(_scope, showMiddle ? 0 : 1),
-    () => _if$if_content2,
   ),
   _setup$if_content = (_scope) => {
     _write$if_content._(_scope),
@@ -100,13 +99,9 @@ const _expr_name_write_effect = _$.effect(
       _showOuter(_scope, !showOuter);
     }),
   ),
-  _showOuter = _$.state(
-    5,
-    (_scope, showOuter) => {
-      _showOuter_effect(_scope), _if(_scope, showOuter ? 0 : 1);
-    },
-    () => _if,
-  );
+  _showOuter = _$.state(5, (_scope, showOuter) => {
+    _showOuter_effect(_scope), _if(_scope, showOuter ? 0 : 1);
+  });
 _$.register("b0", function (_scope) {
   return function (msg) {
     _scope[3].innerHTML += "\n" + msg;

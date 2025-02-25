@@ -1,4 +1,4 @@
-// size: 680 (min) 328 (brotli)
+// size: 664 (min) 319 (brotli)
 const _count$if_content_effect = _$.effect(
     "a0",
     (
@@ -36,15 +36,9 @@ const _count$if_content_effect = _$.effect(
       _inner(_scope._, !inner);
     }),
   ),
-  _inner$if_content = _$.conditionalClosure(
-    3,
-    1,
-    0,
-    (_scope, inner) => {
-      _inner$if_content_effect(_scope), _if$if_content(_scope, inner ? 0 : 1);
-    },
-    () => _if$if_content,
-  ),
+  _inner$if_content = _$.conditionalClosure(3, 1, 0, (_scope, inner) => {
+    _inner$if_content_effect(_scope), _if$if_content(_scope, inner ? 0 : 1);
+  }),
   _setup$if_content = (_scope) => {
     _inner$if_content._(_scope);
   },
@@ -61,11 +55,7 @@ const _count$if_content_effect = _$.effect(
       _outer(_scope, !outer);
     }),
   ),
-  _outer = _$.state(
-    2,
-    (_scope, outer) => {
-      _outer_effect(_scope), _if(_scope, outer ? 0 : 1);
-    },
-    () => _if,
-  );
+  _outer = _$.state(2, (_scope, outer) => {
+    _outer_effect(_scope), _if(_scope, outer ? 0 : 1);
+  });
 init();

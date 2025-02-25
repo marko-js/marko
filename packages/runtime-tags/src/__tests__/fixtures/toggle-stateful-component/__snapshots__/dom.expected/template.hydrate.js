@@ -1,4 +1,4 @@
-// size: 627 (min) 333 (brotli)
+// size: 619 (min) 339 (brotli)
 const _expr_input_onCount_clickCount_effect = _$.effect(
     "a0",
     (_scope, { 4: input_onCount, 5: clickCount }) =>
@@ -44,11 +44,7 @@ const _onCount$if_content = _$.conditionalClosure(
     _setup$if_content,
   ),
   _if = _$.conditional(0, _if_content),
-  _show = _$.state(
-    1,
-    (_scope, show) => _if(_scope, show ? 0 : 1),
-    () => _if,
-  );
+  _show = _$.state(1, (_scope, show) => _if(_scope, show ? 0 : 1));
 _$.register("b0", function (_scope) {
   return function (count) {
     _show(_scope, count < 1);

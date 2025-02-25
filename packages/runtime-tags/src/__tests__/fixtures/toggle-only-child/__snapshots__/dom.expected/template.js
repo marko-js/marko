@@ -11,7 +11,7 @@ const _if = /* @__PURE__ */_$.conditional("#div/0", _if_content);
 export const _input_value_ = /* @__PURE__ */_$.value("input_value", (_scope, input_value) => {
   _if(_scope, input_value ? 0 : 1);
   _input_value$if_content(_scope);
-}, () => _if);
-export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_value_(_scope, input.value), () => _input_value_);
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
+});
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_value_(_scope, input.value));
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, () => _params__);

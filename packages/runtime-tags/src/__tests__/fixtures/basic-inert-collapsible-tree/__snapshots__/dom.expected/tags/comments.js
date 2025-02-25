@@ -51,16 +51,16 @@ const _i$for_content = /* @__PURE__ */_$.value("i", 0, () => _expr_input_path_i$
 const _comment_comments$for_content = /* @__PURE__ */_$.value("comment_comments", (_scope, comment_comments) => {
   _if$for_content(_scope, comment_comments ? 0 : 1);
   _comment_comments$if_content(_scope);
-}, () => _if$for_content);
+});
 const _comment_text$for_content = /* @__PURE__ */_$.value("comment_text", (_scope, comment_text) => _$.data(_scope["#text/1"], comment_text));
 const _comment$for_content = /* @__PURE__ */_$.value("comment", (_scope, comment) => {
   _comment_text$for_content(_scope, comment?.text);
   _comment_comments$for_content(_scope, comment?.comments);
-}, () => _comment_comments$for_content);
+});
 const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => {
   _comment$for_content(_scope, _params_2[0]);
   _i$for_content(_scope, _params_2[1]);
-}, () => _$.intersections([_comment$for_content, _i$for_content]));
+}, () => _i$for_content);
 const _input_path$for_content = /* @__PURE__ */_$.loopClosure("input_path", "#ul/0", 0, () => _expr_input_path_i$for_content);
 const _setup$for_content = _scope => {
   _input_path$for_content._(_scope);
@@ -69,10 +69,10 @@ const _setup$for_content = _scope => {
 const _for_content = /* @__PURE__ */_$.createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", _setup$for_content, () => _params_2$for_content);
 const _for = /* @__PURE__ */_$.loopOf("#ul/0", _for_content);
 export const _input_path_ = /* @__PURE__ */_$.value("input_path", (_scope, input_path) => _input_path$for_content(_scope));
-export const _input_comments_ = /* @__PURE__ */_$.value("input_comments", (_scope, input_comments) => _for(_scope, [input_comments]), () => _for);
+export const _input_comments_ = /* @__PURE__ */_$.value("input_comments", (_scope, input_comments) => _for(_scope, [input_comments]));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_comments_(_scope, input.comments);
   _input_path_(_scope, input.path);
-}, () => _input_comments_);
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
+});
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/comments.marko", _template_, _walks_, _setup_, () => _params__);

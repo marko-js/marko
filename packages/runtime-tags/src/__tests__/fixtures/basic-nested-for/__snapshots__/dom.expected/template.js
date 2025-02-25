@@ -37,7 +37,7 @@ const _items = /* @__PURE__ */_$.state("items", (_scope, items) => {
   _items_effect(_scope);
   _for(_scope, [items]);
   _items$for_content(_scope);
-}, () => _for);
+});
 export function _setup_(_scope) {
   _items(_scope, [0, 1]);
 }

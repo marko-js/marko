@@ -11,7 +11,7 @@ const _setup$if_content3 = _scope => {
 const _if_content3 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$if_content3);
 const _if$if_content = /* @__PURE__ */_$.conditional("#text/1", _if_content3);
 const _write$if_content2 = /* @__PURE__ */_$.dynamicClosure("write", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_write), _scope => _scope._._);
-const _showInner$if_content = _$.registerDynamicClosure("__tests__/template.marko_2_showInner/subscriber", "showInner", (_scope, showInner) => _if$if_content(_scope, showInner ? 0 : 1), () => _if$if_content, _scope => _scope._._);
+const _showInner$if_content = _$.registerDynamicClosure("__tests__/template.marko_2_showInner/subscriber", "showInner", (_scope, showInner) => _if$if_content(_scope, showInner ? 0 : 1), 0, _scope => _scope._._);
 const _setup$if_content2 = _scope => {
   _write$if_content2._(_scope);
   _child(_scope["#childScope/0"]);
@@ -21,7 +21,7 @@ const _setup$if_content2 = _scope => {
 const _if_content2 = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$if_content2);
 const _if$if_content2 = /* @__PURE__ */_$.conditional("#text/1", _if_content2);
 const _write$if_content = /* @__PURE__ */_$.conditionalClosure("write", "#text/4", 0, (_scope, write) => _child_input_write(_scope["#childScope/0"], write), () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_write));
-const _showMiddle$if_content = /* @__PURE__ */_$.conditionalClosure("showMiddle", "#text/4", 0, (_scope, showMiddle) => _if$if_content2(_scope, showMiddle ? 0 : 1), () => _if$if_content2);
+const _showMiddle$if_content = /* @__PURE__ */_$.conditionalClosure("showMiddle", "#text/4", 0, (_scope, showMiddle) => _if$if_content2(_scope, showMiddle ? 0 : 1));
 const _setup$if_content = _scope => {
   _write$if_content._(_scope);
   _child(_scope["#childScope/0"]);
@@ -57,7 +57,7 @@ const _showOuter_effect = _$.effect("__tests__/template.marko_0_showOuter", (_sc
 const _showOuter = /* @__PURE__ */_$.state("showOuter", (_scope, showOuter) => {
   _showOuter_effect(_scope);
   _if(_scope, showOuter ? 0 : 1);
-}, () => _if);
+});
 export function _setup_(_scope) {
   _showOuter(_scope, true);
   _showMiddle(_scope, true);

@@ -1,4 +1,4 @@
-// size: 303 (min) 193 (brotli)
+// size: 295 (min) 190 (brotli)
 const _message_text$if_content = _$.conditionalClosure(
     3,
     1,
@@ -10,11 +10,7 @@ const _message_text$if_content = _$.conditionalClosure(
   },
   _if_content = _$.createRenderer(" ", " ", _setup$if_content),
   _if = _$.conditional(1, _if_content),
-  _show = _$.state(
-    4,
-    (_scope, show) => _if(_scope, show ? 0 : 1),
-    () => _if,
-  ),
+  _show = _$.state(4, (_scope, show) => _if(_scope, show ? 0 : 1)),
   _message_text = _$.value(3, (_scope, message_text) =>
     _message_text$if_content(_scope),
   ),

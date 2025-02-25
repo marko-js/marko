@@ -1,4 +1,4 @@
-// size: 435 (min) 251 (brotli)
+// size: 427 (min) 242 (brotli)
 const _clickCount$else_content = _$.conditionalClosure(
     1,
     0,
@@ -37,13 +37,9 @@ const _clickCount$else_content = _$.conditionalClosure(
     _setup$if_content,
   ),
   _if = _$.conditional(0, _if_content, _else_content),
-  _clickCount = _$.state(
-    1,
-    (_scope, clickCount) => {
-      _if(_scope, clickCount < 3 ? 0 : 1),
-        _clickCount$if_content(_scope),
-        _clickCount$else_content(_scope);
-    },
-    () => _if,
-  );
+  _clickCount = _$.state(1, (_scope, clickCount) => {
+    _if(_scope, clickCount < 3 ? 0 : 1),
+      _clickCount$if_content(_scope),
+      _clickCount$else_content(_scope);
+  });
 init();

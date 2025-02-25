@@ -10,7 +10,7 @@ const _setup$if_content = _scope => {
 const _if_content = /* @__PURE__ */_$.createRenderer(`<div>${_counter_template}</div>`, /* next(1), beginChild, _counter_walks, endChild */`D/${_counter_walks}&`, _setup$if_content);
 const _if = /* @__PURE__ */_$.conditional("#div/0", _if_content);
 const _onCount = /* @__PURE__ */_$.value("onCount");
-const _show = /* @__PURE__ */_$.state("show", (_scope, show) => _if(_scope, show ? 0 : 1), () => _if);
+const _show = /* @__PURE__ */_$.state("show", (_scope, show) => _if(_scope, show ? 0 : 1));
 export function _setup_(_scope) {
   _show(_scope, true);
   _onCount(_scope, _onCount2(_scope));
