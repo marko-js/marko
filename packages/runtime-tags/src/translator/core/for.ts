@@ -99,7 +99,12 @@ export default {
     const section = getOrCreateSection(tag);
     trackParamsReferences(tagBody, BindingType.param, undefined, tagExtra);
     mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
-    getOptimizedOnlyChildNodeRef(tag, section);
+
+    section.children.set(bodySection, {
+      binding: getOptimizedOnlyChildNodeRef(tag, section),
+      suffix: AccessorChar.LoopScopeMap,
+    });
+
     bodySection.upstreamExpression = tagExtra;
     bodySection.isBranch = true;
   },
@@ -142,6 +147,7 @@ export default {
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
         const hasStatefulClosures = checkStatefulClosures(bodySection, true);
+        const hasHoists = bodySection.hasHoistOut;
         const singleNodeOptimization =
           bodySection.content === null ||
           (bodySection.content.singleChild &&
@@ -152,7 +158,7 @@ export default {
           getParentTag(tag)!.node.extra![kSerializeMarker] = false;
         }
 
-        if (isStateful || hasStatefulClosures) {
+        if (isStateful || hasStatefulClosures || hasHoists) {
           const defaultParamNames = (
             {
               of: ["list", "index"],
@@ -223,14 +229,11 @@ export default {
             ]),
           );
 
-          if (keyExpression && (isStateful || hasStatefulClosures)) {
+          if (isStateful || hasStatefulClosures || hasHoists) {
             bodyStatements.push(
               t.expressionStatement(
                 t.callExpression(
-                  t.memberExpression(
-                    getScopeIdentifier(bodySection),
-                    t.identifier("set"),
-                  ),
+                  t.memberExpression(forScopesIdentifier, t.identifier("set")),
                   [
                     keyExpression,
                     callRuntime(

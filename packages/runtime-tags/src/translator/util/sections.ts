@@ -9,7 +9,11 @@ import { currentProgramPath } from "../visitors/program";
 import { isCoreTag } from "./is-core-tag";
 import { isStatefulReferences } from "./is-stateful";
 import { find } from "./optional";
-import type { Binding, ReferencedBindings } from "./references";
+import {
+  type Binding,
+  bindingUtil,
+  type ReferencedBindings,
+} from "./references";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
@@ -27,9 +31,12 @@ export interface Section {
   loc: t.SourceLocation | undefined;
   depth: number;
   parent: Section | undefined;
+  children: Map<Section, { binding: Binding; suffix?: string }>;
   params: undefined | Binding;
   closures: ReferencedBindings;
   bindings: ReferencedBindings;
+  hoists: ReferencedBindings;
+  hasHoistOut: true | undefined;
   assignments: ReferencedBindings;
   upstreamExpression: t.NodeExtra | undefined;
   hasAbortSignal: boolean;
@@ -78,9 +85,12 @@ export function startSection(
       loc: sectionNamePath?.node.loc || undefined,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
+      children: new Map(),
       params: undefined,
       closures: undefined,
       bindings: undefined,
+      hoists: undefined,
+      hasHoistOut: undefined,
       assignments: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
@@ -274,3 +284,22 @@ export const checkStatefulClosures = (
       isStatefulReferences(closure),
   );
 };
+
+export function isParentSection(parent: Section, child: Section) {
+  while ((child = child.parent!)) {
+    if (child === parent) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function setSectionHoist(section: Section, binding: Binding) {
+  binding.section.hoists = bindingUtil.add(binding.section.hoists, binding);
+
+  let currentSection: Section | undefined = section;
+  while (currentSection && currentSection !== binding.section) {
+    currentSection.hasHoistOut = true;
+    currentSection = currentSection.parent;
+  }
+}

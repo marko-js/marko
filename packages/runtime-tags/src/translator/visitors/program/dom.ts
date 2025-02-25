@@ -3,6 +3,7 @@ import { importDefault } from "@marko/compiler/babel-utils";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import getStyleFile from "../../util/get-style-file";
+import { getSectionScopeAccessorLiteral } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {
   forEachSectionReverse,
@@ -63,6 +64,9 @@ export default {
                   walks,
                   setup,
                   params,
+                  childSection.hasHoistOut
+                    ? getSectionScopeAccessorLiteral(childSection)
+                    : undefined,
                 ]),
               );
           writeSignals(childSection);

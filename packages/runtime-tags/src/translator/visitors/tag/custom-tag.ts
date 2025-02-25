@@ -10,6 +10,7 @@ import {
 } from "@marko/compiler/babel-utils";
 import path from "path";
 
+import { AccessorChar } from "../../../common/types";
 import { getTagName } from "../../util/get-tag-name";
 import { isStatefulReferences } from "../../util/is-stateful";
 import { isOutputHTML } from "../../util/marko-config";
@@ -37,6 +38,7 @@ import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
+  isParentSection,
   type Section,
   startSection,
 } from "../../util/sections";
@@ -148,6 +150,34 @@ export default {
           childProgramExtra?.isInteractive ||
           childProgramExtra?.hasInteractiveChild ||
           false;
+      }
+
+      const tagVar = tag.node.var;
+      if (tagVar && t.isIdentifier(tagVar)) {
+        const varBinding = tag.scope.getBinding(tagVar.name)!;
+        for (const reference of varBinding.referencePaths) {
+          const referenceSection = getSection(reference);
+          if (isParentSection(referenceSection, section)) {
+            // let hoistedBinding = referenceSection.hoists.get(tagBinding);
+            // if (!hoistedBinding) {
+            //   hoistedBinding = createBinding(
+            //     currentProgramPath.scope.generateUid(tagVar.name),
+            //     BindingType.derived,
+            //     referenceSection,
+            //     undefined,
+            //     undefined,
+            //     undefined,
+            //     tagVar.loc,
+            //     true,
+            //   );
+            //   referenceSection.hoists.set(tagBinding, hoistedBinding);
+            // }
+            // trackReference(
+            //   reference as t.NodePath<t.Identifier>,
+            //   hoistedBinding,
+            // );
+          }
+        }
       }
     },
   },

@@ -1,12 +1,20 @@
-// size: 1002 (min) 485 (brotli)
-const _expr_comment_comments_id$if_content = intersection(1, (_scope) => {
-    const {
-      _: { 8: comment_comments, 11: id },
-    } = _scope;
-    _input_$1(_scope[0], { comments: comment_comments, path: id });
-  }),
-  _id$if_content = conditionalClosure(11, 4, 0, (_scope, id) =>
-    _expr_comment_comments_id$if_content(_scope),
+// size: 1088 (min) 529 (brotli)
+const _expr_comment_comments_id$if_content = intersection(
+    2,
+    (_scope) => {
+      const {
+        _: { 8: comment_comments, 10: id },
+      } = _scope;
+      _input_$1(_scope[0], { comments: comment_comments, path: id });
+    },
+    () => inChild(0, _input_$1),
+  ),
+  _id$if_content = conditionalClosure(
+    10,
+    4,
+    0,
+    0,
+    () => _expr_comment_comments_id$if_content,
   ),
   _comment_comments$if_content = conditionalClosure(
     8,

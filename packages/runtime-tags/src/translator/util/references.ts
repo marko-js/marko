@@ -41,6 +41,7 @@ export type Binding = {
   section: Section;
   serialize: boolean | Set<Binding>;
   aliases: Set<Binding>;
+  hoists: Map<Section, Binding>;
   property: string | undefined;
   propertyAliases: Map<string, Binding>;
   excludeProperties: undefined | string[];
@@ -110,6 +111,7 @@ export function createBinding(
     excludeProperties: undefined,
     serialize: false,
     aliases: new Set(),
+    hoists: new Map(),
     propertyAliases: new Map(),
     upstreamAlias,
     upstreamExpression,
@@ -394,7 +396,7 @@ function createBindingsAndTrackReferences(
   }
 }
 
-function trackReference(
+export function trackReference(
   referencePath: t.NodePath<t.Identifier>,
   binding: Binding,
 ) {
@@ -821,7 +823,29 @@ export function getScopeAccessorLiteral(binding: Binding, includeId?: boolean) {
   );
 }
 
-export function getScopeAccessor(binding: Binding, includeId?: boolean) {
+export function getSectionInParent(section: Section) {
+  return section.parent?.children?.get(section);
+}
+
+export function getSectionScopeAccessor(section: Section) {
+  const inParent = getSectionInParent(section);
+  return inParent
+    ? inParent.suffix
+      ? getScopeAccessor(inParent.binding) + inParent.suffix
+      : getScopeAccessor(inParent.binding)
+    : undefined;
+}
+
+export function getSectionScopeAccessorLiteral(section: Section) {
+  const accessor = getSectionScopeAccessor(section);
+  return accessor
+    ? typeof accessor === "number"
+      ? t.numericLiteral(accessor)
+      : t.stringLiteral(accessor)
+    : undefined;
+}
+
+export function getScopeAccessor(binding: Binding) {
   if (isOptimize()) {
     return binding.id + "";
   }

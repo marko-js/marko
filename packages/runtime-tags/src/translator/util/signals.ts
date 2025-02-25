@@ -109,6 +109,10 @@ export function setSerializedProperty(
 ) {
   getSerializedScopeProperties(section).set(key, value);
 }
+
+export const [getSectionSubscriberIdentifier, setSectionSubscriberIdentifiers] =
+  createSectionState<undefined | t.Identifier>("sectionSubscriberIdentifiers");
+
 export const [getHTMLSectionStatements] = createSectionState<t.Statement[]>(
   "htmlScopeStatements",
   () => [],
@@ -1002,7 +1006,12 @@ export function writeHTMLResumeStatements(
     serializedProperties.push(toObjectProperty(key, value));
   }
 
-  if (serializedProperties.length || forceResumeScope(section)) {
+  const subscriberIdentifier = getSectionSubscriberIdentifier(section);
+  if (
+    serializedProperties.length ||
+    forceResumeScope(section) ||
+    subscriberIdentifier
+  ) {
     for (const prop of serializedProperties) {
       if (
         prop.key.type === "Identifier" &&
@@ -1064,9 +1073,18 @@ export function writeHTMLResumeStatements(
         writeScopeArgs.push(t.objectExpression(debugVars));
       }
     }
+
     path.pushContainer(
       "body",
-      t.expressionStatement(callRuntime("writeScope", ...writeScopeArgs)),
+      t.expressionStatement(
+        subscriberIdentifier
+          ? callRuntime(
+              "writeSubscribe",
+              subscriberIdentifier,
+              callRuntime("writeScope", ...writeScopeArgs),
+            )
+          : callRuntime("writeScope", ...writeScopeArgs),
+      ),
     );
   }
 

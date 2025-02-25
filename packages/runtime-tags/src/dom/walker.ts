@@ -1,4 +1,5 @@
 import {
+  AccessorChar,
   type BranchScope,
   NodeType,
   type Scope,
@@ -50,11 +51,17 @@ function walkInternal(
     storedMultiplier = 0;
 
     if (value === WalkCode.Get) {
+      const node = walker.currentNode;
       scope[
         MARKO_DEBUG
+          ? getDebugKey(currentScopeIndex, walker.currentNode)
+          : currentScopeIndex
+      ] = node;
+      scope[
+        (MARKO_DEBUG
           ? getDebugKey(currentScopeIndex++, walker.currentNode)
-          : currentScopeIndex++
-      ] = walker.currentNode;
+          : currentScopeIndex++) + AccessorChar.Getter
+      ] = () => node;
     } else if (
       value === WalkCode.Replace ||
       value === WalkCode.DynamicTagWithVar
