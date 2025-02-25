@@ -95,23 +95,23 @@ function stripSpacesAndPunctuation(str) {
 }
 var registeredValues = {},
   Render = class {
-    l = [];
-    m = {};
-    A = { _: registeredValues };
+    n = [];
+    o = {};
+    D = { _: registeredValues };
     constructor(renders, runtimeId, renderId) {
-      (this.B = renders),
-        (this.C = runtimeId),
-        (this.n = renderId),
-        (this.o = renders[renderId]),
-        this.p();
+      (this.E = renders),
+        (this.F = runtimeId),
+        (this.p = renderId),
+        (this.q = renders[renderId]),
+        this.s();
     }
     w() {
-      this.o.w(), this.p();
+      this.q.w(), this.s();
     }
-    p() {
-      let data2 = this.o,
-        serializeContext = this.A,
-        scopeLookup = this.m,
+    s() {
+      let data2 = this.q,
+        serializeContext = this.D,
+        scopeLookup = this.o,
         visits = data2.v,
         branchIds = new Set(),
         parentBranchIds = new Map();
@@ -153,8 +153,10 @@ var registeredValues = {},
             scope = (scopeLookup[scopeId] ||= { d: +scopeId }),
             data3 = dataIndex ? commentText.slice(dataIndex) : "",
             token = commentText[commentPrefixLen];
-          if ("*" === token) scope[data3] = visit.previousSibling;
-          else if ("$" === token) closestBranchMarkers.set(scopeId, visit);
+          if ("*" === token) {
+            let node = (scope[data3] = visit.previousSibling);
+            scope[data3 + ">"] = () => node;
+          } else if ("$" === token) closestBranchMarkers.set(scopeId, visit);
           else if ("[" === token)
             this.e &&
               (dataIndex && branchEnd(this.e, visit, visit),
@@ -200,8 +202,8 @@ var registeredValues = {},
                 { $global: $global } = scopeLookup;
               $global ||
                 ((scopeLookup.$global = $global = scopes.$ || {}),
-                ($global.runtimeId = this.C),
-                ($global.renderId = this.n));
+                ($global.runtimeId = this.F),
+                ($global.renderId = this.p));
               for (let scopeId in scopes)
                 if ("$" !== scopeId) {
                   let scope = scopes[scopeId],
@@ -219,13 +221,13 @@ var registeredValues = {},
                       parentBranch = branch.c;
                     (scope.c = branch),
                       parentBranch &&
-                        ((branch.q = parentBranch),
-                        (parentBranch.j ||= new Set()).add(branch));
+                        ((branch.t = parentBranch),
+                        (parentBranch.l ||= new Set()).add(branch));
                   }
                 }
             } else
               i === len || "string" != typeof resumes[i]
-                ? delete this.B[this.n]
+                ? delete this.E[this.p]
                 : registeredValues[resumes[i++]](
                     scopeLookup[resumeData],
                     scopeLookup[resumeData],
@@ -268,7 +270,10 @@ function init(runtimeId = "M") {
       });
 }
 function nodeRef(id, key) {
-  return register(id, (scope) => () => scope[key]);
+  return register(id, (scope) => {
+    let fn = () => (fn = scope[key])();
+    return fn;
+  });
 }
 function controllable_input_checked(
   scope,
@@ -778,13 +783,13 @@ function skipScope() {
   return nextID++;
 }
 function destroyBranch(branch) {
-  branch.q?.j?.delete(branch), destroyNestedBranches(branch);
+  branch.t?.l?.delete(branch), destroyNestedBranches(branch);
 }
 function destroyNestedBranches(branch) {
-  (branch.s = 1),
-    branch.j?.forEach(destroyNestedBranches),
-    branch.D?.forEach((scope) => {
-      for (let id in scope.g) scope.g[id]?.abort();
+  (branch.G = 1),
+    branch.l?.forEach(destroyNestedBranches),
+    branch.H?.forEach((scope) => {
+      for (let id in scope.h) scope.h[id]?.abort();
     });
 }
 function removeAndDestroyBranch(branch) {
@@ -792,6 +797,246 @@ function removeAndDestroyBranch(branch) {
 }
 function insertBranchBefore(branch, parentNode, nextSibling) {
   insertChildNodes(parentNode, nextSibling, branch.a, branch.b);
+}
+var isScheduled,
+  port2 = (() => {
+    let { port1: port1, port2: port22 } = new MessageChannel();
+    return (
+      (port1.onmessage = () => {
+        (isScheduled = !1), run();
+      }),
+      port22
+    );
+  })();
+function flushAndWaitFrame() {
+  run(), requestAnimationFrame(triggerMacroTask);
+}
+function triggerMacroTask() {
+  port2.postMessage(0);
+}
+var MARK = {},
+  CLEAN = {},
+  DIRTY = {};
+function state(valueAccessor, fn, getIntersection) {
+  let valueSignal = value(valueAccessor, fn, getIntersection),
+    markAccessor = valueAccessor + "#",
+    valueChangeAccessor = valueAccessor + "@";
+  return (scope, valueOrOp, valueChange) => (
+    rendering
+      ? valueSignal(
+          scope,
+          valueOrOp === MARK ||
+            valueOrOp === CLEAN ||
+            valueOrOp === DIRTY ||
+            (scope[valueChangeAccessor] = valueChange) ||
+            void 0 === scope[markAccessor]
+            ? valueOrOp
+            : CLEAN,
+        )
+      : scope[valueChangeAccessor]
+        ? scope[valueChangeAccessor](valueOrOp)
+        : (isScheduled ||
+            ((isScheduled = !0), queueMicrotask(flushAndWaitFrame)),
+          queueSource(scope, valueSignal, valueOrOp)),
+    valueOrOp
+  );
+}
+function value(valueAccessor, fn, getIntersection) {
+  let intersection2,
+    markAccessor = valueAccessor + "#";
+  return (scope, valueOrOp) => {
+    if (valueOrOp === MARK)
+      1 === (scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) &&
+        getIntersection &&
+        (intersection2 ||= getIntersection())(scope, MARK);
+    else if (valueOrOp !== DIRTY) {
+      let existing = void 0 !== scope[markAccessor];
+      1 === (scope[markAccessor] ||= 1) &&
+        (valueOrOp === CLEAN || (existing && scope[valueAccessor] === valueOrOp)
+          ? getIntersection &&
+            (intersection2 ||= getIntersection())(scope, CLEAN)
+          : ((scope[valueAccessor] = valueOrOp),
+            fn && fn(scope, valueOrOp),
+            getIntersection &&
+              (intersection2 ||= getIntersection())(scope, DIRTY))),
+        scope[markAccessor]--;
+    }
+  };
+}
+var accessorId = 0;
+function intersection(count, fn, getIntersection) {
+  let intersection2,
+    dirtyAccessor = "?" + accessorId++,
+    markAccessor = dirtyAccessor + "#";
+  return (scope, op) => {
+    op === MARK
+      ? 1 === (scope[markAccessor] = (scope[markAccessor] ?? 0) + 1) &&
+        getIntersection &&
+        (intersection2 ||= getIntersection())(scope, MARK)
+      : void 0 === scope[markAccessor]
+        ? ((scope[markAccessor] = count - 1), (scope[dirtyAccessor] = !0))
+        : 0 == --scope[markAccessor]
+          ? op === DIRTY || scope[dirtyAccessor]
+            ? ((scope[dirtyAccessor] = !1),
+              fn(scope),
+              getIntersection &&
+                (intersection2 ||= getIntersection())(scope, DIRTY))
+            : getIntersection &&
+              (intersection2 ||= getIntersection())(scope, CLEAN)
+          : (scope[dirtyAccessor] ||= op === DIRTY);
+  };
+}
+function loopClosure(
+  valueAccessor,
+  ownerLoopNodeAccessor,
+  fn,
+  getIntersection,
+) {
+  let childSignal = closure(valueAccessor, fn, getIntersection),
+    loopScopeAccessor = ownerLoopNodeAccessor + "!",
+    loopScopeMapAccessor = ownerLoopNodeAccessor + "(",
+    ownerSignal = (ownerScope) => {
+      for (let scope of ownerScope[loopScopeAccessor] ||
+        ownerScope[loopScopeMapAccessor]?.values() ||
+        [])
+        scope.g || queueSource(scope, childSignal);
+    };
+  return (ownerSignal._ = childSignal), ownerSignal;
+}
+function conditionalClosure(
+  valueAccessor,
+  ownerConditionalNodeAccessor,
+  branch,
+  fn,
+  getIntersection,
+) {
+  let childSignal = closure(valueAccessor, fn, getIntersection),
+    scopeAccessor = ownerConditionalNodeAccessor + "!",
+    branchAccessor = ownerConditionalNodeAccessor + "(",
+    ownerSignal = (scope) => {
+      let ifScope = scope[scopeAccessor];
+      ifScope &&
+        !ifScope.g &&
+        scope[branchAccessor] === branch &&
+        queueSource(ifScope, childSignal);
+    };
+  return (ownerSignal._ = childSignal), ownerSignal;
+}
+function subscribeToScopeSet(ownerScope, accessor, scope) {
+  let subscribers = (ownerScope[accessor] ||= new Set());
+  subscribers.has(scope) ||
+    (subscribers.add(scope),
+    getAbortSignal(scope, -1).addEventListener("abort", () =>
+      ownerScope[accessor].delete(scope),
+    ));
+}
+function dynamicClosure(valueAccessor, fn, getIntersection, getOwnerScope) {
+  let subscribersAccessor = "?" + accessorId++,
+    childSignal = closure(valueAccessor, fn, getIntersection, getOwnerScope),
+    ownerSignal = (ownerScope) => {
+      let subscribers = ownerScope[subscribersAccessor];
+      if (subscribers)
+        for (let subscriber of subscribers)
+          subscriber.g || queueSource(subscriber, childSignal);
+    },
+    subscribe = (scope) => {
+      let owner = getOwnerScope ? getOwnerScope(scope) : scope._,
+        subscribers = (owner[subscribersAccessor] ||= new Set());
+      subscribers.has(scope) ||
+        (subscribers.add(scope),
+        getAbortSignal(scope, -1).addEventListener("abort", () =>
+          subscribers.delete(scope),
+        ));
+    };
+  return (
+    (ownerSignal._ = (scope) => {
+      childSignal(scope), subscribe(scope);
+    }),
+    ownerSignal
+  );
+}
+function registerDynamicClosure(
+  id,
+  valueAccessor,
+  fn,
+  getIntersection,
+  getOwnerScope,
+) {
+  let signal = dynamicClosure(
+    valueAccessor,
+    fn,
+    getIntersection,
+    getOwnerScope,
+  );
+  return register(id, signal.I), signal;
+}
+function closure(valueAccessor, fn, getIntersection, getOwnerScope) {
+  let intersection2;
+  return (scope, op) => {
+    op ||
+      (fn &&
+        fn(
+          scope,
+          (getOwnerScope ? getOwnerScope(scope) : scope._)[valueAccessor],
+        )),
+      getIntersection &&
+        (intersection2 ||= getIntersection())(scope, op ? MARK : DIRTY);
+  };
+}
+function setTagVar(scope, childAccessor, tagVarSignal2) {
+  scope[childAccessor]["/"] = (valueOrOp) => tagVarSignal2(scope, valueOrOp);
+}
+var tagVarSignal = (scope, valueOrOp) => scope["/"]?.(valueOrOp);
+function setTagVarChange(scope, changeHandler) {
+  scope["@"] = changeHandler;
+}
+var tagVarSignalChange = (scope, value2) => scope["@"]?.(value2),
+  tagIdsByGlobal = new WeakMap();
+function nextTagId({ $global: $global }) {
+  let id = tagIdsByGlobal.get($global) || 0;
+  return (
+    tagIdsByGlobal.set($global, id + 1),
+    "c" + $global.runtimeId + $global.renderId + id.toString(36)
+  );
+}
+function inChild(childAccessor, signal) {
+  return (scope, valueOrOp) => {
+    signal(scope[childAccessor], valueOrOp);
+  };
+}
+function intersections(signals) {
+  return (scope, op) => {
+    for (let signal of signals) signal(scope, op);
+  };
+}
+function effect(id, fn) {
+  return (
+    register(id, fn),
+    (scope) => {
+      queueEffect(scope, fn);
+    }
+  );
+}
+function* traverseAllHoisted(scope, path, curIndex = path.length - 1) {
+  if (scope)
+    if (Symbol.iterator in scope)
+      for (let s of scope instanceof Map ? scope.values() : scope)
+        yield* traverseAllHoisted(s, path, curIndex);
+    else
+      curIndex
+        ? yield* traverseAllHoisted(scope[path[curIndex]], path, curIndex - 1)
+        : yield scope[path[0]];
+}
+function hoist(...path) {
+  return (scope) => {
+    let getOne = (...args) =>
+        iterator()
+          .next()
+          .value(...args),
+      iterator = (getOne[Symbol.iterator] = () =>
+        traverseAllHoisted(scope, path));
+    return getOne;
+  };
 }
 var pendingRenders = [],
   pendingRendersLookup = new Map(),
@@ -895,8 +1140,8 @@ function resetAbortSignal(scope, id) {
 }
 function getAbortSignal(scope, id) {
   return (
-    scope.c && (scope.c.D ||= new Set()).add(scope),
-    ((scope.g ||= {})[id] ||= new AbortController()).signal
+    scope.c && (scope.c.H ||= new Set()).add(scope),
+    ((scope.h ||= {})[id] ||= new AbortController()).signal
   );
 }
 function abort(ctrl) {
@@ -1477,7 +1722,8 @@ var classIdToBranch = new Map(),
     registerRenderer(fn) {
       register("$C_r", fn);
     },
-    isRenderer: (renderer) => renderer.k,
+    isOp: (value2) => value2 === MARK || value2 === CLEAN || value2 === DIRTY,
+    isRenderer: (renderer) => renderer.m,
     getStartNode: (branch) => branch.a,
     setScopeNodes(branch, startNode, endNode) {
       (branch.a = startNode), (branch.b = endNode);
@@ -1501,7 +1747,7 @@ var classIdToBranch = new Map(),
             2 === value2.length &&
               window[runtimeId]?.[
                 "s" === componentIdPrefix ? "_" : componentIdPrefix
-              ]?.m[value2[1]],
+              ]?.o[value2[1]],
           )
         : value2,
     createRenderer(args, clone) {

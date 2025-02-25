@@ -60,7 +60,7 @@
       "name": "comments 💧",
       "user": {
         "min": 145,
-        "brotli": 120
+        "brotli": 119
       },
       "runtime": {
         "min": 3443,
