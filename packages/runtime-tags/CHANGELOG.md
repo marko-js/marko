@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.45
+
+### Patch Changes
+
+- [#2535](https://github.com/marko-js/marko/pull/2535) [`43522b7`](https://github.com/marko-js/marko/commit/43522b78c3a84090f5f039a7ef2d0935541f81ee) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid creating intersections for closures which are now handled via the queue.
+
 ## 0.3.44
 
 ### Patch Changes
