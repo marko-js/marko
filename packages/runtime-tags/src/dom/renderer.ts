@@ -1,4 +1,9 @@
-import { type BranchScope, NodeType, type Scope } from "../common/types";
+import {
+  type Accessor,
+  type BranchScope,
+  NodeType,
+  type Scope,
+} from "../common/types";
 import { insertChildNodes } from "./dom";
 import { parseHTML } from "./parse-html";
 import { queueRender } from "./queue";
@@ -11,6 +16,7 @@ export type Renderer = {
   ___template: string;
   ___walks: string;
   ___setup: SetupFn | undefined | 0;
+  ___accessor: Accessor | undefined;
   ___clone: (ns: string) => ChildNode;
   ___args: Signal<unknown> | undefined;
   ___owner: Scope | undefined;
@@ -52,7 +58,8 @@ export function createBranchScopeWithTagNameOrRenderer(
   }
 
   const branch = createBranch($global, parentScope, parentScope);
-  branch[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : 0] =
+  const node =
+    (branch[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : 0] =
     branch.___startNode =
     branch.___endNode =
       document.createElementNS(
@@ -62,7 +69,8 @@ export function createBranchScopeWithTagNameOrRenderer(
             ? "http://www.w3.org/1998/Math/MathML"
             : (parentNode as Element).namespaceURI,
         tagNameOrRenderer,
-      );
+      ));
+  branch[MARKO_DEBUG ? `#${tagNameOrRenderer}/0>` : "0>"] = () => node;
   return branch;
 }
 
@@ -112,9 +120,10 @@ export function createRendererWithOwner(
   template: string,
   rawWalks?: string | 0,
   setup?: SetupFn | 0,
-  getArgs?: () => Signal<unknown>,
+  getArgs?: (() => Signal<unknown>) | 0,
+  dynamicScopesAccessor?: Accessor,
 ) {
-  let args: Signal<unknown> | undefined;
+  let args: Signal<unknown> | undefined | 0;
   const id = MARKO_DEBUG ? Symbol("Marko Renderer") : ({} as any as symbol);
   const walks = rawWalks ? /* @__PURE__ */ trimWalkString(rawWalks) : " ";
   return (owner?: Scope): Renderer => {
@@ -123,10 +132,11 @@ export function createRendererWithOwner(
       ___template: template,
       ___walks: walks,
       ___setup: setup,
+      ___accessor: dynamicScopesAccessor,
       ___clone: _clone,
       ___owner: owner,
       get ___args() {
-        return (args ||= getArgs?.());
+        return (args ||= getArgs ? getArgs() : undefined);
       },
     };
   };

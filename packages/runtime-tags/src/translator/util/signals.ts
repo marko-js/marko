@@ -110,6 +110,10 @@ export function setSerializedProperty(
 ) {
   getSerializedScopeProperties(section).set(key, value);
 }
+
+export const [getSectionSubscriberIdentifier, setSectionSubscriberIdentifiers] =
+  createSectionState<undefined | t.Identifier>("sectionSubscriberIdentifiers");
+
 export const [getHTMLSectionStatements] = createSectionState<t.Statement[]>(
   "htmlScopeStatements",
   () => [],
@@ -602,7 +606,9 @@ export function finalizeSignalArgs(args: t.Expression[]) {
 
   for (
     let i = args.length - 1;
-    t.isNumericLiteral(args[i]) && (args[i] as t.NumericLiteral).value === 0;
+    i &&
+    t.isNumericLiteral(args[i]) &&
+    (args[i] as t.NumericLiteral).value === 0;
 
   ) {
     args.length = i--;
@@ -1034,7 +1040,12 @@ export function writeHTMLResumeStatements(
     serializedProperties.push(toObjectProperty(key, value));
   }
 
-  if (serializedProperties.length || forceResumeScope(section)) {
+  const subscriberIdentifier = getSectionSubscriberIdentifier(section);
+  if (
+    serializedProperties.length ||
+    forceResumeScope(section) ||
+    subscriberIdentifier
+  ) {
     const writeScopeArgs: t.Expression[] = [
       scopeIdIdentifier,
       t.objectExpression(serializedProperties),
@@ -1086,9 +1097,18 @@ export function writeHTMLResumeStatements(
         writeScopeArgs.push(t.objectExpression(debugVars));
       }
     }
+
     path.pushContainer(
       "body",
-      t.expressionStatement(callRuntime("writeScope", ...writeScopeArgs)),
+      t.expressionStatement(
+        subscriberIdentifier
+          ? callRuntime(
+              "writeSubscribe",
+              subscriberIdentifier,
+              callRuntime("writeScope", ...writeScopeArgs),
+            )
+          : callRuntime("writeScope", ...writeScopeArgs),
+      ),
     );
   }
 

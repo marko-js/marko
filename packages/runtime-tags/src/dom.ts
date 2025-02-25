@@ -44,6 +44,7 @@ export {
   conditionalClosure,
   dynamicClosure,
   effect,
+  hoist,
   inChild,
   intersection,
   intersections,

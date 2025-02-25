@@ -3,6 +3,7 @@ import { importDefault } from "@marko/compiler/babel-utils";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import getStyleFile from "../../util/get-style-file";
+import { getSectionScopeAccessorLiteral } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {
   forEachSectionReverse,
@@ -47,16 +48,26 @@ export default {
             childSection.params && initValue(childSection.params);
           const { walks, writes, setup } = writer.getSectionMeta(childSection);
           const identifier = t.identifier(childSection.name);
-          const renderer = callRuntime(
-            getSectionParentIsOwner(childSection)
-              ? "createRenderer"
-              : "createRendererWithOwner",
-            writes,
-            walks,
-            setup,
-            tagParamsSignal?.identifier &&
-              t.arrowFunctionExpression([], tagParamsSignal.identifier),
-          );
+          const renderer = getSectionParentIsOwner(childSection)
+            ? callRuntime(
+                "createRenderer",
+                writes,
+                walks,
+                setup,
+                tagParamsSignal?.identifier &&
+                  t.arrowFunctionExpression([], tagParamsSignal.identifier),
+              )
+            : callRuntime(
+                "createRendererWithOwner",
+                writes,
+                walks,
+                setup,
+                tagParamsSignal?.identifier &&
+                  t.arrowFunctionExpression([], tagParamsSignal.identifier),
+                childSection.hasHoistOut
+                  ? getSectionScopeAccessorLiteral(childSection)
+                  : undefined,
+              );
           writeSignals(childSection);
           program.node.body.push(
             t.variableDeclaration("const", [

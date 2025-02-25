@@ -77,7 +77,14 @@ export default {
         tagExtra,
       );
 
-      startSection(tagBody);
+      const bodySection = startSection(tagBody);
+      if (bodySection) {
+        section.children.set(bodySection, {
+          binding: tagExtra[kDOMBinding],
+          suffix: AccessorChar.Dynamic,
+        });
+      }
+
       trackVarReferences(tag, BindingType.derived);
       trackParamsReferences(tagBody, BindingType.param);
       mergeReferences(section, tag.node, [

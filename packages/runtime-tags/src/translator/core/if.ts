@@ -59,7 +59,8 @@ export const IfTag = {
     assertValidCondition(tag);
     if (tag.node.body.attributeTags) return;
 
-    const [isLast, branches] = getBranches(tag, startSection(tag.get("body")));
+    const bodySection = startSection(tag.get("body"));
+    const [isLast, branches] = getBranches(tag, bodySection);
     if (isLast) {
       const [rootTag] = branches[0];
       const rootExtra = (rootTag.node.extra ??= {});
@@ -90,7 +91,16 @@ export const IfTag = {
 
       const section = getOrCreateSection(tag);
       mergeReferences(section, rootTag.node, mergeReferenceNodes);
-      getOptimizedOnlyChildNodeRef(rootTag, section, branches.length);
+
+      section.children.set(bodySection!, {
+        binding: getOptimizedOnlyChildNodeRef(
+          rootTag,
+          section,
+          branches.length,
+        ),
+        suffix: AccessorChar.ConditionalScope,
+      });
+
       rootExtra.singleNodeOptimization = singleNodeOptimization;
     }
   },
@@ -126,9 +136,10 @@ export const IfTag = {
         const singleNodeOptimization = rootExtra.singleNodeOptimization;
         const hasStatefulClosures =
           bodySection && checkStatefulClosures(bodySection, true);
+        const hasHoists = bodySection?.hasHoistOut;
 
         if (bodySection) {
-          if (isStateful || hasStatefulClosures) {
+          if (isStateful || hasStatefulClosures || hasHoists) {
             setForceResumeScope(bodySection);
           }
           writer.flushInto(tag);
@@ -173,7 +184,7 @@ export const IfTag = {
                   ) as any,
                 );
               }
-              if (isStateful || branchHasStatefulClosures) {
+              if (isStateful || branchHasStatefulClosures || hasHoists) {
                 bodyStatements.push(
                   t.expressionStatement(
                     t.assignmentExpression(
@@ -202,9 +213,7 @@ export const IfTag = {
             branchTag.remove();
           }
 
-          if (!(isStateful || hasStatefulClosures)) {
-            nextTag.insertBefore(statement!);
-          } else {
+          if (isStateful || hasStatefulClosures || hasHoists) {
             if (isStateful) {
               setSerializedProperty(
                 section,
@@ -248,6 +257,8 @@ export const IfTag = {
               getScopeAccessor(nodeRef) + AccessorChar.ConditionalScope,
               callRuntime("getScopeById", ifScopeIdIdentifier),
             );
+          } else {
+            nextTag.insertBefore(statement!);
           }
         }
       },

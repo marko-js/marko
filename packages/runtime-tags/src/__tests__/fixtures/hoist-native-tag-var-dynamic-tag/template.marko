@@ -1,0 +1,43 @@
+import Child from './tags/child.marko'
+
+<child>
+  <span/el></span>
+</child>
+
+<script>
+  for (const element of el) {
+    element().innerHTML = 'Hoist from custom tag';
+  }
+</script>
+
+
+
+<${input.show ? Child : null}>
+  <child>
+    <div/el2 />
+  </child>
+  
+  <script>
+    for (const element of el2) {
+       element().classList.add('inner');
+    }
+  </script>
+</>
+<script>
+  for (const element of el2) {
+    element().classList.add('outer');
+  }
+</script>
+
+
+
+<${input.show ? 'section' : null}>
+  <p/el3 />
+</>
+
+<script>
+  const element = el3()
+  if (element) {
+    element.innerHTML = 'Hoist from dynamic tag';
+  }
+</script>

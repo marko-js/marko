@@ -136,6 +136,16 @@ export function nodeRef(scopeId: number, id?: string) {
   return id ? register(getter, id, scopeId) : getter;
 }
 
+export function hoist(scopeId: number, id?: string) {
+  const getter = () => {
+    if (MARKO_DEBUG) {
+      throw new Error("Cannot read a hoisted value on the server.");
+    }
+  };
+  getter[Symbol.iterator] = getter;
+  return id ? register(getter, id, scopeId) : getter;
+}
+
 export function resumeClosestBranch(scopeId: number) {
   const branchId = $chunk.context?.[branchIdKey];
   if (branchId !== undefined && branchId !== scopeId) {
@@ -1044,4 +1054,12 @@ function getFilteredGlobals($global: Record<string, unknown>) {
   }
 
   return filtered;
+}
+
+export function writeSubscribe(
+  subscribers: Set<ScopeInternals>,
+  scope: ScopeInternals,
+) {
+  $chunk.boundary.state.serializer.writeCall(scope, subscribers, "add");
+  return scope;
 }
