@@ -26,6 +26,7 @@ import {
   setTagVar,
   type Signal,
   type SignalOp,
+  subscribeToScopeSet,
 } from "./signals";
 
 export function conditional(
@@ -89,13 +90,34 @@ export let dynamicTag = function dynamicTag(
           setTagVar(scope, childScopeAccessor, getTagVar());
         }
 
-        if (getContent && typeof newRenderer === "string") {
-          setConditionalRenderer(
-            scope[childScopeAccessor],
-            MARKO_DEBUG ? `#${newRenderer}/0` : 0,
-            getContent(scope),
-            createBranchScopeWithRenderer,
-          );
+        if (newRenderer) {
+          if (typeof newRenderer === "string") {
+            if (getContent) {
+              const content = getContent(scope);
+              setConditionalRenderer(
+                scope[childScopeAccessor],
+                MARKO_DEBUG ? `#${newRenderer}/0` : 0,
+                content,
+                createBranchScopeWithRenderer,
+              );
+              if (content.___accessor) {
+                subscribeToScopeSet(
+                  content.___owner!,
+                  content.___accessor,
+                  scope[childScopeAccessor][
+                    (MARKO_DEBUG ? `#${newRenderer}/0` : 0) +
+                      AccessorChar.ConditionalScope
+                  ],
+                );
+              }
+            }
+          } else if (newRenderer.___accessor) {
+            subscribeToScopeSet(
+              newRenderer.___owner!,
+              newRenderer.___accessor,
+              scope[childScopeAccessor],
+            );
+          }
         }
       }
 

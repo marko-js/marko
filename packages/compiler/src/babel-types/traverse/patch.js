@@ -107,7 +107,7 @@ Scope.prototype.crawl = function () {
             const movedBinding = movedBindings.get(hoistableBinding);
             if (
               !movedBinding ||
-              getScopeDepth(movedBinding) < getScopeDepth(curScope)
+              getScopeDepth(movedBinding) > getScopeDepth(curScope)
             ) {
               movedBindings.set(hoistableBinding, curScope);
             }
