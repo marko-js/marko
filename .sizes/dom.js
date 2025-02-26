@@ -1,4 +1,4 @@
-// size: 17931 (min) 6756 (brotli)
+// size: 17910 (min) 6739 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1155,21 +1155,25 @@ function createBranchWithTagNameOrRenderer(
   parentScope,
   parentNode,
 ) {
-  if ("string" != typeof tagNameOrRenderer)
-    return createBranch($global, tagNameOrRenderer, parentScope, parentNode);
-  let branch = createBranch($global, 0, parentScope, parentNode);
+  let branch = createBranch(
+    $global,
+    tagNameOrRenderer,
+    parentScope,
+    parentNode,
+  );
   return (
-    (branch[0] =
-      branch.a =
-      branch.b =
-        document.createElementNS(
-          "svg" === tagNameOrRenderer
-            ? "http://www.w3.org/2000/svg"
-            : "math" === tagNameOrRenderer
-              ? "http://www.w3.org/1998/Math/MathML"
-              : parentNode.namespaceURI,
-          tagNameOrRenderer,
-        )),
+    "string" == typeof tagNameOrRenderer &&
+      (branch[0] =
+        branch.a =
+        branch.b =
+          document.createElementNS(
+            "svg" === tagNameOrRenderer
+              ? "http://www.w3.org/2000/svg"
+              : "math" === tagNameOrRenderer
+                ? "http://www.w3.org/1998/Math/MathML"
+                : parentNode.namespaceURI,
+            tagNameOrRenderer,
+          )),
     branch
   );
 }
@@ -1184,7 +1188,7 @@ function createBranch($global, renderer, parentScope, parentNode) {
         (branch.q = parentBranch),
         (parentBranch.j ||= new Set()).add(branch))
       : (branch.f = 1),
-    renderer && renderer.k(branch, parentNode.namespaceURI),
+    renderer.k?.(branch, parentNode.namespaceURI),
     branch
   );
 }

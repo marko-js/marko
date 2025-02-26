@@ -7,9 +7,9 @@ import type { BranchScope } from "../common/types";
 import { patchDynamicTag } from "./control-flow";
 import { toInsertNode } from "./dom";
 import { prepareEffects, queueEffect, runEffects } from "./queue";
-import { createRenderer, initBranch, type Renderer } from "./renderer";
+import { createBranch, createRenderer, type Renderer } from "./renderer";
 import { getRegisteredWithScope, register } from "./resume";
-import { createScope, destroyBranch } from "./scope";
+import { destroyBranch } from "./scope";
 import { CLEAN, DIRTY, MARK } from "./signals";
 const classIdToBranch = new Map<string, BranchScope>();
 
@@ -30,7 +30,7 @@ export const compat = {
     return value === MARK || value === CLEAN || value === DIRTY;
   },
   isRenderer(renderer: any) {
-    return renderer.___clone;
+    return renderer.___init;
   },
   getStartNode(branch: any) {
     return branch.___startNode;
@@ -68,10 +68,14 @@ export const compat = {
   },
   createRenderer(
     args: NonNullable<Renderer["___args"]>,
-    clone: Renderer["___clone"],
+    clone: () => { startNode: ChildNode; endNode: ChildNode },
   ) {
-    const renderer = createRenderer("", 0, 0, () => args);
-    renderer.___clone = clone;
+    const renderer = createRenderer(0, 0, 0, () => args);
+    renderer.___init = (branch) => {
+      const cloned = clone();
+      branch.___startNode = cloned.startNode;
+      branch.___endNode = cloned.endNode;
+    };
     return renderer;
   },
   render(out: any, component: any, renderer: Renderer, args: any) {
@@ -97,10 +101,12 @@ export const compat = {
 
     component.effects = prepareEffects(() => {
       if (!branch) {
-        // TODO: this should be createBranch
-        branch = component.scope = createScope(out.global) as BranchScope;
-        branch._ = renderer.___owner;
-        initBranch(renderer, branch, document.body);
+        branch = component.scope = createBranch(
+          out.global,
+          renderer,
+          renderer.___owner,
+          document.body,
+        );
       } else {
         applyArgs(branch, MARK);
         existing = true;

@@ -9,13 +9,13 @@ export interface BranchScope extends Scope {
   ___destroyed: 1 | undefined;
   ___abortScopes: Set<Scope> | undefined;
   ___branchScopes: Set<BranchScope> | undefined;
+  ___renderer: ClientRenderer | string;
 }
 export interface Scope {
   $global: Record<string, unknown>;
   _: Scope | undefined;
   ___args: unknown;
   ___pending: 1 | 0 | undefined;
-  ___renderer: ClientRenderer | undefined;
   ___abortControllers:
     | Record<string | number, AbortController | void>
     | undefined;
