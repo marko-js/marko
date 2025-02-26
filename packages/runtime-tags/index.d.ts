@@ -33,8 +33,11 @@ declare global {
       $global?: Global;
     };
 
-    /** Body content created by a template. */
-    export interface Body<
+    /** @deprecated prefer `Marko.Content` */
+    export interface Body extends Content {}
+
+    /** Body content created from by a component, typically held in an object with a `content` property. */
+    export interface Content<
       in Params extends readonly any[] = [],
       out Return = void,
     > {}
