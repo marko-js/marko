@@ -4,7 +4,7 @@ import tagA from "./tags/tag-a/index.marko";
 import tagB from "./tags/tag-b/index.marko";
 const foo = '';
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _showTagATagA_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Body content", ""));
+const _showTagATagA_content = _$.registerContent("__tests__/template.marko_1_renderer", "Body content");
 const _expr_other_tagConstB = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     other,

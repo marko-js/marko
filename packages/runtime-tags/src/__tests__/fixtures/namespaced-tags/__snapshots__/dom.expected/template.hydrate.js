@@ -1,18 +1,14 @@
-// size: 856 (min) 376 (brotli)
-const _Child_content2 = _$.register("a0", _$.createRendererWithOwner("Hi", "")),
-  _Child_content = _$.register("a1", _$.createRendererWithOwner("Hi", "")),
+// size: 788 (min) 350 (brotli)
+const _Child_content2 = _$.registerContent("a0", "Hi"),
+  _Child_content = _$.registerContent("a1", "Hi"),
   _input_value$Parent_content = _$.registerDynamicClosure(
-    "a2",
+    "a3",
     10,
     (_scope, input_value) => _$.html(_scope, input_value, 0),
   ),
-  _setup$Parent_content = (_scope) => {
+  _Parent_content = _$.registerContent("a2", " ", " ", (_scope) => {
     _input_value$Parent_content._(_scope);
-  },
-  _Parent_content = _$.register(
-    "a3",
-    _$.createRendererWithOwner(" ", " ", _setup$Parent_content),
-  ),
+  }),
   _expr_Parent_Child_effect = _$.effect(
     "a4",
     (_scope, { 11: Parent, 12: Child }) => {

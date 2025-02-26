@@ -1,2 +1,2 @@
-// size: 74 (min) 71 (brotli)
-_$.register("b0", _$.createRendererWithOwner("This is the body content", ""));
+// size: 51 (min) 52 (brotli)
+_$.registerContent("b0", "This is the body content");

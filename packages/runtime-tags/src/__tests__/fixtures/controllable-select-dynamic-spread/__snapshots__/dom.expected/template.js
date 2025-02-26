@@ -18,7 +18,7 @@ const _setup$tagSelect_content = _scope => {
   });
   _setup$tagSelect_content_effect(_scope);
 };
-const _tagSelect_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<option>A</option><option>B</option><option>C</option>", /* get, over(1), get, over(1), get */" b b ", _setup$tagSelect_content));
+const _tagSelect_content = _$.registerContent("__tests__/template.marko_1_renderer", "<option>A</option><option>B</option><option>C</option>", /* get, over(1), get, over(1), get */" b b ", _setup$tagSelect_content);
 const _expr_value_tag = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     value,

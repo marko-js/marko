@@ -1,8 +1,8 @@
 export const _template_ = "<!><!><!><!><!><!><!><!><!><!><!>";
 export const _walks_ = /* replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1) */"D%b%b%b%b%b%b%b%b%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _for_content10 = /* @__PURE__ */_$.createRenderer("Hello", "");
-const _for_content9 = /* @__PURE__ */_$.createRenderer("Hello", "");
+const _for_content10 = /* @__PURE__ */_$.createRenderer("Hello");
+const _for_content9 = /* @__PURE__ */_$.createRenderer("Hello");
 const _i$for_content6 = /* @__PURE__ */_$.value("i", (_scope, i) => {
   _$.attr(_scope["#div/0"], "key", i);
   _$.data(_scope["#text/1"], i);

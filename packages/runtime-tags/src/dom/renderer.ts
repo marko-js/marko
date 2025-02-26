@@ -2,12 +2,13 @@ import { type BranchScope, NodeType, type Scope } from "../common/types";
 import { insertChildNodes } from "./dom";
 import { parseHTML } from "./parse-html";
 import { queueRender } from "./queue";
+import { register } from "./resume";
 import { createScope } from "./scope";
 import type { Signal } from "./signals";
 import { trimWalkString, walk } from "./walker";
 
 export type Renderer = {
-  ___id: symbol;
+  ___id: string;
   ___template: string;
   ___walks: string;
   ___setup: SetupFn | undefined | 0;
@@ -108,19 +109,19 @@ export function initBranch(
   }
 }
 
-export function createRendererWithOwner(
-  template: string,
+export function createContent(
+  id: string,
+  template?: string | 0,
   rawWalks?: string | 0,
   setup?: SetupFn | 0,
   getArgs?: () => Signal<unknown>,
 ) {
   let args: Signal<unknown> | undefined;
-  const id = MARKO_DEBUG ? Symbol("Marko Renderer") : ({} as any as symbol);
-  const walks = rawWalks ? /* @__PURE__ */ trimWalkString(rawWalks) : " ";
+  const walks = rawWalks ? /* @__PURE__ */ trimWalkString(rawWalks) : "";
   return (owner?: Scope): Renderer => {
     return {
       ___id: id,
-      ___template: template,
+      ___template: template || "",
       ___walks: walks,
       ___setup: setup,
       ___clone: _clone,
@@ -132,13 +133,23 @@ export function createRendererWithOwner(
   };
 }
 
-export function createRenderer(
-  template: string,
+export function registerContent(
+  id: string,
+  template?: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
   getArgs?: () => Signal<unknown>,
 ) {
-  return createRendererWithOwner(template, walks, setup, getArgs)();
+  return register(id, createContent(id, template, walks, setup, getArgs));
+}
+
+export function createRenderer(
+  template?: string | 0,
+  walks?: string | 0,
+  setup?: SetupFn | 0,
+  getArgs?: () => Signal<unknown>,
+) {
+  return createContent("", template, walks, setup, getArgs)();
 }
 
 function _clone(this: Renderer, ns: string) {

@@ -2,11 +2,11 @@ export const _template_ = "<!><!><!><div></div>";
 export const _walks_ = /* replace, over(1), replace, over(1), get, over(1) */"D%b%b b";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _else_content = /* @__PURE__ */_$.createRenderer("C", "");
-const _elseIf_content = /* @__PURE__ */_$.createRenderer("B", "");
-const _if_content3 = /* @__PURE__ */_$.createRenderer("A", "");
-const _if_content2 = /* @__PURE__ */_$.createRenderer("World", "");
-const _if_content = /* @__PURE__ */_$.createRenderer("Hello", "");
+const _else_content = /* @__PURE__ */_$.createRenderer("C");
+const _elseIf_content = /* @__PURE__ */_$.createRenderer("B");
+const _if_content3 = /* @__PURE__ */_$.createRenderer("A");
+const _if_content2 = /* @__PURE__ */_$.createRenderer("World");
+const _if_content = /* @__PURE__ */_$.createRenderer("Hello");
 const _expr_input_x_input_y = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     input_x,

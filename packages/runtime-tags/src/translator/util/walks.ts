@@ -181,10 +181,8 @@ export function getWalkString(section: Section) {
       ? String.fromCharCode(WalkCode.Next + 1)
       : "";
   const walks = getWalks(section);
-  const walkLiteral =
-    normalizeStringExpression([prefix, ...walks, postfix]) ||
-    t.stringLiteral("");
-  if ((walkLiteral as t.StringLiteral).value !== "") {
+  const walkLiteral = normalizeStringExpression([prefix, ...walks, postfix]);
+  if (walkLiteral && (walkLiteral as t.StringLiteral).value !== "") {
     walkLiteral.leadingComments = [
       {
         type: "CommentBlock",

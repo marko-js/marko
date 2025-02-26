@@ -13,6 +13,7 @@ import {
 import {
   getResumeRegisterId,
   initValue,
+  replaceNullishAndEmptyFunctionsWith0,
   writeRegisteredFns,
   writeSignals,
 } from "../../util/signals";
@@ -46,32 +47,28 @@ export default {
           const tagParamsSignal =
             childSection.params && initValue(childSection.params);
           const { walks, writes, setup } = writer.getSectionMeta(childSection);
-          const identifier = t.identifier(childSection.name);
-          const renderer = callRuntime(
-            getSectionParentIsOwner(childSection)
-              ? "createRenderer"
-              : "createRendererWithOwner",
-            writes,
-            walks,
-            setup,
+          const params =
             tagParamsSignal?.identifier &&
-              t.arrowFunctionExpression([], tagParamsSignal.identifier),
-          );
+            t.arrowFunctionExpression([], tagParamsSignal.identifier);
+          const identifier = t.identifier(childSection.name);
+          const renderer = getSectionParentIsOwner(childSection)
+            ? callRuntime("createRenderer", writes, walks, setup, params)
+            : callRuntime(
+                !childSection.isBranch && isStatefulSection(childSection)
+                  ? "registerContent"
+                  : "createContent",
+                t.stringLiteral(getResumeRegisterId(childSection, "renderer")),
+                ...replaceNullishAndEmptyFunctionsWith0([
+                  writes,
+                  walks,
+                  setup,
+                  params,
+                ]),
+              );
           writeSignals(childSection);
           program.node.body.push(
             t.variableDeclaration("const", [
-              t.variableDeclarator(
-                identifier,
-                !childSection.isBranch && isStatefulSection(childSection)
-                  ? callRuntime(
-                      "register",
-                      t.stringLiteral(
-                        getResumeRegisterId(childSection, "renderer"),
-                      ),
-                      renderer,
-                    )
-                  : renderer,
-              ),
+              t.variableDeclarator(identifier, renderer),
             ]),
           );
         }

@@ -18,7 +18,7 @@ const _count$classLayout_content = _$.registerDynamicClosure("__tests__/template
 const _setup$classLayout_content = _scope => {
   _count$classLayout_content._(_scope);
 };
-const _classLayout_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<button id=tags> </button>", /* get, next(1), get */" D ", _setup$classLayout_content));
+const _classLayout_content = _$.registerContent("__tests__/template.marko_1_renderer", "<button id=tags> </button>", /* get, next(1), get */" D ", _setup$classLayout_content);
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _classLayout_content);
 const _count = /* @__PURE__ */_$.state("count", (_scope, count) => _count$classLayout_content(_scope));
 export function _setup_(_scope) {

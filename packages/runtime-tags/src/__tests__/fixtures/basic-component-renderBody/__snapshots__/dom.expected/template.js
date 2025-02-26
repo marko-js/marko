@@ -6,7 +6,7 @@ const _clickCount$myButton_content = _$.registerDynamicClosure("__tests__/templa
 const _setup$myButton_content = _scope => {
   _clickCount$myButton_content._(_scope);
 };
-const _myButton_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner(" ", /* get */" ", _setup$myButton_content));
+const _myButton_content = _$.registerContent("__tests__/template.marko_1_renderer", " ", /* get */" ", _setup$myButton_content);
 const _clickCount = /* @__PURE__ */_$.state("clickCount", (_scope, clickCount) => {
   _myButton_input_onClick(_scope["#childScope/0"], _onClick(_scope));
   _clickCount$myButton_content(_scope);

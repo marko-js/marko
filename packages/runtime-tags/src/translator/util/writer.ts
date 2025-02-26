@@ -100,9 +100,7 @@ export function getSectionMeta(section: Section) {
   return {
     setup: getSetup(section),
     walks: getWalkString(section),
-    writes:
-      normalizeStringExpression([writePrefix, ...writes, writePostfix]) ||
-      t.stringLiteral(""),
+    writes: normalizeStringExpression([writePrefix, ...writes, writePostfix]),
   };
 }
 

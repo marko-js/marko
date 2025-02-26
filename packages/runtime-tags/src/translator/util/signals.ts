@@ -582,10 +582,17 @@ function generateSignalName(referencedBindings?: ReferencedBindings) {
   return name;
 }
 
-export function finalizeSignalArgs(args: t.Expression[]) {
+export function replaceNullishAndEmptyFunctionsWith0(
+  args: (t.Expression | undefined | false)[],
+): t.Expression[] {
   for (let i = args.length; i--; ) {
     const arg = args[i];
-    if (t.isArrowFunctionExpression(arg) && t.isBlockStatement(arg.body)) {
+    if (!arg) {
+      args[i] = t.numericLiteral(0);
+    } else if (
+      t.isArrowFunctionExpression(arg) &&
+      t.isBlockStatement(arg.body)
+    ) {
       const body = arg.body.body;
       if (body.length === 0) {
         args[i] = t.numericLiteral(0);
@@ -602,11 +609,14 @@ export function finalizeSignalArgs(args: t.Expression[]) {
 
   for (
     let i = args.length - 1;
-    t.isNumericLiteral(args[i]) && (args[i] as t.NumericLiteral).value === 0;
+    t.isNumericLiteral(args[i] as any) &&
+    (args[i] as t.NumericLiteral).value === 0;
 
   ) {
     args.length = i--;
   }
+
+  return args as t.Expression[];
 }
 export function addStatement(
   type: "render" | "effect",
@@ -776,7 +786,7 @@ export function writeSignals(section: Section) {
     let value = signal.build();
 
     if (t.isCallExpression(value)) {
-      finalizeSignalArgs(value.arguments as any as t.Expression[]);
+      replaceNullishAndEmptyFunctionsWith0(value.arguments as t.Expression[]);
     }
 
     if (signal.register) {

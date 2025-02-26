@@ -2,8 +2,8 @@ export const _template_ = `<!>${_customTag_template}`;
 export const _walks_ = /* beginChild, _customTag_walks, endChild */`D/${_customTag_walks}&`;
 import { _setup_ as _customTag, _pattern__ as _customTag_input_thing, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./tags/custom-tag/index.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _thing_content2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRendererWithOwner("Goodbye", ""));
-const _thing_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello", ""));
+const _thing_content2 = _$.registerContent("__tests__/template.marko_2_renderer", "Goodbye");
+const _thing_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello");
 export const _x_ = /* @__PURE__ */_$.value("x", (_scope, x) => {
   let _thing;
   if (x) {

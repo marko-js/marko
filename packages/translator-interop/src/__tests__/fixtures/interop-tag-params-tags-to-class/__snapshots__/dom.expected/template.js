@@ -33,7 +33,7 @@ const _multiplier$classLayout_content = _$.registerDynamicClosure("__tests__/tem
 const _setup$classLayout_content = _scope => {
   _multiplier$classLayout_content._(_scope);
 };
-const _classLayout_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<h1> </h1><button id=tags><!> * <!> = <!></button>", /* next(1), get, out(1), get, next(1), replace, over(2), replace, over(2), replace */"D l D%c%c%", _setup$classLayout_content, () => _params_2$classLayout_content));
+const _classLayout_content = _$.registerContent("__tests__/template.marko_1_renderer", "<h1> </h1><button id=tags><!> * <!> = <!></button>", /* next(1), get, out(1), get, next(1), replace, over(2), replace, over(2), replace */"D l D%c%c%", _setup$classLayout_content, () => _params_2$classLayout_content);
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _classLayout_content);
 const _multiplier = /* @__PURE__ */_$.state("multiplier", (_scope, multiplier) => _multiplier$classLayout_content(_scope));
 export function _setup_(_scope) {

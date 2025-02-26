@@ -23,7 +23,7 @@ const _setup$customTag_content = _scope => {
   _b$customTag_content._(_scope);
   _c$customTag_content._(_scope);
 };
-const _customTag_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$customTag_content));
+const _customTag_content = _$.registerContent("__tests__/template.marko_1_renderer", "<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$customTag_content);
 const _if = /* @__PURE__ */_$.conditional("#div/2", _if_content);
 const _c = /* @__PURE__ */_$.state("c", (_scope, c) => {
   _c$customTag_content(_scope);

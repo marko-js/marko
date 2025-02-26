@@ -1,20 +1,16 @@
-// size: 353 (min) 216 (brotli)
+// size: 331 (min) 195 (brotli)
 const _onClick__effect = _$.effect("a0", (_scope, { 4: onClick }) =>
     _$.on(_scope[0], "click", onClick),
   ),
   _onClick_ = _$.value(4, (_scope, onClick) => _onClick__effect(_scope)),
   _clickCount$myButton_content = _$.registerDynamicClosure(
-    "b1",
+    "b2",
     1,
     (_scope, clickCount) => _$.data(_scope[0], clickCount),
-  ),
-  _setup$myButton_content = (_scope) => {
-    _clickCount$myButton_content._(_scope);
-  };
-_$.register(
-  "b2",
-  _$.createRendererWithOwner(" ", " ", _setup$myButton_content),
-);
+  );
+_$.registerContent("b1", " ", " ", (_scope) => {
+  _clickCount$myButton_content._(_scope);
+});
 const _clickCount = _$.state(
   1,
   (_scope, clickCount) => {

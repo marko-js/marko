@@ -8,21 +8,21 @@ const _count$await_content3 = _$.registerDynamicClosure("__tests__/template.mark
 const _setup$await_content3 = _scope => {
   _count$await_content3._(_scope);
 };
-const _await_content3 = _$.register("__tests__/template.marko_3_renderer", /* @__PURE__ */_$.createRenderer("Got: <!> <!>", /* over(1), replace, over(2), replace */"b%c%", _setup$await_content3, () => _params_4$await_content));
+const _await_content3 = /* @__PURE__ */_$.createRenderer("Got: <!> <!>", /* over(1), replace, over(2), replace */"b%c%", _setup$await_content3, () => _params_4$await_content);
 const _value$await_content2 = /* @__PURE__ */_$.value("value", (_scope, value) => _$.data(_scope["#text/0"], value));
 const _params_3$await_content = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _value$await_content2(_scope, _params_3[0]));
 const _count$await_content2 = _$.registerDynamicClosure("__tests__/template.marko_2_count/subscriber", "count", (_scope, count) => _$.data(_scope["#text/1"], count));
 const _setup$await_content2 = _scope => {
   _count$await_content2._(_scope);
 };
-const _await_content2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRenderer("Got: <!> <!>", /* over(1), replace, over(2), replace */"b%c%", _setup$await_content2, () => _params_3$await_content));
+const _await_content2 = /* @__PURE__ */_$.createRenderer("Got: <!> <!>", /* over(1), replace, over(2), replace */"b%c%", _setup$await_content2, () => _params_3$await_content);
 const _value$await_content = /* @__PURE__ */_$.value("value", (_scope, value) => _$.data(_scope["#text/0"], value));
 const _params_2$await_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _value$await_content(_scope, _params_2[0]));
 const _count$await_content = _$.registerDynamicClosure("__tests__/template.marko_1_count/subscriber", "count", (_scope, count) => _$.data(_scope["#text/1"], count));
 const _setup$await_content = _scope => {
   _count$await_content._(_scope);
 };
-const _await_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRenderer("Got: <!> <!>", /* over(1), replace, over(2), replace */"b%c%", _setup$await_content, () => _params_2$await_content));
+const _await_content = /* @__PURE__ */_$.createRenderer("Got: <!> <!>", /* over(1), replace, over(2), replace */"b%c%", _setup$await_content, () => _params_2$await_content);
 const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
   count
 }) => _$.on(_scope["#button/0"], "click", function () {

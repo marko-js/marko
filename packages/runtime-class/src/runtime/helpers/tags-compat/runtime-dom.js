@@ -124,7 +124,7 @@ exports.p = function (domCompat) {
             (scope, input) =>
               domCompat.isOp(input) ||
               renderAndMorph(scope, rendererFromAnywhere, renderer, input),
-            () => ___createFragmentNode().startNode,
+            () => ___createFragmentNode(),
           );
           rendererCache.set(renderer, newRenderer);
         }

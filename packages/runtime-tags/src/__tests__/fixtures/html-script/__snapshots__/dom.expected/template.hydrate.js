@@ -1,5 +1,5 @@
-// size: 259 (min) 179 (brotli)
-_$.register("a1", _$.createRendererWithOwner("", ""));
+// size: 233 (min) 174 (brotli)
+_$.registerContent("a1");
 const _count_effect = _$.effect("a2", (_scope, { 1: count }) =>
     _$.on(_scope[0], "click", function () {
       _count(_scope, count + 1);

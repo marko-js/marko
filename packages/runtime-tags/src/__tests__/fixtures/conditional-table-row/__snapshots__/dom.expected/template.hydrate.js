@@ -1,5 +1,5 @@
-// size: 188 (min) 136 (brotli)
-const _if_content = _$.createRenderer("<tr><td>Hi</td></tr>", ""),
+// size: 185 (min) 148 (brotli)
+const _if_content = _$.createRenderer("<tr><td>Hi</td></tr>"),
   _if = _$.conditional(0, _if_content),
   _show_effect = _$.effect("a0", (_scope, { 2: show }) =>
     _$.on(_scope[1], "click", function () {

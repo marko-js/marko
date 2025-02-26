@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _number$define_content = /* @__PURE__ */_$.value("number", (_scope, number) => _$.data(_scope["#text/0"], number));
 const _pattern_$define_content = /* @__PURE__ */_$.value("_pattern_", (_scope, _pattern_) => _number$define_content(_scope, _pattern_.number));
 const _params_2$define_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _pattern_$define_content(_scope, _params_2?.[0]));
-const _define_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div> </div>", /* next(1), get */"D ", void 0, () => _params_2$define_content));
+const _define_content = _$.registerContent("__tests__/template.marko_1_renderer", "<div> </div>", /* next(1), get */"D ", 0, () => _params_2$define_content);
 const _expr_x_MyTag = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     x,

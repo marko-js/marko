@@ -1,2 +1,2 @@
-// size: 61 (min) 60 (brotli)
-_$.register("a0", _$.createRendererWithOwner("Hello World", ""));
+// size: 38 (min) 42 (brotli)
+_$.registerContent("a0", "Hello World");

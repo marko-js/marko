@@ -1,4 +1,4 @@
-// size: 377 (min) 244 (brotli)
+// size: 352 (min) 234 (brotli)
 const _expr_input_content_x = _$.intersection(
     2,
     (_scope) => {
@@ -26,13 +26,11 @@ const _expr_input_content_x = _$.intersection(
   _params_2$customTag_content = _$.value(1, (_scope, _params_2) =>
     _count$customTag_content(_scope, _params_2[0]),
   );
-_$.register(
+_$.registerContent(
   "b0",
-  _$.createRendererWithOwner(
-    "<div>Count: <!></div>",
-    "Db%",
-    void 0,
-    () => _params_2$customTag_content,
-  ),
+  "<div>Count: <!></div>",
+  "Db%",
+  0,
+  () => _params_2$customTag_content,
 ),
   init();

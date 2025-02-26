@@ -1,22 +1,19 @@
-// size: 522 (min) 273 (brotli)
-const _setup$tagSelect_content_effect = _$.effect("a1", (_scope) => {
+// size: 500 (min) 252 (brotli)
+const _setup$tagSelect_content_effect = _$.effect("a2", (_scope) => {
     _$.attrsEvents(_scope, 0),
       _$.attrsEvents(_scope, 1),
       _$.attrsEvents(_scope, 2);
   }),
-  _setup$tagSelect_content = (_scope) => {
-    _$.attrs(_scope, 0, { value: "a" }),
-      _$.attrs(_scope, 1, { value: "b" }),
-      _$.attrs(_scope, 2, { value: "c" }),
-      _setup$tagSelect_content_effect(_scope);
-  },
-  _tagSelect_content = _$.register(
-    "a2",
-    _$.createRendererWithOwner(
-      "<option>A</option><option>B</option><option>C</option>",
-      " b b ",
-      _setup$tagSelect_content,
-    ),
+  _tagSelect_content = _$.registerContent(
+    "a1",
+    "<option>A</option><option>B</option><option>C</option>",
+    " b b ",
+    (_scope) => {
+      _$.attrs(_scope, 0, { value: "a" }),
+        _$.attrs(_scope, 1, { value: "b" }),
+        _$.attrs(_scope, 2, { value: "c" }),
+        _setup$tagSelect_content_effect(_scope);
+    },
   ),
   _expr_value_tag = _$.intersection(
     2,

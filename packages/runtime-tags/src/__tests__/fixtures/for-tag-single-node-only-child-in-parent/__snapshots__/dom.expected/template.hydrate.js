@@ -1,5 +1,5 @@
-// size: 229 (min) 163 (brotli)
-const _for_content = _$.createRenderer("<div></div>", ""),
+// size: 226 (min) 160 (brotli)
+const _for_content = _$.createRenderer("<div></div>"),
   _for = _$.loopOf(0, _for_content),
   _children_length = _$.value(2, (_scope, children_length) =>
     _$.attr(_scope[0], "data-children", children_length),
