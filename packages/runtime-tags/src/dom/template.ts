@@ -7,27 +7,26 @@ import type {
 } from "../common/types";
 import { insertChildNodes } from "./dom";
 import { prepareEffects, runEffects } from "./queue";
-import { createRenderer, initBranch, type Renderer } from "./renderer";
+import { createContent, initBranch, type Renderer } from "./renderer";
 import { register } from "./resume";
 import { createScope, removeAndDestroyBranch } from "./scope";
 import { MARK } from "./signals";
 
 export const createTemplate = (
-  templateId: string,
-  ...rendererArgs: Parameters<typeof createRenderer>
+  ...contentArgs: Parameters<typeof createContent>
 ): Template => {
-  const renderer = createRenderer(...rendererArgs);
-  (renderer as unknown as Template).mount = mount;
-  (renderer as unknown as any)._ = renderer; // This is added exclusively for the compat layer, maybe someday it can be removed.
+  const renderer = createContent(...contentArgs)() as unknown as Template;
+  renderer.mount = mount;
+  (renderer as any)._ = renderer; // This is added exclusively for the compat layer, maybe someday it can be removed.
   if (MARKO_DEBUG) {
-    (renderer as unknown as Template).render = () => {
+    renderer.render = () => {
       throw new Error(
         `render() is not implemented for the DOM compilation of a Marko template`,
       );
     };
   }
 
-  return register(templateId, renderer as unknown as Template);
+  return register(contentArgs[0], renderer);
 };
 
 function mount(

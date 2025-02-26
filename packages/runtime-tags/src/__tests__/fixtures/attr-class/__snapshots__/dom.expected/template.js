@@ -2,7 +2,7 @@ export const _template_ = `<div></div><div class="a b"></div><div class="a b c">
 export const _walks_ = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(1) */` d/${_customTag_walks}&/${_customTag_walks}&%bD`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _customTag, _className_ as _customTag_input_class, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./tags/custom-tag.marko";
-const _test_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello", ""));
+const _test_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello");
 const _expr_input_test_c_d = /* @__PURE__ */_$.intersection(3, _scope => {
   const {
     input_test,

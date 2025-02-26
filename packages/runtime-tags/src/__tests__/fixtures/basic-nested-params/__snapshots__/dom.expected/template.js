@@ -8,7 +8,7 @@ const _params_3$child_content = /* @__PURE__ */_$.value("_params_3", (_scope, _p
 const _setup$child_content = _scope => {
   _outer$child_content._(_scope);
 };
-const _child_content2 = _$.register("__tests__/template.marko_2_renderer", /* @__PURE__ */_$.createRendererWithOwner("<div><!>.<!></div>", /* next(1), replace, over(2), replace */"D%c%", _setup$child_content, () => _params_3$child_content));
+const _child_content2 = _$.registerContent("__tests__/template.marko_2_renderer", "<div><!>.<!></div>", /* next(1), replace, over(2), replace */"D%c%", _setup$child_content, () => _params_3$child_content);
 const _y$child_content = _$.registerDynamicClosure("__tests__/template.marko_1_y/subscriber", "y", (_scope, y) => _child_input_value(_scope["#childScope/0"], y), () => /* @__PURE__ */_$.inChild("#childScope/0", _child_input_value));
 const _outer$child_content2 = /* @__PURE__ */_$.value("outer", (_scope, outer) => _outer$child_content(_scope));
 const _params_2$child_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outer$child_content2(_scope, _params_2[0]));
@@ -17,7 +17,7 @@ const _setup$child_content2 = _scope => {
   _child(_scope["#childScope/0"]);
   _child_input_content(_scope["#childScope/0"], _child_content2(_scope));
 };
-const _child_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$child_content2, () => _params_2$child_content));
+const _child_content = _$.registerContent("__tests__/template.marko_1_renderer", _child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$child_content2, () => _params_2$child_content);
 const _y = /* @__PURE__ */_$.state("y", (_scope, y) => _y$child_content(_scope));
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
   x

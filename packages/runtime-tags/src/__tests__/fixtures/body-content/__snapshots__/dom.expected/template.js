@@ -6,7 +6,7 @@ const _clickCount$FancyButton_content = _$.registerDynamicClosure("__tests__/tem
 const _setup$FancyButton_content = _scope => {
   _clickCount$FancyButton_content._(_scope);
 };
-const _FancyButton_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner(" ", /* get */" ", _setup$FancyButton_content));
+const _FancyButton_content = _$.registerContent("__tests__/template.marko_1_renderer", " ", /* get */" ", _setup$FancyButton_content);
 const _clickCount = /* @__PURE__ */_$.state("clickCount", (_scope, clickCount) => {
   _FancyButton_input(_scope["#childScope/0"], {
     onClick: _onClick(_scope),

@@ -1,4 +1,4 @@
-// size: 449 (min) 240 (brotli)
+// size: 426 (min) 226 (brotli)
 const _dynamicTag = _$.dynamicTag(1),
   _input_thing_content_ = _$.value(
     6,
@@ -16,10 +16,7 @@ const _dynamicTag = _$.dynamicTag(1),
     },
     () => _input_thing_content_,
   ),
-  _define_content = _$.register(
-    "b0",
-    _$.createRendererWithOwner("<span>The thing</span>", ""),
-  ),
+  _define_content = _$.registerContent("b0", "<span>The thing</span>"),
   _myThing = _$.value(
     3,
     (_scope, myThing) => _input_thing_(_scope[0], myThing),

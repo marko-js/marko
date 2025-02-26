@@ -1,4 +1,4 @@
-// size: 473 (min) 257 (brotli)
+// size: 451 (min) 242 (brotli)
 const _dynamicTag = _$.dynamicTag(1),
   _attrs__effect = _$.effect("a0", (_scope) => _$.attrsEvents(_scope, 0)),
   _content_ = _$.value(
@@ -17,17 +17,13 @@ const _dynamicTag = _$.dynamicTag(1),
     () => _content_,
   ),
   _clickCount$FancyButton_content = _$.registerDynamicClosure(
-    "b1",
+    "b2",
     1,
     (_scope, clickCount) => _$.data(_scope[0], clickCount),
   ),
-  _setup$FancyButton_content = (_scope) => {
+  _FancyButton_content = _$.registerContent("b1", " ", " ", (_scope) => {
     _clickCount$FancyButton_content._(_scope);
-  },
-  _FancyButton_content = _$.register(
-    "b2",
-    _$.createRendererWithOwner(" ", " ", _setup$FancyButton_content),
-  ),
+  }),
   _clickCount = _$.state(
     1,
     (_scope, clickCount) => {

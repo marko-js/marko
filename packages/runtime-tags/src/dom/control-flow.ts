@@ -280,8 +280,7 @@ function isDifferentRenderer(
   b: Renderer | string | undefined,
 ) {
   return (
-    a !== b &&
-    ((a as Renderer | undefined)?.___id || 0) !==
-      (b as Renderer | undefined)?.___id
+    a !== b ||
+    (a as Renderer | undefined)?.___id !== (b as Renderer | undefined)?.___id
   );
 }

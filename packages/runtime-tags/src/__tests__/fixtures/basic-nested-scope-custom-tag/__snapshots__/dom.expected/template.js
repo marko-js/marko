@@ -16,7 +16,7 @@ const _count$child_content = _$.registerDynamicClosure("__tests__/template.marko
 const _setup$child_content = _scope => {
   _count$child_content._(_scope);
 };
-const _child_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<button> </button>", /* get, next(1), get */" D ", _setup$child_content));
+const _child_content = _$.registerContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", _setup$child_content);
 const _count = /* @__PURE__ */_$.state("count", (_scope, count) => _count$child_content(_scope));
 export function _setup_(_scope) {
   _child(_scope["#childScope/0"]);

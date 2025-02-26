@@ -1,8 +1,5 @@
-// size: 298 (min) 197 (brotli)
-const _tagName_content = _$.register(
-    "a0",
-    _$.createRendererWithOwner("body content", ""),
-  ),
+// size: 275 (min) 180 (brotli)
+const _tagName_content = _$.registerContent("a0", "body content"),
   _expr_tagName_className = _$.intersection(
     2,
     (_scope) => {

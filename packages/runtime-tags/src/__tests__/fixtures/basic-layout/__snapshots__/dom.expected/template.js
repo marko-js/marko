@@ -6,7 +6,7 @@ const _name$layout_content = _$.registerDynamicClosure("__tests__/template.marko
 const _setup$layout_content = _scope => {
   _name$layout_content._(_scope);
 };
-const _layout_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<h1>Hello <!></h1>", /* next(1), over(1), replace */"Db%", _setup$layout_content));
+const _layout_content = _$.registerContent("__tests__/template.marko_1_renderer", "<h1>Hello <!></h1>", /* next(1), over(1), replace */"Db%", _setup$layout_content);
 export const _name_ = /* @__PURE__ */_$.value("name", (_scope, name) => _name$layout_content(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _name_(_scope, input.name));
 export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));

@@ -1,4 +1,4 @@
-// size: 403 (min) 241 (brotli)
+// size: 381 (min) 218 (brotli)
 const _count_effect = _$.effect("a0", (_scope, { 2: count }) =>
     _$.on(_scope[0], "click", function () {
       _count(_scope, count + 1);
@@ -7,18 +7,15 @@ const _count_effect = _$.effect("a0", (_scope, { 2: count }) =>
   _count = _$.state(2, (_scope, count) => {
     _$.data(_scope[1], count), _count_effect(_scope);
   });
-const _setup$tagName_content = (_scope) => {
-    !(function (_scope) {
-      _count(_scope, 0);
-    })(_scope[0]);
-  },
-  _tagName_content = _$.register(
+const _tagName_content = _$.registerContent(
     "b0",
-    _$.createRendererWithOwner(
-      "<button id=count> </button>",
-      "/ D l&",
-      _setup$tagName_content,
-    ),
+    "<button id=count> </button>",
+    "/ D l&",
+    (_scope) => {
+      !(function (_scope) {
+        _count(_scope, 0);
+      })(_scope[0]);
+    },
   ),
   _dynamicTag = _$.dynamicTag(0, _tagName_content),
   _tagName_effect = _$.effect("b1", (_scope, { 2: tagName }) =>

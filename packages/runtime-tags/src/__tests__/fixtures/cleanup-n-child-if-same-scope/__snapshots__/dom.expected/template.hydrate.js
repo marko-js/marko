@@ -1,4 +1,4 @@
-// size: 362 (min) 219 (brotli)
+// size: 366 (min) 225 (brotli)
 const _setup$if_content_effect = _$.effect("a0", (_scope) => {
     (_scope._[1].innerHTML += "\nmounted"),
       (_$.getAbortSignal(_scope, 0).onabort = () => {
@@ -10,7 +10,7 @@ const _setup$if_content_effect = _$.effect("a0", (_scope) => {
   },
   _if_content = _$.createRenderer(
     "<div>a</div><span>b</span><p>c</p>",
-    "",
+    void 0,
     _setup$if_content,
   ),
   _if = _$.conditional(2, _if_content),

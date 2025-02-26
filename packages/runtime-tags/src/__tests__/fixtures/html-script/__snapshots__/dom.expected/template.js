@@ -1,7 +1,7 @@
 export const _template_ = "<script type=importmap></script>";
 export const _walks_ = /* get, over(1) */" b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _htmlScript_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("", ""));
+const _htmlScript_content = _$.registerContent("__tests__/template.marko_1_renderer");
 const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
   count
 }) => _$.on(_scope["#script/0"], "click", function () {

@@ -1,4 +1,4 @@
-// size: 1399 (min) 451 (brotli)
+// size: 1351 (min) 428 (brotli)
 const _expr_value_call$define_content2 = _$.intersection(
     2,
     (_scope) => {
@@ -25,18 +25,15 @@ const _expr_value_call$define_content2 = _$.intersection(
     0,
     (_scope, _params_3) => _pattern_2$define_content(_scope, _params_3?.[0]),
     () => _pattern_2$define_content,
-  ),
-  _setup$define_content2 = (_scope) => {
-    _call$define_content2(_scope, 2);
-  };
-_$.register(
+  );
+_$.registerContent(
   "a4",
-  _$.createRendererWithOwner(
-    "",
-    "",
-    _setup$define_content2,
-    () => _params_3$define_content,
-  ),
+  0,
+  0,
+  (_scope) => {
+    _call$define_content2(_scope, 2);
+  },
+  () => _params_3$define_content,
 );
 const _expr_value_call$define_content = _$.intersection(
     2,
@@ -56,18 +53,15 @@ const _expr_value_call$define_content = _$.intersection(
     0,
     (_scope, _params_2) => _pattern_$define_content(_scope, _params_2?.[0]),
     () => _pattern_$define_content,
-  ),
-  _setup$define_content = (_scope) => {
-    _call$define_content(_scope, 1);
-  };
-_$.register(
+  );
+_$.registerContent(
   "a5",
-  _$.createRendererWithOwner(
-    "",
-    "",
-    _setup$define_content,
-    () => _params_2$define_content,
-  ),
+  0,
+  0,
+  (_scope) => {
+    _call$define_content(_scope, 1);
+  },
+  () => _params_2$define_content,
 );
 const _expr_Twice_clickTwiceCount = _$.intersection(
     2,

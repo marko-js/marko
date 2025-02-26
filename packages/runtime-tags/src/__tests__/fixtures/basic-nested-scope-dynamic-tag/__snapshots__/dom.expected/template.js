@@ -16,7 +16,7 @@ const _count$falseChild_content = _$.registerDynamicClosure("__tests__/template.
 const _setup$falseChild_content = _scope => {
   _count$falseChild_content._(_scope);
 };
-const _falseChild_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("<button> </button>", /* get, next(1), get */" D ", _setup$falseChild_content));
+const _falseChild_content = _$.registerContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", _setup$falseChild_content);
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _falseChild_content);
 const _count = /* @__PURE__ */_$.state("count", (_scope, count) => _count$falseChild_content(_scope));
 export function _setup_(_scope) {

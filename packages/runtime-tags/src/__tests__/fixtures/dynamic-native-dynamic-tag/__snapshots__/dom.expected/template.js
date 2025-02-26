@@ -1,7 +1,7 @@
 export const _template_ = "<!><!><button></button>";
 export const _walks_ = /* replace, over(1), get, over(1) */"D%b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _tagName_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("body content", ""));
+const _tagName_content = _$.registerContent("__tests__/template.marko_1_renderer", "body content");
 const _expr_tagName_className = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
     tagName,

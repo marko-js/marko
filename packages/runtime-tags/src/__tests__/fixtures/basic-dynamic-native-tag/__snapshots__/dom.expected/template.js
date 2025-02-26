@@ -2,7 +2,7 @@ export const _template_ = "<!><!><!>";
 export const _walks_ = /* replace, over(1) */"D%bD";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _tagName_content = _$.register("__tests__/template.marko_1_renderer", /* @__PURE__ */_$.createRendererWithOwner("Hello World", ""));
+const _tagName_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello World");
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _tagName_content);
 export const _tagName_ = /* @__PURE__ */_$.value("tagName", (_scope, tagName) => _dynamicTag(_scope, tagName, () => ({
   class: ["a", "b"]
