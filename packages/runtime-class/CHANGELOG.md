@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.18
+
+### Patch Changes
+
+- [#2537](https://github.com/marko-js/marko/pull/2537) [`ae24290`](https://github.com/marko-js/marko/commit/ae24290c4c9f9807d70d398e661bb510fb905e09) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Consolidate create branch logic, optimizing code size and creating branches with only side effects and no template code.
+
 ## 5.37.17
 
 ### Patch Changes
