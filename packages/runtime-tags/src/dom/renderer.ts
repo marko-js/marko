@@ -9,72 +9,51 @@ import { trimWalkString, walk } from "./walker";
 
 export type Renderer = {
   ___id: string;
-  ___template: string;
-  ___walks: string;
-  ___setup: SetupFn | undefined | 0;
-  ___clone: (ns: string) => ChildNode;
+  ___init: (branch: BranchScope, ns: string) => void;
   ___args: Signal<unknown> | undefined;
   ___owner: Scope | undefined;
 };
 
 type SetupFn = (scope: Scope) => void;
 
-export function createBranchScopeWithRenderer(
-  renderer: Renderer,
+export function createBranchWithTagNameOrRenderer(
   $global: Scope["$global"],
+  tagNameOrRenderer: Renderer | string,
   parentScope: Scope,
   parentNode: ParentNode,
 ) {
   const branch = createBranch(
     $global,
-    renderer.___owner || parentScope,
+    tagNameOrRenderer,
     parentScope,
+    parentNode,
   );
-  if (MARKO_DEBUG) {
-    branch.___renderer = renderer;
+  if (typeof tagNameOrRenderer === "string") {
+    branch[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : 0] =
+      branch.___startNode =
+      branch.___endNode =
+        document.createElementNS(
+          tagNameOrRenderer === "svg"
+            ? "http://www.w3.org/2000/svg"
+            : tagNameOrRenderer === "math"
+              ? "http://www.w3.org/1998/Math/MathML"
+              : (parentNode as Element).namespaceURI,
+          tagNameOrRenderer,
+        );
   }
-  initBranch(renderer, branch, parentNode);
+
   return branch;
 }
 
-export function createBranchScopeWithTagNameOrRenderer(
-  tagNameOrRenderer: Renderer | string,
+export function createBranch(
   $global: Scope["$global"],
-  parentScope: Scope,
+  renderer: Renderer | string,
+  parentScope: Scope | undefined,
   parentNode: ParentNode,
 ) {
-  if (typeof tagNameOrRenderer !== "string") {
-    return createBranchScopeWithRenderer(
-      tagNameOrRenderer,
-      $global,
-      parentScope,
-      parentNode,
-    );
-  }
-
-  const branch = createBranch($global, parentScope, parentScope);
-  branch[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : 0] =
-    branch.___startNode =
-    branch.___endNode =
-      document.createElementNS(
-        tagNameOrRenderer === "svg"
-          ? "http://www.w3.org/2000/svg"
-          : tagNameOrRenderer === "math"
-            ? "http://www.w3.org/1998/Math/MathML"
-            : (parentNode as Element).namespaceURI,
-        tagNameOrRenderer,
-      );
-  return branch;
-}
-
-function createBranch(
-  $global: Scope["$global"],
-  ownerScope: Scope,
-  parentScope: Scope,
-) {
   const branch = createScope($global) as BranchScope;
-  const parentBranch = parentScope.___closestBranch;
-  branch._ = ownerScope;
+  const parentBranch = parentScope?.___closestBranch;
+  branch._ = (renderer as Renderer).___owner || parentScope;
   branch.___closestBranch = branch;
 
   if (parentBranch) {
@@ -85,28 +64,16 @@ function createBranch(
     branch.___branchDepth = 1;
   }
 
+  if (MARKO_DEBUG) {
+    branch.___renderer = renderer;
+  }
+
+  (renderer as Renderer | { ___init?: Renderer["___init"] }).___init?.(
+    branch,
+    (parentNode as Element).namespaceURI!,
+  );
+
   return branch;
-}
-
-export function initBranch(
-  renderer: Renderer,
-  branch: BranchScope,
-  parentNode: ParentNode,
-) {
-  const clone = renderer.___clone((parentNode as Element).namespaceURI!);
-  const cloneParent = clone.parentNode;
-  if (cloneParent) {
-    walk(cloneParent.firstChild!, renderer.___walks, branch);
-    branch.___startNode = cloneParent.firstChild!;
-    branch.___endNode = cloneParent.lastChild!;
-  } else {
-    walk(clone, renderer.___walks, branch);
-    branch.___startNode = branch.___endNode = clone;
-  }
-
-  if (renderer.___setup) {
-    queueRender(branch, renderer.___setup);
-  }
 }
 
 export function createContent(
@@ -118,13 +85,23 @@ export function createContent(
 ) {
   let args: Signal<unknown> | undefined;
   const walks = rawWalks ? /* @__PURE__ */ trimWalkString(rawWalks) : "";
+  const init: Renderer["___init"] = template
+    ? (branch, ns) => {
+        ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(
+          template,
+          ns,
+        ))(branch, walks);
+        setup && queueRender(branch, setup);
+      }
+    : (branch) => {
+        branch.___startNode = branch.___endNode = new Text();
+        setup && queueRender(branch, setup);
+      };
+
   return (owner?: Scope): Renderer => {
     return {
       ___id: id,
-      ___template: template || "",
-      ___walks: walks,
-      ___setup: setup,
-      ___clone: _clone,
+      ___init: init,
       ___owner: owner,
       get ___args() {
         return (args ||= getArgs?.());
@@ -152,26 +129,35 @@ export function createRenderer(
   return createContent("", template, walks, setup, getArgs)();
 }
 
-function _clone(this: Renderer, ns: string) {
-  return ((cloneCache[ns] ||= {})[this.___template] ||= createCloneableHTML(
-    this.___template,
-    ns,
-  ))();
-}
-
 const cloneCache: Partial<
   Record<string, Record<string, ReturnType<typeof createCloneableHTML>>>
 > = {};
-function createCloneableHTML(html: string, ns: string) {
-  const { firstChild, lastChild } = parseHTML(html, ns);
+function createCloneableHTML(
+  html: string,
+  ns: string,
+): (branch: BranchScope, walks: string) => void {
+  const { firstChild, lastChild } = parseHTML(html, ns) as {
+    firstChild: ChildNode;
+    lastChild: ChildNode;
+  };
   const parent = document.createElementNS(ns, "t") as ParentNode & {
     firstChild: ChildNode;
     lastChild: ChildNode;
   };
   insertChildNodes(parent, null, firstChild, lastChild);
-  return (
-    firstChild === lastChild && firstChild!.nodeType < NodeType.Comment
-      ? () => firstChild.cloneNode(true)
-      : () => parent.cloneNode(true).firstChild
-  ) as () => ChildNode;
+  return firstChild === lastChild && firstChild!.nodeType < NodeType.Comment
+    ? (branch, walks) => {
+        walk(
+          (branch.___startNode = branch.___endNode =
+            firstChild.cloneNode(true) as ChildNode),
+          walks,
+          branch,
+        );
+      }
+    : (branch, walks) => {
+        const clone = parent.cloneNode(true);
+        walk(clone.firstChild!, walks, branch);
+        branch.___startNode = clone.firstChild!;
+        branch.___endNode = clone.lastChild!;
+      };
 }

@@ -268,9 +268,10 @@ export function html(scope: Scope, value: unknown, accessor: Accessor) {
   insertChildNodes(
     parentNode,
     firstChild,
-    (scope[accessor] = newContent.firstChild),
+    (scope[accessor] =
+      newContent.firstChild || newContent.appendChild(new Text())),
     (scope[accessor + AccessorChar.DynamicPlaceholderLastChild] =
-      newContent.lastChild),
+      newContent.lastChild!),
   );
   removeChildNodes(firstChild, lastChild);
 }

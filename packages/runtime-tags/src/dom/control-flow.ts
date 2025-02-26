@@ -10,8 +10,8 @@ import {
 import { attrs } from "./dom";
 import { reconcile } from "./reconcile";
 import {
-  createBranchScopeWithRenderer,
-  createBranchScopeWithTagNameOrRenderer,
+  createBranch,
+  createBranchWithTagNameOrRenderer,
   type Renderer,
 } from "./renderer";
 import {
@@ -36,7 +36,7 @@ export function conditional(nodeAccessor: Accessor, ...branches: Renderer[]) {
         scope,
         nodeAccessor,
         branches[(scope[branchAccessor] = newBranch)],
-        createBranchScopeWithRenderer,
+        createBranch,
       );
     }
   };
@@ -74,7 +74,7 @@ export let dynamicTag = function dynamicTag(
           scope,
           nodeAccessor,
           newRenderer || (getContent ? getContent(scope) : undefined),
-          createBranchScopeWithTagNameOrRenderer,
+          createBranchWithTagNameOrRenderer,
         );
 
         if (getTagVar) {
@@ -86,7 +86,7 @@ export let dynamicTag = function dynamicTag(
             scope[childScopeAccessor],
             MARKO_DEBUG ? `#${newRenderer}/0` : 0,
             getContent(scope),
-            createBranchScopeWithRenderer,
+            createBranch,
           );
         }
       }
@@ -124,8 +124,8 @@ export function setConditionalRenderer<T>(
   nodeAccessor: Accessor,
   newRenderer: T,
   createBranch: (
-    renderer: NonNullable<T>,
     $global: Scope["$global"],
+    renderer: NonNullable<T>,
     parentScope: Scope,
     parentNode: ParentNode,
   ) => BranchScope,
@@ -139,7 +139,7 @@ export function setConditionalRenderer<T>(
       ? (prevBranch?.___startNode || referenceNode).parentNode!
       : (referenceNode as ParentNode);
   const newBranch = (scope[nodeAccessor + AccessorChar.ConditionalScope] =
-    newRenderer && createBranch(newRenderer, scope.$global, scope, parentNode));
+    newRenderer && createBranch(scope.$global, newRenderer, scope, parentNode));
   if (referenceNode === parentNode) {
     if (prevBranch) {
       destroyBranch(prevBranch);
@@ -238,12 +238,7 @@ function loop<T extends unknown[] = unknown[]>(
       forEach(valueOrOp, (key, args) => {
         const branch =
           oldMap?.get(key) ||
-          createBranchScopeWithRenderer(
-            renderer,
-            scope.$global,
-            scope,
-            parentNode,
-          );
+          createBranch(scope.$global, renderer, scope, parentNode);
         params?.(branch, args);
         newMap.set(key, branch);
         newArray.push(branch);

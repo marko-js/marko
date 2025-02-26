@@ -7,9 +7,9 @@ import type {
 } from "../common/types";
 import { insertChildNodes } from "./dom";
 import { prepareEffects, runEffects } from "./queue";
-import { createContent, initBranch, type Renderer } from "./renderer";
+import { createBranch, createContent, type Renderer } from "./renderer";
 import { register } from "./resume";
-import { createScope, removeAndDestroyBranch } from "./scope";
+import { removeAndDestroyBranch } from "./scope";
 import { MARK } from "./signals";
 
 export const createTemplate = (
@@ -77,8 +77,7 @@ function mount(
 
   const args = this.___args;
   const effects = prepareEffects(() => {
-    branch = createScope($global) as BranchScope;
-    initBranch(this, branch, parentNode);
+    branch = createBranch($global, this, undefined, parentNode);
     args?.(branch, [input]);
   });
 
