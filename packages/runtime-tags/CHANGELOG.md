@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 0.3.46
+
+### Patch Changes
+
+- [#2537](https://github.com/marko-js/marko/pull/2537) [`c4fd6e7`](https://github.com/marko-js/marko/commit/c4fd6e767036bad962f0471a6460d31bcff44a37) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Rename renderer apis to content and create shorthand api for creating registered contents.
+
+- [#2537](https://github.com/marko-js/marko/pull/2537) [`ae24290`](https://github.com/marko-js/marko/commit/ae24290c4c9f9807d70d398e661bb510fb905e09) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Consolidate create branch logic, optimizing code size and creating branches with only side effects and no template code.
+
 ## 0.3.45
 
 ### Patch Changes
