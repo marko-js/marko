@@ -60,6 +60,6 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/div1/#text1 "3" => "4"
 UPDATE html/body/div0/#text1 "3" => "4"
+UPDATE html/body/div1/#text1 "3" => "4"
 ```

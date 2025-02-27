@@ -13,7 +13,6 @@ type PendingRender = {
   ___scope: Scope;
   ___signal: Signal<any>;
   ___value: unknown;
-  ___depth: number;
   ___index: number;
 };
 
@@ -39,7 +38,6 @@ export function queueRender(
     ___scope: scope,
     ___signal: signal,
     ___value: value,
-    ___depth: scope.___closestBranch?.___branchDepth || 0,
     ___index: i,
   };
 
@@ -145,5 +143,5 @@ function runRenders() {
 }
 
 function comparePendingRenders(a: PendingRender, b: PendingRender) {
-  return a.___depth - b.___depth || a.___index - b.___index;
+  return a.___scope.___id - b.___scope.___id || a.___index - b.___index;
 }

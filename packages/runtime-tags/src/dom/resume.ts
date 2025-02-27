@@ -1,5 +1,6 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import { type BranchScope, ResumeSymbol, type Scope } from "../common/types";
+import { resumeScopeId } from "./scope";
 import type { Signal, SignalOp } from "./signals";
 
 interface Renders {
@@ -175,6 +176,7 @@ class Render implements RenderData {
               if (scopeId !== "$") {
                 const scope = scopes[scopeId];
                 const prevScope = scopeLookup[scopeId];
+                scope.___id = resumeScopeId(+scopeId);
                 scope.$global = $global;
                 if (prevScope !== scope) {
                   scopeLookup[scopeId] = Object.assign(
@@ -193,16 +195,11 @@ class Render implements RenderData {
                 if (branchIds.has(scopeId)) {
                   const branch = scope as BranchScope;
                   const parentBranch = branch.___closestBranch;
-                  branch.___branchDepth = +scopeId;
-                  scope.___closestBranch = branch;
+                  branch.___closestBranch = branch;
                   if (parentBranch) {
                     branch.___parentBranch = parentBranch;
                     (parentBranch.___branchScopes ||= new Set()).add(branch);
                   }
-                }
-
-                if (MARKO_DEBUG) {
-                  scope.___debugId = "server-" + scopeId;
                 }
               }
             }
