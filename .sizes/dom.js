@@ -1,4 +1,4 @@
-// size: 17441 (min) 6584 (brotli)
+// size: 17482 (min) 6602 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -97,10 +97,10 @@ var registeredValues = {},
   Render = class {
     l = [];
     m = {};
-    z = { _: registeredValues };
+    A = { _: registeredValues };
     constructor(renders, runtimeId, renderId) {
-      (this.A = renders),
-        (this.B = runtimeId),
+      (this.B = renders),
+        (this.C = runtimeId),
         (this.n = renderId),
         (this.o = renders[renderId]),
         this.p();
@@ -110,7 +110,7 @@ var registeredValues = {},
     }
     p() {
       let data2 = this.o,
-        serializeContext = this.z,
+        serializeContext = this.A,
         scopeLookup = this.m,
         visits = data2.v,
         branchIds = new Set(),
@@ -200,7 +200,7 @@ var registeredValues = {},
                 { $global: $global } = scopeLookup;
               $global ||
                 ((scopeLookup.$global = $global = scopes.$ || {}),
-                ($global.runtimeId = this.B),
+                ($global.runtimeId = this.C),
                 ($global.renderId = this.n));
               for (let scopeId in scopes)
                 if ("$" !== scopeId) {
@@ -225,7 +225,7 @@ var registeredValues = {},
                 }
             } else
               i === len || "string" != typeof resumes[i]
-                ? delete this.A[this.n]
+                ? delete this.B[this.n]
                 : registeredValues[resumes[i++]](
                     scopeLookup[resumeData],
                     scopeLookup[resumeData],
@@ -781,7 +781,7 @@ function destroyBranch(branch) {
   branch.q?.j?.delete(branch), destroyNestedBranches(branch);
 }
 function destroyNestedBranches(branch) {
-  (branch.C = 1),
+  (branch.s = 1),
     branch.j?.forEach(destroyNestedBranches),
     branch.D?.forEach((scope) => {
       for (let id in scope.g) scope.g[id]?.abort();
@@ -800,10 +800,10 @@ var pendingRenders = [],
 function queueRender(scope, signal, signalKey, value2, scopeKey = scope.d) {
   let key = 1024 * scopeKey + signalKey,
     existingRender = -1 !== signalKey && pendingRendersLookup.get(key);
-  if (existingRender) existingRender.s = value2;
+  if (existingRender) existingRender.t = value2;
   else {
     let i = pendingRenders.length,
-      render = { t: scope, E: signal, s: value2, u: key };
+      render = { u: scope, E: signal, t: value2, x: key };
     for (
       pendingRendersLookup.set(key, render), pendingRenders.push(render);
       i;
@@ -879,7 +879,7 @@ function runRenders() {
       }
       pendingRenders[i] = item;
     }
-    render.t.c?.C || render.E(render.t, render.s);
+    render.u.c?.s || render.E(render.u, render.t);
   }
   !(function () {
     for (let scope of pendingScopes) scope.f = 0;
@@ -887,7 +887,7 @@ function runRenders() {
   })();
 }
 function comparePendingRenders(a, b) {
-  return a.u - b.u;
+  return a.x - b.x;
 }
 function resetAbortSignal(scope, id) {
   let ctrl = scope.g?.[id];
@@ -983,13 +983,13 @@ function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global),
     parentBranch = parentScope?.c;
   return (
-    (branch._ = renderer.x || parentScope),
+    (branch._ = renderer.y || parentScope),
     (branch.c = branch),
     parentBranch
-      ? ((branch.y = parentBranch.y + 1),
+      ? ((branch.z = parentBranch.z + 1),
         (branch.q = parentBranch),
         (parentBranch.j ||= new Set()).add(branch))
-      : (branch.y = 1),
+      : (branch.z = 1),
     renderer.k?.(branch, parentNode.namespaceURI),
     branch
   );
@@ -1032,7 +1032,7 @@ function createContent(id, template, rawWalks, setup, getArgs) {
   return (owner) => ({
     d: id,
     k: init2,
-    x: owner,
+    y: owner,
     get h() {
       return (args ||= getArgs?.());
     },
@@ -1102,10 +1102,22 @@ function loopClosure(valueAccessor, ownerLoopNodeAccessor, fn) {
     loopScopeAccessor = ownerLoopNodeAccessor + "!",
     loopScopeMapAccessor = ownerLoopNodeAccessor + "(",
     ownerSignal = (ownerScope) => {
-      for (let scope of ownerScope[loopScopeAccessor] ||
-        ownerScope[loopScopeMapAccessor]?.values() ||
-        [])
-        scope.f || queueRender(scope, childSignal, -1);
+      let scopes =
+          ownerScope[loopScopeAccessor] ||
+          ownerScope[loopScopeMapAccessor]?.values() ||
+          [],
+        [firstScope] = scopes;
+      firstScope &&
+        queueRender(
+          ownerScope,
+          () => {
+            for (let scope of scopes)
+              !scope.f && !scope.s && childSignal(scope);
+          },
+          -1,
+          0,
+          firstScope.d,
+        );
     };
   return (ownerSignal._ = childSignal), ownerSignal;
 }
@@ -1521,7 +1533,7 @@ var classIdToBranch = new Map(),
           branch
             ? (existing = !0)
             : (branch = component.scope =
-                createBranch(out.global, renderer, renderer.x, document.body)),
+                createBranch(out.global, renderer, renderer.y, document.body)),
             applyArgs(branch, args);
         })),
         !existing)
