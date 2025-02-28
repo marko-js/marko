@@ -2,21 +2,25 @@ export const _template_ = "<div></div>";
 export const _walks_ = /* get, over(1) */" b";
 export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _expr_input_foo_input_bar = /* @__PURE__ */_$.intersection(2, _scope => {
+const _expr_input_foo_input_bar = /* @__PURE__ */_$.intersection(5, _scope => {
   const {
-    input_foo,
-    input_bar
+    "input_foo/3": input_foo,
+    "input_bar/4": input_bar
   } = _scope;
   _$.attr(_scope["#div/0"], "nested", `a ${input_foo + ` nested ${input_bar}`} b`);
 });
-export const _input_bar_ = /* @__PURE__ */_$.value("input_bar", (_scope, input_bar) => _$.attr(_scope["#div/0"], "bar", `a ${input_bar} b`), () => _expr_input_foo_input_bar);
-export const _input_foo_ = /* @__PURE__ */_$.value("input_foo", (_scope, input_foo) => {
+export const _input_bar_ = /* @__PURE__ */_$.value("input_bar/4", (_scope, input_bar) => {
+  _$.attr(_scope["#div/0"], "bar", `a ${input_bar} b`);
+  _expr_input_foo_input_bar(_scope);
+});
+export const _input_foo_ = /* @__PURE__ */_$.value("input_foo/3", (_scope, input_foo) => {
   _$.classAttr(_scope["#div/0"], input_foo);
   _$.attr(_scope["#div/0"], "foo", 'a' + input_foo + 'b');
-}, () => _expr_input_foo_input_bar);
-export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
+  _expr_input_foo_input_bar(_scope);
+});
+export const _input_ = /* @__PURE__ */_$.value("input/2", (_scope, input) => {
   _input_foo_(_scope, input.foo);
   _input_bar_(_scope, input.bar);
-}, () => _$.intersections([_input_foo_, _input_bar_]));
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
+});
+export const _params__ = /* @__PURE__ */_$.value("_params_/1", (_scope, _params_) => _input_(_scope, _params_[0]));
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, () => _params__);

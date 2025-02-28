@@ -21,6 +21,7 @@ import {
   getReadReplacement,
   getScopeAccessor,
   getScopeAccessorLiteral,
+  intersectionMeta,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
   type ReferencedBindings,
@@ -57,7 +58,6 @@ export type Signal = {
     };
     value: t.Expression;
     scope: t.Expression;
-    intersectionExpression?: t.Expression;
   }>;
   intersection: Opt<t.Expression>;
   render: t.Statement[];
@@ -78,7 +78,6 @@ export type Signal = {
 type closureSignalBuilder = (
   signal: Signal,
   render: t.Expression,
-  intersection?: t.Expression,
 ) => t.Expression;
 const [getSignals] = createSectionState<Map<unknown, Signal>>(
   "signals",
@@ -195,11 +194,12 @@ export function getSignal(
     } else if (Array.isArray(referencedBindings)) {
       subscribe(referencedBindings, signal);
       signal.build = () => {
+        const { id, scopeOffset } = intersectionMeta.get(referencedBindings)!;
         return callRuntime(
           "intersection",
-          t.numericLiteral(referencedBindings.length),
+          t.numericLiteral(id),
           getSignalFn(signal, [scopeIdentifier], referencedBindings),
-          buildSignalIntersections(signal),
+          scopeOffset && getScopeAccessorLiteral(scopeOffset),
         );
       };
     } else if (
@@ -223,7 +223,6 @@ export function getSignal(
           scopeIdentifier,
           t.identifier(referencedBindings.name),
         ]);
-        const intersection = buildSignalIntersections(signal);
         return isDynamicClosure
           ? isStatefulReferences(referencedBindings)
             ? callRuntime(
@@ -237,7 +236,6 @@ export function getSignal(
                 ),
                 getScopeAccessorLiteral(referencedBindings),
                 render,
-                intersection,
                 isImmediateOwner
                   ? undefined
                   : t.arrowFunctionExpression([scopeIdentifier], ownerScope),
@@ -246,12 +244,11 @@ export function getSignal(
                 "dynamicClosure",
                 getScopeAccessorLiteral(referencedBindings),
                 render,
-                intersection,
                 isImmediateOwner
                   ? undefined
                   : t.arrowFunctionExpression([scopeIdentifier], ownerScope),
               )
-          : builder(signal, render, intersection);
+          : builder(signal, render);
       };
       addStatement(
         "render",
@@ -281,7 +278,6 @@ export function initValue(
       scopeIdentifier,
       t.identifier(binding.name),
     ]);
-    const intersections = buildSignalIntersections(signal);
     const isParamBinding =
       !binding.upstreamAlias &&
       (binding.type === BindingType.param ||
@@ -291,10 +287,11 @@ export function initValue(
       !isNakedAlias &&
       (binding.downstreamExpressions.size ||
         (fn.body as t.BlockStatement).body.length > 0);
-    const needsCache = needsGuard || intersections;
-    const needsMarks = isParamBinding || intersections;
+    const needsCache = needsGuard || signal.intersection;
+    // TODO: marks not used anymore. can remove?
+    const needsMarks = isParamBinding || signal.intersection;
     if (needsCache || needsMarks) {
-      return callRuntime(runtimeHelper, valueAccessor, fn, intersections);
+      return callRuntime(runtimeHelper, valueAccessor, fn);
     } else {
       return fn;
     }
@@ -366,6 +363,12 @@ export function getSignalFn(
     );
   }
 
+  forEach(signal.intersection, (intersection) => {
+    signal.render.push(
+      t.expressionStatement(t.callExpression(intersection, [scopeIdentifier])),
+    );
+  });
+
   if (isValueSignal) {
     const closureEntries = Array.from(signal.closures.entries()).sort(
       ([a], [b]) => a.id - b.id,
@@ -379,6 +382,15 @@ export function getSignalFn(
         );
       }
     }
+  }
+
+  if (signal.effect.length) {
+    const effectIdentifier = t.identifier(`${signal.identifier.name}_effect`);
+    signal.render.push(
+      t.expressionStatement(
+        t.callExpression(effectIdentifier, [scopeIdentifier]),
+      ),
+    );
   }
 
   if (referencedBindings) {
@@ -408,59 +420,6 @@ function getTranslatedExtraArgs(signal: { extraArgs?: t.Expression[] }) {
   }
 
   return emptyExtraArgs;
-}
-
-export function buildSignalIntersections(signal: Signal) {
-  let intersections = signal.intersection;
-  const binding = signal.referencedBindings;
-
-  if (
-    binding &&
-    !Array.isArray(binding) &&
-    binding.section === signal.section
-  ) {
-    for (const alias of binding.aliases) {
-      const signal = getSignal(alias.section, alias);
-      if (signal.hasDownstreamIntersections()) {
-        intersections = push(
-          intersections,
-          t.identifier(signal.identifier.name),
-        );
-      }
-    }
-
-    for (const [, alias] of binding.propertyAliases) {
-      const signal = getSignal(alias.section, alias);
-      if (signal.hasDownstreamIntersections()) {
-        intersections = push(
-          intersections,
-          t.identifier(signal.identifier.name),
-        );
-      }
-    }
-  }
-
-  for (const value of signal.values) {
-    if (value.signal.hasDownstreamIntersections()) {
-      intersections = push(
-        intersections,
-        value.intersectionExpression ??
-          (t.isMemberExpression(value.signal.identifier)
-            ? value.signal.identifier
-            : t.identifier(value.signal.identifier.name)),
-      );
-    }
-  }
-
-  return (
-    intersections &&
-    t.arrowFunctionExpression(
-      [],
-      Array.isArray(intersections)
-        ? callRuntime("intersections", t.arrayExpression(intersections))
-        : (intersections as t.Expression),
-    )
-  );
 }
 
 export function getDestructureSignal(
@@ -672,13 +631,11 @@ export function addValue(
   signal: Signal["values"][number]["signal"],
   value: t.Expression,
   scope: t.Expression = scopeIdentifier,
-  intersectionExpression?: t.Expression,
 ) {
   getSignal(targetSection, referencedBindings).values.push({
     signal,
     value,
     scope,
-    intersectionExpression,
   });
 }
 
@@ -774,11 +731,6 @@ export function writeSignals(section: Section) {
                 : [],
             toFirstExpressionOrBlock(signal.effect),
           ),
-        ),
-      );
-      signal.render.push(
-        t.expressionStatement(
-          t.callExpression(effectIdentifier, [scopeIdentifier]),
         ),
       );
     }

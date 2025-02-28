@@ -6,11 +6,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write("<span>child</span>");
   const _return = x + y;
   _$.writeScope(_scope0_id, {
-    x: x,
-    y: y
+    "x/0": x,
+    "y/1": y
   }, "__tests__/tags/child.marko", 0, {
-    x: "1:6",
-    y: "2:6"
+    "x/0": "1:6",
+    "y/1": "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
   return _return;

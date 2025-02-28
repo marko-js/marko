@@ -54,10 +54,12 @@ import { currentProgramPath } from "../program";
 import { getTagRelativePath } from "./custom-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
+const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kDOMBinding]?: Binding;
+    [kChildOffsetScopeBinding]?: Binding;
   }
 }
 
@@ -77,8 +79,20 @@ export default {
         tagExtra,
       );
 
+      if (tag.has("var")) {
+        trackVarReferences(tag, BindingType.derived);
+        tag.node.var!.extra!.binding!.scopeOffset = tagExtra[
+          kChildOffsetScopeBinding
+        ] = createBinding(
+          "#scopeOffset",
+          BindingType.dom,
+          section,
+          undefined,
+          tagExtra,
+        );
+      }
+
       startSection(tagBody);
-      trackVarReferences(tag, BindingType.derived);
       trackParamsReferences(tagBody, BindingType.param);
       mergeReferences(section, tag.node, [
         tag.node.name,
@@ -88,7 +102,10 @@ export default {
   },
   translate: {
     enter(tag) {
-      walks.visit(tag, WalkCode.Replace);
+      walks.visit(
+        tag,
+        tag.node.var ? WalkCode.DynamicTagWithVar : WalkCode.Replace,
+      );
       walks.enterShallow(tag);
 
       if (isOutputHTML()) {
@@ -211,10 +228,16 @@ export default {
 
         if (node.var) {
           statements.push(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(node.var, dynamicTagExpr),
+            ]),
             t.expressionStatement(
               callRuntime(
                 "setTagVar",
                 getScopeIdIdentifier(section),
+                getScopeAccessorLiteral(
+                  tag.node.extra![kChildOffsetScopeBinding]!,
+                ),
                 dynamicScopeIdentifier,
                 t.stringLiteral(
                   getResumeRegisterId(
@@ -225,9 +248,6 @@ export default {
                 ),
               ),
             ),
-            t.variableDeclaration("const", [
-              t.variableDeclarator(node.var, dynamicTagExpr),
-            ]),
           );
         } else {
           statements.push(t.expressionStatement(dynamicTagExpr));

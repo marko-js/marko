@@ -5,9 +5,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<div><button id=button>0</button>${_$.markResumeNode(_scope0_id, "#button/0")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_clickCount");
   _$.writeScope(_scope0_id, {
-    clickCount: clickCount
+    "clickCount/1": clickCount
   }, "__tests__/template.marko", 0, {
-    clickCount: "2:8"
+    "clickCount/1": "2:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

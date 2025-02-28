@@ -34,9 +34,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<button>Inc</button>${_$.markResumeNode(_scope0_id, "#button/0")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope(_scope0_id, {
-    count: count
+    "count/1": count
   }, "__tests__/template.marko", 0, {
-    count: "3:6"
+    "count/1": "3:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

@@ -8,11 +8,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<div>${_$.escapeXML(name)}${_$.markResumeNode(_scope0_id, "#text/0")}</div><span>${_$.escapeXML(name)}${_$.markResumeNode(_scope0_id, "#text/1")}</span><p>${_$.escapeXML(name)}${_$.markResumeNode(_scope0_id, "#text/2")}</p>`);
   _$.writeEffect(_scope0_id, "__tests__/tags/child.marko_0_name_write");
   _$.writeScope(_scope0_id, {
-    name: name,
-    write: write
+    "name/5": name,
+    "write/6": write
   }, "__tests__/tags/child.marko", 0, {
-    name: "1:9",
-    write: "1:15"
+    "name/5": "1:9",
+    "write/6": "1:15"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

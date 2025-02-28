@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div></div><!--M_*1 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:_.a={},2:{el:_._["__tests__/template.marko_0/#div"](_.a)}}),2,"__tests__/tags/hello-setter.marko_0_el",0];M._.w()</script>
+  <div></div><!--M_*1 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:_.a={},2:{"el/2":_._["__tests__/template.marko_0/#div"](_.a)}}),2,"__tests__/tags/hello-setter.marko_0_el",0];M._.w()</script>
 ```
 
 # Render End
@@ -11,7 +11,7 @@
     <div />
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={},2:{el:_._["__tests__/template.marko_0/#div"](_.a)}}),2,"__tests__/tags/hello-setter.marko_0_el",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={},2:{"el/2":_._["__tests__/template.marko_0/#div"](_.a)}}),2,"__tests__/tags/hello-setter.marko_0_el",0];M._.w()
     </script>
   </body>
 </html>

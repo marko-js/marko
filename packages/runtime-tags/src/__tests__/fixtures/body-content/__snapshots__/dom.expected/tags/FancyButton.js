@@ -8,10 +8,10 @@ export const _attrs_ = (_scope, attrs) => {
   _$.attrs(_scope, "#button/0", attrs);
   _attrs__effect(_scope);
 };
-export const _content_ = /* @__PURE__ */_$.value("content", (_scope, content) => _dynamicTag(_scope, content), () => _dynamicTag);
-export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
+export const _content_ = /* @__PURE__ */_$.value("content/4", (_scope, content) => _dynamicTag(_scope, content));
+export const _input_ = /* @__PURE__ */_$.value("input/3", (_scope, input) => {
   _attrs_(_scope, input);
   _content_(_scope, input.content);
-}, () => _content_);
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
+});
+export const _params__ = /* @__PURE__ */_$.value("_params_/2", (_scope, _params_) => _input_(_scope, _params_[0]));
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/FancyButton.marko", _template_, _walks_, _setup_, () => _params__);

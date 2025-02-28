@@ -1,4 +1,4 @@
-// size: 348 (min) 216 (brotli)
+// size: 348 (min) 214 (brotli)
 const _setup$if_content_effect = _$.effect("a0", (_scope) => {
     (_scope._[1].innerHTML += "\nmounted"),
       (_$.getAbortSignal(_scope, 0).onabort = () => {
@@ -20,6 +20,6 @@ const _setup$if_content_effect = _$.effect("a0", (_scope) => {
     }),
   ),
   _show = _$.state(3, (_scope, show) => {
-    _show_effect(_scope), _if(_scope, show ? 0 : 1);
+    _if(_scope, show ? 0 : 1), _show_effect(_scope);
   });
 init();

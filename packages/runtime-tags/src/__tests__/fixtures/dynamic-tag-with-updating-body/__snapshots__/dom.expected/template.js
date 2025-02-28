@@ -8,14 +8,14 @@ const _setup$tagName_content = _scope => {
 const _tagName_content = _$.registerContent("__tests__/template.marko_1_renderer", _counter_template, /* beginChild, _counter_walks, endChild */`/${_counter_walks}&`, _setup$tagName_content);
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _tagName_content);
 const _tagName_effect = _$.effect("__tests__/template.marko_0_tagName", (_scope, {
-  tagName
+  "tagName/2": tagName
 }) => _$.on(_scope["#button/1"], "click", function () {
   _tagName(_scope, tagName === "span" ? "div" : "span");
 }));
-const _tagName = /* @__PURE__ */_$.state("tagName", (_scope, tagName) => {
-  _tagName_effect(_scope);
+const _tagName = /* @__PURE__ */_$.state("tagName/2", (_scope, tagName) => {
   _dynamicTag(_scope, tagName);
-}, () => _dynamicTag);
+  _tagName_effect(_scope);
+});
 export function _setup_(_scope) {
   _tagName(_scope, "div");
 }

@@ -1,4 +1,4 @@
-// size: 200 (min) 150 (brotli)
+// size: 200 (min) 152 (brotli)
 const _myObj = _$.value(4, (_scope, myObj) =>
     _$.data(_scope[0], JSON.stringify(myObj)),
   ),
@@ -9,7 +9,7 @@ const _myObj = _$.value(4, (_scope, myObj) =>
   ),
   _x = _$.state(3, (_scope, x) => {
     _$.data(_scope[2], x),
-      _x_effect(_scope),
-      _myObj(_scope, { foo: 1, bar: x + 1 });
+      _myObj(_scope, { foo: 1, bar: x + 1 }),
+      _x_effect(_scope);
   });
 init();

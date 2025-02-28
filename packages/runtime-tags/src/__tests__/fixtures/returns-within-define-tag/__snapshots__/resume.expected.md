@@ -9,20 +9,20 @@
       class="once"
     >
       0
-      <!--M_*1 #text/2-->
+      <!--M_*1 #text/3-->
     </button>
-    <!--M_*1 #button/1-->
-    <!--M_[3-->
-    <!--M_]1 #text/3-->
+    <!--M_*1 #button/2-->
+    <!--M_[4-->
+    <!--M_]1 #text/4-->
     <button
       class="twice"
     >
       0
-      <!--M_*1 #text/5-->
+      <!--M_*1 #text/7-->
     </button>
-    <!--M_*1 #button/4-->
+    <!--M_*1 #button/6-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={Once:_.b={},clickOnceCount:0,onClickOnce:_.c={call:1},Twice:_.d={},clickTwiceCount:0,onClickTwice:_.e={call:2},"#text/0!":_.c,"#text/3!":_.e},2:_.c,3:_.e},_.b.content=_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c["/"]=_._["__tests__/template.marko_0_onClickOnce/var"](_.a),_.c.value=_._["__tests__/template.marko_0/onClickOnce"](_.a),_.a.onClickOnce=_._["__tests__/template.marko_1/_return"](_.c),_.d.content=_.a["#text/3("]=_._["__tests__/template.marko_2_renderer"](_.a),_.e["/"]=_._["__tests__/template.marko_0_onClickTwice/var"](_.a),_.e.value=_._["__tests__/template.marko_0/onClickTwice"](_.a),_.a.onClickTwice=_._["__tests__/template.marko_2/_return"](_.e),_.f),1,"__tests__/template.marko_0_onClickTwice",1,"__tests__/template.marko_0_onClickOnce",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#scopeOffset/1":3,"#scopeOffset/5":5,"Once/8":_.b={},"clickOnceCount/9":0,"onClickOnce/11":_.c={"call/3":1},"Twice/12":_.d={},"clickTwiceCount/13":0,"onClickTwice/15":_.e={"call/3":2},"#text/0!":_.c,"#text/4!":_.e},2:_.c,4:_.e},_.b.content=_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c["value/2"]=_._["__tests__/template.marko_0/onClickOnce"](_.a),_.c["/"]=_._["__tests__/template.marko_0_onClickOnce/var"](_.a),_.a["onClickOnce/11"]=_._["__tests__/template.marko_1/_return"](_.c),_.d.content=_.a["#text/4("]=_._["__tests__/template.marko_2_renderer"](_.a),_.e["value/2"]=_._["__tests__/template.marko_0/onClickTwice"](_.a),_.e["/"]=_._["__tests__/template.marko_0_onClickTwice/var"](_.a),_.a["onClickTwice/15"]=_._["__tests__/template.marko_2/_return"](_.e),_.f),1,"__tests__/template.marko_0_onClickTwice",1,"__tests__/template.marko_0_onClickOnce",0];M._.w()
     </script>
   </body>
 </html>
@@ -43,20 +43,20 @@ container.querySelector("button.once").click();
       class="once"
     >
       1
-      <!--M_*1 #text/2-->
+      <!--M_*1 #text/3-->
     </button>
-    <!--M_*1 #button/1-->
-    <!--M_[3-->
-    <!--M_]1 #text/3-->
+    <!--M_*1 #button/2-->
+    <!--M_[4-->
+    <!--M_]1 #text/4-->
     <button
       class="twice"
     >
       0
-      <!--M_*1 #text/5-->
+      <!--M_*1 #text/7-->
     </button>
-    <!--M_*1 #button/4-->
+    <!--M_*1 #button/6-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={Once:_.b={},clickOnceCount:0,onClickOnce:_.c={call:1},Twice:_.d={},clickTwiceCount:0,onClickTwice:_.e={call:2},"#text/0!":_.c,"#text/3!":_.e},2:_.c,3:_.e},_.b.content=_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c["/"]=_._["__tests__/template.marko_0_onClickOnce/var"](_.a),_.c.value=_._["__tests__/template.marko_0/onClickOnce"](_.a),_.a.onClickOnce=_._["__tests__/template.marko_1/_return"](_.c),_.d.content=_.a["#text/3("]=_._["__tests__/template.marko_2_renderer"](_.a),_.e["/"]=_._["__tests__/template.marko_0_onClickTwice/var"](_.a),_.e.value=_._["__tests__/template.marko_0/onClickTwice"](_.a),_.a.onClickTwice=_._["__tests__/template.marko_2/_return"](_.e),_.f),1,"__tests__/template.marko_0_onClickTwice",1,"__tests__/template.marko_0_onClickOnce",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#scopeOffset/1":3,"#scopeOffset/5":5,"Once/8":_.b={},"clickOnceCount/9":0,"onClickOnce/11":_.c={"call/3":1},"Twice/12":_.d={},"clickTwiceCount/13":0,"onClickTwice/15":_.e={"call/3":2},"#text/0!":_.c,"#text/4!":_.e},2:_.c,4:_.e},_.b.content=_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c["value/2"]=_._["__tests__/template.marko_0/onClickOnce"](_.a),_.c["/"]=_._["__tests__/template.marko_0_onClickOnce/var"](_.a),_.a["onClickOnce/11"]=_._["__tests__/template.marko_1/_return"](_.c),_.d.content=_.a["#text/4("]=_._["__tests__/template.marko_2_renderer"](_.a),_.e["value/2"]=_._["__tests__/template.marko_0/onClickTwice"](_.a),_.e["/"]=_._["__tests__/template.marko_0_onClickTwice/var"](_.a),_.a["onClickTwice/15"]=_._["__tests__/template.marko_2/_return"](_.e),_.f),1,"__tests__/template.marko_0_onClickTwice",1,"__tests__/template.marko_0_onClickOnce",0];M._.w()
     </script>
   </body>
 </html>
@@ -81,20 +81,20 @@ container.querySelector("button.once").click();
       class="once"
     >
       1
-      <!--M_*1 #text/2-->
+      <!--M_*1 #text/3-->
     </button>
-    <!--M_*1 #button/1-->
-    <!--M_[3-->
-    <!--M_]1 #text/3-->
+    <!--M_*1 #button/2-->
+    <!--M_[4-->
+    <!--M_]1 #text/4-->
     <button
       class="twice"
     >
       0
-      <!--M_*1 #text/5-->
+      <!--M_*1 #text/7-->
     </button>
-    <!--M_*1 #button/4-->
+    <!--M_*1 #button/6-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={Once:_.b={},clickOnceCount:0,onClickOnce:_.c={call:1},Twice:_.d={},clickTwiceCount:0,onClickTwice:_.e={call:2},"#text/0!":_.c,"#text/3!":_.e},2:_.c,3:_.e},_.b.content=_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c["/"]=_._["__tests__/template.marko_0_onClickOnce/var"](_.a),_.c.value=_._["__tests__/template.marko_0/onClickOnce"](_.a),_.a.onClickOnce=_._["__tests__/template.marko_1/_return"](_.c),_.d.content=_.a["#text/3("]=_._["__tests__/template.marko_2_renderer"](_.a),_.e["/"]=_._["__tests__/template.marko_0_onClickTwice/var"](_.a),_.e.value=_._["__tests__/template.marko_0/onClickTwice"](_.a),_.a.onClickTwice=_._["__tests__/template.marko_2/_return"](_.e),_.f),1,"__tests__/template.marko_0_onClickTwice",1,"__tests__/template.marko_0_onClickOnce",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#scopeOffset/1":3,"#scopeOffset/5":5,"Once/8":_.b={},"clickOnceCount/9":0,"onClickOnce/11":_.c={"call/3":1},"Twice/12":_.d={},"clickTwiceCount/13":0,"onClickTwice/15":_.e={"call/3":2},"#text/0!":_.c,"#text/4!":_.e},2:_.c,4:_.e},_.b.content=_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c["value/2"]=_._["__tests__/template.marko_0/onClickOnce"](_.a),_.c["/"]=_._["__tests__/template.marko_0_onClickOnce/var"](_.a),_.a["onClickOnce/11"]=_._["__tests__/template.marko_1/_return"](_.c),_.d.content=_.a["#text/4("]=_._["__tests__/template.marko_2_renderer"](_.a),_.e["value/2"]=_._["__tests__/template.marko_0/onClickTwice"](_.a),_.e["/"]=_._["__tests__/template.marko_0_onClickTwice/var"](_.a),_.a["onClickTwice/15"]=_._["__tests__/template.marko_2/_return"](_.e),_.f),1,"__tests__/template.marko_0_onClickTwice",1,"__tests__/template.marko_0_onClickOnce",0];M._.w()
     </script>
   </body>
 </html>
@@ -115,20 +115,20 @@ container.querySelector("button.twice").click();
       class="once"
     >
       1
-      <!--M_*1 #text/2-->
+      <!--M_*1 #text/3-->
     </button>
-    <!--M_*1 #button/1-->
-    <!--M_[3-->
-    <!--M_]1 #text/3-->
+    <!--M_*1 #button/2-->
+    <!--M_[4-->
+    <!--M_]1 #text/4-->
     <button
       class="twice"
     >
       1
-      <!--M_*1 #text/5-->
+      <!--M_*1 #text/7-->
     </button>
-    <!--M_*1 #button/4-->
+    <!--M_*1 #button/6-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={Once:_.b={},clickOnceCount:0,onClickOnce:_.c={call:1},Twice:_.d={},clickTwiceCount:0,onClickTwice:_.e={call:2},"#text/0!":_.c,"#text/3!":_.e},2:_.c,3:_.e},_.b.content=_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c["/"]=_._["__tests__/template.marko_0_onClickOnce/var"](_.a),_.c.value=_._["__tests__/template.marko_0/onClickOnce"](_.a),_.a.onClickOnce=_._["__tests__/template.marko_1/_return"](_.c),_.d.content=_.a["#text/3("]=_._["__tests__/template.marko_2_renderer"](_.a),_.e["/"]=_._["__tests__/template.marko_0_onClickTwice/var"](_.a),_.e.value=_._["__tests__/template.marko_0/onClickTwice"](_.a),_.a.onClickTwice=_._["__tests__/template.marko_2/_return"](_.e),_.f),1,"__tests__/template.marko_0_onClickTwice",1,"__tests__/template.marko_0_onClickOnce",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#scopeOffset/1":3,"#scopeOffset/5":5,"Once/8":_.b={},"clickOnceCount/9":0,"onClickOnce/11":_.c={"call/3":1},"Twice/12":_.d={},"clickTwiceCount/13":0,"onClickTwice/15":_.e={"call/3":2},"#text/0!":_.c,"#text/4!":_.e},2:_.c,4:_.e},_.b.content=_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c["value/2"]=_._["__tests__/template.marko_0/onClickOnce"](_.a),_.c["/"]=_._["__tests__/template.marko_0_onClickOnce/var"](_.a),_.a["onClickOnce/11"]=_._["__tests__/template.marko_1/_return"](_.c),_.d.content=_.a["#text/4("]=_._["__tests__/template.marko_2_renderer"](_.a),_.e["value/2"]=_._["__tests__/template.marko_0/onClickTwice"](_.a),_.e["/"]=_._["__tests__/template.marko_0_onClickTwice/var"](_.a),_.a["onClickTwice/15"]=_._["__tests__/template.marko_2/_return"](_.e),_.f),1,"__tests__/template.marko_0_onClickTwice",1,"__tests__/template.marko_0_onClickOnce",0];M._.w()
     </script>
   </body>
 </html>
@@ -153,20 +153,20 @@ container.querySelector("button.twice").click();
       class="once"
     >
       1
-      <!--M_*1 #text/2-->
+      <!--M_*1 #text/3-->
     </button>
-    <!--M_*1 #button/1-->
-    <!--M_[3-->
-    <!--M_]1 #text/3-->
+    <!--M_*1 #button/2-->
+    <!--M_[4-->
+    <!--M_]1 #text/4-->
     <button
       class="twice"
     >
       2
-      <!--M_*1 #text/5-->
+      <!--M_*1 #text/7-->
     </button>
-    <!--M_*1 #button/4-->
+    <!--M_*1 #button/6-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={Once:_.b={},clickOnceCount:0,onClickOnce:_.c={call:1},Twice:_.d={},clickTwiceCount:0,onClickTwice:_.e={call:2},"#text/0!":_.c,"#text/3!":_.e},2:_.c,3:_.e},_.b.content=_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c["/"]=_._["__tests__/template.marko_0_onClickOnce/var"](_.a),_.c.value=_._["__tests__/template.marko_0/onClickOnce"](_.a),_.a.onClickOnce=_._["__tests__/template.marko_1/_return"](_.c),_.d.content=_.a["#text/3("]=_._["__tests__/template.marko_2_renderer"](_.a),_.e["/"]=_._["__tests__/template.marko_0_onClickTwice/var"](_.a),_.e.value=_._["__tests__/template.marko_0/onClickTwice"](_.a),_.a.onClickTwice=_._["__tests__/template.marko_2/_return"](_.e),_.f),1,"__tests__/template.marko_0_onClickTwice",1,"__tests__/template.marko_0_onClickOnce",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#scopeOffset/1":3,"#scopeOffset/5":5,"Once/8":_.b={},"clickOnceCount/9":0,"onClickOnce/11":_.c={"call/3":1},"Twice/12":_.d={},"clickTwiceCount/13":0,"onClickTwice/15":_.e={"call/3":2},"#text/0!":_.c,"#text/4!":_.e},2:_.c,4:_.e},_.b.content=_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c["value/2"]=_._["__tests__/template.marko_0/onClickOnce"](_.a),_.c["/"]=_._["__tests__/template.marko_0_onClickOnce/var"](_.a),_.a["onClickOnce/11"]=_._["__tests__/template.marko_1/_return"](_.c),_.d.content=_.a["#text/4("]=_._["__tests__/template.marko_2_renderer"](_.a),_.e["value/2"]=_._["__tests__/template.marko_0/onClickTwice"](_.a),_.e["/"]=_._["__tests__/template.marko_0_onClickTwice/var"](_.a),_.a["onClickTwice/15"]=_._["__tests__/template.marko_2/_return"](_.e),_.f),1,"__tests__/template.marko_0_onClickTwice",1,"__tests__/template.marko_0_onClickOnce",0];M._.w()
     </script>
   </body>
 </html>
@@ -191,20 +191,20 @@ container.querySelector("button.twice").click();
       class="once"
     >
       1
-      <!--M_*1 #text/2-->
+      <!--M_*1 #text/3-->
     </button>
-    <!--M_*1 #button/1-->
-    <!--M_[3-->
-    <!--M_]1 #text/3-->
+    <!--M_*1 #button/2-->
+    <!--M_[4-->
+    <!--M_]1 #text/4-->
     <button
       class="twice"
     >
       2
-      <!--M_*1 #text/5-->
+      <!--M_*1 #text/7-->
     </button>
-    <!--M_*1 #button/4-->
+    <!--M_*1 #button/6-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={Once:_.b={},clickOnceCount:0,onClickOnce:_.c={call:1},Twice:_.d={},clickTwiceCount:0,onClickTwice:_.e={call:2},"#text/0!":_.c,"#text/3!":_.e},2:_.c,3:_.e},_.b.content=_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c["/"]=_._["__tests__/template.marko_0_onClickOnce/var"](_.a),_.c.value=_._["__tests__/template.marko_0/onClickOnce"](_.a),_.a.onClickOnce=_._["__tests__/template.marko_1/_return"](_.c),_.d.content=_.a["#text/3("]=_._["__tests__/template.marko_2_renderer"](_.a),_.e["/"]=_._["__tests__/template.marko_0_onClickTwice/var"](_.a),_.e.value=_._["__tests__/template.marko_0/onClickTwice"](_.a),_.a.onClickTwice=_._["__tests__/template.marko_2/_return"](_.e),_.f),1,"__tests__/template.marko_0_onClickTwice",1,"__tests__/template.marko_0_onClickOnce",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#scopeOffset/1":3,"#scopeOffset/5":5,"Once/8":_.b={},"clickOnceCount/9":0,"onClickOnce/11":_.c={"call/3":1},"Twice/12":_.d={},"clickTwiceCount/13":0,"onClickTwice/15":_.e={"call/3":2},"#text/0!":_.c,"#text/4!":_.e},2:_.c,4:_.e},_.b.content=_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c["value/2"]=_._["__tests__/template.marko_0/onClickOnce"](_.a),_.c["/"]=_._["__tests__/template.marko_0_onClickOnce/var"](_.a),_.a["onClickOnce/11"]=_._["__tests__/template.marko_1/_return"](_.c),_.d.content=_.a["#text/4("]=_._["__tests__/template.marko_2_renderer"](_.a),_.e["value/2"]=_._["__tests__/template.marko_0/onClickTwice"](_.a),_.e["/"]=_._["__tests__/template.marko_0_onClickTwice/var"](_.a),_.a["onClickTwice/15"]=_._["__tests__/template.marko_2/_return"](_.e),_.f),1,"__tests__/template.marko_0_onClickTwice",1,"__tests__/template.marko_0_onClickOnce",0];M._.w()
     </script>
   </body>
 </html>

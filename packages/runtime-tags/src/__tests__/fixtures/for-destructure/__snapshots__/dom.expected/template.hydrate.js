@@ -1,4 +1,4 @@
-// size: 474 (min) 249 (brotli)
+// size: 474 (min) 248 (brotli)
 const _description$for_content = _$.value(5, (_scope, description) =>
     _$.data(_scope[1], description),
   ),
@@ -29,6 +29,6 @@ const _description$for_content = _$.value(5, (_scope, description) =>
       });
   }),
   _items = _$.state(3, (_scope, items) => {
-    _items_effect(_scope), _for(_scope, [items]);
+    _for(_scope, [items]), _items_effect(_scope);
   });
 init();

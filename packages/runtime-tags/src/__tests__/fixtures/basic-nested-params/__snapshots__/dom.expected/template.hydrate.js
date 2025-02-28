@@ -1,15 +1,11 @@
-// size: 705 (min) 324 (brotli)
-const _expr_content_value = _$.intersection(
-    2,
-    (_scope) => {
-      const { 3: content, 4: value } = _scope;
-      _dynamicTag(_scope, content, () => value);
-    },
-    () => _dynamicTag,
-  ),
+// size: 663 (min) 309 (brotli)
+const _expr_content_value = _$.intersection(5, (_scope) => {
+    const { 3: content, 4: value } = _scope;
+    _dynamicTag(_scope, content, () => value);
+  }),
   _dynamicTag = _$.dynamicTag(),
-  _value_ = _$.value(4, 0, () => _expr_content_value),
-  _content_ = _$.value(3, 0, () => _expr_content_value),
+  _value_ = _$.value(4, (_scope, value) => _expr_content_value(_scope)),
+  _content_ = _$.value(3, (_scope, content) => _expr_content_value(_scope)),
   _inner$child_content = _$.value(3, (_scope, inner) =>
     _$.data(_scope[1], inner),
   ),
@@ -28,11 +24,8 @@ const _expr_content_value = _$.intersection(
     },
     () => _params_3$child_content,
   ),
-  _y$child_content = _$.registerDynamicClosure(
-    "b3",
-    3,
-    (_scope, y) => _value_(_scope[0], y),
-    () => _$.inChild(0, _value_),
+  _y$child_content = _$.registerDynamicClosure("b3", 3, (_scope, y) =>
+    _value_(_scope[0], y),
   ),
   _outer$child_content2 = _$.value(2, (_scope, outer) =>
     _outer$child_content(_scope),
@@ -56,11 +49,7 @@ const _x_effect = _$.effect("b4", (_scope, { 2: x }) =>
       _x(_scope, x + 1);
     }),
   ),
-  _x = _$.state(
-    2,
-    (_scope, x) => {
-      _x_effect(_scope), _value_(_scope[1], x);
-    },
-    () => _$.inChild(1, _value_),
-  );
+  _x = _$.state(2, (_scope, x) => {
+    _value_(_scope[1], x), _x_effect(_scope);
+  });
 init();

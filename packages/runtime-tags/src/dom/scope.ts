@@ -2,25 +2,26 @@ import type { BranchScope, Scope } from "../common/types";
 import { insertChildNodes, removeChildNodes } from "./dom";
 
 let pendingScopes: Scope[] = [];
-let debugID = 0;
+let nextID = 2 ** 32;
 
 export function createScope(
   $global: Scope["$global"],
   closestBranch?: BranchScope,
 ): Scope {
   const scope = {
+    ___id: nextID++,
     ___pending: 1,
     ___closestBranch: closestBranch,
     $global,
   } as Scope;
 
-  if (MARKO_DEBUG) {
-    scope.___debugId = "client-" + debugID++;
-  }
-
   pendingScopes.push(scope);
 
   return scope;
+}
+
+export function skipScope() {
+  return nextID++;
 }
 
 export function finishPendingScopes() {

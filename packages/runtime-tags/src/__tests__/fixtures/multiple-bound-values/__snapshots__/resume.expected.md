@@ -22,7 +22,7 @@
       <!--M_*1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={input_count1:0,input_count2:0,count1:0,count2:0}},2:_.b},_.b.input_count1Change=_.b["count1@"]=_._["__tests__/template.marko_0/count1Change"](_.a),_.b.input_count2Change=_.b["count2@"]=_._["__tests__/template.marko_0/count2Change"](_.a),_.c),2,"__tests__/tags/2counters.marko_0_count2",2,"__tests__/tags/2counters.marko_0_count1",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={"input_count1/6":0,"input_count2/9":0,"count1/12":0,"count2/13":0}},2:_.b},_.b["input_count1Change/7"]=_.b["count1/12@"]=_._["__tests__/template.marko_0/count1Change"](_.a),_.b["input_count2Change/10"]=_.b["count2/13@"]=_._["__tests__/template.marko_0/count2Change"](_.a),_.c),2,"__tests__/tags/2counters.marko_0_count2",2,"__tests__/tags/2counters.marko_0_count1",0];M._.w()
     </script>
   </body>
 </html>
@@ -56,7 +56,7 @@ container.querySelectorAll("button").forEach(item => item.click());
       <!--M_*1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={input_count1:0,input_count2:0,count1:0,count2:0}},2:_.b},_.b.input_count1Change=_.b["count1@"]=_._["__tests__/template.marko_0/count1Change"](_.a),_.b.input_count2Change=_.b["count2@"]=_._["__tests__/template.marko_0/count2Change"](_.a),_.c),2,"__tests__/tags/2counters.marko_0_count2",2,"__tests__/tags/2counters.marko_0_count1",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={"input_count1/6":0,"input_count2/9":0,"count1/12":0,"count2/13":0}},2:_.b},_.b["input_count1Change/7"]=_.b["count1/12@"]=_._["__tests__/template.marko_0/count1Change"](_.a),_.b["input_count2Change/10"]=_.b["count2/13@"]=_._["__tests__/template.marko_0/count2Change"](_.a),_.c),2,"__tests__/tags/2counters.marko_0_count2",2,"__tests__/tags/2counters.marko_0_count1",0];M._.w()
     </script>
   </body>
 </html>
@@ -65,8 +65,8 @@ container.querySelectorAll("button").forEach(item => item.click());
 # Mutations
 ```
 UPDATE html/body/div/#text0 "0" => "1"
-UPDATE html/body/button0/#text "0" => "1"
 UPDATE html/body/div/#text2 "0" => "1"
+UPDATE html/body/button0/#text "0" => "1"
 UPDATE html/body/button1/#text "0" => "1"
 ```
 
@@ -97,7 +97,7 @@ container.querySelectorAll("button").forEach(item => item.click());
       <!--M_*1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={input_count1:0,input_count2:0,count1:0,count2:0}},2:_.b},_.b.input_count1Change=_.b["count1@"]=_._["__tests__/template.marko_0/count1Change"](_.a),_.b.input_count2Change=_.b["count2@"]=_._["__tests__/template.marko_0/count2Change"](_.a),_.c),2,"__tests__/tags/2counters.marko_0_count2",2,"__tests__/tags/2counters.marko_0_count1",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={"input_count1/6":0,"input_count2/9":0,"count1/12":0,"count2/13":0}},2:_.b},_.b["input_count1Change/7"]=_.b["count1/12@"]=_._["__tests__/template.marko_0/count1Change"](_.a),_.b["input_count2Change/10"]=_.b["count2/13@"]=_._["__tests__/template.marko_0/count2Change"](_.a),_.c),2,"__tests__/tags/2counters.marko_0_count2",2,"__tests__/tags/2counters.marko_0_count1",0];M._.w()
     </script>
   </body>
 </html>
@@ -106,8 +106,8 @@ container.querySelectorAll("button").forEach(item => item.click());
 # Mutations
 ```
 UPDATE html/body/div/#text0 "1" => "2"
-UPDATE html/body/button0/#text "1" => "2"
 UPDATE html/body/div/#text2 "1" => "2"
+UPDATE html/body/button0/#text "1" => "2"
 UPDATE html/body/button1/#text "1" => "2"
 ```
 
@@ -138,7 +138,7 @@ container.querySelectorAll("button").forEach(item => item.click());
       <!--M_*1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={input_count1:0,input_count2:0,count1:0,count2:0}},2:_.b},_.b.input_count1Change=_.b["count1@"]=_._["__tests__/template.marko_0/count1Change"](_.a),_.b.input_count2Change=_.b["count2@"]=_._["__tests__/template.marko_0/count2Change"](_.a),_.c),2,"__tests__/tags/2counters.marko_0_count2",2,"__tests__/tags/2counters.marko_0_count1",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={"input_count1/6":0,"input_count2/9":0,"count1/12":0,"count2/13":0}},2:_.b},_.b["input_count1Change/7"]=_.b["count1/12@"]=_._["__tests__/template.marko_0/count1Change"](_.a),_.b["input_count2Change/10"]=_.b["count2/13@"]=_._["__tests__/template.marko_0/count2Change"](_.a),_.c),2,"__tests__/tags/2counters.marko_0_count2",2,"__tests__/tags/2counters.marko_0_count1",0];M._.w()
     </script>
   </body>
 </html>
@@ -147,7 +147,7 @@ container.querySelectorAll("button").forEach(item => item.click());
 # Mutations
 ```
 UPDATE html/body/div/#text0 "2" => "3"
-UPDATE html/body/button0/#text "2" => "3"
 UPDATE html/body/div/#text2 "2" => "3"
+UPDATE html/body/button0/#text "2" => "3"
 UPDATE html/body/button1/#text "2" => "3"
 ```

@@ -1,4 +1,4 @@
-// size: 319 (min) 206 (brotli)
+// size: 311 (min) 204 (brotli)
 const _setup_ = () => {},
   _input_ = _$.value(2, (_scope, input) => _$.data(_scope[0], input)),
   _params__ = _$.value(1, (_scope, _params_) => _input_(_scope, _params_[0]));
@@ -11,13 +11,9 @@ const tags = [
       _x(_scope, x + 1);
     }),
   ),
-  _x = _$.state(
-    3,
-    (_scope, x) => {
-      _$.data(_scope[1], x),
-        _x_effect(_scope),
-        _dynamicTag(_scope, tags[0], () => [x, "foo"]);
-    },
-    () => _dynamicTag,
-  );
+  _x = _$.state(3, (_scope, x) => {
+    _$.data(_scope[1], x),
+      _dynamicTag(_scope, tags[0], () => [x, "foo"]),
+      _x_effect(_scope);
+  });
 init();

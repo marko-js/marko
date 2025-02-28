@@ -6,17 +6,17 @@ import _classCounter from "./components/class-counter.marko";
 _$.register("__tests__/components/class-counter.marko", _classCounter);
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2");
 const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
-  count
+  "count/3": count
 }) => _$.on(_scope["#button/0"], "click", function () {
   _count(_scope, count + 1), count;
 }));
-const _count = /* @__PURE__ */_$.state("count", (_scope, count) => {
+const _count = /* @__PURE__ */_$.state("count/3", (_scope, count) => {
   _$.data(_scope["#text/1"], count);
-  _count_effect(_scope);
   _dynamicTag(_scope, _classCounter, () => ({
     count: count
   }));
-}, () => _dynamicTag);
+  _count_effect(_scope);
+});
 export function _setup_(_scope) {
   _count(_scope, 0);
 }

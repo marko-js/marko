@@ -7,11 +7,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   })(), clickCount))}${_$.markResumeNode(_scope0_id, "#text/1")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   _$.writeEffect(_scope0_id, "__tests__/tags/counter.marko_0_input_onCount_clickCount");
   _$.writeScope(_scope0_id, {
-    input_onCount: input.onCount,
-    clickCount: clickCount
+    "input_onCount/4": input.onCount,
+    "clickCount/5": clickCount
   }, "__tests__/tags/counter.marko", 0, {
-    input_onCount: ["input.onCount"],
-    clickCount: "1:6"
+    "input_onCount/4": ["input.onCount"],
+    "clickCount/5": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

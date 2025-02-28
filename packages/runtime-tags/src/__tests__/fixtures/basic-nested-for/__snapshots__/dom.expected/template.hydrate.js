@@ -1,27 +1,20 @@
-// size: 629 (min) 360 (brotli)
+// size: 600 (min) 315 (brotli)
 const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
-  _expr_outer_inner$for_content = _$.intersection(
-    2,
-    (_scope) => {
-      const {
-        _: { 2: outer },
-        2: inner,
-      } = _scope;
-      _name_(_scope[0], `${outer}.${inner}`);
-    },
-    () => _$.inChild(0, _name_),
+  _expr_outer_inner$for_content = _$.intersection(3, (_scope) => {
+    const {
+      _: { 2: outer },
+      2: inner,
+    } = _scope;
+    _name_(_scope[0], `${outer}.${inner}`);
+  }),
+  _outer$for_content = _$.loopClosure(2, 0, (_scope, outer) =>
+    _expr_outer_inner$for_content(_scope),
   ),
-  _outer$for_content = _$.loopClosure(
-    2,
-    0,
-    0,
-    () => _expr_outer_inner$for_content,
+  _inner$for_content = _$.value(2, (_scope, inner) =>
+    _expr_outer_inner$for_content(_scope),
   ),
-  _inner$for_content = _$.value(2, 0, () => _expr_outer_inner$for_content),
-  _params_3$for_content = _$.value(
-    1,
-    (_scope, _params_3) => _inner$for_content(_scope, _params_3[0]),
-    () => _inner$for_content,
+  _params_3$for_content = _$.value(1, (_scope, _params_3) =>
+    _inner$for_content(_scope, _params_3[0]),
   ),
   _setup$for_content = (_scope) => {
     _outer$for_content._(_scope), _scope[0];
@@ -36,11 +29,8 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
   _outer$for_content2 = _$.value(2, (_scope, outer) =>
     _outer$for_content(_scope),
   ),
-  _items$for_content = _$.loopClosure(
-    2,
-    1,
-    (_scope, items) => _for$for_content(_scope, [items]),
-    () => _for$for_content,
+  _items$for_content = _$.loopClosure(2, 1, (_scope, items) =>
+    _for$for_content(_scope, [items]),
   ),
   _params_2$for_content = _$.value(1, (_scope, _params_2) =>
     _outer$for_content2(_scope, _params_2[0]),
@@ -61,6 +51,6 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
     }),
   ),
   _items = _$.state(2, (_scope, items) => {
-    _items_effect(_scope), _for(_scope, [items]), _items$for_content(_scope);
+    _for(_scope, [items]), _items$for_content(_scope), _items_effect(_scope);
   });
 init();

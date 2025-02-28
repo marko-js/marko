@@ -23,11 +23,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }, _scope0_id, "#div/0", 1);
   _$.write("</div>");
   _$.writeScope(_scope0_id, {
-    onCount: onCount,
+    "onCount/2": onCount,
     "#div/0(": _ifBranch,
     "#div/0!": _$.getScopeById(_ifScopeId)
   }, "__tests__/template.marko", 0, {
-    onCount: "2:8"
+    "onCount/2": "2:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

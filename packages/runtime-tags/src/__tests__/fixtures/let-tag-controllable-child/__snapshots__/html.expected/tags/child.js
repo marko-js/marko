@@ -7,17 +7,17 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeEffect(_scope0_id, "__tests__/tags/child.marko_0_otherState");
   _$.writeEffect(_scope0_id, "__tests__/tags/child.marko_0_state");
   _$.writeScope(_scope0_id, {
-    input_value: input.value,
-    input_valueChange: input.valueChange,
-    state: state,
-    otherState: otherState,
-    "state@": input.valueChange,
-    "otherState@": input["value" + "Change"]
+    "input_value/8": input.value,
+    "input_valueChange/9": input.valueChange,
+    "state/11": state,
+    "otherState/12": otherState,
+    "state/11@": input.valueChange,
+    "otherState/12@": input["value" + "Change"]
   }, "__tests__/tags/child.marko", 0, {
-    input_value: ["input.value"],
-    input_valueChange: ["input.valueChange"],
-    state: "1:6",
-    otherState: "6:6"
+    "input_value/8": ["input.value"],
+    "input_valueChange/9": ["input.valueChange"],
+    "state/11": "1:6",
+    "otherState/12": "6:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

@@ -1,4 +1,4 @@
-// size: 455 (min) 273 (brotli)
+// size: 455 (min) 271 (brotli)
 const _input__effect = _$.effect("a0", (_scope, { 1: input }) => {
     input.write("mounted"),
       (_$.getAbortSignal(_scope, 0).onabort = () => {
@@ -19,7 +19,7 @@ const _input__effect = _$.effect("a0", (_scope, { 1: input }) => {
     }),
   ),
   _show = _$.state(3, (_scope, show) => {
-    _show_effect(_scope), _if(_scope, show ? 0 : 1);
+    _if(_scope, show ? 0 : 1), _show_effect(_scope);
   });
 function _write(_scope) {
   return function (state) {

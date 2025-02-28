@@ -50,13 +50,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }, _scope0_id, "#div/0");
   _$.write("</div>");
   _$.writeScope(_scope0_id, {
-    value1: value1,
-    value2: value2,
+    "value1/4": value1,
+    "value2/5": value2,
     "#div/0(": _ifBranch3,
     "#div/0!": _$.getScopeById(_ifScopeId3)
   }, "__tests__/template.marko", 0, {
-    value1: "1:15",
-    value2: "1:23"
+    "value1/4": "1:15",
+    "value2/5": "1:23"
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

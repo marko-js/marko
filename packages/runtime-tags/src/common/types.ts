@@ -14,6 +14,7 @@ export interface BranchScope extends Scope {
 export interface Scope {
   $global: Record<string, unknown>;
   _: Scope | undefined;
+  ___id: number;
   ___args: unknown;
   ___pending: 1 | 0 | undefined;
   ___abortControllers:
@@ -71,6 +72,8 @@ export enum WalkCode {
   EndChild = 38,
 
   BeginChild = 47,
+  BeginChildWithVar = 48,
+  DynamicTagWithVar = 49,
 
   Next = 67,
   NextEnd = 91,

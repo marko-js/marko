@@ -36,22 +36,22 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     _scope1_.set(_index2, _$.ensureScopeWithId(_scope1_id));
     _$.write("</div>");
     _$.writeScope(_scope1_id, {
-      outerItem: outerItem,
+      "outerItem/3": outerItem,
       "#childScope/0": _$.writeExistingScope(_childScope),
       "#text/1(": _scope2_.size ? _scope2_ : undefined,
       _: _$.ensureScopeWithId(_scope0_id)
     }, "__tests__/template.marko", "7:2", {
-      outerItem: "7:6"
+      "outerItem/3": "7:6"
     });
   }, _scope0_id, "#text/2");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope(_scope0_id, {
-    items: items,
-    write: write,
+    "items/3": items,
+    "write/4": write,
     "#text/2(": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
-    items: "1:6",
-    write: "5:8"
+    "items/3": "1:6",
+    "write/4": "5:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

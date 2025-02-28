@@ -5,7 +5,7 @@ import {
   WalkCode,
   WalkRangeSize,
 } from "../common/types";
-import { createScope } from "./scope";
+import { createScope, skipScope } from "./scope";
 
 export const walker = /* @__PURE__ */ document.createTreeWalker(document);
 
@@ -55,7 +55,10 @@ function walkInternal(
           ? getDebugKey(currentScopeIndex++, walker.currentNode)
           : currentScopeIndex++
       ] = walker.currentNode;
-    } else if (value === WalkCode.Replace) {
+    } else if (
+      value === WalkCode.Replace ||
+      value === WalkCode.DynamicTagWithVar
+    ) {
       (walker.currentNode as ChildNode).replaceWith(
         (walker.currentNode = scope[
           MARKO_DEBUG
@@ -64,9 +67,19 @@ function walkInternal(
         ] =
           new Text()),
       );
+      if (value === WalkCode.DynamicTagWithVar) {
+        scope[
+          MARKO_DEBUG
+            ? getDebugKey(currentScopeIndex++, "#scopeOffset")
+            : currentScopeIndex++
+        ] = skipScope();
+      }
     } else if (value === WalkCode.EndChild) {
       return currentWalkIndex;
-    } else if (value === WalkCode.BeginChild) {
+    } else if (
+      value === WalkCode.BeginChild ||
+      value === WalkCode.BeginChildWithVar
+    ) {
       currentWalkIndex = walkInternal(
         currentWalkIndex,
         walkCodes,
@@ -76,6 +89,13 @@ function walkInternal(
             : currentScopeIndex++
         ] = createScope(scope.$global, scope.___closestBranch)),
       )!;
+      if (value === WalkCode.BeginChildWithVar) {
+        scope[
+          MARKO_DEBUG
+            ? getDebugKey(currentScopeIndex++, "#scopeOffset")
+            : currentScopeIndex++
+        ] = skipScope();
+      }
     } else if (value < WalkCode.NextEnd + 1) {
       value = WalkRangeSize.Next * currentMultiplier + value - WalkCode.Next;
       while (value--) {

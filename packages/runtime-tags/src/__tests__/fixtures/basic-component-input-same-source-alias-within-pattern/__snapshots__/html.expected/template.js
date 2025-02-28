@@ -22,11 +22,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     })
   });
   _$.writeScope(_scope0_id, {
-    clickCount: clickCount,
+    "clickCount/2": clickCount,
     "#childScope/0": _$.writeExistingScope(_childScope),
     "#childScope/1": _$.writeExistingScope(_childScope2)
   }, "__tests__/template.marko", 0, {
-    clickCount: "1:6"
+    "clickCount/2": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

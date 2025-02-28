@@ -91,11 +91,11 @@ export function createContent(
           template,
           ns,
         ))(branch, walks);
-        setup && queueRender(branch, setup);
+        setup && queueRender(branch, setup, -1);
       }
     : (branch) => {
         branch.___startNode = branch.___endNode = new Text();
-        setup && queueRender(branch, setup);
+        setup && queueRender(branch, setup, -1);
       };
 
   return (owner?: Scope): Renderer => {

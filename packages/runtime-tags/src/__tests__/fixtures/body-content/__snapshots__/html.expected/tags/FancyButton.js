@@ -11,11 +11,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   _$.writeEffect(_scope0_id, "__tests__/tags/FancyButton.marko_0_attrs");
   _$.writeScope(_scope0_id, {
-    attrs: attrs,
+    "attrs/5": attrs,
     "#text/1!": _$.writeExistingScope(_dynamicScope),
     "#text/1(": _$.normalizeDynamicRenderer(content)
   }, "__tests__/tags/FancyButton.marko", 0, {
-    attrs: "1:22"
+    "attrs/5": "1:22"
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/FancyButton.marko", _renderer);

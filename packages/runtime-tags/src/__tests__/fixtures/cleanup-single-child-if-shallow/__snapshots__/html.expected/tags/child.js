@@ -4,9 +4,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write("<div>child</div>");
   _$.writeEffect(_scope0_id, "__tests__/tags/child.marko_0_input");
   _$.writeScope(_scope0_id, {
-    input: input
+    "input/1": input
   }, "__tests__/tags/child.marko", 0, {
-    input: 0
+    "input/1": 0
   });
   _$.resumeClosestBranch(_scope0_id);
 });

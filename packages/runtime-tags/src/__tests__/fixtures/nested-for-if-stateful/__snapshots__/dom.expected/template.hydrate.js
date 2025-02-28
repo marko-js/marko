@@ -1,4 +1,4 @@
-// size: 904 (min) 414 (brotli)
+// size: 911 (min) 421 (brotli)
 const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
     _$.data(_scope[1], count),
   ),
@@ -36,28 +36,19 @@ const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
           _editing$for_content(_scope._, !1);
       }),
   ),
-  _expr_counts_count_i$if_content = _$.intersection(3, (_scope) => {
+  _expr_counts_count_i$if_content = _$.intersection(2, (_scope) => {
     _expr_counts_count_i$if_content_effect(_scope);
   }),
-  _i$if_content = _$.conditionalClosure(
-    3,
-    0,
-    0,
-    0,
-    () => _expr_counts_count_i$if_content,
+  _i$if_content = _$.conditionalClosure(3, 0, 0, (_scope, i) =>
+    _expr_counts_count_i$if_content(_scope),
   ),
-  _count$if_content = _$.conditionalClosure(
-    2,
-    0,
-    0,
-    (_scope, count) => _$.data(_scope[1], count + 1),
-    () => _expr_counts_count_i$if_content,
-  ),
+  _count$if_content = _$.conditionalClosure(2, 0, 0, (_scope, count) => {
+    _$.data(_scope[1], count + 1), _expr_counts_count_i$if_content(_scope);
+  }),
   _counts$if_content = _$.registerDynamicClosure(
     "a2",
     1,
-    0,
-    () => _expr_counts_count_i$if_content,
+    (_scope, counts) => _expr_counts_count_i$if_content(_scope),
     (_scope) => _scope._._,
   ),
   _setup$if_content = (_scope) => {

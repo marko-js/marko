@@ -57,7 +57,7 @@
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.d={input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a","#text/2!":_.a={},"#text/2(":"a","#text/4!":_.b={},"#text/4(":"a","#text/5!":_.c={},"#text/5(":"div"},2:_.a,4:_.b,6:_.c,7:{_:_.d}}),7,"__tests__/template.marko_1_input_value/subscriber",1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.d={"input_value/10":"\x3Ca href=#&gt;\x3C/a&gt;","Parent/11":"div","Child/12":"a","#text/2!":_.a={},"#text/2(":"a","#text/4!":_.b={},"#text/4(":"a","#text/5!":_.c={},"#text/5(":"div"},2:_.a,4:_.b,6:_.c,7:{_:_.d}}),7,"__tests__/template.marko_1_input_value/subscriber",1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",0];M._.w()
     </script>
   </body>
 </html>
@@ -131,7 +131,7 @@ container.querySelector(".toggle-parent").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.d={input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a","#text/2!":_.a={},"#text/2(":"a","#text/4!":_.b={},"#text/4(":"a","#text/5!":_.c={},"#text/5(":"div"},2:_.a,4:_.b,6:_.c,7:{_:_.d}}),7,"__tests__/template.marko_1_input_value/subscriber",1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.d={"input_value/10":"\x3Ca href=#&gt;\x3C/a&gt;","Parent/11":"div","Child/12":"a","#text/2!":_.a={},"#text/2(":"a","#text/4!":_.b={},"#text/4(":"a","#text/5!":_.c={},"#text/5(":"div"},2:_.a,4:_.b,6:_.c,7:{_:_.d}}),7,"__tests__/template.marko_1_input_value/subscriber",1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",0];M._.w()
     </script>
   </body>
 </html>
@@ -206,7 +206,7 @@ container.querySelector(".toggle-parent").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.d={input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a","#text/2!":_.a={},"#text/2(":"a","#text/4!":_.b={},"#text/4(":"a","#text/5!":_.c={},"#text/5(":"div"},2:_.a,4:_.b,6:_.c,7:{_:_.d}}),7,"__tests__/template.marko_1_input_value/subscriber",1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.d={"input_value/10":"\x3Ca href=#&gt;\x3C/a&gt;","Parent/11":"div","Child/12":"a","#text/2!":_.a={},"#text/2(":"a","#text/4!":_.b={},"#text/4(":"a","#text/5!":_.c={},"#text/5(":"div"},2:_.a,4:_.b,6:_.c,7:{_:_.d}}),7,"__tests__/template.marko_1_input_value/subscriber",1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",0];M._.w()
     </script>
   </body>
 </html>
@@ -281,7 +281,7 @@ container.querySelector(".toggle-parent").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.d={input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a","#text/2!":_.a={},"#text/2(":"a","#text/4!":_.b={},"#text/4(":"a","#text/5!":_.c={},"#text/5(":"div"},2:_.a,4:_.b,6:_.c,7:{_:_.d}}),7,"__tests__/template.marko_1_input_value/subscriber",1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.d={"input_value/10":"\x3Ca href=#&gt;\x3C/a&gt;","Parent/11":"div","Child/12":"a","#text/2!":_.a={},"#text/2(":"a","#text/4!":_.b={},"#text/4(":"a","#text/5!":_.c={},"#text/5(":"div"},2:_.a,4:_.b,6:_.c,7:{_:_.d}}),7,"__tests__/template.marko_1_input_value/subscriber",1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",0];M._.w()
     </script>
   </body>
 </html>
@@ -346,7 +346,7 @@ container.querySelector(".toggle-child").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.d={input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a","#text/2!":_.a={},"#text/2(":"a","#text/4!":_.b={},"#text/4(":"a","#text/5!":_.c={},"#text/5(":"div"},2:_.a,4:_.b,6:_.c,7:{_:_.d}}),7,"__tests__/template.marko_1_input_value/subscriber",1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.d={"input_value/10":"\x3Ca href=#&gt;\x3C/a&gt;","Parent/11":"div","Child/12":"a","#text/2!":_.a={},"#text/2(":"a","#text/4!":_.b={},"#text/4(":"a","#text/5!":_.c={},"#text/5(":"div"},2:_.a,4:_.b,6:_.c,7:{_:_.d}}),7,"__tests__/template.marko_1_input_value/subscriber",1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",0];M._.w()
     </script>
   </body>
 </html>
@@ -419,7 +419,7 @@ container.querySelector(".toggle-child").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.d={input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a","#text/2!":_.a={},"#text/2(":"a","#text/4!":_.b={},"#text/4(":"a","#text/5!":_.c={},"#text/5(":"div"},2:_.a,4:_.b,6:_.c,7:{_:_.d}}),7,"__tests__/template.marko_1_input_value/subscriber",1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.d={"input_value/10":"\x3Ca href=#&gt;\x3C/a&gt;","Parent/11":"div","Child/12":"a","#text/2!":_.a={},"#text/2(":"a","#text/4!":_.b={},"#text/4(":"a","#text/5!":_.c={},"#text/5(":"div"},2:_.a,4:_.b,6:_.c,7:{_:_.d}}),7,"__tests__/template.marko_1_input_value/subscriber",1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",0];M._.w()
     </script>
   </body>
 </html>
@@ -488,7 +488,7 @@ container.querySelector(".toggle-child").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.d={input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a","#text/2!":_.a={},"#text/2(":"a","#text/4!":_.b={},"#text/4(":"a","#text/5!":_.c={},"#text/5(":"div"},2:_.a,4:_.b,6:_.c,7:{_:_.d}}),7,"__tests__/template.marko_1_input_value/subscriber",1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.d={"input_value/10":"\x3Ca href=#&gt;\x3C/a&gt;","Parent/11":"div","Child/12":"a","#text/2!":_.a={},"#text/2(":"a","#text/4!":_.b={},"#text/4(":"a","#text/5!":_.c={},"#text/5(":"div"},2:_.a,4:_.b,6:_.c,7:{_:_.d}}),7,"__tests__/template.marko_1_input_value/subscriber",1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",0];M._.w()
     </script>
   </body>
 </html>

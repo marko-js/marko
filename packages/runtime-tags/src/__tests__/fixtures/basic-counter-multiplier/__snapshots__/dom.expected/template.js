@@ -1,29 +1,33 @@
 export const _template_ = "<button id=multiplier>increase multiplier (<!>)</button><button id=count>increase count</button><div> </div>";
 export const _walks_ = /* get, next(1), over(1), replace, out(1), get, over(1), next(1), get, out(1) */" Db%l bD l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _expr_count_multiplier = /* @__PURE__ */_$.intersection(2, _scope => {
+const _expr_count_multiplier = /* @__PURE__ */_$.intersection(6, _scope => {
   const {
-    count,
-    multiplier
+    "count/4": count,
+    "multiplier/5": multiplier
   } = _scope;
   _multipliedCount(_scope, count * multiplier);
 });
-const _multipliedCount = /* @__PURE__ */_$.value("multipliedCount", (_scope, multipliedCount) => _$.data(_scope["#text/3"], multipliedCount));
+const _multipliedCount = /* @__PURE__ */_$.value("multipliedCount/7", (_scope, multipliedCount) => _$.data(_scope["#text/3"], multipliedCount));
 const _multiplier_effect = _$.effect("__tests__/template.marko_0_multiplier", (_scope, {
-  multiplier
+  "multiplier/5": multiplier
 }) => _$.on(_scope["#button/0"], "click", function () {
   _multiplier(_scope, multiplier + 1), multiplier;
 }));
-const _multiplier = /* @__PURE__ */_$.state("multiplier", (_scope, multiplier) => {
+const _multiplier = /* @__PURE__ */_$.state("multiplier/5", (_scope, multiplier) => {
   _$.data(_scope["#text/1"], multiplier);
+  _expr_count_multiplier(_scope);
   _multiplier_effect(_scope);
-}, () => _expr_count_multiplier);
+});
 const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
-  count
+  "count/4": count
 }) => _$.on(_scope["#button/2"], "click", function () {
   _count(_scope, count + 1), count;
 }));
-const _count = /* @__PURE__ */_$.state("count", (_scope, count) => _count_effect(_scope), () => _expr_count_multiplier);
+const _count = /* @__PURE__ */_$.state("count/4", (_scope, count) => {
+  _expr_count_multiplier(_scope);
+  _count_effect(_scope);
+});
 export function _setup_(_scope) {
   _count(_scope, 0);
   _multiplier(_scope, 1);

@@ -66,17 +66,17 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_showMiddle");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_showOuter");
   _$.writeScope(_scope0_id, {
-    showOuter: showOuter,
-    showMiddle: showMiddle,
-    showInner: showInner,
-    write: write,
+    "showOuter/5": showOuter,
+    "showMiddle/6": showMiddle,
+    "showInner/7": showInner,
+    "write/8": write,
     "#text/4(": _ifBranch3,
     "#text/4!": _$.getScopeById(_ifScopeId3)
   }, "__tests__/template.marko", 0, {
-    showOuter: "1:6",
-    showMiddle: "2:6",
-    showInner: "3:6",
-    write: "9:8"
+    "showOuter/5": "1:6",
+    "showMiddle/6": "2:6",
+    "showInner/7": "3:6",
+    "write/8": "9:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

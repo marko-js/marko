@@ -35,8 +35,8 @@ container.querySelectorAll("button").forEach(item => item.click());
 # Mutations
 ```
 UPDATE div/#text0 "0" => "1"
-UPDATE button0/#text "0" => "1"
 UPDATE div/#text2 "0" => "1"
+UPDATE button0/#text "0" => "1"
 UPDATE button1/#text "0" => "1"
 ```
 
@@ -59,8 +59,8 @@ container.querySelectorAll("button").forEach(item => item.click());
 # Mutations
 ```
 UPDATE div/#text0 "1" => "2"
-UPDATE button0/#text "1" => "2"
 UPDATE div/#text2 "1" => "2"
+UPDATE button0/#text "1" => "2"
 UPDATE button1/#text "1" => "2"
 ```
 
@@ -83,7 +83,7 @@ container.querySelectorAll("button").forEach(item => item.click());
 # Mutations
 ```
 UPDATE div/#text0 "2" => "3"
-UPDATE button0/#text "2" => "3"
 UPDATE div/#text2 "2" => "3"
+UPDATE button0/#text "2" => "3"
 UPDATE button1/#text "2" => "3"
 ```

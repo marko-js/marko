@@ -72,11 +72,13 @@ import {
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
 const kChildScopeBinding = Symbol("custom tag child scope");
+const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
 const kChildAttrExprs = Symbol("custom tag child attribute expressions");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kChildScopeBinding]?: Binding;
+    [kChildOffsetScopeBinding]?: Binding;
     [kChildAttrExprs]?: Set<t.NodeExtra>;
   }
 }
@@ -105,9 +107,6 @@ export default {
       const section = getOrCreateSection(tag);
       const tagBody = tag.get("body");
       const tagExtra = (tag.node.extra ??= {});
-      startSection(tagBody);
-      trackVarReferences(tag, BindingType.derived);
-      trackParamsReferences(tagBody, BindingType.param);
 
       tagExtra[kChildScopeBinding] = createBinding(
         "#childScope",
@@ -117,6 +116,21 @@ export default {
         tagExtra,
       );
       tagExtra[kChildAttrExprs] = new Set([tagExtra]);
+
+      if (tag.has("var")) {
+        trackVarReferences(tag, BindingType.derived);
+        tag.node.var!.extra!.binding!.scopeOffset = tagExtra[
+          kChildOffsetScopeBinding
+        ] = createBinding(
+          "#scopeOffset",
+          BindingType.dom,
+          section,
+          undefined,
+          tagExtra,
+        );
+      }
+      startSection(tagBody);
+      trackParamsReferences(tagBody, BindingType.param);
 
       const childFile = loadFileForTag(tag)!;
       if (childFile.opts.filename === tag.hub.file.opts.filename) {
@@ -216,6 +230,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
           callRuntime(
             "setTagVar",
             getScopeIdIdentifier(section),
+            getScopeAccessorLiteral(tag.node.extra![kChildOffsetScopeBinding]!),
             peekScopeId,
             t.stringLiteral(
               getResumeRegisterId(
@@ -549,11 +564,6 @@ function writeAttrsToExports(
         ? t.memberExpression(arg.argument, t.numericLiteral(0), true)
         : arg,
       createScopeReadExpression(info.tagSection, info.childScopeBinding),
-      callRuntime(
-        "inChild",
-        getScopeAccessorLiteral(info.childScopeBinding),
-        t.identifier(tagInputIdentifier.name),
-      ),
     );
     return;
   }
@@ -626,11 +636,6 @@ function writeAttrsToExports(
       identifierToSignal(tagInputIdentifier),
       translatedProps,
       createScopeReadExpression(info.tagSection, info.childScopeBinding),
-      callRuntime(
-        "inChild",
-        getScopeAccessorLiteral(info.childScopeBinding),
-        t.identifier(tagInputIdentifier.name),
-      ),
     );
     return;
   }
@@ -723,11 +728,6 @@ function writeAttrsToExports(
           identifierToSignal(attrExportIdentifier),
           getAttrTagIdentifier(attrTagMeta),
           createScopeReadExpression(info.tagSection, info.childScopeBinding),
-          callRuntime(
-            "inChild",
-            getScopeAccessorLiteral(info.childScopeBinding),
-            t.identifier(attrExportIdentifier.name),
-          ),
         );
       }
 
@@ -754,11 +754,6 @@ function writeAttrsToExports(
         identifierToSignal(contentExportIdentifier),
         t.callExpression(t.identifier(bodySection.name), [scopeIdentifier]),
         createScopeReadExpression(info.tagSection, info.childScopeBinding),
-        callRuntime(
-          "inChild",
-          getScopeAccessorLiteral(info.childScopeBinding),
-          t.identifier(contentExportIdentifier.name),
-        ),
       );
     }
   }
@@ -800,11 +795,6 @@ function writeAttrsToExports(
       identifierToSignal(attrExportIdentifier),
       attr.value,
       createScopeReadExpression(info.tagSection, info.childScopeBinding),
-      callRuntime(
-        "inChild",
-        getScopeAccessorLiteral(info.childScopeBinding),
-        t.identifier(attrExportIdentifier.name),
-      ),
     );
   }
 
@@ -839,11 +829,6 @@ function writeAttrsToExports(
         identifierToSignal(attrExportIdentifier),
         getMissingPropValue(name),
         createScopeReadExpression(info.tagSection, info.childScopeBinding),
-        callRuntime(
-          "inChild",
-          getScopeAccessorLiteral(info.childScopeBinding),
-          t.identifier(attrExportIdentifier.name),
-        ),
       );
     }
   }

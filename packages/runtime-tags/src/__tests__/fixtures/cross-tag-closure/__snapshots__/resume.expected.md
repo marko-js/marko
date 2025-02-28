@@ -3,15 +3,15 @@
 <html>
   <head />
   <body>
-    <!--M_[4-->
+    <!--M_[5-->
     <button>
       0
-      <!--M_*4 #text/1-->
+      <!--M_*5 #text/1-->
     </button>
-    <!--M_*4 #button/0-->
-    <!--M_]3 #text/0-->
+    <!--M_*5 #button/0-->
+    <!--M_]4 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.b={count:0,"#childScope/0":_.a={}},2:_.a,3:{"#text/0!":_.c={_:_.b},"#text/0(":_._["__tests__/template.marko_1_renderer"](_.b)},4:_.c},_.a["@"]=_._["__tests__/tags/my-let.marko_0/valueChange"](_.a),_.a["/"]=_._["__tests__/template.marko_0_count/var"](_.b),_.d),4,"__tests__/template.marko_1_count/subscriber",4,"__tests__/template.marko_1_count",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.b={"#scopeOffset/1":3,"count/3":0,"#childScope/0":_.a={}},2:_.a,4:{"#text/0!":_.c={_:_.b},"#text/0(":_._["__tests__/template.marko_1_renderer"](_.b)},5:_.c},_.a["@"]=_._["__tests__/tags/my-let.marko_0/valueChange"](_.a),_.a["/"]=_._["__tests__/template.marko_0_count/var"](_.b),_.d),5,"__tests__/template.marko_1_count/subscriber",5,"__tests__/template.marko_1_count",0];M._.w()
     </script>
   </body>
 </html>
@@ -31,15 +31,15 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[4-->
+    <!--M_[5-->
     <button>
       1
-      <!--M_*4 #text/1-->
+      <!--M_*5 #text/1-->
     </button>
-    <!--M_*4 #button/0-->
-    <!--M_]3 #text/0-->
+    <!--M_*5 #button/0-->
+    <!--M_]4 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.b={count:0,"#childScope/0":_.a={}},2:_.a,3:{"#text/0!":_.c={_:_.b},"#text/0(":_._["__tests__/template.marko_1_renderer"](_.b)},4:_.c},_.a["@"]=_._["__tests__/tags/my-let.marko_0/valueChange"](_.a),_.a["/"]=_._["__tests__/template.marko_0_count/var"](_.b),_.d),4,"__tests__/template.marko_1_count/subscriber",4,"__tests__/template.marko_1_count",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.b={"#scopeOffset/1":3,"count/3":0,"#childScope/0":_.a={}},2:_.a,4:{"#text/0!":_.c={_:_.b},"#text/0(":_._["__tests__/template.marko_1_renderer"](_.b)},5:_.c},_.a["@"]=_._["__tests__/tags/my-let.marko_0/valueChange"](_.a),_.a["/"]=_._["__tests__/template.marko_0_count/var"](_.b),_.d),5,"__tests__/template.marko_1_count/subscriber",5,"__tests__/template.marko_1_count",0];M._.w()
     </script>
   </body>
 </html>
@@ -58,15 +58,15 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[4-->
+    <!--M_[5-->
     <button>
       2
-      <!--M_*4 #text/1-->
+      <!--M_*5 #text/1-->
     </button>
-    <!--M_*4 #button/0-->
-    <!--M_]3 #text/0-->
+    <!--M_*5 #button/0-->
+    <!--M_]4 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.b={count:0,"#childScope/0":_.a={}},2:_.a,3:{"#text/0!":_.c={_:_.b},"#text/0(":_._["__tests__/template.marko_1_renderer"](_.b)},4:_.c},_.a["@"]=_._["__tests__/tags/my-let.marko_0/valueChange"](_.a),_.a["/"]=_._["__tests__/template.marko_0_count/var"](_.b),_.d),4,"__tests__/template.marko_1_count/subscriber",4,"__tests__/template.marko_1_count",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.b={"#scopeOffset/1":3,"count/3":0,"#childScope/0":_.a={}},2:_.a,4:{"#text/0!":_.c={_:_.b},"#text/0(":_._["__tests__/template.marko_1_renderer"](_.b)},5:_.c},_.a["@"]=_._["__tests__/tags/my-let.marko_0/valueChange"](_.a),_.a["/"]=_._["__tests__/template.marko_0_count/var"](_.b),_.d),5,"__tests__/template.marko_1_count/subscriber",5,"__tests__/template.marko_1_count",0];M._.w()
     </script>
   </body>
 </html>
@@ -85,15 +85,15 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[4-->
+    <!--M_[5-->
     <button>
       3
-      <!--M_*4 #text/1-->
+      <!--M_*5 #text/1-->
     </button>
-    <!--M_*4 #button/0-->
-    <!--M_]3 #text/0-->
+    <!--M_*5 #button/0-->
+    <!--M_]4 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.b={count:0,"#childScope/0":_.a={}},2:_.a,3:{"#text/0!":_.c={_:_.b},"#text/0(":_._["__tests__/template.marko_1_renderer"](_.b)},4:_.c},_.a["@"]=_._["__tests__/tags/my-let.marko_0/valueChange"](_.a),_.a["/"]=_._["__tests__/template.marko_0_count/var"](_.b),_.d),4,"__tests__/template.marko_1_count/subscriber",4,"__tests__/template.marko_1_count",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.b={"#scopeOffset/1":3,"count/3":0,"#childScope/0":_.a={}},2:_.a,4:{"#text/0!":_.c={_:_.b},"#text/0(":_._["__tests__/template.marko_1_renderer"](_.b)},5:_.c},_.a["@"]=_._["__tests__/tags/my-let.marko_0/valueChange"](_.a),_.a["/"]=_._["__tests__/template.marko_0_count/var"](_.b),_.d),5,"__tests__/template.marko_1_count/subscriber",5,"__tests__/template.marko_1_count",0];M._.w()
     </script>
   </body>
 </html>

@@ -5,7 +5,7 @@ import _classCounter from "./components/class-counter.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 _$.register("__tests__/components/class-counter.marko", _classCounter);
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
-const _count = /* @__PURE__ */_$.state("count", (_scope, count) => _$.data(_scope["#text/1"], count));
+const _count = /* @__PURE__ */_$.state("count/2", (_scope, count) => _$.data(_scope["#text/1"], count));
 export function _setup_(_scope) {
   _count(_scope, 0);
   _dynamicTag(_scope, _classCounter, () => ({

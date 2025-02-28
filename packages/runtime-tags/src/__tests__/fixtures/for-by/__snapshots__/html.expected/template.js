@@ -82,14 +82,14 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`</div><button>Rotate</button>${_$.markResumeNode(_scope0_id, "#button/5")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope(_scope0_id, {
-    items: items,
+    "items/6": items,
     "#div/0(": _scope1_.size ? _scope1_ : undefined,
     "#div/1(": _scope2_.size ? _scope2_ : undefined,
     "#div/2(": _scope3_.size ? _scope3_ : undefined,
     "#div/3(": _scope4_.size ? _scope4_ : undefined,
     "#div/4(": _scope5_.size ? _scope5_ : undefined
   }, "__tests__/template.marko", 0, {
-    items: "14:8"
+    "items/6": "14:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

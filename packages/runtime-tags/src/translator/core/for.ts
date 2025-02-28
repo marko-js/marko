@@ -317,7 +317,7 @@ export default {
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
         const nodeRef = getOptimizedOnlyChildNodeRef(tag, tagSection);
-        setClosureSignalBuilder(tag, (closureSignal, render, intersection) => {
+        setClosureSignalBuilder(tag, (closureSignal, render) => {
           return callRuntime(
             "loopClosure",
             getScopeAccessorLiteral(
@@ -325,7 +325,6 @@ export default {
             ),
             getScopeAccessorLiteral(nodeRef),
             render,
-            intersection,
           );
         });
 

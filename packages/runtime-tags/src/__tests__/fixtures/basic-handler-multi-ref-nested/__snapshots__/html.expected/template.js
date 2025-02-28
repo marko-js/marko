@@ -6,11 +6,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<button>${_$.escapeXML(a.join(""))}${_$.markResumeNode(_scope0_id, "#text/1")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_a_b");
   _$.writeScope(_scope0_id, {
-    a: a,
-    b: b
+    "a/2": a,
+    "b/3": b
   }, "__tests__/template.marko", 0, {
-    a: "1:6",
-    b: "2:6"
+    "a/2": "1:6",
+    "b/3": "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

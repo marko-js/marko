@@ -1,5 +1,5 @@
-// size: 451 (min) 178 (brotli)
-const _expr_checkedValue__checkedValueChange = _$.intersection(2, (_scope) => {
+// size: 450 (min) 178 (brotli)
+const _expr_checkedValue__checkedValueChange = _$.intersection(6, (_scope) => {
     const { 4: checkedValue, 5: _checkedValueChange } = _scope;
     _$.controllable_input_checkedValue(
       _scope,
@@ -23,11 +23,10 @@ const _expr_checkedValue__checkedValueChange = _$.intersection(2, (_scope) => {
         "c",
       );
   }),
-  _checkedValue = _$.state(
-    4,
-    (_scope, checkedValue) => _$.data(_scope[3], checkedValue),
-    () => _expr_checkedValue__checkedValueChange,
-  );
+  _checkedValue = _$.state(4, (_scope, checkedValue) => {
+    _$.data(_scope[3], checkedValue),
+      _expr_checkedValue__checkedValueChange(_scope);
+  });
 _$.effect("a1", (_scope) => {
   _$.controllable_input_checkedValue_effect(_scope, 0),
     _$.controllable_input_checkedValue_effect(_scope, 1),

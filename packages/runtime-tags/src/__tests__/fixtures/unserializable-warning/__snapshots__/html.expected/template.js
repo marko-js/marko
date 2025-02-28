@@ -14,11 +14,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       }, "__tests__/template.marko_1/test", _scope1_id);
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_test");
       _$.writeScope(_scope1_id, {
-        unserializable: unserializable,
-        test: test
+        "unserializable/0": unserializable,
+        "test/1": test
       }, "__tests__/template.marko", "1:2", {
-        unserializable: "2:10",
-        test: "7:10"
+        "unserializable/0": "2:10",
+        "test/1": "7:10"
       });
     }), "__tests__/template.marko_1_renderer", _scope0_id)
   };

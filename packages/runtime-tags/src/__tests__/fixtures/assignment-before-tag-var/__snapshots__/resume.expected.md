@@ -16,7 +16,7 @@
       <!--M_*1 #text/2-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{clickCount:0}}),1,"__tests__/template.marko_0_clickCount",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{"clickCount/3":0}}),1,"__tests__/template.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>
@@ -44,7 +44,7 @@ container.querySelector("button").click();
       <!--M_*1 #text/2-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{clickCount:0}}),1,"__tests__/template.marko_0_clickCount",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{"clickCount/3":0}}),1,"__tests__/template.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>
@@ -52,8 +52,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/span/#text2 "‍" => "0"
 UPDATE html/body/span/#text0 "0" => "1"
+UPDATE html/body/span/#text2 "‍" => "0"
 ```
 
 # Render
@@ -77,7 +77,7 @@ container.querySelector("button").click();
       <!--M_*1 #text/2-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{clickCount:0}}),1,"__tests__/template.marko_0_clickCount",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{"clickCount/3":0}}),1,"__tests__/template.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>
@@ -85,8 +85,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/span/#text2 "0" => "1"
 UPDATE html/body/span/#text0 "1" => "2"
+UPDATE html/body/span/#text2 "0" => "1"
 ```
 
 # Render
@@ -110,7 +110,7 @@ container.querySelector("button").click();
       <!--M_*1 #text/2-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{clickCount:0}}),1,"__tests__/template.marko_0_clickCount",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{"clickCount/3":0}}),1,"__tests__/template.marko_0_clickCount",0];M._.w()
     </script>
   </body>
 </html>
@@ -118,6 +118,6 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/span/#text2 "1" => "2"
 UPDATE html/body/span/#text0 "2" => "3"
+UPDATE html/body/span/#text2 "1" => "2"
 ```

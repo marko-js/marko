@@ -1,4 +1,4 @@
-// size: 500 (min) 252 (brotli)
+// size: 491 (min) 242 (brotli)
 const _setup$tagSelect_content_effect = _$.effect("a2", (_scope) => {
     _$.attrsEvents(_scope, 0),
       _$.attrsEvents(_scope, 1),
@@ -15,23 +15,17 @@ const _setup$tagSelect_content_effect = _$.effect("a2", (_scope) => {
         _setup$tagSelect_content_effect(_scope);
     },
   ),
-  _expr_value_tag = _$.intersection(
-    2,
-    (_scope) => {
-      const { 2: value, 3: tag } = _scope;
-      _dynamicTag(_scope, tag ? "select" : {}, () => ({
-        value: value,
-        valueChange: _valueChange(_scope),
-      }));
-    },
-    () => _dynamicTag,
-  ),
+  _expr_value_tag = _$.intersection(4, (_scope) => {
+    const { 2: value, 3: tag } = _scope;
+    _dynamicTag(_scope, tag ? "select" : {}, () => ({
+      value: value,
+      valueChange: _valueChange(_scope),
+    }));
+  }),
   _dynamicTag = _$.dynamicTag(0, _tagSelect_content),
-  _value = _$.state(
-    2,
-    (_scope, value) => _$.data(_scope[1], value),
-    () => _expr_value_tag,
-  );
+  _value = _$.state(2, (_scope, value) => {
+    _$.data(_scope[1], value), _expr_value_tag(_scope);
+  });
 function _valueChange(_scope) {
   return function (v) {
     _value(_scope, v);

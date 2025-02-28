@@ -5,15 +5,15 @@ const tags = [customTag];
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2");
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
-  x
+  "x/3": x
 }) => _$.on(_scope["#button/0"], "click", function () {
   _x(_scope, x + 1), x;
 }));
-const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
+const _x = /* @__PURE__ */_$.state("x/3", (_scope, x) => {
   _$.data(_scope["#text/1"], x);
-  _x_effect(_scope);
   _dynamicTag(_scope, tags[0], () => x);
-}, () => _dynamicTag);
+  _x_effect(_scope);
+});
 export function _setup_(_scope) {
   _x(_scope, 1);
 }

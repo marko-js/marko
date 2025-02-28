@@ -1,4 +1,4 @@
-// size: 361 (min) 218 (brotli)
+// size: 353 (min) 217 (brotli)
 const _setup_ = () => {},
   _id_ = _$.value(3, (_scope, id) => _$.data(_scope[0], id)),
   _input_ = _$.value(2, (_scope, input) => _id_(_scope, input.id)),
@@ -16,12 +16,8 @@ const _dynamicTag = _$.dynamicTag(1),
       _tagName(_scope, tagName === child ? "div" : child);
     }),
   ),
-  _tagName = _$.state(
-    2,
-    (_scope, tagName) => {
-      _tagName_effect(_scope),
-        _dynamicTag(_scope, tagName, () => ({ id: "dynamic" }));
-    },
-    () => _dynamicTag,
-  );
+  _tagName = _$.state(2, (_scope, tagName) => {
+    _dynamicTag(_scope, tagName, () => ({ id: "dynamic" })),
+      _tagName_effect(_scope);
+  });
 init();

@@ -5,15 +5,15 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write("<div>");
   const _childScope = _$.peekNextScope();
   const divName = _parentEl({});
-  _$.setTagVar(_scope0_id, _childScope, "__tests__/template.marko_0_divName/var");
-  _$.write(`${_$.escapeXML(divName)}${_$.markResumeNode(_scope0_id, "#text/1")}</div><span>`);
+  _$.setTagVar(_scope0_id, "#scopeOffset/1", _childScope, "__tests__/template.marko_0_divName/var");
+  _$.write(`${_$.escapeXML(divName)}${_$.markResumeNode(_scope0_id, "#text/2")}</div><span>`);
   const _childScope2 = _$.peekNextScope();
   const spanName = _parentEl({});
-  _$.setTagVar(_scope0_id, _childScope2, "__tests__/template.marko_0_spanName/var");
-  _$.write(`${_$.escapeXML(spanName)}${_$.markResumeNode(_scope0_id, "#text/3")}</span>`);
+  _$.setTagVar(_scope0_id, "#scopeOffset/4", _childScope2, "__tests__/template.marko_0_spanName/var");
+  _$.write(`${_$.escapeXML(spanName)}${_$.markResumeNode(_scope0_id, "#text/5")}</span>`);
   _$.writeScope(_scope0_id, {
     "#childScope/0": _$.writeExistingScope(_childScope),
-    "#childScope/2": _$.writeExistingScope(_childScope2)
+    "#childScope/3": _$.writeExistingScope(_childScope2)
   }, "__tests__/template.marko", 0);
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

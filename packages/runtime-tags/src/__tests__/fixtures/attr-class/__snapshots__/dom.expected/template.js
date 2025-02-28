@@ -3,11 +3,11 @@ export const _walks_ = /* get, over(3), beginChild, _customTag_walks, endChild, 
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _customTag, _className_ as _customTag_input_class, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./tags/custom-tag.marko";
 const _test_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello");
-const _expr_input_test_c_d = /* @__PURE__ */_$.intersection(3, _scope => {
+const _expr_input_test_c_d = /* @__PURE__ */_$.intersection(10, _scope => {
   const {
-    input_test,
-    c,
-    d
+    "input_test/6": input_test,
+    "c/7": c,
+    "d/8": d
   } = _scope;
   _dynamicTag(_scope, input_test, () => ({
     class: ["a", {
@@ -22,11 +22,11 @@ const _expr_input_test_c_d = /* @__PURE__ */_$.intersection(3, _scope => {
       content: _test_content(_scope)
     })
   }));
-}, () => _dynamicTag);
-const _expr_c_d = /* @__PURE__ */_$.intersection(2, _scope => {
+});
+const _expr_c_d = /* @__PURE__ */_$.intersection(9, _scope => {
   const {
-    c,
-    d
+    "c/7": c,
+    "d/8": d
   } = _scope;
   _$.classAttr(_scope["#div/0"], ["a", {
     b: c,
@@ -36,17 +36,23 @@ const _expr_c_d = /* @__PURE__ */_$.intersection(2, _scope => {
     b: c,
     d
   }]);
-}, () => /* @__PURE__ */_$.inChild("#childScope/1", _customTag_input_class));
+});
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3");
-export const _d_ = /* @__PURE__ */_$.value("d", 0, () => _$.intersections([_expr_c_d, _expr_input_test_c_d]));
-export const _c_ = /* @__PURE__ */_$.value("c", 0, () => _$.intersections([_expr_c_d, _expr_input_test_c_d]));
-export const _input_test_ = /* @__PURE__ */_$.value("input_test", 0, () => _expr_input_test_c_d);
-export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
+export const _d_ = /* @__PURE__ */_$.value("d/8", (_scope, d) => {
+  _expr_c_d(_scope);
+  _expr_input_test_c_d(_scope);
+});
+export const _c_ = /* @__PURE__ */_$.value("c/7", (_scope, c) => {
+  _expr_c_d(_scope);
+  _expr_input_test_c_d(_scope);
+});
+export const _input_test_ = /* @__PURE__ */_$.value("input_test/6", (_scope, input_test) => _expr_input_test_c_d(_scope));
+export const _input_ = /* @__PURE__ */_$.value("input/5", (_scope, input) => {
   _input_test_(_scope, input.test);
   _c_(_scope, input.c);
   _d_(_scope, input.d);
-}, () => _$.intersections([_input_test_, _c_, _d_]));
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]), () => _input_);
+});
+export const _params__ = /* @__PURE__ */_$.value("_params_/4", (_scope, _params_) => _input_(_scope, _params_[0]));
 export function _setup_(_scope) {
   _customTag(_scope["#childScope/1"]);
   _customTag(_scope["#childScope/2"]);

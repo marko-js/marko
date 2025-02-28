@@ -5,9 +5,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<div id=ref></div><button id=increment>Increment</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope(_scope0_id, {
-    x: x
+    "x/1": x
   }, "__tests__/template.marko", 0, {
-    x: "1:6"
+    "x/1": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

@@ -10,7 +10,6 @@ import { prepareEffects, runEffects } from "./queue";
 import { createBranch, createContent, type Renderer } from "./renderer";
 import { register } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
-import { MARK } from "./signals";
 
 export const createTemplate = (
   ...contentArgs: Parameters<typeof createContent>
@@ -94,7 +93,6 @@ function mount(
       if (args) {
         runEffects(
           prepareEffects(() => {
-            args(branch, MARK);
             args(branch, [newInput]);
           }),
         );

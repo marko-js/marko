@@ -16,11 +16,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }, _scope0_id, "#div/0", 1);
   _$.write("</div>");
   _$.writeScope(_scope0_id, {
-    input_value: input.value,
+    "input_value/3": input.value,
     "#div/0(": _ifBranch,
     "#div/0!": _$.getScopeById(_ifScopeId)
   }, "__tests__/template.marko", 0, {
-    input_value: ["input.value"]
+    "input_value/3": ["input.value"]
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

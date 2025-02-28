@@ -19,14 +19,7 @@ import {
   insertBranchBefore,
   removeAndDestroyBranch,
 } from "./scope";
-import {
-  CLEAN,
-  DIRTY,
-  MARK,
-  setTagVar,
-  type Signal,
-  type SignalOp,
-} from "./signals";
+import { setTagVar, type Signal } from "./signals";
 
 export function conditional(nodeAccessor: Accessor, ...branches: Renderer[]) {
   const branchAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
@@ -56,64 +49,56 @@ export let dynamicTag = function dynamicTag(
 ): Signal<Renderer | string | undefined> {
   const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
   const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
-  return (scope, newRendererOrOp, getInput?: () => any) => {
-    if (newRendererOrOp === DIRTY) return;
-    if (newRendererOrOp === MARK || newRendererOrOp === CLEAN) {
-      scope[rendererAccessor]?.___args?.(
-        scope[childScopeAccessor],
-        newRendererOrOp,
+  return (scope, newRenderer, getInput?: () => any) => {
+    const normalizedRenderer = normalizeDynamicRenderer<Renderer>(newRenderer);
+    if (
+      !(rendererAccessor in scope) ||
+      isDifferentRenderer(scope[rendererAccessor], normalizedRenderer)
+    ) {
+      scope[rendererAccessor] = normalizedRenderer;
+      setConditionalRenderer(
+        scope,
+        nodeAccessor,
+        normalizedRenderer || (getContent ? getContent(scope) : undefined),
+        createBranchWithTagNameOrRenderer,
       );
-    } else {
-      const newRenderer = normalizeDynamicRenderer<Renderer>(newRendererOrOp);
-      if (
-        !(rendererAccessor in scope) ||
-        isDifferentRenderer(scope[rendererAccessor], newRenderer)
-      ) {
-        scope[rendererAccessor] = newRenderer;
-        setConditionalRenderer(
-          scope,
-          nodeAccessor,
-          newRenderer || (getContent ? getContent(scope) : undefined),
-          createBranchWithTagNameOrRenderer,
-        );
 
-        if (getTagVar) {
-          setTagVar(scope, childScopeAccessor, getTagVar());
-        }
-
-        if (getContent && typeof newRenderer === "string") {
-          setConditionalRenderer(
-            scope[childScopeAccessor],
-            MARKO_DEBUG ? `#${newRenderer}/0` : 0,
-            getContent(scope),
-            createBranch,
-          );
-        }
+      if (getTagVar) {
+        setTagVar(scope, childScopeAccessor, getTagVar());
       }
 
-      if (newRenderer) {
-        const input = getInput?.();
-        if (typeof newRenderer === "string") {
-          attrs(
-            scope[childScopeAccessor],
-            MARKO_DEBUG ? `#${newRenderer}/0` : 0,
-            (inputIsArgs ? input[0] : input) || {},
-          );
-        } else {
-          newRenderer.___args?.(
-            scope[childScopeAccessor],
-            inputIsArgs
-              ? input
-              : [
-                  getContent
-                    ? {
-                        ...input,
-                        content: getContent(scope),
-                      }
-                    : input || {},
-                ],
-          );
-        }
+      if (getContent && typeof normalizedRenderer === "string") {
+        setConditionalRenderer(
+          scope[childScopeAccessor],
+          MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0,
+          getContent(scope),
+          createBranch,
+        );
+      }
+    }
+
+    if (normalizedRenderer) {
+      const input = getInput?.();
+      if (typeof normalizedRenderer === "string") {
+        attrs(
+          scope[childScopeAccessor],
+          MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0,
+          (inputIsArgs ? input[0] : input) || {},
+        );
+      } else {
+        normalizedRenderer.___args?.(
+          scope[childScopeAccessor],
+          inputIsArgs
+            ? input
+            : [
+                getContent
+                  ? {
+                      ...input,
+                      content: getContent(scope),
+                    }
+                  : input || {},
+              ],
+        );
       }
     }
   };
@@ -201,64 +186,51 @@ function loop<T extends unknown[] = unknown[]>(
   renderer: Renderer,
   forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
 ) {
-  const loopScopeAccessor = nodeAccessor + AccessorChar.LoopScopeArray;
   const params = renderer.___args;
-  return (scope: Scope, valueOrOp: T | SignalOp) => {
-    if (valueOrOp === DIRTY) {
-      // ignore
-    } else if (valueOrOp === MARK || valueOrOp === CLEAN) {
-      if (params) {
-        for (const branch of scope[loopScopeAccessor] ||
-          scope[nodeAccessor + AccessorChar.LoopScopeMap]?.values() ||
-          []) {
-          params(branch, valueOrOp);
-        }
-      }
-    } else {
-      const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
-      const oldMap = scope[nodeAccessor + AccessorChar.LoopScopeMap] as
-        | Map<unknown, BranchScope>
-        | undefined;
-      const oldArray = oldMap
-        ? scope[nodeAccessor + AccessorChar.LoopScopeArray] || [
-            ...oldMap.values(),
-          ]
-        : [];
-      const parentNode = (
-        referenceNode.nodeType > NodeType.Element
-          ? referenceNode.parentNode || oldArray[0].___startNode.parentNode
-          : referenceNode
-      ) as Element;
-      const newMap: Map<unknown, BranchScope> = (scope[
-        nodeAccessor + AccessorChar.LoopScopeMap
-      ] = new Map());
-      const newArray: BranchScope[] = (scope[
-        nodeAccessor + AccessorChar.LoopScopeArray
-      ] = []);
-      forEach(valueOrOp, (key, args) => {
-        const branch =
-          oldMap?.get(key) ||
-          createBranch(scope.$global, renderer, scope, parentNode);
-        params?.(branch, args);
-        newMap.set(key, branch);
-        newArray.push(branch);
-      });
+  return (scope: Scope, value: T) => {
+    const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
+    const oldMap = scope[nodeAccessor + AccessorChar.LoopScopeMap] as
+      | Map<unknown, BranchScope>
+      | undefined;
+    const oldArray = oldMap
+      ? scope[nodeAccessor + AccessorChar.LoopScopeArray] || [
+          ...oldMap.values(),
+        ]
+      : [];
+    const parentNode = (
+      referenceNode.nodeType > NodeType.Element
+        ? referenceNode.parentNode || oldArray[0].___startNode.parentNode
+        : referenceNode
+    ) as Element;
+    const newMap: Map<unknown, BranchScope> = (scope[
+      nodeAccessor + AccessorChar.LoopScopeMap
+    ] = new Map());
+    const newArray: BranchScope[] = (scope[
+      nodeAccessor + AccessorChar.LoopScopeArray
+    ] = []);
+    forEach(value, (key, args) => {
+      const branch =
+        oldMap?.get(key) ||
+        createBranch(scope.$global, renderer, scope, parentNode);
+      params?.(branch, args);
+      newMap.set(key, branch);
+      newArray.push(branch);
+    });
 
-      let afterReference: null | Node = null;
-      if (referenceNode !== parentNode) {
-        if (oldArray.length) {
-          afterReference = oldArray[oldArray.length - 1].___endNode.nextSibling;
-          if (!newArray.length) {
-            parentNode.insertBefore(referenceNode, afterReference);
-          }
-        } else if (newArray.length) {
-          afterReference = referenceNode.nextSibling;
-          referenceNode.remove();
+    let afterReference: null | Node = null;
+    if (referenceNode !== parentNode) {
+      if (oldArray.length) {
+        afterReference = oldArray[oldArray.length - 1].___endNode.nextSibling;
+        if (!newArray.length) {
+          parentNode.insertBefore(referenceNode, afterReference);
         }
+      } else if (newArray.length) {
+        afterReference = referenceNode.nextSibling;
+        referenceNode.remove();
       }
-
-      reconcile(parentNode, oldArray, newArray, afterReference);
     }
+
+    reconcile(parentNode, oldArray, newArray, afterReference);
   };
 }
 
