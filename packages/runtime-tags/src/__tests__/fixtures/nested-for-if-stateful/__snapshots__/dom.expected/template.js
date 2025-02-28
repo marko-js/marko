@@ -33,7 +33,7 @@ const _expr_counts_count_i$if_content = /* @__PURE__ */_$.intersection(2, _scope
     }
   } = _scope;
   _expr_counts_count_i$if_content_effect(_scope);
-});
+}, 2);
 const _i$if_content = /* @__PURE__ */_$.conditionalClosure("i", "#text/0", 0, (_scope, i) => _expr_counts_count_i$if_content(_scope));
 const _count$if_content = /* @__PURE__ */_$.conditionalClosure("count", "#text/0", 0, (_scope, count) => {
   _$.data(_scope["#text/1"], count + 1);

@@ -1,8 +1,15 @@
-// size: 458 (min) 265 (brotli)
-const _expr_input_content_input_name_x = _$.intersection(8, (_scope) => {
-    const { 5: input_content, 6: input_name, 7: x } = _scope;
-    _dynamicTag(_scope, input_content, () => ({ count: x, name: input_name }));
-  }),
+// size: 460 (min) 271 (brotli)
+const _expr_input_content_input_name_x = _$.intersection(
+    8,
+    (_scope) => {
+      const { 5: input_content, 6: input_name, 7: x } = _scope;
+      _dynamicTag(_scope, input_content, () => ({
+        count: x,
+        name: input_name,
+      }));
+    },
+    2,
+  ),
   _dynamicTag = _$.dynamicTag(2),
   _x_effect = _$.effect("a0", (_scope, { 7: x }) =>
     _$.on(_scope[0], "click", function () {

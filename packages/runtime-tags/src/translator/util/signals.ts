@@ -199,6 +199,9 @@ export function getSignal(
           "intersection",
           t.numericLiteral(id),
           getSignalFn(signal, [scopeIdentifier], referencedBindings),
+          scopeOffset || referencedBindings.length > 2
+            ? t.numericLiteral(referencedBindings.length - 1)
+            : undefined,
           scopeOffset && getScopeAccessorLiteral(scopeOffset),
         );
       };

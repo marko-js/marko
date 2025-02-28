@@ -11,7 +11,7 @@ const _expr_input_content_input_name_x = /* @__PURE__ */_$.intersection(8, _scop
     count: x,
     name: input_name
   }));
-});
+}, 2);
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2");
 const _x_effect = _$.effect("__tests__/tags/custom-tag.marko_0_x", (_scope, {
   x
