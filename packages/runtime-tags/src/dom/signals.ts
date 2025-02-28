@@ -97,12 +97,25 @@ export function loopClosure<T>(
   const loopScopeMapAccessor =
     ownerLoopNodeAccessor + AccessorChar.LoopScopeMap;
   const ownerSignal = (ownerScope: Scope) => {
-    for (const scope of ownerScope[loopScopeAccessor] ||
+    const scopes =
+      ownerScope[loopScopeAccessor] ||
       ownerScope[loopScopeMapAccessor]?.values() ||
-      []) {
-      if (!scope.___pending) {
-        queueRender(scope, childSignal, -1);
-      }
+      [];
+    const [firstScope] = scopes;
+    if (firstScope) {
+      queueRender(
+        ownerScope,
+        () => {
+          for (const scope of scopes) {
+            if (!scope.___pending && !scope.___destroyed) {
+              childSignal(scope);
+            }
+          }
+        },
+        -1,
+        0,
+        firstScope.___id,
+      );
     }
   };
   ownerSignal._ = childSignal;
