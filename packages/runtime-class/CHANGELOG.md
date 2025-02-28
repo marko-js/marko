@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.19
+
+### Patch Changes
+
+- [#2541](https://github.com/marko-js/marko/pull/2541) [`6c24a30`](https://github.com/marko-js/marko/commit/6c24a30ee22155d0bd7e63564fc8d67e75e10980) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with no-update-body on native elements without a key not always being preserved during hydrate.
+
 ## 5.37.18
 
 ### Patch Changes
