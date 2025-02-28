@@ -11,11 +11,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<div>Parent: <!>${_$.escapeXML(y)}${_$.markResumeNode(_scope0_id, "#text/4")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope(_scope0_id, {
-    "x/5": x,
+    x,
     "#text/2!": _$.writeExistingScope(_dynamicScope),
     "#text/2(": _$.normalizeDynamicRenderer(tags[0])
   }, "__tests__/template.marko", 0, {
-    "x/5": "3:6"
+    x: "3:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

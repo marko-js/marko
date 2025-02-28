@@ -36,9 +36,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_Child");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_Parent");
   _$.writeScope(_scope0_id, {
-    "input_value/10": input.value,
-    "Parent/11": Parent,
-    "Child/12": Child,
+    input_value: input.value,
+    Parent,
+    Child,
     "#text/2!": _$.writeExistingScope(_dynamicScope),
     "#text/2(": _$.normalizeDynamicRenderer(Child),
     "#text/4!": _$.writeExistingScope(_dynamicScope2),
@@ -46,9 +46,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     "#text/5!": _$.writeExistingScope(_dynamicScope3),
     "#text/5(": _$.normalizeDynamicRenderer(Parent)
   }, "__tests__/template.marko", 0, {
-    "input_value/10": ["input.value"],
-    "Parent/11": "1:5",
-    "Child/12": "2:5"
+    input_value: ["input.value"],
+    Parent: "1:5",
+    Child: "2:5"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

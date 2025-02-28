@@ -10,11 +10,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope(_scope0_id, {
-    "x/2": x,
+    x,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(x)
   }, "__tests__/template.marko", 0, {
-    "x/2": "1:6"
+    x: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

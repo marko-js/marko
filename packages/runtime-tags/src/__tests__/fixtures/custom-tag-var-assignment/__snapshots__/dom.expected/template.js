@@ -3,11 +3,11 @@ export const _walks_ = /* beginChildWithVar, _counter_walks, endChild, get, next
 import { _setup_ as _counter, _template_ as _counter_template, _walks_ as _counter_walks } from "./tags/counter.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
-  "count/5": count
+  count
 }) => _$.on(_scope["#button/2"], "click", function () {
   _$.tagVarSignalChange(_scope["#childScope/0"], count + 1), count;
 }));
-const _count = _$.registerBoundSignal("__tests__/template.marko_0_count/var", /* @__PURE__ */_$.value("count/5", (_scope, count) => {
+const _count = _$.registerBoundSignal("__tests__/template.marko_0_count/var", /* @__PURE__ */_$.value("count", (_scope, count) => {
   _$.data(_scope["#text/3"], count);
   _count_effect(_scope);
 }));

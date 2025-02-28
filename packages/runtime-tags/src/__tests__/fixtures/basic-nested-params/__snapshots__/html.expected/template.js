@@ -25,23 +25,23 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       });
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_y/subscriber");
       _$.writeScope(_scope1_id, {
-        "outer/2": outer,
+        outer,
         "#childScope/0": _$.writeExistingScope(_childScope),
         _: _$.ensureScopeWithId(_scope0_id)
       }, "__tests__/template.marko", "6:2", {
-        "outer/2": "6:8"
+        outer: "6:8"
       });
       _$.resumeClosestBranch(_scope1_id);
     }), "__tests__/template.marko_1_renderer", _scope0_id)
   });
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope(_scope0_id, {
-    "x/2": x,
-    "y/3": y,
+    x,
+    y,
     "#childScope/1": _$.writeExistingScope(_childScope2)
   }, "__tests__/template.marko", 0, {
-    "x/2": "1:6",
-    "y/3": "2:6"
+    x: "1:6",
+    y: "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

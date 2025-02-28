@@ -1,6 +1,6 @@
 # Write
 ```html
-  <form><select><option value=1 selected>1<!--M_*2 #text/1--></option><!--M_*2 #option/0--><option value=2>2<!--M_*3 #text/1--></option><!--M_*3 #option/0--><option value=3>3<!--M_*4 #text/1--></option><!--M_*4 #option/0--><!--M_=1 #select/0 4 3 2--></select><button type=reset>reset</button></form><div>1<!--M_*1 #text/1--></div><button class=remove>Remove option</button><!--M_*1 #button/2--><button class=add>Add option</button><!--M_*1 #button/3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.f={1:_.a={"#select/0=":3,"#select/0:":1,"options/4":[1,2,3],"value/6":1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()</script>
+  <form><select><option value=1 selected>1<!--M_*2 #text/1--></option><!--M_*2 #option/0--><option value=2>2<!--M_*3 #text/1--></option><!--M_*3 #option/0--><option value=3>3<!--M_*4 #text/1--></option><!--M_*4 #option/0--><!--M_=1 #select/0 4 3 2--></select><button type=reset>reset</button></form><div>1<!--M_*1 #text/1--></div><button class=remove>Remove option</button><!--M_*1 #button/2--><button class=add>Add option</button><!--M_*1 #button/3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.f={1:_.a={"#select/0=":3,"#select/0:":1,options:[1,2,3],value:1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()</script>
 ```
 
 # Render End
@@ -57,7 +57,7 @@
     </button>
     <!--M_*1 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,"options/4":[1,2,3],"value/6":1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,options:[1,2,3],value:1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

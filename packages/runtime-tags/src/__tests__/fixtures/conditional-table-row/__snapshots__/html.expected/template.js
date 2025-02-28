@@ -16,11 +16,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`</tbody></table><button>Toggle</button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_show");
   _$.writeScope(_scope0_id, {
-    "show/2": show,
+    show,
     "#tbody/0(": _ifBranch,
     "#tbody/0!": _$.getScopeById(_ifScopeId)
   }, "__tests__/template.marko", 0, {
-    "show/2": "1:6"
+    show: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

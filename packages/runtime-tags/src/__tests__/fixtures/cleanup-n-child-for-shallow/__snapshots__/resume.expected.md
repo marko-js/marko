@@ -58,7 +58,7 @@ mounted 3
     <!--M_$7-->
     <!--M_]1 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={"items/3":[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={"name/5":1}}],[1,_.g={"#childScope/0":_.d={"name/5":2}}],[2,_.h={"#childScope/0":_.e={"name/5":3}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a["write/4"]=_.c["write/6"]=_.d["write/6"]=_.e["write/6"]=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={items:[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1}}],[1,_.g={"#childScope/0":_.d={name:2}}],[2,_.h={"#childScope/0":_.e={name:3}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items",0];M._.w()
     </script>
   </body>
 </html>
@@ -124,7 +124,7 @@ destroyed 3
     <!--M_$7-->
     <!--M_]1 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={"items/3":[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={"name/5":1}}],[1,_.g={"#childScope/0":_.d={"name/5":2}}],[2,_.h={"#childScope/0":_.e={"name/5":3}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a["write/4"]=_.c["write/6"]=_.d["write/6"]=_.e["write/6"]=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={items:[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1}}],[1,_.g={"#childScope/0":_.d={name:2}}],[2,_.h={"#childScope/0":_.e={name:3}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items",0];M._.w()
     </script>
   </body>
 </html>
@@ -179,7 +179,7 @@ destroyed 2
     <!--M_$7-->
     <!--M_]1 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={"items/3":[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={"name/5":1}}],[1,_.g={"#childScope/0":_.d={"name/5":2}}],[2,_.h={"#childScope/0":_.e={"name/5":3}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a["write/4"]=_.c["write/6"]=_.d["write/6"]=_.e["write/6"]=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={items:[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1}}],[1,_.g={"#childScope/0":_.d={name:2}}],[2,_.h={"#childScope/0":_.e={name:3}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items",0];M._.w()
     </script>
   </body>
 </html>
@@ -222,7 +222,7 @@ destroyed 1
     <!--M_$5-->
     <!--M_$7-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={"items/3":[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={"name/5":1}}],[1,_.g={"#childScope/0":_.d={"name/5":2}}],[2,_.h={"#childScope/0":_.e={"name/5":3}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a["write/4"]=_.c["write/6"]=_.d["write/6"]=_.e["write/6"]=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={items:[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1}}],[1,_.g={"#childScope/0":_.d={name:2}}],[2,_.h={"#childScope/0":_.e={name:3}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items",0];M._.w()
     </script>
   </body>
 </html>
@@ -296,7 +296,7 @@ mounted 3
     <!--M_$5-->
     <!--M_$7-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={"items/3":[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={"name/5":1}}],[1,_.g={"#childScope/0":_.d={"name/5":2}}],[2,_.h={"#childScope/0":_.e={"name/5":3}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a["write/4"]=_.c["write/6"]=_.d["write/6"]=_.e["write/6"]=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={items:[1,2,3],"#text/2(":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1}}],[1,_.g={"#childScope/0":_.d={name:2}}],[2,_.h={"#childScope/0":_.e={name:3}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items",0];M._.w()
     </script>
   </body>
 </html>

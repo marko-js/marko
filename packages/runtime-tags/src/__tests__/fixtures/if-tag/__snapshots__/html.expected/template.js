@@ -46,10 +46,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }, _scope0_id, "#div/2");
   _$.write("</div>");
   _$.writeScope(_scope0_id, {
-    "input_a/5": input.a,
-    "input_b/6": input.b,
-    "input_x/8": input.x,
-    "input_y/9": input.y,
+    input_a: input.a,
+    input_b: input.b,
+    input_x: input.x,
+    input_y: input.y,
     "#text/0(": _ifBranch,
     "#text/0!": _$.getScopeById(_ifScopeId),
     "#text/1(": _ifBranch2,
@@ -57,10 +57,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     "#div/2(": _ifBranch3,
     "#div/2!": _$.getScopeById(_ifScopeId3)
   }, "__tests__/template.marko", 0, {
-    "input_a/5": ["input.a"],
-    "input_b/6": ["input.b"],
-    "input_x/8": ["input.x"],
-    "input_y/9": ["input.y"]
+    input_a: ["input.a"],
+    input_b: ["input.b"],
+    input_x: ["input.x"],
+    input_y: ["input.y"]
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

@@ -52,7 +52,7 @@
     </button>
     <!--M_*1 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,"options/4":[1,2,3],"value/6":1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,options:[1,2,3],value:1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -110,7 +110,7 @@ container.querySelector(".remove").click();
     </button>
     <!--M_*1 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,"options/4":[1,2,3],"value/6":1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,options:[1,2,3],value:1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -167,7 +167,7 @@ container.querySelector(".remove").click();
     </button>
     <!--M_*1 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,"options/4":[1,2,3],"value/6":1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,options:[1,2,3],value:1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -217,7 +217,7 @@ container.querySelector(".remove").click();
     </button>
     <!--M_*1 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,"options/4":[1,2,3],"value/6":1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,options:[1,2,3],value:1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -273,7 +273,7 @@ container.querySelector(".add").click();
     </button>
     <!--M_*1 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,"options/4":[1,2,3],"value/6":1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,options:[1,2,3],value:1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -334,7 +334,7 @@ container.querySelector(".add").click();
     </button>
     <!--M_*1 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,"options/4":[1,2,3],"value/6":1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,options:[1,2,3],value:1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -399,7 +399,7 @@ container.querySelector(".add").click();
     </button>
     <!--M_*1 #button/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,"options/4":[1,2,3],"value/6":1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"#select/0=":3,"#select/0:":1,options:[1,2,3],value:1,"#select/0(":new Map(_.b=[[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.c,3:_.d,4:_.e},_.a["#select/0;"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.f),1,"__tests__/template.marko_0_options",1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

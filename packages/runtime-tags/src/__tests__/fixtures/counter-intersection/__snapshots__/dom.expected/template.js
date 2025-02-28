@@ -3,8 +3,8 @@ export const _walks_ = /* next(1), get, next(1), get, out(1), over(1), get, next
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _expr_a_b = /* @__PURE__ */_$.intersection(7, _scope => {
   const {
-    "a/5": a,
-    "b/6": b
+    a,
+    b
   } = _scope;
   _$.data(_scope["#text/4"], a + b);
 });

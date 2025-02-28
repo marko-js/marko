@@ -8,15 +8,21 @@ export type SignalFn<T> = (scope: Scope, value: T) => void;
 export type Signal<T> = SignalFn<T> & {
   ___subscribe?(scope: Scope): void;
 };
+type Closure = Signal<never> & { _: SignalFn<never> };
 
 export function state<T>(valueAccessor: Accessor, fn: SignalFn<T>) {
-  const valueChangeAccessor = valueAccessor + AccessorChar.TagVariableChange;
-  const id = MARKO_DEBUG
-    ? +(valueAccessor as string).slice(
-        (valueAccessor as string).lastIndexOf("/") + 1,
-      )
-    : (valueAccessor as number);
+  if (MARKO_DEBUG) {
+    // eslint-disable-next-line no-var
+    var id = +(valueAccessor as string).slice(
+      (valueAccessor as string).lastIndexOf("/") + 1,
+    );
+    valueAccessor = (valueAccessor as string).slice(
+      0,
+      (valueAccessor as string).lastIndexOf("/"),
+    );
+  }
 
+  const valueChangeAccessor = valueAccessor + AccessorChar.TagVariableChange;
   const update = (scope: Scope, value: T) => {
     if (scope[valueAccessor] !== value) {
       scope[valueAccessor] = value;
@@ -38,7 +44,12 @@ export function state<T>(valueAccessor: Accessor, fn: SignalFn<T>) {
       scope[valueChangeAccessor](value);
     } else {
       schedule();
-      queueRender(scope, update, id, value);
+      queueRender(
+        scope,
+        update,
+        MARKO_DEBUG ? id : (valueAccessor as number),
+        value,
+      );
     }
     return value;
   };
@@ -188,6 +199,16 @@ function closure<T>(
   return (scope) => {
     fn(scope, (getOwnerScope ? getOwnerScope(scope) : scope._!)[valueAccessor]);
   };
+}
+
+export function setupClosures(scope: Scope, ...closures: Closure[]) {
+  queueRender(scope, runClosures, -1, closures);
+}
+
+function runClosures(scope: Scope, closures: any[]) {
+  for (const closure of closures) {
+    closure._(scope);
+  }
 }
 
 export function setTagVar(

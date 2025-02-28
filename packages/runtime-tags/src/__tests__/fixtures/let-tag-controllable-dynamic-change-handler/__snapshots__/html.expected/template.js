@@ -10,14 +10,14 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_y");
   _$.writeScope(_scope0_id, {
-    "x/4": x,
-    "yChange/5": yChange,
-    "y/7": y,
-    "y/7@": yChange
+    x,
+    yChange,
+    y,
+    "y@": yChange
   }, "__tests__/template.marko", 0, {
-    "x/4": "1:6",
-    "yChange/5": "2:6",
-    "y/7": "3:6"
+    x: "1:6",
+    yChange: "2:6",
+    y: "3:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

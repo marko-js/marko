@@ -5,8 +5,8 @@ import child2 from "./tags/child2.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _expr_tagName_val = /* @__PURE__ */_$.intersection(4, _scope => {
   const {
-    "tagName/2": tagName,
-    "val/3": val
+    tagName,
+    val
   } = _scope;
   _dynamicTag(_scope, tagName, () => ({
     value: val
@@ -15,7 +15,7 @@ const _expr_tagName_val = /* @__PURE__ */_$.intersection(4, _scope => {
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
 const _val = /* @__PURE__ */_$.state("val/3", (_scope, val) => _expr_tagName_val(_scope));
 const _tagName_effect = _$.effect("__tests__/template.marko_0_tagName", (_scope, {
-  "tagName/2": tagName
+  tagName
 }) => _$.on(_scope["#button/1"], "click", function () {
   _tagName(_scope, tagName === child1 ? child2 : child1);
 }));

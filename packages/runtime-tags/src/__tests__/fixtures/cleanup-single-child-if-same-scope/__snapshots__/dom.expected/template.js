@@ -14,7 +14,7 @@ const _setup$if_content = _scope => {
 const _if_content = /* @__PURE__ */_$.createRenderer("<div>child</div>", void 0, _setup$if_content);
 const _if = /* @__PURE__ */_$.conditional("#text/2", _if_content);
 const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
-  "show/3": show
+  show
 }) => _$.on(_scope["#button/0"], "click", function () {
   _show(_scope, !show);
 }));

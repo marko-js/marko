@@ -4,9 +4,9 @@ import customTag from './tags/custom-tag.marko';
 const tags = [customTag];
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", 0, () => _y);
-const _y = _$.registerBoundSignal("__tests__/template.marko_0_y/var", /* @__PURE__ */_$.value("y/6", (_scope, y) => _$.data(_scope["#text/4"], y)));
+const _y = _$.registerBoundSignal("__tests__/template.marko_0_y/var", /* @__PURE__ */_$.value("y", (_scope, y) => _$.data(_scope["#text/4"], y)));
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
-  "x/5": x
+  x
 }) => _$.on(_scope["#button/0"], "click", function () {
   _x(_scope, x + 1), x;
 }));

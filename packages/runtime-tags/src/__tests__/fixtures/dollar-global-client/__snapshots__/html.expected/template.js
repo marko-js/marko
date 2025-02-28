@@ -26,13 +26,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<button>Toggle</button>${_$.markResumeNode(_scope0_id, "#button/2")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_show");
   _$.writeScope(_scope0_id, {
-    "show/3": show,
+    show,
     "#text/0(": _ifBranch,
     "#text/0!": _$.getScopeById(_ifScopeId),
     "#text/1(": _ifBranch2,
     "#text/1!": _$.getScopeById(_ifScopeId2)
   }, "__tests__/template.marko", 0, {
-    "show/3": "2:8"
+    show: "2:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

@@ -13,10 +13,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write("</div>");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_children");
   _$.writeScope(_scope0_id, {
-    "children/1": children,
+    children,
     "#div/0(": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
-    "children/1": "1:6"
+    children: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

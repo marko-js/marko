@@ -8,11 +8,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write("</div>");
   _$.writeEffect(_scope0_id, "__tests__/components/tags-layout.marko_0_count");
   _$.writeScope(_scope0_id, {
-    "count/7": count,
+    count,
     "#text/2!": _$.writeExistingScope(_dynamicScope),
     "#text/2(": _$.normalizeDynamicRenderer(input.stuff.content)
   }, "__tests__/components/tags-layout.marko", 0, {
-    "count/7": "1:6"
+    count: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

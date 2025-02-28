@@ -14,11 +14,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
         }
       }, "__tests__/template.marko_1/_return", _scope1_id);
       _$.writeScope(_scope1_id, {
-        "value/2": value,
-        "call/3": call
+        value,
+        call
       }, "__tests__/template.marko", "1:1", {
-        "value/2": "1:15",
-        "call/3": "2:7"
+        value: "1:15",
+        call: "2:7"
       });
       _$.resumeClosestBranch(_scope1_id);
       return _return;
@@ -46,11 +46,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
         }
       }, "__tests__/template.marko_2/_return", _scope2_id);
       _$.writeScope(_scope2_id, {
-        "value/2": value,
-        "call/3": call
+        value,
+        call
       }, "__tests__/template.marko", "15:1", {
-        "value/2": "15:16",
-        "call/3": "16:7"
+        value: "15:16",
+        call: "16:7"
       });
       _$.resumeClosestBranch(_scope2_id);
       return _return2;
@@ -68,23 +68,23 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_onClickTwice");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_onClickOnce");
   _$.writeScope(_scope0_id, {
-    "Once/8": Once,
-    "clickOnceCount/9": clickOnceCount,
-    "onClickOnce/11": onClickOnce,
-    "Twice/12": Twice,
-    "clickTwiceCount/13": clickTwiceCount,
-    "onClickTwice/15": onClickTwice,
+    Once,
+    clickOnceCount,
+    onClickOnce,
+    Twice,
+    clickTwiceCount,
+    onClickTwice,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(Once),
     "#text/4!": _$.writeExistingScope(_dynamicScope2),
     "#text/4(": _$.normalizeDynamicRenderer(Twice)
   }, "__tests__/template.marko", 0, {
-    "Once/8": "1:8",
-    "clickOnceCount/9": "9:5",
-    "onClickOnce/11": "10:6",
-    "Twice/12": "15:8",
-    "clickTwiceCount/13": "23:5",
-    "onClickTwice/15": "24:7"
+    Once: "1:8",
+    clickOnceCount: "9:5",
+    onClickOnce: "10:6",
+    Twice: "15:8",
+    clickTwiceCount: "23:5",
+    onClickTwice: "24:7"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

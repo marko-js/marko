@@ -35,11 +35,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write("</div>");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.writeScope(_scope0_id, {
-    "b/3": b,
-    "c/4": c
+    b,
+    c
   }, "__tests__/template.marko", 0, {
-    "b/3": "2:7",
-    "c/4": "3:5"
+    b: "2:7",
+    c: "3:5"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

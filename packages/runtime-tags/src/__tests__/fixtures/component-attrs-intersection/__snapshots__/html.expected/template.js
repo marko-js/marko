@@ -10,10 +10,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope(_scope0_id, {
-    "count/2": count,
+    count,
     "#childScope/0": _$.writeExistingScope(_childScope)
   }, "__tests__/template.marko", 0, {
-    "count/2": "1:6"
+    count: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

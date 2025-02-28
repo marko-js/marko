@@ -1,6 +1,6 @@
 # Write
 ```html
-  <table><tbody><!--M_=1 #tbody/0--></tbody></table><button>Toggle</button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={1:{"show/2":!1}}),1,"__tests__/template.marko_0_show",0];M._.w()</script>
+  <table><tbody><!--M_=1 #tbody/0--></tbody></table><button>Toggle</button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={1:{show:!1}}),1,"__tests__/template.marko_0_show",0];M._.w()</script>
 ```
 
 # Render End
@@ -18,7 +18,7 @@
     </button>
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{"show/2":!1}}),1,"__tests__/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{show:!1}}),1,"__tests__/template.marko_0_show",0];M._.w()
     </script>
   </body>
 </html>

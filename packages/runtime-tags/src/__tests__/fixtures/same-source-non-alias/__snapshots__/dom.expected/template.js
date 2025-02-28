@@ -5,13 +5,13 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _b = (_scope, b) => {
   _$.data(_scope["#text/2"], b);
 };
-const _a = /* @__PURE__ */_$.value("a/5", (_scope, a) => {
+const _a = /* @__PURE__ */_$.value("a", (_scope, a) => {
   _$.data(_scope["#text/1"], a);
   _b(_scope, a);
 });
-const _pattern_ = /* @__PURE__ */_$.value("_pattern_/4", (_scope, _pattern_) => _a(_scope, _pattern_.a));
+const _pattern_ = /* @__PURE__ */_$.value("_pattern_", (_scope, _pattern_) => _a(_scope, _pattern_.a));
 const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
-  "count/3": count
+  count
 }) => _$.on(_scope["#button/0"], "click", function () {
   _count(_scope, count + 1), count;
 }));

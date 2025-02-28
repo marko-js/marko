@@ -1,5 +1,5 @@
 # Write
-  <button class=inc>1<!--M_*1 #text/1-->,<!>10<!--M_*1 #text/2--></button><!--M_*1 #button/0--><!--M_[2--><div>Counts: 1,10</div><!--M_]1 #text/3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:{"input_content/6":_._.$compat_renderBody,"x/7":1,"y/8":10,"#text/3!":_.a={},"#text/3(":_._.$compat_renderBody},2:_.a}),1,"__tests__/components/custom-tag.marko_0_x_y",0];M._.w()</script>
+  <button class=inc>1<!--M_*1 #text/1-->,<!>10<!--M_*1 #text/2--></button><!--M_*1 #button/0--><!--M_[2--><div>Counts: 1,10</div><!--M_]1 #text/3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:{input_content:_._.$compat_renderBody,x:1,y:10,"#text/3!":_.a={},"#text/3(":_._.$compat_renderBody},2:_.a}),1,"__tests__/components/custom-tag.marko_0_x_y",0];M._.w()</script>
 
 # Render End
 ```html
@@ -23,7 +23,7 @@
     </div>
     <!--M_]1 #text/3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"input_content/6":_._.$compat_renderBody,"x/7":1,"y/8":10,"#text/3!":_.a={},"#text/3(":_._.$compat_renderBody},2:_.a}),1,"__tests__/components/custom-tag.marko_0_x_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{input_content:_._.$compat_renderBody,x:1,y:10,"#text/3!":_.a={},"#text/3(":_._.$compat_renderBody},2:_.a}),1,"__tests__/components/custom-tag.marko_0_x_y",0];M._.w()
     </script>
   </body>
 </html>

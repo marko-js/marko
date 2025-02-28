@@ -11,12 +11,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const message = `${name} ${data}`;
   _$.write(`<div>${_$.escapeXML(message)}${_$.markResumeNode(_scope0_id, "#text/2")}</div>`);
   _$.writeScope(_scope0_id, {
-    "name/3": name,
-    "data/4": data,
+    name,
+    data,
     "#childScope/0": _$.writeExistingScope(_childScope)
   }, "__tests__/template.marko", 0, {
-    "name/3": "1:6",
-    "data/4": "2:8"
+    name: "1:6",
+    data: "2:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

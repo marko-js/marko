@@ -19,7 +19,7 @@
     </div>
     <!--M_]2 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={2:{"input_content/5":_.b=_._["__tests__/template.marko_1_renderer"](_.a={}),"x/6":1,"#text/2!":_.c={},"#text/2(":_.b},3:_.c}),2,"__tests__/tags/custom-tag.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={2:{input_content:_.b=_._["__tests__/template.marko_1_renderer"](_.a={}),x:1,"#text/2!":_.c={},"#text/2(":_.b},3:_.c}),2,"__tests__/tags/custom-tag.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -50,7 +50,7 @@ container.querySelector("button").click();
     </div>
     <!--M_]2 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={2:{"input_content/5":_.b=_._["__tests__/template.marko_1_renderer"](_.a={}),"x/6":1,"#text/2!":_.c={},"#text/2(":_.b},3:_.c}),2,"__tests__/tags/custom-tag.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={2:{input_content:_.b=_._["__tests__/template.marko_1_renderer"](_.a={}),x:1,"#text/2!":_.c={},"#text/2(":_.b},3:_.c}),2,"__tests__/tags/custom-tag.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -86,7 +86,7 @@ container.querySelector("button").click();
     </div>
     <!--M_]2 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={2:{"input_content/5":_.b=_._["__tests__/template.marko_1_renderer"](_.a={}),"x/6":1,"#text/2!":_.c={},"#text/2(":_.b},3:_.c}),2,"__tests__/tags/custom-tag.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={2:{input_content:_.b=_._["__tests__/template.marko_1_renderer"](_.a={}),x:1,"#text/2!":_.c={},"#text/2(":_.b},3:_.c}),2,"__tests__/tags/custom-tag.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>
@@ -122,7 +122,7 @@ container.querySelector("button").click();
     </div>
     <!--M_]2 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={2:{"input_content/5":_.b=_._["__tests__/template.marko_1_renderer"](_.a={}),"x/6":1,"#text/2!":_.c={},"#text/2(":_.b},3:_.c}),2,"__tests__/tags/custom-tag.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={2:{input_content:_.b=_._["__tests__/template.marko_1_renderer"](_.a={}),x:1,"#text/2!":_.c={},"#text/2(":_.b},3:_.c}),2,"__tests__/tags/custom-tag.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

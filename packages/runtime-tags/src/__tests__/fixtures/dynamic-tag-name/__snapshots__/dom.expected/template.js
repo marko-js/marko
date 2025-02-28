@@ -7,8 +7,8 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _showTagATagA_content = _$.registerContent("__tests__/template.marko_1_renderer", "Body content");
 const _expr_other_tagConstB = /* @__PURE__ */_$.intersection(41, _scope => {
   const {
-    "other/28": other,
-    "tagConstB/40": tagConstB
+    other,
+    tagConstB
   } = _scope;
   _dynamicTag15(_scope, tagConstB, () => ({
     class: ["a", "b"],
@@ -17,8 +17,8 @@ const _expr_other_tagConstB = /* @__PURE__ */_$.intersection(41, _scope => {
 });
 const _expr_other_tagConstA = /* @__PURE__ */_$.intersection(39, _scope => {
   const {
-    "other/28": other,
-    "tagConstA/38": tagConstA
+    other,
+    tagConstA
   } = _scope;
   _dynamicTag14(_scope, tagConstA, () => ({
     class: ["a", "b"],
@@ -27,8 +27,8 @@ const _expr_other_tagConstA = /* @__PURE__ */_$.intersection(39, _scope => {
 });
 const _expr_other_largeHeading = /* @__PURE__ */_$.intersection(37, _scope => {
   const {
-    "other/28": other,
-    "largeHeading/36": largeHeading
+    other,
+    largeHeading
   } = _scope;
   _dynamicTag10(_scope, largeHeading || "h2", () => ({
     class: ["a", "b"],
@@ -37,8 +37,8 @@ const _expr_other_largeHeading = /* @__PURE__ */_$.intersection(37, _scope => {
 });
 const _expr_level_other = /* @__PURE__ */_$.intersection(35, _scope => {
   const {
-    "level/27": level,
-    "other/28": other
+    level,
+    other
   } = _scope;
   _dynamicTag12(_scope, "h" + level, () => ({
     class: ["a", "b"],
@@ -51,8 +51,8 @@ const _expr_level_other = /* @__PURE__ */_$.intersection(35, _scope => {
 });
 const _expr_tag_other = /* @__PURE__ */_$.intersection(34, _scope => {
   const {
-    "tag/26": tag,
-    "other/28": other
+    tag,
+    other
   } = _scope;
   _dynamicTag9(_scope, tag || tagA, () => ({
     class: ["a", "b"],
@@ -61,8 +61,8 @@ const _expr_tag_other = /* @__PURE__ */_$.intersection(34, _scope => {
 });
 const _expr_isLarge_other = /* @__PURE__ */_$.intersection(33, _scope => {
   const {
-    "isLarge/25": isLarge,
-    "other/28": other
+    isLarge,
+    other
   } = _scope;
   _dynamicTag5(_scope, isLarge ? "h1" : "h2", () => ({
     class: ["a", "b"],
@@ -71,8 +71,8 @@ const _expr_isLarge_other = /* @__PURE__ */_$.intersection(33, _scope => {
 });
 const _expr_showTagA_other = /* @__PURE__ */_$.intersection(32, _scope => {
   const {
-    "showTagA/24": showTagA,
-    "other/28": other
+    showTagA,
+    other
   } = _scope;
   _dynamicTag6(_scope, showTagA ? tagA : tagB, () => ({
     class: ["a", "b"],
@@ -89,8 +89,8 @@ const _expr_showTagA_other = /* @__PURE__ */_$.intersection(32, _scope => {
 });
 const _expr_show_other = /* @__PURE__ */_$.intersection(31, _scope => {
   const {
-    "show/23": show,
-    "other/28": other
+    show,
+    other
   } = _scope;
   _dynamicTag3(_scope, show ? "div" : null, () => ({
     class: ["a", "b"],
@@ -103,8 +103,8 @@ const _expr_show_other = /* @__PURE__ */_$.intersection(31, _scope => {
 });
 const _expr_x_other = /* @__PURE__ */_$.intersection(30, _scope => {
   const {
-    "x/22": x,
-    "other/28": other
+    x,
+    other
   } = _scope;
   _dynamicTag2(_scope, x, () => ({
     class: ["a", "b"],
@@ -113,8 +113,8 @@ const _expr_x_other = /* @__PURE__ */_$.intersection(30, _scope => {
 });
 const _expr_content_other = /* @__PURE__ */_$.intersection(29, _scope => {
   const {
-    "content/21": content,
-    "other/28": other
+    content,
+    other
   } = _scope;
   _dynamicTag(_scope, content, () => ({
     class: ["a", "b"],
@@ -140,10 +140,10 @@ const _dynamicTag4 = /* @__PURE__ */_$.dynamicTag("#text/3");
 const _dynamicTag3 = /* @__PURE__ */_$.dynamicTag("#text/2");
 const _dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/1");
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
-const _tagConstB = /* @__PURE__ */_$.value("tagConstB/40", (_scope, tagConstB) => _expr_other_tagConstB(_scope));
-const _tagConstA = /* @__PURE__ */_$.value("tagConstA/38", (_scope, tagConstA) => _expr_other_tagConstA(_scope));
-const _largeHeading = /* @__PURE__ */_$.value("largeHeading/36", (_scope, largeHeading) => _expr_other_largeHeading(_scope));
-export const _other_ = /* @__PURE__ */_$.value("other/28", (_scope, other) => {
+const _tagConstB = /* @__PURE__ */_$.value("tagConstB", (_scope, tagConstB) => _expr_other_tagConstB(_scope));
+const _tagConstA = /* @__PURE__ */_$.value("tagConstA", (_scope, tagConstA) => _expr_other_tagConstA(_scope));
+const _largeHeading = /* @__PURE__ */_$.value("largeHeading", (_scope, largeHeading) => _expr_other_largeHeading(_scope));
+export const _other_ = /* @__PURE__ */_$.value("other", (_scope, other) => {
   _dynamicTag11(_scope, global.x = "a" + "b", () => ({
     class: ["a", "b"],
     other: other
@@ -159,20 +159,20 @@ export const _other_ = /* @__PURE__ */_$.value("other/28", (_scope, other) => {
   _expr_other_tagConstA(_scope);
   _expr_other_tagConstB(_scope);
 });
-export const _level_ = /* @__PURE__ */_$.value("level/27", (_scope, level) => _expr_level_other(_scope));
-export const _tag_ = /* @__PURE__ */_$.value("tag/26", (_scope, tag) => _expr_tag_other(_scope));
-export const _isLarge_ = /* @__PURE__ */_$.value("isLarge/25", (_scope, isLarge) => {
+export const _level_ = /* @__PURE__ */_$.value("level", (_scope, level) => _expr_level_other(_scope));
+export const _tag_ = /* @__PURE__ */_$.value("tag", (_scope, tag) => _expr_tag_other(_scope));
+export const _isLarge_ = /* @__PURE__ */_$.value("isLarge", (_scope, isLarge) => {
   _largeHeading(_scope, isLarge && "h1");
   _expr_isLarge_other(_scope);
 });
-export const _showTagA_ = /* @__PURE__ */_$.value("showTagA/24", (_scope, showTagA) => _expr_showTagA_other(_scope));
-export const _show_ = /* @__PURE__ */_$.value("show/23", (_scope, show) => {
+export const _showTagA_ = /* @__PURE__ */_$.value("showTagA", (_scope, showTagA) => _expr_showTagA_other(_scope));
+export const _show_ = /* @__PURE__ */_$.value("show", (_scope, show) => {
   _tagConstB(_scope, show ? "div" : null);
   _expr_show_other(_scope);
 });
-export const _x_ = /* @__PURE__ */_$.value("x/22", (_scope, x) => _expr_x_other(_scope));
-export const _content_ = /* @__PURE__ */_$.value("content/21", (_scope, content) => _expr_content_other(_scope));
-export const _input_ = /* @__PURE__ */_$.value("input/20", (_scope, input) => {
+export const _x_ = /* @__PURE__ */_$.value("x", (_scope, x) => _expr_x_other(_scope));
+export const _content_ = /* @__PURE__ */_$.value("content", (_scope, content) => _expr_content_other(_scope));
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _content_(_scope, input.content);
   _x_(_scope, input.x);
   _show_(_scope, input.show);
@@ -182,7 +182,7 @@ export const _input_ = /* @__PURE__ */_$.value("input/20", (_scope, input) => {
   _level_(_scope, input.level);
   _other_(_scope, input.other);
 });
-export const _params__ = /* @__PURE__ */_$.value("_params_/19", (_scope, _params_) => _input_(_scope, _params_[0]));
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export function _setup_(_scope) {
   _tagConstA(_scope, "a");
   _dynamicTag16(_scope, `h${1}`);

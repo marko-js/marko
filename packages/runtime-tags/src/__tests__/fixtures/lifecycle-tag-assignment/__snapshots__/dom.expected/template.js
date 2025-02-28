@@ -3,9 +3,9 @@ export const _walks_ = /* next(1), over(1), next(1), get, out(1), over(1), repla
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _prev = /* @__PURE__ */_$.state("prev/4", (_scope, prev) => _$.data(_scope["#text/1"], prev));
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
-  "x/3": x
+  x
 }) => {
-  _$.lifecycle(_scope, "_lifecycle/4", {
+  _$.lifecycle(_scope, "_lifecycle", {
     onMount: function () {
       this.cur = x;
     },

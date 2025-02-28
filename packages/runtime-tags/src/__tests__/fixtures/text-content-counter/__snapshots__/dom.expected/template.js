@@ -2,7 +2,7 @@ export const _template_ = "<div><button id=button>0</button></div>";
 export const _walks_ = /* next(1), get, out(1) */"D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _clickCount_effect = _$.effect("__tests__/template.marko_0_clickCount", (_scope, {
-  "clickCount/1": clickCount
+  clickCount
 }) => {
   document.getElementById("button").textContent = clickCount;
   _$.on(_scope["#button/0"], "click", function () {

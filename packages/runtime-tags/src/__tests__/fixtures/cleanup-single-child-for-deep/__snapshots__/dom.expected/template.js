@@ -5,16 +5,16 @@ import { _setup_ as _child, _write_ as _child_input_write, _name_ as _child_inpu
 const _expr_outerItem_middleItem$for_content = /* @__PURE__ */_$.intersection(3, _scope => {
   const {
     _: {
-      "outerItem/3": outerItem
+      outerItem
     },
-    "middleItem/2": middleItem
+    middleItem
   } = _scope;
   _child_input_name(_scope["#childScope/0"], `${outerItem}.${middleItem}`);
 });
-const _write$for_content2 = /* @__PURE__ */_$.dynamicClosure("write/4", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._);
-const _outerItem$for_content2 = /* @__PURE__ */_$.loopClosure("outerItem/3", "#text/1", (_scope, outerItem) => _expr_outerItem_middleItem$for_content(_scope));
-const _middleItem$for_content = /* @__PURE__ */_$.value("middleItem/2", (_scope, middleItem) => _expr_outerItem_middleItem$for_content(_scope));
-const _params_3$for_content = /* @__PURE__ */_$.value("_params_3/1", (_scope, _params_3) => _middleItem$for_content(_scope, _params_3[0]));
+const _write$for_content2 = /* @__PURE__ */_$.dynamicClosure("write", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._);
+const _outerItem$for_content2 = /* @__PURE__ */_$.loopClosure("outerItem", "#text/1", (_scope, outerItem) => _expr_outerItem_middleItem$for_content(_scope));
+const _middleItem$for_content = /* @__PURE__ */_$.value("middleItem", (_scope, middleItem) => _expr_outerItem_middleItem$for_content(_scope));
+const _params_3$for_content = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _middleItem$for_content(_scope, _params_3[0]));
 const _setup$for_content2 = _scope => {
   _write$for_content2._(_scope);
   _outerItem$for_content2._(_scope);
@@ -22,13 +22,13 @@ const _setup$for_content2 = _scope => {
 };
 const _for_content2 = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}</div>`, /* next(1), beginChild, _child_walks, endChild */`D/${_child_walks}&`, _setup$for_content2, () => _params_3$for_content);
 const _for$for_content = /* @__PURE__ */_$.loopOf("#text/1", _for_content2);
-const _write$for_content = /* @__PURE__ */_$.loopClosure("write/4", "#text/2", (_scope, write) => _child_input_write(_scope["#childScope/0"], write));
-const _outerItem$for_content = /* @__PURE__ */_$.value("outerItem/3", (_scope, outerItem) => {
+const _write$for_content = /* @__PURE__ */_$.loopClosure("write", "#text/2", (_scope, write) => _child_input_write(_scope["#childScope/0"], write));
+const _outerItem$for_content = /* @__PURE__ */_$.value("outerItem", (_scope, outerItem) => {
   _child_input_name(_scope["#childScope/0"], `${outerItem}`);
   _outerItem$for_content2(_scope);
 });
-const _items$for_content = /* @__PURE__ */_$.loopClosure("items/3", "#text/2", (_scope, items) => _for$for_content(_scope, [items]));
-const _params_2$for_content = /* @__PURE__ */_$.value("_params_2/2", (_scope, _params_2) => _outerItem$for_content(_scope, _params_2[0]));
+const _items$for_content = /* @__PURE__ */_$.loopClosure("items", "#text/2", (_scope, items) => _for$for_content(_scope, [items]));
+const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outerItem$for_content(_scope, _params_2[0]));
 const _setup$for_content = _scope => {
   _write$for_content._(_scope);
   _child(_scope["#childScope/0"]);
@@ -36,9 +36,9 @@ const _setup$for_content = _scope => {
 };
 const _for_content = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$for_content, () => _params_2$for_content);
 const _for = /* @__PURE__ */_$.loopOf("#text/2", _for_content);
-const _write = /* @__PURE__ */_$.value("write/4");
+const _write = /* @__PURE__ */_$.value("write");
 const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {
-  "items/3": items
+  items
 }) => _$.on(_scope["#button/0"], "click", function () {
   _items(_scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
 }));

@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _customTag, _style_ as _customTag_input_style, _template_ as _customTag_template, _walks_ as _customTag_walks } from "./tags/custom-tag.marko";
 const _test_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello");
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/4");
-export const _test_ = /* @__PURE__ */_$.value("test/8", (_scope, test) => _dynamicTag(_scope, test, () => ({
+export const _test_ = /* @__PURE__ */_$.value("test", (_scope, test) => _dynamicTag(_scope, test, () => ({
   style: {
     color: "green"
   },
@@ -15,7 +15,7 @@ export const _test_ = /* @__PURE__ */_$.value("test/8", (_scope, test) => _dynam
     content: _test_content(_scope)
   })
 })));
-export const _color_ = /* @__PURE__ */_$.value("color/7", (_scope, color) => {
+export const _color_ = /* @__PURE__ */_$.value("color", (_scope, color) => {
   _$.styleAttr(_scope["#div/0"], {
     color: color
   });
@@ -23,11 +23,11 @@ export const _color_ = /* @__PURE__ */_$.value("color/7", (_scope, color) => {
     color: color
   });
 });
-export const _input_ = /* @__PURE__ */_$.value("input/6", (_scope, input) => {
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _color_(_scope, input.color);
   _test_(_scope, input.test);
 });
-export const _params__ = /* @__PURE__ */_$.value("_params_/5", (_scope, _params_) => _input_(_scope, _params_[0]));
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export function _setup_(_scope) {
   _customTag(_scope["#childScope/1"]);
   _customTag(_scope["#childScope/2"]);

@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _if_content = /* @__PURE__ */_$.createRenderer("hi");
 const _if = /* @__PURE__ */_$.conditional("#text/1", _if_content);
 const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
-  "show/2": show
+  show
 }) => _$.on(_scope["#button/0"], "click", function () {
   _show(_scope, !show);
 }));

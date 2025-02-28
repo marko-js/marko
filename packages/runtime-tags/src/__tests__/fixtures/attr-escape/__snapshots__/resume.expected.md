@@ -12,7 +12,7 @@
     />
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{"input_foo/3":"c","input_bar/4":"d"}}),0]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{input_foo:"c",input_bar:"d"}}),0]
     </script>
   </body>
 </html>

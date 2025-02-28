@@ -270,7 +270,6 @@ export function initValue(
   binding: Binding,
   runtimeHelper: "value" | "state" = "value",
 ) {
-  const valueAccessor = getScopeAccessorLiteral(binding);
   const section = binding.section;
   const signal = getSignal(section, binding);
   signal.build = () => {
@@ -291,12 +290,16 @@ export function initValue(
     // TODO: marks not used anymore. can remove?
     const needsMarks = isParamBinding || signal.intersection;
     if (needsCache || needsMarks) {
-      return callRuntime(runtimeHelper, valueAccessor, fn);
+      return callRuntime(
+        runtimeHelper,
+        getScopeAccessorLiteral(binding, runtimeHelper === "state"),
+        fn,
+      );
     } else {
       return fn;
     }
   };
-  signal.valueAccessor = valueAccessor;
+  signal.valueAccessor = getScopeAccessorLiteral(binding);
 
   for (const alias of binding.aliases) {
     initValue(alias);
@@ -997,6 +1000,16 @@ export function writeHTMLResumeStatements(
   }
 
   if (serializedProperties.length || forceResumeScope(section)) {
+    for (const prop of serializedProperties) {
+      if (
+        prop.key.type === "Identifier" &&
+        prop.value.type === "Identifier" &&
+        prop.key.name === prop.value.name
+      ) {
+        prop.shorthand = true;
+      }
+    }
+
     const writeScopeArgs: t.Expression[] = [
       scopeIdIdentifier,
       t.objectExpression(serializedProperties),

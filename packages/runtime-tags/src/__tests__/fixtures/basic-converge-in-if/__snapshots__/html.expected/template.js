@@ -13,12 +13,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     _ifScopeId = _scope1_id;
   }
   _$.writeScope(_scope0_id, {
-    "a/1": a,
-    "b/2": b,
+    a,
+    b,
     "#text/0!": _$.getScopeById(_ifScopeId)
   }, "__tests__/template.marko", 0, {
-    "a/1": "1:6",
-    "b/2": "2:6"
+    a: "1:6",
+    b: "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

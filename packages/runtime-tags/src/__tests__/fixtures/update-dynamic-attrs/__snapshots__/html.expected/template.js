@@ -11,11 +11,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_input_value_a");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_input_value");
   _$.writeScope(_scope0_id, {
-    "input_value/5": input.value,
-    "a/6": a
+    input_value: input.value,
+    a
   }, "__tests__/template.marko", 0, {
-    "input_value/5": ["input.value"],
-    "a/6": "1:6"
+    input_value: ["input.value"],
+    a: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

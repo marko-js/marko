@@ -5,9 +5,9 @@ import { _setup_ as _customTag, _className_ as _customTag_input_class, _template
 const _test_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello");
 const _expr_input_test_c_d = /* @__PURE__ */_$.intersection(10, _scope => {
   const {
-    "input_test/6": input_test,
-    "c/7": c,
-    "d/8": d
+    input_test,
+    c,
+    d
   } = _scope;
   _dynamicTag(_scope, input_test, () => ({
     class: ["a", {
@@ -25,8 +25,8 @@ const _expr_input_test_c_d = /* @__PURE__ */_$.intersection(10, _scope => {
 });
 const _expr_c_d = /* @__PURE__ */_$.intersection(9, _scope => {
   const {
-    "c/7": c,
-    "d/8": d
+    c,
+    d
   } = _scope;
   _$.classAttr(_scope["#div/0"], ["a", {
     b: c,
@@ -38,21 +38,21 @@ const _expr_c_d = /* @__PURE__ */_$.intersection(9, _scope => {
   }]);
 });
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3");
-export const _d_ = /* @__PURE__ */_$.value("d/8", (_scope, d) => {
+export const _d_ = /* @__PURE__ */_$.value("d", (_scope, d) => {
   _expr_c_d(_scope);
   _expr_input_test_c_d(_scope);
 });
-export const _c_ = /* @__PURE__ */_$.value("c/7", (_scope, c) => {
+export const _c_ = /* @__PURE__ */_$.value("c", (_scope, c) => {
   _expr_c_d(_scope);
   _expr_input_test_c_d(_scope);
 });
-export const _input_test_ = /* @__PURE__ */_$.value("input_test/6", (_scope, input_test) => _expr_input_test_c_d(_scope));
-export const _input_ = /* @__PURE__ */_$.value("input/5", (_scope, input) => {
+export const _input_test_ = /* @__PURE__ */_$.value("input_test", (_scope, input_test) => _expr_input_test_c_d(_scope));
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_test_(_scope, input.test);
   _c_(_scope, input.c);
   _d_(_scope, input.d);
 });
-export const _params__ = /* @__PURE__ */_$.value("_params_/4", (_scope, _params_) => _input_(_scope, _params_[0]));
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export function _setup_(_scope) {
   _customTag(_scope["#childScope/1"]);
   _customTag(_scope["#childScope/2"]);

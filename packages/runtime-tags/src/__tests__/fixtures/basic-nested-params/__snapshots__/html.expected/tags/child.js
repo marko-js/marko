@@ -10,13 +10,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.dynamicTagInput(_scope0_id, "#text/0", content, value);
   _$.write("</div>");
   _$.writeScope(_scope0_id, {
-    "content/3": content,
-    "value/4": value,
+    content,
+    value,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(content)
   }, "__tests__/tags/child.marko", 0, {
-    "content/3": "1:9",
-    "value/4": "1:18"
+    content: "1:9",
+    value: "1:18"
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", _renderer);

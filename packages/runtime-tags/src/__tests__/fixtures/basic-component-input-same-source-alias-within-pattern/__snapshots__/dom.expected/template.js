@@ -16,14 +16,14 @@ export function _setup_(_scope) {
   _clickCount(_scope, 0);
 }
 function _onClick(_scope, {
-  "clickCount/2": clickCount
+  clickCount
 } = _scope) {
   return function () {
     _clickCount(_scope, clickCount + 1), clickCount;
   };
 }
 function _onClick2(_scope, {
-  "clickCount/2": clickCount
+  clickCount
 } = _scope) {
   return function () {
     _clickCount(_scope, clickCount + 1), clickCount;

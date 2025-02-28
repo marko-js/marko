@@ -2,7 +2,7 @@ export const _template_ = "<div><button> </button><!----></div>";
 export const _walks_ = /* next(1), get, next(1), get, out(1), get, out(1) */"D D l l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
-  "count/3": count
+  count
 }) => _$.on(_scope["#button/0"], "click", function () {
   _count(_scope, count + 1), count;
 }));

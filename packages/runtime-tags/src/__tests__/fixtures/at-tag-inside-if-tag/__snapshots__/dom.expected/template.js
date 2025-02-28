@@ -4,7 +4,7 @@ import { _setup_ as _customTag, _pattern__ as _customTag_input_thing, _template_
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _thing_content2 = _$.registerContent("__tests__/template.marko_2_renderer", "Goodbye");
 const _thing_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello");
-export const _x_ = /* @__PURE__ */_$.value("x/3", (_scope, x) => {
+export const _x_ = /* @__PURE__ */_$.value("x", (_scope, x) => {
   let _thing;
   if (x) {
     _thing = _$.attrTag({
@@ -19,8 +19,8 @@ export const _x_ = /* @__PURE__ */_$.value("x/3", (_scope, x) => {
   }
   _customTag_input_thing(_scope["#childScope/0"], _thing);
 });
-export const _input_ = /* @__PURE__ */_$.value("input/2", (_scope, input) => _x_(_scope, input.x));
-export const _params__ = /* @__PURE__ */_$.value("_params_/1", (_scope, _params_) => _input_(_scope, _params_[0]));
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _x_(_scope, input.x));
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export function _setup_(_scope) {
   _customTag(_scope["#childScope/0"]);
 }

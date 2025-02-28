@@ -3,14 +3,14 @@ export const _walks_ = /* get, next(2), replace, over(1), replace, out(1), next(
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _Child_content2 = _$.registerContent("__tests__/template.marko_3_renderer", "Hi");
 const _Child_content = _$.registerContent("__tests__/template.marko_2_renderer", "Hi");
-const _input_value$Parent_content = _$.registerDynamicClosure("__tests__/template.marko_1_input_value/subscriber", "input_value/10", (_scope, input_value) => _$.html(_scope, input_value, "#text/0"));
+const _input_value$Parent_content = _$.registerDynamicClosure("__tests__/template.marko_1_input_value/subscriber", "input_value", (_scope, input_value) => _$.html(_scope, input_value, "#text/0"));
 const _setup$Parent_content = _scope => {
   _input_value$Parent_content._(_scope);
 };
 const _Parent_content = _$.registerContent("__tests__/template.marko_1_renderer", " ", /* get */" ", _setup$Parent_content);
 const _expr_Parent_Child_effect = _$.effect("__tests__/template.marko_0_Parent_Child", (_scope, {
-  "Parent/11": Parent,
-  "Child/12": Child
+  Parent,
+  Child
 }) => {
   Parent;
   Child;
@@ -22,8 +22,8 @@ const _expr_Parent_Child_effect = _$.effect("__tests__/template.marko_0_Parent_C
 });
 const _expr_Parent_Child = /* @__PURE__ */_$.intersection(13, _scope => {
   const {
-    "Parent/11": Parent,
-    "Child/12": Child
+    Parent,
+    Child
   } = _scope;
   _expr_Parent_Child_effect(_scope);
 });
@@ -31,7 +31,7 @@ const _dynamicTag3 = /* @__PURE__ */_$.dynamicTag("#text/5", _Parent_content);
 const _dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/4", _Child_content2);
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", _Child_content);
 const _Child_effect = _$.effect("__tests__/template.marko_0_Child", (_scope, {
-  "Child/12": Child
+  Child
 }) => _$.on(_scope["#button/7"], "click", function () {
   _Child(_scope, Child === "a" ? null : "a");
 }));
@@ -46,7 +46,7 @@ const _Child = /* @__PURE__ */_$.state("Child/12", (_scope, Child) => {
   _Child_effect(_scope);
 });
 const _Parent_effect = _$.effect("__tests__/template.marko_0_Parent", (_scope, {
-  "Parent/11": Parent
+  Parent
 }) => _$.on(_scope["#button/6"], "click", function () {
   _Parent(_scope, Parent === "div" ? "svg" : "div");
 }));
@@ -55,13 +55,13 @@ const _Parent = /* @__PURE__ */_$.state("Parent/11", (_scope, Parent) => {
   _expr_Parent_Child(_scope);
   _Parent_effect(_scope);
 });
-export const _input_value_ = /* @__PURE__ */_$.value("input_value/10", (_scope, input_value) => {
+export const _input_value_ = /* @__PURE__ */_$.value("input_value", (_scope, input_value) => {
   _$.html(_scope, input_value, "#text/1");
   _$.html(_scope, input_value, "#text/3");
   _input_value$Parent_content(_scope);
 });
-export const _input_ = /* @__PURE__ */_$.value("input/9", (_scope, input) => _input_value_(_scope, input.value));
-export const _params__ = /* @__PURE__ */_$.value("_params_/8", (_scope, _params_) => _input_(_scope, _params_[0]));
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_value_(_scope, input.value));
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export function _setup_(_scope) {
   _Parent(_scope, "div");
   _Child(_scope, "a");

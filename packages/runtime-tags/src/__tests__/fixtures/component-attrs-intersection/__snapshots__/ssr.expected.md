@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div>0<!--M_*2 #text/0--></div><button></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:{"count/2":0,"#childScope/0":_.a={"value/3":0,"dummy/4":{}}},2:_.a}),1,"__tests__/template.marko_0_count",0];M._.w()</script>
+  <div>0<!--M_*2 #text/0--></div><button></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:{count:0,"#childScope/0":_.a={value:0,dummy:{}}},2:_.a}),1,"__tests__/template.marko_0_count",0];M._.w()</script>
 ```
 
 # Render End
@@ -15,7 +15,7 @@
     <button />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"count/2":0,"#childScope/0":_.a={"value/3":0,"dummy/4":{}}},2:_.a}),1,"__tests__/template.marko_0_count",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{count:0,"#childScope/0":_.a={value:0,dummy:{}}},2:_.a}),1,"__tests__/template.marko_0_count",0];M._.w()
     </script>
   </body>
 </html>
