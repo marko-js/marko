@@ -31,21 +31,21 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     }, _scope1_id, "#text/0");
     _scope1_.set(i, _$.ensureScopeWithId(_scope1_id));
     _$.writeScope(_scope1_id, {
-      count: count,
-      i: i,
+      "count/2": count,
+      "i/3": i,
       _: _$.ensureScopeWithId(_scope0_id),
       "#text/0(": _ifBranch,
       "#text/0!": _$.getScopeById(_ifScopeId)
     }, "__tests__/template.marko", "2:2", {
-      count: "2:6",
-      i: "2:13"
+      "count/2": "2:6",
+      "i/3": "2:13"
     });
   }, _scope0_id, "#text/0");
   _$.writeScope(_scope0_id, {
-    counts: counts,
+    "counts/1": counts,
     "#text/0(": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
-    counts: "1:6"
+    "counts/1": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

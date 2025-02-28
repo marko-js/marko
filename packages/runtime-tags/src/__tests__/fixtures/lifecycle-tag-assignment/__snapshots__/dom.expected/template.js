@@ -1,11 +1,11 @@
 export const _template_ = "<div>x=<span> </span>, was=<!></div><button id=increment>Increment</button>";
 export const _walks_ = /* next(1), over(1), next(1), get, out(1), over(1), replace, out(1), get, over(1) */"DbD lb%l b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _prev = /* @__PURE__ */_$.state("prev", (_scope, prev) => _$.data(_scope["#text/1"], prev));
+const _prev = /* @__PURE__ */_$.state("prev/4", (_scope, prev) => _$.data(_scope["#text/1"], prev));
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
-  x
+  "x/3": x
 }) => {
-  _$.lifecycle(_scope, "_lifecycle", {
+  _$.lifecycle(_scope, "_lifecycle/4", {
     onMount: function () {
       this.cur = x;
     },
@@ -18,7 +18,7 @@ const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
     _x(_scope, x + 1), x;
   });
 });
-const _x = /* @__PURE__ */_$.state("x", (_scope, x) => {
+const _x = /* @__PURE__ */_$.state("x/3", (_scope, x) => {
   _$.data(_scope["#text/0"], x);
   _x_effect(_scope);
 });

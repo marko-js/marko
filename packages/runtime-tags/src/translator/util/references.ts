@@ -47,6 +47,7 @@ export type Binding = {
   upstreamAlias: Binding | undefined;
   upstreamExpression: t.NodeExtra | undefined;
   downstreamExpressions: Set<ReferencedExtra>;
+  scopeOffset: Binding | undefined;
   export: string | undefined;
   declared: boolean;
   nullable: boolean;
@@ -113,6 +114,7 @@ export function createBinding(
     upstreamAlias,
     upstreamExpression,
     downstreamExpressions: new Set(),
+    scopeOffset: undefined,
     export: undefined,
     nullable:
       !upstreamExpression?.confident || upstreamExpression.computed == null,
@@ -626,19 +628,65 @@ export function finalizeReferences() {
     });
   });
 
-  forEachSection(({ id, bindings }) => {
-    forEach(
-      filter(bindings, ({ section }) => section.id === id),
-      (binding, i) => {
-        binding.id = i;
-      },
-    );
+  forEachSection((section) => {
+    let intersectionIndex = 0;
+    const intersections = intersectionsBySection.get(section) || [];
+    const { id, bindings } = section;
+    const isOwnedBinding = ({ section }: Binding) => section.id === id;
+    let lastBindingIndex = 0;
+    let intersection: Intersection;
+    forEach(filter(bindings, isOwnedBinding), (binding, bindingIndex) => {
+      binding.id = (lastBindingIndex = bindingIndex) + intersectionIndex;
+      while (
+        intersectionIndex < intersections.length &&
+        (intersection = intersections[intersectionIndex])
+          .filter(isOwnedBinding)
+          .at(-1) === binding
+      ) {
+        intersectionMeta.set(intersection, {
+          id: bindingIndex + ++intersectionIndex,
+          scopeOffset: getMaxOwnSourceOffset(intersection, section),
+        });
+      }
+    });
+
+    while (intersectionIndex < intersections.length) {
+      intersection = intersections[intersectionIndex];
+      intersectionMeta.set(intersection, {
+        id: lastBindingIndex + ++intersectionIndex,
+        scopeOffset: getMaxOwnSourceOffset(intersection, section),
+      });
+    }
   });
 
   mergedReferences.clear();
   readsByExpression.clear();
   readsByFn.clear();
 }
+
+function getMaxOwnSourceOffset(intersection: Intersection, section: Section) {
+  let scopeOffset: Binding | undefined;
+
+  for (const binding of intersection) {
+    if (binding.section === section) {
+      for (const sourceBinding of getSourceBindings(binding)) {
+        if (
+          sourceBinding.scopeOffset &&
+          (!scopeOffset || scopeOffset.id < sourceBinding.scopeOffset.id)
+        ) {
+          scopeOffset = sourceBinding.scopeOffset;
+        }
+      }
+    }
+  }
+
+  return scopeOffset;
+}
+
+export const intersectionMeta = new WeakMap<
+  Intersection,
+  { id: number; scopeOffset: Binding | undefined }
+>();
 
 function isSuperset(set: Set<any>, subset: Set<any>) {
   for (const elem of subset) {
@@ -767,9 +815,7 @@ export function getScopeAccessorLiteral(binding: Binding) {
     return t.numericLiteral(binding.id);
   }
 
-  return t.stringLiteral(
-    binding.name + (binding.type === BindingType.dom ? `/${binding.id}` : ""),
-  );
+  return t.stringLiteral(binding.name + `/${binding.id}`);
 }
 
 export function getScopeAccessor(binding: Binding) {
@@ -777,9 +823,7 @@ export function getScopeAccessor(binding: Binding) {
     return binding.id + "";
   }
 
-  return (
-    binding.name + (binding.type === BindingType.dom ? `/${binding.id}` : "")
-  );
+  return binding.name + `/${binding.id}`;
 }
 
 export function getReadReplacement(node: t.Identifier | t.MemberExpression) {

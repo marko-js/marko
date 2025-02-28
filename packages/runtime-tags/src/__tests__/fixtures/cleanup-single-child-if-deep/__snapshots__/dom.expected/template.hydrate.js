@@ -1,4 +1,4 @@
-// size: 1314 (min) 496 (brotli)
+// size: 1252 (min) 486 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 3: name, 4: write }) => {
@@ -8,19 +8,16 @@ const _expr_name_write_effect = _$.effect(
         });
     },
   ),
-  _expr_name_write = _$.intersection(2, (_scope) => {
+  _expr_name_write = _$.intersection(5, (_scope) => {
     _$.resetAbortSignal(_scope, 0), _expr_name_write_effect(_scope);
   }),
-  _write_ = _$.value(4, 0, () => _expr_name_write),
-  _name_ = _$.value(
-    3,
-    (_scope, name) => _$.data(_scope[0], name),
-    () => _expr_name_write,
-  ),
+  _write_ = _$.value(4, (_scope, write) => _expr_name_write(_scope)),
+  _name_ = _$.value(3, (_scope, name) => {
+    _$.data(_scope[0], name), _expr_name_write(_scope);
+  }),
   _write$if_content3 = _$.dynamicClosure(
     8,
     (_scope, write) => _write_(_scope[0], write),
-    () => _$.inChild(0, _write_),
     (_scope) => _scope._._._,
   ),
   _setup$if_content3 = (_scope) => {
@@ -31,14 +28,12 @@ const _expr_name_write_effect = _$.effect(
   _write$if_content2 = _$.dynamicClosure(
     8,
     (_scope, write) => _write_(_scope[0], write),
-    () => _$.inChild(0, _write_),
     (_scope) => _scope._._,
   ),
   _showInner$if_content = _$.registerDynamicClosure(
     "b1",
     7,
     (_scope, showInner) => _if$if_content(_scope, showInner ? 0 : 1),
-    0,
     (_scope) => _scope._._,
   ),
   _setup$if_content2 = (_scope) => {
@@ -53,12 +48,8 @@ const _expr_name_write_effect = _$.effect(
     _setup$if_content2,
   ),
   _if$if_content2 = _$.conditional(1, _if_content2),
-  _write$if_content = _$.conditionalClosure(
-    8,
-    4,
-    0,
-    (_scope, write) => _write_(_scope[0], write),
-    () => _$.inChild(0, _write_),
+  _write$if_content = _$.conditionalClosure(8, 4, 0, (_scope, write) =>
+    _write_(_scope[0], write),
   ),
   _showMiddle$if_content = _$.conditionalClosure(
     6,
@@ -84,7 +75,7 @@ const _expr_name_write_effect = _$.effect(
     }),
   ),
   _showInner = _$.state(7, (_scope, showInner) => {
-    _showInner_effect(_scope), _showInner$if_content(_scope);
+    _showInner$if_content(_scope), _showInner_effect(_scope);
   }),
   _showMiddle_effect = _$.effect("b3", (_scope, { 6: showMiddle }) =>
     _$.on(_scope[1], "click", function () {
@@ -92,7 +83,7 @@ const _expr_name_write_effect = _$.effect(
     }),
   ),
   _showMiddle = _$.state(6, (_scope, showMiddle) => {
-    _showMiddle_effect(_scope), _showMiddle$if_content(_scope);
+    _showMiddle$if_content(_scope), _showMiddle_effect(_scope);
   }),
   _showOuter_effect = _$.effect("b4", (_scope, { 5: showOuter }) =>
     _$.on(_scope[0], "click", function () {
@@ -100,7 +91,7 @@ const _expr_name_write_effect = _$.effect(
     }),
   ),
   _showOuter = _$.state(5, (_scope, showOuter) => {
-    _showOuter_effect(_scope), _if(_scope, showOuter ? 0 : 1);
+    _if(_scope, showOuter ? 0 : 1), _showOuter_effect(_scope);
   });
 _$.register("b0", function (_scope) {
   return function (msg) {

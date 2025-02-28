@@ -26,7 +26,7 @@
     1
     <!--M_*1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={input_value:1,state:1,otherState:1}},2:_.b},_.b.input_valueChange=_.b["state@"]=_.b["otherState@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),2,"__tests__/tags/child.marko_0_otherState",2,"__tests__/tags/child.marko_0_state",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={"input_value/8":1,"state/11":1,"otherState/12":1}},2:_.b},_.b["input_valueChange/9"]=_.b["state/11@"]=_.b["otherState/12@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),2,"__tests__/tags/child.marko_0_otherState",2,"__tests__/tags/child.marko_0_state",0];M._.w()
     </script>
   </body>
 </html>
@@ -64,7 +64,7 @@ container.querySelectorAll("button").forEach(item => item.click());
     2
     <!--M_*1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={input_value:1,state:1,otherState:1}},2:_.b},_.b.input_valueChange=_.b["state@"]=_.b["otherState@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),2,"__tests__/tags/child.marko_0_otherState",2,"__tests__/tags/child.marko_0_state",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={"input_value/8":1,"state/11":1,"otherState/12":1}},2:_.b},_.b["input_valueChange/9"]=_.b["state/11@"]=_.b["otherState/12@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),2,"__tests__/tags/child.marko_0_otherState",2,"__tests__/tags/child.marko_0_state",0];M._.w()
     </script>
   </body>
 </html>
@@ -75,8 +75,8 @@ container.querySelectorAll("button").forEach(item => item.click());
 UPDATE html/body/#text1 "1" => "2"
 UPDATE html/body/button0/#text0 "1" => "2"
 UPDATE html/body/button1/#text0 "1" => "2"
-UPDATE html/body/button0/#text2 "1" => "2"
 UPDATE html/body/button1/#text2 "1" => "2"
+UPDATE html/body/button0/#text2 "1" => "2"
 ```
 
 # Render
@@ -110,7 +110,7 @@ container.querySelectorAll("button").forEach(item => item.click());
     3
     <!--M_*1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={input_value:1,state:1,otherState:1}},2:_.b},_.b.input_valueChange=_.b["state@"]=_.b["otherState@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),2,"__tests__/tags/child.marko_0_otherState",2,"__tests__/tags/child.marko_0_state",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={"input_value/8":1,"state/11":1,"otherState/12":1}},2:_.b},_.b["input_valueChange/9"]=_.b["state/11@"]=_.b["otherState/12@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),2,"__tests__/tags/child.marko_0_otherState",2,"__tests__/tags/child.marko_0_state",0];M._.w()
     </script>
   </body>
 </html>
@@ -121,8 +121,8 @@ container.querySelectorAll("button").forEach(item => item.click());
 UPDATE html/body/#text1 "2" => "3"
 UPDATE html/body/button0/#text0 "2" => "3"
 UPDATE html/body/button1/#text0 "2" => "3"
-UPDATE html/body/button0/#text2 "2" => "3"
 UPDATE html/body/button1/#text2 "2" => "3"
+UPDATE html/body/button0/#text2 "2" => "3"
 ```
 
 # Render
@@ -156,7 +156,7 @@ container.querySelectorAll("button").forEach(item => item.click());
     4
     <!--M_*1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={input_value:1,state:1,otherState:1}},2:_.b},_.b.input_valueChange=_.b["state@"]=_.b["otherState@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),2,"__tests__/tags/child.marko_0_otherState",2,"__tests__/tags/child.marko_0_state",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#childScope/0":_.b={"input_value/8":1,"state/11":1,"otherState/12":1}},2:_.b},_.b["input_valueChange/9"]=_.b["state/11@"]=_.b["otherState/12@"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),2,"__tests__/tags/child.marko_0_otherState",2,"__tests__/tags/child.marko_0_state",0];M._.w()
     </script>
   </body>
 </html>
@@ -167,6 +167,6 @@ container.querySelectorAll("button").forEach(item => item.click());
 UPDATE html/body/#text1 "3" => "4"
 UPDATE html/body/button0/#text0 "3" => "4"
 UPDATE html/body/button1/#text0 "3" => "4"
-UPDATE html/body/button0/#text2 "3" => "4"
 UPDATE html/body/button1/#text2 "3" => "4"
+UPDATE html/body/button0/#text2 "3" => "4"
 ```

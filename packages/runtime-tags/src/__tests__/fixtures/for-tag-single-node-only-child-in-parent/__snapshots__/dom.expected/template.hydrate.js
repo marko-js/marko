@@ -1,4 +1,4 @@
-// size: 226 (min) 160 (brotli)
+// size: 226 (min) 162 (brotli)
 const _for_content = _$.createRenderer("<div></div>"),
   _for = _$.loopOf(0, _for_content),
   _children_length = _$.value(2, (_scope, children_length) =>
@@ -8,8 +8,8 @@ const _for_content = _$.createRenderer("<div></div>"),
     1 === children.length && _children(_scope, [...children, 2]);
   }),
   _children = _$.state(1, (_scope, children) => {
-    _children_effect(_scope),
-      _children_length(_scope, children?.length),
-      _for(_scope, [children]);
+    _children_length(_scope, children?.length),
+      _for(_scope, [children]),
+      _children_effect(_scope);
   });
 init();

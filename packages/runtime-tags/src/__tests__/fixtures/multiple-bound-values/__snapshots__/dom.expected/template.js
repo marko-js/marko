@@ -2,14 +2,14 @@ export const _template_ = `${_counters_template}<div><!> <!></div>`;
 export const _walks_ = /* beginChild, _counters_walks, endChild, next(1), replace, over(2), replace, out(1) */`/${_counters_walks}&D%c%l`;
 import { _setup_ as _counters, _input_count1_ as _counters_input_count, _input_count1Change_ as _counters_input_count1Change, _input_count2_ as _counters_input_count2, _input_count2Change_ as _counters_input_count2Change, _template_ as _counters_template, _walks_ as _counters_walks } from "./tags/2counters.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _count2 = /* @__PURE__ */_$.state("count2", (_scope, count2) => {
+const _count2 = /* @__PURE__ */_$.state("count2/4", (_scope, count2) => {
   _$.data(_scope["#text/2"], count2);
   _counters_input_count2(_scope["#childScope/0"], count2);
-}, () => /* @__PURE__ */_$.inChild("#childScope/0", _counters_input_count2));
-const _count = /* @__PURE__ */_$.state("count1", (_scope, count1) => {
+});
+const _count = /* @__PURE__ */_$.state("count1/3", (_scope, count1) => {
   _$.data(_scope["#text/1"], count1);
   _counters_input_count(_scope["#childScope/0"], count1);
-}, () => /* @__PURE__ */_$.inChild("#childScope/0", _counters_input_count));
+});
 export function _setup_(_scope) {
   _counters(_scope["#childScope/0"]);
   _count(_scope, 0);

@@ -20,11 +20,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }, _scope0_id, "#text/1");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.writeScope(_scope0_id, {
-    message_text: message?.text,
+    "message_text/3": message?.text,
     "#text/1(": _ifBranch,
     "#text/1!": _$.getScopeById(_ifScopeId)
   }, "__tests__/template.marko", 0, {
-    message_text: ["message.text", "1:6"]
+    "message_text/3": ["message.text", "1:6"]
   });
   _$.resumeClosestBranch(_scope0_id);
 });

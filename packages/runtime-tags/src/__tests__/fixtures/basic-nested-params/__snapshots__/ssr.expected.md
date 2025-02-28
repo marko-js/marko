@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>Inc</button><!--M_*1 #button/0--><div><!--M_[3--><div><!--M_[5--><div>1<!--M_*5 #text/0-->.<!>2<!--M_*5 #text/1--></div><!--M_]4 #text/0--></div><!--M_]2 #text/0--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.f={1:_.a={x:1,y:2,"#childScope/1":_.b={value:1,"#text/0!":_.c={outer:1,"#childScope/0":_.d={value:2,"#text/0!":_.e={}}}}},2:_.b,3:_.c,4:_.d,5:_.e},_.b.content=_.b["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d.content=_.d["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,_.f),5,"__tests__/template.marko_2_outer/subscriber",3,"__tests__/template.marko_1_y/subscriber",1,"__tests__/template.marko_0_x",0];M._.w()</script>
+  <button>Inc</button><!--M_*1 #button/0--><div><!--M_[3--><div><!--M_[5--><div>1<!--M_*5 #text/0-->.<!>2<!--M_*5 #text/1--></div><!--M_]4 #text/0--></div><!--M_]2 #text/0--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.f={1:_.a={"x/2":1,"y/3":2,"#childScope/1":_.b={"value/4":1,"#text/0!":_.c={"outer/2":1,"#childScope/0":_.d={"value/4":2,"#text/0!":_.e={}}}}},2:_.b,3:_.c,4:_.d,5:_.e},_.b["content/3"]=_.b["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d["content/3"]=_.d["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,_.f),5,"__tests__/template.marko_2_outer/subscriber",3,"__tests__/template.marko_1_y/subscriber",1,"__tests__/template.marko_0_x",0];M._.w()</script>
 ```
 
 # Render End
@@ -29,7 +29,7 @@
       <!--M_]2 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={x:1,y:2,"#childScope/1":_.b={value:1,"#text/0!":_.c={outer:1,"#childScope/0":_.d={value:2,"#text/0!":_.e={}}}}},2:_.b,3:_.c,4:_.d,5:_.e},_.b.content=_.b["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d.content=_.d["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,_.f),5,"__tests__/template.marko_2_outer/subscriber",3,"__tests__/template.marko_1_y/subscriber",1,"__tests__/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={"x/2":1,"y/3":2,"#childScope/1":_.b={"value/4":1,"#text/0!":_.c={"outer/2":1,"#childScope/0":_.d={"value/4":2,"#text/0!":_.e={}}}}},2:_.b,3:_.c,4:_.d,5:_.e},_.b["content/3"]=_.b["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.d["content/3"]=_.d["#text/0("]=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,_.f),5,"__tests__/template.marko_2_outer/subscriber",3,"__tests__/template.marko_1_y/subscriber",1,"__tests__/template.marko_0_x",0];M._.w()
     </script>
   </body>
 </html>

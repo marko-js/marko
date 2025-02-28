@@ -1,9 +1,8 @@
-// size: 369 (min) 183 (brotli)
+// size: 367 (min) 182 (brotli)
 const _c$if_content = _$.registerDynamicClosure(
     "b0",
     4,
     (_scope, c) => _$.data(_scope[2], c),
-    0,
     (_scope) => _scope._._,
   ),
   _c$customTag_content = _$.registerDynamicClosure("b2", 4, (_scope, c) =>

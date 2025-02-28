@@ -14,7 +14,7 @@
     </button>
     <!--M_*3 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={2:{input:{format:_._["__tests__/template.marko_0/formatNumber"]},count:0},3:{input:{format:_._["__tests__/template.marko_0/formatNumber2"]},count:0}}),2,"__tests__/tags/counter.marko_0_count",3,"__tests__/tags/counter.marko_0_count",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={2:{"input/3":{format:_._["__tests__/template.marko_0/formatNumber"]},"count/4":0},3:{"input/3":{format:_._["__tests__/template.marko_0/formatNumber2"]},"count/4":0}}),2,"__tests__/tags/counter.marko_0_count",3,"__tests__/tags/counter.marko_0_count",0];M._.w()
     </script>
   </body>
 </html>
@@ -40,7 +40,7 @@ container.querySelectorAll("button").forEach(button => button.click());
     </button>
     <!--M_*3 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={2:{input:{format:_._["__tests__/template.marko_0/formatNumber"]},count:0},3:{input:{format:_._["__tests__/template.marko_0/formatNumber2"]},count:0}}),2,"__tests__/tags/counter.marko_0_count",3,"__tests__/tags/counter.marko_0_count",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={2:{"input/3":{format:_._["__tests__/template.marko_0/formatNumber"]},"count/4":0},3:{"input/3":{format:_._["__tests__/template.marko_0/formatNumber2"]},"count/4":0}}),2,"__tests__/tags/counter.marko_0_count",3,"__tests__/tags/counter.marko_0_count",0];M._.w()
     </script>
   </body>
 </html>

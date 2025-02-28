@@ -15,9 +15,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<button>${_$.escapeXML(a)}${_$.markResumeNode(_scope0_id, "#text/1")} <!>${_$.escapeXML(b)}${_$.markResumeNode(_scope0_id, "#text/2")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope(_scope0_id, {
-    count: count
+    "count/3": count
   }, "__tests__/template.marko", 0, {
-    count: "5:6"
+    "count/3": "5:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

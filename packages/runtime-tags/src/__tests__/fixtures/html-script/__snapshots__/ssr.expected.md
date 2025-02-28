@@ -6,7 +6,7 @@
         "0": "https://markojs.com",
       }
     }
-  </script><!--M_*1 #script/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={1:{count:0}}),1,"__tests__/template.marko_0_count",0];M._.w()</script>
+  </script><!--M_*1 #script/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={1:{"count/1":0}}),1,"__tests__/template.marko_0_count",0];M._.w()</script>
 ```
 
 # Render End
@@ -26,7 +26,7 @@
     </script>
     <!--M_*1 #script/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{count:0}}),1,"__tests__/template.marko_0_count",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{"count/1":0}}),1,"__tests__/template.marko_0_count",0];M._.w()
     </script>
   </head>
   <body />

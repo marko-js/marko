@@ -74,9 +74,11 @@ export function withContext(key: PropertyKey, value: unknown, cb: () => void) {
 
 export function setTagVar(
   parentScopeId: number,
+  scopeOffsetAccessor: Accessor,
   childScope: PartialScope,
   registryId: string,
 ) {
+  ensureScopeWithId(parentScopeId)[scopeOffsetAccessor] = nextScopeId();
   childScope[AccessorChar.TagVariable] = register(
     {},
     registryId,

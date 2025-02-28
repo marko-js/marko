@@ -79,14 +79,8 @@ exports.p = function (domCompat) {
 
   domCompat.patchDynamicTag((dynamicTag) => (...args) => {
     const signal = dynamicTag(...args);
-    return (scope, rendererOrOp, getInput) => {
-      return signal(
-        scope,
-        domCompat.isOp(rendererOrOp)
-          ? rendererOrOp
-          : create5to6Renderer(rendererOrOp),
-        getInput,
-      );
+    return (scope, renderer, getInput) => {
+      return signal(scope, create5to6Renderer(renderer), getInput);
     };
   });
 
@@ -122,7 +116,6 @@ exports.p = function (domCompat) {
           }
           newRenderer = domCompat.createRenderer(
             (scope, input) =>
-              domCompat.isOp(input) ||
               renderAndMorph(scope, rendererFromAnywhere, renderer, input),
             () => ___createFragmentNode(),
           );

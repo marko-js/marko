@@ -13,10 +13,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     }, "__tests__/template.marko", "3:2");
   }, _scope0_id, "#text/0");
   _$.writeScope(_scope0_id, {
-    num: num,
+    "num/1": num,
     "#text/0(": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
-    num: "1:6"
+    "num/1": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

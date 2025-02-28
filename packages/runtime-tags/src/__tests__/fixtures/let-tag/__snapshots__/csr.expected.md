@@ -24,8 +24,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE #text "1" => "2"
 UPDATE button/#text "1" => "2"
+UPDATE #text "1" => "2"
 ```
 
 # Render
@@ -41,8 +41,8 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE #text "2" => "4"
 UPDATE button/#text "2" => "4"
+UPDATE #text "2" => "4"
 ```
 
 # Render
@@ -58,6 +58,6 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE #text "4" => "8"
 UPDATE button/#text "4" => "8"
+UPDATE #text "4" => "8"
 ```

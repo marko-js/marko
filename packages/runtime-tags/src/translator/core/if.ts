@@ -290,21 +290,17 @@ export const IfTag = {
             const consequent = t.numericLiteral(branchBodySection ? i : -1);
             if (branchBodySection) {
               rendererIdentifiers.push(t.identifier(branchBodySection.name));
-              setClosureSignalBuilder(
-                branchTag,
-                (closureSignal, render, intersection) => {
-                  return callRuntime(
-                    "conditionalClosure",
-                    getScopeAccessorLiteral(
-                      closureSignal.referencedBindings as Binding,
-                    ),
-                    getScopeAccessorLiteral(nodeRef),
-                    t.numericLiteral(i),
-                    render,
-                    intersection,
-                  );
-                },
-              );
+              setClosureSignalBuilder(branchTag, (closureSignal, render) => {
+                return callRuntime(
+                  "conditionalClosure",
+                  getScopeAccessorLiteral(
+                    closureSignal.referencedBindings as Binding,
+                  ),
+                  getScopeAccessorLiteral(nodeRef),
+                  t.numericLiteral(i),
+                  render,
+                );
+              });
             }
 
             branchTag.remove();

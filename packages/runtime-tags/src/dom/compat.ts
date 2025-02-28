@@ -10,7 +10,6 @@ import { prepareEffects, queueEffect, runEffects } from "./queue";
 import { createBranch, createRenderer, type Renderer } from "./renderer";
 import { getRegisteredWithScope, register } from "./resume";
 import { destroyBranch } from "./scope";
-import { CLEAN, DIRTY, MARK } from "./signals";
 const classIdToBranch = new Map<string, BranchScope>();
 
 export const compat = {
@@ -25,9 +24,6 @@ export const compat = {
   },
   registerRenderer(fn: any) {
     register(RENDERER_REGISTER_ID, fn);
-  },
-  isOp(value: any) {
-    return value === MARK || value === CLEAN || value === DIRTY;
   },
   isRenderer(renderer: any) {
     return renderer.___init;
@@ -108,7 +104,6 @@ export const compat = {
           document.body,
         );
       } else {
-        applyArgs(branch, MARK);
         existing = true;
       }
       applyArgs(branch, args);

@@ -17,11 +17,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }), "__tests__/template.marko_1_renderer", _scope0_id));
   _s(_classLayout, "__tests__/components/class-layout.marko");
   _$.writeScope(_scope0_id, {
-    count: count,
+    "count/1": count,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(_classLayout)
   }, "__tests__/template.marko", 0, {
-    count: "1:6"
+    "count/1": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

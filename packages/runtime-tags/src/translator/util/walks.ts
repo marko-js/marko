@@ -30,6 +30,8 @@ const walkCodeToName = {
   [WalkCode.Replace]: "replace",
   [WalkCode.EndChild]: "endChild",
   [WalkCode.BeginChild]: "beginChild",
+  [WalkCode.BeginChildWithVar]: "beginChildWithVar",
+  [WalkCode.DynamicTagWithVar]: "dynamicTagWithVar",
   [WalkCode.Next]: "next",
   [WalkCode.Over]: "over",
   [WalkCode.Out]: "out",
@@ -40,7 +42,11 @@ const walkCodeToName = {
   [WalkCode.MultiplierEnd]: "multiplierEnd",
 };
 
-type VisitCodes = WalkCode.Get | WalkCode.Inside | WalkCode.Replace;
+type VisitCodes =
+  | WalkCode.Get
+  | WalkCode.Inside
+  | WalkCode.Replace
+  | WalkCode.DynamicTagWithVar;
 
 export function enter(path: t.NodePath<any>) {
   getSteps(getSection(path)).push(Step.Enter);
@@ -54,15 +60,20 @@ export function enterShallow(path: t.NodePath<any>) {
   getSteps(getSection(path)).push(Step.Enter, Step.Exit);
 }
 
-export function injectWalks(path: t.NodePath<any>, expr: t.Expression) {
-  const walks = getWalks(getSection(path));
-  const walkComment = getWalkComment(getSection(path));
+export function injectWalks(tag: t.NodePath<t.MarkoTag>, expr: t.Expression) {
+  const walks = getWalks(getSection(tag));
+  const walkComment = getWalkComment(getSection(tag));
   walkComment.push(
-    `${walkCodeToName[WalkCode.BeginChild]}`,
+    `${walkCodeToName[tag.node.var ? WalkCode.BeginChildWithVar : WalkCode.BeginChild]}`,
     (expr as t.Identifier).name,
     walkCodeToName[WalkCode.EndChild],
   );
-  appendLiteral(walks, String.fromCharCode(WalkCode.BeginChild));
+  appendLiteral(
+    walks,
+    String.fromCharCode(
+      tag.node.var ? WalkCode.BeginChildWithVar : WalkCode.BeginChild,
+    ),
+  );
   walks.push(expr, String.fromCharCode(WalkCode.EndChild));
 }
 

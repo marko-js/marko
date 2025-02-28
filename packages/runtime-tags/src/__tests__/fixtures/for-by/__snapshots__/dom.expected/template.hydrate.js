@@ -1,4 +1,4 @@
-// size: 1157 (min) 374 (brotli)
+// size: 1157 (min) 371 (brotli)
 const getStringBy = _getStringBy,
   getFunctionBy = _getFunctionBy,
   getMissingBy = _getMissingBy,
@@ -78,12 +78,12 @@ const getStringBy = _getStringBy,
     }),
   ),
   _items = _$.state(6, (_scope, items) => {
-    _items_effect(_scope),
-      _for(_scope, [items, "id"]),
+    _for(_scope, [items, "id"]),
       _for2(_scope, [items, (item) => item.id]),
       _for3(_scope, [items, getStringBy()]),
       _for4(_scope, [items, getFunctionBy()]),
-      _for5(_scope, [items, getMissingBy()]);
+      _for5(_scope, [items, getMissingBy()]),
+      _items_effect(_scope);
   });
 function _getStringBy() {
   return "id";

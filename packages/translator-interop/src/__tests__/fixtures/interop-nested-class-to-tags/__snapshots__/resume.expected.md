@@ -19,7 +19,7 @@
       <!--M_]1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{m5c:"s0-0",count:0,"#text/2!":_.a={},"#text/2(":_._.$compat_renderBody},2:_.a}),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{m5c:"s0-0","count/6":0,"#text/2!":_.a={},"#text/2(":_._.$compat_renderBody},2:_.a}),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
     </script>
   </body>
 </html>
@@ -72,7 +72,7 @@ container.querySelector("#tags").click();
       <!--M_]1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{m5c:"s0-0",count:0,"#text/2!":_.a={},"#text/2(":_._.$compat_renderBody},2:_.a}),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{m5c:"s0-0","count/6":0,"#text/2!":_.a={},"#text/2(":_._.$compat_renderBody},2:_.a}),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
     </script>
   </body>
 </html>
@@ -107,7 +107,7 @@ container.querySelector("#class").click();
       <!--M_]1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{m5c:"s0-0",count:0,"#text/2!":_.a={},"#text/2(":_._.$compat_renderBody},2:_.a}),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{m5c:"s0-0","count/6":0,"#text/2!":_.a={},"#text/2(":_._.$compat_renderBody},2:_.a}),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
     </script>
   </body>
 </html>
@@ -151,7 +151,7 @@ container.querySelector("#tags").click();
       <!--M_]1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{m5c:"s0-0",count:0,"#text/2!":_.a={},"#text/2(":_._.$compat_renderBody},2:_.a}),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{m5c:"s0-0","count/6":0,"#text/2!":_.a={},"#text/2(":_._.$compat_renderBody},2:_.a}),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
     </script>
   </body>
 </html>
@@ -186,7 +186,7 @@ container.querySelector("#class").click();
       <!--M_]1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{m5c:"s0-0",count:0,"#text/2!":_.a={},"#text/2(":_._.$compat_renderBody},2:_.a}),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{m5c:"s0-0","count/6":0,"#text/2!":_.a={},"#text/2(":_._.$compat_renderBody},2:_.a}),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
     </script>
   </body>
 </html>
@@ -230,7 +230,7 @@ container.querySelector("#tags").click();
       <!--M_]1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{m5c:"s0-0",count:0,"#text/2!":_.a={},"#text/2(":_._.$compat_renderBody},2:_.a}),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{m5c:"s0-0","count/6":0,"#text/2!":_.a={},"#text/2(":_._.$compat_renderBody},2:_.a}),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",0];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
     </script>
   </body>
 </html>

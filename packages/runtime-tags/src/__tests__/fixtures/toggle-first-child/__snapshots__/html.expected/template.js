@@ -19,11 +19,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }, _scope0_id, "#text/0");
   _$.write("<span></span><span></span></div>");
   _$.writeScope(_scope0_id, {
-    value: value,
+    "value/3": value,
     "#text/0(": _ifBranch,
     "#text/0!": _$.getScopeById(_ifScopeId)
   }, "__tests__/template.marko", 0, {
-    value: "1:10"
+    "value/3": "1:10"
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

@@ -5,9 +5,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write("<div id=ref>0</div>");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope(_scope0_id, {
-    x: x
+    "x/0": x
   }, "__tests__/template.marko", 0, {
-    x: "1:6"
+    "x/0": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

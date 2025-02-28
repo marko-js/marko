@@ -10,9 +10,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       _$.write(`<div>Hello <!>${_$.escapeXML(name)}${_$.markResumeNode(_scope1_id, "#text/0")} <!>${_$.escapeXML(y)}${_$.markResumeNode(_scope1_id, "#text/1")}</div><button>${_$.escapeXML(y)}${_$.markResumeNode(_scope1_id, "#text/3")}</button>${_$.markResumeNode(_scope1_id, "#button/2")}`);
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_y");
       _$.writeScope(_scope1_id, {
-        y: y
+        "y/7": y
       }, "__tests__/template.marko", "1:2", {
-        y: "2:8"
+        "y/7": "2:8"
       });
       _$.resumeClosestBranch(_scope1_id);
     }), "__tests__/template.marko_1_renderer", _scope0_id)

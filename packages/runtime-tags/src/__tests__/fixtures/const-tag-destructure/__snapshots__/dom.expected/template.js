@@ -1,9 +1,9 @@
 export const _template_ = "<div> </div><!>";
 export const _walks_ = /* next(1), get, out(1), replace, over(1) */"D l%b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _y = /* @__PURE__ */_$.value("y", (_scope, y) => _$.data(_scope["#text/1"], y));
-const _x = /* @__PURE__ */_$.value("x", (_scope, x) => _$.data(_scope["#text/0"], x));
-const _z = /* @__PURE__ */_$.state("z", (_scope, z) => {
+const _y = /* @__PURE__ */_$.value("y/4", (_scope, y) => _$.data(_scope["#text/1"], y));
+const _x = /* @__PURE__ */_$.value("x/3", (_scope, x) => _$.data(_scope["#text/0"], x));
+const _z = /* @__PURE__ */_$.state("z/2", (_scope, z) => {
   _x(_scope, z.x);
   _y(_scope, z.y);
 });

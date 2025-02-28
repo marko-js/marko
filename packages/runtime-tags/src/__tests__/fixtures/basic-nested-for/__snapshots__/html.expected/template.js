@@ -22,19 +22,19 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     }, _scope1_id, "#text/0");
     _scope1_.set(_index2, _$.ensureScopeWithId(_scope1_id));
     _$.writeScope(_scope1_id, {
-      outer: outer,
+      "outer/2": outer,
       "#text/0(": _scope2_.size ? _scope2_ : undefined,
       _: _$.ensureScopeWithId(_scope0_id)
     }, "__tests__/template.marko", "4:2", {
-      outer: "4:6"
+      "outer/2": "4:6"
     });
   }, _scope0_id, "#text/1");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope(_scope0_id, {
-    items: items,
+    "items/2": items,
     "#text/1(": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
-    items: "1:6"
+    "items/2": "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

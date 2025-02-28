@@ -25,8 +25,8 @@ INSERT span0, span1
 
 # Mutations
 ```
-UPDATE span1/#text "0" => "1"
 UPDATE span0/#text "1" => "2"
+UPDATE span1/#text "0" => "1"
 ```
 
 # Render ASYNC

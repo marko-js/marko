@@ -1,4 +1,4 @@
-// size: 271 (min) 167 (brotli)
+// size: 271 (min) 178 (brotli)
 const createWrapper = _createWrapper,
   _a = _$.value(5, (_scope, a) => {
     _$.data(_scope[1], a),
@@ -13,7 +13,7 @@ const createWrapper = _createWrapper,
     }),
   ),
   _count = _$.state(3, (_scope, count) => {
-    _count_effect(_scope), _pattern_(_scope, createWrapper(count));
+    _pattern_(_scope, createWrapper(count)), _count_effect(_scope);
   });
 function _createWrapper(a) {
   return { a: a };

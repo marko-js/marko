@@ -1,4 +1,4 @@
-// size: 666 (min) 332 (brotli)
+// size: 666 (min) 338 (brotli)
 const _opt$for_content = _$.value(3, (_scope, opt) => {
     _$.attr(_scope[0], "value", opt), _$.data(_scope[1], opt);
   }),
@@ -26,9 +26,9 @@ const _opt$for_content = _$.value(3, (_scope, opt) => {
       });
   }),
   _options = _$.state(4, (_scope, options) => {
-    _options_effect(_scope),
-      _options_(_scope, options?.[0]),
-      _for(_scope, [options, (v) => v]);
+    _options_(_scope, options?.[0]),
+      _for(_scope, [options, (v) => v]),
+      _options_effect(_scope);
   });
 function _valueChange(_scope) {
   return (_new_value) => {

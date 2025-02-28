@@ -41,6 +41,6 @@ UPDATE div/#text0 "0" => "1"
 
 # Mutations
 ```
-UPDATE div/#text2 "0" => "1"
 UPDATE div/#text0 "1" => "2"
+UPDATE div/#text2 "0" => "1"
 ```

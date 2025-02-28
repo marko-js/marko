@@ -1,6 +1,6 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import { type BranchScope, ResumeSymbol, type Scope } from "../common/types";
-import type { Signal, SignalOp } from "./signals";
+import type { Signal } from "./signals";
 
 interface Renders {
   (renderId: string): Render | RenderData;
@@ -101,7 +101,7 @@ class Render implements RenderData {
           commentPrefixLen + 1,
           dataIndex ? dataIndex - 1 : commentText.length,
         );
-        const scope = (scopeLookup[scopeId] ||= {} as Scope);
+        const scope = (scopeLookup[scopeId] ||= { ___id: +scopeId } as Scope);
         const data = dataIndex ? commentText.slice(dataIndex) : "";
         const token = commentText[commentPrefixLen];
 
@@ -176,6 +176,7 @@ class Render implements RenderData {
                 const scope = scopes[scopeId];
                 const prevScope = scopeLookup[scopeId];
                 scope.$global = $global;
+                scope.___id = +scopeId;
                 if (prevScope !== scope) {
                   scopeLookup[scopeId] = Object.assign(
                     scope,
@@ -193,7 +194,7 @@ class Render implements RenderData {
                 if (branchIds.has(scopeId)) {
                   const branch = scope as BranchScope;
                   const parentBranch = branch.___closestBranch;
-                  branch.___branchDepth = +scopeId;
+
                   scope.___closestBranch = branch;
                   if (parentBranch) {
                     branch.___parentBranch = parentBranch;
@@ -233,8 +234,8 @@ export function registerBoundSignal<T extends Signal<unknown>>(
   id: string,
   signal: T,
 ): T {
-  registeredValues[id] = (scope: Scope) => (valueOrOp: unknown | SignalOp) =>
-    signal(scope, valueOrOp);
+  registeredValues[id] = (scope: Scope) => (value: unknown) =>
+    signal(scope, value);
   return signal;
 }
 

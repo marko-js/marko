@@ -1,6 +1,6 @@
 import type { Scope } from "../common/types";
 import { finishPendingScopes } from "./scope";
-import { MARK, type Signal } from "./signals";
+import type { Signal } from "./signals";
 
 const enum PendingEffectOffset {
   Scope = 0,
@@ -13,46 +13,49 @@ type PendingRender = {
   ___scope: Scope;
   ___signal: Signal<any>;
   ___value: unknown;
-  ___depth: number;
-  ___index: number;
+  ___key: number;
 };
 
 let pendingRenders: PendingRender[] = [];
+let pendingRendersLookup = new Map<number, PendingRender>();
 export let pendingEffects: unknown[] = [];
 export let rendering = false;
 
-export function queueSource<T>(scope: Scope, signal: Signal<T>, value?: T) {
-  const prevRendering = rendering;
-  rendering = true;
-  signal(scope, MARK);
-  rendering = prevRendering;
-  queueRender(scope, signal, value);
-}
+export const scopeKeyOffset = 1024;
 
-export function queueRender(
+export function queueRender<T>(
   scope: Scope,
-  signal: Signal<any>,
-  value?: unknown,
+  signal: Signal<T>,
+  signalKey: number,
+  value?: T,
+  scopeKey = scope.___id,
 ) {
-  let i = pendingRenders.length;
-  const render: PendingRender = {
-    ___scope: scope,
-    ___signal: signal,
-    ___value: value,
-    ___depth: scope.___closestBranch?.___branchDepth || 0,
-    ___index: i,
-  };
+  const key = scopeKey * scopeKeyOffset + signalKey;
+  const existingRender = signalKey !== -1 && pendingRendersLookup.get(key);
 
-  pendingRenders.push(render);
-  while (i) {
-    const parentIndex = (i - 1) >> 1;
-    const parent = pendingRenders[parentIndex];
-    if (comparePendingRenders(render, parent) >= 0) break;
-    pendingRenders[i] = parent;
-    i = parentIndex;
+  if (existingRender) {
+    existingRender.___value = value;
+  } else {
+    let i = pendingRenders.length;
+    const render: PendingRender = {
+      ___scope: scope,
+      ___signal: signal,
+      ___value: value,
+      ___key: key,
+    };
+
+    pendingRendersLookup.set(key, render);
+    pendingRenders.push(render);
+    while (i) {
+      const parentIndex = (i - 1) >> 1;
+      const parent = pendingRenders[parentIndex];
+      if (comparePendingRenders(render, parent) >= 0) break;
+      pendingRenders[i] = parent;
+      i = parentIndex;
+    }
+
+    pendingRenders[i] = render;
   }
-
-  pendingRenders[i] = render;
 }
 
 export function queueEffect<S extends Scope, T extends ExecFn<S>>(
@@ -69,6 +72,7 @@ export function run() {
     runRenders();
   } finally {
     pendingRenders = [];
+    pendingRendersLookup = new Map();
     pendingEffects = [];
     rendering = false;
   }
@@ -77,9 +81,11 @@ export function run() {
 
 export function prepareEffects(fn: () => void): unknown[] {
   const prevRenders = pendingRenders;
+  const prevRendersLookup = pendingRendersLookup;
   const prevEffects = pendingEffects;
   const preparedEffects = (pendingEffects = []);
   pendingRenders = [];
+  pendingRendersLookup = new Map();
 
   try {
     rendering = true;
@@ -88,6 +94,7 @@ export function prepareEffects(fn: () => void): unknown[] {
   } finally {
     rendering = false;
     pendingRenders = prevRenders;
+    pendingRendersLookup = prevRendersLookup;
     pendingEffects = prevEffects;
   }
   return preparedEffects;
@@ -145,5 +152,5 @@ function runRenders() {
 }
 
 function comparePendingRenders(a: PendingRender, b: PendingRender) {
-  return a.___depth - b.___depth || a.___index - b.___index;
+  return a.___key - b.___key;
 }

@@ -29,26 +29,26 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     _$.write(`</li>${_$.markResumeNode(_scope1_id, "#li/0")}`);
     _$.writeEffect(_scope1_id, "__tests__/tags/comments.marko_1_open");
     _$.writeScope(_scope1_id, {
-      comment_comments: comment?.comments,
-      i: i,
-      id: id,
-      open: open,
+      "comment_comments/8": comment?.comments,
+      "i/9": i,
+      "id/11": id,
+      "open/12": open,
       "#text/4(": _ifBranch,
       "#text/4!": _$.getScopeById(_ifScopeId),
       _: _$.ensureScopeWithId(_scope0_id)
     }, "__tests__/tags/comments.marko", "2:4", {
-      comment_comments: ["comment.comments", "2:8"],
-      i: "2:17",
-      id: "3:12",
-      open: "4:10"
+      "comment_comments/8": ["comment.comments", "2:8"],
+      "i/9": "2:17",
+      "id/11": "3:12",
+      "open/12": "4:10"
     });
   }, _scope0_id, "#ul/0", 1);
   _$.write("</ul>");
   _$.writeScope(_scope0_id, {
-    input_path: input.path,
+    "input_path/4": input.path,
     "#ul/0(": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/tags/comments.marko", 0, {
-    input_path: ["input.path"]
+    "input_path/4": ["input.path"]
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/comments.marko", _renderer);

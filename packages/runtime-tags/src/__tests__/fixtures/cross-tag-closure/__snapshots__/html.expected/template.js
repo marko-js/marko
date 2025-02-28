@@ -7,7 +7,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const count = _myLet({
     value: 0
   });
-  _$.setTagVar(_scope0_id, _childScope, "__tests__/template.marko_0_count/var");
+  _$.setTagVar(_scope0_id, "#scopeOffset/1", _childScope, "__tests__/template.marko_0_count/var");
   _myTag({
     content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
       const _scope1_id = _$.nextScopeId();
@@ -21,10 +21,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     }), "__tests__/template.marko_1_renderer", _scope0_id)
   });
   _$.writeScope(_scope0_id, {
-    count: count,
+    "count/3": count,
     "#childScope/0": _$.writeExistingScope(_childScope)
   }, "__tests__/template.marko", 0, {
-    count: "1:8"
+    "count/3": "1:8"
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

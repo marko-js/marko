@@ -21,10 +21,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<button id=add>Add</button>${_$.markResumeNode(_scope0_id, "#button/1")}<button id=remove>Remove</button>${_$.markResumeNode(_scope0_id, "#button/2")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope(_scope0_id, {
-    items: items,
+    "items/3": items,
     "#text/0(": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
-    items: "3:8"
+    "items/3": "3:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

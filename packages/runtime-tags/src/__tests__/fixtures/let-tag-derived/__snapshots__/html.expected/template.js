@@ -8,9 +8,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<button>Increment</button>${_$.markResumeNode(_scope0_id, "#button/0")}${_$.escapeXML(a)}${_$.markResumeNode(_scope0_id, "#text/1")} <!>${_$.escapeXML(b)}${_$.markResumeNode(_scope0_id, "#text/2")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_b");
   _$.writeScope(_scope0_id, {
-    b: b
+    "b/6": b
   }, "__tests__/template.marko", 0, {
-    b: "2:6"
+    "b/6": "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

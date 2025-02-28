@@ -19,13 +19,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_show");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope(_scope0_id, {
-    show: show,
-    count: count,
+    "show/3": show,
+    "count/4": count,
     "#text/2(": _ifBranch,
     "#text/2!": _$.getScopeById(_ifScopeId)
   }, "__tests__/template.marko", 0, {
-    show: "1:6",
-    count: "2:6"
+    "show/3": "1:6",
+    "count/4": "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

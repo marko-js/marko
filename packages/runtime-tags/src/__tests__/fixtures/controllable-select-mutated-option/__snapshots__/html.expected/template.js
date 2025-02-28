@@ -21,12 +21,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_options");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.writeScope(_scope0_id, {
-    options: options,
-    value: value,
+    "options/4": options,
+    "value/6": value,
     "#select/0(": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
-    options: "1:6",
-    value: "2:6"
+    "options/4": "1:6",
+    "value/6": "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

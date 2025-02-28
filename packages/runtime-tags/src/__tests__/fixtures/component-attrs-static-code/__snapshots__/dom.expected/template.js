@@ -3,7 +3,6 @@ export const _walks_ = /* beginChild, _counter_walks, endChild, beginChild, _cou
 const formatNumber = _formatNumber;
 const formatNumber2 = _formatNumber2;
 import { _setup_ as _counter, _input_ as _counter_input, _template_ as _counter_template, _walks_ as _counter_walks } from "./tags/counter.marko";
-import * as _$ from "@marko/runtime-tags/debug/dom";
 export function _setup_(_scope) {
   _counter(_scope["#childScope/0"]);
   _counter(_scope["#childScope/1"]);
@@ -14,6 +13,7 @@ export function _setup_(_scope) {
     format: formatNumber2
   });
 }
+import * as _$ from "@marko/runtime-tags/debug/dom";
 function _formatNumber(n) {
   return "$" + n.toFixed(2);
 }
