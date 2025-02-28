@@ -3,22 +3,22 @@ export const _walks_ = /* get, next(1), get, out(1), replace, over(2), replace, 
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _expr_y_z = /* @__PURE__ */_$.intersection(8, _scope => {
   const {
-    "y/6": y,
-    "z/7": z
+    y,
+    z
   } = _scope;
   _a(_scope, y + z);
 });
-const _a = /* @__PURE__ */_$.value("a/9", (_scope, a) => _$.data(_scope["#text/4"], a));
-const _z = /* @__PURE__ */_$.value("z/7", (_scope, z) => {
+const _a = /* @__PURE__ */_$.value("a", (_scope, a) => _$.data(_scope["#text/4"], a));
+const _z = /* @__PURE__ */_$.value("z", (_scope, z) => {
   _$.data(_scope["#text/3"], z);
   _expr_y_z(_scope);
 });
-const _y = /* @__PURE__ */_$.value("y/6", (_scope, y) => {
+const _y = /* @__PURE__ */_$.value("y", (_scope, y) => {
   _$.data(_scope["#text/2"], y);
   _expr_y_z(_scope);
 });
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
-  "x/5": x
+  x
 }) => _$.on(_scope["#button/0"], "click", () => (_x(_scope, x + 1), x)));
 const _x = /* @__PURE__ */_$.state("x/5", (_scope, x) => {
   _$.data(_scope["#text/1"], x);

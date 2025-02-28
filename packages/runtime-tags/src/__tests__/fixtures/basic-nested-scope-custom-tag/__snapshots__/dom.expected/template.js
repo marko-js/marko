@@ -4,12 +4,12 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 import { _setup_ as _child, _input_content_ as _child_input_content, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child.marko";
 const _count$child_content_effect = _$.effect("__tests__/template.marko_1_count", (_scope, {
   _: {
-    "count/1": count
+    count
   }
 }) => _$.on(_scope["#button/0"], "click", function () {
   _count(_scope._, count + 1), count;
 }));
-const _count$child_content = _$.registerDynamicClosure("__tests__/template.marko_1_count/subscriber", "count/1", (_scope, count) => {
+const _count$child_content = _$.registerDynamicClosure("__tests__/template.marko_1_count/subscriber", "count", (_scope, count) => {
   _$.data(_scope["#text/1"], count);
   _count$child_content_effect(_scope);
 });

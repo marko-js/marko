@@ -1,12 +1,12 @@
 export const _template_ = "<div><!><button id=add>Add</button><button id=remove>Remove</button></div>";
 export const _walks_ = /* next(1), replace, over(1), get, over(1), get, out(1) */"D%b b l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _item$for_content = /* @__PURE__ */_$.value("item/2", (_scope, item) => _$.data(_scope["#text/0"], item));
-const _params_2$for_content = /* @__PURE__ */_$.value("_params_2/1", (_scope, _params_2) => _item$for_content(_scope, _params_2[0]));
+const _item$for_content = /* @__PURE__ */_$.value("item", (_scope, item) => _$.data(_scope["#text/0"], item));
+const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _item$for_content(_scope, _params_2[0]));
 const _for_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", void 0, () => _params_2$for_content);
 const _expr_id_items_effect = _$.effect("__tests__/template.marko_0_id_items", (_scope, {
-  "id/3": id,
-  "items/4": items
+  id,
+  items
 }) => _$.on(_scope["#button/1"], "click", function () {
   // TODO: nested writes ([...items, id++]) don't work
   const nextId = id + 1;
@@ -15,14 +15,14 @@ const _expr_id_items_effect = _$.effect("__tests__/template.marko_0_id_items", (
 }));
 const _expr_id_items = /* @__PURE__ */_$.intersection(5, _scope => {
   const {
-    "id/3": id,
-    "items/4": items
+    id,
+    items
   } = _scope;
   _expr_id_items_effect(_scope);
 });
 const _for = /* @__PURE__ */_$.loopOf("#text/0", _for_content);
 const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {
-  "items/4": items
+  items
 }) => _$.on(_scope["#button/2"], "click", function () {
   _items(_scope, items.slice(0, -1));
 }));

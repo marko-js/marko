@@ -32,7 +32,7 @@
     </div>
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"multiplier/1":1,"#text/0!":_.b={m5c:"s0-2","baseCount/6":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier/subscriber",2,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={1:_.a}),3,"$compat_setScope",0);M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"#text/0!":_.b={m5c:"s0-2",baseCount:0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier/subscriber",2,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={1:_.a}),3,"$compat_setScope",0);M._.w()
     </script>
   </body>
 </html>
@@ -91,7 +91,7 @@ container.querySelector("#tags").click();
     </div>
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"multiplier/1":1,"#text/0!":_.b={m5c:"s0-2","baseCount/6":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier/subscriber",2,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={1:_.a}),3,"$compat_setScope",0);M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"#text/0!":_.b={m5c:"s0-2",baseCount:0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier/subscriber",2,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={1:_.a}),3,"$compat_setScope",0);M._.w()
     </script>
   </body>
 </html>
@@ -139,7 +139,7 @@ container.querySelector("#class").click();
     </div>
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"multiplier/1":1,"#text/0!":_.b={m5c:"s0-2","baseCount/6":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier/subscriber",2,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={1:_.a}),3,"$compat_setScope",0);M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"#text/0!":_.b={m5c:"s0-2",baseCount:0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier/subscriber",2,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={1:_.a}),3,"$compat_setScope",0);M._.w()
     </script>
   </body>
 </html>
@@ -189,7 +189,7 @@ container.querySelector("#tags").click();
     </div>
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"multiplier/1":1,"#text/0!":_.b={m5c:"s0-2","baseCount/6":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier/subscriber",2,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={1:_.a}),3,"$compat_setScope",0);M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"#text/0!":_.b={m5c:"s0-2",baseCount:0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier/subscriber",2,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={1:_.a}),3,"$compat_setScope",0);M._.w()
     </script>
   </body>
 </html>
@@ -238,7 +238,7 @@ container.querySelector("#class").click();
     </div>
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"multiplier/1":1,"#text/0!":_.b={m5c:"s0-2","baseCount/6":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier/subscriber",2,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={1:_.a}),3,"$compat_setScope",0);M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"#text/0!":_.b={m5c:"s0-2",baseCount:0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier/subscriber",2,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={1:_.a}),3,"$compat_setScope",0);M._.w()
     </script>
   </body>
 </html>
@@ -288,7 +288,7 @@ container.querySelector("#tags").click();
     </div>
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"multiplier/1":1,"#text/0!":_.b={m5c:"s0-2","baseCount/6":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier/subscriber",2,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={1:_.a}),3,"$compat_setScope",0);M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"#text/0!":_.b={m5c:"s0-2",baseCount:0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier/subscriber",2,"__tests__/template.marko_1_multiplier",0];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.d={1:_.a}),3,"$compat_setScope",0);M._.w()
     </script>
   </body>
 </html>

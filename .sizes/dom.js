@@ -1,4 +1,4 @@
-// size: 17403 (min) 6569 (brotli)
+// size: 17399 (min) 6584 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1063,7 +1063,6 @@ function triggerMacroTask() {
 }
 function state(valueAccessor, fn) {
   let valueChangeAccessor = valueAccessor + "@",
-    id = valueAccessor,
     update = (scope, value2) => {
       scope[valueAccessor] !== value2 &&
         ((scope[valueAccessor] = value2), fn(scope, value2));
@@ -1078,7 +1077,7 @@ function state(valueAccessor, fn) {
         ? scope[valueChangeAccessor](value2)
         : (isScheduled ||
             ((isScheduled = !0), queueMicrotask(flushAndWaitFrame)),
-          queueRender(scope, update, id, value2)),
+          queueRender(scope, update, valueAccessor, value2)),
     value2
   );
 }

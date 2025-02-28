@@ -5,7 +5,7 @@ const tags = [customTag];
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", 0, 0, 1);
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
-  "x/3": x
+  x
 }) => _$.on(_scope["#button/0"], "click", function () {
   _x(_scope, x + 1), x;
 }));

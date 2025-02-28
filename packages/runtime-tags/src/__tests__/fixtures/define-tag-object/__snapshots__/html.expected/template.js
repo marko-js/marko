@@ -9,9 +9,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<div>${_$.escapeXML(JSON.stringify(myObj))}${_$.markResumeNode(_scope0_id, "#text/0")}</div><button>${_$.escapeXML(x)}${_$.markResumeNode(_scope0_id, "#text/2")}</button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope(_scope0_id, {
-    "x/3": x
+    x
   }, "__tests__/template.marko", 0, {
-    "x/3": "1:6"
+    x: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

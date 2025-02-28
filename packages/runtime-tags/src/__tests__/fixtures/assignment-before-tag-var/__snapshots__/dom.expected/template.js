@@ -3,7 +3,7 @@ export const _walks_ = /* get, over(1), next(1), replace, over(2), replace, out(
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _lastClickCount = /* @__PURE__ */_$.state("lastClickCount/4", (_scope, lastClickCount) => _$.data(_scope["#text/2"], lastClickCount));
 const _clickCount_effect = _$.effect("__tests__/template.marko_0_clickCount", (_scope, {
-  "clickCount/3": clickCount
+  clickCount
 }) => _$.on(_scope["#button/0"], "click", function () {
   _lastClickCount(_scope, clickCount);
   _clickCount(_scope, clickCount + 1), clickCount;

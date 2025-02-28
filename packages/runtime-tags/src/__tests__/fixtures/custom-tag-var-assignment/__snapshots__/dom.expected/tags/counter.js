@@ -2,7 +2,7 @@ export const _template_ = "<button class=inc-child> </button>";
 export const _walks_ = /* get, next(1), get, out(1) */" D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _x_effect = _$.effect("__tests__/tags/counter.marko_0_x", (_scope, {
-  "x/2": x
+  x
 }) => _$.on(_scope["#button/0"], "click", function () {
   _x(_scope, x + 1), x;
 }));

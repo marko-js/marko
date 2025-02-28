@@ -6,9 +6,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _return = x;
   _$.writeEffect(_scope0_id, "__tests__/tags/child.marko_0_x");
   _$.writeScope(_scope0_id, {
-    "x/2": x
+    x
   }, "__tests__/tags/child.marko", 0, {
-    "x/2": "1:6"
+    x: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
   return _return;

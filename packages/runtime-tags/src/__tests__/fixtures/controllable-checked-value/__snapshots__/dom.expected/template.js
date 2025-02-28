@@ -3,14 +3,14 @@ export const _walks_ = /* get, over(1), get, over(1), get, over(1), next(1), get
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _expr_checkedValue__checkedValueChange = /* @__PURE__ */_$.intersection(6, _scope => {
   const {
-    "checkedValue/4": checkedValue,
-    "_checkedValueChange/5": _checkedValueChange
+    checkedValue,
+    _checkedValueChange
   } = _scope;
   _$.controllable_input_checkedValue(_scope, "#input/0", checkedValue, _checkedValueChange, "a");
   _$.controllable_input_checkedValue(_scope, "#input/1", checkedValue, _checkedValueChange, "b");
   _$.controllable_input_checkedValue(_scope, "#input/2", checkedValue, _checkedValueChange, "c");
 });
-const _checkedValueChange2 = /* @__PURE__ */_$.value("_checkedValueChange/5", (_scope, _checkedValueChange) => _expr_checkedValue__checkedValueChange(_scope));
+const _checkedValueChange2 = /* @__PURE__ */_$.value("_checkedValueChange", (_scope, _checkedValueChange) => _expr_checkedValue__checkedValueChange(_scope));
 const _checkedValue = /* @__PURE__ */_$.state("checkedValue/4", (_scope, checkedValue) => {
   _$.data(_scope["#text/3"], checkedValue);
   _expr_checkedValue__checkedValueChange(_scope);

@@ -3,7 +3,7 @@ export const _walks_ = /* beginChild, _displayIntersection_walks, endChild, get,
 import { _setup_ as _displayIntersection, _value_ as _displayIntersection_input_value, _template_ as _displayIntersection_template, _walks_ as _displayIntersection_walks } from "./tags/display-intersection.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
-  "count/2": count
+  count
 }) => _$.on(_scope["#button/1"], "click", function () {
   _count(_scope, count + 1), count;
 }));

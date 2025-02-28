@@ -3,13 +3,13 @@ export const _walks_ = /* get, next(1), replace, over(2), replace, out(1), get, 
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _expr_x_yChange = /* @__PURE__ */_$.intersection(6, _scope => {
   const {
-    "x/4": x,
-    "yChange/5": yChange
+    x,
+    yChange
   } = _scope;
   _y(_scope, x, yChange);
 });
 const _y_effect = _$.effect("__tests__/template.marko_0_y", (_scope, {
-  "y/7": y
+  y
 }) => _$.on(_scope["#button/0"], "click", function () {
   _y(_scope, y + 1), y;
 }));

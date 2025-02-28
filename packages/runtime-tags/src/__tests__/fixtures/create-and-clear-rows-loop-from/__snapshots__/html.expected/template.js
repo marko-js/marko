@@ -11,14 +11,14 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }, _scope0_id, "#div/0", 1);
   _$.write("</div>");
   _$.writeScope(_scope0_id, {
-    "input_from/3": input.from,
-    "input_to/4": input.to,
-    "input_step/5": input.step,
+    input_from: input.from,
+    input_to: input.to,
+    input_step: input.step,
     "#div/0(": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
-    "input_from/3": ["input.from"],
-    "input_to/4": ["input.to"],
-    "input_step/5": ["input.step"]
+    input_from: ["input.from"],
+    input_to: ["input.to"],
+    input_step: ["input.step"]
   });
 });
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

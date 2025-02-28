@@ -1,16 +1,16 @@
 export const _template_ = "<!><!><!>";
 export const _walks_ = /* replace, over(1) */"D%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _i$for_content = /* @__PURE__ */_$.value("i/3", (_scope, i) => _$.data(_scope["#text/1"], i));
-const _params_2$for_content = /* @__PURE__ */_$.value("_params_2/2", (_scope, _params_2) => _i$for_content(_scope, _params_2[0]));
+const _i$for_content = /* @__PURE__ */_$.value("i", (_scope, i) => _$.data(_scope["#text/1"], i));
+const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _i$for_content(_scope, _params_2[0]));
 const _num$for_content_effect = _$.effect("__tests__/template.marko_1_num", (_scope, {
   _: {
-    "num/1": num
+    num
   }
 }) => _$.on(_scope["#button/0"], "click", function () {
   _num(_scope._, num + 1), num;
 }));
-const _num$for_content = /* @__PURE__ */_$.loopClosure("num/1", "#text/0", (_scope, num) => _num$for_content_effect(_scope));
+const _num$for_content = /* @__PURE__ */_$.loopClosure("num", "#text/0", (_scope, num) => _num$for_content_effect(_scope));
 const _setup$for_content = _scope => {
   _num$for_content._(_scope);
 };

@@ -13,13 +13,13 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_tagName");
   _$.writeScope(_scope0_id, {
-    "tagName/2": tagName,
-    "className/3": className,
+    tagName,
+    className,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(tagName)
   }, "__tests__/template.marko", 0, {
-    "tagName/2": "1:6",
-    "className/3": "2:6"
+    tagName: "1:6",
+    className: "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

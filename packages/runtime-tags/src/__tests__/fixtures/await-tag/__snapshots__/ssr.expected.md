@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div>Got: a <!>0<!--M_*2 #text/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:_.a={"count/1":0},2:{_:_.a}}),2,"__tests__/template.marko_1_count/subscriber"];M._.w()</script>
+  <div>Got: a <!>0<!--M_*2 #text/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:_.a={count:0},2:{_:_.a}}),2,"__tests__/template.marko_1_count/subscriber"];M._.w()</script>
 ```
 
 # Write
@@ -24,7 +24,7 @@
       0
       <!--M_*2 #text/1-->
       <script>
-        WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={"count/1":0},2:{_:_.a}}),2,"__tests__/template.marko_1_count/subscriber"];M._.w()
+        WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={count:0},2:{_:_.a}}),2,"__tests__/template.marko_1_count/subscriber"];M._.w()
       </script>
       <script>
         M._.r.push(_=&gt;(_.c={3:{_:_.a}}))

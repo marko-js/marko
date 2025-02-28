@@ -18,12 +18,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_list");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_open");
   _$.writeScope(_scope0_id, {
-    "open/3": open,
-    "list/4": list,
+    open,
+    list,
     "#ul/0(": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
-    "open/3": "1:6",
-    "list/4": "2:6"
+    open: "1:6",
+    list: "2:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

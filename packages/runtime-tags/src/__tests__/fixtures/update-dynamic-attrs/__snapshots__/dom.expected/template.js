@@ -4,8 +4,8 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _expr_input_value_a_effect = _$.effect("__tests__/template.marko_0_input_value_a", _scope => _$.attrsEvents(_scope, "#div/1"));
 const _expr_input_value_a = /* @__PURE__ */_$.intersection(7, _scope => {
   const {
-    "input_value/5": input_value,
-    "a/6": a
+    input_value,
+    a
   } = _scope;
   _$.attrs(_scope, "#div/1", {
     a: a,
@@ -21,7 +21,7 @@ const _input_value__effect = _$.effect("__tests__/template.marko_0_input_value",
   _$.attrsEvents(_scope, "#div/0");
   _$.attrsEvents(_scope, "#div/2");
 });
-export const _input_value_ = /* @__PURE__ */_$.value("input_value/5", (_scope, input_value) => {
+export const _input_value_ = /* @__PURE__ */_$.value("input_value", (_scope, input_value) => {
   _$.attrs(_scope, "#div/0", input_value);
   _$.partialAttrs(_scope, "#div/2", input_value, {
     a: 1
@@ -29,8 +29,8 @@ export const _input_value_ = /* @__PURE__ */_$.value("input_value/5", (_scope, i
   _expr_input_value_a(_scope);
   _input_value__effect(_scope);
 });
-export const _input_ = /* @__PURE__ */_$.value("input/4", (_scope, input) => _input_value_(_scope, input.value));
-export const _params__ = /* @__PURE__ */_$.value("_params_/3", (_scope, _params_) => _input_(_scope, _params_[0]));
+export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_value_(_scope, input.value));
+export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export function _setup_(_scope) {
   _a(_scope, 0);
 }

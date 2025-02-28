@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div class=c foo=acb bar="a d b" nested="a c nested d b"></div><!--M_*1 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={1:{"input_foo/3":"c","input_bar/4":"d"}}),0]</script>
+  <div class=c foo=acb bar="a d b" nested="a c nested d b"></div><!--M_*1 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={1:{input_foo:"c",input_bar:"d"}}),0]</script>
 ```
 
 # Render End
@@ -16,7 +16,7 @@
     />
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{"input_foo/3":"c","input_bar/4":"d"}}),0]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{input_foo:"c",input_bar:"d"}}),0]
     </script>
   </body>
 </html>

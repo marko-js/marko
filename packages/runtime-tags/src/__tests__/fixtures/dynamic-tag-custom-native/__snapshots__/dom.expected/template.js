@@ -4,7 +4,7 @@ import child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1");
 const _tagName_effect = _$.effect("__tests__/template.marko_0_tagName", (_scope, {
-  "tagName/2": tagName
+  tagName
 }) => _$.on(_scope["#button/0"], "click", function () {
   _tagName(_scope, tagName === child ? "div" : child);
 }));

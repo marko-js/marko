@@ -26,12 +26,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   });
   _$.write(`<span>${_$.escapeXML(checkedValue)}${_$.markResumeNode(_scope0_id, "#text/3")}</span>`);
   _$.writeScope(_scope0_id, {
-    "_checkedValueChange/5": _checkedValueChange,
+    _checkedValueChange,
     "#childScope/0": _$.writeExistingScope(_childScope),
     "#childScope/1": _$.writeExistingScope(_childScope2),
     "#childScope/2": _$.writeExistingScope(_childScope3)
   }, "__tests__/template.marko", 0, {
-    "_checkedValueChange/5": 0
+    _checkedValueChange: 0
   });
   _$.resumeClosestBranch(_scope0_id);
 });

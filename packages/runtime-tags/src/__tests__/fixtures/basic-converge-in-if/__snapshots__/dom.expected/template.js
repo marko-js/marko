@@ -4,14 +4,14 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _expr_a_b$if_content = /* @__PURE__ */_$.intersection(1, _scope => {
   const {
     _: {
-      "a/1": a,
-      "b/2": b
+      a,
+      b
     }
   } = _scope;
   _$.data(_scope["#text/0"], a + b);
 });
-const _b$if_content = /* @__PURE__ */_$.conditionalClosure("b/2", "#text/0", 0, (_scope, b) => _expr_a_b$if_content(_scope));
-const _a$if_content = /* @__PURE__ */_$.conditionalClosure("a/1", "#text/0", 0, (_scope, a) => _expr_a_b$if_content(_scope));
+const _b$if_content = /* @__PURE__ */_$.conditionalClosure("b", "#text/0", 0, (_scope, b) => _expr_a_b$if_content(_scope));
+const _a$if_content = /* @__PURE__ */_$.conditionalClosure("a", "#text/0", 0, (_scope, a) => _expr_a_b$if_content(_scope));
 const _setup$if_content = _scope => {
   _a$if_content._(_scope);
   _b$if_content._(_scope);

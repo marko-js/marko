@@ -3,7 +3,7 @@ export const _walks_ = /* get, over(1) */" b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _htmlStyle_content = _$.registerContent("__tests__/template.marko_1_renderer");
 const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
-  "count/1": count
+  count
 }) => _$.on(_scope["#style/0"], "click", function () {
   _count(_scope, count + 1), count;
 }));

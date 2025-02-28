@@ -21,8 +21,8 @@ const _setup$tagSelect_content = _scope => {
 const _tagSelect_content = _$.registerContent("__tests__/template.marko_1_renderer", "<option>A</option><option>B</option><option>C</option>", /* get, over(1), get, over(1), get */" b b ", _setup$tagSelect_content);
 const _expr_value_tag = /* @__PURE__ */_$.intersection(4, _scope => {
   const {
-    "value/2": value,
-    "tag/3": tag
+    value,
+    tag
   } = _scope;
   _dynamicTag(_scope, tag ? "select" : {}, () => ({
     value,
@@ -30,7 +30,7 @@ const _expr_value_tag = /* @__PURE__ */_$.intersection(4, _scope => {
   }));
 });
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _tagSelect_content);
-const _tag = /* @__PURE__ */_$.value("tag/3", (_scope, tag) => _expr_value_tag(_scope));
+const _tag = /* @__PURE__ */_$.value("tag", (_scope, tag) => _expr_value_tag(_scope));
 const _value = /* @__PURE__ */_$.state("value/2", (_scope, value) => {
   _$.data(_scope["#text/1"], value);
   _expr_value_tag(_scope);

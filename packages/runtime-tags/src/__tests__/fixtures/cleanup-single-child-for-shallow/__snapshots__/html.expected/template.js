@@ -23,12 +23,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }, _scope0_id, "#text/2");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope(_scope0_id, {
-    "items/3": items,
-    "write/4": write,
+    items,
+    write,
     "#text/2(": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
-    "items/3": "1:6",
-    "write/4": "5:8"
+    items: "1:6",
+    write: "5:8"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

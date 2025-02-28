@@ -2,9 +2,9 @@ export const _template_ = "<div id=ref></div><button id=increment>Increment</but
 export const _walks_ = /* over(1), get, over(1) */"b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
-  "x/1": x
+  x
 }) => {
-  _$.lifecycle(_scope, "_lifecycle/3", {
+  _$.lifecycle(_scope, "_lifecycle", {
     onMount: function () {
       this.onUpdate();
     },

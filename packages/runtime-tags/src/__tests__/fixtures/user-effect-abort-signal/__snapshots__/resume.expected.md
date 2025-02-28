@@ -13,7 +13,7 @@
       <!--M_*1 #text/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{"input_value/4":0}}),1,"__tests__/template.marko_0_input_value",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{input_value:0}}),1,"__tests__/template.marko_0_input_value",0];M._.w()
     </script>
   </body>
 </html>
@@ -34,7 +34,7 @@
       <!--M_*1 #text/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{"input_value/4":0}}),1,"__tests__/template.marko_0_input_value",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{input_value:0}}),1,"__tests__/template.marko_0_input_value",0];M._.w()
     </script>
   </body>
 </html>

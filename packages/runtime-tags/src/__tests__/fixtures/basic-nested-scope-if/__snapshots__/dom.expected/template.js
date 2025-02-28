@@ -1,19 +1,19 @@
 export const _template_ = "<div><!></div>";
 export const _walks_ = /* next(1), replace, out(1) */"D%l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _clickCount$else_content = /* @__PURE__ */_$.conditionalClosure("clickCount/1", "#text/0", 1, (_scope, clickCount) => _$.data(_scope["#text/0"], clickCount));
+const _clickCount$else_content = /* @__PURE__ */_$.conditionalClosure("clickCount", "#text/0", 1, (_scope, clickCount) => _$.data(_scope["#text/0"], clickCount));
 const _setup$else_content = _scope => {
   _clickCount$else_content._(_scope);
 };
 const _else_content = /* @__PURE__ */_$.createRenderer("<span>The button was clicked <!> times.</span>", /* next(1), over(1), replace */"Db%", _setup$else_content);
 const _clickCount$if_content_effect = _$.effect("__tests__/template.marko_1_clickCount", (_scope, {
   _: {
-    "clickCount/1": clickCount
+    clickCount
   }
 }) => _$.on(_scope["#button/0"], "click", function () {
   _clickCount(_scope._, clickCount + 1), clickCount;
 }));
-const _clickCount$if_content = /* @__PURE__ */_$.conditionalClosure("clickCount/1", "#text/0", 0, (_scope, clickCount) => {
+const _clickCount$if_content = /* @__PURE__ */_$.conditionalClosure("clickCount", "#text/0", 0, (_scope, clickCount) => {
   _$.data(_scope["#text/1"], clickCount);
   _clickCount$if_content_effect(_scope);
 });

@@ -1,12 +1,12 @@
 export const _template_ = "<ul></ul><button id=toggle>Toggle</button><button id=reverse>Reverse</button>";
 export const _walks_ = /* get, over(1), get, over(1), get, over(1) */" b b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _x$for_content = /* @__PURE__ */_$.value("x/2", (_scope, x) => _$.data(_scope["#text/0"], x));
-const _params_2$for_content = /* @__PURE__ */_$.value("_params_2/1", (_scope, _params_2) => _x$for_content(_scope, _params_2[0]));
+const _x$for_content = /* @__PURE__ */_$.value("x", (_scope, x) => _$.data(_scope["#text/0"], x));
+const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _x$for_content(_scope, _params_2[0]));
 const _for_content = /* @__PURE__ */_$.createRenderer("<li> </li>", /* next(1), get */"D ", void 0, () => _params_2$for_content);
 const _for = /* @__PURE__ */_$.loopOf("#ul/0", _for_content);
 const _list_effect = _$.effect("__tests__/template.marko_0_list", (_scope, {
-  "list/4": list
+  list
 }) => _$.on(_scope["#button/2"], "click", function () {
   _list(_scope, [].concat(list).reverse());
 }));
@@ -17,7 +17,7 @@ const _list = /* @__PURE__ */_$.state("list/4", (_scope, list) => {
   _list_effect(_scope);
 });
 const _open_effect = _$.effect("__tests__/template.marko_0_open", (_scope, {
-  "open/3": open
+  open
 }) => _$.on(_scope["#button/1"], "click", function () {
   _open(_scope, !open);
 }));

@@ -9,7 +9,7 @@
       <!--M_]1 #div/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{"value1/4":"Hello","value2/5":"World"}}),0]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{value1:"Hello",value2:"World"}}),0]
     </script>
   </body>
 </html>

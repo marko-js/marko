@@ -3,7 +3,7 @@ export const _walks_ = /* next(1), get, out(1), next(1), get, out(1) */"D lD l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _y = /* @__PURE__ */_$.state("y/3", (_scope, y) => _$.data(_scope["#text/1"], y));
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
-  "x/2": x
+  x
 }) => {
   _y(_scope, x);
   _x(_scope, 2);

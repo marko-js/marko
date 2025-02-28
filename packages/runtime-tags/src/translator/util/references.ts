@@ -810,20 +810,26 @@ export function getAllTagReferenceNodes(
   return referenceNodes;
 }
 
-export function getScopeAccessorLiteral(binding: Binding) {
+export function getScopeAccessorLiteral(binding: Binding, includeId?: boolean) {
   if (isOptimize()) {
     return t.numericLiteral(binding.id);
   }
 
-  return t.stringLiteral(binding.name + `/${binding.id}`);
+  return t.stringLiteral(
+    binding.name +
+      (includeId || binding.type === BindingType.dom ? `/${binding.id}` : ""),
+  );
 }
 
-export function getScopeAccessor(binding: Binding) {
+export function getScopeAccessor(binding: Binding, includeId?: boolean) {
   if (isOptimize()) {
     return binding.id + "";
   }
 
-  return binding.name + `/${binding.id}`;
+  return (
+    binding.name +
+    (includeId || binding.type === BindingType.dom ? `/${binding.id}` : "")
+  );
 }
 
 export function getReadReplacement(node: t.Identifier | t.MemberExpression) {

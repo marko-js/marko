@@ -3,8 +3,8 @@ export const _walks_ = /* over(1) */"b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _expr_x_y = /* @__PURE__ */_$.intersection(2, _scope => {
   const {
-    "x/0": x,
-    "y/1": y
+    x,
+    y
   } = _scope;
   _$.tagVarSignal(_scope, x + y);
 });

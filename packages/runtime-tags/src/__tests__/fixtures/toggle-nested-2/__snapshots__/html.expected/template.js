@@ -37,15 +37,15 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write("</div>");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_outer");
   _$.writeScope(_scope0_id, {
-    "outer/2": outer,
-    "inner/3": inner,
-    "count/4": count,
+    outer,
+    inner,
+    count,
     "#text/1(": _ifBranch2,
     "#text/1!": _$.getScopeById(_ifScopeId2)
   }, "__tests__/template.marko", 0, {
-    "outer/2": "1:6",
-    "inner/3": "2:6",
-    "count/4": "3:6"
+    outer: "1:6",
+    inner: "2:6",
+    count: "3:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

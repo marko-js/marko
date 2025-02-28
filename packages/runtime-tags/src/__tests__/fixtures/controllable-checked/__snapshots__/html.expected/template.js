@@ -7,9 +7,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }, "__tests__/template.marko_0/checkedChange", _scope0_id))} type=checkbox>${_$.markResumeNode(_scope0_id, "#input/0")}<span>${_$.escapeXML(String(checked))}${_$.markResumeNode(_scope0_id, "#text/1")}</span>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.writeScope(_scope0_id, {
-    "checked/2": checked
+    checked
   }, "__tests__/template.marko", 0, {
-    "checked/2": "1:6"
+    checked: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

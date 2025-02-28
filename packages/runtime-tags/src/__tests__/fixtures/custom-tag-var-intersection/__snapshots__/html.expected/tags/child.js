@@ -6,11 +6,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _return = x + input.extra;
   _$.writeEffect(_scope0_id, "__tests__/tags/child.marko_0_x");
   _$.writeScope(_scope0_id, {
-    "input_extra/4": input.extra,
-    "x/5": x
+    input_extra: input.extra,
+    x
   }, "__tests__/tags/child.marko", 0, {
-    "input_extra/4": ["input.extra"],
-    "x/5": "1:6"
+    input_extra: ["input.extra"],
+    x: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
   return _return;

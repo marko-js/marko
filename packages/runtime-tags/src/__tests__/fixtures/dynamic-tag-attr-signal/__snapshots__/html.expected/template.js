@@ -5,9 +5,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<p${_$.classAttr(className)}>paragraph</p>${_$.markResumeNode(_scope0_id, "#p/0")}<button></button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_className");
   _$.writeScope(_scope0_id, {
-    "className/2": className
+    className
   }, "__tests__/template.marko", 0, {
-    "className/2": "1:6"
+    className: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

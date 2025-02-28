@@ -4,8 +4,8 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _tagName_content = _$.registerContent("__tests__/template.marko_1_renderer", "body content");
 const _expr_tagName_className = /* @__PURE__ */_$.intersection(4, _scope => {
   const {
-    "tagName/2": tagName,
-    "className/3": className
+    tagName,
+    className
   } = _scope;
   _dynamicTag(_scope, tagName, () => ({
     class: className
@@ -14,7 +14,7 @@ const _expr_tagName_className = /* @__PURE__ */_$.intersection(4, _scope => {
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _tagName_content);
 const _className = /* @__PURE__ */_$.state("className/3", (_scope, className) => _expr_tagName_className(_scope));
 const _tagName_effect = _$.effect("__tests__/template.marko_0_tagName", (_scope, {
-  "tagName/2": tagName
+  tagName
 }) => _$.on(_scope["#button/1"], "click", function () {
   _tagName(_scope, tagName === "span" ? "div" : "span");
 }));

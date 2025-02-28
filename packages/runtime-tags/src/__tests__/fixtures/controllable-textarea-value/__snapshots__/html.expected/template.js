@@ -7,9 +7,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }, "__tests__/template.marko_0/valueChange", _scope0_id))}</textarea>${_$.markResumeNode(_scope0_id, "#textarea/0")}<span>${_$.escapeXML(value)}${_$.markResumeNode(_scope0_id, "#text/1")}</span>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.writeScope(_scope0_id, {
-    "value/2": value
+    value
   }, "__tests__/template.marko", 0, {
-    "value/2": "1:6"
+    value: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

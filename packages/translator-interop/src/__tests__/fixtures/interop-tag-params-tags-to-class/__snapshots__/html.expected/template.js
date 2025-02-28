@@ -11,20 +11,20 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1_multiplier/subscriber");
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1_multiplier");
     _$.writeScope(_scope1_id, {
-      "baseCount/6": baseCount,
+      baseCount,
       _: _$.ensureScopeWithId(_scope0_id)
     }, "__tests__/template.marko", "2:2", {
-      "baseCount/6": "2:15"
+      baseCount: "2:15"
     });
     _$.resumeClosestBranch(_scope1_id);
   }), "__tests__/template.marko_1_renderer", _scope0_id));
   _s(_classLayout, "__tests__/components/class-layout.marko");
   _$.writeScope(_scope0_id, {
-    "multiplier/1": multiplier,
+    multiplier,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
     "#text/0(": _$.normalizeDynamicRenderer(_classLayout)
   }, "__tests__/template.marko", 0, {
-    "multiplier/1": "1:6"
+    multiplier: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

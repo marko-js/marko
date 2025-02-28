@@ -17,10 +17,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`<button>Toggle</button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_selected");
   _$.writeScope(_scope0_id, {
-    "selected/2": selected,
+    selected,
     "#childScope/0": _$.writeExistingScope(_childScope)
   }, "__tests__/template.marko", 0, {
-    "selected/2": "1:6"
+    selected: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });

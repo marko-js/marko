@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _y = /* @__PURE__ */_$.state("y/1", (_scope, y) => {
   debugger;
 });
-const _x = /* @__PURE__ */_$.value("x/0", (_scope, x) => {
+const _x = /* @__PURE__ */_$.value("x", (_scope, x) => {
   debugger;
 });
 export function _setup_(_scope) {
