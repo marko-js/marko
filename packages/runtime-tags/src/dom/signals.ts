@@ -4,11 +4,10 @@ import { queueEffect, queueRender, rendering } from "./queue";
 import { register } from "./resume";
 import { schedule } from "./schedule";
 
-export type SignalFn<T> = (scope: Scope, value: T) => void;
+export type SignalFn<T> = (scope: Scope, value?: T) => void;
 export type Signal<T> = SignalFn<T> & {
   ___subscribe?(scope: Scope): void;
 };
-type Closure = Signal<never> & { _: SignalFn<never> };
 
 export function state<T>(valueAccessor: Accessor, fn: SignalFn<T>) {
   if (MARKO_DEBUG) {
@@ -23,7 +22,7 @@ export function state<T>(valueAccessor: Accessor, fn: SignalFn<T>) {
   }
 
   const valueChangeAccessor = valueAccessor + AccessorChar.TagVariableChange;
-  const update = (scope: Scope, value: T) => {
+  const update = (scope: Scope, value?: T) => {
     if (scope[valueAccessor] !== value) {
       scope[valueAccessor] = value;
       fn(scope, value);
@@ -72,10 +71,19 @@ let accessorId = 0;
 export function intersection(
   id: number,
   fn: SignalFn<never>,
+  defaultPending: number = 1,
   scopeIdAccessor: Accessor = /*@__KEY__*/ "___id",
 ): Signal<never> {
   return (scope) => {
-    queueRender(scope, fn as any, id, 0, scope[scopeIdAccessor]);
+    if (scope.___pending) {
+      if (scope[id] === undefined) {
+        scope[id] = defaultPending;
+      } else if (!--scope[id]) {
+        fn(scope);
+      }
+    } else {
+      queueRender(scope, fn as any, id, 0, scope[scopeIdAccessor]);
+    }
   };
 }
 
@@ -199,16 +207,6 @@ function closure<T>(
   return (scope) => {
     fn(scope, (getOwnerScope ? getOwnerScope(scope) : scope._!)[valueAccessor]);
   };
-}
-
-export function setupClosures(scope: Scope, ...closures: Closure[]) {
-  queueRender(scope, runClosures, -1, closures);
-}
-
-function runClosures(scope: Scope, closures: any[]) {
-  for (const closure of closures) {
-    closure._(scope);
-  }
 }
 
 export function setTagVar(

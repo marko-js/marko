@@ -1,4 +1,4 @@
-// size: 17399 (min) 6584 (brotli)
+// size: 17441 (min) 6584 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1088,9 +1088,13 @@ function value(valueAccessor, fn = () => {}) {
   };
 }
 var accessorId = 0;
-function intersection(id, fn, scopeIdAccessor = "d") {
+function intersection(id, fn, defaultPending = 1, scopeIdAccessor = "d") {
   return (scope) => {
-    queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
+    scope.f
+      ? void 0 === scope[id]
+        ? (scope[id] = defaultPending)
+        : --scope[id] || fn(scope)
+      : queueRender(scope, fn, id, 0, scope[scopeIdAccessor]);
   };
 }
 function loopClosure(valueAccessor, ownerLoopNodeAccessor, fn) {

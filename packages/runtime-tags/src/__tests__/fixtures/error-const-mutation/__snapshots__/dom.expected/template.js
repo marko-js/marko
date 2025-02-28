@@ -9,7 +9,7 @@ const _expr_user_fullName_user_firstName_user_middleName_user_lastName = /* @__P
     user_lastName
   } = _scope;
   _fullName(_scope, user_fullName = `${user_firstName} ${user_middleName} ${user_lastName}`);
-});
+}, 3);
 const _fullName = /* @__PURE__ */_$.value("fullName", (_scope, fullName) => _$.data(_scope["#text/0"], fullName));
 const _user_lastName = /* @__PURE__ */_$.value("user_lastName", (_scope, user_lastName) => _expr_user_fullName_user_firstName_user_middleName_user_lastName(_scope));
 const _user_middleName = /* @__PURE__ */_$.value("user_middleName", (_scope, user_middleName) => _expr_user_fullName_user_firstName_user_middleName_user_lastName(_scope));

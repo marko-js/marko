@@ -8,7 +8,7 @@ const _expr_input_content_x_y = /* @__PURE__ */_$.intersection(10, _scope => {
     y
   } = _scope;
   _dynamicTag(_scope, input_content, () => [x, y]);
-});
+}, 2);
 const _expr_x_y_effect = _$.effect("__tests__/tags/custom-tag.marko_0_x_y", (_scope, {
   x,
   y
