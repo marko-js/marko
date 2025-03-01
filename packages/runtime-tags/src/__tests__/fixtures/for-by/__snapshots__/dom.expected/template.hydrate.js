@@ -1,4 +1,4 @@
-// size: 1157 (min) 371 (brotli)
+// size: 1132 (min) 369 (brotli)
 const getStringBy = _getStringBy,
   getFunctionBy = _getFunctionBy,
   getMissingBy = _getMissingBy,
@@ -9,12 +9,7 @@ const getStringBy = _getStringBy,
   _params_6$for_content = _$.value(1, (_scope, _params_6) =>
     _pattern_5$for_content(_scope, _params_6?.[0]),
   ),
-  _for_content5 = _$.createRenderer(
-    " ",
-    " ",
-    void 0,
-    () => _params_6$for_content,
-  ),
+  _for_content5 = _$.createRenderer(" ", " ", 0, () => _params_6$for_content),
   _text$for_content4 = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
   _pattern_4$for_content = _$.value(2, (_scope, _pattern_4) =>
     _text$for_content4(_scope, _pattern_4.text),
@@ -22,12 +17,7 @@ const getStringBy = _getStringBy,
   _params_5$for_content = _$.value(1, (_scope, _params_5) =>
     _pattern_4$for_content(_scope, _params_5?.[0]),
   ),
-  _for_content4 = _$.createRenderer(
-    " ",
-    " ",
-    void 0,
-    () => _params_5$for_content,
-  ),
+  _for_content4 = _$.createRenderer(" ", " ", 0, () => _params_5$for_content),
   _text$for_content3 = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
   _pattern_3$for_content = _$.value(2, (_scope, _pattern_3) =>
     _text$for_content3(_scope, _pattern_3.text),
@@ -35,12 +25,7 @@ const getStringBy = _getStringBy,
   _params_4$for_content = _$.value(1, (_scope, _params_4) =>
     _pattern_3$for_content(_scope, _params_4?.[0]),
   ),
-  _for_content3 = _$.createRenderer(
-    " ",
-    " ",
-    void 0,
-    () => _params_4$for_content,
-  ),
+  _for_content3 = _$.createRenderer(" ", " ", 0, () => _params_4$for_content),
   _text$for_content2 = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
   _pattern_2$for_content = _$.value(2, (_scope, _pattern_2) =>
     _text$for_content2(_scope, _pattern_2.text),
@@ -48,12 +33,7 @@ const getStringBy = _getStringBy,
   _params_3$for_content = _$.value(1, (_scope, _params_3) =>
     _pattern_2$for_content(_scope, _params_3?.[0]),
   ),
-  _for_content2 = _$.createRenderer(
-    " ",
-    " ",
-    void 0,
-    () => _params_3$for_content,
-  ),
+  _for_content2 = _$.createRenderer(" ", " ", 0, () => _params_3$for_content),
   _text$for_content = _$.value(3, (_scope, text) => _$.data(_scope[0], text)),
   _pattern_$for_content = _$.value(2, (_scope, _pattern_) =>
     _text$for_content(_scope, _pattern_.text),
@@ -61,12 +41,7 @@ const getStringBy = _getStringBy,
   _params_2$for_content = _$.value(1, (_scope, _params_2) =>
     _pattern_$for_content(_scope, _params_2?.[0]),
   ),
-  _for_content = _$.createRenderer(
-    " ",
-    " ",
-    void 0,
-    () => _params_2$for_content,
-  ),
+  _for_content = _$.createRenderer(" ", " ", 0, () => _params_2$for_content),
   _for5 = _$.loopOf(4, _for_content5),
   _for4 = _$.loopOf(3, _for_content4),
   _for3 = _$.loopOf(2, _for_content3),

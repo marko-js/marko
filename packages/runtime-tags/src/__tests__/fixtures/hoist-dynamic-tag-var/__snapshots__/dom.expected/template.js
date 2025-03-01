@@ -7,7 +7,7 @@ const _setup$if_content5_effect = _$.effect("__tests__/template.marko_5", _scope
 const _setup$if_content5 = _scope => {
   _setup$if_content5_effect(_scope);
 };
-const _if_content5 = /* @__PURE__ */_$.createRenderer(void 0, void 0, _setup$if_content5);
+const _if_content5 = /* @__PURE__ */_$.createRenderer(0, 0, _setup$if_content5);
 const _get_hoisted_setHtml = _$.hoist("setHtml3", "#text/3!");
 const _dynamicTag$if_content3 = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => _setHtml3$if_content);
 const _setHtml3$if_content = _$.registerBoundSignal("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_$.value("setHtml3"));

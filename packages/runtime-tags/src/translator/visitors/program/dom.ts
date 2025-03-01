@@ -53,7 +53,15 @@ export default {
             t.arrowFunctionExpression([], tagParamsSignal.identifier);
           const identifier = t.identifier(childSection.name);
           const renderer = getSectionParentIsOwner(childSection)
-            ? callRuntime("createRenderer", writes, walks, setup, params)
+            ? callRuntime(
+                "createRenderer",
+                ...replaceNullishAndEmptyFunctionsWith0([
+                  writes,
+                  walks,
+                  setup,
+                  params,
+                ]),
+              )
             : callRuntime(
                 !childSection.isBranch && isStatefulSection(childSection)
                   ? "registerContent"

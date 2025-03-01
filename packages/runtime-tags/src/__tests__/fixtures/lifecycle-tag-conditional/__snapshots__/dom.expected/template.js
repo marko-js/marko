@@ -20,7 +20,7 @@ const _x$if_content = /* @__PURE__ */_$.conditionalClosure("x", "#text/0", 0, (_
 const _setup$if_content = _scope => {
   _x$if_content._(_scope);
 };
-const _if_content = /* @__PURE__ */_$.createRenderer(void 0, void 0, _setup$if_content);
+const _if_content = /* @__PURE__ */_$.createRenderer(0, 0, _setup$if_content);
 const _if = /* @__PURE__ */_$.conditional("#text/0", _if_content);
 const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
   show
