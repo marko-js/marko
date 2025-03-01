@@ -5,13 +5,21 @@
   <head />
   <body>
     <div>
-      Hello World
+      Hello world
     </div>
-    <!--M_*3 #div/0-->
+    <!--M_*4 #div/0-->
     <!--M_|2 #text/0 3-->
     <!--M_|1 #text/0 2-->
+    <div>
+      Hello world
+    </div>
+    <!--M_*8 #div/0-->
+    <div>
+      Hello world
+    </div>
+    <!--M_*11 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.a={input_show:!0,"#text/0(":0,"#text/0!":_.b={"#text/0(":0,"#text/0!":_.c={}}},2:_.b,3:_.c},_.b._=_.a,_.a._hoisted_el=_._["__tests__/template.marko_0/_hoisted_el"](_.a),_.d),1,"__tests__/template.marko_0__hoisted_el",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.k={1:_.c={input_show:!0,"#text/0(":0,"#text/0!":_.d={"#text/0(":0,"#text/0!":_.a={"#scopeOffset/1":5,"#childScope/0":_.b={},setHtml:_._["__tests__/tags/child.marko_0/_return"](_.b)}},"#childScope/1":_.e={},"#text/2!":_.f={"#scopeOffset/1":9,"#childScope/0":_.g={},setHtml2:_._["__tests__/tags/child.marko_0/_return"](_.g)},"#text/3!":_.h={"#scopeOffset/1":12,"#childScope/0":_.i={},setHtml3:_._["__tests__/tags/child.marko_0/_return"](_.i)},"#text/4!":_.j={}},2:_.d,3:_.a,4:_.b,6:_.e,7:_.f,8:_.g,10:_.h,11:_.i,13:_.j},_.b["/"]=_._["__tests__/template.marko_2_setHtml/var"](_.a),_.d._=_.j._=_.c,_.e.input_value=_._["__tests__/template.marko_0/_hoisted_setHtml"](_.c),_.g["/"]=_._["__tests__/template.marko_3_setHtml2/var"](_.f),_.i["/"]=_._["__tests__/template.marko_4_setHtml3/var"](_.h),_.k),6,"__tests__/tags/thing.marko_0_input_value",13,"__tests__/template.marko_5",1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -20,5 +28,7 @@
 # Mutations
 ```
 INSERT html/body/#text
-INSERT html/body/div/#text
+INSERT html/body/div2/#text
+INSERT html/body/div0/#text
+INSERT html/body/div1/#text
 ```

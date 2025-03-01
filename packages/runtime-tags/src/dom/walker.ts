@@ -26,7 +26,7 @@ export const walker = /* @__PURE__ */ document.createTreeWalker(document);
 
 export function trimWalkString(walkString: string): string {
   let end = walkString.length;
-  while (walkString.charCodeAt(--end) > WalkCode.BeginChild);
+  while (walkString.charCodeAt(--end) > WalkCode.DynamicTagWithVar);
   return walkString.slice(0, end + 1);
 }
 

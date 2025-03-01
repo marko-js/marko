@@ -4,7 +4,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   _$.writeEffect(_scope0_id, "__tests__/tags/child.marko_0_input");
   _$.writeScope(_scope0_id, {
-    input: input
+    input
   }, "__tests__/tags/child.marko", 0, {
     input: 0
   });

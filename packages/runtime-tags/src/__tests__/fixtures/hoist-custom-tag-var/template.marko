@@ -1,5 +1,30 @@
-<child/setHtml />
+<if=input.show>
+  <if=input.show>
+    <child/setHtml />
+  </if>
+</if>
+
+<thing=setHtml />
 
 <script>
   setHtml("Hello world");
 </script>
+
+<if=true>
+  <child/setHtml2 />
+</if>
+
+<script>
+  setHtml2("Hello world");
+</script>
+
+
+<if=true>
+  <child/setHtml3 />
+</if>
+
+<if=true>
+  <script>
+    setHtml3("Hello world");
+  </script>
+</if>

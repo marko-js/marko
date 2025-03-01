@@ -123,18 +123,30 @@ export function registerContent(
   template?: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
-  getArgs?: () => Signal<unknown>,
+  getArgs?: (() => Signal<unknown>) | 0,
+  dynamicScopesAccessor?: Accessor,
 ) {
-  return register(id, createContent(id, template, walks, setup, getArgs));
+  return register(
+    id,
+    createContent(id, template, walks, setup, getArgs, dynamicScopesAccessor),
+  );
 }
 
 export function createRenderer(
   template?: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
-  getArgs?: () => Signal<unknown>,
+  getArgs?: (() => Signal<unknown>) | 0,
+  dynamicScopesAccessor?: Accessor,
 ) {
-  return createContent("", template, walks, setup, getArgs)();
+  return createContent(
+    "",
+    template,
+    walks,
+    setup,
+    getArgs,
+    dynamicScopesAccessor,
+  )();
 }
 
 const cloneCache: Partial<

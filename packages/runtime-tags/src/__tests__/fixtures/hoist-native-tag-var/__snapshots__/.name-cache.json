@@ -3,7 +3,9 @@
     "props": {
       "$_$": "o",
       "$init": "m",
-      "$id": "e"
+      "$id": "e",
+      "$_get_hoisted_el": "t",
+      "$_get_hoisted_el2": "r"
     }
   }
 }

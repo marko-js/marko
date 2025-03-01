@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getTemplateId } from "@marko/compiler/babel-utils";
 
+import { AccessorChar } from "../../common/types";
 import { toAccess } from "../../html/serializer";
 import { getSectionReturnValueIdentifier } from "../core/return";
 import {
@@ -21,11 +22,15 @@ import {
   getReadReplacement,
   getScopeAccessor,
   getScopeAccessorLiteral,
+  getSectionInParent,
+  getSectionScopeAccessor,
+  getSectionScopeAccessorLiteral,
   intersectionMeta,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
   type ReferencedBindings,
 } from "./references";
+import { getRegisterState } from "./registration";
 import { callRuntime } from "./runtime";
 import { createScopeReadPattern, getScopeExpression } from "./scope-read";
 import {
@@ -117,6 +122,27 @@ export const [getHTMLSectionStatements] = createSectionState<t.Statement[]>(
   "htmlScopeStatements",
   () => [],
 );
+
+const [getHoistFunctionsIdsMap] = createSectionState<
+  Map<Binding, t.Identifier>
+>("hoistFunctionsIdsMap", () => new Map());
+
+export function getHoistFunctionIdentifier(
+  binding: Binding,
+  hoistedBinding: Binding,
+) {
+  const idsMap = getHoistFunctionsIdsMap(hoistedBinding.section);
+  let identifier = idsMap.get(binding);
+  if (!identifier) {
+    idsMap.set(
+      binding,
+      (identifier = currentProgramPath.scope.generateUidIdentifier(
+        `get${hoistedBinding.name}`,
+      )),
+    );
+  }
+  return identifier;
+}
 
 const unimplementedBuild = () => {
   return t.stringLiteral("SIGNAL NOT INITIALIZED");
@@ -296,7 +322,7 @@ export function initValue(
     const needsCache = needsGuard || signal.intersection;
     // TODO: marks not used anymore. can remove?
     const needsMarks = isParamBinding || signal.intersection;
-    if (needsCache || needsMarks) {
+    if (needsCache || needsMarks || binding.hoists.size) {
       return callRuntime(
         runtimeHelper,
         getScopeAccessorLiteral(binding, runtimeHelper === "state"),
@@ -704,6 +730,56 @@ export function getRegisterUID(section: Section, name: string) {
 }
 
 export function writeSignals(section: Section) {
+  forEach(section.hoisted, (binding) => {
+    for (const hoistedBinding of binding.hoists.values()) {
+      const accessors: t.Expression[] = [
+        binding.type === BindingType.dom
+          ? t.stringLiteral(getScopeAccessor(binding) + AccessorChar.Getter)
+          : getScopeAccessorLiteral(binding),
+      ];
+      let currentSection: Section | undefined = section;
+      while (currentSection && currentSection !== hoistedBinding.section) {
+        const parentSection: Section | undefined = currentSection.parent;
+        if (parentSection) {
+          accessors.push(getSectionScopeAccessorLiteral(currentSection)!);
+        }
+        currentSection = parentSection;
+      }
+
+      const hoistIdentifier = getHoistFunctionIdentifier(
+        binding,
+        hoistedBinding,
+      );
+
+      const registerId = getRegisterState().get(hoistedBinding);
+
+      currentProgramPath.pushContainer(
+        "body",
+        t.variableDeclaration("const", [
+          t.variableDeclarator(
+            hoistIdentifier,
+            registerId
+              ? callRuntime(
+                  "register",
+                  t.stringLiteral(registerId),
+                  callRuntime("hoist", ...accessors),
+                )
+              : callRuntime("hoist", ...accessors),
+          ),
+        ]),
+      );
+
+      if (hoistedBinding.downstreamExpressions.size) {
+        addValue(
+          hoistedBinding.section,
+          undefined,
+          initValue(hoistedBinding),
+          t.callExpression(hoistIdentifier, [scopeIdentifier]),
+        );
+      }
+    }
+  });
+
   const signals = [...getSignals(section).values()].sort(sortSignals);
   for (const signal of signals) {
     traverseReplace(signal, "render", replaceRenderNode);
@@ -971,6 +1047,72 @@ export function writeHTMLResumeStatements(
           ),
         );
       }
+    }
+  });
+
+  const sectionDynamicSubscribers = new Set<Section>();
+  forEach(section.hoisted, (binding) => {
+    for (const hoistedBinding of binding.hoists.values()) {
+      const hoistSection = hoistedBinding.section;
+      const registerId = getRegisterState().get(hoistedBinding);
+      if (registerId) {
+        getHTMLSectionStatements(hoistSection).push(
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              t.identifier(hoistedBinding.name),
+              callRuntime(
+                "hoist",
+                getScopeIdIdentifier(hoistSection),
+                t.stringLiteral(registerId),
+              ),
+            ),
+          ]),
+        );
+      }
+
+      let currentSection: Section | undefined = section;
+      while (currentSection && currentSection !== hoistedBinding.section) {
+        const parentSection: Section = currentSection.parent!;
+        if (
+          !sectionDynamicSubscribers.has(currentSection) &&
+          getSectionInParent(currentSection)?.suffix === AccessorChar.Dynamic
+        ) {
+          const subscribersIdentifier =
+            currentProgramPath.scope.generateUidIdentifier(
+              `${currentSection.name}_subscribers`,
+            );
+
+          sectionDynamicSubscribers.add(currentSection);
+
+          getHTMLSectionStatements(parentSection).push(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                subscribersIdentifier,
+                t.newExpression(t.identifier("Set"), []),
+              ),
+            ]),
+          );
+
+          setSectionSubscriberIdentifiers(
+            currentSection,
+            subscribersIdentifier,
+          );
+          setSerializedProperty(
+            parentSection,
+            getSectionScopeAccessor(currentSection)!,
+            subscribersIdentifier,
+          );
+        }
+        currentSection = parentSection!;
+      }
+    }
+
+    if (binding.hoists.size && binding.type !== BindingType.dom) {
+      setSerializedProperty(
+        section,
+        getScopeAccessor(binding),
+        getDeclaredBindingExpression(binding),
+      );
     }
   });
 

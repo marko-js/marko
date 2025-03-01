@@ -10,6 +10,7 @@ import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
 import { AccessorChar, WalkCode } from "../../../common/types";
 import evaluate from "../../util/evaluate";
 import { getTagName } from "../../util/get-tag-name";
+import isInvokedFunction from "../../util/is-invoked-function";
 import { isStatefulReferences } from "../../util/is-stateful";
 import { isOutputHTML } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
@@ -19,12 +20,9 @@ import {
   createBinding,
   dropReferences,
   getScopeAccessorLiteral,
-  getSectionInParent,
-  getSectionScopeAccessor,
-  getSectionScopeAccessorLiteral,
   mergeReferences,
   setReferencesScope,
-  trackReference,
+  trackHoistedReference,
 } from "../../util/references";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 import {
@@ -35,19 +33,13 @@ import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
-  isParentSection,
-  type Section,
-  setSectionHoist,
+  isSameOrChildSection,
 } from "../../util/sections";
 import {
   addHTMLEffectCall,
   addStatement,
-  addValue,
-  getHTMLSectionStatements,
   getRegisterUID,
-  initValue,
   setForceResumeScope,
-  setSectionSubscriberIdentifiers,
   setSerializedProperty,
 } from "../../util/signals";
 import { toObjectProperty } from "../../util/to-property-name";
@@ -61,8 +53,6 @@ import { currentProgramPath, scopeIdentifier } from "../program";
 export const kNativeTagBinding = Symbol("native tag binding");
 export const kSerializeMarker = Symbol("serialize marker");
 const kGetterId = Symbol("node getter id");
-const kHoistIds = Symbol("hoist id per section");
-const kHoistedBinding = Symbol("hoisted binding for tag var reference");
 
 const htmlSelectArgs = new WeakMap<
   t.MarkoTag,
@@ -77,8 +67,6 @@ declare module "@marko/compiler/dist/types" {
     [kNativeTagBinding]?: Binding;
     [kSerializeMarker]?: boolean;
     [kGetterId]?: string;
-    [kHoistedBinding]?: Binding;
-    [kHoistIds]?: Map<Binding, string>;
   }
 }
 
@@ -297,44 +285,17 @@ export default {
 
         if (node.var) {
           const varBinding = tag.scope.getBinding(node.var.name)!;
-          for (const reference of varBinding.referencePaths) {
-            const referenceSection = getSection(reference);
+          for (const referencePath of varBinding.referencePaths) {
+            const referenceSection = getSection(referencePath);
 
-            setReferencesScope(reference);
+            setReferencesScope(referencePath);
 
-            if (isParentSection(referenceSection, section)) {
-              let hoistedBinding = tagBinding.hoists.get(referenceSection);
-              if (!hoistedBinding) {
-                hoistedBinding = createBinding(
-                  currentProgramPath.scope.generateUid(
-                    "hoisted_" + node.var.name,
-                  ),
-                  BindingType.derived,
-                  referenceSection,
-                  undefined,
-                  undefined,
-                  undefined,
-                  node.var.loc,
-                  true,
-                );
-                setSectionHoist(section, hoistedBinding);
-                tagBinding.hoists.set(referenceSection, hoistedBinding);
-
-                //if (!isInvokedFunction(reference)) {
-                (tagExtra[kHoistIds] ||= new Map()).set(
-                  hoistedBinding,
-                  getRegisterUID(referenceSection, hoistedBinding.name),
-                );
-                //}
-              }
-
-              (reference.node.extra ??= {})[kHoistedBinding] = hoistedBinding;
-
-              trackReference(
-                reference as t.NodePath<t.Identifier>,
-                hoistedBinding,
+            if (!isSameOrChildSection(section, referenceSection)) {
+              trackHoistedReference(
+                referencePath as t.NodePath<t.Identifier>,
+                tagBinding,
               );
-            } else if (!isInvokedFunction(reference)) {
+            } else if (!isInvokedFunction(referencePath)) {
               tagExtra[kGetterId] ||= getRegisterUID(section, bindingName);
             }
           }
@@ -362,53 +323,6 @@ export default {
         const varBinding = tag.scope.getBinding(varName)!;
         const getterId = extra[kGetterId];
         if (isHTML) {
-          let prevSection = section;
-          for (const hoistedBinding of [...nodeRef!.hoists.values()].sort(
-            (a, b) => b.section.depth - a.section.depth,
-          )) {
-            const referenceSection = hoistedBinding.section;
-            const registerId = extra[kHoistIds]?.get(hoistedBinding);
-            getHTMLSectionStatements(referenceSection).push(
-              t.variableDeclaration("const", [
-                t.variableDeclarator(
-                  t.identifier(hoistedBinding.name),
-                  callRuntime(
-                    "hoist",
-                    getScopeIdIdentifier(referenceSection),
-                    registerId && t.stringLiteral(registerId),
-                  ),
-                ),
-              ]),
-            );
-
-            if (
-              getSectionInParent(prevSection)?.suffix === AccessorChar.Dynamic
-            ) {
-              const subscribersIdentifier =
-                currentProgramPath.scope.generateUidIdentifier("subscribers");
-
-              getHTMLSectionStatements(referenceSection).push(
-                t.variableDeclaration("const", [
-                  t.variableDeclarator(
-                    subscribersIdentifier,
-                    t.newExpression(t.identifier("Set"), []),
-                  ),
-                ]),
-              );
-
-              setSectionSubscriberIdentifiers(
-                prevSection,
-                subscribersIdentifier,
-              );
-              setSerializedProperty(
-                referenceSection,
-                getSectionScopeAccessor(prevSection)!,
-                subscribersIdentifier,
-              );
-              prevSection = referenceSection;
-            }
-          }
-
           for (const reference of varBinding.referencePaths) {
             const referenceSection = getSection(reference);
             if (!reference.node.extra?.hoist) {
@@ -461,56 +375,8 @@ export default {
             );
           }
 
-          for (const [referenceSection, hoistedBinding] of nodeRef!.hoists) {
-            const accessors: t.Expression[] = [
-              t.stringLiteral(
-                getScopeAccessorLiteral(nodeRef!).value + AccessorChar.Getter,
-              ),
-            ];
-            let currentSection: Section | undefined = section;
-            while (currentSection && currentSection !== referenceSection) {
-              const parentSection: Section | undefined = currentSection.parent;
-
-              if (parentSection) {
-                accessors.push(getSectionScopeAccessorLiteral(currentSection)!);
-              }
-
-              currentSection = parentSection;
-            }
-
-            const hoistIdentifier =
-              currentProgramPath.scope.generateUidIdentifier(
-                `hoist_${varName}`,
-              );
-
-            const registerId = extra[kHoistIds]?.get(hoistedBinding);
-
-            currentProgramPath.pushContainer(
-              "body",
-              t.variableDeclaration("const", [
-                t.variableDeclarator(
-                  hoistIdentifier,
-                  registerId
-                    ? callRuntime(
-                        "register",
-                        t.stringLiteral(registerId),
-                        callRuntime("hoist", ...accessors),
-                      )
-                    : callRuntime("hoist", ...accessors),
-                ),
-              ]),
-            );
-
-            addValue(
-              referenceSection,
-              undefined,
-              initValue(hoistedBinding),
-              t.callExpression(hoistIdentifier, [scopeIdentifier]),
-            );
-          }
-
           for (const reference of varBinding.referencePaths) {
-            if (!reference.node.extra?.[kHoistedBinding]) {
+            if (!reference.node.extra?.hoistedBinding) {
               const referenceSection = getSection(reference);
               if (isInvokedFunction(reference)) {
                 reference.parentPath.replaceWith(
@@ -971,24 +837,4 @@ function isChangeHandler(propName: string) {
 
 function buildUndefined() {
   return t.unaryExpression("void", t.numericLiteral(0));
-}
-
-function isInvokedFunction(expr: t.NodePath<t.Node>): expr is typeof expr & {
-  parent: t.CallExpression;
-  parentPath: t.NodePath<t.CallExpression>;
-} {
-  let curPath: t.NodePath<t.Node> | null = expr;
-  while (curPath) {
-    const { parent, node } = curPath;
-    switch (parent.type) {
-      case "CallExpression":
-        return parent.callee === node;
-      case "TSNonNullExpression":
-        curPath = curPath.parentPath;
-        break;
-      default:
-        return false;
-    }
-  }
-  return false;
 }

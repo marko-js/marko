@@ -38,7 +38,6 @@ import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
-  isParentSection,
   type Section,
   startSection,
 } from "../../util/sections";
@@ -131,7 +130,13 @@ export default {
           tagExtra,
         );
       }
-      startSection(tagBody);
+      const bodySection = startSection(tagBody);
+      if (bodySection) {
+        section.children.set(bodySection, {
+          binding: tagExtra[kChildScopeBinding],
+          suffix: AccessorChar.Dynamic,
+        });
+      }
       trackParamsReferences(tagBody, BindingType.param);
 
       const childFile = loadFileForTag(tag)!;
@@ -150,34 +155,6 @@ export default {
           childProgramExtra?.isInteractive ||
           childProgramExtra?.hasInteractiveChild ||
           false;
-      }
-
-      const tagVar = tag.node.var;
-      if (tagVar && t.isIdentifier(tagVar)) {
-        const varBinding = tag.scope.getBinding(tagVar.name)!;
-        for (const reference of varBinding.referencePaths) {
-          const referenceSection = getSection(reference);
-          if (isParentSection(referenceSection, section)) {
-            // let hoistedBinding = referenceSection.hoists.get(tagBinding);
-            // if (!hoistedBinding) {
-            //   hoistedBinding = createBinding(
-            //     currentProgramPath.scope.generateUid(tagVar.name),
-            //     BindingType.derived,
-            //     referenceSection,
-            //     undefined,
-            //     undefined,
-            //     undefined,
-            //     tagVar.loc,
-            //     true,
-            //   );
-            //   referenceSection.hoists.set(tagBinding, hoistedBinding);
-            // }
-            // trackReference(
-            //   reference as t.NodePath<t.Identifier>,
-            //   hoistedBinding,
-            // );
-          }
-        }
       }
     },
   },
@@ -201,6 +178,7 @@ export default {
 function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const tagBody = tag.get("body");
   const { node } = tag;
+  const extra = node.extra!;
   let tagIdentifier: t.Expression;
 
   writer.flushInto(tag);
@@ -227,7 +205,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       };
   let providesStatefulAttrs = false;
 
-  for (const expr of tag.node.extra![kChildAttrExprs]!) {
+  for (const expr of extra[kChildAttrExprs]!) {
     if (
       isReferencedExtra(expr) &&
       isStatefulReferences(expr.referencedBindings)
@@ -238,7 +216,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   }
 
   if (providesStatefulAttrs || tagVar) {
-    const childScopeBinding = node.extra![kChildScopeBinding]!;
+    const childScopeBinding = extra[kChildScopeBinding]!;
     const peekScopeId = tag.scope.generateUidIdentifier(
       childScopeBinding?.name,
     );

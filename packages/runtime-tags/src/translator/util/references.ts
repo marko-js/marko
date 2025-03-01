@@ -3,6 +3,7 @@ import { types as t } from "@marko/compiler";
 import { currentProgramPath } from "../visitors/program";
 import { forEachIdentifier } from "./for-each-identifier";
 import { getExprRoot, getFnRoot } from "./get-root";
+import isInvokedFunction from "./is-invoked-function";
 import { isStatefulReferences } from "./is-stateful";
 import { isOptimize } from "./marko-config";
 import {
@@ -17,7 +18,16 @@ import {
   push,
   Sorted,
 } from "./optional";
-import { forEachSection, getOrCreateSection, type Section } from "./sections";
+import { getRegisterState } from "./registration";
+import { getScopeExpression } from "./scope-read";
+import {
+  forEachSection,
+  getCommonSection,
+  getOrCreateSection,
+  isSameOrChildSection,
+  type Section,
+} from "./sections";
+import { getHoistFunctionIdentifier, getRegisterUID } from "./signals";
 import { createProgramState } from "./state";
 import { toMemberExpression } from "./to-property-name";
 import withPreviousLocation from "./with-previous-location";
@@ -30,6 +40,7 @@ export enum BindingType {
   input,
   param,
   derived,
+  hoist,
   // todo: constant
 }
 
@@ -72,6 +83,7 @@ declare module "@marko/compiler/dist/types" {
     section?: Section;
     referencedBindings?: ReferencedBindings;
     binding?: Binding;
+    hoistedBinding?: Binding;
     assignment?: Binding;
     read?: { binding: Binding; props: Opt<string> };
     pruned?: true;
@@ -205,12 +217,75 @@ export function trackParamsReferences(
   }
 }
 
+export function trackHoistedReference(
+  referencePath: t.NodePath<t.Identifier>,
+  binding: Binding,
+) {
+  const section = binding.section;
+  const referenceSection = getOrCreateSection(referencePath);
+  const hoistSection = getCommonSection(referenceSection, section);
+  const extra = (referencePath.node.extra ??= {});
+
+  let hoistedBinding = binding.hoists.get(hoistSection);
+  if (!hoistedBinding) {
+    binding.hoists.set(
+      hoistSection,
+      (hoistedBinding = createBinding(
+        currentProgramPath.scope.generateUid(
+          "hoisted_" + referencePath.node.name,
+        ),
+        BindingType.hoist,
+        hoistSection,
+        undefined,
+        undefined,
+        undefined,
+        binding.loc,
+        true,
+      )),
+    );
+
+    section.hoisted = bindingUtil.add(section.hoisted, binding);
+
+    let currentSection = section.parent;
+    while (currentSection && currentSection !== hoistSection) {
+      currentSection.isHoistThrough = true;
+      currentSection = currentSection.parent;
+    }
+  }
+
+  extra.hoistedBinding = hoistedBinding;
+
+  if (isInvokedFunction(referencePath)) {
+    extra.read = createRead(hoistedBinding, undefined);
+    extra.section = referenceSection;
+    extra.binding = binding;
+  } else {
+    trackReference(referencePath, hoistedBinding);
+    getRegisterState().set(
+      hoistedBinding,
+      getRegisterUID(hoistSection, hoistedBinding.name),
+    );
+  }
+
+  if (referenceSection !== hoistSection) {
+    referenceSection.closures = bindingUtil.add(
+      referenceSection.closures,
+      hoistedBinding,
+    );
+  }
+}
+
 function trackReferencesForBinding(babelBinding: t.Binding) {
   const { identifier, referencePaths, constantViolations } = babelBinding;
   const binding = identifier.extra!.binding!;
 
   for (const referencePath of referencePaths) {
-    trackReference(referencePath as t.NodePath<t.Identifier>, binding);
+    const referenceSection = getOrCreateSection(referencePath);
+    if (isSameOrChildSection(binding.section, referenceSection)) {
+      trackReference(referencePath as t.NodePath<t.Identifier>, binding);
+    } else {
+      trackHoistedReference(referencePath as t.NodePath<t.Identifier>, binding);
+    }
   }
 
   for (const ref of constantViolations) {
@@ -823,6 +898,17 @@ export function getScopeAccessorLiteral(binding: Binding, includeId?: boolean) {
   );
 }
 
+export function getScopeAccessor(binding: Binding, includeId?: boolean) {
+  if (isOptimize()) {
+    return binding.id + "";
+  }
+
+  return (
+    binding.name +
+    (includeId || binding.type === BindingType.dom ? `/${binding.id}` : "")
+  );
+}
+
 export function getSectionInParent(section: Section) {
   return section.parent?.children?.get(section);
 }
@@ -845,17 +931,6 @@ export function getSectionScopeAccessorLiteral(section: Section) {
     : undefined;
 }
 
-export function getScopeAccessor(binding: Binding) {
-  if (isOptimize()) {
-    return binding.id + "";
-  }
-
-  return (
-    binding.name +
-    (includeId || binding.type === BindingType.dom ? `/${binding.id}` : "")
-  );
-}
-
 export function getReadReplacement(node: t.Identifier | t.MemberExpression) {
   const { extra } = node;
   if (!extra) return;
@@ -873,7 +948,14 @@ export function getReadReplacement(node: t.Identifier | t.MemberExpression) {
 
   if (binding) {
     if (node.type === "Identifier") {
-      if (binding.name !== node.name) {
+      if (binding.type === BindingType.hoist) {
+        replacement = node.extra?.binding
+          ? t.callExpression(
+              getHoistFunctionIdentifier(node.extra.binding, binding),
+              [getScopeExpression(node.extra.section!, binding.section)],
+            )
+          : t.identifier(getScopeAccessor(binding)!);
+      } else if (binding.name !== node.name) {
         node.name = binding.name;
       }
     } else {

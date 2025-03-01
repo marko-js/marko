@@ -1,9 +1,7 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
-  const _hoisted_el = _$.hoist(_scope0_id, "__tests__/template.marko_0/_hoisted_el");
   const _scope1_ = new Map();
-  const _hoisted_el2 = _$.hoist(_scope0_id, "__tests__/template.marko_0/_hoisted_el2");
   const _scope2_ = new Map();
   const _hoisted_el3 = _$.hoist(_scope0_id, "__tests__/template.marko_0/_hoisted_el3");
   const _scope3_ = new Map();
@@ -42,19 +40,14 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     }, "__tests__/template.marko", "28:2");
   });
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0__hoisted_el3");
-  _$.writeEffect(_scope0_id, "__tests__/template.marko_0__hoisted_el2");
-  _$.writeEffect(_scope0_id, "__tests__/template.marko_0__hoisted_el");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.writeScope(_scope0_id, {
-    _hoisted_el: _hoisted_el,
-    _hoisted_el2: _hoisted_el2,
-    _hoisted_el3: _hoisted_el3,
+    _hoisted_el3,
     "#text/0(": _scope1_.size ? _scope1_ : undefined,
     "#text/1(": _scope2_.size ? _scope2_ : undefined,
     "#text/2(": _scope3_.size ? _scope3_ : undefined
   }, "__tests__/template.marko", 0, {
-    _hoisted_el: "2:8",
-    _hoisted_el2: "16:8",
-    _hoisted_el3: "31:9"
+    _hoisted_el3: 0
   });
   _$.resumeClosestBranch(_scope0_id);
 });

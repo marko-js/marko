@@ -9,11 +9,7 @@ import { currentProgramPath } from "../visitors/program";
 import { isCoreTag } from "./is-core-tag";
 import { isStatefulReferences } from "./is-stateful";
 import { find } from "./optional";
-import {
-  type Binding,
-  bindingUtil,
-  type ReferencedBindings,
-} from "./references";
+import type { Binding, ReferencedBindings } from "./references";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
@@ -35,8 +31,8 @@ export interface Section {
   params: undefined | Binding;
   closures: ReferencedBindings;
   bindings: ReferencedBindings;
-  hoists: ReferencedBindings;
-  hasHoistOut: true | undefined;
+  hoisted: ReferencedBindings;
+  isHoistThrough: true | undefined;
   assignments: ReferencedBindings;
   upstreamExpression: t.NodeExtra | undefined;
   hasAbortSignal: boolean;
@@ -89,8 +85,8 @@ export function startSection(
       params: undefined,
       closures: undefined,
       bindings: undefined,
-      hoists: undefined,
-      hasHoistOut: undefined,
+      hoisted: undefined,
+      isHoistThrough: undefined,
       assignments: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
@@ -285,21 +281,29 @@ export const checkStatefulClosures = (
   );
 };
 
-export function isParentSection(parent: Section, child: Section) {
-  while ((child = child.parent!)) {
-    if (child === parent) {
+export function isSameOrChildSection(section: Section, other: Section) {
+  do {
+    if (other === section) {
       return true;
     }
-  }
+  } while ((other = other.parent!));
   return false;
 }
 
-export function setSectionHoist(section: Section, binding: Binding) {
-  binding.section.hoists = bindingUtil.add(binding.section.hoists, binding);
-
-  let currentSection: Section | undefined = section;
-  while (currentSection && currentSection !== binding.section) {
-    currentSection.hasHoistOut = true;
-    currentSection = currentSection.parent;
+export function getCommonSection(section: Section, other: Section) {
+  let ancestor: Section | undefined = section;
+  if (other.depth < section.depth) {
+    ancestor = other;
+    other = section;
   }
+  while (ancestor) {
+    if (other === ancestor || !other.parent) {
+      return ancestor;
+    }
+    other = other.parent;
+    if (other.depth < ancestor.depth) {
+      ancestor = ancestor.parent;
+    }
+  }
+  throw new Error("No common section");
 }

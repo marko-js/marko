@@ -64,7 +64,7 @@ export default {
                   walks,
                   setup,
                   params,
-                  childSection.hasHoistOut
+                  childSection.hoisted || childSection.isHoistThrough
                     ? getSectionScopeAccessorLiteral(childSection)
                     : undefined,
                 ]),

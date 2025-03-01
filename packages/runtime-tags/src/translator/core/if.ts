@@ -136,7 +136,8 @@ export const IfTag = {
         const singleNodeOptimization = rootExtra.singleNodeOptimization;
         const hasStatefulClosures =
           bodySection && checkStatefulClosures(bodySection, true);
-        const hasHoists = bodySection?.hasHoistOut;
+        const hasHoists =
+          bodySection && (bodySection.hoisted || bodySection.isHoistThrough);
 
         if (bodySection) {
           if (isStateful || hasStatefulClosures || hasHoists) {

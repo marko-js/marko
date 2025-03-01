@@ -1,5 +1,10 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
-import { AccessorChar, type BranchScope, ResumeSymbol, type Scope } from "../common/types";
+import {
+  AccessorChar,
+  type BranchScope,
+  ResumeSymbol,
+  type Scope,
+} from "../common/types";
 import type { Signal } from "./signals";
 
 interface Renders {
