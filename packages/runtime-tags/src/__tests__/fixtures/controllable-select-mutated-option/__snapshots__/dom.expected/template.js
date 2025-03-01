@@ -6,7 +6,7 @@ const _opt$for_content = /* @__PURE__ */_$.value("opt", (_scope, opt) => {
   _$.data(_scope["#text/1"], opt);
 });
 const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _opt$for_content(_scope, _params_2[0]));
-const _for_content = /* @__PURE__ */_$.createRenderer("<option> </option>", /* get, next(1), get */" D ", void 0, () => _params_2$for_content);
+const _for_content = /* @__PURE__ */_$.createRenderer("<option> </option>", /* get, next(1), get */" D ", 0, () => _params_2$for_content);
 const _for = /* @__PURE__ */_$.loopOf("#select/0", _for_content);
 const _value = /* @__PURE__ */_$.state("value/6", (_scope, value) => {
   _$.controllable_select_value(_scope, "#select/0", value, _valueChange(_scope));

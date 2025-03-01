@@ -1,0 +1,35 @@
+<for to=5>
+  <child/setHtml />
+</for>
+
+<script>
+  setHtml('First Only');
+</script>
+
+<hr />
+
+<let/to=3 />
+<for to=to>
+  <child/setHtml2 />
+</for>
+
+<script>
+  setHtml2('First Only');
+</script>
+
+<hr />
+
+<for|i| to=3>
+  <ul>
+  <for|j| to=3>
+    <child/setHtml3 />
+  </for>
+  </ul>
+</for>
+
+<script>
+  let i = 0;
+  for (const fn of setHtml3) {
+    fn(`All (${i++})`);
+  }
+</script>

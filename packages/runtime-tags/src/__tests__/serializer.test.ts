@@ -1,7 +1,12 @@
 import assert from "node:assert/strict";
 import { inspect } from "node:util";
 
-import { register, Serializer, stringify } from "../html/serializer";
+import {
+  register,
+  registerGetter,
+  Serializer,
+  stringify,
+} from "../html/serializer";
 import type { Boundary } from "../html/writer";
 
 describe("serializer", () => {
@@ -821,6 +826,15 @@ describe("serializer", () => {
           _: { fn: builder },
         },
       );
+    });
+
+    it("getter", () => {
+      const scope = { value: 1 } as any;
+      const fn = () => scope.value;
+      fn.toString = () => "()=>s.value";
+      const obj = { a: 1, fn };
+      registerGetter("value", fn, scope);
+      assertStringify(obj, `{a:1,fn:(s=>()=>s.value)(_.a={value:1})}`);
     });
   });
 

@@ -143,6 +143,20 @@ export function conditionalClosure<T>(
   return ownerSignal;
 }
 
+export function subscribeToScopeSet(
+  ownerScope: Scope,
+  accessor: Accessor,
+  scope: Scope,
+) {
+  const subscribers = (ownerScope[accessor] ||= new Set<Scope>());
+  if (!subscribers.has(scope)) {
+    subscribers.add(scope);
+    getAbortSignal(scope, -1).addEventListener("abort", () =>
+      ownerScope[accessor].delete(scope),
+    );
+  }
+}
+
 export function dynamicClosure<T>(
   valueAccessor: Accessor,
   fn: Signal<T>,
@@ -160,18 +174,12 @@ export function dynamicClosure<T>(
       }
     }
   };
-  const subscribe = (scope: Scope) => {
-    const owner = getOwnerScope ? getOwnerScope(scope) : scope._!;
-    const subscribers = (owner[subscribersAccessor] ||= new Set());
-    if (!subscribers.has(scope)) {
-      subscribers.add(scope);
-      getAbortSignal(scope, -1).addEventListener("abort", () =>
-        subscribers.delete(scope),
-      );
-    }
-  };
-
-  ownerSignal.___subscribe = subscribe;
+  const subscribe = (ownerSignal.___subscribe = (scope: Scope) =>
+    subscribeToScopeSet(
+      getOwnerScope ? getOwnerScope(scope) : scope._!,
+      subscribersAccessor,
+      scope,
+    ));
   ownerSignal._ = (scope: Scope) => {
     childSignal(scope);
     subscribe(scope);
@@ -254,5 +262,35 @@ export function effect(id: string, fn: (scope: Scope) => void) {
   register(id, fn);
   return (scope: Scope) => {
     queueEffect(scope, fn);
+  };
+}
+
+function* traverseAllHoisted(
+  scope: Scope | Iterable<Scope>,
+  path: Accessor[],
+  curIndex: number = path.length - 1,
+): IterableIterator<(...args: unknown[]) => unknown> {
+  if (scope) {
+    if (Symbol.iterator in scope) {
+      for (const s of scope instanceof Map ? scope.values() : scope) {
+        yield* traverseAllHoisted(s, path, curIndex);
+      }
+    } else if (curIndex) {
+      yield* traverseAllHoisted(scope[path[curIndex]], path, curIndex - 1);
+    } else {
+      yield scope[path[0]];
+    }
+  }
+}
+
+export function hoist(...path: Accessor[]) {
+  return (scope: Scope) => {
+    const getOne = (...args: unknown[]) =>
+      iterator()
+        .next()
+        .value(...args);
+    const iterator = ((getOne as any)[Symbol.iterator] = () =>
+      traverseAllHoisted(scope, path));
+    return getOne;
   };
 }

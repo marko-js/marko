@@ -11,7 +11,7 @@ const _setup$if_content = _scope => {
   _$.resetAbortSignal(_scope, 0);
   _setup$if_content_effect(_scope);
 };
-const _if_content = /* @__PURE__ */_$.createRenderer("<div>child</div>", void 0, _setup$if_content);
+const _if_content = /* @__PURE__ */_$.createRenderer("<div>child</div>", 0, _setup$if_content);
 const _if = /* @__PURE__ */_$.conditional("#text/2", _if_content);
 const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
   show

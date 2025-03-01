@@ -19,7 +19,7 @@ import {
   insertBranchBefore,
   removeAndDestroyBranch,
 } from "./scope";
-import { setTagVar, type Signal } from "./signals";
+import { setTagVar, type Signal, subscribeToScopeSet } from "./signals";
 
 export function conditional(nodeAccessor: Accessor, ...branches: Renderer[]) {
   const branchAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
@@ -67,12 +67,31 @@ export let dynamicTag = function dynamicTag(
         setTagVar(scope, childScopeAccessor, getTagVar());
       }
 
-      if (getContent && typeof normalizedRenderer === "string") {
-        setConditionalRenderer(
+      if (typeof normalizedRenderer === "string") {
+        if (getContent) {
+          const content = getContent(scope);
+          setConditionalRenderer(
+            scope[childScopeAccessor],
+            MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0,
+            content,
+            createBranch,
+          );
+          if (content.___accessor) {
+            subscribeToScopeSet(
+              content.___owner!,
+              content.___accessor,
+              scope[childScopeAccessor][
+                (MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0) +
+                  AccessorChar.ConditionalScope
+              ],
+            );
+          }
+        }
+      } else if (normalizedRenderer?.___accessor) {
+        subscribeToScopeSet(
+          normalizedRenderer.___owner!,
+          normalizedRenderer.___accessor,
           scope[childScopeAccessor],
-          MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0,
-          getContent(scope),
-          createBranch,
         );
       }
     }

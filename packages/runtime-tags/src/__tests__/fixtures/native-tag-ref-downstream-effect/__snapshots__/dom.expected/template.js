@@ -5,7 +5,7 @@ const _setup$if_content_effect = _$.effect("__tests__/template.marko_1", _scope 
 const _setup$if_content = _scope => {
   _setup$if_content_effect(_scope);
 };
-const _if_content = /* @__PURE__ */_$.createRenderer(void 0, void 0, _setup$if_content);
+const _if_content = /* @__PURE__ */_$.createRenderer(0, 0, _setup$if_content);
 const _if = /* @__PURE__ */_$.conditional("#text/1", _if_content);
 export function _setup_(_scope) {
   _if(_scope, true ? 0 : 1);

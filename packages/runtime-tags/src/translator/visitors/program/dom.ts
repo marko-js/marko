@@ -3,6 +3,7 @@ import { importDefault } from "@marko/compiler/babel-utils";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import getStyleFile from "../../util/get-style-file";
+import { getSectionScopeAccessorLiteral } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {
   forEachSectionReverse,
@@ -52,7 +53,15 @@ export default {
             t.arrowFunctionExpression([], tagParamsSignal.identifier);
           const identifier = t.identifier(childSection.name);
           const renderer = getSectionParentIsOwner(childSection)
-            ? callRuntime("createRenderer", writes, walks, setup, params)
+            ? callRuntime(
+                "createRenderer",
+                ...replaceNullishAndEmptyFunctionsWith0([
+                  writes,
+                  walks,
+                  setup,
+                  params,
+                ]),
+              )
             : callRuntime(
                 !childSection.isBranch && isStatefulSection(childSection)
                   ? "registerContent"
@@ -63,6 +72,9 @@ export default {
                   walks,
                   setup,
                   params,
+                  childSection.hoisted || childSection.isHoistThrough
+                    ? getSectionScopeAccessorLiteral(childSection)
+                    : undefined,
                 ]),
               );
           writeSignals(childSection);

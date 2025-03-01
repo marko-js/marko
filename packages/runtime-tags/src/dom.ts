@@ -44,6 +44,7 @@ export {
   conditionalClosure,
   dynamicClosure,
   effect,
+  hoist,
   intersection,
   loopClosure,
   nextTagId,

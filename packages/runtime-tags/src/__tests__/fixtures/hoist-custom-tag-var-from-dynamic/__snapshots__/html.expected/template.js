@@ -1,0 +1,69 @@
+import Thing from "./tags/thing.marko";
+import _child from "./tags/child.marko";
+import * as _$ from "@marko/runtime-tags/debug/html";
+import _thing from "./tags/thing.marko";
+const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+  const _scope0_id = _$.nextScopeId();
+  const _hoisted_setHtml = _$.hoist(_scope0_id, "__tests__/template.marko_0/_hoisted_setHtml");
+  const _thing_content_subscribers = new Set();
+  const _inputShowThingNull_content_subscribers = new Set();
+  const _inputShowSectionNull_content_subscribers = new Set();
+  _thing({
+    content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+      const _scope1_id = _$.nextScopeId();
+      const _childScope = _$.peekNextScope();
+      const setHtml = _child({});
+      _$.setTagVar(_scope1_id, "#scopeOffset/1", _childScope, "__tests__/template.marko_1_setHtml/var");
+      _$.writeSubscribe(_thing_content_subscribers, _$.writeScope(_scope1_id, {
+        "#childScope/0": _$.writeExistingScope(_childScope),
+        setHtml
+      }, "__tests__/template.marko", "3:2"));
+    }), "__tests__/template.marko_1_renderer", _scope0_id)
+  });
+  const _dynamicScope = _$.peekNextScope();
+  _$.dynamicTagInput(_scope0_id, "#text/1", input.show ? Thing : null, {}, _$.register(/* @__PURE__ */_$.createRenderer(() => {
+    const _scope2_id = _$.nextScopeId();
+    const _thing_content2_subscribers = new Set();
+    _thing({
+      content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+        const _scope3_id = _$.nextScopeId();
+        const _childScope2 = _$.peekNextScope();
+        const setHtml2 = _child({});
+        _$.setTagVar(_scope3_id, "#scopeOffset/1", _childScope2, "__tests__/template.marko_3_setHtml2/var");
+        _$.writeSubscribe(_thing_content2_subscribers, _$.writeScope(_scope3_id, {
+          "#childScope/0": _$.writeExistingScope(_childScope2),
+          setHtml2
+        }, "__tests__/template.marko", "16:4"));
+      }), "__tests__/template.marko_3_renderer", _scope2_id)
+    });
+    _$.writeSubscribe(_inputShowThingNull_content_subscribers, _$.writeScope(_scope2_id, {
+      "#childScope/0?": _thing_content2_subscribers
+    }, "__tests__/template.marko", "15:4"));
+  }), "__tests__/template.marko_2_renderer", _scope0_id));
+  const _dynamicScope2 = _$.peekNextScope();
+  _$.dynamicTagInput(_scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.register(/* @__PURE__ */_$.createRenderer(() => {
+    const _scope4_id = _$.nextScopeId();
+    const _childScope3 = _$.peekNextScope();
+    const setHtml3 = _child({});
+    _$.setTagVar(_scope4_id, "#scopeOffset/1", _childScope3, "__tests__/template.marko_4_setHtml3/var");
+    _$.writeSubscribe(_inputShowSectionNull_content_subscribers, _$.writeScope(_scope4_id, {
+      "#childScope/0": _$.writeExistingScope(_childScope3),
+      setHtml3
+    }, "__tests__/template.marko", "26:4"));
+  }), "__tests__/template.marko_4_renderer", _scope0_id));
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
+  _$.writeEffect(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml");
+  _$.writeScope(_scope0_id, {
+    _hoisted_setHtml,
+    "#childScope/0?": _thing_content_subscribers,
+    "#text/1?": _inputShowThingNull_content_subscribers,
+    "#text/1!": _$.writeExistingScope(_dynamicScope),
+    "#text/1(": _$.normalizeDynamicRenderer(input.show ? Thing : null),
+    "#text/2?": _inputShowSectionNull_content_subscribers,
+    "#text/2!": _$.writeExistingScope(_dynamicScope2),
+    "#text/2(": _$.normalizeDynamicRenderer(input.show ? 'section' : null)
+  }, "__tests__/template.marko", 0, {
+    _hoisted_setHtml: "4:10"
+  });
+});
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);
