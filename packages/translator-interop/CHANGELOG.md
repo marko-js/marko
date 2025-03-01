@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.18
+
+### Patch Changes
+
+- [#2540](https://github.com/marko-js/marko/pull/2540) [`b05c1f7`](https://github.com/marko-js/marko/commit/b05c1f7f3a1e97f964c7ebff051b7b06e12d02c3) Thanks [@mlrawlings](https://github.com/mlrawlings)! - refactor signals to no longer mark but rely soley on queueing for proper execution order
+
+- Updated dependencies [[`b05c1f7`](https://github.com/marko-js/marko/commit/b05c1f7f3a1e97f964c7ebff051b7b06e12d02c3)]:
+  - marko@5.37.20
+  - @marko/runtime-tags@0.3.47
+
 ## 0.2.17
 
 ### Patch Changes
