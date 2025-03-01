@@ -171,12 +171,14 @@ export function controllable_select_value(
     scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
   }
 
-  pendingEffects.unshift(scope, () =>
-    setSelectOptions(
-      scope[nodeAccessor] as HTMLSelectElement,
-      value,
-      valueChange,
-    ),
+  pendingEffects.unshift(
+    () =>
+      setSelectOptions(
+        scope[nodeAccessor] as HTMLSelectElement,
+        value,
+        valueChange,
+      ),
+    scope,
   );
 }
 export function controllable_select_value_effect(
