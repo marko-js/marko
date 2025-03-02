@@ -9,7 +9,23 @@ import { simplifyFunction } from "../../util/simplify-fn";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
 import { flushInto } from "../../util/writer";
-import { htmlRendererIdentifier } from ".";
+import { currentProgramPath } from ".";
+
+const templateContentIdentifierForProgram = new WeakMap<
+  t.NodePath<t.Program>,
+  string
+>();
+export function getTemplateContentName() {
+  let name = templateContentIdentifierForProgram.get(currentProgramPath);
+  if (!name) {
+    templateContentIdentifierForProgram.set(
+      currentProgramPath,
+      (name = currentProgramPath.scope.generateUid("content")),
+    );
+  }
+
+  return name;
+}
 
 export default {
   translate: {
@@ -32,28 +48,30 @@ export default {
         }
       }
 
-      program.pushContainer("body", [
-        t.variableDeclaration("const", [
-          t.variableDeclarator(
-            htmlRendererIdentifier,
-            callRuntime(
-              "createRenderer",
-              t.arrowFunctionExpression(
-                [t.identifier("input")],
-                t.blockStatement(renderContent),
-              ),
-            ),
-          ),
-        ]),
-
-        t.exportDefaultDeclaration(
-          callRuntime(
-            "createTemplate",
-            t.stringLiteral(program.hub.file.metadata.marko.id),
-            htmlRendererIdentifier,
-          ),
+      const contentId = templateContentIdentifierForProgram.get(program);
+      const contentFn = t.arrowFunctionExpression(
+        [t.identifier("input")],
+        t.blockStatement(renderContent),
+      );
+      const exportDefault = t.exportDefaultDeclaration(
+        callRuntime(
+          "createTemplate",
+          t.stringLiteral(program.hub.file.metadata.marko.id),
+          contentId ? t.identifier(contentId) : contentFn,
         ),
-      ]);
+      );
+
+      program.pushContainer(
+        "body",
+        contentId
+          ? [
+              t.variableDeclaration("const", [
+                t.variableDeclarator(t.identifier(contentId), contentFn),
+              ]),
+              exportDefault,
+            ]
+          : exportDefault,
+      );
     },
   },
 } satisfies TemplateVisitor<t.Program>;

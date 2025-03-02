@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-button.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const {
     onClick,
@@ -13,9 +13,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeScope(_scope0_id, {
     onClick,
     "#text/1!": _$.writeExistingScope(_dynamicScope),
-    "#text/1(": _$.normalizeDynamicRenderer(content)
+    "#text/1(": _$.dynamicTagId(content)
   }, "__tests__/tags/my-button.marko", 0, {
     onClick: "1:10"
   });
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-button.marko", _renderer);

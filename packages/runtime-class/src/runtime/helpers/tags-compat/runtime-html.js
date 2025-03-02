@@ -7,8 +7,8 @@ const defaultCreateOut = require("../../createOut");
 const dynamicTag5 = require("../dynamic-tag");
 
 exports.p = function (htmlCompat) {
-  const isMarko6 = (fn) => !!fn.___isTagsAPI;
-  const isMarko5 = (fn) => !fn.___isTagsAPI;
+  const isMarko6 = (fn) => htmlCompat.isTagsAPI(fn);
+  const isMarko5 = (fn) => !isMarko6(fn);
   const writeHTML = (result) => {
     const state = result.out._state;
     const writer = state.writer;
@@ -63,77 +63,71 @@ exports.p = function (htmlCompat) {
     {},
   );
 
-  htmlCompat.patchDynamicTag(
-    function getRenderer(tag) {
-      const renderer = tag._ || tag.renderBody || tag;
-      if (isMarko6(renderer)) return renderer;
+  htmlCompat.patchDynamicTag(function getRenderer(tag) {
+    const renderer = tag._ || tag.renderBody || tag;
+    if (isMarko6(renderer)) return renderer;
 
-      const renderer5 =
-        tag._ ||
-        tag.render ||
-        (tag.renderer && tag.renderer.renderer) ||
-        tag.renderer;
-      const renderBody5 = tag.renderBody || tag;
+    const renderer5 =
+      tag._ ||
+      tag.render ||
+      (tag.renderer && tag.renderer.renderer) ||
+      tag.renderer;
+    const renderBody5 = tag.renderBody || tag;
 
-      if (!renderer5 && renderBody5) {
-        htmlCompat.registerRenderBody(renderBody5);
-      }
-      return (input, ...args) => {
-        const out = defaultCreateOut();
-        let customEvents;
+    if (!renderer5 && renderBody5) {
+      htmlCompat.registerRenderBody(renderBody5);
+    }
+    return (input, ...args) => {
+      const out = defaultCreateOut();
+      let customEvents;
 
-        if (renderer5) {
-          const normalizedInput = {};
+      if (renderer5) {
+        const normalizedInput = {};
 
-          for (const key in input) {
-            const value = input[key];
-            if (/^on[-A-Z]/.test(key)) {
-              if (typeof value === "function") {
-                (customEvents || (customEvents = [])).push([
-                  key[2] === "-" ? key.slice(3) : key.slice(2).toLowerCase(),
-                  value,
-                ]);
-                value.toJSON = htmlCompat.toJSON;
-              }
-            } else {
-              normalizedInput[key === "content" ? "renderBody" : key] = value;
+        for (const key in input) {
+          const value = input[key];
+          if (/^on[-A-Z]/.test(key)) {
+            if (typeof value === "function") {
+              (customEvents || (customEvents = [])).push([
+                key[2] === "-" ? key.slice(3) : key.slice(2).toLowerCase(),
+                value,
+              ]);
+              value.toJSON = htmlCompat.toJSON;
             }
+          } else {
+            normalizedInput[key === "content" ? "renderBody" : key] = value;
           }
-          renderer5(normalizedInput, out);
-        } else {
-          renderBody5(out, input, ...args);
         }
+        renderer5(normalizedInput, out);
+      } else {
+        renderBody5(out, input, ...args);
+      }
 
-        const componentsContext = ___getComponentsContext(out);
-        const component = componentsContext.___components[0];
-        if (component) {
-          component.___component.___customEvents = customEvents;
-          htmlCompat.writeSetScopeForComponent(component.id);
+      const componentsContext = ___getComponentsContext(out);
+      const component = componentsContext.___components[0];
+      if (component) {
+        component.___component.___customEvents = customEvents;
+        htmlCompat.writeSetScopeForComponent(component.id);
+      }
+
+      initComponentsTag({}, out);
+
+      let async;
+      out.once("finish", (result) => {
+        if (!async) {
+          async = false;
+          writeHTML(result);
         }
+      });
 
-        initComponentsTag({}, out);
+      out.end();
 
-        let async;
-        out.once("finish", (result) => {
-          if (!async) {
-            async = false;
-            writeHTML(result);
-          }
-        });
-
-        out.end();
-
-        if (async !== false) {
-          async = true;
-          htmlCompat.fork(out, writeHTML);
-        }
-      };
-    },
-    function createRenderer(renderFn) {
-      renderFn.___isTagsAPI = true;
-      return renderFn;
-    },
-  );
+      if (async !== false) {
+        async = true;
+        htmlCompat.fork(out, writeHTML);
+      }
+    };
+  });
 
   return htmlCompat.registerRenderer;
 };

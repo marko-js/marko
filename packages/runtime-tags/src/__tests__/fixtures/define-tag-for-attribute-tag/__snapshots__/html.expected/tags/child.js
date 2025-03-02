@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", input => {
   const _scope0_id = _$.nextScopeId();
   _$.write(`<div${_$.classAttr({
     "selected": input.thing.selected
@@ -9,7 +9,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.write(`</div>${_$.markResumeNode(_scope0_id, "#div/0")}`);
   _$.writeScope(_scope0_id, {
     "#text/1!": _$.writeExistingScope(_dynamicScope),
-    "#text/1(": _$.normalizeDynamicRenderer(input.thing.content)
+    "#text/1(": _$.dynamicTagId(input.thing.content)
   }, "__tests__/tags/child.marko", 0);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", _renderer);

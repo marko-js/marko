@@ -2,7 +2,7 @@ import type { BranchScope, Scope } from "../common/types";
 import { insertChildNodes, removeChildNodes } from "./dom";
 
 let pendingScopes: Scope[] = [];
-let nextID = 2 ** 32;
+let nextID = 1e6;
 
 export function createScope(
   $global: Scope["$global"],
