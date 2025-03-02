@@ -1,8 +1,8 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const Once = {
-    content: _$.register(/* @__PURE__ */_$.createRenderer(({
+    content: _$.registerContent("__tests__/template.marko_1_renderer", ({
       value
     }) => {
       const _scope1_id = _$.nextScopeId();
@@ -22,7 +22,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       });
       _$.resumeClosestBranch(_scope1_id);
       return _return;
-    }), "__tests__/template.marko_1_renderer", _scope0_id)
+    }, _scope0_id)
   };
   const clickOnceCount = 0;
   const _dynamicScope = _$.peekNextScope();
@@ -34,7 +34,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.setTagVar(_scope0_id, "#scopeOffset/1", _dynamicScope, "__tests__/template.marko_0_onClickOnce/var");
   _$.write(`<button class=once>${_$.escapeXML(clickOnceCount)}${_$.markResumeNode(_scope0_id, "#text/3")}</button>${_$.markResumeNode(_scope0_id, "#button/2")}`);
   const Twice = {
-    content: _$.register(/* @__PURE__ */_$.createRenderer(({
+    content: _$.registerContent("__tests__/template.marko_2_renderer", ({
       value
     }) => {
       const _scope2_id = _$.nextScopeId();
@@ -54,7 +54,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       });
       _$.resumeClosestBranch(_scope2_id);
       return _return2;
-    }), "__tests__/template.marko_2_renderer", _scope0_id)
+    }, _scope0_id)
   };
   const clickTwiceCount = 0;
   const _dynamicScope2 = _$.peekNextScope();
@@ -75,9 +75,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     clickTwiceCount,
     onClickTwice,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.normalizeDynamicRenderer(Once),
+    "#text/0(": _$.dynamicTagId(Once),
     "#text/4!": _$.writeExistingScope(_dynamicScope2),
-    "#text/4(": _$.normalizeDynamicRenderer(Twice)
+    "#text/4(": _$.dynamicTagId(Twice)
   }, "__tests__/template.marko", 0, {
     Once: "1:8",
     clickOnceCount: "9:5",
@@ -88,4 +88,3 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   });
   _$.resumeClosestBranch(_scope0_id);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

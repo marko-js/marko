@@ -1,8 +1,8 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const Foo = {
-    content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+    content: /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", () => {
       const _scope1_id = _$.nextScopeId();
       const unserializable = {
         nested: {
@@ -20,13 +20,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
         unserializable: "2:10",
         test: "7:10"
       });
-    }), "__tests__/template.marko_1_renderer", _scope0_id)
+    })
   };
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/0", Foo, {});
   _$.writeScope(_scope0_id, {
     "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.normalizeDynamicRenderer(Foo)
+    "#text/0(": _$.dynamicTagId(Foo)
   }, "__tests__/template.marko", 0);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

@@ -52,7 +52,7 @@ export type Binding = {
   type: BindingType;
   loc: t.SourceLocation | null;
   section: Section;
-  serialize: boolean | Set<Binding>;
+  serialize: boolean;
   aliases: Set<Binding>;
   hoists: Map<Section, Binding>;
   property: string | undefined;

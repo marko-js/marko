@@ -1,5 +1,6 @@
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import type { RenderResult, Template, TemplateInput } from "../common/types";
+import { registerContent } from "./dynamic-tag";
 import {
   Boundary,
   Chunk,
@@ -7,11 +8,12 @@ import {
   offTick,
   prepareChunk,
   queueTick,
-  register,
   State,
 } from "./writer";
 
-export type ServerRenderer = (...args: unknown[]) => unknown;
+export type ServerRenderer = ((...args: unknown[]) => unknown) & {
+  ___id?: string;
+};
 
 export const createTemplate = (
   templateId: string,
@@ -28,7 +30,7 @@ export const createTemplate = (
     };
   }
 
-  return register(renderer as unknown as Template, templateId);
+  return registerContent(templateId, renderer) as unknown as Template;
 };
 
 function render(this: Template & ServerRenderer, input: TemplateInput = {}) {

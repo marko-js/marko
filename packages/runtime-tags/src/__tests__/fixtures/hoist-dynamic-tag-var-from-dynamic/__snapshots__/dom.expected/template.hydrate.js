@@ -1,4 +1,4 @@
-// size: 973 (min) 383 (brotli)
+// size: 874 (min) 383 (brotli)
 function _setup_$1(_scope) {
   _$.tagVarSignal(_scope, _return(_scope));
 }
@@ -41,13 +41,14 @@ const _get_hoisted_setHtml2 = _$.hoist(11, "3?", "2?"),
     () => _setHtml2$thing_content,
   ),
   _setHtml2$thing_content = _$.registerBoundSignal("c3", _$.value(11)),
-  _thing_content2 = _$.registerContent(
+  _setup$thing_content2 = (_scope) => {
+    _dynamicTag$thing_content2(_scope, Child);
+  },
+  _thing_content2 = _$.createContent(
     "c2",
     "<!><!><!>",
     "D1D",
-    (_scope) => {
-      _dynamicTag$thing_content2(_scope, Child);
-    },
+    _setup$thing_content2,
     0,
     "3?",
   );
@@ -61,23 +62,8 @@ _$.registerContent(
   0,
   "2?",
 ),
-  _$.register("c6", _$.hoist(5, "1?"));
-const _dynamicTag$thing_content = _$.dynamicTag(
-    0,
-    0,
-    () => _setHtml$thing_content,
-  ),
-  _setHtml$thing_content = _$.registerBoundSignal("c7", _$.value(5));
-_$.registerContent(
-  "c5",
-  "<!><!><!>",
-  "D1D",
-  (_scope) => {
-    _dynamicTag$thing_content(_scope, Child);
-  },
-  0,
-  "1?",
-),
+  _$.register("c6", _$.hoist(5, "1?")),
+  _$.registerBoundSignal("c7", _$.value(5)),
   _$.effect("c8", ({ 6: _hoisted_setHtml }) => {
     for (const fn of 6) fn("Hoist from custom tag");
   }),

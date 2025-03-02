@@ -22,9 +22,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-INSERT button/#text
-REMOVE #text after button/#text
-UPDATE button/#text " " => "1"
+UPDATE button/#text "0" => "1"
 ```
 
 # Render
@@ -39,9 +37,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-INSERT button/#text
-REMOVE #text after button/#text
-UPDATE button/#text " " => "2"
+UPDATE button/#text "1" => "2"
 ```
 
 # Render
@@ -56,7 +52,5 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-INSERT button/#text
-REMOVE #text after button/#text
-UPDATE button/#text " " => "3"
+UPDATE button/#text "2" => "3"
 ```

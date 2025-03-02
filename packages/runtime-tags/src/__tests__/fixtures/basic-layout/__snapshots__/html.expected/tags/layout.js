@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/layout.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const {
     content
@@ -10,7 +10,6 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeTrailers("</body>");
   _$.writeScope(_scope0_id, {
     "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.normalizeDynamicRenderer(content)
+    "#text/0(": _$.dynamicTagId(content)
   }, "__tests__/tags/layout.marko", 0);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/layout.marko", _renderer);

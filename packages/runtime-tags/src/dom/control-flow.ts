@@ -52,10 +52,12 @@ export let dynamicTag = function dynamicTag(
   return (scope, newRenderer, getInput?: () => any) => {
     const normalizedRenderer = normalizeDynamicRenderer<Renderer>(newRenderer);
     if (
-      !(rendererAccessor in scope) ||
-      isDifferentRenderer(scope[rendererAccessor], normalizedRenderer)
+      scope[rendererAccessor] !==
+        (scope[rendererAccessor] =
+          (normalizedRenderer as Renderer | undefined)?.___id ||
+          normalizedRenderer) ||
+      (getContent && !(normalizedRenderer || scope[childScopeAccessor]))
     ) {
-      scope[rendererAccessor] = normalizedRenderer;
       setConditionalRenderer(
         scope,
         nodeAccessor,
@@ -259,14 +261,4 @@ function bySecondArg(_item: unknown, index: unknown) {
 
 function byFirstArg(name: unknown) {
   return name;
-}
-
-function isDifferentRenderer(
-  a: Renderer | string | undefined,
-  b: Renderer | string | undefined,
-) {
-  return (
-    a !== b ||
-    (a as Renderer | undefined)?.___id !== (b as Renderer | undefined)?.___id
-  );
 }

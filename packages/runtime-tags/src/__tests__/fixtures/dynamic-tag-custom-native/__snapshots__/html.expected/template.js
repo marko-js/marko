@@ -1,6 +1,6 @@
 import child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const tagName = child;
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
@@ -12,10 +12,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeScope(_scope0_id, {
     tagName,
     "#text/1!": _$.writeExistingScope(_dynamicScope),
-    "#text/1(": _$.normalizeDynamicRenderer(tagName)
+    "#text/1(": _$.dynamicTagId(tagName)
   }, "__tests__/template.marko", 0, {
     tagName: "3:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

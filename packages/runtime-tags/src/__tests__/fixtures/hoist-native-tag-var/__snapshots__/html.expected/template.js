@@ -1,6 +1,6 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _hoisted_el = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_el/hoist");
   let _ifScopeId2, _ifBranch2;
@@ -54,4 +54,3 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     input_show: ["input.show"]
   });
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

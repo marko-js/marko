@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-button.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const attrs = input;
   const {
@@ -16,4 +16,3 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     onClick: "3:10"
   });
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-button.marko", _renderer);

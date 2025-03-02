@@ -264,7 +264,7 @@ export default {
           section,
           getScopeAccessor(nodeRef) + AccessorChar.ConditionalRenderer,
           callRuntime(
-            "normalizeDynamicRenderer",
+            "dynamicTagId",
             t.isIdentifier(tagExpression)
               ? t.identifier(tagExpression.name)
               : tagExpression,

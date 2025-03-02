@@ -7,7 +7,7 @@ const _get_hoisted_el = _$.hoist("#p/0>", "4?");
 const _inputShowSectionNull_content = _$.registerContent("__tests__/template.marko_4_renderer", "<p></p>", /* get */" ", 0, 0, "4?");
 const _get_hoisted_el2 = _$.register("__tests__/template.marko_2__hoisted_el2/hoist", _$.hoist("#div/0>", "3?"));
 const _get_hoisted_el3 = _$.register("__tests__/template.marko_0__hoisted_el3/hoist", _$.hoist("#div/0>", "3?", "2?"));
-const _child_content2 = _$.registerContent("__tests__/template.marko_3_renderer", "<div></div>", /* get */" ", 0, 0, "3?");
+const _child_content2 = /* @__PURE__ */_$.createContent("__tests__/template.marko_3_renderer", "<div></div>", /* get */" ", 0, 0, "3?");
 const _hoisted_el2$inputShowChildNull_content_effect = _$.effect("__tests__/template.marko_2__hoisted_el2", ({
   _hoisted_el2
 }) => {
@@ -23,7 +23,7 @@ const _setup$inputShowChildNull_content = _scope => {
 };
 const _inputShowChildNull_content = _$.registerContent("__tests__/template.marko_2_renderer", `<!>${_child_template}<!>`, /* beginChild, _child_walks, endChild */`D/${_child_walks}&D`, _setup$inputShowChildNull_content, 0, "2?");
 const _get_hoisted_el4 = _$.register("__tests__/template.marko_0__hoisted_el/hoist", _$.hoist("#span/0>", "1?"));
-const _child_content = _$.registerContent("__tests__/template.marko_1_renderer", "<span></span>", /* get */" ", 0, 0, "1?");
+const _child_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<span></span>", /* get */" ", 0, 0, "1?");
 const _dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/2", _inputShowSectionNull_content);
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1", _inputShowChildNull_content);
 const _hoisted_el2_effect = _$.effect("__tests__/template.marko_0__hoisted_el3", ({

@@ -21,7 +21,7 @@
     <!--M_*2 #button/2-->
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#text/0!":_.b={y:1}},2:_.b},_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c),2,"__tests__/template.marko_1_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0!":_.a={y:1},"#text/0(":"__tests__/template.marko_1_renderer"},2:_.a}),2,"__tests__/template.marko_1_y",0];M._.w()
     </script>
   </body>
 </html>
@@ -59,7 +59,7 @@ container.querySelector("button").click();
     <!--M_*2 #button/2-->
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#text/0!":_.b={y:1}},2:_.b},_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c),2,"__tests__/template.marko_1_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0!":_.a={y:1},"#text/0(":"__tests__/template.marko_1_renderer"},2:_.a}),2,"__tests__/template.marko_1_y",0];M._.w()
     </script>
   </body>
 </html>
@@ -97,7 +97,7 @@ container.querySelector("button").click();
     <!--M_*2 #button/2-->
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#text/0!":_.b={y:1}},2:_.b},_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c),2,"__tests__/template.marko_1_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0!":_.a={y:1},"#text/0(":"__tests__/template.marko_1_renderer"},2:_.a}),2,"__tests__/template.marko_1_y",0];M._.w()
     </script>
   </body>
 </html>
@@ -135,7 +135,7 @@ container.querySelector("button").click();
     <!--M_*2 #button/2-->
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#text/0!":_.b={y:1}},2:_.b},_.a["#text/0("]=_._["__tests__/template.marko_1_renderer"](_.a),_.c),2,"__tests__/template.marko_1_y",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0!":_.a={y:1},"#text/0(":"__tests__/template.marko_1_renderer"},2:_.a}),2,"__tests__/template.marko_1_y",0];M._.w()
     </script>
   </body>
 </html>
