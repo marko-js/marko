@@ -81,5 +81,5 @@ export function alphaEncode(num: number): string {
 export function normalizeDynamicRenderer<Renderer>(
   value: any,
 ): Renderer | string | undefined {
-  if (value) return value.content || value.default || value;
+  return value ? value.content || value.default || value : undefined;
 }

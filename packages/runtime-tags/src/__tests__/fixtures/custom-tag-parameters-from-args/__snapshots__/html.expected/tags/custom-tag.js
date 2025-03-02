@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/custom-tag.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const x = 1;
   const y = 10;
@@ -12,7 +12,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     x,
     y,
     "#text/3!": _$.writeExistingScope(_dynamicScope),
-    "#text/3(": _$.normalizeDynamicRenderer(input.content)
+    "#text/3(": _$.dynamicTagId(input.content)
   }, "__tests__/tags/custom-tag.marko", 0, {
     input_content: ["input.content"],
     x: "1:6",
@@ -20,4 +20,3 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   });
   _$.resumeClosestBranch(_scope0_id);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/custom-tag.marko", _renderer);

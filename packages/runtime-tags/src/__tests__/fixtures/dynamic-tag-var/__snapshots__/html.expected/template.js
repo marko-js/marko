@@ -1,6 +1,6 @@
 import child from "./tags/child/index.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _childScope = _$.peekNextScope();
   const data1 = child({});
@@ -17,11 +17,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeScope(_scope0_id, {
     "#childScope/0": _$.writeExistingScope(_childScope),
     "#text/2!": _$.writeExistingScope(_dynamicScope),
-    "#text/2(": _$.normalizeDynamicRenderer(input.show && child),
+    "#text/2(": _$.dynamicTagId(input.show && child),
     "#text/4!": _$.writeExistingScope(_dynamicScope2),
-    "#text/4(": _$.normalizeDynamicRenderer(input.dynamic),
+    "#text/4(": _$.dynamicTagId(input.dynamic),
     "#text/6!": _$.writeExistingScope(_dynamicScope3),
-    "#text/6(": _$.normalizeDynamicRenderer(input.show && "div")
+    "#text/6(": _$.dynamicTagId(input.show && "div")
   }, "__tests__/template.marko", 0);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

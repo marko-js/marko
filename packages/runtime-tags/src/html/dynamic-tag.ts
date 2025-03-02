@@ -1,5 +1,5 @@
+import { normalizeDynamicRenderer } from "../common/helpers";
 import type { Accessor } from "../common/types";
-import { normalizeDynamicRenderer } from "../html";
 import {
   attrs,
   controllable_select_value,
@@ -8,6 +8,7 @@ import {
 import type { ServerRenderer } from "./template";
 import {
   nextScopeId,
+  register,
   resumeConditional,
   resumeSingleNodeConditional,
   write,
@@ -18,6 +19,14 @@ const voidElementsReg =
 interface BodyContentObject {
   [x: PropertyKey]: unknown;
   content: ServerRenderer;
+}
+
+export function dynamicTagId(tagName: unknown) {
+  const normalizedRenderer = normalizeDynamicRenderer<ServerRenderer>(tagName);
+  return (
+    (normalizedRenderer as ServerRenderer | undefined)?.___id ||
+    normalizedRenderer
+  );
 }
 
 // TODO: refactor dynamicTagInput and dynamicTagArgs to be the same impl with a flag for input vs args.
@@ -155,13 +164,22 @@ export function dynamicTagArgs(
   return result;
 }
 
-let getDynamicRenderer = normalizeDynamicRenderer<ServerRenderer>;
-export let createRenderer = (fn: ServerRenderer) => fn;
+export function createContent(id: string, fn: ServerRenderer) {
+  fn.___id = id;
+  return fn;
+}
 
+export function registerContent(
+  id: string,
+  fn: ServerRenderer,
+  scopeId?: number,
+) {
+  return register(createContent(id, fn), id, scopeId);
+}
+
+let getDynamicRenderer = normalizeDynamicRenderer<ServerRenderer>;
 export function patchDynamicTag(
   newGetDynamicRenderer: typeof getDynamicRenderer,
-  newCreateRenderer: typeof createRenderer,
 ) {
   getDynamicRenderer = newGetDynamicRenderer;
-  createRenderer = newCreateRenderer;
 }

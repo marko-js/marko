@@ -1,6 +1,6 @@
 import Child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _scope1_ = new Map();
   const _scope2_ = new Map();
@@ -14,7 +14,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     _scope1_.set(_value, _$.ensureScopeWithId(_scope1_id));
     _$.writeScope(_scope1_id, {
       "#text/0!": _$.writeExistingScope(_dynamicScope),
-      "#text/0(": _$.normalizeDynamicRenderer(1 && Child),
+      "#text/0(": _$.dynamicTagId(1 && Child),
       setHtml
     }, "__tests__/template.marko", "3:2");
   });
@@ -28,7 +28,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     _scope2_.set(_value2, _$.ensureScopeWithId(_scope2_id));
     _$.writeScope(_scope2_id, {
       "#text/0!": _$.writeExistingScope(_dynamicScope2),
-      "#text/0(": _$.normalizeDynamicRenderer(1 && Child),
+      "#text/0(": _$.dynamicTagId(1 && Child),
       setHtml2
     }, "__tests__/template.marko", "14:2");
   }, _scope0_id, "#text/1");
@@ -45,7 +45,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       _scope4_.set(j, _$.ensureScopeWithId(_scope4_id));
       _$.writeScope(_scope4_id, {
         "#text/0!": _$.writeExistingScope(_dynamicScope3),
-        "#text/0(": _$.normalizeDynamicRenderer(1 && Child),
+        "#text/0(": _$.dynamicTagId(1 && Child),
         setHtml3
       }, "__tests__/template.marko", "26:4");
     }, 1);
@@ -67,4 +67,3 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   });
   _$.resumeClosestBranch(_scope0_id);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

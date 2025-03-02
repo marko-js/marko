@@ -35,6 +35,7 @@ export interface Section {
   isHoistThrough: true | undefined;
   assignments: ReferencedBindings;
   upstreamExpression: t.NodeExtra | undefined;
+  downstreamBinding: Binding | undefined;
   hasAbortSignal: boolean;
   isBranch: boolean;
   content: null | {
@@ -90,6 +91,7 @@ export function startSection(
       assignments: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
+      downstreamBinding: undefined,
       hasAbortSignal: false,
       isBranch: false,
     };
@@ -260,6 +262,10 @@ export function getNodeContentType(
 
   return ContentType.Dynamic;
 }
+
+export const isSerializedSection = (section: Section) => {
+  return !(section.isBranch || section.downstreamBinding?.serialize === false);
+};
 
 export const isStatefulSection = (section: Section) => {
   const upstreamExpression = section.upstreamExpression;

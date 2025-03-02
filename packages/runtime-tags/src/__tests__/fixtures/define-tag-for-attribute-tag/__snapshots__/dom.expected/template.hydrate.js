@@ -1,4 +1,4 @@
-// size: 381 (min) 207 (brotli)
+// size: 379 (min) 210 (brotli)
 const _dynamicTag = _$.dynamicTag(1),
   _input_thing_content_ = _$.value(6, (_scope, input_thing_content) =>
     _dynamicTag(_scope, input_thing_content),
@@ -10,7 +10,7 @@ const _dynamicTag = _$.dynamicTag(1),
     _input_thing_selected_(_scope, input_thing?.selected),
       _input_thing_content_(_scope, input_thing?.content);
   }),
-  _define_content = _$.registerContent("b0", "<span>The thing</span>"),
+  _define_content = _$.createContent("b0", "<span>The thing</span>"),
   _myThing = _$.value(3, (_scope, myThing) =>
     _input_thing_(_scope[0], myThing),
   ),

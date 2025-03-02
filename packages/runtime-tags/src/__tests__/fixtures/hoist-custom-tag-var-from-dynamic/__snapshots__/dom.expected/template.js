@@ -17,7 +17,7 @@ const _setup$thing_content2 = _scope => {
   _$.setTagVar(_scope, "#childScope/0", _setHtml2$thing_content);
   _child(_scope["#childScope/0"]);
 };
-const _thing_content2 = _$.registerContent("__tests__/template.marko_3_renderer", _child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, _setup$thing_content2, 0, "3?");
+const _thing_content2 = /* @__PURE__ */_$.createContent("__tests__/template.marko_3_renderer", _child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, _setup$thing_content2, 0, "3?");
 const _setup$inputShowThingNull_content = _scope => {
   _thing(_scope["#childScope/0"]);
   _thing_input_content(_scope["#childScope/0"], _thing_content2(_scope));
@@ -29,7 +29,7 @@ const _setup$thing_content = _scope => {
   _$.setTagVar(_scope, "#childScope/0", _setHtml$thing_content);
   _child(_scope["#childScope/0"]);
 };
-const _thing_content = _$.registerContent("__tests__/template.marko_1_renderer", _child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, _setup$thing_content, 0, "1?");
+const _thing_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", _child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, _setup$thing_content, 0, "1?");
 const _dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/2", _inputShowSectionNull_content);
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1", _inputShowThingNull_content);
 const _hoisted_setHtml_effect = _$.effect("__tests__/template.marko_0__hoisted_setHtml", ({

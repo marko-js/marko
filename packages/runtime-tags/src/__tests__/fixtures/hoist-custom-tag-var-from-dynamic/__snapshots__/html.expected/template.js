@@ -2,14 +2,14 @@ import Thing from "./tags/thing.marko";
 import _child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _thing from "./tags/thing.marko";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _hoisted_setHtml = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml/hoist");
   const _thing_content_subscribers = new Set();
   const _inputShowThingNull_content_subscribers = new Set();
   const _inputShowSectionNull_content_subscribers = new Set();
   _thing({
-    content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+    content: /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", () => {
       const _scope1_id = _$.nextScopeId();
       const _childScope = _$.peekNextScope();
       const setHtml = _child({});
@@ -18,14 +18,14 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
         "#childScope/0": _$.writeExistingScope(_childScope),
         setHtml
       }, "__tests__/template.marko", "3:2"));
-    }), "__tests__/template.marko_1_renderer", _scope0_id)
+    })
   });
   const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/1", input.show ? Thing : null, {}, _$.register(/* @__PURE__ */_$.createRenderer(() => {
+  _$.dynamicTagInput(_scope0_id, "#text/1", input.show ? Thing : null, {}, _$.registerContent("__tests__/template.marko_2_renderer", () => {
     const _scope2_id = _$.nextScopeId();
     const _thing_content2_subscribers = new Set();
     _thing({
-      content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+      content: /* @__PURE__ */_$.createContent("__tests__/template.marko_3_renderer", () => {
         const _scope3_id = _$.nextScopeId();
         const _childScope2 = _$.peekNextScope();
         const setHtml2 = _child({});
@@ -34,14 +34,14 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
           "#childScope/0": _$.writeExistingScope(_childScope2),
           setHtml2
         }, "__tests__/template.marko", "16:4"));
-      }), "__tests__/template.marko_3_renderer", _scope2_id)
+      })
     });
     _$.writeSubscribe(_inputShowThingNull_content_subscribers, _$.writeScope(_scope2_id, {
       "3?": _thing_content2_subscribers
     }, "__tests__/template.marko", "15:4"));
-  }), "__tests__/template.marko_2_renderer", _scope0_id));
+  }, _scope0_id));
   const _dynamicScope2 = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.register(/* @__PURE__ */_$.createRenderer(() => {
+  _$.dynamicTagInput(_scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.registerContent("__tests__/template.marko_4_renderer", () => {
     const _scope4_id = _$.nextScopeId();
     const _childScope3 = _$.peekNextScope();
     const setHtml3 = _child({});
@@ -50,7 +50,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       "#childScope/0": _$.writeExistingScope(_childScope3),
       setHtml3
     }, "__tests__/template.marko", "26:4"));
-  }), "__tests__/template.marko_4_renderer", _scope0_id));
+  }, _scope0_id));
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml");
   _$.writeScope(_scope0_id, {
@@ -58,12 +58,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     "1?": _thing_content_subscribers,
     "2?": _inputShowThingNull_content_subscribers,
     "#text/1!": _$.writeExistingScope(_dynamicScope),
-    "#text/1(": _$.normalizeDynamicRenderer(input.show ? Thing : null),
+    "#text/1(": _$.dynamicTagId(input.show ? Thing : null),
     "4?": _inputShowSectionNull_content_subscribers,
     "#text/2!": _$.writeExistingScope(_dynamicScope2),
-    "#text/2(": _$.normalizeDynamicRenderer(input.show ? 'section' : null)
+    "#text/2(": _$.dynamicTagId(input.show ? 'section' : null)
   }, "__tests__/template.marko", 0, {
     _hoisted_setHtml: "4:10"
   });
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

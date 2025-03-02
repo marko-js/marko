@@ -1,6 +1,6 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const x = 1;
   const y = 2;
@@ -8,12 +8,12 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _childScope2 = _$.peekNextScope();
   _child({
     value: x,
-    content: _$.register(/* @__PURE__ */_$.createRenderer(outer => {
+    content: _$.registerContent("__tests__/template.marko_1_renderer", outer => {
       const _scope1_id = _$.nextScopeId();
       const _childScope = _$.peekNextScope();
       _child({
         value: y,
-        content: _$.register(/* @__PURE__ */_$.createRenderer(inner => {
+        content: _$.registerContent("__tests__/template.marko_2_renderer", inner => {
           const _scope2_id = _$.nextScopeId();
           _$.write(`<div>${_$.escapeXML(outer)}${_$.markResumeNode(_scope2_id, "#text/0")}.<!>${_$.escapeXML(inner)}${_$.markResumeNode(_scope2_id, "#text/1")}</div>`);
           _$.writeEffect(_scope2_id, "__tests__/template.marko_2_outer/subscriber");
@@ -21,7 +21,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
             _: _$.ensureScopeWithId(_scope1_id)
           }, "__tests__/template.marko", "7:6");
           _$.resumeClosestBranch(_scope2_id);
-        }), "__tests__/template.marko_2_renderer", _scope1_id)
+        }, _scope1_id)
       });
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_y/subscriber");
       _$.writeScope(_scope1_id, {
@@ -32,7 +32,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
         outer: "6:8"
       });
       _$.resumeClosestBranch(_scope1_id);
-    }), "__tests__/template.marko_1_renderer", _scope0_id)
+    }, _scope0_id)
   });
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope(_scope0_id, {
@@ -45,4 +45,3 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   });
   _$.resumeClosestBranch(_scope0_id);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

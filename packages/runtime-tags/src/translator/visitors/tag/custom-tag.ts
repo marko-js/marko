@@ -37,6 +37,7 @@ import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
+  getSectionForBody,
   type Section,
   startSection,
 } from "../../util/sections";
@@ -65,10 +66,10 @@ import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import {
   currentProgramPath,
-  htmlRendererIdentifier,
   scopeIdentifier,
   type TemplateExport,
 } from "../program";
+import { getTemplateContentName } from "../program/html";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
 const kChildScopeBinding = Symbol("custom tag child scope");
@@ -180,7 +181,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   if (t.isStringLiteral(node.name)) {
     const relativePath = getTagRelativePath(tag);
     tagIdentifier = isCircularRequest(tag.hub.file, relativePath)
-      ? htmlRendererIdentifier
+      ? t.identifier(getTemplateContentName())
       : importDefault(tag.hub.file, relativePath, getTagName(tag));
   } else {
     tagIdentifier = node.name;
@@ -422,6 +423,13 @@ function analyzeAttrs(
   if (!templateExport.props || tag.node.arguments?.length) {
     mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
     return;
+  }
+
+  const bodySection = getSectionForBody(tag.get("body"));
+  if (bodySection) {
+    bodySection.downstreamBinding = (
+      templateExport.props.content || templateExport.props
+    ).binding;
   }
 
   const attrTagLookup = analyzeAttributeTags(tag);

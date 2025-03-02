@@ -11,7 +11,7 @@ function getMissingBy() {
 }
 _$.register(getMissingBy, "__tests__/template.marko_0/getMissingBy");
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _scope1_ = new Map();
   const _scope2_ = new Map();
@@ -93,4 +93,3 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   });
   _$.resumeClosestBranch(_scope0_id);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

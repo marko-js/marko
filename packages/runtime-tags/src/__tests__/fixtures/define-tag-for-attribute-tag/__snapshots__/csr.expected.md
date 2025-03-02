@@ -35,8 +35,6 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE div[class] null => "selected"
-INSERT div/span
-REMOVE span after div/span
 ```
 
 # Render
@@ -57,8 +55,6 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE div[class] "selected" => null
-INSERT div/span
-REMOVE span after div/span
 ```
 
 # Render
@@ -81,6 +77,4 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE div[class] null => "selected"
-INSERT div/span
-REMOVE span after div/span
 ```

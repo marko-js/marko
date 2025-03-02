@@ -1,7 +1,7 @@
 import Child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _thing from "./tags/thing.marko";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _hoisted_setHtml = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml/hoist");
   let _ifScopeId2, _ifBranch2;
@@ -20,7 +20,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
           _$.setTagVar(_scope2_id, "#scopeOffset/1", _dynamicScope, "__tests__/template.marko_2_setHtml/var");
           _$.writeScope(_scope2_id, {
             "#text/0!": _$.writeExistingScope(_dynamicScope),
-            "#text/0(": _$.normalizeDynamicRenderer(1 && Child),
+            "#text/0(": _$.dynamicTagId(1 && Child),
             setHtml
           }, "__tests__/template.marko", "4:4");
           _ifBranch = 0;
@@ -47,7 +47,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     _$.setTagVar(_scope3_id, "#scopeOffset/1", _dynamicScope2, "__tests__/template.marko_3_setHtml2/var");
     _$.writeScope(_scope3_id, {
       "#text/0!": _$.writeExistingScope(_dynamicScope2),
-      "#text/0(": _$.normalizeDynamicRenderer(1 && Child),
+      "#text/0(": _$.dynamicTagId(1 && Child),
       setHtml2
     }, "__tests__/template.marko", "15:2");
     _ifScopeId3 = _scope3_id;
@@ -59,7 +59,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     _$.setTagVar(_scope4_id, "#scopeOffset/1", _dynamicScope3, "__tests__/template.marko_4_setHtml3/var");
     _$.writeScope(_scope4_id, {
       "#text/0!": _$.writeExistingScope(_dynamicScope3),
-      "#text/0(": _$.normalizeDynamicRenderer(1 && Child),
+      "#text/0(": _$.dynamicTagId(1 && Child),
       setHtml3
     }, "__tests__/template.marko", "24:2");
     _ifScopeId4 = _scope4_id;
@@ -85,4 +85,3 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     input_show: ["input.show"]
   });
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

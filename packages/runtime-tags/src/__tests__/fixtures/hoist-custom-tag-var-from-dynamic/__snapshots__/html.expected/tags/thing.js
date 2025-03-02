@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/thing.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/0", input.content, {});
@@ -7,9 +7,8 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.dynamicTagInput(_scope0_id, "#text/1", input.content, {});
   _$.writeScope(_scope0_id, {
     "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.normalizeDynamicRenderer(input.content),
+    "#text/0(": _$.dynamicTagId(input.content),
     "#text/1!": _$.writeExistingScope(_dynamicScope2),
-    "#text/1(": _$.normalizeDynamicRenderer(input.content)
+    "#text/1(": _$.dynamicTagId(input.content)
   }, "__tests__/tags/thing.marko", 0);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/thing.marko", _renderer);

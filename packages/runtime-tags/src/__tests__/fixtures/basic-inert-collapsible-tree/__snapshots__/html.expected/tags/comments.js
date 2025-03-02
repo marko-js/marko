@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+const _content = input => {
   const _scope0_id = _$.nextScopeId();
   const _scope1_ = new Map();
   _$.write("<ul>");
@@ -13,7 +13,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       if (comment.comments) {
         const _scope2_id = _$.nextScopeId();
         const _childScope = _$.peekNextScope();
-        _renderer({
+        _content({
           comments: comment.comments,
           path: id
         });
@@ -50,5 +50,5 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   }, "__tests__/tags/comments.marko", 0, {
     input_path: ["input.path"]
   });
-});
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/comments.marko", _renderer);
+};
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/comments.marko", _content);

@@ -1,13 +1,13 @@
 const a = 1;
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _customTag from "./tags/custom-tag.marko";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const b = 2;
   const c = 3;
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   _customTag({
-    content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+    content: /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", () => {
       const _scope1_id = _$.nextScopeId();
       _$.write(`${_$.escapeXML(a)} ${_$.escapeXML(b)} <!>${_$.escapeXML(c)}${_$.markResumeNode(_scope1_id, "#text/2")}`);
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_c/subscriber");
@@ -15,7 +15,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
         _: _$.ensureScopeWithId(_scope0_id)
       }, "__tests__/template.marko", "6:2");
       _$.resumeClosestBranch(_scope1_id);
-    }), "__tests__/template.marko_1_renderer", _scope0_id)
+    })
   });
   _$.write("<div>");
   if (Math.random()) {
@@ -43,4 +43,3 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   });
   _$.resumeClosestBranch(_scope0_id);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);
