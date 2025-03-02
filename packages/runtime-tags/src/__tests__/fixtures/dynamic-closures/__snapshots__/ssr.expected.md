@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button></button><!--M_*1 #button/0--><div><!--M_[3-->1 2 <!>3<!--M_*3 #text/2--><!--M_]2 #text/0--></div><div>1 2 <!>3<!--M_*5 #text/2--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d={1:_.a={b:2,c:3},2:{"#text/0!":_.b={_:_.a},"#text/0(":_._["__tests__/template.marko_1_renderer"](_.a)},3:_.b,4:_.c={_:_.a},5:{_:_.c}}),3,"__tests__/template.marko_1_c/subscriber",5,"__tests__/template.marko_3_c/subscriber",1,"__tests__/template.marko_0",0];M._.w()</script>
+  <button></button><!--M_*1 #button/0--><div><!--M_[3-->1 2 <!>3<!--M_*3 #text/2--><!--M_]2 #text/0--></div><div>1 2 <!>3<!--M_*5 #text/2--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d={1:_.a={b:2,c:3},2:{"#text/0!":_.b={_:_.a},"#text/0(":"__tests__/template.marko_1_renderer"},3:_.b,4:_.c={_:_.a},5:{_:_.c}}),3,"__tests__/template.marko_1_c/subscriber",5,"__tests__/template.marko_3_c/subscriber",1,"__tests__/template.marko_0",0];M._.w()</script>
 ```
 
 # Render End
@@ -25,7 +25,7 @@
       <!--M_*5 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.a={b:2,c:3},2:{"#text/0!":_.b={_:_.a},"#text/0(":_._["__tests__/template.marko_1_renderer"](_.a)},3:_.b,4:_.c={_:_.a},5:{_:_.c}}),3,"__tests__/template.marko_1_c/subscriber",5,"__tests__/template.marko_3_c/subscriber",1,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.a={b:2,c:3},2:{"#text/0!":_.b={_:_.a},"#text/0(":"__tests__/template.marko_1_renderer"},3:_.b,4:_.c={_:_.a},5:{_:_.c}}),3,"__tests__/template.marko_1_c/subscriber",5,"__tests__/template.marko_3_c/subscriber",1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>

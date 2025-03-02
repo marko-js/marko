@@ -35,6 +35,9 @@ export const compat = {
   write,
   writeScript,
   nextScopeId,
+  isTagsAPI(fn: any) {
+    return !!fn.___id;
+  },
   patchDynamicTag,
   writeSetScopeForComponent(m5c: string) {
     const scopeId = nextScopeId();

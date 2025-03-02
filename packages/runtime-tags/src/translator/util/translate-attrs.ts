@@ -13,7 +13,11 @@ import {
   getAttrTagIdentifier,
 } from "./nested-attribute-tags";
 import { callRuntime } from "./runtime";
-import { getScopeIdIdentifier, getSection } from "./sections";
+import {
+  getScopeIdIdentifier,
+  getSection,
+  isSerializedSection,
+} from "./sections";
 import { getResumeRegisterId } from "./signals";
 import { toObjectProperty } from "./to-property-name";
 
@@ -404,21 +408,23 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
   const bodySection = body.node.extra?.section;
   if (bodySection) {
     if (isOutputHTML()) {
+      const serialized = isSerializedSection(bodySection);
       return callRuntime(
-        "register",
-        callRuntime(
-          "createRenderer",
-          t.arrowFunctionExpression(
-            body.node.params,
-            t.blockStatement(body.node.body),
-          ),
-        ),
+        serialized ? "registerContent" : "createContent",
         t.stringLiteral(getResumeRegisterId(bodySection, "renderer")),
-        getScopeIdIdentifier(
-          getSection(
-            getNonAttributeTagParent(body.parentPath as t.NodePath<t.MarkoTag>),
-          )!,
+        t.arrowFunctionExpression(
+          body.node.params,
+          t.blockStatement(body.node.body),
         ),
+        serialized
+          ? getScopeIdIdentifier(
+              getSection(
+                getNonAttributeTagParent(
+                  body.parentPath as t.NodePath<t.MarkoTag>,
+                ),
+              )!,
+            )
+          : undefined,
       );
     } else {
       return t.callExpression(t.identifier(bodySection.name), [

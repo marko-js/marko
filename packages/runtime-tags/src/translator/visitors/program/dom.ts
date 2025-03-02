@@ -8,7 +8,7 @@ import {
   forEachSectionReverse,
   getSectionForBody,
   getSectionParentIsOwner,
-  isStatefulSection,
+  isSerializedSection,
 } from "../../util/sections";
 import {
   getResumeRegisterId,
@@ -54,7 +54,7 @@ export default {
           const renderer = getSectionParentIsOwner(childSection)
             ? callRuntime("createRenderer", writes, walks, setup, params)
             : callRuntime(
-                !childSection.isBranch && isStatefulSection(childSection)
+                isSerializedSection(childSection)
                   ? "registerContent"
                   : "createContent",
                 t.stringLiteral(getResumeRegisterId(childSection, "renderer")),

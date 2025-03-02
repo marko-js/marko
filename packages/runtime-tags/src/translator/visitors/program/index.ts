@@ -26,13 +26,10 @@ import programHTML from "./html";
 
 export let currentProgramPath: t.NodePath<t.Program>;
 export let cleanIdentifier: t.Identifier;
-export let htmlRendererIdentifier: t.Identifier;
-
 export let scopeIdentifier: t.Identifier;
 export function isScopeIdentifier(node: t.Node): node is t.Identifier {
   return node === scopeIdentifier;
 }
-
 const previousProgramPath: WeakMap<
   t.NodePath<t.Program>,
   t.NodePath<t.Program> | undefined
@@ -40,6 +37,7 @@ const previousProgramPath: WeakMap<
 
 export type TemplateExport = {
   id: string;
+  binding: Binding;
   props: { [prop: string]: TemplateExport } | undefined;
 };
 export type TemplateExports = TemplateExport["props"];
@@ -113,9 +111,6 @@ export default {
       cleanIdentifier = isOutputDOM()
         ? program.scope.generateUidIdentifier("clean")
         : (null as any as t.Identifier);
-      htmlRendererIdentifier = isOutputHTML()
-        ? program.scope.generateUidIdentifier("renderer")
-        : (null as any as t.Identifier);
       if (getMarkoOpts().output === "hydrate") {
         const entryFile = program.hub.file;
         const visitedFiles = new Set([
@@ -186,6 +181,7 @@ function resolveRelativeToEntry(
 function buildTemplateExports(binding: Binding, scope: t.Scope) {
   const templateExport: TemplateExport = {
     id: (binding.export ??= scope.generateUid(binding.name + "_")),
+    binding,
     props: undefined,
   };
   const { aliases, propertyAliases, downstreamExpressions } = binding;

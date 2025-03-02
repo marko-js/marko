@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/tags-layout.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const count = 0;
   _$.write(`<button id=tags>${_$.escapeXML(count)}${_$.markResumeNode(_scope0_id, "#text/1")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}<div>`);
@@ -11,11 +11,10 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     input_content: input.content,
     count,
     "#text/2!": _$.writeExistingScope(_dynamicScope),
-    "#text/2(": _$.normalizeDynamicRenderer(input.content)
+    "#text/2(": _$.dynamicTagId(input.content)
   }, "__tests__/components/tags-layout.marko", 0, {
     input_content: ["input.content"],
     count: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/components/tags-layout.marko", _renderer);

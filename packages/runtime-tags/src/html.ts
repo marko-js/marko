@@ -1,5 +1,4 @@
 export { attrTag, attrTags } from "./common/attr-tag";
-export { normalizeDynamicRenderer } from "./common/helpers";
 export {
   attr,
   attrs,
@@ -17,9 +16,11 @@ export {
 export { compat } from "./html/compat";
 export { escapeScript, escapeStyle, escapeXML, toString } from "./html/content";
 export {
-  createRenderer,
+  createContent,
   dynamicTagArgs,
+  dynamicTagId,
   dynamicTagInput,
+  registerContent,
 } from "./html/dynamic-tag";
 export { forIn, forInBy, forOf, forOfBy, forTo, forToBy } from "./html/for";
 export { createTemplate } from "./html/template";

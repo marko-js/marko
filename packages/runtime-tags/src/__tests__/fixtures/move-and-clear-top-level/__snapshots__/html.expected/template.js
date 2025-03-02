@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _scope1_ = new Map();
   const _by = function (c) {
@@ -15,4 +15,3 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     "#text/0(": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);

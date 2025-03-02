@@ -1,9 +1,9 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-const _renderer = /* @__PURE__ */_$.createRenderer(input => {
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const x = 1;
   const MyTag = {
-    content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
+    content: /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", () => {
       const _scope1_id = _$.nextScopeId();
       _$.write(`<div>${_$.escapeXML(x)}${_$.markResumeNode(_scope1_id, "#text/0")}</div>`);
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_x/subscriber");
@@ -11,7 +11,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
         _: _$.ensureScopeWithId(_scope0_id)
       }, "__tests__/template.marko", "2:2");
       _$.resumeClosestBranch(_scope1_id);
-    }), "__tests__/template.marko_1_renderer", _scope0_id)
+    })
   };
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/0", MyTag, {});
@@ -20,10 +20,9 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeScope(_scope0_id, {
     x,
     "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.normalizeDynamicRenderer(MyTag)
+    "#text/0(": _$.dynamicTagId(MyTag)
   }, "__tests__/template.marko", 0, {
     x: "1:6"
   });
   _$.resumeClosestBranch(_scope0_id);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _renderer);
