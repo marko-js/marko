@@ -48,7 +48,7 @@ declare module "@marko/compiler/dist/types" {
       template: string;
       walks: string;
       setup: string;
-      params: TemplateExport | undefined;
+      input: TemplateExport | undefined;
       closures: string;
     };
   }
@@ -73,8 +73,9 @@ export default {
       startSection(program);
       trackParamsReferences(program, BindingType.input);
 
-      if (program.node.params[0]?.extra?.binding) {
-        program.node.params[0].extra!.binding!.nullable = false;
+      const inputBinding = program.node.params[0].extra?.binding;
+      if (inputBinding) {
+        inputBinding.nullable = false;
       }
 
       const { scope } = program;
@@ -83,20 +84,17 @@ export default {
         template: scope.generateUid("template_"),
         walks: scope.generateUid("walks_"),
         setup: scope.generateUid("setup_"),
-        params: undefined, // TODO look into recursive components with fine grained params.
+        input: undefined, // TODO look into recursive components with fine grained params.
         closures: scope.generateUid("closures_"),
       };
     },
 
     exit(program) {
       finalizeReferences();
-      const {
-        scope,
-        node: { extra },
-      } = program;
-
-      if (extra.binding && bindingHasDownstreamExpressions(extra.binding)) {
-        extra.domExports!.params = buildTemplateExports(extra.binding, scope);
+      const programExtra = program.node.extra;
+      const inputBinding = program.node.params[0].extra?.binding;
+      if (inputBinding && bindingHasDownstreamExpressions(inputBinding)) {
+        programExtra.domExports!.input = buildTemplateExports(inputBinding);
       }
       currentProgramPath = previousProgramPath.get(currentProgramPath)!;
     },
@@ -178,30 +176,18 @@ function resolveRelativeToEntry(
       );
 }
 
-function buildTemplateExports(binding: Binding, scope: t.Scope) {
+function buildTemplateExports(binding: Binding) {
   const templateExport: TemplateExport = {
-    id: (binding.export ??= scope.generateUid(binding.name + "_")),
+    id: (binding.export ??= currentProgramPath.scope.generateUid(
+      binding.name + "_",
+    )),
     binding,
     props: undefined,
   };
-  const { aliases, propertyAliases, downstreamExpressions } = binding;
-
-  if (!downstreamExpressions.size) {
+  if (!(binding.aliases.size || binding.downstreamExpressions.size)) {
     templateExport.props = {};
-    for (const [property, alias] of propertyAliases) {
-      templateExport.props[property] = buildTemplateExports(alias, scope);
-    }
-
-    for (const alias of aliases) {
-      // TODO: handle spreads
-      const exports = buildTemplateExports(alias, scope);
-      if (exports.props) {
-        // TODO: this allows one alias to overwrite another
-        templateExport.props = { ...templateExport.props, ...exports.props };
-      } else {
-        templateExport.props = undefined;
-        return templateExport;
-      }
+    for (const [property, alias] of binding.propertyAliases) {
+      templateExport.props[property] = buildTemplateExports(alias);
     }
   }
 

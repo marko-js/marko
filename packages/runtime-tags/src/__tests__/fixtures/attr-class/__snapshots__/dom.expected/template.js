@@ -52,10 +52,9 @@ export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _c_(_scope, input.c);
   _d_(_scope, input.d);
 });
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export function _setup_(_scope) {
   _customTag(_scope["#childScope/1"]);
   _customTag(_scope["#childScope/2"]);
   _customTag_input_class(_scope["#childScope/2"], ["a", false, "b"]);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, _input_);

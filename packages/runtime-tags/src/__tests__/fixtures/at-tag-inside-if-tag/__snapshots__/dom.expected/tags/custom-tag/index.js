@@ -10,5 +10,4 @@ export const _pattern__ = /* @__PURE__ */_$.value("_pattern_", (_scope, _pattern
   _content_(_scope, _pattern_.content);
 });
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _pattern__(_scope, input.thing));
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/custom-tag/index.marko", _template_, _walks_, _setup_, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/custom-tag/index.marko", _template_, _walks_, _setup_, _input_);

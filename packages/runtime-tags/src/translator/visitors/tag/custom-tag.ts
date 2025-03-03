@@ -142,7 +142,7 @@ export default {
           tagExtra,
           section,
           tag,
-          childProgramExtra?.domExports!.params?.props?.[0],
+          childProgramExtra?.domExports!.input,
         );
         // TODO: should check individual inputs to see if they are intersecting with state
         currentProgramPath.node.extra!.hasInteractiveChild =
@@ -189,8 +189,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 
   const tagVar = node.var;
   const section = getSection(tag);
-  const inputExport =
-    loadFileForTag(tag)?.ast.program.extra?.domExports?.params?.props?.[0];
+  const inputExport = loadFileForTag(tag)?.ast.program.extra?.domExports?.input;
   const { properties, statements } = inputExport
     ? translateAttrs(tag, inputExport.props)
     : {
@@ -322,7 +321,7 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     childExports.setup,
     tagName,
   );
-  const inputExport = childExports.params?.props?.[0];
+  const inputExport = childExports.input;
   if (inputExport) {
     writeAttrsToExports(tag, inputExport, `${getTagName(tag) || "tag"}_input`, {
       circular: childFile.opts.filename === file.opts.filename,

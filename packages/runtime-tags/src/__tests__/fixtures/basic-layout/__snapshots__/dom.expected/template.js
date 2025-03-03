@@ -9,9 +9,8 @@ const _setup$layout_content = _scope => {
 const _layout_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<h1>Hello <!></h1>", /* next(1), over(1), replace */"Db%", _setup$layout_content);
 export const _name_ = /* @__PURE__ */_$.value("name", (_scope, name) => _name$layout_content(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _name_(_scope, input.name));
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export function _setup_(_scope) {
   _layout(_scope["#childScope/0"]);
   _layout_input_content(_scope["#childScope/0"], _layout_content(_scope));
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, _input_);

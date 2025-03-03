@@ -85,7 +85,6 @@ export const compat = {
       }
     }
 
-    const applyArgs = renderer.___args || noop;
     let existing = false;
     if (typeof args[0] === "object" && "renderBody" in args[0]) {
       const input = args[0];
@@ -106,7 +105,8 @@ export const compat = {
       } else {
         existing = true;
       }
-      applyArgs(branch, args);
+
+      renderer.___args?.(branch, (renderer as any)._ ? args[0] : args);
     });
 
     if (!existing) {
@@ -114,5 +114,3 @@ export const compat = {
     }
   },
 };
-
-function noop() {}

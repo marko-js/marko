@@ -1,6 +1,7 @@
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import type {
   BranchScope,
+  Scope,
   Template,
   TemplateInput,
   TemplateInstance,
@@ -10,13 +11,24 @@ import { prepareEffects, runEffects } from "./queue";
 import { createBranch, createContent, type Renderer } from "./renderer";
 import { register } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
+import type { Signal } from "./signals";
 
 export const createTemplate = (
-  ...contentArgs: Parameters<typeof createContent>
+  id: string,
+  template?: string | 0,
+  rawWalks?: string | 0,
+  setup?: ((scope: Scope) => void) | 0,
+  inputSignal?: Signal<unknown>,
 ): Template => {
-  const renderer = createContent(...contentArgs)() as unknown as Template;
+  const renderer = createContent(
+    id,
+    template,
+    rawWalks,
+    setup,
+    inputSignal && (() => inputSignal),
+  )() as unknown as Template;
   renderer.mount = mount;
-  (renderer as any)._ = renderer; // This is added exclusively for the compat layer, maybe someday it can be removed.
+  (renderer as any)._ = renderer; // This is added exclusively for the compat layer and also to differentiate a Template from a Renderer
   if (MARKO_DEBUG) {
     renderer.render = () => {
       throw new Error(
@@ -25,7 +37,7 @@ export const createTemplate = (
     };
   }
 
-  return register(contentArgs[0], renderer);
+  return register(id, renderer);
 };
 
 function mount(
@@ -77,7 +89,7 @@ function mount(
   const args = this.___args;
   const effects = prepareEffects(() => {
     branch = createBranch($global, this, undefined, parentNode);
-    args?.(branch, [input]);
+    args?.(branch, input);
   });
 
   insertChildNodes(
@@ -93,7 +105,7 @@ function mount(
       if (args) {
         runEffects(
           prepareEffects(() => {
-            args(branch, [newInput]);
+            args(branch, newInput);
           }),
         );
       }

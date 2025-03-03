@@ -1,4 +1,4 @@
-// size: 1002 (min) 485 (brotli)
+// size: 962 (min) 464 (brotli)
 const _expr_comment_comments_id$if_content = intersection(1, (_scope) => {
     const {
       _: { 8: comment_comments, 11: id },
@@ -78,14 +78,18 @@ const _expr_comment_comments_id$if_content = intersection(1, (_scope) => {
   ),
   _input_$1 = value(2, (_scope, input) => {
     _input_comments_(_scope, input.comments), _input_path_(_scope, input.path);
-  }),
-  _input_ = value(2, (_scope, input) => {
+  });
+function _setup_(_scope) {
+  _scope[0];
+}
+createTemplate(
+  "b",
+  "<ul></ul>",
+  "/ b&",
+  _setup_,
+  value(2, (_scope, input) => {
     const _comments_input_spread = input;
     _input_comments_(_scope[0], _comments_input_spread.comments),
       _input_path_(_scope[0], _comments_input_spread.path);
   }),
-  _params__ = value(1, (_scope, _params_) => _input_(_scope, _params_[0]));
-function _setup_(_scope) {
-  _scope[0];
-}
-createTemplate("b", "<ul></ul>", "/ b&", _setup_, () => _params__).mount();
+).mount();
