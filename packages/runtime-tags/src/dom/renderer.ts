@@ -137,16 +137,8 @@ export function createRenderer(
   walks?: string | 0,
   setup?: SetupFn | 0,
   getArgs?: (() => Signal<unknown>) | 0,
-  dynamicScopesAccessor?: Accessor,
 ) {
-  return createContent(
-    "",
-    template,
-    walks,
-    setup,
-    getArgs,
-    dynamicScopesAccessor,
-  )();
+  return createContent("", template, walks, setup, getArgs)();
 }
 
 const cloneCache: Partial<

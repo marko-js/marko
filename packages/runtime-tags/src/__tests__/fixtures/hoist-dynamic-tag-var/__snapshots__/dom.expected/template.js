@@ -22,7 +22,7 @@ const _setup$if_content3 = _scope => {
   _dynamicTag$if_content2(_scope, 1 && Child);
 };
 const _if_content3 = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* dynamicTagWithVar */"D1D", _setup$if_content3);
-const _get_hoisted_setHtml3 = _$.register("__tests__/template.marko_0/_hoisted_setHtml", _$.hoist("setHtml", "#text/0!", "#text/0!"));
+const _get_hoisted_setHtml3 = _$.register("__tests__/template.marko_0__hoisted_setHtml/hoist", _$.hoist("setHtml", "#text/0!", "#text/0!"));
 const _dynamicTag$if_content = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => _setHtml$if_content);
 const _setHtml$if_content = _$.registerBoundSignal("__tests__/template.marko_2_setHtml/var", /* @__PURE__ */_$.value("setHtml"));
 const _setup$if_content = _scope => {

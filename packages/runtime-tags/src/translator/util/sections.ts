@@ -27,7 +27,7 @@ export interface Section {
   loc: t.SourceLocation | undefined;
   depth: number;
   parent: Section | undefined;
-  children: Map<Section, { binding: Binding; suffix?: string }>;
+  sectionAccessor: { binding: Binding; suffix: string } | undefined;
   params: undefined | Binding;
   closures: ReferencedBindings;
   bindings: ReferencedBindings;
@@ -81,7 +81,7 @@ export function startSection(
       loc: sectionNamePath?.node.loc || undefined,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
-      children: new Map(),
+      sectionAccessor: undefined,
       params: undefined,
       closures: undefined,
       bindings: undefined,

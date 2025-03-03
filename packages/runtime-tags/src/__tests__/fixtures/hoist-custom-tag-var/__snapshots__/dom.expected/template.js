@@ -22,7 +22,7 @@ const _setup$if_content3 = _scope => {
   _child(_scope["#childScope/0"]);
 };
 const _if_content3 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, _setup$if_content3);
-const _get_hoisted_setHtml3 = _$.register("__tests__/template.marko_0/_hoisted_setHtml", _$.hoist("setHtml", "#text/0!", "#text/0!"));
+const _get_hoisted_setHtml3 = _$.register("__tests__/template.marko_0__hoisted_setHtml/hoist", _$.hoist("setHtml", "#text/0!", "#text/0!"));
 const _setHtml$if_content = _$.registerBoundSignal("__tests__/template.marko_2_setHtml/var", /* @__PURE__ */_$.value("setHtml"));
 const _setup$if_content = _scope => {
   _$.setTagVar(_scope, "#childScope/0", _setHtml$if_content);

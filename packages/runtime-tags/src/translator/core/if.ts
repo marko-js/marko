@@ -92,14 +92,14 @@ export const IfTag = {
       const section = getOrCreateSection(tag);
       mergeReferences(section, rootTag.node, mergeReferenceNodes);
 
-      section.children.set(bodySection!, {
+      bodySection!.sectionAccessor = {
         binding: getOptimizedOnlyChildNodeRef(
           rootTag,
           section,
           branches.length,
         ),
         suffix: AccessorChar.ConditionalScope,
-      });
+      };
 
       rootExtra.singleNodeOptimization = singleNodeOptimization;
     }

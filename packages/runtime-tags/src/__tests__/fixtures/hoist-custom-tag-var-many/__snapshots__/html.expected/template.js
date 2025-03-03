@@ -4,7 +4,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
   const _scope1_ = new Map();
   const _scope2_ = new Map();
-  const _hoisted_setHtml3 = _$.hoist(_scope0_id, "__tests__/template.marko_0/_hoisted_setHtml3");
+  const _hoisted_setHtml3 = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml3/hoist");
   const _scope3_ = new Map();
   _$.forTo(5, 0, 1, _value => {
     const _scope1_id = _$.nextScopeId();

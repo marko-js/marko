@@ -3,9 +3,9 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
-  const _hoisted_el = _$.hoist(_scope0_id, "__tests__/template.marko_0/_hoisted_el");
+  const _hoisted_el = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_el/hoist");
   const _child_content_subscribers = new Set();
-  const _hoisted_el3 = _$.hoist(_scope0_id, "__tests__/template.marko_0/_hoisted_el3");
+  const _hoisted_el3 = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_el3/hoist");
   const _inputShowChildNull_content_subscribers = new Set();
   const _inputShowSectionNull_content_subscribers = new Set();
   _child({
@@ -19,7 +19,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/1", input.show ? Child : null, {}, _$.register(/* @__PURE__ */_$.createRenderer(() => {
     const _scope2_id = _$.nextScopeId();
-    const _hoisted_el2 = _$.hoist(_scope2_id, "__tests__/template.marko_2/_hoisted_el2");
+    const _hoisted_el2 = _$.hoist(_scope2_id, "__tests__/template.marko_2__hoisted_el2/hoist");
     const _child_content2_subscribers = new Set();
     _child({
       content: _$.register(/* @__PURE__ */_$.createRenderer(() => {
@@ -33,7 +33,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
     _$.writeSubscribe(_inputShowChildNull_content_subscribers, _$.writeScope(_scope2_id, {
       _hoisted_el2,
       _: _$.ensureScopeWithId(_scope0_id),
-      "#childScope/0?": _child_content2_subscribers
+      "3?": _child_content2_subscribers
     }, "__tests__/template.marko", "15:4", {
       _hoisted_el2: 0
     }));
@@ -51,11 +51,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeScope(_scope0_id, {
     _hoisted_el,
     _hoisted_el3,
-    "#childScope/0?": _child_content_subscribers,
-    "#text/1?": _inputShowChildNull_content_subscribers,
+    "1?": _child_content_subscribers,
+    "2?": _inputShowChildNull_content_subscribers,
     "#text/1!": _$.writeExistingScope(_dynamicScope),
     "#text/1(": _$.normalizeDynamicRenderer(input.show ? Child : null),
-    "#text/2?": _inputShowSectionNull_content_subscribers,
+    "4?": _inputShowSectionNull_content_subscribers,
     "#text/2!": _$.writeExistingScope(_dynamicScope2),
     "#text/2(": _$.normalizeDynamicRenderer(input.show ? 'section' : null)
   }, "__tests__/template.marko", 0, {

@@ -10,7 +10,6 @@ import {
 } from "@marko/compiler/babel-utils";
 import path from "path";
 
-import { AccessorChar } from "../../../common/types";
 import { getTagName } from "../../util/get-tag-name";
 import { isStatefulReferences } from "../../util/is-stateful";
 import { isOutputHTML } from "../../util/marko-config";
@@ -130,13 +129,7 @@ export default {
           tagExtra,
         );
       }
-      const bodySection = startSection(tagBody);
-      if (bodySection) {
-        section.children.set(bodySection, {
-          binding: tagExtra[kChildScopeBinding],
-          suffix: AccessorChar.Dynamic,
-        });
-      }
+      startSection(tagBody);
       trackParamsReferences(tagBody, BindingType.param);
 
       const childFile = loadFileForTag(tag)!;
@@ -178,7 +171,7 @@ export default {
 function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const tagBody = tag.get("body");
   const { node } = tag;
-  const extra = node.extra!;
+  const tagExtra = node.extra!;
   let tagIdentifier: t.Expression;
 
   writer.flushInto(tag);
@@ -205,7 +198,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       };
   let providesStatefulAttrs = false;
 
-  for (const expr of extra[kChildAttrExprs]!) {
+  for (const expr of tagExtra[kChildAttrExprs]!) {
     if (
       isReferencedExtra(expr) &&
       isStatefulReferences(expr.referencedBindings)
@@ -216,7 +209,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   }
 
   if (providesStatefulAttrs || tagVar) {
-    const childScopeBinding = extra[kChildScopeBinding]!;
+    const childScopeBinding = tagExtra[kChildScopeBinding]!;
     const peekScopeId = tag.scope.generateUidIdentifier(
       childScopeBinding?.name,
     );
@@ -890,4 +883,8 @@ function buildUndefined() {
 
 function always() {
   return true;
+}
+
+export function getChildScopeBinding(path: t.NodePath<t.MarkoTag>) {
+  return path.node.extra![kChildScopeBinding]!;
 }

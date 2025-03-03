@@ -2,7 +2,7 @@ export const _template_ = "<!><!><hr><!><hr><!><!>";
 export const _walks_ = /* replace, over(2), replace, over(2), replace, over(1) */"D%c%c%bD";
 import Child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _get_hoisted_setHtml = _$.register("__tests__/template.marko_0/_hoisted_setHtml3", _$.hoist("setHtml3", "#ul/0(", "#text/2("));
+const _get_hoisted_setHtml = _$.register("__tests__/template.marko_0__hoisted_setHtml3/hoist", _$.hoist("setHtml3", "#ul/0(", "#text/2("));
 const _dynamicTag$for_content3 = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => _setHtml3$for_content);
 const _setHtml3$for_content = _$.registerBoundSignal("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_$.value("setHtml3"));
 const _params_3$for_content = /* @__PURE__ */_$.value("_params_3");

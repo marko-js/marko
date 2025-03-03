@@ -1,5 +1,6 @@
 import { types as t } from "@marko/compiler";
 
+import { AccessorChar } from "../../common/types";
 import { currentProgramPath } from "../visitors/program";
 import { forEachIdentifier } from "./for-each-identifier";
 import { getExprRoot, getFnRoot } from "./get-root";
@@ -18,7 +19,6 @@ import {
   push,
   Sorted,
 } from "./optional";
-import { getRegisterState } from "./registration";
 import { getScopeExpression } from "./scope-read";
 import {
   forEachSection,
@@ -27,10 +27,12 @@ import {
   isSameOrChildSection,
   type Section,
 } from "./sections";
-import { getHoistFunctionIdentifier, getRegisterUID } from "./signals";
+import { getHoistFunctionIdentifier } from "./signals";
 import { createProgramState } from "./state";
 import { toMemberExpression } from "./to-property-name";
 import withPreviousLocation from "./with-previous-location";
+
+const kIsInvoked = Symbol("hoist is invoked");
 
 export type Aliases = undefined | Binding | { [property: string]: Aliases };
 
@@ -73,6 +75,7 @@ type FnExtra = (
   | t.ArrowFunctionExpressionExtra
   | t.FunctionDeclarationExtra
 ) & { section: Section };
+
 type Read = {
   binding: Binding;
   node: undefined | t.MemberExpression | t.Identifier;
@@ -88,6 +91,7 @@ declare module "@marko/compiler/dist/types" {
     read?: { binding: Binding; props: Opt<string> };
     pruned?: true;
     isEffect?: true;
+    [kIsInvoked]?: true;
   }
 
   export interface FunctionExtra {
@@ -258,13 +262,9 @@ export function trackHoistedReference(
   if (isInvokedFunction(referencePath)) {
     extra.read = createRead(hoistedBinding, undefined);
     extra.section = referenceSection;
-    extra.binding = binding;
+    extra[kIsInvoked] = true;
   } else {
     trackReference(referencePath, hoistedBinding);
-    getRegisterState().set(
-      hoistedBinding,
-      getRegisterUID(hoistSection, hoistedBinding.name),
-    );
   }
 
   if (referenceSection !== hoistSection) {
@@ -471,7 +471,7 @@ function createBindingsAndTrackReferences(
   }
 }
 
-export function trackReference(
+function trackReference(
   referencePath: t.NodePath<t.Identifier>,
   binding: Binding,
 ) {
@@ -909,17 +909,11 @@ export function getScopeAccessor(binding: Binding, includeId?: boolean) {
   );
 }
 
-export function getSectionInParent(section: Section) {
-  return section.parent?.children?.get(section);
-}
-
 export function getSectionScopeAccessor(section: Section) {
-  const inParent = getSectionInParent(section);
-  return inParent
-    ? inParent.suffix
-      ? getScopeAccessor(inParent.binding) + inParent.suffix
-      : getScopeAccessor(inParent.binding)
-    : undefined;
+  return section.sectionAccessor
+    ? getScopeAccessor(section.sectionAccessor.binding) +
+        section.sectionAccessor.suffix
+    : section.id + AccessorChar.Dynamic;
 }
 
 export function getSectionScopeAccessorLiteral(section: Section) {
@@ -949,11 +943,10 @@ export function getReadReplacement(node: t.Identifier | t.MemberExpression) {
   if (binding) {
     if (node.type === "Identifier") {
       if (binding.type === BindingType.hoist) {
-        replacement = node.extra?.binding
-          ? t.callExpression(
-              getHoistFunctionIdentifier(node.extra.binding, binding),
-              [getScopeExpression(node.extra.section!, binding.section)],
-            )
+        replacement = node.extra?.[kIsInvoked]
+          ? t.callExpression(getHoistFunctionIdentifier(binding), [
+              getScopeExpression(node.extra.section!, binding.section),
+            ])
           : t.identifier(getScopeAccessor(binding)!);
       } else if (binding.name !== node.name) {
         node.name = binding.name;

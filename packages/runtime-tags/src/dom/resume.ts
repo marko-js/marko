@@ -295,8 +295,5 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 }
 
 export function nodeRef(id: string, key: string) {
-  return register(id, (scope: Scope) => {
-    let fn = () => (fn = scope[key])();
-    return fn;
-  });
+  return register(id, (scope: Scope) => () => scope[key]());
 }

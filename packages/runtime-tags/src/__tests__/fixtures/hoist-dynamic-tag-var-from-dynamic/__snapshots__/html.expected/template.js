@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 import _thing from "./tags/thing.marko";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
-  const _hoisted_setHtml = _$.hoist(_scope0_id, "__tests__/template.marko_0/_hoisted_setHtml");
+  const _hoisted_setHtml = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml/hoist");
   const _thing_content_subscribers = new Set();
   const _inputShowThingNull_content_subscribers = new Set();
   const _inputShowSectionNull_content_subscribers = new Set();
@@ -39,7 +39,7 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
       }), "__tests__/template.marko_3_renderer", _scope2_id)
     });
     _$.writeSubscribe(_inputShowThingNull_content_subscribers, _$.writeScope(_scope2_id, {
-      "#childScope/0?": _thing_content2_subscribers
+      "3?": _thing_content2_subscribers
     }, "__tests__/template.marko", "16:4"));
   }), "__tests__/template.marko_2_renderer", _scope0_id));
   const _dynamicScope5 = _$.peekNextScope();
@@ -58,11 +58,11 @@ const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml");
   _$.writeScope(_scope0_id, {
     _hoisted_setHtml,
-    "#childScope/0?": _thing_content_subscribers,
-    "#text/1?": _inputShowThingNull_content_subscribers,
+    "1?": _thing_content_subscribers,
+    "2?": _inputShowThingNull_content_subscribers,
     "#text/1!": _$.writeExistingScope(_dynamicScope3),
     "#text/1(": _$.normalizeDynamicRenderer(input.show ? Thing : null),
-    "#text/2?": _inputShowSectionNull_content_subscribers,
+    "4?": _inputShowSectionNull_content_subscribers,
     "#text/2!": _$.writeExistingScope(_dynamicScope5),
     "#text/2(": _$.normalizeDynamicRenderer(input.show ? 'section' : null)
   }, "__tests__/template.marko", 0, {

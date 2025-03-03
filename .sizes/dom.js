@@ -1,4 +1,4 @@
-// size: 17938 (min) 6796 (brotli)
+// size: 17913 (min) 6779 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -270,10 +270,7 @@ function init(runtimeId = "M") {
       });
 }
 function nodeRef(id, key) {
-  return register(id, (scope) => {
-    let fn = () => (fn = scope[key])();
-    return fn;
-  });
+  return register(id, (scope) => () => scope[key]());
 }
 function controllable_input_checked(
   scope,
@@ -1066,21 +1063,8 @@ function registerContent(
     createContent(id, template, walks, setup, getArgs, dynamicScopesAccessor),
   );
 }
-function createRenderer(
-  template,
-  walks,
-  setup,
-  getArgs,
-  dynamicScopesAccessor,
-) {
-  return createContent(
-    "",
-    template,
-    walks,
-    setup,
-    getArgs,
-    dynamicScopesAccessor,
-  )();
+function createRenderer(template, walks, setup, getArgs) {
+  return createContent("", template, walks, setup, getArgs)();
 }
 var cloneCache = {};
 var isScheduled,

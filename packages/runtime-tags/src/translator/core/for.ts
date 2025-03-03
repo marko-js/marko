@@ -100,10 +100,10 @@ export default {
     trackParamsReferences(tagBody, BindingType.param, undefined, tagExtra);
     mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
 
-    section.children.set(bodySection, {
+    bodySection.sectionAccessor = {
       binding: getOptimizedOnlyChildNodeRef(tag, section),
       suffix: AccessorChar.LoopScopeMap,
-    });
+    };
 
     bodySection.upstreamExpression = tagExtra;
     bodySection.isBranch = true;

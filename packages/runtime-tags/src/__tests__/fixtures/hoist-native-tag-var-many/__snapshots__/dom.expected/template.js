@@ -1,7 +1,7 @@
 export const _template_ = "<!><!><hr><!><hr><!><!>";
 export const _walks_ = /* replace, over(2), replace, over(2), replace, over(1) */"D%c%c%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _get_hoisted_el = _$.register("__tests__/template.marko_0/_hoisted_el3", _$.hoist("#li/0>", "#ul/0(", "#text/2("));
+const _get_hoisted_el = _$.register("__tests__/template.marko_0__hoisted_el3/hoist", _$.hoist("#li/0>", "#ul/0(", "#text/2("));
 const _expr_i_j$for_content = /* @__PURE__ */_$.intersection(3, _scope => {
   const {
     _: {

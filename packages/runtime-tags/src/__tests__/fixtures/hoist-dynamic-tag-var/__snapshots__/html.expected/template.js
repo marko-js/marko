@@ -3,7 +3,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 import _thing from "./tags/thing.marko";
 const _renderer = /* @__PURE__ */_$.createRenderer(input => {
   const _scope0_id = _$.nextScopeId();
-  const _hoisted_setHtml = _$.hoist(_scope0_id, "__tests__/template.marko_0/_hoisted_setHtml");
+  const _hoisted_setHtml = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml/hoist");
   let _ifScopeId2, _ifBranch2;
   let _ifScopeId3;
   let _ifScopeId4;

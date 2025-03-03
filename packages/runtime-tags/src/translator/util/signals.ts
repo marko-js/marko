@@ -22,7 +22,6 @@ import {
   getReadReplacement,
   getScopeAccessor,
   getScopeAccessorLiteral,
-  getSectionInParent,
   getSectionScopeAccessor,
   getSectionScopeAccessorLiteral,
   intersectionMeta,
@@ -30,7 +29,6 @@ import {
   isRegisteredFnExtra,
   type ReferencedBindings,
 } from "./references";
-import { getRegisterState } from "./registration";
 import { callRuntime } from "./runtime";
 import { createScopeReadPattern, getScopeExpression } from "./scope-read";
 import {
@@ -127,15 +125,12 @@ const [getHoistFunctionsIdsMap] = createSectionState<
   Map<Binding, t.Identifier>
 >("hoistFunctionsIdsMap", () => new Map());
 
-export function getHoistFunctionIdentifier(
-  binding: Binding,
-  hoistedBinding: Binding,
-) {
+export function getHoistFunctionIdentifier(hoistedBinding: Binding) {
   const idsMap = getHoistFunctionsIdsMap(hoistedBinding.section);
-  let identifier = idsMap.get(binding);
+  let identifier = idsMap.get(hoistedBinding);
   if (!identifier) {
     idsMap.set(
-      binding,
+      hoistedBinding,
       (identifier = currentProgramPath.scope.generateUidIdentifier(
         `get${hoistedBinding.name}`,
       )),
@@ -746,22 +741,23 @@ export function writeSignals(section: Section) {
         currentSection = parentSection;
       }
 
-      const hoistIdentifier = getHoistFunctionIdentifier(
-        binding,
-        hoistedBinding,
-      );
-
-      const registerId = getRegisterState().get(hoistedBinding);
+      const hoistIdentifier = getHoistFunctionIdentifier(hoistedBinding);
 
       currentProgramPath.pushContainer(
         "body",
         t.variableDeclaration("const", [
           t.variableDeclarator(
             hoistIdentifier,
-            registerId
+            hoistedBinding.downstreamExpressions.size
               ? callRuntime(
                   "register",
-                  t.stringLiteral(registerId),
+                  t.stringLiteral(
+                    getResumeRegisterId(
+                      hoistedBinding.section,
+                      hoistedBinding,
+                      "hoist",
+                    ),
+                  ),
                   callRuntime("hoist", ...accessors),
                 )
               : callRuntime("hoist", ...accessors),
@@ -1053,17 +1049,21 @@ export function writeHTMLResumeStatements(
   const sectionDynamicSubscribers = new Set<Section>();
   forEach(section.hoisted, (binding) => {
     for (const hoistedBinding of binding.hoists.values()) {
-      const hoistSection = hoistedBinding.section;
-      const registerId = getRegisterState().get(hoistedBinding);
-      if (registerId) {
-        getHTMLSectionStatements(hoistSection).push(
+      if (hoistedBinding.downstreamExpressions.size) {
+        getHTMLSectionStatements(hoistedBinding.section).push(
           t.variableDeclaration("const", [
             t.variableDeclarator(
               t.identifier(hoistedBinding.name),
               callRuntime(
                 "hoist",
-                getScopeIdIdentifier(hoistSection),
-                t.stringLiteral(registerId),
+                getScopeIdIdentifier(hoistedBinding.section),
+                t.stringLiteral(
+                  getResumeRegisterId(
+                    hoistedBinding.section,
+                    hoistedBinding,
+                    "hoist",
+                  ),
+                ),
               ),
             ),
           ]),
@@ -1074,8 +1074,8 @@ export function writeHTMLResumeStatements(
       while (currentSection && currentSection !== hoistedBinding.section) {
         const parentSection: Section = currentSection.parent!;
         if (
-          !sectionDynamicSubscribers.has(currentSection) &&
-          getSectionInParent(currentSection)?.suffix === AccessorChar.Dynamic
+          !currentSection.sectionAccessor &&
+          !sectionDynamicSubscribers.has(currentSection)
         ) {
           const subscribersIdentifier =
             currentProgramPath.scope.generateUidIdentifier(

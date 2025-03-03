@@ -5,7 +5,7 @@ const _get_el = _$.nodeRef("__tests__/template.marko_2/#div", "#div/0>");
 import { _setup_ as _child, _input_ as _child_input, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child.marko";
 const _get_hoisted_el = _$.hoist("#div/0>", "#text/2!");
 const _if_content3 = /* @__PURE__ */_$.createRenderer("<div></div>", /* get */" ");
-const _get_hoisted_el2 = _$.register("__tests__/template.marko_0/_hoisted_el", _$.hoist("#div/0>", "#text/0!", "#text/0!"));
+const _get_hoisted_el2 = _$.register("__tests__/template.marko_0__hoisted_el/hoist", _$.hoist("#div/0>", "#text/0!", "#text/0!"));
 const _setup$if_content = _scope => {
   _child(_scope["#childScope/1"]);
   _child_input(_scope["#childScope/1"], {
