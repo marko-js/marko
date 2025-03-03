@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.37.20
+
+### Patch Changes
+
+- [#2544](https://github.com/marko-js/marko/pull/2544) [`08e0d24`](https://github.com/marko-js/marko/commit/08e0d245a604380120de16db9e7806a1ccaf459d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update tags api interop layer.
+
+- [#2540](https://github.com/marko-js/marko/pull/2540) [`b05c1f7`](https://github.com/marko-js/marko/commit/b05c1f7f3a1e97f964c7ebff051b7b06e12d02c3) Thanks [@mlrawlings](https://github.com/mlrawlings)! - refactor signals to no longer mark but rely soley on queueing for proper execution order
+
+- Updated dependencies [[`cfca41a`](https://github.com/marko-js/marko/commit/cfca41ac8c571d1fecb3b889df5eead1dfe06130)]:
+  - @marko/compiler@5.39.13
+
 ## 5.37.19
 
 ### Patch Changes

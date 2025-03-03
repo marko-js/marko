@@ -1,5 +1,17 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.18
+
+### Patch Changes
+
+- [#2544](https://github.com/marko-js/marko/pull/2544) [`08e0d24`](https://github.com/marko-js/marko/commit/08e0d245a604380120de16db9e7806a1ccaf459d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update tags api interop layer.
+
+- [#2540](https://github.com/marko-js/marko/pull/2540) [`b05c1f7`](https://github.com/marko-js/marko/commit/b05c1f7f3a1e97f964c7ebff051b7b06e12d02c3) Thanks [@mlrawlings](https://github.com/mlrawlings)! - refactor signals to no longer mark but rely soley on queueing for proper execution order
+
+- Updated dependencies [[`08e0d24`](https://github.com/marko-js/marko/commit/08e0d245a604380120de16db9e7806a1ccaf459d), [`ff2f413`](https://github.com/marko-js/marko/commit/ff2f413422f297fa4bdbfe32984e28883958db0e), [`b05c1f7`](https://github.com/marko-js/marko/commit/b05c1f7f3a1e97f964c7ebff051b7b06e12d02c3), [`08e0d24`](https://github.com/marko-js/marko/commit/08e0d245a604380120de16db9e7806a1ccaf459d), [`cfca41a`](https://github.com/marko-js/marko/commit/cfca41ac8c571d1fecb3b889df5eead1dfe06130), [`4c87458`](https://github.com/marko-js/marko/commit/4c87458d88bcf80b194234eaed593375f97cd5bf), [`53de7a0`](https://github.com/marko-js/marko/commit/53de7a0b1e80a804e4a4348e8bc5fc0bb0c0c02a)]:
+  - marko@5.37.20
+  - @marko/runtime-tags@0.3.47
+
 ## 0.2.17
 
 ### Patch Changes
