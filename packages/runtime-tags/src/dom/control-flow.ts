@@ -99,27 +99,33 @@ export let dynamicTag = function dynamicTag(
     }
 
     if (normalizedRenderer) {
-      const input = getInput?.();
+      const args = getInput?.();
       if (typeof normalizedRenderer === "string") {
         attrs(
           scope[childScopeAccessor],
           MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0,
-          (inputIsArgs ? input[0] : input) || {},
+          (inputIsArgs ? args[0] : args) || {},
         );
-      } else {
-        normalizedRenderer.___args?.(
-          scope[childScopeAccessor],
-          inputIsArgs
-            ? input
-            : [
-                getContent
-                  ? {
-                      ...input,
-                      content: getContent(scope),
-                    }
-                  : input || {},
-              ],
-        );
+      } else if (normalizedRenderer.___args) {
+        if (inputIsArgs) {
+          normalizedRenderer.___args(
+            scope[childScopeAccessor],
+            (normalizedRenderer as any)._ ? args[0] : args,
+          );
+        } else {
+          const inputWithContent = getContent
+            ? {
+                ...args,
+                content: getContent(scope),
+              }
+            : args || {};
+          normalizedRenderer.___args(
+            scope[childScopeAccessor],
+            (normalizedRenderer as any)._
+              ? inputWithContent
+              : [inputWithContent],
+          );
+        }
       }
     }
   };

@@ -32,10 +32,10 @@ export default {
       const templateIdentifier = t.identifier(domExports.template);
       const walksIdentifier = t.identifier(domExports.walks);
       const setupIdentifier = t.identifier(domExports.setup);
-      const paramsBinding = program.node.extra.binding;
-      const programParamsSignal =
-        paramsBinding && bindingHasDownstreamExpressions(paramsBinding)
-          ? initValue(paramsBinding)
+      const inputBinding = program.node.params[0].extra?.binding;
+      const programInputSignal =
+        inputBinding && bindingHasDownstreamExpressions(inputBinding)
+          ? initValue(inputBinding)
           : undefined;
 
       const styleFile = getStyleFile(program.hub.file);
@@ -126,8 +126,7 @@ export default {
             templateIdentifier,
             walksIdentifier,
             setupIdentifier,
-            programParamsSignal?.identifier &&
-              t.arrowFunctionExpression([], programParamsSignal.identifier),
+            programInputSignal?.identifier,
           ),
         ),
       );

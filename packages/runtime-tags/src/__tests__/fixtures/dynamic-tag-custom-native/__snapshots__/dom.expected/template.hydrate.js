@@ -1,14 +1,13 @@
-// size: 353 (min) 217 (brotli)
+// size: 315 (min) 205 (brotli)
 const _setup_ = () => {},
   _id_ = _$.value(3, (_scope, id) => _$.data(_scope[0], id)),
-  _input_ = _$.value(2, (_scope, input) => _id_(_scope, input.id)),
-  _params__ = _$.value(1, (_scope, _params_) => _input_(_scope, _params_[0]));
+  _input_ = _$.value(2, (_scope, input) => _id_(_scope, input.id));
 var child = _$.createTemplate(
   "a",
   "<div>Id is <!></div>",
   "Db%l",
   _setup_,
-  () => _params__,
+  _input_,
 );
 const _dynamicTag = _$.dynamicTag(1),
   _tagName_effect = _$.effect("b0", (_scope, { 2: tagName }) =>

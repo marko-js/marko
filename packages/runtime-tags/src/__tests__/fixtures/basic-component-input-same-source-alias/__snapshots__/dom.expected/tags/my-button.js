@@ -17,5 +17,4 @@ export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _onClick_(_scope, input.onClick);
   _text_(_scope, input.text);
 });
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-button.marko", _template_, _walks_, _setup_, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-button.marko", _template_, _walks_, _setup_, _input_);

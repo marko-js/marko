@@ -8,7 +8,6 @@ const _c = /* @__PURE__ */_$.state("c/8", (_scope, c) => _$.data(_scope["#text/3
 const _b = /* @__PURE__ */_$.state("b/7", (_scope, b) => _$.data(_scope["#text/2"], b));
 const _a = /* @__PURE__ */_$.state("a/6", (_scope, a) => _$.data(_scope["#text/1"], a));
 const _setup__effect = _$.effect("__tests__/template.marko_0", _scope => _$.on(_scope["#button/0"], "click", function () {
-  debugger;
   let local;
   ((_result2, _a2, _b2, _c2) => ({
     a: _a2,

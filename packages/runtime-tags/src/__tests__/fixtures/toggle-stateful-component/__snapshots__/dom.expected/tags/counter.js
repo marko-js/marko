@@ -22,8 +22,7 @@ const _clickCount = /* @__PURE__ */_$.state("clickCount/5", (_scope, clickCount)
 });
 export const _input_onCount_ = /* @__PURE__ */_$.value("input_onCount", (_scope, input_onCount) => _expr_input_onCount_clickCount(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_onCount_(_scope, input.onCount));
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export function _setup_(_scope) {
   _clickCount(_scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/counter.marko", _template_, _walks_, _setup_, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/counter.marko", _template_, _walks_, _setup_, _input_);

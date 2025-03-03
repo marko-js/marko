@@ -18,10 +18,9 @@ export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_dynamic_(_scope, input.dynamic);
 });
 const _data2 = _$.registerBoundSignal("__tests__/template.marko_0_data2/var", (_scope, data2) => {});
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 const _data = _$.registerBoundSignal("__tests__/template.marko_0_data1/var", (_scope, data1) => {});
 export function _setup_(_scope) {
   _$.setTagVar(_scope, "#childScope/0", _data);
   _child(_scope["#childScope/0"]);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, _input_);

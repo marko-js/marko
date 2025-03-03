@@ -45,7 +45,6 @@ export const _input_show_ = /* @__PURE__ */_$.value("input_show", (_scope, input
   _input_show$if_content(_scope);
 });
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_show_(_scope, input.show));
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 const _setup__effect = _$.effect("__tests__/template.marko_0", _scope => {
   _get_hoisted_setHtml3(_scope)("Hello world");
   _get_hoisted_setHtml2(_scope)("Hello world");
@@ -58,4 +57,4 @@ export function _setup_(_scope) {
   _hoisted_setHtml(_scope, _get_hoisted_setHtml3(_scope));
   _setup__effect(_scope);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, _input_);

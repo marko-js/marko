@@ -10,5 +10,4 @@ const _for_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */
 const _for = /* @__PURE__ */_$.loopOf("#text/0", _for_content);
 export const _input_item_ = /* @__PURE__ */_$.value("input_item", (_scope, input_item) => _for(_scope, [input_item]));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_item_(_scope, input.item));
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/list/index.marko", _template_, _walks_, _setup_, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/list/index.marko", _template_, _walks_, _setup_, _input_);

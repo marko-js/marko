@@ -8,7 +8,6 @@ export const _input_x_ = /* @__PURE__ */_$.value("input_x", (_scope, input_x) =>
   _$.html(_scope, input_x, "#text/3");
 });
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_x_(_scope, input.x));
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export function _setup_(_scope) {
   _$.html(_scope, "Hello HTML <span>hi</span>", "#text/4");
   _$.textContent(_scope["#script/5"], `
@@ -18,4 +17,4 @@ export function _setup_(_scope) {
     ${".test { content: 'Hello <b> </style>' }"}
   `);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, _input_);

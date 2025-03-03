@@ -20,8 +20,7 @@ const _x = /* @__PURE__ */_$.state("x/5", (_scope, x) => {
 });
 export const _input_extra_ = /* @__PURE__ */_$.value("input_extra", (_scope, input_extra) => _expr_input_extra_x(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_extra_(_scope, input.extra));
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export function _setup_(_scope) {
   _x(_scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", _template_, _walks_, _setup_, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", _template_, _walks_, _setup_, _input_);

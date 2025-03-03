@@ -7,8 +7,7 @@ export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _comments_input_comments(_scope["#childScope/0"], _comments_input_spread.comments);
   _comments_input_path(_scope["#childScope/0"], _comments_input_spread.path);
 });
-export const _params__ = /* @__PURE__ */_$.value("_params_", (_scope, _params_) => _input_(_scope, _params_[0]));
 export function _setup_(_scope) {
   _comments(_scope["#childScope/0"]);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, () => _params__);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_, _input_);
