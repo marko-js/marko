@@ -1,6 +1,6 @@
 {
   "name": "@marko/translator-interop-class-tags",
-  "version": "0.2.17",
+  "version": "0.2.18",
   "description": "Combines the Class API translator from Marko 5 and the Tags API translator from Marko 6",
   "keywords": [
     "babel",
@@ -30,8 +30,8 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.26.2",
-    "@marko/runtime-tags": "^0.3.46",
-    "marko": "^5.37.18"
+    "@marko/runtime-tags": "^0.3.47",
+    "marko": "^5.37.20"
   },
   "peerDependencies": {
     "@marko/compiler": "^5.23.0"

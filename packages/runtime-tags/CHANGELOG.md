@@ -1,5 +1,24 @@
 # @marko/runtime-tags
 
+## 0.3.47
+
+### Patch Changes
+
+- [#2544](https://github.com/marko-js/marko/pull/2544) [`ff2f413`](https://github.com/marko-js/marko/commit/ff2f413422f297fa4bdbfe32984e28883958db0e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Use unique scope id counter per $global instance.
+
+- [#2540](https://github.com/marko-js/marko/pull/2540) [`b05c1f7`](https://github.com/marko-js/marko/commit/b05c1f7f3a1e97f964c7ebff051b7b06e12d02c3) Thanks [@mlrawlings](https://github.com/mlrawlings)! - refactor signals to no longer mark but rely soley on queueing for proper execution order
+
+- [#2544](https://github.com/marko-js/marko/pull/2544) [`08e0d24`](https://github.com/marko-js/marko/commit/08e0d245a604380120de16db9e7806a1ccaf459d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid registering body content when known downstream usage is not serialized.
+
+- [#2534](https://github.com/marko-js/marko/pull/2534) [`cfca41a`](https://github.com/marko-js/marko/commit/cfca41ac8c571d1fecb3b889df5eead1dfe06130) Thanks [@rturnq](https://github.com/rturnq)! - Add support for tag varaible hoisting
+
+- [#2544](https://github.com/marko-js/marko/pull/2544) [`4c87458`](https://github.com/marko-js/marko/commit/4c87458d88bcf80b194234eaed593375f97cd5bf) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Minor queue perf improvements.
+
+- [#2544](https://github.com/marko-js/marko/pull/2544) [`53de7a0`](https://github.com/marko-js/marko/commit/53de7a0b1e80a804e4a4348e8bc5fc0bb0c0c02a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid "params" on templates, go straight to providing "input".
+
+- Updated dependencies [[`cfca41a`](https://github.com/marko-js/marko/commit/cfca41ac8c571d1fecb3b889df5eead1dfe06130)]:
+  - @marko/compiler@5.39.13
+
 ## 0.3.46
 
 ### Patch Changes

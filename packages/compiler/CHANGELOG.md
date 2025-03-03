@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.13
+
+### Patch Changes
+
+- [#2534](https://github.com/marko-js/marko/pull/2534) [`cfca41a`](https://github.com/marko-js/marko/commit/cfca41ac8c571d1fecb3b889df5eead1dfe06130) Thanks [@rturnq](https://github.com/rturnq)! - Add support for tag varaible hoisting
+
 ## 5.39.12
 
 ### Patch Changes
