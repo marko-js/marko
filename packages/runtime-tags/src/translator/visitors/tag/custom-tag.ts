@@ -171,6 +171,7 @@ export default {
 function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   const tagBody = tag.get("body");
   const { node } = tag;
+  const tagExtra = node.extra!;
   let tagIdentifier: t.Expression;
 
   writer.flushInto(tag);
@@ -197,7 +198,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       };
   let providesStatefulAttrs = false;
 
-  for (const expr of tag.node.extra![kChildAttrExprs]!) {
+  for (const expr of tagExtra[kChildAttrExprs]!) {
     if (
       isReferencedExtra(expr) &&
       isStatefulReferences(expr.referencedBindings)
@@ -208,7 +209,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   }
 
   if (providesStatefulAttrs || tagVar) {
-    const childScopeBinding = node.extra![kChildScopeBinding]!;
+    const childScopeBinding = tagExtra[kChildScopeBinding]!;
     const peekScopeId = tag.scope.generateUidIdentifier(
       childScopeBinding?.name,
     );
@@ -882,4 +883,8 @@ function buildUndefined() {
 
 function always() {
   return true;
+}
+
+export function getChildScopeBinding(path: t.NodePath<t.MarkoTag>) {
+  return path.node.extra![kChildScopeBinding]!;
 }

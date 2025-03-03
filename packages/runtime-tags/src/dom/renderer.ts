@@ -1,4 +1,9 @@
-import { type BranchScope, NodeType, type Scope } from "../common/types";
+import {
+  type Accessor,
+  type BranchScope,
+  NodeType,
+  type Scope,
+} from "../common/types";
 import { insertChildNodes } from "./dom";
 import { parseHTML } from "./parse-html";
 import { queueRender } from "./queue";
@@ -12,6 +17,7 @@ export type Renderer = {
   ___init: (branch: BranchScope, ns: string) => void;
   ___args: Signal<unknown> | undefined;
   ___owner: Scope | undefined;
+  ___accessor: Accessor | undefined;
 };
 
 type SetupFn = (scope: Scope) => void;
@@ -81,7 +87,8 @@ export function createContent(
   template?: string | 0,
   rawWalks?: string | 0,
   setup?: SetupFn | 0,
-  getArgs?: () => Signal<unknown>,
+  getArgs?: (() => Signal<unknown>) | 0,
+  dynamicScopesAccessor?: Accessor,
 ) {
   let args: Signal<unknown> | undefined;
   const walks = rawWalks ? /* @__PURE__ */ trimWalkString(rawWalks) : "";
@@ -103,8 +110,9 @@ export function createContent(
       ___id: id,
       ___init: init,
       ___owner: owner,
+      ___accessor: dynamicScopesAccessor,
       get ___args() {
-        return (args ||= getArgs?.());
+        return (args ||= getArgs ? getArgs() : undefined);
       },
     };
   };
@@ -115,16 +123,20 @@ export function registerContent(
   template?: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
-  getArgs?: () => Signal<unknown>,
+  getArgs?: (() => Signal<unknown>) | 0,
+  dynamicScopesAccessor?: Accessor,
 ) {
-  return register(id, createContent(id, template, walks, setup, getArgs));
+  return register(
+    id,
+    createContent(id, template, walks, setup, getArgs, dynamicScopesAccessor),
+  );
 }
 
 export function createRenderer(
   template?: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
-  getArgs?: () => Signal<unknown>,
+  getArgs?: (() => Signal<unknown>) | 0,
 ) {
   return createContent("", template, walks, setup, getArgs)();
 }

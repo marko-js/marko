@@ -93,6 +93,7 @@ export default {
       }
 
       startSection(tagBody);
+
       trackParamsReferences(tagBody, BindingType.param);
       mergeReferences(section, tag.node, [
         tag.node.name,

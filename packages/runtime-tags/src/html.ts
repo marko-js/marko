@@ -28,6 +28,7 @@ export {
   ensureScopeWithId,
   fork,
   getScopeById,
+  hoist,
   markResumeNode,
   nextScopeId,
   nextTagId,
@@ -49,5 +50,6 @@ export {
   writeEffect,
   writeExistingScope,
   writeScope,
+  writeSubscribe,
   writeTrailers,
 } from "./html/writer";

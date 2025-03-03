@@ -27,9 +27,12 @@ export interface Section {
   loc: t.SourceLocation | undefined;
   depth: number;
   parent: Section | undefined;
+  sectionAccessor: { binding: Binding; suffix: string } | undefined;
   params: undefined | Binding;
   closures: ReferencedBindings;
   bindings: ReferencedBindings;
+  hoisted: ReferencedBindings;
+  isHoistThrough: true | undefined;
   assignments: ReferencedBindings;
   upstreamExpression: t.NodeExtra | undefined;
   hasAbortSignal: boolean;
@@ -78,9 +81,12 @@ export function startSection(
       loc: sectionNamePath?.node.loc || undefined,
       depth: parentSection ? parentSection.depth + 1 : 0,
       parent: parentSection,
+      sectionAccessor: undefined,
       params: undefined,
       closures: undefined,
       bindings: undefined,
+      hoisted: undefined,
+      isHoistThrough: undefined,
       assignments: undefined,
       content: getContentInfo(path),
       upstreamExpression: undefined,
@@ -274,3 +280,30 @@ export const checkStatefulClosures = (
       isStatefulReferences(closure),
   );
 };
+
+export function isSameOrChildSection(section: Section, other: Section) {
+  do {
+    if (other === section) {
+      return true;
+    }
+  } while ((other = other.parent!));
+  return false;
+}
+
+export function getCommonSection(section: Section, other: Section) {
+  let ancestor: Section | undefined = section;
+  if (other.depth < section.depth) {
+    ancestor = other;
+    other = section;
+  }
+  while (ancestor) {
+    if (other === ancestor || !other.parent) {
+      return ancestor;
+    }
+    other = other.parent;
+    if (other.depth < ancestor.depth) {
+      ancestor = ancestor.parent;
+    }
+  }
+  throw new Error("No common section");
+}

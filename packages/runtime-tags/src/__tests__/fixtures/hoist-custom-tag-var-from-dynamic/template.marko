@@ -1,0 +1,32 @@
+import Thing from '<thing>';
+
+<thing>
+  <child/setHtml />
+</thing>
+
+<script>
+  for (const fn of setHtml) {
+    fn('Hoist from custom tag');
+  }
+</script>
+
+
+
+<${input.show ? Thing : null}>
+  <thing>
+    <child/setHtml2 />
+  </thing>
+</>
+<script>
+  setHtml2('Hoist from dynamic tag');
+</script>
+
+
+
+<${input.show ? 'section' : null}>
+  <child/setHtml3 />
+</>
+
+<script>
+  setHtml3('Hoist from dynamic tag');
+</script>

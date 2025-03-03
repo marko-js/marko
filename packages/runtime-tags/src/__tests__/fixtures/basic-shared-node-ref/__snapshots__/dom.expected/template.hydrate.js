@@ -1,4 +1,4 @@
-// size: 424 (min) 230 (brotli)
+// size: 419 (min) 229 (brotli)
 const _x$for_content = _$.value(2, (_scope, x) => _$.data(_scope[0], x)),
   _params_2$for_content = _$.value(1, (_scope, _params_2) =>
     _x$for_content(_scope, _params_2[0]),
@@ -6,7 +6,7 @@ const _x$for_content = _$.value(2, (_scope, x) => _$.data(_scope[0], x)),
   _for_content = _$.createRenderer(
     "<li> </li>",
     "D ",
-    void 0,
+    0,
     () => _params_2$for_content,
   ),
   _for = _$.loopOf(0, _for_content),

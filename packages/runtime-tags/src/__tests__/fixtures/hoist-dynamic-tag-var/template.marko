@@ -1,0 +1,32 @@
+import Child from '<child>';
+
+<if=input.show>
+  <if=input.show>
+    <${1 && Child}/setHtml />
+  </if>
+</if>
+
+<thing=setHtml />
+
+<script>
+  setHtml("Hello world");
+</script>
+
+<if=true>
+  <${1 && Child}/setHtml2 />
+</if>
+
+<script>
+  setHtml2("Hello world");
+</script>
+
+
+<if=true>
+  <${1 && Child}/setHtml3 />
+</if>
+
+<if=true>
+  <script>
+    setHtml3("Hello world");
+  </script>
+</if>

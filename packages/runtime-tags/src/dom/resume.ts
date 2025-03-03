@@ -1,5 +1,10 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
-import { type BranchScope, ResumeSymbol, type Scope } from "../common/types";
+import {
+  AccessorChar,
+  type BranchScope,
+  ResumeSymbol,
+  type Scope,
+} from "../common/types";
 import type { Signal } from "./signals";
 
 interface Renders {
@@ -108,7 +113,8 @@ class Render implements RenderData {
         // TODO: switch?
         if (token === ResumeSymbol.Node) {
           // TODO: could we use attr marker?
-          scope[data] = visit.previousSibling;
+          const node = (scope[data] = visit.previousSibling);
+          scope[data + AccessorChar.Getter] = () => node;
         } else if (token === ResumeSymbol.ClosestBranch) {
           closestBranchMarkers.set(scopeId, visit);
         } else if (token === ResumeSymbol.BranchStart) {
@@ -289,5 +295,5 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 }
 
 export function nodeRef(id: string, key: string) {
-  return register(id, (scope: Scope) => () => scope[key]);
+  return register(id, (scope: Scope) => () => scope[key]());
 }

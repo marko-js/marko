@@ -1,0 +1,22 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "o",
+      "$init": "m",
+      "$id": "e",
+      "$_setHtml_effect": "r",
+      "$_hoist_setHtml": "t",
+      "$_input__effect": "n",
+      "$_input_": "i",
+      "$_setHtml$if_content_effect": "a",
+      "$_hoist_setHtml2": "l",
+      "$_hoist_setHtml3": "c",
+      "$_hoist_setHtml3_": "s",
+      "$_hoist_setHtml2_": "u",
+      "$_hoist_setHtml_": "f",
+      "$_get_hoisted_setHtml": "g",
+      "$_get_hoisted_setHtml2": "d",
+      "$_get_hoisted_setHtml3": "H"
+    }
+  }
+}

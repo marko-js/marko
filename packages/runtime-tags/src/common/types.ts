@@ -50,6 +50,7 @@ export enum AccessorChar {
   ControlledValue = ":",
   ControlledHandler = ";",
   ControlledType = "=",
+  Getter = ">",
 }
 
 export enum NodeType {

@@ -1,0 +1,10 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "r",
+      "$_get_hoisted_setHtml2": "e",
+      "$_get_hoisted_setHtml3": "o"
+    }
+  }
+}

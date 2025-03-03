@@ -7,9 +7,10 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
-import { WalkCode } from "../../../common/types";
+import { AccessorChar, WalkCode } from "../../../common/types";
 import evaluate from "../../util/evaluate";
 import { getTagName } from "../../util/get-tag-name";
+import isInvokedFunction from "../../util/is-invoked-function";
 import { isStatefulReferences } from "../../util/is-stateful";
 import { isOutputHTML } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
@@ -21,6 +22,7 @@ import {
   getScopeAccessorLiteral,
   mergeReferences,
   setReferencesScope,
+  trackHoistedReference,
 } from "../../util/references";
 import { callRuntime, getHTMLRuntime } from "../../util/runtime";
 import {
@@ -31,6 +33,7 @@ import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
+  isSameOrChildSection,
 } from "../../util/sections";
 import {
   addHTMLEffectCall,
@@ -273,19 +276,27 @@ export default {
         if (hasEventHandlers || node.var) {
           tagExtra[kSerializeMarker] = true;
         }
-        tagExtra[kNativeTagBinding] = createBinding(
+
+        const tagBinding = (tagExtra[kNativeTagBinding] = createBinding(
           bindingName,
           BindingType.dom,
           section,
-        );
+        ));
 
         if (node.var) {
-          for (const ref of tag.scope.getBinding(node.var.name)!
-            .referencePaths) {
-            setReferencesScope(ref);
-            if (!isInvokedFunction(ref)) {
-              tagExtra[kGetterId] = getRegisterUID(section, bindingName);
-              break;
+          const varBinding = tag.scope.getBinding(node.var.name)!;
+          for (const referencePath of varBinding.referencePaths) {
+            const referenceSection = getSection(referencePath);
+
+            setReferencesScope(referencePath);
+
+            if (!isSameOrChildSection(section, referenceSection)) {
+              trackHoistedReference(
+                referencePath as t.NodePath<t.Identifier>,
+                tagBinding,
+              );
+            } else if (!isInvokedFunction(referencePath)) {
+              tagExtra[kGetterId] ||= getRegisterUID(section, bindingName);
             }
           }
         }
@@ -308,23 +319,26 @@ export default {
       }
 
       if (tag.has("var")) {
+        const varName = (tag.node.var as t.Identifier).name;
+        const varBinding = tag.scope.getBinding(varName)!;
         const getterId = extra[kGetterId];
         if (isHTML) {
-          const varName = (tag.node.var as t.Identifier).name;
-          const references = tag.scope.getBinding(varName)!.referencePaths;
-          for (const reference of references) {
-            let currentSection = getSection(reference);
-            while (currentSection !== section && currentSection.parent) {
-              setSerializedProperty(
-                currentSection,
-                "_",
-                callRuntime(
-                  "ensureScopeWithId",
-                  getScopeIdIdentifier(
-                    (currentSection = currentSection.parent!),
+          for (const reference of varBinding.referencePaths) {
+            const referenceSection = getSection(reference);
+            if (!reference.node.extra?.hoist) {
+              let currentSection = referenceSection;
+              while (currentSection !== section && currentSection.parent) {
+                setSerializedProperty(
+                  currentSection,
+                  "_",
+                  callRuntime(
+                    "ensureScopeWithId",
+                    getScopeIdIdentifier(
+                      (currentSection = currentSection.parent!),
+                    ),
                   ),
-                ),
-              );
+                );
+              }
             }
           }
 
@@ -338,8 +352,6 @@ export default {
             ),
           );
         } else {
-          const varName = (tag.node.var as t.Identifier).name;
-          const references = tag.scope.getBinding(varName)!.referencePaths;
           let getterFnIdentifier: t.Identifier | undefined;
           if (getterId) {
             getterFnIdentifier = currentProgramPath.scope.generateUidIdentifier(
@@ -353,27 +365,45 @@ export default {
                   callRuntime(
                     "nodeRef",
                     t.stringLiteral(getterId),
-                    getScopeAccessorLiteral(nodeRef!),
+                    t.stringLiteral(
+                      getScopeAccessorLiteral(nodeRef!).value +
+                        AccessorChar.Getter,
+                    ),
                   ),
                 ),
               ]),
             );
           }
 
-          for (const reference of references) {
-            const referenceSection = getSection(reference);
-            if (isInvokedFunction(reference)) {
-              reference.parentPath.replaceWith(
-                t.expressionStatement(
-                  createScopeReadExpression(referenceSection, nodeRef!),
-                ),
-              );
-            } else if (getterFnIdentifier) {
-              reference.replaceWith(
-                t.callExpression(getterFnIdentifier, [
-                  getScopeExpression(referenceSection, getSection(tag)),
-                ]),
-              );
+          for (const reference of varBinding.referencePaths) {
+            if (!reference.node.extra?.hoistedBinding) {
+              const referenceSection = getSection(reference);
+              if (isInvokedFunction(reference)) {
+                reference.parentPath.replaceWith(
+                  t.expressionStatement(
+                    createScopeReadExpression(referenceSection, nodeRef!),
+                  ),
+                );
+              } else if (getterFnIdentifier) {
+                reference.replaceWith(
+                  t.callExpression(getterFnIdentifier, [
+                    getScopeExpression(referenceSection, getSection(tag)),
+                  ]),
+                );
+              } else {
+                reference.replaceWith(
+                  t.expressionStatement(
+                    t.memberExpression(
+                      getScopeExpression(section, referenceSection),
+                      t.stringLiteral(
+                        getScopeAccessorLiteral(nodeRef!).value +
+                          AccessorChar.Getter,
+                      ),
+                      true,
+                    ),
+                  ),
+                );
+              }
             }
           }
         }
@@ -807,12 +837,4 @@ function isChangeHandler(propName: string) {
 
 function buildUndefined() {
   return t.unaryExpression("void", t.numericLiteral(0));
-}
-
-function isInvokedFunction(expr: t.NodePath<t.Node>): expr is typeof expr & {
-  parent: t.CallExpression;
-  parentPath: t.NodePath<t.CallExpression>;
-} {
-  const { parent, node } = expr;
-  return parent.type === "CallExpression" && parent.callee === node;
 }
