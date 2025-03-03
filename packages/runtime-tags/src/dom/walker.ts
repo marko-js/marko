@@ -79,7 +79,7 @@ function walkInternal(
           MARKO_DEBUG
             ? getDebugKey(currentScopeIndex++, "#scopeOffset")
             : currentScopeIndex++
-        ] = skipScope();
+        ] = skipScope(scope);
       }
     } else if (value === WalkCode.EndChild) {
       return currentWalkIndex;
@@ -101,7 +101,7 @@ function walkInternal(
           MARKO_DEBUG
             ? getDebugKey(currentScopeIndex++, "#scopeOffset")
             : currentScopeIndex++
-        ] = skipScope();
+        ] = skipScope(scope);
       }
     } else if (value < WalkCode.NextEnd + 1) {
       value = WalkRangeSize.Next * currentMultiplier + value - WalkCode.Next;

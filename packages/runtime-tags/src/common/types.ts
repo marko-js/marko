@@ -12,7 +12,7 @@ export interface BranchScope extends Scope {
   ___renderer: ClientRenderer | string;
 }
 export interface Scope {
-  $global: Record<string, unknown>;
+  $global: Record<string, unknown> & { ___nextScopeId: number };
   _: Scope | undefined;
   ___id: number;
   ___args: unknown;

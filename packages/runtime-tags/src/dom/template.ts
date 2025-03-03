@@ -53,12 +53,14 @@ function mount(
   if ($global) {
     ({ $global, ...input } = input);
     $global = {
+      ___nextScopeId: 0,
       runtimeId: DEFAULT_RUNTIME_ID,
       renderId: DEFAULT_RENDER_ID,
       ...$global,
     };
   } else {
     $global = {
+      ___nextScopeId: 0,
       runtimeId: DEFAULT_RUNTIME_ID,
       renderId: DEFAULT_RENDER_ID,
     };
@@ -88,7 +90,12 @@ function mount(
 
   const args = this.___args;
   const effects = prepareEffects(() => {
-    branch = createBranch($global, this, undefined, parentNode);
+    branch = createBranch(
+      $global as any as Scope["$global"],
+      this,
+      undefined,
+      parentNode,
+    );
     args?.(branch, input);
   });
 

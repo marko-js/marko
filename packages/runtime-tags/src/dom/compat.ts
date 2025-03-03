@@ -96,6 +96,7 @@ export const compat = {
 
     component.effects = prepareEffects(() => {
       if (!branch) {
+        out.global.___nextScopeId ||= 0;
         branch = component.scope = createBranch(
           out.global,
           renderer,

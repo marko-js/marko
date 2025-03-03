@@ -2,14 +2,13 @@ import type { BranchScope, Scope } from "../common/types";
 import { insertChildNodes, removeChildNodes } from "./dom";
 
 let pendingScopes: Scope[] = [];
-let nextID = 1e6;
 
 export function createScope(
   $global: Scope["$global"],
   closestBranch?: BranchScope,
 ): Scope {
   const scope = {
-    ___id: nextID++,
+    ___id: $global.___nextScopeId++,
     ___pending: 1,
     ___closestBranch: closestBranch,
     $global,
@@ -20,8 +19,8 @@ export function createScope(
   return scope;
 }
 
-export function skipScope() {
-  return nextID++;
+export function skipScope(scope: Scope) {
+  return scope.$global.___nextScopeId++;
 }
 
 export function finishPendingScopes() {

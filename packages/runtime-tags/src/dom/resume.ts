@@ -175,13 +175,14 @@ class Render implements RenderData {
               scopeLookup.$global = $global = scopes.$ || {};
               $global.runtimeId = this.___runtimeId;
               $global.renderId = this.___renderId;
+              $global.___nextScopeId = 1e6;
             }
 
             for (const scopeId in scopes) {
               if (scopeId !== "$") {
                 const scope = scopes[scopeId];
                 const prevScope = scopeLookup[scopeId];
-                scope.$global = $global;
+                scope.$global = $global as unknown as Scope["$global"];
                 scope.___id = +scopeId;
                 if (prevScope !== scope) {
                   scopeLookup[scopeId] = Object.assign(

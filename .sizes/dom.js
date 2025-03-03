@@ -1,4 +1,4 @@
-// size: 17885 (min) 6769 (brotli)
+// size: 17924 (min) 6783 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -95,23 +95,23 @@ function stripSpacesAndPunctuation(str) {
 }
 var registeredValues = {},
   Render = class {
-    o = [];
-    p = {};
-    B = { _: registeredValues };
+    p = [];
+    q = {};
+    C = { _: registeredValues };
     constructor(renders, runtimeId, renderId) {
-      (this.C = renders),
-        (this.D = runtimeId),
-        (this.q = renderId),
-        (this.s = renders[renderId]),
-        this.t();
+      (this.D = renders),
+        (this.E = runtimeId),
+        (this.s = renderId),
+        (this.t = renders[renderId]),
+        this.u();
     }
     w() {
-      this.s.w(), this.t();
+      this.t.w(), this.u();
     }
-    t() {
-      let data2 = this.s,
-        serializeContext = this.B,
-        scopeLookup = this.p,
+    u() {
+      let data2 = this.t,
+        serializeContext = this.C,
+        scopeLookup = this.q,
         visits = data2.v,
         branchIds = new Set(),
         parentBranchIds = new Map();
@@ -160,7 +160,7 @@ var registeredValues = {},
           else if ("[" === token)
             this.f &&
               (dataIndex && branchEnd(this.f, visit, visit),
-              this.o.push(this.f)),
+              this.p.push(this.f)),
               (this.f = scopeId),
               (scope.a = visit);
           else if ("]" === token) {
@@ -168,7 +168,7 @@ var registeredValues = {},
             let curParent = visit.parentNode,
               startNode = branchEnd(this.f, visit, visit).a;
             curParent !== startNode.parentNode && curParent.prepend(startNode),
-              (this.f = this.o.pop());
+              (this.f = this.p.pop());
           } else if ("|" === token || "=" === token) {
             let next = data3.indexOf(" "),
               curNode = visit;
@@ -202,8 +202,9 @@ var registeredValues = {},
                 { $global: $global } = scopeLookup;
               $global ||
                 ((scopeLookup.$global = $global = scopes.$ || {}),
-                ($global.runtimeId = this.D),
-                ($global.renderId = this.q));
+                ($global.runtimeId = this.E),
+                ($global.renderId = this.s),
+                ($global.g = 1e6));
               for (let scopeId in scopes)
                 if ("$" !== scopeId) {
                   let scope = scopes[scopeId],
@@ -221,13 +222,13 @@ var registeredValues = {},
                       parentBranch = branch.c;
                     (scope.c = branch),
                       parentBranch &&
-                        ((branch.u = parentBranch),
-                        (parentBranch.m ||= new Set()).add(branch));
+                        ((branch.x = parentBranch),
+                        (parentBranch.n ||= new Set()).add(branch));
                   }
                 }
             } else
               i === len || "string" != typeof resumes[i]
-                ? delete this.C[this.q]
+                ? delete this.D[this.s]
                 : registeredValues[resumes[i++]](
                     scopeLookup[resumeData],
                     scopeLookup[resumeData],
@@ -771,23 +772,22 @@ function toInsertNode(startNode, endNode) {
   }
   return parent;
 }
-var pendingScopes = [],
-  nextID = 1e6;
+var pendingScopes = [];
 function createScope($global, closestBranch) {
-  let scope = { d: nextID++, g: 1, c: closestBranch, $global: $global };
+  let scope = { d: $global.g++, h: 1, c: closestBranch, $global: $global };
   return pendingScopes.push(scope), scope;
 }
-function skipScope() {
-  return nextID++;
+function skipScope(scope) {
+  return scope.$global.g++;
 }
 function destroyBranch(branch) {
-  branch.u?.m?.delete(branch), destroyNestedBranches(branch);
+  branch.x?.n?.delete(branch), destroyNestedBranches(branch);
 }
 function destroyNestedBranches(branch) {
-  (branch.x = 1),
-    branch.m?.forEach(destroyNestedBranches),
-    branch.E?.forEach((scope) => {
-      for (let id in scope.j) scope.j[id]?.abort();
+  (branch.y = 1),
+    branch.n?.forEach(destroyNestedBranches),
+    branch.F?.forEach((scope) => {
+      for (let id in scope.k) scope.k[id]?.abort();
     });
 }
 function removeAndDestroyBranch(branch) {
@@ -803,14 +803,14 @@ var pendingRenders = [],
 function queueRender(scope, signal, signalKey, value2, scopeKey = scope.d) {
   let key = 1e3 * scopeKey + signalKey,
     existingRender = signalKey >= 0 && pendingRendersLookup.get(key);
-  if (existingRender) existingRender.y = value2;
+  if (existingRender) existingRender.z = value2;
   else {
-    let render = { h: key, z: scope, F: signal, y: value2 },
+    let render = { j: key, A: scope, G: signal, z: value2 },
       i = pendingRenders.push(render) - 1;
     for (; i; ) {
       let parentIndex = (i - 1) >> 1,
         parent = pendingRenders[parentIndex];
-      if (key - parent.h >= 0) break;
+      if (key - parent.j >= 0) break;
       (pendingRenders[i] = parent), (i = parentIndex);
     }
     signalKey >= 0 && pendingRendersLookup.set(key, render),
@@ -859,36 +859,36 @@ function runRenders() {
     if (render !== item) {
       let i = 0,
         mid = pendingRenders.length >> 1,
-        key = (pendingRenders[0] = item).h;
+        key = (pendingRenders[0] = item).j;
       for (; i < mid; ) {
         let bestChild = 1 + (i << 1),
           right = bestChild + 1;
         if (
           (right < pendingRenders.length &&
-            pendingRenders[right].h - pendingRenders[bestChild].h < 0 &&
+            pendingRenders[right].j - pendingRenders[bestChild].j < 0 &&
             (bestChild = right),
-          pendingRenders[bestChild].h - key >= 0)
+          pendingRenders[bestChild].j - key >= 0)
         )
           break;
         (pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild);
       }
       pendingRenders[i] = item;
     }
-    render.z.c?.x || render.F(render.z, render.y);
+    render.A.c?.y || render.G(render.A, render.z);
   }
   !(function () {
-    for (let scope of pendingScopes) scope.g = 0;
+    for (let scope of pendingScopes) scope.h = 0;
     pendingScopes = [];
   })();
 }
 function resetAbortSignal(scope, id) {
-  let ctrl = scope.j?.[id];
-  ctrl && (queueEffect(ctrl, abort), (scope.j[id] = void 0));
+  let ctrl = scope.k?.[id];
+  ctrl && (queueEffect(ctrl, abort), (scope.k[id] = void 0));
 }
 function getAbortSignal(scope, id) {
   return (
-    scope.c && (scope.c.E ||= new Set()).add(scope),
-    ((scope.j ||= {})[id] ||= new AbortController()).signal
+    scope.c && (scope.c.F ||= new Set()).add(scope),
+    ((scope.k ||= {})[id] ||= new AbortController()).signal
   );
 }
 function abort(ctrl) {
@@ -922,7 +922,7 @@ function walkInternal(currentWalkIndex, walkCodes, scope) {
       walker.currentNode.replaceWith(
         (walker.currentNode = scope[currentScopeIndex++] = new Text()),
       ),
-        49 === value2 && (scope[currentScopeIndex++] = skipScope());
+        49 === value2 && (scope[currentScopeIndex++] = skipScope(scope));
     else {
       if (38 === value2) return currentWalkIndex;
       if (47 === value2 || 48 === value2)
@@ -931,7 +931,7 @@ function walkInternal(currentWalkIndex, walkCodes, scope) {
           walkCodes,
           (scope[currentScopeIndex++] = createScope(scope.$global, scope.c)),
         )),
-          48 === value2 && (scope[currentScopeIndex++] = skipScope());
+          48 === value2 && (scope[currentScopeIndex++] = skipScope(scope));
       else if (value2 < 92)
         for (value2 = 20 * currentMultiplier + value2 - 67; value2--; )
           walker.nextNode();
@@ -977,14 +977,14 @@ function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global),
     parentBranch = parentScope?.c;
   return (
-    (branch._ = renderer.k || parentScope),
+    (branch._ = renderer.l || parentScope),
     (branch.c = branch),
     parentBranch
-      ? ((branch.A = parentBranch.A + 1),
-        (branch.u = parentBranch),
-        (parentBranch.m ||= new Set()).add(branch))
-      : (branch.A = 1),
-    renderer.n?.(branch, parentNode.namespaceURI),
+      ? ((branch.B = parentBranch.B + 1),
+        (branch.x = parentBranch),
+        (parentBranch.n ||= new Set()).add(branch))
+      : (branch.B = 1),
+    renderer.o?.(branch, parentNode.namespaceURI),
     branch
   );
 }
@@ -1032,9 +1032,9 @@ function createContent(
         };
   return (owner) => ({
     d: id,
-    n: init2,
-    k: owner,
-    l: dynamicScopesAccessor,
+    o: init2,
+    l: owner,
+    m: dynamicScopesAccessor,
     get e() {
       return (args ||= getArgs ? getArgs() : void 0);
     },
@@ -1102,7 +1102,7 @@ function value(valueAccessor, fn = () => {}) {
 var accessorId = 0;
 function intersection(id, fn, defaultPending = 1, scopeIdAccessor = "d") {
   return (scope) => {
-    scope.g
+    scope.h
       ? void 0 === scope[id]
         ? (scope[id] = defaultPending)
         : --scope[id] || fn(scope)
@@ -1124,7 +1124,7 @@ function loopClosure(valueAccessor, ownerLoopNodeAccessor, fn) {
           ownerScope,
           () => {
             for (let scope of scopes)
-              !scope.g && !scope.x && childSignal(scope);
+              !scope.h && !scope.y && childSignal(scope);
           },
           -1,
           0,
@@ -1145,7 +1145,7 @@ function conditionalClosure(
     ownerSignal = (scope) => {
       let ifScope = scope[scopeAccessor];
       ifScope &&
-        !ifScope.g &&
+        !ifScope.h &&
         scope[branchAccessor] === branch &&
         queueRender(ifScope, childSignal, -1);
     };
@@ -1166,9 +1166,9 @@ function dynamicClosure(valueAccessor, fn, getOwnerScope) {
       let subscribers = ownerScope[subscribersAccessor];
       if (subscribers)
         for (let subscriber of subscribers)
-          subscriber.g || queueRender(subscriber, childSignal, -1);
+          subscriber.h || queueRender(subscriber, childSignal, -1);
     },
-    subscribe = (ownerSignal.G = (scope) =>
+    subscribe = (ownerSignal.H = (scope) =>
       subscribeToScopeSet(
         getOwnerScope ? getOwnerScope(scope) : scope._,
         subscribersAccessor,
@@ -1183,7 +1183,7 @@ function dynamicClosure(valueAccessor, fn, getOwnerScope) {
 }
 function registerDynamicClosure(registryId, valueAccessor, fn, getOwnerScope) {
   let signal = dynamicClosure(valueAccessor, fn, getOwnerScope);
-  return register(registryId, signal.G), signal;
+  return register(registryId, signal.H), signal;
 }
 function closure(valueAccessor, fn, getOwnerScope) {
   return (scope) => {
@@ -1279,18 +1279,18 @@ var dynamicTag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
             content,
             createBranch,
           ),
-            content.l &&
+            content.m &&
               subscribeToScopeSet(
-                content.k,
                 content.l,
+                content.m,
                 scope[childScopeAccessor]["0!"],
               );
         }
       } else
-        normalizedRenderer?.l &&
+        normalizedRenderer?.m &&
           subscribeToScopeSet(
-            normalizedRenderer.k,
             normalizedRenderer.l,
+            normalizedRenderer.m,
             scope[childScopeAccessor],
           );
     if (normalizedRenderer) {
@@ -1536,7 +1536,7 @@ var classIdToBranch = new Map(),
     registerRenderer(fn) {
       register("$C_r", fn);
     },
-    isRenderer: (renderer) => renderer.n,
+    isRenderer: (renderer) => renderer.o,
     getStartNode: (branch) => branch.a,
     setScopeNodes(branch, startNode, endNode) {
       (branch.a = startNode), (branch.b = endNode);
@@ -1560,13 +1560,13 @@ var classIdToBranch = new Map(),
             2 === value2.length &&
               window[runtimeId]?.[
                 "s" === componentIdPrefix ? "_" : componentIdPrefix
-              ]?.p[value2[1]],
+              ]?.q[value2[1]],
           )
         : value2,
     createRenderer(args, clone) {
       let renderer = createRenderer(0, 0, 0, () => args);
       return (
-        (renderer.n = (branch) => {
+        (renderer.o = (branch) => {
           let cloned = clone();
           (branch.a = cloned.startNode), (branch.b = cloned.endNode);
         }),
@@ -1590,8 +1590,9 @@ var classIdToBranch = new Map(),
         ((component.effects = prepareEffects(() => {
           branch
             ? (existing = !0)
-            : (branch = component.scope =
-                createBranch(out.global, renderer, renderer.k, document.body)),
+            : ((out.global.g ||= 0),
+              (branch = component.scope =
+                createBranch(out.global, renderer, renderer.l, document.body))),
             renderer.e?.(branch, renderer._ ? args[0] : args);
         })),
         !existing)
@@ -1619,8 +1620,8 @@ function mount(input = {}, reference, position) {
   switch (
     ($global
       ? (({ $global: $global, ...input } = input),
-        ($global = { runtimeId: "M", renderId: "_", ...$global }))
-      : ($global = { runtimeId: "M", renderId: "_" }),
+        ($global = { g: 0, runtimeId: "M", renderId: "_", ...$global }))
+      : ($global = { g: 0, runtimeId: "M", renderId: "_" }),
     position)
   ) {
     case "beforebegin":
