@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.48
+
+### Patch Changes
+
+- [#2545](https://github.com/marko-js/marko/pull/2545) [`be54ab2`](https://github.com/marko-js/marko/commit/be54ab200f664efd7e9351f845d477c6b77e90f5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Deoptimize serializer assignments after 100 assignments to the same reference. This avoids an issue where 1192 assignments in a chain caused a Maximum callstack error in chrome.
+
 ## 0.3.47
 
 ### Patch Changes
