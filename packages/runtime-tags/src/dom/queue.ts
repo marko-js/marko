@@ -22,11 +22,14 @@ export function queueRender<T>(
   signalKey: number,
   value?: T,
   scopeKey = scope.___id,
+  isLast?: 1
 ) {
   const key = scopeKey * scopeKeyOffset + signalKey;
   const existingRender = signalKey >= 0 && pendingRendersLookup.get(key);
   if (existingRender) {
     existingRender.___value = value;
+  } else if (isLast) {
+    signal(scope);
   } else {
     const render: PendingRender = {
       ___key: key,

@@ -46,6 +46,7 @@ export {
   effect,
   hoist,
   intersection,
+  intersectionWithLast,
   loopClosure,
   nextTagId,
   registerDynamicClosure,

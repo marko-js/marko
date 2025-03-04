@@ -87,6 +87,22 @@ export function intersection(
   };
 }
 
+export function intersectionWithLast(
+  id: number,
+  fn: SignalFn<never>,
+  scopeIdAccessor: Accessor = /*@__KEY__*/ "___id",
+): Signal<never> {
+  return (scope, isLast?: 1) => {
+    if (scope.___pending) {
+      if (isLast) {
+        fn(scope);
+      }
+    } else {
+      queueRender(scope, fn as any, id, 0, scope[scopeIdAccessor], isLast);
+    }
+  };
+}
+
 export function loopClosure<T>(
   valueAccessor: Accessor,
   ownerLoopNodeAccessor: Accessor,

@@ -25,6 +25,7 @@ const pureFunctions: Array<keyof typeof import("../../dom")> = [
   "createTemplate",
   "dynamicClosure",
   "intersection",
+  "intersectionWithLast",
   "loopClosure",
   "loopIn",
   "loopOf",
