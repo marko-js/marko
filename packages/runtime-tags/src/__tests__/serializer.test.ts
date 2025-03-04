@@ -277,6 +277,24 @@ describe("serializer", () => {
       );
     });
 
+    it("circular assignments > 100 (deopt for chrome :crying-emoji:)", () => {
+      const parent = {
+        name: "parent",
+        children: [],
+      } as any;
+
+      for (let i = 0; i < 101; i++) {
+        parent.children.push({
+          parent,
+        });
+      }
+
+      assertStringify(
+        { parent },
+        `{parent:_.a={name:"parent",children:[_.b={},_.c={},_.d={},_.e={},_.f={},_.g={},_.h={},_.i={},_.j={},_.k={},_.l={},_.m={},_.n={},_.o={},_.p={},_.q={},_.r={},_.s={},_.t={},_.u={},_.v={},_.w={},_.x={},_.y={},_.z={},_.A={},_.B={},_.C={},_.D={},_.E={},_.F={},_.G={},_.H={},_.I={},_.J={},_.K={},_.L={},_.M={},_.N={},_.O={},_.P={},_.Q={},_.R={},_.S={},_.T={},_.U={},_.V={},_.W={},_.X={},_.Y={},_.Z={},_.$={},_.ab={},_.bb={},_.cb={},_.db={},_.eb={},_.fb={},_.gb={},_.hb={},_.ib={},_.jb={},_.kb={},_.lb={},_.mb={},_.nb={},_.ob={},_.pb={},_.qb={},_.rb={},_.sb={},_.tb={},_.ub={},_.vb={},_.wb={},_.xb={},_.yb={},_.zb={},_.Ab={},_.Bb={},_.Cb={},_.Db={},_.Eb={},_.Fb={},_.Gb={},_.Hb={},_.Ib={},_.Jb={},_.Kb={},_.Lb={},_.Mb={},_.Nb={},_.Ob={},_.Pb={},_.Qb={},_.Rb={},_.Sb={},_.Tb={},_.Ub={},_.Vb={},_.Wb={}]}},($=>(_.b.parent=$,_.c.parent=$,_.d.parent=$,_.e.parent=$,_.f.parent=$,_.g.parent=$,_.h.parent=$,_.i.parent=$,_.j.parent=$,_.k.parent=$,_.l.parent=$,_.m.parent=$,_.n.parent=$,_.o.parent=$,_.p.parent=$,_.q.parent=$,_.r.parent=$,_.s.parent=$,_.t.parent=$,_.u.parent=$,_.v.parent=$,_.w.parent=$,_.x.parent=$,_.y.parent=$,_.z.parent=$,_.A.parent=$,_.B.parent=$,_.C.parent=$,_.D.parent=$,_.E.parent=$,_.F.parent=$,_.G.parent=$,_.H.parent=$,_.I.parent=$,_.J.parent=$,_.K.parent=$,_.L.parent=$,_.M.parent=$,_.N.parent=$,_.O.parent=$,_.P.parent=$,_.Q.parent=$,_.R.parent=$,_.S.parent=$,_.T.parent=$,_.U.parent=$,_.V.parent=$,_.W.parent=$,_.X.parent=$,_.Y.parent=$,_.Z.parent=$,_.$.parent=$,_.ab.parent=$,_.bb.parent=$,_.cb.parent=$,_.db.parent=$,_.eb.parent=$,_.fb.parent=$,_.gb.parent=$,_.hb.parent=$,_.ib.parent=$,_.jb.parent=$,_.kb.parent=$,_.lb.parent=$,_.mb.parent=$,_.nb.parent=$,_.ob.parent=$,_.pb.parent=$,_.qb.parent=$,_.rb.parent=$,_.sb.parent=$,_.tb.parent=$,_.ub.parent=$,_.vb.parent=$,_.wb.parent=$,_.xb.parent=$,_.yb.parent=$,_.zb.parent=$,_.Ab.parent=$,_.Bb.parent=$,_.Cb.parent=$,_.Db.parent=$,_.Eb.parent=$,_.Fb.parent=$,_.Gb.parent=$,_.Hb.parent=$,_.Ib.parent=$,_.Jb.parent=$,_.Kb.parent=$,_.Lb.parent=$,_.Mb.parent=$,_.Nb.parent=$,_.Ob.parent=$,_.Pb.parent=$,_.Qb.parent=$,_.Rb.parent=$,_.Sb.parent=$,_.Tb.parent=$,_.Ub.parent=$,_.Vb.parent=$,_.Wb.parent=$))(_.a)`,
+      );
+    });
+
     it("known objects", () => {
       assertStringify(
         [console, Math, JSON, globalThis],
