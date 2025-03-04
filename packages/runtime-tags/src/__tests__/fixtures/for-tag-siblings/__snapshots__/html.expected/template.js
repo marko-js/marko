@@ -6,7 +6,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.forOf(arrA, val => {
     const _scope1_id = _$.nextScopeId();
     _$.write(`<div>${_$.escapeXML(val)}</div>`);
-  }, 1);
+  });
   _$.write("</div><div>");
   _$.forOf(arrA, val => {
     const _scope2_id = _$.nextScopeId();

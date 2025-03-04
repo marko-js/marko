@@ -32,7 +32,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       _scope4_.set(j, _$.ensureScopeWithId(_scope4_id));
       _$.write(`<li${_$.attr("data-index", i * 4 + j)}></li>${_$.markResumeNode(_scope4_id, "#li/0")}`);
       _$.writeScope(_scope4_id, {}, "__tests__/template.marko", "30:4");
-    }, 1);
+    });
     _scope3_.set(i, _$.ensureScopeWithId(_scope3_id));
     _$.write("</ul>");
     _$.writeScope(_scope3_id, {

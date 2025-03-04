@@ -48,7 +48,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
         "#text/0(": _$.dynamicTagId(1 && Child),
         setHtml3
       }, "__tests__/template.marko", "26:4");
-    }, 1);
+    });
     _scope3_.set(i, _$.ensureScopeWithId(_scope3_id));
     _$.write("</ul>");
     _$.writeScope(_scope3_id, {
