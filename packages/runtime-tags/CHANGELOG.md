@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 0.3.49
+
+### Patch Changes
+
+- [#2547](https://github.com/marko-js/marko/pull/2547) [`1fb32b8`](https://github.com/marko-js/marko/commit/1fb32b89d1b06a97c2b247a0f186f700942c47c3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with for/if telling the parent to avoid serializing a marker when it was necessary.
+
+- [#2547](https://github.com/marko-js/marko/pull/2547) [`ce86dec`](https://github.com/marko-js/marko/commit/ce86dec45c2f3ee2ab8701eec7df6fcd58f559d3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where branches with no render content were not having child scopes initialized properly.
+
 ## 0.3.48
 
 ### Patch Changes
