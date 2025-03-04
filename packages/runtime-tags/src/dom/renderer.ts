@@ -101,7 +101,11 @@ export function createContent(
         setup && queueRender(branch, setup, -1);
       }
     : (branch) => {
-        branch.___startNode = branch.___endNode = new Text();
+        walk(
+          (branch.___startNode = branch.___endNode = new Text()),
+          walks,
+          branch,
+        );
         setup && queueRender(branch, setup, -1);
       };
 
