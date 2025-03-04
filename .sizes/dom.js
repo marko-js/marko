@@ -1,4 +1,4 @@
-// size: 17924 (min) 6783 (brotli)
+// size: 17932 (min) 6783 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1027,7 +1027,7 @@ function createContent(
             setup && queueRender(branch, setup, -1);
         }
       : (branch) => {
-          (branch.a = branch.b = new Text()),
+          walk((branch.a = branch.b = new Text()), walks, branch),
             setup && queueRender(branch, setup, -1);
         };
   return (owner) => ({
