@@ -287,7 +287,7 @@ class State {
 class Reference {
   declare debug?: Debug;
   public init = "";
-  public assigns = "";
+  public assigns: null | string[] = null;
   constructor(
     public parent: Reference | null,
     public accessor: string | null,
@@ -414,7 +414,12 @@ function writeRoot(state: State, root: unknown) {
       if (assigned.size || calls.length) {
         assigned.delete(rootRef!);
         writeAssigned(state);
-        buf.push("," + rootRef.assigns + rootId);
+        buf.push(
+          "," +
+            (rootRef.assigns
+              ? assignsToString(rootRef.assigns, rootId)
+              : rootId),
+        );
       }
     }
 
@@ -440,9 +445,17 @@ function writeRoot(state: State, root: unknown) {
 function writeAssigned(state: State) {
   if (state.assigned.size) {
     for (const valueRef of state.assigned) {
-      if (valueRef.assigns || valueRef.init) {
-        state.buf.push("," + valueRef.assigns + (valueRef.init || valueRef.id));
+      if (valueRef.init) {
+        if (valueRef.assigns) {
+          state.buf.push(
+            "," + assignsToString(valueRef.assigns, valueRef.init),
+          );
+        } else {
+          state.buf.push("," + valueRef.init);
+        }
         valueRef.init = "";
+      } else if (valueRef.assigns) {
+        state.buf.push("," + assignsToString(valueRef.assigns, valueRef.id!));
       }
     }
     state.assigned = new Set();
@@ -535,7 +548,7 @@ function writeReferenceOr(
   let ref = state.refs.get(val);
   if (ref) {
     if (ref.init) {
-      ref.assigns += ensureId(state, parent!) + toAccess(accessor) + "=";
+      addAssignment(ref, ensureId(state, parent!) + toAccess(accessor));
       return false;
     }
 
@@ -544,7 +557,7 @@ function writeReferenceOr(
         ensureId(state, ref);
         state.assigned.add(ref);
       }
-      ref.assigns += ensureId(state, parent!) + toAccess(accessor) + "=";
+      addAssignment(ref, ensureId(state, parent!) + toAccess(accessor));
       return false;
     }
 
@@ -611,7 +624,7 @@ function writeRegistered(
         state.assigned.add(parent);
         state.assigned.add(fnRef);
         fnRef.init = access + "(" + ensureId(state, scopeRef) + ")";
-        fnRef.assigns += ensureId(state, parent) + toAccess(accessor) + "=";
+        addAssignment(fnRef, ensureId(state, parent) + toAccess(accessor));
         return false;
       }
 
@@ -629,7 +642,7 @@ function writeRegistered(
         state.assigned.add(parent);
         state.assigned.add(fnRef);
         fnRef.init = access + "(" + scopeId + ")";
-        fnRef.assigns += ensureId(state, parent) + toAccess(accessor) + "=";
+        addAssignment(fnRef, ensureId(state, parent) + toAccess(accessor));
       } else {
         state.buf[pos] = access + "(" + state.buf[pos];
         state.buf.push(")");
@@ -853,16 +866,16 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
   }
 
   const items: (undefined | [unknown?, unknown?])[] = [];
-  let assigns = "";
+  let assigns: undefined | string[];
   for (let [itemKey, itemValue] of val) {
     if (itemKey === val) {
       itemKey = undefined;
-      assigns += "i[" + items.length + "][0]=";
+      (assigns ||= []).push("i[" + items.length + "][0]");
     }
 
     if (itemValue === val) {
       itemValue = undefined;
-      assigns += "i[" + items.length + "][1]=";
+      (assigns ||= []).push("i[" + items.length + "][1]");
     }
 
     if (itemValue === undefined) {
@@ -881,7 +894,9 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
   );
   state.buf.push(
     (assigns
-      ? "((m,i)=>(" + assigns + "m,i.forEach(i=>m.set(i[0],i[1])),m))(new Map,"
+      ? "((m,i)=>(" +
+        assignsToString(assigns, "m") +
+        ",i.forEach(i=>m.set(i[0],i[1])),m))(new Map,"
       : "new Map(") +
       arrayRef.id +
       "=",
@@ -898,11 +913,11 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
   }
 
   const items: (unknown | undefined)[] = [];
-  let assigns = "";
+  let assigns: undefined | string[];
   for (let item of val) {
     if (item === val) {
       item = undefined;
-      assigns += "i[" + items.length + "]=";
+      (assigns ||= []).push("i[" + items.length + "]");
     }
 
     items.push(item);
@@ -917,7 +932,9 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
   );
   state.buf.push(
     (assigns
-      ? "((s,i)=>(" + assigns + "s,i.forEach(i=>s.add(i)),s))(new Set,"
+      ? "((s,i)=>(" +
+        assignsToString(assigns, "s") +
+        ",i.forEach(i=>s.add(i)),s))(new Set,"
       : "new Set(") +
       arrayRef.id +
       "=",
@@ -1527,6 +1544,22 @@ function assignId(state: State, ref: Reference) {
   } while (cur);
 
   return ref.id + "=" + accessPrevValue;
+}
+
+function assignsToString(assigns: string[], value: string) {
+  if (assigns.length > 100) {
+    return "($=>(" + assigns.join("=$,") + "=$))(" + value + ")";
+  }
+
+  return assigns.join("=") + "=" + value;
+}
+
+function addAssignment(ref: Reference, assign: string) {
+  if (ref.assigns) {
+    ref.assigns.push(assign);
+  } else {
+    ref.assigns = [assign];
+  }
 }
 
 function nextRefAccess(state: State) {
