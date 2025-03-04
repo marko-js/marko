@@ -154,7 +154,7 @@ export default {
             bodySection.content.startType !== ContentType.Text);
         let keyExpression: t.Expression | undefined;
 
-        if (onlyChildInParentOptimization) {
+        if (isStateful && onlyChildInParentOptimization) {
           getParentTag(tag)!.node.extra![kSerializeMarker] = false;
         }
 
@@ -276,10 +276,10 @@ export default {
             getScopeIdIdentifier(tagSection),
             getScopeAccessorLiteral(nodeRef),
           );
-        }
 
-        if (onlyChildInParentOptimization) {
-          forTagArgs.push(t.numericLiteral(1));
+          if (onlyChildInParentOptimization) {
+            forTagArgs.push(t.numericLiteral(1));
+          }
         }
 
         statements.push(

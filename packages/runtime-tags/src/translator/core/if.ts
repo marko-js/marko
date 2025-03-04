@@ -160,7 +160,7 @@ export const IfTag = {
             rootTag.scope.generateUidIdentifier("ifBranch");
           let statement: t.Statement | undefined;
 
-          if (onlyChildInParentOptimization) {
+          if (isStateful && onlyChildInParentOptimization) {
             getParentTag(rootTag)!.node.extra![kSerializeMarker] = false;
           }
 

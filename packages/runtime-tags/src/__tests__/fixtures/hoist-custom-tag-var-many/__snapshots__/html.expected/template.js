@@ -45,7 +45,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
         "#childScope/0": _$.writeExistingScope(_childScope3),
         setHtml3
       }, "__tests__/template.marko", "24:4");
-    }, 1);
+    });
     _scope3_.set(i, _$.ensureScopeWithId(_scope3_id));
     _$.write("</ul>");
     _$.writeScope(_scope3_id, {
