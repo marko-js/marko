@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.51
+
+### Patch Changes
+
+- [#2551](https://github.com/marko-js/marko/pull/2551) [`2b1ff5e`](https://github.com/marko-js/marko/commit/2b1ff5ea338a3a76dac821a30aa8f5bcfd291e92) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with args not being queued with setup.
+
 ## 0.3.50
 
 ### Patch Changes
