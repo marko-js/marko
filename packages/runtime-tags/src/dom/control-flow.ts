@@ -8,12 +8,9 @@ import {
   type Scope,
 } from "../common/types";
 import { attrs } from "./dom";
+import { queueRender } from "./queue";
 import { reconcile } from "./reconcile";
-import {
-  createBranch,
-  createBranchWithTagNameOrRenderer,
-  type Renderer,
-} from "./renderer";
+import { createBranch, type Renderer } from "./renderer";
 import {
   destroyBranch,
   insertBranchBefore,
@@ -29,7 +26,7 @@ export function conditional(nodeAccessor: Accessor, ...branches: Renderer[]) {
         scope,
         nodeAccessor,
         branches[(scope[branchAccessor] = newBranch)],
-        createBranch,
+        createAndSetupBranch,
       );
     }
   };
@@ -76,7 +73,7 @@ export let dynamicTag = function dynamicTag(
             scope[childScopeAccessor],
             MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0,
             content,
-            createBranch,
+            createAndSetupBranch,
           );
           if (content.___accessor) {
             subscribeToScopeSet(
@@ -238,7 +235,7 @@ function loop<T extends unknown[] = unknown[]>(
     forEach(value, (key, args) => {
       const branch =
         oldMap?.get(key) ||
-        createBranch(scope.$global, renderer, scope, parentNode);
+        createAndSetupBranch(scope.$global, renderer, scope, parentNode);
       params?.(branch, args);
       newMap.set(key, branch);
       newArray.push(branch);
@@ -259,6 +256,48 @@ function loop<T extends unknown[] = unknown[]>(
 
     reconcile(parentNode, oldArray, newArray, afterReference);
   };
+}
+
+function createAndSetupBranch(
+  $global: Scope["$global"],
+  renderer: Renderer,
+  parentScope: Scope | undefined,
+  parentNode: ParentNode,
+) {
+  const branch = createBranch($global, renderer, parentScope, parentNode);
+  renderer.___setup && queueRender(branch, renderer.___setup as any, -1);
+  return branch;
+}
+
+function createBranchWithTagNameOrRenderer(
+  $global: Scope["$global"],
+  tagNameOrRenderer: Renderer | string,
+  parentScope: Scope,
+  parentNode: ParentNode,
+) {
+  const branch = createBranch(
+    $global,
+    tagNameOrRenderer,
+    parentScope,
+    parentNode,
+  );
+  if (typeof tagNameOrRenderer === "string") {
+    branch[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : 0] =
+      branch.___startNode =
+      branch.___endNode =
+        document.createElementNS(
+          tagNameOrRenderer === "svg"
+            ? "http://www.w3.org/2000/svg"
+            : tagNameOrRenderer === "math"
+              ? "http://www.w3.org/1998/Math/MathML"
+              : (parentNode as Element).namespaceURI,
+          tagNameOrRenderer,
+        );
+  } else if (tagNameOrRenderer.___setup) {
+    queueRender(branch, tagNameOrRenderer.___setup as any, -1);
+  }
+
+  return branch;
 }
 
 function bySecondArg(_item: unknown, index: unknown) {

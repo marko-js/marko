@@ -96,7 +96,9 @@ function mount(
       undefined,
       parentNode,
     );
-    args?.(branch, input);
+
+    this.___setup && this.___setup(branch);
+    args && args(branch, input);
   });
 
   insertChildNodes(

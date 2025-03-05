@@ -6,7 +6,6 @@ import {
 } from "../common/types";
 import { insertChildNodes } from "./dom";
 import { parseHTML } from "./parse-html";
-import { queueRender } from "./queue";
 import { register } from "./resume";
 import { createScope } from "./scope";
 import type { Signal } from "./signals";
@@ -14,42 +13,14 @@ import { walk } from "./walker";
 
 export type Renderer = {
   ___id: string;
-  ___init: (branch: BranchScope, ns: string) => void;
+  ___setup: undefined | 0 | ((branch: BranchScope) => void);
+  ___clone: (branch: BranchScope, ns: string) => void;
   ___args: Signal<unknown> | undefined;
   ___owner: Scope | undefined;
   ___accessor: Accessor | undefined;
 };
 
 type SetupFn = (scope: Scope) => void;
-
-export function createBranchWithTagNameOrRenderer(
-  $global: Scope["$global"],
-  tagNameOrRenderer: Renderer | string,
-  parentScope: Scope,
-  parentNode: ParentNode,
-) {
-  const branch = createBranch(
-    $global,
-    tagNameOrRenderer,
-    parentScope,
-    parentNode,
-  );
-  if (typeof tagNameOrRenderer === "string") {
-    branch[MARKO_DEBUG ? `#${tagNameOrRenderer}/0` : 0] =
-      branch.___startNode =
-      branch.___endNode =
-        document.createElementNS(
-          tagNameOrRenderer === "svg"
-            ? "http://www.w3.org/2000/svg"
-            : tagNameOrRenderer === "math"
-              ? "http://www.w3.org/1998/Math/MathML"
-              : (parentNode as Element).namespaceURI,
-          tagNameOrRenderer,
-        );
-  }
-
-  return branch;
-}
 
 export function createBranch(
   $global: Scope["$global"],
@@ -71,7 +42,7 @@ export function createBranch(
     branch.___renderer = renderer;
   }
 
-  (renderer as Renderer | { ___init?: Renderer["___init"] }).___init?.(
+  (renderer as Renderer | { ___clone?: Renderer["___clone"] }).___clone?.(
     branch,
     (parentNode as Element).namespaceURI!,
   );
@@ -95,13 +66,12 @@ export function createContent(
   // 1 is charcode 49 (WalkCode.DynamicTagWithVar)
   walks = walks ? walks.replace(/[^\0-1]+$/, "") : "";
   let args: Signal<unknown> | undefined;
-  const init: Renderer["___init"] = template
+  const clone: Renderer["___clone"] = template
     ? (branch, ns) => {
         ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(
           template,
           ns,
         ))(branch, walks);
-        setup && queueRender(branch, setup, -1);
       }
     : (branch) => {
         walk(
@@ -109,13 +79,13 @@ export function createContent(
           walks,
           branch,
         );
-        setup && queueRender(branch, setup, -1);
       };
 
   return (owner?: Scope): Renderer => {
     return {
       ___id: id,
-      ___init: init,
+      ___clone: clone,
+      ___setup: setup,
       ___owner: owner,
       ___accessor: dynamicScopesAccessor,
       get ___args() {

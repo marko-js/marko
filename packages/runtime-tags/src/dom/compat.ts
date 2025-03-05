@@ -26,7 +26,7 @@ export const compat = {
     register(RENDERER_REGISTER_ID, fn);
   },
   isRenderer(renderer: any) {
-    return renderer.___init;
+    return renderer.___clone;
   },
   getStartNode(branch: any) {
     return branch.___startNode;
@@ -67,7 +67,7 @@ export const compat = {
     clone: () => { startNode: ChildNode; endNode: ChildNode },
   ) {
     const renderer = createRenderer(0, 0, 0, () => args);
-    renderer.___init = (branch) => {
+    renderer.___clone = (branch) => {
       const cloned = clone();
       branch.___startNode = cloned.startNode;
       branch.___endNode = cloned.endNode;
@@ -103,6 +103,7 @@ export const compat = {
           renderer.___owner,
           document.body,
         );
+        renderer.___setup && renderer.___setup(branch);
       } else {
         existing = true;
       }
