@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 0.3.50
+
+### Patch Changes
+
+- [#2549](https://github.com/marko-js/marko/pull/2549) [`7629cba`](https://github.com/marko-js/marko/commit/7629cbae66145873960082ff1e4dcab39ac9163d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix type for script tag.
+
+- [#2549](https://github.com/marko-js/marko/pull/2549) [`7629cba`](https://github.com/marko-js/marko/commit/7629cbae66145873960082ff1e4dcab39ac9163d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reduce bundle size by inlining (shorter) walks string trimming logic.
+
+- [#2549](https://github.com/marko-js/marko/pull/2549) [`7629cba`](https://github.com/marko-js/marko/commit/7629cbae66145873960082ff1e4dcab39ac9163d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove unecessary tracking of branch depth.
+
 ## 0.3.49
 
 ### Patch Changes
