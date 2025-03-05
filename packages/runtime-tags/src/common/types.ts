@@ -5,7 +5,6 @@ export interface BranchScope extends Scope {
   ___startNode: ChildNode;
   ___endNode: ChildNode;
   ___parentBranch: BranchScope | undefined;
-  ___branchDepth: number;
   ___destroyed: 1 | undefined;
   ___abortScopes: Set<Scope> | undefined;
   ___branchScopes: Set<BranchScope> | undefined;

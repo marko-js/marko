@@ -10,7 +10,7 @@ import { queueRender } from "./queue";
 import { register } from "./resume";
 import { createScope } from "./scope";
 import type { Signal } from "./signals";
-import { trimWalkString, walk } from "./walker";
+import { walk } from "./walker";
 
 export type Renderer = {
   ___id: string;
@@ -63,11 +63,8 @@ export function createBranch(
   branch.___closestBranch = branch;
 
   if (parentBranch) {
-    branch.___branchDepth = parentBranch.___branchDepth + 1;
     branch.___parentBranch = parentBranch;
     (parentBranch.___branchScopes ||= new Set()).add(branch);
-  } else {
-    branch.___branchDepth = 1;
   }
 
   if (MARKO_DEBUG) {
@@ -84,14 +81,20 @@ export function createBranch(
 
 export function createContent(
   id: string,
-  template?: string | 0,
-  rawWalks?: string | 0,
+  template: string | 0,
+  walks?: string | 0,
   setup?: SetupFn | 0,
   getArgs?: (() => Signal<unknown>) | 0,
   dynamicScopesAccessor?: Accessor,
 ) {
+  // Walks are required to encode how to "exit" the content
+  // so that we can continue walking across merged child templates.
+  // However at this point we have the full walks string for a branch,
+  // so we trim the trailing `Next`, `Over or `Out` walk codes.
+  // The regexp below replaces trailing values between charcodes `0-49`
+  // 1 is charcode 49 (WalkCode.DynamicTagWithVar)
+  walks = walks ? walks.replace(/[^\0-1]+$/, "") : "";
   let args: Signal<unknown> | undefined;
-  const walks = rawWalks ? /* @__PURE__ */ trimWalkString(rawWalks) : "";
   const init: Renderer["___init"] = template
     ? (branch, ns) => {
         ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(
@@ -124,7 +127,7 @@ export function createContent(
 
 export function registerContent(
   id: string,
-  template?: string | 0,
+  template: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
   getArgs?: (() => Signal<unknown>) | 0,
@@ -137,7 +140,7 @@ export function registerContent(
 }
 
 export function createRenderer(
-  template?: string | 0,
+  template: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
   getArgs?: (() => Signal<unknown>) | 0,

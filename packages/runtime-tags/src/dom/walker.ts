@@ -24,12 +24,6 @@ export const walker = /* @__PURE__ */ document.createTreeWalker(document);
 //    - Next would walk back in the node we just walked Out of
 //  - A component must assume the walker is on its first node, and include instructions for walking to its assumed nextSibling
 
-export function trimWalkString(walkString: string): string {
-  let end = walkString.length;
-  while (walkString.charCodeAt(--end) > WalkCode.DynamicTagWithVar);
-  return walkString.slice(0, end + 1);
-}
-
 export function walk(startNode: Node, walkCodes: string, branch: BranchScope) {
   walker.currentNode = startNode;
   walkInternal(0, walkCodes, branch);

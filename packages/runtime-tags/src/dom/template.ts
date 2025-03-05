@@ -15,15 +15,15 @@ import type { Signal } from "./signals";
 
 export const createTemplate = (
   id: string,
-  template?: string | 0,
-  rawWalks?: string | 0,
+  template: string | 0,
+  walks?: string | 0,
   setup?: ((scope: Scope) => void) | 0,
   inputSignal?: Signal<unknown>,
 ): Template => {
   const renderer = createContent(
     id,
     template,
-    rawWalks,
+    walks,
     setup,
     inputSignal && (() => inputSignal),
   )() as unknown as Template;
