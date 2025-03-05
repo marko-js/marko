@@ -1,4 +1,4 @@
-// size: 17932 (min) 6783 (brotli)
+// size: 17857 (min) 6762 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -97,10 +97,10 @@ var registeredValues = {},
   Render = class {
     p = [];
     q = {};
-    C = { _: registeredValues };
+    B = { _: registeredValues };
     constructor(renders, runtimeId, renderId) {
-      (this.D = renders),
-        (this.E = runtimeId),
+      (this.C = renders),
+        (this.D = runtimeId),
         (this.s = renderId),
         (this.t = renders[renderId]),
         this.u();
@@ -110,7 +110,7 @@ var registeredValues = {},
     }
     u() {
       let data2 = this.t,
-        serializeContext = this.C,
+        serializeContext = this.B,
         scopeLookup = this.q,
         visits = data2.v,
         branchIds = new Set(),
@@ -202,7 +202,7 @@ var registeredValues = {},
                 { $global: $global } = scopeLookup;
               $global ||
                 ((scopeLookup.$global = $global = scopes.$ || {}),
-                ($global.runtimeId = this.E),
+                ($global.runtimeId = this.D),
                 ($global.renderId = this.s),
                 ($global.g = 1e6));
               for (let scopeId in scopes)
@@ -228,7 +228,7 @@ var registeredValues = {},
                 }
             } else
               i === len || "string" != typeof resumes[i]
-                ? delete this.D[this.s]
+                ? delete this.C[this.s]
                 : registeredValues[resumes[i++]](
                     scopeLookup[resumeData],
                     scopeLookup[resumeData],
@@ -786,7 +786,7 @@ function destroyBranch(branch) {
 function destroyNestedBranches(branch) {
   (branch.y = 1),
     branch.n?.forEach(destroyNestedBranches),
-    branch.F?.forEach((scope) => {
+    branch.E?.forEach((scope) => {
       for (let id in scope.k) scope.k[id]?.abort();
     });
 }
@@ -805,7 +805,7 @@ function queueRender(scope, signal, signalKey, value2, scopeKey = scope.d) {
     existingRender = signalKey >= 0 && pendingRendersLookup.get(key);
   if (existingRender) existingRender.z = value2;
   else {
-    let render = { j: key, A: scope, G: signal, z: value2 },
+    let render = { j: key, A: scope, F: signal, z: value2 },
       i = pendingRenders.push(render) - 1;
     for (; i; ) {
       let parentIndex = (i - 1) >> 1,
@@ -874,7 +874,7 @@ function runRenders() {
       }
       pendingRenders[i] = item;
     }
-    render.A.c?.y || render.G(render.A, render.z);
+    render.A.c?.y || render.F(render.A, render.z);
   }
   !(function () {
     for (let scope of pendingScopes) scope.h = 0;
@@ -887,7 +887,7 @@ function resetAbortSignal(scope, id) {
 }
 function getAbortSignal(scope, id) {
   return (
-    scope.c && (scope.c.F ||= new Set()).add(scope),
+    scope.c && (scope.c.E ||= new Set()).add(scope),
     ((scope.k ||= {})[id] ||= new AbortController()).signal
   );
 }
@@ -895,11 +895,6 @@ function abort(ctrl) {
   ctrl.abort();
 }
 var walker = document.createTreeWalker(document);
-function trimWalkString(walkString) {
-  let end = walkString.length;
-  for (; walkString.charCodeAt(--end) > 49; );
-  return walkString.slice(0, end + 1);
-}
 function walk(startNode, walkCodes, branch) {
   (walker.currentNode = startNode), walkInternal(0, walkCodes, branch);
 }
@@ -979,11 +974,8 @@ function createBranch($global, renderer, parentScope, parentNode) {
   return (
     (branch._ = renderer.l || parentScope),
     (branch.c = branch),
-    parentBranch
-      ? ((branch.B = parentBranch.B + 1),
-        (branch.x = parentBranch),
-        (parentBranch.n ||= new Set()).add(branch))
-      : (branch.B = 1),
+    parentBranch &&
+      ((branch.x = parentBranch), (parentBranch.n ||= new Set()).add(branch)),
     renderer.o?.(branch, parentNode.namespaceURI),
     branch
   );
@@ -991,13 +983,13 @@ function createBranch($global, renderer, parentScope, parentNode) {
 function createContent(
   id,
   template,
-  rawWalks,
+  walks,
   setup,
   getArgs,
   dynamicScopesAccessor,
 ) {
+  walks = walks ? walks.replace(/[^\0-1]+$/, "") : "";
   let args,
-    walks = rawWalks ? trimWalkString(rawWalks) : "",
     init2 = template
       ? (branch, ns) => {
           ((cloneCache[ns] ||= {})[template] ||= (function (html2, ns) {
@@ -1168,7 +1160,7 @@ function dynamicClosure(valueAccessor, fn, getOwnerScope) {
         for (let subscriber of subscribers)
           subscriber.h || queueRender(subscriber, childSignal, -1);
     },
-    subscribe = (ownerSignal.H = (scope) =>
+    subscribe = (ownerSignal.G = (scope) =>
       subscribeToScopeSet(
         getOwnerScope ? getOwnerScope(scope) : scope._,
         subscribersAccessor,
@@ -1183,7 +1175,7 @@ function dynamicClosure(valueAccessor, fn, getOwnerScope) {
 }
 function registerDynamicClosure(registryId, valueAccessor, fn, getOwnerScope) {
   let signal = dynamicClosure(valueAccessor, fn, getOwnerScope);
-  return register(registryId, signal.H), signal;
+  return register(registryId, signal.G), signal;
 }
 function closure(valueAccessor, fn, getOwnerScope) {
   return (scope) => {
@@ -1600,11 +1592,11 @@ var classIdToBranch = new Map(),
         return toInsertNode(branch.a, branch.b);
     },
   },
-  createTemplate = (id, template, rawWalks, setup, inputSignal) => {
+  createTemplate = (id, template, walks, setup, inputSignal) => {
     let renderer = createContent(
       id,
       template,
-      rawWalks,
+      walks,
       setup,
       inputSignal && (() => inputSignal),
     )();
