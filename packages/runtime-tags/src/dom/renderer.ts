@@ -16,7 +16,7 @@ export type Renderer = {
   ___id: string;
   ___setup: undefined | ((branch: BranchScope) => void);
   ___clone: (branch: BranchScope, ns: string) => void;
-  ___args: Signal<unknown> | undefined;
+  ___params: Signal<unknown> | undefined;
   ___closures: SetupFn | undefined;
   ___owner: Scope | undefined;
   ___accessor: Accessor | undefined;
@@ -83,7 +83,7 @@ export function createContent(
   template: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
-  getArgs?: (() => Signal<unknown>) | 0,
+  params?: Signal<unknown> | 0,
   closures?: Signal<unknown> | 0,
   dynamicScopesAccessor?: Accessor,
 ) {
@@ -95,8 +95,8 @@ export function createContent(
   // 1 is charcode 49 (WalkCode.DynamicTagWithVar)
   walks = walks ? walks.replace(/[^\0-1]+$/, "") : "";
   setup ||= undefined;
+  params ||= undefined;
   closures ||= undefined;
-  let args: Renderer["___args"] | typeof getArgs | null = getArgs;
   const clone: Renderer["___clone"] = template
     ? (branch, ns) => {
         ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(
@@ -116,15 +116,11 @@ export function createContent(
     return {
       ___id: id,
       ___clone: clone,
-      ___setup: setup,
       ___owner: owner,
+      ___setup: setup,
+      ___params: params,
       ___closures: closures,
       ___accessor: dynamicScopesAccessor,
-      get ___args() {
-        return (
-          args === getArgs ? (args = getArgs ? getArgs() : null) : args
-        ) as Renderer["___args"];
-      },
     };
   };
 }
@@ -134,7 +130,7 @@ export function registerContent(
   template: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
-  getArgs?: (() => Signal<unknown>) | 0,
+  params?: Signal<unknown> | 0,
   closures?: Signal<unknown> | 0,
   dynamicScopesAccessor?: Accessor,
 ) {
@@ -145,7 +141,7 @@ export function registerContent(
       template,
       walks,
       setup,
-      getArgs,
+      params,
       closures,
       dynamicScopesAccessor,
     ),
@@ -156,10 +152,10 @@ export function createRenderer(
   template: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
-  getArgs?: (() => Signal<unknown>) | 0,
+  params?: Signal<unknown> | 0,
   closures?: Signal<unknown> | 0,
 ) {
-  return createContent("", template, walks, setup, getArgs, closures)();
+  return createContent("", template, walks, setup, params, closures)();
 }
 
 const cloneCache: Partial<
