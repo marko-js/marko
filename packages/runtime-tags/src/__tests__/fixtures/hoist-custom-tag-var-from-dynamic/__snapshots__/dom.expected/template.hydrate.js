@@ -1,4 +1,4 @@
-// size: 821 (min) 391 (brotli)
+// size: 827 (min) 392 (brotli)
 const _dynamicTag2 = _$.dynamicTag(1),
   _dynamicTag = _$.dynamicTag(),
   _input_content_ = _$.value(4, (_scope, input_content) => {
@@ -27,6 +27,7 @@ _$.registerContent(
       _setup_(_scope[0]);
   },
   0,
+  0,
   "4?",
 );
 const _get_hoisted_setHtml2 = _$.hoist(11, "3?", "2?"),
@@ -40,6 +41,7 @@ const _get_hoisted_setHtml2 = _$.hoist(11, "3?", "2?"),
     "0 b&",
     _setup$thing_content2,
     0,
+    0,
     "3?",
   );
 _$.registerContent(
@@ -49,6 +51,7 @@ _$.registerContent(
   (_scope) => {
     _scope[0], _input_content_(_scope[0], _thing_content2(_scope));
   },
+  0,
   0,
   "2?",
 ),

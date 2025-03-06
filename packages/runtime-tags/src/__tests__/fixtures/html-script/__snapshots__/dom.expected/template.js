@@ -1,7 +1,8 @@
 export const _template_ = "<script type=importmap></script>";
 export const _walks_ = /* get, over(1) */" b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _htmlScript_content = _$.registerContent("__tests__/template.marko_1_renderer");
+const _count$htmlScript_content = _$.registerDynamicClosure("__tests__/template.marko_1_count/subscriber", "count");
+const _htmlScript_content = _$.registerContent("__tests__/template.marko_1_renderer", 0, 0, 0, 0, _scope => _count$htmlScript_content._(_scope));
 const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
   count
 }) => _$.on(_scope["#script/0"], "click", function () {
@@ -15,6 +16,7 @@ const _count = /* @__PURE__ */_$.state("count/1", (_scope, count) => {
     }
   }
 `);
+  _count$htmlScript_content(_scope);
   _count_effect(_scope);
 });
 export function _setup_(_scope) {

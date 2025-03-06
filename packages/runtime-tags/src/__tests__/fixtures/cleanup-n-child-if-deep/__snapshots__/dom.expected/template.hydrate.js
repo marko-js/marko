@@ -1,4 +1,4 @@
-// size: 1334 (min) 512 (brotli)
+// size: 1359 (min) 511 (brotli)
 const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _expr_name_write_effect = _$.effect("a0", (_scope, { 5: name, 6: write }) => {
     write(`${name} mounted`),
@@ -22,12 +22,14 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     (_scope) => _scope._._._,
   ),
   _setup$if_content3 = (_scope) => {
-    _write$if_content3._(_scope), _scope[0], _name_(_scope[0], "Inner");
+    _scope[0], _name_(_scope[0], "Inner");
   },
   _if_content3 = _$.createRenderer(
     _template_,
     "/D%lD%lD%l&",
     _setup$if_content3,
+    0,
+    (_scope) => _write$if_content3._(_scope),
   ),
   _if$if_content = _$.conditional(1, _if_content3),
   _write$if_content2 = _$.dynamicClosure(
@@ -42,15 +44,16 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     (_scope) => _scope._._,
   ),
   _setup$if_content2 = (_scope) => {
-    _write$if_content2._(_scope),
-      _scope[0],
-      _showInner$if_content._(_scope),
-      _name_(_scope[0], "Middle");
+    _scope[0], _name_(_scope[0], "Middle");
   },
   _if_content2 = _$.createRenderer(
     `<div>${_template_}<!></div>`,
     "D/D%lD%lD%l&%",
     _setup$if_content2,
+    0,
+    (_scope) => {
+      _showInner$if_content._(_scope), _write$if_content2._(_scope);
+    },
   ),
   _if$if_content2 = _$.conditional(1, _if_content2),
   _write$if_content = _$.conditionalClosure(8, 4, 0, (_scope, write) =>
@@ -63,15 +66,16 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     (_scope, showMiddle) => _if$if_content2(_scope, showMiddle ? 0 : 1),
   ),
   _setup$if_content = (_scope) => {
-    _write$if_content._(_scope),
-      _scope[0],
-      _showMiddle$if_content._(_scope),
-      _name_(_scope[0], "Outer");
+    _scope[0], _name_(_scope[0], "Outer");
   },
   _if_content = _$.createRenderer(
     `<div>${_template_}<!></div>`,
     "D/D%lD%lD%l&%",
     _setup$if_content,
+    0,
+    (_scope) => {
+      _showMiddle$if_content._(_scope), _write$if_content._(_scope);
+    },
   ),
   _if = _$.conditional(4, _if_content),
   _showInner_effect = _$.effect("b2", (_scope, { 7: showInner }) =>

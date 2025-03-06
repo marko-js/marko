@@ -4,10 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _Child_content2 = _$.registerContent("__tests__/template.marko_3_renderer", "Hi");
 const _Child_content = _$.registerContent("__tests__/template.marko_2_renderer", "Hi");
 const _input_value$Parent_content = _$.registerDynamicClosure("__tests__/template.marko_1_input_value/subscriber", "input_value", (_scope, input_value) => _$.html(_scope, input_value, "#text/0"));
-const _setup$Parent_content = _scope => {
-  _input_value$Parent_content._(_scope);
-};
-const _Parent_content = _$.registerContent("__tests__/template.marko_1_renderer", " ", /* get */" ", _setup$Parent_content);
+const _Parent_content = _$.registerContent("__tests__/template.marko_1_renderer", " ", /* get */" ", 0, 0, _scope => _input_value$Parent_content._(_scope));
 const _expr_Parent_Child_effect = _$.effect("__tests__/template.marko_0_Parent_Child", (_scope, {
   Parent,
   Child

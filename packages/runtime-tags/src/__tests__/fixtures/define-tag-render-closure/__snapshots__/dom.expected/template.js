@@ -2,10 +2,7 @@ export const _template_ = "<!><!><button> </button>";
 export const _walks_ = /* replace, over(1), get, next(1), get, out(1) */"D%b D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _x$define_content = _$.registerDynamicClosure("__tests__/template.marko_1_x/subscriber", "x", (_scope, x) => _$.data(_scope["#text/0"], x));
-const _setup$define_content = _scope => {
-  _x$define_content._(_scope);
-};
-const _define_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<div> </div>", /* next(1), get */"D ", _setup$define_content);
+const _define_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<div> </div>", /* next(1), get */"D ", 0, 0, _scope => _x$define_content._(_scope));
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
 const _MyTag = /* @__PURE__ */_$.value("MyTag", (_scope, MyTag) => _dynamicTag(_scope, MyTag));
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {

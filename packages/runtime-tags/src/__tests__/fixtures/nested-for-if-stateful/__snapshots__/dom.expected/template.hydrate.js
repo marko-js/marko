@@ -1,4 +1,4 @@
-// size: 913 (min) 421 (brotli)
+// size: 922 (min) 420 (brotli)
 const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
     _$.data(_scope[1], count),
   ),
@@ -8,12 +8,14 @@ const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
     }),
   ),
   _setup$else_content = (_scope) => {
-    _count$else_content._(_scope), _setup$else_content_effect(_scope);
+    _setup$else_content_effect(_scope);
   },
   _else_content = _$.createRenderer(
     "<button>Increment <!></button>",
     " Db%",
     _setup$else_content,
+    0,
+    (_scope) => _count$else_content._(_scope),
   ),
   _expr_counts_count_i$if_content_effect = _$.effect(
     "a1",
@@ -55,15 +57,16 @@ const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
     (_scope, counts) => _expr_counts_count_i$if_content(_scope),
     (_scope) => _scope._._,
   ),
-  _setup$if_content = (_scope) => {
-    _counts$if_content._(_scope),
-      _count$if_content._(_scope),
-      _i$if_content._(_scope);
-  },
   _if_content = _$.createRenderer(
     "<button>Confirm <!></button>",
     " Db%",
-    _setup$if_content,
+    0,
+    0,
+    (_scope) => {
+      _counts$if_content._(_scope),
+        _count$if_content._(_scope),
+        _i$if_content._(_scope);
+    },
   ),
   _if$for_content = _$.conditional(0, _if_content, _else_content),
   _editing$for_content = _$.state(4, (_scope, editing) =>

@@ -1,11 +1,10 @@
-// size: 292 (min) 194 (brotli)
+// size: 292 (min) 187 (brotli)
 const _message$if_content = _$.conditionalClosure(3, 1, 0, (_scope, message) =>
     _$.data(_scope[0], message),
   ),
-  _setup$if_content = (_scope) => {
-    _message$if_content._(_scope);
-  },
-  _if_content = _$.createRenderer("<span> </span>", "D ", _setup$if_content),
+  _if_content = _$.createRenderer("<span> </span>", "D ", 0, 0, (_scope) =>
+    _message$if_content._(_scope),
+  ),
   _if = _$.conditional(1, _if_content),
   _message = _$.state(3, (_scope, message) => _message$if_content(_scope)),
   _show_effect = _$.effect("a0", (_scope, { 2: show }) =>

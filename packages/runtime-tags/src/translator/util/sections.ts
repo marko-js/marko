@@ -29,7 +29,8 @@ export interface Section {
   parent: Section | undefined;
   sectionAccessor: { binding: Binding; suffix: string } | undefined;
   params: undefined | Binding;
-  closures: ReferencedBindings;
+  referencedClosures: ReferencedBindings;
+  referencedHoists: ReferencedBindings;
   bindings: ReferencedBindings;
   hoisted: ReferencedBindings;
   isHoistThrough: true | undefined;
@@ -84,7 +85,8 @@ export function startSection(
       parent: parentSection,
       sectionAccessor: undefined,
       params: undefined,
-      closures: undefined,
+      referencedClosures: undefined,
+      referencedHoists: undefined,
       bindings: undefined,
       hoisted: undefined,
       isHoistThrough: undefined,
@@ -280,7 +282,7 @@ export const checkStatefulClosures = (
   immediateOnly: boolean,
 ) => {
   return !!find(
-    section.closures,
+    section.referencedClosures,
     (closure) =>
       (!immediateOnly || section.parent === closure.section) &&
       isStatefulReferences(closure),

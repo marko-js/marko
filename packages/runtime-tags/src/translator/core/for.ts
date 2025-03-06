@@ -147,7 +147,10 @@ export default {
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
         const hasStatefulClosures = checkStatefulClosures(bodySection, true);
-        const hasHoists = bodySection.hoisted || bodySection.isHoistThrough;
+        const hasHoists =
+          bodySection.hoisted ||
+          bodySection.isHoistThrough ||
+          bodySection.referencedHoists;
         const singleNodeOptimization =
           bodySection.content === null ||
           (bodySection.content.singleChild &&

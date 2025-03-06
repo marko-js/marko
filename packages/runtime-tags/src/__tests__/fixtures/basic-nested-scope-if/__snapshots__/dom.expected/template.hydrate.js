@@ -1,17 +1,16 @@
-// size: 427 (min) 242 (brotli)
+// size: 427 (min) 238 (brotli)
 const _clickCount$else_content = _$.conditionalClosure(
     1,
     0,
     1,
     (_scope, clickCount) => _$.data(_scope[0], clickCount),
   ),
-  _setup$else_content = (_scope) => {
-    _clickCount$else_content._(_scope);
-  },
   _else_content = _$.createRenderer(
     "<span>The button was clicked <!> times.</span>",
     "Db%",
-    _setup$else_content,
+    0,
+    0,
+    (_scope) => _clickCount$else_content._(_scope),
   ),
   _clickCount$if_content_effect = _$.effect(
     "a0",
@@ -28,13 +27,8 @@ const _clickCount$else_content = _$.conditionalClosure(
       _$.data(_scope[1], clickCount), _clickCount$if_content_effect(_scope);
     },
   ),
-  _setup$if_content = (_scope) => {
-    _clickCount$if_content._(_scope);
-  },
-  _if_content = _$.createRenderer(
-    "<button> </button>",
-    " D ",
-    _setup$if_content,
+  _if_content = _$.createRenderer("<button> </button>", " D ", 0, 0, (_scope) =>
+    _clickCount$if_content._(_scope),
   ),
   _if = _$.conditional(0, _if_content, _else_content),
   _clickCount = _$.state(1, (_scope, clickCount) => {

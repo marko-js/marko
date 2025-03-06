@@ -1,4 +1,4 @@
-// size: 663 (min) 309 (brotli)
+// size: 668 (min) 309 (brotli)
 const _expr_content_value = _$.intersection(5, (_scope) => {
     const { 3: content, 4: value } = _scope;
     _dynamicTag(_scope, content, () => value);
@@ -19,10 +19,9 @@ const _expr_content_value = _$.intersection(5, (_scope) => {
     "b0",
     "<div><!>.<!></div>",
     "D%c%",
-    (_scope) => {
-      _outer$child_content._(_scope);
-    },
+    0,
     () => _params_3$child_content,
+    (_scope) => _outer$child_content._(_scope),
   ),
   _y$child_content = _$.registerDynamicClosure("b3", 3, (_scope, y) =>
     _value_(_scope[0], y),
@@ -38,11 +37,10 @@ _$.registerContent(
   "<div><!></div>",
   "/D%l&",
   (_scope) => {
-    _y$child_content._(_scope),
-      _scope[0],
-      _content_(_scope[0], _child_content2(_scope));
+    _scope[0], _content_(_scope[0], _child_content2(_scope));
   },
   () => _params_2$child_content,
+  (_scope) => _y$child_content._(_scope),
 );
 const _x_effect = _$.effect("b4", (_scope, { 2: x }) =>
     _$.on(_scope[0], "click", function () {

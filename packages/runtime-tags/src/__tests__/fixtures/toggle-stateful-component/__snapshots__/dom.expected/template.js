@@ -4,10 +4,9 @@ import { _setup_ as _counter, _input_onCount_ as _counter_input_onCount, _templa
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _onCount$if_content = /* @__PURE__ */_$.conditionalClosure("onCount", "#div/0", 0, (_scope, onCount) => _counter_input_onCount(_scope["#childScope/0"], onCount));
 const _setup$if_content = _scope => {
-  _onCount$if_content._(_scope);
   _counter(_scope["#childScope/0"]);
 };
-const _if_content = /* @__PURE__ */_$.createRenderer(`<div>${_counter_template}</div>`, /* next(1), beginChild, _counter_walks, endChild */`D/${_counter_walks}&`, _setup$if_content);
+const _if_content = /* @__PURE__ */_$.createRenderer(`<div>${_counter_template}</div>`, /* next(1), beginChild, _counter_walks, endChild */`D/${_counter_walks}&`, _setup$if_content, 0, _scope => _onCount$if_content._(_scope));
 const _if = /* @__PURE__ */_$.conditional("#div/0", _if_content);
 const _onCount = /* @__PURE__ */_$.value("onCount");
 const _show = /* @__PURE__ */_$.state("show/1", (_scope, show) => _if(_scope, show ? 0 : 1));

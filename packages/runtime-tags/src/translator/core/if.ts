@@ -137,7 +137,10 @@ export const IfTag = {
         const hasStatefulClosures =
           bodySection && checkStatefulClosures(bodySection, true);
         const hasHoists =
-          bodySection && (bodySection.hoisted || bodySection.isHoistThrough);
+          bodySection &&
+          (bodySection.hoisted ||
+            bodySection.isHoistThrough ||
+            bodySection.referencedHoists);
 
         if (bodySection) {
           if (isStateful || hasStatefulClosures || hasHoists) {
@@ -173,6 +176,10 @@ export const IfTag = {
                 branchBodySection,
                 true,
               );
+              const branchHasHoists =
+                branchBodySection.hoisted ||
+                branchBodySection.isHoistThrough ||
+                branchBodySection.referencedHoists;
 
               if (isStateful) {
                 bodyStatements.push(
@@ -185,7 +192,7 @@ export const IfTag = {
                   ) as any,
                 );
               }
-              if (isStateful || branchHasStatefulClosures || hasHoists) {
+              if (isStateful || branchHasStatefulClosures || branchHasHoists) {
                 bodyStatements.push(
                   t.expressionStatement(
                     t.assignmentExpression(

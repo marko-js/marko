@@ -15,10 +15,7 @@ const _setup$if_content = _scope => {
 const _if_content2 = /* @__PURE__ */_$.createRenderer(`<div></div>${_child_template}`, /* get, over(1), beginChild, _child_walks, endChild */` b/${_child_walks}&`, _setup$if_content);
 const _if$if_content = /* @__PURE__ */_$.conditional("#text/0", _if_content2);
 const _input_show$if_content = /* @__PURE__ */_$.conditionalClosure("input_show", "#text/0", 0, (_scope, input_show) => _if$if_content(_scope, input_show ? 0 : 1));
-const _setup$if_content2 = _scope => {
-  _input_show$if_content._(_scope);
-};
-const _if_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", _setup$if_content2);
+const _if_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", 0, 0, _scope => _input_show$if_content._(_scope));
 const _if2 = /* @__PURE__ */_$.conditional("#text/2", _if_content3);
 const _if = /* @__PURE__ */_$.conditional("#text/0", _if_content);
 const _hoisted_el = /* @__PURE__ */_$.value("_hoisted_el", (_scope, _hoisted_el) => _child_input(_scope["#childScope/1"], {

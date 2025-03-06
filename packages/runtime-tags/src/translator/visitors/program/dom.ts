@@ -3,6 +3,7 @@ import { importDefault } from "@marko/compiler/babel-utils";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import getStyleFile from "../../util/get-style-file";
+import { map } from "../../util/optional";
 import { getSectionScopeAccessorLiteral } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {
@@ -13,14 +14,17 @@ import {
 } from "../../util/sections";
 import {
   getResumeRegisterId,
+  getSignal,
   initValue,
   replaceNullishAndEmptyFunctionsWith0,
   writeRegisteredFns,
   writeSignals,
 } from "../../util/signals";
+import { toFirstExpressionOrBlock } from "../../util/to-first-expression-or-block";
 import type { TemplateVisitor } from "../../util/visitors";
 import { visit } from "../../util/walks";
 import * as writer from "../../util/writer";
+import { scopeIdentifier } from ".";
 
 export default {
   translate: {
@@ -52,6 +56,24 @@ export default {
             tagParamsSignal?.identifier &&
             t.arrowFunctionExpression([], tagParamsSignal.identifier);
           const identifier = t.identifier(childSection.name);
+          const closures = childSection.referencedClosures
+            ? t.arrowFunctionExpression(
+                [scopeIdentifier],
+                toFirstExpressionOrBlock(
+                  map(childSection.referencedClosures, (closure) =>
+                    t.expressionStatement(
+                      t.callExpression(
+                        t.memberExpression(
+                          getSignal(childSection, closure).identifier,
+                          t.identifier("_"),
+                        ),
+                        [scopeIdentifier],
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            : undefined;
           const renderer = getSectionParentIsOwner(childSection)
             ? callRuntime(
                 "createRenderer",
@@ -60,6 +82,7 @@ export default {
                   walks,
                   setup,
                   params,
+                  closures,
                 ]),
               )
             : callRuntime(
@@ -72,6 +95,7 @@ export default {
                   walks,
                   setup,
                   params,
+                  closures,
                   childSection.hoisted || childSection.isHoistThrough
                     ? getSectionScopeAccessorLiteral(childSection)
                     : undefined,
