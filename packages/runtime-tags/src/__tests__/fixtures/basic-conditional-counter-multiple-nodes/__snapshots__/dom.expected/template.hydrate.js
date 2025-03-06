@@ -1,11 +1,10 @@
-// size: 362 (min) 201 (brotli)
+// size: 362 (min) 199 (brotli)
 const _count$if_content = _$.conditionalClosure(4, 2, 0, (_scope, count) =>
     _$.data(_scope[0], count),
   ),
-  _setup$if_content = (_scope) => {
-    _count$if_content._(_scope);
-  },
-  _if_content = _$.createRenderer("The count is <!>", "b%", _setup$if_content),
+  _if_content = _$.createRenderer("The count is <!>", "b%", 0, 0, (_scope) =>
+    _count$if_content._(_scope),
+  ),
   _if = _$.conditional(2, _if_content),
   _count_effect = _$.effect("a0", (_scope, { 4: count }) =>
     _$.on(_scope[0], "click", function () {

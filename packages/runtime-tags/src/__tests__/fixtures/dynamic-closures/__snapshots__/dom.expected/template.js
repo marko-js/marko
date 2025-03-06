@@ -7,10 +7,11 @@ const _c$if_content = _$.registerDynamicClosure("__tests__/template.marko_3_c/su
 const _b$if_content = /* @__PURE__ */_$.dynamicClosure("b", (_scope, b) => _$.data(_scope["#text/1"], b), _scope => _scope._._);
 const _setup$if_content = _scope => {
   _$.data(_scope["#text/0"], a);
+};
+const _if_content2 = /* @__PURE__ */_$.createRenderer("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$if_content, 0, _scope => {
   _b$if_content._(_scope);
   _c$if_content._(_scope);
-};
-const _if_content2 = /* @__PURE__ */_$.createRenderer("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$if_content);
+});
 const _if$if_content = /* @__PURE__ */_$.conditional("#text/0", _if_content2);
 const _setup$if_content2 = _scope => {
   _if$if_content(_scope, Math.random() ? 0 : 1);
@@ -20,10 +21,11 @@ const _c$customTag_content = _$.registerDynamicClosure("__tests__/template.marko
 const _b$customTag_content = /* @__PURE__ */_$.dynamicClosure("b", (_scope, b) => _$.data(_scope["#text/1"], b));
 const _setup$customTag_content = _scope => {
   _$.data(_scope["#text/0"], a);
+};
+const _customTag_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$customTag_content, 0, _scope => {
   _b$customTag_content._(_scope);
   _c$customTag_content._(_scope);
-};
-const _customTag_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", _setup$customTag_content);
+});
 const _if = /* @__PURE__ */_$.conditional("#div/2", _if_content);
 const _c = /* @__PURE__ */_$.state("c/4", (_scope, c) => {
   _c$customTag_content(_scope);

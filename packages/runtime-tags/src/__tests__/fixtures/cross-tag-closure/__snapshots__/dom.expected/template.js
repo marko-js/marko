@@ -14,10 +14,7 @@ const _count$myTag_content = _$.registerDynamicClosure("__tests__/template.marko
   _$.data(_scope["#text/1"], count);
   _count$myTag_content_effect(_scope);
 });
-const _setup$myTag_content = _scope => {
-  _count$myTag_content._(_scope);
-};
-const _myTag_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", _setup$myTag_content);
+const _myTag_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", 0, 0, _scope => _count$myTag_content._(_scope));
 const _count = _$.registerBoundSignal("__tests__/template.marko_0_count/var", /* @__PURE__ */_$.value("count", (_scope, count) => _count$myTag_content(_scope)));
 export function _setup_(_scope) {
   _$.setTagVar(_scope, "#childScope/0", _count);

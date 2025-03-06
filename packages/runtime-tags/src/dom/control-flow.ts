@@ -8,9 +8,13 @@ import {
   type Scope,
 } from "../common/types";
 import { attrs } from "./dom";
-import { queueRender } from "./queue";
 import { reconcile } from "./reconcile";
-import { createBranch, type Renderer } from "./renderer";
+import {
+  createAndSetupBranch,
+  createBranch,
+  type Renderer,
+  setupBranch,
+} from "./renderer";
 import {
   destroyBranch,
   insertBranchBefore,
@@ -258,17 +262,6 @@ function loop<T extends unknown[] = unknown[]>(
   };
 }
 
-function createAndSetupBranch(
-  $global: Scope["$global"],
-  renderer: Renderer,
-  parentScope: Scope | undefined,
-  parentNode: ParentNode,
-) {
-  const branch = createBranch($global, renderer, parentScope, parentNode);
-  renderer.___setup && queueRender(branch, renderer.___setup as any, -1);
-  return branch;
-}
-
 function createBranchWithTagNameOrRenderer(
   $global: Scope["$global"],
   tagNameOrRenderer: Renderer | string,
@@ -293,8 +286,8 @@ function createBranchWithTagNameOrRenderer(
               : (parentNode as Element).namespaceURI,
           tagNameOrRenderer,
         );
-  } else if (tagNameOrRenderer.___setup) {
-    queueRender(branch, tagNameOrRenderer.___setup as any, -1);
+  } else {
+    setupBranch(tagNameOrRenderer, branch);
   }
 
   return branch;

@@ -7,7 +7,11 @@ import type { BranchScope } from "../common/types";
 import { patchDynamicTag } from "./control-flow";
 import { toInsertNode } from "./dom";
 import { prepareEffects, queueEffect, runEffects } from "./queue";
-import { createBranch, createRenderer, type Renderer } from "./renderer";
+import {
+  createAndSetupBranch,
+  createRenderer,
+  type Renderer,
+} from "./renderer";
 import { getRegisteredWithScope, register } from "./resume";
 import { destroyBranch } from "./scope";
 const classIdToBranch = new Map<string, BranchScope>();
@@ -97,13 +101,12 @@ export const compat = {
     component.effects = prepareEffects(() => {
       if (!branch) {
         out.global.___nextScopeId ||= 0;
-        branch = component.scope = createBranch(
+        branch = component.scope = createAndSetupBranch(
           out.global,
           renderer,
           renderer.___owner,
           document.body,
         );
-        renderer.___setup && renderer.___setup(branch);
       } else {
         existing = true;
       }

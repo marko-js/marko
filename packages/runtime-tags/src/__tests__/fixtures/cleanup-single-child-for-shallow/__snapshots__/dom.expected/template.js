@@ -6,10 +6,9 @@ const _write$for_content = /* @__PURE__ */_$.loopClosure("write", "#text/2", (_s
 const _item$for_content = /* @__PURE__ */_$.value("item", (_scope, item) => _child_input_name(_scope["#childScope/0"], item));
 const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _item$for_content(_scope, _params_2[0]));
 const _setup$for_content = _scope => {
-  _write$for_content._(_scope);
   _child(_scope["#childScope/0"]);
 };
-const _for_content = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$for_content, () => _params_2$for_content);
+const _for_content = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$for_content, () => _params_2$for_content, _scope => _write$for_content._(_scope));
 const _for = /* @__PURE__ */_$.loopOf("#text/2", _for_content);
 const _write = /* @__PURE__ */_$.value("write");
 const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {

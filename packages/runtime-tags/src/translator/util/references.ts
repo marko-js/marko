@@ -267,12 +267,10 @@ export function trackHoistedReference(
     trackReference(referencePath, hoistedBinding);
   }
 
-  if (referenceSection !== hoistSection) {
-    referenceSection.closures = bindingUtil.add(
-      referenceSection.closures,
-      hoistedBinding,
-    );
-  }
+  referenceSection.referencedHoists = bindingUtil.add(
+    referenceSection.referencedHoists,
+    hoistedBinding,
+  );
 }
 
 function trackReferencesForBinding(babelBinding: t.Binding) {
@@ -649,7 +647,10 @@ export function finalizeReferences() {
       section,
     } of binding.downstreamExpressions) {
       if (section !== binding.section) {
-        section.closures = bindingUtil.add(section.closures, binding);
+        section.referencedClosures = bindingUtil.add(
+          section.referencedClosures,
+          binding,
+        );
       }
       if (isEffect) {
         forEach(referencedBindings, (bindingReference) => {
@@ -685,7 +686,7 @@ export function finalizeReferences() {
     }
 
     // mark bindings that need to be serialized due to being closed over by stateful sections
-    forEach(section.closures, (binding) => {
+    forEach(section.referencedClosures, (binding) => {
       if (!binding.serialize) {
         let serialize = false;
         const sourceSection = binding.section;

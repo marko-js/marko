@@ -232,7 +232,7 @@ export function getSignal(
       };
     } else if (
       referencedBindings.section !== section &&
-      bindingUtil.find(section.closures, referencedBindings)
+      bindingUtil.find(section.referencedClosures, referencedBindings)
     ) {
       getSignal(referencedBindings.section, referencedBindings).closures.set(
         section,
@@ -278,17 +278,6 @@ export function getSignal(
               )
           : builder(signal, render);
       };
-      addStatement(
-        "render",
-        section,
-        undefined,
-        t.expressionStatement(
-          t.callExpression(
-            t.memberExpression(signal.identifier, t.identifier("_")),
-            [scopeIdentifier],
-          ),
-        ),
-      );
     }
   }
   return signal;
@@ -988,10 +977,9 @@ export function writeHTMLResumeStatements(
 
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
-
-  forEach(section.assignments, (assignment) => {
+  const serializeOwnersUntilBindingSection = (binding: Binding) => {
     let currentSection = section;
-    while (currentSection !== assignment.section) {
+    while (currentSection !== binding.section) {
       const currentSerialized = getSerializedScopeProperties(currentSection);
       currentSection = currentSection.parent!;
       if (!currentSerialized.has("_")) {
@@ -1004,24 +992,13 @@ export function writeHTMLResumeStatements(
         );
       }
     }
-  });
+  };
 
-  forEach(section.closures, (closure) => {
+  forEach(section.assignments, serializeOwnersUntilBindingSection);
+  forEach(section.referencedHoists, serializeOwnersUntilBindingSection);
+  forEach(section.referencedClosures, (closure) => {
     if (isStatefulReferences(closure)) {
-      let currentSection = section;
-      while (currentSection !== closure.section) {
-        const currentSerialized = getSerializedScopeProperties(currentSection);
-        currentSection = currentSection.parent!;
-        if (!currentSerialized.has("_")) {
-          currentSerialized.set(
-            "_",
-            callRuntime(
-              "ensureScopeWithId",
-              getScopeIdIdentifier(currentSection),
-            ),
-          );
-        }
-      }
+      serializeOwnersUntilBindingSection(closure);
       setForceResumeScope(closure.section);
       const isImmediateOwner = section.parent?.id === closure.section.id;
       // TODO: getClosureSignalBuilder is not the right check
@@ -1233,7 +1210,7 @@ export function writeHTMLResumeStatements(
   const resumeClosestBranch =
     !section.isBranch &&
     (section.hasAbortSignal ||
-      !!section.closures ||
+      !!section.referencedClosures ||
       !!find(section.bindings, (binding) => binding.type === BindingType.let));
 
   if (resumeClosestBranch) {

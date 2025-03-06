@@ -1,4 +1,4 @@
-// size: 252 (min) 173 (brotli)
+// size: 254 (min) 173 (brotli)
 const _count$falseChild_content_effect = _$.effect(
     "b1",
     (_scope, { _: { 1: count } }) =>
@@ -13,9 +13,9 @@ const _count$falseChild_content_effect = _$.effect(
       _$.data(_scope[1], count), _count$falseChild_content_effect(_scope);
     },
   );
-_$.registerContent("b0", "<button> </button>", " D ", (_scope) => {
-  _count$falseChild_content._(_scope);
-});
+_$.registerContent("b0", "<button> </button>", " D ", 0, 0, (_scope) =>
+  _count$falseChild_content._(_scope),
+);
 const _count = _$.state(1, (_scope, count) =>
   _count$falseChild_content(_scope),
 );

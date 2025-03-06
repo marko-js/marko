@@ -6,6 +6,7 @@ import {
 } from "../common/types";
 import { insertChildNodes } from "./dom";
 import { parseHTML } from "./parse-html";
+import { queueRender } from "./queue";
 import { register } from "./resume";
 import { createScope } from "./scope";
 import type { Signal } from "./signals";
@@ -13,9 +14,10 @@ import { walk } from "./walker";
 
 export type Renderer = {
   ___id: string;
-  ___setup: undefined | 0 | ((branch: BranchScope) => void);
+  ___setup: undefined | ((branch: BranchScope) => void);
   ___clone: (branch: BranchScope, ns: string) => void;
   ___args: Signal<unknown> | undefined;
+  ___closures: SetupFn | undefined;
   ___owner: Scope | undefined;
   ___accessor: Accessor | undefined;
 };
@@ -50,12 +52,39 @@ export function createBranch(
   return branch;
 }
 
+export function createAndSetupBranch(
+  $global: Scope["$global"],
+  renderer: Renderer,
+  parentScope: Scope | undefined,
+  parentNode: ParentNode,
+) {
+  return setupBranch(
+    renderer,
+    createBranch($global, renderer, parentScope, parentNode),
+  );
+}
+
+export function setupBranch(renderer: Renderer, branch: BranchScope) {
+  if (renderer.___setup || renderer.___closures) {
+    queueRender(
+      branch,
+      (branch) => {
+        renderer.___setup?.(branch as BranchScope);
+        renderer.___closures?.(branch);
+      },
+      -1,
+    );
+  }
+  return branch;
+}
+
 export function createContent(
   id: string,
   template: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
   getArgs?: (() => Signal<unknown>) | 0,
+  closures?: Signal<unknown> | 0,
   dynamicScopesAccessor?: Accessor,
 ) {
   // Walks are required to encode how to "exit" the content
@@ -65,7 +94,9 @@ export function createContent(
   // The regexp below replaces trailing values between charcodes `0-49`
   // 1 is charcode 49 (WalkCode.DynamicTagWithVar)
   walks = walks ? walks.replace(/[^\0-1]+$/, "") : "";
-  let args: Signal<unknown> | undefined;
+  setup ||= undefined;
+  closures ||= undefined;
+  let args: Renderer["___args"] | typeof getArgs | null = getArgs;
   const clone: Renderer["___clone"] = template
     ? (branch, ns) => {
         ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(
@@ -87,9 +118,12 @@ export function createContent(
       ___clone: clone,
       ___setup: setup,
       ___owner: owner,
+      ___closures: closures,
       ___accessor: dynamicScopesAccessor,
       get ___args() {
-        return (args ||= getArgs ? getArgs() : undefined);
+        return (
+          args === getArgs ? (args = getArgs ? getArgs() : null) : args
+        ) as Renderer["___args"];
       },
     };
   };
@@ -101,11 +135,20 @@ export function registerContent(
   walks?: string | 0,
   setup?: SetupFn | 0,
   getArgs?: (() => Signal<unknown>) | 0,
+  closures?: Signal<unknown> | 0,
   dynamicScopesAccessor?: Accessor,
 ) {
   return register(
     id,
-    createContent(id, template, walks, setup, getArgs, dynamicScopesAccessor),
+    createContent(
+      id,
+      template,
+      walks,
+      setup,
+      getArgs,
+      closures,
+      dynamicScopesAccessor,
+    ),
   );
 }
 
@@ -114,8 +157,9 @@ export function createRenderer(
   walks?: string | 0,
   setup?: SetupFn | 0,
   getArgs?: (() => Signal<unknown>) | 0,
+  closures?: Signal<unknown> | 0,
 ) {
-  return createContent("", template, walks, setup, getArgs)();
+  return createContent("", template, walks, setup, getArgs, closures)();
 }
 
 const cloneCache: Partial<
