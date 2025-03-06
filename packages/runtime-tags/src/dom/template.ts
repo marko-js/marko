@@ -25,7 +25,7 @@ export const createTemplate = (
     template,
     walks,
     setup,
-    inputSignal && (() => inputSignal),
+    inputSignal,
   )() as unknown as Template;
   renderer.mount = mount;
   (renderer as any)._ = renderer; // This is added exclusively for the compat layer and also to differentiate a Template from a Renderer
@@ -88,7 +88,7 @@ function mount(
       break;
   }
 
-  const args = this.___args;
+  const args = this.___params;
   const effects = prepareEffects(() => {
     branch = createBranch(
       $global as any as Scope["$global"],

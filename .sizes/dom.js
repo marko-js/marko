@@ -1,4 +1,4 @@
-// size: 18009 (min) 6856 (brotli)
+// size: 17968 (min) 6791 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -976,54 +976,52 @@ function createContent(
   template,
   walks,
   setup,
-  getArgs,
+  params,
   closures,
   dynamicScopesAccessor,
 ) {
   (walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
     (setup ||= void 0),
+    (params ||= void 0),
     (closures ||= void 0);
-  let args = getArgs,
-    clone = template
-      ? (branch, ns) => {
-          ((cloneCache[ns] ||= {})[template] ||= (function (html2, ns) {
-            let { firstChild: firstChild, lastChild: lastChild } = parseHTML(
-                html2,
-                ns,
-              ),
-              parent = document.createElementNS(ns, "t");
-            return (
-              insertChildNodes(parent, null, firstChild, lastChild),
-              firstChild === lastChild && firstChild.nodeType < 8
-                ? (branch, walks) => {
-                    walk(
-                      (branch.a = branch.b = firstChild.cloneNode(!0)),
-                      walks,
-                      branch,
-                    );
-                  }
-                : (branch, walks) => {
-                    let clone = parent.cloneNode(!0);
-                    walk(clone.firstChild, walks, branch),
-                      (branch.a = clone.firstChild),
-                      (branch.b = clone.lastChild);
-                  }
-            );
-          })(template, ns))(branch, walks);
-        }
-      : (branch) => {
-          walk((branch.a = branch.b = new Text()), walks, branch);
-        };
+  let clone = template
+    ? (branch, ns) => {
+        ((cloneCache[ns] ||= {})[template] ||= (function (html2, ns) {
+          let { firstChild: firstChild, lastChild: lastChild } = parseHTML(
+              html2,
+              ns,
+            ),
+            parent = document.createElementNS(ns, "t");
+          return (
+            insertChildNodes(parent, null, firstChild, lastChild),
+            firstChild === lastChild && firstChild.nodeType < 8
+              ? (branch, walks) => {
+                  walk(
+                    (branch.a = branch.b = firstChild.cloneNode(!0)),
+                    walks,
+                    branch,
+                  );
+                }
+              : (branch, walks) => {
+                  let clone = parent.cloneNode(!0);
+                  walk(clone.firstChild, walks, branch),
+                    (branch.a = clone.firstChild),
+                    (branch.b = clone.lastChild);
+                }
+          );
+        })(template, ns))(branch, walks);
+      }
+    : (branch) => {
+        walk((branch.a = branch.b = new Text()), walks, branch);
+      };
   return (owner) => ({
     d: id,
     o: clone,
-    p: setup,
     l: owner,
+    p: setup,
+    e: params,
     C: closures,
     m: dynamicScopesAccessor,
-    get e() {
-      return args === getArgs ? (args = getArgs ? getArgs() : null) : args;
-    },
   });
 }
 function registerContent(
@@ -1031,7 +1029,7 @@ function registerContent(
   template,
   walks,
   setup,
-  getArgs,
+  params,
   closures,
   dynamicScopesAccessor,
 ) {
@@ -1042,14 +1040,14 @@ function registerContent(
       template,
       walks,
       setup,
-      getArgs,
+      params,
       closures,
       dynamicScopesAccessor,
     ),
   );
 }
-function createRenderer(template, walks, setup, getArgs, closures) {
-  return createContent("", template, walks, setup, getArgs, closures)();
+function createRenderer(template, walks, setup, params, closures) {
+  return createContent("", template, walks, setup, params, closures)();
 }
 var cloneCache = {};
 var isScheduled,
@@ -1587,8 +1585,8 @@ var classIdToBranch = new Map(),
               ]?.s[value2[1]],
           )
         : value2,
-    createRenderer(args, clone) {
-      let renderer = createRenderer(0, 0, 0, () => args);
+    createRenderer(params, clone) {
+      let renderer = createRenderer(0, 0, 0, params);
       return (
         (renderer.o = (branch) => {
           let cloned = clone();
@@ -1630,13 +1628,7 @@ var classIdToBranch = new Map(),
     },
   },
   createTemplate = (id, template, walks, setup, inputSignal) => {
-    let renderer = createContent(
-      id,
-      template,
-      walks,
-      setup,
-      inputSignal && (() => inputSignal),
-    )();
+    let renderer = createContent(id, template, walks, setup, inputSignal)();
     return (
       (renderer.mount = mount), (renderer._ = renderer), register(id, renderer)
     );

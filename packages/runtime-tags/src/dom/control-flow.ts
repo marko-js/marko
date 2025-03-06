@@ -107,9 +107,9 @@ export let dynamicTag = function dynamicTag(
           MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0,
           (inputIsArgs ? args[0] : args) || {},
         );
-      } else if (normalizedRenderer.___args) {
+      } else if (normalizedRenderer.___params) {
         if (inputIsArgs) {
-          normalizedRenderer.___args(
+          normalizedRenderer.___params(
             scope[childScopeAccessor],
             (normalizedRenderer as any)._ ? args[0] : args,
           );
@@ -120,7 +120,7 @@ export let dynamicTag = function dynamicTag(
                 content: getContent(scope),
               }
             : args || {};
-          normalizedRenderer.___args(
+          normalizedRenderer.___params(
             scope[childScopeAccessor],
             (normalizedRenderer as any)._
               ? inputWithContent
@@ -214,7 +214,7 @@ function loop<T extends unknown[] = unknown[]>(
   renderer: Renderer,
   forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
 ) {
-  const params = renderer.___args;
+  const params = renderer.___params;
   return (scope: Scope, value: T) => {
     const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
     const oldMap = scope[nodeAccessor + AccessorChar.LoopScopeMap] as

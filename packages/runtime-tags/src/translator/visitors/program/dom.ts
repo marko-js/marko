@@ -52,9 +52,6 @@ export default {
           const tagParamsSignal =
             childSection.params && initValue(childSection.params);
           const { walks, writes, setup } = writer.getSectionMeta(childSection);
-          const params =
-            tagParamsSignal?.identifier &&
-            t.arrowFunctionExpression([], tagParamsSignal.identifier);
           const identifier = t.identifier(childSection.name);
           const closures = childSection.referencedClosures
             ? t.arrowFunctionExpression(
@@ -81,7 +78,7 @@ export default {
                   writes,
                   walks,
                   setup,
-                  params,
+                  tagParamsSignal?.identifier,
                   closures,
                 ]),
               )
@@ -94,7 +91,7 @@ export default {
                   writes,
                   walks,
                   setup,
-                  params,
+                  tagParamsSignal?.identifier,
                   closures,
                   childSection.hoisted || childSection.isHoistThrough
                     ? getSectionScopeAccessorLiteral(childSection)

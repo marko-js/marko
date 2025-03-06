@@ -67,10 +67,10 @@ export const compat = {
     return value;
   },
   createRenderer(
-    args: NonNullable<Renderer["___args"]>,
+    params: NonNullable<Renderer["___params"]>,
     clone: () => { startNode: ChildNode; endNode: ChildNode },
   ) {
-    const renderer = createRenderer(0, 0, 0, () => args);
+    const renderer = createRenderer(0, 0, 0, params);
     renderer.___clone = (branch) => {
       const cloned = clone();
       branch.___startNode = cloned.startNode;
@@ -111,7 +111,7 @@ export const compat = {
         existing = true;
       }
 
-      renderer.___args?.(branch, (renderer as any)._ ? args[0] : args);
+      renderer.___params?.(branch, (renderer as any)._ ? args[0] : args);
     });
 
     if (!existing) {
