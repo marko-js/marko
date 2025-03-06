@@ -55,7 +55,7 @@ export function createContent(
   template: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
-  getArgs?: (() => Signal<unknown>) | 0,
+  args?: Signal<unknown> | 0,
   dynamicScopesAccessor?: Accessor,
 ) {
   // Walks are required to encode how to "exit" the content
@@ -65,7 +65,7 @@ export function createContent(
   // The regexp below replaces trailing values between charcodes `0-49`
   // 1 is charcode 49 (WalkCode.DynamicTagWithVar)
   walks = walks ? walks.replace(/[^\0-1]+$/, "") : "";
-  let args: Signal<unknown> | undefined;
+  args ||= undefined;
   const clone: Renderer["___clone"] = template
     ? (branch, ns) => {
         ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(
@@ -84,13 +84,11 @@ export function createContent(
   return (owner?: Scope): Renderer => {
     return {
       ___id: id,
+      ___args: args,
       ___clone: clone,
       ___setup: setup,
       ___owner: owner,
       ___accessor: dynamicScopesAccessor,
-      get ___args() {
-        return (args ||= getArgs ? getArgs() : undefined);
-      },
     };
   };
 }
@@ -100,12 +98,12 @@ export function registerContent(
   template: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
-  getArgs?: (() => Signal<unknown>) | 0,
+  args?: Signal<unknown> | 0,
   dynamicScopesAccessor?: Accessor,
 ) {
   return register(
     id,
-    createContent(id, template, walks, setup, getArgs, dynamicScopesAccessor),
+    createContent(id, template, walks, setup, args, dynamicScopesAccessor),
   );
 }
 
@@ -113,9 +111,9 @@ export function createRenderer(
   template: string | 0,
   walks?: string | 0,
   setup?: SetupFn | 0,
-  getArgs?: (() => Signal<unknown>) | 0,
+  args?: Signal<unknown> | 0,
 ) {
-  return createContent("", template, walks, setup, getArgs)();
+  return createContent("", template, walks, setup, args)();
 }
 
 const cloneCache: Partial<

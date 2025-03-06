@@ -1,4 +1,4 @@
-// size: 469 (min) 247 (brotli)
+// size: 463 (min) 235 (brotli)
 const _description$for_content = _$.value(5, (_scope, description) =>
     _$.data(_scope[1], description),
   ),
@@ -14,7 +14,7 @@ const _description$for_content = _$.value(5, (_scope, description) =>
     "<div><!>: <!></div>",
     "D%c%",
     0,
-    () => _params_2$for_content,
+    _params_2$for_content,
   ),
   _for = _$.loopOf(0, _for_content),
   _items_effect = _$.effect("a0", (_scope, { 3: items }) => {

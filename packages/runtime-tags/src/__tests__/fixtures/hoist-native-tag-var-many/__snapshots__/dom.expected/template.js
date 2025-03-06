@@ -17,14 +17,14 @@ const _params_3$for_content = /* @__PURE__ */_$.value("_params_3", (_scope, _par
 const _setup$for_content = _scope => {
   _i$for_content._(_scope);
 };
-const _for_content4 = /* @__PURE__ */_$.createRenderer("<li></li>", /* get */" ", _setup$for_content, () => _params_3$for_content);
+const _for_content4 = /* @__PURE__ */_$.createRenderer("<li></li>", /* get */" ", _setup$for_content, _params_3$for_content);
 const _for$for_content = /* @__PURE__ */_$.loopTo("#ul/0", _for_content4);
 const _i$for_content2 = /* @__PURE__ */_$.value("i");
 const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _i$for_content2(_scope, _params_2[0]));
 const _setup$for_content2 = _scope => {
   _for$for_content(_scope, [3, 0, 1]);
 };
-const _for_content3 = /* @__PURE__ */_$.createRenderer("<ul></ul>", /* get */" ", _setup$for_content2, () => _params_2$for_content);
+const _for_content3 = /* @__PURE__ */_$.createRenderer("<ul></ul>", /* get */" ", _setup$for_content2, _params_2$for_content);
 const _get_hoisted_el2 = _$.hoist("#div/0>", "#text/1(");
 const _for_content2 = /* @__PURE__ */_$.createRenderer("<div></div>", /* get */" ");
 const _get_hoisted_el3 = _$.hoist("#div/0>", "#text/0(");

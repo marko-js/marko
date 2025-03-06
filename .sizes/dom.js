@@ -1,4 +1,4 @@
-// size: 17945 (min) 6806 (brotli)
+// size: 17910 (min) 6772 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -957,50 +957,47 @@ function createContent(
   template,
   walks,
   setup,
-  getArgs,
+  args,
   dynamicScopesAccessor,
 ) {
-  walks = walks ? walks.replace(/[^\0-1]+$/, "") : "";
-  let args,
-    clone = template
-      ? (branch, ns) => {
-          ((cloneCache[ns] ||= {})[template] ||= (function (html2, ns) {
-            let { firstChild: firstChild, lastChild: lastChild } = parseHTML(
-                html2,
-                ns,
-              ),
-              parent = document.createElementNS(ns, "t");
-            return (
-              insertChildNodes(parent, null, firstChild, lastChild),
-              firstChild === lastChild && firstChild.nodeType < 8
-                ? (branch, walks) => {
-                    walk(
-                      (branch.a = branch.b = firstChild.cloneNode(!0)),
-                      walks,
-                      branch,
-                    );
-                  }
-                : (branch, walks) => {
-                    let clone = parent.cloneNode(!0);
-                    walk(clone.firstChild, walks, branch),
-                      (branch.a = clone.firstChild),
-                      (branch.b = clone.lastChild);
-                  }
-            );
-          })(template, ns))(branch, walks);
-        }
-      : (branch) => {
-          walk((branch.a = branch.b = new Text()), walks, branch);
-        };
+  (walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""), (args ||= void 0);
+  let clone = template
+    ? (branch, ns) => {
+        ((cloneCache[ns] ||= {})[template] ||= (function (html2, ns) {
+          let { firstChild: firstChild, lastChild: lastChild } = parseHTML(
+              html2,
+              ns,
+            ),
+            parent = document.createElementNS(ns, "t");
+          return (
+            insertChildNodes(parent, null, firstChild, lastChild),
+            firstChild === lastChild && firstChild.nodeType < 8
+              ? (branch, walks) => {
+                  walk(
+                    (branch.a = branch.b = firstChild.cloneNode(!0)),
+                    walks,
+                    branch,
+                  );
+                }
+              : (branch, walks) => {
+                  let clone = parent.cloneNode(!0);
+                  walk(clone.firstChild, walks, branch),
+                    (branch.a = clone.firstChild),
+                    (branch.b = clone.lastChild);
+                }
+          );
+        })(template, ns))(branch, walks);
+      }
+    : (branch) => {
+        walk((branch.a = branch.b = new Text()), walks, branch);
+      };
   return (owner) => ({
     e: id,
+    f: args,
     p: clone,
     d: setup,
     m: owner,
     n: dynamicScopesAccessor,
-    get f() {
-      return (args ||= getArgs ? getArgs() : void 0);
-    },
   });
 }
 function registerContent(
@@ -1008,16 +1005,16 @@ function registerContent(
   template,
   walks,
   setup,
-  getArgs,
+  args,
   dynamicScopesAccessor,
 ) {
   return register(
     id,
-    createContent(id, template, walks, setup, getArgs, dynamicScopesAccessor),
+    createContent(id, template, walks, setup, args, dynamicScopesAccessor),
   );
 }
-function createRenderer(template, walks, setup, getArgs) {
-  return createContent("", template, walks, setup, getArgs)();
+function createRenderer(template, walks, setup, args) {
+  return createContent("", template, walks, setup, args)();
 }
 var cloneCache = {};
 var isScheduled,
@@ -1560,7 +1557,7 @@ var classIdToBranch = new Map(),
           )
         : value2,
     createRenderer(args, clone) {
-      let renderer = createRenderer(0, 0, 0, () => args);
+      let renderer = createRenderer(0, 0, 0, args);
       return (
         (renderer.p = (branch) => {
           let cloned = clone();
@@ -1598,13 +1595,7 @@ var classIdToBranch = new Map(),
     },
   },
   createTemplate = (id, template, walks, setup, inputSignal) => {
-    let renderer = createContent(
-      id,
-      template,
-      walks,
-      setup,
-      inputSignal && (() => inputSignal),
-    )();
+    let renderer = createContent(id, template, walks, setup, inputSignal)();
     return (
       (renderer.mount = mount), (renderer._ = renderer), register(id, renderer)
     );

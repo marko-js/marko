@@ -25,7 +25,7 @@ export const createTemplate = (
     template,
     walks,
     setup,
-    inputSignal && (() => inputSignal),
+    inputSignal,
   )() as unknown as Template;
   renderer.mount = mount;
   (renderer as any)._ = renderer; // This is added exclusively for the compat layer and also to differentiate a Template from a Renderer

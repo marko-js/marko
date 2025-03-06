@@ -1,4 +1,4 @@
-// size: 600 (min) 315 (brotli)
+// size: 588 (min) 309 (brotli)
 const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
   _expr_outer_inner$for_content = _$.intersection(3, (_scope) => {
     const {
@@ -23,7 +23,7 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
     "<div> </div>",
     "/D l&",
     _setup$for_content,
-    () => _params_3$for_content,
+    _params_3$for_content,
   ),
   _for$for_content = _$.loopOf(0, _for_content2),
   _outer$for_content2 = _$.value(2, (_scope, outer) =>
@@ -42,7 +42,7 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
     "<!><!><!>",
     "D%D",
     _setup$for_content2,
-    () => _params_2$for_content,
+    _params_2$for_content,
   ),
   _for = _$.loopOf(1, _for_content),
   _items_effect = _$.effect("b0", (_scope, { 2: items }) =>

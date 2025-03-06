@@ -9,13 +9,13 @@ const _params_3$for_content = /* @__PURE__ */_$.value("_params_3");
 const _setup$for_content3 = _scope => {
   _dynamicTag$for_content3(_scope, 1 && Child);
 };
-const _for_content4 = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* dynamicTagWithVar */"D1D", _setup$for_content3, () => _params_3$for_content);
+const _for_content4 = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* dynamicTagWithVar */"D1D", _setup$for_content3, _params_3$for_content);
 const _for$for_content = /* @__PURE__ */_$.loopTo("#ul/0", _for_content4);
 const _params_2$for_content = /* @__PURE__ */_$.value("_params_2");
 const _setup$for_content4 = _scope => {
   _for$for_content(_scope, [3, 0, 1]);
 };
-const _for_content3 = /* @__PURE__ */_$.createRenderer("<ul></ul>", /* get */" ", _setup$for_content4, () => _params_2$for_content);
+const _for_content3 = /* @__PURE__ */_$.createRenderer("<ul></ul>", /* get */" ", _setup$for_content4, _params_2$for_content);
 const _get_hoisted_setHtml2 = _$.hoist("setHtml2", "#text/1(");
 const _dynamicTag$for_content2 = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => _setHtml2$for_content);
 const _setHtml2$for_content = _$.registerBoundSignal("__tests__/template.marko_2_setHtml2/var", /* @__PURE__ */_$.value("setHtml2"));

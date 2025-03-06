@@ -1,4 +1,4 @@
-// size: 1031 (min) 468 (brotli)
+// size: 1019 (min) 465 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 3: name, 4: write }) =>
@@ -41,7 +41,7 @@ const _expr_name_write_effect = _$.effect(
     "<div><div> </div></div>",
     "D/D l&",
     _setup$for_content2,
-    () => _params_3$for_content,
+    _params_3$for_content,
   ),
   _for$for_content = _$.loopOf(1, _for_content2),
   _write$for_content = _$.loopClosure(4, 2, (_scope, write) =>
@@ -63,7 +63,7 @@ const _expr_name_write_effect = _$.effect(
     "<div><div> </div><!></div>",
     "D/D l&%",
     _setup$for_content,
-    () => _params_2$for_content,
+    _params_2$for_content,
   ),
   _for = _$.loopOf(2, _for_content),
   _items_effect = _$.effect("b1", (_scope, { 3: items }) =>

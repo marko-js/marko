@@ -60,7 +60,7 @@ const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _par
 const _setup$for_content = _scope => {
   _editing$for_content(_scope, false);
 };
-const _for_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", _setup$for_content, () => _params_2$for_content);
+const _for_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", _setup$for_content, _params_2$for_content);
 const _for = /* @__PURE__ */_$.loopOf("#text/0", _for_content);
 const _counts = /* @__PURE__ */_$.state("counts/1", (_scope, counts) => {
   _for(_scope, [counts]);

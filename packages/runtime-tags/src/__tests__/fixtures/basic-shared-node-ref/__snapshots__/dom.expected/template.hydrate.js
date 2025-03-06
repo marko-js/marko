@@ -1,4 +1,4 @@
-// size: 419 (min) 229 (brotli)
+// size: 413 (min) 224 (brotli)
 const _x$for_content = _$.value(2, (_scope, x) => _$.data(_scope[0], x)),
   _params_2$for_content = _$.value(1, (_scope, _params_2) =>
     _x$for_content(_scope, _params_2[0]),
@@ -7,7 +7,7 @@ const _x$for_content = _$.value(2, (_scope, x) => _$.data(_scope[0], x)),
     "<li> </li>",
     "D ",
     0,
-    () => _params_2$for_content,
+    _params_2$for_content,
   ),
   _for = _$.loopOf(0, _for_content),
   _list_effect = _$.effect("a0", (_scope, { 4: list }) =>

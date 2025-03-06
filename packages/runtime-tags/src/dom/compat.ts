@@ -66,7 +66,7 @@ export const compat = {
     args: NonNullable<Renderer["___args"]>,
     clone: () => { startNode: ChildNode; endNode: ChildNode },
   ) {
-    const renderer = createRenderer(0, 0, 0, () => args);
+    const renderer = createRenderer(0, 0, 0, args);
     renderer.___clone = (branch) => {
       const cloned = clone();
       branch.___startNode = cloned.startNode;

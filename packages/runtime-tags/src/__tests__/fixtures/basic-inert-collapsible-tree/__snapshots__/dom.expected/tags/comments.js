@@ -66,7 +66,7 @@ const _setup$for_content = _scope => {
   _input_path$for_content._(_scope);
   _open$for_content(_scope, true);
 };
-const _for_content = /* @__PURE__ */_$.createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", _setup$for_content, () => _params_2$for_content);
+const _for_content = /* @__PURE__ */_$.createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", _setup$for_content, _params_2$for_content);
 const _for = /* @__PURE__ */_$.loopOf("#ul/0", _for_content);
 export const _input_path_ = /* @__PURE__ */_$.value("input_path", (_scope, input_path) => _input_path$for_content(_scope));
 export const _input_comments_ = /* @__PURE__ */_$.value("input_comments", (_scope, input_comments) => _for(_scope, [input_comments]));
