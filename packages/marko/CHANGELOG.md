@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.28.10](https://github.com/marko-js/marko/compare/v4.28.9...v4.28.10) (2025-03-07)
+
+
+### Bug Fixes
+
+* conditional nested attr tags ([6d0764c](https://github.com/marko-js/marko/commit/6d0764ccbe330602d3c03bb7219fa5cb0770bdd0))
+
 ### [4.28.9](https://github.com/marko-js/marko/compare/v4.28.8...v4.28.9) (2025-02-21)
 
 
