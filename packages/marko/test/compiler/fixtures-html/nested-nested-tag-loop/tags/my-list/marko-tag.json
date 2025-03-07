@@ -1,0 +1,8 @@
+{
+  "renderer": "./renderer",
+  "@body <body>": {
+    "@item <item>[]": {
+      "@content": "string"
+    }
+  }
+}
