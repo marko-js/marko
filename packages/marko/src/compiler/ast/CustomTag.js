@@ -97,6 +97,10 @@ function checkIfNestedTagCanBeAddedDirectlyToInput(nestedTag, parentCustomTag) {
   if (!nestedTag._isDirectlyNestedTag) {
     return false;
   }
+  
+  if (nestedTag._nestedTagVar) {
+    return false;
+  }
 
   let isRepeated = nestedTag.tagDef.isRepeated;
   if (!isRepeated) {

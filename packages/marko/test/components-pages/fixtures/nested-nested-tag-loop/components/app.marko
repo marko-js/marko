@@ -1,0 +1,11 @@
+class {}
+
+$ const items = ["a", "b", "c"]
+
+<my-list>
+    <@body>
+        <for|content| of=items>
+            <@item content=content/>
+        </for>
+    </@body>
+</my-list>

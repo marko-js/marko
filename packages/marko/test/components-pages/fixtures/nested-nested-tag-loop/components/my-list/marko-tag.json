@@ -1,0 +1,7 @@
+{
+  "@body <body>": {
+    "@item <item>[]": {
+      "@content": "string"
+    }
+  }
+}
