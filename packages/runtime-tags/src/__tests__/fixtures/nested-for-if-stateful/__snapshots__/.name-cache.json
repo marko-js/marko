@@ -26,7 +26,8 @@
       "$_if_content": "D",
       "$_if$for_content": "R",
       "$_editing$for_content": "y",
-      "$_setup$if_content": "I"
+      "$_setup$if_content": "I",
+      "$_counts_closure": "O"
     }
   }
 }

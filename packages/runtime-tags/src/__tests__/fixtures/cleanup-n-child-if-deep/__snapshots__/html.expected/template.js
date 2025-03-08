@@ -2,6 +2,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
+  const _showInner_closures = new Set();
   let _ifScopeId3, _ifBranch3;
   const showOuter = true;
   const showMiddle = true;
@@ -42,12 +43,12 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
             }
           }, _scope2_id, "#text/1");
           _$.write("</div>");
-          _$.writeEffect(_scope2_id, "__tests__/template.marko_2_showInner/subscriber");
-          _$.writeScope(_scope2_id, {
+          _$.writeSubscribe(_showInner_closures, _$.writeScope(_scope2_id, {
             "#text/1(": _ifBranch,
             "#text/1!": _$.getScopeById(_ifScopeId),
-            _: _$.ensureScopeWithId(_scope1_id)
-          }, "__tests__/template.marko", "14:6");
+            _: _$.ensureScopeWithId(_scope1_id),
+            "showInner(": 0
+          }, "__tests__/template.marko", "14:6"));
           _ifBranch2 = 0;
           _ifScopeId2 = _scope2_id;
         }
@@ -70,6 +71,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     showMiddle,
     showInner,
     write,
+    "showInner!": _showInner_closures,
     "#text/4(": _ifBranch3,
     "#text/4!": _$.getScopeById(_ifScopeId3)
   }, "__tests__/template.marko", 0, {

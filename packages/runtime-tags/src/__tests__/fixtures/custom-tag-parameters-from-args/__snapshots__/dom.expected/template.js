@@ -8,7 +8,7 @@ const _params_2$customTag_content = /* @__PURE__ */_$.value("_params_2", (_scope
   _count$customTag_content(_scope, _params_2[0]);
   _count2$customTag_content(_scope, _params_2[1]);
 });
-const _customTag_content = _$.registerContent("__tests__/template.marko_1_renderer", "<div>Counts: <!>,<!></div>", /* next(1), over(1), replace, over(2), replace */"Db%c%", 0, () => _params_2$customTag_content);
+const _customTag_content = _$.registerContent("__tests__/template.marko_1_renderer", "<div>Counts: <!>,<!></div>", /* next(1), over(1), replace, over(2), replace */"Db%c%", 0, _params_2$customTag_content);
 export function _setup_(_scope) {
   _customTag(_scope["#childScope/0"]);
   _customTag_input_content(_scope["#childScope/0"], _customTag_content(_scope));

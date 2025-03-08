@@ -9,7 +9,8 @@
       "$_clickCount$myButtonBody": "s",
       "$_clickCount": "o",
       "$_clickCount$myButton_content": "a",
-      "$_setup$myButton_content": "m"
+      "$_setup$myButton_content": "m",
+      "$_clickCount_closure": "c"
     }
   }
 }

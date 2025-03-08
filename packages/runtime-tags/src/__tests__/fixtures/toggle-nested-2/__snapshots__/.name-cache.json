@@ -23,7 +23,8 @@
       "$_inner$if_content": "v",
       "$_if_content": "S",
       "$_setup$if_content2": "C",
-      "$_setup$if_content": "D"
+      "$_setup$if_content": "D",
+      "$_count_closure": "R"
     }
   }
 }

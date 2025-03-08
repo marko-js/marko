@@ -1,4 +1,4 @@
-// size: 661 (min) 321 (brotli)
+// size: 655 (min) 318 (brotli)
 const _opt$for_content = _$.value(3, (_scope, opt) => {
     _$.attr(_scope[0], "value", opt), _$.data(_scope[1], opt);
   }),
@@ -9,7 +9,7 @@ const _opt$for_content = _$.value(3, (_scope, opt) => {
     "<option> </option>",
     " D ",
     0,
-    () => _params_2$for_content,
+    _params_2$for_content,
   ),
   _for = _$.loopOf(0, _for_content),
   _value = _$.state(6, (_scope, value) => {

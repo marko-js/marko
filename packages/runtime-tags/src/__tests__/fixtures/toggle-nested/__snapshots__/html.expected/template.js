@@ -1,6 +1,8 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
+  const _value1__closures = new Set();
+  const _value2__closures = new Set();
   let _ifScopeId3, _ifBranch3;
   const {
     show,
@@ -17,10 +19,10 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
         if (value1) {
           const _scope2_id = _$.nextScopeId();
           _$.write(`<span>${_$.escapeXML(value1)}${_$.markResumeNode(_scope2_id, "#text/0")}</span>`);
-          _$.writeEffect(_scope2_id, "__tests__/template.marko_2_value1/subscriber");
-          _$.writeScope(_scope2_id, {
-            _: _$.ensureScopeWithId(_scope1_id)
-          }, "__tests__/template.marko", "4:6");
+          _$.writeSubscribe(_value1__closures, _$.writeScope(_scope2_id, {
+            _: _$.ensureScopeWithId(_scope1_id),
+            "value1(": 0
+          }, "__tests__/template.marko", "4:6"));
           _ifBranch = 0;
           _ifScopeId = _scope2_id;
         }
@@ -29,10 +31,10 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
         if (value2) {
           const _scope3_id = _$.nextScopeId();
           _$.write(`<span>${_$.escapeXML(value2)}${_$.markResumeNode(_scope3_id, "#text/0")}</span>`);
-          _$.writeEffect(_scope3_id, "__tests__/template.marko_3_value2/subscriber");
-          _$.writeScope(_scope3_id, {
-            _: _$.ensureScopeWithId(_scope1_id)
-          }, "__tests__/template.marko", "5:6");
+          _$.writeSubscribe(_value2__closures, _$.writeScope(_scope3_id, {
+            _: _$.ensureScopeWithId(_scope1_id),
+            "value2(": 0
+          }, "__tests__/template.marko", "5:6"));
           _ifBranch2 = 0;
           _ifScopeId2 = _scope3_id;
         }
@@ -52,6 +54,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeScope(_scope0_id, {
     value1,
     value2,
+    "value1!": _value1__closures,
+    "value2!": _value2__closures,
     "#div/0(": _ifBranch3,
     "#div/0!": _$.getScopeById(_ifScopeId3)
   }, "__tests__/template.marko", 0, {

@@ -10,7 +10,8 @@
       "$_c$customTag_content": "s",
       "$_b$customTag_content": "m",
       "$_setup$customTag_content": "o",
-      "$_c$if_content": "n"
+      "$_c$if_content": "n",
+      "$_c_closure": "d"
     }
   }
 }

@@ -1,4 +1,4 @@
-// size: 1359 (min) 511 (brotli)
+// size: 1374 (min) 517 (brotli)
 const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _expr_name_write_effect = _$.effect("a0", (_scope, { 5: name, 6: write }) => {
     write(`${name} mounted`),
@@ -16,7 +16,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
       _$.data(_scope[2], name),
       _expr_name_write(_scope);
   }),
-  _write$if_content3 = _$.dynamicClosure(
+  _write$if_content3 = _$.dynamicClosureRead(
     8,
     (_scope, write) => _write_(_scope[0], write),
     (_scope) => _scope._._._,
@@ -29,16 +29,15 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     "/D%lD%lD%l&",
     _setup$if_content3,
     0,
-    (_scope) => _write$if_content3._(_scope),
+    (_scope) => _write$if_content3(_scope),
   ),
   _if$if_content = _$.conditional(1, _if_content3),
-  _write$if_content2 = _$.dynamicClosure(
+  _write$if_content2 = _$.dynamicClosureRead(
     8,
     (_scope, write) => _write_(_scope[0], write),
     (_scope) => _scope._._,
   ),
-  _showInner$if_content = _$.registerDynamicClosure(
-    "b1",
+  _showInner$if_content = _$.dynamicClosureRead(
     7,
     (_scope, showInner) => _if$if_content(_scope, showInner ? 0 : 1),
     (_scope) => _scope._._,
@@ -52,7 +51,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     _setup$if_content2,
     0,
     (_scope) => {
-      _showInner$if_content._(_scope), _write$if_content2._(_scope);
+      _showInner$if_content(_scope), _write$if_content2(_scope);
     },
   ),
   _if$if_content2 = _$.conditional(1, _if_content2),
@@ -78,15 +77,16 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     },
   ),
   _if = _$.conditional(4, _if_content),
-  _showInner_effect = _$.effect("b2", (_scope, { 7: showInner }) =>
+  _showInner_closure = _$.dynamicClosure(_showInner$if_content),
+  _showInner_effect = _$.effect("b1", (_scope, { 7: showInner }) =>
     _$.on(_scope[2], "click", function () {
       _showInner(_scope, !showInner);
     }),
   ),
   _showInner = _$.state(7, (_scope, showInner) => {
-    _showInner$if_content(_scope), _showInner_effect(_scope);
+    _showInner_closure(_scope), _showInner_effect(_scope);
   }),
-  _showMiddle_effect = _$.effect("b3", (_scope, { 6: showMiddle }) =>
+  _showMiddle_effect = _$.effect("b2", (_scope, { 6: showMiddle }) =>
     _$.on(_scope[1], "click", function () {
       _showMiddle(_scope, !showMiddle);
     }),
@@ -94,7 +94,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _showMiddle = _$.state(6, (_scope, showMiddle) => {
     _showMiddle$if_content(_scope), _showMiddle_effect(_scope);
   }),
-  _showOuter_effect = _$.effect("b4", (_scope, { 5: showOuter }) =>
+  _showOuter_effect = _$.effect("b3", (_scope, { 5: showOuter }) =>
     _$.on(_scope[0], "click", function () {
       _showOuter(_scope, !showOuter);
     }),

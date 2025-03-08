@@ -1,16 +1,16 @@
 # Write
 ```html
-  <div>Got: a <!>0<!--M_*2 #text/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:_.a={count:0},2:{_:_.a}}),2,"__tests__/template.marko_1_count/subscriber"];M._.w()</script>
+  <div>Got: a <!>0<!--M_*2 #text/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:_.a={count:0,"count!":_.c=new Set},2:_.d={_:_.a,"count(":0}},(_.c).add(_.d),_.b)]</script>
 ```
 
 # Write
 ```html
-  <script>M._.r.push(_=>(_.c={3:{_:_.a}}))</script>
+  <script>M._.r.push(_=>(_.e={3:_.f={_:_.a,"count(":2}},(_.c).add(_.f),_.e))</script>
 ```
 
 # Write
 ```html
-  Got: b <!>0<!--M_*4 #text/1-->Got: c <!>0<!--M_*3 #text/1--><button>Inc</button><!--M_*1 #button/0--></div><script>M._.r.push(_=>(_.d={4:{_:_.a}}),4,"__tests__/template.marko_2_count/subscriber",3,"__tests__/template.marko_3_count/subscriber",1,"__tests__/template.marko_0_count",0);M._.w()</script>
+  Got: b <!>0<!--M_*4 #text/1-->Got: c <!>0<!--M_*3 #text/1--><button>Inc</button><!--M_*1 #button/0--></div><script>M._.r.push(_=>(_.g={4:_.h={_:_.a,"count(":1}},(_.c).add(_.h),_.g),1,"__tests__/template.marko_0_count",0);M._.w()</script>
 ```
 
 # Render End
@@ -24,10 +24,10 @@
       0
       <!--M_*2 #text/1-->
       <script>
-        WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={count:0},2:{_:_.a}}),2,"__tests__/template.marko_1_count/subscriber"];M._.w()
+        WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:_.a={count:0,"count!":_.c=new Set},2:_.d={_:_.a,"count(":0}},(_.c).add(_.d),_.b)]
       </script>
       <script>
-        M._.r.push(_=&gt;(_.c={3:{_:_.a}}))
+        M._.r.push(_=&gt;(_.e={3:_.f={_:_.a,"count(":2}},(_.c).add(_.f),_.e))
       </script>
       Got: b 
       <!---->
@@ -43,7 +43,7 @@
       <!--M_*1 #button/0-->
     </div>
     <script>
-      M._.r.push(_=&gt;(_.d={4:{_:_.a}}),4,"__tests__/template.marko_2_count/subscriber",3,"__tests__/template.marko_3_count/subscriber",1,"__tests__/template.marko_0_count",0);M._.w()
+      M._.r.push(_=&gt;(_.g={4:_.h={_:_.a,"count(":1}},(_.c).add(_.h),_.g),1,"__tests__/template.marko_0_count",0);M._.w()
     </script>
   </body>
 </html>

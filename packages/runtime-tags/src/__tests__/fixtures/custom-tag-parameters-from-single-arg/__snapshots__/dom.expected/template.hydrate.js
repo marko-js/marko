@@ -1,4 +1,4 @@
-// size: 341 (min) 227 (brotli)
+// size: 335 (min) 227 (brotli)
 const _expr_input_content_x = _$.intersection(7, (_scope) => {
     const { 5: input_content, 6: x } = _scope;
     _dynamicTag(_scope, input_content, () => x);
@@ -23,6 +23,6 @@ _$.registerContent(
   "<div>Count: <!></div>",
   "Db%",
   0,
-  () => _params_2$customTag_content,
+  _params_2$customTag_content,
 ),
   init();

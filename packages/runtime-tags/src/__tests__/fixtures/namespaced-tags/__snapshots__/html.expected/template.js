@@ -1,6 +1,7 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
+  const _input_value__closures = new Set();
   const Parent = "div";
   const Child = "a";
   const el = _$.nodeRef();
@@ -25,10 +26,10 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.dynamicTagInput(_scope0_id, "#text/5", Parent, {}, _$.registerContent("__tests__/template.marko_1_renderer", () => {
     const _scope1_id = _$.nextScopeId();
     _$.write(`${_$.toString(input.value)}${_$.markResumeNode(_scope1_id, "#text/0")}`);
-    _$.writeEffect(_scope1_id, "__tests__/template.marko_1_input_value/subscriber");
-    _$.writeScope(_scope1_id, {
-      _: _$.ensureScopeWithId(_scope0_id)
-    }, "__tests__/template.marko", "12:3");
+    _$.writeSubscribe(_input_value__closures, _$.writeScope(_scope1_id, {
+      _: _$.ensureScopeWithId(_scope0_id),
+      "input_value(": 0
+    }, "__tests__/template.marko", "12:3"));
     _$.resumeClosestBranch(_scope1_id);
   }, _scope0_id));
   _$.write(`<button class=toggle-parent>Toggle Parent</button>${_$.markResumeNode(_scope0_id, "#button/6")}<button class=toggle-child>Toggle Child</button>${_$.markResumeNode(_scope0_id, "#button/7")}</div>${_$.markResumeNode(_scope0_id, "#div/0")}`);
@@ -43,6 +44,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     "#text/2(": _$.dynamicTagId(Child),
     "#text/4!": _$.writeExistingScope(_dynamicScope2),
     "#text/4(": _$.dynamicTagId(Child),
+    "input_value!": _input_value__closures,
     "#text/5!": _$.writeExistingScope(_dynamicScope3),
     "#text/5(": _$.dynamicTagId(Parent)
   }, "__tests__/template.marko", 0, {

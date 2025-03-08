@@ -7,7 +7,8 @@
       "$_count$myTag_content_effect": "e",
       "$_count$myTag_content": "n",
       "$_setup$myTag_content": "i",
-      "$_value2": "o"
+      "$_value2": "o",
+      "$_count_closure": "m"
     }
   }
 }

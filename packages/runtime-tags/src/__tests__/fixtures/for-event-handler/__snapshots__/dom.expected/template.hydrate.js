@@ -1,4 +1,4 @@
-// size: 319 (min) 207 (brotli)
+// size: 313 (min) 207 (brotli)
 const _i$for_content = _$.value(3, (_scope, i) => _$.data(_scope[1], i)),
   _params_2$for_content = _$.value(2, (_scope, _params_2) =>
     _i$for_content(_scope, _params_2[0]),
@@ -15,7 +15,7 @@ const _i$for_content = _$.value(3, (_scope, i) => _$.data(_scope[1], i)),
     "<button> </button>",
     " D ",
     0,
-    () => _params_2$for_content,
+    _params_2$for_content,
     (_scope) => _num$for_content._(_scope),
   ),
   _for = _$.loopTo(0, _for_content),
