@@ -16,7 +16,6 @@ import {
 } from "../util/is-only-child-in-parent";
 import { isStatefulReferences } from "../util/is-stateful";
 import {
-  type Binding,
   BindingType,
   dropReferences,
   getAllTagReferenceNodes,
@@ -261,9 +260,6 @@ export default {
         }
 
         writer.flushInto(tag);
-        // TODO: this is a hack to get around the fact that we don't have a way to
-        // know if a scope requires dynamic subscriptions
-        setClosureSignalBuilder(tag, (() => {}) as any);
         writeHTMLResumeStatements(tagBody);
 
         const forTagArgs = getBaseArgsInForTag(forType, forAttrs);
@@ -323,12 +319,10 @@ export default {
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
         const nodeRef = getOptimizedOnlyChildNodeRef(tag, tagSection);
-        setClosureSignalBuilder(tag, (closureSignal, render) => {
+        setClosureSignalBuilder(tag, (closure, render) => {
           return callRuntime(
             "loopClosure",
-            getScopeAccessorLiteral(
-              closureSignal.referencedBindings as Binding,
-            ),
+            getScopeAccessorLiteral(closure),
             getScopeAccessorLiteral(nodeRef),
             render,
           );

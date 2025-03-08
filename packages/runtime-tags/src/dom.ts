@@ -43,12 +43,12 @@ export { init, nodeRef, register, registerBoundSignal } from "./dom/resume";
 export {
   conditionalClosure,
   dynamicClosure,
+  dynamicClosureRead,
   effect,
   hoist,
   intersection,
   loopClosure,
   nextTagId,
-  registerDynamicClosure,
   setTagVar,
   setTagVarChange,
   state,

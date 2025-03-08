@@ -17,7 +17,6 @@ import {
 } from "../util/is-only-child-in-parent";
 import { isStatefulReferences } from "../util/is-stateful";
 import {
-  type Binding,
   getScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
@@ -147,9 +146,6 @@ export const IfTag = {
             setForceResumeScope(bodySection);
           }
           writer.flushInto(tag);
-          // TODO: this is a hack to get around the fact that we don't have a way to
-          // know if a scope requires dynamic subscriptions
-          setClosureSignalBuilder(tag, (() => {}) as any);
           writeHTMLResumeStatements(tagBody);
         }
 
@@ -309,12 +305,10 @@ export const IfTag = {
             const consequent = t.numericLiteral(branchBodySection ? i : -1);
             if (branchBodySection) {
               rendererIdentifiers.push(t.identifier(branchBodySection.name));
-              setClosureSignalBuilder(branchTag, (closureSignal, render) => {
+              setClosureSignalBuilder(branchTag, (closure, render) => {
                 return callRuntime(
                   "conditionalClosure",
-                  getScopeAccessorLiteral(
-                    closureSignal.referencedBindings as Binding,
-                  ),
+                  getScopeAccessorLiteral(closure),
                   getScopeAccessorLiteral(nodeRef),
                   t.numericLiteral(i),
                   render,

@@ -34,17 +34,16 @@ export enum ResumeSymbol {
 }
 
 export enum AccessorChar {
-  Dynamic = "?",
-  Mark = "#",
-  Subscribers = "*",
-  LifecycleAbortController = "-",
-  DynamicPlaceholderLastChild = "-",
-  TagVariable = "/",
-  TagVariableChange = "@",
+  ClosureScopes = "!",
+  ClosureSignalIndex = "(",
   ConditionalScope = "!",
   ConditionalRenderer = "(",
   LoopScopeArray = "!",
   LoopScopeMap = "(",
+  LifecycleAbortController = "-",
+  DynamicPlaceholderLastChild = "-",
+  TagVariable = "/",
+  TagVariableChange = "@",
   EventAttributes = "~",
   ControlledValue = ":",
   ControlledHandler = ";",

@@ -66,8 +66,6 @@ export function value<T>(
   };
 }
 
-let accessorId = 0;
-
 export function intersection(
   id: number,
   fn: SignalFn<never>,
@@ -157,67 +155,54 @@ export function subscribeToScopeSet(
   }
 }
 
-export function dynamicClosure<T>(
-  valueAccessor: Accessor,
-  fn: Signal<T>,
-  getOwnerScope?: (scope: Scope) => Scope,
+export function dynamicClosure(
+  ...closureSignals: ReturnType<typeof dynamicClosureRead>[]
 ) {
-  const subscribersAccessor = AccessorChar.Dynamic + accessorId++;
-  const childSignal = closure(valueAccessor, fn, getOwnerScope);
-  const ownerSignal = (ownerScope: Scope) => {
-    const subscribers = ownerScope[subscribersAccessor] as Set<Scope>;
-    if (subscribers) {
-      for (const subscriber of subscribers) {
-        if (!subscriber.___pending) {
-          queueRender(subscriber, childSignal, -1);
+  const [{ ___scopeInstancesAccessor, ___signalIndexAccessor }] =
+    closureSignals;
+  for (let i = closureSignals.length; i--; ) {
+    closureSignals[i].___index = i;
+  }
+
+  return (scope: Scope) => {
+    if (scope[___scopeInstancesAccessor]) {
+      for (const childScope of scope[___scopeInstancesAccessor] as Set<Scope>) {
+        if (!childScope.___pending) {
+          queueRender(
+            childScope,
+            closureSignals[childScope[___signalIndexAccessor]],
+            -1,
+          );
         }
       }
     }
   };
-  const subscribe = (ownerSignal.___subscribe = (scope: Scope) =>
-    subscribeToScopeSet(
-      getOwnerScope ? getOwnerScope(scope) : scope._!,
-      subscribersAccessor,
-      scope,
-    ));
-  ownerSignal._ = (scope: Scope) => {
-    childSignal(scope);
-    subscribe(scope);
-  };
-  return ownerSignal;
 }
 
-export function registerDynamicClosure<T>(
-  registryId: string,
+export function dynamicClosureRead<T>(
   valueAccessor: Accessor,
   fn: Signal<T>,
   getOwnerScope?: (scope: Scope) => Scope,
 ) {
-  const signal = dynamicClosure(valueAccessor, fn, getOwnerScope);
-  register(registryId, signal.___subscribe);
-  return signal;
-
-  // TODO: we need to handle the async case - DO NOT REMOVE UNTIL WE DO
-  // const ownerMarkAccessor = ownerValueAccessor + AccessorChars.MARK;
-  // const ownerSubscribersAccessor =
-  //   ownerValueAccessor + AccessorChars.SUBSCRIBERS;
-
-  // register(id, (subscriberScope: Scope) => {
-  //   const ownerScope = getOwnerScope(subscriberScope);
-  //   const boundSignal = bindFunction(subscriberScope, signal);
-  //   const ownerMark = ownerScope[ownerMarkAccessor];
-  //   (ownerScope[ownerSubscribersAccessor] ||= new Set()).add(boundSignal);
-
-  //   // TODO: if the mark is not undefined, it means the value was updated clientside
-  //   // before this subscriber was flushed.
-  //   if (ownerMark === 0) {
-  //     // the value has finished updating
-  //     // we should trigger an update to `signal`
-  //   } else if (ownerMark >= 1) {
-  //     // the value is queued for update
-  //     // we should mark `signal` and let it be updated when the owner is updated
-  //   }
-  // });
+  const childSignal = closure(valueAccessor, fn, getOwnerScope);
+  const closureSignal = ((scope: Scope) => {
+    scope[closureSignal.___signalIndexAccessor] = closureSignal.___index;
+    childSignal(scope);
+    subscribeToScopeSet(
+      getOwnerScope ? getOwnerScope(scope) : scope._!,
+      closureSignal.___scopeInstancesAccessor,
+      scope,
+    );
+  }) as ((scope: Scope) => void) & {
+    ___scopeInstancesAccessor: string;
+    ___signalIndexAccessor: string;
+    ___index: number;
+  };
+  closureSignal.___scopeInstancesAccessor =
+    valueAccessor + AccessorChar.ClosureScopes;
+  closureSignal.___signalIndexAccessor =
+    valueAccessor + AccessorChar.ClosureSignalIndex;
+  return closureSignal;
 }
 
 function closure<T>(

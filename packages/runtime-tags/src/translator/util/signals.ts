@@ -22,8 +22,8 @@ import {
   getReadReplacement,
   getScopeAccessor,
   getScopeAccessorLiteral,
-  getSectionScopeAccessor,
-  getSectionScopeAccessorLiteral,
+  getSectionInstancesAccessor,
+  getSectionInstancesAccessorLiteral,
   intersectionMeta,
   isAssignedBindingExtra,
   isRegisteredFnExtra,
@@ -34,6 +34,8 @@ import { createScopeReadPattern, getScopeExpression } from "./scope-read";
 import {
   getScopeIdIdentifier,
   getSectionForBody,
+  isDynamicClosure,
+  isImmediateOwner,
   type Section,
 } from "./sections";
 import { simplifyFunction } from "./simplify-fn";
@@ -67,11 +69,11 @@ export type Signal = {
   renderReferencedBindings: ReferencedBindings;
   effect: t.Statement[];
   effectReferencedBindings: ReferencedBindings;
-  closures: Map<Section, Signal>;
   hasDownstreamIntersections: () => boolean;
   hasDynamicSubscribers?: true;
   export: boolean;
   extraArgs?: t.Expression[];
+  prependStatements?: t.Statement[];
   buildAssignment?: (
     valueSection: Section,
     value: t.Expression,
@@ -79,7 +81,7 @@ export type Signal = {
 };
 
 type closureSignalBuilder = (
-  signal: Signal,
+  closure: Binding,
   render: t.Expression,
 ) => t.Expression;
 const [getSignals] = createSectionState<Map<unknown, Signal>>(
@@ -113,8 +115,25 @@ export function setSerializedProperty(
   getSerializedScopeProperties(section).set(key, value);
 }
 
-export const [getSectionSubscriberIdentifier, setSectionSubscriberIdentifiers] =
-  createSectionState<undefined | t.Identifier>("sectionSubscriberIdentifiers");
+const [getSectionWriteScopeBuilder, setSectionWriteScopeBuilder] =
+  createSectionState<undefined | ((expr: t.Expression) => t.Expression)>(
+    "sectionWriteScopeBuilder",
+  );
+function addWriteScopeBuilder(
+  section: Section,
+  builder: (writeCall: t.Expression) => t.Expression,
+) {
+  const prev = getSectionWriteScopeBuilder(section);
+  setSectionWriteScopeBuilder(
+    section,
+    prev ? (expr) => builder(prev(expr)) : builder,
+  );
+}
+
+const htmlDynamicClosureInstancesIdentifier = new WeakMap<
+  Signal,
+  t.Identifier
+>();
 
 export const [getHTMLSectionStatements] = createSectionState<t.Statement[]>(
   "htmlScopeStatements",
@@ -174,7 +193,6 @@ export function getSignal(
         effect: [],
         effectReferencedBindings: undefined,
         subscribers: [],
-        closures: new Map(),
         hasDownstreamIntersections: () => {
           let hasDownstreamIntersections: boolean =
             !!(signal.intersection /* || signal.closures.size */);
@@ -234,49 +252,24 @@ export function getSignal(
       referencedBindings.section !== section &&
       bindingUtil.find(section.referencedClosures, referencedBindings)
     ) {
-      getSignal(referencedBindings.section, referencedBindings).closures.set(
-        section,
-        signal,
-      );
       signal.build = () => {
-        const builder = getClosureSignalBuilder(section);
-        const ownerScope = getScopeExpression(
-          section,
-          referencedBindings.section,
-        );
-        const isImmediateOwner =
-          (ownerScope as t.MemberExpression).object === scopeIdentifier;
-        const isDynamicClosure = !isImmediateOwner || !builder;
         const render = getSignalFn(signal, [
           scopeIdentifier,
           t.identifier(referencedBindings.name),
         ]);
-        return isDynamicClosure
-          ? isStatefulReferences(referencedBindings)
-            ? callRuntime(
-                "registerDynamicClosure",
-                t.stringLiteral(
-                  getResumeRegisterId(
-                    section,
-                    signal.referencedBindings,
-                    "subscriber",
+        return isDynamicClosure(section, referencedBindings)
+          ? callRuntime(
+              "dynamicClosureRead",
+              getScopeAccessorLiteral(referencedBindings),
+              render,
+              isImmediateOwner(section, referencedBindings)
+                ? undefined
+                : t.arrowFunctionExpression(
+                    [scopeIdentifier],
+                    getScopeExpression(section, referencedBindings.section),
                   ),
-                ),
-                getScopeAccessorLiteral(referencedBindings),
-                render,
-                isImmediateOwner
-                  ? undefined
-                  : t.arrowFunctionExpression([scopeIdentifier], ownerScope),
-              )
-            : callRuntime(
-                "dynamicClosure",
-                getScopeAccessorLiteral(referencedBindings),
-                render,
-                isImmediateOwner
-                  ? undefined
-                  : t.arrowFunctionExpression([scopeIdentifier], ownerScope),
-              )
-          : builder(signal, render);
+            )
+          : getClosureSignalBuilder(section)!(referencedBindings, render);
       };
     }
   }
@@ -390,17 +383,51 @@ export function getSignalFn(
   });
 
   if (isValueSignal) {
-    const closureEntries = Array.from(signal.closures.entries()).sort(
-      ([a], [b]) => a.id - b.id,
-    );
-    for (const [_closureSection, closureSignal] of closureEntries) {
-      if (isStatefulReferences(closureSignal.referencedBindings)) {
-        signal.render.push(
-          t.expressionStatement(
-            t.callExpression(closureSignal.identifier, [scopeIdentifier]),
-          ),
-        );
+    let dynamicClosureArgs: t.Expression[] | undefined;
+    let dynamicClosureSignalIdentifier: t.Identifier | undefined;
+    forEach(binding.closureSections, (closureSection) => {
+      if (isStatefulReferences(binding)) {
+        if (isDynamicClosure(closureSection, binding)) {
+          if (!dynamicClosureArgs) {
+            dynamicClosureArgs = [];
+            dynamicClosureSignalIdentifier =
+              currentProgramPath.scope.generateUidIdentifier(
+                signal.identifier.name + "_closure",
+              );
+
+            signal.render.push(
+              t.expressionStatement(
+                t.callExpression(dynamicClosureSignalIdentifier, [
+                  scopeIdentifier,
+                ]),
+              ),
+            );
+          }
+
+          dynamicClosureArgs.push(
+            getSignal(closureSection, binding).identifier,
+          );
+        } else {
+          signal.render.push(
+            t.expressionStatement(
+              t.callExpression(getSignal(closureSection, binding).identifier, [
+                scopeIdentifier,
+              ]),
+            ),
+          );
+        }
       }
+    });
+
+    if (dynamicClosureSignalIdentifier) {
+      (signal.prependStatements ||= []).push(
+        t.variableDeclaration("const", [
+          t.variableDeclarator(
+            dynamicClosureSignalIdentifier,
+            callRuntime("dynamicClosure", ...dynamicClosureArgs!),
+          ),
+        ]),
+      );
     }
   }
 
@@ -725,7 +752,7 @@ export function writeSignals(section: Section) {
       while (currentSection && currentSection !== hoistedBinding.section) {
         const parentSection: Section | undefined = currentSection.parent;
         if (parentSection) {
-          accessors.push(getSectionScopeAccessorLiteral(currentSection)!);
+          accessors.push(getSectionInstancesAccessorLiteral(currentSection)!);
         }
         currentSection = parentSection;
       }
@@ -838,15 +865,15 @@ export function writeSignals(section: Section) {
     if (signal.export) {
       signalDeclaration = t.exportNamedDeclaration(signalDeclaration);
     }
-    currentProgramPath.pushContainer(
-      "body",
-      effectDeclarator
-        ? [
-            t.variableDeclaration("const", [effectDeclarator]),
-            signalDeclaration,
-          ]
-        : signalDeclaration,
-    );
+
+    const signalStatements = signal.prependStatements || [];
+
+    if (effectDeclarator) {
+      signalStatements.push(t.variableDeclaration("const", [effectDeclarator]));
+    }
+
+    signalStatements.push(signalDeclaration);
+    currentProgramPath.pushContainer("body", signalStatements);
   }
 }
 
@@ -1000,24 +1027,40 @@ export function writeHTMLResumeStatements(
     if (isStatefulReferences(closure)) {
       serializeOwnersUntilBindingSection(closure);
       setForceResumeScope(closure.section);
-      const isImmediateOwner = section.parent?.id === closure.section.id;
-      // TODO: getClosureSignalBuilder is not the right check
-      // the builder shouldn't get set for the HTML output
-      // we're setting it to an empty builder from if/for purely for this check
-      const isDynamicClosure =
-        !getClosureSignalBuilder(section) || !isImmediateOwner;
-      if (isDynamicClosure) {
-        path.pushContainer(
-          "body",
-          t.expressionStatement(
-            callRuntime(
-              "writeEffect",
-              scopeIdIdentifier,
-              t.stringLiteral(
-                getResumeRegisterId(section, closure, "subscriber"),
+      if (isDynamicClosure(section, closure)) {
+        const closureSignal = getSignal(closure.section, closure);
+        let identifier =
+          htmlDynamicClosureInstancesIdentifier.get(closureSignal);
+        if (!identifier) {
+          htmlDynamicClosureInstancesIdentifier.set(
+            closureSignal,
+            (identifier = currentProgramPath.scope.generateUidIdentifier(
+              closureSignal.identifier.name + "_closures",
+            )),
+          );
+
+          getHTMLSectionStatements(closure.section).push(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                identifier,
+                t.newExpression(t.identifier("Set"), []),
               ),
-            ),
-          ),
+            ]),
+          );
+          setSerializedProperty(
+            closure.section,
+            getScopeAccessor(closure) + AccessorChar.ClosureScopes,
+            identifier,
+          );
+        }
+
+        setSerializedProperty(
+          section,
+          getScopeAccessor(closure) + AccessorChar.ClosureSignalIndex,
+          t.numericLiteral(getDynamicClosureIndex(closure, section)),
+        );
+        addWriteScopeBuilder(section, (expr) =>
+          callRuntime("writeSubscribe", identifier, expr),
         );
       }
     }
@@ -1070,13 +1113,12 @@ export function writeHTMLResumeStatements(
             ]),
           );
 
-          setSectionSubscriberIdentifiers(
-            currentSection,
-            subscribersIdentifier,
+          addWriteScopeBuilder(currentSection, (expr) =>
+            callRuntime("writeSubscribe", subscribersIdentifier, expr),
           );
           setSerializedProperty(
             parentSection,
-            getSectionScopeAccessor(currentSection)!,
+            getSectionInstancesAccessor(currentSection)!,
             subscribersIdentifier,
           );
         }
@@ -1125,11 +1167,11 @@ export function writeHTMLResumeStatements(
     serializedProperties.push(toObjectProperty(key, value));
   }
 
-  const subscriberIdentifier = getSectionSubscriberIdentifier(section);
+  const writeScopeBuilder = getSectionWriteScopeBuilder(section);
   if (
+    writeScopeBuilder ||
     serializedProperties.length ||
-    forceResumeScope(section) ||
-    subscriberIdentifier
+    forceResumeScope(section)
   ) {
     for (const prop of serializedProperties) {
       if (
@@ -1196,12 +1238,8 @@ export function writeHTMLResumeStatements(
     path.pushContainer(
       "body",
       t.expressionStatement(
-        subscriberIdentifier
-          ? callRuntime(
-              "writeSubscribe",
-              subscriberIdentifier,
-              callRuntime("writeScope", ...writeScopeArgs),
-            )
+        writeScopeBuilder
+          ? writeScopeBuilder(callRuntime("writeScope", ...writeScopeArgs))
           : callRuntime("writeScope", ...writeScopeArgs),
       ),
     );
@@ -1429,4 +1467,17 @@ function getRegisteredFnExpression(node: t.Function) {
       return t.identifier(id);
     }
   }
+}
+
+function getDynamicClosureIndex(closure: Binding, closureSection: Section) {
+  let index = 0;
+  find(closure.closureSections, (section) => {
+    if (section === closureSection) return true;
+    if (isDynamicClosure(section, closure)) {
+      index++;
+    }
+
+    return false;
+  });
+  return index;
 }
