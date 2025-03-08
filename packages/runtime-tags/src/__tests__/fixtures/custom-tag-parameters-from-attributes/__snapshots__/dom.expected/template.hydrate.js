@@ -1,4 +1,4 @@
-// size: 460 (min) 271 (brotli)
+// size: 454 (min) 274 (brotli)
 const _expr_input_content_input_name_x = _$.intersection(
     8,
     (_scope) => {
@@ -39,6 +39,6 @@ _$.registerContent(
   "<div>Count (<!>): <!></div>",
   "Db%c%",
   0,
-  () => _params_2$customTag_content,
+  _params_2$customTag_content,
 ),
   init();

@@ -9,13 +9,14 @@ const _count$falseChild_content_effect = _$.effect("__tests__/template.marko_1_c
 }) => _$.on(_scope["#button/0"], "click", function () {
   _count(_scope._, count + 1), count;
 }));
-const _count$falseChild_content = _$.registerDynamicClosure("__tests__/template.marko_1_count/subscriber", "count", (_scope, count) => {
+const _count$falseChild_content = /* @__PURE__ */_$.dynamicClosureRead("count", (_scope, count) => {
   _$.data(_scope["#text/1"], count);
   _count$falseChild_content_effect(_scope);
 });
-const _falseChild_content = _$.registerContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", 0, 0, _scope => _count$falseChild_content._(_scope));
+const _falseChild_content = _$.registerContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", 0, 0, _scope => _count$falseChild_content(_scope));
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _falseChild_content);
-const _count = /* @__PURE__ */_$.state("count/1", (_scope, count) => _count$falseChild_content(_scope));
+const _count_closure = /* @__PURE__ */_$.dynamicClosure(_count$falseChild_content);
+const _count = /* @__PURE__ */_$.state("count/1", (_scope, count) => _count_closure(_scope));
 export function _setup_(_scope) {
   _count(_scope, 0);
   _dynamicTag(_scope, false || Child);

@@ -3,8 +3,8 @@ export const _walks_ = /* get, next(2), replace, over(1), replace, out(1), next(
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _Child_content2 = _$.registerContent("__tests__/template.marko_3_renderer", "Hi");
 const _Child_content = _$.registerContent("__tests__/template.marko_2_renderer", "Hi");
-const _input_value$Parent_content = _$.registerDynamicClosure("__tests__/template.marko_1_input_value/subscriber", "input_value", (_scope, input_value) => _$.html(_scope, input_value, "#text/0"));
-const _Parent_content = _$.registerContent("__tests__/template.marko_1_renderer", " ", /* get */" ", 0, 0, _scope => _input_value$Parent_content._(_scope));
+const _input_value$Parent_content = /* @__PURE__ */_$.dynamicClosureRead("input_value", (_scope, input_value) => _$.html(_scope, input_value, "#text/0"));
+const _Parent_content = _$.registerContent("__tests__/template.marko_1_renderer", " ", /* get */" ", 0, 0, _scope => _input_value$Parent_content(_scope));
 const _expr_Parent_Child_effect = _$.effect("__tests__/template.marko_0_Parent_Child", (_scope, {
   Parent,
   Child
@@ -52,10 +52,11 @@ const _Parent = /* @__PURE__ */_$.state("Parent/11", (_scope, Parent) => {
   _expr_Parent_Child(_scope);
   _Parent_effect(_scope);
 });
+const _input_value__closure = /* @__PURE__ */_$.dynamicClosure(_input_value$Parent_content);
 export const _input_value_ = /* @__PURE__ */_$.value("input_value", (_scope, input_value) => {
   _$.html(_scope, input_value, "#text/1");
   _$.html(_scope, input_value, "#text/3");
-  _input_value$Parent_content(_scope);
+  _input_value__closure(_scope);
 });
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_value_(_scope, input.value));
 export function _setup_(_scope) {

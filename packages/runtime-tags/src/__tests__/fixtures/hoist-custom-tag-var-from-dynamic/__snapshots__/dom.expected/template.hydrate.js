@@ -13,7 +13,7 @@ function _return(_scope) {
   };
 }
 _$.register("a0", _return);
-const _get_hoisted_setHtml = _$.hoist(16, "4?"),
+const _get_hoisted_setHtml = _$.hoist(16, "4!"),
   _setHtml3$inputShowSectionNull_content = _$.registerBoundSignal(
     "c1",
     _$.value(16),
@@ -28,9 +28,9 @@ _$.registerContent(
   },
   0,
   0,
-  "4?",
+  "4!",
 );
-const _get_hoisted_setHtml2 = _$.hoist(11, "3?", "2?"),
+const _get_hoisted_setHtml2 = _$.hoist(11, "3!", "2!"),
   _setHtml2$thing_content = _$.registerBoundSignal("c3", _$.value(11)),
   _setup$thing_content2 = (_scope) => {
     _$.setTagVar(_scope, 0, _setHtml2$thing_content), _setup_(_scope[0]);
@@ -42,7 +42,7 @@ const _get_hoisted_setHtml2 = _$.hoist(11, "3?", "2?"),
     _setup$thing_content2,
     0,
     0,
-    "3?",
+    "3!",
   );
 _$.registerContent(
   "c4",
@@ -53,9 +53,9 @@ _$.registerContent(
   },
   0,
   0,
-  "2?",
+  "2!",
 ),
-  _$.register("c6", _$.hoist(5, "1?")),
+  _$.register("c6", _$.hoist(5, "1!")),
   _$.registerBoundSignal("c7", _$.value(5)),
   _$.effect("c8", ({ 6: _hoisted_setHtml }) => {
     for (const fn of 6) fn("Hoist from custom tag");

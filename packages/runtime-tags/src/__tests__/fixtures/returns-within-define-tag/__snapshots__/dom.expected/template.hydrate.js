@@ -1,4 +1,4 @@
-// size: 1280 (min) 422 (brotli)
+// size: 1268 (min) 430 (brotli)
 const _expr_value_call$define_content2 = _$.intersection(4, (_scope) => {
     _$.tagVarSignal(_scope, _return(_scope));
   }),
@@ -21,7 +21,7 @@ _$.registerContent(
   (_scope) => {
     _call$define_content2(_scope, 2);
   },
-  () => _params_3$define_content,
+  _params_3$define_content,
 );
 const _expr_value_call$define_content = _$.intersection(4, (_scope) => {
     _$.tagVarSignal(_scope, _return2(_scope));
@@ -45,7 +45,7 @@ _$.registerContent(
   (_scope) => {
     _call$define_content(_scope, 1);
   },
-  () => _params_2$define_content,
+  _params_2$define_content,
 );
 const _expr_Twice_clickTwiceCount = _$.intersection(14, (_scope) => {
     const { 12: Twice, 13: clickTwiceCount } = _scope;

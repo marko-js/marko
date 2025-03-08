@@ -11,16 +11,16 @@ const _expr_outerItem_middleItem$for_content = /* @__PURE__ */_$.intersection(3,
   } = _scope;
   _child_input_name(_scope["#childScope/0"], `${outerItem}.${middleItem}`);
 });
-const _write$for_content2 = /* @__PURE__ */_$.dynamicClosure("write", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._);
+const _write$for_content2 = /* @__PURE__ */_$.dynamicClosureRead("write", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._);
 const _outerItem$for_content2 = /* @__PURE__ */_$.loopClosure("outerItem", "#text/1", (_scope, outerItem) => _expr_outerItem_middleItem$for_content(_scope));
 const _middleItem$for_content = /* @__PURE__ */_$.value("middleItem", (_scope, middleItem) => _expr_outerItem_middleItem$for_content(_scope));
 const _params_3$for_content = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _middleItem$for_content(_scope, _params_3[0]));
 const _setup$for_content2 = _scope => {
   _child(_scope["#childScope/0"]);
 };
-const _for_content2 = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}</div>`, /* next(1), beginChild, _child_walks, endChild */`D/${_child_walks}&`, _setup$for_content2, () => _params_3$for_content, _scope => {
+const _for_content2 = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}</div>`, /* next(1), beginChild, _child_walks, endChild */`D/${_child_walks}&`, _setup$for_content2, _params_3$for_content, _scope => {
   _outerItem$for_content2._(_scope);
-  _write$for_content2._(_scope);
+  _write$for_content2(_scope);
 });
 const _for$for_content = /* @__PURE__ */_$.loopOf("#text/1", _for_content2);
 const _write$for_content = /* @__PURE__ */_$.loopClosure("write", "#text/2", (_scope, write) => _child_input_write(_scope["#childScope/0"], write));
@@ -33,7 +33,7 @@ const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _par
 const _setup$for_content = _scope => {
   _child(_scope["#childScope/0"]);
 };
-const _for_content = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$for_content, () => _params_2$for_content, _scope => {
+const _for_content = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$for_content, _params_2$for_content, _scope => {
   _items$for_content._(_scope);
   _write$for_content._(_scope);
 });

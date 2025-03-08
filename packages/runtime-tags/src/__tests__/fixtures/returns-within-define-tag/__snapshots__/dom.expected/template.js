@@ -15,7 +15,7 @@ const _params_3$define_content = /* @__PURE__ */_$.value("_params_3", (_scope, _
 const _setup$define_content2 = _scope => {
   _call$define_content2(_scope, 2);
 };
-const _define_content2 = _$.registerContent("__tests__/template.marko_2_renderer", 0, 0, _setup$define_content2, () => _params_3$define_content);
+const _define_content2 = _$.registerContent("__tests__/template.marko_2_renderer", 0, 0, _setup$define_content2, _params_3$define_content);
 const _expr_value_call$define_content = /* @__PURE__ */_$.intersection(4, _scope => {
   const {
     value,
@@ -30,7 +30,7 @@ const _params_2$define_content = /* @__PURE__ */_$.value("_params_2", (_scope, _
 const _setup$define_content = _scope => {
   _call$define_content(_scope, 1);
 };
-const _define_content = _$.registerContent("__tests__/template.marko_1_renderer", 0, 0, _setup$define_content, () => _params_2$define_content);
+const _define_content = _$.registerContent("__tests__/template.marko_1_renderer", 0, 0, _setup$define_content, _params_2$define_content);
 const _expr_Twice_clickTwiceCount = /* @__PURE__ */_$.intersection(14, _scope => {
   const {
     Twice,

@@ -19,7 +19,8 @@
       "$_setup$FancyButton_content": "l",
       "$_dynamicTag": "k",
       "$_attrs_effect": "v",
-      "$_content": "C"
+      "$_content": "C",
+      "$_clickCount_closure": "y"
     }
   }
 }

@@ -1,6 +1,7 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
+  const _count_closures = new Set();
   let _ifScopeId2, _ifBranch2;
   const outer = true;
   const inner = true;
@@ -15,11 +16,11 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
         if (inner) {
           const _scope2_id = _$.nextScopeId();
           _$.write(`<button id=count>${_$.escapeXML(count)}${_$.markResumeNode(_scope2_id, "#text/1")}</button>${_$.markResumeNode(_scope2_id, "#button/0")}`);
-          _$.writeEffect(_scope2_id, "__tests__/template.marko_2_count/subscriber");
           _$.writeEffect(_scope2_id, "__tests__/template.marko_2_count");
-          _$.writeScope(_scope2_id, {
-            _: _$.ensureScopeWithId(_scope1_id)
-          }, "__tests__/template.marko", "8:6");
+          _$.writeSubscribe(_count_closures, _$.writeScope(_scope2_id, {
+            _: _$.ensureScopeWithId(_scope1_id),
+            "count(": 0
+          }, "__tests__/template.marko", "8:6"));
           _ifBranch = 0;
           _ifScopeId = _scope2_id;
         }
@@ -40,6 +41,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     outer,
     inner,
     count,
+    "count!": _count_closures,
     "#text/1(": _ifBranch2,
     "#text/1!": _$.getScopeById(_ifScopeId2)
   }, "__tests__/template.marko", 0, {

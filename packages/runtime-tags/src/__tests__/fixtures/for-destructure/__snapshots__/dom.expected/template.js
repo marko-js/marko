@@ -8,7 +8,7 @@ const _pattern_$for_content = /* @__PURE__ */_$.value("_pattern_", (_scope, _pat
   _description$for_content(_scope, _pattern_.description);
 });
 const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _pattern_$for_content(_scope, _params_2?.[0]));
-const _for_content = /* @__PURE__ */_$.createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", 0, () => _params_2$for_content);
+const _for_content = /* @__PURE__ */_$.createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", 0, _params_2$for_content);
 const _for = /* @__PURE__ */_$.loopOf("#text/0", _for_content);
 const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {
   items

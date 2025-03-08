@@ -8,7 +8,8 @@
       "$_count": "n",
       "$_count$child_content_effect": "i",
       "$_count$child_content": "a",
-      "$_setup$child_content": "m"
+      "$_setup$child_content": "m",
+      "$_count_closure": "c"
     }
   }
 }

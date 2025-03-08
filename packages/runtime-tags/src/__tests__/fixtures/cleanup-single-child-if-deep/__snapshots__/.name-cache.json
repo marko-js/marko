@@ -39,7 +39,8 @@
       "$_write$if_content": "q",
       "$_showMiddle$if_content": "w",
       "$_setup$if_content": "x",
-      "$_if_content": "z"
+      "$_if_content": "z",
+      "$_showInner_closure": "B"
     }
   }
 }

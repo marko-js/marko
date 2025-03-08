@@ -4,7 +4,7 @@ export const _setup_ = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _n$for_content = /* @__PURE__ */_$.value("n", (_scope, n) => _$.data(_scope["#text/0"], n));
 const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _n$for_content(_scope, _params_2[0]));
-const _for_content = /* @__PURE__ */_$.createRenderer("<!>, ", /* replace */"%", 0, () => _params_2$for_content);
+const _for_content = /* @__PURE__ */_$.createRenderer("<!>, ", /* replace */"%", 0, _params_2$for_content);
 const _expr_input_from_input_to_input_step = /* @__PURE__ */_$.intersection(6, _scope => {
   const {
     input_from,

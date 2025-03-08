@@ -6,7 +6,8 @@
       "$_count$htmlScriptBody": "e",
       "$_count_effect": "n",
       "$_count": "o",
-      "$_count$htmlScript_content": "i"
+      "$_count$htmlScript_content": "i",
+      "$_count_closure": "m"
     }
   }
 }

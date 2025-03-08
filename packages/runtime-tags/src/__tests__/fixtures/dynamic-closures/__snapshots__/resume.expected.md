@@ -20,7 +20,7 @@
       <!--M_*5 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.a={b:2,c:3},2:{"#text/0!":_.b={_:_.a},"#text/0(":"__tests__/template.marko_1_renderer"},3:_.b,4:_.c={_:_.a},5:{_:_.c}}),3,"__tests__/template.marko_1_c/subscriber",5,"__tests__/template.marko_3_c/subscriber",1,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.a={b:2,c:3,"c!":_.e=new Set},2:{"#text/0!":_.b={_:_.a,"c(":0},"#text/0(":"__tests__/template.marko_1_renderer"},3:_.b,4:_.c={_:_.a},5:_.f={_:_.c,"c(":1}},(_.e).add(_.b),(_.e).add(_.f),_.d),1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
@@ -52,7 +52,7 @@ container.querySelector("button").click();
       <!--M_*5 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.a={b:2,c:3},2:{"#text/0!":_.b={_:_.a},"#text/0(":"__tests__/template.marko_1_renderer"},3:_.b,4:_.c={_:_.a},5:{_:_.c}}),3,"__tests__/template.marko_1_c/subscriber",5,"__tests__/template.marko_3_c/subscriber",1,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.a={b:2,c:3,"c!":_.e=new Set},2:{"#text/0!":_.b={_:_.a,"c(":0},"#text/0(":"__tests__/template.marko_1_renderer"},3:_.b,4:_.c={_:_.a},5:_.f={_:_.c,"c(":1}},(_.e).add(_.b),(_.e).add(_.f),_.d),1,"__tests__/template.marko_0",0];M._.w()
     </script>
   </body>
 </html>
