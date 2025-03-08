@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 0.3.52
+
+### Patch Changes
+
+- [#2554](https://github.com/marko-js/marko/pull/2554) [`89e310e`](https://github.com/marko-js/marko/commit/89e310e9a2355e38fc9779ec2006dadbb553c672) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid getters for renderer args and rename to params.
+
+- [#2554](https://github.com/marko-js/marko/pull/2554) [`f352b09`](https://github.com/marko-js/marko/commit/f352b0994629cf67918bb18929202edbe0b708f6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor dynamic closures to avoid registration.
+
+- [#2554](https://github.com/marko-js/marko/pull/2554) [`e19cfdd`](https://github.com/marko-js/marko/commit/e19cfddd48178fc601d67f718072d2dcb1d8c736) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure closures always called after setup.
+
 ## 0.3.51
 
 ### Patch Changes
