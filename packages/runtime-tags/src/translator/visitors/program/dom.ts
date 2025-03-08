@@ -4,12 +4,13 @@ import { importDefault } from "@marko/compiler/babel-utils";
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import getStyleFile from "../../util/get-style-file";
 import { map } from "../../util/optional";
-import { getSectionScopeAccessorLiteral } from "../../util/references";
+import { getSectionInstancesAccessorLiteral } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {
   forEachSectionReverse,
   getSectionForBody,
   getSectionParentIsOwner,
+  isDynamicClosure,
   isSerializedSection,
 } from "../../util/sections";
 import {
@@ -53,21 +54,24 @@ export default {
             childSection.params && initValue(childSection.params);
           const { walks, writes, setup } = writer.getSectionMeta(childSection);
           const identifier = t.identifier(childSection.name);
-          const closures = childSection.referencedClosures
+          const referencedClosures = childSection.referencedClosures
             ? t.arrowFunctionExpression(
                 [scopeIdentifier],
                 toFirstExpressionOrBlock(
-                  map(childSection.referencedClosures, (closure) =>
-                    t.expressionStatement(
+                  map(childSection.referencedClosures, (closure) => {
+                    const closureSignal = getSignal(childSection, closure);
+                    return t.expressionStatement(
                       t.callExpression(
-                        t.memberExpression(
-                          getSignal(childSection, closure).identifier,
-                          t.identifier("_"),
-                        ),
+                        isDynamicClosure(childSection, closure)
+                          ? closureSignal.identifier
+                          : t.memberExpression(
+                              closureSignal.identifier,
+                              t.identifier("_"),
+                            ),
                         [scopeIdentifier],
                       ),
-                    ),
-                  ),
+                    );
+                  }),
                 ),
               )
             : undefined;
@@ -79,7 +83,7 @@ export default {
                   walks,
                   setup,
                   tagParamsSignal?.identifier,
-                  closures,
+                  referencedClosures,
                 ]),
               )
             : callRuntime(
@@ -92,9 +96,9 @@ export default {
                   walks,
                   setup,
                   tagParamsSignal?.identifier,
-                  closures,
+                  referencedClosures,
                   childSection.hoisted || childSection.isHoistThrough
-                    ? getSectionScopeAccessorLiteral(childSection)
+                    ? getSectionInstancesAccessorLiteral(childSection)
                     : undefined,
                 ]),
               );

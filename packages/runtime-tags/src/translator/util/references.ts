@@ -26,6 +26,7 @@ import {
   getOrCreateSection,
   isSameOrChildSection,
   type Section,
+  sectionUtil,
 } from "./sections";
 import { getHoistFunctionIdentifier } from "./signals";
 import { createProgramState } from "./state";
@@ -52,6 +53,7 @@ export type Binding = {
   type: BindingType;
   loc: t.SourceLocation | null;
   section: Section;
+  closureSections: Opt<Section>;
   serialize: boolean;
   aliases: Set<Binding>;
   hoists: Map<Section, Binding>;
@@ -124,6 +126,7 @@ export function createBinding(
     section,
     property,
     declared,
+    closureSections: undefined,
     excludeProperties: undefined,
     serialize: false,
     aliases: new Set(),
@@ -647,6 +650,10 @@ export function finalizeReferences() {
       section,
     } of binding.downstreamExpressions) {
       if (section !== binding.section) {
+        binding.closureSections = sectionUtil.add(
+          binding.closureSections,
+          section,
+        );
         section.referencedClosures = bindingUtil.add(
           section.referencedClosures,
           binding,
@@ -910,15 +917,15 @@ export function getScopeAccessor(binding: Binding, includeId?: boolean) {
   );
 }
 
-export function getSectionScopeAccessor(section: Section) {
+export function getSectionInstancesAccessor(section: Section) {
   return section.sectionAccessor
     ? getScopeAccessor(section.sectionAccessor.binding) +
         section.sectionAccessor.suffix
-    : section.id + AccessorChar.Dynamic;
+    : section.id + AccessorChar.ClosureScopes;
 }
 
-export function getSectionScopeAccessorLiteral(section: Section) {
-  const accessor = getSectionScopeAccessor(section);
+export function getSectionInstancesAccessorLiteral(section: Section) {
+  const accessor = getSectionInstancesAccessor(section);
   return accessor
     ? typeof accessor === "number"
       ? t.numericLiteral(accessor)

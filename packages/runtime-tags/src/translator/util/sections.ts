@@ -8,7 +8,7 @@ import {
 import { currentProgramPath } from "../visitors/program";
 import { isCoreTag } from "./is-core-tag";
 import { isStatefulReferences } from "./is-stateful";
-import { find } from "./optional";
+import { find, Sorted } from "./optional";
 import type { Binding, ReferencedBindings } from "./references";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
@@ -56,6 +56,13 @@ declare module "@marko/compiler/dist/types" {
     section?: Section;
   }
 }
+
+export const sectionUtil = new Sorted(function compareSections(
+  a: Section,
+  b: Section,
+) {
+  return a.id - b.id;
+});
 
 export function startSection(
   path: t.NodePath<t.MarkoTagBody | t.Program>,
@@ -288,6 +295,14 @@ export const checkStatefulClosures = (
       isStatefulReferences(closure),
   );
 };
+
+export function isImmediateOwner(section: Section, binding: Binding) {
+  return section.parent?.id === binding.section.id;
+}
+
+export function isDynamicClosure(section: Section, closure: Binding) {
+  return !section.isBranch || !isImmediateOwner(section, closure);
+}
 
 export function isSameOrChildSection(section: Section, other: Section) {
   do {
