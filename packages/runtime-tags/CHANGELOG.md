@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.53
+
+### Patch Changes
+
+- [#2557](https://github.com/marko-js/marko/pull/2557) [`7d6ea47`](https://github.com/marko-js/marko/commit/7d6ea472de8ff14cd88be3c632b55e49d3b65dfb) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Dynamic attrs on trailing tags
+
 ## 0.3.52
 
 ### Patch Changes
