@@ -707,10 +707,19 @@ export default {
         tag.insertBefore(tag.node.body.body).forEach((child) => child.skip());
       }
 
+      const shouldMark =
+        nodeRef &&
+        (extra[kSerializeMarker] ||
+          (extra[kSerializeMarker] === undefined &&
+            (isStatefulReferences(extra.referencedBindings) ||
+              tag.node.attributes.some((attr) =>
+                isStatefulReferences(attr.value.extra?.referencedBindings),
+              ))));
+
       if (!openTagOnly && !selectArgs) {
         writer.writeTo(
           tag,
-          isHTML && (tagName === "html" || tagName === "body"),
+          isHTML && !shouldMark && (tagName === "html" || tagName === "body"),
         )`</${tag.node.name}>`;
       }
 
@@ -723,15 +732,7 @@ export default {
           .skip();
       }
 
-      if (
-        nodeRef &&
-        (extra[kSerializeMarker] ||
-          (extra[kSerializeMarker] === undefined &&
-            (isStatefulReferences(extra.referencedBindings) ||
-              tag.node.attributes.some((attr) =>
-                isStatefulReferences(attr.value.extra?.referencedBindings),
-              ))))
-      ) {
+      if (shouldMark) {
         writer.markNode(tag, nodeRef);
       }
 
