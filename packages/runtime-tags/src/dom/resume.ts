@@ -33,6 +33,7 @@ class Render implements RenderData {
   declare private ___renders: Renders;
   declare private ___runtimeId: string;
   declare private ___renderId: string;
+  declare private ___walk: RenderData["w"];
   private ___scopeStack: string[] = [];
   private ___scopeLookup: Record<string, Scope> = {};
   private ___serializeContext: Record<string, unknown> = {
@@ -43,11 +44,12 @@ class Render implements RenderData {
     this.___renders = renders;
     this.___runtimeId = runtimeId;
     this.___renderId = renderId;
-    this.w = ((w) => () => {
-      w();
-      this.___resume();
-    })(this.w);
+    this.___walk = this.w;
     this.___resume();
+    this.w = () => {
+      this.___walk();
+      this.___resume();
+    };
   }
   ___resume() {
     const serializeContext = this.___serializeContext;
