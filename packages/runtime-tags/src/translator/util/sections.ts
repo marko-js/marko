@@ -118,9 +118,7 @@ export function getOrCreateSection(path: t.NodePath<any>) {
       cur.type === "Program" ||
       (cur.type === "MarkoTagBody" &&
         !cur.node.attributeTags &&
-        analyzeTagNameType(cur.parentPath as t.NodePath<t.MarkoTag>) !==
-          TagNameType.NativeTag &&
-        (cur.parent as { name: t.StringLiteral }).name.value !== "html-comment")
+        !isNativeNode(cur.parentPath as t.NodePath<t.MarkoTag>))
     ) {
       return startSection(cur)!;
     }
@@ -329,4 +327,18 @@ export function getCommonSection(section: Section, other: Section) {
     }
   }
   throw new Error("No common section");
+}
+
+function isNativeNode(tag: t.NodePath<t.MarkoTag>) {
+  if (isCoreTag(tag)) {
+    switch (tag.node.name.value) {
+      case "html-comment":
+      case "html-script":
+      case "html-style":
+        return true;
+      default:
+        return false;
+    }
+  }
+  return analyzeTagNameType(tag) === TagNameType.NativeTag;
 }
