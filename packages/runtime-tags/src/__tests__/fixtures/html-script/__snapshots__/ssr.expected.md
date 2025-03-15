@@ -6,7 +6,7 @@
         "0": "https://markojs.com",
       }
     }
-  </script><!--M_*1 #script/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={1:{count:0}}),1,"__tests__/template.marko_0_count",0];M._.w()</script>
+  </script><!--M_*1 #script/0--><div>0<!--M_*1 #text/1--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={1:{count:0}}),1,"__tests__/template.marko_0_count",0];M._.w()</script>
 ```
 
 # Render End
@@ -25,11 +25,16 @@
 
     </script>
     <!--M_*1 #script/0-->
+  </head>
+  <body>
+    <div>
+      0
+      <!--M_*1 #text/1-->
+    </div>
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{count:0}}),1,"__tests__/template.marko_0_count",0];M._.w()
     </script>
-  </head>
-  <body />
+  </body>
 </html>
 ```
 
@@ -37,10 +42,13 @@
 ```
 INSERT html
 INSERT html/head
-INSERT html/head/script0
-INSERT html/head/script0/#text
+INSERT html/head/script
+INSERT html/head/script/#text
 INSERT html/head/#comment
-INSERT html/head/script1
-INSERT html/head/script1/#text
 INSERT html/body
+INSERT html/body/div
+INSERT html/body/div/#text
+INSERT html/body/div/#comment
+INSERT html/body/script
+INSERT html/body/script/#text
 ```
