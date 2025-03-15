@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 0.3.56
+
+### Patch Changes
+
+- [#2564](https://github.com/marko-js/marko/pull/2564) [`cdb925b`](https://github.com/marko-js/marko/commit/cdb925b4dfe637391c219ae26a5ef5e64261ba3c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where ssr compiled let tags were becoming consts and causing syntax errors.
+
+- [#2564](https://github.com/marko-js/marko/pull/2564) [`da0da1a`](https://github.com/marko-js/marko/commit/da0da1a4aa651aeb31f40a038ab4462c2c85f85e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize html-script and html-style to avoid creating body sections.
+
 ## 0.3.55
 
 ### Patch Changes
