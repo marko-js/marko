@@ -55,6 +55,7 @@ export type Binding = {
   section: Section;
   closureSections: Opt<Section>;
   serialize: boolean;
+  sources: Set<Binding>;
   aliases: Set<Binding>;
   hoists: Map<Section, Binding>;
   property: string | undefined;
@@ -129,6 +130,7 @@ export function createBinding(
     closureSections: undefined,
     excludeProperties: undefined,
     serialize: false,
+    sources: new Set(),
     aliases: new Set(),
     hoists: new Map(),
     propertyAliases: new Map(),
@@ -627,6 +629,8 @@ export function finalizeReferences() {
   for (const binding of bindings) {
     const { name, section } = binding;
     if (binding.type !== BindingType.dom) {
+      resolveBindingSources(binding);
+
       if (find(section.bindings, ({ name }) => name === binding.name)) {
         /*
           TODO: this will break if parent sections use the generated UID.
@@ -679,12 +683,16 @@ export function finalizeReferences() {
           for (let j = i + 1; j < numReferences; j++) {
             const binding1 = intersection[i];
             const binding2 = intersection[j];
-            const sources1 = getSourceBindings(binding1);
-            const sources2 = getSourceBindings(binding2);
-            if (!binding1.serialize && !isSuperset(sources1, sources2)) {
+            if (
+              !binding1.serialize &&
+              !isSuperset(binding1.sources, binding2.sources)
+            ) {
               binding1.serialize = true;
             }
-            if (!binding2.serialize && !isSuperset(sources2, sources1)) {
+            if (
+              !binding2.serialize &&
+              !isSuperset(binding2.sources, binding1.sources)
+            ) {
               binding2.serialize = true;
             }
           }
@@ -754,7 +762,7 @@ function getMaxOwnSourceOffset(intersection: Intersection, section: Section) {
 
   for (const binding of intersection) {
     if (binding.section === section) {
-      for (const sourceBinding of getSourceBindings(binding)) {
+      for (const sourceBinding of binding.sources) {
         if (
           sourceBinding.scopeOffset &&
           (!scopeOffset || scopeOffset.id < sourceBinding.scopeOffset.id)
@@ -782,13 +790,10 @@ function isSuperset(set: Set<any>, subset: Set<any>) {
   return true;
 }
 
-export function getSourceBindings(binding: Binding): Set<Binding> {
-  // TODO: is this right?
+function resolveBindingSources(binding: Binding) {
   const derived = new Set<Binding>();
-  const sources = new Set<Binding>();
+  const { sources } = binding;
   crawl(binding);
-  return sources;
-
   function crawl(binding: Binding) {
     if (
       binding.type === BindingType.derived ||
