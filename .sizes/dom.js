@@ -1,4 +1,4 @@
-// size: 18021 (min) 6804 (brotli)
+// size: 18027 (min) 6806 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -103,10 +103,11 @@ var registeredValues = {},
         (this.F = renders),
         (this.G = runtimeId),
         (this.t = renderId),
-        (this.w = ((w) => () => {
-          w(), this.u();
-        })(this.w)),
-        this.u();
+        (this.H = this.w),
+        this.u(),
+        (this.w = () => {
+          this.H(), this.u();
+        });
     }
     u() {
       let serializeContext = this.E,
@@ -785,7 +786,7 @@ function destroyBranch(branch) {
 function destroyNestedBranches(branch) {
   (branch.y = 1),
     branch.n?.forEach(destroyNestedBranches),
-    branch.H?.forEach((scope) => {
+    branch.I?.forEach((scope) => {
       for (let id in scope.k) scope.k[id]?.abort();
     });
 }
@@ -804,7 +805,7 @@ function queueRender(scope, signal, signalKey, value2, scopeKey = scope.d) {
     existingRender = signalKey >= 0 && pendingRendersLookup.get(key);
   if (existingRender) existingRender.z = value2;
   else {
-    let render = { j: key, A: scope, I: signal, z: value2 },
+    let render = { j: key, A: scope, J: signal, z: value2 },
       i = pendingRenders.push(render) - 1;
     for (; i; ) {
       let parentIndex = (i - 1) >> 1,
@@ -873,7 +874,7 @@ function runRenders() {
       }
       pendingRenders[i] = item;
     }
-    render.A.c?.y || render.I(render.A, render.z);
+    render.A.c?.y || render.J(render.A, render.z);
   }
   !(function () {
     for (let scope of pendingScopes) scope.h = 0;
@@ -886,7 +887,7 @@ function resetAbortSignal(scope, id) {
 }
 function getAbortSignal(scope, id) {
   return (
-    scope.c && (scope.c.H ||= new Set()).add(scope),
+    scope.c && (scope.c.I ||= new Set()).add(scope),
     ((scope.k ||= {})[id] ||= new AbortController()).signal
   );
 }
@@ -1153,7 +1154,7 @@ function subscribeToScopeSet(ownerScope, accessor, scope) {
 function dynamicClosure(...closureSignals) {
   let [{ C: ___scopeInstancesAccessor, D: ___signalIndexAccessor }] =
     closureSignals;
-  for (let i = closureSignals.length; i--; ) closureSignals[i].J = i;
+  for (let i = closureSignals.length; i--; ) closureSignals[i].K = i;
   return (scope) => {
     if (scope[___scopeInstancesAccessor])
       for (let childScope of scope[___scopeInstancesAccessor])
@@ -1168,7 +1169,7 @@ function dynamicClosure(...closureSignals) {
 function dynamicClosureRead(valueAccessor, fn, getOwnerScope) {
   let childSignal = closure(valueAccessor, fn, getOwnerScope),
     closureSignal = (scope) => {
-      (scope[closureSignal.D] = closureSignal.J),
+      (scope[closureSignal.D] = closureSignal.K),
         childSignal(scope),
         subscribeToScopeSet(
           getOwnerScope ? getOwnerScope(scope) : scope._,
