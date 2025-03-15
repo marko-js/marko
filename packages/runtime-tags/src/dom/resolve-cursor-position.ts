@@ -1,13 +1,17 @@
 export function resolveCursorPosition(
-  updatedValue: string,
-  initialValue: string,
-  initialPosition: number,
   inputType: string,
+  initialPosition: number | null | false,
+  initialValue: string,
+  updatedValue: string,
 ) {
   if (
-    initialPosition !== initialValue.length ||
-    // short regex to match input types that delete backwards
-    /kw/.test(inputType)
+    // If initial position is null or false then
+    // either this node is not the active element
+    // or does not support selection ranges.
+    (initialPosition || initialPosition === 0) &&
+    (initialPosition !== initialValue.length ||
+      // short regex to match input types that delete backwards
+      /kw/.test(inputType))
   ) {
     const before = initialValue.slice(0, initialPosition);
     const after = initialValue.slice(initialPosition);

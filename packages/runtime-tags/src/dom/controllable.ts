@@ -297,22 +297,16 @@ export function controllable_detailsOrDialog_open_effect(
 
 let inputType = "";
 function setValueAndUpdateSelection(el: HTMLInputElement, value: string) {
-  const initialValue = el.value;
-  if (initialValue !== value) {
-    if ((el.getRootNode() as Document | ShadowRoot).activeElement === el) {
-      const initialPosition = el.selectionStart!;
-      el.value = value;
-      const updatedPosition = resolveCursorPosition(
-        el.value,
-        initialValue,
-        initialPosition,
-        inputType,
-      );
-      if (~updatedPosition) {
-        el.setSelectionRange(updatedPosition, updatedPosition);
-      }
-    } else {
-      el.value = value;
+  if (el.value !== value) {
+    const updatedPosition = resolveCursorPosition(
+      inputType,
+      (el.getRootNode() as Document | ShadowRoot).activeElement === el &&
+        el.selectionStart,
+      el.value,
+      (el.value = value),
+    );
+    if (~updatedPosition) {
+      el.selectionStart = updatedPosition;
     }
   }
 }
