@@ -1,4 +1,4 @@
-// size: 17987 (min) 6815 (brotli)
+// size: 18021 (min) 6804 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -97,30 +97,29 @@ var registeredValues = {},
   Render = class {
     q = [];
     s = {};
-    F = { _: registeredValues };
+    E = { _: registeredValues };
     constructor(renders, runtimeId, renderId) {
-      (this.G = renders),
-        (this.H = runtimeId),
+      Object.assign(this, renders[renderId]),
+        (this.F = renders),
+        (this.G = runtimeId),
         (this.t = renderId),
-        (this.u = renders[renderId]),
-        this.x();
+        (this.w = ((w) => () => {
+          w(), this.u();
+        })(this.w)),
+        this.u();
     }
-    w() {
-      this.u.w(), this.x();
-    }
-    x() {
-      let data2 = this.u,
-        serializeContext = this.F,
+    u() {
+      let serializeContext = this.E,
         scopeLookup = this.s,
-        visits = data2.v,
+        visits = this.v,
         branchIds = new Set(),
         parentBranchIds = new Map();
       if (visits.length) {
         let lastEndNode,
-          commentPrefixLen = data2.i.length,
+          commentPrefixLen = this.i.length,
           closestBranchMarkers = new Map(),
           visitNodes = new Set(visits);
-        data2.v = [];
+        this.v = [];
         let branchEnd = (branchId, visit, reference) => {
           let branch = (scopeLookup[branchId] ||= {}),
             endNode = reference;
@@ -151,11 +150,11 @@ var registeredValues = {},
               dataIndex ? dataIndex - 1 : commentText.length,
             ),
             scope = (scopeLookup[scopeId] ||= { d: +scopeId }),
-            data3 = dataIndex ? commentText.slice(dataIndex) : "",
+            data2 = dataIndex ? commentText.slice(dataIndex) : "",
             token = commentText[commentPrefixLen];
           if ("*" === token) {
-            let node = (scope[data3] = visit.previousSibling);
-            scope[data3 + ">"] = () => node;
+            let node = (scope[data2] = visit.previousSibling);
+            scope[data2 + ">"] = () => node;
           } else if ("$" === token) closestBranchMarkers.set(scopeId, visit);
           else if ("[" === token)
             this.f &&
@@ -164,24 +163,24 @@ var registeredValues = {},
               (this.f = scopeId),
               (scope.a = visit);
           else if ("]" === token) {
-            scope[data3] = visit;
+            scope[data2] = visit;
             let curParent = visit.parentNode,
               startNode = branchEnd(this.f, visit, visit).a;
             curParent !== startNode.parentNode && curParent.prepend(startNode),
               (this.f = this.q.pop());
           } else if ("|" === token || "=" === token) {
-            let next = data3.indexOf(" "),
+            let next = data2.indexOf(" "),
               curNode = visit;
             for (
-              scope[~next ? data3.slice(0, next) : data3] =
+              scope[~next ? data2.slice(0, next) : data2] =
                 "=" === token ? visit.parentNode : visit;
               ~next;
 
             ) {
               let start = next + 1;
-              (next = data3.indexOf(" ", start)),
+              (next = data2.indexOf(" ", start)),
                 (curNode = branchEnd(
-                  data3.slice(start, ~next ? next : data3.length),
+                  data2.slice(start, ~next ? next : data2.length),
                   visit,
                   curNode,
                 ).b);
@@ -189,9 +188,9 @@ var registeredValues = {},
           }
         }
       }
-      let resumes = data2.r;
+      let resumes = this.r;
       if (resumes) {
-        data2.r = [];
+        this.r = [];
         let len = resumes.length,
           i = 0;
         try {
@@ -202,7 +201,7 @@ var registeredValues = {},
                 { $global: $global } = scopeLookup;
               $global ||
                 ((scopeLookup.$global = $global = scopes.$ || {}),
-                ($global.runtimeId = this.H),
+                ($global.runtimeId = this.G),
                 ($global.renderId = this.t),
                 ($global.g = 1e6));
               for (let scopeId in scopes)
@@ -222,13 +221,13 @@ var registeredValues = {},
                       parentBranch = branch.c;
                     (scope.c = branch),
                       parentBranch &&
-                        ((branch.y = parentBranch),
+                        ((branch.x = parentBranch),
                         (parentBranch.n ||= new Set()).add(branch));
                   }
                 }
             } else
               i === len || "string" != typeof resumes[i]
-                ? delete this.G[this.t]
+                ? delete this.F[this.t]
                 : registeredValues[resumes[i++]](
                     scopeLookup[resumeData],
                     scopeLookup[resumeData],
@@ -781,12 +780,12 @@ function skipScope(scope) {
   return scope.$global.g++;
 }
 function destroyBranch(branch) {
-  branch.y?.n?.delete(branch), destroyNestedBranches(branch);
+  branch.x?.n?.delete(branch), destroyNestedBranches(branch);
 }
 function destroyNestedBranches(branch) {
-  (branch.z = 1),
+  (branch.y = 1),
     branch.n?.forEach(destroyNestedBranches),
-    branch.I?.forEach((scope) => {
+    branch.H?.forEach((scope) => {
       for (let id in scope.k) scope.k[id]?.abort();
     });
 }
@@ -803,9 +802,9 @@ var pendingRenders = [],
 function queueRender(scope, signal, signalKey, value2, scopeKey = scope.d) {
   let key = 1e3 * scopeKey + signalKey,
     existingRender = signalKey >= 0 && pendingRendersLookup.get(key);
-  if (existingRender) existingRender.A = value2;
+  if (existingRender) existingRender.z = value2;
   else {
-    let render = { j: key, B: scope, J: signal, A: value2 },
+    let render = { j: key, A: scope, I: signal, z: value2 },
       i = pendingRenders.push(render) - 1;
     for (; i; ) {
       let parentIndex = (i - 1) >> 1,
@@ -874,7 +873,7 @@ function runRenders() {
       }
       pendingRenders[i] = item;
     }
-    render.B.c?.z || render.J(render.B, render.A);
+    render.A.c?.y || render.I(render.A, render.z);
   }
   !(function () {
     for (let scope of pendingScopes) scope.h = 0;
@@ -887,7 +886,7 @@ function resetAbortSignal(scope, id) {
 }
 function getAbortSignal(scope, id) {
   return (
-    scope.c && (scope.c.I ||= new Set()).add(scope),
+    scope.c && (scope.c.H ||= new Set()).add(scope),
     ((scope.k ||= {})[id] ||= new AbortController()).signal
   );
 }
@@ -947,7 +946,7 @@ function createBranch($global, renderer, parentScope, parentNode) {
     (branch._ = renderer.l || parentScope),
     (branch.c = branch),
     parentBranch &&
-      ((branch.y = parentBranch), (parentBranch.n ||= new Set()).add(branch)),
+      ((branch.x = parentBranch), (parentBranch.n ||= new Set()).add(branch)),
     renderer.o?.(branch, parentNode.namespaceURI),
     branch
   );
@@ -960,11 +959,11 @@ function createAndSetupBranch($global, renderer, parentScope, parentNode) {
 }
 function setupBranch(renderer, branch) {
   return (
-    (renderer.p || renderer.C) &&
+    (renderer.p || renderer.B) &&
       queueRender(
         branch,
         (branch2) => {
-          renderer.p?.(branch2), renderer.C?.(branch2);
+          renderer.p?.(branch2), renderer.B?.(branch2);
         },
         -1,
       ),
@@ -1020,7 +1019,7 @@ function createContent(
     l: owner,
     p: setup,
     e: params,
-    C: closures,
+    B: closures,
     m: dynamicScopesAccessor,
   });
 }
@@ -1116,7 +1115,7 @@ function loopClosure(valueAccessor, ownerLoopNodeAccessor, fn) {
           ownerScope,
           () => {
             for (let scope of scopes)
-              !scope.h && !scope.z && childSignal(scope);
+              !scope.h && !scope.y && childSignal(scope);
           },
           -1,
           0,
@@ -1152,9 +1151,9 @@ function subscribeToScopeSet(ownerScope, accessor, scope) {
     ));
 }
 function dynamicClosure(...closureSignals) {
-  let [{ D: ___scopeInstancesAccessor, E: ___signalIndexAccessor }] =
+  let [{ C: ___scopeInstancesAccessor, D: ___signalIndexAccessor }] =
     closureSignals;
-  for (let i = closureSignals.length; i--; ) closureSignals[i].K = i;
+  for (let i = closureSignals.length; i--; ) closureSignals[i].J = i;
   return (scope) => {
     if (scope[___scopeInstancesAccessor])
       for (let childScope of scope[___scopeInstancesAccessor])
@@ -1169,17 +1168,17 @@ function dynamicClosure(...closureSignals) {
 function dynamicClosureRead(valueAccessor, fn, getOwnerScope) {
   let childSignal = closure(valueAccessor, fn, getOwnerScope),
     closureSignal = (scope) => {
-      (scope[closureSignal.E] = closureSignal.K),
+      (scope[closureSignal.D] = closureSignal.J),
         childSignal(scope),
         subscribeToScopeSet(
           getOwnerScope ? getOwnerScope(scope) : scope._,
-          closureSignal.D,
+          closureSignal.C,
           scope,
         );
     };
   return (
-    (closureSignal.D = valueAccessor + "!"),
-    (closureSignal.E = valueAccessor + "("),
+    (closureSignal.C = valueAccessor + "!"),
+    (closureSignal.D = valueAccessor + "("),
     closureSignal
   );
 }

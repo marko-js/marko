@@ -27,9 +27,9 @@ const registeredValues: Record<string, unknown> = {};
 class Render implements RenderData {
   declare i: RenderData["i"];
   declare v: RenderData["v"];
+  declare w: RenderData["w"];
   declare r?: RenderData["r"];
   declare private ___currentScopeId: string | undefined;
-  declare private ___data: RenderData;
   declare private ___renders: Renders;
   declare private ___runtimeId: string;
   declare private ___renderId: string;
@@ -39,32 +39,31 @@ class Render implements RenderData {
     _: registeredValues,
   };
   constructor(renders: Renders, runtimeId: string, renderId: string) {
+    Object.assign(this, renders[renderId] as RenderData);
     this.___renders = renders;
     this.___runtimeId = runtimeId;
     this.___renderId = renderId;
-    this.___data = renders[renderId] as RenderData;
-    this.___resume();
-  }
-  w() {
-    this.___data.w();
+    this.w = ((w) => () => {
+      w();
+      this.___resume();
+    })(this.w);
     this.___resume();
   }
   ___resume() {
-    const data = this.___data;
     const serializeContext = this.___serializeContext;
     const scopeLookup = this.___scopeLookup;
-    const visits = data.v;
+    const visits = this.v;
     const branchIds = new Set<string>();
     const parentBranchIds = new Map<string, string>();
 
     if (visits.length) {
-      const commentPrefix = data.i;
+      const commentPrefix = this.i;
       const commentPrefixLen = commentPrefix.length;
       const closestBranchMarkers = new Map<string, Comment>();
       const visitNodes = new Set<ChildNode>(visits);
       let lastEndNode: ChildNode | undefined;
 
-      data.v = [];
+      this.v = [];
 
       const branchEnd = (
         branchId: string,
@@ -158,9 +157,9 @@ class Render implements RenderData {
       }
     }
 
-    const resumes = data.r;
+    const resumes = this.r;
     if (resumes) {
-      data.r = [];
+      this.r = [];
       const len = resumes.length;
       let i = 0;
       try {
