@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.54
+
+### Patch Changes
+
+- [#2560](https://github.com/marko-js/marko/pull/2560) [`d0fda30`](https://github.com/marko-js/marko/commit/d0fda30c6b1819e360b92c3c852dea7ce52a6a1d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where serialized render data was not being properly synchronized with runtime render data.
+
 ## 0.3.53
 
 ### Patch Changes
