@@ -1,8 +1,8 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const tagName = "span";
-  const className = "A";
+  let tagName = "span";
+  let className = "A";
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/0", tagName, {
     class: className

@@ -3,7 +3,7 @@ import _child from "./tags/child.marko";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _scope1_ = new Map();
-  const items = [0, 1];
+  let items = [0, 1];
   _$.write(`<button>Push</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   _$.resumeSingleNodeForOf(items, (outer, _index2) => {
     const _scope1_id = _$.nextScopeId();

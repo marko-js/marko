@@ -6,7 +6,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       value
     }) => {
       const _scope1_id = _$.nextScopeId();
-      const call = 1;
+      let call = 1;
       const _return = _$.register(function () {
         if (call) {
           call--;
@@ -24,7 +24,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       return _return;
     }, _scope0_id)
   };
-  const clickOnceCount = 0;
+  let clickOnceCount = 0;
   const _dynamicScope = _$.peekNextScope();
   const onClickOnce = _$.dynamicTagInput(_scope0_id, "#text/0", Once, {
     value: _$.register(function () {
@@ -38,7 +38,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       value
     }) => {
       const _scope2_id = _$.nextScopeId();
-      const call = 2;
+      let call = 2;
       const _return2 = _$.register(function () {
         if (call) {
           call--;
@@ -56,7 +56,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       return _return2;
     }, _scope0_id)
   };
-  const clickTwiceCount = 0;
+  let clickTwiceCount = 0;
   const _dynamicScope2 = _$.peekNextScope();
   const onClickTwice = _$.dynamicTagInput(_scope0_id, "#text/4", Twice, {
     value: _$.register(function () {

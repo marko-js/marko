@@ -1,7 +1,7 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const x = 1;
+  let x = 1;
   _$.write("<span>child</span>");
   const _return = x + 3;
   _$.resumeClosestBranch(_scope0_id);

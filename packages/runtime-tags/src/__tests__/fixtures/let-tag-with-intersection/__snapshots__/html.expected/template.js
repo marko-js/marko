@@ -1,7 +1,7 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const x = 1;
+  let x = 1;
   const y = x + 1;
   const z = x + 2;
   const a = y + z;

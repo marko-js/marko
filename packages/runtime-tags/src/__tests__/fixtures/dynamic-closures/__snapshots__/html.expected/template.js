@@ -5,7 +5,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   const _scope0_id = _$.nextScopeId();
   const _c_closures = new Set();
   const b = 2;
-  const c = 3;
+  let c = 3;
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   _customTag({
     content: /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", () => {

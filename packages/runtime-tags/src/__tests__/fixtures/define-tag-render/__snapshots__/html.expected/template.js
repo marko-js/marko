@@ -6,7 +6,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       name
     }) => {
       const _scope1_id = _$.nextScopeId();
-      const y = 1;
+      let y = 1;
       _$.write(`<div>Hello <!>${_$.escapeXML(name)}${_$.markResumeNode(_scope1_id, "#text/0")} <!>${_$.escapeXML(y)}${_$.markResumeNode(_scope1_id, "#text/1")}</div><button>${_$.escapeXML(y)}${_$.markResumeNode(_scope1_id, "#text/3")}</button>${_$.markResumeNode(_scope1_id, "#button/2")}`);
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_y");
       _$.writeScope(_scope1_id, {

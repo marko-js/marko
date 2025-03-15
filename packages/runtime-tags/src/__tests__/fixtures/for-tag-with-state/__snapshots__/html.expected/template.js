@@ -7,7 +7,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     const _scope1_id = _$.nextScopeId();
     _$.write(`<div>${_$.escapeXML(i)}: ${_$.escapeXML(val)}</div>`);
   });
-  const arrB = [1, 2, 3];
+  let arrB = [1, 2, 3];
   _$.resumeSingleNodeForOf(arrB, (val, i) => {
     const _scope2_id = _$.nextScopeId();
     _scope2_.set(i, _$.ensureScopeWithId(_scope2_id));

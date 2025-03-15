@@ -3,7 +3,7 @@ import _child from "./tags/child.marko";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _scope1_ = new Map();
-  const items = [1, 2, 3];
+  let items = [1, 2, 3];
   const el = _$.nodeRef();
   const write = _$.register(function (msg) {
     el().innerHTML += '\n' + msg;

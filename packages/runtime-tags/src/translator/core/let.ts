@@ -123,7 +123,7 @@ export default {
           return t.callExpression(signal.identifier, [scope, value]);
         };
       } else {
-        translateVar(tag, valueAttr.value);
+        translateVar(tag, valueAttr.value, "let");
 
         if (valueChangeAttr) {
           setSerializedProperty(

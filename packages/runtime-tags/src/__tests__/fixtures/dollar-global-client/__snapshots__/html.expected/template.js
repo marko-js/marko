@@ -3,7 +3,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   const _scope0_id = _$.nextScopeId();
   let _ifScopeId, _ifBranch;
   let _ifScopeId2, _ifBranch2;
-  const show = false;
+  let show = false;
   _$.write("<div>");
   _$.resumeSingleNodeConditional(() => {
     if (show) {

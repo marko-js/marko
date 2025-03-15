@@ -2,7 +2,7 @@ import _checkbox from "./tags/checkbox.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const checkedValue = ["a", "b"];
+  let checkedValue = ["a", "b"];
   const _checkedValueChange = _$.register(_new_checkedValue => {
     checkedValue = _new_checkedValue;
   }, "__tests__/template.marko_0/_checkedValueChange", _scope0_id);

@@ -17,7 +17,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       setHtml
     }, "__tests__/template.marko", "1:2");
   });
-  const to = 3;
+  let to = 3;
   _$.write("<hr>");
   _$.resumeSingleNodeForTo(to, 0, 1, _value2 => {
     const _scope2_id = _$.nextScopeId();

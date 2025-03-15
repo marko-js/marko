@@ -1,7 +1,7 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-let.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const value = input.value;
+  let value = input.value;
   const _return = value;
   _$.writeScope(_scope0_id, {
     "@": _$.register(_new_value => {

@@ -4,9 +4,9 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   const _scope0_id = _$.nextScopeId();
   const _showInner_closures = new Set();
   let _ifScopeId3, _ifBranch3;
-  const showOuter = true;
-  const showMiddle = true;
-  const showInner = true;
+  let showOuter = true;
+  let showMiddle = true;
+  let showInner = true;
   const el = _$.nodeRef();
   const write = _$.register(function (msg) {
     el().innerHTML += '\n' + msg;

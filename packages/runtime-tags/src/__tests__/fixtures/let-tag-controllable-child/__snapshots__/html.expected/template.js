@@ -2,7 +2,7 @@ import _child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const source = 1;
+  let source = 1;
   const _childScope = _$.peekNextScope();
   _child({
     value: source,

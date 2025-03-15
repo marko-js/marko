@@ -2,8 +2,8 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _scope1_ = new Map();
-  const options = [1, 2, 3];
-  const value = options[0];
+  let options = [1, 2, 3];
+  let value = options[0];
   _$.controllable_select_value(_scope0_id, "#select/0", value, _$.register(_new_value => {
     value = _new_value;
   }, "__tests__/template.marko_0/valueChange", _scope0_id), () => {

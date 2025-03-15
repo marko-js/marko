@@ -2,8 +2,8 @@ import _counters from "./tags/2counters.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const count1 = 0;
-  const count2 = 0;
+  let count1 = 0;
+  let count2 = 0;
   const _childScope = _$.peekNextScope();
   _counters({
     count1: count1,

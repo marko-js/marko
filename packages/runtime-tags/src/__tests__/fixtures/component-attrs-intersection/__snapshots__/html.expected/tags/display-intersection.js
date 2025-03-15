@@ -4,7 +4,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/tags/display-intersec
   const {
     value
   } = input;
-  const dummy = {};
+  let dummy = {};
   _$.write(`<div>${_$.escapeXML((dummy, value))}${_$.markResumeNode(_scope0_id, "#text/0")}</div>`);
   _$.writeScope(_scope0_id, {
     value,

@@ -7,7 +7,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   const tagVar = "tag var";
   console.log(tagVar);
   console.log(staticVar);
-  const output = JSON.stringify(testLog);
+  let output = JSON.stringify(testLog);
   _$.write(`<!>${_$.escapeXML(output)}${_$.markResumeNode(_scope0_id, "#text/0")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.resumeClosestBranch(_scope0_id);

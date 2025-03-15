@@ -2,7 +2,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _x_closures = new Set();
-  const x = 1;
+  let x = 1;
   const MyTag = {
     content: /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", () => {
       const _scope1_id = _$.nextScopeId();

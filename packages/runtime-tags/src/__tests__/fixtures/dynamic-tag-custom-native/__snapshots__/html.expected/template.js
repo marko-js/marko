@@ -2,7 +2,7 @@ import child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const tagName = child;
+  let tagName = child;
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/1", tagName, {

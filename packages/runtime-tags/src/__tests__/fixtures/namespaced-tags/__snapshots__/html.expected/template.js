@@ -2,8 +2,8 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _input_value__closures = new Set();
-  const Parent = "div";
-  const Child = "a";
+  let Parent = "div";
+  let Child = "a";
   const el = _$.nodeRef();
   _$.write(`<div><svg>${_$.toString(input.value)}${_$.markResumeNode(_scope0_id, "#text/1")}`);
   const _dynamicScope = _$.peekNextScope();

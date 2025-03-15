@@ -2,8 +2,8 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _scope1_ = new Map();
-  const open = true;
-  const list = [1, 2, 3];
+  let open = true;
+  let list = [1, 2, 3];
   _$.write(`<ul${_$.attr("hidden", !open)}>`);
   const _by = function (x) {
     return x;

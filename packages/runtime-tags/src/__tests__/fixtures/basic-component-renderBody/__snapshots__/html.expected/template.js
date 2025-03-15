@@ -3,7 +3,7 @@ import _myButton from "./tags/my-button.marko";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _clickCount_closures = new Set();
-  const clickCount = 0;
+  let clickCount = 0;
   const _childScope = _$.peekNextScope();
   _myButton({
     onClick: _$.register(function () {

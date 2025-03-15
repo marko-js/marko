@@ -2,8 +2,8 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   let _ifScopeId, _ifBranch;
-  const show = true;
-  const count = 0;
+  let show = true;
+  let count = 0;
   _$.write(`<button class=inc></button>${_$.markResumeNode(_scope0_id, "#button/0")}<button class=toggle></button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.resumeSingleNodeConditional(() => {
     if (show) {

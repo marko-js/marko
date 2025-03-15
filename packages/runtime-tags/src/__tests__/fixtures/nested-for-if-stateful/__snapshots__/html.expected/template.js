@@ -3,11 +3,11 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   const _scope0_id = _$.nextScopeId();
   const _counts_closures = new Set();
   const _scope1_ = new Map();
-  const counts = [0, 0, 0];
+  let counts = [0, 0, 0];
   _$.resumeSingleNodeForOf(counts, (count, i) => {
     const _scope1_id = _$.nextScopeId();
     let _ifScopeId, _ifBranch;
-    const editing = false;
+    let editing = false;
     _$.resumeSingleNodeConditional(() => {
       if (editing) {
         const _scope2_id = _$.nextScopeId();

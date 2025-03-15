@@ -2,7 +2,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _scope1_ = new Map();
-  const children = [1];
+  let children = [1];
   _$.write(`<div${_$.attr("data-children", children.length)}>Before `);
   _$.resumeForOf(children, (_list, _index) => {
     const _scope1_id = _$.nextScopeId();
