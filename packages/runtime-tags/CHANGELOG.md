@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 0.3.57
+
+### Patch Changes
+
+- [#2566](https://github.com/marko-js/marko/pull/2566) [`4a2e2e3`](https://github.com/marko-js/marko/commit/4a2e2e3e997b4b35b813969924ffc65f6e6399b4) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where selection range was being applied to incompatible input nodes.
+
+- [#2568](https://github.com/marko-js/marko/pull/2568) [`7ebd673`](https://github.com/marko-js/marko/commit/7ebd673c969b83f24f378dca182b218e8230cfb8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with html-script, html-style and html-comment causing extra placeholder bindings to be registered.
+
 ## 0.3.56
 
 ### Patch Changes
