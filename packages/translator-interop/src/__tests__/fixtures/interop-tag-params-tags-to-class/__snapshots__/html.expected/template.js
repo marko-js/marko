@@ -4,7 +4,7 @@ import _classLayout from "./components/class-layout.marko";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _multiplier_closures = new Set();
-  const multiplier = 1;
+  let multiplier = 1;
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/0", _classLayout, {}, _$.registerContent("__tests__/template.marko_1_renderer", (baseCount, message) => {
     const _scope1_id = _$.nextScopeId();

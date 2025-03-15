@@ -12,7 +12,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.write(`<div></div>${_$.markResumeNode(_scope1_id, "#div/0")}`);
     _$.writeScope(_scope1_id, {}, "__tests__/template.marko", "1:2");
   });
-  const to = 3;
+  let to = 3;
   _$.write("<hr>");
   _$.resumeSingleNodeForTo(to, 0, 1, _value2 => {
     const _scope2_id = _$.nextScopeId();

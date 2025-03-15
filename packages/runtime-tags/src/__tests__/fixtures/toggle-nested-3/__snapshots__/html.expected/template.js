@@ -3,9 +3,9 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   const _scope0_id = _$.nextScopeId();
   const _count_closures = new Set();
   let _ifScopeId2, _ifBranch2;
-  const outer = true;
-  const inner = true;
-  const count = 0;
+  let outer = true;
+  let inner = true;
+  let count = 0;
   _$.write(`<div><button id=outer></button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   _$.resumeConditional(() => {
     if (outer) {

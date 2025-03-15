@@ -2,7 +2,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   let _ifScopeId, _ifBranch;
-  const show = true;
+  let show = true;
   const el = _$.nodeRef();
   _$.write(`<button>Toggle</button>${_$.markResumeNode(_scope0_id, "#button/0")}<pre></pre>${_$.markResumeNode(_scope0_id, "#pre/1")}`);
   _$.resumeSingleNodeConditional(() => {

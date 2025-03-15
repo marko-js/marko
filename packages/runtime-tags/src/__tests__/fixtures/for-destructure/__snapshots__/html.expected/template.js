@@ -2,8 +2,8 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _scope1_ = new Map();
-  const id = 0;
-  const items = [{
+  let id = 0;
+  let items = [{
     name: "Marko",
     description: "HTML Reimagined"
   }];

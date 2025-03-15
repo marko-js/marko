@@ -3,7 +3,7 @@ import _counter from "./tags/counter.marko";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   let _ifScopeId, _ifBranch;
-  const show = true;
+  let show = true;
   const onCount = _$.register(function (count) {
     show = count < 1;
   }, "__tests__/template.marko_0/onCount", _scope0_id);

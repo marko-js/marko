@@ -2,7 +2,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   let _ifScopeId, _ifBranch;
-  const hide = undefined;
+  let hide = undefined;
   _$.resumeSingleNodeConditional(() => {
     if (!hide) {
       const _scope1_id = _$.nextScopeId();

@@ -4,7 +4,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   debugger;
   const x = 0;
   debugger;
-  const y = 0;
+  let y = 0;
   debugger;
   _$.resumeClosestBranch(_scope0_id);
 });

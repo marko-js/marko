@@ -1,8 +1,8 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/components/custom-tag.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const x = 1;
-  const y = 10;
+  let x = 1;
+  let y = 10;
   _$.write(`<button class=inc>${_$.escapeXML(x)}${_$.markResumeNode(_scope0_id, "#text/1")},<!>${_$.escapeXML(y)}${_$.markResumeNode(_scope0_id, "#text/2")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagArgs(_scope0_id, "#text/3", input.content, [x, y]);

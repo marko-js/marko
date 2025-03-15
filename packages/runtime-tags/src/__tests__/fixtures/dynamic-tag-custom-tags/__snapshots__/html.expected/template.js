@@ -3,8 +3,8 @@ import child2 from "./tags/child2.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const tagName = child1;
-  const val = 3;
+  let tagName = child1;
+  let val = 3;
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/0", tagName, {
     value: val

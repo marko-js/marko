@@ -2,7 +2,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _scope1_ = new Map();
-  const num = 0;
+  let num = 0;
   _$.resumeSingleNodeForTo(num, 0, 1, i => {
     const _scope1_id = _$.nextScopeId();
     _scope1_.set(i, _$.ensureScopeWithId(_scope1_id));

@@ -7,7 +7,7 @@ const _content = input => {
     const _scope1_id = _$.nextScopeId();
     let _ifScopeId, _ifBranch;
     const id = `${input.path || "c"}-${i}`;
-    const open = true;
+    let open = true;
     _$.write(`<li${_$.attr("id", id)}${_$.attr("hidden", !open)}><span>${_$.escapeXML(comment.text)}${_$.markResumeNode(_scope1_id, "#text/1")}</span><button>${_$.escapeXML(open ? "[-]" : "[+]")}${_$.markResumeNode(_scope1_id, "#text/3")}</button>${_$.markResumeNode(_scope1_id, "#button/2")}`);
     _$.resumeSingleNodeConditional(() => {
       if (comment.comments) {

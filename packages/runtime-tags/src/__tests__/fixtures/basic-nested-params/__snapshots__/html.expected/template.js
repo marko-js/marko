@@ -3,8 +3,8 @@ import _child from "./tags/child.marko";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _y_closures = new Set();
-  const x = 1;
-  const y = 2;
+  let x = 1;
+  let y = 2;
   _$.write(`<button>Inc</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   const _childScope2 = _$.peekNextScope();
   _child({

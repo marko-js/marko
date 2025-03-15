@@ -1,7 +1,7 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const value = "b";
+  let value = "b";
   _$.controllable_select_value(_scope0_id, "#select/0", value, _$.register(function (v) {
     value = v;
   }, "__tests__/template.marko_0/valueChange", _scope0_id), () => {

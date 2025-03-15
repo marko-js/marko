@@ -18,7 +18,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   const _scope3_ = new Map();
   const _scope4_ = new Map();
   const _scope5_ = new Map();
-  const items = [{
+  let items = [{
     id: 0,
     text: "first"
   }, {

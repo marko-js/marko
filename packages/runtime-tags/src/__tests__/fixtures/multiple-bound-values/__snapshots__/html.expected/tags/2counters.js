@@ -1,8 +1,8 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/2counters.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const count1 = input.count1;
-  const count2 = input.count2;
+  let count1 = input.count1;
+  let count2 = input.count2;
   _$.write(`<button>${_$.escapeXML(count1)}${_$.markResumeNode(_scope0_id, "#text/1")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}<button>${_$.escapeXML(count2)}${_$.markResumeNode(_scope0_id, "#text/3")}</button>${_$.markResumeNode(_scope0_id, "#button/2")}`);
   _$.writeEffect(_scope0_id, "__tests__/tags/2counters.marko_0_count2");
   _$.writeEffect(_scope0_id, "__tests__/tags/2counters.marko_0_count1");
