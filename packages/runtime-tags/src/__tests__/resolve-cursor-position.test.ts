@@ -73,10 +73,10 @@ describe("resolveCursorPosition", () => {
       const expectedPosition = updated.indexOf("|");
       const updatedValue = updated.replace("|", "");
       let actualPosition = resolveCursorPosition(
-        updated.replace("|", ""),
-        initial.replace("|", ""),
-        initialPosition,
         inputType || "",
+        initialPosition,
+        initial.replace("|", ""),
+        updated.replace("|", ""),
       );
 
       if (actualPosition === -1) {

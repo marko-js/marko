@@ -1,4 +1,4 @@
-// size: 18027 (min) 6806 (brotli)
+// size: 18003 (min) 6796 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -453,38 +453,41 @@ function controllable_detailsOrDialog_open_effect(scope, nodeAccessor) {
 }
 var inputType = "";
 function setValueAndUpdateSelection(el, value2) {
-  let initialValue = el.value;
-  if (initialValue !== value2)
-    if (el.getRootNode().activeElement === el) {
-      let initialPosition = el.selectionStart;
-      el.value = value2;
-      let updatedPosition = (function (
-        updatedValue,
-        initialValue,
-        initialPosition,
-        inputType2,
+  if (el.value !== value2) {
+    let updatedPosition = (function (
+      inputType2,
+      initialPosition,
+      initialValue,
+      updatedValue,
+    ) {
+      if (
+        (initialPosition || 0 === initialPosition) &&
+        (initialPosition !== initialValue.length || /kw/.test(inputType2))
       ) {
-        if (initialPosition !== initialValue.length || /kw/.test(inputType2)) {
-          let before = initialValue.slice(0, initialPosition),
-            after = initialValue.slice(initialPosition);
-          if (updatedValue.startsWith(before)) return initialPosition;
-          if (updatedValue.endsWith(after))
-            return updatedValue.length - after.length;
-          {
-            let relevantChars = stripSpacesAndPunctuation(before).length,
-              pos = 0,
-              relevantIndex = 0;
-            for (; relevantIndex < relevantChars; )
-              stripSpacesAndPunctuation(updatedValue[pos]) && relevantIndex++,
-                pos++;
-            return pos;
-          }
+        let before = initialValue.slice(0, initialPosition),
+          after = initialValue.slice(initialPosition);
+        if (updatedValue.startsWith(before)) return initialPosition;
+        if (updatedValue.endsWith(after))
+          return updatedValue.length - after.length;
+        {
+          let relevantChars = stripSpacesAndPunctuation(before).length,
+            pos = 0,
+            relevantIndex = 0;
+          for (; relevantIndex < relevantChars; )
+            stripSpacesAndPunctuation(updatedValue[pos]) && relevantIndex++,
+              pos++;
+          return pos;
         }
-        return -1;
-      })(el.value, initialValue, initialPosition, inputType);
-      ~updatedPosition &&
-        el.setSelectionRange(updatedPosition, updatedPosition);
-    } else el.value = value2;
+      }
+      return -1;
+    })(
+      inputType,
+      el.getRootNode().activeElement === el && el.selectionStart,
+      el.value,
+      (el.value = value2),
+    );
+    ~updatedPosition && (el.selectionStart = updatedPosition);
+  }
 }
 function setCheckboxValue(scope, nodeAccessor, type, checked, checkedChange) {
   (scope[nodeAccessor + ";"] = checkedChange),
