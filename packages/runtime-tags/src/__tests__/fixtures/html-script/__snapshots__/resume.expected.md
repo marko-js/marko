@@ -14,11 +14,16 @@
 
     </script>
     <!--M_*1 #script/0-->
+  </head>
+  <body>
+    <div>
+      0
+      <!--M_*1 #text/1-->
+    </div>
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{count:0}}),1,"__tests__/template.marko_0_count",0];M._.w()
     </script>
-  </head>
-  <body />
+  </body>
 </html>
 ```
 
@@ -42,18 +47,24 @@ container.querySelector("script").click();
 
     </script>
     <!--M_*1 #script/0-->
+  </head>
+  <body>
+    <div>
+      1
+      <!--M_*1 #text/1-->
+    </div>
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{count:0}}),1,"__tests__/template.marko_0_count",0];M._.w()
     </script>
-  </head>
-  <body />
+  </body>
 </html>
 ```
 
 # Mutations
 ```
-REMOVE #text in html/head/script0
-INSERT html/head/script0/#text
+REMOVE #text in html/head/script
+INSERT html/head/script/#text
+UPDATE html/body/div/#text "0" => "1"
 ```
 
 # Render
@@ -75,18 +86,24 @@ container.querySelector("script").click();
 
     </script>
     <!--M_*1 #script/0-->
+  </head>
+  <body>
+    <div>
+      2
+      <!--M_*1 #text/1-->
+    </div>
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{count:0}}),1,"__tests__/template.marko_0_count",0];M._.w()
     </script>
-  </head>
-  <body />
+  </body>
 </html>
 ```
 
 # Mutations
 ```
-REMOVE #text in html/head/script0
-INSERT html/head/script0/#text
+REMOVE #text in html/head/script
+INSERT html/head/script/#text
+UPDATE html/body/div/#text "1" => "2"
 ```
 
 # Render
@@ -108,16 +125,22 @@ container.querySelector("script").click();
 
     </script>
     <!--M_*1 #script/0-->
+  </head>
+  <body>
+    <div>
+      3
+      <!--M_*1 #text/1-->
+    </div>
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{count:0}}),1,"__tests__/template.marko_0_count",0];M._.w()
     </script>
-  </head>
-  <body />
+  </body>
 </html>
 ```
 
 # Mutations
 ```
-REMOVE #text in html/head/script0
-INSERT html/head/script0/#text
+REMOVE #text in html/head/script
+INSERT html/head/script/#text
+UPDATE html/body/div/#text "2" => "3"
 ```

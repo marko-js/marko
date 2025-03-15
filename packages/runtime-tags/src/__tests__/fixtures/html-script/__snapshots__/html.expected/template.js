@@ -8,7 +8,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       "${_$.escapeScript(count)}": "https://markojs.com",
     }
   }
-</script>${_$.markResumeNode(_scope0_id, "#script/0")}`);
+</script>${_$.markResumeNode(_scope0_id, "#script/0")}<div>${_$.escapeXML(count)}${_$.markResumeNode(_scope0_id, "#text/1")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope(_scope0_id, {
     count

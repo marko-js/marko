@@ -11,11 +11,14 @@
   }
 
 </script>
+<div>
+  0
+</div>
 ```
 
 # Mutations
 ```
-INSERT script
+INSERT script, div
 ```
 
 # Render
@@ -34,12 +37,16 @@ container.querySelector("script").click();
   }
 
 </script>
+<div>
+  1
+</div>
 ```
 
 # Mutations
 ```
 REMOVE #text in script
 INSERT script/#text
+UPDATE div/#text "0" => "1"
 ```
 
 # Render
@@ -58,12 +65,16 @@ container.querySelector("script").click();
   }
 
 </script>
+<div>
+  2
+</div>
 ```
 
 # Mutations
 ```
 REMOVE #text in script
 INSERT script/#text
+UPDATE div/#text "1" => "2"
 ```
 
 # Render
@@ -82,10 +93,14 @@ container.querySelector("script").click();
   }
 
 </script>
+<div>
+  3
+</div>
 ```
 
 # Mutations
 ```
 REMOVE #text in script
 INSERT script/#text
+UPDATE div/#text "2" => "3"
 ```
