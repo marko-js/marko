@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.55
+
+### Patch Changes
+
+- [#2562](https://github.com/marko-js/marko/pull/2562) [`d747ef7`](https://github.com/marko-js/marko/commit/d747ef7397d25b9f55e24e3b0f989460a4a7fb8b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue referencing unbound walker code.
+
 ## 0.3.54
 
 ### Patch Changes
