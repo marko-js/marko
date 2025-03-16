@@ -7,6 +7,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../common/types";
+import isInvokedFunction from "../util/is-invoked-function";
 import { isOutputHTML } from "../util/marko-config";
 import {
   type Binding,
@@ -60,7 +61,7 @@ export default {
       needsBinding = true;
 
       for (const ref of tag.scope.getBinding(tagVar.name)!.referencePaths) {
-        if (!ref.parentPath?.isCallExpression()) {
+        if (!isInvokedFunction(ref)) {
           needsGetter = true;
           break;
         }
@@ -134,7 +135,7 @@ export default {
         }
         for (const reference of references) {
           const referenceSection = getSection(reference);
-          if (reference.parentPath?.isCallExpression()) {
+          if (isInvokedFunction(reference)) {
             reference.parentPath.replaceWith(
               t.expressionStatement(
                 createScopeReadExpression(referenceSection, commentBinding!),

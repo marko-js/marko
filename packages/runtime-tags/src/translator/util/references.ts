@@ -497,10 +497,7 @@ function trackReference(
       continue;
     }
 
-    if (
-      root.parentPath.parentPath!.isCallExpression() &&
-      !isEventOrChangeHandler(prop)
-    ) {
+    if (isInvokedFunction(root.parentPath) && !isEventOrChangeHandler(prop)) {
       break;
     }
 
