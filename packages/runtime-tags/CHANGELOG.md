@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 0.3.58
+
+### Patch Changes
+
+- [#2569](https://github.com/marko-js/marko/pull/2569) [`dcff748`](https://github.com/marko-js/marko/commit/dcff7484e99791b921a5f4b5ee7064f5404a027a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor and optimize owner serialization in the compiler.
+
+- [#2569](https://github.com/marko-js/marko/pull/2569) [`0e93548`](https://github.com/marko-js/marko/commit/0e93548f67c29007f80a4b946c8a1cbbdfe3893b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Use invoked function helper in more places to avoid unnecessary deopts.
+
 ## 0.3.57
 
 ### Patch Changes
