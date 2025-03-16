@@ -39,8 +39,8 @@ import {
   addHTMLEffectCall,
   addStatement,
   getRegisterUID,
+  serializeOwners,
   setForceResumeScope,
-  setSerializedProperty,
 } from "../../util/signals";
 import { toObjectProperty } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
@@ -326,19 +326,7 @@ export default {
           for (const reference of varBinding.referencePaths) {
             const referenceSection = getSection(reference);
             if (!reference.node.extra?.hoist) {
-              let currentSection = referenceSection;
-              while (currentSection !== section && currentSection.parent) {
-                setSerializedProperty(
-                  currentSection,
-                  "_",
-                  callRuntime(
-                    "ensureScopeWithId",
-                    getScopeIdIdentifier(
-                      (currentSection = currentSection.parent!),
-                    ),
-                  ),
-                );
-              }
+              serializeOwners(referenceSection, section);
             }
           }
 

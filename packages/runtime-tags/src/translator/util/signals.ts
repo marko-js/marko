@@ -1004,28 +1004,13 @@ export function writeHTMLResumeStatements(
 
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
-  const serializeOwnersUntilBindingSection = (binding: Binding) => {
-    let currentSection = section;
-    while (currentSection !== binding.section) {
-      const currentSerialized = getSerializedScopeProperties(currentSection);
-      currentSection = currentSection.parent!;
-      if (!currentSerialized.has("_")) {
-        currentSerialized.set(
-          "_",
-          callRuntime(
-            "ensureScopeWithId",
-            getScopeIdIdentifier(currentSection),
-          ),
-        );
-      }
-    }
-  };
-
-  forEach(section.assignments, serializeOwnersUntilBindingSection);
-  forEach(section.referencedHoists, serializeOwnersUntilBindingSection);
+  const serializeOwnersUntilBinding = (binding: Binding) =>
+    serializeOwners(section, binding.section);
+  forEach(section.assignments, serializeOwnersUntilBinding);
+  forEach(section.referencedHoists, serializeOwnersUntilBinding);
   forEach(section.referencedClosures, (closure) => {
     if (isStatefulReferences(closure)) {
-      serializeOwnersUntilBindingSection(closure);
+      serializeOwnersUntilBinding(closure);
       setForceResumeScope(closure.section);
       if (isDynamicClosure(section, closure)) {
         const closureSignal = getSignal(closure.section, closure);
@@ -1273,6 +1258,22 @@ export function writeHTMLResumeStatements(
   const returnIdentifier = getSectionReturnValueIdentifier(section);
   if (returnIdentifier !== undefined) {
     path.pushContainer("body", t.returnStatement(returnIdentifier));
+  }
+}
+
+export function serializeOwners(from: Section, to?: Section) {
+  let cur = from;
+  while (cur !== to) {
+    const parent = cur.parent;
+    if (!parent) break;
+    const serialized = getSerializedScopeProperties(cur);
+    cur = parent;
+    if (!serialized.has("_")) {
+      serialized.set(
+        "_",
+        callRuntime("ensureScopeWithId", getScopeIdIdentifier(cur)),
+      );
+    }
   }
 }
 

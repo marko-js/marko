@@ -34,7 +34,7 @@ import {
   addHTMLEffectCall,
   addStatement,
   getRegisterUID,
-  setSerializedProperty,
+  serializeOwners,
 } from "../util/signals";
 import { toObjectProperty } from "../util/to-property-name";
 import { propsToExpression } from "../util/translate-attrs";
@@ -172,17 +172,7 @@ export default {
         const varName = (tag.node.var as t.Identifier).name;
         const references = tag.scope.getBinding(varName)!.referencePaths;
         for (const reference of references) {
-          let currentSection = getSection(reference);
-          while (currentSection !== section && currentSection.parent) {
-            setSerializedProperty(
-              currentSection,
-              "_",
-              callRuntime(
-                "ensureScopeWithId",
-                getScopeIdIdentifier((currentSection = currentSection.parent!)),
-              ),
-            );
-          }
+          serializeOwners(getSection(reference), section);
         }
 
         translateVar(
