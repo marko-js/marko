@@ -12,6 +12,7 @@ import {
 import { getEventHandlerName, isEventHandler } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
 import evaluate from "../util/evaluate";
+import isInvokedFunction from "../util/is-invoked-function";
 import { isOutputHTML } from "../util/marko-config";
 import {
   BindingType,
@@ -150,7 +151,7 @@ export default {
 
       if (node.var) {
         for (const ref of tag.scope.getBinding(node.var.name)!.referencePaths) {
-          if (!ref.parentPath?.isCallExpression()) {
+          if (!isInvokedFunction(ref)) {
             tagExtra[kGetterId] = getRegisterUID(section, bindingName);
             break;
           }
@@ -208,7 +209,7 @@ export default {
 
         for (const reference of references) {
           const referenceSection = getSection(reference);
-          if (reference.parentPath?.isCallExpression()) {
+          if (isInvokedFunction(reference)) {
             reference.parentPath.replaceWith(
               t.expressionStatement(
                 createScopeReadExpression(referenceSection, nodeRef!),
