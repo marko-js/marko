@@ -1,6 +1,6 @@
 # Write
 ```html
-  <input value=a checked type=checkbox><!--M_*1 #input/0--><input value=b checked type=checkbox><!--M_*1 #input/1--><input value=c type=checkbox><!--M_*1 #input/2--><span>a,b<!--M_*1 #text/3--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={1:_.a={"#input/0=":1,"#input/0:":_.b=["a","b"],"#input/1=":1,"#input/1:":_.b,"#input/2=":1,"#input/2:":_.b,checkedValue:_.b}},_.a["#input/0;"]=_.a["#input/1;"]=_.a["#input/2;"]=_.a._checkedValueChange=_._["__tests__/template.marko_0/_checkedValueChange"](_.a),_.c),1,"__tests__/template.marko_0",0];M._.w()</script>
+  <input value=a checked type=checkbox><!--M_*1 #input/0--><input value=b checked type=checkbox><!--M_*1 #input/1--><input value=c type=checkbox><!--M_*1 #input/2--><span>a,b<!--M_*1 #text/3--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={1:_.a={"#input/0=":1,"#input/0:":_.b=["a","b"],"#input/1=":1,"#input/1:":_.b,"#input/2=":1,"#input/2:":_.b,checkedValue:_.b}},_.a["#input/0;"]=_.a["#input/1;"]=_.a["#input/2;"]=_.a._checkedValueChange=_._["__tests__/template.marko_0/_checkedValueChange"](_.a),_.c),1,"__tests__/template.marko_0"];M._.w()</script>
 ```
 
 # Render End
@@ -30,7 +30,7 @@
       <!--M_*1 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#input/0=":1,"#input/0:":_.b=["a","b"],"#input/1=":1,"#input/1:":_.b,"#input/2=":1,"#input/2:":_.b,checkedValue:_.b}},_.a["#input/0;"]=_.a["#input/1;"]=_.a["#input/2;"]=_.a._checkedValueChange=_._["__tests__/template.marko_0/_checkedValueChange"](_.a),_.c),1,"__tests__/template.marko_0",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#input/0=":1,"#input/0:":_.b=["a","b"],"#input/1=":1,"#input/1:":_.b,"#input/2=":1,"#input/2:":_.b,checkedValue:_.b}},_.a["#input/0;"]=_.a["#input/1;"]=_.a["#input/2;"]=_.a._checkedValueChange=_._["__tests__/template.marko_0/_checkedValueChange"](_.a),_.c),1,"__tests__/template.marko_0"];M._.w()
     </script>
   </body>
 </html>

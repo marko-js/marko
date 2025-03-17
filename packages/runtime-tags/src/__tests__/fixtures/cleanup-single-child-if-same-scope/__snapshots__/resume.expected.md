@@ -17,7 +17,7 @@ mounted
     </div>
     <!--M_|1 #text/2 2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,"#text/2(":0,"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),2,"__tests__/template.marko_1",1,"__tests__/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,"#text/2(":0,"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),2,"__tests__/template.marko_1",1,"__tests__/template.marko_0_show"];M._.w()
     </script>
   </body>
 </html>
@@ -48,7 +48,7 @@ destroyed
     <!--M_*1 #pre/1-->
     <!--M_|1 #text/2 2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,"#text/2(":0,"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),2,"__tests__/template.marko_1",1,"__tests__/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,"#text/2(":0,"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),2,"__tests__/template.marko_1",1,"__tests__/template.marko_0_show"];M._.w()
     </script>
   </body>
 </html>
@@ -86,7 +86,7 @@ mounted
       child
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,"#text/2(":0,"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),2,"__tests__/template.marko_1",1,"__tests__/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,"#text/2(":0,"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),2,"__tests__/template.marko_1",1,"__tests__/template.marko_0_show"];M._.w()
     </script>
   </body>
 </html>
@@ -122,7 +122,7 @@ destroyed
     <!--M_*1 #pre/1-->
     <!--M_|1 #text/2 2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,"#text/2(":0,"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),2,"__tests__/template.marko_1",1,"__tests__/template.marko_0_show",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,"#text/2(":0,"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),2,"__tests__/template.marko_1",1,"__tests__/template.marko_0_show"];M._.w()
     </script>
   </body>
 </html>

@@ -17,7 +17,7 @@
       <!--M_*1 #text/1-->
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["__tests__/template.marko_0/onCount",1]]],"f":1,"p":null}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0!":_.a={m5c:"s0"},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"])},2:_.a}),2,"$compat_setScope",0];M._.w()
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["__tests__/template.marko_0/onCount",1]]],"f":1,"p":null}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0!":_.a={m5c:"s0"},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"])},2:_.a}),2,"$compat_setScope"];M._.w()
     </script>
   </body>
 </html>
@@ -53,7 +53,7 @@ container.querySelector("#class-api").click();
       <!--M_*1 #text/1-->
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["__tests__/template.marko_0/onCount",1]]],"f":1,"p":null}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0!":_.a={m5c:"s0"},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"])},2:_.a}),2,"$compat_setScope",0];M._.w()
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["__tests__/template.marko_0/onCount",1]]],"f":1,"p":null}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0!":_.a={m5c:"s0"},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"])},2:_.a}),2,"$compat_setScope"];M._.w()
     </script>
   </body>
 </html>
@@ -87,7 +87,7 @@ container.querySelector("#class-api").click();
       <!--M_*1 #text/1-->
     </div>
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["__tests__/template.marko_0/onCount",1]]],"f":1,"p":null}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0!":_.a={m5c:"s0"},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"])},2:_.a}),2,"$compat_setScope",0];M._.w()
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"e":[["count",["__tests__/template.marko_0/onCount",1]]],"f":1,"p":null}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0!":_.a={m5c:"s0"},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"])},2:_.a}),2,"$compat_setScope"];M._.w()
     </script>
   </body>
 </html>

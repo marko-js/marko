@@ -19,7 +19,7 @@
       <!--M_*1 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{id:0,items:[]}}),1,"__tests__/template.marko_0_items",1,"__tests__/template.marko_0_id_items",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{id:0,items:[]}}),1,"__tests__/template.marko_0_items",1,"__tests__/template.marko_0_id_items"];M._.w()
     </script>
   </body>
 </html>
@@ -50,7 +50,7 @@ container.querySelector("#add").click();
       <!--M_*1 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{id:0,items:[]}}),1,"__tests__/template.marko_0_items",1,"__tests__/template.marko_0_id_items",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{id:0,items:[]}}),1,"__tests__/template.marko_0_items",1,"__tests__/template.marko_0_id_items"];M._.w()
     </script>
   </body>
 </html>
@@ -86,7 +86,7 @@ container.querySelector("#add").click();
       <!--M_*1 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{id:0,items:[]}}),1,"__tests__/template.marko_0_items",1,"__tests__/template.marko_0_id_items",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{id:0,items:[]}}),1,"__tests__/template.marko_0_items",1,"__tests__/template.marko_0_id_items"];M._.w()
     </script>
   </body>
 </html>
@@ -121,7 +121,7 @@ container.querySelector("#remove").click();
       <!--M_*1 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{id:0,items:[]}}),1,"__tests__/template.marko_0_items",1,"__tests__/template.marko_0_id_items",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{id:0,items:[]}}),1,"__tests__/template.marko_0_items",1,"__tests__/template.marko_0_id_items"];M._.w()
     </script>
   </body>
 </html>
@@ -156,7 +156,7 @@ container.querySelector("#add").click();
       <!--M_*1 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{id:0,items:[]}}),1,"__tests__/template.marko_0_items",1,"__tests__/template.marko_0_id_items",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{id:0,items:[]}}),1,"__tests__/template.marko_0_items",1,"__tests__/template.marko_0_id_items"];M._.w()
     </script>
   </body>
 </html>
