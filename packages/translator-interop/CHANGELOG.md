@@ -1,5 +1,14 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.19
+
+### Patch Changes
+
+- [#2571](https://github.com/marko-js/marko/pull/2571) [`03339a3`](https://github.com/marko-js/marko/commit/03339a350e10428ea311d24310336d6436a86bc8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor resume api to avoid class.
+
+- Updated dependencies [[`03339a3`](https://github.com/marko-js/marko/commit/03339a350e10428ea311d24310336d6436a86bc8)]:
+  - @marko/runtime-tags@0.3.59
+
 ## 0.2.18
 
 ### Patch Changes
