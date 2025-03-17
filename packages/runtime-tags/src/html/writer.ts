@@ -828,10 +828,6 @@ export function prepareChunk(chunk: Chunk) {
     resumes = resumes ? resumes + "," + effects : effects;
   }
 
-  if (boundary.done && (resumes || state.hasWrittenResume)) {
-    resumes = resumes ? resumes + ",0" : "0";
-  }
-
   if (resumes) {
     if (state.hasWrittenResume) {
       scripts = concatScripts(

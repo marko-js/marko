@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->used to be <span>0<!--M_*1 #text/2--></span> which should be the same as <span>0<!--M_*1 #text/3--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={1:{clickCount:0}}),1,"__tests__/template.marko_0_clickCount",0];M._.w()</script>
+  <button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0-->used to be <span>0<!--M_*1 #text/2--></span> which should be the same as <span>0<!--M_*1 #text/3--></span><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={1:{clickCount:0}}),1,"__tests__/template.marko_0_clickCount"];M._.w()</script>
 ```
 
 # Render End
@@ -24,7 +24,7 @@
       <!--M_*1 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{clickCount:0}}),1,"__tests__/template.marko_0_clickCount",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{clickCount:0}}),1,"__tests__/template.marko_0_clickCount"];M._.w()
     </script>
   </body>
 </html>

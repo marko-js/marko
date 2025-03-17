@@ -60,7 +60,7 @@ export const compat = {
         value.length === 2 &&
           (window as any)[runtimeId]?.[
             componentIdPrefix === "s" ? "_" : componentIdPrefix
-          ]?.___scopeLookup[value[1]],
+          ]?.s[value[1]],
       );
     }
 

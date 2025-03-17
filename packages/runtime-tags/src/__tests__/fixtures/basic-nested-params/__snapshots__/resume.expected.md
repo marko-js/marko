@@ -24,7 +24,7 @@
       <!--M_]2 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={x:1,y:2,"y!":_.h=new Set,"#childScope/1":_.b={value:1,"#text/0!":_.c={outer:1,"outer!":_.g=new Set,"#childScope/0":_.d={value:2,"#text/0!":_.e={"outer(":0},"#text/0(":"__tests__/template.marko_2_renderer"},"y(":0},"#text/0(":"__tests__/template.marko_1_renderer"}},2:_.b,3:_.c,4:_.d,5:_.e},_.b.content=_._["__tests__/template.marko_1_renderer"](_.a),_.d.content=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,(_.g).add(_.e),(_.h).add(_.c),_.f),1,"__tests__/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={x:1,y:2,"y!":_.h=new Set,"#childScope/1":_.b={value:1,"#text/0!":_.c={outer:1,"outer!":_.g=new Set,"#childScope/0":_.d={value:2,"#text/0!":_.e={"outer(":0},"#text/0(":"__tests__/template.marko_2_renderer"},"y(":0},"#text/0(":"__tests__/template.marko_1_renderer"}},2:_.b,3:_.c,4:_.d,5:_.e},_.b.content=_._["__tests__/template.marko_1_renderer"](_.a),_.d.content=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,(_.g).add(_.e),(_.h).add(_.c),_.f),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
   </body>
 </html>
@@ -60,7 +60,7 @@ container.querySelector("button").click();
       <!--M_]2 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={x:1,y:2,"y!":_.h=new Set,"#childScope/1":_.b={value:1,"#text/0!":_.c={outer:1,"outer!":_.g=new Set,"#childScope/0":_.d={value:2,"#text/0!":_.e={"outer(":0},"#text/0(":"__tests__/template.marko_2_renderer"},"y(":0},"#text/0(":"__tests__/template.marko_1_renderer"}},2:_.b,3:_.c,4:_.d,5:_.e},_.b.content=_._["__tests__/template.marko_1_renderer"](_.a),_.d.content=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,(_.g).add(_.e),(_.h).add(_.c),_.f),1,"__tests__/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={x:1,y:2,"y!":_.h=new Set,"#childScope/1":_.b={value:1,"#text/0!":_.c={outer:1,"outer!":_.g=new Set,"#childScope/0":_.d={value:2,"#text/0!":_.e={"outer(":0},"#text/0(":"__tests__/template.marko_2_renderer"},"y(":0},"#text/0(":"__tests__/template.marko_1_renderer"}},2:_.b,3:_.c,4:_.d,5:_.e},_.b.content=_._["__tests__/template.marko_1_renderer"](_.a),_.d.content=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,(_.g).add(_.e),(_.h).add(_.c),_.f),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
   </body>
 </html>
@@ -100,7 +100,7 @@ container.querySelector("button").click();
       <!--M_]2 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={x:1,y:2,"y!":_.h=new Set,"#childScope/1":_.b={value:1,"#text/0!":_.c={outer:1,"outer!":_.g=new Set,"#childScope/0":_.d={value:2,"#text/0!":_.e={"outer(":0},"#text/0(":"__tests__/template.marko_2_renderer"},"y(":0},"#text/0(":"__tests__/template.marko_1_renderer"}},2:_.b,3:_.c,4:_.d,5:_.e},_.b.content=_._["__tests__/template.marko_1_renderer"](_.a),_.d.content=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,(_.g).add(_.e),(_.h).add(_.c),_.f),1,"__tests__/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={x:1,y:2,"y!":_.h=new Set,"#childScope/1":_.b={value:1,"#text/0!":_.c={outer:1,"outer!":_.g=new Set,"#childScope/0":_.d={value:2,"#text/0!":_.e={"outer(":0},"#text/0(":"__tests__/template.marko_2_renderer"},"y(":0},"#text/0(":"__tests__/template.marko_1_renderer"}},2:_.b,3:_.c,4:_.d,5:_.e},_.b.content=_._["__tests__/template.marko_1_renderer"](_.a),_.d.content=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,(_.g).add(_.e),(_.h).add(_.c),_.f),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
   </body>
 </html>
@@ -140,7 +140,7 @@ container.querySelector("button").click();
       <!--M_]2 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={x:1,y:2,"y!":_.h=new Set,"#childScope/1":_.b={value:1,"#text/0!":_.c={outer:1,"outer!":_.g=new Set,"#childScope/0":_.d={value:2,"#text/0!":_.e={"outer(":0},"#text/0(":"__tests__/template.marko_2_renderer"},"y(":0},"#text/0(":"__tests__/template.marko_1_renderer"}},2:_.b,3:_.c,4:_.d,5:_.e},_.b.content=_._["__tests__/template.marko_1_renderer"](_.a),_.d.content=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,(_.g).add(_.e),(_.h).add(_.c),_.f),1,"__tests__/template.marko_0_x",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:_.a={x:1,y:2,"y!":_.h=new Set,"#childScope/1":_.b={value:1,"#text/0!":_.c={outer:1,"outer!":_.g=new Set,"#childScope/0":_.d={value:2,"#text/0!":_.e={"outer(":0},"#text/0(":"__tests__/template.marko_2_renderer"},"y(":0},"#text/0(":"__tests__/template.marko_1_renderer"}},2:_.b,3:_.c,4:_.d,5:_.e},_.b.content=_._["__tests__/template.marko_1_renderer"](_.a),_.d.content=_._["__tests__/template.marko_2_renderer"](_.c),_.e._=_.c,_.c._=_.a,(_.g).add(_.e),(_.h).add(_.c),_.f),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
   </body>
 </html>

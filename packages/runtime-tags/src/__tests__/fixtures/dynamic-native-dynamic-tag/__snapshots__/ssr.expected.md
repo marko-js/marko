@@ -1,6 +1,6 @@
 # Write
 ```html
-  <span class=A>body content</span><!--M_|1 #text/0 2--><button></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:{tagName:"span",className:"A","#text/0!":_.a={},"#text/0(":"span"},2:_.a}),1,"__tests__/template.marko_0_tagName",0];M._.w()</script>
+  <span class=A>body content</span><!--M_|1 #text/0 2--><button></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:{tagName:"span",className:"A","#text/0!":_.a={},"#text/0(":"span"},2:_.a}),1,"__tests__/template.marko_0_tagName"];M._.w()</script>
 ```
 
 # Render End
@@ -17,7 +17,7 @@
     <button />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{tagName:"span",className:"A","#text/0!":_.a={},"#text/0(":"span"},2:_.a}),1,"__tests__/template.marko_0_tagName",0];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{tagName:"span",className:"A","#text/0!":_.a={},"#text/0(":"span"},2:_.a}),1,"__tests__/template.marko_0_tagName"];M._.w()
     </script>
   </body>
 </html>
