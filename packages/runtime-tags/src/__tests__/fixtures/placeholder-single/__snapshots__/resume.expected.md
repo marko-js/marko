@@ -1,0 +1,22 @@
+# Render
+```html
+<html>
+  <head>
+    <style
+      m_=""
+    >
+      t{display:none}
+    </style>
+  </head>
+  <body>
+    abcde
+    <script>
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#text/0!":_.b={"#text/0*":"#text/0"}},2:_.b},_.b["#text/0%"]=_._["__tests__/template.marko_2_renderer"](_.a),_.c)];REORDER_RUNTIME(M._);M._.w()
+    </script>
+    fg
+    <script>
+      M._.w()
+    </script>
+  </body>
+</html>
+```

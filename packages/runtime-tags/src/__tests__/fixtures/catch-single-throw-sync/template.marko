@@ -1,0 +1,8 @@
+-- a
+<try>
+  b${(() => { throw new Error("ERROR!") })()}
+  <@catch|error|>
+    ${error.message}
+  </@catch>
+</try>
+-- d

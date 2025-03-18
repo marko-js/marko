@@ -1,0 +1,14 @@
+import { resolveAfter } from "../../utils/resolve";
+
+-- a
+<try>
+  b
+  <@placeholder>
+    _A_
+  </@placeholder>
+</try>
+-- c
+<await|data|=resolveAfter("d", 1)>
+  ${data}
+</await>
+-- e

@@ -426,9 +426,23 @@ describe("runtime-tags/translator", () => {
           // when the steps for a test contains more than one input,
           // the updates are not run for the resume test
           // so we trim the csrLogs to match the number of resumeLogs
-          const csrLogs = (await csr()).tracker
-            .getRawLogs(true)
-            .slice(0, resumeLogs.length);
+          const isAsyncRender = isWait((config.steps as unknown[])?.[1]);
+          let csrLogs = [...(await csr()).tracker.getRawLogs(true)];
+          let skip = 0;
+          if (isAsyncRender) {
+            while (csrLogs[skip + 1]?.startsWith(`# Render ASYNC`)) {
+              skip++;
+            }
+            for (const resumeLog of resumeLogs.slice(1)) {
+              if (resumeLog.startsWith(`# Render ASYNC`)) {
+                skip--;
+              } else {
+                break;
+              }
+            }
+            csrLogs[skip] = csrLogs[skip].replace(`# Render ASYNC`, `# Render`);
+          }
+          csrLogs = csrLogs.slice(skip, resumeLogs.length + skip);
           assert.strictEqual(
             csrLogs.join("\n\n").replace(/[cs]M_[a-z0-9]+/g, "%id"),
             resumeLogs.join("\n\n").replace(/[cs]M_[a-z0-9]+/g, "%id"),

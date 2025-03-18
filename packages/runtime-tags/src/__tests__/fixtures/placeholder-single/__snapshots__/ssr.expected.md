@@ -1,6 +1,6 @@
 # Write
 ```html
-  a<!--M_!^b-->_A_<!--M_!b-->e<style M_>t{display:none}</style><t M_=b>b<!--M_#c-->d</t><script>WALKER_RUNTIME("M")("_");REORDER_RUNTIME(M._);M._.w()</script>
+  a<!--M_!^b-->_A_<!--M_!b-->e<style M_>t{display:none}</style><t M_=b>b<!--M_#c-->d</t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={1:_.a={"#text/0!":_.b={"#text/0*":"#text/0"}},2:_.b},_.b["#text/0%"]=_._["__tests__/template.marko_2_renderer"](_.a),_.c)];REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Write
@@ -26,7 +26,7 @@
   <body>
     abcde
     <script>
-      WALKER_RUNTIME("M")("_");REORDER_RUNTIME(M._);M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#text/0!":_.b={"#text/0*":"#text/0"}},2:_.b},_.b["#text/0%"]=_._["__tests__/template.marko_2_renderer"](_.a),_.c)];REORDER_RUNTIME(M._);M._.w()
     </script>
     fg
     <script>

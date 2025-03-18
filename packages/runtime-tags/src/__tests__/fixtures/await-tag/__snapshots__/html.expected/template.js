@@ -32,7 +32,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     }, "__tests__/template.marko", "13:4"));
     _$.resumeClosestBranch(_scope3_id);
   });
-  _$.write(`<button>Inc</button>${_$.markResumeNode(_scope0_id, "#button/0")}</div>`);
+  _$.write(`<button>Inc</button>${_$.markResumeNode(_scope0_id, "#button/3")}</div>`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope(_scope0_id, {
     count,

@@ -17,8 +17,10 @@ import runtimeInfo from "./runtime-info";
 import { toMemberExpression } from "./to-property-name";
 
 const pureFunctions: Array<keyof typeof import("../../dom")> = [
+  "awaitTag",
   "conditional",
   "conditionalClosure",
+  "createTry",
   "dynamicTag",
   "createRenderer",
   "createContent",

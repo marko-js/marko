@@ -240,6 +240,8 @@ export function getNodeContentType(
             return ContentType.Tag;
           case "for":
           case "if":
+          case "await":
+          case "try":
             return ContentType.Dynamic;
           default:
             return null;

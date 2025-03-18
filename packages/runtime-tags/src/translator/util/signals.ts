@@ -257,7 +257,9 @@ export function getSignal(
           scopeIdentifier,
           t.identifier(referencedBindings.name),
         ]);
-        return isDynamicClosure(section, referencedBindings)
+        const closureSignalBuilder = getClosureSignalBuilder(section);
+        return !closureSignalBuilder ||
+          isDynamicClosure(section, referencedBindings)
           ? callRuntime(
               "dynamicClosureRead",
               getScopeAccessorLiteral(referencedBindings),

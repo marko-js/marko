@@ -6,25 +6,45 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
+import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { isStatefulReferences } from "../util/is-stateful";
-import { BindingType, trackParamsReferences } from "../util/references";
+import {
+  type Binding,
+  BindingType,
+  createBinding,
+  getScopeAccessorLiteral,
+  trackParamsReferences,
+} from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
   checkStatefulClosures,
   getOrCreateSection,
+  getSection,
   getSectionForBody,
   setSectionParentIsOwner,
+  startSection,
 } from "../util/sections";
 import {
+  addValue,
+  getSignal,
   setForceResumeScope,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { toFirstExpressionOrBlock } from "../util/to-first-expression-or-block";
 import { translateByTarget } from "../util/visitors";
+import * as walks from "../util/walks";
 import * as writer from "../util/writer";
+
+const kDOMBinding = Symbol("await tag dom binding");
+
+declare module "@marko/compiler/dist/types" {
+  export interface MarkoTagExtra {
+    [kDOMBinding]?: Binding;
+  }
+}
 
 export default {
   analyze(tag: t.NodePath<t.MarkoTag>) {
@@ -33,7 +53,17 @@ export default {
     assertNoSpreadAttrs(tag);
     assertNoAttributeTags(tag);
     const { node } = tag;
+    const tagBody = tag.get("body");
+    const section = getOrCreateSection(tag);
     const [valueAttr] = node.attributes;
+    const tagExtra = (tag.node.extra ??= {});
+    tagExtra[kDOMBinding] = createBinding(
+      "#text",
+      BindingType.dom,
+      section,
+      undefined,
+      tagExtra,
+    );
 
     if (!valueAttr) {
       throw tag
@@ -70,10 +100,12 @@ export default {
         );
     }
 
+    startSection(tagBody)!;
+
     getOrCreateSection(tag);
     trackParamsReferences(
-      tag.get("body"),
-      BindingType.derived,
+      tagBody,
+      BindingType.param,
       undefined,
       evaluate(valueAttr.value),
     );
@@ -135,8 +167,34 @@ export default {
         }
 
         setSectionParentIsOwner(bodySection, true);
+
+        walks.visit(tag, WalkCode.Replace);
+        walks.enterShallow(tag);
       },
       exit(tag) {
+        const { node } = tag;
+        const tagExtra = node.extra!;
+        const nodeRef = tagExtra[kDOMBinding]!;
+
+        const section = getSection(tag);
+        const bodySection = getSectionForBody(tag.get("body"))!;
+        const signal = getSignal(section, nodeRef, "await");
+
+        signal.build = () => {
+          return callRuntime(
+            "awaitTag",
+            getScopeAccessorLiteral(nodeRef),
+            t.identifier(bodySection.name),
+          );
+        };
+
+        addValue(
+          section,
+          tag.node.attributes[0].value.extra?.referencedBindings,
+          signal,
+          tag.node.attributes[0].value,
+        );
+
         tag.remove();
       },
     },

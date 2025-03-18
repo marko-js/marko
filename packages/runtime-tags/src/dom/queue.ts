@@ -1,4 +1,6 @@
-import type { Scope } from "../common/types";
+import { AccessorChar, type Scope } from "../common/types";
+import { setConditionalRenderer } from "./control-flow";
+import { createAndSetupBranch } from "./renderer";
 import { finishPendingScopes } from "./scope";
 import type { Signal } from "./signals";
 
@@ -132,9 +134,41 @@ function runRenders() {
     }
 
     if (!render.___scope.___closestBranch?.___destroyed) {
-      render.___signal(render.___scope, render.___value);
+      runRender(render);
     }
   }
 
   finishPendingScopes();
 }
+
+let runRender = (render: PendingRender) =>
+  render.___signal(render.___scope, render.___value);
+
+export let enableCatch = () => {
+  enableCatch = () => {};
+  runRender = ((runRender) => (render: PendingRender) => {
+    try {
+      runRender(render);
+    } catch (error) {
+      let branch = render.___scope.___closestBranch;
+      while (branch && !branch[AccessorChar.CatchContent])
+        branch = branch.___parentBranch;
+      if (!branch) {
+        throw error;
+      } else {
+        setConditionalRenderer(
+          branch._!,
+          branch[AccessorChar.BranchAccessor],
+          branch[AccessorChar.CatchContent],
+          createAndSetupBranch,
+        );
+        branch[AccessorChar.CatchContent].___params?.(
+          branch._![
+            branch[AccessorChar.BranchAccessor] + AccessorChar.ConditionalScope
+          ],
+          [error],
+        );
+      }
+    }
+  })(runRender);
+};

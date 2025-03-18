@@ -1,0 +1,10 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "r",
+      "$_err_message$catch_content": "a",
+      "$_err$catch_content": "e",
+      "$_params_2$catch_content": "t"
+    }
+  }
+}

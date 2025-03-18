@@ -10,7 +10,7 @@
 
 # Write
 ```html
-  Got: b <!>0<!--M_*4 #text/1-->Got: c <!>0<!--M_*3 #text/1--><button>Inc</button><!--M_*1 #button/0--></div><script>M._.r.push(_=>(_.g={4:_.h={_:_.a,"count(":1}},(_.c).add(_.h),_.g),1,"__tests__/template.marko_0_count");M._.w()</script>
+  Got: b <!>0<!--M_*4 #text/1-->Got: c <!>0<!--M_*3 #text/1--><button>Inc</button><!--M_*1 #button/3--></div><script>M._.r.push(_=>(_.g={4:_.h={_:_.a,"count(":1}},(_.c).add(_.h),_.g),1,"__tests__/template.marko_0_count");M._.w()</script>
 ```
 
 # Render End
@@ -40,7 +40,7 @@
       <button>
         Inc
       </button>
-      <!--M_*1 #button/0-->
+      <!--M_*1 #button/3-->
     </div>
     <script>
       M._.r.push(_=&gt;(_.g={4:_.h={_:_.a,"count(":1}},(_.c).add(_.h),_.g),1,"__tests__/template.marko_0_count");M._.w()

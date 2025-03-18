@@ -1,0 +1,16 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "a",
+      "$_error_message$catch_content": "e",
+      "$_error$catch_content": "t",
+      "$_params_2$catch_content": "m",
+      "$_data$await_content2": "r",
+      "$_params_4$await_content": "l",
+      "$_await_content2": "u",
+      "$_data$await_content": "n",
+      "$_params_3$await_content": "v",
+      "$_await_content": "d"
+    }
+  }
+}

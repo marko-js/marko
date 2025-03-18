@@ -1,0 +1,17 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "e",
+      "$init": "a",
+      "$resolveAfter": "o",
+      "$_value$await_content": "t",
+      "$_params_2$await_content": "r",
+      "$_await_content": "m",
+      "$_await$try_content": "n",
+      "$_clickCount$try_content": "i",
+      "$_clickCount_closure": "s",
+      "$_clickCount_effect": "c",
+      "$_clickCount": "l"
+    }
+  }
+}

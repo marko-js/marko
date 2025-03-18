@@ -49,6 +49,12 @@ export enum AccessorChar {
   ControlledHandler = ";",
   ControlledType = "=",
   Getter = ">",
+  BranchAccessor = "*",
+  CatchContent = "^",
+  PlaceholderContent = "%",
+  PlaceholderBranch = "#",
+  PendingCount = ".",
+  Promise = "?",
 }
 
 export enum NodeType {

@@ -1,0 +1,25 @@
+# Render
+```html
+<html>
+  <head>
+    <style
+      m_=""
+    >
+      t{display:none}
+    </style>
+  </head>
+  <body>
+    abcdefgh
+    <script>
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.a={"#text/0!":_.b={"#text/0*":"#text/0","#text/1!":_.c={"#text/1*":"#text/1"}}},2:_.b,3:_.c},_.b["#text/0%"]=_._["__tests__/template.marko_2_renderer"](_.a),_.c["#text/1%"]=_._["__tests__/template.marko_5_renderer"](_.b),_.d)];REORDER_RUNTIME(M._);M._.w()
+    </script>
+    ij
+    <script>
+      M._.w()
+    </script>
+    <script>
+      M._.w()
+    </script>
+  </body>
+</html>
+```
