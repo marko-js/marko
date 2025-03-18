@@ -6,7 +6,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.tryContent(_scope0_id, "#text/0", _$.registerContent("__tests__/template.marko_1_renderer", () => {
     const _scope1_id = _$.nextScopeId();
     _$.write("b");
-    _$.fork(resolveAfter("c", 2), data => {
+    _$.fork(_scope1_id, "#text/0", resolveAfter("c", 2), data => {
       const _scope3_id = _$.nextScopeId();
       _$.write(_$.escapeXML(data));
     });
@@ -20,7 +20,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     })
   });
   _$.write("f");
-  _$.fork(resolveAfter("g", 1), data => {
+  _$.fork(_scope0_id, "#text/1", resolveAfter("g", 1), data => {
     const _scope4_id = _$.nextScopeId();
     _$.write(_$.escapeXML(data));
   });

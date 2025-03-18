@@ -22,6 +22,7 @@ import runtimeInfo from "../util/runtime-info";
 import {
   checkStatefulClosures,
   getOrCreateSection,
+  getScopeIdIdentifier,
   getSection,
   getSectionForBody,
   setSectionParentIsOwner,
@@ -127,7 +128,10 @@ export default {
       exit(tag) {
         const { node } = tag;
         const [valueAttr] = node.attributes;
+        const tagExtra = node.extra!;
+        const nodeRef = tagExtra[kDOMBinding]!;
         const tagBody = tag.get("body");
+        const section = getSection(tag);
         const bodySection = getSectionForBody(tagBody)!;
 
         if (
@@ -145,6 +149,8 @@ export default {
             t.expressionStatement(
               callRuntime(
                 "fork",
+                getScopeIdIdentifier(section),
+                getScopeAccessorLiteral(nodeRef),
                 valueAttr.value,
                 t.arrowFunctionExpression(
                   node.body.params,

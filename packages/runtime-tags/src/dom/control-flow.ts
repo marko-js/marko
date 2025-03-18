@@ -104,7 +104,9 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
           tryBranch = tryBranch.___parentBranch;
         }
         if (!tryBranch) {
-          throw error;
+          setTimeout(() => {
+            throw error;
+          });
         } else {
           setConditionalRenderer(
             tryBranch._!,

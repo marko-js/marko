@@ -10,12 +10,28 @@ interface Registered {
   scope: unknown;
   getter: boolean;
 }
-interface Call {
+
+enum MutationType {
+  call,
+  assign,
+}
+
+interface CallMutation {
+  type: MutationType.call;
   value: unknown;
   object: unknown;
-  method?: string;
+  property: string | undefined;
   spread?: boolean;
 }
+
+interface AssignMutation {
+  type: MutationType.assign;
+  value: unknown;
+  object: unknown;
+  property: string;
+}
+
+type Mutation = CallMutation | AssignMutation;
 
 type TypedArray =
   | Int8Array
@@ -281,7 +297,7 @@ class State {
   refs = new WeakMap<WeakKey, Reference>();
   assigned = new Set<Reference>();
   boundary: Boundary | undefined = undefined;
-  calls: Call[] = [];
+  mutations: Mutation[] = [];
 }
 
 class Reference {
@@ -348,11 +364,27 @@ export class Serializer {
   writeCall(
     value: unknown,
     object: unknown,
-    method?: string,
+    property?: string,
     spread?: boolean,
   ) {
     const state = this.#state;
-    state.calls.push({ value, object, method, spread });
+    state.mutations.push({
+      type: MutationType.call,
+      value,
+      object,
+      property,
+      spread,
+    });
+    state.flushed = true;
+  }
+  writeAssign(value: unknown, object: unknown, property: string) {
+    const state = this.#state;
+    state.mutations.push({
+      type: MutationType.assign,
+      value,
+      object,
+      property,
+    });
     state.flushed = true;
   }
 }
@@ -400,7 +432,7 @@ export function stringify(val: unknown) {
 }
 
 function writeRoot(state: State, root: unknown) {
-  const { buf, assigned, calls } = state;
+  const { buf, assigned, mutations } = state;
   const hadBuf = buf.length !== 0;
   let result = "";
   if (hadBuf) {
@@ -411,7 +443,7 @@ function writeRoot(state: State, root: unknown) {
     const rootRef = state.refs.get(root as object);
     if (rootRef) {
       const rootId = ensureId(state, rootRef);
-      if (assigned.size || calls.length) {
+      if (assigned.size || mutations.length) {
         assigned.delete(rootRef!);
         writeAssigned(state);
         buf.push(
@@ -460,14 +492,14 @@ function writeAssigned(state: State) {
     }
     state.assigned = new Set();
   }
-  if (state.calls.length) {
-    for (const { value, object, method, spread } of state.calls) {
+  if (state.mutations.length) {
+    for (const mutation of state.mutations) {
       const objectStartIndex = state.buf.push(
         state.buf.length === 0 ? "(" : ",(",
       );
 
-      if (writeProp(state, object, null, "")) {
-        const objectRef = state.refs.get(object as object);
+      if (writeProp(state, mutation.object, null, "")) {
+        const objectRef = state.refs.get(mutation.object as object);
         if (objectRef && !objectRef.id) {
           objectRef.id = nextRefAccess(state);
           state.buf[objectStartIndex] =
@@ -478,13 +510,18 @@ function writeAssigned(state: State) {
       }
 
       const valueStartIndex = state.buf.push(
-        ")" +
-          (method === undefined ? "" : toAccess(toObjectKey(method))) +
-          "(" +
-          (spread ? "..." : ""),
+        mutation.type === MutationType.call
+          ? ")" +
+              (mutation.property === undefined
+                ? ""
+                : toAccess(toObjectKey(mutation.property))) +
+              "(" +
+              (mutation.spread ? "..." : "")
+          : toAccess(toObjectKey(mutation.property)) + "=",
       );
-      if (writeProp(state, value, null, "")) {
-        const valueRef = state.refs.get(value as object);
+
+      if (writeProp(state, mutation.value, null, "")) {
+        const valueRef = state.refs.get(mutation.value as object);
         if (valueRef && !valueRef.id) {
           valueRef.id = nextRefAccess(state);
           state.buf[valueStartIndex] =
@@ -496,7 +533,7 @@ function writeAssigned(state: State) {
 
       state.buf.push(")");
     }
-    state.calls = [];
+    state.mutations = [];
 
     if (state.assigned.size) {
       writeAssigned(state);

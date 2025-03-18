@@ -9,9 +9,16 @@
     </style>
   </head>
   <body>
-    aERROR!
+    a
+    <!--M_[2-->
+    ERROR!
     <!--M_*4 #text/0-->
-    def
+    <!--M_]1 #text/0-->
+    d
+    <!--M_[3-->
+    e
+    <!--M_]1 #text/1-->
+    f
     <script>
       REORDER_RUNTIME(M._);M._.w()
     </script>

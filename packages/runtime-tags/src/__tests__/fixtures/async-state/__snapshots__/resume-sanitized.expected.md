@@ -19,6 +19,24 @@ container.querySelector("button").click();
 ```
 
 
+# Render ASYNC
+```html
+<button>
+  inc
+</button>
+LOADING...
+```
+
+
+# Render ASYNC
+```html
+<button>
+  inc
+</button>
+1
+```
+
+
 # Render
 ```js
 container.querySelector("button").click();
@@ -27,5 +45,23 @@ container.querySelector("button").click();
 <button>
   inc
 </button>
-0
+1
+```
+
+
+# Render ASYNC
+```html
+<button>
+  inc
+</button>
+LOADING...
+```
+
+
+# Render ASYNC
+```html
+<button>
+  inc
+</button>
+2
 ```

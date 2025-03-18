@@ -7,7 +7,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.write(`<button>inc</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   _$.tryContent(_scope0_id, "#text/1", _$.registerContent("__tests__/template.marko_1_renderer", () => {
     const _scope1_id = _$.nextScopeId();
-    _$.fork(resolveAfter(clickCount, 1), value => {
+    _$.fork(_scope1_id, "#text/0", resolveAfter(clickCount, 1), value => {
       const _scope3_id = _$.nextScopeId();
       _$.write(`${_$.escapeXML(value)}${_$.markResumeNode(_scope3_id, "#text/0")}`);
     });

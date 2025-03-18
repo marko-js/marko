@@ -1,4 +1,1 @@
-# Emit error
-```
-  Error: ERROR!
-```
+ERROR!

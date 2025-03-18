@@ -24,11 +24,6 @@ const baseConfig: compiler.Config = {
 const htmlConfig: compiler.Config = { ...baseConfig, output: "html" };
 const domConfig: compiler.Config = { ...baseConfig, output: "dom" };
 
-type Result = {
-  browser: ReturnType<typeof createBrowser>;
-  tracker: ReturnType<typeof createMutationTracker>;
-};
-
 type TestConfig = {
   steps?: unknown[] | (() => Promise<unknown[]>);
   skip_dom?: boolean;
@@ -152,37 +147,31 @@ describe("translator-interop", () => {
         }
       };
 
-      let ssrResult: Result;
-      let csrResult: Result;
-      let resumeResult: Result;
+      let ssr = () => {
+        const cached = (async () => {
+          const serverTemplate = require(templateFile).default as Template;
 
-      const ssr = async () => {
-        if (ssrResult) return ssrResult;
+          let buffer = "";
+          // let flushCount = 0;
 
-        const serverTemplate = require(templateFile).default as Template;
+          const browser = createBrowser({
+            dir: __dirname,
+            extensions: register({
+              ...domConfig,
+              extensions: {},
+            }),
+          });
+          const document = browser.window.document;
+          const [input] = (
+            typeof config.steps === "function"
+              ? await config.steps()
+              : config.steps || []
+          ) as [Input];
 
-        let buffer = "";
-        // let flushCount = 0;
+          document.open();
 
-        const browser = createBrowser({
-          dir: __dirname,
-          extensions: register({
-            ...domConfig,
-            extensions: {},
-          }),
-        });
-        const document = browser.window.document;
-        const [input] = (
-          typeof config.steps === "function"
-            ? await config.steps()
-            : config.steps || []
-        ) as [Input];
+          const tracker = createMutationTracker(browser.window, document);
 
-        document.open();
-
-        const tracker = createMutationTracker(browser.window, document);
-
-        try {
           for await (const chunk of serverTemplate.render(input)) {
             buffer += chunk;
             tracker.log(`# Write\n${indent(stripInlineRuntime(chunk))}`);
@@ -190,136 +179,138 @@ describe("translator-interop", () => {
           document.write(`<html><body>${buffer}</body></html>`);
           document.close();
           tracker.logUpdate("End");
-        } catch (error) {
-          tracker.log(`# Emit error\n${indent(error)}`);
-          document.write(`<html><body>${buffer}</body></html>`);
-          document.close();
-          tracker.logUpdate("Error");
-        }
+          tracker.cleanup();
 
-        tracker.cleanup();
-
-        return (ssrResult = { browser, tracker });
+          return { browser, tracker };
+        })();
+        ssr = () => cached;
+        return cached;
       };
 
-      const csr = async () => {
-        if (csrResult) return csrResult;
+      let csr = () => {
+        const cached = (async () => {
+          const browser = createBrowser({
+            dir: __dirname,
+            extensions: register({
+              ...domConfig,
+              extensions: {},
+            }),
+          });
 
-        const browser = createBrowser({
-          dir: __dirname,
-          extensions: register({
-            ...domConfig,
-            extensions: {},
-          }),
-        });
+          const { window } = browser;
+          const { document } = window;
+          const throwErrors = trackErrors(window);
 
-        const { window } = browser;
-        const { document } = window;
-        const throwErrors = trackErrors(window);
+          const [input = {}, ...steps] = (
+            typeof config.steps === "function"
+              ? await config.steps()
+              : config.steps || []
+          ) as [Input, ...unknown[]];
+          const template = browser.require<{ default: Template }>(
+            templateFile,
+          ).default;
+          const container = Object.assign(document.createElement("div"), {
+            TEST_ROOT: true,
+          });
+          const tracker = createMutationTracker(browser.window, container);
 
-        const [input = {}, ...steps] = (
-          typeof config.steps === "function"
-            ? await config.steps()
-            : config.steps || []
-        ) as [Input, ...unknown[]];
-        const template = browser.require<{ default: Template }>(
-          templateFile,
-        ).default;
-        const container = Object.assign(document.createElement("div"), {
-          TEST_ROOT: true,
-        });
-        const tracker = createMutationTracker(browser.window, container);
+          document.body.appendChild(container);
 
-        document.body.appendChild(container);
+          const instance = template.mount(input, container, "beforeend");
 
-        const instance = template.mount(input, container, "beforeend");
+          const { run } = browser.require<
+            typeof import("@marko/runtime-tags/dom")
+          >("@marko/runtime-tags/dom");
+          const { ___componentLookup } = browser.require(
+            "marko/src/node_modules/@internal/components-util",
+          );
 
-        const { run } = browser.require<
-          typeof import("@marko/runtime-tags/dom")
-        >("@marko/runtime-tags/dom");
-        const { ___componentLookup } = browser.require(
-          "marko/src/node_modules/@internal/components-util",
-        );
-
-        function runUpdates() {
-          run();
-          Object.values(___componentLookup).forEach((c: any) => c.update());
-        }
-
-        throwErrors();
-        tracker.logUpdate(input);
-
-        for (const update of steps) {
-          if (isWait(update)) {
-            await update();
-          } else if (typeof update === "function") {
-            await update(document.documentElement);
-            runUpdates();
-            tracker.logUpdate(update);
-          } else {
-            instance.update(update);
-            tracker.logUpdate(update);
+          function runUpdates() {
+            run();
+            Object.values(___componentLookup).forEach((c: any) => c.update());
           }
 
           throwErrors();
-        }
+          tracker.logUpdate(input);
 
-        tracker.cleanup();
+          for (const update of steps) {
+            if (isWait(update)) {
+              await update();
+            } else if (typeof update === "function") {
+              await update(document.documentElement);
+              runUpdates();
+              tracker.logUpdate(update);
+            } else {
+              instance.update(update);
+              tracker.logUpdate(update);
+            }
 
-        return (csrResult = { browser, tracker });
-      };
-
-      const resume = async () => {
-        if (resumeResult) return resumeResult;
-        const { browser } = await ssr();
-        const { window } = browser;
-        const { document } = window;
-        const throwErrors = trackErrors(window);
-        const tracker = createMutationTracker(window, document);
-        const [input, ...steps] =
-          typeof config.steps === "function"
-            ? await config.steps()
-            : config.steps || [];
-
-        const { run, init } = browser.require<
-          typeof import("@marko/runtime-tags/dom")
-        >("@marko/runtime-tags/dom");
-
-        browser.require(templateFile);
-        browser.require("marko/src/runtime/components");
-        init();
-        browser.window.$initComponents();
-        throwErrors();
-        tracker.logUpdate(input);
-
-        const { ___componentLookup } = browser.require(
-          "marko/src/node_modules/@internal/components-util",
-        );
-
-        function runUpdates() {
-          run();
-          Object.values(___componentLookup).forEach((c: any) => c.update());
-        }
-
-        for (const update of steps) {
-          if (isWait(update)) {
-            await update();
-          } else if (typeof update === "function") {
-            await update(document.documentElement);
-            runUpdates();
-            tracker.logUpdate(update);
-          } else {
-            // if new input is detected, stop testing
-            // this will be covered by the client tests
-            break;
+            throwErrors();
           }
 
+          tracker.cleanup();
+
+          return { browser, tracker };
+        })();
+        csr = () => cached;
+        return cached;
+      };
+
+      let resume = () => {
+        const cached = (async () => {
+          const { browser } = await ssr();
+          const { window } = browser;
+          const { document } = window;
+          const throwErrors = trackErrors(window);
+          const tracker = createMutationTracker(window, document);
+          const [input, ...steps] =
+            typeof config.steps === "function"
+              ? await config.steps()
+              : config.steps || [];
+
+          const { run, init } = browser.require<
+            typeof import("@marko/runtime-tags/dom")
+          >("@marko/runtime-tags/dom");
+
+          browser.require(templateFile);
+          browser.require("marko/src/runtime/components");
+          init();
+          browser.window.$initComponents();
           throwErrors();
-        }
+          tracker.logUpdate(input);
 
-        tracker.cleanup();
+          const { ___componentLookup } = browser.require(
+            "marko/src/node_modules/@internal/components-util",
+          );
 
-        return (resumeResult = { browser, tracker });
+          function runUpdates() {
+            run();
+            Object.values(___componentLookup).forEach((c: any) => c.update());
+          }
+
+          for (const update of steps) {
+            if (isWait(update)) {
+              await update();
+            } else if (typeof update === "function") {
+              await update(document.documentElement);
+              runUpdates();
+              tracker.logUpdate(update);
+            } else {
+              // if new input is detected, stop testing
+              // this will be covered by the client tests
+              break;
+            }
+
+            throwErrors();
+          }
+
+          tracker.cleanup();
+
+          return { browser, tracker };
+        })();
+
+        resume = () => cached;
+        return cached;
       };
 
       describe("compile", () => {

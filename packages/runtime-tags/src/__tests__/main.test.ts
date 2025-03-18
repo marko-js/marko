@@ -35,11 +35,6 @@ type TestHooks = {
   after?: () => void;
 };
 
-type Result = {
-  browser: ReturnType<typeof createBrowser>;
-  tracker: ReturnType<typeof createMutationTracker>;
-};
-
 const baseConfig: compiler.Config = {
   translator,
   babelConfig: {
@@ -194,49 +189,43 @@ describe("runtime-tags/translator", () => {
           );
         }
       };
+      let ssr = () => {
+        const cached = (async () => {
+          const hooks: TestHooks = (() => {
+            try {
+              return require(resolve("hooks.ts"));
+            } catch {
+              return {};
+            }
+          })();
 
-      let ssrResult: Result;
-      let csrResult: Result;
-      let resumeResult: Result;
+          hooks.before?.();
 
-      const ssr = async () => {
-        if (ssrResult) return ssrResult;
-        const hooks: TestHooks = (() => {
-          try {
-            return require(resolve("hooks.ts"));
-          } catch {
-            return {};
-          }
-        })();
+          const serverTemplate = require(manualSSR ? serverFile : templateFile)
+            .default as Template;
 
-        hooks.before?.();
+          let buffer = "";
+          // let flushCount = 0;
 
-        const serverTemplate = require(manualSSR ? serverFile : templateFile)
-          .default as Template;
+          const browser = createBrowser({
+            dir: __dirname,
+            extensions: register({
+              ...domConfig,
+              modules: "cjs",
+              extensions: {},
+            }),
+          });
+          const document = browser.window.document;
+          const [input = {}] = (
+            typeof config.steps === "function"
+              ? await config.steps()
+              : config.steps || []
+          ) as [Input];
 
-        let buffer = "";
-        // let flushCount = 0;
+          document.open();
 
-        const browser = createBrowser({
-          dir: __dirname,
-          extensions: register({
-            ...domConfig,
-            modules: "cjs",
-            extensions: {},
-          }),
-        });
-        const document = browser.window.document;
-        const [input = {}] = (
-          typeof config.steps === "function"
-            ? await config.steps()
-            : config.steps || []
-        ) as [Input];
+          const tracker = createMutationTracker(browser.window, document);
 
-        document.open();
-
-        const tracker = createMutationTracker(browser.window, document);
-
-        try {
           for await (const data of serverTemplate.render(input)) {
             const formattedHtml = indent(stripInlineRuntime(data));
             if (formattedHtml) {
@@ -248,135 +237,136 @@ describe("runtime-tags/translator", () => {
           document.write(buffer);
           document.close();
           tracker.logUpdate("End", true);
-        } catch (error) {
-          tracker.log(`# Emit error\n\`\`\`\n${indent(error)}\n\`\`\``);
-          document.write(buffer);
-          document.close();
-          tracker.logUpdate("Error", true);
-        }
 
-        tracker.cleanup();
+          tracker.cleanup();
 
-        hooks.after?.();
+          hooks.after?.();
 
-        return (ssrResult = { browser, tracker });
+          return { browser, tracker };
+        })();
+        ssr = () => cached;
+        return cached;
       };
 
-      const csr = async () => {
-        if (csrResult) return csrResult;
+      let csr = () => {
+        const cached = (async () => {
+          const browser = createBrowser({
+            dir: __dirname,
+            extensions: register({
+              ...domConfig,
+              extensions: {},
+            }),
+          });
 
-        const browser = createBrowser({
-          dir: __dirname,
-          extensions: register({
-            ...domConfig,
-            extensions: {},
-          }),
-        });
+          const hooks: TestHooks = (() => {
+            try {
+              return browser.require(resolve("hooks.ts"));
+            } catch {
+              return {};
+            }
+          })();
 
-        const hooks: TestHooks = (() => {
-          try {
-            return browser.require(resolve("hooks.ts"));
-          } catch {
-            return {};
-          }
-        })();
+          hooks.before?.();
 
-        hooks.before?.();
+          const { window } = browser;
+          const { document } = window;
+          const [input, ...steps] = (
+            typeof config.steps === "function"
+              ? await config.steps()
+              : config.steps || []
+          ) as [Input, ...unknown[]];
+          const { run } = browser.require<
+            typeof import("@marko/runtime-tags/dom")
+          >("@marko/runtime-tags/dom");
+          const template = browser.require<{ default: Template }>(
+            manualCSR ? browserFile : templateFile,
+          ).default;
+          const container = document.createElement("div");
+          const tracker = createMutationTracker(browser.window, container);
 
-        const { window } = browser;
-        const { document } = window;
-        const [input, ...steps] = (
-          typeof config.steps === "function"
-            ? await config.steps()
-            : config.steps || []
-        ) as [Input, ...unknown[]];
-        const { run } = browser.require<
-          typeof import("@marko/runtime-tags/dom")
-        >("@marko/runtime-tags/dom");
-        const template = browser.require<{ default: Template }>(
-          manualCSR ? browserFile : templateFile,
-        ).default;
-        const container = document.createElement("div");
-        const tracker = createMutationTracker(browser.window, container);
+          document.body.appendChild(container);
 
-        document.body.appendChild(container);
+          const instance = template.mount(input, container, "afterbegin");
+          tracker.logUpdate(input);
 
-        const instance = template.mount(input, container, "afterbegin");
-        tracker.logUpdate(input);
-
-        for (const update of steps) {
-          if (isWait(update)) {
-            await update();
-          } else if (typeof update === "function") {
-            tracker.beginUpdate();
-            await update(document.documentElement);
-            if (isThrows(update)) {
-              try {
+          for (const update of steps) {
+            if (isWait(update)) {
+              await update();
+            } else if (typeof update === "function") {
+              tracker.beginUpdate();
+              await update(document.documentElement);
+              if (isThrows(update)) {
+                try {
+                  run();
+                  throw new Error("Expected error to be thrown");
+                } catch (err) {
+                  tracker.logError(update, err as Error);
+                  break;
+                }
+              } else {
                 run();
-                throw new Error("Expected error to be thrown");
-              } catch (err) {
-                tracker.logError(update, err as Error);
-                break;
+                await 1; // allow a microtask before we log the update in order to catch mutation observers.
+                tracker.logUpdate(update);
               }
             } else {
-              run();
-              await 1; // allow a microtask before we log the update in order to catch mutation observers.
+              instance.update(update);
               tracker.logUpdate(update);
             }
-          } else {
-            instance.update(update);
-            tracker.logUpdate(update);
           }
-        }
 
-        tracker.cleanup();
+          tracker.cleanup();
 
-        hooks.after?.();
-
-        return (csrResult = { browser, tracker });
+          hooks.after?.();
+          return { browser, tracker };
+        })();
+        csr = () => cached;
+        return cached;
       };
 
-      const resume = async () => {
-        if (resumeResult) return resumeResult;
-        const { browser } = await ssr();
-        const { window } = browser;
-        const { document } = window;
-        const tracker = createMutationTracker(window, document);
-        const [input, ...steps] =
-          typeof config.steps === "function"
-            ? await config.steps()
-            : config.steps || [];
+      let resume = () => {
+        const cached = (async () => {
+          const { browser } = await ssr();
+          const { window } = browser;
+          const { document } = window;
+          const tracker = createMutationTracker(window, document);
+          const [input, ...steps] =
+            typeof config.steps === "function"
+              ? await config.steps()
+              : config.steps || [];
 
-        // TODO: when this is removed, the resume test will fail if run by itself... why?
-        await new Promise((resolve) => setTimeout(resolve, 10));
+          // TODO: when this is removed, the resume test will fail if run by itself... why?
+          await new Promise((resolve) => setTimeout(resolve, 10));
 
-        const { run, init } = browser.require<
-          typeof import("@marko/runtime-tags/dom")
-        >("@marko/runtime-tags/dom");
+          const { run, init } = browser.require<
+            typeof import("@marko/runtime-tags/dom")
+          >("@marko/runtime-tags/dom");
 
-        browser.require(manualResume ? resumeFile : templateFile);
-        init();
-        tracker.logUpdate(input);
+          browser.require(manualResume ? resumeFile : templateFile);
+          init();
+          tracker.logUpdate(input);
 
-        for (const update of steps) {
-          if (isWait(update)) {
-            await update();
-          } else if (typeof update === "function") {
-            tracker.beginUpdate();
-            await update(document.documentElement);
-            run();
-            await 1; // allow a microtask before we log the update in order to catch mutation observers
-            tracker.logUpdate(update);
-          } else {
-            // if new input is detected, stop testing
-            // this will be covered by the client tests
-            break;
+          for (const update of steps) {
+            if (isWait(update)) {
+              await update();
+            } else if (typeof update === "function") {
+              tracker.beginUpdate();
+              await update(document.documentElement);
+              run();
+              await 1; // allow a microtask before we log the update in order to catch mutation observers
+              tracker.logUpdate(update);
+            } else {
+              // if new input is detected, stop testing
+              // this will be covered by the client tests
+              break;
+            }
           }
-        }
 
-        tracker.cleanup();
+          tracker.cleanup();
 
-        return (resumeResult = { browser, tracker });
+          return { browser, tracker };
+        })();
+        resume = () => cached;
+        return cached;
       };
 
       after(() => {
@@ -422,6 +412,19 @@ describe("runtime-tags/translator", () => {
         });
 
         (skipEquivalent ? it.skip : it)("equivalent", async () => {
+          if (config.error_runtime) {
+            const resumeError = (await resume()
+              .then(() => undefined)
+              .catch((err) => err)) as Error | undefined;
+            const csrError = (await csr()
+              .then(() => undefined)
+              .catch((err) => err)) as Error | undefined;
+            if (!resumeError) throw new Error("Resume did not error.");
+            if (!csrError) throw new Error("CSR did not error.");
+            assert.strictEqual(resumeError.message, csrError.message);
+            return;
+          }
+
           const resumeLogs = (await resume()).tracker.getRawLogs(true);
           // when the steps for a test contains more than one input,
           // the updates are not run for the resume test

@@ -423,9 +423,27 @@ export function $global() {
   return $chunk.boundary.state.$global;
 }
 
-export function fork<T>(promise: Promise<T> | T, content: (value: T) => void) {
+export function fork<T>(
+  scopeId: number,
+  accessor: Accessor,
+  promise: Promise<T> | T,
+  content: (value: T) => void,
+) {
   if (!isPromise(promise)) {
+    const branchId = peekNextScopeId();
+    $chunk.writeHTML(
+      $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + ""),
+    );
     content(promise);
+    writeScope(scopeId, {
+      [accessor + AccessorChar.ConditionalScope]: writeScope(branchId, {}),
+    });
+    $chunk.writeHTML(
+      $chunk.boundary.state.mark(
+        ResumeSymbol.BranchEnd,
+        scopeId + " " + accessor,
+      ),
+    );
     return;
   }
 
@@ -443,7 +461,27 @@ export function fork<T>(promise: Promise<T> | T, content: (value: T) => void) {
         chunk.async = false;
 
         if (!boundary.signal.aborted) {
-          chunk.render(content, value);
+          chunk.render(() => {
+            const branchId = peekNextScopeId();
+            $chunk.writeHTML(
+              $chunk.boundary.state.mark(
+                ResumeSymbol.BranchStart,
+                branchId + "",
+              ),
+            );
+            content(value);
+            boundary.state.serializer.writeAssign(
+              writeScope(branchId, {}),
+              ensureScopeWithId(scopeId),
+              accessor + AccessorChar.ConditionalScope,
+            );
+            $chunk.writeHTML(
+              $chunk.boundary.state.mark(
+                ResumeSymbol.BranchEnd,
+                scopeId + " " + accessor,
+              ),
+            );
+          });
           boundary.endAsync(chunk);
         }
       }
@@ -456,8 +494,8 @@ export function fork<T>(promise: Promise<T> | T, content: (value: T) => void) {
 }
 
 export function tryContent(
-  ownerScopeId: number,
-  nodeAccessor: Accessor,
+  scopeId: number,
+  accessor: Accessor,
   content: () => void,
   input: {
     placeholder?: {
@@ -468,7 +506,11 @@ export function tryContent(
     };
   },
 ) {
-  const scopeId = peekNextScopeId();
+  const branchId = peekNextScopeId();
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + ""),
+  );
+
   const catchContent = normalizeDynamicRenderer(input.catch) as
     | ServerRenderer
     | undefined;
@@ -476,16 +518,6 @@ export function tryContent(
     | ServerRenderer
     | undefined;
 
-  if (catchContent || placeholderContent) {
-    writeScope(scopeId, {
-      [nodeAccessor + AccessorChar.BranchAccessor]: nodeAccessor,
-      [nodeAccessor + AccessorChar.CatchContent]: catchContent,
-      [nodeAccessor + AccessorChar.PlaceholderContent]: placeholderContent,
-    });
-    writeScope(ownerScopeId, {
-      [nodeAccessor + AccessorChar.ConditionalScope]: getScopeById(scopeId),
-    });
-  }
   if (catchContent) {
     tryCatch(
       placeholderContent
@@ -498,6 +530,22 @@ export function tryContent(
   } else {
     content();
   }
+
+  writeScope(branchId, {
+    [AccessorChar.BranchAccessor]: accessor,
+    [AccessorChar.CatchContent]: catchContent,
+    [AccessorChar.PlaceholderContent]: placeholderContent,
+  });
+  writeScope(scopeId, {
+    [accessor + AccessorChar.ConditionalScope]: getScopeById(branchId),
+  });
+
+  $chunk.writeHTML(
+    $chunk.boundary.state.mark(
+      ResumeSymbol.BranchEnd,
+      scopeId + " " + accessor,
+    ),
+  );
 }
 
 function tryPlaceholder(content: () => void, placeholder: () => void) {

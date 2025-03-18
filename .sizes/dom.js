@@ -1,4 +1,4 @@
-// size: 18848 (min) 7141 (brotli)
+// size: 18809 (min) 7115 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1188,14 +1188,17 @@ function awaitTag(nodeAccessor, renderer) {
       .catch((error) => {
         let tryBranch2 = scope.c;
         for (; tryBranch2 && !tryBranch2["^"]; ) tryBranch2 = tryBranch2.g;
-        if (!tryBranch2) throw error;
-        setConditionalRenderer(
-          tryBranch2._,
-          tryBranch2["*"],
-          tryBranch2["^"],
-          createAndSetupBranch,
-        ),
-          tryBranch2["^"].d?.(tryBranch2._[tryBranch2["*"] + "!"], [error]);
+        tryBranch2
+          ? (setConditionalRenderer(
+              tryBranch2._,
+              tryBranch2["*"],
+              tryBranch2["^"],
+              createAndSetupBranch,
+            ),
+            tryBranch2["^"].d?.(tryBranch2._[tryBranch2["*"] + "!"], [error]))
+          : setTimeout(() => {
+              throw error;
+            });
       }));
     tryBranch
       ? (tryBranch["."] ||

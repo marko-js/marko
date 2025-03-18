@@ -15,7 +15,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     })
   });
   _$.write("c");
-  _$.fork(resolveAfter("d", 1), data => {
+  _$.fork(_scope0_id, "#text/1", resolveAfter("d", 1), data => {
     const _scope3_id = _$.nextScopeId();
     _$.write(_$.escapeXML(data));
   });

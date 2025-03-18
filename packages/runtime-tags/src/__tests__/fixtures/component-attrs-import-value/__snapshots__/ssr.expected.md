@@ -1,4 +1,1 @@
-# Emit error
-```
-  TypeError: Unable to serialize "input" in __tests__/tags/counter.marko (reading format)
-```
+Unable to serialize "input" in packages/runtime-tags/src/__tests__/fixtures/component-attrs-import-value/tags/counter.marko (reading format)
