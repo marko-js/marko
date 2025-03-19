@@ -453,6 +453,21 @@ export const translate = {
           ),
         ),
       );
+
+      if (meta.implicitSplitComponent && isHTML) {
+        renderBlock.unshiftContainer(
+          "body",
+          t.callExpression(
+            importDefault(
+              file,
+              "marko/src/runtime/helpers/skip-serialize.js",
+              "marko_skip_serialize",
+            ),
+            [t.identifier("input")],
+          ),
+        );
+      }
+
       renderBlock.remove();
 
       if (!isHTML) {
@@ -559,6 +574,7 @@ export function getRuntimeEntryFiles(output, optimize) {
           `${base}core-tags/core/__flush_here_and_after__.js`,
           `${base}core-tags/core/await/renderer.js`,
           `${base}core-tags/core/await/reorderer-renderer.js`,
+          `${base}runtime/helpers/skip-serialize.js`,
         ]
       : [
           `${base}runtime/vdom/index.js`,
