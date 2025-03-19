@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.21
+
+### Patch Changes
+
+- [#2574](https://github.com/marko-js/marko/pull/2574) [`23eedc2`](https://github.com/marko-js/marko/commit/23eedc20a0a3e2e9d99514c49c615d74825fe4cb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid serializing input for implicit split components (those with only string event handlers and no class/component).
+
 ## 5.37.20
 
 ### Patch Changes
