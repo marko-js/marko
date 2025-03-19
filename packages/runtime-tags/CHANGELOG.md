@@ -1,5 +1,12 @@
 # @marko/runtime-tags
 
+## 0.3.60
+
+### Patch Changes
+
+- [#2573](https://github.com/marko-js/marko/pull/2573) [`1995c96`](https://github.com/marko-js/marko/commit/1995c96c9431339832b0980bfa091abf31b7f650) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Implement client side await tag.
+  (NOTE: there are still issues around effect ordering and cleanup)
+
 ## 0.3.59
 
 ### Patch Changes
