@@ -4,6 +4,7 @@
   <head />
   <body>
     <!--M_[2-->
+    <!--M_[4-->
     <button
       id="class"
     >
@@ -31,8 +32,9 @@
       <!--M_*2 #button/1-->
     </div>
     <!--M_]1 #text/0-->
+    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"multiplier!":_.d=new Set,"#text/0!":_.b={m5c:"s0-2",baseCount:0,"multiplier(":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e={1:_.a}),3,"$compat_setScope");M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"multiplier!":_.d=new Set,"#text/0!":_.b={m5c:"s0-2",baseCount:0,"multiplier(":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e={1:_.a,4:_.f={}},(_.a["#text/0!"]=_.f),_.e),3,"$compat_setScope");M._.w()
     </script>
   </body>
 </html>
@@ -40,9 +42,10 @@
 
 # Mutations
 ```
+INSERT html/body/#text2
 INSERT html/body/#text0
 INSERT html/body/#text1
-REMOVE #comment after html/body/#comment0
+REMOVE #comment after html/body/#comment1
 REMOVE #comment after html/body/#text1
 INSERT html/body/div/#text0
 INSERT html/body/div/#text3
@@ -63,6 +66,7 @@ container.querySelector("#tags").click();
   <head />
   <body>
     <!--M_[2-->
+    <!--M_[4-->
     <button
       id="class"
     >
@@ -90,8 +94,9 @@ container.querySelector("#tags").click();
       <!--M_*2 #button/1-->
     </div>
     <!--M_]1 #text/0-->
+    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"multiplier!":_.d=new Set,"#text/0!":_.b={m5c:"s0-2",baseCount:0,"multiplier(":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e={1:_.a}),3,"$compat_setScope");M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"multiplier!":_.d=new Set,"#text/0!":_.b={m5c:"s0-2",baseCount:0,"multiplier(":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e={1:_.a,4:_.f={}},(_.a["#text/0!"]=_.f),_.e),3,"$compat_setScope");M._.w()
     </script>
   </body>
 </html>
@@ -111,6 +116,7 @@ container.querySelector("#class").click();
   <head />
   <body>
     <!--M_[2-->
+    <!--M_[4-->
     <button
       id="class"
     >
@@ -138,8 +144,9 @@ container.querySelector("#class").click();
       <!--M_*2 #button/1-->
     </div>
     <!--M_]1 #text/0-->
+    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"multiplier!":_.d=new Set,"#text/0!":_.b={m5c:"s0-2",baseCount:0,"multiplier(":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e={1:_.a}),3,"$compat_setScope");M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"multiplier!":_.d=new Set,"#text/0!":_.b={m5c:"s0-2",baseCount:0,"multiplier(":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e={1:_.a,4:_.f={}},(_.a["#text/0!"]=_.f),_.e),3,"$compat_setScope");M._.w()
     </script>
   </body>
 </html>
@@ -161,6 +168,7 @@ container.querySelector("#tags").click();
   <head />
   <body>
     <!--M_[2-->
+    <!--M_[4-->
     <button
       id="class"
     >
@@ -188,8 +196,9 @@ container.querySelector("#tags").click();
       <!--M_*2 #button/1-->
     </div>
     <!--M_]1 #text/0-->
+    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"multiplier!":_.d=new Set,"#text/0!":_.b={m5c:"s0-2",baseCount:0,"multiplier(":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e={1:_.a}),3,"$compat_setScope");M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"multiplier!":_.d=new Set,"#text/0!":_.b={m5c:"s0-2",baseCount:0,"multiplier(":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e={1:_.a,4:_.f={}},(_.a["#text/0!"]=_.f),_.e),3,"$compat_setScope");M._.w()
     </script>
   </body>
 </html>
@@ -210,6 +219,7 @@ container.querySelector("#class").click();
   <head />
   <body>
     <!--M_[2-->
+    <!--M_[4-->
     <button
       id="class"
     >
@@ -237,8 +247,9 @@ container.querySelector("#class").click();
       <!--M_*2 #button/1-->
     </div>
     <!--M_]1 #text/0-->
+    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"multiplier!":_.d=new Set,"#text/0!":_.b={m5c:"s0-2",baseCount:0,"multiplier(":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e={1:_.a}),3,"$compat_setScope");M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"multiplier!":_.d=new Set,"#text/0!":_.b={m5c:"s0-2",baseCount:0,"multiplier(":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e={1:_.a,4:_.f={}},(_.a["#text/0!"]=_.f),_.e),3,"$compat_setScope");M._.w()
     </script>
   </body>
 </html>
@@ -260,6 +271,7 @@ container.querySelector("#tags").click();
   <head />
   <body>
     <!--M_[2-->
+    <!--M_[4-->
     <button
       id="class"
     >
@@ -287,8 +299,9 @@ container.querySelector("#tags").click();
       <!--M_*2 #button/1-->
     </div>
     <!--M_]1 #text/0-->
+    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"multiplier!":_.d=new Set,"#text/0!":_.b={m5c:"s0-2",baseCount:0,"multiplier(":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e={1:_.a}),3,"$compat_setScope");M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={multiplier:1,"multiplier!":_.d=new Set,"#text/0!":_.b={m5c:"s0-2",baseCount:0,"multiplier(":0},"#text/0(":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},2:_.b,3:{m5c:"s0"}},_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_multiplier"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e={1:_.a,4:_.f={}},(_.a["#text/0!"]=_.f),_.e),3,"$compat_setScope");M._.w()
     </script>
   </body>
 </html>

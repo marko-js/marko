@@ -63,3 +63,12 @@ export function insertBranchBefore(
     branch.___endNode,
   );
 }
+
+export function tempDetatchBranch(branch: BranchScope) {
+  insertChildNodes(
+    branch.___startNode.ownerDocument!.createDocumentFragment(),
+    null,
+    branch.___startNode,
+    branch.___endNode,
+  );
+}

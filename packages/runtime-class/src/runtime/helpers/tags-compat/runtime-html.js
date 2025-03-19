@@ -63,7 +63,7 @@ exports.p = function (htmlCompat) {
     {},
   );
 
-  htmlCompat.patchDynamicTag(function getRenderer(tag) {
+  htmlCompat.patchDynamicTag(function getRenderer(scopeId, accessor, tag) {
     const renderer = tag._ || tag.renderBody || tag;
     if (isMarko6(renderer)) return renderer;
 
@@ -124,7 +124,7 @@ exports.p = function (htmlCompat) {
 
       if (async !== false) {
         async = true;
-        htmlCompat.fork(out, writeHTML);
+        htmlCompat.fork(scopeId, accessor, out, writeHTML);
       }
     };
   });

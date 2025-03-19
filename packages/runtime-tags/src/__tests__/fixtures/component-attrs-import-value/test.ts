@@ -4,4 +4,5 @@ function click(container: Element) {
   container.querySelector("button")!.click();
 }
 
-export const skip_resume = true;
+export const skip_csr = true;
+export const error_runtime = true;

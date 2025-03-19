@@ -30,13 +30,13 @@ export function dynamicTagId(tagName: unknown) {
 }
 
 // TODO: refactor dynamicTagInput and dynamicTagArgs to be the same impl with a flag for input vs args.
-export function dynamicTagInput(
+export let dynamicTagInput = (
   scopeId: number,
   accessor: Accessor,
   tag: unknown | string | ServerRenderer | BodyContentObject,
   input: Record<string, unknown>,
   content?: () => void,
-) {
+) => {
   if (!tag && !content) {
     nextScopeId();
     return;
@@ -96,7 +96,9 @@ export function dynamicTagInput(
     return;
   }
 
-  const renderer = getDynamicRenderer(tag) as ServerRenderer;
+  const renderer = normalizeDynamicRenderer<ServerRenderer>(
+    tag,
+  ) as ServerRenderer;
 
   if (MARKO_DEBUG) {
     if (typeof renderer !== "function") {
@@ -113,14 +115,14 @@ export function dynamicTagInput(
     accessor,
   );
   return result;
-}
+};
 
-export function dynamicTagArgs(
+export let dynamicTagArgs = (
   scopeId: number,
   accessor: Accessor,
   tag: unknown | string | ServerRenderer | BodyContentObject,
   args: unknown[],
-) {
+) => {
   if (!tag) {
     nextScopeId();
     return;
@@ -145,7 +147,9 @@ export function dynamicTagArgs(
     return;
   }
 
-  const renderer = getDynamicRenderer(tag) as ServerRenderer;
+  const renderer = normalizeDynamicRenderer<ServerRenderer>(
+    tag,
+  ) as ServerRenderer;
 
   if (MARKO_DEBUG) {
     if (typeof renderer !== "function") {
@@ -162,7 +166,7 @@ export function dynamicTagArgs(
     accessor,
   );
   return result;
-}
+};
 
 export function createContent(id: string, fn: ServerRenderer) {
   fn.___id = id;
@@ -177,9 +181,31 @@ export function registerContent(
   return register(createContent(id, fn), id, scopeId);
 }
 
-let getDynamicRenderer = normalizeDynamicRenderer<ServerRenderer>;
 export function patchDynamicTag(
-  newGetDynamicRenderer: typeof getDynamicRenderer,
+  patch: (
+    scopeId: number,
+    accessor: Accessor,
+    tag: unknown | string | ServerRenderer | BodyContentObject,
+  ) => unknown,
 ) {
-  getDynamicRenderer = newGetDynamicRenderer;
+  dynamicTagInput = (
+    (originalDynamicTagInput) => (scopeId, accessor, tag, input, content) =>
+      originalDynamicTagInput(
+        scopeId,
+        accessor,
+        patch(scopeId, accessor, tag),
+        input,
+        content,
+      )
+  )(dynamicTagInput);
+
+  dynamicTagArgs = (
+    (originalDynamicTagArgs) => (scopeId, accessor, tag, args) =>
+      originalDynamicTagArgs(
+        scopeId,
+        accessor,
+        patch(scopeId, accessor, tag),
+        args,
+      )
+  )(dynamicTagArgs);
 }

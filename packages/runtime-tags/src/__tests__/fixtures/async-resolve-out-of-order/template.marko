@@ -1,0 +1,7 @@
+
+import { resolveAfter } from "../../utils/resolve";
+-- a
+await|value|=resolveAfter("b", 2) -- ${value}
+-- c
+await|value|=resolveAfter("d", 1) -- ${value}
+-- e

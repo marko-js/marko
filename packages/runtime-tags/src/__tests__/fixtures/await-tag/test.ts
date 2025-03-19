@@ -1,6 +1,6 @@
-export const skip_csr = true;
+import { wait } from "../../utils/resolve";
 
-export const steps = [{}, click, click, click];
+export const steps = [{}, wait(2), click, click, click];
 
 function click(container: Element) {
   container.querySelector("button")!.click();

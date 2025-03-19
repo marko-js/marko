@@ -3,7 +3,9 @@ export { forIn, forOf, forTo } from "./common/for";
 export { getAbortSignal, resetAbortSignal } from "./dom/abort-signal";
 export { compat } from "./dom/compat";
 export {
+  awaitTag,
   conditional,
+  createTry,
   dynamicTag,
   loopIn,
   loopOf,
@@ -37,7 +39,7 @@ export {
   textContent,
 } from "./dom/dom";
 export { on } from "./dom/event";
-export { run } from "./dom/queue";
+export { enableCatch, run } from "./dom/queue";
 export { createContent, createRenderer, registerContent } from "./dom/renderer";
 export { init, nodeRef, register, registerBoundSignal } from "./dom/resume";
 export {

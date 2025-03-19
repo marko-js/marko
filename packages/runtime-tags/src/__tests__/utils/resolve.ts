@@ -12,11 +12,11 @@ export function throws(fn: (...args: any[]) => void) {
 }
 
 export function isWait(value: any): value is ReturnType<typeof wait> {
-  return value.wait;
+  return value?.wait;
 }
 
 export function isThrows(value: any): value is ReturnType<typeof throws> {
-  return value.throws;
+  return value?.throws;
 }
 
 export function resolveAfter<T>(value: T, timeout: number) {

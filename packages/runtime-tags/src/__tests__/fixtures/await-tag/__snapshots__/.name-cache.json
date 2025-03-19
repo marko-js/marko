@@ -1,0 +1,23 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "a",
+      "$init": "e",
+      "$_count$await_content3": "t",
+      "$_value$await_content3": "r",
+      "$_params_4$await_content": "o",
+      "$_await_content3": "d",
+      "$_count$await_content2": "c",
+      "$_value$await_content2": "m",
+      "$_params_3$await_content": "n",
+      "$_await_content2": "i",
+      "$_count$await_content": "u",
+      "$_value$await_content": "l",
+      "$_params_2$await_content": "s",
+      "$_await_content": "v",
+      "$_count_closure": "R",
+      "$_count_effect": "f",
+      "$_count": "g"
+    }
+  }
+}
