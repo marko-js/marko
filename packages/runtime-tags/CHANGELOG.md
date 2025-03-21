@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.61
+
+### Patch Changes
+
+- [#2577](https://github.com/marko-js/marko/pull/2577) [`33c3979`](https://github.com/marko-js/marko/commit/33c3979dcbdde3b849a4e8af186f52aaaac55e69) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve debug and production Accessor Chars output.
+
 ## 0.3.60
 
 ### Patch Changes

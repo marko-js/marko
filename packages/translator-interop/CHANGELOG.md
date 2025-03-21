@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.20
+
+### Patch Changes
+
+- [#2577](https://github.com/marko-js/marko/pull/2577) [`33c3979`](https://github.com/marko-js/marko/commit/33c3979dcbdde3b849a4e8af186f52aaaac55e69) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve debug and production Accessor Chars output.
+
+- Updated dependencies [[`33c3979`](https://github.com/marko-js/marko/commit/33c3979dcbdde3b849a4e8af186f52aaaac55e69)]:
+  - marko@5.37.22
+  - @marko/runtime-tags@0.3.61
+
 ## 0.2.19
 
 ### Patch Changes
