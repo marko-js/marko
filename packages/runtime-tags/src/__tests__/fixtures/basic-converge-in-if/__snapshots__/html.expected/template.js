@@ -15,7 +15,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeScope(_scope0_id, {
     a,
     b,
-    "#text/0!": _$.getScopeById(_ifScopeId)
+    "ConditionalScope:#text/0": _$.getScopeById(_ifScopeId)
   }, "__tests__/template.marko", 0, {
     a: "1:6",
     b: "2:6"

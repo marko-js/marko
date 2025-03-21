@@ -8,8 +8,8 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { AccessorChar } from "../../common/types";
 import { assertNoBodyContent } from "../util/assert";
+import { getAccessorProp } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import { isControlFlowTag } from "../util/is-core-tag";
@@ -77,7 +77,7 @@ export default {
           // TODO: this should be based on the child actually mutating the tag variable.
           setSerializedProperty(
             section,
-            AccessorChar.TagVariableChange,
+            getAccessorProp().TagVariableChange,
             attrs.valueChange,
           );
         }

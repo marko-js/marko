@@ -6,8 +6,9 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { AccessorChar, WalkCode } from "../../common/types";
+import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { getAccessorPrefix } from "../util/get-accessor-char";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
@@ -97,7 +98,7 @@ export const IfTag = {
           section,
           branches.length,
         ),
-        suffix: AccessorChar.ConditionalScope,
+        prefix: getAccessorPrefix().ConditionalScope,
       };
 
       rootExtra.singleNodeOptimization = singleNodeOptimization;
@@ -221,7 +222,8 @@ export const IfTag = {
             if (isStateful) {
               setSerializedProperty(
                 section,
-                getScopeAccessor(nodeRef) + AccessorChar.ConditionalRenderer,
+                getAccessorPrefix().ConditionalRenderer +
+                  getScopeAccessor(nodeRef),
                 ifBranchIdentifier,
               );
               const cbNode = t.arrowFunctionExpression(
@@ -258,7 +260,7 @@ export const IfTag = {
             );
             setSerializedProperty(
               section,
-              getScopeAccessor(nodeRef) + AccessorChar.ConditionalScope,
+              getAccessorPrefix().ConditionalScope + getScopeAccessor(nodeRef),
               callRuntime("getScopeById", ifScopeIdIdentifier),
             );
           } else {

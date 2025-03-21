@@ -1,7 +1,7 @@
 export const _template_ = "<!><!><hr><!><hr><!><!>";
 export const _walks_ = /* replace, over(2), replace, over(2), replace, over(1) */"D%c%c%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _get_hoisted_el = _$.register("__tests__/template.marko_0__hoisted_el3/hoist", _$.hoist("#li/0>", "#ul/0(", "#text/2("));
+const _get_hoisted_el = _$.register("__tests__/template.marko_0__hoisted_el3/hoist", _$.hoist("Getter:#li/0", "LoopScopeMap:#ul/0", "LoopScopeMap:#text/2"));
 const _expr_i_j$for_content = /* @__PURE__ */_$.intersection(3, _scope => {
   const {
     _: {
@@ -22,9 +22,9 @@ const _setup$for_content = _scope => {
   _for$for_content(_scope, [3, 0, 1]);
 };
 const _for_content3 = /* @__PURE__ */_$.createRenderer("<ul></ul>", /* get */" ", _setup$for_content, _params_2$for_content);
-const _get_hoisted_el2 = _$.hoist("#div/0>", "#text/1(");
+const _get_hoisted_el2 = _$.hoist("Getter:#div/0", "LoopScopeMap:#text/1");
 const _for_content2 = /* @__PURE__ */_$.createRenderer("<div></div>", /* get */" ");
-const _get_hoisted_el3 = _$.hoist("#div/0>", "#text/0(");
+const _get_hoisted_el3 = _$.hoist("Getter:#div/0", "LoopScopeMap:#text/0");
 const _for_content = /* @__PURE__ */_$.createRenderer("<div></div>", /* get */" ");
 const _for3 = /* @__PURE__ */_$.loopTo("#text/2", _for_content3);
 const _for2 = /* @__PURE__ */_$.loopTo("#text/1", _for_content2);

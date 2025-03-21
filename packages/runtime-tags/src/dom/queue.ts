@@ -1,4 +1,4 @@
-import { AccessorChar, type Scope } from "../common/types";
+import { AccessorPrefix, AccessorProp, type Scope } from "../common/types";
 import { setConditionalRenderer } from "./control-flow";
 import { createAndSetupBranch } from "./renderer";
 import { finishPendingScopes } from "./scope";
@@ -151,20 +151,21 @@ export let enableCatch = () => {
       runRender(render);
     } catch (error) {
       let branch = render.___scope.___closestBranch;
-      while (branch && !branch[AccessorChar.CatchContent])
+      while (branch && !branch[AccessorProp.CatchContent])
         branch = branch.___parentBranch;
       if (!branch) {
         throw error;
       } else {
         setConditionalRenderer(
           branch._!,
-          branch[AccessorChar.BranchAccessor],
-          branch[AccessorChar.CatchContent],
+          branch[AccessorProp.BranchAccessor],
+          branch[AccessorProp.CatchContent],
           createAndSetupBranch,
         );
-        branch[AccessorChar.CatchContent].___params?.(
+        branch[AccessorProp.CatchContent].___params?.(
           branch._![
-            branch[AccessorChar.BranchAccessor] + AccessorChar.ConditionalScope
+            AccessorPrefix.ConditionalScope +
+              branch[AccessorProp.BranchAccessor]
           ],
           [error],
         );

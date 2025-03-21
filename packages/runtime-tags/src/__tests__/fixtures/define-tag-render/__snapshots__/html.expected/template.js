@@ -22,7 +22,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     name: "Ryan"
   });
   _$.writeScope(_scope0_id, {
-    "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.dynamicTagId(MyTag)
+    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/0": _$.dynamicTagId(MyTag)
   }, "__tests__/template.marko", 0);
 });

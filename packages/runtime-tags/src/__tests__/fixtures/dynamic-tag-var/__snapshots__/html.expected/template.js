@@ -16,11 +16,11 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.setTagVar(_scope0_id, "#scopeOffset/7", _dynamicScope3, "__tests__/template.marko_0_el1/var");
   _$.writeScope(_scope0_id, {
     "#childScope/0": _$.writeExistingScope(_childScope),
-    "#text/2!": _$.writeExistingScope(_dynamicScope),
-    "#text/2(": _$.dynamicTagId(input.show && child),
-    "#text/4!": _$.writeExistingScope(_dynamicScope2),
-    "#text/4(": _$.dynamicTagId(input.dynamic),
-    "#text/6!": _$.writeExistingScope(_dynamicScope3),
-    "#text/6(": _$.dynamicTagId(input.show && "div")
+    "ConditionalScope:#text/2": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/2": _$.dynamicTagId(input.show && child),
+    "ConditionalScope:#text/4": _$.writeExistingScope(_dynamicScope2),
+    "ConditionalRenderer:#text/4": _$.dynamicTagId(input.dynamic),
+    "ConditionalScope:#text/6": _$.writeExistingScope(_dynamicScope3),
+    "ConditionalRenderer:#text/6": _$.dynamicTagId(input.show && "div")
   }, "__tests__/template.marko", 0);
 });

@@ -49,16 +49,16 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _scope3_.set(i, _$.ensureScopeWithId(_scope3_id));
     _$.write("</ul>");
     _$.writeScope(_scope3_id, {
-      "#ul/0(": _scope4_.size ? _scope4_ : undefined
+      "LoopScopeMap:#ul/0": _scope4_.size ? _scope4_ : undefined
     }, "__tests__/template.marko", "22:2");
   });
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml3");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.writeScope(_scope0_id, {
     _hoisted_setHtml3,
-    "#text/0(": _scope1_.size ? _scope1_ : undefined,
-    "#text/1(": _scope2_.size ? _scope2_ : undefined,
-    "#text/2(": _scope3_.size ? _scope3_ : undefined
+    "LoopScopeMap:#text/0": _scope1_.size ? _scope1_ : undefined,
+    "LoopScopeMap:#text/1": _scope2_.size ? _scope2_ : undefined,
+    "LoopScopeMap:#text/2": _scope3_.size ? _scope3_ : undefined
   }, "__tests__/template.marko", 0, {
     _hoisted_setHtml3: "25:12"
   });

@@ -13,8 +13,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.setTagVar(_scope1_id, "#scopeOffset/1", _dynamicScope, "__tests__/template.marko_1_setHtml/var");
     _scope1_.set(_value, _$.ensureScopeWithId(_scope1_id));
     _$.writeScope(_scope1_id, {
-      "#text/0!": _$.writeExistingScope(_dynamicScope),
-      "#text/0(": _$.dynamicTagId(1 && Child),
+      "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
+      "ConditionalRenderer:#text/0": _$.dynamicTagId(1 && Child),
       setHtml
     }, "__tests__/template.marko", "3:2");
   });
@@ -27,8 +27,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.setTagVar(_scope2_id, "#scopeOffset/1", _dynamicScope2, "__tests__/template.marko_2_setHtml2/var");
     _scope2_.set(_value2, _$.ensureScopeWithId(_scope2_id));
     _$.writeScope(_scope2_id, {
-      "#text/0!": _$.writeExistingScope(_dynamicScope2),
-      "#text/0(": _$.dynamicTagId(1 && Child),
+      "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope2),
+      "ConditionalRenderer:#text/0": _$.dynamicTagId(1 && Child),
       setHtml2
     }, "__tests__/template.marko", "14:2");
   }, _scope0_id, "#text/1");
@@ -44,24 +44,24 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       _$.setTagVar(_scope4_id, "#scopeOffset/1", _dynamicScope3, "__tests__/template.marko_4_setHtml3/var");
       _scope4_.set(j, _$.ensureScopeWithId(_scope4_id));
       _$.writeScope(_scope4_id, {
-        "#text/0!": _$.writeExistingScope(_dynamicScope3),
-        "#text/0(": _$.dynamicTagId(1 && Child),
+        "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope3),
+        "ConditionalRenderer:#text/0": _$.dynamicTagId(1 && Child),
         setHtml3
       }, "__tests__/template.marko", "26:4");
     });
     _scope3_.set(i, _$.ensureScopeWithId(_scope3_id));
     _$.write("</ul>");
     _$.writeScope(_scope3_id, {
-      "#ul/0(": _scope4_.size ? _scope4_ : undefined
+      "LoopScopeMap:#ul/0": _scope4_.size ? _scope4_ : undefined
     }, "__tests__/template.marko", "24:2");
   });
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml3");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.writeScope(_scope0_id, {
     _hoisted_setHtml3,
-    "#text/0(": _scope1_.size ? _scope1_ : undefined,
-    "#text/1(": _scope2_.size ? _scope2_ : undefined,
-    "#text/2(": _scope3_.size ? _scope3_ : undefined
+    "LoopScopeMap:#text/0": _scope1_.size ? _scope1_ : undefined,
+    "LoopScopeMap:#text/1": _scope2_.size ? _scope2_ : undefined,
+    "LoopScopeMap:#text/2": _scope3_.size ? _scope3_ : undefined
   }, "__tests__/template.marko", 0, {
     _hoisted_setHtml3: "27:20"
   });

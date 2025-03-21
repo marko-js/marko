@@ -50,12 +50,12 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     input_b: input.b,
     input_x: input.x,
     input_y: input.y,
-    "#text/0(": _ifBranch,
-    "#text/0!": _$.getScopeById(_ifScopeId),
-    "#text/1(": _ifBranch2,
-    "#text/1!": _$.getScopeById(_ifScopeId2),
-    "#div/2(": _ifBranch3,
-    "#div/2!": _$.getScopeById(_ifScopeId3)
+    "ConditionalRenderer:#text/0": _ifBranch,
+    "ConditionalScope:#text/0": _$.getScopeById(_ifScopeId),
+    "ConditionalRenderer:#text/1": _ifBranch2,
+    "ConditionalScope:#text/1": _$.getScopeById(_ifScopeId2),
+    "ConditionalRenderer:#div/2": _ifBranch3,
+    "ConditionalScope:#div/2": _$.getScopeById(_ifScopeId3)
   }, "__tests__/template.marko", 0, {
     input_a: ["input.a"],
     input_b: ["input.b"],

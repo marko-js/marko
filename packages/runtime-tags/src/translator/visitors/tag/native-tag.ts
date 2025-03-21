@@ -7,8 +7,9 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
-import { AccessorChar, WalkCode } from "../../../common/types";
+import { WalkCode } from "../../../common/types";
 import evaluate from "../../util/evaluate";
+import { getAccessorPrefix } from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
 import isInvokedFunction from "../../util/is-invoked-function";
 import { isStatefulReferences } from "../../util/is-stateful";
@@ -354,8 +355,8 @@ export default {
                     "nodeRef",
                     t.stringLiteral(getterId),
                     t.stringLiteral(
-                      getScopeAccessorLiteral(nodeRef!).value +
-                        AccessorChar.Getter,
+                      getAccessorPrefix().Getter +
+                        getScopeAccessorLiteral(nodeRef!).value,
                     ),
                   ),
                 ),
@@ -384,8 +385,8 @@ export default {
                     t.memberExpression(
                       getScopeExpression(section, referenceSection),
                       t.stringLiteral(
-                        getScopeAccessorLiteral(nodeRef!).value +
-                          AccessorChar.Getter,
+                        getAccessorPrefix().Getter +
+                          getScopeAccessorLiteral(nodeRef!).value,
                       ),
                       true,
                     ),

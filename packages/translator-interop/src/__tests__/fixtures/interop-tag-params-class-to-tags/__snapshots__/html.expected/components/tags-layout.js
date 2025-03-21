@@ -10,8 +10,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/components/tags-layou
   _$.writeScope(_scope0_id, {
     input_content: input.content,
     count,
-    "#text/2!": _$.writeExistingScope(_dynamicScope),
-    "#text/2(": _$.dynamicTagId(input.content)
+    "ConditionalScope:#text/2": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/2": _$.dynamicTagId(input.content)
   }, "__tests__/components/tags-layout.marko", 0, {
     input_content: ["input.content"],
     count: "1:6"

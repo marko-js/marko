@@ -4,7 +4,8 @@ import { normalizeDynamicRenderer } from "../common/helpers";
 import {
   type $Global,
   type Accessor,
-  AccessorChar,
+  AccessorPrefix,
+  AccessorProp,
   type Falsy,
   ResumeSymbol,
 } from "../common/types";
@@ -81,7 +82,7 @@ export function setTagVar(
   registryId: string,
 ) {
   ensureScopeWithId(parentScopeId)[scopeOffsetAccessor] = nextScopeId();
-  childScope[AccessorChar.TagVariable] = register(
+  childScope[AccessorProp.TagVariable] = register(
     {},
     registryId,
     parentScopeId,
@@ -436,7 +437,7 @@ export function fork<T>(
     );
     content(promise);
     writeScope(scopeId, {
-      [accessor + AccessorChar.ConditionalScope]: writeScope(branchId, {}),
+      [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
     });
     $chunk.writeHTML(
       $chunk.boundary.state.mark(
@@ -473,7 +474,7 @@ export function fork<T>(
             boundary.state.serializer.writeAssign(
               writeScope(branchId, {}),
               ensureScopeWithId(scopeId),
-              accessor + AccessorChar.ConditionalScope,
+              AccessorPrefix.ConditionalScope + accessor,
             );
             $chunk.writeHTML(
               $chunk.boundary.state.mark(
@@ -532,12 +533,12 @@ export function tryContent(
   }
 
   writeScope(branchId, {
-    [AccessorChar.BranchAccessor]: accessor,
-    [AccessorChar.CatchContent]: catchContent,
-    [AccessorChar.PlaceholderContent]: placeholderContent,
+    [AccessorProp.BranchAccessor]: accessor,
+    [AccessorProp.CatchContent]: catchContent,
+    [AccessorProp.PlaceholderContent]: placeholderContent,
   });
   writeScope(scopeId, {
-    [accessor + AccessorChar.ConditionalScope]: getScopeById(branchId),
+    [AccessorPrefix.ConditionalScope + accessor]: getScopeById(branchId),
   });
 
   $chunk.writeHTML(

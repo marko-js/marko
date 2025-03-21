@@ -20,7 +20,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeScope(_scope0_id, {
     open,
     list,
-    "#ul/0(": _scope1_.size ? _scope1_ : undefined
+    "LoopScopeMap:#ul/0": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
     open: "1:6",
     list: "2:6"

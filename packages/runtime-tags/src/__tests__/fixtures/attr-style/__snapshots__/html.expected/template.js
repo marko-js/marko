@@ -40,7 +40,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   });
   _$.writeScope(_scope0_id, {
     "#childScope/1": _$.writeExistingScope(_childScope),
-    "#text/4!": _$.writeExistingScope(_dynamicScope),
-    "#text/4(": _$.dynamicTagId(test)
+    "ConditionalScope:#text/4": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/4": _$.dynamicTagId(test)
   }, "__tests__/template.marko", 0);
 });

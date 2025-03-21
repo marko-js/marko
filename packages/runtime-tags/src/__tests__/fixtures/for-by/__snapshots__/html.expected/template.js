@@ -83,11 +83,11 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope(_scope0_id, {
     items,
-    "#div/0(": _scope1_.size ? _scope1_ : undefined,
-    "#div/1(": _scope2_.size ? _scope2_ : undefined,
-    "#div/2(": _scope3_.size ? _scope3_ : undefined,
-    "#div/3(": _scope4_.size ? _scope4_ : undefined,
-    "#div/4(": _scope5_.size ? _scope5_ : undefined
+    "LoopScopeMap:#div/0": _scope1_.size ? _scope1_ : undefined,
+    "LoopScopeMap:#div/1": _scope2_.size ? _scope2_ : undefined,
+    "LoopScopeMap:#div/2": _scope3_.size ? _scope3_ : undefined,
+    "LoopScopeMap:#div/3": _scope4_.size ? _scope4_ : undefined,
+    "LoopScopeMap:#div/4": _scope5_.size ? _scope5_ : undefined
   }, "__tests__/template.marko", 0, {
     items: "14:8"
   });

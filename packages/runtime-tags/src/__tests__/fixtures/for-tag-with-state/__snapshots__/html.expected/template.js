@@ -15,7 +15,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.writeScope(_scope2_id, {}, "__tests__/template.marko", "9:2");
   }, _scope0_id, "#text/1");
   _$.writeScope(_scope0_id, {
-    "#text/1(": _scope2_.size ? _scope2_ : undefined
+    "LoopScopeMap:#text/1": _scope2_.size ? _scope2_ : undefined
   }, "__tests__/template.marko", 0);
   _$.resumeClosestBranch(_scope0_id);
 });

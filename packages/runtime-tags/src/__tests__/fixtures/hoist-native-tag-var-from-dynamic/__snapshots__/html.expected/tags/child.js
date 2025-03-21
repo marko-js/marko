@@ -6,9 +6,9 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", in
   const _dynamicScope2 = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/1", input.content, {});
   _$.writeScope(_scope0_id, {
-    "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.dynamicTagId(input.content),
-    "#text/1!": _$.writeExistingScope(_dynamicScope2),
-    "#text/1(": _$.dynamicTagId(input.content)
+    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/0": _$.dynamicTagId(input.content),
+    "ConditionalScope:#text/1": _$.writeExistingScope(_dynamicScope2),
+    "ConditionalRenderer:#text/1": _$.dynamicTagId(input.content)
   }, "__tests__/tags/child.marko", 0);
 });

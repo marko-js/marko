@@ -19,7 +19,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
           _$.writeEffect(_scope2_id, "__tests__/template.marko_2_count");
           _$.writeSubscribe(_count_closures, _$.writeScope(_scope2_id, {
             _: _$.ensureScopeWithId(_scope1_id),
-            "count(": 0
+            "ClosureSignalIndex:count": 0
           }, "__tests__/template.marko", "8:6"));
           _ifBranch = 0;
           _ifScopeId = _scope2_id;
@@ -28,8 +28,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       _$.writeEffect(_scope1_id, "__tests__/template.marko_1_inner");
       _$.writeScope(_scope1_id, {
         _: _$.ensureScopeWithId(_scope0_id),
-        "#text/1(": _ifBranch,
-        "#text/1!": _$.getScopeById(_ifScopeId)
+        "ConditionalRenderer:#text/1": _ifBranch,
+        "ConditionalScope:#text/1": _$.getScopeById(_ifScopeId)
       }, "__tests__/template.marko", "6:4");
       _ifBranch2 = 0;
       _ifScopeId2 = _scope1_id;
@@ -41,9 +41,9 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     outer,
     inner,
     count,
-    "count!": _count_closures,
-    "#text/1(": _ifBranch2,
-    "#text/1!": _$.getScopeById(_ifScopeId2)
+    "ClosureScopes:count": _count_closures,
+    "ConditionalRenderer:#text/1": _ifBranch2,
+    "ConditionalScope:#text/1": _$.getScopeById(_ifScopeId2)
   }, "__tests__/template.marko", 0, {
     outer: "1:6",
     inner: "2:6",

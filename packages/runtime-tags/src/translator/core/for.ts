@@ -6,8 +6,9 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { AccessorChar, WalkCode } from "../../common/types";
+import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { getAccessorPrefix } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import {
@@ -101,7 +102,7 @@ export default {
 
     bodySection.sectionAccessor = {
       binding: getOptimizedOnlyChildNodeRef(tag, section),
-      suffix: AccessorChar.LoopScopeMap,
+      prefix: getAccessorPrefix().LoopScopeMap,
     };
 
     bodySection.upstreamExpression = tagExtra;
@@ -250,7 +251,7 @@ export default {
 
           setSerializedProperty(
             tagSection,
-            getScopeAccessor(nodeRef) + AccessorChar.LoopScopeMap,
+            getAccessorPrefix().LoopScopeMap + getScopeAccessor(nodeRef),
             t.conditionalExpression(
               t.memberExpression(forScopesIdentifier, t.identifier("size")),
               forScopesIdentifier,

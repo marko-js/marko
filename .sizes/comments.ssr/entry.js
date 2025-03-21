@@ -1,4 +1,4 @@
-// size: 145 (min) 121 (brotli)
+// size: 145 (min) 129 (brotli)
 const _open$for_content_effect = effect("a0", (_scope, { 12: open }) =>
     on(_scope[2], "click", function () {
       _open$for_content(_scope, !open);

@@ -21,7 +21,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
           _$.write(`<span>${_$.escapeXML(value1)}${_$.markResumeNode(_scope2_id, "#text/0")}</span>`);
           _$.writeSubscribe(_value1__closures, _$.writeScope(_scope2_id, {
             _: _$.ensureScopeWithId(_scope1_id),
-            "value1(": 0
+            "ClosureSignalIndex:value1": 0
           }, "__tests__/template.marko", "4:6"));
           _ifBranch = 0;
           _ifScopeId = _scope2_id;
@@ -33,7 +33,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
           _$.write(`<span>${_$.escapeXML(value2)}${_$.markResumeNode(_scope3_id, "#text/0")}</span>`);
           _$.writeSubscribe(_value2__closures, _$.writeScope(_scope3_id, {
             _: _$.ensureScopeWithId(_scope1_id),
-            "value2(": 0
+            "ClosureSignalIndex:value2": 0
           }, "__tests__/template.marko", "5:6"));
           _ifBranch2 = 0;
           _ifScopeId2 = _scope3_id;
@@ -41,10 +41,10 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       }, _scope1_id, "#text/1");
       _$.writeScope(_scope1_id, {
         _: _$.ensureScopeWithId(_scope0_id),
-        "#text/0(": _ifBranch,
-        "#text/0!": _$.getScopeById(_ifScopeId),
-        "#text/1(": _ifBranch2,
-        "#text/1!": _$.getScopeById(_ifScopeId2)
+        "ConditionalRenderer:#text/0": _ifBranch,
+        "ConditionalScope:#text/0": _$.getScopeById(_ifScopeId),
+        "ConditionalRenderer:#text/1": _ifBranch2,
+        "ConditionalScope:#text/1": _$.getScopeById(_ifScopeId2)
       }, "__tests__/template.marko", "3:4");
       _ifBranch3 = 0;
       _ifScopeId3 = _scope1_id;
@@ -54,10 +54,10 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeScope(_scope0_id, {
     value1,
     value2,
-    "value1!": _value1__closures,
-    "value2!": _value2__closures,
-    "#div/0(": _ifBranch3,
-    "#div/0!": _$.getScopeById(_ifScopeId3)
+    "ClosureScopes:value1": _value1__closures,
+    "ClosureScopes:value2": _value2__closures,
+    "ConditionalRenderer:#div/0": _ifBranch3,
+    "ConditionalScope:#div/0": _$.getScopeById(_ifScopeId3)
   }, "__tests__/template.marko", 0, {
     value1: "1:15",
     value2: "1:23"

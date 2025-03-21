@@ -4,7 +4,7 @@ function _return(_scope) {
     _scope[0].innerHTML = html;
   };
 }
-_$.register("a0", _return), _$.register("c1", _$.hoist(4, "1!"));
+_$.register("a0", _return), _$.register("c1", _$.hoist(4, "a1"));
 const _setHtml$what_content = _$.registerBoundSignal("c2", _$.value(4));
 _$.registerContent(
   "c0",
@@ -18,7 +18,7 @@ _$.registerContent(
   },
   0,
   0,
-  "1!",
+  "a1",
 ),
   _$.effect("c3", ({ 1: _hoisted_setHtml }) => {
     for (const fn of 1) fn("Hoist from custom tag");

@@ -14,7 +14,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     input_from: input.from,
     input_to: input.to,
     input_step: input.step,
-    "#div/0(": _scope1_.size ? _scope1_ : undefined
+    "LoopScopeMap:#div/0": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
     input_from: ["input.from"],
     input_to: ["input.to"],

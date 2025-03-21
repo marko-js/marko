@@ -11,7 +11,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/tags/tag-b/index.mark
   _$.dynamicTagInput(_scope0_id, "#text/1", content, {});
   _$.write(`</div>${_$.markResumeNode(_scope0_id, "#div/0")}`);
   _$.writeScope(_scope0_id, {
-    "#text/1!": _$.writeExistingScope(_dynamicScope),
-    "#text/1(": _$.dynamicTagId(content)
+    "ConditionalScope:#text/1": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/1": _$.dynamicTagId(content)
   }, "__tests__/tags/tag-b/index.marko", 0);
 });

@@ -33,8 +33,8 @@ const _content = input => {
       i,
       id,
       open,
-      "#text/4(": _ifBranch,
-      "#text/4!": _$.getScopeById(_ifScopeId),
+      "ConditionalRenderer:#text/4": _ifBranch,
+      "ConditionalScope:#text/4": _$.getScopeById(_ifScopeId),
       _: _$.ensureScopeWithId(_scope0_id)
     }, "__tests__/tags/comments.marko", "2:4", {
       comment_comments: ["comment.comments", "2:8"],
@@ -46,7 +46,7 @@ const _content = input => {
   _$.write("</ul>");
   _$.writeScope(_scope0_id, {
     input_path: input.path,
-    "#ul/0(": _scope1_.size ? _scope1_ : undefined
+    "LoopScopeMap:#ul/0": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/tags/comments.marko", 0, {
     input_path: ["input.path"]
   });

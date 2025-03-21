@@ -74,10 +74,10 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     Twice,
     clickTwiceCount,
     onClickTwice,
-    "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.dynamicTagId(Once),
-    "#text/4!": _$.writeExistingScope(_dynamicScope2),
-    "#text/4(": _$.dynamicTagId(Twice)
+    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/0": _$.dynamicTagId(Once),
+    "ConditionalScope:#text/4": _$.writeExistingScope(_dynamicScope2),
+    "ConditionalRenderer:#text/4": _$.dynamicTagId(Twice)
   }, "__tests__/template.marko", 0, {
     Once: "1:8",
     clickOnceCount: "9:5",

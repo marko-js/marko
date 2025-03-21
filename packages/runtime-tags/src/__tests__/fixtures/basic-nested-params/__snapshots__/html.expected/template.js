@@ -20,17 +20,17 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
           _$.write(`<div>${_$.escapeXML(outer)}${_$.markResumeNode(_scope2_id, "#text/0")}.<!>${_$.escapeXML(inner)}${_$.markResumeNode(_scope2_id, "#text/1")}</div>`);
           _$.writeSubscribe(_outer$child_content_closures, _$.writeScope(_scope2_id, {
             _: _$.ensureScopeWithId(_scope1_id),
-            "outer(": 0
+            "ClosureSignalIndex:outer": 0
           }, "__tests__/template.marko", "7:6"));
           _$.resumeClosestBranch(_scope2_id);
         }, _scope1_id)
       });
       _$.writeSubscribe(_y_closures, _$.writeScope(_scope1_id, {
         outer,
-        "outer!": _outer$child_content_closures,
+        "ClosureScopes:outer": _outer$child_content_closures,
         "#childScope/0": _$.writeExistingScope(_childScope),
         _: _$.ensureScopeWithId(_scope0_id),
-        "y(": 0
+        "ClosureSignalIndex:y": 0
       }, "__tests__/template.marko", "6:2", {
         outer: "6:8"
       }));
@@ -41,7 +41,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeScope(_scope0_id, {
     x,
     y,
-    "y!": _y_closures,
+    "ClosureScopes:y": _y_closures,
     "#childScope/1": _$.writeExistingScope(_childScope2)
   }, "__tests__/template.marko", 0, {
     x: "1:6",

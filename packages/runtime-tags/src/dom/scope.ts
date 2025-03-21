@@ -66,7 +66,7 @@ export function insertBranchBefore(
 
 export function tempDetatchBranch(branch: BranchScope) {
   insertChildNodes(
-    branch.___startNode.ownerDocument!.createDocumentFragment(),
+    new DocumentFragment(),
     null,
     branch.___startNode,
     branch.___endNode,

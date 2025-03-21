@@ -8,21 +8,21 @@ const _setup$if_content4 = _scope => {
   _setup$if_content4_effect(_scope);
 };
 const _if_content5 = /* @__PURE__ */_$.createRenderer(0, 0, _setup$if_content4);
-const _get_hoisted_setHtml = _$.hoist("setHtml3", "#text/3!");
+const _get_hoisted_setHtml = _$.hoist("setHtml3", "ConditionalScope:#text/3");
 const _setHtml3$if_content = _$.registerBoundSignal("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_$.value("setHtml3"));
 const _setup$if_content3 = _scope => {
   _$.setTagVar(_scope, "#childScope/0", _setHtml3$if_content);
   _child(_scope["#childScope/0"]);
 };
 const _if_content4 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, _setup$if_content3);
-const _get_hoisted_setHtml2 = _$.hoist("setHtml2", "#text/2!");
+const _get_hoisted_setHtml2 = _$.hoist("setHtml2", "ConditionalScope:#text/2");
 const _setHtml2$if_content = _$.registerBoundSignal("__tests__/template.marko_3_setHtml2/var", /* @__PURE__ */_$.value("setHtml2"));
 const _setup$if_content2 = _scope => {
   _$.setTagVar(_scope, "#childScope/0", _setHtml2$if_content);
   _child(_scope["#childScope/0"]);
 };
 const _if_content3 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, _setup$if_content2);
-const _get_hoisted_setHtml3 = _$.register("__tests__/template.marko_0__hoisted_setHtml/hoist", _$.hoist("setHtml", "#text/0!", "#text/0!"));
+const _get_hoisted_setHtml3 = _$.register("__tests__/template.marko_0__hoisted_setHtml/hoist", _$.hoist("setHtml", "ConditionalScope:#text/0", "ConditionalScope:#text/0"));
 const _setHtml$if_content = _$.registerBoundSignal("__tests__/template.marko_2_setHtml/var", /* @__PURE__ */_$.value("setHtml"));
 const _setup$if_content = _scope => {
   _$.setTagVar(_scope, "#childScope/0", _setHtml$if_content);

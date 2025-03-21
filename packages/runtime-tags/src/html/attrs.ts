@@ -5,7 +5,7 @@ import {
   isVoid,
   styleValue,
 } from "../common/helpers";
-import { type Accessor, AccessorChar, ControlledType } from "../common/types";
+import { type Accessor, AccessorPrefix, ControlledType } from "../common/types";
 import { escapeTextAreaValue } from "./content";
 import { getChunk, withContext, writeScope } from "./writer";
 
@@ -239,7 +239,7 @@ export function attrs(
             if (!events) {
               events = {};
               writeScope(scopeId, {
-                [nodeAccessor + AccessorChar.EventAttributes]: events,
+                [AccessorPrefix.EventAttributes + nodeAccessor]: events,
               });
             }
 
@@ -277,9 +277,9 @@ function writeControlledScope(
   valueChange: unknown,
 ) {
   writeScope(scopeId, {
-    [nodeAccessor + AccessorChar.ControlledType]: type,
-    [nodeAccessor + AccessorChar.ControlledValue]: value,
-    [nodeAccessor + AccessorChar.ControlledHandler]: valueChange,
+    [AccessorPrefix.ControlledType + nodeAccessor]: type,
+    [AccessorPrefix.ControlledValue + nodeAccessor]: value,
+    [AccessorPrefix.ControlledHandler + nodeAccessor]: valueChange,
   });
 }
 

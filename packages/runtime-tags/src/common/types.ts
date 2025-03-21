@@ -9,6 +9,7 @@ export interface BranchScope extends Scope {
   ___abortScopes: Set<Scope> | undefined;
   ___branchScopes: Set<BranchScope> | undefined;
   ___renderer: ClientRenderer | string;
+  ___pendingAsyncCount: number | undefined;
 }
 export interface Scope {
   $global: Record<string, unknown> & { ___nextScopeId: number };
@@ -33,29 +34,7 @@ export enum ResumeSymbol {
   ClosestBranch = "$",
 }
 
-export enum AccessorChar {
-  ClosureScopes = "!",
-  ClosureSignalIndex = "(",
-  ConditionalScope = "!",
-  ConditionalRenderer = "(",
-  LoopScopeArray = "!",
-  LoopScopeMap = "(",
-  LifecycleAbortController = "-",
-  DynamicPlaceholderLastChild = "-",
-  TagVariable = "/",
-  TagVariableChange = "@",
-  EventAttributes = "~",
-  ControlledValue = ":",
-  ControlledHandler = ";",
-  ControlledType = "=",
-  Getter = ">",
-  BranchAccessor = "*",
-  CatchContent = "^",
-  PlaceholderContent = "%",
-  PlaceholderBranch = "#",
-  PendingCount = ".",
-  Promise = "?",
-}
+export { AccessorPrefix, AccessorProp } from "./accessor.debug";
 
 export enum NodeType {
   Element = 1,

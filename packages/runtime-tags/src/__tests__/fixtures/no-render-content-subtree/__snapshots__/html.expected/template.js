@@ -20,7 +20,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     }
   }, _scope0_id, "#text/1");
   _$.writeScope(_scope0_id, {
-    "#text/1(": _ifBranch,
-    "#text/1!": _$.getScopeById(_ifScopeId)
+    "ConditionalRenderer:#text/1": _ifBranch,
+    "ConditionalScope:#text/1": _$.getScopeById(_ifScopeId)
   }, "__tests__/template.marko", 0);
 });

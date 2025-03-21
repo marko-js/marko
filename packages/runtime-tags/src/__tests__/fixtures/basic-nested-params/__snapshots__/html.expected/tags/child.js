@@ -12,8 +12,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", in
   _$.writeScope(_scope0_id, {
     content,
     value,
-    "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.dynamicTagId(content)
+    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/0": _$.dynamicTagId(content)
   }, "__tests__/tags/child.marko", 0, {
     content: "1:9",
     value: "1:18"

@@ -1,6 +1,6 @@
 import {
   type Accessor,
-  AccessorChar,
+  AccessorPrefix,
   ControlledType,
   type Scope,
 } from "../common/types";
@@ -31,7 +31,7 @@ export function controllable_input_checked_effect(
   const el = scope[nodeAccessor] as HTMLInputElement;
   syncControllable(el, "input", hasCheckboxChanged, () => {
     const checkedChange = scope[
-      nodeAccessor + AccessorChar.ControlledHandler
+      AccessorPrefix.ControlledHandler + nodeAccessor
     ] as undefined | ((value: unknown) => unknown);
     if (checkedChange) {
       const newValue = el.checked;
@@ -49,7 +49,7 @@ export function controllable_input_checkedValue(
   checkedValueChange: unknown,
   value: unknown,
 ) {
-  scope[nodeAccessor + AccessorChar.ControlledValue] = checkedValue;
+  scope[AccessorPrefix.ControlledValue + nodeAccessor] = checkedValue;
   attr(scope[nodeAccessor] as HTMLInputElement, "value", value);
   setCheckboxValue(
     scope,
@@ -68,10 +68,10 @@ export function controllable_input_checkedValue_effect(
   const el = scope[nodeAccessor] as HTMLInputElement;
   syncControllable(el, "input", hasCheckboxChanged, () => {
     const checkedValueChange = scope[
-      nodeAccessor + AccessorChar.ControlledHandler
+      AccessorPrefix.ControlledHandler + nodeAccessor
     ] as undefined | ((value: unknown) => unknown);
     if (checkedValueChange) {
-      const oldValue = scope[nodeAccessor + AccessorChar.ControlledValue];
+      const oldValue = scope[AccessorPrefix.ControlledValue + nodeAccessor];
       const newValue = Array.isArray(oldValue)
         ? updateList(oldValue, el.value, el.checked)
         : el.checked
@@ -107,12 +107,12 @@ export function controllable_input_value(
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
   const normalizedValue = normalizeStrProp(value);
-  scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
+  scope[AccessorPrefix.ControlledHandler + nodeAccessor] = valueChange;
 
   if (valueChange) {
-    scope[nodeAccessor + AccessorChar.ControlledType] =
+    scope[AccessorPrefix.ControlledType + nodeAccessor] =
       ControlledType.InputChecked;
-    scope[nodeAccessor + AccessorChar.ControlledValue] = value;
+    scope[AccessorPrefix.ControlledValue + nodeAccessor] = value;
 
     if (el.isConnected) {
       setValueAndUpdateSelection(el, normalizedValue);
@@ -120,7 +120,7 @@ export function controllable_input_value(
       el.defaultValue = normalizedValue;
     }
   } else {
-    scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
+    scope[AccessorPrefix.ControlledType + nodeAccessor] = ControlledType.None;
     el.defaultValue = normalizedValue;
   }
 }
@@ -130,18 +130,18 @@ export function controllable_input_value_effect(
 ) {
   const el = scope[nodeAccessor] as HTMLInputElement;
   if (isResuming) {
-    scope[nodeAccessor + AccessorChar.ControlledValue] = el.defaultValue;
+    scope[AccessorPrefix.ControlledValue + nodeAccessor] = el.defaultValue;
   }
   syncControllable(el, "input", hasValueChanged, (ev?: Event) => {
-    const valueChange = scope[nodeAccessor + AccessorChar.ControlledHandler] as
-      | undefined
-      | ((value: unknown) => unknown);
+    const valueChange = scope[
+      AccessorPrefix.ControlledHandler + nodeAccessor
+    ] as undefined | ((value: unknown) => unknown);
     if (valueChange) {
       const newValue = el.value;
       inputType = (ev as InputEvent)?.inputType;
       setValueAndUpdateSelection(
         el,
-        scope[nodeAccessor + AccessorChar.ControlledValue],
+        scope[AccessorPrefix.ControlledValue + nodeAccessor],
       );
       valueChange(newValue);
       run();
@@ -161,14 +161,14 @@ export function controllable_select_value(
   value: unknown,
   valueChange: unknown,
 ) {
-  scope[nodeAccessor + AccessorChar.ControlledHandler] = valueChange;
+  scope[AccessorPrefix.ControlledHandler + nodeAccessor] = valueChange;
 
   if (valueChange) {
-    scope[nodeAccessor + AccessorChar.ControlledType] =
+    scope[AccessorPrefix.ControlledType + nodeAccessor] =
       ControlledType.SelectValue;
-    scope[nodeAccessor + AccessorChar.ControlledValue] = value;
+    scope[AccessorPrefix.ControlledValue + nodeAccessor] = value;
   } else {
-    scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
+    scope[AccessorPrefix.ControlledType + nodeAccessor] = ControlledType.None;
   }
 
   pendingEffects.unshift(
@@ -187,18 +187,18 @@ export function controllable_select_value_effect(
 ) {
   const el = scope[nodeAccessor] as HTMLSelectElement;
   const onChange = () => {
-    const valueChange = scope[nodeAccessor + AccessorChar.ControlledHandler] as
-      | undefined
-      | ((value: unknown) => unknown);
+    const valueChange = scope[
+      AccessorPrefix.ControlledHandler + nodeAccessor
+    ] as undefined | ((value: unknown) => unknown);
     if (valueChange) {
       const newValue = Array.isArray(
-        scope[nodeAccessor + AccessorChar.ControlledValue],
+        scope[AccessorPrefix.ControlledValue + nodeAccessor],
       )
         ? Array.from(el.selectedOptions, toValueProp)
         : el.value;
       setSelectOptions(
         el,
-        scope[nodeAccessor + AccessorChar.ControlledValue],
+        scope[AccessorPrefix.ControlledValue + nodeAccessor],
         valueChange,
       );
       valueChange(newValue);
@@ -208,7 +208,7 @@ export function controllable_select_value_effect(
 
   if (!(el as any)._) {
     new MutationObserver(() => {
-      const value = scope[nodeAccessor + AccessorChar.ControlledValue];
+      const value = scope[AccessorPrefix.ControlledValue + nodeAccessor];
       if (
         Array.isArray(value)
           ? value.length !== el.selectedOptions.length ||
@@ -258,16 +258,16 @@ export function controllable_detailsOrDialog_open(
   open: unknown,
   openChange: unknown,
 ) {
-  scope[nodeAccessor + AccessorChar.ControlledHandler] = openChange;
+  scope[AccessorPrefix.ControlledHandler + nodeAccessor] = openChange;
   if (openChange) {
-    scope[nodeAccessor + AccessorChar.ControlledType] =
+    scope[AccessorPrefix.ControlledType + nodeAccessor] =
       ControlledType.DetailsOrDialogOpen;
   } else {
-    scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
+    scope[AccessorPrefix.ControlledType + nodeAccessor] = ControlledType.None;
   }
 
   (scope[nodeAccessor] as HTMLDetailsElement).open = scope[
-    nodeAccessor + AccessorChar.ControlledValue
+    AccessorPrefix.ControlledValue + nodeAccessor
   ] = normalizeBoolProp(open);
 }
 export function controllable_detailsOrDialog_open_effect(
@@ -276,14 +276,14 @@ export function controllable_detailsOrDialog_open_effect(
 ) {
   const el = scope[nodeAccessor] as HTMLDetailsElement;
   const hasChanged = () =>
-    el.open !== scope[nodeAccessor + AccessorChar.ControlledValue];
+    el.open !== scope[AccessorPrefix.ControlledValue + nodeAccessor];
   syncControllable(
     el,
     el.tagName === "DIALOG" ? "close" : "toggle",
     hasChanged,
     () => {
       const openChange = scope[
-        nodeAccessor + AccessorChar.ControlledHandler
+        AccessorPrefix.ControlledHandler + nodeAccessor
       ] as undefined | ((value: unknown) => unknown);
       if (openChange && hasChanged()) {
         const newValue = el.open;
@@ -318,13 +318,13 @@ function setCheckboxValue(
   checked: boolean,
   checkedChange: unknown,
 ) {
-  scope[nodeAccessor + AccessorChar.ControlledHandler] = checkedChange;
+  scope[AccessorPrefix.ControlledHandler + nodeAccessor] = checkedChange;
 
   if (checkedChange) {
-    scope[nodeAccessor + AccessorChar.ControlledType] = type;
+    scope[AccessorPrefix.ControlledType + nodeAccessor] = type;
     (scope[nodeAccessor] as HTMLInputElement).checked = checked;
   } else {
-    scope[nodeAccessor + AccessorChar.ControlledType] = ControlledType.None;
+    scope[AccessorPrefix.ControlledType + nodeAccessor] = ControlledType.None;
     (scope[nodeAccessor] as HTMLInputElement).defaultChecked = checked;
   }
 }

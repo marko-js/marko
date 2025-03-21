@@ -13,8 +13,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   });
   _$.write(`<div id=tags-api>${_$.escapeXML(count)}${_$.markResumeNode(_scope0_id, "#text/1")}</div>`);
   _$.writeScope(_scope0_id, {
-    "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.dynamicTagId(_classCounter)
+    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/0": _$.dynamicTagId(_classCounter)
   }, "__tests__/template.marko", 0);
   _$.resumeClosestBranch(_scope0_id);
 });

@@ -6,7 +6,7 @@ import {
 } from "../common/helpers";
 import {
   type Accessor,
-  AccessorChar,
+  AccessorPrefix,
   ControlledType,
   type Scope,
 } from "../common/types";
@@ -213,9 +213,8 @@ function attrsInternal(
         break;
       default: {
         if (isEventHandler(name)) {
-          (events ||= scope[nodeAccessor + AccessorChar.EventAttributes] = {})[
-            getEventHandlerName(name)
-          ] = value;
+          (events ||= scope[AccessorPrefix.EventAttributes + nodeAccessor] =
+            {})[getEventHandlerName(name)] = value;
         } else if (!skip?.test(name)) {
           attr(el, name, value);
         }
@@ -226,12 +225,12 @@ function attrsInternal(
 
 export function attrsEvents(scope: Scope, nodeAccessor: Accessor) {
   const el = scope[nodeAccessor] as Element;
-  const events = scope[nodeAccessor + AccessorChar.EventAttributes] as Record<
+  const events = scope[AccessorPrefix.EventAttributes + nodeAccessor] as Record<
     string,
     any
   >;
 
-  switch (scope[nodeAccessor + AccessorChar.ControlledType]) {
+  switch (scope[AccessorPrefix.ControlledType + nodeAccessor]) {
     case ControlledType.InputChecked:
       controllable_input_checked_effect(scope, nodeAccessor);
       break;
@@ -258,7 +257,7 @@ export function html(scope: Scope, value: unknown, accessor: Accessor) {
   const firstChild = scope[accessor] as ChildNode;
   const parentNode = firstChild.parentNode!;
   const lastChild = (scope[
-    accessor + AccessorChar.DynamicPlaceholderLastChild
+    AccessorPrefix.DynamicPlaceholderLastChild + accessor
   ] || firstChild) as ChildNode;
   const newContent = parseHTML(
     value || value === 0 ? value + "" : "",
@@ -270,7 +269,7 @@ export function html(scope: Scope, value: unknown, accessor: Accessor) {
     firstChild,
     (scope[accessor] =
       newContent.firstChild || newContent.appendChild(new Text())),
-    (scope[accessor + AccessorChar.DynamicPlaceholderLastChild] =
+    (scope[AccessorPrefix.DynamicPlaceholderLastChild + accessor] =
       newContent.lastChild!),
   );
   removeChildNodes(firstChild, lastChild);
@@ -323,7 +322,7 @@ export function lifecycle(
     thisObj.onMount?.();
     getAbortSignal(
       scope,
-      AccessorChar.LifecycleAbortController + index,
+      AccessorPrefix.LifecycleAbortController + index,
     ).onabort = () => thisObj.onDestroy?.();
   }
 }

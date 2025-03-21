@@ -25,7 +25,7 @@
       <!--M_*1 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#input/0=":1,"#input/0:":_.b=["a","b"],"#input/1=":1,"#input/1:":_.b,"#input/2=":1,"#input/2:":_.b,checkedValue:_.b}},_.a["#input/0;"]=_.a["#input/1;"]=_.a["#input/2;"]=_.a._checkedValueChange=_._["__tests__/template.marko_0/_checkedValueChange"](_.a),_.c),1,"__tests__/template.marko_0"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"ControlledType:#input/0":1,"ControlledValue:#input/0":_.b=["a","b"],"ControlledType:#input/1":1,"ControlledValue:#input/1":_.b,"ControlledType:#input/2":1,"ControlledValue:#input/2":_.b,checkedValue:_.b}},_.a["ControlledHandler:#input/0"]=_.a["ControlledHandler:#input/1"]=_.a["ControlledHandler:#input/2"]=_.a._checkedValueChange=_._["__tests__/template.marko_0/_checkedValueChange"](_.a),_.c),1,"__tests__/template.marko_0"];M._.w()
     </script>
   </body>
 </html>
@@ -61,7 +61,7 @@ container.querySelectorAll(`input`)[1].click();
       <!--M_*1 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#input/0=":1,"#input/0:":_.b=["a","b"],"#input/1=":1,"#input/1:":_.b,"#input/2=":1,"#input/2:":_.b,checkedValue:_.b}},_.a["#input/0;"]=_.a["#input/1;"]=_.a["#input/2;"]=_.a._checkedValueChange=_._["__tests__/template.marko_0/_checkedValueChange"](_.a),_.c),1,"__tests__/template.marko_0"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"ControlledType:#input/0":1,"ControlledValue:#input/0":_.b=["a","b"],"ControlledType:#input/1":1,"ControlledValue:#input/1":_.b,"ControlledType:#input/2":1,"ControlledValue:#input/2":_.b,checkedValue:_.b}},_.a["ControlledHandler:#input/0"]=_.a["ControlledHandler:#input/1"]=_.a["ControlledHandler:#input/2"]=_.a._checkedValueChange=_._["__tests__/template.marko_0/_checkedValueChange"](_.a),_.c),1,"__tests__/template.marko_0"];M._.w()
     </script>
   </body>
 </html>
@@ -102,7 +102,7 @@ container.querySelectorAll(`input`)[2].click();
       <!--M_*1 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#input/0=":1,"#input/0:":_.b=["a","b"],"#input/1=":1,"#input/1:":_.b,"#input/2=":1,"#input/2:":_.b,checkedValue:_.b}},_.a["#input/0;"]=_.a["#input/1;"]=_.a["#input/2;"]=_.a._checkedValueChange=_._["__tests__/template.marko_0/_checkedValueChange"](_.a),_.c),1,"__tests__/template.marko_0"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"ControlledType:#input/0":1,"ControlledValue:#input/0":_.b=["a","b"],"ControlledType:#input/1":1,"ControlledValue:#input/1":_.b,"ControlledType:#input/2":1,"ControlledValue:#input/2":_.b,checkedValue:_.b}},_.a["ControlledHandler:#input/0"]=_.a["ControlledHandler:#input/1"]=_.a["ControlledHandler:#input/2"]=_.a._checkedValueChange=_._["__tests__/template.marko_0/_checkedValueChange"](_.a),_.c),1,"__tests__/template.marko_0"];M._.w()
     </script>
   </body>
 </html>
@@ -142,7 +142,7 @@ container.querySelectorAll(`input`)[0].click();
       <!--M_*1 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#input/0=":1,"#input/0:":_.b=["a","b"],"#input/1=":1,"#input/1:":_.b,"#input/2=":1,"#input/2:":_.b,checkedValue:_.b}},_.a["#input/0;"]=_.a["#input/1;"]=_.a["#input/2;"]=_.a._checkedValueChange=_._["__tests__/template.marko_0/_checkedValueChange"](_.a),_.c),1,"__tests__/template.marko_0"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"ControlledType:#input/0":1,"ControlledValue:#input/0":_.b=["a","b"],"ControlledType:#input/1":1,"ControlledValue:#input/1":_.b,"ControlledType:#input/2":1,"ControlledValue:#input/2":_.b,checkedValue:_.b}},_.a["ControlledHandler:#input/0"]=_.a["ControlledHandler:#input/1"]=_.a["ControlledHandler:#input/2"]=_.a._checkedValueChange=_._["__tests__/template.marko_0/_checkedValueChange"](_.a),_.c),1,"__tests__/template.marko_0"];M._.w()
     </script>
   </body>
 </html>

@@ -21,8 +21,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeScope(_scope0_id, {
     show,
     count,
-    "#text/2(": _ifBranch,
-    "#text/2!": _$.getScopeById(_ifScopeId)
+    "ConditionalRenderer:#text/2": _ifBranch,
+    "ConditionalScope:#text/2": _$.getScopeById(_ifScopeId)
   }, "__tests__/template.marko", 0, {
     show: "1:6",
     count: "2:6"

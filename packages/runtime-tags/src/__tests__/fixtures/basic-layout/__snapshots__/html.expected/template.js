@@ -12,14 +12,14 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       _$.write(`<h1>Hello <!>${_$.escapeXML(name)}${_$.markResumeNode(_scope1_id, "#text/0")}</h1>`);
       _$.writeSubscribe(_name__closures, _$.writeScope(_scope1_id, {
         _: _$.ensureScopeWithId(_scope0_id),
-        "name(": 0
+        "ClosureSignalIndex:name": 0
       }, "__tests__/template.marko", "2:2"));
       _$.resumeClosestBranch(_scope1_id);
     })
   });
   _$.writeScope(_scope0_id, {
     name,
-    "name!": _name__closures
+    "ClosureScopes:name": _name__closures
   }, "__tests__/template.marko", 0, {
     name: "1:10"
   });

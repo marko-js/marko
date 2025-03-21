@@ -13,7 +13,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     });
     _$.writeSubscribe(_clickCount_closures, _$.writeScope(_scope1_id, {
       _: _$.ensureScopeWithId(_scope0_id),
-      "clickCount(": 0
+      "ClosureSignalIndex:clickCount": 0
     }, "__tests__/template.marko", "6:2"));
     _$.resumeClosestBranch(_scope1_id);
   }, _scope0_id), {
@@ -27,7 +27,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_clickCount");
   _$.writeScope(_scope0_id, {
     clickCount,
-    "clickCount!": _clickCount_closures
+    "ClosureScopes:clickCount": _clickCount_closures
   }, "__tests__/template.marko", 0, {
     clickCount: "2:6"
   });
