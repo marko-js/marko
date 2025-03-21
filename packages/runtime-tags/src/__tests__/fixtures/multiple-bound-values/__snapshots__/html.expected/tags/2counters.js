@@ -13,8 +13,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/tags/2counters.marko"
     input_count2Change: input.count2Change,
     count1,
     count2,
-    "count1@": input.count1Change,
-    "count2@": input.count2Change
+    "@TagVariableChangecount1": input.count1Change,
+    "@TagVariableChangecount2": input.count2Change
   }, "__tests__/tags/2counters.marko", 0, {
     input_count1: ["input.count1"],
     input_count1Change: ["input.count1Change"],

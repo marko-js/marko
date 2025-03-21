@@ -7,7 +7,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/tags/hello.marko", in
   const _dynamicScope = _$.peekNextScope();
   _$.dynamicTagInput(_scope0_id, "#text/0", _helloInternal, {});
   _$.writeScope(_scope0_id, {
-    "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.dynamicTagId(_helloInternal)
+    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/0": _$.dynamicTagId(_helloInternal)
   }, "__tests__/tags/hello.marko", 0);
 });

@@ -10,7 +10,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.write(`Got: ${_$.escapeXML(value)} <!>${_$.escapeXML(count)}${_$.markResumeNode(_scope1_id, "#text/1")}`);
     _$.writeSubscribe(_count_closures, _$.writeScope(_scope1_id, {
       _: _$.ensureScopeWithId(_scope0_id),
-      "count(": 0
+      "ClosureSignalIndex:count": 0
     }, "__tests__/template.marko", "5:4"));
     _$.resumeClosestBranch(_scope1_id);
   });
@@ -19,7 +19,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.write(`Got: ${_$.escapeXML(value)} <!>${_$.escapeXML(count)}${_$.markResumeNode(_scope2_id, "#text/1")}`);
     _$.writeSubscribe(_count_closures, _$.writeScope(_scope2_id, {
       _: _$.ensureScopeWithId(_scope0_id),
-      "count(": 1
+      "ClosureSignalIndex:count": 1
     }, "__tests__/template.marko", "9:4"));
     _$.resumeClosestBranch(_scope2_id);
   });
@@ -28,7 +28,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.write(`Got: ${_$.escapeXML(value)} <!>${_$.escapeXML(count)}${_$.markResumeNode(_scope3_id, "#text/1")}`);
     _$.writeSubscribe(_count_closures, _$.writeScope(_scope3_id, {
       _: _$.ensureScopeWithId(_scope0_id),
-      "count(": 2
+      "ClosureSignalIndex:count": 2
     }, "__tests__/template.marko", "13:4"));
     _$.resumeClosestBranch(_scope3_id);
   });
@@ -36,7 +36,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope(_scope0_id, {
     count,
-    "count!": _count_closures
+    "ClosureScopes:count": _count_closures
   }, "__tests__/template.marko", 0, {
     count: "3:6"
   });

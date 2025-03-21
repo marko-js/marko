@@ -42,8 +42,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     c,
     d,
     "#childScope/1": _$.writeExistingScope(_childScope),
-    "#text/3!": _$.writeExistingScope(_dynamicScope),
-    "#text/3(": _$.dynamicTagId(input.test)
+    "ConditionalScope:#text/3": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/3": _$.dynamicTagId(input.test)
   }, "__tests__/template.marko", 0, {
     input_test: ["input.test"],
     c: "2:10",

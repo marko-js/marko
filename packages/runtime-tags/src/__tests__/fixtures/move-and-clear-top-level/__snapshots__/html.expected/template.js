@@ -12,6 +12,6 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.writeScope(_scope1_id, {}, "__tests__/template.marko", "1:2");
   }, _scope0_id, "#text/0");
   _$.writeScope(_scope0_id, {
-    "#text/0(": _scope1_.size ? _scope1_ : undefined
+    "LoopScopeMap:#text/0": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0);
 });

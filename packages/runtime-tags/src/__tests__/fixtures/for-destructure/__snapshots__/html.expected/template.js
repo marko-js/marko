@@ -22,7 +22,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope(_scope0_id, {
     items,
-    "#text/0(": _scope1_.size ? _scope1_ : undefined
+    "LoopScopeMap:#text/0": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
     items: "3:8"
   });

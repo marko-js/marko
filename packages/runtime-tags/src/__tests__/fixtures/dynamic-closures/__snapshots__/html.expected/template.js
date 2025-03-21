@@ -13,7 +13,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       _$.write(`${_$.escapeXML(a)} ${_$.escapeXML(b)} <!>${_$.escapeXML(c)}${_$.markResumeNode(_scope1_id, "#text/2")}`);
       _$.writeSubscribe(_c_closures, _$.writeScope(_scope1_id, {
         _: _$.ensureScopeWithId(_scope0_id),
-        "c(": 0
+        "ClosureSignalIndex:c": 0
       }, "__tests__/template.marko", "6:2"));
       _$.resumeClosestBranch(_scope1_id);
     })
@@ -26,7 +26,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       _$.write(`${_$.escapeXML(a)} ${_$.escapeXML(b)} <!>${_$.escapeXML(c)}${_$.markResumeNode(_scope3_id, "#text/2")}`);
       _$.writeSubscribe(_c_closures, _$.writeScope(_scope3_id, {
         _: _$.ensureScopeWithId(_scope2_id),
-        "c(": 1
+        "ClosureSignalIndex:c": 1
       }, "__tests__/template.marko", "11:6"));
     }
     _$.writeScope(_scope2_id, {
@@ -38,7 +38,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeScope(_scope0_id, {
     b,
     c,
-    "c!": _c_closures
+    "ClosureScopes:c": _c_closures
   }, "__tests__/template.marko", 0, {
     b: "2:7",
     c: "3:5"

@@ -1,7 +1,7 @@
 // size: 292 (min) 170 (brotli)
-_$.register("a0", _$.hoist("0>", "0(", "2("));
-const _get_hoisted_el2 = _$.hoist("0>", "1("),
-  _get_hoisted_el3 = _$.hoist("0>", "0(");
+_$.register("a0", _$.hoist("j0", "m0", "m2"));
+const _get_hoisted_el2 = _$.hoist("j0", "m1"),
+  _get_hoisted_el3 = _$.hoist("j0", "m0");
 _$.effect("a1", ({ 4: _hoisted_el3 }) => {
   {
     let i = 0;

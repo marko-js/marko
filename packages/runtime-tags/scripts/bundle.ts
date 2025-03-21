@@ -39,6 +39,20 @@ Promise.all([
           mangleProps: isProd ? /^___/ : undefined,
           platform: name === "dom" ? "browser" : "node",
           outExtension: { ".js": format === "esm" ? ".mjs" : ".js" },
+          plugins: isProd
+            ? [
+                {
+                  name: "remap-debug",
+                  setup(build) {
+                    build.onResolve(
+                      { filter: /^\..*\.debug$/ },
+                      ({ path, ...args }) =>
+                        build.resolve(path.replace(/\.debug$/, ""), args),
+                    );
+                  },
+                },
+              ]
+            : undefined,
         });
 
         await Promise.all([

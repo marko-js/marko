@@ -18,7 +18,7 @@
     <!--M_*2 #text/0-->
     <!--M_]1 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,count:0,"#text/2(":0,"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,count:0,"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={}},2:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count"];M._.w()
     </script>
   </body>
 </html>
@@ -48,7 +48,7 @@ container.querySelector("button.inc").click();
     <!--M_*2 #text/0-->
     <!--M_]1 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,count:0,"#text/2(":0,"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,count:0,"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={}},2:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count"];M._.w()
     </script>
   </body>
 </html>
@@ -78,7 +78,7 @@ container.querySelector("button.toggle").click();
     <!--M_]1 #text/2-->
     <!--M_*2 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,count:0,"#text/2(":0,"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,count:0,"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={}},2:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count"];M._.w()
     </script>
   </body>
 </html>
@@ -113,7 +113,7 @@ container.querySelector("button.inc").click();
     <!--M_]1 #text/2-->
     <!--M_*2 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,count:0,"#text/2(":0,"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,count:0,"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={}},2:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count"];M._.w()
     </script>
   </body>
 </html>
@@ -139,7 +139,7 @@ container.querySelector("button.toggle").click();
     The count is 2
     <!--M_*2 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,count:0,"#text/2(":0,"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,count:0,"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={}},2:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count"];M._.w()
     </script>
   </body>
 </html>
@@ -171,7 +171,7 @@ container.querySelector("button.inc").click();
     The count is 3
     <!--M_*2 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,count:0,"#text/2(":0,"#text/2!":_.b={}},2:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,count:0,"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={}},2:_.b},_.b._=_.a,_.c),1,"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count"];M._.w()
     </script>
   </body>
 </html>

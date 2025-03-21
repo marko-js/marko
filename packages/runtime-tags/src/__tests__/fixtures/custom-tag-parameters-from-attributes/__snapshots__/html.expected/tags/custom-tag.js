@@ -13,8 +13,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/tags/custom-tag.marko
     input_content: input.content,
     input_name: input.name,
     x,
-    "#text/2!": _$.writeExistingScope(_dynamicScope),
-    "#text/2(": _$.dynamicTagId(input.content)
+    "ConditionalScope:#text/2": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/2": _$.dynamicTagId(input.content)
   }, "__tests__/tags/custom-tag.marko", 0, {
     input_content: ["input.content"],
     input_name: ["input.name"],

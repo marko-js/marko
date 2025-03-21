@@ -25,7 +25,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeScope(_scope0_id, {
     items,
     write,
-    "#text/2(": _scope1_.size ? _scope1_ : undefined
+    "LoopScopeMap:#text/2": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
     items: "1:6",
     write: "5:8"

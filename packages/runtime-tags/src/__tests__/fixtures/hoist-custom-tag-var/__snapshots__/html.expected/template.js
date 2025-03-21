@@ -27,8 +27,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
         }
       }, _scope1_id, "#text/0");
       _$.writeScope(_scope1_id, {
-        "#text/0(": _ifBranch,
-        "#text/0!": _$.getScopeById(_ifScopeId),
+        "ConditionalRenderer:#text/0": _ifBranch,
+        "ConditionalScope:#text/0": _$.getScopeById(_ifScopeId),
         _: _$.ensureScopeWithId(_scope0_id)
       }, "__tests__/template.marko", "1:2");
       _ifBranch2 = 0;
@@ -72,12 +72,12 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.writeScope(_scope0_id, {
     input_show: input.show,
-    "#text/0(": _ifBranch2,
-    "#text/0!": _$.getScopeById(_ifScopeId2),
+    "ConditionalRenderer:#text/0": _ifBranch2,
+    "ConditionalScope:#text/0": _$.getScopeById(_ifScopeId2),
     "#childScope/1": _$.writeExistingScope(_childScope2),
-    "#text/2!": _$.getScopeById(_ifScopeId3),
-    "#text/3!": _$.getScopeById(_ifScopeId4),
-    "#text/4!": _$.getScopeById(_ifScopeId5)
+    "ConditionalScope:#text/2": _$.getScopeById(_ifScopeId3),
+    "ConditionalScope:#text/3": _$.getScopeById(_ifScopeId4),
+    "ConditionalScope:#text/4": _$.getScopeById(_ifScopeId5)
   }, "__tests__/template.marko", 0, {
     input_show: ["input.show"]
   });

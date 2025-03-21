@@ -2,7 +2,8 @@ import { forIn, forOf, forTo } from "../common/for";
 import { normalizeDynamicRenderer } from "../common/helpers";
 import {
   type Accessor,
-  AccessorChar,
+  AccessorPrefix,
+  AccessorProp,
   type BranchScope,
   NodeType,
   type Scope,
@@ -25,8 +26,8 @@ import {
 import { setTagVar, type Signal, subscribeToScopeSet } from "./signals";
 
 export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
-  const promiseAccessor = nodeAccessor + AccessorChar.Promise;
-  const branchAccessor = nodeAccessor + AccessorChar.ConditionalScope;
+  const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
+  const branchAccessor = AccessorPrefix.ConditionalScope + nodeAccessor;
   return (scope: Scope, promise: Promise<unknown>) => {
     // TODO: !isPromise, render synchronously
 
@@ -36,7 +37,7 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
     const namespaceNode = (awaitBranch?.___startNode ?? referenceNode)
       .parentNode!;
 
-    while (tryBranch && !tryBranch[AccessorChar.PlaceholderContent]) {
+    while (tryBranch && !tryBranch[AccessorProp.PlaceholderContent]) {
       tryBranch = tryBranch.___parentBranch;
     }
 
@@ -74,9 +75,9 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
 
         if (tryBranch) {
           // TODO: store effects with the try branch so we can trigger them when all await branches are resolved
-          if (!--tryBranch[AccessorChar.PendingCount]) {
+          if (!--tryBranch.___pendingAsyncCount!) {
             const placeholderBranch = tryBranch[
-              AccessorChar.PlaceholderBranch
+              AccessorProp.PlaceholderBranch
             ] as BranchScope;
             if (placeholderBranch) {
               insertBranchBefore(
@@ -100,7 +101,7 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
       })
       .catch((error) => {
         let tryBranch = scope.___closestBranch;
-        while (tryBranch && !tryBranch[AccessorChar.CatchContent]) {
+        while (tryBranch && !tryBranch[AccessorProp.CatchContent]) {
           tryBranch = tryBranch.___parentBranch;
         }
         if (!tryBranch) {
@@ -110,14 +111,14 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
         } else {
           setConditionalRenderer(
             tryBranch._!,
-            tryBranch[AccessorChar.BranchAccessor],
-            tryBranch[AccessorChar.CatchContent],
+            tryBranch[AccessorProp.BranchAccessor],
+            tryBranch[AccessorProp.CatchContent],
             createAndSetupBranch,
           );
-          tryBranch[AccessorChar.CatchContent].___params?.(
+          tryBranch[AccessorProp.CatchContent].___params?.(
             tryBranch._![
-              tryBranch[AccessorChar.BranchAccessor] +
-                AccessorChar.ConditionalScope
+              AccessorPrefix.ConditionalScope +
+                tryBranch[AccessorProp.BranchAccessor]
             ],
             [error],
           );
@@ -125,15 +126,15 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
       }));
 
     if (tryBranch) {
-      if (!tryBranch[AccessorChar.PendingCount]) {
-        tryBranch[AccessorChar.PendingCount] = 0;
+      if (!tryBranch.___pendingAsyncCount) {
+        tryBranch.___pendingAsyncCount = 0;
         requestAnimationFrame(() => {
-          if (tryBranch[AccessorChar.PendingCount] && !tryBranch.___destroyed) {
+          if (tryBranch.___pendingAsyncCount && !tryBranch.___destroyed) {
             const placeholderBranch = (tryBranch[
-              AccessorChar.PlaceholderBranch
+              AccessorProp.PlaceholderBranch
             ] = createAndSetupBranch(
               scope.$global,
-              tryBranch[AccessorChar.PlaceholderContent],
+              tryBranch[AccessorProp.PlaceholderContent],
               tryBranch._,
               tryBranch.___startNode.parentNode!,
             ));
@@ -147,7 +148,7 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
         });
       }
 
-      tryBranch[AccessorChar.PendingCount]++;
+      tryBranch.___pendingAsyncCount++;
     } else if (awaitBranch) {
       awaitBranch.___startNode.parentNode!.insertBefore(
         referenceNode,
@@ -159,7 +160,7 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
 }
 
 export function createTry(nodeAccessor: Accessor, tryContent: Renderer) {
-  const branchAccessor = nodeAccessor + AccessorChar.ConditionalScope;
+  const branchAccessor = AccessorPrefix.ConditionalScope + nodeAccessor;
 
   return (scope: Scope, input: { catch: unknown; placeholder: unknown }) => {
     if (!scope[branchAccessor]) {
@@ -173,9 +174,9 @@ export function createTry(nodeAccessor: Accessor, tryContent: Renderer) {
 
     const branch = scope[branchAccessor];
     if (branch) {
-      branch[AccessorChar.BranchAccessor] = nodeAccessor;
-      branch[AccessorChar.CatchContent] = normalizeDynamicRenderer(input.catch);
-      branch[AccessorChar.PlaceholderContent] = normalizeDynamicRenderer(
+      branch[AccessorProp.BranchAccessor] = nodeAccessor;
+      branch[AccessorProp.CatchContent] = normalizeDynamicRenderer(input.catch);
+      branch[AccessorProp.PlaceholderContent] = normalizeDynamicRenderer(
         input.placeholder,
       );
     }
@@ -183,7 +184,7 @@ export function createTry(nodeAccessor: Accessor, tryContent: Renderer) {
 }
 
 export function conditional(nodeAccessor: Accessor, ...branches: Renderer[]) {
-  const branchAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
+  const branchAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
   return (scope: Scope, newBranch: number) => {
     if (newBranch !== (scope[branchAccessor] as number)) {
       setConditionalRenderer(
@@ -208,8 +209,8 @@ export let dynamicTag = function dynamicTag(
   getTagVar?: (() => Signal<unknown>) | 0,
   inputIsArgs?: 1,
 ): Signal<Renderer | string | undefined> {
-  const childScopeAccessor = nodeAccessor + AccessorChar.ConditionalScope;
-  const rendererAccessor = nodeAccessor + AccessorChar.ConditionalRenderer;
+  const childScopeAccessor = AccessorPrefix.ConditionalScope + nodeAccessor;
+  const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
   return (scope, newRenderer, getInput?: () => any) => {
     const normalizedRenderer = normalizeDynamicRenderer<Renderer>(newRenderer);
     if (
@@ -244,8 +245,8 @@ export let dynamicTag = function dynamicTag(
               content.___owner!,
               content.___accessor,
               scope[childScopeAccessor][
-                (MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0) +
-                  AccessorChar.ConditionalScope
+                AccessorPrefix.ConditionalScope +
+                  (MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0)
               ],
             );
           }
@@ -304,14 +305,14 @@ export function setConditionalRenderer<T>(
   ) => BranchScope,
 ) {
   const referenceNode = scope[nodeAccessor] as Comment | Element;
-  const prevBranch = scope[nodeAccessor + AccessorChar.ConditionalScope] as
+  const prevBranch = scope[AccessorPrefix.ConditionalScope + nodeAccessor] as
     | BranchScope
     | undefined;
   const parentNode =
     referenceNode.nodeType > NodeType.Element
       ? (prevBranch?.___startNode || referenceNode).parentNode!
       : (referenceNode as ParentNode);
-  const newBranch = (scope[nodeAccessor + AccessorChar.ConditionalScope] =
+  const newBranch = (scope[AccessorPrefix.ConditionalScope + nodeAccessor] =
     newRenderer && createBranch(scope.$global, newRenderer, scope, parentNode));
   if (referenceNode === parentNode) {
     if (prevBranch) {
@@ -377,11 +378,11 @@ function loop<T extends unknown[] = unknown[]>(
   const params = renderer.___params;
   return (scope: Scope, value: T) => {
     const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
-    const oldMap = scope[nodeAccessor + AccessorChar.LoopScopeMap] as
+    const oldMap = scope[AccessorPrefix.LoopScopeMap + nodeAccessor] as
       | Map<unknown, BranchScope>
       | undefined;
     const oldArray = oldMap
-      ? scope[nodeAccessor + AccessorChar.LoopScopeArray] || [
+      ? scope[AccessorPrefix.LoopScopeArray + nodeAccessor] || [
           ...oldMap.values(),
         ]
       : [];
@@ -391,10 +392,10 @@ function loop<T extends unknown[] = unknown[]>(
         : referenceNode
     ) as Element;
     const newMap: Map<unknown, BranchScope> = (scope[
-      nodeAccessor + AccessorChar.LoopScopeMap
+      AccessorPrefix.LoopScopeMap + nodeAccessor
     ] = new Map());
     const newArray: BranchScope[] = (scope[
-      nodeAccessor + AccessorChar.LoopScopeArray
+      AccessorPrefix.LoopScopeArray + nodeAccessor
     ] = []);
     forEach(value, (key, args) => {
       const branch =

@@ -16,8 +16,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_show");
   _$.writeScope(_scope0_id, {
     show,
-    "#text/1(": _ifBranch,
-    "#text/1!": _$.getScopeById(_ifScopeId)
+    "ConditionalRenderer:#text/1": _ifBranch,
+    "ConditionalScope:#text/1": _$.getScopeById(_ifScopeId)
   }, "__tests__/template.marko", 0, {
     show: "1:6"
   });

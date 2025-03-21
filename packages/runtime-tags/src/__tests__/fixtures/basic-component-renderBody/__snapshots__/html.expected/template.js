@@ -14,14 +14,14 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       _$.write(`${_$.escapeXML(clickCount)}${_$.markResumeNode(_scope1_id, "#text/0")}`);
       _$.writeSubscribe(_clickCount_closures, _$.writeScope(_scope1_id, {
         _: _$.ensureScopeWithId(_scope0_id),
-        "clickCount(": 0
+        "ClosureSignalIndex:clickCount": 0
       }, "__tests__/template.marko", "2:2"));
       _$.resumeClosestBranch(_scope1_id);
     })
   });
   _$.writeScope(_scope0_id, {
     clickCount,
-    "clickCount!": _clickCount_closures,
+    "ClosureScopes:clickCount": _clickCount_closures,
     "#childScope/0": _$.writeExistingScope(_childScope)
   }, "__tests__/template.marko", 0, {
     clickCount: "1:6"

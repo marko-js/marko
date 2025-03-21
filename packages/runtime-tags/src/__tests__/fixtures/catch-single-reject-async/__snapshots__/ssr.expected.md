@@ -1,11 +1,11 @@
 # Write
 ```html
-  a<!--M_[2--><!--M_!^b-->b<script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={1:_.a={"#text/0!":_.b={"*":"#text/0"}},2:_.b},_.b["^"]=_._["__tests__/template.marko_2_renderer"](_.a),_.c)]</script>
+  a<!--M_[2--><!--M_!^b-->b<script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={1:_.a={"ConditionalScope:#text/0":_.b={"*BranchAccessor":"#text/0"}},2:_.b},_.b["^CatchContent"]=_._["__tests__/template.marko_2_renderer"](_.a),_.c)]</script>
 ```
 
 # Write
 ```html
-  <script>M._.r.push(_=>(_.d={3:_.e={}},(_.a["#text/1!"]=_.e),_.d))</script>
+  <script>M._.r.push(_=>(_.d={3:_.e={}},(_.a["ConditionalScope:#text/1"]=_.e),_.d))</script>
 ```
 
 # Write

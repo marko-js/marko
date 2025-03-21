@@ -27,7 +27,7 @@ export interface Section {
   loc: t.SourceLocation | undefined;
   depth: number;
   parent: Section | undefined;
-  sectionAccessor: { binding: Binding; suffix: string } | undefined;
+  sectionAccessor: { binding: Binding; prefix: string } | undefined;
   params: undefined | Binding;
   referencedClosures: ReferencedBindings;
   referencedHoists: ReferencedBindings;

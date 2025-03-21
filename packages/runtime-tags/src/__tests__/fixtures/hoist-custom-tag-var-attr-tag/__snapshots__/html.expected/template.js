@@ -22,7 +22,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml");
   _$.writeScope(_scope0_id, {
     _hoisted_setHtml,
-    "1!": _what_content_subscribers
+    "ClosureScopes:1": _what_content_subscribers
   }, "__tests__/template.marko", 0, {
     _hoisted_setHtml: "4:12"
   });

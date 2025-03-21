@@ -14,8 +14,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeScope(_scope0_id, {
     tagName,
     val,
-    "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.dynamicTagId(tagName)
+    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/0": _$.dynamicTagId(tagName)
   }, "__tests__/template.marko", 0, {
     tagName: "4:6",
     val: "5:6"

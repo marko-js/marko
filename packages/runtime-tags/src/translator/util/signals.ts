@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 import { getTemplateId } from "@marko/compiler/babel-utils";
 
-import { AccessorChar } from "../../common/types";
 import { toAccess } from "../../html/serializer";
 import { getSectionReturnValueIdentifier } from "../core/return";
 import {
@@ -11,6 +10,7 @@ import {
   scopeIdentifier,
 } from "../visitors/program";
 import { forEachIdentifier } from "./for-each-identifier";
+import { getAccessorPrefix } from "./get-accessor-char";
 import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
 import { isStatefulReferences } from "./is-stateful";
 import { isOptimize, isOutputHTML } from "./marko-config";
@@ -747,7 +747,9 @@ export function writeSignals(section: Section) {
     for (const hoistedBinding of binding.hoists.values()) {
       const accessors: t.Expression[] = [
         binding.type === BindingType.dom
-          ? t.stringLiteral(getScopeAccessor(binding) + AccessorChar.Getter)
+          ? t.stringLiteral(
+              getAccessorPrefix().Getter + getScopeAccessor(binding),
+            )
           : getScopeAccessorLiteral(binding),
       ];
       let currentSection: Section | undefined = section;
@@ -1036,14 +1038,14 @@ export function writeHTMLResumeStatements(
           );
           setSerializedProperty(
             closure.section,
-            getScopeAccessor(closure) + AccessorChar.ClosureScopes,
+            getAccessorPrefix().ClosureScopes + getScopeAccessor(closure),
             identifier,
           );
         }
 
         setSerializedProperty(
           section,
-          getScopeAccessor(closure) + AccessorChar.ClosureSignalIndex,
+          getAccessorPrefix().ClosureSignalIndex + getScopeAccessor(closure),
           t.numericLiteral(getDynamicClosureIndex(closure, section)),
         );
         addWriteScopeBuilder(section, (expr) =>

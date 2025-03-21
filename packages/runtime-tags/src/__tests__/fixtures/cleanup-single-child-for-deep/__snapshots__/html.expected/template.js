@@ -38,7 +38,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.writeScope(_scope1_id, {
       outerItem,
       "#childScope/0": _$.writeExistingScope(_childScope),
-      "#text/1(": _scope2_.size ? _scope2_ : undefined,
+      "LoopScopeMap:#text/1": _scope2_.size ? _scope2_ : undefined,
       _: _$.ensureScopeWithId(_scope0_id)
     }, "__tests__/template.marko", "7:2", {
       outerItem: "7:6"
@@ -48,7 +48,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeScope(_scope0_id, {
     items,
     write,
-    "#text/2(": _scope1_.size ? _scope1_ : undefined
+    "LoopScopeMap:#text/2": _scope1_.size ? _scope1_ : undefined
   }, "__tests__/template.marko", 0, {
     items: "1:6",
     write: "5:8"

@@ -7,7 +7,7 @@
     Foo!
     <!--M_]2 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={2:{"#text/0!":_.a={},"#text/0(":"__tests__/template.marko_1_renderer"},3:_.a})]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={2:{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"},3:_.a})]
     </script>
   </body>
 </html>

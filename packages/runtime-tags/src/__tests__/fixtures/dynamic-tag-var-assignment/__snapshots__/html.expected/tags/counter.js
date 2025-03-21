@@ -7,7 +7,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/tags/counter.marko", 
   _$.writeEffect(_scope0_id, "__tests__/tags/counter.marko_0_x");
   _$.writeScope(_scope0_id, {
     x,
-    "@": _$.register(_new_x => {
+    "@TagVariableChange": _$.register(_new_x => {
       x = _new_x;
     }, "__tests__/tags/counter.marko_0/valueChange", _scope0_id)
   }, "__tests__/tags/counter.marko", 0, {

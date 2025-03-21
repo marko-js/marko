@@ -12,8 +12,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-button.marko"
   _$.writeEffect(_scope0_id, "__tests__/tags/my-button.marko_0_onClick");
   _$.writeScope(_scope0_id, {
     onClick,
-    "#text/1!": _$.writeExistingScope(_dynamicScope),
-    "#text/1(": _$.dynamicTagId(content)
+    "ConditionalScope:#text/1": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/1": _$.dynamicTagId(content)
   }, "__tests__/tags/my-button.marko", 0, {
     onClick: "1:10"
   });

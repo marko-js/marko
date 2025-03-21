@@ -33,7 +33,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.writeSubscribe(_inputShowChildNull_content_subscribers, _$.writeScope(_scope2_id, {
       _hoisted_el2,
       _: _$.ensureScopeWithId(_scope0_id),
-      "3!": _child_content2_subscribers
+      "ClosureScopes:3": _child_content2_subscribers
     }, "__tests__/template.marko", "15:4", {
       _hoisted_el2: 0
     }));
@@ -51,13 +51,13 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeScope(_scope0_id, {
     _hoisted_el,
     _hoisted_el3,
-    "1!": _child_content_subscribers,
-    "2!": _inputShowChildNull_content_subscribers,
-    "#text/1!": _$.writeExistingScope(_dynamicScope),
-    "#text/1(": _$.dynamicTagId(input.show ? Child : null),
-    "4!": _inputShowSectionNull_content_subscribers,
-    "#text/2!": _$.writeExistingScope(_dynamicScope2),
-    "#text/2(": _$.dynamicTagId(input.show ? 'section' : null)
+    "ClosureScopes:1": _child_content_subscribers,
+    "ClosureScopes:2": _inputShowChildNull_content_subscribers,
+    "ConditionalScope:#text/1": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/1": _$.dynamicTagId(input.show ? Child : null),
+    "ClosureScopes:4": _inputShowSectionNull_content_subscribers,
+    "ConditionalScope:#text/2": _$.writeExistingScope(_dynamicScope2),
+    "ConditionalRenderer:#text/2": _$.dynamicTagId(input.show ? 'section' : null)
   }, "__tests__/template.marko", 0, {
     _hoisted_el: 0,
     _hoisted_el3: 0

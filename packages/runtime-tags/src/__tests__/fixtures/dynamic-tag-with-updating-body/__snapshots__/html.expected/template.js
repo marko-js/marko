@@ -12,8 +12,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_tagName");
   _$.writeScope(_scope0_id, {
     tagName,
-    "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.dynamicTagId(tagName)
+    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/0": _$.dynamicTagId(tagName)
   }, "__tests__/template.marko", 0, {
     tagName: "1:6"
   });

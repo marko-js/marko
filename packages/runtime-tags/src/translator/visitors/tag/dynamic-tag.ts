@@ -6,7 +6,8 @@ import {
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
-import { AccessorChar, WalkCode } from "../../../common/types";
+import { WalkCode } from "../../../common/types";
+import { getAccessorPrefix } from "../../util/get-accessor-char";
 import { isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
 import {
@@ -261,13 +262,13 @@ export default {
 
         setSerializedProperty(
           section,
-          getScopeAccessor(nodeRef) + AccessorChar.ConditionalScope,
+          getAccessorPrefix().ConditionalScope + getScopeAccessor(nodeRef),
           callRuntime("writeExistingScope", dynamicScopeIdentifier),
         );
 
         setSerializedProperty(
           section,
-          getScopeAccessor(nodeRef) + AccessorChar.ConditionalRenderer,
+          getAccessorPrefix().ConditionalRenderer + getScopeAccessor(nodeRef),
           callRuntime(
             "dynamicTagId",
             t.isIdentifier(tagExpression)
@@ -295,7 +296,8 @@ export default {
               t.memberExpression(
                 getScopeExpression(tagVarSignal!.section, valueSection),
                 t.stringLiteral(
-                  getScopeAccessor(nodeRef) + AccessorChar.ConditionalScope,
+                  getAccessorPrefix().ConditionalScope +
+                    getScopeAccessor(nodeRef),
                 ),
                 true,
               ),

@@ -1,8 +1,8 @@
 import { types as t } from "@marko/compiler";
 
-import { AccessorChar } from "../../common/types";
 import { currentProgramPath } from "../visitors/program";
 import { forEachIdentifier } from "./for-each-identifier";
+import { getAccessorPrefix } from "./get-accessor-char";
 import { getExprRoot, getFnRoot } from "./get-root";
 import isInvokedFunction from "./is-invoked-function";
 import { isStatefulReferences } from "./is-stateful";
@@ -921,9 +921,9 @@ export function getScopeAccessor(binding: Binding, includeId?: boolean) {
 
 export function getSectionInstancesAccessor(section: Section) {
   return section.sectionAccessor
-    ? getScopeAccessor(section.sectionAccessor.binding) +
-        section.sectionAccessor.suffix
-    : section.id + AccessorChar.ClosureScopes;
+    ? section.sectionAccessor.prefix +
+        getScopeAccessor(section.sectionAccessor.binding)
+    : getAccessorPrefix().ClosureScopes + section.id;
 }
 
 export function getSectionInstancesAccessorLiteral(section: Section) {

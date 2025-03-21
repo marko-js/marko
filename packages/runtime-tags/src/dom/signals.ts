@@ -1,4 +1,9 @@
-import { type Accessor, AccessorChar, type Scope } from "../common/types";
+import {
+  type Accessor,
+  AccessorPrefix,
+  AccessorProp,
+  type Scope,
+} from "../common/types";
 import { getAbortSignal } from "./abort-signal";
 import { queueEffect, queueRender, rendering } from "./queue";
 import { register } from "./resume";
@@ -21,7 +26,7 @@ export function state<T>(valueAccessor: Accessor, fn: SignalFn<T>) {
     );
   }
 
-  const valueChangeAccessor = valueAccessor + AccessorChar.TagVariableChange;
+  const valueChangeAccessor = AccessorProp.TagVariableChange + valueAccessor;
   const update = (scope: Scope, value?: T) => {
     if (scope[valueAccessor] !== value) {
       scope[valueAccessor] = value;
@@ -91,9 +96,10 @@ export function loopClosure<T>(
   fn: SignalFn<T>,
 ): SignalFn<T> {
   const childSignal = closure(valueAccessor, fn);
-  const loopScopeAccessor = ownerLoopNodeAccessor + AccessorChar.LoopScopeArray;
+  const loopScopeAccessor =
+    AccessorPrefix.LoopScopeArray + ownerLoopNodeAccessor;
   const loopScopeMapAccessor =
-    ownerLoopNodeAccessor + AccessorChar.LoopScopeMap;
+    AccessorPrefix.LoopScopeMap + ownerLoopNodeAccessor;
   const ownerSignal = (ownerScope: Scope) => {
     const scopes =
       ownerScope[loopScopeAccessor] ||
@@ -128,9 +134,9 @@ export function conditionalClosure<T>(
 ): SignalFn<T> {
   const childSignal = closure(valueAccessor, fn);
   const scopeAccessor =
-    ownerConditionalNodeAccessor + AccessorChar.ConditionalScope;
+    AccessorPrefix.ConditionalScope + ownerConditionalNodeAccessor;
   const branchAccessor =
-    ownerConditionalNodeAccessor + AccessorChar.ConditionalRenderer;
+    AccessorPrefix.ConditionalRenderer + ownerConditionalNodeAccessor;
   const ownerSignal = (scope: Scope) => {
     const ifScope = scope[scopeAccessor];
     if (ifScope && !ifScope.___pending && scope[branchAccessor] === branch) {
@@ -199,9 +205,9 @@ export function dynamicClosureRead<T>(
     ___index: number;
   };
   closureSignal.___scopeInstancesAccessor =
-    valueAccessor + AccessorChar.ClosureScopes;
+    AccessorPrefix.ClosureScopes + valueAccessor;
   closureSignal.___signalIndexAccessor =
-    valueAccessor + AccessorChar.ClosureSignalIndex;
+    AccessorPrefix.ClosureSignalIndex + valueAccessor;
   return closureSignal;
 }
 
@@ -220,21 +226,21 @@ export function setTagVar(
   childAccessor: Accessor,
   tagVarSignal: Signal<unknown>,
 ) {
-  scope[childAccessor][AccessorChar.TagVariable] = (value: unknown) =>
+  scope[childAccessor][AccessorProp.TagVariable] = (value: unknown) =>
     tagVarSignal(scope, value);
 }
 
 export const tagVarSignal = (scope: Scope, value: unknown) =>
-  scope[AccessorChar.TagVariable]?.(value);
+  scope[AccessorProp.TagVariable]?.(value);
 
 export function setTagVarChange(
   scope: Scope,
   changeHandler: (value: unknown) => void,
 ) {
-  scope[AccessorChar.TagVariableChange] = changeHandler;
+  scope[AccessorProp.TagVariableChange] = changeHandler;
 }
 export const tagVarSignalChange = (scope: Scope, value: unknown) =>
-  scope[AccessorChar.TagVariableChange]?.(value);
+  scope[AccessorProp.TagVariableChange]?.(value);
 
 const tagIdsByGlobal = new WeakMap<Scope["___global"], number>();
 export function nextTagId({ $global }: Scope) {

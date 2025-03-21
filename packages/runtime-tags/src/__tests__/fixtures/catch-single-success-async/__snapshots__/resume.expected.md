@@ -8,10 +8,10 @@
     <!--M_!^b-->
     b
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"#text/0!":_.b={"*":"#text/0"}},2:_.b},_.b["^"]=_._["__tests__/template.marko_2_renderer"](_.a),_.c)]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"ConditionalScope:#text/0":_.b={"*BranchAccessor":"#text/0"}},2:_.b},_.b["^CatchContent"]=_._["__tests__/template.marko_2_renderer"](_.a),_.c)]
     </script>
     <script>
-      M._.r.push(_=&gt;(_.d={3:_.e={}},(_.a["#text/1!"]=_.e),_.d))
+      M._.r.push(_=&gt;(_.d={3:_.e={}},(_.a["ConditionalScope:#text/1"]=_.e),_.d))
     </script>
     <!--M_[4-->
     c
@@ -25,7 +25,7 @@
     <!--M_]1 #text/1-->
     h
     <script>
-      M._.r.push(_=&gt;(_.f={4:_.g={}},(_.b["#text/0!"]=_.g),_.f))
+      M._.r.push(_=&gt;(_.f={4:_.g={}},(_.b["ConditionalScope:#text/0"]=_.g),_.f))
     </script>
   </body>
 </html>

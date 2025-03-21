@@ -1,5 +1,5 @@
 import {
-  AccessorChar,
+  AccessorPrefix,
   type BranchScope,
   NodeType,
   type Scope,
@@ -52,9 +52,10 @@ function walkInternal(
           : currentScopeIndex
       ] = node;
       scope[
-        (MARKO_DEBUG
-          ? getDebugKey(currentScopeIndex++, walker.currentNode)
-          : currentScopeIndex++) + AccessorChar.Getter
+        AccessorPrefix.Getter +
+          (MARKO_DEBUG
+            ? getDebugKey(currentScopeIndex++, walker.currentNode)
+            : currentScopeIndex++)
       ] = () => node;
     } else if (
       value === WalkCode.Replace ||

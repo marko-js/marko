@@ -1,13 +1,13 @@
-// size: 773 (min) 333 (brotli)
+// size: 773 (min) 360 (brotli)
 const _dynamicTag2 = _$.dynamicTag(1),
   _dynamicTag = _$.dynamicTag(),
   _input_content_ = _$.value(4, (_scope, input_content) => {
     _dynamicTag(_scope, input_content), _dynamicTag2(_scope, input_content);
   }),
-  _get_hoisted_el = _$.hoist("0>", "4!");
-_$.registerContent("b0", "<p></p>", " ", 0, 0, 0, "4!");
-const _get_hoisted_el2 = _$.register("b2", _$.hoist("0>", "3!"));
-_$.register("b3", _$.hoist("0>", "3!", "2!"));
+  _get_hoisted_el = _$.hoist("j0", "a4");
+_$.registerContent("b0", "<p></p>", " ", 0, 0, 0, "a4");
+const _get_hoisted_el2 = _$.register("b2", _$.hoist("j0", "a3"));
+_$.register("b3", _$.hoist("j0", "a3", "a2"));
 const _child_content2 = _$.createContent(
     "b1",
     "<div></div>",
@@ -15,7 +15,7 @@ const _child_content2 = _$.createContent(
     0,
     0,
     0,
-    "3!",
+    "a3",
   ),
   _hoisted_el2$inputShowChildNull_content_effect = _$.effect(
     "b5",
@@ -39,9 +39,9 @@ _$.registerContent(
   },
   0,
   0,
-  "2!",
+  "a2",
 ),
-  _$.register("b7", _$.hoist("0>", "1!")),
+  _$.register("b7", _$.hoist("j0", "a1")),
   _$.effect("b8", ({ 7: _hoisted_el3 }) => {
     for (const element of 7) element().classList.add("outer");
   }),

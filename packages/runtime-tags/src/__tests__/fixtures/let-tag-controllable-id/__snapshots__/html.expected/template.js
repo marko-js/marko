@@ -12,7 +12,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     x,
     handler,
     y,
-    "y@": handler
+    "@TagVariableChangey": handler
   }, "__tests__/template.marko", 0, {
     x: "1:6",
     handler: "2:6",

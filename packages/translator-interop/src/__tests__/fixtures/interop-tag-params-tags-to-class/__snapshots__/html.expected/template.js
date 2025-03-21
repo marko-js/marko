@@ -14,7 +14,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.writeSubscribe(_multiplier_closures, _$.writeScope(_scope1_id, {
       baseCount,
       _: _$.ensureScopeWithId(_scope0_id),
-      "multiplier(": 0
+      "ClosureSignalIndex:multiplier": 0
     }, "__tests__/template.marko", "2:2", {
       baseCount: "2:15"
     }));
@@ -22,9 +22,9 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   }, _scope0_id));
   _$.writeScope(_scope0_id, {
     multiplier,
-    "multiplier!": _multiplier_closures,
-    "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.dynamicTagId(_classLayout)
+    "ClosureScopes:multiplier": _multiplier_closures,
+    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/0": _$.dynamicTagId(_classLayout)
   }, "__tests__/template.marko", 0, {
     multiplier: "1:6"
   });

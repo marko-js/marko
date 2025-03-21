@@ -9,7 +9,7 @@
     </div>
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"#text/0!":_.a={},"#text/0(":"__tests__/tags/baz.marko"},2:_.a})]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"__tests__/tags/baz.marko"},2:_.a})]
     </script>
   </body>
 </html>

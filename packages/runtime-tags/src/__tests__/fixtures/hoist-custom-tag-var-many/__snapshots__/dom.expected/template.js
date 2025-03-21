@@ -2,7 +2,7 @@ export const _template_ = "<!><!><hr><!><hr><!><!>";
 export const _walks_ = /* replace, over(2), replace, over(2), replace, over(1) */"D%c%c%bD";
 import { _setup_ as _child, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _get_hoisted_setHtml = _$.register("__tests__/template.marko_0__hoisted_setHtml3/hoist", _$.hoist("setHtml3", "#ul/0(", "#text/2("));
+const _get_hoisted_setHtml = _$.register("__tests__/template.marko_0__hoisted_setHtml3/hoist", _$.hoist("setHtml3", "LoopScopeMap:#ul/0", "LoopScopeMap:#text/2"));
 const _setHtml3$for_content = _$.registerBoundSignal("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_$.value("setHtml3"));
 const _params_3$for_content = /* @__PURE__ */_$.value("_params_3");
 const _setup$for_content3 = _scope => {
@@ -16,14 +16,14 @@ const _setup$for_content4 = _scope => {
   _for$for_content(_scope, [3, 0, 1]);
 };
 const _for_content3 = /* @__PURE__ */_$.createRenderer("<ul></ul>", /* get */" ", _setup$for_content4, _params_2$for_content);
-const _get_hoisted_setHtml2 = _$.hoist("setHtml2", "#text/1(");
+const _get_hoisted_setHtml2 = _$.hoist("setHtml2", "LoopScopeMap:#text/1");
 const _setHtml2$for_content = _$.registerBoundSignal("__tests__/template.marko_2_setHtml2/var", /* @__PURE__ */_$.value("setHtml2"));
 const _setup$for_content2 = _scope => {
   _$.setTagVar(_scope, "#childScope/0", _setHtml2$for_content);
   _child(_scope["#childScope/0"]);
 };
 const _for_content2 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, _setup$for_content2);
-const _get_hoisted_setHtml3 = _$.hoist("setHtml", "#text/0(");
+const _get_hoisted_setHtml3 = _$.hoist("setHtml", "LoopScopeMap:#text/0");
 const _setHtml$for_content = _$.registerBoundSignal("__tests__/template.marko_1_setHtml/var", /* @__PURE__ */_$.value("setHtml"));
 const _setup$for_content = _scope => {
   _$.setTagVar(_scope, "#childScope/0", _setHtml$for_content);

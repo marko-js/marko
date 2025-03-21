@@ -11,8 +11,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/components/custom-tag
     input_content: input.content,
     x,
     y,
-    "#text/3!": _$.writeExistingScope(_dynamicScope),
-    "#text/3(": _$.dynamicTagId(input.content)
+    "ConditionalScope:#text/3": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/3": _$.dynamicTagId(input.content)
   }, "__tests__/components/custom-tag.marko", 0, {
     input_content: ["input.content"],
     x: "1:6",

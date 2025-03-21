@@ -25,7 +25,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.write("Body content");
   }, _scope0_id));
   _$.writeScope(_scope0_id, {
-    "#text/0!": _$.writeExistingScope(_dynamicScope),
-    "#text/0(": _$.dynamicTagId(x)
+    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/0": _$.dynamicTagId(x)
   }, "__tests__/template.marko", 0);
 });

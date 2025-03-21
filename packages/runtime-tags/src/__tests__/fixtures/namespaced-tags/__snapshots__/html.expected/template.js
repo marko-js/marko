@@ -28,7 +28,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.write(`${_$.toString(input.value)}${_$.markResumeNode(_scope1_id, "#text/0")}`);
     _$.writeSubscribe(_input_value__closures, _$.writeScope(_scope1_id, {
       _: _$.ensureScopeWithId(_scope0_id),
-      "input_value(": 0
+      "ClosureSignalIndex:input_value": 0
     }, "__tests__/template.marko", "12:3"));
     _$.resumeClosestBranch(_scope1_id);
   }, _scope0_id));
@@ -40,13 +40,13 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     input_value: input.value,
     Parent,
     Child,
-    "#text/2!": _$.writeExistingScope(_dynamicScope),
-    "#text/2(": _$.dynamicTagId(Child),
-    "#text/4!": _$.writeExistingScope(_dynamicScope2),
-    "#text/4(": _$.dynamicTagId(Child),
-    "input_value!": _input_value__closures,
-    "#text/5!": _$.writeExistingScope(_dynamicScope3),
-    "#text/5(": _$.dynamicTagId(Parent)
+    "ConditionalScope:#text/2": _$.writeExistingScope(_dynamicScope),
+    "ConditionalRenderer:#text/2": _$.dynamicTagId(Child),
+    "ConditionalScope:#text/4": _$.writeExistingScope(_dynamicScope2),
+    "ConditionalRenderer:#text/4": _$.dynamicTagId(Child),
+    "ClosureScopes:input_value": _input_value__closures,
+    "ConditionalScope:#text/5": _$.writeExistingScope(_dynamicScope3),
+    "ConditionalRenderer:#text/5": _$.dynamicTagId(Parent)
   }, "__tests__/template.marko", 0, {
     input_value: ["input.value"],
     Parent: "1:5",

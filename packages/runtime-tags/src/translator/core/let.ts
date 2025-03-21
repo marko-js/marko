@@ -6,8 +6,8 @@ import {
   type Tag,
 } from "@marko/compiler/babel-utils";
 
-import { AccessorChar } from "../../common/types";
 import { assertNoBodyContent, assertNoSpreadAttrs } from "../util/assert";
+import { getAccessorProp } from "../util/get-accessor-char";
 import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
@@ -128,7 +128,7 @@ export default {
         if (valueChangeAttr) {
           setSerializedProperty(
             section,
-            getScopeAccessor(binding) + AccessorChar.TagVariableChange,
+            getAccessorProp().TagVariableChange + getScopeAccessor(binding),
             valueChangeAttr.value,
           );
         }

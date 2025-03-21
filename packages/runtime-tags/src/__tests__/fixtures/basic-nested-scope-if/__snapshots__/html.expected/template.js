@@ -27,8 +27,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.write("</div>");
   _$.writeScope(_scope0_id, {
     clickCount,
-    "#text/0(": _ifBranch,
-    "#text/0!": _$.getScopeById(_ifScopeId)
+    "ConditionalRenderer:#text/0": _ifBranch,
+    "ConditionalScope:#text/0": _$.getScopeById(_ifScopeId)
   }, "__tests__/template.marko", 0, {
     clickCount: "2:8"
   });
