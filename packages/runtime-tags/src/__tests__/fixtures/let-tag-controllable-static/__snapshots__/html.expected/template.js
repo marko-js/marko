@@ -7,7 +7,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_y");
   _$.writeScope(_scope0_id, {
     y,
-    "@TagVariableChangey": _$.register(function (newValue) {
+    "TagVariableChange:y": _$.register(function (newValue) {
       x = newValue + 1;
     }, "__tests__/template.marko_0/valueChange", _scope0_id)
   }, "__tests__/template.marko", 0, {

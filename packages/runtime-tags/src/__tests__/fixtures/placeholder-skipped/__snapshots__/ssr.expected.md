@@ -1,6 +1,6 @@
 # Write
 ```html
-  a<!--M_[2-->b<!--M_]1 #text/0-->c<script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={1:_.a={"ConditionalScope:#text/0":_.b={"*BranchAccessor":"#text/0"}},2:_.b},_.b["%PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.a),_.c)]</script>
+  a<!--M_[2-->b<!--M_]1 #text/0-->c<script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={1:_.a={"ConditionalScope:#text/0":_.b={"#BranchAccessor":"#text/0"}},2:_.b},_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.a),_.c)]</script>
 ```
 
 # Write
@@ -19,7 +19,7 @@
     <!--M_]1 #text/0-->
     c
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"ConditionalScope:#text/0":_.b={"*BranchAccessor":"#text/0"}},2:_.b},_.b["%PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.a),_.c)]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={"ConditionalScope:#text/0":_.b={"#BranchAccessor":"#text/0"}},2:_.b},_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.a),_.c)]
     </script>
     <!--M_[3-->
     d
