@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.62
+
+### Patch Changes
+
+- [#2579](https://github.com/marko-js/marko/pull/2579) [`544ec95`](https://github.com/marko-js/marko/commit/544ec95dac5fa8ccddb8e2e81bfc28ac3756d949) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize AccessorProp ids.
+
 ## 0.3.61
 
 ### Patch Changes
