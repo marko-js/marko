@@ -26,7 +26,7 @@ export function state<T>(valueAccessor: Accessor, fn: SignalFn<T>) {
     );
   }
 
-  const valueChangeAccessor = AccessorProp.TagVariableChange + valueAccessor;
+  const valueChangeAccessor = AccessorPrefix.TagVariableChange + valueAccessor;
   const update = (scope: Scope, value?: T) => {
     if (scope[valueAccessor] !== value) {
       scope[valueAccessor] = value;

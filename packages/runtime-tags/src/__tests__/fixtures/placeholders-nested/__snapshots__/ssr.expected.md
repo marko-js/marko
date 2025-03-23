@@ -1,6 +1,6 @@
 # Write
 ```html
-  a<!--M_[2--><!--M_!^b-->_B_<!--M_!b--><!--M_]1 #text/0-->h<style M_>t{display:none}</style><t M_=b>b<!--M_#c-->d<!--M_[3--><!--M_!^d-->_A_<!--M_!d--><!--M_]2 #text/1--></t><t M_=d>e<!--M_#e-->g</t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d={1:_.c={"ConditionalScope:#text/0":_.a={"ConditionalScope:#text/1":_.b={"*BranchAccessor":"#text/1"},"*BranchAccessor":"#text/0"}},2:_.a,3:_.b},_.b["%PlaceholderContent"]=_._["__tests__/template.marko_5_renderer"](_.a),_.a["%PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.c),_.d)];REORDER_RUNTIME(M._);M._.w()</script>
+  a<!--M_[2--><!--M_!^b-->_B_<!--M_!b--><!--M_]1 #text/0-->h<style M_>t{display:none}</style><t M_=b>b<!--M_#c-->d<!--M_[3--><!--M_!^d-->_A_<!--M_!d--><!--M_]2 #text/1--></t><t M_=d>e<!--M_#e-->g</t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d={1:_.c={"ConditionalScope:#text/0":_.a={"ConditionalScope:#text/1":_.b={"#BranchAccessor":"#text/1"},"#BranchAccessor":"#text/0"}},2:_.a,3:_.b},_.b["#PlaceholderContent"]=_._["__tests__/template.marko_5_renderer"](_.a),_.a["#PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.c),_.d)];REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Write
@@ -46,7 +46,7 @@
     <!--M_]1 #text/0-->
     h
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.c={"ConditionalScope:#text/0":_.a={"ConditionalScope:#text/1":_.b={"*BranchAccessor":"#text/1"},"*BranchAccessor":"#text/0"}},2:_.a,3:_.b},_.b["%PlaceholderContent"]=_._["__tests__/template.marko_5_renderer"](_.a),_.a["%PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.c),_.d)];REORDER_RUNTIME(M._);M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d={1:_.c={"ConditionalScope:#text/0":_.a={"ConditionalScope:#text/1":_.b={"#BranchAccessor":"#text/1"},"#BranchAccessor":"#text/0"}},2:_.a,3:_.b},_.b["#PlaceholderContent"]=_._["__tests__/template.marko_5_renderer"](_.a),_.a["#PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.c),_.d)];REORDER_RUNTIME(M._);M._.w()
     </script>
     <!--M_[6-->
     i

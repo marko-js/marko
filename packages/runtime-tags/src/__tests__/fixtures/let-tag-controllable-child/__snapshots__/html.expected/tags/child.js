@@ -11,8 +11,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", in
     input_valueChange: input.valueChange,
     state,
     otherState,
-    "@TagVariableChangestate": input.valueChange,
-    "@TagVariableChangeotherState": input["value" + "Change"]
+    "TagVariableChange:state": input.valueChange,
+    "TagVariableChange:otherState": input["value" + "Change"]
   }, "__tests__/tags/child.marko", 0, {
     input_value: ["input.value"],
     input_valueChange: ["input.valueChange"],

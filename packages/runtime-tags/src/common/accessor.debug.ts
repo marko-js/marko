@@ -13,13 +13,14 @@ export enum AccessorPrefix {
   LoopScopeArray = "LoopScopeArray:",
   LoopScopeMap = "LoopScopeMap:",
   Promise = "Promise:",
+  TagVariableChange = "TagVariableChange:",
 }
 
 export enum AccessorProp {
-  BranchAccessor = "*BranchAccessor",
-  CatchContent = "^CatchContent",
+  BranchAccessor = "#BranchAccessor",
+  CatchContent = "#CatchContent",
   PlaceholderBranch = "#PlaceholderBranch",
-  PlaceholderContent = "%PlaceholderContent",
-  TagVariable = "/TagVariable",
-  TagVariableChange = "@TagVariableChange",
+  PlaceholderContent = "#PlaceholderContent",
+  TagVariable = "#TagVariable",
+  TagVariableChange = "#TagVariableChange",
 }
