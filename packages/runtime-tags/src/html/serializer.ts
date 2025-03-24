@@ -902,26 +902,6 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
     return true;
   }
 
-  const items: (undefined | [unknown?, unknown?])[] = [];
-  let assigns: undefined | string[];
-  for (let [itemKey, itemValue] of val) {
-    if (itemKey === val) {
-      itemKey = undefined;
-      (assigns ||= []).push("i[" + items.length + "][0]");
-    }
-
-    if (itemValue === val) {
-      itemValue = undefined;
-      (assigns ||= []).push("i[" + items.length + "][1]");
-    }
-
-    if (itemValue === undefined) {
-      items.push([itemKey]);
-    } else {
-      items.push([itemKey, itemValue]);
-    }
-  }
-
   const arrayRef = new Reference(
     ref,
     null,
@@ -929,17 +909,79 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
     null,
     nextRefAccess(state),
   );
-  state.buf.push(
-    (assigns
-      ? "((m,i)=>(" +
-        assignsToString(assigns, "m") +
-        ",i.forEach(i=>m.set(i[0],i[1])),m))(new Map,"
-      : "new Map(") +
-      arrayRef.id +
-      "=",
-  );
-  writeArray(state, items, arrayRef);
-  state.buf.push(")");
+
+  const items: unknown[] = [];
+  let assigns: undefined | string[];
+  let i = 0;
+
+  // Using the map constructor uses 2 bytes per entry (serialized as an array).
+  // If we are below the number of bytes of the reduce runtime, we'll output a plain
+  // constructor.
+  if (val.size < 25) {
+    for (let [itemKey, itemValue] of val) {
+      if (itemKey === val) {
+        itemKey = undefined;
+        (assigns ||= []).push("a[" + i + "][0]");
+      }
+
+      if (itemValue === val) {
+        itemValue = undefined;
+        (assigns ||= []).push("a[" + i + "][1]");
+      }
+
+      i = items.push(
+        itemValue === undefined ? [itemKey] : [itemKey, itemValue],
+      );
+    }
+
+    if (assigns) {
+      state.buf.push(
+        "((m,a)=>(" +
+          assignsToString(assigns, "m") +
+          ",a.forEach(i=>m.set(i[0],i[1])),m))(new Map," +
+          arrayRef.id +
+          "=",
+      );
+    } else {
+      state.buf.push("new Map(" + arrayRef.id + "=");
+    }
+
+    writeArray(state, items, arrayRef);
+    state.buf.push(")");
+  } else {
+    for (let [itemKey, itemValue] of val) {
+      if (itemKey === val) {
+        itemKey = undefined;
+        (assigns ||= []).push("a[" + i + "]");
+      }
+
+      if (itemValue === val) {
+        itemValue = undefined;
+        (assigns ||= []).push("a[" + (i + 1) + "]");
+      }
+
+      i = items.push(itemKey, itemValue);
+    }
+
+    if (assigns) {
+      state.buf.push(
+        "(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1])," +
+          assignsToString(assigns, "new Map") +
+          "))(" +
+          arrayRef.id +
+          "=",
+      );
+    } else {
+      state.buf.push(
+        "(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),new Map))(" +
+          arrayRef.id +
+          "=",
+      );
+    }
+    writeArray(state, items, arrayRef);
+    state.buf.push(")");
+  }
+
   return true;
 }
 

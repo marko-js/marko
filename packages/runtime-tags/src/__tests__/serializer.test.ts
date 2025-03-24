@@ -142,7 +142,7 @@ describe("serializer", () => {
       map.set(map, 1);
       assertStringify(
         map,
-        `((m,i)=>(i[0][0]=m,i.forEach(i=>m.set(i[0],i[1])),m))(new Map,_.a=[[,1]])`,
+        `((m,a)=>(a[0][0]=m,a.forEach(i=>m.set(i[0],i[1])),m))(new Map,_.a=[[,1]])`,
       );
     });
     it("circular value", () => {
@@ -150,7 +150,7 @@ describe("serializer", () => {
       map.set(1, map);
       assertStringify(
         map,
-        `((m,i)=>(i[0][1]=m,i.forEach(i=>m.set(i[0],i[1])),m))(new Map,_.a=[[1]])`,
+        `((m,a)=>(a[0][1]=m,a.forEach(i=>m.set(i[0],i[1])),m))(new Map,_.a=[[1]])`,
       );
     });
     it("circular key and value", () => {
@@ -158,7 +158,7 @@ describe("serializer", () => {
       map.set(map, map);
       assertStringify(
         map,
-        `((m,i)=>(i[0][0]=i[0][1]=m,i.forEach(i=>m.set(i[0],i[1])),m))(new Map,_.a=[[]])`,
+        `((m,a)=>(a[0][0]=a[0][1]=m,a.forEach(i=>m.set(i[0],i[1])),m))(new Map,_.a=[[]])`,
       );
     });
     it("circular mixed", () => {
@@ -167,7 +167,7 @@ describe("serializer", () => {
       map.set(3, 4);
       assertStringify(
         map,
-        `((m,i)=>(i[1][0]=i[1][1]=m,i.forEach(i=>m.set(i[0],i[1])),m))(new Map,_.a=[[1,2],[],[3,4]])`,
+        `((m,a)=>(a[1][0]=a[1][1]=m,a.forEach(i=>m.set(i[0],i[1])),m))(new Map,_.a=[[1,2],[],[3,4]])`,
       );
     });
     it("circular nested", () => {
@@ -176,6 +176,50 @@ describe("serializer", () => {
 
       assertStringify(map, `new Map(_.a=[[1,2],[3,_.c={}]]),_.c.nested=_.b`);
     });
+
+    it("large circular key", () => {
+      const map = createPaddedMap();
+      map.set(map, 1);
+      assertStringify(
+        map,
+        `(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),a[50]=new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,,1])`,
+      );
+    });
+    it("large circular value", () => {
+      const map = createPaddedMap();
+      map.set(1, map);
+      assertStringify(
+        map,
+        `(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),a[51]=new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,1,])`,
+      );
+    });
+    it("large circular key and value", () => {
+      const map = createPaddedMap();
+      map.set(map, map);
+      assertStringify(
+        map,
+        `(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),a[50]=a[51]=new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,,])`,
+      );
+    });
+    it("large circular mixed", () => {
+      const map = createPaddedMap();
+      map.set(map, map);
+      map.set(3, 4);
+      assertStringify(
+        map,
+        `(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),a[50]=a[51]=new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,,,3,4])`,
+      );
+    });
+    it("large circular nested", () => {
+      const map = createPaddedMap();
+      map.set(3, { nested: map });
+
+      assertStringify(
+        map,
+        `(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,3,_.c={}]),_.c.nested=_.b`,
+      );
+    });
+
     it("dedupe value and keys across flushes", () => {
       const serializer = assertSerializer();
       const objA = { a: 1 };
@@ -1402,6 +1446,15 @@ function assertIsDeepSubset(
         break;
     }
   }
+}
+
+function createPaddedMap() {
+  const map = new Map<unknown, unknown>();
+  for (let i = 0; i < 25; i++) {
+    map.set(i.toString(36), i);
+  }
+
+  return map;
 }
 
 function assertEqualAtAccessor<T>(
