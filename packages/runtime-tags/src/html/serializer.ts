@@ -293,6 +293,7 @@ class State {
   ids = 0;
   flush = 0;
   flushed = false;
+  wroteUndefined = false;
   buf = [] as string[];
   refs = new WeakMap<WeakKey, Reference>();
   assigned = new Set<Reference>();
@@ -471,7 +472,12 @@ function writeRoot(state: State, root: unknown) {
     result += chunk;
   }
 
-  return "_=>" + result;
+  if (state.wroteUndefined) {
+    state.wroteUndefined = false;
+    return "(_,$)=>" + result;
+  } else {
+    return "_=>" + result;
+  }
 }
 
 function writeAssigned(state: State) {
@@ -859,15 +865,26 @@ function writePlainObject(state: State, val: object, ref: Reference) {
 }
 
 function writeArray(state: State, val: unknown[], ref: Reference) {
-  state.buf.push("[");
-  writeProp(state, val[0], ref, "0");
+  let sep = "[";
 
-  for (let i = 1; i < val.length; i++) {
-    state.buf.push(",");
-    writeProp(state, val[i], ref, "" + i);
+  for (let i = 0; i < val.length; i++) {
+    const item = val[i];
+    state.buf.push(sep);
+    sep = ",";
+
+    if (item === undefined) {
+      state.wroteUndefined = true;
+      state.buf.push("$");
+    } else {
+      writeProp(state, item, ref, "" + i);
+    }
   }
 
-  state.buf.push("]");
+  if (sep === "[") {
+    state.buf.push("[]");
+  } else {
+    state.buf.push("]");
+  }
   return true;
 }
 
@@ -930,7 +947,11 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
       }
 
       i = items.push(
-        itemValue === undefined ? [itemKey] : [itemKey, itemValue],
+        itemValue === undefined
+          ? itemKey === undefined
+            ? []
+            : [itemKey]
+          : [itemKey, itemValue],
       );
     }
 
@@ -951,12 +972,12 @@ function writeMap(state: State, val: Map<unknown, unknown>, ref: Reference) {
   } else {
     for (let [itemKey, itemValue] of val) {
       if (itemKey === val) {
-        itemKey = undefined;
+        itemKey = 0;
         (assigns ||= []).push("a[" + i + "]");
       }
 
       if (itemValue === val) {
-        itemValue = undefined;
+        itemValue = 0;
         (assigns ||= []).push("a[" + (i + 1) + "]");
       }
 
@@ -993,13 +1014,14 @@ function writeSet(state: State, val: Set<unknown>, ref: Reference) {
 
   const items: (unknown | undefined)[] = [];
   let assigns: undefined | string[];
+  let i = 0;
   for (let item of val) {
     if (item === val) {
-      item = undefined;
-      (assigns ||= []).push("i[" + items.length + "]");
+      item = 0;
+      (assigns ||= []).push("i[" + i + "]");
     }
 
-    items.push(item);
+    i = items.push(item);
   }
 
   const arrayRef = new Reference(
