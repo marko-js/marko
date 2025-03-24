@@ -1,0 +1,16 @@
+<let/clickCount = 0/>
+
+<div/el/>
+<try>
+  <button onClick() {
+    clickCount++
+  }>inc</button>
+  <script>
+    el().textContent = clickCount;
+  </script>
+  -- ${(() => { if (clickCount > 1) throw new Error("ERROR!")})()}
+  <@catch|err|>
+    ${err}
+  </@catch>
+</try>
+

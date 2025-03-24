@@ -9,7 +9,7 @@ export function createScope(
 ): Scope {
   const scope = {
     ___id: $global.___nextScopeId++,
-    ___pending: 1,
+    ___creating: 1,
     ___closestBranch: closestBranch,
     $global,
   } as Scope;
@@ -25,10 +25,21 @@ export function skipScope(scope: Scope) {
 
 export function finishPendingScopes() {
   for (const scope of pendingScopes) {
-    scope.___pending = 0;
+    scope.___creating = 0;
   }
 
   pendingScopes = [];
+}
+
+export function findBranchWithKey(
+  scope: Scope,
+  key: string,
+): BranchScope | undefined {
+  let branch = scope.___closestBranch;
+  while (branch && !branch[key]) {
+    branch = branch.___parentBranch;
+  }
+  return branch;
 }
 
 export function destroyBranch(branch: BranchScope) {

@@ -91,9 +91,9 @@ runtime.x = (op, id, node, start, placeholderCallback) => {
     // repurpose "op" for callbacks ...carefully
     if (op = runtime.j[id]) {
       placeholderCallback = placeholder.c;
-      placeholder.c = () => placeholderCallback() + op(runtime);
+      placeholder.c = () => placeholderCallback() + op(runtime.r);
     }
   }
 };
 })`
-  : `(e=>{let i,t,r,l={},o=(e,i)=>{e.replaceWith(...i.childNodes),i.remove()};e.d.head.append(e.d.querySelector("style["+e.i+"]")||""),e.j={},e.x=(d,n,a,c,p)=>{"#"==d?(l[n]=t).i++:a==r&&i(),"T"==a.tagName&&(n=a.getAttribute(e.i))&&((c=e.l["^"+n])&&(l[n]={i:1,c(i=e.l[n]||a){for(;i.parentNode!==c.parentNode;)i=i.parentNode;for(;i!=r;(r=c.nextSibling).remove());o(c,a)}}),r=a.nextSibling,t=l[n],i=()=>{c||o(e.l[n],a),--t.i||t.c()},(d=e.j[n])&&(p=t.c,t.c=()=>p()+d(e)))}})`;
+  : `(e=>{let i,t,r,l={},o=(e,i)=>{e.replaceWith(...i.childNodes),i.remove()};e.d.head.append(e.d.querySelector("style["+e.i+"]")||""),e.j={},e.x=(d,n,a,c,p)=>{"#"==d?(l[n]=t).i++:a==r&&i(),"T"==a.tagName&&(n=a.getAttribute(e.i))&&((c=e.l["^"+n])&&(l[n]={i:1,c(i=e.l[n]||a){for(;i.parentNode!==c.parentNode;)i=i.parentNode;for(;i!=r;(r=c.nextSibling).remove());o(c,a)}}),r=a.nextSibling,t=l[n],i=()=>{c||o(e.l[n],a),--t.i||t.c()},(d=e.j[n])&&(p=t.c,t.c=()=>p()+d(e.r)))}})`;

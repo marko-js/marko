@@ -1,0 +1,20 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "e",
+      "$init": "t",
+      "$resolveAfter": "a",
+      "$_value$await_content": "r",
+      "$_params_3$await_content": "o",
+      "$_await_content": "n",
+      "$_err$catch_content": "m",
+      "$_params_2$catch_content": "i",
+      "$_await$try_content": "s",
+      "$_clickCount$try_content_effect": "c",
+      "$_clickCount$try_content": "l",
+      "$_clickCount_closure": "u",
+      "$_clickCount_effect": "d",
+      "$_clickCount": "f"
+    }
+  }
+}
