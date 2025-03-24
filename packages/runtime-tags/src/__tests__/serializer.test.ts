@@ -30,7 +30,7 @@ describe("serializer", () => {
 
     assertStringify(
       data,
-      `{strings:"hello\\nworld",numbers:[1,NaN,Infinity],booleans:[!0,!1],void:[null,],regexps:/abc/g,maps:new Map(_.a=[[1,2]]),sets:new Set(_.b=[1,2]),nested:{object:_.d={"special-keys":1}}},_.d.cyclical=_.c`,
+      `{strings:"hello\\nworld",numbers:[1,NaN,Infinity],booleans:[!0,!1],void:[null,$],regexps:/abc/g,maps:new Map(_.a=[[1,2]]),sets:new Set(_.b=[1,2]),nested:{object:_.d={"special-keys":1}}},_.d.cyclical=_.c`,
     );
   });
 
@@ -142,7 +142,7 @@ describe("serializer", () => {
       map.set(map, 1);
       assertStringify(
         map,
-        `((m,a)=>(a[0][0]=m,a.forEach(i=>m.set(i[0],i[1])),m))(new Map,_.a=[[,1]])`,
+        `((m,a)=>(a[0][0]=m,a.forEach(i=>m.set(i[0],i[1])),m))(new Map,_.a=[[$,1]])`,
       );
     });
     it("circular value", () => {
@@ -182,7 +182,7 @@ describe("serializer", () => {
       map.set(map, 1);
       assertStringify(
         map,
-        `(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),a[50]=new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,,1])`,
+        `(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),a[50]=new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,0,1])`,
       );
     });
     it("large circular value", () => {
@@ -190,7 +190,7 @@ describe("serializer", () => {
       map.set(1, map);
       assertStringify(
         map,
-        `(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),a[51]=new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,1,])`,
+        `(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),a[51]=new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,1,0])`,
       );
     });
     it("large circular key and value", () => {
@@ -198,7 +198,7 @@ describe("serializer", () => {
       map.set(map, map);
       assertStringify(
         map,
-        `(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),a[50]=a[51]=new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,,])`,
+        `(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),a[50]=a[51]=new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,0,0])`,
       );
     });
     it("large circular mixed", () => {
@@ -207,7 +207,7 @@ describe("serializer", () => {
       map.set(3, 4);
       assertStringify(
         map,
-        `(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),a[50]=a[51]=new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,,,3,4])`,
+        `(a=>a.reduce((m,v,i)=>i%2?m:m.set(v,a[i+1]),a[50]=a[51]=new Map))(_.a=["0",0,"1",1,"2",2,"3",3,"4",4,"5",5,"6",6,"7",7,"8",8,"9",9,"a",10,"b",11,"c",12,"d",13,"e",14,"f",15,"g",16,"h",17,"i",18,"j",19,"k",20,"l",21,"m",22,"n",23,"o",24,0,0,3,4])`,
       );
     });
     it("large circular nested", () => {
@@ -245,7 +245,7 @@ describe("serializer", () => {
       set.add(set);
       assertStringify(
         set,
-        `((s,i)=>(i[0]=s,i.forEach(i=>s.add(i)),s))(new Set,_.a=[])`,
+        `((s,i)=>(i[0]=s,i.forEach(i=>s.add(i)),s))(new Set,_.a=[0])`,
       );
     });
     it("circular nested", () => {
@@ -351,8 +351,8 @@ describe("serializer", () => {
     it("empty", () => assertStringify([], `[]`));
     it("nested", () => assertStringify([1, [2]], `[1,[2]]`));
     // eslint-disable-next-line no-sparse-arrays
-    it("sparse", () => assertStringify([, 1, 2], `[,1,2]`));
-    it("undefined", () => assertStringify([undefined, 1, 2], `[,1,2]`));
+    it("sparse", () => assertStringify([, 1, 2], `[$,1,2]`));
+    it("undefined", () => assertStringify([undefined, 1, 2], `[$,1,2]`));
     it("circular", () => {
       const arr: any = [1];
       arr.push(arr);
@@ -380,7 +380,7 @@ describe("serializer", () => {
       a.push(2);
       a.push(undefined);
 
-      assertStringify(a, `[_.b=[,1,],2,],_.b[0]=_.b[2]=_.a`);
+      assertStringify(a, `[_.b=[,1,],2,$],_.b[0]=_.b[2]=_.a`);
     });
   });
 
@@ -1329,7 +1329,10 @@ function assertSerializer(ctx: Record<PropertyKey, unknown> = {}) {
           for (const flush of flushes) {
             await promises[promiseIndex++];
             const actual = serializer.stringify(undefined, boundary);
-            assert.equal(actual?.replace(/^_=>[({](.*?)[})]$/, "$1"), flush);
+            assert.equal(
+              actual?.replace(/^(?:_|\(_,\$\))=>[({](.*?)[})]$/, "$1"),
+              flush,
+            );
             (0, eval)(actual)(ctx);
           }
 
@@ -1357,7 +1360,10 @@ function assertSerializedIsActual(
   ctx: Record<PropertyKey, unknown> = {},
 ) {
   assert.equal(
-    actual.replace(/^_=>[({](?:(_\.[^=]+)=)?(.*?)(?:,\1)?[})]$/, "$2"),
+    actual.replace(
+      /^(?:_|\(_,\$\))=>[({](?:(_\.[^=]+)=)?(.*?)(?:,\1)?[})]$/,
+      "$2",
+    ),
     serialized,
   );
   const actualValue = (0, eval)(actual)(ctx);
