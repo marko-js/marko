@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 0.3.63
+
+### Patch Changes
+
+- [#2581](https://github.com/marko-js/marko/pull/2581) [`4ea18b8`](https://github.com/marko-js/marko/commit/4ea18b8d4c831cf84cd2c1a458305fbf81085e9b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize serializing FormData objects.
+
+- [#2581](https://github.com/marko-js/marko/pull/2581) [`ec3e55c`](https://github.com/marko-js/marko/commit/ec3e55ca89fb152af0bad6e02943a7eac582f2c8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid serializing sparse arrays.
+
+- [#2581](https://github.com/marko-js/marko/pull/2581) [`0101b39`](https://github.com/marko-js/marko/commit/0101b39a6839b36e8cfc919baa9d139054634831) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize serializing large maps.
+
 ## 0.3.62
 
 ### Patch Changes
