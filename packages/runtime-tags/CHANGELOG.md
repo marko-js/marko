@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.64
+
+### Patch Changes
+
+- [#2583](https://github.com/marko-js/marko/pull/2583) [`4c9919f`](https://github.com/marko-js/marko/commit/4c9919f978e7fdd9c2d0d830c5ad3be4ae1e7cb5) Thanks [@mlrawlings](https://github.com/mlrawlings)! - Try effect batching
+
 ## 0.3.63
 
 ### Patch Changes
