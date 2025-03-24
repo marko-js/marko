@@ -708,7 +708,7 @@ describe("serializer", () => {
       formData.append("b", "2");
       assertStringify(
         formData,
-        `((f,i)=>(f,i.forEach(i=>f.append(i[0],i[1])),f))(new FormData,[["a","1"],["b","2"]])`,
+        `["a","1","b","2"].reduce((f,v,i,a)=>i%2&&f.append(v,a[i+1])||f,new FormData)`,
       );
     });
     it("duplicated", () => {
@@ -717,11 +717,11 @@ describe("serializer", () => {
       formData.append("b", "2");
       assertStringify(
         formData,
-        `((f,i)=>(f,i.forEach(i=>f.append(i[0],i[1])),f))(new FormData,[["a","1"],["b","2"]])`,
+        `["a","1","b","2"].reduce((f,v,i,a)=>i%2&&f.append(v,a[i+1])||f,new FormData)`,
       );
       assertStringify(
         [formData, formData],
-        `[_.a=((f,i)=>(f,i.forEach(i=>f.append(i[0],i[1])),f))(new FormData,[["a","1"],["b","2"]]),_.a]`,
+        `[_.a=["a","1","b","2"].reduce((f,v,i,a)=>i%2&&f.append(v,a[i+1])||f,new FormData),_.a]`,
       );
     });
   });
