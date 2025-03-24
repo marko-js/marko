@@ -1,4 +1,9 @@
-import { AccessorPrefix, AccessorProp, type Scope } from "../common/types";
+import {
+  AccessorPrefix,
+  AccessorProp,
+  type BranchScope,
+  type Scope,
+} from "../common/types";
 import { setConditionalRenderer } from "./control-flow";
 import { createAndSetupBranch } from "./renderer";
 import { finishPendingScopes } from "./scope";
@@ -14,8 +19,14 @@ type PendingRender = {
 
 let pendingRenders: PendingRender[] = [];
 let pendingRendersLookup = new Map<number, PendingRender>();
+const caughtError = new WeakSet<unknown[]>();
+const placeholderShown = new WeakSet<unknown[]>();
 export let pendingEffects: unknown[] = [];
 export let rendering = false;
+
+export function queuePlaceholder() {
+  placeholderShown.add(pendingEffects);
+}
 
 const scopeKeyOffset = 1e3;
 export function queueRender<T>(
@@ -92,14 +103,14 @@ export function prepareEffects(fn: () => void): unknown[] {
   return preparedEffects;
 }
 
-export function runEffects(effects: unknown[]) {
+export let runEffects = (effects: unknown[]) => {
   for (let i = 0, scope: Scope; i < effects.length; ) {
     (effects[i++] as (a: Scope, b: Scope) => void)(
       (scope = effects[i++] as Scope),
       scope,
     );
   }
-}
+};
 
 function runRenders() {
   while (pendingRenders.length) {
@@ -146,26 +157,67 @@ let runRender = (render: PendingRender) =>
 
 export let enableCatch = () => {
   enableCatch = () => {};
+  const handlePendingTry = (
+    fn: ExecFn,
+    scope: Scope,
+    branch: BranchScope | undefined,
+  ) => {
+    // walk up the branches to see if any have a ___pendingAsyncCount
+    // if not, return false
+    // if so, return true and push the fn to the pending async queue on the try branch
+    while (branch) {
+      if (branch.___pendingAsyncCount) {
+        return (branch.___effects ||= []).push(fn, scope);
+      }
+      branch = branch.___parentBranch;
+    }
+  };
+  runEffects = (
+    (runEffects) =>
+    (effects: unknown[], checkPending = placeholderShown.has(effects)) => {
+      if (checkPending || caughtError.has(effects)) {
+        let i = 0;
+        let fn: ExecFn;
+        let scope: Scope;
+        let branch: BranchScope | undefined;
+        for (; i < effects.length; ) {
+          fn = effects[i++] as ExecFn;
+          scope = effects[i++] as Scope;
+          branch = scope.___closestBranch;
+          if (
+            !branch?.___destroyed &&
+            !(checkPending && handlePendingTry(fn, scope, branch))
+          ) {
+            fn(scope, scope);
+          }
+        }
+      } else {
+        runEffects(effects);
+      }
+    }
+  )(runEffects);
   runRender = ((runRender) => (render: PendingRender) => {
     try {
       runRender(render);
     } catch (error) {
-      let branch = render.___scope.___closestBranch;
-      while (branch && !branch[AccessorProp.CatchContent])
-        branch = branch.___parentBranch;
-      if (!branch) {
+      let tryWithCatch: BranchScope | undefined =
+        render.___scope.___closestBranch;
+      while (tryWithCatch && !tryWithCatch[AccessorProp.CatchContent])
+        tryWithCatch = tryWithCatch.___parentBranch;
+      if (!tryWithCatch) {
         throw error;
       } else {
+        caughtError.add(pendingEffects);
         setConditionalRenderer(
-          branch._!,
-          branch[AccessorProp.BranchAccessor],
-          branch[AccessorProp.CatchContent],
+          tryWithCatch._!,
+          tryWithCatch[AccessorProp.BranchAccessor],
+          tryWithCatch[AccessorProp.CatchContent],
           createAndSetupBranch,
         );
-        branch[AccessorProp.CatchContent].___params?.(
-          branch._![
+        tryWithCatch[AccessorProp.CatchContent].___params?.(
+          tryWithCatch._![
             AccessorPrefix.ConditionalScope +
-              branch[AccessorProp.BranchAccessor]
+              tryWithCatch[AccessorProp.BranchAccessor]
           ],
           [error],
         );

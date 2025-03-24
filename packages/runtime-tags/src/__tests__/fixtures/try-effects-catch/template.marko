@@ -1,0 +1,14 @@
+<div/el/>
+<try>
+  <script>
+    el().textContent = "This shouldn't happen"
+  </script>
+  ${(() => { throw new Error("ERROR!") })()}
+  <@catch|err|>
+    ${err.message}
+  </@catch>
+</try>
+<div/el2/>
+<script>
+  el2().textContent = "This is good"
+</script>

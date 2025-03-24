@@ -9,7 +9,7 @@ import {
   type Scope,
 } from "../common/types";
 import { attrs } from "./dom";
-import { prepareEffects, runEffects } from "./queue";
+import { prepareEffects, queuePlaceholder, runEffects } from "./queue";
 import { reconcile } from "./reconcile";
 import {
   createAndSetupBranch,
@@ -31,14 +31,17 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
   return (scope: Scope, promise: Promise<unknown>) => {
     // TODO: !isPromise, render synchronously
 
-    let tryBranch = scope.___closestBranch;
+    let tryWithPlaceholder = scope.___closestBranch;
     let awaitBranch = scope[branchAccessor];
     const referenceNode = scope[nodeAccessor];
     const namespaceNode = (awaitBranch?.___startNode ?? referenceNode)
       .parentNode!;
 
-    while (tryBranch && !tryBranch[AccessorProp.PlaceholderContent]) {
-      tryBranch = tryBranch.___parentBranch;
+    while (
+      tryWithPlaceholder &&
+      !tryWithPlaceholder[AccessorProp.PlaceholderContent]
+    ) {
+      tryWithPlaceholder = tryWithPlaceholder.___parentBranch;
     }
 
     const thisPromise = (scope[promiseAccessor] = promise
@@ -52,103 +55,124 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
 
         scope[promiseAccessor] = undefined;
 
-        const effects = prepareEffects(() => {
-          if (!awaitBranch || !tryBranch) {
-            // TODO: this preserves the existing scope, but we need to defer closures executing in this existing scope while it is pending.
-            // Not ideal, but we could destroy and recreate the scope everytime the promise changes to avoid this.
-            insertBranchBefore(
-              (awaitBranch ??= scope[branchAccessor] =
-                createAndSetupBranch(
-                  scope.$global,
-                  renderer,
-                  scope,
-                  namespaceNode,
-                )),
-              referenceNode.parentNode!,
-              referenceNode,
-            );
-            referenceNode.remove();
-          }
+        runEffects(
+          prepareEffects(() => {
+            if (tryWithPlaceholder) {
+              queuePlaceholder();
+            }
 
-          renderer.___params?.(awaitBranch, [data]);
-        });
+            if (!awaitBranch || !tryWithPlaceholder) {
+              // TODO: this preserves the existing scope, but we need to defer closures executing in this existing scope while it is pending.
+              // Not ideal, but we could destroy and recreate the scope everytime the promise changes to avoid this.
+              insertBranchBefore(
+                (awaitBranch ??= scope[branchAccessor] =
+                  createAndSetupBranch(
+                    scope.$global,
+                    renderer,
+                    scope,
+                    namespaceNode,
+                  )),
+                referenceNode.parentNode!,
+                referenceNode,
+              );
+              referenceNode.remove();
+            }
 
-        if (tryBranch) {
-          // TODO: store effects with the try branch so we can trigger them when all await branches are resolved
-          if (!--tryBranch.___pendingAsyncCount!) {
-            const placeholderBranch = tryBranch[
+            renderer.___params?.(awaitBranch, [data]);
+          }),
+        );
+
+        if (tryWithPlaceholder) {
+          tryWithPlaceholder;
+          if (!--tryWithPlaceholder.___pendingAsyncCount!) {
+            const placeholderBranch = tryWithPlaceholder[
               AccessorProp.PlaceholderBranch
             ] as BranchScope;
+            tryWithPlaceholder[AccessorProp.PlaceholderBranch] = undefined;
             if (placeholderBranch) {
               insertBranchBefore(
-                tryBranch,
+                tryWithPlaceholder,
                 placeholderBranch.___startNode.parentNode!,
                 placeholderBranch.___startNode,
               );
               removeAndDestroyBranch(placeholderBranch);
             } else {
               insertBranchBefore(
-                tryBranch,
+                tryWithPlaceholder,
                 referenceNode.parentNode!,
                 referenceNode,
               );
             }
-            // TODO: trigger effects for the tryBranch
+            if (tryWithPlaceholder.___effects) {
+              (runEffects as any)(tryWithPlaceholder.___effects, true);
+            }
           }
-        } else {
-          runEffects(effects);
         }
       })
       .catch((error) => {
-        let tryBranch = scope.___closestBranch;
-        while (tryBranch && !tryBranch[AccessorProp.CatchContent]) {
-          tryBranch = tryBranch.___parentBranch;
+        let tryWithCatch = scope.___closestBranch;
+        while (tryWithCatch && !tryWithCatch[AccessorProp.CatchContent]) {
+          tryWithCatch = tryWithCatch.___parentBranch;
         }
-        if (!tryBranch) {
+        if (!tryWithCatch) {
           setTimeout(() => {
             throw error;
           });
         } else {
+          const placeholderBranch = tryWithCatch[
+            AccessorProp.PlaceholderBranch
+          ] as BranchScope;
+          if (placeholderBranch) {
+            tryWithCatch._![
+              AccessorPrefix.ConditionalScope +
+                tryWithCatch[AccessorProp.BranchAccessor]
+            ] = placeholderBranch;
+          }
           setConditionalRenderer(
-            tryBranch._!,
-            tryBranch[AccessorProp.BranchAccessor],
-            tryBranch[AccessorProp.CatchContent],
+            tryWithCatch._!,
+            tryWithCatch[AccessorProp.BranchAccessor],
+            tryWithCatch[AccessorProp.CatchContent],
             createAndSetupBranch,
           );
-          tryBranch[AccessorProp.CatchContent].___params?.(
-            tryBranch._![
+          tryWithCatch[AccessorProp.CatchContent].___params?.(
+            tryWithCatch._![
               AccessorPrefix.ConditionalScope +
-                tryBranch[AccessorProp.BranchAccessor]
+                tryWithCatch[AccessorProp.BranchAccessor]
             ],
             [error],
           );
         }
       }));
 
-    if (tryBranch) {
-      if (!tryBranch.___pendingAsyncCount) {
-        tryBranch.___pendingAsyncCount = 0;
+    if (tryWithPlaceholder) {
+      queuePlaceholder();
+
+      if (!tryWithPlaceholder.___pendingAsyncCount) {
+        tryWithPlaceholder.___pendingAsyncCount = 0;
         requestAnimationFrame(() => {
-          if (tryBranch.___pendingAsyncCount && !tryBranch.___destroyed) {
-            const placeholderBranch = (tryBranch[
+          if (
+            tryWithPlaceholder.___pendingAsyncCount &&
+            !tryWithPlaceholder.___destroyed
+          ) {
+            const placeholderBranch = (tryWithPlaceholder[
               AccessorProp.PlaceholderBranch
             ] = createAndSetupBranch(
               scope.$global,
-              tryBranch[AccessorProp.PlaceholderContent],
-              tryBranch._,
-              tryBranch.___startNode.parentNode!,
+              tryWithPlaceholder[AccessorProp.PlaceholderContent],
+              tryWithPlaceholder._,
+              tryWithPlaceholder.___startNode.parentNode!,
             ));
             insertBranchBefore(
               placeholderBranch,
-              tryBranch.___startNode.parentNode!,
-              tryBranch.___startNode,
+              tryWithPlaceholder.___startNode.parentNode!,
+              tryWithPlaceholder.___startNode,
             );
-            tempDetatchBranch(tryBranch);
+            tempDetatchBranch(tryWithPlaceholder);
           }
         });
       }
 
-      tryBranch.___pendingAsyncCount++;
+      tryWithPlaceholder.___pendingAsyncCount++;
     } else if (awaitBranch) {
       awaitBranch.___startNode.parentNode!.insertBefore(
         referenceNode,

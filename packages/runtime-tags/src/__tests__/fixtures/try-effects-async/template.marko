@@ -1,0 +1,20 @@
+import { resolveAfter } from "../../utils/resolve";
+<let/clickCount = 0/>
+<button onClick() {
+  clickCount++
+}>inc</button>
+<div/el/>
+<try>
+  <script>
+    el().textContent = clickCount;
+  </script>
+  <await|value|=resolveAfter(clickCount, 1)>
+    Async: ${value > 1 ? (() => { throw new Error("ERROR!")})() : value}
+  </await>
+  <@placeholder>
+    LOADING...
+  </@placeholder>
+  <@catch|err|>
+    ${err}
+  </@catch>
+</try>

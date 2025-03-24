@@ -78,7 +78,7 @@ export function intersection(
   scopeIdAccessor: Accessor = /*@__KEY__*/ "___id",
 ): Signal<never> {
   return (scope) => {
-    if (scope.___pending) {
+    if (scope.___creating) {
       if (scope[id] === undefined) {
         scope[id] = defaultPending;
       } else if (!--scope[id]) {
@@ -111,7 +111,7 @@ export function loopClosure<T>(
         ownerScope,
         () => {
           for (const scope of scopes) {
-            if (!scope.___pending && !scope.___destroyed) {
+            if (!scope.___creating && !scope.___destroyed) {
               childSignal(scope);
             }
           }
@@ -139,7 +139,7 @@ export function conditionalClosure<T>(
     AccessorPrefix.ConditionalRenderer + ownerConditionalNodeAccessor;
   const ownerSignal = (scope: Scope) => {
     const ifScope = scope[scopeAccessor];
-    if (ifScope && !ifScope.___pending && scope[branchAccessor] === branch) {
+    if (ifScope && !ifScope.___creating && scope[branchAccessor] === branch) {
       queueRender(ifScope, childSignal, -1);
     }
   };
@@ -173,7 +173,7 @@ export function dynamicClosure(
   return (scope: Scope) => {
     if (scope[___scopeInstancesAccessor]) {
       for (const childScope of scope[___scopeInstancesAccessor] as Set<Scope>) {
-        if (!childScope.___pending) {
+        if (!childScope.___creating) {
           queueRender(
             childScope,
             closureSignals[childScope[___signalIndexAccessor]],

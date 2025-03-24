@@ -10,13 +10,14 @@ export interface BranchScope extends Scope {
   ___branchScopes: Set<BranchScope> | undefined;
   ___renderer: ClientRenderer | string;
   ___pendingAsyncCount: number | undefined;
+  ___effects: unknown[] | undefined;
 }
 export interface Scope {
   $global: Record<string, unknown> & { ___nextScopeId: number };
   _: Scope | undefined;
   ___id: number;
   ___args: unknown;
-  ___pending: 1 | 0 | undefined;
+  ___creating: 1 | 0 | undefined;
   ___abortControllers:
     | Record<string | number, AbortController | void>
     | undefined;
