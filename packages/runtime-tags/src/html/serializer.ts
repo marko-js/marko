@@ -1127,7 +1127,7 @@ function writeFormData(state: State, val: FormData) {
   for (const [key, value] of val as unknown as Iterable<[string, string]>) {
     // TODO: support file/blob
     if (typeof value === "string") {
-      valStr += sep + "[" + quote(key, 0) + "," + quote(value, 0) + "]";
+      valStr += sep + quote(key, 0) + "," + quote(value, 0);
       sep = ",";
     }
   }
@@ -1136,9 +1136,7 @@ function writeFormData(state: State, val: FormData) {
     state.buf.push("new FormData");
   } else {
     state.buf.push(
-      "((f,i)=>(f,i.forEach(i=>f.append(i[0],i[1])),f))(new FormData," +
-        valStr +
-        "])",
+      valStr + "].reduce((f,v,i,a)=>i%2&&f.append(v,a[i+1])||f,new FormData)",
     );
   }
 
