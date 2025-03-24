@@ -31,6 +31,17 @@ export function finishPendingScopes() {
   pendingScopes = [];
 }
 
+export function findBranchWithKey(
+  scope: Scope,
+  key: string,
+): BranchScope | undefined {
+  let branch = scope.___closestBranch;
+  while (branch && !branch[key]) {
+    branch = branch.___parentBranch;
+  }
+  return branch;
+}
+
 export function destroyBranch(branch: BranchScope) {
   branch.___parentBranch?.___branchScopes?.delete(branch);
   destroyNestedBranches(branch);

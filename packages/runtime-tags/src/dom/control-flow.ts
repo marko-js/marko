@@ -9,7 +9,13 @@ import {
   type Scope,
 } from "../common/types";
 import { attrs } from "./dom";
-import { prepareEffects, queuePlaceholder, runEffects } from "./queue";
+import {
+  caughtError,
+  pendingEffects,
+  placeholderShown,
+  prepareEffects,
+  runEffects,
+} from "./queue";
 import { reconcile } from "./reconcile";
 import {
   createAndSetupBranch,
@@ -19,6 +25,7 @@ import {
 } from "./renderer";
 import {
   destroyBranch,
+  findBranchWithKey,
   insertBranchBefore,
   removeAndDestroyBranch,
   tempDetatchBranch,
@@ -31,18 +38,14 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
   return (scope: Scope, promise: Promise<unknown>) => {
     // TODO: !isPromise, render synchronously
 
-    let tryWithPlaceholder = scope.___closestBranch;
+    const tryWithPlaceholder = findBranchWithKey(
+      scope,
+      AccessorProp.PlaceholderContent,
+    );
     let awaitBranch = scope[branchAccessor];
     const referenceNode = scope[nodeAccessor];
     const namespaceNode = (awaitBranch?.___startNode ?? referenceNode)
       .parentNode!;
-
-    while (
-      tryWithPlaceholder &&
-      !tryWithPlaceholder[AccessorProp.PlaceholderContent]
-    ) {
-      tryWithPlaceholder = tryWithPlaceholder.___parentBranch;
-    }
 
     const thisPromise = (scope[promiseAccessor] = promise
       .then((data) => {
@@ -58,7 +61,7 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
         runEffects(
           prepareEffects(() => {
             if (tryWithPlaceholder) {
-              queuePlaceholder();
+              placeholderShown.add(pendingEffects);
             }
 
             if (!awaitBranch || !tryWithPlaceholder) {
@@ -110,42 +113,11 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
         }
       })
       .catch((error) => {
-        let tryWithCatch = scope.___closestBranch;
-        while (tryWithCatch && !tryWithCatch[AccessorProp.CatchContent]) {
-          tryWithCatch = tryWithCatch.___parentBranch;
-        }
-        if (!tryWithCatch) {
-          setTimeout(() => {
-            throw error;
-          });
-        } else {
-          const placeholderBranch = tryWithCatch[
-            AccessorProp.PlaceholderBranch
-          ] as BranchScope;
-          if (placeholderBranch) {
-            tryWithCatch._![
-              AccessorPrefix.ConditionalScope +
-                tryWithCatch[AccessorProp.BranchAccessor]
-            ] = placeholderBranch;
-          }
-          setConditionalRenderer(
-            tryWithCatch._!,
-            tryWithCatch[AccessorProp.BranchAccessor],
-            tryWithCatch[AccessorProp.CatchContent],
-            createAndSetupBranch,
-          );
-          tryWithCatch[AccessorProp.CatchContent].___params?.(
-            tryWithCatch._![
-              AccessorPrefix.ConditionalScope +
-                tryWithCatch[AccessorProp.BranchAccessor]
-            ],
-            [error],
-          );
-        }
+        renderCatch(scope, error, true);
       }));
 
     if (tryWithPlaceholder) {
-      queuePlaceholder();
+      placeholderShown.add(pendingEffects);
 
       if (!tryWithPlaceholder.___pendingAsyncCount) {
         tryWithPlaceholder.___pendingAsyncCount = 0;
@@ -205,6 +177,44 @@ export function createTry(nodeAccessor: Accessor, tryContent: Renderer) {
       );
     }
   };
+}
+
+export function renderCatch(scope: Scope, error: unknown, async?: boolean) {
+  const tryWithCatch = findBranchWithKey(scope, AccessorProp.CatchContent);
+  if (!tryWithCatch) {
+    if (async) {
+      setTimeout(() => {
+        throw error;
+      });
+    } else {
+      throw error;
+    }
+  } else {
+    const placeholderBranch = tryWithCatch[
+      AccessorProp.PlaceholderBranch
+    ] as BranchScope;
+    if (placeholderBranch) {
+      tryWithCatch._![
+        AccessorPrefix.ConditionalScope +
+          tryWithCatch[AccessorProp.BranchAccessor]
+      ] = placeholderBranch;
+      destroyBranch(tryWithCatch);
+    }
+    caughtError.add(pendingEffects);
+    setConditionalRenderer(
+      tryWithCatch._!,
+      tryWithCatch[AccessorProp.BranchAccessor],
+      tryWithCatch[AccessorProp.CatchContent],
+      createAndSetupBranch,
+    );
+    tryWithCatch[AccessorProp.CatchContent].___params?.(
+      tryWithCatch._![
+        AccessorPrefix.ConditionalScope +
+          tryWithCatch[AccessorProp.BranchAccessor]
+      ],
+      [error],
+    );
+  }
 }
 
 export function conditional(nodeAccessor: Accessor, ...branches: Renderer[]) {

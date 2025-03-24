@@ -1,11 +1,5 @@
-import {
-  AccessorPrefix,
-  AccessorProp,
-  type BranchScope,
-  type Scope,
-} from "../common/types";
-import { setConditionalRenderer } from "./control-flow";
-import { createAndSetupBranch } from "./renderer";
+import type { BranchScope, Scope } from "../common/types";
+import { renderCatch } from "./control-flow";
 import { finishPendingScopes } from "./scope";
 import type { Signal } from "./signals";
 
@@ -19,14 +13,10 @@ type PendingRender = {
 
 let pendingRenders: PendingRender[] = [];
 let pendingRendersLookup = new Map<number, PendingRender>();
-const caughtError = new WeakSet<unknown[]>();
-const placeholderShown = new WeakSet<unknown[]>();
+export const caughtError = new WeakSet<unknown[]>();
+export const placeholderShown = new WeakSet<unknown[]>();
 export let pendingEffects: unknown[] = [];
 export let rendering = false;
-
-export function queuePlaceholder() {
-  placeholderShown.add(pendingEffects);
-}
 
 const scopeKeyOffset = 1e3;
 export function queueRender<T>(
@@ -200,28 +190,7 @@ export let enableCatch = () => {
     try {
       runRender(render);
     } catch (error) {
-      let tryWithCatch: BranchScope | undefined =
-        render.___scope.___closestBranch;
-      while (tryWithCatch && !tryWithCatch[AccessorProp.CatchContent])
-        tryWithCatch = tryWithCatch.___parentBranch;
-      if (!tryWithCatch) {
-        throw error;
-      } else {
-        caughtError.add(pendingEffects);
-        setConditionalRenderer(
-          tryWithCatch._!,
-          tryWithCatch[AccessorProp.BranchAccessor],
-          tryWithCatch[AccessorProp.CatchContent],
-          createAndSetupBranch,
-        );
-        tryWithCatch[AccessorProp.CatchContent].___params?.(
-          tryWithCatch._![
-            AccessorPrefix.ConditionalScope +
-              tryWithCatch[AccessorProp.BranchAccessor]
-          ],
-          [error],
-        );
-      }
+      renderCatch(render.___scope, error);
     }
   })(runRender);
 };
