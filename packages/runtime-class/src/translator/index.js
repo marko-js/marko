@@ -457,13 +457,15 @@ export const translate = {
       if (meta.implicitSplitComponent && isHTML) {
         renderBlock.unshiftContainer(
           "body",
-          t.callExpression(
-            importDefault(
-              file,
-              "marko/src/runtime/helpers/skip-serialize.js",
-              "marko_skip_serialize",
+          t.expressionStatement(
+            t.callExpression(
+              importDefault(
+                file,
+                "marko/src/runtime/helpers/skip-serialize.js",
+                "marko_skip_serialize",
+              ),
+              [t.identifier("input")],
             ),
-            [t.identifier("input")],
           ),
         );
       }

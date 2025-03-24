@@ -14,7 +14,7 @@ const _marko_componentType = "__tests__/template.marko",
 var _default = exports.default = _marko_template;
 const _marko_component = {};
 _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, _component, state, $global) {
-  (0, _skipSerialize.default)(input)
+  (0, _skipSerialize.default)(input);
   out.w(`<div${(0, _dataMarko.default)(out, _componentDef, {
     "onclick": _componentDef.d("click", "handleClick", false, [a, b, ...d])
   })}></div>`);
