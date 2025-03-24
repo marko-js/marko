@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.23
+
+### Patch Changes
+
+- [#2585](https://github.com/marko-js/marko/pull/2585) [`e84ff79`](https://github.com/marko-js/marko/commit/e84ff79a5f942b5b6f636d1c527e229f3c5fd244) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix missing expression statement wrapper.
+
 ## 5.37.22
 
 ### Patch Changes
