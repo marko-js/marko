@@ -23,4 +23,5 @@ export enum AccessorProp {
   PlaceholderContent = "d",
   TagVariable = "e",
   TagVariableChange = "f",
+  ClosestBranchId = "g",
 }

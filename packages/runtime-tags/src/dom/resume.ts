@@ -1,6 +1,7 @@
 import { DEFAULT_RUNTIME_ID } from "../common/meta";
 import {
   AccessorPrefix,
+  AccessorProp,
   type BranchScope,
   ResumeSymbol,
   type Scope,
@@ -113,8 +114,6 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 // TODO: could we use attr marker?
                 const node = (scope[data] = visit.previousSibling);
                 scope[AccessorPrefix.Getter + data] = () => node;
-              } else if (token === ResumeSymbol.ClosestBranch) {
-                parentBranchIds.set(scopeId, data);
               } else if (token === ResumeSymbol.BranchStart) {
                 if (currentBranchId && dataIndex) {
                   branchEnd(currentBranchId, visit);
@@ -191,7 +190,9 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                         ) as Scope;
                       }
 
-                      const parentBranchId = parentBranchIds.get(scopeId);
+                      const parentBranchId =
+                        scope[AccessorProp.ClosestBranchId] ||
+                        parentBranchIds.get(scopeId);
                       if (parentBranchId) {
                         scope.___closestBranch = scopes[
                           parentBranchId
