@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.65
+
+### Patch Changes
+
+- [#2587](https://github.com/marko-js/marko/pull/2587) [`c217dd2`](https://github.com/marko-js/marko/commit/c217dd2d28a731f2243a4f5715ef1eef16067da9) Thanks [@mlrawlings](https://github.com/mlrawlings)! - resume fixes & perf
+
 ## 0.3.64
 
 ### Patch Changes
