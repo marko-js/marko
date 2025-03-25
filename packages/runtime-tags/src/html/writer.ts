@@ -154,9 +154,9 @@ export function hoist(scopeId: number, id?: string) {
 export function resumeClosestBranch(scopeId: number) {
   const branchId = $chunk.context?.[branchIdKey];
   if (branchId !== undefined && branchId !== scopeId) {
-    $chunk.writeHTML(
-      $chunk.boundary.state.mark(ResumeSymbol.ClosestBranch, "" + scopeId),
-    );
+    writeScope(scopeId, {
+      [AccessorProp.ClosestBranchId]: branchId,
+    });
   }
 }
 

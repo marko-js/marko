@@ -32,7 +32,6 @@ export enum ResumeSymbol {
   BranchEnd = "]",
   BranchSingleNode = "|",
   BranchSingleNodeOnlyChildInParent = "=",
-  ClosestBranch = "$",
 }
 
 export { AccessorPrefix, AccessorProp } from "./accessor.debug";
