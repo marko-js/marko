@@ -9,7 +9,6 @@ import {
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
 import evaluate from "../util/evaluate";
-import { isStatefulReferences } from "../util/is-stateful";
 import {
   type Binding,
   BindingType,
@@ -20,7 +19,6 @@ import {
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import {
-  checkStatefulClosures,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
@@ -31,7 +29,6 @@ import {
 import {
   addValue,
   getSignal,
-  setForceResumeScope,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import { toFirstExpressionOrBlock } from "../util/to-first-expression-or-block";
@@ -101,7 +98,7 @@ export default {
         );
     }
 
-    startSection(tagBody)!;
+    const bodySection = startSection(tagBody)!;
 
     getOrCreateSection(tag);
     trackParamsReferences(
@@ -110,6 +107,8 @@ export default {
       undefined,
       evaluate(valueAttr.value),
     );
+
+    bodySection.upstreamExpression = valueAttr.value.extra;
   },
   translate: translateByTarget({
     html: {
@@ -132,15 +131,6 @@ export default {
         const nodeRef = tagExtra[kDOMBinding]!;
         const tagBody = tag.get("body");
         const section = getSection(tag);
-        const bodySection = getSectionForBody(tagBody)!;
-
-        if (
-          isStatefulReferences(valueAttr.extra?.referencedBindings) ||
-          checkStatefulClosures(bodySection, true)
-        ) {
-          setForceResumeScope(bodySection);
-        }
-
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
 
@@ -196,7 +186,7 @@ export default {
 
         addValue(
           section,
-          tag.node.attributes[0].value.extra?.referencedBindings,
+          bodySection.upstreamExpression?.referencedBindings,
           signal,
           tag.node.attributes[0].value,
         );

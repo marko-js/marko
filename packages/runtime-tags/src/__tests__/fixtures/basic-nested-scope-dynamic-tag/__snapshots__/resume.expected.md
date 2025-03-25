@@ -13,7 +13,7 @@
     <!--M_]2 #text/0-->
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.a={count:0,"ClosureScopes:count":_.e=new Set,"ConditionalScope:#text/0":_.c={"ConditionalScope:#text/0":_.b={"ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/0":"__tests__/tags/child.marko"},_.c,_.b],_.b._=_.a,(_.e).add(_.b),_.d),3,"__tests__/template.marko_1_count"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={count:0,"ClosureScopes:count":_.d=new Set},{"ConditionalScope:#text/0":_.b={_:_.a,"ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"},_.b],(_.d).add(_.b),_.c),3,"__tests__/template.marko_1_count"];M._.w()
     </script>
   </body>
 </html>
@@ -46,7 +46,7 @@ container.querySelector("button").click();
     <!--M_]2 #text/0-->
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.a={count:0,"ClosureScopes:count":_.e=new Set,"ConditionalScope:#text/0":_.c={"ConditionalScope:#text/0":_.b={"ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/0":"__tests__/tags/child.marko"},_.c,_.b],_.b._=_.a,(_.e).add(_.b),_.d),3,"__tests__/template.marko_1_count"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={count:0,"ClosureScopes:count":_.d=new Set},{"ConditionalScope:#text/0":_.b={_:_.a,"ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"},_.b],(_.d).add(_.b),_.c),3,"__tests__/template.marko_1_count"];M._.w()
     </script>
   </body>
 </html>
@@ -75,7 +75,7 @@ container.querySelector("button").click();
     <!--M_]2 #text/0-->
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.a={count:0,"ClosureScopes:count":_.e=new Set,"ConditionalScope:#text/0":_.c={"ConditionalScope:#text/0":_.b={"ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/0":"__tests__/tags/child.marko"},_.c,_.b],_.b._=_.a,(_.e).add(_.b),_.d),3,"__tests__/template.marko_1_count"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={count:0,"ClosureScopes:count":_.d=new Set},{"ConditionalScope:#text/0":_.b={_:_.a,"ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"},_.b],(_.d).add(_.b),_.c),3,"__tests__/template.marko_1_count"];M._.w()
     </script>
   </body>
 </html>
@@ -104,7 +104,7 @@ container.querySelector("button").click();
     <!--M_]2 #text/0-->
     <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.a={count:0,"ClosureScopes:count":_.e=new Set,"ConditionalScope:#text/0":_.c={"ConditionalScope:#text/0":_.b={"ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/0":"__tests__/tags/child.marko"},_.c,_.b],_.b._=_.a,(_.e).add(_.b),_.d),3,"__tests__/template.marko_1_count"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={count:0,"ClosureScopes:count":_.d=new Set},{"ConditionalScope:#text/0":_.b={_:_.a,"ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"},_.b],(_.d).add(_.b),_.c),3,"__tests__/template.marko_1_count"];M._.w()
     </script>
   </body>
 </html>

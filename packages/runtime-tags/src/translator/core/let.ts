@@ -130,6 +130,7 @@ export default {
             section,
             getAccessorPrefix().TagVariableChange + getScopeAccessor(binding),
             valueChangeAttr.value,
+            true, // TODO: could be based on if there are actually assignments.
           );
         }
       }

@@ -7,6 +7,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../../common/types";
+import { getDynamicSourcesForReferences } from "../../util/dynamic-sources";
 import { getAccessorPrefix } from "../../util/get-accessor-char";
 import { isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
@@ -260,22 +261,30 @@ export default {
           statements.push(t.expressionStatement(dynamicTagExpr));
         }
 
-        setSerializedProperty(
-          section,
-          getAccessorPrefix().ConditionalScope + getScopeAccessor(nodeRef),
-          callRuntime("writeExistingScope", dynamicScopeIdentifier),
-        );
+        const serializeReason =
+          isClassAPI ||
+          !!node.var ||
+          getDynamicSourcesForReferences(referencedBindings);
+        if (serializeReason) {
+          setSerializedProperty(
+            section,
+            getAccessorPrefix().ConditionalScope + getScopeAccessor(nodeRef),
+            callRuntime("writeExistingScope", dynamicScopeIdentifier),
+            serializeReason,
+          );
 
-        setSerializedProperty(
-          section,
-          getAccessorPrefix().ConditionalRenderer + getScopeAccessor(nodeRef),
-          callRuntime(
-            "dynamicTagId",
-            t.isIdentifier(tagExpression)
-              ? t.identifier(tagExpression.name)
-              : tagExpression,
-          ),
-        );
+          setSerializedProperty(
+            section,
+            getAccessorPrefix().ConditionalRenderer + getScopeAccessor(nodeRef),
+            callRuntime(
+              "dynamicTagId",
+              t.isIdentifier(tagExpression)
+                ? t.identifier(tagExpression.name)
+                : tagExpression,
+            ),
+            serializeReason,
+          );
+        }
 
         for (const replacement of tag.replaceWithMultiple(statements)) {
           replacement.skip();

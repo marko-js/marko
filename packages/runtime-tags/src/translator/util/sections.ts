@@ -7,8 +7,7 @@ import {
 
 import { currentProgramPath } from "../visitors/program";
 import { isCoreTag } from "./is-core-tag";
-import { isStatefulReferences } from "./is-stateful";
-import { find, Sorted } from "./optional";
+import { filter, Sorted } from "./optional";
 import type { Binding, ReferencedBindings } from "./references";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
@@ -276,32 +275,29 @@ export const isSerializedSection = (section: Section) => {
   return !(section.isBranch || section.downstreamBinding?.serialize === false);
 };
 
-export const isStatefulSection = (section: Section) => {
-  const upstreamExpression = section.upstreamExpression;
-  return (
-    !upstreamExpression ||
-    isStatefulReferences(upstreamExpression.referencedBindings)
-  );
-};
-
-export const checkStatefulClosures = (
-  section: Section,
-  immediateOnly: boolean,
-) => {
-  return !!find(
-    section.referencedClosures,
-    (closure) =>
-      (!immediateOnly || section.parent === closure.section) &&
-      isStatefulReferences(closure),
-  );
-};
+export function isSectionWithHoists(section: Section) {
+  if (section.hoisted || section.isHoistThrough || section.referencedHoists)
+    return true;
+}
 
 export function isImmediateOwner(section: Section, binding: Binding) {
   return section.parent?.id === binding.section.id;
 }
 
+export function isDirectClosure(section: Section, closure: Binding) {
+  return section.isBranch && isImmediateOwner(section, closure);
+}
+
 export function isDynamicClosure(section: Section, closure: Binding) {
-  return !section.isBranch || !isImmediateOwner(section, closure);
+  return !isDirectClosure(section, closure);
+}
+
+export function getDirectClosures(section: Section) {
+  if (section.isBranch) {
+    return filter(section.referencedClosures, (closure) =>
+      isImmediateOwner(section, closure),
+    );
+  }
 }
 
 export function isSameOrChildSection(section: Section, other: Section) {
