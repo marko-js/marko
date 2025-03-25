@@ -8,11 +8,11 @@ import {
 
 import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
+import { getDynamicSourcesForExtras } from "../../util/dynamic-sources";
 import evaluate from "../../util/evaluate";
 import { getAccessorPrefix } from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
 import isInvokedFunction from "../../util/is-invoked-function";
-import { isStatefulReferences } from "../../util/is-stateful";
 import { isOutputHTML } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
 import {
@@ -41,7 +41,7 @@ import {
   addStatement,
   getRegisterUID,
   serializeOwners,
-  setForceResumeScope,
+  serializeSectionIfNeeded,
 } from "../../util/signals";
 import { toObjectProperty } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
@@ -331,7 +331,7 @@ export default {
             }
           }
 
-          setForceResumeScope(section);
+          serializeSectionIfNeeded(section, true);
           translateVar(
             tag,
             callRuntime(
@@ -696,14 +696,17 @@ export default {
         tag.insertBefore(tag.node.body.body).forEach((child) => child.skip());
       }
 
+      const allExtras: t.NodeExtra[] = [extra];
+      for (const attr of tag.node.attributes) {
+        if (attr.value.extra) {
+          allExtras.push(attr.value.extra);
+        }
+      }
+      const serializeReason = getDynamicSourcesForExtras(allExtras);
       const shouldMark =
         nodeRef &&
         (extra[kSerializeMarker] ||
-          (extra[kSerializeMarker] === undefined &&
-            (isStatefulReferences(extra.referencedBindings) ||
-              tag.node.attributes.some((attr) =>
-                isStatefulReferences(attr.value.extra?.referencedBindings),
-              ))));
+          (extra[kSerializeMarker] === undefined && !!serializeReason));
 
       if (!openTagOnly && !selectArgs) {
         writer.writeTo(

@@ -74,11 +74,11 @@ export default {
         writer.flushBefore(tag);
 
         if (attrs.valueChange) {
-          // TODO: this should be based on the child actually mutating the tag variable.
           setSerializedProperty(
             section,
             getAccessorProp().TagVariableChange,
             attrs.valueChange,
+            true, // TODO: this should be based on the child actually mutating the tag variable.
           );
         }
 

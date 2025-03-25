@@ -8,6 +8,7 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import { getDynamicSourcesForSection } from "../util/dynamic-sources";
 import { getAccessorPrefix } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
@@ -15,7 +16,6 @@ import {
   getOptimizedOnlyChildNodeRef,
   isOnlyChildInParent,
 } from "../util/is-only-child-in-parent";
-import { isStatefulReferences } from "../util/is-stateful";
 import {
   BindingType,
   dropReferences,
@@ -27,13 +27,13 @@ import {
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import {
-  checkStatefulClosures,
   ContentType,
   getOrCreateSection,
   getScopeIdentifier,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  isSectionWithHoists,
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
@@ -41,8 +41,8 @@ import {
   addValue,
   getHTMLSectionStatements,
   getSignal,
+  serializeSectionIfNeeded,
   setClosureSignalBuilder,
-  setForceResumeScope,
   setSerializedProperty,
   writeHTMLResumeStatements,
 } from "../util/signals";
@@ -137,8 +137,6 @@ export default {
         const tagSection = getSection(tag);
         const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
-        const tagExtra = node.extra!;
-        const isStateful = isStatefulReferences(tagExtra.referencedBindings);
         const onlyChildInParentOptimization = isOnlyChildInParent(tag);
         const nodeRef = getOptimizedOnlyChildNodeRef(tag, tagSection);
         const forAttrs = getKnownAttrValues(node);
@@ -146,22 +144,24 @@ export default {
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
-        const hasStatefulClosures = checkStatefulClosures(bodySection, true);
-        const hasHoists =
-          bodySection.hoisted ||
-          bodySection.isHoistThrough ||
-          bodySection.referencedHoists;
+        const sectionSources = getDynamicSourcesForSection(bodySection);
+        const hasHoists = isSectionWithHoists(bodySection);
+        const serializeReason = hasHoists || sectionSources?.all;
         const singleNodeOptimization =
           bodySection.content === null ||
           (bodySection.content.singleChild &&
             bodySection.content.startType !== ContentType.Text);
         let keyExpression: t.Expression | undefined;
 
-        if (isStateful && onlyChildInParentOptimization) {
+        if (sectionSources?.referenced && onlyChildInParentOptimization) {
           getParentTag(tag)!.node.extra![kSerializeMarker] = false;
         }
 
-        if (isStateful || hasStatefulClosures || hasHoists) {
+        if (serializeReason) {
+          // TODO: could skip this serialize if needed by having the comments used in the html resume runtime
+          // include the for loops "key"'s. This way the deserializer could construct the loop scope map and array.
+          serializeSectionIfNeeded(bodySection, serializeReason);
+
           const defaultParamNames = (
             {
               of: ["list", "index"],
@@ -173,7 +173,6 @@ export default {
           const requiredParamsIndex = forAttrs.by
             ? defaultParamNames.length - 1
             : defaultByParamIndex;
-          setForceResumeScope(bodySection);
 
           for (let i = 0; i <= requiredParamsIndex; i++) {
             const existingParam = params[i];
@@ -232,22 +231,20 @@ export default {
             ]),
           );
 
-          if (isStateful || hasStatefulClosures || hasHoists) {
-            bodyStatements.push(
-              t.expressionStatement(
-                t.callExpression(
-                  t.memberExpression(forScopesIdentifier, t.identifier("set")),
-                  [
-                    keyExpression,
-                    callRuntime(
-                      "ensureScopeWithId",
-                      getScopeIdIdentifier(bodySection),
-                    ),
-                  ],
-                ),
+          bodyStatements.push(
+            t.expressionStatement(
+              t.callExpression(
+                t.memberExpression(forScopesIdentifier, t.identifier("set")),
+                [
+                  keyExpression,
+                  callRuntime(
+                    "ensureScopeWithId",
+                    getScopeIdIdentifier(bodySection),
+                  ),
+                ],
               ),
-            );
-          }
+            ),
+          );
 
           setSerializedProperty(
             tagSection,
@@ -257,6 +254,7 @@ export default {
               forScopesIdentifier,
               t.identifier("undefined"),
             ),
+            serializeReason,
           );
         }
 
@@ -264,14 +262,14 @@ export default {
         writeHTMLResumeStatements(tagBody);
 
         const forTagArgs = getBaseArgsInForTag(forType, forAttrs);
-        const forTagHTMLRuntime = isStateful
+        const forTagHTMLRuntime = sectionSources?.referenced
           ? forTypeToHTMLResumeRuntime(forType, singleNodeOptimization)
           : forTypeToRuntime(forType);
         forTagArgs.push(
           t.arrowFunctionExpression(params, t.blockStatement(bodyStatements)),
         );
 
-        if (isStateful) {
+        if (sectionSources?.referenced) {
           forTagArgs.push(
             getScopeIdIdentifier(tagSection),
             getScopeAccessorLiteral(nodeRef),

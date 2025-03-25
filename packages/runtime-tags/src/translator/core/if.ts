@@ -8,6 +8,10 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
+import {
+  getDynamicSourcesForSection,
+  getDynamicSourcesForSections,
+} from "../util/dynamic-sources";
 import { getAccessorPrefix } from "../util/get-accessor-char";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
@@ -16,7 +20,6 @@ import {
   getOptimizedOnlyChildNodeRef,
   isOnlyChildInParent,
 } from "../util/is-only-child-in-parent";
-import { isStatefulReferences } from "../util/is-stateful";
 import {
   getScopeAccessor,
   getScopeAccessorLiteral,
@@ -24,12 +27,12 @@ import {
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import {
-  checkStatefulClosures,
   ContentType,
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
+  isSectionWithHoists,
   type Section,
   setSectionParentIsOwner,
   startSection,
@@ -38,8 +41,8 @@ import {
   addValue,
   getHTMLSectionStatements,
   getSignal,
+  serializeSectionIfNeeded,
   setClosureSignalBuilder,
-  setForceResumeScope,
   setSerializedProperty,
   writeHTMLResumeStatements,
 } from "../util/signals";
@@ -132,20 +135,15 @@ export const IfTag = {
         const [isLast, branches] = getBranches(tag, bodySection);
         const [rootTag] = branches[0];
         const rootExtra = rootTag.node.extra!;
-        const isStateful = isStatefulReferences(rootExtra.referencedBindings);
         const singleNodeOptimization = rootExtra.singleNodeOptimization;
-        const hasStatefulClosures =
-          bodySection && checkStatefulClosures(bodySection, true);
-        const hasHoists =
-          bodySection &&
-          (bodySection.hoisted ||
-            bodySection.isHoistThrough ||
-            bodySection.referencedHoists);
+        const branchSources = getSourcesForBranches(branches);
+        const hasHoists = hasHoistsInBranches(branches);
+        const serializeReason = hasHoists || branchSources?.all;
 
         if (bodySection) {
-          if (isStateful || hasStatefulClosures || hasHoists) {
-            setForceResumeScope(bodySection);
-          }
+          // TODO: could skip this serialize if needed by having the comments used in the html resume runtime
+          // include the if ConditionalScope and ConditionalRenderer
+          serializeSectionIfNeeded(bodySection, serializeReason);
           writer.flushInto(tag);
           writeHTMLResumeStatements(tagBody);
         }
@@ -160,7 +158,7 @@ export const IfTag = {
             rootTag.scope.generateUidIdentifier("ifBranch");
           let statement: t.Statement | undefined;
 
-          if (isStateful && onlyChildInParentOptimization) {
+          if (branchSources?.referenced && onlyChildInParentOptimization) {
             getParentTag(rootTag)!.node.extra![kSerializeMarker] = false;
           }
 
@@ -169,16 +167,7 @@ export const IfTag = {
             const bodyStatements = branchTag.node.body.body;
 
             if (branchBodySection) {
-              const branchHasStatefulClosures = checkStatefulClosures(
-                branchBodySection,
-                true,
-              );
-              const branchHasHoists =
-                branchBodySection.hoisted ||
-                branchBodySection.isHoistThrough ||
-                branchBodySection.referencedHoists;
-
-              if (isStateful) {
+              if (branchSources?.referenced) {
                 bodyStatements.push(
                   t.expressionStatement(
                     t.assignmentExpression(
@@ -189,7 +178,7 @@ export const IfTag = {
                   ) as any,
                 );
               }
-              if (isStateful || branchHasStatefulClosures || branchHasHoists) {
+              if (serializeReason) {
                 bodyStatements.push(
                   t.expressionStatement(
                     t.assignmentExpression(
@@ -218,13 +207,14 @@ export const IfTag = {
             branchTag.remove();
           }
 
-          if (isStateful || hasStatefulClosures || hasHoists) {
-            if (isStateful) {
+          if (serializeReason) {
+            if (branchSources?.referenced) {
               setSerializedProperty(
                 section,
                 getAccessorPrefix().ConditionalRenderer +
                   getScopeAccessor(nodeRef),
                 ifBranchIdentifier,
+                branchSources.referenced,
               );
               const cbNode = t.arrowFunctionExpression(
                 [],
@@ -254,7 +244,8 @@ export const IfTag = {
                 "let",
                 [
                   t.variableDeclarator(ifScopeIdIdentifier),
-                  isStateful && t.variableDeclarator(ifBranchIdentifier),
+                  branchSources?.referenced &&
+                    t.variableDeclarator(ifBranchIdentifier),
                 ].filter(Boolean) as t.VariableDeclarator[],
               ),
             );
@@ -262,6 +253,7 @@ export const IfTag = {
               section,
               getAccessorPrefix().ConditionalScope + getScopeAccessor(nodeRef),
               callRuntime("getScopeById", ifScopeIdIdentifier),
+              serializeReason,
             );
           } else {
             nextTag.insertBefore(statement!);
@@ -486,6 +478,29 @@ function getBranches(
   }
 
   return [isLast, branches] as const;
+}
+
+function hasHoistsInBranches(
+  branches: [tag: t.NodePath<t.MarkoTag>, bodySection: Section | undefined][],
+) {
+  for (const [, section] of branches) {
+    if (section && isSectionWithHoists(section)) return true;
+  }
+}
+
+function getSourcesForBranches(
+  branches: [tag: t.NodePath<t.MarkoTag>, bodySection: Section | undefined][],
+) {
+  if (branches.length === 1) {
+    return getDynamicSourcesForSection(branches[0][1]!);
+  }
+
+  const branchSections = [];
+  for (const [, branchSection] of branches) {
+    branchSections.push(branchSection);
+  }
+
+  return getDynamicSourcesForSections(branchSections);
 }
 
 function isRoot(tag: t.NodePath<t.MarkoTag>) {

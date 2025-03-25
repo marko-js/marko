@@ -17,9 +17,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   }, _scope0_id));
   _$.writeScope(_scope0_id, {
     count,
-    "ClosureScopes:count": _count_closures,
-    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
-    "ConditionalRenderer:#text/0": _$.dynamicTagId(false || Child)
+    "ClosureScopes:count": _count_closures
   }, "__tests__/template.marko", 0, {
     count: "3:6"
   });

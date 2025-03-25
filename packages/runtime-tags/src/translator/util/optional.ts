@@ -48,6 +48,56 @@ export class Sorted<T> {
       }
     }
   }
+  findIndex(data: Opt<T>, item: T) {
+    if (data) {
+      if (Array.isArray(data)) {
+        let max = data.length;
+        let pos = 0;
+
+        while (pos < max) {
+          const mid = (pos + max) >>> 1;
+          const compareResult = this.compare(data[mid], item);
+          if (compareResult === 0) return mid;
+          if (compareResult > 0) max = mid;
+          else pos = mid + 1;
+        }
+
+        return -1;
+      }
+
+      if (this.compare(data, item) === 0) {
+        return 0;
+      }
+    }
+
+    return -1;
+  }
+  isSuperset(superset: Opt<T>, subset: Opt<T>) {
+    if (!subset) {
+      return true;
+    }
+
+    if (!Array.isArray(subset)) {
+      return this.findIndex(superset, subset) !== -1;
+    }
+
+    if (!Array.isArray(superset)) {
+      return false;
+    }
+
+    const subLen = subset.length;
+    const supLen = superset.length;
+    if (subLen > supLen) {
+      return false;
+    }
+
+    for (let i = subLen; i--; ) {
+      const supIndex = this.findIndex(superset, subset[i]);
+      if (supIndex === -1 || supLen - supIndex <= i) return false;
+    }
+
+    return true;
+  }
 }
 
 export function push<T>(data: Opt<T>, item: T): Opt<T> {
