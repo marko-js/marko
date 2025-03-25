@@ -1,4 +1,4 @@
-// size: 19015 (min) 7267 (brotli)
+// size: 18927 (min) 7201 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -104,17 +104,16 @@ function init(runtimeId = "M") {
     initRuntime = (renders2) => {
       defineRuntime({
         value: (resumeRender = (renderId) => {
-          let currentScopeId,
+          let currentBranchId,
             render = (resumeRender[renderId] =
               renders2[renderId] || renders2(renderId)),
             walk2 = render.w,
             commentPrefixLen = render.i.length,
-            scopeStack = [],
+            branchStack = [],
             scopeLookup = (render.s = {}),
             serializeContext = { _: registeredValues },
             branchIds = new Set(),
-            parentBranchIds = new Map(),
-            closestBranchMarkers = new Map();
+            parentBranchIds = new Map();
           return (
             (render.w = () => {
               walk2.call(render);
@@ -123,30 +122,24 @@ function init(runtimeId = "M") {
               if (visits.length) {
                 let lastEndNode,
                   visitNodes = new Set(visits);
-                render.v = [];
-                let branchEnd = (branchId, visit, reference) => {
+                visits.length = 0;
+                let branchEnd = (branchId, reference) => {
                   let branch = (scopeLookup[branchId] ||= {}),
                     endNode = reference;
                   for (; visitNodes.has((endNode = endNode.previousSibling)); );
-                  endNode === lastEndNode &&
-                    (endNode = reference.parentNode.insertBefore(
-                      new Text(),
-                      reference,
-                    )),
-                    (branch.h = lastEndNode = endNode),
-                    (branch.g ||= endNode);
-                  for (let [markerScopeId, markerNode] of closestBranchMarkers)
-                    4 & branch.g.compareDocumentPosition(markerNode) &&
-                      2 & reference.compareDocumentPosition(markerNode) &&
-                      (parentBranchIds.set(markerScopeId, branchId),
-                      closestBranchMarkers.delete(markerScopeId));
                   return (
+                    endNode === lastEndNode &&
+                      (endNode = reference.parentNode.insertBefore(
+                        new Text(),
+                        reference,
+                      )),
+                    (branch.h = lastEndNode = endNode),
+                    (branch.g ||= endNode),
                     branchIds.add(branchId),
-                    closestBranchMarkers.set(branchId, visit),
                     branch
                   );
                 };
-                for (let visit of visits) {
+                for (let visit of visitNodes) {
                   let commentText = visit.data,
                     dataIndex = commentText.indexOf(" ") + 1,
                     scopeId = commentText.slice(
@@ -159,21 +152,24 @@ function init(runtimeId = "M") {
                   if ("*" === token) {
                     let node = (scope[data2] = visit.previousSibling);
                     scope["j" + data2] = () => node;
-                  } else if ("$" === token)
-                    closestBranchMarkers.set(scopeId, visit);
+                  } else if ("$" === token) parentBranchIds.set(scopeId, data2);
                   else if ("[" === token)
-                    currentScopeId &&
-                      (dataIndex && branchEnd(currentScopeId, visit, visit),
-                      scopeStack.push(currentScopeId)),
-                      (currentScopeId = scopeId),
+                    currentBranchId &&
+                      dataIndex &&
+                      (branchEnd(currentBranchId, visit),
+                      (currentBranchId = branchStack.pop())),
+                      currentBranchId &&
+                        (branchStack.push(currentBranchId),
+                        parentBranchIds.set(scopeId, currentBranchId)),
+                      (currentBranchId = scopeId),
                       (scope.g = visit);
                   else if ("]" === token) {
                     scope[data2] = visit;
                     let curParent = visit.parentNode,
-                      startNode = branchEnd(currentScopeId, visit, visit).g;
+                      startNode = branchEnd(currentBranchId, visit).g;
                     curParent !== startNode.parentNode &&
                       curParent.prepend(startNode),
-                      (currentScopeId = scopeStack.pop());
+                      (currentBranchId = branchStack.pop());
                   } else if ("|" === token || "=" === token) {
                     let next = data2.indexOf(" "),
                       curNode = visit;
@@ -184,12 +180,13 @@ function init(runtimeId = "M") {
 
                     ) {
                       let start = next + 1;
-                      (next = data2.indexOf(" ", start)),
-                        (curNode = branchEnd(
-                          data2.slice(start, ~next ? next : data2.length),
-                          visit,
-                          curNode,
-                        ).h);
+                      next = data2.indexOf(" ", start);
+                      let childScopeId = data2.slice(
+                        start,
+                        ~next ? next : data2.length,
+                      );
+                      (curNode = branchEnd(childScopeId, curNode).h),
+                        parentBranchIds.set(childScopeId, scopeId);
                     }
                   }
                 }

@@ -21,7 +21,7 @@
     <p>
       c
     </p>
-    <!--M_$3-->
+    <!--M_$3 2-->
     <!--M_]1 #text/2-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={}},2:_.b,3:{input:{write:_._["__tests__/template.marko_1/write"](_.b)}}},_.b._=_.a,_.c),3,"__tests__/tags/child.marko_0_input",1,"__tests__/template.marko_0_show"];M._.w()
@@ -52,7 +52,7 @@ container.querySelector("button").click();
     </div>
     <!--M_*1 #div/1-->
     <!--M_]1 #text/2-->
-    <!--M_$3-->
+    <!--M_$3 2-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={}},2:_.b,3:{input:{write:_._["__tests__/template.marko_1/write"](_.b)}}},_.b._=_.a,_.c),3,"__tests__/tags/child.marko_0_input",1,"__tests__/template.marko_0_show"];M._.w()
     </script>
@@ -97,7 +97,7 @@ container.querySelector("button").click();
     <p>
       c
     </p>
-    <!--M_$3-->
+    <!--M_$3 2-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={}},2:_.b,3:{input:{write:_._["__tests__/template.marko_1/write"](_.b)}}},_.b._=_.a,_.c),3,"__tests__/tags/child.marko_0_input",1,"__tests__/template.marko_0_show"];M._.w()
     </script>
@@ -130,7 +130,7 @@ container.querySelector("button").click();
     </div>
     <!--M_*1 #div/1-->
     <!--M_]1 #text/2-->
-    <!--M_$3-->
+    <!--M_$3 2-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:_.a={show:!0,"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={}},2:_.b,3:{input:{write:_._["__tests__/template.marko_1/write"](_.b)}}},_.b._=_.a,_.c),3,"__tests__/tags/child.marko_0_input",1,"__tests__/template.marko_0_show"];M._.w()
     </script>

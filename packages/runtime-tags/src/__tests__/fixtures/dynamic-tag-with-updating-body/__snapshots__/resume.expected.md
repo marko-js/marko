@@ -11,7 +11,7 @@
         <!--M_*4 #text/1-->
       </button>
       <!--M_*4 #button/0-->
-      <!--M_$4-->
+      <!--M_$4 2-->
     </div>
     <!--M_|1 #text/0 2-->
     <button
@@ -42,7 +42,7 @@ container.querySelector("#count").click();
         <!--M_*4 #text/1-->
       </button>
       <!--M_*4 #button/0-->
-      <!--M_$4-->
+      <!--M_$4 2-->
     </div>
     <!--M_|1 #text/0 2-->
     <button

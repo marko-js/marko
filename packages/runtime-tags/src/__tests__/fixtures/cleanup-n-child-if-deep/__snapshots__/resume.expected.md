@@ -44,7 +44,7 @@ Inner mounted
         <!--M_*3 #text/2-->
          a
       </p>
-      <!--M_$3-->
+      <!--M_$3 2-->
       <div>
         <div>
           Middle
@@ -61,7 +61,7 @@ Inner mounted
           <!--M_*5 #text/2-->
            a
         </p>
-        <!--M_$5-->
+        <!--M_$5 4-->
         <!--M_[6-->
         <div>
           Inner
@@ -78,7 +78,7 @@ Inner mounted
           <!--M_*7 #text/2-->
            a
         </p>
-        <!--M_$7-->
+        <!--M_$7 6-->
         <!--M_]4 #text/1-->
       </div>
       <!--M_|2 #text/1 4-->
@@ -150,7 +150,7 @@ Inner destroyed
         <!--M_*3 #text/2-->
          a
       </p>
-      <!--M_$3-->
+      <!--M_$3 2-->
       <div>
         <div>
           Middle
@@ -167,9 +167,9 @@ Inner destroyed
           <!--M_*5 #text/2-->
            a
         </p>
-        <!--M_$5-->
+        <!--M_$5 4-->
         <!--M_]4 #text/1-->
-        <!--M_$7-->
+        <!--M_$7 6-->
       </div>
       <!--M_|2 #text/1 4-->
     </div>
@@ -244,7 +244,7 @@ Middle destroyed
         <!--M_*3 #text/2-->
          a
       </p>
-      <!--M_$3-->
+      <!--M_$3 2-->
       <!--M_|2 #text/1 4-->
     </div>
     <!--M_|1 #text/4 2-->
