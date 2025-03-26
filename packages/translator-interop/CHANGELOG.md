@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.21
+
+### Patch Changes
+
+- [#2589](https://github.com/marko-js/marko/pull/2589) [`765915a`](https://github.com/marko-js/marko/commit/765915ad423827bcdec6281413c59ecda173a80d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue when using with latest version of babel.
+
+- Updated dependencies [[`5aad665`](https://github.com/marko-js/marko/commit/5aad6653a3f14d8d15a9ff103e9a38b25a3bd1ee), [`765915a`](https://github.com/marko-js/marko/commit/765915ad423827bcdec6281413c59ecda173a80d)]:
+  - @marko/runtime-tags@0.3.66
+  - marko@5.37.24
+
 ## 0.2.20
 
 ### Patch Changes
