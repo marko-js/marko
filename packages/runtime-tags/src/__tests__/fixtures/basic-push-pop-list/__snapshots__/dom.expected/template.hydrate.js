@@ -1,4 +1,4 @@
-// size: 411 (min) 229 (brotli)
+// size: 409 (min) 228 (brotli)
 const _item$for_content = _$.value(2, (_scope, item) =>
     _$.data(_scope[0], item),
   ),
@@ -12,9 +12,9 @@ const _item$for_content = _$.value(2, (_scope, item) =>
       _id(_scope, nextId), _items(_scope, [...items, nextId]);
     }),
   ),
-  _expr_id_items = _$.intersection(5, (_scope) => {
-    _expr_id_items_effect(_scope);
-  }),
+  _expr_id_items = _$.intersection(5, (_scope) =>
+    _expr_id_items_effect(_scope),
+  ),
   _for = _$.loopOf(0, _for_content),
   _items_effect = _$.effect("a1", (_scope, { 4: items }) =>
     _$.on(_scope[2], "click", function () {

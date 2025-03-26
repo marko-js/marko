@@ -13,13 +13,7 @@ const _expr_id_items_effect = _$.effect("__tests__/template.marko_0_id_items", (
   _id(_scope, nextId);
   _items(_scope, [...items, nextId]);
 }));
-const _expr_id_items = /* @__PURE__ */_$.intersection(5, _scope => {
-  const {
-    id,
-    items
-  } = _scope;
-  _expr_id_items_effect(_scope);
-});
+const _expr_id_items = /* @__PURE__ */_$.intersection(5, _scope => _expr_id_items_effect(_scope));
 const _for = /* @__PURE__ */_$.loopOf("#text/0", _for_content);
 const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {
   items

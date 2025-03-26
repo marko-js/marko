@@ -1,5 +1,6 @@
-// size: 1268 (min) 430 (brotli)
+// size: 1302 (min) 421 (brotli)
 const _expr_value_call$define_content2 = _$.intersection(4, (_scope) => {
+    const { 2: value, 3: call } = _scope;
     _$.tagVarSignal(_scope, _return(_scope));
   }),
   _call$define_content2 = _$.state(3, (_scope, call) =>
@@ -24,6 +25,7 @@ _$.registerContent(
   _params_3$define_content,
 );
 const _expr_value_call$define_content = _$.intersection(4, (_scope) => {
+    const { 2: value, 3: call } = _scope;
     _$.tagVarSignal(_scope, _return2(_scope));
   }),
   _call$define_content = _$.state(3, (_scope, call) =>

@@ -17,13 +17,7 @@ const _expr_Parent_Child_effect = _$.effect("__tests__/template.marko_0_Parent_C
     }
   }
 });
-const _expr_Parent_Child = /* @__PURE__ */_$.intersection(13, _scope => {
-  const {
-    Parent,
-    Child
-  } = _scope;
-  _expr_Parent_Child_effect(_scope);
-});
+const _expr_Parent_Child = /* @__PURE__ */_$.intersection(13, _scope => _expr_Parent_Child_effect(_scope));
 const _dynamicTag3 = /* @__PURE__ */_$.dynamicTag("#text/5", _Parent_content);
 const _dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/4", _Child_content2);
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", _Child_content);

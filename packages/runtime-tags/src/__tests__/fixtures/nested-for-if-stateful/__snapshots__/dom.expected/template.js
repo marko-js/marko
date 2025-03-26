@@ -21,18 +21,7 @@ const _expr_counts_count_i$if_content_effect = _$.effect("__tests__/template.mar
   _counts(_scope._._, [...counts.slice(0, i), count + 1, ...counts.slice(i + 1)]);
   _editing$for_content(_scope._, false);
 }));
-const _expr_counts_count_i$if_content = /* @__PURE__ */_$.intersection(2, _scope => {
-  const {
-    _: {
-      _: {
-        counts
-      },
-      count,
-      i
-    }
-  } = _scope;
-  _expr_counts_count_i$if_content_effect(_scope);
-}, 2);
+const _expr_counts_count_i$if_content = /* @__PURE__ */_$.intersection(2, _scope => _expr_counts_count_i$if_content_effect(_scope), 2);
 const _i$if_content = /* @__PURE__ */_$.conditionalClosure("i", "#text/0", 0, (_scope, i) => _expr_counts_count_i$if_content(_scope));
 const _count$if_content = /* @__PURE__ */_$.conditionalClosure("count", "#text/0", 0, (_scope, count) => {
   _$.data(_scope["#text/1"], count + 1);

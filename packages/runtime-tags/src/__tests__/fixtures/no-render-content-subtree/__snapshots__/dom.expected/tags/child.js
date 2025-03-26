@@ -6,13 +6,7 @@ const _expr_input_x_effect = _$.effect("__tests__/tags/child.marko_0_input_x", (
   input,
   x
 }) => (input.output().innerHTML = x));
-const _expr_input_x = /* @__PURE__ */_$.intersection(6, _scope => {
-  const {
-    input,
-    x
-  } = _scope;
-  _expr_input_x_effect(_scope);
-}, 1, "#scopeOffset/1");
+const _expr_input_x = /* @__PURE__ */_$.intersection(6, _scope => _expr_input_x_effect(_scope), 1, "#scopeOffset/1");
 const _x = _$.registerBoundSignal("__tests__/tags/child.marko_0_x/var", /* @__PURE__ */_$.value("x", (_scope, x) => _expr_input_x(_scope)));
 const _input_foo = /* @__PURE__ */_$.value("input_foo", (_scope, input_foo) => _myConst_input_value(_scope["#childScope/0"], input_foo));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {

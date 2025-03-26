@@ -1,4 +1,4 @@
-// size: 927 (min) 420 (brotli)
+// size: 925 (min) 419 (brotli)
 const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
     _$.data(_scope[1], count),
   ),
@@ -40,9 +40,7 @@ const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
   ),
   _expr_counts_count_i$if_content = _$.intersection(
     2,
-    (_scope) => {
-      _expr_counts_count_i$if_content_effect(_scope);
-    },
+    (_scope) => _expr_counts_count_i$if_content_effect(_scope),
     2,
   ),
   _i$if_content = _$.conditionalClosure(3, 0, 0, (_scope, i) =>
