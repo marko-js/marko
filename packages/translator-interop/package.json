@@ -30,8 +30,8 @@
   },
   "dependencies": {
     "@babel/code-frame": "^7.26.2",
-    "@marko/runtime-tags": "^0.3.61",
-    "marko": "^5.37.22"
+    "@marko/runtime-tags": "^0.3.65",
+    "marko": "^5.37.23"
   },
   "peerDependencies": {
     "@marko/compiler": "^5.23.0"

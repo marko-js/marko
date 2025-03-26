@@ -1,6 +1,6 @@
 /* eslint-disable no-import-assign */
 import * as babelTypes from "@babel/types";
-import defineType from "@babel/types/lib/definitions/utils";
+import * as definitionUtils from "@babel/types/lib/definitions/utils";
 import * as generatedValidators from "@babel/types/lib/validators/generated";
 import * as referencedValidators from "@babel/types/lib/validators/isReferenced";
 import validate from "@babel/types/lib/validators/validate";
@@ -21,7 +21,7 @@ getBindingIdentifiers.keys.MarkoTag = ["var"];
 getBindingIdentifiers.keys.MarkoTagBody = ["params"];
 
 MARKO_TYPES.forEach((typeName) => {
-  defineType(typeName, definitions[typeName]);
+  definitionUtils.default(typeName, definitions[typeName]);
 });
 
 babelTypes.NODE_FIELDS.Program.params =
@@ -64,6 +64,17 @@ referencedValidators.default = (node, parent, grandparent) => {
       return originalIsReferenced(node, parent, grandparent);
   }
 };
+
+for (const { types, set } of definitionUtils.allExpandedTypes || []) {
+  for (const type of types) {
+    const aliases = FLIPPED_ALIAS_KEYS[type];
+    if (aliases) {
+      aliases.forEach(set.add, set);
+    } else {
+      set.add(type);
+    }
+  }
+}
 
 function assert(typeName, node, opts) {
   if (!is(typeName, node, opts)) {
