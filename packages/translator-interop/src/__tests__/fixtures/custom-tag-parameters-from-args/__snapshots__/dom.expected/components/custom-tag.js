@@ -16,13 +16,7 @@ const _expr_x_y_effect = _$.effect("__tests__/components/custom-tag.marko_0_x_y"
   _x(_scope, x + 1), x;
   _y(_scope, y + 1), y;
 }));
-const _expr_x_y = /* @__PURE__ */_$.intersection(9, _scope => {
-  const {
-    x,
-    y
-  } = _scope;
-  _expr_x_y_effect(_scope);
-});
+const _expr_x_y = /* @__PURE__ */_$.intersection(9, _scope => _expr_x_y_effect(_scope));
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3", 0, 0, 1);
 const _y = /* @__PURE__ */_$.state("y/8", (_scope, y) => {
   _$.data(_scope["#text/2"], y);

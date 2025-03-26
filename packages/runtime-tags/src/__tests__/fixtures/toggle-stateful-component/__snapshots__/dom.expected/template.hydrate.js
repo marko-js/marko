@@ -1,4 +1,4 @@
-// size: 609 (min) 345 (brotli)
+// size: 607 (min) 335 (brotli)
 const _expr_input_onCount_clickCount_effect = _$.effect(
     "a0",
     (_scope, { 4: input_onCount, 5: clickCount }) =>
@@ -6,9 +6,9 @@ const _expr_input_onCount_clickCount_effect = _$.effect(
         input_onCount(_clickCount(_scope, clickCount + 1));
       }),
   ),
-  _expr_input_onCount_clickCount = _$.intersection(6, (_scope) => {
-    _expr_input_onCount_clickCount_effect(_scope);
-  }),
+  _expr_input_onCount_clickCount = _$.intersection(6, (_scope) =>
+    _expr_input_onCount_clickCount_effect(_scope),
+  ),
   _clickCount = _$.state(5, (_scope, clickCount) => {
     _$.data(
       _scope[1],

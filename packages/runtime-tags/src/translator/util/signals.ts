@@ -241,7 +241,11 @@ export function getSignal(
         return callRuntime(
           "intersection",
           t.numericLiteral(id),
-          getSignalFn(signal, [scopeIdentifier], referencedBindings),
+          getSignalFn(
+            signal,
+            [scopeIdentifier],
+            signal.renderReferencedBindings,
+          ),
           scopeOffset || referencedBindings.length > 2
             ? t.numericLiteral(referencedBindings.length - 1)
             : undefined,
@@ -681,7 +685,9 @@ export function addValue(
   value: t.Expression,
   scope: t.Expression = scopeIdentifier,
 ) {
-  getSignal(targetSection, referencedBindings).values.push({
+  const parentSignal = getSignal(targetSection, referencedBindings);
+  addRenderReferences(parentSignal, referencedBindings);
+  parentSignal.values.push({
     signal,
     value,
     scope,

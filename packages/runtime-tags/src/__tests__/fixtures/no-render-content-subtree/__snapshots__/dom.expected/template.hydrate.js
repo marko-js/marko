@@ -1,13 +1,11 @@
-// size: 175 (min) 141 (brotli)
+// size: 173 (min) 143 (brotli)
 const _expr_input_x_effect = _$.effect(
     "a0",
     ({ 3: input, 5: x }) => (input.output().innerHTML = x),
   ),
   _expr_input_x = _$.intersection(
     6,
-    (_scope) => {
-      _expr_input_x_effect(_scope);
-    },
+    (_scope) => _expr_input_x_effect(_scope),
     1,
     1,
   );

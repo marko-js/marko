@@ -7,13 +7,7 @@ const _expr_input_onCount_clickCount_effect = _$.effect("__tests__/tags/counter.
 }) => _$.on(_scope["#button/0"], "click", function () {
   input_onCount(_clickCount(_scope, clickCount + 1));
 }));
-const _expr_input_onCount_clickCount = /* @__PURE__ */_$.intersection(6, _scope => {
-  const {
-    input_onCount,
-    clickCount
-  } = _scope;
-  _expr_input_onCount_clickCount_effect(_scope);
-});
+const _expr_input_onCount_clickCount = /* @__PURE__ */_$.intersection(6, _scope => _expr_input_onCount_clickCount_effect(_scope));
 const _clickCount = /* @__PURE__ */_$.state("clickCount/5", (_scope, clickCount) => {
   _$.data(_scope["#text/1"], ((() => {
     if (clickCount > 0) throw new Error("This should not have executed since the parent removes this component when the count is greater than 0");

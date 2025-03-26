@@ -1,4 +1,4 @@
-// size: 502 (min) 275 (brotli)
+// size: 500 (min) 273 (brotli)
 const _expr_input_content_x_y = _$.intersection(
     10,
     (_scope) => {
@@ -12,9 +12,7 @@ const _expr_input_content_x_y = _$.intersection(
       _x(_scope, x + 1), _y(_scope, y + 1);
     }),
   ),
-  _expr_x_y = _$.intersection(9, (_scope) => {
-    _expr_x_y_effect(_scope);
-  }),
+  _expr_x_y = _$.intersection(9, (_scope) => _expr_x_y_effect(_scope)),
   _dynamicTag = _$.dynamicTag(3, 0, 0, 1),
   _y = _$.state(8, (_scope, y) => {
     _$.data(_scope[2], y), _expr_x_y(_scope), _expr_input_content_x_y(_scope);

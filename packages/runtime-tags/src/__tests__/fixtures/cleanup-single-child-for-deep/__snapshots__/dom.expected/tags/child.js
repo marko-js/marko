@@ -9,10 +9,6 @@ const _expr_name_write_effect = _$.effect("__tests__/tags/child.marko_0_name_wri
   write(`destroyed ${name}`);
 }));
 const _expr_name_write = /* @__PURE__ */_$.intersection(5, _scope => {
-  const {
-    name,
-    write
-  } = _scope;
   _$.resetAbortSignal(_scope, 0);
   _expr_name_write_effect(_scope);
 });
