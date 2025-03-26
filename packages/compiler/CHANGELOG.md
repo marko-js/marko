@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.14
+
+### Patch Changes
+
+- [#2589](https://github.com/marko-js/marko/pull/2589) [`765915a`](https://github.com/marko-js/marko/commit/765915ad423827bcdec6281413c59ecda173a80d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue when using with latest version of babel.
+
 ## 5.39.13
 
 ### Patch Changes

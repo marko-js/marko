@@ -1,5 +1,16 @@
 # @marko/runtime-tags
 
+## 0.3.66
+
+### Patch Changes
+
+- [#2589](https://github.com/marko-js/marko/pull/2589) [`5aad665`](https://github.com/marko-js/marko/commit/5aad6653a3f14d8d15a9ff103e9a38b25a3bd1ee) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid outputting some unnecessary scope destructures.
+
+- [#2589](https://github.com/marko-js/marko/pull/2589) [`765915a`](https://github.com/marko-js/marko/commit/765915ad423827bcdec6281413c59ecda173a80d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue when using with latest version of babel.
+
+- Updated dependencies [[`765915a`](https://github.com/marko-js/marko/commit/765915ad423827bcdec6281413c59ecda173a80d)]:
+  - @marko/compiler@5.39.14
+
 ## 0.3.65
 
 ### Patch Changes
