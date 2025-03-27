@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div></div><!--M_*1 #div/0--><!--M_|1 #text/1 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.e={1:_.a={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={}},2:_.b,3:_.c={"#scopeOffset/1":5,input:{foo:"bar",output:_._["__tests__/template.marko_0/#div"](_.a)},x:"bar","#childScope/0":_.d={}},4:_.d},_.b._=_.a,_.d["#TagVariable"]=_._["__tests__/tags/child.marko_0_x/var"](_.c),_.e),3,"__tests__/tags/child.marko_0_input_x"];M._.w()</script>
+  <div></div><!--M_*1 #div/0--><!--M_|1 #text/1 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.e=[0,_.a={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={}},_.b,_.c={"#scopeOffset/1":5,input:{foo:"bar",output:_._["__tests__/template.marko_0/#div"](_.a)},x:"bar","#childScope/0":_.d={}},_.d],_.b._=_.a,_.d["#TagVariable"]=_._["__tests__/tags/child.marko_0_x/var"](_.c),_.e),3,"__tests__/tags/child.marko_0_input_x"];M._.w()</script>
 ```
 
 # Render End
@@ -12,7 +12,7 @@
     <!--M_*1 #div/0-->
     <!--M_|1 #text/1 2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e={1:_.a={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={}},2:_.b,3:_.c={"#scopeOffset/1":5,input:{foo:"bar",output:_._["__tests__/template.marko_0/#div"](_.a)},x:"bar","#childScope/0":_.d={}},4:_.d},_.b._=_.a,_.d["#TagVariable"]=_._["__tests__/tags/child.marko_0_x/var"](_.c),_.e),3,"__tests__/tags/child.marko_0_input_x"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e=[0,_.a={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={}},_.b,_.c={"#scopeOffset/1":5,input:{foo:"bar",output:_._["__tests__/template.marko_0/#div"](_.a)},x:"bar","#childScope/0":_.d={}},_.d],_.b._=_.a,_.d["#TagVariable"]=_._["__tests__/tags/child.marko_0_x/var"](_.c),_.e),3,"__tests__/tags/child.marko_0_input_x"];M._.w()
     </script>
   </body>
 </html>

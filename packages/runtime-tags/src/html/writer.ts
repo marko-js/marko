@@ -371,14 +371,8 @@ let writeScope = (scopeId: number, partialScope: PartialScope) => {
 
   if (state.writeScopes) {
     state.writeScopes[scopeId] = scope;
-  } else if (state.hasGlobals) {
-    state.writeScopes = { [scopeId]: scope };
   } else {
-    state.hasGlobals = true;
-    state.writeScopes = {
-      $: getFilteredGlobals(state.$global),
-      [scopeId]: scope,
-    };
+    state.writeScopes = { [scopeId]: scope };
   }
 
   return scope;
@@ -638,6 +632,7 @@ export class State {
   public tagId = 1;
   public scopeId = 1;
   public reorderId = 1;
+  public lastSerializedScopeId = this.scopeId;
   public hasGlobals = false;
   public needsMainRuntime = false;
   public hasMainRuntime = false;
@@ -648,8 +643,7 @@ export class State {
   public serializer = new Serializer();
   public writeReorders: Chunk[] | null = null;
   public scopes = new Map<number, PartialScope>();
-  public writeScopes: null | (Record<number, PartialScope> & { $?: unknown }) =
-    null;
+  public writeScopes: null | Record<number, PartialScope> = null;
   constructor(
     public $global: $Global & {
       renderId: string;
@@ -886,8 +880,29 @@ export function prepareChunk(chunk: Chunk) {
   let resumes = "";
 
   if (state.writeScopes || serializer.flushed) {
-    resumes = state.serializer.stringify(state.writeScopes || {}, boundary);
+    let { lastSerializedScopeId } = state;
+    const serializeData: [
+      $global?: ReturnType<typeof getFilteredGlobals>,
+      ...(number | PartialScope)[],
+    ] = [];
+
+    if (!state.hasGlobals) {
+      state.hasGlobals = true;
+      serializeData.push(getFilteredGlobals(state.$global));
+    }
+
+    for (const key in state.writeScopes) {
+      const scope = state.writeScopes[key as unknown as number];
+      const scopeId = getScopeId(scope)!;
+      const scopeIdDelta = scopeId - lastSerializedScopeId;
+      lastSerializedScopeId = scopeId + 1;
+      if (scopeIdDelta) serializeData.push(scopeIdDelta);
+      serializeData.push(scope);
+    }
+
+    resumes = state.serializer.stringify(serializeData, boundary);
     state.writeScopes = null;
+    state.lastSerializedScopeId = lastSerializedScopeId;
   }
 
   if (effects) {
@@ -1081,16 +1096,16 @@ function isPromise(value: unknown): value is Promise<unknown> {
 }
 
 function getFilteredGlobals($global: Record<string, unknown>) {
-  if (!$global) return undefined;
+  if (!$global) return 0;
 
   const serializedGlobals = $global.serializedGlobals as
     | string[]
     | Record<string, boolean>
     | undefined;
 
-  if (!serializedGlobals) return undefined;
+  if (!serializedGlobals) return 0;
 
-  let filtered: undefined | Record<string, unknown>;
+  let filtered: 0 | Record<string, unknown> = 0;
 
   if (Array.isArray(serializedGlobals)) {
     for (const key of serializedGlobals) {

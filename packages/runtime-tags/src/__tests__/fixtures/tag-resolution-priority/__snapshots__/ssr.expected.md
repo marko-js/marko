@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div></div><span></span><div></div><!--M_|1 #text/1 3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b={1:{"ConditionalScope:#text/1":_.a={},"ConditionalRenderer:#text/1":"div"},3:_.a})]</script>
+  <div></div><span></span><div></div><!--M_|1 #text/1 3--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,{"ConditionalScope:#text/1":_.a={},"ConditionalRenderer:#text/1":"div"},1,_.a])]</script>
 ```
 
 # Render End
@@ -13,7 +13,7 @@
     <div />
     <!--M_|1 #text/1 3-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"ConditionalScope:#text/1":_.a={},"ConditionalRenderer:#text/1":"div"},3:_.a})]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/1":_.a={},"ConditionalRenderer:#text/1":"div"},1,_.a])]
     </script>
   </body>
 </html>

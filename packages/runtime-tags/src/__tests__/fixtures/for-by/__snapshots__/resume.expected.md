@@ -65,7 +65,7 @@
       <!--M_*1 #button/5-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.u={1:{items:[{id:0,text:"first"},{id:1,text:"second"},{id:2,text:"third"}],"LoopScopeMap:#div/0":new Map(_.a=[[0,_.f={}],[1,_.g={}],[2,_.h={}]]),"LoopScopeMap:#div/1":new Map(_.b=[[0,_.i={}],[1,_.j={}],[2,_.k={}]]),"LoopScopeMap:#div/2":new Map(_.c=[[0,_.l={}],[1,_.m={}],[2,_.n={}]]),"LoopScopeMap:#div/3":new Map(_.d=[[0,_.o={}],[1,_.p={}],[2,_.q={}]]),"LoopScopeMap:#div/4":new Map(_.e=[[0,_.r={}],[1,_.s={}],[2,_.t={}]])},2:_.f,3:_.g,4:_.h,5:_.i,6:_.j,7:_.k,8:_.l,9:_.m,10:_.n,11:_.o,12:_.p,13:_.q,14:_.r,15:_.s,16:_.t}),1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.u=[0,{items:[{id:0,text:"first"},{id:1,text:"second"},{id:2,text:"third"}],"LoopScopeMap:#div/0":new Map(_.a=[[0,_.f={}],[1,_.g={}],[2,_.h={}]]),"LoopScopeMap:#div/1":new Map(_.b=[[0,_.i={}],[1,_.j={}],[2,_.k={}]]),"LoopScopeMap:#div/2":new Map(_.c=[[0,_.l={}],[1,_.m={}],[2,_.n={}]]),"LoopScopeMap:#div/3":new Map(_.d=[[0,_.o={}],[1,_.p={}],[2,_.q={}]]),"LoopScopeMap:#div/4":new Map(_.e=[[0,_.r={}],[1,_.s={}],[2,_.t={}]])},_.f,_.g,_.h,_.i,_.j,_.k,_.l,_.m,_.n,_.o,_.p,_.q,_.r,_.s,_.t]),1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>
@@ -142,7 +142,7 @@ container.querySelector("button").click();
       <!--M_*1 #button/5-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.u={1:{items:[{id:0,text:"first"},{id:1,text:"second"},{id:2,text:"third"}],"LoopScopeMap:#div/0":new Map(_.a=[[0,_.f={}],[1,_.g={}],[2,_.h={}]]),"LoopScopeMap:#div/1":new Map(_.b=[[0,_.i={}],[1,_.j={}],[2,_.k={}]]),"LoopScopeMap:#div/2":new Map(_.c=[[0,_.l={}],[1,_.m={}],[2,_.n={}]]),"LoopScopeMap:#div/3":new Map(_.d=[[0,_.o={}],[1,_.p={}],[2,_.q={}]]),"LoopScopeMap:#div/4":new Map(_.e=[[0,_.r={}],[1,_.s={}],[2,_.t={}]])},2:_.f,3:_.g,4:_.h,5:_.i,6:_.j,7:_.k,8:_.l,9:_.m,10:_.n,11:_.o,12:_.p,13:_.q,14:_.r,15:_.s,16:_.t}),1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.u=[0,{items:[{id:0,text:"first"},{id:1,text:"second"},{id:2,text:"third"}],"LoopScopeMap:#div/0":new Map(_.a=[[0,_.f={}],[1,_.g={}],[2,_.h={}]]),"LoopScopeMap:#div/1":new Map(_.b=[[0,_.i={}],[1,_.j={}],[2,_.k={}]]),"LoopScopeMap:#div/2":new Map(_.c=[[0,_.l={}],[1,_.m={}],[2,_.n={}]]),"LoopScopeMap:#div/3":new Map(_.d=[[0,_.o={}],[1,_.p={}],[2,_.q={}]]),"LoopScopeMap:#div/4":new Map(_.e=[[0,_.r={}],[1,_.s={}],[2,_.t={}]])},_.f,_.g,_.h,_.i,_.j,_.k,_.l,_.m,_.n,_.o,_.p,_.q,_.r,_.s,_.t]),1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>
@@ -229,7 +229,7 @@ container.querySelector("button").click();
       <!--M_*1 #button/5-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.u={1:{items:[{id:0,text:"first"},{id:1,text:"second"},{id:2,text:"third"}],"LoopScopeMap:#div/0":new Map(_.a=[[0,_.f={}],[1,_.g={}],[2,_.h={}]]),"LoopScopeMap:#div/1":new Map(_.b=[[0,_.i={}],[1,_.j={}],[2,_.k={}]]),"LoopScopeMap:#div/2":new Map(_.c=[[0,_.l={}],[1,_.m={}],[2,_.n={}]]),"LoopScopeMap:#div/3":new Map(_.d=[[0,_.o={}],[1,_.p={}],[2,_.q={}]]),"LoopScopeMap:#div/4":new Map(_.e=[[0,_.r={}],[1,_.s={}],[2,_.t={}]])},2:_.f,3:_.g,4:_.h,5:_.i,6:_.j,7:_.k,8:_.l,9:_.m,10:_.n,11:_.o,12:_.p,13:_.q,14:_.r,15:_.s,16:_.t}),1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.u=[0,{items:[{id:0,text:"first"},{id:1,text:"second"},{id:2,text:"third"}],"LoopScopeMap:#div/0":new Map(_.a=[[0,_.f={}],[1,_.g={}],[2,_.h={}]]),"LoopScopeMap:#div/1":new Map(_.b=[[0,_.i={}],[1,_.j={}],[2,_.k={}]]),"LoopScopeMap:#div/2":new Map(_.c=[[0,_.l={}],[1,_.m={}],[2,_.n={}]]),"LoopScopeMap:#div/3":new Map(_.d=[[0,_.o={}],[1,_.p={}],[2,_.q={}]]),"LoopScopeMap:#div/4":new Map(_.e=[[0,_.r={}],[1,_.s={}],[2,_.t={}]])},_.f,_.g,_.h,_.i,_.j,_.k,_.l,_.m,_.n,_.o,_.p,_.q,_.r,_.s,_.t]),1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>
@@ -312,7 +312,7 @@ container.querySelector("button").click();
       <!--M_*1 #button/5-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.u={1:{items:[{id:0,text:"first"},{id:1,text:"second"},{id:2,text:"third"}],"LoopScopeMap:#div/0":new Map(_.a=[[0,_.f={}],[1,_.g={}],[2,_.h={}]]),"LoopScopeMap:#div/1":new Map(_.b=[[0,_.i={}],[1,_.j={}],[2,_.k={}]]),"LoopScopeMap:#div/2":new Map(_.c=[[0,_.l={}],[1,_.m={}],[2,_.n={}]]),"LoopScopeMap:#div/3":new Map(_.d=[[0,_.o={}],[1,_.p={}],[2,_.q={}]]),"LoopScopeMap:#div/4":new Map(_.e=[[0,_.r={}],[1,_.s={}],[2,_.t={}]])},2:_.f,3:_.g,4:_.h,5:_.i,6:_.j,7:_.k,8:_.l,9:_.m,10:_.n,11:_.o,12:_.p,13:_.q,14:_.r,15:_.s,16:_.t}),1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.u=[0,{items:[{id:0,text:"first"},{id:1,text:"second"},{id:2,text:"third"}],"LoopScopeMap:#div/0":new Map(_.a=[[0,_.f={}],[1,_.g={}],[2,_.h={}]]),"LoopScopeMap:#div/1":new Map(_.b=[[0,_.i={}],[1,_.j={}],[2,_.k={}]]),"LoopScopeMap:#div/2":new Map(_.c=[[0,_.l={}],[1,_.m={}],[2,_.n={}]]),"LoopScopeMap:#div/3":new Map(_.d=[[0,_.o={}],[1,_.p={}],[2,_.q={}]]),"LoopScopeMap:#div/4":new Map(_.e=[[0,_.r={}],[1,_.s={}],[2,_.t={}]])},_.f,_.g,_.h,_.i,_.j,_.k,_.l,_.m,_.n,_.o,_.p,_.q,_.r,_.s,_.t]),1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>

@@ -8,6 +8,8 @@ import {
 } from "../common/types";
 import type { Signal } from "./signals";
 
+type Resumes = (number | Scope)[];
+type ResumeFn = (ctx: object) => Resumes;
 interface Renders {
   (renderId: string): RenderData;
   [renderId: string]: RenderData;
@@ -18,7 +20,7 @@ interface RenderData {
   // Marked nodes to visit
   v: Comment[];
   // Resumes
-  r?: (string | number | ((ctx: object) => Record<string, Scope>))[];
+  r?: (string | number | ResumeFn)[];
   // Scope lookup (just needed for compat layer)
   s?: Record<string, Scope>;
   // Walk
@@ -55,14 +57,16 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           renders[renderId] || renders(renderId));
         const walk = render.w;
         const commentPrefixLen = render.i.length;
-        const branchStack: string[] = [];
-        const scopeLookup: Record<string, Scope> = (render.s = {});
+        const branchStack: number[] = [];
+        const scopeLookup: Record<string | number, Scope> = (render.s = {});
         const serializeContext: Record<string, unknown> = {
           _: registeredValues,
         };
-        const branchIds = new Set<string>();
-        const parentBranchIds = new Map<string, string>();
-        let currentBranchId: string | undefined;
+        const branchIds = new Set<number>();
+        const parentBranchIds = new Map<number, number>();
+        let currentBranchId: number | undefined;
+        let $global: Scope["$global"] | undefined;
+        let lastScopeId = 0;
         render.w = () => {
           walk.call(render);
 
@@ -74,7 +78,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             let lastEndNode: ChildNode | undefined;
             visits.length = 0;
 
-            const branchEnd = (branchId: string, reference: ChildNode) => {
+            const branchEnd = (branchId: number, reference: ChildNode) => {
               const branch = (scopeLookup[branchId] ||=
                 {} as BranchScope) as BranchScope;
 
@@ -99,12 +103,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
             for (const visit of visitNodes) {
               const commentText = visit.data!;
               const dataIndex = commentText.indexOf(" ") + 1;
-              const scopeId = commentText.slice(
+              const scopeId = +commentText.slice(
                 commentPrefixLen + 1,
                 dataIndex ? dataIndex - 1 : commentText.length,
               );
               const scope = (scopeLookup[scopeId] ||= {
-                ___id: +scopeId,
+                ___id: scopeId,
               } as Scope);
               const data = dataIndex ? commentText.slice(dataIndex) : "";
               const token = commentText[commentPrefixLen];
@@ -149,7 +153,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 while (~next) {
                   const start = next + 1;
                   next = data.indexOf(" ", start);
-                  const childScopeId = data.slice(
+                  const childScopeId = +data.slice(
                     start,
                     ~next ? next : data.length,
                   );
@@ -167,22 +171,19 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               for (let i = 0; i < resumes.length; i++) {
                 const serialized = resumes[i];
                 if (typeof serialized === "function") {
-                  const scopes = serialized(serializeContext);
-                  let { $global } = scopeLookup;
-
-                  if (!$global) {
-                    scopeLookup.$global = $global = scopes.$ || {};
-                    $global.runtimeId = runtimeId;
-                    $global.renderId = renderId;
-                    $global.___nextScopeId = 1e6;
-                  }
-
-                  for (const scopeId in scopes) {
-                    if (scopeId !== "$") {
-                      const scope = scopes[scopeId];
+                  for (const scope of serialized(serializeContext)) {
+                    if (!$global) {
+                      $global = (scope || {}) as Scope["$global"];
+                      $global.runtimeId = runtimeId;
+                      $global.renderId = renderId;
+                      $global.___nextScopeId = 1e6;
+                    } else if (typeof scope === "number") {
+                      lastScopeId += scope;
+                    } else {
+                      const scopeId = ++lastScopeId;
                       const prevScope = scopeLookup[scopeId];
-                      scope.$global = $global as unknown as Scope["$global"];
-                      scope.___id = +scopeId;
+                      scope.$global = $global;
+                      scope.___id = scopeId;
                       if (prevScope !== scope) {
                         scopeLookup[scopeId] = Object.assign(
                           scope,
@@ -191,10 +192,11 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                       }
 
                       const parentBranchId =
-                        scope[AccessorProp.ClosestBranchId] ||
-                        parentBranchIds.get(scopeId);
+                        (scope[AccessorProp.ClosestBranchId] as
+                          | number
+                          | undefined) || parentBranchIds.get(scopeId);
                       if (parentBranchId) {
-                        scope.___closestBranch = scopes[
+                        scope.___closestBranch = scopeLookup[
                           parentBranchId
                         ] as BranchScope;
                       }

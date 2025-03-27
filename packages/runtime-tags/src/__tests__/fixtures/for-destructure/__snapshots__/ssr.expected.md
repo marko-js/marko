@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div><div>Marko<!--M_*2 #text/0-->: <!>HTML Reimagined<!--M_*2 #text/1--></div><!--M_|1 #text/0 2--><button id=add>Add</button><!--M_*1 #button/1--><button id=remove>Remove</button><!--M_*1 #button/2--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c={1:{items:[{name:"Marko",description:"HTML Reimagined"}],"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={}]])},2:_.b}),1,"__tests__/template.marko_0_items"];M._.w()</script>
+  <div><div>Marko<!--M_*2 #text/0-->: <!>HTML Reimagined<!--M_*2 #text/1--></div><!--M_|1 #text/0 2--><button id=add>Add</button><!--M_*1 #button/1--><button id=remove>Remove</button><!--M_*1 #button/2--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,{items:[{name:"Marko",description:"HTML Reimagined"}],"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={}]])},_.b]),1,"__tests__/template.marko_0_items"];M._.w()</script>
 ```
 
 # Render End
@@ -32,7 +32,7 @@
       <!--M_*1 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c={1:{items:[{name:"Marko",description:"HTML Reimagined"}],"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={}]])},2:_.b}),1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,{items:[{name:"Marko",description:"HTML Reimagined"}],"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={}]])},_.b]),1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>
