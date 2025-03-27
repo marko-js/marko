@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.67
+
+### Patch Changes
+
+- [#2591](https://github.com/marko-js/marko/pull/2591) [`67103c0`](https://github.com/marko-js/marko/commit/67103c084b98a6ba91de07f24fbe4b765a80e546) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Serialize scopes as arrays and use delta offsets for scope ids.
+
 ## 0.3.66
 
 ### Patch Changes
