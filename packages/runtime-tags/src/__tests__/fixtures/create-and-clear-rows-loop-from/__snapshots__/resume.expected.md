@@ -24,7 +24,7 @@
       <!--M_]1 #div/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f={1:{input_to:3,"LoopScopeMap:#div/0":new Map(_.a=[[0,_.b={}],[1,_.c={}],[2,_.d={}],[3,_.e={}]])},2:_.b,3:_.c,4:_.d,5:_.e})]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,{input_to:3,"LoopScopeMap:#div/0":new Map(_.a=[[0,_.b={}],[1,_.c={}],[2,_.d={}],[3,_.e={}]])},_.b,_.c,_.d,_.e])]
     </script>
   </body>
 </html>

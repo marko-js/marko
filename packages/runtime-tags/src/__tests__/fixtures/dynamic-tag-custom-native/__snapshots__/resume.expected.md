@@ -14,7 +14,7 @@
     </div>
     <!--M_]1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{tagName:_._["__tests__/tags/child.marko"],"ConditionalScope:#text/1":_.a={},"ConditionalRenderer:#text/1":"__tests__/tags/child.marko"},2:_.a}),1,"__tests__/template.marko_0_tagName"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{tagName:_._["__tests__/tags/child.marko"],"ConditionalScope:#text/1":_.a={},"ConditionalRenderer:#text/1":"__tests__/tags/child.marko"},_.a]),1,"__tests__/template.marko_0_tagName"];M._.w()
     </script>
   </body>
 </html>
@@ -36,7 +36,7 @@ container.querySelector("button").click();
     />
     <!--M_]1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{tagName:_._["__tests__/tags/child.marko"],"ConditionalScope:#text/1":_.a={},"ConditionalRenderer:#text/1":"__tests__/tags/child.marko"},2:_.a}),1,"__tests__/template.marko_0_tagName"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{tagName:_._["__tests__/tags/child.marko"],"ConditionalScope:#text/1":_.a={},"ConditionalRenderer:#text/1":"__tests__/tags/child.marko"},_.a]),1,"__tests__/template.marko_0_tagName"];M._.w()
     </script>
   </body>
 </html>
@@ -65,7 +65,7 @@ container.querySelector("button").click();
     </div>
     <!--M_]1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{tagName:_._["__tests__/tags/child.marko"],"ConditionalScope:#text/1":_.a={},"ConditionalRenderer:#text/1":"__tests__/tags/child.marko"},2:_.a}),1,"__tests__/template.marko_0_tagName"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{tagName:_._["__tests__/tags/child.marko"],"ConditionalScope:#text/1":_.a={},"ConditionalRenderer:#text/1":"__tests__/tags/child.marko"},_.a]),1,"__tests__/template.marko_0_tagName"];M._.w()
     </script>
   </body>
 </html>

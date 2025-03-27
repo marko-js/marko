@@ -55,7 +55,7 @@ mounted 3
     </p>
     <!--M_]1 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={items:[1,2,3],"LoopScopeMap:#text/2":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1,"#ClosestBranchId":2}}],[1,_.g={"#childScope/0":_.d={name:2,"#ClosestBranchId":4}}],[2,_.h={"#childScope/0":_.e={name:3,"#ClosestBranchId":6}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.a={items:[1,2,3],"LoopScopeMap:#text/2":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1,"#ClosestBranchId":2}}],[1,_.g={"#childScope/0":_.d={name:2,"#ClosestBranchId":4}}],[2,_.h={"#childScope/0":_.e={name:3,"#ClosestBranchId":6}}]])},_.f,_.c,_.g,_.d,_.h,_.e],_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>
@@ -118,7 +118,7 @@ destroyed 3
     </p>
     <!--M_]1 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={items:[1,2,3],"LoopScopeMap:#text/2":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1,"#ClosestBranchId":2}}],[1,_.g={"#childScope/0":_.d={name:2,"#ClosestBranchId":4}}],[2,_.h={"#childScope/0":_.e={name:3,"#ClosestBranchId":6}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.a={items:[1,2,3],"LoopScopeMap:#text/2":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1,"#ClosestBranchId":2}}],[1,_.g={"#childScope/0":_.d={name:2,"#ClosestBranchId":4}}],[2,_.h={"#childScope/0":_.e={name:3,"#ClosestBranchId":6}}]])},_.f,_.c,_.g,_.d,_.h,_.e],_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>
@@ -170,7 +170,7 @@ destroyed 2
     </p>
     <!--M_]1 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={items:[1,2,3],"LoopScopeMap:#text/2":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1,"#ClosestBranchId":2}}],[1,_.g={"#childScope/0":_.d={name:2,"#ClosestBranchId":4}}],[2,_.h={"#childScope/0":_.e={name:3,"#ClosestBranchId":6}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.a={items:[1,2,3],"LoopScopeMap:#text/2":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1,"#ClosestBranchId":2}}],[1,_.g={"#childScope/0":_.d={name:2,"#ClosestBranchId":4}}],[2,_.h={"#childScope/0":_.e={name:3,"#ClosestBranchId":6}}]])},_.f,_.c,_.g,_.d,_.h,_.e],_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>
@@ -210,7 +210,7 @@ destroyed 1
     <!--M_*1 #div/1-->
     <!--M_]1 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={items:[1,2,3],"LoopScopeMap:#text/2":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1,"#ClosestBranchId":2}}],[1,_.g={"#childScope/0":_.d={name:2,"#ClosestBranchId":4}}],[2,_.h={"#childScope/0":_.e={name:3,"#ClosestBranchId":6}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.a={items:[1,2,3],"LoopScopeMap:#text/2":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1,"#ClosestBranchId":2}}],[1,_.g={"#childScope/0":_.d={name:2,"#ClosestBranchId":4}}],[2,_.h={"#childScope/0":_.e={name:3,"#ClosestBranchId":6}}]])},_.f,_.c,_.g,_.d,_.h,_.e],_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>
@@ -281,7 +281,7 @@ mounted 3
       3
     </p>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i={1:_.a={items:[1,2,3],"LoopScopeMap:#text/2":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1,"#ClosestBranchId":2}}],[1,_.g={"#childScope/0":_.d={name:2,"#ClosestBranchId":4}}],[2,_.h={"#childScope/0":_.e={name:3,"#ClosestBranchId":6}}]])},2:_.f,3:_.c,4:_.g,5:_.d,6:_.h,7:_.e},_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.a={items:[1,2,3],"LoopScopeMap:#text/2":new Map(_.b=[[0,_.f={"#childScope/0":_.c={name:1,"#ClosestBranchId":2}}],[1,_.g={"#childScope/0":_.d={name:2,"#ClosestBranchId":4}}],[2,_.h={"#childScope/0":_.e={name:3,"#ClosestBranchId":6}}]])},_.f,_.c,_.g,_.d,_.h,_.e],_.a.write=_.c.write=_.d.write=_.e.write=_._["__tests__/template.marko_0/write"](_.a),_.i),3,"__tests__/tags/child.marko_0_name_write",5,"__tests__/tags/child.marko_0_name_write",7,"__tests__/tags/child.marko_0_name_write",1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>

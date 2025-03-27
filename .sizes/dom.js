@@ -1,4 +1,4 @@
-// size: 18905 (min) 7201 (brotli)
+// size: 18899 (min) 7204 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -105,6 +105,7 @@ function init(runtimeId = "M") {
       defineRuntime({
         value: (resumeRender = (renderId) => {
           let currentBranchId,
+            $global,
             render = (resumeRender[renderId] =
               renders2[renderId] || renders2(renderId)),
             walk2 = render.w,
@@ -113,7 +114,8 @@ function init(runtimeId = "M") {
             scopeLookup = (render.s = {}),
             serializeContext = { _: registeredValues },
             branchIds = new Set(),
-            parentBranchIds = new Map();
+            parentBranchIds = new Map(),
+            lastScopeId = 0;
           return (
             (render.w = () => {
               walk2.call(render);
@@ -142,11 +144,11 @@ function init(runtimeId = "M") {
                 for (let visit of visitNodes) {
                   let commentText = visit.data,
                     dataIndex = commentText.indexOf(" ") + 1,
-                    scopeId = commentText.slice(
+                    scopeId = +commentText.slice(
                       commentPrefixLen + 1,
                       dataIndex ? dataIndex - 1 : commentText.length,
                     ),
-                    scope = (scopeLookup[scopeId] ||= { m: +scopeId }),
+                    scope = (scopeLookup[scopeId] ||= { m: scopeId }),
                     data2 = dataIndex ? commentText.slice(dataIndex) : "",
                     token = commentText[commentPrefixLen];
                   if ("*" === token) {
@@ -180,7 +182,7 @@ function init(runtimeId = "M") {
                     ) {
                       let start = next + 1;
                       next = data2.indexOf(" ", start);
-                      let childScopeId = data2.slice(
+                      let childScopeId = +data2.slice(
                         start,
                         ~next ? next : data2.length,
                       );
@@ -195,41 +197,41 @@ function init(runtimeId = "M") {
                   (render.r = []), (isResuming = !0);
                   for (let i = 0; i < resumes.length; i++) {
                     let serialized = resumes[i];
-                    if ("function" == typeof serialized) {
-                      let scopes = serialized(serializeContext),
-                        { $global: $global } = scopeLookup;
-                      $global ||
-                        ((scopeLookup.$global = $global = scopes.$ || {}),
-                        ($global.runtimeId = runtimeId),
-                        ($global.renderId = renderId),
-                        ($global.n = 1e6));
-                      for (let scopeId in scopes)
-                        if ("$" !== scopeId) {
-                          let scope = scopes[scopeId],
-                            prevScope = scopeLookup[scopeId];
-                          (scope.$global = $global),
-                            (scope.m = +scopeId),
-                            prevScope !== scope &&
-                              (scopeLookup[scopeId] = Object.assign(
-                                scope,
-                                prevScope,
-                              ));
-                          let parentBranchId =
-                            scope.g || parentBranchIds.get(scopeId);
-                          if (
-                            (parentBranchId &&
-                              (scope.k = scopes[parentBranchId]),
-                            branchIds.has(scopeId))
-                          ) {
-                            let branch = scope,
-                              parentBranch = branch.k;
-                            (scope.k = branch),
-                              parentBranch &&
-                                ((branch.u = parentBranch),
-                                (parentBranch.A ||= new Set()).add(branch));
+                    if ("function" == typeof serialized)
+                      for (let scope of serialized(serializeContext))
+                        if ($global)
+                          if ("number" == typeof scope) lastScopeId += scope;
+                          else {
+                            let scopeId = ++lastScopeId,
+                              prevScope = scopeLookup[scopeId];
+                            (scope.$global = $global),
+                              (scope.m = scopeId),
+                              prevScope !== scope &&
+                                (scopeLookup[scopeId] = Object.assign(
+                                  scope,
+                                  prevScope,
+                                ));
+                            let parentBranchId =
+                              scope.g || parentBranchIds.get(scopeId);
+                            if (
+                              (parentBranchId &&
+                                (scope.k = scopeLookup[parentBranchId]),
+                              branchIds.has(scopeId))
+                            ) {
+                              let branch = scope,
+                                parentBranch = branch.k;
+                              (scope.k = branch),
+                                parentBranch &&
+                                  ((branch.u = parentBranch),
+                                  (parentBranch.A ||= new Set()).add(branch));
+                            }
                           }
-                        }
-                    } else
+                        else
+                          ($global = scope || {}),
+                            ($global.runtimeId = runtimeId),
+                            ($global.renderId = renderId),
+                            ($global.n = 1e6);
+                    else
                       registeredValues[resumes[++i]](
                         scopeLookup[serialized],
                         scopeLookup[serialized],

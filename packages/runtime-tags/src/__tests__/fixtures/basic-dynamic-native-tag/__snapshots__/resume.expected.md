@@ -11,7 +11,7 @@
     </h1>
     <!--M_|1 #text/0 2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b={1:{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"h1"},2:_.a})]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"h1"},_.a])]
     </script>
   </body>
 </html>

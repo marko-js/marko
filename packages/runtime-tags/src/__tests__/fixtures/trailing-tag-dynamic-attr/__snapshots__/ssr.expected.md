@@ -1,6 +1,6 @@
 # Write
 ```html
-  <html><body><button>Toggle</button><!--M_*1 #button/1--></body><!--M_*1 #body/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a={1:{toggle:!1}}),1,"__tests__/template.marko_0_toggle"];M._.w()</script></html>
+  <html><body><button>Toggle</button><!--M_*1 #button/1--></body><!--M_*1 #body/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{toggle:!1}]),1,"__tests__/template.marko_0_toggle"];M._.w()</script></html>
 ```
 
 # Render End
@@ -13,7 +13,7 @@
     </button>
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a={1:{toggle:!1}}),1,"__tests__/template.marko_0_toggle"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{toggle:!1}]),1,"__tests__/template.marko_0_toggle"];M._.w()
     </script>
   </body>
   <!--M_*1 #body/0-->
