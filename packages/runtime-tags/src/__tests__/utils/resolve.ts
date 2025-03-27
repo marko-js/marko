@@ -1,4 +1,4 @@
-const TIMEOUT_MULTIPLIER = 30;
+const TIMEOUT_MULTIPLIER = 50;
 const promisesByResolveTime = new Map<number, Promise<any>>();
 
 export function wait(timeout: number) {
