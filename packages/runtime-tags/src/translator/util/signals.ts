@@ -9,10 +9,10 @@ import {
   isScopeIdentifier,
   scopeIdentifier,
 } from "../visitors/program";
+import { getDynamicSourcesForBinding } from "./dynamic-sources";
 import { forEachIdentifier } from "./for-each-identifier";
 import { getAccessorPrefix } from "./get-accessor-char";
 import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
-import { isStatefulReferences } from "./is-stateful";
 import { isOptimize, isOutputHTML } from "./marko-config";
 import { find, forEach, type Opt, push } from "./optional";
 import {
@@ -98,21 +98,41 @@ export function setClosureSignalBuilder(
   _setClosureSignalBuilder(getSectionForBody(tag.get("body"))!, builder);
 }
 
-const [forceResumeScope, _setForceResumeScope] = createSectionState<
-  undefined | true
->("forceResumeScope");
-export function setForceResumeScope(section: Section) {
-  _setForceResumeScope(section, true);
+const [serializeSectionReason, setSerializeSectionReason] = createSectionState<
+  undefined | true | Opt<Binding>
+>("serializeSectionSources");
+export function serializeSectionIfNeeded(
+  section: Section,
+  reason: undefined | boolean | Opt<Binding>,
+) {
+  if (reason) {
+    const existingReason = serializeSectionReason(section);
+    if (existingReason === true) return;
+    if (!existingReason || reason === true) {
+      setSerializeSectionReason(section, reason);
+    } else {
+      setSerializeSectionReason(
+        section,
+        bindingUtil.union(existingReason, reason),
+      );
+    }
+  }
 }
 const [getSerializedScopeProperties] = createSectionState<
-  Map<string, t.Expression>
+  Map<
+    string,
+    { expression: t.Expression; reason: undefined | boolean | Opt<Binding> }
+  >
 >("serializedScopeProperties", () => new Map());
 export function setSerializedProperty(
   section: Section,
   key: string,
-  value: t.Expression,
+  expression: t.Expression,
+  reason: undefined | boolean | Opt<Binding>,
 ) {
-  getSerializedScopeProperties(section).set(key, value);
+  if (reason) {
+    getSerializedScopeProperties(section).set(key, { expression, reason });
+  }
 }
 
 const [getSectionWriteScopeBuilder, setSectionWriteScopeBuilder] =
@@ -392,7 +412,7 @@ export function getSignalFn(
     let dynamicClosureArgs: t.Expression[] | undefined;
     let dynamicClosureSignalIdentifier: t.Identifier | undefined;
     forEach(binding.closureSections, (closureSection) => {
-      if (isStatefulReferences(binding)) {
+      if (binding.sources) {
         if (isDynamicClosure(closureSection, binding)) {
           if (!dynamicClosureArgs) {
             dynamicClosureArgs = [];
@@ -1019,9 +1039,10 @@ export function writeHTMLResumeStatements(
   forEach(section.assignments, serializeOwnersUntilBinding);
   forEach(section.referencedHoists, serializeOwnersUntilBinding);
   forEach(section.referencedClosures, (closure) => {
-    if (isStatefulReferences(closure)) {
+    if (closure.sources) {
+      const serializeReason = getDynamicSourcesForBinding(closure);
       serializeOwnersUntilBinding(closure);
-      setForceResumeScope(closure.section);
+      serializeSectionIfNeeded(closure.section, serializeReason);
       if (isDynamicClosure(section, closure)) {
         const closureSignal = getSignal(closure.section, closure);
         let identifier =
@@ -1046,6 +1067,7 @@ export function writeHTMLResumeStatements(
             closure.section,
             getAccessorPrefix().ClosureScopes + getScopeAccessor(closure),
             identifier,
+            serializeReason,
           );
         }
 
@@ -1053,6 +1075,7 @@ export function writeHTMLResumeStatements(
           section,
           getAccessorPrefix().ClosureSignalIndex + getScopeAccessor(closure),
           t.numericLiteral(getDynamicClosureIndex(closure, section)),
+          serializeReason,
         );
         addWriteScopeBuilder(section, (expr) =>
           callRuntime("writeSubscribe", identifier, expr),
@@ -1115,6 +1138,7 @@ export function writeHTMLResumeStatements(
             parentSection,
             getSectionInstancesAccessor(currentSection)!,
             subscribersIdentifier,
+            true,
           );
         }
         currentSection = parentSection!;
@@ -1126,6 +1150,7 @@ export function writeHTMLResumeStatements(
         section,
         getScopeAccessor(binding),
         getDeclaredBindingExpression(binding),
+        true,
       );
     }
   });
@@ -1158,15 +1183,16 @@ export function writeHTMLResumeStatements(
     }
   });
 
-  for (const [key, value] of serializedLookup) {
-    serializedProperties.push(toObjectProperty(key, value));
+  for (const [key, { expression }] of serializedLookup) {
+    serializedProperties.push(toObjectProperty(key, expression));
   }
 
   const writeScopeBuilder = getSectionWriteScopeBuilder(section);
+  const forceSerializeReason = serializeSectionReason(section);
   if (
     writeScopeBuilder ||
     serializedProperties.length ||
-    forceResumeScope(section)
+    forceSerializeReason
   ) {
     for (const prop of serializedProperties) {
       if (
@@ -1272,6 +1298,7 @@ export function writeHTMLResumeStatements(
 }
 
 export function serializeOwners(from: Section, to?: Section) {
+  // TODO: need to do this based on sources.
   let cur = from;
   while (cur !== to) {
     const parent = cur.parent;
@@ -1279,10 +1306,10 @@ export function serializeOwners(from: Section, to?: Section) {
     const serialized = getSerializedScopeProperties(cur);
     cur = parent;
     if (!serialized.has("_")) {
-      serialized.set(
-        "_",
-        callRuntime("ensureScopeWithId", getScopeIdIdentifier(cur)),
-      );
+      serialized.set("_", {
+        expression: callRuntime("ensureScopeWithId", getScopeIdIdentifier(cur)),
+        reason: true,
+      });
     }
   }
 }

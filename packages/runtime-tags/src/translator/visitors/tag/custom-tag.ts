@@ -10,8 +10,8 @@ import {
 } from "@marko/compiler/babel-utils";
 import path from "path";
 
+import { getDynamicSourcesForExtras } from "../../util/dynamic-sources";
 import { getTagName } from "../../util/get-tag-name";
-import { isStatefulReferences } from "../../util/is-stateful";
 import { isOutputHTML } from "../../util/marko-config";
 import {
   analyzeAttributeTags,
@@ -26,7 +26,6 @@ import {
   getAllTagReferenceNodes,
   getScopeAccessor,
   getScopeAccessorLiteral,
-  isReferencedExtra,
   mergeReferences,
   trackParamsReferences,
   trackVarReferences,
@@ -46,7 +45,7 @@ import {
   addValue,
   getResumeRegisterId,
   initValue,
-  setForceResumeScope,
+  serializeSectionIfNeeded,
   setSerializedProperty,
   writeHTMLResumeStatements,
 } from "../../util/signals";
@@ -196,19 +195,10 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         properties: [],
         statements: [],
       };
-  let providesStatefulAttrs = false;
+  const serializeReason =
+    !!tagVar || getDynamicSourcesForExtras(tagExtra[kChildAttrExprs]!);
 
-  for (const expr of tagExtra[kChildAttrExprs]!) {
-    if (
-      isReferencedExtra(expr) &&
-      isStatefulReferences(expr.referencedBindings)
-    ) {
-      providesStatefulAttrs = true;
-      break;
-    }
-  }
-
-  if (providesStatefulAttrs || tagVar) {
+  if (serializeReason) {
     const childScopeBinding = tagExtra[kChildScopeBinding]!;
     const peekScopeId = tag.scope.generateUidIdentifier(
       childScopeBinding?.name,
@@ -223,6 +213,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       section,
       getScopeAccessor(childScopeBinding),
       callRuntime("writeExistingScope", peekScopeId),
+      serializeReason,
     );
 
     if (tagVar) {
@@ -288,7 +279,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       tag,
       callExpression(tagIdentifier, propsToExpression(properties)),
     );
-    setForceResumeScope(section);
+    serializeSectionIfNeeded(section, true); // TODO should be based on if tag var definition is stateful.
   } else {
     statements.push(
       callStatement(tagIdentifier, propsToExpression(properties)),

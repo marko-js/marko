@@ -1,11 +1,11 @@
 import { types as t } from "@marko/compiler";
 
 import { currentProgramPath } from "../visitors/program";
+import { getDynamicSourcesForReferences } from "./dynamic-sources";
 import { forEachIdentifier } from "./for-each-identifier";
 import { getAccessorPrefix } from "./get-accessor-char";
 import { getExprRoot, getFnRoot } from "./get-root";
 import isInvokedFunction from "./is-invoked-function";
-import { isStatefulReferences } from "./is-stateful";
 import { isOptimize } from "./marko-config";
 import {
   addSorted,
@@ -47,7 +47,7 @@ export enum BindingType {
   // todo: constant
 }
 
-export type Binding = {
+export interface Binding {
   id: number;
   name: string;
   type: BindingType;
@@ -55,7 +55,7 @@ export type Binding = {
   section: Section;
   closureSections: Opt<Section>;
   serialize: boolean;
-  sources: Set<Binding>;
+  sources: Opt<Binding>;
   aliases: Set<Binding>;
   hoists: Map<Section, Binding>;
   property: string | undefined;
@@ -68,7 +68,7 @@ export type Binding = {
   export: string | undefined;
   declared: boolean;
   nullable: boolean;
-};
+}
 
 export type ReferencedBindings = Opt<Binding>;
 export type Intersection = Many<Binding>;
@@ -79,10 +79,10 @@ type FnExtra = (
   | t.FunctionDeclarationExtra
 ) & { section: Section };
 
-type Read = {
+interface Read {
   binding: Binding;
   node: undefined | t.MemberExpression | t.Identifier;
-};
+}
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
@@ -130,7 +130,7 @@ export function createBinding(
     closureSections: undefined,
     excludeProperties: undefined,
     serialize: false,
-    sources: new Set(),
+    sources: undefined,
     aliases: new Set(),
     hoists: new Map(),
     propertyAliases: new Map(),
@@ -682,13 +682,13 @@ export function finalizeReferences() {
             const binding2 = intersection[j];
             if (
               !binding1.serialize &&
-              !isSuperset(binding1.sources, binding2.sources)
+              !bindingUtil.isSuperset(binding1.sources, binding2.sources)
             ) {
               binding1.serialize = true;
             }
             if (
               !binding2.serialize &&
-              !isSuperset(binding2.sources, binding1.sources)
+              !bindingUtil.isSuperset(binding2.sources, binding1.sources)
             ) {
               binding2.serialize = true;
             }
@@ -707,7 +707,7 @@ export function finalizeReferences() {
           currentSection !== sourceSection &&
           !(serialize =
             !currentSection.upstreamExpression ||
-            isStatefulReferences(
+            !!getDynamicSourcesForReferences(
               currentSection.upstreamExpression.referencedBindings,
             ))
         ) {
@@ -759,14 +759,14 @@ function getMaxOwnSourceOffset(intersection: Intersection, section: Section) {
 
   for (const binding of intersection) {
     if (binding.section === section) {
-      for (const sourceBinding of binding.sources) {
+      forEach(binding.sources, (source) => {
         if (
-          sourceBinding.scopeOffset &&
-          (!scopeOffset || scopeOffset.id < sourceBinding.scopeOffset.id)
+          source.scopeOffset &&
+          (!scopeOffset || scopeOffset.id < source.scopeOffset.id)
         ) {
-          scopeOffset = sourceBinding.scopeOffset;
+          scopeOffset = source.scopeOffset;
         }
-      }
+      });
     }
   }
 
@@ -778,19 +778,11 @@ export const intersectionMeta = new WeakMap<
   { id: number; scopeOffset: Binding | undefined }
 >();
 
-function isSuperset(set: Set<any>, subset: Set<any>) {
-  for (const elem of subset) {
-    if (!set.has(elem)) {
-      return false;
-    }
-  }
-  return true;
-}
-
 function resolveBindingSources(binding: Binding) {
   const derived = new Set<Binding>();
-  const { sources } = binding;
+  let sources: Opt<Binding>;
   crawl(binding);
+  binding.sources = sources;
   function crawl(binding: Binding) {
     if (
       binding.type === BindingType.derived ||
@@ -806,12 +798,12 @@ function resolveBindingSources(binding: Binding) {
         derived.add(curBinding);
         forEach(curBinding.upstreamExpression.referencedBindings, crawl);
       } else if (curBinding.type === BindingType.input) {
-        sources.add(binding);
+        sources = bindingUtil.add(sources, binding);
       } else {
-        sources.add(curBinding);
+        sources = bindingUtil.add(sources, curBinding);
       }
     } else {
-      sources.add(binding);
+      sources = bindingUtil.add(sources, binding);
     }
   }
 }

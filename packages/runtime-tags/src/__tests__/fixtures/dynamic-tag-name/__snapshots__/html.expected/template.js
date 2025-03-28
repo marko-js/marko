@@ -144,15 +144,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     "ConditionalScope:#text/13": _$.writeExistingScope(_dynamicScope14),
     "ConditionalRenderer:#text/13": _$.dynamicTagId(tagConstA),
     "ConditionalScope:#text/14": _$.writeExistingScope(_dynamicScope15),
-    "ConditionalRenderer:#text/14": _$.dynamicTagId(tagConstB),
-    "ConditionalScope:#text/15": _$.writeExistingScope(_dynamicScope16),
-    "ConditionalRenderer:#text/15": _$.dynamicTagId(`h${1}`),
-    "ConditionalScope:#text/16": _$.writeExistingScope(_dynamicScope17),
-    "ConditionalRenderer:#text/16": _$.dynamicTagId(foo || 'div'),
-    "ConditionalScope:#text/17": _$.writeExistingScope(_dynamicScope18),
-    "ConditionalRenderer:#text/17": _$.dynamicTagId(foo + 'div'),
-    "ConditionalScope:#text/18": _$.writeExistingScope(_dynamicScope19),
-    "ConditionalRenderer:#text/18": _$.dynamicTagId("d" + "iv")
+    "ConditionalRenderer:#text/14": _$.dynamicTagId(tagConstB)
   }, "__tests__/template.marko", 0, {
     content: "5:10",
     x: "5:19",

@@ -1,9 +1,9 @@
 import { types as t } from "@marko/compiler";
 
 import { WalkCode } from "../../common/types";
+import { getDynamicSourcesForReferences } from "../util/dynamic-sources";
 import evaluate from "../util/evaluate";
 import { isCoreTag } from "../util/is-core-tag";
-import { isStatefulReferences } from "../util/is-stateful";
 import { isOutputHTML } from "../util/marko-config";
 import {
   type Binding,
@@ -82,14 +82,15 @@ export default {
         : node.escape
           ? "data"
           : "html";
-      const isStateful = isStatefulReferences(referencedBindings);
+      const serializeReason =
+        getDynamicSourcesForReferences(referencedBindings);
       const siblingText = extra[kSiblingText]!;
 
       if (confident && canWriteHTML) {
         write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
       } else {
         if (siblingText === SiblingText.Before) {
-          if (isHTML && isStateful) {
+          if (isHTML && serializeReason) {
             write`<!>`;
           }
           walks.visit(placeholder, WalkCode.Replace);
@@ -102,7 +103,7 @@ export default {
 
         if (isHTML) {
           write`${callRuntime(method as HTMLMethod | DOMMethod, value)}`;
-          if (isStateful) {
+          if (serializeReason) {
             writer.markNode(placeholder, nodeBinding);
           }
         } else {
