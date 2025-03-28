@@ -1,0 +1,24 @@
+import { resolveAfter } from "../../utils/resolve";
+
+const/promiseA = resolveAfter("a", 1)
+try
+  @placeholder
+    -- LOADING A1
+  await|value|=promiseA
+    div class=value level=1
+      try
+        @placeholder
+          -- LOADING A2
+        await|value|=promiseA
+          div class=value level=2
+            const/promiseB = resolveAfter("b", 2)
+            try
+              @placeholder
+                -- LOADING B1
+              await|value|=promiseB
+                div class=value level=3
+                  try
+                    @placeholder
+                      -- LOADING B2
+                    await|value|=promiseB
+                      div class=value level=4

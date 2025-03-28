@@ -89,7 +89,7 @@ REMOVE #comment in t
 INSERT html/body/#comment4, html/body/#text0, html/body/#comment5, html/body/#text1, html/body/#comment6, html/body/#comment7
 REMOVE t after html/body/script0
 REMOVE #text after #comment
-REMOVE #comment after #comment
+REMOVE #comment after html/body/#comment3
 REMOVE html/body/#comment4 before html/body/#text0
 REMOVE html/body/#text0 before html/body/#comment5
 REMOVE html/body/#comment5 before html/body/#text1

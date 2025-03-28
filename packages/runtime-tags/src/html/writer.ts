@@ -950,8 +950,8 @@ export function prepareChunk(chunk: Chunk) {
       reorderedChunk.reorderId = null;
 
       for (;;) {
-        const { next } = cur;
         cur.flushPlaceholder();
+        const { next } = cur;
         cur.consumed = true;
         reorderHTML += cur.html;
         reorderEffects = concatEffects(reorderEffects, cur.effects);

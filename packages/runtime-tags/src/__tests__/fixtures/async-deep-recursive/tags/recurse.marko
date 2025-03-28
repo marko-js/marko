@@ -1,0 +1,6 @@
+if=input.level
+  div data-level=input.level
+    try
+      @placeholder -- LOADING...
+      await=new Promise(setImmediate)
+        recurse level=input.level - 1
