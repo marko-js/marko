@@ -4,7 +4,6 @@ const _content = input => {
   _$.write("<ul>");
   _$.resumeSingleNodeForOf(input.comments, (comment, i) => {
     const _scope1_id = _$.nextScopeId();
-    let _ifScopeId, _ifBranch;
     const id = `${input.path || "c"}-${i}`;
     let open = true;
     _$.write(`<li${_$.attr("id", id)}${_$.attr("hidden", !open)}><span>${_$.escapeXML(comment.text)}${_$.markResumeNode(_scope1_id, "#text/1")}</span><button>${_$.escapeXML(open ? "[-]" : "[+]")}${_$.markResumeNode(_scope1_id, "#text/3")}</button>${_$.markResumeNode(_scope1_id, "#button/2")}`);
@@ -20,10 +19,9 @@ const _content = input => {
           "#childScope/0": _$.writeExistingScope(_childScope),
           _: _$.ensureScopeWithId(_scope1_id)
         }, "__tests__/tags/comments.marko", "10:8");
-        _ifBranch = 0;
-        _ifScopeId = _scope2_id;
+        return 0;
       }
-    }, _scope1_id, "#text/4");
+    }, _scope1_id, "#text/4", 1);
     _$.write(`</li>${_$.markResumeNode(_scope1_id, "#li/0")}`);
     _$.writeEffect(_scope1_id, "__tests__/tags/comments.marko_1_open");
     _$.writeScope(_scope1_id, {
@@ -31,8 +29,6 @@ const _content = input => {
       i,
       id,
       open,
-      "ConditionalRenderer:#text/4": _ifBranch,
-      "ConditionalScope:#text/4": _$.getScopeById(_ifScopeId),
       _: _$.ensureScopeWithId(_scope0_id)
     }, "__tests__/tags/comments.marko", "2:4", {
       comment_comments: ["comment.comments", "2:8"],

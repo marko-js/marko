@@ -20,8 +20,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _customTag({
     class: ["a", false, "b"]
   });
-  const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/3", input.test, {
+  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/3", input.test, {
     class: ["a", {
       b: c,
       d
@@ -36,14 +35,12 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
         _$.write("Hello");
       }, _scope0_id)
     })
-  });
+  }, 0, 0, 1);
   _$.writeScope(_scope0_id, {
     input_test: input.test,
     c,
     d,
-    "#childScope/1": _$.writeExistingScope(_childScope),
-    "ConditionalScope:#text/3": _$.writeExistingScope(_dynamicScope),
-    "ConditionalRenderer:#text/3": _$.dynamicTagId(input.test)
+    "#childScope/1": _$.writeExistingScope(_childScope)
   }, "__tests__/template.marko", 0, {
     input_test: ["input.test"],
     c: "2:10",

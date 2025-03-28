@@ -20,11 +20,7 @@ import {
   getOptimizedOnlyChildNodeRef,
   isOnlyChildInParent,
 } from "../util/is-only-child-in-parent";
-import {
-  getScopeAccessor,
-  getScopeAccessorLiteral,
-  mergeReferences,
-} from "../util/references";
+import { getScopeAccessorLiteral, mergeReferences } from "../util/references";
 import { callRuntime } from "../util/runtime";
 import {
   ContentType,
@@ -39,11 +35,8 @@ import {
 } from "../util/sections";
 import {
   addValue,
-  getHTMLSectionStatements,
   getSignal,
-  serializeSectionIfNeeded,
   setClosureSignalBuilder,
-  setSerializedProperty,
   writeHTMLResumeStatements,
 } from "../util/signals";
 import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
@@ -141,9 +134,6 @@ export const IfTag = {
         const serializeReason = hasHoists || branchSources?.all;
 
         if (bodySection) {
-          // TODO: could skip this serialize if needed by having the comments used in the html resume runtime
-          // include the if ConditionalScope and ConditionalRenderer
-          serializeSectionIfNeeded(bodySection, serializeReason);
           writer.flushInto(tag);
           writeHTMLResumeStatements(tagBody);
         }
@@ -152,10 +142,6 @@ export const IfTag = {
           const nodeRef = getOptimizedOnlyChildNodeRef(rootTag, section);
           const onlyChildInParentOptimization = isOnlyChildInParent(rootTag);
           const nextTag = tag.getNextSibling();
-          const ifScopeIdIdentifier =
-            rootTag.scope.generateUidIdentifier("ifScopeId");
-          const ifBranchIdentifier =
-            rootTag.scope.generateUidIdentifier("ifBranch");
           let statement: t.Statement | undefined;
 
           if (branchSources?.referenced && onlyChildInParentOptimization) {
@@ -163,32 +149,12 @@ export const IfTag = {
           }
 
           for (let i = branches.length; i--; ) {
-            const [branchTag, branchBodySection] = branches[i];
+            const [branchTag] = branches[i];
             const bodyStatements = branchTag.node.body.body;
-
-            if (branchBodySection) {
-              if (branchSources?.referenced) {
-                bodyStatements.push(
-                  t.expressionStatement(
-                    t.assignmentExpression(
-                      "=",
-                      ifBranchIdentifier,
-                      t.numericLiteral(i),
-                    ),
-                  ) as any,
-                );
-              }
-              if (serializeReason) {
-                bodyStatements.push(
-                  t.expressionStatement(
-                    t.assignmentExpression(
-                      "=",
-                      ifScopeIdIdentifier,
-                      getScopeIdIdentifier(branchBodySection),
-                    ),
-                  ) as any,
-                );
-              }
+            if (serializeReason) {
+              bodyStatements.push(
+                t.returnStatement(t.numericLiteral(i)) as any,
+              );
             }
 
             const [testAttr] = branchTag.node.attributes;
@@ -208,56 +174,36 @@ export const IfTag = {
           }
 
           if (serializeReason) {
-            if (branchSources?.referenced) {
-              setSerializedProperty(
-                section,
-                getAccessorPrefix().ConditionalRenderer +
-                  getScopeAccessor(nodeRef),
-                ifBranchIdentifier,
-                branchSources.referenced,
-              );
-              const cbNode = t.arrowFunctionExpression(
-                [],
-                t.blockStatement([statement!]),
-              );
-              statement = t.expressionStatement(
-                singleNodeOptimization
-                  ? callRuntime(
-                      "resumeSingleNodeConditional",
-                      cbNode,
-                      getScopeIdIdentifier(section),
-                      getScopeAccessorLiteral(nodeRef),
-                      onlyChildInParentOptimization && t.numericLiteral(1),
-                    )
-                  : callRuntime(
-                      "resumeConditional",
-                      cbNode,
-                      getScopeIdIdentifier(section),
-                      getScopeAccessorLiteral(nodeRef),
-                    ),
-              );
-            }
-
-            nextTag.insertBefore(statement!);
-            getHTMLSectionStatements(section).push(
-              t.variableDeclaration(
-                "let",
-                [
-                  t.variableDeclarator(ifScopeIdIdentifier),
-                  branchSources?.referenced &&
-                    t.variableDeclarator(ifBranchIdentifier),
-                ].filter(Boolean) as t.VariableDeclarator[],
-              ),
+            const conditionSerializeReason = branchSources?.referenced;
+            const cbNode = t.arrowFunctionExpression(
+              [],
+              t.blockStatement([statement!]),
             );
-            setSerializedProperty(
-              section,
-              getAccessorPrefix().ConditionalScope + getScopeAccessor(nodeRef),
-              callRuntime("getScopeById", ifScopeIdIdentifier),
-              serializeReason,
+            statement = t.expressionStatement(
+              singleNodeOptimization
+                ? callRuntime(
+                    "resumeSingleNodeConditional",
+                    cbNode,
+                    getScopeIdIdentifier(section),
+                    getScopeAccessorLiteral(nodeRef),
+                    conditionSerializeReason
+                      ? t.numericLiteral(1)
+                      : onlyChildInParentOptimization
+                        ? t.numericLiteral(0)
+                        : undefined,
+                    onlyChildInParentOptimization && t.numericLiteral(1),
+                  )
+                : callRuntime(
+                    "resumeConditional",
+                    cbNode,
+                    getScopeIdIdentifier(section),
+                    getScopeAccessorLiteral(nodeRef),
+                    conditionSerializeReason ? t.numericLiteral(1) : undefined,
+                  ),
             );
-          } else {
-            nextTag.insertBefore(statement!);
           }
+
+          nextTag.insertBefore(statement!);
         }
       },
     },

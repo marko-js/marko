@@ -3,14 +3,11 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/tags/custom-tag.marko
   const _scope0_id = _$.nextScopeId();
   let x = 1;
   _$.write(`<button class=inc>${_$.escapeXML(x)}${_$.markResumeNode(_scope0_id, "#text/1")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
-  const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/2", input.content, x);
+  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/2", input.content, x, 0, 0, 1);
   _$.writeEffect(_scope0_id, "__tests__/tags/custom-tag.marko_0_x");
   _$.writeScope(_scope0_id, {
     input_content: input.content,
-    x,
-    "ConditionalScope:#text/2": _$.writeExistingScope(_dynamicScope),
-    "ConditionalRenderer:#text/2": _$.dynamicTagId(input.content)
+    x
   }, "__tests__/tags/custom-tag.marko", 0, {
     input_content: ["input.content"],
     x: "1:6"

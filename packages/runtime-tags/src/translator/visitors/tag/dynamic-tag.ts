@@ -40,7 +40,6 @@ import {
   getResumeRegisterId,
   getSignal,
   initValue,
-  setSerializedProperty,
   type Signal,
   writeHTMLResumeStatements,
 } from "../../util/signals";
@@ -201,40 +200,43 @@ export default {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
 
-        if (node.var) {
-          if (!hasMultipleArgs && args.length === 1) {
-            args.push(t.unaryExpression("void", t.numericLiteral(0)));
-          }
-        }
-
-        const dynamicScopeIdentifier =
-          currentProgramPath.scope.generateUidIdentifier("dynamicScope");
+        const serializeReason =
+          isClassAPI ||
+          !!node.var ||
+          getDynamicSourcesForReferences(referencedBindings);
         const dynamicTagExpr = hasMultipleArgs
           ? callRuntime(
-              "dynamicTagArgs",
+              "dynamicTag",
               getScopeIdIdentifier(section),
               getScopeAccessorLiteral(nodeRef),
               tagExpression,
               t.arrayExpression(args),
+              t.numericLiteral(0),
+              t.numericLiteral(1),
+              serializeReason ? t.numericLiteral(1) : undefined,
             )
           : callRuntime(
-              "dynamicTagInput",
+              "dynamicTag",
               getScopeIdIdentifier(section),
               getScopeAccessorLiteral(nodeRef),
               tagExpression,
-              ...args,
+              args[0],
+              args[1] || (serializeReason ? t.numericLiteral(0) : undefined),
+              serializeReason ? t.numericLiteral(0) : undefined,
+              serializeReason ? t.numericLiteral(1) : undefined,
             );
 
-        statements.push(
-          t.variableDeclaration("const", [
-            t.variableDeclarator(
-              dynamicScopeIdentifier,
-              callRuntime("peekNextScope"),
-            ),
-          ]),
-        );
-
         if (node.var) {
+          const dynamicScopeIdentifier =
+            currentProgramPath.scope.generateUidIdentifier("dynamicScope");
+          statements.push(
+            t.variableDeclaration("const", [
+              t.variableDeclarator(
+                dynamicScopeIdentifier,
+                callRuntime("peekNextScope"),
+              ),
+            ]),
+          );
           statements.push(
             t.variableDeclaration("const", [
               t.variableDeclarator(node.var, dynamicTagExpr),
@@ -259,31 +261,6 @@ export default {
           );
         } else {
           statements.push(t.expressionStatement(dynamicTagExpr));
-        }
-
-        const serializeReason =
-          isClassAPI ||
-          !!node.var ||
-          getDynamicSourcesForReferences(referencedBindings);
-        if (serializeReason) {
-          setSerializedProperty(
-            section,
-            getAccessorPrefix().ConditionalScope + getScopeAccessor(nodeRef),
-            callRuntime("writeExistingScope", dynamicScopeIdentifier),
-            serializeReason,
-          );
-
-          setSerializedProperty(
-            section,
-            getAccessorPrefix().ConditionalRenderer + getScopeAccessor(nodeRef),
-            callRuntime(
-              "dynamicTagId",
-              t.isIdentifier(tagExpression)
-                ? t.identifier(tagExpression.name)
-                : tagExpression,
-            ),
-            serializeReason,
-          );
         }
 
         for (const replacement of tag.replaceWithMultiple(statements)) {

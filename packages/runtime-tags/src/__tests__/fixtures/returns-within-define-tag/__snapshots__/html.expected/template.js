@@ -26,11 +26,11 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   };
   let clickOnceCount = 0;
   const _dynamicScope = _$.peekNextScope();
-  const onClickOnce = _$.dynamicTagInput(_scope0_id, "#text/0", Once, {
+  const onClickOnce = /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/0", Once, {
     value: _$.register(function () {
       clickOnceCount++;
     }, "__tests__/template.marko_0/onClickOnce", _scope0_id)
-  }, void 0);
+  }, 0, 0, 1);
   _$.setTagVar(_scope0_id, "#scopeOffset/1", _dynamicScope, "__tests__/template.marko_0_onClickOnce/var");
   _$.write(`<button class=once>${_$.escapeXML(clickOnceCount)}${_$.markResumeNode(_scope0_id, "#text/3")}</button>${_$.markResumeNode(_scope0_id, "#button/2")}`);
   const Twice = {
@@ -58,11 +58,11 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   };
   let clickTwiceCount = 0;
   const _dynamicScope2 = _$.peekNextScope();
-  const onClickTwice = _$.dynamicTagInput(_scope0_id, "#text/4", Twice, {
+  const onClickTwice = /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/4", Twice, {
     value: _$.register(function () {
       clickTwiceCount++;
     }, "__tests__/template.marko_0/onClickTwice", _scope0_id)
-  }, void 0);
+  }, 0, 0, 1);
   _$.setTagVar(_scope0_id, "#scopeOffset/5", _dynamicScope2, "__tests__/template.marko_0_onClickTwice/var");
   _$.write(`<button class=twice>${_$.escapeXML(clickTwiceCount)}${_$.markResumeNode(_scope0_id, "#text/7")}</button>${_$.markResumeNode(_scope0_id, "#button/6")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_onClickTwice");
@@ -73,11 +73,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     onClickOnce,
     Twice,
     clickTwiceCount,
-    onClickTwice,
-    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
-    "ConditionalRenderer:#text/0": _$.dynamicTagId(Once),
-    "ConditionalScope:#text/4": _$.writeExistingScope(_dynamicScope2),
-    "ConditionalRenderer:#text/4": _$.dynamicTagId(Twice)
+    onClickTwice
   }, "__tests__/template.marko", 0, {
     Once: "1:8",
     clickOnceCount: "9:5",

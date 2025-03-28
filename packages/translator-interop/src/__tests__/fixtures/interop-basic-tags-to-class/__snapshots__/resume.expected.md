@@ -19,7 +19,7 @@
     </button>
     <!--M_]1 #text/2-->
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{count:0,"ConditionalScope:#text/2":_.a={m5c:"s0"},"ConditionalRenderer:#text/2":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"])},_.a]),2,"$compat_setScope",1,"__tests__/template.marko_0_count"];M._.w()
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={m5c:"s0"},"ConditionalRenderer:#text/2":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"]),count:0},_.a]),2,"$compat_setScope",1,"__tests__/template.marko_0_count"];M._.w()
     </script>
   </body>
 </html>
@@ -57,7 +57,7 @@ container.querySelector("#tags").click();
     </button>
     <!--M_]1 #text/2-->
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{count:0,"ConditionalScope:#text/2":_.a={m5c:"s0"},"ConditionalRenderer:#text/2":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"])},_.a]),2,"$compat_setScope",1,"__tests__/template.marko_0_count"];M._.w()
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={m5c:"s0"},"ConditionalRenderer:#text/2":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"]),count:0},_.a]),2,"$compat_setScope",1,"__tests__/template.marko_0_count"];M._.w()
     </script>
   </body>
 </html>
@@ -93,7 +93,7 @@ container.querySelector("#class").click();
     </button>
     <!--M_]1 #text/2-->
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{count:0,"ConditionalScope:#text/2":_.a={m5c:"s0"},"ConditionalRenderer:#text/2":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"])},_.a]),2,"$compat_setScope",1,"__tests__/template.marko_0_count"];M._.w()
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={m5c:"s0"},"ConditionalRenderer:#text/2":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"]),count:0},_.a]),2,"$compat_setScope",1,"__tests__/template.marko_0_count"];M._.w()
     </script>
   </body>
 </html>
@@ -128,7 +128,7 @@ container.querySelector("#tags").click();
     </button>
     <!--M_]1 #text/2-->
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{count:0,"ConditionalScope:#text/2":_.a={m5c:"s0"},"ConditionalRenderer:#text/2":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"])},_.a]),2,"$compat_setScope",1,"__tests__/template.marko_0_count"];M._.w()
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={m5c:"s0"},"ConditionalRenderer:#text/2":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"]),count:0},_.a]),2,"$compat_setScope",1,"__tests__/template.marko_0_count"];M._.w()
     </script>
   </body>
 </html>
@@ -164,7 +164,7 @@ container.querySelector("#class").click();
     </button>
     <!--M_]1 #text/2-->
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{count:0,"ConditionalScope:#text/2":_.a={m5c:"s0"},"ConditionalRenderer:#text/2":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"])},_.a]),2,"$compat_setScope",1,"__tests__/template.marko_0_count"];M._.w()
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={m5c:"s0"},"ConditionalRenderer:#text/2":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"]),count:0},_.a]),2,"$compat_setScope",1,"__tests__/template.marko_0_count"];M._.w()
     </script>
   </body>
 </html>
@@ -199,7 +199,7 @@ container.querySelector("#tags").click();
     </button>
     <!--M_]1 #text/2-->
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{count:0,"ConditionalScope:#text/2":_.a={m5c:"s0"},"ConditionalRenderer:#text/2":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"])},_.a]),2,"$compat_setScope",1,"__tests__/template.marko_0_count"];M._.w()
+      $MC=(window.$MC||[]).concat({"w":[["s0",0,{"count":0},{"f":1}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={m5c:"s0"},"ConditionalRenderer:#text/2":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"]),count:0},_.a]),2,"$compat_setScope",1,"__tests__/template.marko_0_count"];M._.w()
     </script>
   </body>
 </html>

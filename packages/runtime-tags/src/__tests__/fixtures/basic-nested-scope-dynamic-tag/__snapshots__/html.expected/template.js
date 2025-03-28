@@ -4,8 +4,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   const _scope0_id = _$.nextScopeId();
   const _count_closures = new Set();
   let count = 0;
-  const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/0", false || Child, {}, _$.registerContent("__tests__/template.marko_1_renderer", () => {
+  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/0", false || Child, {}, _$.registerContent("__tests__/template.marko_1_renderer", () => {
     const _scope1_id = _$.nextScopeId();
     _$.write(`<button>${_$.escapeXML(count)}${_$.markResumeNode(_scope1_id, "#text/1")}</button>${_$.markResumeNode(_scope1_id, "#button/0")}`);
     _$.writeEffect(_scope1_id, "__tests__/template.marko_1_count");

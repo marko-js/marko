@@ -6,14 +6,11 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", in
     value
   } = input;
   _$.write("<div>");
-  const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/0", content, value);
+  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/0", content, value, 0, 0, 1);
   _$.write("</div>");
   _$.writeScope(_scope0_id, {
     content,
-    value,
-    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
-    "ConditionalRenderer:#text/0": _$.dynamicTagId(content)
+    value
   }, "__tests__/tags/child.marko", 0, {
     content: "1:9",
     value: "1:18"

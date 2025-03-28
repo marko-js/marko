@@ -157,6 +157,9 @@ export function resumeClosestBranch(scopeId: number) {
 }
 
 const branchIdKey = Symbol();
+export function withBranchId<T>(branchId: number, cb: () => T): T {
+  return withContext(branchIdKey, branchId, cb);
+}
 
 export function resumeForOf(
   list: Falsy | Iterable<unknown>,
@@ -175,7 +178,7 @@ export function resumeForOf(
       ),
     );
 
-    withContext(branchIdKey, branchId, () => {
+    withBranchId(branchId, () => {
       cb(item, index);
       loopScopes.set(forOfBy(by, item, index), writeScope(branchId, {}));
     });
@@ -206,7 +209,7 @@ export function resumeSingleNodeForOf(
   forOf(list, (item, index) => {
     const branchId = peekNextScopeId();
     branchIds = " " + branchId + branchIds;
-    withContext(branchIdKey, branchId, () => {
+    withBranchId(branchId, () => {
       cb(item, index);
       loopScopes.set(forOfBy(by, item, index), writeScope(branchId, {}));
     });
@@ -253,7 +256,7 @@ export function resumeForIn(
       $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + sep),
     );
     sep = " ";
-    withContext(branchIdKey, branchId, () => {
+    withBranchId(branchId, () => {
       cb(key, value);
       loopScopes.set(forInBy(by, key, value), writeScope(branchId, {}));
     });
@@ -284,7 +287,7 @@ export function resumeSingleNodeForIn(
   forIn(obj, (key, value) => {
     const branchId = peekNextScopeId();
     branchIds = " " + branchId + branchIds;
-    withContext(branchIdKey, branchId, () => {
+    withBranchId(branchId, () => {
       cb(key, value);
       loopScopes.set(forInBy(by, key, value), writeScope(branchId, {}));
     });
@@ -329,7 +332,7 @@ export function resumeForTo(
       $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + sep),
     );
     sep = " ";
-    withContext(branchIdKey, branchId, () => {
+    withBranchId(branchId, () => {
       cb(index);
       loopScopes.set(forToBy(by, index), writeScope(branchId, {}));
     });
@@ -362,7 +365,7 @@ export function resumeSingleNodeForTo(
   forTo(to, from, step, (index) => {
     const branchId = peekNextScopeId();
     branchIds = " " + branchId + branchIds;
-    withContext(branchIdKey, branchId, () => {
+    withBranchId(branchId, () => {
       cb(index);
       loopScopes.set(forToBy(by, index), writeScope(branchId, {}));
     });
@@ -394,52 +397,70 @@ export function resumeConditional(
   cb: () => void | number,
   scopeId: number,
   accessor: Accessor,
+  dynamic?: 1,
 ) {
   const branchId = peekNextScopeId();
-  $chunk.writeHTML(
-    $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + ""),
-  );
-  withContext(branchIdKey, branchId, cb);
+  if (dynamic) {
+    $chunk.writeHTML(
+      $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + ""),
+    );
+  }
 
-  const rendered = peekNextScopeId() !== branchId;
-  if (rendered) {
-    writeScope(branchId, {});
+  const branchIndex = withBranchId(branchId, cb);
+
+  if (branchIndex !== undefined) {
+    writeScope(scopeId, {
+      [AccessorPrefix.ConditionalRenderer + accessor]: dynamic
+        ? branchIndex
+        : undefined,
+      [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
+    });
   } else {
     nextScopeId();
   }
 
-  $chunk.writeHTML(
-    $chunk.boundary.state.mark(
-      ResumeSymbol.BranchEnd,
-      scopeId + " " + accessor,
-    ),
-  );
+  if (dynamic) {
+    $chunk.writeHTML(
+      $chunk.boundary.state.mark(
+        ResumeSymbol.BranchEnd,
+        scopeId + " " + accessor,
+      ),
+    );
+  }
 }
 
 export function resumeSingleNodeConditional(
   cb: () => void | number,
   scopeId: number,
   accessor: Accessor,
+  dynamic?: 0 | 1,
   onlyChild?: 1,
 ) {
   const branchId = peekNextScopeId();
-  withContext(branchIdKey, branchId, cb);
+  const branchIndex = withBranchId(branchId, cb);
+  const rendered = branchIndex !== undefined;
 
-  const rendered = peekNextScopeId() !== branchId;
   if (rendered) {
-    writeScope(branchId, {});
+    writeScope(scopeId, {
+      [AccessorPrefix.ConditionalRenderer + accessor]: dynamic
+        ? branchIndex
+        : undefined,
+      [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
+    });
   } else {
     nextScopeId();
   }
 
-  $chunk.writeHTML(
-    $chunk.boundary.state.mark(
-      onlyChild
-        ? ResumeSymbol.BranchSingleNodeOnlyChildInParent
-        : ResumeSymbol.BranchSingleNode,
-      scopeId + " " + accessor + (rendered ? " " + branchId : ""),
-    ),
-  );
+  if (dynamic) {
+    $chunk.writeHTML(
+      $chunk.boundary.state.mark(
+        onlyChild
+          ? ResumeSymbol.BranchSingleNodeOnlyChildInParent
+          : ResumeSymbol.BranchSingleNode,
+        scopeId + " " + accessor + (rendered ? " " + branchId : ""),
+      ),
+    );
+  }
 }
 
 let writeScope = (scopeId: number, partialScope: PartialScope) => {

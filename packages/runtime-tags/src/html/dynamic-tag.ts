@@ -1,5 +1,5 @@
 import { normalizeDynamicRenderer } from "../common/helpers";
-import type { Accessor } from "../common/types";
+import { type Accessor, AccessorPrefix, ResumeSymbol } from "../common/types";
 import {
   attrs,
   controllable_select_value,
@@ -7,11 +7,13 @@ import {
 } from "./attrs";
 import type { ServerRenderer } from "./template";
 import {
+  getChunk,
   nextScopeId,
+  peekNextScopeId,
   register,
-  resumeConditional,
-  resumeSingleNodeConditional,
+  withBranchId,
   write,
+  writeScope,
 } from "./writer";
 
 const voidElementsReg =
@@ -21,150 +23,131 @@ interface BodyContentObject {
   content: ServerRenderer;
 }
 
-export function dynamicTagId(tagName: unknown) {
-  const normalizedRenderer = normalizeDynamicRenderer<ServerRenderer>(tagName);
-  return (
-    (normalizedRenderer as ServerRenderer | undefined)?.___id ||
-    normalizedRenderer
-  );
-}
-
 // TODO: refactor dynamicTagInput and dynamicTagArgs to be the same impl with a flag for input vs args.
-export let dynamicTagInput = (
+
+export let dynamicTag = (
   scopeId: number,
   accessor: Accessor,
   tag: unknown | string | ServerRenderer | BodyContentObject,
-  input: Record<string, unknown>,
-  content?: () => void,
+  inputOrArgs: unknown,
+  content?: (() => void) | 0,
+  inputIsArgs?: 1,
+  resume?: 1,
 ) => {
-  if (!tag && !content) {
+  const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
+
+  if (MARKO_DEBUG) {
+    if (
+      renderer &&
+      typeof renderer !== "function" &&
+      typeof renderer !== "string"
+    ) {
+      throw new Error(`Invalid renderer passed for dynamic tag: ${renderer}`);
+    }
+  }
+
+  const chunk = getChunk()!;
+  const branchId = peekNextScopeId();
+  let result: unknown;
+
+  if (typeof renderer === "string") {
+    const input = ((inputIsArgs
+      ? (inputOrArgs as unknown[])[0]
+      : inputOrArgs) || {}) as Record<string, unknown>;
     nextScopeId();
-    return;
-  }
+    write(`<${renderer}${attrs(input, accessor, scopeId, renderer)}>`);
 
-  if (!tag) {
-    resumeConditional(content!, scopeId, accessor);
-    return;
-  }
-
-  if (typeof tag === "string") {
-    resumeSingleNodeConditional(
-      () => {
-        nextScopeId();
-        write(`<${tag}${attrs(input, accessor, scopeId, tag)}>`);
-
-        if (!voidElementsReg.test(tag)) {
-          if (tag === "textarea") {
-            if (MARKO_DEBUG && content) {
-              throw new Error(
-                "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
-              );
-            }
-            write(
-              controllable_textarea_value(
-                scopeId,
-                accessor,
-                input.value,
-                input.valueChange,
-              ),
+    if (!voidElementsReg.test(renderer)) {
+      withBranchId(branchId, () => {
+        if (renderer === "textarea") {
+          if (MARKO_DEBUG && content) {
+            throw new Error(
+              "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
             );
-          } else if (content) {
-            if (
-              tag === "select" &&
-              ("value" in input || "valueChange" in input)
-            ) {
-              controllable_select_value(
-                scopeId,
-                accessor,
-                input.value,
-                input.valueChange,
-                content,
-              );
-            } else {
-              content();
-            }
           }
-          write(`</${tag}>`);
-        } else if (MARKO_DEBUG && content) {
-          throw new Error(`Body content is not supported for a "${tag}" tag.`);
+          write(
+            controllable_textarea_value(
+              scopeId,
+              accessor,
+              input.value,
+              input.valueChange,
+            ),
+          );
+        } else if (content) {
+          if (
+            renderer === "select" &&
+            ("value" in input || "valueChange" in input)
+          ) {
+            controllable_select_value(
+              scopeId,
+              accessor,
+              input.value,
+              input.valueChange,
+              content,
+            );
+          } else {
+            content();
+          }
         }
-      },
-      scopeId,
-      accessor,
-    );
-    // TODO: this needs to return the element getter
-    return;
-  }
+      });
+      write(`</${renderer}>`);
+    } else if (MARKO_DEBUG && content) {
+      throw new Error(`Body content is not supported for a "${renderer}" tag.`);
+    }
 
-  const renderer = normalizeDynamicRenderer<ServerRenderer>(
-    tag,
-  ) as ServerRenderer;
+    if (resume) {
+      chunk.writeHTML(
+        chunk.boundary.state.mark(
+          ResumeSymbol.BranchSingleNode,
+          scopeId + " " + accessor + " " + branchId,
+        ),
+      );
+    }
 
-  if (MARKO_DEBUG) {
-    if (typeof renderer !== "function") {
-      throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
+    // TODO: this needs to set result the element getter
+  } else {
+    if (resume) {
+      chunk.writeHTML(
+        chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + ""),
+      );
+    }
+    result = withBranchId(branchId, () => {
+      if (renderer) {
+        return inputIsArgs
+          ? renderer(...(inputOrArgs as unknown[]))
+          : renderer(
+              content
+                ? { ...(inputOrArgs as Record<string, unknown>), content }
+                : inputOrArgs,
+            );
+      } else if (content) {
+        return content();
+      }
+    });
+
+    if (resume) {
+      chunk.writeHTML(
+        chunk.boundary.state.mark(
+          ResumeSymbol.BranchEnd,
+          scopeId + " " + accessor,
+        ),
+      );
     }
   }
 
-  let result;
-  resumeConditional(
-    () => {
-      result = renderer(content ? { ...input, content } : input);
-    },
-    scopeId,
-    accessor,
-  );
-  return result;
-};
-
-export let dynamicTagArgs = (
-  scopeId: number,
-  accessor: Accessor,
-  tag: unknown | string | ServerRenderer | BodyContentObject,
-  args: unknown[],
-) => {
-  if (!tag) {
+  const rendered = peekNextScopeId() !== branchId;
+  if (rendered) {
+    if (resume) {
+      writeScope(scopeId, {
+        [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
+        [AccessorPrefix.ConditionalRenderer + accessor]:
+          (renderer as ServerRenderer | undefined)?.___id || renderer,
+      });
+    }
+  } else {
     nextScopeId();
-    return;
   }
 
-  if (typeof tag === "string") {
-    resumeSingleNodeConditional(
-      () => {
-        nextScopeId();
-        write(
-          `<${tag}${attrs(args[0] as Record<string, unknown>, accessor, scopeId, tag)}>`,
-        );
-
-        if (!voidElementsReg.test(tag)) {
-          write(`</${tag}>`);
-        }
-      },
-      scopeId,
-      accessor,
-    );
-    // TODO: this needs to return the element getter
-    return;
-  }
-
-  const renderer = normalizeDynamicRenderer<ServerRenderer>(
-    tag,
-  ) as ServerRenderer;
-
-  if (MARKO_DEBUG) {
-    if (typeof renderer !== "function") {
-      throw new Error(`Invalid renderer passed for dynamic tag: ${tag}`);
-    }
-  }
-
-  let result;
-  resumeConditional(
-    () => {
-      result = renderer(...args);
-    },
-    scopeId,
-    accessor,
-  );
   return result;
 };
 
@@ -188,24 +171,20 @@ export function patchDynamicTag(
     tag: unknown | string | ServerRenderer | BodyContentObject,
   ) => unknown,
 ) {
-  dynamicTagInput = (
-    (originalDynamicTagInput) => (scopeId, accessor, tag, input, content) =>
-      originalDynamicTagInput(
+  dynamicTag = (
+    (originalDynamicTag) =>
+    (scopeId, accessor, tag, input, content, inputIsArgs, resume) => {
+      const patched = patch(scopeId, accessor, tag);
+      (patched as any).___id = tag;
+      return originalDynamicTag(
         scopeId,
         accessor,
-        patch(scopeId, accessor, tag),
+        patched,
         input,
         content,
-      )
-  )(dynamicTagInput);
-
-  dynamicTagArgs = (
-    (originalDynamicTagArgs) => (scopeId, accessor, tag, args) =>
-      originalDynamicTagArgs(
-        scopeId,
-        accessor,
-        patch(scopeId, accessor, tag),
-        args,
-      )
-  )(dynamicTagArgs);
+        inputIsArgs,
+        resume,
+      );
+    }
+  )(dynamicTag);
 }

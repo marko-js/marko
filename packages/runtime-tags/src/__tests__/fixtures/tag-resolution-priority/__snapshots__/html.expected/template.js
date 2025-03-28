@@ -7,6 +7,5 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   const _scope0_id = _$.nextScopeId();
   _$.write("<div></div>");
   _foo({});
-  const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/1", Bar, {});
+  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/1", Bar, {});
 });

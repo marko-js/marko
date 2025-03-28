@@ -3,20 +3,17 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   const _scope0_id = _$.nextScopeId();
   let tagName = "span";
   let className = "A";
-  const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/0", tagName, {
+  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/0", tagName, {
     class: className
   }, _$.registerContent("__tests__/template.marko_1_renderer", () => {
     const _scope1_id = _$.nextScopeId();
     _$.write("body content");
-  }, _scope0_id));
+  }, _scope0_id), 0, 1);
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_tagName");
   _$.writeScope(_scope0_id, {
     tagName,
-    className,
-    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
-    "ConditionalRenderer:#text/0": _$.dynamicTagId(tagName)
+    className
   }, "__tests__/template.marko", 0, {
     tagName: "1:6",
     className: "2:6"

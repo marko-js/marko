@@ -16,7 +16,7 @@
       <!--M_]1 #div/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{input_a:1,input_b:2,input_x:!1,input_y:!0,"ConditionalRenderer:#text/0":0,"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={},"ConditionalRenderer:#div/2":1,"ConditionalScope:#div/2":_.c={}},_.a,_.b,_.c])]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalRenderer:#text/0":0,"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={},"ConditionalRenderer:#div/2":1,"ConditionalScope:#div/2":_.c={},input_a:1,input_b:2,input_x:!1,input_y:!0},_.a,_.b,_.c])]
     </script>
   </body>
 </html>

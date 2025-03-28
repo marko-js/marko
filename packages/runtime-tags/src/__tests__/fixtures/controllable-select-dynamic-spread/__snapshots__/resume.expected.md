@@ -30,7 +30,7 @@
       <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ControlledType:#text/0":3,"ControlledValue:#text/0":"b",tag:"select","ConditionalScope:#text/0":_.b={},"ConditionalRenderer:#text/0":"select"},_.b],_.a["ControlledHandler:#text/0"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),3,"__tests__/template.marko_1"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ControlledType:#text/0":3,"ControlledValue:#text/0":"b","ConditionalScope:#text/0":_.b={},"ConditionalRenderer:#text/0":"select",tag:"select"},_.b],_.a["ControlledHandler:#text/0"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),3,"__tests__/template.marko_1"];M._.w()
     </script>
   </body>
 </html>
@@ -77,7 +77,7 @@ select.dispatchEvent(new window.Event("input", {
       <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ControlledType:#text/0":3,"ControlledValue:#text/0":"b",tag:"select","ConditionalScope:#text/0":_.b={},"ConditionalRenderer:#text/0":"select"},_.b],_.a["ControlledHandler:#text/0"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),3,"__tests__/template.marko_1"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ControlledType:#text/0":3,"ControlledValue:#text/0":"b","ConditionalScope:#text/0":_.b={},"ConditionalRenderer:#text/0":"select",tag:"select"},_.b],_.a["ControlledHandler:#text/0"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),3,"__tests__/template.marko_1"];M._.w()
     </script>
   </body>
 </html>

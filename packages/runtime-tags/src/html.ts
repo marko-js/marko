@@ -15,13 +15,7 @@ export {
 } from "./html/attrs";
 export { compat } from "./html/compat";
 export { escapeScript, escapeStyle, escapeXML, toString } from "./html/content";
-export {
-  createContent,
-  dynamicTagArgs,
-  dynamicTagId,
-  dynamicTagInput,
-  registerContent,
-} from "./html/dynamic-tag";
+export { createContent, dynamicTag, registerContent } from "./html/dynamic-tag";
 export { forIn, forInBy, forOf, forOfBy, forTo, forToBy } from "./html/for";
 export { createTemplate } from "./html/template";
 export {

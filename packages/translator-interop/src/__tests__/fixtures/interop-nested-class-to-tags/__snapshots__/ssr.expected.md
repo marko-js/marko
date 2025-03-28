@@ -1,5 +1,5 @@
 # Write
-  <!--M#s0--><!--F#0--><button id=tags>0<!--M_*1 #text/1--></button><!--M_*1 #button/0--><div><!--M_[2--><button id=class>0</button><!--M_]1 #text/2--></div><!--F/--><!--M/--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,{m5c:"s0-0",count:0,"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":_._.$compat_renderBody},_.a]),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count"];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})</script>
+  <!--M#s0--><!--F#0--><button id=tags>0<!--M_*1 #text/1--></button><!--M_*1 #button/0--><div><!--M_[2--><button id=class>0</button><!--M_]1 #text/2--></div><!--F/--><!--M/--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{m5c:"s0-0",count:0}]),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count"];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})</script>
 
 # Render End
 ```html
@@ -27,7 +27,7 @@
     <!--F/-->
     <!--M/-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{m5c:"s0-0",count:0,"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":_._.$compat_renderBody},_.a]),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count"];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{m5c:"s0-0",count:0}]),1,"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count"];M._.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})
     </script>
   </body>
 </html>

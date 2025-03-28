@@ -9,7 +9,7 @@
     <button />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{x:null,"ConditionalScope:#text/0":_.a={}},_.a]),1,"__tests__/template.marko_0_x"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={},x:null},_.a]),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
   </body>
 </html>
@@ -36,7 +36,7 @@ container.querySelector("button").click();
     <button />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{x:null,"ConditionalScope:#text/0":_.a={}},_.a]),1,"__tests__/template.marko_0_x"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={},x:null},_.a]),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
   </body>
 </html>
@@ -63,7 +63,7 @@ container.querySelector("button").click();
     <button />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{x:null,"ConditionalScope:#text/0":_.a={}},_.a]),1,"__tests__/template.marko_0_x"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={},x:null},_.a]),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
   </body>
 </html>

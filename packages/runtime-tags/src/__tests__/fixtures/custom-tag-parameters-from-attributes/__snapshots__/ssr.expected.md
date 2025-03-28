@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button class=inc>1<!--M_*2 #text/1--></button><!--M_*2 #button/0--><!--M_[3--><div>Count (<!>hello<!--M_*3 #text/0-->): <!>1<!--M_*3 #text/1--></div><!--M_]2 #text/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,1,{input_content:_._["__tests__/template.marko_1_renderer"](_.a={}),input_name:"hello",x:1,"ConditionalScope:#text/2":_.b={},"ConditionalRenderer:#text/2":"__tests__/template.marko_1_renderer"},_.b]),2,"__tests__/tags/custom-tag.marko_0_x"];M._.w()</script>
+  <button class=inc>1<!--M_*2 #text/1--></button><!--M_*2 #button/0--><!--M_[3--><div>Count (<!>hello<!--M_*3 #text/0-->): <!>1<!--M_*3 #text/1--></div><!--M_]2 #text/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,1,{"ConditionalScope:#text/2":_.b={},"ConditionalRenderer:#text/2":"__tests__/template.marko_1_renderer",input_content:_._["__tests__/template.marko_1_renderer"](_.a={}),input_name:"hello",x:1},_.b]),2,"__tests__/tags/custom-tag.marko_0_x"];M._.w()</script>
 ```
 
 # Render End
@@ -28,7 +28,7 @@
     </div>
     <!--M_]2 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,1,{input_content:_._["__tests__/template.marko_1_renderer"](_.a={}),input_name:"hello",x:1,"ConditionalScope:#text/2":_.b={},"ConditionalRenderer:#text/2":"__tests__/template.marko_1_renderer"},_.b]),2,"__tests__/tags/custom-tag.marko_0_x"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,1,{"ConditionalScope:#text/2":_.b={},"ConditionalRenderer:#text/2":"__tests__/template.marko_1_renderer",input_content:_._["__tests__/template.marko_1_renderer"](_.a={}),input_name:"hello",x:1},_.b]),2,"__tests__/tags/custom-tag.marko_0_x"];M._.w()
     </script>
   </body>
 </html>

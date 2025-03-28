@@ -4,10 +4,5 @@ _s(_helloInternal, "__tests__/tags/components/hello-internal.marko");
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/hello.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/0", _helloInternal, {});
-  _$.writeScope(_scope0_id, {
-    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
-    "ConditionalRenderer:#text/0": _$.dynamicTagId(_helloInternal)
-  }, "__tests__/tags/hello.marko", 0);
+  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/0", _helloInternal, {}, 0, 0, 1);
 });

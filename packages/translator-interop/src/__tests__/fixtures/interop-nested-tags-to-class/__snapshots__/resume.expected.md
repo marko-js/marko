@@ -4,6 +4,7 @@
   <head />
   <body>
     <!--M_[2-->
+    <!--M_]1 #text/0-->
     <!--M_[4-->
     <button
       id="class"
@@ -20,9 +21,8 @@
       <!--M_*2 #button/0-->
     </div>
     <!--M_]1 #text/0-->
-    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={count:0,"ClosureScopes:count":_.d=new Set,"ConditionalScope:#text/0":_.b={m5c:"s0-2","ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},_.b,{m5c:"s0"}],_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_count"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e=[-3,_.a,2,_.f={}],(_.a["ConditionalScope:#text/0"]=_.f),_.e),3,"$compat_setScope");M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/0":_.b={m5c:"s0-2","ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"]),count:0,"ClosureScopes:count":_.d=new Set},_.b,{m5c:"s0"}],_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_count"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e=[-3,_.a,2,_.f={}],(_.a["ConditionalScope:#text/0"]=_.f),_.e),3,"$compat_setScope");M._.w()
     </script>
   </body>
 </html>
@@ -30,10 +30,9 @@
 
 # Mutations
 ```
-INSERT html/body/#text2
 INSERT html/body/#text0
 INSERT html/body/#text1
-REMOVE #comment after html/body/#comment1
+REMOVE #comment after html/body/#comment2
 REMOVE #comment after html/body/#text1
 INSERT html/body/div/#text0
 INSERT html/body/div/#text3
@@ -54,6 +53,7 @@ container.querySelector("#tags").click();
   <head />
   <body>
     <!--M_[2-->
+    <!--M_]1 #text/0-->
     <!--M_[4-->
     <button
       id="class"
@@ -70,9 +70,8 @@ container.querySelector("#tags").click();
       <!--M_*2 #button/0-->
     </div>
     <!--M_]1 #text/0-->
-    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={count:0,"ClosureScopes:count":_.d=new Set,"ConditionalScope:#text/0":_.b={m5c:"s0-2","ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},_.b,{m5c:"s0"}],_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_count"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e=[-3,_.a,2,_.f={}],(_.a["ConditionalScope:#text/0"]=_.f),_.e),3,"$compat_setScope");M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/0":_.b={m5c:"s0-2","ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"]),count:0,"ClosureScopes:count":_.d=new Set},_.b,{m5c:"s0"}],_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_count"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e=[-3,_.a,2,_.f={}],(_.a["ConditionalScope:#text/0"]=_.f),_.e),3,"$compat_setScope");M._.w()
     </script>
   </body>
 </html>
@@ -92,6 +91,7 @@ container.querySelector("#class").click();
   <head />
   <body>
     <!--M_[2-->
+    <!--M_]1 #text/0-->
     <!--M_[4-->
     <button
       id="class"
@@ -108,9 +108,8 @@ container.querySelector("#class").click();
       <!--M_*2 #button/0-->
     </div>
     <!--M_]1 #text/0-->
-    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={count:0,"ClosureScopes:count":_.d=new Set,"ConditionalScope:#text/0":_.b={m5c:"s0-2","ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},_.b,{m5c:"s0"}],_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_count"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e=[-3,_.a,2,_.f={}],(_.a["ConditionalScope:#text/0"]=_.f),_.e),3,"$compat_setScope");M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/0":_.b={m5c:"s0-2","ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"]),count:0,"ClosureScopes:count":_.d=new Set},_.b,{m5c:"s0"}],_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_count"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e=[-3,_.a,2,_.f={}],(_.a["ConditionalScope:#text/0"]=_.f),_.e),3,"$compat_setScope");M._.w()
     </script>
   </body>
 </html>
@@ -130,6 +129,7 @@ container.querySelector("#tags").click();
   <head />
   <body>
     <!--M_[2-->
+    <!--M_]1 #text/0-->
     <!--M_[4-->
     <button
       id="class"
@@ -146,9 +146,8 @@ container.querySelector("#tags").click();
       <!--M_*2 #button/0-->
     </div>
     <!--M_]1 #text/0-->
-    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={count:0,"ClosureScopes:count":_.d=new Set,"ConditionalScope:#text/0":_.b={m5c:"s0-2","ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},_.b,{m5c:"s0"}],_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_count"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e=[-3,_.a,2,_.f={}],(_.a["ConditionalScope:#text/0"]=_.f),_.e),3,"$compat_setScope");M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/0":_.b={m5c:"s0-2","ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"]),count:0,"ClosureScopes:count":_.d=new Set},_.b,{m5c:"s0"}],_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_count"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e=[-3,_.a,2,_.f={}],(_.a["ConditionalScope:#text/0"]=_.f),_.e),3,"$compat_setScope");M._.w()
     </script>
   </body>
 </html>
@@ -168,6 +167,7 @@ container.querySelector("#class").click();
   <head />
   <body>
     <!--M_[2-->
+    <!--M_]1 #text/0-->
     <!--M_[4-->
     <button
       id="class"
@@ -184,9 +184,8 @@ container.querySelector("#class").click();
       <!--M_*2 #button/0-->
     </div>
     <!--M_]1 #text/0-->
-    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={count:0,"ClosureScopes:count":_.d=new Set,"ConditionalScope:#text/0":_.b={m5c:"s0-2","ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},_.b,{m5c:"s0"}],_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_count"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e=[-3,_.a,2,_.f={}],(_.a["ConditionalScope:#text/0"]=_.f),_.e),3,"$compat_setScope");M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/0":_.b={m5c:"s0-2","ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"]),count:0,"ClosureScopes:count":_.d=new Set},_.b,{m5c:"s0"}],_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_count"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e=[-3,_.a,2,_.f={}],(_.a["ConditionalScope:#text/0"]=_.f),_.e),3,"$compat_setScope");M._.w()
     </script>
   </body>
 </html>
@@ -206,6 +205,7 @@ container.querySelector("#tags").click();
   <head />
   <body>
     <!--M_[2-->
+    <!--M_]1 #text/0-->
     <!--M_[4-->
     <button
       id="class"
@@ -222,9 +222,8 @@ container.querySelector("#tags").click();
       <!--M_*2 #button/0-->
     </div>
     <!--M_]1 #text/0-->
-    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={count:0,"ClosureScopes:count":_.d=new Set,"ConditionalScope:#text/0":_.b={m5c:"s0-2","ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"])},_.b,{m5c:"s0"}],_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_count"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e=[-3,_.a,2,_.f={}],(_.a["ConditionalScope:#text/0"]=_.f),_.e),3,"$compat_setScope");M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/0":_.b={m5c:"s0-2","ClosureSignalIndex:count":0},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/components/class-layout.marko"]),count:0,"ClosureScopes:count":_.d=new Set},_.b,{m5c:"s0"}],_.b._=_.a,(_.d).add(_.b),_.c),2,"$compat_setScope",2,"__tests__/template.marko_1_count"];M._.w();$MC=(window.$MC||[]).concat({"o":{"w":[["s0",0,{"renderBody":["__tests__/template.marko_1_renderer",1]},{"f":1}]],"t":["__tests__/components/class-layout.marko"]},"$$":[{"l":["w",0,3,"r"],"r":["w",0,2,"renderBody"]}]});M._.r.push(_=&gt;(_.e=[-3,_.a,2,_.f={}],(_.a["ConditionalScope:#text/0"]=_.f),_.e),3,"$compat_setScope");M._.w()
     </script>
   </body>
 </html>

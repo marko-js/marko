@@ -4,15 +4,10 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   const {
     tagName
   } = input;
-  const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/0", tagName, {
+  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/0", tagName, {
     class: ["a", "b"]
   }, _$.registerContent("__tests__/template.marko_1_renderer", () => {
     const _scope1_id = _$.nextScopeId();
     _$.write("Hello World");
-  }, _scope0_id));
-  _$.writeScope(_scope0_id, {
-    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
-    "ConditionalRenderer:#text/0": _$.dynamicTagId(tagName)
-  }, "__tests__/template.marko", 0);
+  }, _scope0_id), 0, 1);
 });

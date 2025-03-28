@@ -23,8 +23,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _customTag({
     style: "color: green"
   });
-  const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/4", test, {
+  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/4", test, {
     style: {
       color: "green"
     },
@@ -37,10 +36,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
         _$.write("Hello");
       }, _scope0_id)
     })
-  });
+  }, 0, 0, 1);
   _$.writeScope(_scope0_id, {
-    "#childScope/1": _$.writeExistingScope(_childScope),
-    "ConditionalScope:#text/4": _$.writeExistingScope(_dynamicScope),
-    "ConditionalRenderer:#text/4": _$.dynamicTagId(test)
+    "#childScope/1": _$.writeExistingScope(_childScope)
   }, "__tests__/template.marko", 0);
 });
