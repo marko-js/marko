@@ -1,9 +1,11 @@
+var toJSONDescriptor = {
+  enumerable: false,
+  value: function emptyInput() {
+    return {};
+  },
+};
 module.exports = function (input) {
   if (!input.toJSON) {
-    input.toJSON = emptyInput;
+    Object.defineProperty(input, "toJSON", toJSONDescriptor);
   }
 };
-
-function emptyInput() {
-  return {};
-}

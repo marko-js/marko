@@ -1,4 +1,4 @@
-// size: 18879 (min) 7224 (brotli)
+// size: 18904 (min) 7206 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -128,7 +128,12 @@ function init(runtimeId = "M") {
                 let branchEnd = (branchId, reference) => {
                   let branch = (scopeLookup[branchId] ||= {}),
                     endNode = reference;
-                  for (; visitNodes.has((endNode = endNode.previousSibling)); );
+                  for (
+                    ;
+                    endNode.previousSibling !== branch.h &&
+                    visitNodes.has((endNode = endNode.previousSibling));
+
+                  );
                   return (
                     endNode === lastEndNode &&
                       (endNode = reference.parentNode.insertBefore(
