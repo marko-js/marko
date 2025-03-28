@@ -2,7 +2,6 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _counts_closures = new Set();
-  const _scope1_ = new Map();
   let counts = [0, 0, 0];
   _$.resumeSingleNodeForOf(counts, (count, i) => {
     const _scope1_id = _$.nextScopeId();
@@ -30,7 +29,6 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
         _ifScopeId = _scope3_id;
       }
     }, _scope1_id, "#text/0");
-    _scope1_.set(i, _$.ensureScopeWithId(_scope1_id));
     _$.writeScope(_scope1_id, {
       count,
       i,
@@ -41,11 +39,10 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       count: "2:6",
       i: "2:13"
     });
-  }, _scope0_id, "#text/0");
+  }, 0, _scope0_id, "#text/0");
   _$.writeScope(_scope0_id, {
     counts,
-    "ClosureScopes:counts": _counts_closures,
-    "LoopScopeMap:#text/0": _scope1_.size ? _scope1_ : undefined
+    "ClosureScopes:counts": _counts_closures
   }, "__tests__/template.marko", 0, {
     counts: "1:6"
   });

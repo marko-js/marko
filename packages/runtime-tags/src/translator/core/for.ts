@@ -20,7 +20,6 @@ import {
   BindingType,
   dropReferences,
   getAllTagReferenceNodes,
-  getScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
   trackParamsReferences,
@@ -29,7 +28,6 @@ import { callRuntime } from "../util/runtime";
 import {
   ContentType,
   getOrCreateSection,
-  getScopeIdentifier,
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
@@ -39,18 +37,13 @@ import {
 } from "../util/sections";
 import {
   addValue,
-  getHTMLSectionStatements,
   getSignal,
-  serializeSectionIfNeeded,
   setClosureSignalBuilder,
-  setSerializedProperty,
   writeHTMLResumeStatements,
 } from "../util/signals";
-import { toMemberExpression } from "../util/to-property-name";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
-import { currentProgramPath } from "../visitors/program";
 import { kSerializeMarker } from "../visitors/tag/native-tag";
 
 type ForType = "in" | "of" | "to";
@@ -151,126 +144,25 @@ export default {
           bodySection.content === null ||
           (bodySection.content.singleChild &&
             bodySection.content.startType !== ContentType.Text);
-        let keyExpression: t.Expression | undefined;
 
-        if (sectionSources?.referenced && onlyChildInParentOptimization) {
+        if (serializeReason && onlyChildInParentOptimization) {
           getParentTag(tag)!.node.extra![kSerializeMarker] = false;
-        }
-
-        if (serializeReason) {
-          // TODO: could skip this serialize if needed by having the comments used in the html resume runtime
-          // include the for loops "key"'s. This way the deserializer could construct the loop scope map and array.
-          serializeSectionIfNeeded(bodySection, serializeReason);
-
-          const defaultParamNames = (
-            {
-              of: ["list", "index"],
-              in: ["key", "value"],
-              to: ["value"],
-            } as const
-          )[forType];
-          const defaultByParamIndex = forType === "of" ? 1 : 0;
-          const requiredParamsIndex = forAttrs.by
-            ? defaultParamNames.length - 1
-            : defaultByParamIndex;
-
-          for (let i = 0; i <= requiredParamsIndex; i++) {
-            const existingParam = params[i];
-            if (!existingParam || !t.isIdentifier(existingParam)) {
-              const id = (params[i] =
-                currentProgramPath.scope.generateUidIdentifier(
-                  defaultParamNames[i],
-                ));
-
-              if (existingParam) {
-                bodyStatements.unshift(
-                  t.variableDeclaration("let", [
-                    t.variableDeclarator(existingParam, id),
-                  ]),
-                );
-              }
-            }
-          }
-
-          if (forAttrs.by) {
-            if (t.isStringLiteral(forAttrs.by)) {
-              keyExpression = toMemberExpression(
-                params[0] as t.Identifier,
-                forAttrs.by.value,
-              );
-            } else if (t.isFunction(forAttrs.by)) {
-              const byIdentifier =
-                currentProgramPath.scope.generateUidIdentifier("by");
-              statements.push(
-                t.variableDeclaration("const", [
-                  t.variableDeclarator(byIdentifier, forAttrs.by),
-                ]),
-              );
-              keyExpression = t.callExpression(
-                byIdentifier,
-                params as t.Identifier[],
-              );
-            } else {
-              keyExpression = callRuntime(
-                forTypeToHTMLByRuntime(forType),
-                forAttrs.by,
-                ...(params as t.Identifier[]),
-              );
-            }
-          } else {
-            keyExpression = params[defaultByParamIndex] as t.Identifier;
-          }
-
-          const forScopesIdentifier = getScopeIdentifier(bodySection);
-          getHTMLSectionStatements(tagSection).push(
-            t.variableDeclaration("const", [
-              t.variableDeclarator(
-                forScopesIdentifier,
-                t.newExpression(t.identifier("Map"), []),
-              ),
-            ]),
-          );
-
-          bodyStatements.push(
-            t.expressionStatement(
-              t.callExpression(
-                t.memberExpression(forScopesIdentifier, t.identifier("set")),
-                [
-                  keyExpression,
-                  callRuntime(
-                    "ensureScopeWithId",
-                    getScopeIdIdentifier(bodySection),
-                  ),
-                ],
-              ),
-            ),
-          );
-
-          setSerializedProperty(
-            tagSection,
-            getAccessorPrefix().LoopScopeMap + getScopeAccessor(nodeRef),
-            t.conditionalExpression(
-              t.memberExpression(forScopesIdentifier, t.identifier("size")),
-              forScopesIdentifier,
-              t.identifier("undefined"),
-            ),
-            serializeReason,
-          );
         }
 
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
 
         const forTagArgs = getBaseArgsInForTag(forType, forAttrs);
-        const forTagHTMLRuntime = sectionSources?.referenced
+        const forTagHTMLRuntime = serializeReason
           ? forTypeToHTMLResumeRuntime(forType, singleNodeOptimization)
           : forTypeToRuntime(forType);
         forTagArgs.push(
           t.arrowFunctionExpression(params, t.blockStatement(bodyStatements)),
         );
 
-        if (sectionSources?.referenced) {
+        if (serializeReason) {
           forTagArgs.push(
+            forAttrs.by || t.numericLiteral(0),
             getScopeIdIdentifier(tagSection),
             getScopeAccessorLiteral(nodeRef),
           );
@@ -514,17 +406,6 @@ function forTypeToDOMRuntime(type: ForType) {
       return "loopIn";
     case "to":
       return "loopTo";
-  }
-}
-
-function forTypeToHTMLByRuntime(type: ForType) {
-  switch (type) {
-    case "of":
-      return "forOfBy";
-    case "in":
-      return "forInBy";
-    case "to":
-      return "forToBy";
   }
 }
 

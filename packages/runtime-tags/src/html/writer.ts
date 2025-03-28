@@ -19,9 +19,7 @@ import {
 import type { ServerRenderer } from "./template";
 
 export type PartialScope = Record<Accessor, unknown>;
-type ScopeInternals = PartialScope & {
-  [K_SCOPE_ID]?: number;
-};
+type ScopeInternals = PartialScope & { [K_SCOPE_ID]?: number };
 
 let $chunk: Chunk;
 const NOOP = () => {};
@@ -62,13 +60,13 @@ export function writeEffect(scopeId: number, registryId: string) {
 }
 
 const kPendingContexts = Symbol("Pending Contexts");
-export function withContext(key: PropertyKey, value: unknown, cb: () => void) {
+export function withContext<T>(key: PropertyKey, value: unknown, cb: () => T) {
   const ctx = ($chunk.context ||= { [kPendingContexts]: 0 } as any);
   const prev = ctx[key];
   ctx[kPendingContexts]++;
   ctx[key] = value;
   try {
-    cb();
+    return cb();
   } finally {
     ctx[kPendingContexts]--;
     ctx[key] = prev;
@@ -154,9 +152,7 @@ export function hoist(scopeId: number, id?: string) {
 export function resumeClosestBranch(scopeId: number) {
   const branchId = $chunk.context?.[branchIdKey];
   if (branchId !== undefined && branchId !== scopeId) {
-    writeScope(scopeId, {
-      [AccessorProp.ClosestBranchId]: branchId,
-    });
+    writeScope(scopeId, { [AccessorProp.ClosestBranchId]: branchId });
   }
 }
 
@@ -165,20 +161,31 @@ const branchIdKey = Symbol();
 export function resumeForOf(
   list: Falsy | Iterable<unknown>,
   cb: (item: unknown, index: number) => void,
+  by: Falsy | ((item: unknown, index: number) => unknown),
   scopeId: number,
   accessor: Accessor,
 ): void {
-  forOf(list, (item, i) => {
+  const loopScopes = new Map<unknown, ScopeInternals>();
+  forOf(list, (item, index) => {
     const branchId = peekNextScopeId();
     $chunk.writeHTML(
       $chunk.boundary.state.mark(
         ResumeSymbol.BranchStart,
-        branchId + (i ? " " : ""),
+        branchId + (index ? " " : ""),
       ),
     );
 
-    withContext(branchIdKey, branchId, () => cb(item, i));
+    withContext(branchIdKey, branchId, () => {
+      cb(item, index);
+      loopScopes.set(forOfBy(by, item, index), writeScope(branchId, {}));
+    });
   });
+
+  if (loopScopes.size) {
+    writeScope(scopeId, {
+      [AccessorPrefix.LoopScopeMap + accessor]: loopScopes,
+    });
+  }
   $chunk.writeHTML(
     $chunk.boundary.state.mark(
       ResumeSymbol.BranchEnd,
@@ -189,16 +196,27 @@ export function resumeForOf(
 export function resumeSingleNodeForOf(
   list: Falsy | Iterable<unknown>,
   cb: (item: unknown, index: number) => void,
+  by: Falsy | ((item: unknown, index: number) => unknown),
   scopeId: number,
   accessor: Accessor,
   onlyChildInParent?: 1,
 ): void {
+  const loopScopes = new Map<unknown, ScopeInternals>();
   let branchIds = "";
   forOf(list, (item, index) => {
     const branchId = peekNextScopeId();
     branchIds = " " + branchId + branchIds;
-    withContext(branchIdKey, branchId, () => cb(item, index));
+    withContext(branchIdKey, branchId, () => {
+      cb(item, index);
+      loopScopes.set(forOfBy(by, item, index), writeScope(branchId, {}));
+    });
   });
+
+  if (loopScopes.size) {
+    writeScope(scopeId, {
+      [AccessorPrefix.LoopScopeMap + accessor]: loopScopes,
+    });
+  }
   $chunk.writeHTML(
     $chunk.boundary.state.mark(
       onlyChildInParent
@@ -208,13 +226,26 @@ export function resumeSingleNodeForOf(
     ),
   );
 }
+function forOfBy(by: unknown, item: any, index: unknown) {
+  if (by) {
+    if (typeof by === "string") {
+      return item[by];
+    }
+
+    return (by as any)(item, index);
+  }
+
+  return index;
+}
 
 export function resumeForIn(
   obj: Falsy | {},
   cb: (key: string, value: unknown) => void,
+  by: Falsy | ((key: string, v: unknown) => unknown),
   scopeId: number,
   accessor: Accessor,
 ): void {
+  const loopScopes = new Map<unknown, ScopeInternals>();
   let sep = "";
   forIn(obj, (key, value) => {
     const branchId = peekNextScopeId();
@@ -222,8 +253,17 @@ export function resumeForIn(
       $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + sep),
     );
     sep = " ";
-    withContext(branchIdKey, branchId, () => cb(key, value));
+    withContext(branchIdKey, branchId, () => {
+      cb(key, value);
+      loopScopes.set(forInBy(by, key, value), writeScope(branchId, {}));
+    });
   });
+
+  if (loopScopes.size) {
+    writeScope(scopeId, {
+      [AccessorPrefix.LoopScopeMap + accessor]: loopScopes,
+    });
+  }
   $chunk.writeHTML(
     $chunk.boundary.state.mark(
       ResumeSymbol.BranchEnd,
@@ -234,16 +274,27 @@ export function resumeForIn(
 export function resumeSingleNodeForIn(
   obj: Falsy | {},
   cb: (key: string, value: unknown) => void,
+  by: Falsy | ((key: string, v: unknown) => unknown),
   scopeId: number,
   accessor: Accessor,
   onlyChild?: 1,
 ): void {
+  const loopScopes = new Map<unknown, ScopeInternals>();
   let branchIds = "";
   forIn(obj, (key, value) => {
     const branchId = peekNextScopeId();
     branchIds = " " + branchId + branchIds;
-    withContext(branchIdKey, branchId, () => cb(key, value));
+    withContext(branchIdKey, branchId, () => {
+      cb(key, value);
+      loopScopes.set(forInBy(by, key, value), writeScope(branchId, {}));
+    });
   });
+
+  if (loopScopes.size) {
+    writeScope(scopeId, {
+      [AccessorPrefix.LoopScopeMap + accessor]: loopScopes,
+    });
+  }
   $chunk.writeHTML(
     $chunk.boundary.state.mark(
       onlyChild
@@ -253,15 +304,24 @@ export function resumeSingleNodeForIn(
     ),
   );
 }
+function forInBy(by: unknown, name: string, value: unknown) {
+  if (by) {
+    return (by as any)(name, value);
+  }
+
+  return name;
+}
 
 export function resumeForTo(
   to: number,
   from: number | Falsy,
   step: number | Falsy,
   cb: (index: number) => void,
+  by: Falsy | ((v: number) => unknown),
   scopeId: number,
   accessor: Accessor,
 ): void {
+  const loopScopes = new Map<unknown, ScopeInternals>();
   let sep = "";
   forTo(to, from, step, (index) => {
     const branchId = peekNextScopeId();
@@ -269,8 +329,17 @@ export function resumeForTo(
       $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + sep),
     );
     sep = " ";
-    withContext(branchIdKey, branchId, () => cb(index));
+    withContext(branchIdKey, branchId, () => {
+      cb(index);
+      loopScopes.set(forToBy(by, index), writeScope(branchId, {}));
+    });
   });
+
+  if (loopScopes.size) {
+    writeScope(scopeId, {
+      [AccessorPrefix.LoopScopeMap + accessor]: loopScopes,
+    });
+  }
   $chunk.writeHTML(
     $chunk.boundary.state.mark(
       ResumeSymbol.BranchEnd,
@@ -283,16 +352,27 @@ export function resumeSingleNodeForTo(
   from: number | Falsy,
   step: number | Falsy,
   cb: (index: number) => void,
+  by: Falsy | ((v: number) => unknown),
   scopeId: number,
   accessor: Accessor,
   onlyChild?: 1,
 ): void {
+  const loopScopes = new Map<unknown, ScopeInternals>();
   let branchIds = "";
   forTo(to, from, step, (index) => {
     const branchId = peekNextScopeId();
     branchIds = " " + branchId + branchIds;
-    withContext(branchIdKey, branchId, () => cb(index));
+    withContext(branchIdKey, branchId, () => {
+      cb(index);
+      loopScopes.set(forToBy(by, index), writeScope(branchId, {}));
+    });
   });
+
+  if (loopScopes.size) {
+    writeScope(scopeId, {
+      [AccessorPrefix.LoopScopeMap + accessor]: loopScopes,
+    });
+  }
   $chunk.writeHTML(
     $chunk.boundary.state.mark(
       onlyChild
@@ -301,6 +381,13 @@ export function resumeSingleNodeForTo(
       scopeId + " " + accessor + branchIds,
     ),
   );
+}
+function forToBy(by: unknown, index: number) {
+  if (by) {
+    return (by as any)(index);
+  }
+
+  return index;
 }
 
 export function resumeConditional(
@@ -493,12 +580,8 @@ export function tryContent(
   accessor: Accessor,
   content: () => void,
   input: {
-    placeholder?: {
-      content?(): void;
-    };
-    catch?: {
-      content?(err: unknown): void;
-    };
+    placeholder?: { content?(): void };
+    catch?: { content?(err: unknown): void };
   },
 ) {
   const branchId = peekNextScopeId();
@@ -645,10 +728,7 @@ export class State {
   public scopes = new Map<number, PartialScope>();
   public writeScopes: null | Record<number, PartialScope> = null;
   constructor(
-    public $global: $Global & {
-      renderId: string;
-      runtimeId: string;
-    },
+    public $global: $Global & { renderId: string; runtimeId: string },
   ) {
     this.$global = $global;
     if ($global.cspNonce) {

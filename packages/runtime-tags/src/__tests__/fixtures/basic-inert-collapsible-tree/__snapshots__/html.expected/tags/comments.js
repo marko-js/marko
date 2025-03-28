@@ -1,7 +1,6 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _content = input => {
   const _scope0_id = _$.nextScopeId();
-  const _scope1_ = new Map();
   _$.write("<ul>");
   _$.resumeSingleNodeForOf(input.comments, (comment, i) => {
     const _scope1_id = _$.nextScopeId();
@@ -25,7 +24,6 @@ const _content = input => {
         _ifScopeId = _scope2_id;
       }
     }, _scope1_id, "#text/4");
-    _scope1_.set(i, _$.ensureScopeWithId(_scope1_id));
     _$.write(`</li>${_$.markResumeNode(_scope1_id, "#li/0")}`);
     _$.writeEffect(_scope1_id, "__tests__/tags/comments.marko_1_open");
     _$.writeScope(_scope1_id, {
@@ -42,11 +40,10 @@ const _content = input => {
       id: "3:12",
       open: "4:10"
     });
-  }, _scope0_id, "#ul/0", 1);
+  }, 0, _scope0_id, "#ul/0", 1);
   _$.write("</ul>");
   _$.writeScope(_scope0_id, {
-    input_path: input.path,
-    "LoopScopeMap:#ul/0": _scope1_.size ? _scope1_ : undefined
+    input_path: input.path
   }, "__tests__/tags/comments.marko", 0, {
     input_path: ["input.path"]
   });
