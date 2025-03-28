@@ -1,4 +1,4 @@
-// size: 18899 (min) 7204 (brotli)
+// size: 18879 (min) 7224 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1174,18 +1174,13 @@ function awaitTag(nodeAccessor, renderer) {
           ) {
             let placeholderBranch = tryWithPlaceholder.c;
             (tryWithPlaceholder.c = void 0),
-              placeholderBranch
-                ? (insertBranchBefore(
-                    tryWithPlaceholder,
-                    placeholderBranch.h.parentNode,
-                    placeholderBranch.h,
-                  ),
-                  removeAndDestroyBranch(placeholderBranch))
-                : insertBranchBefore(
-                    tryWithPlaceholder,
-                    referenceNode.parentNode,
-                    referenceNode,
-                  ),
+              placeholderBranch &&
+                (insertBranchBefore(
+                  tryWithPlaceholder,
+                  placeholderBranch.h.parentNode,
+                  placeholderBranch.h,
+                ),
+                removeAndDestroyBranch(placeholderBranch)),
               tryWithPlaceholder.H && runEffects(tryWithPlaceholder.H, !0);
           }
         })

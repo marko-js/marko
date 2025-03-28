@@ -86,7 +86,6 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
         );
 
         if (tryWithPlaceholder) {
-          tryWithPlaceholder;
           if (!--tryWithPlaceholder.___pendingAsyncCount!) {
             const placeholderBranch = tryWithPlaceholder[
               AccessorProp.PlaceholderBranch
@@ -99,12 +98,6 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
                 placeholderBranch.___startNode,
               );
               removeAndDestroyBranch(placeholderBranch);
-            } else {
-              insertBranchBefore(
-                tryWithPlaceholder,
-                referenceNode.parentNode!,
-                referenceNode,
-              );
             }
             if (tryWithPlaceholder.___effects) {
               (runEffects as any)(tryWithPlaceholder.___effects, true);

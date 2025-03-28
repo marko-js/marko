@@ -70,10 +70,10 @@ INSERT html/body/script
 INSERT html/body/script/#text
 REMOVE html/head/style after html/body/#text4
 INSERT html/head/style
+REMOVE script after script
+REMOVE script after #text
 REMOVE #text after #comment
-REMOVE script after #comment
-REMOVE script after #comment
-REMOVE #comment after #comment
+REMOVE #comment after html/body/#comment0
 REMOVE html/body/#text1 before html/body/#comment1
 REMOVE html/body/#comment1 in t
 REMOVE #comment after html/body/#comment0
