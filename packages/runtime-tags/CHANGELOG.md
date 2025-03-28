@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.68
+
+### Patch Changes
+
+- [#2594](https://github.com/marko-js/marko/pull/2594) [`f55c857`](https://github.com/marko-js/marko/commit/f55c857ca8a077e99bee9f659a518b8f82df89ff) Thanks [@mlrawlings](https://github.com/mlrawlings)! - fix batched resolved async/try for ssr and resuming placeholders where the comment markers have different parents (due to implicit nodes added by the parser)
+
 ## 0.3.67
 
 ### Patch Changes
