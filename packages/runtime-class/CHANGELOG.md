@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.25
+
+### Patch Changes
+
+- [#2598](https://github.com/marko-js/marko/pull/2598) [`12600c7`](https://github.com/marko-js/marko/commit/12600c7c7e1238a46bac686e390b0b1ac05e2ef6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Use non enumerable property for implicit split component toJSON.
+
 ## 5.37.24
 
 ### Patch Changes

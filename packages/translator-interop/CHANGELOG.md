@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.22
+
+### Patch Changes
+
+- [#2596](https://github.com/marko-js/marko/pull/2596) [`ff59411`](https://github.com/marko-js/marko/commit/ff59411349f03a4a0b7838848eafa2631c8058f2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor to move more logic (especially around serialization) into the html runtime.
+
+- Updated dependencies [[`12600c7`](https://github.com/marko-js/marko/commit/12600c7c7e1238a46bac686e390b0b1ac05e2ef6), [`ff59411`](https://github.com/marko-js/marko/commit/ff59411349f03a4a0b7838848eafa2631c8058f2)]:
+  - marko@5.37.25
+  - @marko/runtime-tags@0.3.69
+
 ## 0.2.21
 
 ### Patch Changes
