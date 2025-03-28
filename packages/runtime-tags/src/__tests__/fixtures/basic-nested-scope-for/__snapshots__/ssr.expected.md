@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>1</button><!--M_*2 #button/0--><button>2</button><!--M_*3 #button/0--><button>3</button><!--M_*4 #button/0--><button>4</button><!--M_*5 #button/0--><button>5</button><!--M_*6 #button/0--><button>6</button><!--M_*7 #button/0--><button>7</button><!--M_*8 #button/0--><button>8</button><!--M_*9 #button/0--><button>9</button><!--M_*10 #button/0--><button>10</button><!--M_*11 #button/0--><button>11</button><!--M_*12 #button/0--><button>12</button><!--M_*13 #button/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.o=[0,_.b={"LoopScopeMap:#text/0":new Map(_.a=[[0,_.c={num:1}],[1,_.d={num:2}],[2,_.e={num:3}],[3,_.f={num:4}],[4,_.g={num:5}],[5,_.h={num:6}],[6,_.i={num:7}],[7,_.j={num:8}],[8,_.k={num:9}],[9,_.l={num:10}],[10,_.m={num:11}],[11,_.n={num:12}]])},_.c,_.d,_.e,_.f,_.g,_.h,_.i,_.j,_.k,_.l,_.m,_.n],_.c._=_.d._=_.e._=_.f._=_.g._=_.h._=_.i._=_.j._=_.k._=_.l._=_.m._=_.n._=_.b,_.o),2,"__tests__/template.marko_1_num",3,"__tests__/template.marko_1_num",4,"__tests__/template.marko_1_num",5,"__tests__/template.marko_1_num",6,"__tests__/template.marko_1_num",7,"__tests__/template.marko_1_num",8,"__tests__/template.marko_1_num",9,"__tests__/template.marko_1_num",10,"__tests__/template.marko_1_num",11,"__tests__/template.marko_1_num",12,"__tests__/template.marko_1_num",13,"__tests__/template.marko_1_num"];M._.w()</script>
+  <button>1</button><!--M_*2 #button/0--><button>2</button><!--M_*3 #button/0--><button>3</button><!--M_*4 #button/0--><button>4</button><!--M_*5 #button/0--><button>5</button><!--M_*6 #button/0--><button>6</button><!--M_*7 #button/0--><button>7</button><!--M_*8 #button/0--><button>8</button><!--M_*9 #button/0--><button>9</button><!--M_*10 #button/0--><button>10</button><!--M_*11 #button/0--><button>11</button><!--M_*12 #button/0--><button>12</button><!--M_*13 #button/0--><!--M_|1 #text/0 13 12 11 10 9 8 7 6 5 4 3 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.o=[0,_.b={"LoopScopeMap:#text/0":new Map(_.a=[[0,_.c={num:1}],[1,_.d={num:2}],[2,_.e={num:3}],[3,_.f={num:4}],[4,_.g={num:5}],[5,_.h={num:6}],[6,_.i={num:7}],[7,_.j={num:8}],[8,_.k={num:9}],[9,_.l={num:10}],[10,_.m={num:11}],[11,_.n={num:12}]])},_.c,_.d,_.e,_.f,_.g,_.h,_.i,_.j,_.k,_.l,_.m,_.n],_.c._=_.d._=_.e._=_.f._=_.g._=_.h._=_.i._=_.j._=_.k._=_.l._=_.m._=_.n._=_.b,_.o),2,"__tests__/template.marko_1_num",3,"__tests__/template.marko_1_num",4,"__tests__/template.marko_1_num",5,"__tests__/template.marko_1_num",6,"__tests__/template.marko_1_num",7,"__tests__/template.marko_1_num",8,"__tests__/template.marko_1_num",9,"__tests__/template.marko_1_num",10,"__tests__/template.marko_1_num",11,"__tests__/template.marko_1_num",12,"__tests__/template.marko_1_num",13,"__tests__/template.marko_1_num"];M._.w()</script>
 ```
 
 # Render End
@@ -56,6 +56,7 @@
       12
     </button>
     <!--M_*13 #button/0-->
+    <!--M_|1 #text/0 13 12 11 10 9 8 7 6 5 4 3 2-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.o=[0,_.b={"LoopScopeMap:#text/0":new Map(_.a=[[0,_.c={num:1}],[1,_.d={num:2}],[2,_.e={num:3}],[3,_.f={num:4}],[4,_.g={num:5}],[5,_.h={num:6}],[6,_.i={num:7}],[7,_.j={num:8}],[8,_.k={num:9}],[9,_.l={num:10}],[10,_.m={num:11}],[11,_.n={num:12}]])},_.c,_.d,_.e,_.f,_.g,_.h,_.i,_.j,_.k,_.l,_.m,_.n],_.c._=_.d._=_.e._=_.f._=_.g._=_.h._=_.i._=_.j._=_.k._=_.l._=_.m._=_.n._=_.b,_.o),2,"__tests__/template.marko_1_num",3,"__tests__/template.marko_1_num",4,"__tests__/template.marko_1_num",5,"__tests__/template.marko_1_num",6,"__tests__/template.marko_1_num",7,"__tests__/template.marko_1_num",8,"__tests__/template.marko_1_num",9,"__tests__/template.marko_1_num",10,"__tests__/template.marko_1_num",11,"__tests__/template.marko_1_num",12,"__tests__/template.marko_1_num",13,"__tests__/template.marko_1_num"];M._.w()
     </script>
@@ -104,6 +105,7 @@ INSERT html/body/#comment10
 INSERT html/body/button11
 INSERT html/body/button11/#text
 INSERT html/body/#comment11
+INSERT html/body/#comment12
 INSERT html/body/script
 INSERT html/body/script/#text
 ```

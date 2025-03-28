@@ -31,7 +31,7 @@
     </button>
     <!--M_*1 #button/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e=[0,{open:!0,list:[1,2,3],"LoopScopeMap:#ul/0":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},_.b,_.c,_.d]),1,"__tests__/template.marko_0_list",1,"__tests__/template.marko_0_open"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e=[0,{"LoopScopeMap:#ul/0":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]]),open:!0,list:[1,2,3]},_.b,_.c,_.d]),1,"__tests__/template.marko_0_list",1,"__tests__/template.marko_0_open"];M._.w()
     </script>
   </body>
 </html>
@@ -76,7 +76,7 @@ container.querySelector("#toggle").click();
     </button>
     <!--M_*1 #button/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e=[0,{open:!0,list:[1,2,3],"LoopScopeMap:#ul/0":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},_.b,_.c,_.d]),1,"__tests__/template.marko_0_list",1,"__tests__/template.marko_0_open"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e=[0,{"LoopScopeMap:#ul/0":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]]),open:!0,list:[1,2,3]},_.b,_.c,_.d]),1,"__tests__/template.marko_0_list",1,"__tests__/template.marko_0_open"];M._.w()
     </script>
   </body>
 </html>
@@ -123,7 +123,7 @@ container.querySelector("#toggle").click();
     </button>
     <!--M_*1 #button/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e=[0,{open:!0,list:[1,2,3],"LoopScopeMap:#ul/0":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},_.b,_.c,_.d]),1,"__tests__/template.marko_0_list",1,"__tests__/template.marko_0_open"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e=[0,{"LoopScopeMap:#ul/0":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]]),open:!0,list:[1,2,3]},_.b,_.c,_.d]),1,"__tests__/template.marko_0_list",1,"__tests__/template.marko_0_open"];M._.w()
     </script>
   </body>
 </html>
@@ -170,7 +170,7 @@ container.querySelector("#reverse").click();
     </button>
     <!--M_*1 #button/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e=[0,{open:!0,list:[1,2,3],"LoopScopeMap:#ul/0":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},_.b,_.c,_.d]),1,"__tests__/template.marko_0_list",1,"__tests__/template.marko_0_open"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e=[0,{"LoopScopeMap:#ul/0":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]]),open:!0,list:[1,2,3]},_.b,_.c,_.d]),1,"__tests__/template.marko_0_list",1,"__tests__/template.marko_0_open"];M._.w()
     </script>
   </body>
 </html>

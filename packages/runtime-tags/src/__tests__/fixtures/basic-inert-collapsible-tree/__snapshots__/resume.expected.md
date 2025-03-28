@@ -56,7 +56,7 @@
       <!--M_=2 #ul/0 8 3-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,{"#childScope/0":_.g={"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"ConditionalRenderer:#text/4":0,"ConditionalScope:#text/4":_.f={"#childScope/0":_.c={input_path:"c-0","LoopScopeMap:#ul/0":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},_.g,_.e,_.f,_.c,_.d,1,_.h],_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,{"#childScope/0":_.g={"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"ConditionalRenderer:#text/4":0,"ConditionalScope:#text/4":_.f={"#childScope/0":_.c={"LoopScopeMap:#ul/0":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]]),input_path:"c-0"}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},_.g,_.e,_.f,_.c,_.d,1,_.h],_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open"];M._.w()
     </script>
   </body>
 </html>
@@ -124,7 +124,7 @@ container.querySelector(`#c-${id} > button`).click();
       <!--M_=2 #ul/0 8 3-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,{"#childScope/0":_.g={"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"ConditionalRenderer:#text/4":0,"ConditionalScope:#text/4":_.f={"#childScope/0":_.c={input_path:"c-0","LoopScopeMap:#ul/0":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},_.g,_.e,_.f,_.c,_.d,1,_.h],_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,{"#childScope/0":_.g={"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"ConditionalRenderer:#text/4":0,"ConditionalScope:#text/4":_.f={"#childScope/0":_.c={"LoopScopeMap:#ul/0":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]]),input_path:"c-0"}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},_.g,_.e,_.f,_.c,_.d,1,_.h],_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open"];M._.w()
     </script>
   </body>
 </html>
@@ -196,7 +196,7 @@ container.querySelector(`#c-${id} > button`).click();
       <!--M_=2 #ul/0 8 3-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,{"#childScope/0":_.g={"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"ConditionalRenderer:#text/4":0,"ConditionalScope:#text/4":_.f={"#childScope/0":_.c={input_path:"c-0","LoopScopeMap:#ul/0":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},_.g,_.e,_.f,_.c,_.d,1,_.h],_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,{"#childScope/0":_.g={"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"ConditionalRenderer:#text/4":0,"ConditionalScope:#text/4":_.f={"#childScope/0":_.c={"LoopScopeMap:#ul/0":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]]),input_path:"c-0"}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},_.g,_.e,_.f,_.c,_.d,1,_.h],_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open"];M._.w()
     </script>
   </body>
 </html>
@@ -269,7 +269,7 @@ container.querySelector(`#c-${id} > button`).click();
       <!--M_=2 #ul/0 8 3-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,{"#childScope/0":_.g={"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"ConditionalRenderer:#text/4":0,"ConditionalScope:#text/4":_.f={"#childScope/0":_.c={input_path:"c-0","LoopScopeMap:#ul/0":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},_.g,_.e,_.f,_.c,_.d,1,_.h],_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,{"#childScope/0":_.g={"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"ConditionalRenderer:#text/4":0,"ConditionalScope:#text/4":_.f={"#childScope/0":_.c={"LoopScopeMap:#ul/0":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]]),input_path:"c-0"}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},_.g,_.e,_.f,_.c,_.d,1,_.h],_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open"];M._.w()
     </script>
   </body>
 </html>
@@ -343,7 +343,7 @@ container.querySelector(`#c-${id} > button`).click();
       <!--M_=2 #ul/0 8 3-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,{"#childScope/0":_.g={"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"ConditionalRenderer:#text/4":0,"ConditionalScope:#text/4":_.f={"#childScope/0":_.c={input_path:"c-0","LoopScopeMap:#ul/0":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]])}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},_.g,_.e,_.f,_.c,_.d,1,_.h],_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,{"#childScope/0":_.g={"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.e={comment_comments:[{text:"testing 123"}],i:0,id:"c-0",open:!0,"ConditionalRenderer:#text/4":0,"ConditionalScope:#text/4":_.f={"#childScope/0":_.c={"LoopScopeMap:#ul/0":new Map(_.b=[[0,_.d={i:0,id:"c-0-0",open:!0}]]),input_path:"c-0"}}}],[1,_.h={i:1,id:"c-1",open:!0}]])}},_.g,_.e,_.f,_.c,_.d,1,_.h],_.d._=_.c,_.f._=_.e,_.e._=_.h._=_.g,_.i),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",8,"__tests__/tags/comments.marko_1_open"];M._.w()
     </script>
   </body>
 </html>

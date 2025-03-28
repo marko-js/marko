@@ -27,7 +27,7 @@
       <!--M_*1 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,{items:[{name:"Marko",description:"HTML Reimagined"}],"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={}]])},_.b]),1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,{"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={}]]),items:[{name:"Marko",description:"HTML Reimagined"}]},_.b]),1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>
@@ -69,7 +69,7 @@ container.querySelector("#add").click();
       <!--M_*1 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,{items:[{name:"Marko",description:"HTML Reimagined"}],"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={}]])},_.b]),1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,{"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={}]]),items:[{name:"Marko",description:"HTML Reimagined"}]},_.b]),1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>
@@ -112,7 +112,7 @@ container.querySelector("#remove").click();
       <!--M_*1 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,{items:[{name:"Marko",description:"HTML Reimagined"}],"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={}]])},_.b]),1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,{"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={}]]),items:[{name:"Marko",description:"HTML Reimagined"}]},_.b]),1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>
@@ -147,7 +147,7 @@ container.querySelector("#remove").click();
       <!--M_*1 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,{items:[{name:"Marko",description:"HTML Reimagined"}],"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={}]])},_.b]),1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,{"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={}]]),items:[{name:"Marko",description:"HTML Reimagined"}]},_.b]),1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>
@@ -186,7 +186,7 @@ container.querySelector("#add").click();
       <!--M_*1 #button/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,{items:[{name:"Marko",description:"HTML Reimagined"}],"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={}]])},_.b]),1,"__tests__/template.marko_0_items"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,{"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={}]]),items:[{name:"Marko",description:"HTML Reimagined"}]},_.b]),1,"__tests__/template.marko_0_items"];M._.w()
     </script>
   </body>
 </html>
