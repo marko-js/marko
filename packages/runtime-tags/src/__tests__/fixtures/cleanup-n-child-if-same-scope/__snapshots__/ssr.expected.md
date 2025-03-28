@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>Toggle</button><!--M_*1 #button/0--><pre></pre><!--M_*1 #pre/1--><!--M_[2--><div>a</div><span>b</span><p>c</p><!--M_]1 #text/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={show:!0,"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={}},_.b],_.b._=_.a,_.c),2,"__tests__/template.marko_1",1,"__tests__/template.marko_0_show"];M._.w()</script>
+  <button>Toggle</button><!--M_*1 #button/0--><pre></pre><!--M_*1 #pre/1--><!--M_[2--><div>a</div><span>b</span><p>c</p><!--M_]1 #text/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={},show:!0},_.b],_.b._=_.a,_.c),2,"__tests__/template.marko_1",1,"__tests__/template.marko_0_show"];M._.w()</script>
 ```
 
 # Render End
@@ -26,7 +26,7 @@
     </p>
     <!--M_]1 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={show:!0,"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={}},_.b],_.b._=_.a,_.c),2,"__tests__/template.marko_1",1,"__tests__/template.marko_0_show"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={},show:!0},_.b],_.b._=_.a,_.c),2,"__tests__/template.marko_1",1,"__tests__/template.marko_0_show"];M._.w()
     </script>
   </body>
 </html>

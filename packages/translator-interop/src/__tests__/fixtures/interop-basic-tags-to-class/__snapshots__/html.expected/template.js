@@ -6,15 +6,12 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   const _scope0_id = _$.nextScopeId();
   let count = 0;
   _$.write(`<button id=tags>${_$.escapeXML(count)}${_$.markResumeNode(_scope0_id, "#text/1")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
-  const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/2", _classCounter, {
+  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/2", _classCounter, {
     count: count
-  });
+  }, 0, 0, 1);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope(_scope0_id, {
-    count,
-    "ConditionalScope:#text/2": _$.writeExistingScope(_dynamicScope),
-    "ConditionalRenderer:#text/2": _$.dynamicTagId(_classCounter)
+    count
   }, "__tests__/template.marko", 0, {
     count: "1:6"
   });

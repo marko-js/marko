@@ -84,6 +84,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
 
               let endNode = reference;
               while (
+                endNode.previousSibling !== branch.___startNode &&
                 visitNodes.has((endNode = endNode.previousSibling as Comment))
               );
               if (endNode === lastEndNode) {

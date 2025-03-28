@@ -20,8 +20,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       }, "__tests__/template.marko", "3:2"));
     })
   });
-  const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/1", input.show ? Thing : null, {}, _$.registerContent("__tests__/template.marko_2_renderer", () => {
+  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/1", input.show ? Thing : null, {}, _$.registerContent("__tests__/template.marko_2_renderer", () => {
     const _scope2_id = _$.nextScopeId();
     const _thing_content2_subscribers = new Set();
     _thing({
@@ -39,9 +38,8 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.writeSubscribe(_inputShowThingNull_content_subscribers, _$.writeScope(_scope2_id, {
       "ClosureScopes:3": _thing_content2_subscribers
     }, "__tests__/template.marko", "15:4"));
-  }, _scope0_id));
-  const _dynamicScope2 = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.registerContent("__tests__/template.marko_4_renderer", () => {
+  }, _scope0_id), 0, 1);
+  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.registerContent("__tests__/template.marko_4_renderer", () => {
     const _scope4_id = _$.nextScopeId();
     const _childScope3 = _$.peekNextScope();
     const setHtml3 = _child({});
@@ -50,18 +48,14 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       "#childScope/0": _$.writeExistingScope(_childScope3),
       setHtml3
     }, "__tests__/template.marko", "26:4"));
-  }, _scope0_id));
+  }, _scope0_id), 0, 1);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml");
   _$.writeScope(_scope0_id, {
     _hoisted_setHtml,
     "ClosureScopes:1": _thing_content_subscribers,
     "ClosureScopes:2": _inputShowThingNull_content_subscribers,
-    "ConditionalScope:#text/1": _$.writeExistingScope(_dynamicScope),
-    "ConditionalRenderer:#text/1": _$.dynamicTagId(input.show ? Thing : null),
-    "ClosureScopes:4": _inputShowSectionNull_content_subscribers,
-    "ConditionalScope:#text/2": _$.writeExistingScope(_dynamicScope2),
-    "ConditionalRenderer:#text/2": _$.dynamicTagId(input.show ? 'section' : null)
+    "ClosureScopes:4": _inputShowSectionNull_content_subscribers
   }, "__tests__/template.marko", 0, {
     _hoisted_setHtml: "4:10"
   });

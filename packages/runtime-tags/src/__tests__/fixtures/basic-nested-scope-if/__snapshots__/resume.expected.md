@@ -12,7 +12,7 @@
       <!--M_|1 #text/0 2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={clickCount:0,"ConditionalRenderer:#text/0":0,"ConditionalScope:#text/0":_.b={}},_.b],_.b._=_.a,_.c),2,"__tests__/template.marko_1_clickCount"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/0":0,"ConditionalScope:#text/0":_.b={},clickCount:0},_.b],_.b._=_.a,_.c),2,"__tests__/template.marko_1_clickCount"];M._.w()
     </script>
   </body>
 </html>
@@ -36,7 +36,7 @@ container.querySelector("button").click();
       <!--M_|1 #text/0 2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={clickCount:0,"ConditionalRenderer:#text/0":0,"ConditionalScope:#text/0":_.b={}},_.b],_.b._=_.a,_.c),2,"__tests__/template.marko_1_clickCount"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/0":0,"ConditionalScope:#text/0":_.b={},clickCount:0},_.b],_.b._=_.a,_.c),2,"__tests__/template.marko_1_clickCount"];M._.w()
     </script>
   </body>
 </html>
@@ -64,7 +64,7 @@ container.querySelector("button").click();
       <!--M_|1 #text/0 2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={clickCount:0,"ConditionalRenderer:#text/0":0,"ConditionalScope:#text/0":_.b={}},_.b],_.b._=_.a,_.c),2,"__tests__/template.marko_1_clickCount"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/0":0,"ConditionalScope:#text/0":_.b={},clickCount:0},_.b],_.b._=_.a,_.c),2,"__tests__/template.marko_1_clickCount"];M._.w()
     </script>
   </body>
 </html>
@@ -91,7 +91,7 @@ container.querySelector("button").click();
       <!--M_|1 #text/0 2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={clickCount:0,"ConditionalRenderer:#text/0":0,"ConditionalScope:#text/0":_.b={}},_.b],_.b._=_.a,_.c),2,"__tests__/template.marko_1_clickCount"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/0":0,"ConditionalScope:#text/0":_.b={},clickCount:0},_.b],_.b._=_.a,_.c),2,"__tests__/template.marko_1_clickCount"];M._.w()
     </script>
   </body>
 </html>

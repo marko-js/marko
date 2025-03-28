@@ -3,7 +3,6 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   const _scope0_id = _$.nextScopeId();
   const _value1__closures = new Set();
   const _value2__closures = new Set();
-  let _ifScopeId3, _ifBranch3;
   const {
     show,
     value1,
@@ -13,8 +12,6 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.resumeConditional(() => {
     if (show) {
       const _scope1_id = _$.nextScopeId();
-      let _ifScopeId, _ifBranch;
-      let _ifScopeId2, _ifBranch2;
       _$.resumeSingleNodeConditional(() => {
         if (value1) {
           const _scope2_id = _$.nextScopeId();
@@ -23,10 +20,9 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
             _: _$.ensureScopeWithId(_scope1_id),
             "ClosureSignalIndex:value1": 0
           }, "__tests__/template.marko", "4:6"));
-          _ifBranch = 0;
-          _ifScopeId = _scope2_id;
+          return 0;
         }
-      }, _scope1_id, "#text/0");
+      }, _scope1_id, "#text/0", 1);
       _$.resumeSingleNodeConditional(() => {
         if (value2) {
           const _scope3_id = _$.nextScopeId();
@@ -35,29 +31,21 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
             _: _$.ensureScopeWithId(_scope1_id),
             "ClosureSignalIndex:value2": 0
           }, "__tests__/template.marko", "5:6"));
-          _ifBranch2 = 0;
-          _ifScopeId2 = _scope3_id;
+          return 0;
         }
-      }, _scope1_id, "#text/1");
+      }, _scope1_id, "#text/1", 1);
       _$.writeScope(_scope1_id, {
-        _: _$.ensureScopeWithId(_scope0_id),
-        "ConditionalRenderer:#text/0": _ifBranch,
-        "ConditionalScope:#text/0": _$.getScopeById(_ifScopeId),
-        "ConditionalRenderer:#text/1": _ifBranch2,
-        "ConditionalScope:#text/1": _$.getScopeById(_ifScopeId2)
+        _: _$.ensureScopeWithId(_scope0_id)
       }, "__tests__/template.marko", "3:4");
-      _ifBranch3 = 0;
-      _ifScopeId3 = _scope1_id;
+      return 0;
     }
-  }, _scope0_id, "#div/0");
+  }, _scope0_id, "#div/0", 1);
   _$.write("</div>");
   _$.writeScope(_scope0_id, {
     value1,
     value2,
     "ClosureScopes:value1": _value1__closures,
-    "ClosureScopes:value2": _value2__closures,
-    "ConditionalRenderer:#div/0": _ifBranch3,
-    "ConditionalScope:#div/0": _$.getScopeById(_ifScopeId3)
+    "ClosureScopes:value2": _value2__closures
   }, "__tests__/template.marko", 0, {
     value1: "1:15",
     value2: "1:23"

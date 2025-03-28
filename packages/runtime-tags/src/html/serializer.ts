@@ -332,11 +332,7 @@ export function setDebugInfo(
   loc: string | 0,
   vars?: Record<string, string>,
 ) {
-  DEBUG.set(obj, {
-    file,
-    loc,
-    vars,
-  });
+  DEBUG.set(obj, { file, loc, vars });
 }
 
 export class Serializer {
@@ -421,10 +417,7 @@ export function registerGetter<T extends WeakKey>(
 export function getRegistered(val: WeakKey) {
   const registered = REGISTRY.get(val);
   if (registered) {
-    return {
-      id: registered.id,
-      scope: registered.scope,
-    };
+    return { id: registered.id, scope: registered.scope };
   }
 }
 
@@ -660,7 +653,10 @@ function writeRegistered(
     }
 
     if (scopeRef) {
-      if (isCircular(parent, scopeRef)) {
+      if (
+        parent &&
+        (state.assigned.has(scopeRef) || isCircular(parent, scopeRef))
+      ) {
         // TODO: adding parent here is is probably wrong, but is currently needed to ensure the
         // parent of the function has it's assignments before the function so that when the
         // function is called the parent is complete.

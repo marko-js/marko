@@ -6,11 +6,9 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.resumeSingleNodeForTo(5, 0, 1, () => {
     const _scope1_id = _$.nextScopeId();
     const _dynamicScope = _$.peekNextScope();
-    const setHtml = _$.dynamicTagInput(_scope1_id, "#text/0", 1 && Child, {}, void 0);
+    const setHtml = /* @__PURE__ */_$.dynamicTag(_scope1_id, "#text/0", 1 && Child, {}, 0, 0, 1);
     _$.setTagVar(_scope1_id, "#scopeOffset/1", _dynamicScope, "__tests__/template.marko_1_setHtml/var");
     _$.writeScope(_scope1_id, {
-      "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
-      "ConditionalRenderer:#text/0": _$.dynamicTagId(1 && Child),
       setHtml
     }, "__tests__/template.marko", "3:2");
   }, 0, _scope0_id, "#text/0");
@@ -19,11 +17,9 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   _$.resumeSingleNodeForTo(to, 0, 1, () => {
     const _scope2_id = _$.nextScopeId();
     const _dynamicScope2 = _$.peekNextScope();
-    const setHtml2 = _$.dynamicTagInput(_scope2_id, "#text/0", 1 && Child, {}, void 0);
+    const setHtml2 = /* @__PURE__ */_$.dynamicTag(_scope2_id, "#text/0", 1 && Child, {}, 0, 0, 1);
     _$.setTagVar(_scope2_id, "#scopeOffset/1", _dynamicScope2, "__tests__/template.marko_2_setHtml2/var");
     _$.writeScope(_scope2_id, {
-      "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope2),
-      "ConditionalRenderer:#text/0": _$.dynamicTagId(1 && Child),
       setHtml2
     }, "__tests__/template.marko", "14:2");
   }, 0, _scope0_id, "#text/1");
@@ -34,11 +30,9 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
     _$.resumeSingleNodeForTo(3, 0, 1, j => {
       const _scope4_id = _$.nextScopeId();
       const _dynamicScope3 = _$.peekNextScope();
-      const setHtml3 = _$.dynamicTagInput(_scope4_id, "#text/0", 1 && Child, {}, void 0);
+      const setHtml3 = /* @__PURE__ */_$.dynamicTag(_scope4_id, "#text/0", 1 && Child, {}, 0, 0, 1);
       _$.setTagVar(_scope4_id, "#scopeOffset/1", _dynamicScope3, "__tests__/template.marko_4_setHtml3/var");
       _$.writeScope(_scope4_id, {
-        "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope3),
-        "ConditionalRenderer:#text/0": _$.dynamicTagId(1 && Child),
         setHtml3
       }, "__tests__/template.marko", "26:4");
     }, 0, _scope3_id, "#ul/0", 1);

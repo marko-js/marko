@@ -3,17 +3,14 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   let tagName = "div";
-  const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/0", tagName, {}, _$.registerContent("__tests__/template.marko_1_renderer", () => {
+  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/0", tagName, {}, _$.registerContent("__tests__/template.marko_1_renderer", () => {
     const _scope1_id = _$.nextScopeId();
     _counter({});
-  }, _scope0_id));
+  }, _scope0_id), 0, 1);
   _$.write(`<button id=changeTag></button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_tagName");
   _$.writeScope(_scope0_id, {
-    tagName,
-    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
-    "ConditionalRenderer:#text/0": _$.dynamicTagId(tagName)
+    tagName
   }, "__tests__/template.marko", 0, {
     tagName: "1:6"
   });

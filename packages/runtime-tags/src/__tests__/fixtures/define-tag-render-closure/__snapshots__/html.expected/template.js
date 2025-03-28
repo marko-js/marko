@@ -14,15 +14,12 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       _$.resumeClosestBranch(_scope1_id);
     })
   };
-  const _dynamicScope = _$.peekNextScope();
-  _$.dynamicTagInput(_scope0_id, "#text/0", MyTag, {});
+  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/0", MyTag, {}, 0, 0, 1);
   _$.write(`<button>${_$.escapeXML(x)}${_$.markResumeNode(_scope0_id, "#text/2")}</button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope(_scope0_id, {
     x,
-    "ClosureScopes:x": _x_closures,
-    "ConditionalScope:#text/0": _$.writeExistingScope(_dynamicScope),
-    "ConditionalRenderer:#text/0": _$.dynamicTagId(MyTag)
+    "ClosureScopes:x": _x_closures
   }, "__tests__/template.marko", 0, {
     x: "1:6"
   });
