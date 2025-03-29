@@ -724,7 +724,7 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
       catchChunk.render(catchContent, catchBoundary.signal.reason);
       state.reorder(catchChunk);
       boundary.endAsync();
-    } else if (catchBoundary.done) {
+    } else if (!catchBoundary.count) {
       boundary.endAsync();
     } else {
       boundary.onNext();
