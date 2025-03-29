@@ -1,15 +1,7 @@
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import type { RenderResult, Template, TemplateInput } from "../common/types";
 import { registerContent } from "./dynamic-tag";
-import {
-  Boundary,
-  Chunk,
-  flushChunk,
-  offTick,
-  prepareChunk,
-  queueTick,
-  State,
-} from "./writer";
+import { Boundary, Chunk, offTick, queueTick, State } from "./writer";
 
 export type ServerRenderer = ((...args: unknown[]) => unknown) & {
   ___id?: string;
@@ -43,10 +35,7 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
       ...$global,
     };
   } else {
-    $global = {
-      runtimeId: DEFAULT_RUNTIME_ID,
-      renderId: DEFAULT_RENDER_ID,
-    };
+    $global = { runtimeId: DEFAULT_RUNTIME_ID, renderId: DEFAULT_RENDER_ID };
   }
 
   const head = new Chunk(
@@ -117,20 +106,14 @@ class ServerRenderResult implements RenderResult {
           boundary?.abort(error);
         }
 
-        return Promise.resolve({
-          value: "",
-          done: true,
-        } as const);
+        return Promise.resolve({ value: "", done: true } as const);
       },
       return(value: unknown) {
         if (!(done || aborted)) {
           boundary?.abort(new Error("Iterator returned before consumed."));
         }
 
-        return Promise.resolve({
-          value,
-          done: true,
-        } as const);
+        return Promise.resolve({ value, done: true } as const);
       },
     };
 
@@ -215,7 +198,7 @@ class ServerRenderResult implements RenderResult {
 
   #promise() {
     return (this.#cachedPromise ||= new Promise<string>((resolve, reject) => {
-      let head = this.#head!;
+      const head = this.#head!;
       this.#head = null;
 
       if (!head) {
@@ -228,12 +211,7 @@ class ServerRenderResult implements RenderResult {
           boundary.onNext = NOOP;
           reject(boundary.signal.reason);
         } else if (boundary.done) {
-          head = prepareChunk(head);
-          // `prepareChunk` will call the serializer which could
-          // have new promises, the boundary may no longer be `done`.
-          if (boundary.done) {
-            resolve(flushChunk(head, true));
-          }
+          resolve(head.consume().flushHTML());
         }
       })();
     }));
@@ -260,16 +238,11 @@ class ServerRenderResult implements RenderResult {
         boundary.onNext = NOOP;
         onAbort(boundary.signal.reason);
       } else {
-        if (write || boundary.done) {
-          head = prepareChunk(head);
-        }
-
-        // `prepareChunk` will call the serializer which could
-        // have new promises, the boundary may no longer be `done`.
-        if (write || boundary.done) {
-          const html = flushChunk(head, boundary.done);
+        const { done } = boundary;
+        if (done || write) {
+          const html = (head = head.consume()).flushHTML();
           if (html) onWrite(html);
-          if (boundary.done) {
+          if (done) {
             if (!tick) offTick(onNext);
             onClose();
           } else {
@@ -288,10 +261,10 @@ class ServerRenderResult implements RenderResult {
 
   toString() {
     const head = this.#head;
-    if (!head) throw new Error("Cannot read from a consumed render result");
-    if (head.next) throw new Error("Cannot fork in sync mode");
     this.#head = null;
-    return flushChunk(prepareChunk(head), true);
+    if (!head) throw new Error("Cannot read from a consumed render result");
+    if (!head.boundary.done) throw new Error("Cannot fork in sync mode");
+    return head.consume().flushHTML();
   }
 }
 

@@ -16,7 +16,6 @@ import {
   getScopeId,
   nextScopeId,
   peekNextScopeId,
-  prepareChunk,
   State,
   write,
   writeEffect,
@@ -79,7 +78,7 @@ export const compat = {
     }
 
     const boundary = new Boundary(state);
-    let head = new Chunk(
+    const head = new Chunk(
       boundary,
       null,
       null /* TODO: this should grab the context from the previous chunk */,
@@ -102,26 +101,18 @@ export const compat = {
     });
 
     const asyncOut = classAPIOut.beginAsync();
-    (boundary.onNext = () => {
-      if (boundary.done) {
+    queueMicrotask(
+      (boundary.onNext = () => {
         if (boundary.signal.aborted) {
           asyncOut.error(boundary.signal.reason);
-        } else {
-          queueMicrotask(() => {
-            head = prepareChunk(head);
-            // `prepareChunk` will call the serializer which could
-            // have new promises, the boundary may no longer be `done`.
-            if (boundary.done) {
-              const { scripts, html } = head;
-              asyncOut.script(scripts);
-              asyncOut.write(html);
-              asyncOut.end();
-              head.html = head.scripts = "";
-            }
-          });
+        } else if (boundary.done) {
+          const { scripts, html } = head.consume().flushScript();
+          asyncOut.script(scripts);
+          asyncOut.write(html);
+          asyncOut.end();
         }
-      }
-    })();
+      }),
+    );
   },
   registerRenderer(renderer: any, id: string) {
     return register(

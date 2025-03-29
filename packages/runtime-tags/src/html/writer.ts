@@ -743,6 +743,7 @@ export class State {
   public hasReorderRuntime = false;
   public hasWrittenResume = false;
   public trailerHTML = "";
+  public resumes = "";
   public nonceAttr = "";
   public serializer = new Serializer();
   public writeReorders: Chunk[] | null = null;
@@ -802,7 +803,7 @@ export class State {
 
 export class Boundary extends AbortController {
   public onNext = NOOP;
-  private count = 0;
+  public count = 0;
   constructor(
     public state: State,
     parent?: AbortSignal,
@@ -827,7 +828,8 @@ export class Boundary extends AbortController {
   }
 
   get done() {
-    return this.count === 0;
+    flushSerializer(this);
+    return !this.count;
   }
 
   startAsync() {
@@ -954,46 +956,190 @@ export class Chunk {
       $chunk = prev;
     }
   }
-}
 
-export function prepareChunk(chunk: Chunk) {
-  const head = chunk.consume();
-  const { boundary, effects } = head;
-  const { state } = boundary;
-  const { $global, runtimePrefix, serializer, nonceAttr } = state;
-  let { html, scripts } = head;
-  let hasWalk = false;
-  head.effects = "";
+  flushScript() {
+    flushSerializer(this.boundary);
+    const { boundary, effects } = this;
+    const { state } = boundary;
+    const { $global, runtimePrefix, nonceAttr } = state;
+    let { resumes } = state;
+    let { html, scripts } = this;
+    let hasWalk = false;
 
-  if (state.needsMainRuntime && !state.hasMainRuntime) {
-    state.hasMainRuntime = true;
-    scripts = concatScripts(
-      scripts,
-      WALKER_RUNTIME_CODE +
-        '("' +
-        $global.runtimeId +
-        '")("' +
-        $global.renderId +
-        '")',
-    );
+    if (state.needsMainRuntime && !state.hasMainRuntime) {
+      state.hasMainRuntime = true;
+      scripts = concatScripts(
+        scripts,
+        WALKER_RUNTIME_CODE +
+          '("' +
+          $global.runtimeId +
+          '")("' +
+          $global.renderId +
+          '")',
+      );
+    }
+
+    if (effects) {
+      hasWalk = true;
+      resumes = resumes ? resumes + "," + effects : effects;
+    }
+
+    if (resumes) {
+      if (state.hasWrittenResume) {
+        scripts = concatScripts(
+          scripts,
+          runtimePrefix + RuntimeKey.Resume + ".push(" + resumes + ")",
+        );
+      } else {
+        state.hasWrittenResume = true;
+        scripts = concatScripts(
+          scripts,
+          runtimePrefix + RuntimeKey.Resume + "=[" + resumes + "]",
+        );
+      }
+    }
+
+    if (state.writeReorders) {
+      hasWalk = true;
+
+      if (!state.hasReorderRuntime) {
+        state.hasReorderRuntime = true;
+        html +=
+          "<style " +
+          state.commentPrefix +
+          nonceAttr +
+          ">t{display:none}</style>";
+        scripts = concatScripts(
+          scripts,
+          REORDER_RUNTIME_CODE + "(" + runtimePrefix + ")",
+        );
+      }
+
+      for (const reorderedChunk of state.writeReorders) {
+        const { reorderId } = reorderedChunk;
+        let reorderHTML = "";
+        let reorderEffects = "";
+        let reorderScripts = "";
+        let cur = reorderedChunk;
+        reorderedChunk.reorderId = null;
+
+        for (;;) {
+          cur.flushPlaceholder();
+          const { next } = cur;
+          cur.consumed = true;
+          reorderHTML += cur.html;
+          reorderEffects = concatEffects(reorderEffects, cur.effects);
+          reorderScripts = concatScripts(reorderScripts, cur.scripts);
+
+          if (cur.async) {
+            reorderHTML += state.mark(
+              Mark.ReorderMarker,
+              (cur.reorderId = state.nextReorderId()),
+            );
+            cur.html = cur.effects = cur.scripts = "";
+            cur.next = null;
+          }
+
+          if (next) {
+            cur = next;
+          } else {
+            break;
+          }
+        }
+
+        if (reorderEffects) {
+          if (!state.hasWrittenResume) {
+            state.hasWrittenResume = true;
+            scripts = concatScripts(
+              scripts,
+              runtimePrefix + RuntimeKey.Resume + "=[]",
+            );
+          }
+
+          reorderScripts = concatScripts(
+            reorderScripts,
+            "_.push(" + reorderEffects + ")",
+          );
+        }
+
+        scripts = concatScripts(
+          scripts,
+          reorderScripts &&
+            runtimePrefix +
+              RuntimeKey.Scripts +
+              "." +
+              reorderId +
+              "=_=>{" +
+              reorderScripts +
+              "}",
+        );
+
+        html +=
+          "<t " +
+          state.commentPrefix +
+          "=" +
+          reorderId +
+          ">" +
+          reorderHTML +
+          "</t>";
+      }
+
+      state.writeReorders = null;
+    }
+
+    if (hasWalk) {
+      scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Walk + "()");
+    }
+
+    this.effects = state.resumes = "";
+    this.html = html;
+    this.scripts = scripts;
+    return this;
   }
 
-  let resumes = "";
+  flushHTML() {
+    this.flushScript();
+    const { boundary, scripts } = this;
+    const { state } = boundary;
+    const { $global, nonceAttr } = state;
+    const { __flush__ } = $global;
+    let { html } = this;
+    this.html = this.scripts = "";
 
-  if (state.writeScopes || serializer.flushed) {
-    let { lastSerializedScopeId } = state;
+    if (scripts) {
+      html += "<script" + nonceAttr + ">" + scripts + "</script>";
+    }
+
+    if (__flush__) {
+      $global.__flush__ = undefined;
+      html = __flush__($global, html);
+    }
+
+    if (!boundary.count) {
+      html += state.trailerHTML;
+    }
+
+    return html;
+  }
+}
+
+function flushSerializer(boundary: Boundary) {
+  const { state } = boundary;
+  const { writeScopes, serializer } = state;
+  if (writeScopes || serializer.flushed) {
     const serializeData: [
       $global?: ReturnType<typeof getFilteredGlobals>,
       ...(number | PartialScope)[],
     ] = [];
+    let { lastSerializedScopeId } = state;
 
     if (!state.hasGlobals) {
       state.hasGlobals = true;
       serializeData.push(getFilteredGlobals(state.$global));
     }
 
-    for (const key in state.writeScopes) {
-      const scope = state.writeScopes[key as unknown as number];
+    for (const key in writeScopes) {
+      const scope = writeScopes[key as unknown as number];
       const scopeId = getScopeId(scope)!;
       const scopeIdDelta = scopeId - lastSerializedScopeId;
       lastSerializedScopeId = scopeId + 1;
@@ -1001,151 +1147,13 @@ export function prepareChunk(chunk: Chunk) {
       serializeData.push(scope);
     }
 
-    resumes = state.serializer.stringify(serializeData, boundary);
-    state.writeScopes = null;
+    state.resumes = concatEffects(
+      state.resumes,
+      serializer.stringify(serializeData, boundary),
+    );
     state.lastSerializedScopeId = lastSerializedScopeId;
+    state.writeScopes = null;
   }
-
-  if (effects) {
-    hasWalk = true;
-    resumes = resumes ? resumes + "," + effects : effects;
-  }
-
-  if (resumes) {
-    if (state.hasWrittenResume) {
-      scripts = concatScripts(
-        scripts,
-        runtimePrefix + RuntimeKey.Resume + ".push(" + resumes + ")",
-      );
-    } else {
-      state.hasWrittenResume = true;
-      scripts = concatScripts(
-        scripts,
-        runtimePrefix + RuntimeKey.Resume + "=[" + resumes + "]",
-      );
-    }
-  }
-
-  if (state.writeReorders) {
-    hasWalk = true;
-
-    if (!state.hasReorderRuntime) {
-      state.hasReorderRuntime = true;
-      html +=
-        "<style " +
-        state.commentPrefix +
-        nonceAttr +
-        ">t{display:none}</style>";
-      scripts = concatScripts(
-        scripts,
-        REORDER_RUNTIME_CODE + "(" + runtimePrefix + ")",
-      );
-    }
-
-    for (const reorderedChunk of state.writeReorders) {
-      const { reorderId } = reorderedChunk;
-      let reorderHTML = "";
-      let reorderEffects = "";
-      let reorderScripts = "";
-      let cur = reorderedChunk;
-      reorderedChunk.reorderId = null;
-
-      for (;;) {
-        cur.flushPlaceholder();
-        const { next } = cur;
-        cur.consumed = true;
-        reorderHTML += cur.html;
-        reorderEffects = concatEffects(reorderEffects, cur.effects);
-        reorderScripts = concatScripts(reorderScripts, cur.scripts);
-
-        if (cur.async) {
-          reorderHTML += state.mark(
-            Mark.ReorderMarker,
-            (cur.reorderId = state.nextReorderId()),
-          );
-          cur.html = cur.effects = cur.scripts = "";
-          cur.next = null;
-        }
-
-        if (next) {
-          cur = next;
-        } else {
-          break;
-        }
-      }
-
-      if (reorderEffects) {
-        if (!state.hasWrittenResume) {
-          state.hasWrittenResume = true;
-          scripts = concatScripts(
-            scripts,
-            runtimePrefix + RuntimeKey.Resume + "=[]",
-          );
-        }
-
-        reorderScripts = concatScripts(
-          reorderScripts,
-          "_.push(" + reorderEffects + ")",
-        );
-      }
-
-      scripts = concatScripts(
-        scripts,
-        reorderScripts &&
-          runtimePrefix +
-            RuntimeKey.Scripts +
-            "." +
-            reorderId +
-            "=_=>{" +
-            reorderScripts +
-            "}",
-      );
-
-      html +=
-        "<t " +
-        state.commentPrefix +
-        "=" +
-        reorderId +
-        ">" +
-        reorderHTML +
-        "</t>";
-    }
-
-    state.writeReorders = null;
-  }
-
-  if (hasWalk) {
-    scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Walk + "()");
-  }
-
-  head.html = html;
-  head.scripts = scripts;
-  return head;
-}
-
-export function flushChunk(head: Chunk, last: boolean) {
-  const { boundary } = head;
-  const { state } = boundary;
-  const { html, scripts } = head;
-  const { $global } = state;
-  const { __flush__ } = $global;
-  let result = html;
-  head.html = head.scripts = "";
-
-  if (scripts) {
-    result += "<script" + state.nonceAttr + ">" + scripts + "</script>";
-  }
-
-  if (__flush__) {
-    $global.__flush__ = undefined;
-    result = __flush__($global, result);
-  }
-
-  if (last && state.trailerHTML) {
-    result += state.trailerHTML;
-  }
-
-  return result;
 }
 
 export function writeTrailers(html: string) {

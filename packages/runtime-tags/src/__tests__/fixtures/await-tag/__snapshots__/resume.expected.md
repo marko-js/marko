@@ -11,10 +11,10 @@
       <!--M_*2 #text/1-->
       <!--M_]1 #text/0-->
       <script>
-        WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={count:0,"ClosureScopes:count":_.c=new Set},_.d={_:_.a,"ClosureSignalIndex:count":0}],(_.c).add(_.d),(_.a["ConditionalScope:#text/0"]=_.d),_.b)]
+        WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{count:0,"ClosureScopes:count":new Set}]),_=&gt;(_.c=[_.e={_:_.b=_.a[1],"ClosureSignalIndex:count":0}],(_.d=_.b["ClosureScopes:count"]).add(_.e),(_.b["ConditionalScope:#text/0"]=_.e),_.c)]
       </script>
       <script>
-        M._.r.push(_=&gt;(_.e=[_.f={_:_.a,"ClosureSignalIndex:count":2}],(_.c).add(_.f),(_.a["ConditionalScope:#text/2"]=_.f),_.e))
+        M._.r.push(_=&gt;(_.f=[_.g={_:_.b,"ClosureSignalIndex:count":2}],(_.d).add(_.g),(_.b["ConditionalScope:#text/2"]=_.g),_.f))
       </script>
       <!--M_[4-->
       Got: b 
@@ -34,7 +34,7 @@
       <!--M_*1 #button/3-->
     </div>
     <script>
-      M._.r.push(_=&gt;(_.g=[_.h={_:_.a,"ClosureSignalIndex:count":1}],(_.c).add(_.h),(_.a["ConditionalScope:#text/1"]=_.h),_.g),1,"__tests__/template.marko_0_count");M._.w()
+      M._.r.push(_=&gt;(_.h=[_.i={_:_.b,"ClosureSignalIndex:count":1}],(_.d).add(_.i),(_.b["ConditionalScope:#text/1"]=_.i),_.h),1,"__tests__/template.marko_0_count");M._.w()
     </script>
   </body>
 </html>
@@ -57,10 +57,10 @@ container.querySelector("button").click();
       <!--M_*2 #text/1-->
       <!--M_]1 #text/0-->
       <script>
-        WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={count:0,"ClosureScopes:count":_.c=new Set},_.d={_:_.a,"ClosureSignalIndex:count":0}],(_.c).add(_.d),(_.a["ConditionalScope:#text/0"]=_.d),_.b)]
+        WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{count:0,"ClosureScopes:count":new Set}]),_=&gt;(_.c=[_.e={_:_.b=_.a[1],"ClosureSignalIndex:count":0}],(_.d=_.b["ClosureScopes:count"]).add(_.e),(_.b["ConditionalScope:#text/0"]=_.e),_.c)]
       </script>
       <script>
-        M._.r.push(_=&gt;(_.e=[_.f={_:_.a,"ClosureSignalIndex:count":2}],(_.c).add(_.f),(_.a["ConditionalScope:#text/2"]=_.f),_.e))
+        M._.r.push(_=&gt;(_.f=[_.g={_:_.b,"ClosureSignalIndex:count":2}],(_.d).add(_.g),(_.b["ConditionalScope:#text/2"]=_.g),_.f))
       </script>
       <!--M_[4-->
       Got: b 
@@ -80,7 +80,7 @@ container.querySelector("button").click();
       <!--M_*1 #button/3-->
     </div>
     <script>
-      M._.r.push(_=&gt;(_.g=[_.h={_:_.a,"ClosureSignalIndex:count":1}],(_.c).add(_.h),(_.a["ConditionalScope:#text/1"]=_.h),_.g),1,"__tests__/template.marko_0_count");M._.w()
+      M._.r.push(_=&gt;(_.h=[_.i={_:_.b,"ClosureSignalIndex:count":1}],(_.d).add(_.i),(_.b["ConditionalScope:#text/1"]=_.i),_.h),1,"__tests__/template.marko_0_count");M._.w()
     </script>
   </body>
 </html>
@@ -109,10 +109,10 @@ container.querySelector("button").click();
       <!--M_*2 #text/1-->
       <!--M_]1 #text/0-->
       <script>
-        WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={count:0,"ClosureScopes:count":_.c=new Set},_.d={_:_.a,"ClosureSignalIndex:count":0}],(_.c).add(_.d),(_.a["ConditionalScope:#text/0"]=_.d),_.b)]
+        WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{count:0,"ClosureScopes:count":new Set}]),_=&gt;(_.c=[_.e={_:_.b=_.a[1],"ClosureSignalIndex:count":0}],(_.d=_.b["ClosureScopes:count"]).add(_.e),(_.b["ConditionalScope:#text/0"]=_.e),_.c)]
       </script>
       <script>
-        M._.r.push(_=&gt;(_.e=[_.f={_:_.a,"ClosureSignalIndex:count":2}],(_.c).add(_.f),(_.a["ConditionalScope:#text/2"]=_.f),_.e))
+        M._.r.push(_=&gt;(_.f=[_.g={_:_.b,"ClosureSignalIndex:count":2}],(_.d).add(_.g),(_.b["ConditionalScope:#text/2"]=_.g),_.f))
       </script>
       <!--M_[4-->
       Got: b 
@@ -132,7 +132,7 @@ container.querySelector("button").click();
       <!--M_*1 #button/3-->
     </div>
     <script>
-      M._.r.push(_=&gt;(_.g=[_.h={_:_.a,"ClosureSignalIndex:count":1}],(_.c).add(_.h),(_.a["ConditionalScope:#text/1"]=_.h),_.g),1,"__tests__/template.marko_0_count");M._.w()
+      M._.r.push(_=&gt;(_.h=[_.i={_:_.b,"ClosureSignalIndex:count":1}],(_.d).add(_.i),(_.b["ConditionalScope:#text/1"]=_.i),_.h),1,"__tests__/template.marko_0_count");M._.w()
     </script>
   </body>
 </html>
@@ -161,10 +161,10 @@ container.querySelector("button").click();
       <!--M_*2 #text/1-->
       <!--M_]1 #text/0-->
       <script>
-        WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={count:0,"ClosureScopes:count":_.c=new Set},_.d={_:_.a,"ClosureSignalIndex:count":0}],(_.c).add(_.d),(_.a["ConditionalScope:#text/0"]=_.d),_.b)]
+        WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{count:0,"ClosureScopes:count":new Set}]),_=&gt;(_.c=[_.e={_:_.b=_.a[1],"ClosureSignalIndex:count":0}],(_.d=_.b["ClosureScopes:count"]).add(_.e),(_.b["ConditionalScope:#text/0"]=_.e),_.c)]
       </script>
       <script>
-        M._.r.push(_=&gt;(_.e=[_.f={_:_.a,"ClosureSignalIndex:count":2}],(_.c).add(_.f),(_.a["ConditionalScope:#text/2"]=_.f),_.e))
+        M._.r.push(_=&gt;(_.f=[_.g={_:_.b,"ClosureSignalIndex:count":2}],(_.d).add(_.g),(_.b["ConditionalScope:#text/2"]=_.g),_.f))
       </script>
       <!--M_[4-->
       Got: b 
@@ -184,7 +184,7 @@ container.querySelector("button").click();
       <!--M_*1 #button/3-->
     </div>
     <script>
-      M._.r.push(_=&gt;(_.g=[_.h={_:_.a,"ClosureSignalIndex:count":1}],(_.c).add(_.h),(_.a["ConditionalScope:#text/1"]=_.h),_.g),1,"__tests__/template.marko_0_count");M._.w()
+      M._.r.push(_=&gt;(_.h=[_.i={_:_.b,"ClosureSignalIndex:count":1}],(_.d).add(_.i),(_.b["ConditionalScope:#text/1"]=_.i),_.h),1,"__tests__/template.marko_0_count");M._.w()
     </script>
   </body>
 </html>
