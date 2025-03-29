@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.70
+
+### Patch Changes
+
+- [#2599](https://github.com/marko-js/marko/pull/2599) [`34006df`](https://github.com/marko-js/marko/commit/34006dfc502c30848c2de0aaa3b1276d153612c5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor serializer flushing to be decoupled from writing the rest of the script code.
+
 ## 0.3.69
 
 ### Patch Changes
