@@ -48,10 +48,10 @@
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.a={"ConditionalScope:#text/0":_.b={"#BranchAccessor":"#text/0"},promiseA:new Promise((f,r)=&gt;_.c={f,r})},_.b],_.b["#PlaceholderContent"]=_._["__tests__/template.marko_4_renderer"](_.a),_.d)];REORDER_RUNTIME(M._);M._.w()
     </script>
     <script>
-      M._.r.push(_=&gt;(_.c.f("a"),_.j=[1,_.e={"ConditionalScope:#text/1":_.f={"#BranchAccessor":"#text/1"}},_.f,_.g={"ConditionalScope:#text/1":_.h={"#BranchAccessor":"#text/1"},promiseB:new Promise((f,r)=&gt;_.i={f,r})},_.h],_.f["#PlaceholderContent"]=_._["__tests__/template.marko_5_renderer"](_.e),_.h["#PlaceholderContent"]=_._["__tests__/template.marko_10_renderer"](_.g),(_.b["ConditionalScope:#text/0"]=_.e),(_.f["ConditionalScope:#text/0"]=_.g),_.j));M._.w()
+      M._.r.push(_=&gt;(_.g=[1,_.e={"ConditionalScope:#text/1":_.f={"#BranchAccessor":"#text/1"}},_.f],_.f["#PlaceholderContent"]=_._["__tests__/template.marko_5_renderer"](_.e),(_.b["ConditionalScope:#text/0"]=_.e),_.g),_=&gt;(_.c.f("a"),_.h=[]),_=&gt;(_.l=[_.i={"ConditionalScope:#text/1":_.j={"#BranchAccessor":"#text/1"},promiseB:new Promise((f,r)=&gt;_.k={f,r})},_.j],_.j["#PlaceholderContent"]=_._["__tests__/template.marko_10_renderer"](_.i),(_.f["ConditionalScope:#text/0"]=_.i),_.l));M._.w()
     </script>
     <script>
-      M._.r.push(_=&gt;(_.i.f("b"),_.m=[1,_.k={"ConditionalScope:#text/1":_.l={"#BranchAccessor":"#text/1"}},_.l,_.n={}],_.l["#PlaceholderContent"]=_._["__tests__/template.marko_11_renderer"](_.k),(_.h["ConditionalScope:#text/0"]=_.k),(_.l["ConditionalScope:#text/0"]=_.n),_.m));M._.w()
+      M._.r.push(_=&gt;(_.o=[1,_.m={"ConditionalScope:#text/1":_.n={"#BranchAccessor":"#text/1"}},_.n],_.n["#PlaceholderContent"]=_._["__tests__/template.marko_11_renderer"](_.m),(_.j["ConditionalScope:#text/0"]=_.m),_.o),_=&gt;(_.k.f("b"),_.p=[]),_=&gt;(_.q=[_.r={}],(_.n["ConditionalScope:#text/0"]=_.r),_.q));M._.w()
     </script>
   </body>
 </html>

@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div id=ref>0</div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,{promise:new Promise((f,r)=>_.a={f,r})}]),1,"__tests__/template.marko_0_promise"];M._.w();M._.r.push(_=>(_.a.f("hello"),_.c=[]))</script>
+  <div id=ref>0</div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,{promise:new Promise((f,r)=>_.a={f,r})}]),_=>(_.a.f("hello"),_.c=[]),1,"__tests__/template.marko_0_promise"];M._.w()</script>
 ```
 
 # Render End
@@ -14,7 +14,7 @@
       0
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{promise:new Promise((f,r)=&gt;_.a={f,r})}]),1,"__tests__/template.marko_0_promise"];M._.w();M._.r.push(_=&gt;(_.a.f("hello"),_.c=[]))
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{promise:new Promise((f,r)=&gt;_.a={f,r})}]),_=&gt;(_.a.f("hello"),_.c=[]),1,"__tests__/template.marko_0_promise"];M._.w()
     </script>
   </body>
 </html>
