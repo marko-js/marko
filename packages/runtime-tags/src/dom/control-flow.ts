@@ -50,16 +50,11 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
     const thisPromise = (scope[promiseAccessor] = promise
       .then((data) => {
         if (
-          scope.___closestBranch?.___destroyed ||
-          scope[promiseAccessor] !== thisPromise
+          thisPromise === scope[promiseAccessor] &&
+          !scope.___closestBranch?.___destroyed
         ) {
-          return;
-        }
-
-        scope[promiseAccessor] = undefined;
-
-        runEffects(
-          prepareEffects(() => {
+          scope[promiseAccessor] = 0;
+          renderImmediate(() => {
             if (tryWithPlaceholder) {
               placeholderShown.add(pendingEffects);
             }
@@ -82,15 +77,16 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
             }
 
             renderer.___params?.(awaitBranch, [data]);
-          }),
-        );
+          });
 
-        if (tryWithPlaceholder) {
-          if (!--tryWithPlaceholder.___pendingAsyncCount!) {
+          if (
+            tryWithPlaceholder &&
+            !--tryWithPlaceholder.___pendingAsyncCount!
+          ) {
             const placeholderBranch = tryWithPlaceholder[
               AccessorProp.PlaceholderBranch
             ] as BranchScope;
-            tryWithPlaceholder[AccessorProp.PlaceholderBranch] = undefined;
+            tryWithPlaceholder[AccessorProp.PlaceholderBranch] = 0;
             if (placeholderBranch) {
               insertBranchBefore(
                 tryWithPlaceholder,
@@ -105,36 +101,38 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
           }
         }
       })
-      .catch((error) => {
-        renderCatch(scope, error, true);
-      }));
+      .catch((error) =>
+        renderImmediate(() => renderCatch(scope, error, true)),
+      ));
 
     if (tryWithPlaceholder) {
       placeholderShown.add(pendingEffects);
 
       if (!tryWithPlaceholder.___pendingAsyncCount) {
         tryWithPlaceholder.___pendingAsyncCount = 0;
-        requestAnimationFrame(() => {
-          if (
-            tryWithPlaceholder.___pendingAsyncCount &&
-            !tryWithPlaceholder.___destroyed
-          ) {
-            const placeholderBranch = (tryWithPlaceholder[
-              AccessorProp.PlaceholderBranch
-            ] = createAndSetupBranch(
-              scope.$global,
-              tryWithPlaceholder[AccessorProp.PlaceholderContent],
-              tryWithPlaceholder._,
-              tryWithPlaceholder.___startNode.parentNode!,
-            ));
-            insertBranchBefore(
-              placeholderBranch,
-              tryWithPlaceholder.___startNode.parentNode!,
-              tryWithPlaceholder.___startNode,
-            );
-            tempDetatchBranch(tryWithPlaceholder);
-          }
-        });
+        requestAnimationFrame(() =>
+          renderImmediate(() => {
+            if (
+              tryWithPlaceholder.___pendingAsyncCount &&
+              !tryWithPlaceholder.___destroyed
+            ) {
+              const placeholderBranch = (tryWithPlaceholder[
+                AccessorProp.PlaceholderBranch
+              ] = createAndSetupBranch(
+                scope.$global,
+                tryWithPlaceholder[AccessorProp.PlaceholderContent],
+                tryWithPlaceholder._,
+                tryWithPlaceholder.___startNode.parentNode!,
+              ));
+              insertBranchBefore(
+                placeholderBranch,
+                tryWithPlaceholder.___startNode.parentNode!,
+                tryWithPlaceholder.___startNode,
+              );
+              tempDetatchBranch(tryWithPlaceholder);
+            }
+          }),
+        );
       }
 
       tryWithPlaceholder.___pendingAsyncCount++;
@@ -146,6 +144,10 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
       tempDetatchBranch(awaitBranch);
     }
   };
+}
+
+function renderImmediate(cb: () => void) {
+  return runEffects(prepareEffects(cb));
 }
 
 export function createTry(nodeAccessor: Accessor, tryContent: Renderer) {
@@ -303,10 +305,7 @@ export let dynamicTag = function dynamicTag(
           );
         } else {
           const inputWithContent = getContent
-            ? {
-                ...args,
-                content: getContent(scope),
-              }
+            ? { ...args, content: getContent(scope) }
             : args || {};
           normalizedRenderer.___params(
             scope[childScopeAccessor],

@@ -1,4 +1,4 @@
-// size: 18904 (min) 7206 (brotli)
+// size: 18940 (min) 7221 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1153,32 +1153,30 @@ function awaitTag(nodeAccessor, renderer) {
       thisPromise = (scope[promiseAccessor] = promise
         .then((data2) => {
           if (
+            thisPromise === scope[promiseAccessor] &&
             !scope.k?.p &&
-            scope[promiseAccessor] === thisPromise &&
-            ((scope[promiseAccessor] = void 0),
-            runEffects(
-              prepareEffects(() => {
-                tryWithPlaceholder && placeholderShown.add(pendingEffects),
-                  (!awaitBranch || !tryWithPlaceholder) &&
-                    (insertBranchBefore(
-                      (awaitBranch ??= scope[branchAccessor] =
-                        createAndSetupBranch(
-                          scope.$global,
-                          renderer,
-                          scope,
-                          namespaceNode,
-                        )),
-                      referenceNode.parentNode,
-                      referenceNode,
-                    ),
-                    referenceNode.remove()),
-                  renderer.l?.(awaitBranch, [data2]);
-              }),
-            ),
+            ((scope[promiseAccessor] = 0),
+            renderImmediate(() => {
+              tryWithPlaceholder && placeholderShown.add(pendingEffects),
+                (!awaitBranch || !tryWithPlaceholder) &&
+                  (insertBranchBefore(
+                    (awaitBranch ??= scope[branchAccessor] =
+                      createAndSetupBranch(
+                        scope.$global,
+                        renderer,
+                        scope,
+                        namespaceNode,
+                      )),
+                    referenceNode.parentNode,
+                    referenceNode,
+                  ),
+                  referenceNode.remove()),
+                renderer.l?.(awaitBranch, [data2]);
+            }),
             tryWithPlaceholder && !--tryWithPlaceholder.q)
           ) {
             let placeholderBranch = tryWithPlaceholder.c;
-            (tryWithPlaceholder.c = void 0),
+            (tryWithPlaceholder.c = 0),
               placeholderBranch &&
                 (insertBranchBefore(
                   tryWithPlaceholder,
@@ -1189,33 +1187,38 @@ function awaitTag(nodeAccessor, renderer) {
               tryWithPlaceholder.H && runEffects(tryWithPlaceholder.H, !0);
           }
         })
-        .catch((error) => {
-          renderCatch(scope, error, !0);
-        }));
+        .catch((error) =>
+          renderImmediate(() => renderCatch(scope, error, !0)),
+        ));
     tryWithPlaceholder
       ? (placeholderShown.add(pendingEffects),
         tryWithPlaceholder.q ||
           ((tryWithPlaceholder.q = 0),
-          requestAnimationFrame(() => {
-            if (tryWithPlaceholder.q && !tryWithPlaceholder.p) {
-              insertBranchBefore(
-                (tryWithPlaceholder.c = createAndSetupBranch(
-                  scope.$global,
-                  tryWithPlaceholder.d,
-                  tryWithPlaceholder._,
+          requestAnimationFrame(() =>
+            renderImmediate(() => {
+              if (tryWithPlaceholder.q && !tryWithPlaceholder.p) {
+                insertBranchBefore(
+                  (tryWithPlaceholder.c = createAndSetupBranch(
+                    scope.$global,
+                    tryWithPlaceholder.d,
+                    tryWithPlaceholder._,
+                    tryWithPlaceholder.h.parentNode,
+                  )),
                   tryWithPlaceholder.h.parentNode,
-                )),
-                tryWithPlaceholder.h.parentNode,
-                tryWithPlaceholder.h,
-              ),
-                tempDetatchBranch(tryWithPlaceholder);
-            }
-          })),
+                  tryWithPlaceholder.h,
+                ),
+                  tempDetatchBranch(tryWithPlaceholder);
+              }
+            }),
+          )),
         tryWithPlaceholder.q++)
       : awaitBranch &&
         (awaitBranch.h.parentNode.insertBefore(referenceNode, awaitBranch.h),
         tempDetatchBranch(awaitBranch));
   };
+}
+function renderImmediate(cb) {
+  return runEffects(prepareEffects(cb));
 }
 function createTry(nodeAccessor, tryContent) {
   let branchAccessor = "d" + nodeAccessor;
