@@ -8,8 +8,8 @@ const _expr_value_call$define_content2 = /* @__PURE__ */_$.intersection(4, _scop
   } = _scope;
   _$.tagVarSignal(_scope, _return(_scope));
 });
-const _call$define_content2 = /* @__PURE__ */_$.state("call/3", (_scope, call) => _expr_value_call$define_content2(_scope));
-const _value$define_content2 = /* @__PURE__ */_$.value("value", (_scope, value) => _expr_value_call$define_content2(_scope));
+const _call$define_content2 = /* @__PURE__ */_$.state("call/3", _scope => _expr_value_call$define_content2(_scope));
+const _value$define_content2 = /* @__PURE__ */_$.value("value", _scope => _expr_value_call$define_content2(_scope));
 const _pattern_2$define_content = /* @__PURE__ */_$.value("_pattern_2", (_scope, _pattern_2) => _value$define_content2(_scope, _pattern_2.value));
 const _params_3$define_content = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _pattern_2$define_content(_scope, _params_3?.[0]));
 const _setup$define_content2 = _scope => {
@@ -23,8 +23,8 @@ const _expr_value_call$define_content = /* @__PURE__ */_$.intersection(4, _scope
   } = _scope;
   _$.tagVarSignal(_scope, _return2(_scope));
 });
-const _call$define_content = /* @__PURE__ */_$.state("call/3", (_scope, call) => _expr_value_call$define_content(_scope));
-const _value$define_content = /* @__PURE__ */_$.value("value", (_scope, value) => _expr_value_call$define_content(_scope));
+const _call$define_content = /* @__PURE__ */_$.state("call/3", _scope => _expr_value_call$define_content(_scope));
+const _value$define_content = /* @__PURE__ */_$.value("value", _scope => _expr_value_call$define_content(_scope));
 const _pattern_$define_content = /* @__PURE__ */_$.value("_pattern_", (_scope, _pattern_) => _value$define_content(_scope, _pattern_.value));
 const _params_2$define_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _pattern_$define_content(_scope, _params_2?.[0]));
 const _setup$define_content = _scope => {
@@ -54,21 +54,21 @@ const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => _onClickOnc
 const _onClickTwice_effect = _$.effect("__tests__/template.marko_0_onClickTwice", (_scope, {
   onClickTwice
 }) => _$.on(_scope["#button/6"], "click", onClickTwice));
-const _onClickTwice = _$.registerBoundSignal("__tests__/template.marko_0_onClickTwice/var", /* @__PURE__ */_$.value("onClickTwice", (_scope, onClickTwice) => _onClickTwice_effect(_scope)));
+const _onClickTwice = _$.registerBoundSignal("__tests__/template.marko_0_onClickTwice/var", /* @__PURE__ */_$.value("onClickTwice", _scope => _onClickTwice_effect(_scope)));
 const _clickTwiceCount = /* @__PURE__ */_$.state("clickTwiceCount/13", (_scope, clickTwiceCount) => {
   _$.data(_scope["#text/7"], clickTwiceCount);
   _expr_Twice_clickTwiceCount(_scope);
 });
-const _Twice = /* @__PURE__ */_$.value("Twice", (_scope, Twice) => _expr_Twice_clickTwiceCount(_scope));
+const _Twice = /* @__PURE__ */_$.value("Twice", _scope => _expr_Twice_clickTwiceCount(_scope));
 const _onClickOnce_effect = _$.effect("__tests__/template.marko_0_onClickOnce", (_scope, {
   onClickOnce
 }) => _$.on(_scope["#button/2"], "click", onClickOnce));
-const _onClickOnce = _$.registerBoundSignal("__tests__/template.marko_0_onClickOnce/var", /* @__PURE__ */_$.value("onClickOnce", (_scope, onClickOnce) => _onClickOnce_effect(_scope)));
+const _onClickOnce = _$.registerBoundSignal("__tests__/template.marko_0_onClickOnce/var", /* @__PURE__ */_$.value("onClickOnce", _scope => _onClickOnce_effect(_scope)));
 const _clickOnceCount = /* @__PURE__ */_$.state("clickOnceCount/9", (_scope, clickOnceCount) => {
   _$.data(_scope["#text/3"], clickOnceCount);
   _expr_Once_clickOnceCount(_scope);
 });
-const _Once = /* @__PURE__ */_$.value("Once", (_scope, Once) => _expr_Once_clickOnceCount(_scope));
+const _Once = /* @__PURE__ */_$.value("Once", _scope => _expr_Once_clickOnceCount(_scope));
 export function _setup_(_scope) {
   _Once(_scope, {
     content: _define_content(_scope)

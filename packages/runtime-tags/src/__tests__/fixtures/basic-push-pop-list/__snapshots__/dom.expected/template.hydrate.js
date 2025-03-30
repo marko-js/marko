@@ -1,4 +1,4 @@
-// size: 409 (min) 228 (brotli)
+// size: 405 (min) 228 (brotli)
 const _item$for_content = _$.value(2, (_scope, item) =>
     _$.data(_scope[0], item),
   ),
@@ -24,5 +24,5 @@ const _item$for_content = _$.value(2, (_scope, item) =>
   _items = _$.state(4, (_scope, items) => {
     _for(_scope, [items]), _expr_id_items(_scope), _items_effect(_scope);
   }),
-  _id = _$.state(3, (_scope, id) => _expr_id_items(_scope));
+  _id = _$.state(3, (_scope) => _expr_id_items(_scope));
 init();

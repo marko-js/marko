@@ -23,7 +23,7 @@ const _expr_checkedValue__checkedValueChange = /* @__PURE__ */_$.intersection(6,
     value: "c"
   });
 });
-const _checkedValueChange2 = /* @__PURE__ */_$.value("_checkedValueChange", (_scope, _checkedValueChange) => _expr_checkedValue__checkedValueChange(_scope));
+const _checkedValueChange2 = /* @__PURE__ */_$.value("_checkedValueChange", _scope => _expr_checkedValue__checkedValueChange(_scope));
 const _checkedValue = /* @__PURE__ */_$.state("checkedValue/4", (_scope, checkedValue) => {
   _$.data(_scope["#text/3"], checkedValue);
   _expr_checkedValue__checkedValueChange(_scope);

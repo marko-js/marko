@@ -1,4 +1,4 @@
-// size: 194 (min) 142 (brotli)
+// size: 190 (min) 139 (brotli)
 const _count$child_content_effect = _$.effect(
     "b1",
     (_scope, { _: { 1: count } }) =>
@@ -10,5 +10,5 @@ const _count$child_content_effect = _$.effect(
     _$.data(_scope[1], count), _count$child_content_effect(_scope);
   }),
   _count_closure = _$.dynamicClosure(_count$child_content),
-  _count = _$.state(1, (_scope, count) => _count_closure(_scope));
+  _count = _$.state(1, (_scope) => _count_closure(_scope));
 init();

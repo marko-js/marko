@@ -4,7 +4,7 @@ import Counter from "./tags/counter.marko";
 const getCounter = _getCounter;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => _count);
-const _count = _$.registerBoundSignal("__tests__/template.marko_0_count/var", (_scope, count) => {});
+const _count = _$.registerBoundSignal("__tests__/template.marko_0_count/var", _scope => {});
 const _setup__effect = _$.effect("__tests__/template.marko_0", _scope => _$.on(_scope["#button/2"], "click", function () {
   _$.tagVarSignalChange(_scope["ConditionalScope:#text/0"], 0);
 }));

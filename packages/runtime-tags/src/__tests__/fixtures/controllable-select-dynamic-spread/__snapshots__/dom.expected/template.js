@@ -30,7 +30,7 @@ const _expr_value_tag = /* @__PURE__ */_$.intersection(4, _scope => {
   }));
 });
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _tagSelect_content);
-const _tag = /* @__PURE__ */_$.value("tag", (_scope, tag) => _expr_value_tag(_scope));
+const _tag = /* @__PURE__ */_$.value("tag", _scope => _expr_value_tag(_scope));
 const _value = /* @__PURE__ */_$.state("value/2", (_scope, value) => {
   _$.data(_scope["#text/1"], value);
   _expr_value_tag(_scope);

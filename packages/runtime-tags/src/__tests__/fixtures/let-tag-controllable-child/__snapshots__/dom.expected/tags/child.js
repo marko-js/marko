@@ -27,7 +27,7 @@ const _state = /* @__PURE__ */_$.state("state/11", (_scope, state) => {
   _$.data(_scope["#text/2"], state);
   _state_effect(_scope);
 });
-const _input_valueChange = /* @__PURE__ */_$.value("input_valueChange", (_scope, input_valueChange) => _expr_input_value_input_valueChange(_scope));
+const _input_valueChange = /* @__PURE__ */_$.value("input_valueChange", _scope => _expr_input_value_input_valueChange(_scope));
 const _input_value = /* @__PURE__ */_$.value("input_value", (_scope, input_value) => {
   _$.data(_scope["#text/1"], input_value);
   _$.data(_scope["#text/4"], input_value);

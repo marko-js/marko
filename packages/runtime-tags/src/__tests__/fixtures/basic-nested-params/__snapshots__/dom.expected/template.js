@@ -8,7 +8,7 @@ const _params_3$child_content = /* @__PURE__ */_$.value("_params_3", (_scope, _p
 const _child_content2 = _$.registerContent("__tests__/template.marko_2_renderer", "<div><!>.<!></div>", /* next(1), replace, over(2), replace */"D%c%", 0, _params_3$child_content, _scope => _outer$child_content(_scope));
 const _y$child_content = /* @__PURE__ */_$.dynamicClosureRead("y", (_scope, y) => _child_input_value(_scope["#childScope/0"], y));
 const _outer$child_content2_closure = /* @__PURE__ */_$.dynamicClosure(_outer$child_content);
-const _outer$child_content2 = /* @__PURE__ */_$.value("outer", (_scope, outer) => _outer$child_content2_closure(_scope));
+const _outer$child_content2 = /* @__PURE__ */_$.value("outer", _scope => _outer$child_content2_closure(_scope));
 const _params_2$child_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _outer$child_content2(_scope, _params_2[0]));
 const _setup$child_content = _scope => {
   _child(_scope["#childScope/0"]);
@@ -16,7 +16,7 @@ const _setup$child_content = _scope => {
 };
 const _child_content = _$.registerContent("__tests__/template.marko_1_renderer", _child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$child_content, _params_2$child_content, _scope => _y$child_content(_scope));
 const _y_closure = /* @__PURE__ */_$.dynamicClosure(_y$child_content);
-const _y = /* @__PURE__ */_$.state("y/3", (_scope, y) => _y_closure(_scope));
+const _y = /* @__PURE__ */_$.state("y/3", _scope => _y_closure(_scope));
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
   x
 }) => _$.on(_scope["#button/0"], "click", function () {

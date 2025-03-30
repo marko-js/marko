@@ -1,4 +1,4 @@
-// size: 1374 (min) 517 (brotli)
+// size: 1362 (min) 518 (brotli)
 const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _expr_name_write_effect = _$.effect("a0", (_scope, { 5: name, 6: write }) => {
     write(`${name} mounted`),
@@ -9,7 +9,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _expr_name_write = _$.intersection(7, (_scope) => {
     _$.resetAbortSignal(_scope, 0), _expr_name_write_effect(_scope);
   }),
-  _write_ = _$.value(6, (_scope, write) => _expr_name_write(_scope)),
+  _write_ = _$.value(6, (_scope) => _expr_name_write(_scope)),
   _name_ = _$.value(5, (_scope, name) => {
     _$.data(_scope[0], name),
       _$.data(_scope[1], name),
@@ -83,7 +83,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
       _showInner(_scope, !showInner);
     }),
   ),
-  _showInner = _$.state(7, (_scope, showInner) => {
+  _showInner = _$.state(7, (_scope) => {
     _showInner_closure(_scope), _showInner_effect(_scope);
   }),
   _showMiddle_effect = _$.effect("b2", (_scope, { 6: showMiddle }) =>
@@ -91,7 +91,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
       _showMiddle(_scope, !showMiddle);
     }),
   ),
-  _showMiddle = _$.state(6, (_scope, showMiddle) => {
+  _showMiddle = _$.state(6, (_scope) => {
     _showMiddle$if_content(_scope), _showMiddle_effect(_scope);
   }),
   _showOuter_effect = _$.effect("b3", (_scope, { 5: showOuter }) =>

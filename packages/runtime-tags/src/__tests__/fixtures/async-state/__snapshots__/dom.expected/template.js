@@ -17,7 +17,7 @@ const _clickCount_effect = _$.effect("__tests__/template.marko_0_clickCount", (_
 }) => _$.on(_scope["#button/0"], "click", function () {
   _clickCount(_scope, clickCount + 1), clickCount;
 }));
-const _clickCount = /* @__PURE__ */_$.state("clickCount/2", (_scope, clickCount) => {
+const _clickCount = /* @__PURE__ */_$.state("clickCount/2", _scope => {
   _clickCount_closure(_scope);
   _clickCount_effect(_scope);
 });

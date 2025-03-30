@@ -1,6 +1,6 @@
 export const _template_ = "a";
 export const _walks_ = /* over(1) */"b";
-const _2 = (_scope, _) => {};
+const _2 = _scope => {};
 export function _setup_(_scope) {
   _2(_scope, (() => {
     throw new Error("ERROR!");

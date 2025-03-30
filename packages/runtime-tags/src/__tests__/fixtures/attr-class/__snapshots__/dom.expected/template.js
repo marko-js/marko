@@ -38,15 +38,15 @@ const _expr_c_d = /* @__PURE__ */_$.intersection(9, _scope => {
   }]);
 });
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3");
-export const _d_ = /* @__PURE__ */_$.value("d", (_scope, d) => {
+export const _d_ = /* @__PURE__ */_$.value("d", _scope => {
   _expr_c_d(_scope);
   _expr_input_test_c_d(_scope);
 });
-export const _c_ = /* @__PURE__ */_$.value("c", (_scope, c) => {
+export const _c_ = /* @__PURE__ */_$.value("c", _scope => {
   _expr_c_d(_scope);
   _expr_input_test_c_d(_scope);
 });
-export const _input_test_ = /* @__PURE__ */_$.value("input_test", (_scope, input_test) => _expr_input_test_c_d(_scope));
+export const _input_test_ = /* @__PURE__ */_$.value("input_test", _scope => _expr_input_test_c_d(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_test_(_scope, input.test);
   _c_(_scope, input.c);

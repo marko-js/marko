@@ -1,4 +1,4 @@
-// size: 173 (min) 143 (brotli)
+// size: 169 (min) 136 (brotli)
 const _expr_input_x_effect = _$.effect(
     "a0",
     ({ 3: input, 5: x }) => (input.output().innerHTML = x),
@@ -11,7 +11,7 @@ const _expr_input_x_effect = _$.effect(
   );
 _$.registerBoundSignal(
   "a1",
-  _$.value(5, (_scope, x) => _expr_input_x(_scope)),
+  _$.value(5, (_scope) => _expr_input_x(_scope)),
 ),
   _$.nodeRef("c0", "j0"),
   init();

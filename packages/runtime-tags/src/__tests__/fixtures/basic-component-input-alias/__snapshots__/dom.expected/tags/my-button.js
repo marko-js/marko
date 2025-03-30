@@ -5,7 +5,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _onClick__effect = _$.effect("__tests__/tags/my-button.marko_0_onClick", (_scope, {
   onClick
 }) => _$.on(_scope["#button/0"], "click", onClick));
-export const _onClick_ = /* @__PURE__ */_$.value("onClick", (_scope, onClick) => _onClick__effect(_scope));
+export const _onClick_ = /* @__PURE__ */_$.value("onClick", _scope => _onClick__effect(_scope));
 export const _text_ = /* @__PURE__ */_$.value("text", (_scope, text) => _$.data(_scope["#text/1"], text));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _text_(_scope, input.text);

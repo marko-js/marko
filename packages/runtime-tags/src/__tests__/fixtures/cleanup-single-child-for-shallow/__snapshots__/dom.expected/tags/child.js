@@ -15,7 +15,7 @@ const _expr_name_write = /* @__PURE__ */_$.intersection(5, _scope => {
   _$.resetAbortSignal(_scope, 0);
   _expr_name_write_effect(_scope);
 });
-export const _write_ = /* @__PURE__ */_$.value("write", (_scope, write) => _expr_name_write(_scope));
+export const _write_ = /* @__PURE__ */_$.value("write", _scope => _expr_name_write(_scope));
 export const _name_ = /* @__PURE__ */_$.value("name", (_scope, name) => {
   _$.data(_scope["#text/0"], name);
   _expr_name_write(_scope);

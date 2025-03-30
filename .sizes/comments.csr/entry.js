@@ -1,18 +1,15 @@
-// size: 981 (min) 467 (brotli)
+// size: 961 (min) 465 (brotli)
 const _expr_comment_comments_id$if_content = intersection(1, (_scope) => {
     const {
       _: { 8: comment_comments, 11: id },
     } = _scope;
     _input_$1(_scope[0], { comments: comment_comments, path: id });
   }),
-  _id$if_content = conditionalClosure(11, 4, 0, (_scope, id) =>
+  _id$if_content = conditionalClosure(11, 4, 0, (_scope) =>
     _expr_comment_comments_id$if_content(_scope),
   ),
-  _comment_comments$if_content = conditionalClosure(
-    8,
-    4,
-    0,
-    (_scope, comment_comments) => _expr_comment_comments_id$if_content(_scope),
+  _comment_comments$if_content = conditionalClosure(8, 4, 0, (_scope) =>
+    _expr_comment_comments_id$if_content(_scope),
   ),
   _if_content = createRenderer(
     "<ul></ul>",
@@ -46,9 +43,7 @@ const _expr_comment_comments_id$if_content = intersection(1, (_scope) => {
   _id$for_content = value(11, (_scope, id) => {
     attr(_scope[0], "id", id), _id$if_content(_scope);
   }),
-  _i$for_content = value(9, (_scope, i) =>
-    _expr_input_path_i$for_content(_scope),
-  ),
+  _i$for_content = value(9, (_scope) => _expr_input_path_i$for_content(_scope)),
   _comment_comments$for_content = value(8, (_scope, comment_comments) => {
     _if$for_content(_scope, comment_comments ? 0 : 1),
       _comment_comments$if_content(_scope);
@@ -64,7 +59,7 @@ const _expr_comment_comments_id$if_content = intersection(1, (_scope) => {
     _comment$for_content(_scope, _params_2[0]),
       _i$for_content(_scope, _params_2[1]);
   }),
-  _input_path$for_content = loopClosure(4, 0, (_scope, input_path) =>
+  _input_path$for_content = loopClosure(4, 0, (_scope) =>
     _expr_input_path_i$for_content(_scope),
   ),
   _for = loopOf(
@@ -79,9 +74,7 @@ const _expr_comment_comments_id$if_content = intersection(1, (_scope) => {
       (_scope) => _input_path$for_content._(_scope),
     ),
   ),
-  _input_path_ = value(4, (_scope, input_path) =>
-    _input_path$for_content(_scope),
-  ),
+  _input_path_ = value(4, (_scope) => _input_path$for_content(_scope)),
   _input_comments_ = value(3, (_scope, input_comments) =>
     _for(_scope, [input_comments]),
   ),

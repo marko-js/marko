@@ -1,4 +1,4 @@
-// size: 1292 (min) 492 (brotli)
+// size: 1280 (min) 491 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 3: name, 4: write }) => {
@@ -11,7 +11,7 @@ const _expr_name_write_effect = _$.effect(
   _expr_name_write = _$.intersection(5, (_scope) => {
     _$.resetAbortSignal(_scope, 0), _expr_name_write_effect(_scope);
   }),
-  _write_ = _$.value(4, (_scope, write) => _expr_name_write(_scope)),
+  _write_ = _$.value(4, (_scope) => _expr_name_write(_scope)),
   _name_ = _$.value(3, (_scope, name) => {
     _$.data(_scope[0], name), _expr_name_write(_scope);
   }),
@@ -82,7 +82,7 @@ const _expr_name_write_effect = _$.effect(
       _showInner(_scope, !showInner);
     }),
   ),
-  _showInner = _$.state(7, (_scope, showInner) => {
+  _showInner = _$.state(7, (_scope) => {
     _showInner_closure(_scope), _showInner_effect(_scope);
   }),
   _showMiddle_effect = _$.effect("b2", (_scope, { 6: showMiddle }) =>
@@ -90,7 +90,7 @@ const _expr_name_write_effect = _$.effect(
       _showMiddle(_scope, !showMiddle);
     }),
   ),
-  _showMiddle = _$.state(6, (_scope, showMiddle) => {
+  _showMiddle = _$.state(6, (_scope) => {
     _showMiddle$if_content(_scope), _showMiddle_effect(_scope);
   }),
   _showOuter_effect = _$.effect("b3", (_scope, { 5: showOuter }) =>

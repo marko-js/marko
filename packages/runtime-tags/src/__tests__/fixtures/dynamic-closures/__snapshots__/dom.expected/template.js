@@ -28,7 +28,7 @@ const _customTag_content = /* @__PURE__ */_$.createContent("__tests__/template.m
 });
 const _if = /* @__PURE__ */_$.conditional("#div/2", _if_content);
 const _c_closure = /* @__PURE__ */_$.dynamicClosure(_c$customTag_content, _c$if_content);
-const _c = /* @__PURE__ */_$.state("c/4", (_scope, c) => _c_closure(_scope));
+const _c = /* @__PURE__ */_$.state("c/4", _scope => _c_closure(_scope));
 const _b = /* @__PURE__ */_$.value("b");
 const _setup__effect = _$.effect("__tests__/template.marko_0", _scope => _$.on(_scope["#button/0"], "click", function () {
   _c(_scope, 4);

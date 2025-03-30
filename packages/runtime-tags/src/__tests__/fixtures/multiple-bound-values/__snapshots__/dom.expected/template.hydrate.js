@@ -1,4 +1,4 @@
-// size: 608 (min) 236 (brotli)
+// size: 600 (min) 233 (brotli)
 const _expr_input_count2_input_count2Change = _$.intersection(11, (_scope) => {
     const { 9: input_count2, 10: input_count2Change } = _scope;
     _count2$1(_scope, input_count2, input_count2Change);
@@ -23,10 +23,10 @@ const _expr_input_count2_input_count2Change = _$.intersection(11, (_scope) => {
   _count$1 = _$.state(12, (_scope, count1) => {
     _$.data(_scope[1], count1), _count_effect(_scope);
   }),
-  _input_count2_ = _$.value(9, (_scope, input_count2) =>
+  _input_count2_ = _$.value(9, (_scope) =>
     _expr_input_count2_input_count2Change(_scope),
   ),
-  _input_count1_ = _$.value(6, (_scope, input_count1) =>
+  _input_count1_ = _$.value(6, (_scope) =>
     _expr_input_count1_input_count1Change(_scope),
   ),
   _count2 = _$.state(4, (_scope, count2) => {

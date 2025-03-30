@@ -1,4 +1,4 @@
-// size: 518 (min) 256 (brotli)
+// size: 514 (min) 253 (brotli)
 const _setup_$1 = () => {},
   _value_$1 = _$.value(3, (_scope, value) => _$.data(_scope[0], value)),
   _input_$1 = _$.value(2, (_scope, input) => _value_$1(_scope, input.value));
@@ -29,7 +29,7 @@ const _expr_tagName_val = _$.intersection(4, (_scope) => {
       _tagName(_scope, tagName === child1 ? child2 : child1);
     }),
   ),
-  _tagName = _$.state(2, (_scope, tagName) => {
+  _tagName = _$.state(2, (_scope) => {
     _expr_tagName_val(_scope), _tagName_effect(_scope);
   });
 init();

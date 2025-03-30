@@ -9,7 +9,7 @@ const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
 }) => _$.on(_scope["#button/0"], "click", function () {
   _count(_scope, count + 1), count;
 }));
-const _count = /* @__PURE__ */_$.state("count/4", (_scope, count) => {
+const _count = /* @__PURE__ */_$.state("count/4", _scope => {
   _count$if_content(_scope);
   _count_effect(_scope);
 });
