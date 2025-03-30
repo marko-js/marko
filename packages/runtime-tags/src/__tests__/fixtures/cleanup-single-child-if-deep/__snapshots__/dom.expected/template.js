@@ -38,7 +38,7 @@ const _showInner_effect = _$.effect("__tests__/template.marko_0_showInner", (_sc
 }) => _$.on(_scope["#button/2"], "click", function () {
   _showInner(_scope, !showInner);
 }));
-const _showInner = /* @__PURE__ */_$.state("showInner/7", (_scope, showInner) => {
+const _showInner = /* @__PURE__ */_$.state("showInner/7", _scope => {
   _showInner_closure(_scope);
   _showInner_effect(_scope);
 });
@@ -47,7 +47,7 @@ const _showMiddle_effect = _$.effect("__tests__/template.marko_0_showMiddle", (_
 }) => _$.on(_scope["#button/1"], "click", function () {
   _showMiddle(_scope, !showMiddle);
 }));
-const _showMiddle = /* @__PURE__ */_$.state("showMiddle/6", (_scope, showMiddle) => {
+const _showMiddle = /* @__PURE__ */_$.state("showMiddle/6", _scope => {
   _showMiddle$if_content(_scope);
   _showMiddle_effect(_scope);
 });

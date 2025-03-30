@@ -1,4 +1,4 @@
-// size: 232 (min) 147 (brotli)
+// size: 228 (min) 146 (brotli)
 const _c$if_content = _$.dynamicClosureRead(
     4,
     (_scope, c) => _$.data(_scope[2], c),
@@ -8,7 +8,7 @@ const _c$if_content = _$.dynamicClosureRead(
     _$.data(_scope[2], c),
   ),
   _c_closure = _$.dynamicClosure(_c$customTag_content, _c$if_content),
-  _c = _$.state(4, (_scope, c) => _c_closure(_scope));
+  _c = _$.state(4, (_scope) => _c_closure(_scope));
 _$.effect("b1", (_scope) =>
   _$.on(_scope[0], "click", function () {
     _c(_scope, 4);

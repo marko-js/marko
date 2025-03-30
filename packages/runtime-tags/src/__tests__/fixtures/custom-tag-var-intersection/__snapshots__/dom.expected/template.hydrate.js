@@ -1,4 +1,4 @@
-// size: 352 (min) 226 (brotli)
+// size: 348 (min) 226 (brotli)
 const _expr_input_extra_x = _$.intersection(6, (_scope) => {
     const { 4: input_extra, 5: x } = _scope;
     _$.tagVarSignal(_scope, x + input_extra);
@@ -23,6 +23,6 @@ const _expr_input_extra_x = _$.intersection(6, (_scope) => {
   _message = _$.value(6, (_scope, message) => _$.data(_scope[2], message));
 _$.registerBoundSignal(
   "b0",
-  _$.value(4, (_scope, data) => _expr_name_data(_scope)),
+  _$.value(4, (_scope) => _expr_name_data(_scope)),
 ),
   init();

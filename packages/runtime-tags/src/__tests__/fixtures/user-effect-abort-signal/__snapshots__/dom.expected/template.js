@@ -11,7 +11,7 @@ const _input_value__effect = _$.effect("__tests__/template.marko_0_input_value",
     _$.getAbortSignal(_scope, 0).onabort = () => _b(_scope, previousValue);
   }
 });
-export const _input_value_ = /* @__PURE__ */_$.value("input_value", (_scope, input_value) => {
+export const _input_value_ = /* @__PURE__ */_$.value("input_value", _scope => {
   _$.resetAbortSignal(_scope, 0);
   _input_value__effect(_scope);
 });

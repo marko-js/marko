@@ -1,8 +1,8 @@
 export const _template_ = "<div><button> </button></div>";
 export const _walks_ = /* next(1), get, next(1), get, out(2) */"D D m";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _unused_2 = (_scope, unused_2) => {};
-const _unused_ = (_scope, unused_1) => {};
+const _unused_2 = _scope => {};
+const _unused_ = _scope => {};
 const _clickCount_effect = _$.effect("__tests__/template.marko_0_clickCount", (_scope, {
   clickCount
 }) => _$.on(_scope["#button/0"], "click", function () {

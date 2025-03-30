@@ -25,10 +25,10 @@ const _expr_input_a_input_b = /* @__PURE__ */_$.intersection(7, _scope => {
 const _if3 = /* @__PURE__ */_$.conditional("#div/2", _if_content3, _elseIf_content, _else_content);
 const _if2 = /* @__PURE__ */_$.conditional("#text/1", _if_content2);
 const _if = /* @__PURE__ */_$.conditional("#text/0", _if_content);
-export const _input_y_ = /* @__PURE__ */_$.value("input_y", (_scope, input_y) => _expr_input_x_input_y(_scope));
-export const _input_x_ = /* @__PURE__ */_$.value("input_x", (_scope, input_x) => _expr_input_x_input_y(_scope));
-export const _input_b_ = /* @__PURE__ */_$.value("input_b", (_scope, input_b) => _expr_input_a_input_b(_scope));
-export const _input_a_ = /* @__PURE__ */_$.value("input_a", (_scope, input_a) => _expr_input_a_input_b(_scope));
+export const _input_y_ = /* @__PURE__ */_$.value("input_y", _scope => _expr_input_x_input_y(_scope));
+export const _input_x_ = /* @__PURE__ */_$.value("input_x", _scope => _expr_input_x_input_y(_scope));
+export const _input_b_ = /* @__PURE__ */_$.value("input_b", _scope => _expr_input_a_input_b(_scope));
+export const _input_a_ = /* @__PURE__ */_$.value("input_a", _scope => _expr_input_a_input_b(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_a_(_scope, input.a);
   _input_b_(_scope, input.b);

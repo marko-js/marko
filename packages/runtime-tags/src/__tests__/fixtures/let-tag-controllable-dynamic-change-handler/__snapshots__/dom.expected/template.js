@@ -17,7 +17,7 @@ const _y = /* @__PURE__ */_$.state("y/7", (_scope, y) => {
   _$.data(_scope["#text/2"], y);
   _y_effect(_scope);
 });
-const _yChange = /* @__PURE__ */_$.state("yChange/5", (_scope, yChange) => _expr_x_yChange(_scope));
+const _yChange = /* @__PURE__ */_$.state("yChange/5", _scope => _expr_x_yChange(_scope));
 const _x = /* @__PURE__ */_$.state("x/4", (_scope, x) => {
   _$.data(_scope["#text/1"], x);
   _expr_x_yChange(_scope);

@@ -1,4 +1,4 @@
-// size: 266 (min) 177 (brotli)
+// size: 262 (min) 175 (brotli)
 const _tagName_content = _$.registerContent("a0", "body content"),
   _expr_tagName_className = _$.intersection(4, (_scope) => {
     const { 2: tagName, 3: className } = _scope;
@@ -10,7 +10,7 @@ const _tagName_content = _$.registerContent("a0", "body content"),
       _tagName(_scope, "span" === tagName ? "div" : "span");
     }),
   ),
-  _tagName = _$.state(2, (_scope, tagName) => {
+  _tagName = _$.state(2, (_scope) => {
     _expr_tagName_className(_scope), _tagName_effect(_scope);
   });
 init();

@@ -7,7 +7,7 @@ export const _content_ = /* @__PURE__ */_$.value("content", (_scope, content) =>
 const _onClick__effect = _$.effect("__tests__/tags/my-button.marko_0_onClick", (_scope, {
   onClick
 }) => _$.on(_scope["#button/0"], "click", onClick));
-export const _onClick_ = /* @__PURE__ */_$.value("onClick", (_scope, onClick) => _onClick__effect(_scope));
+export const _onClick_ = /* @__PURE__ */_$.value("onClick", _scope => _onClick__effect(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _onClick_(_scope, input.onClick);
   _content_(_scope, input.content);

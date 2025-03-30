@@ -11,10 +11,10 @@ const _expr_user_fullName_user_firstName_user_middleName_user_lastName = /* @__P
   _fullName(_scope, user_fullName = `${user_firstName} ${user_middleName} ${user_lastName}`);
 }, 3);
 const _fullName = /* @__PURE__ */_$.value("fullName", (_scope, fullName) => _$.data(_scope["#text/0"], fullName));
-const _user_lastName = /* @__PURE__ */_$.value("user_lastName", (_scope, user_lastName) => _expr_user_fullName_user_firstName_user_middleName_user_lastName(_scope));
-const _user_middleName = /* @__PURE__ */_$.value("user_middleName", (_scope, user_middleName) => _expr_user_fullName_user_firstName_user_middleName_user_lastName(_scope));
-const _user_firstName = /* @__PURE__ */_$.value("user_firstName", (_scope, user_firstName) => _expr_user_fullName_user_firstName_user_middleName_user_lastName(_scope));
-const _user_fullName = /* @__PURE__ */_$.value("user_fullName", (_scope, user_fullName) => _expr_user_fullName_user_firstName_user_middleName_user_lastName(_scope));
+const _user_lastName = /* @__PURE__ */_$.value("user_lastName", _scope => _expr_user_fullName_user_firstName_user_middleName_user_lastName(_scope));
+const _user_middleName = /* @__PURE__ */_$.value("user_middleName", _scope => _expr_user_fullName_user_firstName_user_middleName_user_lastName(_scope));
+const _user_firstName = /* @__PURE__ */_$.value("user_firstName", _scope => _expr_user_fullName_user_firstName_user_middleName_user_lastName(_scope));
+const _user_fullName = /* @__PURE__ */_$.value("user_fullName", _scope => _expr_user_fullName_user_firstName_user_middleName_user_lastName(_scope));
 const _user = /* @__PURE__ */_$.value("user", (_scope, user) => {
   _user_fullName(_scope, user.fullName);
   _user_firstName(_scope, user.firstName);

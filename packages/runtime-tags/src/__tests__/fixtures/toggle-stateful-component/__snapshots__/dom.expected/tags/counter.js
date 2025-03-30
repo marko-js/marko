@@ -14,7 +14,7 @@ const _clickCount = /* @__PURE__ */_$.state("clickCount/5", (_scope, clickCount)
   })(), clickCount));
   _expr_input_onCount_clickCount(_scope);
 });
-export const _input_onCount_ = /* @__PURE__ */_$.value("input_onCount", (_scope, input_onCount) => _expr_input_onCount_clickCount(_scope));
+export const _input_onCount_ = /* @__PURE__ */_$.value("input_onCount", _scope => _expr_input_onCount_clickCount(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_onCount_(_scope, input.onCount));
 export function _setup_(_scope) {
   _clickCount(_scope, 0);

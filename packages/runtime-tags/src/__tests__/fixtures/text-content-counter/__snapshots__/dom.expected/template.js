@@ -9,7 +9,7 @@ const _clickCount_effect = _$.effect("__tests__/template.marko_0_clickCount", (_
     _clickCount(_scope, clickCount + 1), clickCount;
   });
 });
-const _clickCount = /* @__PURE__ */_$.state("clickCount/1", (_scope, clickCount) => _clickCount_effect(_scope));
+const _clickCount = /* @__PURE__ */_$.state("clickCount/1", _scope => _clickCount_effect(_scope));
 export function _setup_(_scope) {
   _clickCount(_scope, 0);
 }

@@ -16,7 +16,7 @@ const _count$myTag_content = /* @__PURE__ */_$.dynamicClosureRead("count", (_sco
 });
 const _myTag_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", 0, 0, _scope => _count$myTag_content(_scope));
 const _count_closure = /* @__PURE__ */_$.dynamicClosure(_count$myTag_content);
-const _count = _$.registerBoundSignal("__tests__/template.marko_0_count/var", /* @__PURE__ */_$.value("count", (_scope, count) => _count_closure(_scope)));
+const _count = _$.registerBoundSignal("__tests__/template.marko_0_count/var", /* @__PURE__ */_$.value("count", _scope => _count_closure(_scope)));
 export function _setup_(_scope) {
   _$.setTagVar(_scope, "#childScope/0", _count);
   _myLet(_scope["#childScope/0"]);

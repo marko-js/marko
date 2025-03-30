@@ -12,13 +12,13 @@ const _expr_tagName_className = /* @__PURE__ */_$.intersection(4, _scope => {
   }));
 });
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _tagName_content);
-const _className = /* @__PURE__ */_$.state("className/3", (_scope, className) => _expr_tagName_className(_scope));
+const _className = /* @__PURE__ */_$.state("className/3", _scope => _expr_tagName_className(_scope));
 const _tagName_effect = _$.effect("__tests__/template.marko_0_tagName", (_scope, {
   tagName
 }) => _$.on(_scope["#button/1"], "click", function () {
   _tagName(_scope, tagName === "span" ? "div" : "span");
 }));
-const _tagName = /* @__PURE__ */_$.state("tagName/2", (_scope, tagName) => {
+const _tagName = /* @__PURE__ */_$.state("tagName/2", _scope => {
   _expr_tagName_className(_scope);
   _tagName_effect(_scope);
 });

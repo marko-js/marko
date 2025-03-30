@@ -1,4 +1,4 @@
-// size: 363 (min) 206 (brotli)
+// size: 359 (min) 212 (brotli)
 _$.enableCatch();
 const _value$await_content = _$.value(2, (_scope, value) =>
     _$.data(_scope[0], value),
@@ -18,7 +18,7 @@ const _await$try_content = _$.awaitTag(0, _await_content),
       _clickCount(_scope, clickCount + 1);
     }),
   ),
-  _clickCount = _$.state(2, (_scope, clickCount) => {
+  _clickCount = _$.state(2, (_scope) => {
     _clickCount_closure(_scope), _clickCount_effect(_scope);
   });
 init();

@@ -17,7 +17,7 @@ const _y = /* @__PURE__ */_$.state("y/6", (_scope, y) => {
   _$.data(_scope["#text/2"], y);
   _y_effect(_scope);
 });
-const _handler = /* @__PURE__ */_$.state("handler/4", (_scope, handler) => _expr_x_handler(_scope));
+const _handler = /* @__PURE__ */_$.state("handler/4", _scope => _expr_x_handler(_scope));
 const _x = /* @__PURE__ */_$.state("x/3", (_scope, x) => {
   _$.data(_scope["#text/1"], x);
   _expr_x_handler(_scope);

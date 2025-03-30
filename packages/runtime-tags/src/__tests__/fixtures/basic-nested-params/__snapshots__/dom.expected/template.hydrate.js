@@ -1,11 +1,11 @@
-// size: 656 (min) 306 (brotli)
+// size: 644 (min) 311 (brotli)
 const _expr_content_value = _$.intersection(5, (_scope) => {
     const { 3: content, 4: value } = _scope;
     _dynamicTag(_scope, content, () => value);
   }),
   _dynamicTag = _$.dynamicTag(),
-  _value_ = _$.value(4, (_scope, value) => _expr_content_value(_scope)),
-  _content_ = _$.value(3, (_scope, content) => _expr_content_value(_scope)),
+  _value_ = _$.value(4, (_scope) => _expr_content_value(_scope)),
+  _content_ = _$.value(3, (_scope) => _expr_content_value(_scope)),
   _inner$child_content = _$.value(3, (_scope, inner) =>
     _$.data(_scope[1], inner),
   ),
@@ -27,7 +27,7 @@ const _expr_content_value = _$.intersection(5, (_scope) => {
     _value_(_scope[0], y),
   ),
   _outer$child_content2_closure = _$.dynamicClosure(_outer$child_content),
-  _outer$child_content2 = _$.value(2, (_scope, outer) =>
+  _outer$child_content2 = _$.value(2, (_scope) =>
     _outer$child_content2_closure(_scope),
   ),
   _params_2$child_content = _$.value(1, (_scope, _params_2) =>

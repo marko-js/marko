@@ -10,7 +10,7 @@ const _input__effect = _$.effect("__tests__/tags/child.marko_0_input", (_scope, 
     input.write('destroyed');
   };
 });
-export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
+export const _input_ = /* @__PURE__ */_$.value("input", _scope => {
   _$.resetAbortSignal(_scope, 0);
   _input__effect(_scope);
 });

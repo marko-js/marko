@@ -1,12 +1,12 @@
-// size: 1302 (min) 421 (brotli)
+// size: 1278 (min) 424 (brotli)
 const _expr_value_call$define_content2 = _$.intersection(4, (_scope) => {
     const { 2: value, 3: call } = _scope;
     _$.tagVarSignal(_scope, _return(_scope));
   }),
-  _call$define_content2 = _$.state(3, (_scope, call) =>
+  _call$define_content2 = _$.state(3, (_scope) =>
     _expr_value_call$define_content2(_scope),
   ),
-  _value$define_content2 = _$.value(2, (_scope, value) =>
+  _value$define_content2 = _$.value(2, (_scope) =>
     _expr_value_call$define_content2(_scope),
   ),
   _pattern_2$define_content = _$.value(1, (_scope, _pattern_2) =>
@@ -28,10 +28,10 @@ const _expr_value_call$define_content = _$.intersection(4, (_scope) => {
     const { 2: value, 3: call } = _scope;
     _$.tagVarSignal(_scope, _return2(_scope));
   }),
-  _call$define_content = _$.state(3, (_scope, call) =>
+  _call$define_content = _$.state(3, (_scope) =>
     _expr_value_call$define_content(_scope),
   ),
-  _value$define_content = _$.value(2, (_scope, value) =>
+  _value$define_content = _$.value(2, (_scope) =>
     _expr_value_call$define_content(_scope),
   ),
   _pattern_$define_content = _$.value(1, (_scope, _pattern_) =>
@@ -64,7 +64,7 @@ const _expr_Twice_clickTwiceCount = _$.intersection(14, (_scope) => {
   ),
   _onClickTwice = _$.registerBoundSignal(
     "a7",
-    _$.value(15, (_scope, onClickTwice) => _onClickTwice_effect(_scope)),
+    _$.value(15, (_scope) => _onClickTwice_effect(_scope)),
   ),
   _clickTwiceCount = _$.state(13, (_scope, clickTwiceCount) => {
     _$.data(_scope[7], clickTwiceCount), _expr_Twice_clickTwiceCount(_scope);
@@ -74,7 +74,7 @@ const _expr_Twice_clickTwiceCount = _$.intersection(14, (_scope) => {
   ),
   _onClickOnce = _$.registerBoundSignal(
     "a9",
-    _$.value(11, (_scope, onClickOnce) => _onClickOnce_effect(_scope)),
+    _$.value(11, (_scope) => _onClickOnce_effect(_scope)),
   ),
   _clickOnceCount = _$.state(9, (_scope, clickOnceCount) => {
     _$.data(_scope[3], clickOnceCount), _expr_Once_clickOnceCount(_scope);

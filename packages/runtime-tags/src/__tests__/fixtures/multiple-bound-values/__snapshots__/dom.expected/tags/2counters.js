@@ -34,10 +34,10 @@ const _count = /* @__PURE__ */_$.state("count1/12", (_scope, count1) => {
   _$.data(_scope["#text/1"], count1);
   _count_effect(_scope);
 });
-export const _input_count2Change_ = /* @__PURE__ */_$.value("input_count2Change", (_scope, input_count2Change) => _expr_input_count2_input_count2Change(_scope));
-export const _input_count2_ = /* @__PURE__ */_$.value("input_count2", (_scope, input_count2) => _expr_input_count2_input_count2Change(_scope));
-export const _input_count1Change_ = /* @__PURE__ */_$.value("input_count1Change", (_scope, input_count1Change) => _expr_input_count1_input_count1Change(_scope));
-export const _input_count1_ = /* @__PURE__ */_$.value("input_count1", (_scope, input_count1) => _expr_input_count1_input_count1Change(_scope));
+export const _input_count2Change_ = /* @__PURE__ */_$.value("input_count2Change", _scope => _expr_input_count2_input_count2Change(_scope));
+export const _input_count2_ = /* @__PURE__ */_$.value("input_count2", _scope => _expr_input_count2_input_count2Change(_scope));
+export const _input_count1Change_ = /* @__PURE__ */_$.value("input_count1Change", _scope => _expr_input_count1_input_count1Change(_scope));
+export const _input_count1_ = /* @__PURE__ */_$.value("input_count1", _scope => _expr_input_count1_input_count1Change(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_count1_(_scope, input.count1);
   _input_count1Change_(_scope, input.count1Change);

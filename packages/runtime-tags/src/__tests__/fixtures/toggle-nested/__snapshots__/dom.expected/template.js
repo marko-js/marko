@@ -16,12 +16,12 @@ const _if_content = /* @__PURE__ */_$.createRenderer("<!><!><!><!>", /* replace,
 });
 const _if = /* @__PURE__ */_$.conditional("#div/0", _if_content);
 const _value2__closure = /* @__PURE__ */_$.dynamicClosure(_value2$if_content);
-export const _value2_ = /* @__PURE__ */_$.value("value2", (_scope, value2) => {
+export const _value2_ = /* @__PURE__ */_$.value("value2", _scope => {
   _value2$if_content2(_scope);
   _value2__closure(_scope);
 });
 const _value1__closure = /* @__PURE__ */_$.dynamicClosure(_value1$if_content);
-export const _value1_ = /* @__PURE__ */_$.value("value1", (_scope, value1) => {
+export const _value1_ = /* @__PURE__ */_$.value("value1", _scope => {
   _value1$if_content2(_scope);
   _value1__closure(_scope);
 });

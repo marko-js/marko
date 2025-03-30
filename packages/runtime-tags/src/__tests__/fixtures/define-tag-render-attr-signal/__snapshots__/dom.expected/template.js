@@ -15,7 +15,7 @@ const _expr_x_MyTag = /* @__PURE__ */_$.intersection(5, _scope => {
   }));
 });
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
-const _MyTag = /* @__PURE__ */_$.value("MyTag", (_scope, MyTag) => _expr_x_MyTag(_scope));
+const _MyTag = /* @__PURE__ */_$.value("MyTag", _scope => _expr_x_MyTag(_scope));
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
   x
 }) => _$.on(_scope["#button/1"], "click", function () {

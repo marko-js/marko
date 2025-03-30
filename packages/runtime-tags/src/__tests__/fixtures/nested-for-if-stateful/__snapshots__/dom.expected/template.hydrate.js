@@ -1,4 +1,4 @@
-// size: 925 (min) 419 (brotli)
+// size: 909 (min) 418 (brotli)
 const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
     _$.data(_scope[1], count),
   ),
@@ -43,7 +43,7 @@ const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
     (_scope) => _expr_counts_count_i$if_content_effect(_scope),
     2,
   ),
-  _i$if_content = _$.conditionalClosure(3, 0, 0, (_scope, i) =>
+  _i$if_content = _$.conditionalClosure(3, 0, 0, (_scope) =>
     _expr_counts_count_i$if_content(_scope),
   ),
   _count$if_content = _$.conditionalClosure(2, 0, 0, (_scope, count) => {
@@ -51,7 +51,7 @@ const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
   }),
   _counts$if_content = _$.dynamicClosureRead(
     1,
-    (_scope, counts) => _expr_counts_count_i$if_content(_scope),
+    (_scope) => _expr_counts_count_i$if_content(_scope),
     (_scope) => _scope._._,
   ),
   _if_content = _$.createRenderer(
@@ -69,8 +69,8 @@ const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
   _editing$for_content = _$.state(4, (_scope, editing) =>
     _if$for_content(_scope, editing ? 0 : 1),
   ),
-  _i$for_content = _$.value(3, (_scope, i) => _i$if_content(_scope)),
-  _count$for_content = _$.value(2, (_scope, count) => {
+  _i$for_content = _$.value(3, (_scope) => _i$if_content(_scope)),
+  _count$for_content = _$.value(2, (_scope) => {
     _count$if_content(_scope), _count$else_content(_scope);
   }),
   _params_2$for_content = _$.value(1, (_scope, _params_2) => {

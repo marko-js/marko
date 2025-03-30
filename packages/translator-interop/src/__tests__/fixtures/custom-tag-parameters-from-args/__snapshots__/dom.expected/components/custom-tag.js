@@ -28,7 +28,7 @@ const _x = /* @__PURE__ */_$.state("x/7", (_scope, x) => {
   _expr_x_y(_scope);
   _expr_input_content_x_y(_scope);
 });
-export const _input_content_ = /* @__PURE__ */_$.value("input_content", (_scope, input_content) => _expr_input_content_x_y(_scope));
+export const _input_content_ = /* @__PURE__ */_$.value("input_content", _scope => _expr_input_content_x_y(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_content_(_scope, input.content));
 export function _setup_(_scope) {
   _x(_scope, 1);

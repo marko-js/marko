@@ -140,9 +140,9 @@ const _dynamicTag4 = /* @__PURE__ */_$.dynamicTag("#text/3");
 const _dynamicTag3 = /* @__PURE__ */_$.dynamicTag("#text/2");
 const _dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/1");
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
-const _tagConstB = /* @__PURE__ */_$.value("tagConstB", (_scope, tagConstB) => _expr_other_tagConstB(_scope));
-const _tagConstA = /* @__PURE__ */_$.value("tagConstA", (_scope, tagConstA) => _expr_other_tagConstA(_scope));
-const _largeHeading = /* @__PURE__ */_$.value("largeHeading", (_scope, largeHeading) => _expr_other_largeHeading(_scope));
+const _tagConstB = /* @__PURE__ */_$.value("tagConstB", _scope => _expr_other_tagConstB(_scope));
+const _tagConstA = /* @__PURE__ */_$.value("tagConstA", _scope => _expr_other_tagConstA(_scope));
+const _largeHeading = /* @__PURE__ */_$.value("largeHeading", _scope => _expr_other_largeHeading(_scope));
 export const _other_ = /* @__PURE__ */_$.value("other", (_scope, other) => {
   _dynamicTag11(_scope, global.x = "a" + "b", () => ({
     class: ["a", "b"],
@@ -159,19 +159,19 @@ export const _other_ = /* @__PURE__ */_$.value("other", (_scope, other) => {
   _expr_other_tagConstA(_scope);
   _expr_other_tagConstB(_scope);
 });
-export const _level_ = /* @__PURE__ */_$.value("level", (_scope, level) => _expr_level_other(_scope));
-export const _tag_ = /* @__PURE__ */_$.value("tag", (_scope, tag) => _expr_tag_other(_scope));
+export const _level_ = /* @__PURE__ */_$.value("level", _scope => _expr_level_other(_scope));
+export const _tag_ = /* @__PURE__ */_$.value("tag", _scope => _expr_tag_other(_scope));
 export const _isLarge_ = /* @__PURE__ */_$.value("isLarge", (_scope, isLarge) => {
   _largeHeading(_scope, isLarge && "h1");
   _expr_isLarge_other(_scope);
 });
-export const _showTagA_ = /* @__PURE__ */_$.value("showTagA", (_scope, showTagA) => _expr_showTagA_other(_scope));
+export const _showTagA_ = /* @__PURE__ */_$.value("showTagA", _scope => _expr_showTagA_other(_scope));
 export const _show_ = /* @__PURE__ */_$.value("show", (_scope, show) => {
   _tagConstB(_scope, show ? "div" : null);
   _expr_show_other(_scope);
 });
-export const _x_ = /* @__PURE__ */_$.value("x", (_scope, x) => _expr_x_other(_scope));
-export const _content_ = /* @__PURE__ */_$.value("content", (_scope, content) => _expr_content_other(_scope));
+export const _x_ = /* @__PURE__ */_$.value("x", _scope => _expr_x_other(_scope));
+export const _content_ = /* @__PURE__ */_$.value("content", _scope => _expr_content_other(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _content_(_scope, input.content);
   _x_(_scope, input.x);

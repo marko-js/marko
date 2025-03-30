@@ -10,8 +10,8 @@ const _expr_content_value = /* @__PURE__ */_$.intersection(5, _scope => {
   _dynamicTag(_scope, content, () => value);
 });
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
-export const _value_ = /* @__PURE__ */_$.value("value", (_scope, value) => _expr_content_value(_scope));
-export const _content_ = /* @__PURE__ */_$.value("content", (_scope, content) => _expr_content_value(_scope));
+export const _value_ = /* @__PURE__ */_$.value("value", _scope => _expr_content_value(_scope));
+export const _content_ = /* @__PURE__ */_$.value("content", _scope => _expr_content_value(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _content_(_scope, input.content);
   _value_(_scope, input.value);

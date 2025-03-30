@@ -253,7 +253,7 @@ export function getSignal(
     if (isOutputHTML()) {
       return signal;
     } else if (!referencedBindings) {
-      signal.build = () => getSignalFn(signal, [scopeIdentifier]);
+      signal.build = () => getSignalFn(signal);
     } else if (Array.isArray(referencedBindings)) {
       subscribe(referencedBindings, signal);
       signal.build = () => {
@@ -261,11 +261,7 @@ export function getSignal(
         return callRuntime(
           "intersection",
           t.numericLiteral(id),
-          getSignalFn(
-            signal,
-            [scopeIdentifier],
-            signal.renderReferencedBindings,
-          ),
+          getSignalFn(signal),
           scopeOffset || referencedBindings.length > 2
             ? t.numericLiteral(referencedBindings.length - 1)
             : undefined,
@@ -277,10 +273,7 @@ export function getSignal(
       bindingUtil.find(section.referencedClosures, referencedBindings)
     ) {
       signal.build = () => {
-        const render = getSignalFn(signal, [
-          scopeIdentifier,
-          t.identifier(referencedBindings.name),
-        ]);
+        const render = getSignalFn(signal);
         const closureSignalBuilder = getClosureSignalBuilder(section);
         return !closureSignalBuilder ||
           isDynamicClosure(section, referencedBindings)
@@ -309,10 +302,7 @@ export function initValue(
   const section = binding.section;
   const signal = getSignal(section, binding);
   signal.build = () => {
-    const fn = getSignalFn(signal, [
-      scopeIdentifier,
-      t.identifier(binding.name),
-    ]);
+    const fn = getSignalFn(signal);
     const isParamBinding =
       !binding.upstreamAlias &&
       (binding.type === BindingType.param ||
@@ -348,28 +338,37 @@ export function initValue(
   return signal;
 }
 
-export function getSignalFn(
-  signal: Signal,
-  params: Array<t.Identifier | t.Pattern>,
-  referencedBindings?: ReferencedBindings,
-) {
+function getSignalFn(signal: Signal) {
   const section = signal.section;
   const binding = signal.referencedBindings;
-  const [scopeIdentifier, valueIdentifier] = params as [
-    t.Identifier,
-    t.Identifier,
-  ];
-  const isValueSignal =
-    binding && !Array.isArray(binding) && binding.section === section;
+  const params: t.Identifier[] = [scopeIdentifier];
+  const isIntersection = Array.isArray(binding);
+  const isBinding = binding && !isIntersection;
+  const isValue = isBinding && binding.section === section;
 
-  if (isValueSignal) {
+  if (
+    isBinding &&
+    (signal.renderReferencedBindings ||
+      binding.aliases.size ||
+      binding.propertyAliases.size)
+  ) {
+    const valueParam = t.identifier(binding.name);
+    if (binding.loc) {
+      valueParam.loc = binding.loc;
+      valueParam.start = (binding.loc.start as any).index;
+      valueParam.end = (binding.loc.end as any).index;
+    }
+    params.push(valueParam);
+  }
+
+  if (isValue) {
     for (const alias of binding.aliases) {
       const aliasSignal = getSignal(alias.section, alias);
       signal.render.push(
         t.expressionStatement(
           t.callExpression(aliasSignal.identifier, [
             scopeIdentifier,
-            valueIdentifier,
+            t.identifier(binding.name),
             ...getTranslatedExtraArgs(aliasSignal),
           ]),
         ),
@@ -382,7 +381,11 @@ export function getSignalFn(
         t.expressionStatement(
           t.callExpression(aliasSignal.identifier, [
             scopeIdentifier,
-            toMemberExpression(valueIdentifier, key, binding.nullable),
+            toMemberExpression(
+              t.identifier(binding.name),
+              key,
+              binding.nullable,
+            ),
             ...getTranslatedExtraArgs(aliasSignal),
           ]),
         ),
@@ -408,7 +411,7 @@ export function getSignalFn(
     );
   });
 
-  if (isValueSignal) {
+  if (isValue) {
     let dynamicClosureArgs: t.Expression[] | undefined;
     let dynamicClosureSignalIdentifier: t.Identifier | undefined;
     forEach(binding.closureSections, (closureSection) => {
@@ -466,11 +469,11 @@ export function getSignalFn(
     );
   }
 
-  if (referencedBindings) {
+  if (isIntersection && signal.renderReferencedBindings) {
     signal.render.unshift(
       t.variableDeclaration("const", [
         t.variableDeclarator(
-          createScopeReadPattern(section, referencedBindings),
+          createScopeReadPattern(section, signal.renderReferencedBindings),
           scopeIdentifier,
         ),
       ]),

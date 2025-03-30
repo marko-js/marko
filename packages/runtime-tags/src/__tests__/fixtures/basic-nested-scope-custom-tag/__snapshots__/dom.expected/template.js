@@ -15,7 +15,7 @@ const _count$child_content = /* @__PURE__ */_$.dynamicClosureRead("count", (_sco
 });
 const _child_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", 0, 0, _scope => _count$child_content(_scope));
 const _count_closure = /* @__PURE__ */_$.dynamicClosure(_count$child_content);
-const _count = /* @__PURE__ */_$.state("count/1", (_scope, count) => _count_closure(_scope));
+const _count = /* @__PURE__ */_$.state("count/1", _scope => _count_closure(_scope));
 export function _setup_(_scope) {
   _child(_scope["#childScope/0"]);
   _count(_scope, 0);

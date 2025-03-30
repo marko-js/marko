@@ -8,8 +8,8 @@ const _expr_value_dummy = /* @__PURE__ */_$.intersection(5, _scope => {
   } = _scope;
   _$.data(_scope["#text/0"], (dummy, value));
 });
-const _dummy = /* @__PURE__ */_$.state("dummy/4", (_scope, dummy) => _expr_value_dummy(_scope));
-export const _value_ = /* @__PURE__ */_$.value("value", (_scope, value) => _expr_value_dummy(_scope));
+const _dummy = /* @__PURE__ */_$.state("dummy/4", _scope => _expr_value_dummy(_scope));
+export const _value_ = /* @__PURE__ */_$.value("value", _scope => _expr_value_dummy(_scope));
 export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _value_(_scope, input.value));
 export function _setup_(_scope) {
   _dummy(_scope, {});
