@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.71
+
+### Patch Changes
+
+- [#2602](https://github.com/marko-js/marko/pull/2602) [`6a2560a`](https://github.com/marko-js/marko/commit/6a2560a3d921b379f27745f0e1feb0ebb5b3c981) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with render queue not consumed when replacing placeholder/catch.
+
 ## 0.3.70
 
 ### Patch Changes
