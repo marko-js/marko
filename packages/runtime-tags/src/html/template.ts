@@ -1,5 +1,9 @@
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
-import type { RenderResult, Template, TemplateInput } from "../common/types";
+import type {
+  RenderedTemplate,
+  Template,
+  TemplateInput,
+} from "../common/types";
 import { registerContent } from "./dynamic-tag";
 import { Boundary, Chunk, offTick, queueTick, State } from "./writer";
 
@@ -44,10 +48,10 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
     null,
   );
   head.render(this, input);
-  return new ServerRenderResult(head);
+  return new ServerRendered(head);
 }
 
-class ServerRenderResult implements RenderResult {
+class ServerRendered implements RenderedTemplate {
   #head: Chunk | null;
   #cachedPromise: Promise<string> | null = null;
   constructor(head: Chunk) {
@@ -153,11 +157,12 @@ class ServerRenderResult implements RenderResult {
   }
 
   toReadable() {
+    const encoder = new TextEncoder();
     return new ReadableStream({
       start: (ctrl) => {
         this.#read(
           (html) => {
-            ctrl.enqueue(html);
+            ctrl.enqueue(encoder.encode(html));
           },
           (err) => {
             ctrl.error(err);

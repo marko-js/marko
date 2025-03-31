@@ -1,10 +1,10 @@
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import type {
   BranchScope,
+  MountedTemplate,
   Scope,
   Template,
   TemplateInput,
-  TemplateInstance,
 } from "../common/types";
 import { insertChildNodes } from "./dom";
 import { prepareEffects, runEffects } from "./queue";
@@ -45,7 +45,7 @@ function mount(
   input: TemplateInput = {},
   reference: Node,
   position?: InsertPosition,
-): TemplateInstance {
+): MountedTemplate {
   let branch!: BranchScope;
   let parentNode = reference as ParentNode;
   let nextSibling: Node | null = null;

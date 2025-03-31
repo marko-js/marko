@@ -232,6 +232,23 @@ var proto = (AsyncStream.prototype = {
     });
   },
 
+  toReadable() {
+    return new ReadableStream({
+      async start(ctrl) {
+        const encoder = new TextEncoder();
+        try {
+          for await (const chunk of this) {
+            ctrl.enqueue(encoder.encode(chunk));
+          }
+
+          ctrl.close();
+        } catch (err) {
+          ctrl.error(err);
+        }
+      },
+    });
+  },
+
   sync: function () {
     this._sync = true;
   },

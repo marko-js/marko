@@ -33,6 +33,24 @@ declare global {
       $global?: Global;
     };
 
+    /** The result of calling `template.render`. */
+    export type RenderedTemplate = Promise<string> &
+      AsyncIterable<string> & {
+        toReadable(): ReadableStream<Uint8Array<ArrayBufferLike>>;
+        pipe(stream: {
+          write(chunk: string): unknown;
+          end(): unknown;
+          flush?(): void;
+        }): void;
+        toString(): string;
+      };
+
+    /** The result of calling `template.mount`. */
+    export type MountedTemplate<Input = unknown> = {
+      update(input: Marko.TemplateInput<Input>): void;
+      destroy(): void;
+    };
+
     /** Body content created by a template. */
     export interface Body<
       in Params extends readonly any[] = [],
@@ -68,26 +86,16 @@ declare global {
 
       /** @marko-overload-start */
       /** Render the template to a string. */
-      abstract render(input: Marko.TemplateInput<Input>): Promise<string> &
-        AsyncIterable<string> & {
-          toReadable(): ReadableStream;
-          pipe(stream: {
-            write(chunk: string): unknown;
-            end(): unknown;
-            flush?(): void;
-          }): void;
-          toString(): string;
-        };
+      abstract render(
+        input: Marko.TemplateInput<Input>,
+      ): Marko.RenderedTemplate;
 
       /** Render and attach the template to a DOM node. */
       abstract mount(
         input: Marko.TemplateInput<Input>,
         reference: Node,
         position?: "afterbegin" | "afterend" | "beforebegin" | "beforeend",
-      ): {
-        update(input: Marko.TemplateInput<Input>): void;
-        destroy(): void;
-      };
+      ): Marko.MountedTemplate<typeof input>;
       /** @marko-overload-end */
     }
 

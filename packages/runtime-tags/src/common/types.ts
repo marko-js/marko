@@ -101,18 +101,18 @@ export interface Template {
     input: Input,
     reference: Node,
     position?: InsertPosition,
-  ): TemplateInstance;
-  render(input?: Input): RenderResult;
+  ): MountedTemplate;
+  render(input?: Input): RenderedTemplate;
 }
 
-export interface TemplateInstance {
+export interface MountedTemplate {
   update(input: unknown): void;
   destroy(): void;
 }
 
-export type RenderResult = PromiseLike<string> &
+export type RenderedTemplate = PromiseLike<string> &
   AsyncIterable<string> & {
-    toReadable(): ReadableStream;
+    toReadable(): ReadableStream<Uint8Array<ArrayBufferLike>>;
   };
 
 export enum ControlledType {
