@@ -28,8 +28,28 @@ declare global {
       $global?: Global;
     };
 
+    /** The result of calling `template.render`. */
+    export type RenderedTemplate<
+      Component extends Marko.Component = Marko.Component,
+    > = Promise<RenderResult<Component>> &
+      AsyncIterable<string> & {
+        toReadable(): ReadableStream<Uint8Array<ArrayBufferLike>>;
+        pipe(stream: {
+          write(chunk: string): unknown;
+          end(): unknown;
+          flush?(): void;
+        }): void;
+        toString(): string;
+      };
+
+    /** The result of calling `template.mount`. */
+    export type MountedTemplate<Input = unknown> = {
+      update(input: Marko.TemplateInput<Input>): void;
+      destroy(): void;
+    };
+
     export interface Out<Component extends Marko.Component = Marko.Component>
-      extends PromiseLike<RenderResult<Component>> {
+      extends Marko.RenderedTemplate<Component> {
       /** The underlying ReadableStream Marko is writing into. */
       stream: unknown;
       /** A mutable global object for the current render. */
@@ -42,8 +62,6 @@ declare global {
       write(val: string | void): this;
       /** Write javascript content to be merged with the scripts Marko sends out on the next flush. */
       script(val: string | void): this;
-      /** Returns the currently rendered html content. */
-      toString(): string;
       /** Starts a new async/forked stream. */
       beginAsync(options?: {
         name?: string;
@@ -65,8 +83,6 @@ declare global {
       ): this;
       /** Register a callback executed when the last async out has completed. */
       onLast(listener: (next: () => void) => unknown): this;
-      /** Pipe Marko's stream to another stream. */
-      pipe(stream: unknown): this;
       /** Emits an error on the stream. */
       error(e: Error): this;
       /** Schedules a Marko to flush buffered html to the underlying stream. */
@@ -256,6 +272,13 @@ declare global {
       abstract stream(
         input: Marko.TemplateInput<Input>,
       ): ReadableStream<string> & NodeJS.ReadableStream;
+
+      /** Render and attach the template to a DOM node. */
+      abstract mount(
+        input: Marko.TemplateInput<Input>,
+        reference: Node,
+        position?: "afterbegin" | "afterend" | "beforebegin" | "beforeend",
+      ): Marko.MountedTemplate<typeof input>;
       /** @marko-overload-end */
     }
 
