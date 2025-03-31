@@ -112,21 +112,18 @@ export default {
 
     if (importPath) {
       if (!node.var) {
-        currentProgramPath.pushContainer(
-          "body",
+        currentProgramPath.node.body.push(
           t.importDeclaration([], t.stringLiteral(importPath)),
         );
       } else if (t.isIdentifier(node.var)) {
-        currentProgramPath.pushContainer(
-          "body",
+        currentProgramPath.node.body.push(
           t.importDeclaration(
             [t.importDefaultSpecifier(node.var)],
             t.stringLiteral(importPath),
           ),
         );
       } else {
-        currentProgramPath.pushContainer(
-          "body",
+        currentProgramPath.node.body.push(
           t.variableDeclaration("const", [
             t.variableDeclarator(
               node.var,
