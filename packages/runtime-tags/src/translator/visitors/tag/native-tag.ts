@@ -346,8 +346,7 @@ export default {
             getterFnIdentifier = currentProgramPath.scope.generateUidIdentifier(
               `get_${varName}`,
             );
-            currentProgramPath.pushContainer(
-              "body",
+            currentProgramPath.node.body.push(
               t.variableDeclaration("const", [
                 t.variableDeclarator(
                   getterFnIdentifier,

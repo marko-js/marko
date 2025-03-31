@@ -180,8 +180,7 @@ export default {
           );
         }
 
-        currentProgramPath.pushContainer(
-          "body",
+        currentProgramPath.node.body.push(
           t.expressionStatement(callRuntime("enableCatch")),
         );
 

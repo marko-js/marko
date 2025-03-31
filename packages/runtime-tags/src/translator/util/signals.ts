@@ -525,11 +525,11 @@ export function getDestructureSignal(
       get identifier() {
         if (!id) {
           id = currentProgramPath.scope.generateUidIdentifier("destructure");
-          currentProgramPath.pushContainer("body", [
+          currentProgramPath.node.body.push(
             t.variableDeclaration("const", [
               t.variableDeclarator(id, this.build(true)),
             ]),
-          ]);
+          );
         }
         return id;
       },
@@ -792,8 +792,7 @@ export function writeSignals(section: Section) {
 
       const hoistIdentifier = getHoistFunctionIdentifier(hoistedBinding);
 
-      currentProgramPath.pushContainer(
-        "body",
+      currentProgramPath.node.body.push(
         t.variableDeclaration("const", [
           t.variableDeclarator(
             hoistIdentifier,
@@ -906,7 +905,7 @@ export function writeSignals(section: Section) {
     }
 
     signalStatements.push(signalDeclaration);
-    currentProgramPath.pushContainer("body", signalStatements);
+    currentProgramPath.node.body.push(...signalStatements);
   }
 }
 
@@ -975,9 +974,7 @@ export function writeRegisteredFns() {
       );
     }
 
-    for (const stmt of currentProgramPath.pushContainer("body", statements)) {
-      stmt.skip();
-    }
+    currentProgramPath.node.body.push(...statements);
   }
 }
 
@@ -1035,6 +1032,7 @@ export function writeHTMLResumeStatements(
   const section = getSectionForBody(path);
   if (!section) return;
 
+  const body = path.node.body as t.Statement[];
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
   const serializeOwnersUntilBinding = (binding: Binding) =>
@@ -1161,8 +1159,7 @@ export function writeHTMLResumeStatements(
   for (let i = allSignals.length; i--; ) {
     if (allSignals[i].effect.length) {
       const signalRefs = allSignals[i].referencedBindings;
-      path.pushContainer(
-        "body",
+      body.push(
         t.expressionStatement(
           callRuntime(
             "writeEffect",
@@ -1259,8 +1256,7 @@ export function writeHTMLResumeStatements(
       }
     }
 
-    path.pushContainer(
-      "body",
+    body.push(
       t.expressionStatement(
         writeScopeBuilder
           ? writeScopeBuilder(callRuntime("writeScope", ...writeScopeArgs))
@@ -1276,8 +1272,7 @@ export function writeHTMLResumeStatements(
       !!find(section.bindings, (binding) => binding.type === BindingType.let));
 
   if (resumeClosestBranch) {
-    path.pushContainer(
-      "body",
+    body.push(
       t.expressionStatement(
         callRuntime("resumeClosestBranch", scopeIdIdentifier),
       ),
@@ -1285,18 +1280,18 @@ export function writeHTMLResumeStatements(
   }
 
   const additionalStatements = getHTMLSectionStatements(section);
-  if (path.get("body").length || additionalStatements.length) {
-    path.unshiftContainer("body", [
+  if (body.length || additionalStatements.length) {
+    body.unshift(
       t.variableDeclaration("const", [
         t.variableDeclarator(scopeIdIdentifier, callRuntime("nextScopeId")),
       ]),
       ...additionalStatements,
-    ]);
+    );
   }
 
   const returnIdentifier = getSectionReturnValueIdentifier(section);
   if (returnIdentifier !== undefined) {
-    path.pushContainer("body", t.returnStatement(returnIdentifier));
+    body.push(t.returnStatement(returnIdentifier));
   }
 }
 

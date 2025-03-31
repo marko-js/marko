@@ -61,17 +61,16 @@ export default {
         ),
       );
 
-      program.pushContainer(
-        "body",
-        contentId
-          ? [
-              t.variableDeclaration("const", [
-                t.variableDeclarator(t.identifier(contentId), contentFn),
-              ]),
-              exportDefault,
-            ]
-          : exportDefault,
-      );
+      if (contentId) {
+        program.node.body.push(
+          t.variableDeclaration("const", [
+            t.variableDeclarator(t.identifier(contentId), contentFn),
+          ]),
+          exportDefault,
+        );
+      } else {
+        program.node.body.push(exportDefault);
+      }
     },
   },
 } satisfies TemplateVisitor<t.Program>;

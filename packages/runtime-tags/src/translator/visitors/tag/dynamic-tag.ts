@@ -136,8 +136,7 @@ export default {
         // We use the dynamic tag when a custom tag from the class runtime is used
 
         if (isOutputHTML()) {
-          currentProgramPath.pushContainer(
-            "body",
+          currentProgramPath.node.body.push(
             t.markoScriptlet(
               [
                 t.expressionStatement(
@@ -154,8 +153,7 @@ export default {
             ),
           );
         } else {
-          currentProgramPath.pushContainer(
-            "body",
+          currentProgramPath.node.body.push(
             t.expressionStatement(
               callRuntime(
                 "register",
