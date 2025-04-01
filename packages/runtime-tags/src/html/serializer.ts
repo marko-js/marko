@@ -1,8 +1,11 @@
 import type { Boundary } from "./writer";
 
+const kTouchedIterator = Symbol();
 const { hasOwnProperty } = {};
 const Generator = (function* () {})().constructor;
 const AsyncGenerator = (async function* () {})().constructor;
+patchIteratorNext(Generator.prototype);
+patchIteratorNext(AsyncGenerator.prototype);
 
 interface Registered {
   id: string;
@@ -1309,6 +1312,11 @@ function writeReadableStream(
 }
 
 function writeGenerator(state: State, iter: Generator, ref: Reference) {
+  if ((iter as any)[kTouchedIterator]) {
+    state.buf.push("(async function*(){}())");
+    return true;
+  }
+
   let sep = "";
   state.buf.push("(function*(){");
 
@@ -1340,6 +1348,11 @@ function writeAsyncGenerator(
   iter: AsyncGenerator,
   ref: Reference,
 ) {
+  if ((iter as any)[kTouchedIterator]) {
+    state.buf.push("(async function*(){}())");
+    return true;
+  }
+
   const { boundary } = state;
   if (!boundary) return false;
 
@@ -1732,4 +1745,12 @@ function isWord(char: string) {
     char === "_" ||
     char === "$"
   );
+}
+
+function patchIteratorNext(proto: Iterator<any>) {
+  const { next } = proto;
+  proto.next = function (value) {
+    (this as any)[kTouchedIterator] = 1;
+    return next.call(this, value);
+  };
 }

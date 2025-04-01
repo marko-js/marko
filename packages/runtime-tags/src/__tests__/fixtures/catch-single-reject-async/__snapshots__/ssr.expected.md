@@ -5,7 +5,7 @@
 
 # Write
 ```html
-  <script>M._.r.push(_=>(_.d=[_.e={}],(_.a["ConditionalScope:#text/1"]=_.e),_.d))</script>
+  <script>M._.r.push(_=>(_.d=[_.e={}],(_.a["ConditionalScope:#text/1"]=_.e),_.d));M._.w()</script>
 ```
 
 # Write
