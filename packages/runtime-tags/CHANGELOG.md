@@ -1,5 +1,19 @@
 # @marko/runtime-tags
 
+## 0.3.72
+
+### Patch Changes
+
+- [#2604](https://github.com/marko-js/marko/pull/2604) [`3e2ea77`](https://github.com/marko-js/marko/commit/3e2ea77799dc6a7ab37dc0dc503960f48ae2f689) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid using push/unshift container which causes unecessary revisits.
+
+- [#2604](https://github.com/marko-js/marko/pull/2604) [`e3d4485`](https://github.com/marko-js/marko/commit/e3d4485ab6eacf1ceb1234a4a2c81aa115ccc3a1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid priting identifiers for value and closure parameters when the value is not referenced.
+
+- [#2606](https://github.com/marko-js/marko/pull/2606) [`bfa2bc1`](https://github.com/marko-js/marko/commit/bfa2bc1dbabd7a3e0e40557d1de64c202b47745e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where placeholder was being re-created across await tag runs.
+
+- [#2604](https://github.com/marko-js/marko/pull/2604) [`70cb96e`](https://github.com/marko-js/marko/commit/70cb96eb8790434014eef368cea62a060522f231) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose better types for working with ssr and csr rendered template results.
+
+- [#2604](https://github.com/marko-js/marko/pull/2604) [`70cb96e`](https://github.com/marko-js/marko/commit/70cb96eb8790434014eef368cea62a060522f231) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure `toReadable` api on rendered ssr templates are text encoded.
+
 ## 0.3.71
 
 ### Patch Changes

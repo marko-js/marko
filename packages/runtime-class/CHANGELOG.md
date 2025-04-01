@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.37.26
+
+### Patch Changes
+
+- [#2604](https://github.com/marko-js/marko/pull/2604) [`70cb96e`](https://github.com/marko-js/marko/commit/70cb96eb8790434014eef368cea62a060522f231) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose `toReadable` api for whatwg streams in any environment.
+
+- [#2604](https://github.com/marko-js/marko/pull/2604) [`70cb96e`](https://github.com/marko-js/marko/commit/70cb96eb8790434014eef368cea62a060522f231) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose better types for working with ssr and csr rendered template results.
+
 ## 5.37.25
 
 ### Patch Changes
