@@ -154,6 +154,8 @@ export default {
 
 function isAwaitExpression(node: t.Node) {
   switch (node.type) {
+    case "ForOfStatement":
+      return node.await;
     case "FunctionDeclaration":
     case "FunctionExpression":
     case "ArrowFunctionExpression":
