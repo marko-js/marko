@@ -1,5 +1,17 @@
 # @marko/runtime-tags
 
+## 0.3.74
+
+### Patch Changes
+
+- [#2609](https://github.com/marko-js/marko/pull/2609) [`edbbadd`](https://github.com/marko-js/marko/commit/edbbadde15bd4764a0ada7a80f3446c7fa2e5b1f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with ssr apis being incorrectly marked as pure.
+
+- [#2609](https://github.com/marko-js/marko/pull/2609) [`96b33d9`](https://github.com/marko-js/marko/commit/96b33d97dd2299b61a782bdbd543287f543feabd) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix support for `for await` statements within script tag.
+
+- [#2609](https://github.com/marko-js/marko/pull/2609) [`9fd96ac`](https://github.com/marko-js/marko/commit/9fd96acc81f06c3b4d14daa39406b2ae335b7ff5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure walk/deserialized always called when serializer was flushed.
+
+- [#2609](https://github.com/marko-js/marko/pull/2609) [`9fd96ac`](https://github.com/marko-js/marko/commit/9fd96acc81f06c3b4d14daa39406b2ae335b7ff5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid serializing already consumed iterators.
+
 ## 0.3.73
 
 ### Patch Changes
