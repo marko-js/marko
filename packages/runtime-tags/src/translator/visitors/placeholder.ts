@@ -3,7 +3,7 @@ import { types as t } from "@marko/compiler";
 import { WalkCode } from "../../common/types";
 import { getDynamicSourcesForReferences } from "../util/dynamic-sources";
 import evaluate from "../util/evaluate";
-import { isCoreTag } from "../util/is-core-tag";
+import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML } from "../util/marko-config";
 import {
   type Binding,
@@ -43,7 +43,7 @@ type DOMMethod = "html" | "data";
 
 export default {
   analyze(placeholder) {
-    if (isNonHTMLPlaceholder(placeholder)) return;
+    if (isNonHTMLText(placeholder)) return;
 
     const { node } = placeholder;
     const { confident, computed } = evaluate(node.value);
@@ -61,6 +61,8 @@ export default {
   },
   translate: {
     exit(placeholder) {
+      if (isNonHTMLText(placeholder)) return;
+
       const { node } = placeholder;
       const { value } = node;
       const { confident, computed, referencedBindings } = evaluate(value);
@@ -185,22 +187,6 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
   }
 
   return (placeholderExtra[kSiblingText] = SiblingText.None);
-}
-
-function isNonHTMLPlaceholder(placeholder: t.NodePath<t.MarkoPlaceholder>) {
-  const parentTag =
-    placeholder.parentPath.isMarkoTagBody() &&
-    placeholder.parentPath.parentPath;
-  if (parentTag && isCoreTag(parentTag)) {
-    switch (parentTag.node.name.value) {
-      case "html-comment":
-      case "html-script":
-      case "html-style":
-        return true;
-    }
-  }
-
-  return false;
 }
 
 function isVoid(value: unknown) {
