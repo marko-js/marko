@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.76
+
+### Patch Changes
+
+- [#2613](https://github.com/marko-js/marko/pull/2613) [`ac64e18`](https://github.com/marko-js/marko/commit/ac64e18ef6093a57ecd4ae26492c4ac28b2a80b7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with parentNode reference when placeholder is displayed.
+
 ## 0.3.75
 
 ### Patch Changes
