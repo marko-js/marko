@@ -1,5 +1,14 @@
 # @marko/runtime-tags
 
+## 0.3.73
+
+### Patch Changes
+
+- [#2607](https://github.com/marko-js/marko/pull/2607) [`7110193`](https://github.com/marko-js/marko/commit/7110193bffa170a662549265c33996691f17453e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor to use getProgram/getFile api from compiler.
+
+- Updated dependencies [[`7110193`](https://github.com/marko-js/marko/commit/7110193bffa170a662549265c33996691f17453e)]:
+  - @marko/compiler@5.39.15
+
 ## 0.3.72
 
 ### Patch Changes
