@@ -234,7 +234,7 @@ var proto = (AsyncStream.prototype = {
 
   toReadable() {
     return new ReadableStream({
-      async start(ctrl) {
+      start: async (ctrl) => {
         const encoder = new TextEncoder();
         try {
           for await (const chunk of this) {
