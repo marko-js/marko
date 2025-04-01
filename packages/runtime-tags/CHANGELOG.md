@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.75
+
+### Patch Changes
+
+- [#2611](https://github.com/marko-js/marko/pull/2611) [`a8e1392`](https://github.com/marko-js/marko/commit/a8e13925f55d29bdfdf1be7c4802dec3dc829613) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with some visitors not being called for html-\* tags.
+
 ## 0.3.74
 
 ### Patch Changes
