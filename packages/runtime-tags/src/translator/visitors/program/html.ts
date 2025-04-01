@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import { getProgram, types as t } from "@marko/compiler";
 
 import isStatic from "../../util/is-static";
 import { getReadReplacement, isRegisteredFnExtra } from "../../util/references";
@@ -9,18 +9,17 @@ import { simplifyFunction } from "../../util/simplify-fn";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
 import { flushInto } from "../../util/writer";
-import { currentProgramPath } from ".";
 
 const templateContentIdentifierForProgram = new WeakMap<
   t.NodePath<t.Program>,
   string
 >();
 export function getTemplateContentName() {
-  let name = templateContentIdentifierForProgram.get(currentProgramPath);
+  let name = templateContentIdentifierForProgram.get(getProgram());
   if (!name) {
     templateContentIdentifierForProgram.set(
-      currentProgramPath,
-      (name = currentProgramPath.scope.generateUid("content")),
+      getProgram(),
+      (name = getProgram().scope.generateUid("content")),
     );
   }
 

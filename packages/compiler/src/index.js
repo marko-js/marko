@@ -14,6 +14,7 @@ import throwAggregateError from "./util/merge-errors";
 import shouldOptimize from "./util/should-optimize";
 import tryLoadTranslator from "./util/try-load-translator";
 export { taglib };
+export { getFile, getProgram } from "./babel-plugin";
 
 const CWD = process.cwd();
 

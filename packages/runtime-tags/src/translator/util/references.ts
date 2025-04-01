@@ -1,6 +1,5 @@
-import { types as t } from "@marko/compiler";
+import { getProgram, types as t } from "@marko/compiler";
 
-import { currentProgramPath } from "../visitors/program";
 import { getDynamicSourcesForReferences } from "./dynamic-sources";
 import { forEachIdentifier } from "./for-each-identifier";
 import { getAccessorPrefix } from "./get-accessor-char";
@@ -201,7 +200,7 @@ export function trackParamsReferences(
     const paramsBinding =
       canonicalUpstreamAlias ||
       ((body.node.extra ??= {}).binding = createBinding(
-        currentProgramPath.scope.generateUid("params_"),
+        getProgram().scope.generateUid("params_"),
         type,
         section,
         canonicalUpstreamAlias,
@@ -240,9 +239,7 @@ export function trackHoistedReference(
     binding.hoists.set(
       hoistSection,
       (hoistedBinding = createBinding(
-        currentProgramPath.scope.generateUid(
-          "hoisted_" + referencePath.node.name,
-        ),
+        getProgram().scope.generateUid("hoisted_" + referencePath.node.name),
         BindingType.hoist,
         hoistSection,
         undefined,
@@ -365,7 +362,7 @@ function createBindingsAndTrackReferences(
           ? upstreamAlias!.propertyAliases.get(property)
           : upstreamAlias) ||
         ((lVal.extra ??= {}).binding = createBinding(
-          currentProgramPath.scope.generateUid("pattern_"),
+          getProgram().scope.generateUid("pattern_"),
           type,
           section,
           upstreamAlias,
@@ -418,7 +415,7 @@ function createBindingsAndTrackReferences(
           ? upstreamAlias!.propertyAliases.get(property)
           : upstreamAlias) ||
         ((lVal.extra ??= {}).binding = createBinding(
-          currentProgramPath.scope.generateUid("pattern_"),
+          getProgram().scope.generateUid("pattern_"),
           type,
           section,
           upstreamAlias,
@@ -640,7 +637,7 @@ export function finalizeReferences() {
               -- ${_count}
           ```
         */
-        binding.name = currentProgramPath.scope.generateUid(name);
+        binding.name = getProgram().scope.generateUid(name);
       }
     }
 

@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import { getProgram, types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoAttributeTags,
@@ -14,7 +14,7 @@ import runtimeInfo from "../util/runtime-info";
 import { getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { skip, traverseContains } from "../util/traverse";
-import { currentProgramPath, scopeIdentifier } from "../visitors/program";
+import { scopeIdentifier } from "../visitors/program";
 
 const htmlScriptTagAlternateMsg =
   " For a native html `script` tag use the `html-script` core tag instead.";
@@ -75,7 +75,7 @@ export default {
         }
         seenValueAttr = true;
         (attr.value.extra ??= {}).isEffect = true;
-        (currentProgramPath.node.extra ??= {}).isInteractive = true;
+        (getProgram().node.extra ??= {}).isInteractive = true;
       } else {
         throw tag.hub.buildError(
           attr,

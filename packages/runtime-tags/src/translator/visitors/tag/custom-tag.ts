@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import { getProgram, types as t } from "@marko/compiler";
 import {
   assertAttributesOrSingleArg,
   getTagTemplate,
@@ -63,11 +63,7 @@ import translateVar from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
-import {
-  currentProgramPath,
-  scopeIdentifier,
-  type TemplateExport,
-} from "../program";
+import { scopeIdentifier, type TemplateExport } from "../program";
 import { getTemplateContentName } from "../program/html";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
@@ -144,7 +140,7 @@ export default {
           childProgramExtra?.domExports!.input,
         );
         // TODO: should check individual inputs to see if they are intersecting with state
-        currentProgramPath.node.extra!.hasInteractiveChild =
+        getProgram().node.extra!.hasInteractiveChild =
           childProgramExtra?.isInteractive ||
           childProgramExtra?.hasInteractiveChild ||
           false;

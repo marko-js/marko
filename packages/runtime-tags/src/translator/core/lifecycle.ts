@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import { getProgram, types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoParams,
@@ -21,7 +21,7 @@ import runtimeInfo from "../util/runtime-info";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { addHTMLEffectCall, addStatement } from "../util/signals";
 import { propsToExpression, translateAttrs } from "../util/translate-attrs";
-import { currentProgramPath, scopeIdentifier } from "../visitors/program";
+import { scopeIdentifier } from "../visitors/program";
 
 const kRef = Symbol("lifecycle attrs reference");
 declare module "@marko/compiler/dist/types" {
@@ -41,7 +41,7 @@ export default {
     const tagExtra = (node.extra ??= {});
     const section = getOrCreateSection(tag);
     tagExtra[kRef] = createBinding(
-      currentProgramPath.scope.generateUid("lifecycle"),
+      getProgram().scope.generateUid("lifecycle"),
       BindingType.derived,
       section,
       undefined,
@@ -67,7 +67,7 @@ export default {
       (attr.value.extra ??= {}).isEffect = true;
     }
 
-    (currentProgramPath.node.extra ??= {}).isInteractive = true;
+    (getProgram().node.extra ??= {}).isInteractive = true;
     mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
   },
   translate: {

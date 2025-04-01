@@ -2,7 +2,7 @@
 // we should probably attempt to share that logic where possible.
 // Also need to ensure it stays in sync.
 
-import { types as t } from "@marko/compiler";
+import { getProgram, types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoParams,
@@ -42,7 +42,7 @@ import { propsToExpression } from "../util/translate-attrs";
 import translateVar from "../util/translate-var";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
-import { currentProgramPath, scopeIdentifier } from "../visitors/program";
+import { scopeIdentifier } from "../visitors/program";
 import {
   kNativeTagBinding,
   kSerializeMarker,
@@ -139,7 +139,7 @@ export default {
       hasDynamicAttributes ||
       hasBodyPlaceholders
     ) {
-      currentProgramPath.node.extra.isInteractive ||= hasEventHandlers;
+      getProgram().node.extra.isInteractive ||= hasEventHandlers;
       const tagExtra = (node.extra ??= {});
       const bindingName = "#style";
       tagExtra[kSerializeMarker] = hasEventHandlers || !!node.var;
@@ -189,10 +189,10 @@ export default {
         const references = tag.scope.getBinding(varName)!.referencePaths;
         let getterFnIdentifier: t.Identifier | undefined;
         if (getterId) {
-          getterFnIdentifier = currentProgramPath.scope.generateUidIdentifier(
+          getterFnIdentifier = getProgram().scope.generateUidIdentifier(
             `get_${varName}`,
           );
-          currentProgramPath.node.body.push(
+          getProgram().node.body.push(
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 getterFnIdentifier,

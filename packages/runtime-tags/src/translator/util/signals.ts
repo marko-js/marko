@@ -1,11 +1,10 @@
-import { types as t } from "@marko/compiler";
+import { getFile, getProgram, types as t } from "@marko/compiler";
 import { getTemplateId } from "@marko/compiler/babel-utils";
 
 import { toAccess } from "../../html/serializer";
 import { getSectionReturnValueIdentifier } from "../core/return";
 import {
   cleanIdentifier,
-  currentProgramPath,
   isScopeIdentifier,
   scopeIdentifier,
 } from "../visitors/program";
@@ -170,7 +169,7 @@ export function getHoistFunctionIdentifier(hoistedBinding: Binding) {
   if (!identifier) {
     idsMap.set(
       hoistedBinding,
-      (identifier = currentProgramPath.scope.generateUidIdentifier(
+      (identifier = getProgram().scope.generateUidIdentifier(
         `get${hoistedBinding.name}`,
       )),
     );
@@ -194,14 +193,14 @@ export function getSignal(
       ? !Array.isArray(referencedBindings) &&
         referencedBindings.section === section &&
         referencedBindings.export
-      : !section.parent && currentProgramPath.node.extra.domExports?.setup;
+      : !section.parent && getProgram().node.extra.domExports?.setup;
 
     signals.set(
       referencedBindings,
       (signal = {
         identifier: exportName
           ? t.identifier(exportName)
-          : currentProgramPath.scope.generateUidIdentifier(
+          : getProgram().scope.generateUidIdentifier(
               name + section.name.replace("_", "$"),
             ),
         referencedBindings,
@@ -420,7 +419,7 @@ function getSignalFn(signal: Signal) {
           if (!dynamicClosureArgs) {
             dynamicClosureArgs = [];
             dynamicClosureSignalIdentifier =
-              currentProgramPath.scope.generateUidIdentifier(
+              getProgram().scope.generateUidIdentifier(
                 signal.identifier.name + "_closure",
               );
 
@@ -507,7 +506,7 @@ export function getDestructureSignal(
     : Object.values(bindingIdentifiersByName);
   if (bindingIdentifiers.length) {
     const valueIdentifier =
-      currentProgramPath.scope.generateUidIdentifier("destructure");
+      getProgram().scope.generateUidIdentifier("destructure");
     const bindingSignals = bindingIdentifiers.map((bindingIdentifier) =>
       initValue(bindingIdentifier.extra?.binding as Binding),
     );
@@ -524,8 +523,8 @@ export function getDestructureSignal(
     return {
       get identifier() {
         if (!id) {
-          id = currentProgramPath.scope.generateUidIdentifier("destructure");
-          currentProgramPath.node.body.push(
+          id = getProgram().scope.generateUidIdentifier("destructure");
+          getProgram().node.body.push(
             t.variableDeclaration("const", [
               t.variableDeclarator(id, this.build(true)),
             ]),
@@ -725,7 +724,7 @@ export function getResumeRegisterId(
   const {
     markoOpts,
     opts: { filename },
-  } = currentProgramPath.hub.file;
+  } = getFile();
   let name = "";
   if (referencedBindings) {
     if (typeof referencedBindings === "string") {
@@ -750,7 +749,7 @@ export function getRegisterUID(section: Section, name: string) {
   const {
     markoOpts,
     opts: { filename },
-  } = currentProgramPath.hub.file;
+  } = getFile();
 
   let used = usedRegisterIdsBySection.get(section);
   if (!used) usedRegisterIdsBySection.set(section, (used = new Set()));
@@ -792,7 +791,7 @@ export function writeSignals(section: Section) {
 
       const hoistIdentifier = getHoistFunctionIdentifier(hoistedBinding);
 
-      currentProgramPath.node.body.push(
+      getProgram().node.body.push(
         t.variableDeclaration("const", [
           t.variableDeclarator(
             hoistIdentifier,
@@ -905,12 +904,12 @@ export function writeSignals(section: Section) {
     }
 
     signalStatements.push(signalDeclaration);
-    currentProgramPath.node.body.push(...signalStatements);
+    getProgram().node.body.push(...signalStatements);
   }
 }
 
 export function writeRegisteredFns() {
-  const registeredFns = registeredFnsForProgram.get(currentProgramPath.node);
+  const registeredFns = registeredFnsForProgram.get(getProgram().node);
   const statements: t.Statement[] = [];
   if (registeredFns) {
     for (const registeredFn of registeredFns) {
@@ -974,7 +973,7 @@ export function writeRegisteredFns() {
       );
     }
 
-    currentProgramPath.node.body.push(...statements);
+    getProgram().node.body.push(...statements);
   }
 }
 
@@ -1051,7 +1050,7 @@ export function writeHTMLResumeStatements(
         if (!identifier) {
           htmlDynamicClosureInstancesIdentifier.set(
             closureSignal,
-            (identifier = currentProgramPath.scope.generateUidIdentifier(
+            (identifier = getProgram().scope.generateUidIdentifier(
               closureSignal.identifier.name + "_closures",
             )),
           );
@@ -1117,7 +1116,7 @@ export function writeHTMLResumeStatements(
           !sectionDynamicSubscribers.has(currentSection)
         ) {
           const subscribersIdentifier =
-            currentProgramPath.scope.generateUidIdentifier(
+            getProgram().scope.generateUidIdentifier(
               `${currentSection.name}_subscribers`,
             );
 
@@ -1403,7 +1402,7 @@ function replaceAssignedNode(node: t.Node) {
                 extra.assignment,
               );
               if (signal?.buildAssignment) {
-                id.name = currentProgramPath.scope.generateUid(id.name);
+                id.name = getProgram().scope.generateUid(id.name);
                 (params ||= []).push(t.identifier(id.name));
                 (assignments ||= []).push(
                   signal.buildAssignment(extra.section, t.identifier(id.name)),
@@ -1412,7 +1411,7 @@ function replaceAssignedNode(node: t.Node) {
             }
           });
           if (params && assignments) {
-            const resultId = currentProgramPath.scope.generateUid("result");
+            const resultId = getProgram().scope.generateUid("result");
             return t.callExpression(
               t.arrowFunctionExpression(
                 [t.identifier(resultId), ...params],
@@ -1480,12 +1479,12 @@ export function replaceRegisteredFunctionNode(node: t.Node) {
 function getRegisteredFnExpression(node: t.Function) {
   const { extra } = node;
   if (isRegisteredFnExtra(extra)) {
-    const id = currentProgramPath.scope.generateUid(extra.name);
+    const id = getProgram().scope.generateUid(extra.name);
     const referencesScope = extra.referencesScope;
     const referencedBindings = extra.referencedBindingsInFunction;
-    let registedFns = registeredFnsForProgram.get(currentProgramPath.node);
+    let registedFns = registeredFnsForProgram.get(getProgram().node);
     if (!registedFns) {
-      registeredFnsForProgram.set(currentProgramPath.node, (registedFns = []));
+      registeredFnsForProgram.set(getProgram().node, (registedFns = []));
     }
 
     registedFns.push({

@@ -1,11 +1,10 @@
-import { types as t } from "@marko/compiler";
+import { getProgram, types as t } from "@marko/compiler";
 import {
   isAttributeTag,
   isNativeTag,
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
-import { currentProgramPath } from "../visitors/program";
 import { isCoreTag } from "./is-core-tag";
 import { filter, Sorted } from "./optional";
 import type { Binding, ReferencedBindings } from "./references";
@@ -78,9 +77,7 @@ export function startSection(
     );
     const sectionName = path.isProgram()
       ? ""
-      : currentProgramPath.scope.generateUid(
-          sectionNamePath.toString() + "_content",
-        );
+      : getProgram().scope.generateUid(sectionNamePath.toString() + "_content");
     const programExtra = (path.hub.file.path.node.extra ??= {});
     const sections = (programExtra.sections ??= []);
     section = extra.section = {
@@ -149,7 +146,7 @@ export function getParentSection(path: t.NodePath) {
 export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
   "scopeIdIdentifier",
   (section) =>
-    currentProgramPath.scope.generateUidIdentifier(`scope${section.id}_id`),
+    getProgram().scope.generateUidIdentifier(`scope${section.id}_id`),
 );
 
 export const [getSectionParentIsOwner, setSectionParentIsOwner] =
@@ -166,18 +163,18 @@ export const getScopeIdentifier = (
 ) => {
   const scopeId = _getScopeIdentifier(section);
   if (!ignoreDefault && scopeId.name === "undefined") {
-    scopeId.name = currentProgramPath.scope.generateUid(`scope${section.id}_`);
+    scopeId.name = getProgram().scope.generateUid(`scope${section.id}_`);
   }
   return scopeId;
 };
 
 export function forEachSection(fn: (section: Section) => void) {
-  const { sections } = currentProgramPath.node.extra;
+  const { sections } = getProgram().node.extra;
   sections?.forEach(fn);
 }
 
 export function forEachSectionReverse(fn: (section: Section) => void) {
-  const { sections } = currentProgramPath.node.extra;
+  const { sections } = getProgram().node.extra;
   for (let i = sections!.length; i--; ) {
     fn(sections![i]);
   }
