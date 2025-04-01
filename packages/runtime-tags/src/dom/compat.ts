@@ -89,7 +89,7 @@ export const compat = {
       }
     }
 
-    let existing = false;
+    let existing: undefined | 1;
     if (typeof args[0] === "object" && "renderBody" in args[0]) {
       const input = args[0];
       const normalizedInput = (args[0] = {} as any);
@@ -108,7 +108,7 @@ export const compat = {
           document.body,
         );
       } else {
-        existing = true;
+        existing = 1;
       }
 
       renderer.___params?.(branch, (renderer as any)._ ? args[0] : args);

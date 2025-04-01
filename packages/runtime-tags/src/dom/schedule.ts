@@ -3,7 +3,7 @@ let runTask: undefined | (() => void);
 const port2 = /* @__PURE__ */ (() => {
   const { port1, port2 } = new MessageChannel();
   port1.onmessage = () => {
-    isScheduled = false;
+    isScheduled = 0;
     if (MARKO_DEBUG) {
       const run = runTask!;
       runTask = undefined;
@@ -15,7 +15,7 @@ const port2 = /* @__PURE__ */ (() => {
   return port2;
 })();
 
-export let isScheduled: boolean;
+let isScheduled: undefined | 0 | 1;
 
 export function schedule() {
   if (!isScheduled) {
@@ -28,7 +28,7 @@ export function schedule() {
       }
     }
 
-    isScheduled = true;
+    isScheduled = 1;
     queueMicrotask(flushAndWaitFrame);
   }
 }

@@ -1,4 +1,4 @@
-// size: 18929 (min) 7243 (brotli)
+// size: 18903 (min) 7206 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -96,7 +96,8 @@ function handleDelegated(ev) {
 function stripSpacesAndPunctuation(str) {
   return str.replace(/[^\p{L}\p{N}]/gu, "");
 }
-var registeredValues = {};
+var isResuming,
+  registeredValues = {};
 function init(runtimeId = "M") {
   let resumeRender,
     renders = window[runtimeId],
@@ -199,7 +200,7 @@ function init(runtimeId = "M") {
               }
               if (resumes)
                 try {
-                  (render.r = []), (isResuming = !0);
+                  (render.r = []), (isResuming = 1);
                   for (let i = 0; i < resumes.length; i++) {
                     let serialized = resumes[i];
                     if ("function" == typeof serialized)
@@ -243,7 +244,7 @@ function init(runtimeId = "M") {
                       );
                   }
                 } finally {
-                  isResuming = !1;
+                  isResuming = 0;
                 }
             }),
             render
@@ -256,7 +257,6 @@ function init(runtimeId = "M") {
     for (let renderId in renders) resumeRender(renderId).w();
   } else defineRuntime({ configurable: !0, set: initRuntime });
 }
-var isResuming = !1;
 function register(id, obj) {
   return (registeredValues[id] = obj), obj;
 }
@@ -964,13 +964,13 @@ var isScheduled,
     let { port1: port1, port2: port22 } = new MessageChannel();
     return (
       (port1.onmessage = () => {
-        (isScheduled = !1), run();
+        (isScheduled = 0), run();
       }),
       port22
     );
   })();
 function schedule() {
-  isScheduled || ((isScheduled = !0), queueMicrotask(flushAndWaitFrame));
+  isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
 function flushAndWaitFrame() {
   run(), requestAnimationFrame(triggerMacroTask);
@@ -1582,12 +1582,12 @@ function bySecondArg(_item, index) {
 function byFirstArg(name) {
   return name;
 }
-var pendingRenders = [],
+var rendering,
+  pendingRenders = [],
   pendingRendersLookup = new Map(),
   caughtError = new WeakSet(),
   placeholderShown = new WeakSet(),
   pendingEffects = [],
-  rendering = !1,
   scopeKeyOffset = 1e3;
 function queueRender(scope, signal, signalKey, value2, scopeKey = scope.m) {
   let key = scopeKey * scopeKeyOffset + signalKey,
@@ -1612,12 +1612,12 @@ function queueEffect(scope, fn) {
 function run() {
   let effects = pendingEffects;
   try {
-    (rendering = !0), runRenders();
+    (rendering = 1), runRenders();
   } finally {
     (pendingRenders = []),
       (pendingRendersLookup = new Map()),
       (pendingEffects = []),
-      (rendering = !1);
+      (rendering = 0);
   }
   runEffects(effects);
 }
@@ -1628,9 +1628,9 @@ function prepareEffects(fn) {
     preparedEffects = (pendingEffects = []);
   (pendingRenders = []), (pendingRendersLookup = new Map());
   try {
-    (rendering = !0), fn(), runRenders();
+    (rendering = 1), fn(), runRenders();
   } finally {
-    (rendering = !1),
+    (rendering = 0),
       (pendingRenders = prevRenders),
       (pendingRendersLookup = prevRendersLookup),
       (pendingEffects = prevEffects);
@@ -1771,13 +1771,15 @@ var classIdToBranch = new Map(),
       );
     },
     render(out, component, renderer, args) {
-      let branch = component.scope;
-      branch ||
-        ((branch = classIdToBranch.get(component.id)),
-        branch &&
-          ((component.scope = branch), classIdToBranch.delete(component.id)));
-      let existing = !1;
-      if ("object" == typeof args[0] && "renderBody" in args[0]) {
+      let existing,
+        branch = component.scope;
+      if (
+        (branch ||
+          ((branch = classIdToBranch.get(component.id)),
+          branch &&
+            ((component.scope = branch), classIdToBranch.delete(component.id))),
+        "object" == typeof args[0] && "renderBody" in args[0])
+      ) {
         let input = args[0],
           normalizedInput = (args[0] = {});
         for (let key in input)
@@ -1786,7 +1788,7 @@ var classIdToBranch = new Map(),
       if (
         ((component.effects = prepareEffects(() => {
           branch
-            ? (existing = !0)
+            ? (existing = 1)
             : ((out.global.o ||= 0),
               (branch = component.scope =
                 createAndSetupBranch(
