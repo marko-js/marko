@@ -159,132 +159,178 @@ export default {
       }
     }
   },
-  translate(tag) {
-    const tagExtra = tag.node.extra!;
-    const nodeRef = tagExtra[kNativeTagBinding];
-    const isHTML = isOutputHTML();
-    const write = writer.writeTo(tag);
-    const section = getSection(tag);
-    const hasVar = !!tag.node.var;
+  translate: {
+    enter(tag) {
+      const tagExtra = tag.node.extra!;
+      const nodeRef = tagExtra[kNativeTagBinding];
+      const isHTML = isOutputHTML();
+      const write = writer.writeTo(tag);
+      const section = getSection(tag);
+      const hasVar = !!tag.node.var;
 
-    if (hasVar) {
-      const getterId = tagExtra[kGetterId];
-      if (isHTML) {
-        const varName = (tag.node.var as t.Identifier).name;
-        const references = tag.scope.getBinding(varName)!.referencePaths;
-        for (const reference of references) {
-          serializeOwners(getSection(reference), section);
-        }
+      if (hasVar) {
+        const getterId = tagExtra[kGetterId];
+        if (isHTML) {
+          const varName = (tag.node.var as t.Identifier).name;
+          const references = tag.scope.getBinding(varName)!.referencePaths;
+          for (const reference of references) {
+            serializeOwners(getSection(reference), section);
+          }
 
-        translateVar(
-          tag,
-          callRuntime(
-            "nodeRef",
-            getterId && getScopeIdIdentifier(section),
-            getterId && t.stringLiteral(getterId),
-          ),
-        );
-      } else {
-        const varName = (tag.node.var as t.Identifier).name;
-        const references = tag.scope.getBinding(varName)!.referencePaths;
-        let getterFnIdentifier: t.Identifier | undefined;
-        if (getterId) {
-          getterFnIdentifier = getProgram().scope.generateUidIdentifier(
-            `get_${varName}`,
+          translateVar(
+            tag,
+            callRuntime(
+              "nodeRef",
+              getterId && getScopeIdIdentifier(section),
+              getterId && t.stringLiteral(getterId),
+            ),
           );
-          getProgram().node.body.push(
-            t.variableDeclaration("const", [
-              t.variableDeclarator(
-                getterFnIdentifier,
-                callRuntime(
-                  "nodeRef",
-                  t.stringLiteral(getterId),
-                  getScopeAccessorLiteral(nodeRef!),
-                ),
-              ),
-            ]),
-          );
-        }
-
-        for (const reference of references) {
-          const referenceSection = getSection(reference);
-          if (isInvokedFunction(reference)) {
-            reference.parentPath.replaceWith(
-              t.expressionStatement(
-                createScopeReadExpression(referenceSection, nodeRef!),
-              ),
+        } else {
+          const varName = (tag.node.var as t.Identifier).name;
+          const references = tag.scope.getBinding(varName)!.referencePaths;
+          let getterFnIdentifier: t.Identifier | undefined;
+          if (getterId) {
+            getterFnIdentifier = getProgram().scope.generateUidIdentifier(
+              `get_${varName}`,
             );
-          } else if (getterFnIdentifier) {
-            reference.replaceWith(
-              t.callExpression(getterFnIdentifier, [
-                getScopeExpression(referenceSection, getSection(tag)),
+            getProgram().node.body.push(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(
+                  getterFnIdentifier,
+                  callRuntime(
+                    "nodeRef",
+                    t.stringLiteral(getterId),
+                    getScopeAccessorLiteral(nodeRef!),
+                  ),
+                ),
               ]),
             );
           }
-        }
-      }
-    }
 
-    let visitAccessor: t.StringLiteral | t.NumericLiteral | undefined;
-    if (nodeRef) {
-      visitAccessor = getScopeAccessorLiteral(nodeRef);
-      walks.visit(tag, WalkCode.Get);
-    }
-
-    write`<script`;
-
-    const usedAttrs = getUsedAttrs(tag.node);
-    const { staticAttrs, skipExpression, spreadExpression } = usedAttrs;
-
-    for (const attr of staticAttrs) {
-      const { name, value } = attr;
-      const { confident, computed } = value.extra || {};
-      const valueReferences = value.extra?.referencedBindings;
-
-      switch (name) {
-        case "class":
-        case "style": {
-          const helper = `${name}Attr` as const;
-          if (confident) {
-            write`${getHTMLRuntime()[helper](computed)}`;
-          } else if (isHTML) {
-            write`${callRuntime(helper, value)}`;
-          } else {
-            addStatement(
-              "render",
-              section,
-              valueReferences,
-              t.expressionStatement(
-                callRuntime(
-                  helper,
-                  t.memberExpression(scopeIdentifier, visitAccessor!, true),
-                  value,
+          for (const reference of references) {
+            const referenceSection = getSection(reference);
+            if (isInvokedFunction(reference)) {
+              reference.parentPath.replaceWith(
+                t.expressionStatement(
+                  createScopeReadExpression(referenceSection, nodeRef!),
                 ),
-              ),
-            );
-          }
-          break;
-        }
-        default:
-          if (confident) {
-            write`${getHTMLRuntime().attr(name, computed)}`;
-          } else if (isHTML) {
-            if (isEventHandler(name)) {
-              addHTMLEffectCall(section, valueReferences);
-            } else {
-              write`${callRuntime("attr", t.stringLiteral(name), value)}`;
+              );
+            } else if (getterFnIdentifier) {
+              reference.replaceWith(
+                t.callExpression(getterFnIdentifier, [
+                  getScopeExpression(referenceSection, getSection(tag)),
+                ]),
+              );
             }
-          } else if (isEventHandler(name)) {
+          }
+        }
+      }
+
+      let visitAccessor: t.StringLiteral | t.NumericLiteral | undefined;
+      if (nodeRef) {
+        visitAccessor = getScopeAccessorLiteral(nodeRef);
+        walks.visit(tag, WalkCode.Get);
+      }
+
+      write`<script`;
+
+      const usedAttrs = getUsedAttrs(tag.node);
+      const { staticAttrs, skipExpression, spreadExpression } = usedAttrs;
+
+      for (const attr of staticAttrs) {
+        const { name, value } = attr;
+        const { confident, computed } = value.extra || {};
+        const valueReferences = value.extra?.referencedBindings;
+
+        switch (name) {
+          case "class":
+          case "style": {
+            const helper = `${name}Attr` as const;
+            if (confident) {
+              write`${getHTMLRuntime()[helper](computed)}`;
+            } else if (isHTML) {
+              write`${callRuntime(helper, value)}`;
+            } else {
+              addStatement(
+                "render",
+                section,
+                valueReferences,
+                t.expressionStatement(
+                  callRuntime(
+                    helper,
+                    t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                    value,
+                  ),
+                ),
+              );
+            }
+            break;
+          }
+          default:
+            if (confident) {
+              write`${getHTMLRuntime().attr(name, computed)}`;
+            } else if (isHTML) {
+              if (isEventHandler(name)) {
+                addHTMLEffectCall(section, valueReferences);
+              } else {
+                write`${callRuntime("attr", t.stringLiteral(name), value)}`;
+              }
+            } else if (isEventHandler(name)) {
+              addStatement(
+                "effect",
+                section,
+                valueReferences,
+                t.expressionStatement(
+                  callRuntime(
+                    "on",
+                    t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                    t.stringLiteral(getEventHandlerName(name)),
+                    value,
+                  ),
+                ),
+              );
+            } else {
+              addStatement(
+                "render",
+                section,
+                valueReferences,
+                t.expressionStatement(
+                  callRuntime(
+                    "attr",
+                    t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                    t.stringLiteral(name),
+                    value,
+                  ),
+                ),
+              );
+            }
+
+            break;
+        }
+      }
+
+      if (spreadExpression) {
+        if (isHTML) {
+          addHTMLEffectCall(section, tagExtra.referencedBindings);
+
+          if (skipExpression) {
+            write`${callRuntime("partialAttrs", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(section), t.stringLiteral("script"))}`;
+          } else {
+            write`${callRuntime("attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(section), t.stringLiteral("script"))}`;
+          }
+        } else {
+          if (skipExpression) {
             addStatement(
-              "effect",
+              "render",
               section,
-              valueReferences,
+              tagExtra.referencedBindings,
               t.expressionStatement(
                 callRuntime(
-                  "on",
-                  t.memberExpression(scopeIdentifier, visitAccessor!, true),
-                  t.stringLiteral(getEventHandlerName(name)),
-                  value,
+                  "partialAttrs",
+                  scopeIdentifier,
+                  visitAccessor,
+                  spreadExpression,
+                  skipExpression,
                 ),
               ),
             );
@@ -292,129 +338,91 @@ export default {
             addStatement(
               "render",
               section,
-              valueReferences,
+              tagExtra.referencedBindings,
               t.expressionStatement(
                 callRuntime(
-                  "attr",
-                  t.memberExpression(scopeIdentifier, visitAccessor!, true),
-                  t.stringLiteral(name),
-                  value,
+                  "attrs",
+                  scopeIdentifier,
+                  visitAccessor,
+                  spreadExpression,
                 ),
               ),
             );
           }
 
-          break;
+          addStatement(
+            "effect",
+            section,
+            tagExtra.referencedBindings,
+            t.expressionStatement(
+              callRuntime("attrsEvents", scopeIdentifier, visitAccessor),
+            ),
+            false,
+          );
+        }
       }
-    }
 
-    if (spreadExpression) {
-      if (isHTML) {
-        addHTMLEffectCall(section, tagExtra.referencedBindings);
+      write`>`;
+      walks.enter(tag);
+    },
+    exit(tag) {
+      const tagExtra = tag.node.extra!;
+      const nodeRef = tagExtra[kNativeTagBinding];
+      const write = writer.writeTo(tag);
+      const visitAccessor = nodeRef && getScopeAccessorLiteral(nodeRef);
 
-        if (skipExpression) {
-          write`${callRuntime("partialAttrs", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(section), t.stringLiteral("script"))}`;
-        } else {
-          write`${callRuntime("attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(section), t.stringLiteral("script"))}`;
+      if (isOutputHTML()) {
+        for (const child of tag.node.body.body) {
+          if (t.isMarkoText(child)) {
+            write`${child.value}`;
+          } else if (t.isMarkoPlaceholder(child)) {
+            write`${callRuntime("escapeScript", child.value)}`;
+          }
         }
       } else {
-        if (skipExpression) {
-          addStatement(
-            "render",
-            section,
-            tagExtra.referencedBindings,
-            t.expressionStatement(
-              callRuntime(
-                "partialAttrs",
-                scopeIdentifier,
-                visitAccessor,
-                spreadExpression,
-                skipExpression,
-              ),
-            ),
-          );
+        const templateQuasis: t.TemplateElement[] = [];
+        const templateExpressions: t.Expression[] = [];
+        let currentQuasi = "";
+        let referencePlaceholder: t.MarkoPlaceholder | undefined;
+        for (const child of tag.node.body.body) {
+          if (t.isMarkoText(child)) {
+            currentQuasi += child.value;
+          } else if (t.isMarkoPlaceholder(child)) {
+            referencePlaceholder ||= child;
+            templateQuasis.push(t.templateElement({ raw: currentQuasi }));
+            templateExpressions.push(child.value);
+            currentQuasi = "";
+          }
+        }
+
+        if (!referencePlaceholder) {
+          write`${currentQuasi}`;
         } else {
-          addStatement(
-            "render",
-            section,
-            tagExtra.referencedBindings,
-            t.expressionStatement(
-              callRuntime(
-                "attrs",
-                scopeIdentifier,
-                visitAccessor,
-                spreadExpression,
-              ),
-            ),
-          );
-        }
-
-        addStatement(
-          "effect",
-          section,
-          tagExtra.referencedBindings,
-          t.expressionStatement(
-            callRuntime("attrsEvents", scopeIdentifier, visitAccessor),
-          ),
-          false,
-        );
-      }
-    }
-
-    write`>`;
-    walks.enter(tag);
-
-    if (isOutputHTML()) {
-      for (const child of tag.node.body.body) {
-        if (t.isMarkoText(child)) {
-          write`${child.value}`;
-        } else if (t.isMarkoPlaceholder(child)) {
-          write`${callRuntime("escapeScript", child.value)}`;
-        }
-      }
-    } else {
-      const templateQuasis: t.TemplateElement[] = [];
-      const templateExpressions: t.Expression[] = [];
-      let currentQuasi = "";
-      let referencePlaceholder: t.MarkoPlaceholder | undefined;
-      for (const child of tag.node.body.body) {
-        if (t.isMarkoText(child)) {
-          currentQuasi += child.value;
-        } else if (t.isMarkoPlaceholder(child)) {
-          referencePlaceholder ||= child;
           templateQuasis.push(t.templateElement({ raw: currentQuasi }));
-          templateExpressions.push(child.value);
-          currentQuasi = "";
+          addStatement(
+            "render",
+            getSection(tag),
+            referencePlaceholder.value.extra?.referencedBindings,
+            t.expressionStatement(
+              callRuntime(
+                "textContent",
+                t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                t.templateLiteral(templateQuasis, templateExpressions),
+              ),
+            ),
+          );
         }
       }
 
-      if (!referencePlaceholder) {
-        write`${currentQuasi}`;
-      } else {
-        templateQuasis.push(t.templateElement({ raw: currentQuasi }));
-        addStatement(
-          "render",
-          getSection(tag),
-          referencePlaceholder.value.extra?.referencedBindings,
-          t.expressionStatement(
-            callRuntime(
-              "textContent",
-              t.memberExpression(scopeIdentifier, visitAccessor!, true),
-              t.templateLiteral(templateQuasis, templateExpressions),
-            ),
-          ),
-        );
+      write`</script>`;
+
+      if (nodeRef) {
+        writer.markNode(tag, nodeRef);
       }
-    }
 
-    write`</script>`;
-
-    if (nodeRef) {
-      writer.markNode(tag, nodeRef);
-    }
-
-    walks.exit(tag);
-    tag.remove();
+      walks.exit(tag);
+      tag.remove();
+    },
   },
   "@async": "#html-async",
   "@crossorigin": "#html-crossorigin",

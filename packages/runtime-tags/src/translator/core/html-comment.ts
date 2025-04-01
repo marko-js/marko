@@ -96,123 +96,129 @@ export default {
     }
     tag.skip();
   },
-  translate(tag) {
-    const tagExtra = tag.node.extra!;
-    const commentBinding = tagExtra[kCommentTagBinding];
-    const hasVar = !!tag.node.var;
-    if (hasVar) {
-      const getterId = tagExtra[kGetterId];
-      if (isOutputHTML()) {
-        translateVar(
-          tag,
-          callRuntime(
-            "nodeRef",
-            getterId && getScopeIdIdentifier(getSection(tag)),
-            getterId && t.stringLiteral(getterId),
-          ),
-        );
-      } else {
-        const varName = (tag.node.var as t.Identifier).name;
-        const references = tag.scope.getBinding(varName)!.referencePaths;
-        let getterFnIdentifier: t.Identifier | undefined;
-        if (getterId) {
-          getterFnIdentifier = getProgram().scope.generateUidIdentifier(
-            `get_${varName}`,
+  translate: {
+    enter(tag) {
+      const tagExtra = tag.node.extra!;
+      const commentBinding = tagExtra[kCommentTagBinding];
+      const hasVar = !!tag.node.var;
+      if (hasVar) {
+        const getterId = tagExtra[kGetterId];
+        if (isOutputHTML()) {
+          translateVar(
+            tag,
+            callRuntime(
+              "nodeRef",
+              getterId && getScopeIdIdentifier(getSection(tag)),
+              getterId && t.stringLiteral(getterId),
+            ),
           );
-          getProgram().node.body.push(
-            t.variableDeclaration("const", [
-              t.variableDeclarator(
-                getterFnIdentifier,
-                callRuntime(
-                  "nodeRef",
-                  t.stringLiteral(getterId),
-                  getScopeAccessorLiteral(commentBinding!),
-                ),
-              ),
-            ]),
-          );
-        }
-        for (const reference of references) {
-          const referenceSection = getSection(reference);
-          if (isInvokedFunction(reference)) {
-            reference.parentPath.replaceWith(
-              t.expressionStatement(
-                createScopeReadExpression(referenceSection, commentBinding!),
-              ),
+        } else {
+          const varName = (tag.node.var as t.Identifier).name;
+          const references = tag.scope.getBinding(varName)!.referencePaths;
+          let getterFnIdentifier: t.Identifier | undefined;
+          if (getterId) {
+            getterFnIdentifier = getProgram().scope.generateUidIdentifier(
+              `get_${varName}`,
             );
-          } else if (getterFnIdentifier) {
-            reference.replaceWith(
-              t.callExpression(getterFnIdentifier, [
-                getScopeExpression(referenceSection, getSection(tag)),
+            getProgram().node.body.push(
+              t.variableDeclaration("const", [
+                t.variableDeclarator(
+                  getterFnIdentifier,
+                  callRuntime(
+                    "nodeRef",
+                    t.stringLiteral(getterId),
+                    getScopeAccessorLiteral(commentBinding!),
+                  ),
+                ),
               ]),
             );
           }
-        }
-      }
-    }
-
-    if (tagExtra[kCommentTagBinding]) {
-      walks.visit(tag, WalkCode.Get);
-    }
-    const write = writer.writeTo(tag);
-
-    walks.enter(tag);
-    write`<!--`;
-
-    // TODO: If the tag is completely empty, make the marker node the same as the comment node.
-    if (isOutputHTML()) {
-      for (const child of tag.node.body.body) {
-        if (t.isMarkoText(child)) {
-          write`${child.value}`;
-        } else if (t.isMarkoPlaceholder(child)) {
-          write`${callRuntime("escapeXML", child.value)}`;
-        }
-      }
-    } else {
-      const templateQuasis: t.TemplateElement[] = [];
-      const templateExpressions: t.Expression[] = [];
-      let currentQuasi = "";
-      for (const child of tag.node.body.body) {
-        if (t.isMarkoText(child)) {
-          currentQuasi += child.value;
-        } else if (t.isMarkoPlaceholder(child)) {
-          templateQuasis.push(t.templateElement({ raw: currentQuasi }));
-          templateExpressions.push(child.value);
-          currentQuasi = "";
+          for (const reference of references) {
+            const referenceSection = getSection(reference);
+            if (isInvokedFunction(reference)) {
+              reference.parentPath.replaceWith(
+                t.expressionStatement(
+                  createScopeReadExpression(referenceSection, commentBinding!),
+                ),
+              );
+            } else if (getterFnIdentifier) {
+              reference.replaceWith(
+                t.callExpression(getterFnIdentifier, [
+                  getScopeExpression(referenceSection, getSection(tag)),
+                ]),
+              );
+            }
+          }
         }
       }
 
-      if (templateExpressions.length === 0) {
-        write`${currentQuasi}`;
+      if (tagExtra[kCommentTagBinding]) {
+        walks.visit(tag, WalkCode.Get);
+      }
+
+      walks.enter(tag);
+      writer.writeTo(tag)`<!--`;
+    },
+    exit(tag) {
+      const tagExtra = tag.node.extra!;
+      const commentBinding = tagExtra[kCommentTagBinding];
+      const write = writer.writeTo(tag);
+
+      // TODO: If the tag is completely empty, make the marker node the same as the comment node.
+      if (isOutputHTML()) {
+        for (const child of tag.node.body.body) {
+          if (t.isMarkoText(child)) {
+            write`${child.value}`;
+          } else if (t.isMarkoPlaceholder(child)) {
+            write`${callRuntime("escapeXML", child.value)}`;
+          }
+        }
       } else {
-        templateQuasis.push(t.templateElement({ raw: currentQuasi }));
-        addStatement(
-          "render",
-          getSection(tag),
-          tagExtra.referencedBindings,
-          t.expressionStatement(
-            callRuntime(
-              "data",
-              t.memberExpression(
-                scopeIdentifier,
-                getScopeAccessorLiteral(commentBinding!),
-                true,
+        const templateQuasis: t.TemplateElement[] = [];
+        const templateExpressions: t.Expression[] = [];
+        let currentQuasi = "";
+        for (const child of tag.node.body.body) {
+          if (t.isMarkoText(child)) {
+            currentQuasi += child.value;
+          } else if (t.isMarkoPlaceholder(child)) {
+            templateQuasis.push(t.templateElement({ raw: currentQuasi }));
+            templateExpressions.push(child.value);
+            currentQuasi = "";
+          }
+        }
+
+        if (templateExpressions.length === 0) {
+          write`${currentQuasi}`;
+        } else {
+          templateQuasis.push(t.templateElement({ raw: currentQuasi }));
+          addStatement(
+            "render",
+            getSection(tag),
+            tagExtra.referencedBindings,
+            t.expressionStatement(
+              callRuntime(
+                "data",
+                t.memberExpression(
+                  scopeIdentifier,
+                  getScopeAccessorLiteral(commentBinding!),
+                  true,
+                ),
+                t.templateLiteral(templateQuasis, templateExpressions),
               ),
-              t.templateLiteral(templateQuasis, templateExpressions),
             ),
-          ),
-        );
+          );
+        }
       }
-    }
 
-    walks.exit(tag);
-    write`-->`;
+      walks.exit(tag);
+      write`-->`;
 
-    if (commentBinding) {
-      writer.markNode(tag, commentBinding);
-    }
+      if (commentBinding) {
+        writer.markNode(tag, commentBinding);
+      }
 
-    tag.remove();
+      tag.remove();
+    },
   },
   parseOptions: {
     text: true,
