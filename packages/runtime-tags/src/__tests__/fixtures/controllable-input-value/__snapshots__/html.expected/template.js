@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   let value = "hello";
   _$.write(`<input${_$.controllable_input_value(_scope0_id, "#input/0", value, _$.register(_new_value => {

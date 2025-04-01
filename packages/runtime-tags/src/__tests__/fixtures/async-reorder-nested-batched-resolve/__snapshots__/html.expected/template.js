@@ -1,6 +1,6 @@
 import { resolveAfter } from "../../utils/resolve";
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const promiseA = resolveAfter("a", 1);
   _$.tryContent(_scope0_id, "#text/0", _$.registerContent("__tests__/template.marko_1_renderer", () => {

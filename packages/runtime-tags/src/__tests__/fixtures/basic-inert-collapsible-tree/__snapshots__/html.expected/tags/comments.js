@@ -44,4 +44,4 @@ const _content = input => {
     input_path: ["input.path"]
   });
 };
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/comments.marko", _content);
+export default _$.createTemplate("__tests__/tags/comments.marko", _content);

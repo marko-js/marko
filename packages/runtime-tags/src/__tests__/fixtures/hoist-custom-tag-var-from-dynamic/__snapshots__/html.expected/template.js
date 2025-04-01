@@ -2,14 +2,14 @@ import Thing from "./tags/thing.marko";
 import _child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _thing from "./tags/thing.marko";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _hoisted_setHtml = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml/hoist");
   const _thing_content_subscribers = new Set();
   const _inputShowThingNull_content_subscribers = new Set();
   const _inputShowSectionNull_content_subscribers = new Set();
   _thing({
-    content: /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", () => {
+    content: _$.createContent("__tests__/template.marko_1_renderer", () => {
       const _scope1_id = _$.nextScopeId();
       const _childScope = _$.peekNextScope();
       const setHtml = _child({});
@@ -20,11 +20,11 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       }, "__tests__/template.marko", "3:2"));
     })
   });
-  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/1", input.show ? Thing : null, {}, _$.registerContent("__tests__/template.marko_2_renderer", () => {
+  _$.dynamicTag(_scope0_id, "#text/1", input.show ? Thing : null, {}, _$.registerContent("__tests__/template.marko_2_renderer", () => {
     const _scope2_id = _$.nextScopeId();
     const _thing_content2_subscribers = new Set();
     _thing({
-      content: /* @__PURE__ */_$.createContent("__tests__/template.marko_3_renderer", () => {
+      content: _$.createContent("__tests__/template.marko_3_renderer", () => {
         const _scope3_id = _$.nextScopeId();
         const _childScope2 = _$.peekNextScope();
         const setHtml2 = _child({});
@@ -39,7 +39,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       "ClosureScopes:3": _thing_content2_subscribers
     }, "__tests__/template.marko", "15:4"));
   }, _scope0_id), 0, 1);
-  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.registerContent("__tests__/template.marko_4_renderer", () => {
+  _$.dynamicTag(_scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.registerContent("__tests__/template.marko_4_renderer", () => {
     const _scope4_id = _$.nextScopeId();
     const _childScope3 = _$.peekNextScope();
     const setHtml3 = _child({});

@@ -1,6 +1,6 @@
 import { resolveAfter } from "../../utils/resolve";
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _count_closures = new Set();
   let count = 0;

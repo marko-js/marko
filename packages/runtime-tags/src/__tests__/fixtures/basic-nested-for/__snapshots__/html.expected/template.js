@@ -1,6 +1,6 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   let items = [0, 1];
   _$.write(`<button>Push</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);

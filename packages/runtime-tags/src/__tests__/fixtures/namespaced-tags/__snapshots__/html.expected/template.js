@@ -1,26 +1,26 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _input_value__closures = new Set();
   let Parent = "div";
   let Child = "a";
   const el = _$.nodeRef();
   _$.write(`<div><svg>${_$.toString(input.value)}${_$.markResumeNode(_scope0_id, "#text/1")}`);
-  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/2", Child, {
+  _$.dynamicTag(_scope0_id, "#text/2", Child, {
     href: "#bar"
   }, _$.registerContent("__tests__/template.marko_2_renderer", () => {
     const _scope2_id = _$.nextScopeId();
     _$.write("Hi");
   }, _scope0_id), 0, 1);
   _$.write(`</svg><math>${_$.toString(input.value)}${_$.markResumeNode(_scope0_id, "#text/3")}`);
-  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/4", Child, {
+  _$.dynamicTag(_scope0_id, "#text/4", Child, {
     href: "#bar"
   }, _$.registerContent("__tests__/template.marko_3_renderer", () => {
     const _scope3_id = _$.nextScopeId();
     _$.write("Hi");
   }, _scope0_id), 0, 1);
   _$.write("</math>");
-  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/5", Parent, {}, _$.registerContent("__tests__/template.marko_1_renderer", () => {
+  _$.dynamicTag(_scope0_id, "#text/5", Parent, {}, _$.registerContent("__tests__/template.marko_1_renderer", () => {
     const _scope1_id = _$.nextScopeId();
     _$.write(`${_$.toString(input.value)}${_$.markResumeNode(_scope1_id, "#text/0")}`);
     _$.writeSubscribe(_input_value__closures, _$.writeScope(_scope1_id, {

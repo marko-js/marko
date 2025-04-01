@@ -1,8 +1,8 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const MyTag = {
-    content: /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", ({
+    content: _$.createContent("__tests__/template.marko_1_renderer", ({
       name
     }) => {
       const _scope1_id = _$.nextScopeId();
@@ -17,7 +17,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       _$.resumeClosestBranch(_scope1_id);
     })
   };
-  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/0", MyTag, {
+  _$.dynamicTag(_scope0_id, "#text/0", MyTag, {
     name: "Ryan"
   }, 0, 0, 1);
 });

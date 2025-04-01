@@ -1,9 +1,9 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   let value = "b";
   const tag = "select";
-  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/0", tag ? "select" : {}, {
+  _$.dynamicTag(_scope0_id, "#text/0", tag ? "select" : {}, {
     value,
     valueChange: _$.register(function (v) {
       value = v;

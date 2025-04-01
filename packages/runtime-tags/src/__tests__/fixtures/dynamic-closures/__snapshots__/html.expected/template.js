@@ -1,14 +1,14 @@
 const a = 1;
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _customTag from "./tags/custom-tag.marko";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _c_closures = new Set();
   const b = 2;
   let c = 3;
   _$.write(`<button></button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   _customTag({
-    content: /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", () => {
+    content: _$.createContent("__tests__/template.marko_1_renderer", () => {
       const _scope1_id = _$.nextScopeId();
       _$.write(`${_$.escapeXML(a)} ${_$.escapeXML(b)} <!>${_$.escapeXML(c)}${_$.markResumeNode(_scope1_id, "#text/2")}`);
       _$.writeSubscribe(_c_closures, _$.writeScope(_scope1_id, {

@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   let x = 1;
   const MyTag = {
@@ -8,7 +8,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       _$.write(`<div>${_$.escapeXML(a)}${_$.markResumeNode(_scope1_id, "#text/0")}|<!>${_$.escapeXML(b)}${_$.markResumeNode(_scope1_id, "#text/1")}|<!>${_$.escapeXML(c)}${_$.markResumeNode(_scope1_id, "#text/2")}</div>`);
     }, _scope0_id)
   };
-  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/0", MyTag, [1, "Hello", x], 0, 1, 1);
+  _$.dynamicTag(_scope0_id, "#text/0", MyTag, [1, "Hello", x], 0, 1, 1);
   _$.write(`<button>${_$.escapeXML(x)}${_$.markResumeNode(_scope0_id, "#text/2")}</button>${_$.markResumeNode(_scope0_id, "#button/1")}`);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope(_scope0_id, {

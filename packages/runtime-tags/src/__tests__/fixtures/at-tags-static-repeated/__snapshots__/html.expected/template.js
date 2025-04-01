@@ -1,6 +1,6 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _list from "./tags/list/index.marko";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   _list({
     item: _$.attrTags(_$.attrTag({

@@ -1,7 +1,7 @@
 import Child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _hoisted_el = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_el/hoist");
   const _child_content_subscribers = new Set();
@@ -9,19 +9,19 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   const _inputShowChildNull_content_subscribers = new Set();
   const _inputShowSectionNull_content_subscribers = new Set();
   _child({
-    content: /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", () => {
+    content: _$.createContent("__tests__/template.marko_1_renderer", () => {
       const _scope1_id = _$.nextScopeId();
       const el = _$.nodeRef();
       _$.write(`<span></span>${_$.markResumeNode(_scope1_id, "#span/0")}`);
       _$.writeSubscribe(_child_content_subscribers, _$.writeScope(_scope1_id, {}, "__tests__/template.marko", "3:2"));
     })
   });
-  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/1", input.show ? Child : null, {}, _$.registerContent("__tests__/template.marko_2_renderer", () => {
+  _$.dynamicTag(_scope0_id, "#text/1", input.show ? Child : null, {}, _$.registerContent("__tests__/template.marko_2_renderer", () => {
     const _scope2_id = _$.nextScopeId();
     const _hoisted_el2 = _$.hoist(_scope2_id, "__tests__/template.marko_2__hoisted_el2/hoist");
     const _child_content2_subscribers = new Set();
     _child({
-      content: /* @__PURE__ */_$.createContent("__tests__/template.marko_3_renderer", () => {
+      content: _$.createContent("__tests__/template.marko_3_renderer", () => {
         const _scope3_id = _$.nextScopeId();
         const el2 = _$.nodeRef();
         _$.write(`<div></div>${_$.markResumeNode(_scope3_id, "#div/0")}`);
@@ -37,7 +37,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
       _hoisted_el2: 0
     }));
   }, _scope0_id), 0, 1);
-  /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.registerContent("__tests__/template.marko_4_renderer", () => {
+  _$.dynamicTag(_scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.registerContent("__tests__/template.marko_4_renderer", () => {
     const _scope4_id = _$.nextScopeId();
     const el3 = _$.nodeRef();
     _$.write(`<p></p>${_$.markResumeNode(_scope4_id, "#p/0")}`);
