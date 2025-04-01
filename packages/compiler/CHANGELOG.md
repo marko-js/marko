@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.15
+
+### Patch Changes
+
+- [#2607](https://github.com/marko-js/marko/pull/2607) [`7110193`](https://github.com/marko-js/marko/commit/7110193bffa170a662549265c33996691f17453e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose getProgram and getFile apis for accessing the file/program of the active compilation.
+
 ## 5.39.14
 
 ### Patch Changes
