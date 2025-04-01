@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.27
+
+### Patch Changes
+
+- [#2615](https://github.com/marko-js/marko/pull/2615) [`c5c78ff`](https://github.com/marko-js/marko/commit/c5c78ff54e214fb53551c3afc2f936af8d426121) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fixes issue with https://github.com/marko-js/marko/pull/2604 where an incorrect `this` was referenced.
+
 ## 5.37.26
 
 ### Patch Changes
