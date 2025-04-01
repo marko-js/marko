@@ -1,12 +1,10 @@
-import { types as t } from "@marko/compiler";
+import { getProgram, types as t } from "@marko/compiler";
 import type { MarkoTagExtra } from "@marko/compiler/babel-types";
 import {
   isNativeTag,
   loadFileForTag,
   resolveTagImport,
 } from "@marko/compiler/babel-utils";
-
-import { currentProgramPath } from "../visitors/program";
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
@@ -61,7 +59,7 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
       } else if (childFile.ast.program.extra!.featureType === "class") {
         extra.tagNameType = TagNameType.DynamicTag;
         extra.featureType = "class";
-        (currentProgramPath.node.extra ??= {}).needsCompat = true;
+        (getProgram().node.extra ??= {}).needsCompat = true;
       }
     }
   }

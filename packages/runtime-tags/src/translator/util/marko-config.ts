@@ -1,4 +1,4 @@
-import { currentProgramPath } from "../visitors/program";
+import { getFile } from "@marko/compiler";
 
 export function isOutputHTML() {
   return getMarkoOpts().output === "html";
@@ -9,7 +9,7 @@ export function isOutputDOM() {
 }
 
 export function getMarkoOpts() {
-  return currentProgramPath.hub.file.markoOpts;
+  return getFile().markoOpts;
 }
 
 export function isOptimize() {

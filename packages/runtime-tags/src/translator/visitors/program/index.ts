@@ -24,16 +24,11 @@ import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
 
-export let currentProgramPath: t.NodePath<t.Program>;
 export let cleanIdentifier: t.Identifier;
 export let scopeIdentifier: t.Identifier;
 export function isScopeIdentifier(node: t.Node): node is t.Identifier {
   return node === scopeIdentifier;
 }
-const previousProgramPath: WeakMap<
-  t.NodePath<t.Program>,
-  t.NodePath<t.Program> | undefined
-> = new WeakMap();
 
 export type TemplateExport = {
   id: string;
@@ -57,19 +52,14 @@ declare module "@marko/compiler/dist/types" {
 export default {
   migrate: {
     enter(program) {
-      previousProgramPath.set(program, currentProgramPath);
       program.node.params = [t.identifier("input")];
-      currentProgramPath = program;
     },
-    exit() {
-      currentProgramPath.scope.crawl();
-      currentProgramPath = previousProgramPath.get(currentProgramPath)!;
+    exit(program) {
+      program.scope.crawl();
     },
   },
   analyze: {
     enter(program) {
-      previousProgramPath.set(program, currentProgramPath);
-      currentProgramPath = program;
       startSection(program);
       trackParamsReferences(program, BindingType.input);
 
@@ -94,15 +84,15 @@ export default {
       const programExtra = program.node.extra;
       const inputBinding = program.node.params[0].extra?.binding;
       if (inputBinding && bindingHasDownstreamExpressions(inputBinding)) {
-        programExtra.domExports!.input = buildTemplateExports(inputBinding);
+        programExtra.domExports!.input = buildTemplateExports(
+          inputBinding,
+          program,
+        );
       }
-      currentProgramPath = previousProgramPath.get(currentProgramPath)!;
     },
   },
   translate: {
     enter(program) {
-      previousProgramPath.set(program, currentProgramPath);
-      currentProgramPath = program;
       scopeIdentifier = isOutputDOM()
         ? program.scope.generateUidIdentifier("scope")
         : (null as any as t.Identifier);
@@ -156,7 +146,6 @@ export default {
         body[0] ??= t.importDeclaration([], t.stringLiteral(compatFile));
         program.node.body = body as t.Statement[];
       }
-      currentProgramPath = previousProgramPath.get(currentProgramPath)!;
     },
   },
 } satisfies TemplateVisitor<t.Program>;
@@ -176,18 +165,19 @@ function resolveRelativeToEntry(
       );
 }
 
-function buildTemplateExports(binding: Binding) {
+function buildTemplateExports(
+  binding: Binding,
+  program: t.NodePath<t.Program>,
+) {
   const templateExport: TemplateExport = {
-    id: (binding.export ??= currentProgramPath.scope.generateUid(
-      binding.name + "_",
-    )),
+    id: (binding.export ??= program.scope.generateUid(binding.name + "_")),
     binding,
     props: undefined,
   };
   if (!(binding.aliases.size || binding.downstreamExpressions.size)) {
     templateExport.props = {};
     for (const [property, alias] of binding.propertyAliases) {
-      templateExport.props[property] = buildTemplateExports(alias);
+      templateExport.props[property] = buildTemplateExports(alias, program);
     }
   }
 

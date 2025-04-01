@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import { getProgram, types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoAttributeTags,
@@ -49,7 +49,7 @@ import translateVar from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
-import { currentProgramPath, scopeIdentifier } from "../program";
+import { scopeIdentifier } from "../program";
 
 export const kNativeTagBinding = Symbol("native tag binding");
 export const kSerializeMarker = Symbol("serialize marker");
@@ -267,7 +267,7 @@ export default {
       }
 
       if (node.var || hasEventHandlers || hasDynamicAttributes) {
-        currentProgramPath.node.extra.isInteractive ||= hasEventHandlers;
+        getProgram().node.extra.isInteractive ||= hasEventHandlers;
         const tagName =
           node.name.type === "StringLiteral"
             ? node.name.value
@@ -343,10 +343,10 @@ export default {
         } else {
           let getterFnIdentifier: t.Identifier | undefined;
           if (getterId) {
-            getterFnIdentifier = currentProgramPath.scope.generateUidIdentifier(
+            getterFnIdentifier = getProgram().scope.generateUidIdentifier(
               `get_${varName}`,
             );
-            currentProgramPath.node.body.push(
+            getProgram().node.body.push(
               t.variableDeclaration("const", [
                 t.variableDeclarator(
                   getterFnIdentifier,

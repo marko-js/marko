@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import { getProgram, types as t } from "@marko/compiler";
 import {
   assertAttributesOrArgs,
   importDefault,
@@ -51,7 +51,6 @@ import {
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
-import { currentProgramPath } from "../program";
 import { getTagRelativePath } from "./custom-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
@@ -136,7 +135,7 @@ export default {
         // We use the dynamic tag when a custom tag from the class runtime is used
 
         if (isOutputHTML()) {
-          currentProgramPath.node.body.push(
+          getProgram().node.body.push(
             t.markoScriptlet(
               [
                 t.expressionStatement(
@@ -153,7 +152,7 @@ export default {
             ),
           );
         } else {
-          currentProgramPath.node.body.push(
+          getProgram().node.body.push(
             t.expressionStatement(
               callRuntime(
                 "register",
@@ -226,7 +225,7 @@ export default {
 
         if (node.var) {
           const dynamicScopeIdentifier =
-            currentProgramPath.scope.generateUidIdentifier("dynamicScope");
+            getProgram().scope.generateUidIdentifier("dynamicScope");
           statements.push(
             t.variableDeclaration("const", [
               t.variableDeclarator(

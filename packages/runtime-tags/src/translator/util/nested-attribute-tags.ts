@@ -1,7 +1,6 @@
-import { types as t } from "@marko/compiler";
+import { getProgram, types as t } from "@marko/compiler";
 import { isAttributeTag, isLoopTag } from "@marko/compiler/babel-utils";
 
-import { currentProgramPath } from "../visitors/program";
 import { getParentTag } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
 import { isConditionTag } from "./is-core-tag";
@@ -31,7 +30,7 @@ export function getAttrTagIdentifier(
 ): t.Identifier {
   let name = attrTagToIdentifierLookup.get(meta);
   if (!name) {
-    name = currentProgramPath.scope.generateUid(meta.name);
+    name = getProgram().scope.generateUid(meta.name);
     attrTagToIdentifierLookup.set(meta, name);
   }
 

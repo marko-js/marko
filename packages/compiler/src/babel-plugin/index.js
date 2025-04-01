@@ -16,6 +16,7 @@ import { visitor as migrate } from "./plugins/migrate";
 import { visitor as transform } from "./plugins/transform";
 
 const SOURCE_FILES = new WeakMap();
+let currentFile;
 
 export default (api, markoOpts) => {
   api.assertVersion(7);
@@ -61,22 +62,18 @@ export default (api, markoOpts) => {
       curOpts = opts;
     },
     parserOverride(code) {
-      const prevFS = taglibConfig.fs;
-      taglibConfig.fs = markoOpts.fileSystem;
-      try {
-        const file = getMarkoFile(code, curOpts, markoOpts);
-        const finalAst = t.cloneNode(file.ast, true);
-        SOURCE_FILES.set(finalAst, file);
-        return finalAst;
-      } finally {
-        taglibConfig.fs = prevFS;
-      }
+      const file = getMarkoFile(code, curOpts, markoOpts);
+      const finalAst = t.cloneNode(file.ast, true);
+      SOURCE_FILES.set(finalAst, file);
+      return finalAst;
     },
     pre(file) {
       const { buildError: prevBuildError } = file.hub;
       const { buildCodeFrameError: prevCodeFrameError } = file;
       const prevFS = taglibConfig.fs;
+      const prevFile = currentFile;
       taglibConfig.fs = markoOpts.fileSystem;
+      currentFile = file;
       curOpts = undefined;
       try {
         const { ast, metadata } = file;
@@ -114,6 +111,7 @@ export default (api, markoOpts) => {
         file.path.scope.crawl(); // Ensure all scopes are accurate for subsequent babel plugins
       } finally {
         taglibConfig.fs = prevFS;
+        currentFile = prevFile;
         file.buildCodeFrameError = prevCodeFrameError;
         file.hub.buildError = prevBuildError;
         file.markoOpts =
@@ -147,7 +145,23 @@ export default (api, markoOpts) => {
   };
 };
 
-export function getMarkoFile(code, fileOpts, markoOpts) {
+export function getFile() {
+  if (currentFile) {
+    return currentFile;
+  }
+
+  throw new Error("Unable to access Marko File outside of a compilation");
+}
+
+export function getProgram() {
+  if (currentFile) {
+    return currentFile.path;
+  }
+
+  throw new Error("Unable to access Marko Program outside of a compilation");
+}
+
+function getMarkoFile(code, fileOpts, markoOpts) {
   const { translator } = markoOpts;
   let compileCache = markoOpts.cache.get(translator);
 
@@ -191,129 +205,137 @@ export function getMarkoFile(code, fileOpts, markoOpts) {
     return cached.file;
   }
 
-  const taglibLookup = buildLookup(path.dirname(filename), translator);
+  const prevFs = taglibConfig.fs;
+  const prevFile = currentFile;
+  taglibConfig.fs = markoOpts.fileSystem;
 
-  const file = new MarkoFile(fileOpts, {
-    code,
-    ast: {
-      type: "File",
-      program: {
-        type: "Program",
-        sourceType: "module",
-        body: [],
-        directives: [],
-        params: [t.identifier("input")],
+  try {
+    const taglibLookup = buildLookup(path.dirname(filename), translator);
+    const file = (currentFile = new MarkoFile(fileOpts, {
+      code,
+      ast: {
+        type: "File",
+        program: {
+          type: "Program",
+          sourceType: "module",
+          body: [],
+          directives: [],
+          params: [t.identifier("input")],
+        },
       },
-    },
-  });
+    }));
 
-  const meta = (file.metadata.marko = {
-    id,
-    deps: [],
-    tags: [],
-    watchFiles: [],
-    diagnostics: [],
-  });
+    const meta = (file.metadata.marko = {
+      id,
+      deps: [],
+      tags: [],
+      watchFiles: [],
+      diagnostics: [],
+    });
 
-  file.markoOpts = markoOpts;
-  file.___taglibLookup = taglibLookup;
-  file.___getMarkoFile = getMarkoFile;
+    file.markoOpts = markoOpts;
+    file.___taglibLookup = taglibLookup;
+    file.___getMarkoFile = getMarkoFile;
 
-  file.___compileStage = "parse";
-  parseMarko(file);
+    file.___compileStage = "parse";
+    parseMarko(file);
 
-  if (isSource) {
+    if (isSource) {
+      return file;
+    }
+
+    file.path.scope.crawl(); // Initialize bindings.
+
+    const rootMigrators = [];
+    for (const id in taglibLookup.taglibsById) {
+      for (const migrator of taglibLookup.taglibsById[id].migrators) {
+        addPlugin(meta, rootMigrators, migrator);
+      }
+    }
+
+    rootMigrators.push(migrate);
+    file.___compileStage = "migrate";
+    traverseAll(file, rootMigrators);
+
+    if (file.___hasParseErrors) {
+      if (markoOpts.errorRecovery) {
+        t.traverseFast(file.path.node, (node) => {
+          if (node.type === "MarkoParseError") {
+            diagnosticError(file.path, {
+              label: node.label,
+              loc: node.errorLoc || node.loc,
+            });
+          }
+        });
+      } else {
+        let errors = [];
+        t.traverseFast(file.path.node, (node) => {
+          if (node.type === "MarkoParseError") {
+            errors.push(
+              buildCodeFrameError(
+                file.opts.filename,
+                file.code,
+                node.errorLoc || node.loc,
+                node.label,
+              ),
+            );
+          }
+        });
+
+        throwAggregateError(errors);
+      }
+    }
+
+    if (isMigrate) {
+      return file;
+    }
+
+    const rootTransformers = [];
+    for (const id in taglibLookup.taglibsById) {
+      for (const transformer of taglibLookup.taglibsById[id].transformers) {
+        addPlugin(meta, rootTransformers, transformer);
+      }
+    }
+
+    rootTransformers.push(transform);
+    if (translator.transform) {
+      rootTransformers.push(translator.transform);
+    }
+    file.___compileStage = "transform";
+    traverseAll(file, rootTransformers);
+
+    for (const taglibId in taglibLookup.taglibsById) {
+      const { filePath } = taglibLookup.taglibsById[taglibId];
+
+      if (
+        filePath[filePath.length - 5] === "." &&
+        filePath.endsWith("marko.json")
+      ) {
+        meta.watchFiles.push(filePath);
+      }
+    }
+
+    compileCache.set(cacheKey, {
+      time: Date.now(),
+      file,
+      contentHash,
+    });
+
+    if (translator.analyze) {
+      try {
+        file.___compileStage = "analyze";
+        traverseAll(file, translator.analyze);
+      } catch (e) {
+        compileCache.delete(cacheKey);
+        throw e;
+      }
+    }
+
     return file;
+  } finally {
+    taglibConfig.fs = prevFs;
+    currentFile = prevFile;
   }
-
-  file.path.scope.crawl(); // Initialize bindings.
-
-  const rootMigrators = [];
-  for (const id in taglibLookup.taglibsById) {
-    for (const migrator of taglibLookup.taglibsById[id].migrators) {
-      addPlugin(meta, rootMigrators, migrator);
-    }
-  }
-
-  rootMigrators.push(migrate);
-  file.___compileStage = "migrate";
-  traverseAll(file, rootMigrators);
-
-  if (file.___hasParseErrors) {
-    if (markoOpts.errorRecovery) {
-      t.traverseFast(file.path.node, (node) => {
-        if (node.type === "MarkoParseError") {
-          diagnosticError(file.path, {
-            label: node.label,
-            loc: node.errorLoc || node.loc,
-          });
-        }
-      });
-    } else {
-      let errors = [];
-      t.traverseFast(file.path.node, (node) => {
-        if (node.type === "MarkoParseError") {
-          errors.push(
-            buildCodeFrameError(
-              file.opts.filename,
-              file.code,
-              node.errorLoc || node.loc,
-              node.label,
-            ),
-          );
-        }
-      });
-
-      throwAggregateError(errors);
-    }
-  }
-
-  if (isMigrate) {
-    return file;
-  }
-
-  const rootTransformers = [];
-  for (const id in taglibLookup.taglibsById) {
-    for (const transformer of taglibLookup.taglibsById[id].transformers) {
-      addPlugin(meta, rootTransformers, transformer);
-    }
-  }
-
-  rootTransformers.push(transform);
-  if (translator.transform) {
-    rootTransformers.push(translator.transform);
-  }
-  file.___compileStage = "transform";
-  traverseAll(file, rootTransformers);
-
-  for (const taglibId in taglibLookup.taglibsById) {
-    const { filePath } = taglibLookup.taglibsById[taglibId];
-
-    if (
-      filePath[filePath.length - 5] === "." &&
-      filePath.endsWith("marko.json")
-    ) {
-      meta.watchFiles.push(filePath);
-    }
-  }
-
-  compileCache.set(cacheKey, {
-    time: Date.now(),
-    file,
-    contentHash,
-  });
-
-  if (translator.analyze) {
-    try {
-      file.___compileStage = "analyze";
-      traverseAll(file, translator.analyze);
-    } catch (e) {
-      compileCache.delete(cacheKey);
-      throw e;
-    }
-  }
-
-  return file;
 }
 
 function shallowClone(data) {

@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import { getProgram, types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoAttributes,
@@ -42,7 +42,6 @@ import {
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
-import { currentProgramPath } from "../visitors/program";
 
 const kDOMBinding = Symbol("try tag dom binding");
 
@@ -180,7 +179,7 @@ export default {
           );
         }
 
-        currentProgramPath.node.body.push(
+        getProgram().node.body.push(
           t.expressionStatement(callRuntime("enableCatch")),
         );
 

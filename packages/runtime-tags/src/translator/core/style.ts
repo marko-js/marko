@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import { getProgram, types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoAttributeTags,
@@ -12,7 +12,6 @@ import MagicString, { type SourceMap } from "magic-string";
 import path from "path";
 
 import { getMarkoOpts } from "../util/marko-config";
-import { currentProgramPath } from "../visitors/program";
 
 const STYLE_EXT_REG = /^style((?:\.[a-zA-Z0-9$_-]+)+)?/;
 const htmlStyleTagAlternateMsg =
@@ -112,18 +111,18 @@ export default {
 
     if (importPath) {
       if (!node.var) {
-        currentProgramPath.node.body.push(
+        getProgram().node.body.push(
           t.importDeclaration([], t.stringLiteral(importPath)),
         );
       } else if (t.isIdentifier(node.var)) {
-        currentProgramPath.node.body.push(
+        getProgram().node.body.push(
           t.importDeclaration(
             [t.importDefaultSpecifier(node.var)],
             t.stringLiteral(importPath),
           ),
         );
       } else {
-        currentProgramPath.node.body.push(
+        getProgram().node.body.push(
           t.variableDeclaration("const", [
             t.variableDeclarator(
               node.var,

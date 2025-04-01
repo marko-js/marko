@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import { getProgram, types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoAttributes,
@@ -30,7 +30,7 @@ import { addStatement, getRegisterUID } from "../util/signals";
 import translateVar from "../util/translate-var";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
-import { currentProgramPath, scopeIdentifier } from "../visitors/program";
+import { scopeIdentifier } from "../visitors/program";
 
 export const kCommentTagBinding = Symbol("comment tag binding");
 const kGetterId = Symbol("node getter id");
@@ -116,10 +116,10 @@ export default {
         const references = tag.scope.getBinding(varName)!.referencePaths;
         let getterFnIdentifier: t.Identifier | undefined;
         if (getterId) {
-          getterFnIdentifier = currentProgramPath.scope.generateUidIdentifier(
+          getterFnIdentifier = getProgram().scope.generateUidIdentifier(
             `get_${varName}`,
           );
-          currentProgramPath.node.body.push(
+          getProgram().node.body.push(
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 getterFnIdentifier,

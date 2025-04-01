@@ -1,4 +1,4 @@
-import { types as t } from "@marko/compiler";
+import { getFile, types as t } from "@marko/compiler";
 import { importStar } from "@marko/compiler/babel-utils";
 
 import type { Falsy } from "../../common/types";
@@ -11,7 +11,6 @@ import {
   styleAttr,
   toString,
 } from "../../html";
-import { currentProgramPath } from "../visitors/program";
 import { getMarkoOpts, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
 import { toMemberExpression } from "./to-property-name";
@@ -41,7 +40,7 @@ export function importRuntime(
 ) {
   const { output } = getMarkoOpts();
   return toMemberExpression(
-    importStar(currentProgramPath.hub.file, getRuntimePath(output), "$"),
+    importStar(getFile(), getRuntimePath(output), "$"),
     name,
   );
 }

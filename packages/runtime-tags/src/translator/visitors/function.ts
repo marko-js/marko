@@ -1,11 +1,10 @@
-import { types as t } from "@marko/compiler";
+import { getFile, types as t } from "@marko/compiler";
 import { getTemplateId, isNativeTag } from "@marko/compiler/babel-utils";
 
 import { getFnRoot, getMarkoRoot } from "../util/get-root";
 import { isCoreTagName } from "../util/is-core-tag";
 import { getSection, type Section } from "../util/sections";
 import type { TemplateVisitor } from "../util/visitors";
-import { currentProgramPath } from "./program";
 const functionIdsBySection = new WeakMap<Section, Map<string, number>>();
 
 declare module "@marko/compiler/dist/types" {
@@ -74,7 +73,7 @@ export default {
     const {
       markoOpts,
       opts: { filename },
-    } = currentProgramPath.hub.file;
+    } = getFile();
 
     const section = getSection(fn);
     let functionNameCounts = functionIdsBySection.get(section);
