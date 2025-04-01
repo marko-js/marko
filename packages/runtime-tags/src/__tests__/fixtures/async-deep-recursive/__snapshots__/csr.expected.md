@@ -65,6 +65,37 @@ UPDATE div/div[data-level] null => "3"
   <div
     data-level="3"
   >
+    LOADING...
+  </div>
+  <!---->
+  <!---->
+  <!---->
+</div>
+<!---->
+<!---->
+```
+
+# Mutations
+```
+INSERT div/div/#text
+REMOVE #document-fragment/#comment0 after div/div/#text
+REMOVE #document-fragment/#text after div/div/#text
+REMOVE #document-fragment/#comment1 after div/div/#text
+```
+
+# Render ASYNC
+```html
+<!---->
+<!---->
+<div
+  data-level="4"
+>
+  <!---->
+  <!---->
+  <!---->
+  <div
+    data-level="3"
+  >
     <!---->
     <!---->
     <!---->
@@ -88,8 +119,8 @@ UPDATE div/div[data-level] null => "3"
 
 # Mutations
 ```
-INSERT div/div/#comment1, div/div/#comment2, #text, div/div/#comment3, div/div/#comment4
-REMOVE #text after div/div/#comment4
+INSERT div/div/#comment0, div/div/#comment1, div/div/#comment2, #text, div/div/#comment3, div/div/#comment4, div/div/#comment5
+REMOVE #text after div/div/#comment5
 INSERT div/div/div
 REMOVE #text after div/div/div
 INSERT div/div/div/#comment0, div/div/div/#text, div/div/div/#comment1
@@ -177,6 +208,57 @@ UPDATE div/div/div/div[data-level] null => "1"
       <div
         data-level="1"
       >
+        LOADING...
+      </div>
+      <!---->
+      <!---->
+      <!---->
+    </div>
+    <!---->
+    <!---->
+    <!---->
+  </div>
+  <!---->
+  <!---->
+  <!---->
+</div>
+<!---->
+<!---->
+```
+
+# Mutations
+```
+INSERT div/div/div/div/#text
+REMOVE #document-fragment/#comment0 after div/div/div/div/#text
+REMOVE #document-fragment/#text after div/div/div/div/#text
+REMOVE #document-fragment/#comment1 after div/div/div/div/#text
+```
+
+# Render ASYNC
+```html
+<!---->
+<!---->
+<div
+  data-level="4"
+>
+  <!---->
+  <!---->
+  <!---->
+  <div
+    data-level="3"
+  >
+    <!---->
+    <!---->
+    <!---->
+    <div
+      data-level="2"
+    >
+      <!---->
+      <!---->
+      <!---->
+      <div
+        data-level="1"
+      >
         <!---->
         <!---->
         <!---->
@@ -202,6 +284,6 @@ UPDATE div/div/div/div[data-level] null => "1"
 
 # Mutations
 ```
-INSERT div/div/div/div/#comment1, div/div/div/div/#comment2, div/div/div/div/#text, div/div/div/div/#comment3, div/div/div/div/#comment4
-REMOVE #text after div/div/div/div/#comment4
+INSERT div/div/div/div/#comment0, div/div/div/div/#comment1, div/div/div/div/#comment2, div/div/div/div/#text, div/div/div/div/#comment3, div/div/div/div/#comment4, div/div/div/div/#comment5
+REMOVE #text after div/div/div/div/#comment5
 ```

@@ -16,7 +16,7 @@ let pendingRendersLookup = new Map<number, PendingRender>();
 export const caughtError = new WeakSet<unknown[]>();
 export const placeholderShown = new WeakSet<unknown[]>();
 export let pendingEffects: unknown[] = [];
-export let rendering = false;
+export let rendering: undefined | 0 | 1;
 
 const scopeKeyOffset = 1e3;
 export function queueRender<T>(
@@ -61,13 +61,13 @@ export function queueEffect<S extends Scope, T extends ExecFn<S>>(
 export function run() {
   const effects = pendingEffects;
   try {
-    rendering = true;
+    rendering = 1;
     runRenders();
   } finally {
     pendingRenders = [];
     pendingRendersLookup = new Map();
     pendingEffects = [];
-    rendering = false;
+    rendering = 0;
   }
   runEffects(effects);
 }
@@ -81,11 +81,11 @@ export function prepareEffects(fn: () => void): unknown[] {
   pendingRendersLookup = new Map();
 
   try {
-    rendering = true;
+    rendering = 1;
     fn();
     runRenders();
   } finally {
-    rendering = false;
+    rendering = 0;
     pendingRenders = prevRenders;
     pendingRendersLookup = prevRendersLookup;
     pendingEffects = prevEffects;

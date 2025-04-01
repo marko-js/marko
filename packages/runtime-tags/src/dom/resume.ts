@@ -168,7 +168,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           if (resumes) {
             try {
               render.r = [];
-              isResuming = true;
+              isResuming = 1;
               for (let i = 0; i < resumes.length; i++) {
                 const serialized = resumes[i];
                 if (typeof serialized === "function") {
@@ -228,7 +228,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 }
               }
             } finally {
-              isResuming = false;
+              isResuming = 0;
             }
           }
         };
@@ -249,7 +249,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
   }
 }
 
-export let isResuming = false;
+export let isResuming: undefined | 0 | 1;
 
 export function register<T>(id: string, obj: T): T {
   registeredValues[id] = obj;

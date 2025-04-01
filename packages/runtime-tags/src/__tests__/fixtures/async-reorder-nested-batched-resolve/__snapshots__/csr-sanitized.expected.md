@@ -22,6 +22,17 @@ LOADING A1
   class="a"
   level="1"
 >
+  LOADING A2
+</div>
+```
+
+
+# Render ASYNC
+```html
+<div
+  class="a"
+  level="1"
+>
   <div
     class="a"
     level="2"
@@ -60,6 +71,27 @@ LOADING A1
       class="b"
       level="3"
     />
+  </div>
+</div>
+```
+
+
+# Render ASYNC
+```html
+<div
+  class="a"
+  level="1"
+>
+  <div
+    class="a"
+    level="2"
+  >
+    <div
+      class="b"
+      level="3"
+    >
+      LOADING B2
+    </div>
   </div>
 </div>
 ```
