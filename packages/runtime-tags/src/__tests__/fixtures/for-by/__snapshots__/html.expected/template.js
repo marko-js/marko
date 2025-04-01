@@ -11,7 +11,7 @@ function getMissingBy() {
 }
 _$.register(getMissingBy, "__tests__/template.marko_0/getMissingBy");
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   let items = [{
     id: 0,

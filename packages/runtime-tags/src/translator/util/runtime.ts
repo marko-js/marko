@@ -11,11 +11,11 @@ import {
   styleAttr,
   toString,
 } from "../../html";
-import { getMarkoOpts, isOutputHTML } from "./marko-config";
+import { getMarkoOpts, isOutputDOM, isOutputHTML } from "./marko-config";
 import runtimeInfo from "./runtime-info";
 import { toMemberExpression } from "./to-property-name";
 
-const pureFunctions: Array<keyof typeof import("../../dom")> = [
+const pureDOMFunctions = new Set<string>([
   "awaitTag",
   "conditional",
   "conditionalClosure",
@@ -33,7 +33,7 @@ const pureFunctions: Array<keyof typeof import("../../dom")> = [
   "loopTo",
   "state",
   "value",
-];
+] satisfies (keyof typeof import("../../dom"))[]);
 
 export function importRuntime(
   name: keyof typeof import("../../dom") | keyof typeof import("../../html"),
@@ -53,7 +53,7 @@ export function callRuntime(
     importRuntime(name),
     filterArguments(args),
   );
-  if (pureFunctions.includes(name as keyof typeof import("../../dom"))) {
+  if (isOutputDOM() && pureDOMFunctions.has(name)) {
     callExpression.leadingComments = [
       {
         type: "CommentBlock",

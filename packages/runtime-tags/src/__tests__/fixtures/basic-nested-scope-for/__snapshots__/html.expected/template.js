@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   let selected = 0;
   _$.resumeSingleNodeForOf([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], num => {

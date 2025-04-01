@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   let a = 0;
   _$.write(`<div${_$.attrs(input.value, "#div/0", _scope0_id, "div")}></div>${_$.markResumeNode(_scope0_id, "#div/0")}<div${_$.attrs({

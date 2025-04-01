@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const Once = {
     content: _$.registerContent("__tests__/template.marko_1_renderer", ({
@@ -26,7 +26,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   };
   let clickOnceCount = 0;
   const _dynamicScope = _$.peekNextScope();
-  const onClickOnce = /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/0", Once, {
+  const onClickOnce = _$.dynamicTag(_scope0_id, "#text/0", Once, {
     value: _$.register(function () {
       clickOnceCount++;
     }, "__tests__/template.marko_0/onClickOnce", _scope0_id)
@@ -58,7 +58,7 @@ export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", inpu
   };
   let clickTwiceCount = 0;
   const _dynamicScope2 = _$.peekNextScope();
-  const onClickTwice = /* @__PURE__ */_$.dynamicTag(_scope0_id, "#text/4", Twice, {
+  const onClickTwice = _$.dynamicTag(_scope0_id, "#text/4", Twice, {
     value: _$.register(function () {
       clickTwiceCount++;
     }, "__tests__/template.marko_0/onClickTwice", _scope0_id)

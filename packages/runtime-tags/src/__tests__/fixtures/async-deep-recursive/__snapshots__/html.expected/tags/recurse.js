@@ -46,4 +46,4 @@ const _content = input => {
     input_level: ["input.level"]
   });
 };
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/recurse.marko", _content);
+export default _$.createTemplate("__tests__/tags/recurse.marko", _content);
