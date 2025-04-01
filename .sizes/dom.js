@@ -1,4 +1,4 @@
-// size: 18903 (min) 7206 (brotli)
+// size: 18907 (min) 7202 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1149,6 +1149,7 @@ function awaitTag(nodeAccessor, renderer) {
   return (scope, promise) => {
     let tryWithPlaceholder = findBranchWithKey(scope, "d"),
       referenceNode = scope[nodeAccessor],
+      originalParentNode = referenceNode.parentNode,
       awaitBranch = scope[branchAccessor];
     tryWithPlaceholder
       ? (placeholderShown.add(pendingEffects),
@@ -1198,7 +1199,7 @@ function awaitTag(nodeAccessor, renderer) {
                         scope.$global,
                         renderer,
                         scope,
-                        referenceNode.parentNode,
+                        originalParentNode,
                       )),
                     referenceNode.parentNode,
                     referenceNode,

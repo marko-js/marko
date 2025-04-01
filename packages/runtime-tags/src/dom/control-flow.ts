@@ -44,7 +44,9 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
       scope,
       AccessorProp.PlaceholderContent,
     );
-    const referenceNode = scope[nodeAccessor];
+    const referenceNode = scope[nodeAccessor] as Text | Comment;
+    // we need to cache this parentNode since it may change when the placeholder is displayed.
+    const originalParentNode = referenceNode.parentNode;
     let awaitBranch = scope[branchAccessor];
     if (tryWithPlaceholder) {
       placeholderShown.add(pendingEffects);
@@ -107,7 +109,7 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
                       scope.$global,
                       renderer,
                       scope,
-                      referenceNode.parentNode!,
+                      originalParentNode!,
                     )),
                   referenceNode.parentNode!,
                   referenceNode,
