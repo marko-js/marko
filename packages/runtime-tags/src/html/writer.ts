@@ -742,6 +742,7 @@ export class State {
   public hasMainRuntime = false;
   public hasReorderRuntime = false;
   public hasWrittenResume = false;
+  public walkOnNextFlush = false;
   public trailerHTML = "";
   public resumes = "";
   public nonceAttr = "";
@@ -962,9 +963,9 @@ export class Chunk {
     const { boundary, effects } = this;
     const { state } = boundary;
     const { $global, runtimePrefix, nonceAttr } = state;
-    let { resumes } = state;
     let { html, scripts } = this;
-    let hasWalk = false;
+    let hasWalk = state.walkOnNextFlush;
+    if (hasWalk) state.walkOnNextFlush = false;
 
     if (state.needsMainRuntime && !state.hasMainRuntime) {
       state.hasMainRuntime = true;
@@ -981,20 +982,20 @@ export class Chunk {
 
     if (effects) {
       hasWalk = true;
-      resumes = resumes ? resumes + "," + effects : effects;
+      state.resumes = state.resumes ? state.resumes + "," + effects : effects;
     }
 
-    if (resumes) {
+    if (state.resumes) {
       if (state.hasWrittenResume) {
         scripts = concatScripts(
           scripts,
-          runtimePrefix + RuntimeKey.Resume + ".push(" + resumes + ")",
+          runtimePrefix + RuntimeKey.Resume + ".push(" + state.resumes + ")",
         );
       } else {
         state.hasWrittenResume = true;
         scripts = concatScripts(
           scripts,
-          runtimePrefix + RuntimeKey.Resume + "=[" + resumes + "]",
+          runtimePrefix + RuntimeKey.Resume + "=[" + state.resumes + "]",
         );
       }
     }
@@ -1126,7 +1127,8 @@ export class Chunk {
 function flushSerializer(boundary: Boundary) {
   const { state } = boundary;
   const { writeScopes, serializer } = state;
-  if (writeScopes || serializer.flushed) {
+  const { flushed } = serializer;
+  if (writeScopes || flushed) {
     const serializeData: [
       $global?: ReturnType<typeof getFilteredGlobals>,
       ...(number | PartialScope)[],
@@ -1153,6 +1155,9 @@ function flushSerializer(boundary: Boundary) {
     );
     state.lastSerializedScopeId = lastSerializedScopeId;
     state.writeScopes = null;
+    if (flushed) {
+      state.walkOnNextFlush = true;
+    }
   }
 }
 

@@ -16,7 +16,7 @@
     <!--M_]1 #text/1-->
     e
     <script>
-      M._.r.push(_=&gt;(_.d=[_.e={}],(_.a["ConditionalScope:#text/1"]=_.e),_.d))
+      M._.r.push(_=&gt;(_.d=[_.e={}],(_.a["ConditionalScope:#text/1"]=_.e),_.d));M._.w()
     </script>
   </body>
 </html>

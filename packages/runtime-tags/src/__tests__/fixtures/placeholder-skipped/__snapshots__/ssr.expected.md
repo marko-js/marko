@@ -5,7 +5,7 @@
 
 # Write
 ```html
-  <!--M_[3-->d<!--M_]1 #text/1-->e<script>M._.r.push(_=>(_.d=[_.e={}],(_.a["ConditionalScope:#text/1"]=_.e),_.d))</script>
+  <!--M_[3-->d<!--M_]1 #text/1-->e<script>M._.r.push(_=>(_.d=[_.e={}],(_.a["ConditionalScope:#text/1"]=_.e),_.d));M._.w()</script>
 ```
 
 # Render End
@@ -26,7 +26,7 @@
     <!--M_]1 #text/1-->
     e
     <script>
-      M._.r.push(_=&gt;(_.d=[_.e={}],(_.a["ConditionalScope:#text/1"]=_.e),_.d))
+      M._.r.push(_=&gt;(_.d=[_.e={}],(_.a["ConditionalScope:#text/1"]=_.e),_.d));M._.w()
     </script>
   </body>
 </html>
