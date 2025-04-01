@@ -7,7 +7,6 @@ export default function (options: Parameters<typeof createBrowser>[0]) {
     MessageChannel: any;
   };
   window.MARKO_DEBUG = true;
-  window.queueMicrotask = queueMicrotask;
   window.MessageChannel = (window as any).MessageChannel =
     class MessageChannel {
       port1: any;
@@ -16,11 +15,13 @@ export default function (options: Parameters<typeof createBrowser>[0]) {
         this.port1 = { onmessage() {} };
         this.port2 = {
           postMessage: () => {
-            setImmediate(this.port1.onmessage);
+            setImmediate(() => {
+              window.queueMicrotask(this.port1.onmessage);
+            });
           },
         };
       }
     };
-  window.requestAnimationFrame = (fn) => setTimeout(fn) as any;
+  window.requestAnimationFrame = (fn) => window.setTimeout(fn) as any;
   return browser;
 }

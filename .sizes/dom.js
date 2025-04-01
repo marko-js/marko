@@ -1,4 +1,4 @@
-// size: 18940 (min) 7221 (brotli)
+// size: 18929 (min) 7243 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -227,15 +227,15 @@ function init(runtimeId = "M") {
                                 parentBranch = branch.k;
                               (scope.k = branch),
                                 parentBranch &&
-                                  ((branch.u = parentBranch),
-                                  (parentBranch.A ||= new Set()).add(branch));
+                                  ((branch.t = parentBranch),
+                                  (parentBranch.z ||= new Set()).add(branch));
                             }
                           }
                         else
                           ($global = scope || {}),
                             ($global.runtimeId = runtimeId),
                             ($global.renderId = renderId),
-                            ($global.n = 1e6);
+                            ($global.o = 1e6);
                     else
                       registeredValues[resumes[++i]](
                         scopeLookup[serialized],
@@ -773,25 +773,25 @@ function toInsertNode(startNode, endNode) {
 }
 var pendingScopes = [];
 function createScope($global, closestBranch) {
-  let scope = { m: $global.n++, o: 1, k: closestBranch, $global: $global };
+  let scope = { m: $global.o++, p: 1, k: closestBranch, $global: $global };
   return pendingScopes.push(scope), scope;
 }
 function skipScope(scope) {
-  return scope.$global.n++;
+  return scope.$global.o++;
 }
 function findBranchWithKey(scope, key) {
   let branch = scope.k;
-  for (; branch && !branch[key]; ) branch = branch.u;
+  for (; branch && !branch[key]; ) branch = branch.t;
   return branch;
 }
 function destroyBranch(branch) {
-  branch.u?.A?.delete(branch), destroyNestedBranches(branch);
+  branch.t?.z?.delete(branch), destroyNestedBranches(branch);
 }
 function destroyNestedBranches(branch) {
-  (branch.p = 1),
-    branch.A?.forEach(destroyNestedBranches),
+  (branch.A = 1),
+    branch.z?.forEach(destroyNestedBranches),
     branch.J?.forEach((scope) => {
-      for (let id in scope.x) scope.x[id]?.abort();
+      for (let id in scope.u) scope.u[id]?.abort();
     });
 }
 function removeAndDestroyBranch(branch) {
@@ -853,10 +853,10 @@ function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global),
     parentBranch = parentScope?.k;
   return (
-    (branch._ = renderer.y || parentScope),
+    (branch._ = renderer.x || parentScope),
     (branch.k = branch),
     parentBranch &&
-      ((branch.u = parentBranch), (parentBranch.A ||= new Set()).add(branch)),
+      ((branch.t = parentBranch), (parentBranch.z ||= new Set()).add(branch)),
     renderer.B?.(branch, parentNode.namespaceURI),
     branch
   );
@@ -926,11 +926,11 @@ function createContent(
   return (owner) => ({
     m: id,
     B: clone,
-    y: owner,
+    x: owner,
     C: setup,
     l: params,
     E: closures,
-    z: dynamicScopesAccessor,
+    y: dynamicScopesAccessor,
   });
 }
 function registerContent(
@@ -969,6 +969,9 @@ var isScheduled,
       port22
     );
   })();
+function schedule() {
+  isScheduled || ((isScheduled = !0), queueMicrotask(flushAndWaitFrame));
+}
 function flushAndWaitFrame() {
   run(), requestAnimationFrame(triggerMacroTask);
 }
@@ -989,9 +992,7 @@ function state(valueAccessor, fn) {
         ((scope[valueAccessor] = value2), fn(scope, value2))
       : scope[valueChangeAccessor]
         ? scope[valueChangeAccessor](value2)
-        : (isScheduled ||
-            ((isScheduled = !0), queueMicrotask(flushAndWaitFrame)),
-          queueRender(scope, update, valueAccessor, value2)),
+        : (schedule(), queueRender(scope, update, valueAccessor, value2)),
     value2
   );
 }
@@ -1003,7 +1004,7 @@ function value(valueAccessor, fn = () => {}) {
 }
 function intersection(id, fn, defaultPending = 1, scopeIdAccessor = "m") {
   return (scope) => {
-    scope.o
+    scope.p
       ? void 0 === scope[id]
         ? (scope[id] = defaultPending)
         : --scope[id] || fn(scope)
@@ -1025,7 +1026,7 @@ function loopClosure(valueAccessor, ownerLoopNodeAccessor, fn) {
           ownerScope,
           () => {
             for (let scope of scopes)
-              !scope.o && !scope.p && childSignal(scope);
+              !scope.p && !scope.A && childSignal(scope);
           },
           -1,
           0,
@@ -1046,7 +1047,7 @@ function conditionalClosure(
     ownerSignal = (scope) => {
       let ifScope = scope[scopeAccessor];
       ifScope &&
-        !ifScope.o &&
+        !ifScope.p &&
         scope[branchAccessor] === branch &&
         queueRender(ifScope, childSignal, -1);
     };
@@ -1067,7 +1068,7 @@ function dynamicClosure(...closureSignals) {
   return (scope) => {
     if (scope[___scopeInstancesAccessor])
       for (let childScope of scope[___scopeInstancesAccessor])
-        childScope.o ||
+        childScope.p ||
           queueRender(
             childScope,
             closureSignals[childScope[___signalIndexAccessor]],
@@ -1147,78 +1148,91 @@ function awaitTag(nodeAccessor, renderer) {
     branchAccessor = "d" + nodeAccessor;
   return (scope, promise) => {
     let tryWithPlaceholder = findBranchWithKey(scope, "d"),
-      awaitBranch = scope[branchAccessor],
       referenceNode = scope[nodeAccessor],
-      namespaceNode = (awaitBranch?.h ?? referenceNode).parentNode,
-      thisPromise = (scope[promiseAccessor] = promise
-        .then((data2) => {
-          if (
-            thisPromise === scope[promiseAccessor] &&
-            !scope.k?.p &&
-            ((scope[promiseAccessor] = 0),
-            renderImmediate(() => {
-              tryWithPlaceholder && placeholderShown.add(pendingEffects),
-                (!awaitBranch || !tryWithPlaceholder) &&
+      awaitBranch = scope[branchAccessor];
+    tryWithPlaceholder
+      ? (placeholderShown.add(pendingEffects),
+        !scope[promiseAccessor] &&
+          1 === (tryWithPlaceholder.n = (tryWithPlaceholder.n || 0) + 1) &&
+          requestAnimationFrame(
+            () =>
+              tryWithPlaceholder.n &&
+              runEffects(
+                prepareEffects(() =>
+                  queueRender(
+                    tryWithPlaceholder,
+                    () => {
+                      insertBranchBefore(
+                        (tryWithPlaceholder.c = createAndSetupBranch(
+                          scope.$global,
+                          tryWithPlaceholder.d,
+                          tryWithPlaceholder._,
+                          tryWithPlaceholder.h.parentNode,
+                        )),
+                        tryWithPlaceholder.h.parentNode,
+                        tryWithPlaceholder.h,
+                      ),
+                        tempDetatchBranch(tryWithPlaceholder);
+                    },
+                    -1,
+                  ),
+                ),
+              ),
+          ))
+      : awaitBranch &&
+        (awaitBranch.h.parentNode.insertBefore(referenceNode, awaitBranch.h),
+        tempDetatchBranch(awaitBranch));
+    let thisPromise = (scope[promiseAccessor] = promise.then(
+      (data2) => {
+        thisPromise === scope[promiseAccessor] &&
+          ((scope[promiseAccessor] = 0),
+          schedule(),
+          queueRender(
+            scope,
+            () => {
+              if (
+                ((!awaitBranch || !tryWithPlaceholder) &&
                   (insertBranchBefore(
                     (awaitBranch ??= scope[branchAccessor] =
                       createAndSetupBranch(
                         scope.$global,
                         renderer,
                         scope,
-                        namespaceNode,
+                        referenceNode.parentNode,
                       )),
                     referenceNode.parentNode,
                     referenceNode,
                   ),
                   referenceNode.remove()),
-                renderer.l?.(awaitBranch, [data2]);
-            }),
-            tryWithPlaceholder && !--tryWithPlaceholder.q)
-          ) {
-            let placeholderBranch = tryWithPlaceholder.c;
-            (tryWithPlaceholder.c = 0),
-              placeholderBranch &&
-                (insertBranchBefore(
-                  tryWithPlaceholder,
-                  placeholderBranch.h.parentNode,
-                  placeholderBranch.h,
-                ),
-                removeAndDestroyBranch(placeholderBranch)),
-              tryWithPlaceholder.H && runEffects(tryWithPlaceholder.H, !0);
-          }
-        })
-        .catch((error) =>
-          renderImmediate(() => renderCatch(scope, error, !0)),
-        ));
-    tryWithPlaceholder
-      ? (placeholderShown.add(pendingEffects),
-        tryWithPlaceholder.q ||
-          ((tryWithPlaceholder.q = 0),
-          requestAnimationFrame(() =>
-            renderImmediate(() => {
-              if (tryWithPlaceholder.q && !tryWithPlaceholder.p) {
-                insertBranchBefore(
-                  (tryWithPlaceholder.c = createAndSetupBranch(
-                    scope.$global,
-                    tryWithPlaceholder.d,
-                    tryWithPlaceholder._,
-                    tryWithPlaceholder.h.parentNode,
-                  )),
-                  tryWithPlaceholder.h.parentNode,
-                  tryWithPlaceholder.h,
-                ),
-                  tempDetatchBranch(tryWithPlaceholder);
+                renderer.l?.(awaitBranch, [data2]),
+                tryWithPlaceholder &&
+                  (placeholderShown.add(pendingEffects),
+                  !--tryWithPlaceholder.n))
+              ) {
+                let placeholderBranch = tryWithPlaceholder.c;
+                (tryWithPlaceholder.c = 0),
+                  placeholderBranch &&
+                    (insertBranchBefore(
+                      tryWithPlaceholder,
+                      placeholderBranch.h.parentNode,
+                      placeholderBranch.h,
+                    ),
+                    removeAndDestroyBranch(placeholderBranch)),
+                  tryWithPlaceholder.H && runEffects(tryWithPlaceholder.H, !0);
               }
-            }),
-          )),
-        tryWithPlaceholder.q++)
-      : awaitBranch &&
-        (awaitBranch.h.parentNode.insertBefore(referenceNode, awaitBranch.h),
-        tempDetatchBranch(awaitBranch));
+            },
+            -1,
+          ));
+      },
+      (error) => {
+        thisPromise === scope[promiseAccessor] &&
+          (tryWithPlaceholder && (tryWithPlaceholder.n = 0),
+          (scope[promiseAccessor] = 0),
+          schedule(),
+          queueRender(scope, renderCatch, -1, error));
+      },
+    ));
   };
-}
-function renderImmediate(cb) {
-  return runEffects(prepareEffects(cb));
 }
 function createTry(nodeAccessor, tryContent) {
   let branchAccessor = "d" + nodeAccessor;
@@ -1237,12 +1251,14 @@ function createTry(nodeAccessor, tryContent) {
       (branch.d = normalizeDynamicRenderer(input.placeholder)));
   };
 }
-function renderCatch(scope, error, async) {
+function renderCatch(scope, error) {
   let tryWithCatch = findBranchWithKey(scope, "b");
-  if (tryWithCatch) {
+  if (!tryWithCatch) throw error;
+  {
     let placeholderBranch = tryWithCatch.c;
     placeholderBranch &&
-      ((tryWithCatch._["d" + tryWithCatch.a] = placeholderBranch),
+      ((tryWithCatch.n = 0),
+      (tryWithCatch._["d" + tryWithCatch.a] = placeholderBranch),
       destroyBranch(tryWithCatch)),
       caughtError.add(pendingEffects),
       setConditionalRenderer(
@@ -1252,11 +1268,6 @@ function renderCatch(scope, error, async) {
         createAndSetupBranch,
       ),
       tryWithCatch.b.l?.(tryWithCatch._["d" + tryWithCatch.a], [error]);
-  } else {
-    if (!async) throw error;
-    setTimeout(() => {
-      throw error;
-    });
   }
 }
 function conditional(nodeAccessor, ...branches) {
@@ -1300,18 +1311,18 @@ var dynamicTag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
             content,
             createAndSetupBranch,
           ),
-            content.z &&
+            content.y &&
               subscribeToScopeSet(
+                content.x,
                 content.y,
-                content.z,
                 scope[childScopeAccessor].d0,
               );
         }
       } else
-        normalizedRenderer?.z &&
+        normalizedRenderer?.y &&
           subscribeToScopeSet(
+            normalizedRenderer.x,
             normalizedRenderer.y,
-            normalizedRenderer.z,
             scope[childScopeAccessor],
           );
     if (normalizedRenderer) {
@@ -1583,12 +1594,12 @@ function queueRender(scope, signal, signalKey, value2, scopeKey = scope.m) {
     existingRender = signalKey >= 0 && pendingRendersLookup.get(key);
   if (existingRender) existingRender.I = value2;
   else {
-    let render = { t: key, D: scope, L: signal, I: value2 },
+    let render = { q: key, D: scope, L: signal, I: value2 },
       i = pendingRenders.push(render) - 1;
     for (; i; ) {
       let parentIndex = (i - 1) >> 1,
         parent = pendingRenders[parentIndex];
-      if (key - parent.t >= 0) break;
+      if (key - parent.q >= 0) break;
       (pendingRenders[i] = parent), (i = parentIndex);
     }
     signalKey >= 0 && pendingRendersLookup.set(key, render),
@@ -1637,25 +1648,25 @@ function runRenders() {
     if (render !== item) {
       let i = 0,
         mid = pendingRenders.length >> 1,
-        key = (pendingRenders[0] = item).t;
+        key = (pendingRenders[0] = item).q;
       for (; i < mid; ) {
         let bestChild = 1 + (i << 1),
           right = bestChild + 1;
         if (
           (right < pendingRenders.length &&
-            pendingRenders[right].t - pendingRenders[bestChild].t < 0 &&
+            pendingRenders[right].q - pendingRenders[bestChild].q < 0 &&
             (bestChild = right),
-          pendingRenders[bestChild].t - key >= 0)
+          pendingRenders[bestChild].q - key >= 0)
         )
           break;
         (pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild);
       }
       pendingRenders[i] = item;
     }
-    render.D.k?.p || runRender(render);
+    render.D.k?.A || runRender(render);
   }
   !(function () {
-    for (let scope of pendingScopes) scope.o = 0;
+    for (let scope of pendingScopes) scope.p = 0;
     pendingScopes = [];
   })();
 }
@@ -1664,8 +1675,8 @@ var runRender = (render) => render.L(render.D, render.I),
     enableCatch = () => {};
     let handlePendingTry = (fn, scope, branch) => {
       for (; branch; ) {
-        if (branch.q) return (branch.H ||= []).push(fn, scope);
-        branch = branch.u;
+        if (branch.n) return (branch.H ||= []).push(fn, scope);
+        branch = branch.t;
       }
     };
     (runEffects = (
@@ -1680,7 +1691,7 @@ var runRender = (render) => render.L(render.D, render.I),
             (fn = effects[i++]),
               (scope = effects[i++]),
               (branch = scope.k),
-              !branch?.p &&
+              !branch?.A &&
                 (!checkPending || !handlePendingTry(fn, scope, branch)) &&
                 fn(scope, scope);
         } else runEffects2(effects);
@@ -1695,13 +1706,13 @@ var runRender = (render) => render.L(render.D, render.I),
       })(runRender));
   };
 function resetAbortSignal(scope, id) {
-  let ctrl = scope.x?.[id];
-  ctrl && (queueEffect(ctrl, abort), (scope.x[id] = void 0));
+  let ctrl = scope.u?.[id];
+  ctrl && (queueEffect(ctrl, abort), (scope.u[id] = void 0));
 }
 function getAbortSignal(scope, id) {
   return (
     scope.k && (scope.k.J ||= new Set()).add(scope),
-    ((scope.x ||= {})[id] ||= new AbortController()).signal
+    ((scope.u ||= {})[id] ||= new AbortController()).signal
   );
 }
 function abort(ctrl) {
@@ -1776,12 +1787,12 @@ var classIdToBranch = new Map(),
         ((component.effects = prepareEffects(() => {
           branch
             ? (existing = !0)
-            : ((out.global.n ||= 0),
+            : ((out.global.o ||= 0),
               (branch = component.scope =
                 createAndSetupBranch(
                   out.global,
                   renderer,
-                  renderer.y,
+                  renderer.x,
                   document.body,
                 ))),
             renderer.l?.(branch, renderer._ ? args[0] : args);
@@ -1805,8 +1816,8 @@ function mount(input = {}, reference, position) {
   switch (
     ($global
       ? (({ $global: $global, ...input } = input),
-        ($global = { n: 0, runtimeId: "M", renderId: "_", ...$global }))
-      : ($global = { n: 0, runtimeId: "M", renderId: "_" }),
+        ($global = { o: 0, runtimeId: "M", renderId: "_", ...$global }))
+      : ($global = { o: 0, runtimeId: "M", renderId: "_" }),
     position)
   ) {
     case "beforebegin":
