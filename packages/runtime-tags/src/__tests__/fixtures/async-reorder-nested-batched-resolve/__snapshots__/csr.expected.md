@@ -45,6 +45,8 @@ REMOVE #document-fragment/#comment1 after #text
 ```
 INSERT #comment1, div, #comment2
 REMOVE #text after #comment2
+INSERT div/#comment0, div/#text, div/#comment1
+REMOVE #text after div/#comment1
 ```
 
 # Render ASYNC
@@ -140,6 +142,8 @@ REMOVE #document-fragment/#comment1 after div/div/#text
 ```
 INSERT div/div/#comment0, div/div/div, div/div/#comment1
 REMOVE #text after div/div/#comment1
+INSERT div/div/div/#comment0, div/div/div/#text, div/div/div/#comment1
+REMOVE #text after div/div/div/#comment1
 ```
 
 # Render ASYNC
