@@ -137,14 +137,13 @@ export function controllable_input_value_effect(
       AccessorPrefix.ControlledHandler + nodeAccessor
     ] as undefined | ((value: unknown) => unknown);
     if (valueChange) {
-      const newValue = el.value;
       inputType = (ev as InputEvent)?.inputType;
+      valueChange(el.value);
+      run();
       setValueAndUpdateSelection(
         el,
         scope[AccessorPrefix.ControlledValue + nodeAccessor],
       );
-      valueChange(newValue);
-      run();
       inputType = "";
     }
   });
@@ -306,7 +305,7 @@ function setValueAndUpdateSelection(el: HTMLInputElement, value: string) {
       (el.value = value),
     );
     if (~updatedPosition) {
-      el.selectionStart = updatedPosition;
+      el.setSelectionRange(updatedPosition, updatedPosition);
     }
   }
 }

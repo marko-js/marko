@@ -1,4 +1,4 @@
-// size: 18907 (min) 7216 (brotli)
+// size: 18901 (min) 7208 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -361,14 +361,12 @@ function controllable_input_value_effect(scope, nodeAccessor) {
   isResuming && (scope["g" + nodeAccessor] = el.defaultValue),
     syncControllable(el, "input", hasValueChanged, (ev) => {
       let valueChange = scope["e" + nodeAccessor];
-      if (valueChange) {
-        let newValue = el.value;
-        (inputType = ev?.inputType),
-          setValueAndUpdateSelection(el, scope["g" + nodeAccessor]),
-          valueChange(newValue),
-          run(),
-          (inputType = "");
-      }
+      valueChange &&
+        ((inputType = ev?.inputType),
+        valueChange(el.value),
+        run(),
+        setValueAndUpdateSelection(el, scope["g" + nodeAccessor]),
+        (inputType = ""));
     });
 }
 function controllable_select_value(scope, nodeAccessor, value2, valueChange) {
@@ -482,7 +480,7 @@ function setValueAndUpdateSelection(el, value2) {
       el.value,
       (el.value = value2),
     );
-    ~updatedPosition && (el.selectionStart = updatedPosition);
+    ~updatedPosition && el.setSelectionRange(updatedPosition, updatedPosition);
   }
 }
 function setCheckboxValue(scope, nodeAccessor, type, checked, checkedChange) {
