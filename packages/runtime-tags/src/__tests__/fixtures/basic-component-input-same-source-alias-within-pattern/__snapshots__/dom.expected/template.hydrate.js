@@ -1,4 +1,4 @@
-// size: 403 (min) 197 (brotli)
+// size: 395 (min) 196 (brotli)
 const _text = _$.value(7, (_scope, text) => {
     _$.data(_scope[1], text),
       ((_scope, textAlias) => {
@@ -9,7 +9,7 @@ const _text = _$.value(7, (_scope, text) => {
   _onClick_effect = _$.effect("a0", (_scope, { 5: onClick }) =>
     _$.on(_scope[0], "click", onClick),
   ),
-  _onClick$1 = _$.value(5, (_scope) => _onClick_effect(_scope)),
+  _onClick$1 = _$.value(5, _onClick_effect),
   _clickCount = _$.state(2, (_scope, clickCount) => {
     _value2(_scope[0], { text: clickCount }),
       _onClick$1(_scope[0], _onClick(_scope)),

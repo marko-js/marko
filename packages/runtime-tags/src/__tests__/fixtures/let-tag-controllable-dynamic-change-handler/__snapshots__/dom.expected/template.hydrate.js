@@ -1,4 +1,4 @@
-// size: 370 (min) 191 (brotli)
+// size: 362 (min) 194 (brotli)
 const _expr_x_yChange = _$.intersection(6, (_scope) => {
     const { 4: x, 5: yChange } = _scope;
     _y(_scope, x, yChange);
@@ -11,7 +11,7 @@ const _expr_x_yChange = _$.intersection(6, (_scope) => {
   _y = _$.state(7, (_scope, y) => {
     _$.data(_scope[2], y), _y_effect(_scope);
   }),
-  _yChange = _$.state(5, (_scope) => _expr_x_yChange(_scope)),
+  _yChange = _$.state(5, _expr_x_yChange),
   _x = _$.state(4, (_scope, x) => {
     _$.data(_scope[1], x), _expr_x_yChange(_scope);
   });

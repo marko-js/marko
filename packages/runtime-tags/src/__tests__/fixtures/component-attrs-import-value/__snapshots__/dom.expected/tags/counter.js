@@ -17,7 +17,7 @@ const _count = /* @__PURE__ */_$.state("count/4", _scope => {
   _expr_input_count(_scope);
   _count_effect(_scope);
 });
-export const _input = /* @__PURE__ */_$.value("input", _scope => _expr_input_count(_scope));
+export const _input = /* @__PURE__ */_$.value("input", _expr_input_count);
 export function _setup(_scope) {
   _count(_scope, 0);
 }

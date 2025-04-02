@@ -43,7 +43,7 @@ const _hoisted_setHtml4_effect = _$.effect("__tests__/template.marko_0__hoisted_
     }
   }
 });
-const _hoisted_setHtml4 = /* @__PURE__ */_$.value("_hoisted_setHtml3", _scope => _hoisted_setHtml4_effect(_scope));
+const _hoisted_setHtml4 = /* @__PURE__ */_$.value("_hoisted_setHtml3", _hoisted_setHtml4_effect);
 const _to = /* @__PURE__ */_$.state("to/3", (_scope, to) => _for2(_scope, [to, 0, 1]));
 const _setup_effect = _$.effect("__tests__/template.marko_0", _scope => {
   _get_hoisted_setHtml3(_scope)('First Only');

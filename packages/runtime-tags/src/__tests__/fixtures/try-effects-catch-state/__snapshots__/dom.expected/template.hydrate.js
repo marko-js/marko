@@ -1,4 +1,4 @@
-// size: 381 (min) 222 (brotli)
+// size: 373 (min) 223 (brotli)
 _$.enableCatch();
 const _err$catch_content = _$.value(2, (_scope, err) =>
     _$.data(_scope[0], err),
@@ -26,5 +26,5 @@ const _clickCount$try_content_effect = _$.effect(
       _clickCount$try_content_effect(_scope);
   }),
   _clickCount_closure = _$.dynamicClosure(_clickCount$try_content),
-  _clickCount = _$.state(2, (_scope) => _clickCount_closure(_scope));
+  _clickCount = _$.state(2, _clickCount_closure);
 init();

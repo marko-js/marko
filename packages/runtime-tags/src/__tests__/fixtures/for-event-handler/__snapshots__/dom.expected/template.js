@@ -10,7 +10,7 @@ const _num$for_content_effect = _$.effect("__tests__/template.marko_1_num", (_sc
 }) => _$.on(_scope["#button/0"], "click", function () {
   _num(_scope._, num + 1), num;
 }));
-const _num$for_content = /* @__PURE__ */_$.loopClosure("num", "#text/0", _scope => _num$for_content_effect(_scope));
+const _num$for_content = /* @__PURE__ */_$.loopClosure("num", "#text/0", _num$for_content_effect);
 const _for_content = /* @__PURE__ */_$.createRenderer("<button> </button>", /* get, next(1), get */" D ", 0, _params2$for_content, _scope => _num$for_content._(_scope));
 const _for = /* @__PURE__ */_$.loopTo("#text/0", _for_content);
 const _num = /* @__PURE__ */_$.state("num/1", (_scope, num) => {

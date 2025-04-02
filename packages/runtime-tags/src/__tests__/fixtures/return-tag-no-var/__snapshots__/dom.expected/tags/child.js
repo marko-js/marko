@@ -1,7 +1,7 @@
 export const _template = "<span>child</span>";
 export const _walks = /* over(1) */"b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _x = /* @__PURE__ */_$.state("x/0", (_scope, x) => _$.tagVarSignal(_scope, x));
+const _x = /* @__PURE__ */_$.state("x/0", _$.tagVarSignal);
 export function _setup(_scope) {
   _x(_scope, 1);
 }

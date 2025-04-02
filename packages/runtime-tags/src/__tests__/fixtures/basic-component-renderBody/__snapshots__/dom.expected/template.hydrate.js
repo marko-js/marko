@@ -1,8 +1,8 @@
-// size: 267 (min) 167 (brotli)
+// size: 259 (min) 162 (brotli)
 const _onClick_effect = _$.effect("a0", (_scope, { 4: onClick }) =>
     _$.on(_scope[0], "click", onClick),
   ),
-  _onClick$1 = _$.value(4, (_scope) => _onClick_effect(_scope)),
+  _onClick$1 = _$.value(4, _onClick_effect),
   _clickCount$mybutton_content = _$.dynamicClosureRead(
     1,
     (_scope, clickCount) => _$.data(_scope[0], clickCount),

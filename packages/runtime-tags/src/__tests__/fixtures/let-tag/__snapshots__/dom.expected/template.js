@@ -5,7 +5,7 @@ const _expr_x_y_effect = _$.effect("__tests__/template.marko_0_x_y", (_scope, {
   x,
   y
 }) => _$.on(_scope["#button/0"], "click", () => _x(_scope, _y(_scope, x + y))));
-const _expr_x_y = /* @__PURE__ */_$.intersection(5, _scope => _expr_x_y_effect(_scope));
+const _expr_x_y = /* @__PURE__ */_$.intersection(5, _expr_x_y_effect);
 const _y = /* @__PURE__ */_$.state("y/4", (_scope, y) => {
   _$.data(_scope["#text/2"], y);
   _expr_x_y(_scope);

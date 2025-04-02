@@ -23,8 +23,8 @@ const _x = /* @__PURE__ */_$.state("x/7", (_scope, x) => {
   _expr_input_content_input_name_x(_scope);
   _x_effect(_scope);
 });
-export const _input_name = /* @__PURE__ */_$.value("input_name", _scope => _expr_input_content_input_name_x(_scope));
-export const _input_content = /* @__PURE__ */_$.value("input_content", _scope => _expr_input_content_input_name_x(_scope));
+export const _input_name = /* @__PURE__ */_$.value("input_name", _expr_input_content_input_name_x);
+export const _input_content = /* @__PURE__ */_$.value("input_content", _expr_input_content_input_name_x);
 export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_content(_scope, input.content);
   _input_name(_scope, input.name);

@@ -15,7 +15,7 @@ const _hoisted_el2$inputshowChildnull_content_effect = _$.effect("__tests__/temp
     element().classList.add('inner');
   }
 });
-const _hoisted_el2$inputshowChildnull_content = /* @__PURE__ */_$.value("_hoisted_el2", _scope => _hoisted_el2$inputshowChildnull_content_effect(_scope));
+const _hoisted_el2$inputshowChildnull_content = /* @__PURE__ */_$.value("_hoisted_el2", _hoisted_el2$inputshowChildnull_content_effect);
 const _setup$inputshowChildnull_content = _scope => {
   _child(_scope["#childScope/0"]);
   _child_input_content(_scope["#childScope/0"], _child_content2(_scope));
@@ -33,7 +33,7 @@ const _hoisted_el6_effect = _$.effect("__tests__/template.marko_0__hoisted_el3",
     element().classList.add('outer');
   }
 });
-const _hoisted_el6 = /* @__PURE__ */_$.value("_hoisted_el3", _scope => _hoisted_el6_effect(_scope));
+const _hoisted_el6 = /* @__PURE__ */_$.value("_hoisted_el3", _hoisted_el6_effect);
 const _hoisted_el5_effect = _$.effect("__tests__/template.marko_0__hoisted_el", ({
   _hoisted_el
 }) => {
@@ -41,7 +41,7 @@ const _hoisted_el5_effect = _$.effect("__tests__/template.marko_0__hoisted_el", 
     element().innerHTML = 'Hoist from custom tag';
   }
 });
-const _hoisted_el5 = /* @__PURE__ */_$.value("_hoisted_el", _scope => _hoisted_el5_effect(_scope));
+const _hoisted_el5 = /* @__PURE__ */_$.value("_hoisted_el", _hoisted_el5_effect);
 export const _input_show = /* @__PURE__ */_$.value("input_show", (_scope, input_show) => {
   _dynamicTag(_scope, input_show ? Child : null);
   _dynamicTag2(_scope, input_show ? 'section' : null);

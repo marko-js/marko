@@ -1,15 +1,12 @@
-// size: 909 (min) 425 (brotli)
+// size: 865 (min) 406 (brotli)
 const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
     _$.data(_scope[1], count),
   ),
-  _setup$else_content_effect = _$.effect("a0", (_scope) =>
+  _setup$else_content = _$.effect("a0", (_scope) =>
     _$.on(_scope[0], "click", function () {
       _editing$for_content(_scope._, !0);
     }),
   ),
-  _setup$else_content = (_scope) => {
-    _setup$else_content_effect(_scope);
-  },
   _else_content = _$.createRenderer(
     "<button>Increment <!></button>",
     " Db%",
@@ -40,18 +37,21 @@ const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
   ),
   _expr_counts_count_i$if_content = _$.intersection(
     2,
-    (_scope) => _expr_counts_count_i$if_content_effect(_scope),
+    _expr_counts_count_i$if_content_effect,
     2,
   ),
-  _i$if_content = _$.conditionalClosure(3, 0, 0, (_scope) =>
-    _expr_counts_count_i$if_content(_scope),
+  _i$if_content = _$.conditionalClosure(
+    3,
+    0,
+    0,
+    _expr_counts_count_i$if_content,
   ),
   _count$if_content = _$.conditionalClosure(2, 0, 0, (_scope, count) => {
     _$.data(_scope[1], count + 1), _expr_counts_count_i$if_content(_scope);
   }),
   _counts$if_content = _$.dynamicClosureRead(
     1,
-    (_scope) => _expr_counts_count_i$if_content(_scope),
+    _expr_counts_count_i$if_content,
     (_scope) => _scope._._,
   ),
   _if_content = _$.createRenderer(
@@ -69,7 +69,7 @@ const _count$else_content = _$.conditionalClosure(2, 0, 1, (_scope, count) =>
   _editing$for_content = _$.state(4, (_scope, editing) =>
     _if$for_content(_scope, editing ? 0 : 1),
   ),
-  _i$for_content = _$.value(3, (_scope) => _i$if_content(_scope)),
+  _i$for_content = _$.value(3, _i$if_content),
   _count$for_content = _$.value(2, (_scope) => {
     _count$if_content(_scope), _count$else_content(_scope);
   }),

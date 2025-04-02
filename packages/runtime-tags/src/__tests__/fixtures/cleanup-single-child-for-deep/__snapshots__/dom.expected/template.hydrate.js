@@ -1,4 +1,4 @@
-// size: 1023 (min) 474 (brotli)
+// size: 999 (min) 463 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 3: name, 4: write }) =>
@@ -9,7 +9,7 @@ const _expr_name_write_effect = _$.effect(
   _expr_name_write = _$.intersection(5, (_scope) => {
     _$.resetAbortSignal(_scope, 0), _expr_name_write_effect(_scope);
   }),
-  _write = _$.value(4, (_scope) => _expr_name_write(_scope)),
+  _write = _$.value(4, _expr_name_write),
   _name = _$.value(3, (_scope, name) => {
     _$.data(_scope[0], name), _expr_name_write(_scope);
   }),
@@ -25,12 +25,12 @@ const _expr_name_write_effect = _$.effect(
     (_scope, write) => _write(_scope[0], write),
     (_scope) => _scope._._,
   ),
-  _outerItem$for_content2 = _$.loopClosure(3, 1, (_scope) =>
-    _expr_outerItem_middleItem$for_content(_scope),
+  _outerItem$for_content2 = _$.loopClosure(
+    3,
+    1,
+    _expr_outerItem_middleItem$for_content,
   ),
-  _middleItem$for_content = _$.value(2, (_scope) =>
-    _expr_outerItem_middleItem$for_content(_scope),
-  ),
+  _middleItem$for_content = _$.value(2, _expr_outerItem_middleItem$for_content),
   _params3$for_content = _$.value(1, (_scope, _params3) =>
     _middleItem$for_content(_scope, _params3[0]),
   ),

@@ -19,7 +19,7 @@ const _count = /* @__PURE__ */_$.state("count/6", (_scope, count) => {
   _expr_input_content_count(_scope);
   _count_effect(_scope);
 });
-export const _input_content = /* @__PURE__ */_$.value("input_content", _scope => _expr_input_content_count(_scope));
+export const _input_content = /* @__PURE__ */_$.value("input_content", _expr_input_content_count);
 export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => _input_content(_scope, input.content));
 export function _setup(_scope) {
   _count(_scope, 0);

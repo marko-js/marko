@@ -1,4 +1,4 @@
-// size: 655 (min) 329 (brotli)
+// size: 641 (min) 320 (brotli)
 const _opt$for_content = _$.value(3, (_scope, opt) => {
     _$.attr(_scope[0], "value", opt), _$.data(_scope[1], opt);
   }),
@@ -16,7 +16,7 @@ const _opt$for_content = _$.value(3, (_scope, opt) => {
     _$.controllable_select_value(_scope, 0, value, _valueChange(_scope)),
       _$.data(_scope[1], value);
   }),
-  _options_ = _$.value(5, (_scope, options_0) => _value(_scope, options_0)),
+  _options_ = _$.value(5, _value),
   _options_effect = _$.effect("a1", (_scope, { 4: options }) => {
     _$.on(_scope[2], "click", function () {
       _options(_scope, options.slice(1));

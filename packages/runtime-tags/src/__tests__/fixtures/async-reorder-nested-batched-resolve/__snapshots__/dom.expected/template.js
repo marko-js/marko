@@ -12,7 +12,7 @@ const _await_content4 = /* @__PURE__ */_$.createRenderer("<div level=4></div>", 
 const _placeholder_content4 = _$.registerContent("__tests__/template.marko_11_renderer", "LOADING B2");
 const _placeholder_content3 = _$.registerContent("__tests__/template.marko_10_renderer", "LOADING B1");
 const _await$try_content = /* @__PURE__ */_$.awaitTag("#text/0", _await_content4);
-const _promiseB$try_content = /* @__PURE__ */_$.dynamicClosureRead("promiseB", (_scope, promiseB) => _await$try_content(_scope, promiseB), _scope => _scope._._._);
+const _promiseB$try_content = /* @__PURE__ */_$.dynamicClosureRead("promiseB", _await$try_content, _scope => _scope._._._);
 const _try_content4 = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", 0, 0, _scope => _promiseB$try_content(_scope));
 const _try$await_content = /* @__PURE__ */_$.createTry("#text/1", _try_content4);
 const _value$await_content3 = /* @__PURE__ */_$.value("value", (_scope, value) => _$.classAttr(_scope["#div/0"], value));
@@ -26,7 +26,7 @@ const _setup$await_content2 = _scope => {
 };
 const _await_content3 = /* @__PURE__ */_$.createRenderer("<div level=3><!></div>", /* get, next(1), replace */" D%", _setup$await_content2, _params4$await_content);
 const _await$try_content2 = /* @__PURE__ */_$.awaitTag("#text/0", _await_content3);
-const _promiseB$try_content2 = /* @__PURE__ */_$.dynamicClosureRead("promiseB", (_scope, promiseB) => _await$try_content2(_scope, promiseB));
+const _promiseB$try_content2 = /* @__PURE__ */_$.dynamicClosureRead("promiseB", _await$try_content2);
 const _try_content3 = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", 0, 0, _scope => _promiseB$try_content2(_scope));
 const _try$await_content2 = /* @__PURE__ */_$.createTry("#text/1", _try_content3);
 const _promiseB$await_content = /* @__PURE__ */_$.value("promiseB");
@@ -44,7 +44,7 @@ const _await_content2 = /* @__PURE__ */_$.createRenderer("<div level=2><!></div>
 const _placeholder_content2 = _$.registerContent("__tests__/template.marko_5_renderer", "LOADING A2");
 const _placeholder_content = _$.registerContent("__tests__/template.marko_4_renderer", "LOADING A1");
 const _await$try_content3 = /* @__PURE__ */_$.awaitTag("#text/0", _await_content2);
-const _promiseA$try_content = /* @__PURE__ */_$.dynamicClosureRead("promiseA", (_scope, promiseA) => _await$try_content3(_scope, promiseA), _scope => _scope._._._);
+const _promiseA$try_content = /* @__PURE__ */_$.dynamicClosureRead("promiseA", _await$try_content3, _scope => _scope._._._);
 const _try_content2 = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", 0, 0, _scope => _promiseA$try_content(_scope));
 const _try$await_content3 = /* @__PURE__ */_$.createTry("#text/1", _try_content2);
 const _value$await_content = /* @__PURE__ */_$.value("value", (_scope, value) => _$.classAttr(_scope["#div/0"], value));
@@ -58,7 +58,7 @@ const _setup$await_content3 = _scope => {
 };
 const _await_content = /* @__PURE__ */_$.createRenderer("<div level=1><!></div>", /* get, next(1), replace */" D%", _setup$await_content3, _params2$await_content);
 const _await$try_content4 = /* @__PURE__ */_$.awaitTag("#text/0", _await_content);
-const _promiseA$try_content2 = /* @__PURE__ */_$.dynamicClosureRead("promiseA", (_scope, promiseA) => _await$try_content4(_scope, promiseA));
+const _promiseA$try_content2 = /* @__PURE__ */_$.dynamicClosureRead("promiseA", _await$try_content4);
 const _try_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", 0, 0, _scope => _promiseA$try_content2(_scope));
 const _try = /* @__PURE__ */_$.createTry("#text/0", _try_content);
 const _promiseA = /* @__PURE__ */_$.value("promiseA");

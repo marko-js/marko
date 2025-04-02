@@ -8,7 +8,7 @@ const _dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/4", 0, () => _data3);
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", 0, () => _data2);
 const _el = _$.registerBoundSignal("__tests__/template.marko_0_el1/var", _scope => {});
 const _data3 = _$.registerBoundSignal("__tests__/template.marko_0_data3/var", _scope => {});
-export const _input_dynamic = /* @__PURE__ */_$.value("input_dynamic", (_scope, input_dynamic) => _dynamicTag2(_scope, input_dynamic));
+export const _input_dynamic = /* @__PURE__ */_$.value("input_dynamic", _dynamicTag2);
 export const _input_show = /* @__PURE__ */_$.value("input_show", (_scope, input_show) => {
   _dynamicTag(_scope, input_show && child);
   _dynamicTag3(_scope, input_show && "div");

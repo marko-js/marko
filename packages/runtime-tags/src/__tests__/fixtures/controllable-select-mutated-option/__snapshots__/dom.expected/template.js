@@ -12,7 +12,7 @@ const _value = /* @__PURE__ */_$.state("value/6", (_scope, value) => {
   _$.controllable_select_value(_scope, "#select/0", value, _valueChange(_scope));
   _$.data(_scope["#text/1"], value);
 });
-const _options_ = /* @__PURE__ */_$.value("options_0", (_scope, options_0) => _value(_scope, options_0));
+const _options_ = /* @__PURE__ */_$.value("options_0", _value);
 const _options_effect = _$.effect("__tests__/template.marko_0_options", (_scope, {
   options
 }) => {

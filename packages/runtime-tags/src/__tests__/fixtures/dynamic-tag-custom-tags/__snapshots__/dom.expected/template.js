@@ -13,7 +13,7 @@ const _expr_tagName_val = /* @__PURE__ */_$.intersection(4, _scope => {
   }));
 });
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
-const _val = /* @__PURE__ */_$.state("val/3", _scope => _expr_tagName_val(_scope));
+const _val = /* @__PURE__ */_$.state("val/3", _expr_tagName_val);
 const _tagName_effect = _$.effect("__tests__/template.marko_0_tagName", (_scope, {
   tagName
 }) => _$.on(_scope["#button/1"], "click", function () {

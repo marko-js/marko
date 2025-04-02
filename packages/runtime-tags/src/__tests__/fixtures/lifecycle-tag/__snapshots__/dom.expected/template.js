@@ -16,7 +16,7 @@ const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
     _x(_scope, x + 1), x;
   });
 });
-const _x = /* @__PURE__ */_$.state("x/1", _scope => _x_effect(_scope));
+const _x = /* @__PURE__ */_$.state("x/1", _x_effect);
 export function _setup(_scope) {
   _x(_scope, 0);
 }

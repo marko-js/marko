@@ -1,4 +1,4 @@
-// size: 309 (min) 203 (brotli)
+// size: 301 (min) 194 (brotli)
 const _i$for_content = _$.value(3, (_scope, i) => _$.data(_scope[1], i)),
   _params2$for_content = _$.value(2, (_scope, _params2) =>
     _i$for_content(_scope, _params2[0]),
@@ -8,9 +8,7 @@ const _i$for_content = _$.value(3, (_scope, i) => _$.data(_scope[1], i)),
       _num(_scope._, num + 1);
     }),
   ),
-  _num$for_content = _$.loopClosure(1, 0, (_scope) =>
-    _num$for_content_effect(_scope),
-  ),
+  _num$for_content = _$.loopClosure(1, 0, _num$for_content_effect),
   _for_content = _$.createRenderer(
     "<button> </button>",
     " D ",

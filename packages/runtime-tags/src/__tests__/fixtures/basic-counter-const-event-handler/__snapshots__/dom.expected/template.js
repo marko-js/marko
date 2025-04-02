@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const _increment_effect = _$.effect("__tests__/template.marko_0_increment", (_scope, {
   increment
 }) => _$.on(_scope["#button/0"], "click", increment));
-const _increment = /* @__PURE__ */_$.value("increment", _scope => _increment_effect(_scope));
+const _increment = /* @__PURE__ */_$.value("increment", _increment_effect);
 const _clickCount = /* @__PURE__ */_$.state("clickCount/2", (_scope, clickCount) => {
   _$.data(_scope["#text/1"], clickCount);
   _increment(_scope, _increment2(_scope));

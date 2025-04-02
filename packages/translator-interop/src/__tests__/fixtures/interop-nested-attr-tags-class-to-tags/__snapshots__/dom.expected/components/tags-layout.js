@@ -11,7 +11,7 @@ const _count = /* @__PURE__ */_$.state("count/7", (_scope, count) => {
   _$.data(_scope["#text/1"], count);
   _count_effect(_scope);
 });
-export const _input_stuff_content = /* @__PURE__ */_$.value("input_stuff_content", (_scope, input_stuff_content) => _dynamicTag(_scope, input_stuff_content));
+export const _input_stuff_content = /* @__PURE__ */_$.value("input_stuff_content", _dynamicTag);
 export const _input_stuff = /* @__PURE__ */_$.value("input_stuff", (_scope, input_stuff) => _input_stuff_content(_scope, input_stuff?.content));
 export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => _input_stuff(_scope, input.stuff));
 export function _setup(_scope) {

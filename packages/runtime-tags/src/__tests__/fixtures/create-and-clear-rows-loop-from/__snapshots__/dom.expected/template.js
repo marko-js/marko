@@ -14,9 +14,9 @@ const _expr_input_from_input_to_input_step = /* @__PURE__ */_$.intersection(6, _
   _for(_scope, [input_to, input_from, input_step]);
 }, 2);
 const _for = /* @__PURE__ */_$.loopTo("#div/0", _for_content);
-export const _input_step = /* @__PURE__ */_$.value("input_step", _scope => _expr_input_from_input_to_input_step(_scope));
-export const _input_to = /* @__PURE__ */_$.value("input_to", _scope => _expr_input_from_input_to_input_step(_scope));
-export const _input_from = /* @__PURE__ */_$.value("input_from", _scope => _expr_input_from_input_to_input_step(_scope));
+export const _input_step = /* @__PURE__ */_$.value("input_step", _expr_input_from_input_to_input_step);
+export const _input_to = /* @__PURE__ */_$.value("input_to", _expr_input_from_input_to_input_step);
+export const _input_from = /* @__PURE__ */_$.value("input_from", _expr_input_from_input_to_input_step);
 export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_from(_scope, input.from);
   _input_to(_scope, input.to);

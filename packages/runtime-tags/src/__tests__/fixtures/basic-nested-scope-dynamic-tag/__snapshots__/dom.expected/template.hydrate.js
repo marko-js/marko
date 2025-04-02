@@ -1,4 +1,4 @@
-// size: 261 (min) 168 (brotli)
+// size: 253 (min) 167 (brotli)
 const _count$falseChild_content_effect = _$.effect(
     "b1",
     (_scope, { _: { 1: count } }) =>
@@ -13,5 +13,5 @@ _$.registerContent("b0", "<button> </button>", " D ", 0, 0, (_scope) =>
   _count$falseChild_content(_scope),
 );
 const _count_closure = _$.dynamicClosure(_count$falseChild_content),
-  _count = _$.state(1, (_scope) => _count_closure(_scope));
+  _count = _$.state(1, _count_closure);
 init();
