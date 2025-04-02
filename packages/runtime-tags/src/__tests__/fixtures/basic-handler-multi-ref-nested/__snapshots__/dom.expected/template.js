@@ -7,8 +7,8 @@ const _expr_a_b_effect = _$.effect("__tests__/template.marko_0_a_b", (_scope, {
 }) => _$.on(_scope["#button/0"], "click", function () {
   _a(_scope, a.map(a => b));
 }));
-const _expr_a_b = /* @__PURE__ */_$.intersection(4, _scope => _expr_a_b_effect(_scope));
-const _b = /* @__PURE__ */_$.state("b/3", _scope => _expr_a_b(_scope));
+const _expr_a_b = /* @__PURE__ */_$.intersection(4, _expr_a_b_effect);
+const _b = /* @__PURE__ */_$.state("b/3", _expr_a_b);
 const _a = /* @__PURE__ */_$.state("a/2", (_scope, a) => {
   _$.data(_scope["#text/1"], a.join(""));
   _expr_a_b(_scope);

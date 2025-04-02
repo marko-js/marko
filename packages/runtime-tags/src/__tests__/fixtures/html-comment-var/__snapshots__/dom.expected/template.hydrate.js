@@ -1,7 +1,5 @@
-// size: 230 (min) 124 (brotli)
-const _tagName = _$.state(1, (_scope, tagName) =>
-  _$.tagVarSignal(_scope, tagName),
-);
+// size: 216 (min) 120 (brotli)
+const _tagName = _$.state(1, _$.tagVarSignal);
 _$.effect("a0", (_scope) => _tagName(_scope, _scope[0].parentElement.tagName)),
   _$.registerBoundSignal(
     "b0",

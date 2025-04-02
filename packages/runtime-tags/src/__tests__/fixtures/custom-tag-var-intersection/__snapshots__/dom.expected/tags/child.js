@@ -18,7 +18,7 @@ const _x = /* @__PURE__ */_$.state("x/5", (_scope, x) => {
   _expr_input_extra_x(_scope);
   _x_effect(_scope);
 });
-export const _input_extra = /* @__PURE__ */_$.value("input_extra", _scope => _expr_input_extra_x(_scope));
+export const _input_extra = /* @__PURE__ */_$.value("input_extra", _expr_input_extra_x);
 export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => _input_extra(_scope, input.extra));
 export function _setup(_scope) {
   _x(_scope, 0);

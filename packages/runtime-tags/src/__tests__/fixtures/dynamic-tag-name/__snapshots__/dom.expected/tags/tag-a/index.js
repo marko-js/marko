@@ -3,7 +3,7 @@ export const _walks = /* get, next(1), over(1), replace, out(1) */" Db%l";
 export const _setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1");
-export const _content = /* @__PURE__ */_$.value("content", (_scope, content) => _dynamicTag(_scope, content));
+export const _content = /* @__PURE__ */_$.value("content", _dynamicTag);
 export const _other = /* @__PURE__ */_$.value("other", (_scope, other) => _$.attr(_scope["#div/0"], "data-other", other));
 export const _className = /* @__PURE__ */_$.value("className", (_scope, className) => _$.classAttr(_scope["#div/0"], className));
 export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {

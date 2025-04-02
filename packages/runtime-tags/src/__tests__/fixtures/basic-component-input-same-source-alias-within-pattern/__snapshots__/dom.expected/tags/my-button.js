@@ -13,7 +13,7 @@ export const _value2 = /* @__PURE__ */_$.value("_value", (_scope, _value) => _te
 const _onClick_effect = _$.effect("__tests__/tags/my-button.marko_0_onClick", (_scope, {
   onClick
 }) => _$.on(_scope["#button/0"], "click", onClick));
-export const _onClick = /* @__PURE__ */_$.value("onClick", _scope => _onClick_effect(_scope));
+export const _onClick = /* @__PURE__ */_$.value("onClick", _onClick_effect);
 export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _onClick(_scope, input.onClick);
   _value2(_scope, input.value);

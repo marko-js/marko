@@ -1,8 +1,8 @@
 export const _template = "";
 export const _walks = "";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _value = /* @__PURE__ */_$.state("value/3", (_scope, value) => _$.tagVarSignal(_scope, value));
-export const _input_value = /* @__PURE__ */_$.value("input_value", (_scope, input_value) => _value(_scope, input_value));
+const _value = /* @__PURE__ */_$.state("value/3", _$.tagVarSignal);
+export const _input_value = /* @__PURE__ */_$.value("input_value", _value);
 export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => _input_value(_scope, input.value));
 export function _setup(_scope) {
   _$.setTagVarChange(_scope, _valueChange(_scope));

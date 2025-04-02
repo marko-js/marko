@@ -1,4 +1,4 @@
-// size: 769 (min) 329 (brotli)
+// size: 761 (min) 324 (brotli)
 const _dynamicTag2 = _$.dynamicTag(1),
   _dynamicTag = _$.dynamicTag(),
   _input_content = _$.value(4, (_scope, input_content) => {
@@ -23,8 +23,9 @@ const _child_content2 = _$.createContent(
       for (const element of 1) element().classList.add("inner");
     },
   ),
-  _hoisted_el2$inputshowChildnull_content = _$.value(1, (_scope) =>
-    _hoisted_el2$inputshowChildnull_content_effect(_scope),
+  _hoisted_el2$inputshowChildnull_content = _$.value(
+    1,
+    _hoisted_el2$inputshowChildnull_content_effect,
   );
 _$.registerContent(
   "b4",

@@ -24,7 +24,7 @@ const _clickCount$try_content = /* @__PURE__ */_$.dynamicClosureRead("clickCount
 const _try_content = /* @__PURE__ */_$.createRenderer("<button>inc</button> -- <!>", /* get, over(2), replace */" c%", 0, 0, _scope => _clickCount$try_content(_scope));
 const _try = /* @__PURE__ */_$.createTry("#text/1", _try_content);
 const _clickCount_closure = /* @__PURE__ */_$.dynamicClosure(_clickCount$try_content);
-const _clickCount = /* @__PURE__ */_$.state("clickCount/2", _scope => _clickCount_closure(_scope));
+const _clickCount = /* @__PURE__ */_$.state("clickCount/2", _clickCount_closure);
 export function _setup(_scope) {
   _clickCount(_scope, 0);
   _try(_scope, {

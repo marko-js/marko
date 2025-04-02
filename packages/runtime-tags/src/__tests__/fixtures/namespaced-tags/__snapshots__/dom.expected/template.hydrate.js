@@ -1,4 +1,4 @@
-// size: 728 (min) 336 (brotli)
+// size: 720 (min) 337 (brotli)
 const _Child_content2 = _$.registerContent("a0", "Hi"),
   _Child_content = _$.registerContent("a1", "Hi"),
   _input_value$Parent_content = _$.dynamicClosureRead(
@@ -16,9 +16,7 @@ const _Child_content2 = _$.registerContent("a0", "Hi"),
           node.setAttribute("ns", node.namespaceURI);
     },
   ),
-  _expr_Parent_Child = _$.intersection(13, (_scope) =>
-    _expr_Parent_Child_effect(_scope),
-  ),
+  _expr_Parent_Child = _$.intersection(13, _expr_Parent_Child_effect),
   _dynamicTag3 = _$.dynamicTag(5, _Parent_content),
   _dynamicTag2 = _$.dynamicTag(4, _Child_content2),
   _dynamicTag = _$.dynamicTag(2, _Child_content),

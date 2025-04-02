@@ -8,7 +8,7 @@ const _attrs = (_scope, attrs) => {
   _$.attrs(_scope, "#button/0", attrs);
   _attrs_effect(_scope);
 };
-const _content = /* @__PURE__ */_$.value("content", (_scope, content) => _dynamicTag(_scope, content));
+const _content = /* @__PURE__ */_$.value("content", _dynamicTag);
 export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _attrs(_scope, input);
   _content(_scope, input.content);

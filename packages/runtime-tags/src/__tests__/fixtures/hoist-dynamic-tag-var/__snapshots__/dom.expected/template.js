@@ -4,9 +4,7 @@ import Child from "./tags/child.marko";
 import { _setup as _thing, _input_value as _thing_input_value, _template as _thing_template, _walks as _thing_walks } from "./tags/thing.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _setup$if_content4_effect = _$.effect("__tests__/template.marko_5", _scope => _get_hoisted_setHtml(_scope._)("Hello world"));
-const _setup$if_content4 = _scope => {
-  _setup$if_content4_effect(_scope);
-};
+const _setup$if_content4 = _setup$if_content4_effect;
 const _if_content5 = /* @__PURE__ */_$.createRenderer(0, 0, _setup$if_content4);
 const _get_hoisted_setHtml = _$.hoist("setHtml3", "ConditionalScope:#text/3");
 const _dynamicTag$if_content3 = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => _setHtml3$if_content);

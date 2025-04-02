@@ -46,7 +46,7 @@ export const _c = /* @__PURE__ */_$.value("c", _scope => {
   _expr_c_d(_scope);
   _expr_input_test_c_d(_scope);
 });
-export const _input_test = /* @__PURE__ */_$.value("input_test", _scope => _expr_input_test_c_d(_scope));
+export const _input_test = /* @__PURE__ */_$.value("input_test", _expr_input_test_c_d);
 export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_test(_scope, input.test);
   _c(_scope, input.c);

@@ -307,7 +307,8 @@ export function initValue(
     const needsGuard =
       !isNakedAlias &&
       (binding.downstreamExpressions.size ||
-        (fn.body as t.BlockStatement).body.length > 0);
+        (fn.type === "ArrowFunctionExpression" &&
+          (fn.body as t.BlockStatement).body.length > 0));
     const needsCache = needsGuard || signal.intersection;
     // TODO: marks not used anymore. can remove?
     const needsMarks = isParamBinding || signal.intersection;
@@ -334,13 +335,14 @@ export function initValue(
   return signal;
 }
 
-function getSignalFn(signal: Signal) {
+function getSignalFn(signal: Signal): t.Expression {
   const section = signal.section;
   const binding = signal.referencedBindings;
   const params: t.Identifier[] = [scopeIdentifier];
   const isIntersection = Array.isArray(binding);
   const isBinding = binding && !isIntersection;
   const isValue = isBinding && binding.section === section;
+  let canUseCalleeDirectly = !signal.render.length;
 
   if (
     isBinding &&
@@ -473,6 +475,30 @@ function getSignalFn(signal: Signal) {
         ),
       ]),
     );
+  }
+
+  if (canUseCalleeDirectly && signal.render.length === 1) {
+    const render = signal.render[0];
+    if (render.type === "ExpressionStatement") {
+      const { expression } = render;
+      if (expression.type === "CallExpression") {
+        const args = expression.arguments;
+        if (params.length >= args.length) {
+          for (let i = args.length; i--; ) {
+            const param = params[i];
+            const arg = args[i];
+            if (arg.type !== "Identifier" || param.name !== arg.name) {
+              canUseCalleeDirectly = false;
+              break;
+            }
+          }
+
+          if (canUseCalleeDirectly) {
+            return expression.callee as t.Expression;
+          }
+        }
+      }
+    }
   }
 
   return t.arrowFunctionExpression(params, t.blockStatement(signal.render));

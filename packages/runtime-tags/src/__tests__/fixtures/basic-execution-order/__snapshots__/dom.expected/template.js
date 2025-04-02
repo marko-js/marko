@@ -5,7 +5,7 @@ const _message_text$if_content = /* @__PURE__ */_$.conditionalClosure("message_t
 const _if_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, 0, _scope => _message_text$if_content._(_scope));
 const _if = /* @__PURE__ */_$.conditional("#text/1", _if_content);
 const _show = /* @__PURE__ */_$.state("show/4", (_scope, show) => _if(_scope, show ? 0 : 1));
-const _message_text = /* @__PURE__ */_$.value("message_text", _scope => _message_text$if_content(_scope));
+const _message_text = /* @__PURE__ */_$.value("message_text", _message_text$if_content);
 const _message = /* @__PURE__ */_$.state("message/2", (_scope, message) => _message_text(_scope, message?.text));
 const _setup_effect = _$.effect("__tests__/template.marko_0", _scope => _$.on(_scope["#button/0"], "click", function () {
   _message(_scope, null);

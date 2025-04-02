@@ -1,4 +1,4 @@
-// size: 1362 (min) 515 (brotli)
+// size: 1354 (min) 513 (brotli)
 const _template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _expr_name_write_effect = _$.effect("a0", (_scope, { 5: name, 6: write }) => {
     write(`${name} mounted`),
@@ -9,7 +9,7 @@ const _template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _expr_name_write = _$.intersection(7, (_scope) => {
     _$.resetAbortSignal(_scope, 0), _expr_name_write_effect(_scope);
   }),
-  _write = _$.value(6, (_scope) => _expr_name_write(_scope)),
+  _write = _$.value(6, _expr_name_write),
   _name = _$.value(5, (_scope, name) => {
     _$.data(_scope[0], name),
       _$.data(_scope[1], name),

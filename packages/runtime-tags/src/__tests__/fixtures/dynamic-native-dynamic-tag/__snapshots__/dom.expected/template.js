@@ -12,7 +12,7 @@ const _expr_tagName_className = /* @__PURE__ */_$.intersection(4, _scope => {
   }));
 });
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _tagName_content);
-const _className = /* @__PURE__ */_$.state("className/3", _scope => _expr_tagName_className(_scope));
+const _className = /* @__PURE__ */_$.state("className/3", _expr_tagName_className);
 const _tagName_effect = _$.effect("__tests__/template.marko_0_tagName", (_scope, {
   tagName
 }) => _$.on(_scope["#button/1"], "click", function () {

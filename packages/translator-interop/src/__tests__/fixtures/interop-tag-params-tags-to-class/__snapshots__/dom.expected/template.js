@@ -37,7 +37,7 @@ const _multiplier$classlayout_content = /* @__PURE__ */_$.dynamicClosureRead("mu
 const _classlayout_content = _$.registerContent("__tests__/template.marko_1_renderer", "<h1> </h1><button id=tags><!> * <!> = <!></button>", /* next(1), get, out(1), get, next(1), replace, over(2), replace, over(2), replace */"D l D%c%c%", 0, _params2$classlayout_content, _scope => _multiplier$classlayout_content(_scope));
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _classlayout_content);
 const _multiplier_closure = /* @__PURE__ */_$.dynamicClosure(_multiplier$classlayout_content);
-const _multiplier = /* @__PURE__ */_$.state("multiplier/1", _scope => _multiplier_closure(_scope));
+const _multiplier = /* @__PURE__ */_$.state("multiplier/1", _multiplier_closure);
 export function _setup(_scope) {
   _multiplier(_scope, 1);
   _dynamicTag(_scope, _classLayout);

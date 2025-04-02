@@ -8,8 +8,8 @@ const _expr_x_y = /* @__PURE__ */_$.intersection(2, _scope => {
   } = _scope;
   _$.tagVarSignal(_scope, x + y);
 });
-const _y = /* @__PURE__ */_$.state("y/1", _scope => _expr_x_y(_scope));
-const _x = /* @__PURE__ */_$.state("x/0", _scope => _expr_x_y(_scope));
+const _y = /* @__PURE__ */_$.state("y/1", _expr_x_y);
+const _x = /* @__PURE__ */_$.state("x/0", _expr_x_y);
 export function _setup(_scope) {
   _x(_scope, 1);
   _y(_scope, 2);

@@ -39,7 +39,7 @@ const _hoisted_setHtml4_effect = _$.effect("__tests__/template.marko_0__hoisted_
     fn('Hoist from custom tag');
   }
 });
-const _hoisted_setHtml4 = /* @__PURE__ */_$.value("_hoisted_setHtml", _scope => _hoisted_setHtml4_effect(_scope));
+const _hoisted_setHtml4 = /* @__PURE__ */_$.value("_hoisted_setHtml", _hoisted_setHtml4_effect);
 export const _input_show = /* @__PURE__ */_$.value("input_show", (_scope, input_show) => {
   _dynamicTag(_scope, input_show ? Thing : null);
   _dynamicTag2(_scope, input_show ? 'section' : null);

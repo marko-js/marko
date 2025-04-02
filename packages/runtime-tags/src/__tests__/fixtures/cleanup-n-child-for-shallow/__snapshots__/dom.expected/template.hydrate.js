@@ -1,4 +1,4 @@
-// size: 704 (min) 374 (brotli)
+// size: 696 (min) 372 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 5: name, 6: write }) => {
@@ -11,7 +11,7 @@ const _expr_name_write_effect = _$.effect(
   _expr_name_write = _$.intersection(7, (_scope) => {
     _$.resetAbortSignal(_scope, 0), _expr_name_write_effect(_scope);
   }),
-  _write = _$.value(6, (_scope) => _expr_name_write(_scope)),
+  _write = _$.value(6, _expr_name_write),
   _name = _$.value(5, (_scope, name) => {
     _$.data(_scope[0], name),
       _$.data(_scope[1], name),

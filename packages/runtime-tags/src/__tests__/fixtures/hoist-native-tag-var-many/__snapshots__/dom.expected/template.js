@@ -11,8 +11,8 @@ const _expr_i_j$for_content = /* @__PURE__ */_$.intersection(3, _scope => {
   } = _scope;
   _$.attr(_scope["#li/0"], "data-index", i * 4 + j);
 });
-const _i$for_content = /* @__PURE__ */_$.loopClosure("i", "#ul/0", _scope => _expr_i_j$for_content(_scope));
-const _j$for_content = /* @__PURE__ */_$.value("j", _scope => _expr_i_j$for_content(_scope));
+const _i$for_content = /* @__PURE__ */_$.loopClosure("i", "#ul/0", _expr_i_j$for_content);
+const _j$for_content = /* @__PURE__ */_$.value("j", _expr_i_j$for_content);
 const _params3$for_content = /* @__PURE__ */_$.value("_params3", (_scope, _params3) => _j$for_content(_scope, _params3[0]));
 const _for_content4 = /* @__PURE__ */_$.createRenderer("<li></li>", /* get */" ", 0, _params3$for_content, _scope => _i$for_content._(_scope));
 const _for$for_content = /* @__PURE__ */_$.loopTo("#ul/0", _for_content4);
@@ -39,7 +39,7 @@ const _hoisted_el4_effect = _$.effect("__tests__/template.marko_0__hoisted_el3",
     }
   }
 });
-const _hoisted_el4 = /* @__PURE__ */_$.value("_hoisted_el3", _scope => _hoisted_el4_effect(_scope));
+const _hoisted_el4 = /* @__PURE__ */_$.value("_hoisted_el3", _hoisted_el4_effect);
 const _to = /* @__PURE__ */_$.state("to/3", (_scope, to) => _for2(_scope, [to, 0, 1]));
 const _setup_effect = _$.effect("__tests__/template.marko_0", _scope => {
   {

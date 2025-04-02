@@ -17,7 +17,7 @@ const _hoisted_setHtml2_effect = _$.effect("__tests__/template.marko_0__hoisted_
     fn('Hoist from custom tag');
   }
 });
-const _hoisted_setHtml2 = /* @__PURE__ */_$.value("_hoisted_setHtml", _scope => _hoisted_setHtml2_effect(_scope));
+const _hoisted_setHtml2 = /* @__PURE__ */_$.value("_hoisted_setHtml", _hoisted_setHtml2_effect);
 export function _setup(_scope) {
   _thing(_scope["#childScope/0"]);
   _thing_input_what(_scope["#childScope/0"], _$.attrTag({
