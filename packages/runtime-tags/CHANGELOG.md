@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 0.3.77
+
+### Patch Changes
+
+- [#2617](https://github.com/marko-js/marko/pull/2617) [`0d3bfeb`](https://github.com/marko-js/marko/commit/0d3bfeb3e3ac9a787fef639d41ed2100833e1791) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Inline callees directly into signal functions when possible.
+
+- [#2617](https://github.com/marko-js/marko/pull/2617) [`e6e6331`](https://github.com/marko-js/marko/commit/e6e633123af679775cc2463cdc936b7524f1a2fc) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Switch to custom UID helper.
+
 ## 0.3.76
 
 ### Patch Changes
