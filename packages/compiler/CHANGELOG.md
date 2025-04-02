@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.17
+
+### Patch Changes
+
+- [#2623](https://github.com/marko-js/marko/pull/2623) [`525345f`](https://github.com/marko-js/marko/commit/525345f4f71c53c00d7779a4c5d95fceaec3d33b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor getFile and getProgram handling to avoid circular references between babel-utils and babel-plugin code.
+
 ## 5.39.16
 
 ### Patch Changes
