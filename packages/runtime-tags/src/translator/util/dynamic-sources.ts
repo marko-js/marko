@@ -24,25 +24,6 @@ export function getDynamicSourcesForBinding(binding: Binding) {
   }
 }
 
-export function getDynamicSourcesForReferences(
-  referencedBindings: ReferencedBindings,
-) {
-  if (referencedBindings) {
-    let dynamicSources: Opt<Binding>;
-    if (Array.isArray(referencedBindings)) {
-      for (const binding of referencedBindings) {
-        const newDynamicSources = getDynamicSourcesForBinding(binding);
-        if (newDynamicSources === true) return true as const;
-        dynamicSources = bindingUtil.union(dynamicSources, newDynamicSources);
-      }
-
-      return dynamicSources;
-    } else {
-      return getDynamicSourcesForBinding(referencedBindings);
-    }
-  }
-}
-
 export function getDynamicSourcesForExtra(extra: t.NodeExtra) {
   if (isReferencedExtra(extra)) {
     return getDynamicSourcesForReferences(extra.referencedBindings);
@@ -111,6 +92,25 @@ export function getDynamicSourcesForSections(
   }
 
   return merged || first;
+}
+
+function getDynamicSourcesForReferences(
+  referencedBindings: ReferencedBindings,
+) {
+  if (referencedBindings) {
+    let dynamicSources: Opt<Binding>;
+    if (Array.isArray(referencedBindings)) {
+      for (const binding of referencedBindings) {
+        const newDynamicSources = getDynamicSourcesForBinding(binding);
+        if (newDynamicSources === true) return true as const;
+        dynamicSources = bindingUtil.union(dynamicSources, newDynamicSources);
+      }
+
+      return dynamicSources;
+    } else {
+      return getDynamicSourcesForBinding(referencedBindings);
+    }
+  }
 }
 
 function mergeDynamicSources(a: true | Opt<Binding>, b: true | Opt<Binding>) {

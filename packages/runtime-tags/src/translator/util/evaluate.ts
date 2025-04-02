@@ -8,7 +8,7 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-export default function evaluate(value: t.Expression) {
+export default function evaluate<T extends t.Expression>(value: T) {
   let { extra } = value;
 
   if (!extra) {
@@ -26,7 +26,7 @@ export default function evaluate(value: t.Expression) {
     }
   }
 
-  return extra as typeof extra & {
+  return extra as T["extra"] & {
     confident: boolean;
     computed: unknown;
   };

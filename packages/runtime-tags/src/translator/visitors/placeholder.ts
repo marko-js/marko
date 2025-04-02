@@ -1,7 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { WalkCode } from "../../common/types";
-import { getDynamicSourcesForReferences } from "../util/dynamic-sources";
+import { getDynamicSourcesForExtra } from "../util/dynamic-sources";
 import evaluate from "../util/evaluate";
 import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML } from "../util/marko-config";
@@ -65,7 +65,8 @@ export default {
 
       const { node } = placeholder;
       const { value } = node;
-      const { confident, computed, referencedBindings } = evaluate(value);
+      const valueExtra = evaluate(value);
+      const { confident, computed } = valueExtra;
 
       if (confident && isVoid(computed)) {
         placeholder.remove();
@@ -84,8 +85,7 @@ export default {
         : node.escape
           ? "data"
           : "html";
-      const serializeReason =
-        getDynamicSourcesForReferences(referencedBindings);
+      const serializeReason = getDynamicSourcesForExtra(valueExtra);
       const siblingText = extra[kSiblingText]!;
 
       if (confident && canWriteHTML) {
@@ -112,7 +112,7 @@ export default {
           addStatement(
             "render",
             getSection(placeholder),
-            value.extra?.referencedBindings,
+            valueExtra.referencedBindings,
             t.expressionStatement(
               method === "data"
                 ? callRuntime(

@@ -7,7 +7,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../../common/types";
-import { getDynamicSourcesForReferences } from "../../util/dynamic-sources";
+import { getDynamicSourcesForExtra } from "../../util/dynamic-sources";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorPrefix } from "../../util/get-accessor-char";
 import { isOutputHTML } from "../../util/marko-config";
@@ -120,7 +120,6 @@ export default {
       const nodeRef = tagExtra[kDOMBinding]!;
       const section = getSection(tag);
       const isClassAPI = tagExtra.featureType === "class";
-      const referencedBindings = tagExtra.referencedBindings;
       let tagExpression = node.name;
 
       if (t.isStringLiteral(tagExpression)) {
@@ -199,9 +198,7 @@ export default {
         writeHTMLResumeStatements(tag.get("body"));
 
         const serializeReason =
-          isClassAPI ||
-          !!node.var ||
-          getDynamicSourcesForReferences(referencedBindings);
+          isClassAPI || !!node.var || getDynamicSourcesForExtra(tagExtra);
         const dynamicTagExpr = hasMultipleArgs
           ? callRuntime(
               "dynamicTag",
@@ -323,7 +320,7 @@ export default {
         }
 
         signal.hasDownstreamIntersections = () => true;
-        addValue(section, referencedBindings, signal, tagExpression);
+        addValue(section, tagExtra.referencedBindings, signal, tagExpression);
         tag.remove();
       }
     },

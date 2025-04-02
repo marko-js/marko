@@ -1,6 +1,6 @@
 import { types as t } from "@marko/compiler";
 
-import { getDynamicSourcesForReferences } from "./dynamic-sources";
+import { getDynamicSourcesForExtra } from "./dynamic-sources";
 import { forEachIdentifier } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-char";
@@ -705,9 +705,7 @@ export function finalizeReferences() {
           currentSection !== sourceSection &&
           !(serialize =
             !currentSection.upstreamExpression ||
-            !!getDynamicSourcesForReferences(
-              currentSection.upstreamExpression.referencedBindings,
-            ))
+            !!getDynamicSourcesForExtra(currentSection.upstreamExpression))
         ) {
           currentSection = currentSection.parent!;
         }
