@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.78
+
+### Patch Changes
+
+- [#2619](https://github.com/marko-js/marko/pull/2619) [`4524bc4`](https://github.com/marko-js/marko/commit/4524bc459817d7d57530f2e900be80c460c98c2c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with controlled input selection ranges.
+
 ## 0.3.77
 
 ### Patch Changes
