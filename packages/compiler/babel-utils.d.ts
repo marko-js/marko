@@ -393,3 +393,6 @@ type Computed =
   | { [x: string]: Computed }
   | Computed[];
 export function computeNode(node: t.Node): undefined | { value: Computed };
+
+export function getFile(): t.BabelFile;
+export function getProgram(): t.NodePath<t.Program>;

@@ -1,6 +1,7 @@
-import { getProgram, types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
 import type { MarkoTagExtra } from "@marko/compiler/babel-types";
 import {
+  getProgram,
   isNativeTag,
   loadFileForTag,
   resolveTagImport,

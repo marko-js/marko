@@ -1,6 +1,7 @@
-import { getProgram, types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
 import {
   assertAttributesOrArgs,
+  getProgram,
   importDefault,
   importNamed,
   loadFileForTag,

@@ -69,9 +69,6 @@ export function getRuntimeEntryFiles(
   translator?: string | undefined,
 ): string[];
 
-export function getFile(): types.BabelFile;
-export function getProgram(): types.NodePath<types.Program>;
-
 export namespace taglib {
   export function resolveOptionalTaglibs(
     taglibIds: string[],

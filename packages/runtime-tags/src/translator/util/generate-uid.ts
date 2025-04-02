@@ -1,4 +1,5 @@
-import { getFile, types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
+import { getFile } from "@marko/compiler/babel-utils";
 
 import { traverse } from "./traverse";
 

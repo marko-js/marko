@@ -1,5 +1,9 @@
-import { getFile, types as t } from "@marko/compiler";
-import { getTemplateId, isNativeTag } from "@marko/compiler/babel-utils";
+import { types as t } from "@marko/compiler";
+import {
+  getFile,
+  getTemplateId,
+  isNativeTag,
+} from "@marko/compiler/babel-utils";
 
 import { getFnRoot, getMarkoRoot } from "../util/get-root";
 import { isCoreTagName } from "../util/is-core-tag";

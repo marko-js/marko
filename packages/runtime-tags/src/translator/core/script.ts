@@ -1,8 +1,9 @@
-import { getProgram, types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoAttributeTags,
   assertNoParams,
+  getProgram,
   parseStatements,
   type Tag,
 } from "@marko/compiler/babel-utils";

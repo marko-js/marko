@@ -1,5 +1,9 @@
-import { getFile, getProgram, types as t } from "@marko/compiler";
-import { getTemplateId } from "@marko/compiler/babel-utils";
+import { types as t } from "@marko/compiler";
+import {
+  getFile,
+  getProgram,
+  getTemplateId,
+} from "@marko/compiler/babel-utils";
 
 import { toAccess } from "../../html/serializer";
 import { getSectionReturnValueIdentifier } from "../core/return";

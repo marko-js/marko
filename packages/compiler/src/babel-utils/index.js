@@ -1,3 +1,4 @@
+export { getFile, getProgram } from "../babel-plugin";
 export {
   assertAllowedAttributes,
   assertAttributesOrArgs,

@@ -1,4 +1,5 @@
-import { getProgram, types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
+import { getProgram } from "@marko/compiler/babel-utils";
 
 import { generateUid } from "../../util/generate-uid";
 import isStatic from "../../util/is-static";

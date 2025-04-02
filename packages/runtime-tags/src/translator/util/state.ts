@@ -1,4 +1,5 @@
-import { getProgram, type types as t } from "@marko/compiler";
+import type { types as t } from "@marko/compiler";
+import { getProgram } from "@marko/compiler/babel-utils";
 
 import type { Section } from "./sections";
 
