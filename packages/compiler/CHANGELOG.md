@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.16
+
+### Patch Changes
+
+- [#2621](https://github.com/marko-js/marko/pull/2621) [`aad5a8d`](https://github.com/marko-js/marko/commit/aad5a8d9473d0add9093f84bd570af8d47e0a4db) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose getProgram and getFile apis from @marko/compiler/babel-utils. Exposing it directly from the compiler was causing an issue with the website.
+
 ## 5.39.15
 
 ### Patch Changes
