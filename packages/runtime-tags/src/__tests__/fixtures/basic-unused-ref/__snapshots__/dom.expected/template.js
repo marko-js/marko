@@ -1,5 +1,5 @@
-export const _template_ = "<div><button> </button></div>";
-export const _walks_ = /* next(1), get, next(1), get, out(2) */"D D m";
+export const _template = "<div><button> </button></div>";
+export const _walks = /* next(1), get, next(1), get, out(2) */"D D m";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _unused_2 = _scope => {};
 const _unused_ = _scope => {};
@@ -12,9 +12,9 @@ const _clickCount = /* @__PURE__ */_$.state("clickCount/2", (_scope, clickCount)
   _$.data(_scope["#text/1"], clickCount);
   _clickCount_effect(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _unused_(_scope, 123);
   _unused_2(_scope, 456);
   _clickCount(_scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

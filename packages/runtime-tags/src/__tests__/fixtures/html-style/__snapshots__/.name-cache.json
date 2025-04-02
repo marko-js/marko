@@ -2,12 +2,9 @@
   "vars": {
     "props": {
       "$_$": "t",
-      "$init": "e",
-      "$_count$htmlStyleBody": "r",
-      "$_count_effect": "n",
-      "$_count": "o",
-      "$_count$htmlStyle_content": "i",
-      "$_count_closure": "m"
+      "$init": "n",
+      "$_count_effect": "o",
+      "$_count": "m"
     }
   }
 }

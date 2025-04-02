@@ -1,7 +1,7 @@
-export const _template_ = "<button id=outer>Toggle Outer</button><button id=middle>Toggle Middle</button><button id=inner>Toggle Inner</button><pre></pre><!><!>";
-export const _walks_ = /* get, over(1), get, over(1), get, over(1), get, over(1), replace, over(1) */" b b b b%bD";
+export const _template = "<button id=outer>Toggle Outer</button><button id=middle>Toggle Middle</button><button id=inner>Toggle Inner</button><pre></pre><!><!>";
+export const _walks = /* get, over(1), get, over(1), get, over(1), get, over(1), replace, over(1) */" b b b b%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _child, _write_ as _child_input_write, _name_ as _child_input_name, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child.marko";
+import { _setup as _child, _write as _child_input_write, _name as _child_input_name, _template as _child_template, _walks as _child_walks } from "./tags/child.marko";
 const _write$if_content3 = /* @__PURE__ */_$.dynamicClosureRead("write", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._._);
 const _setup$if_content3 = _scope => {
   _child(_scope["#childScope/0"]);
@@ -60,7 +60,7 @@ const _showOuter = /* @__PURE__ */_$.state("showOuter/5", (_scope, showOuter) =>
   _if(_scope, showOuter ? 0 : 1);
   _showOuter_effect(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _showOuter(_scope, true);
   _showMiddle(_scope, true);
   _showInner(_scope, true);
@@ -72,4 +72,4 @@ function _write2(_scope) {
   };
 }
 _$.register("__tests__/template.marko_0/write", _write2);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

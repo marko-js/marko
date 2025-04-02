@@ -1,5 +1,5 @@
-export const _template_ = "<div> </div><div> </div><button>Update</button>";
-export const _walks_ = /* next(1), get, out(1), next(1), get, out(1), get, over(1) */"D lD l b";
+export const _template = "<div> </div><div> </div><button>Update</button>";
+export const _walks = /* next(1), get, out(1), next(1), get, out(1), get, over(1) */"D lD l b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _expr_items_index_effect = _$.effect("__tests__/template.marko_0_items_index", (_scope, {
   items,
@@ -23,8 +23,8 @@ const _items = /* @__PURE__ */_$.state("items/3", (_scope, items) => {
   _items_(_scope, items?.[0]);
   _expr_items_index(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _items(_scope, ["a", "b", "c"]);
   _index(_scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

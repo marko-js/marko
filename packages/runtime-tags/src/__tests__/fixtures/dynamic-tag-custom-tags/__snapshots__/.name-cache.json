@@ -2,24 +2,19 @@
   "vars": {
     "props": {
       "$_$": "a",
-      "$init": "t",
-      "$_setup_$1": "e",
-      "$_value_$1": "o",
-      "$_input_$1": "i",
-      "$_params__$1": "l",
-      "$child1": "v",
-      "$_setup_": "n",
-      "$_value_": "r",
-      "$_input_": "c",
-      "$_params__": "d",
-      "$child2": "m",
-      "$_tagName_input": "s",
-      "$_expr_Text_val": "u",
-      "$_dynamicTagName": "f",
-      "$_tagName_effect": "h",
-      "$_tagName": "p",
-      "$_dynamicTag": "g",
-      "$_expr_tagName_val": "b"
+      "$init": "e",
+      "$_setup$1": "t",
+      "$_value$1": "i",
+      "$_input$1": "o",
+      "$child1": "l",
+      "$_setup": "c",
+      "$_value": "m",
+      "$_input": "r",
+      "$child2": "v",
+      "$_expr_tagName_val": "n",
+      "$_dynamicTag": "d",
+      "$_tagName_effect": "s",
+      "$_tagName": "u"
     }
   }
 }

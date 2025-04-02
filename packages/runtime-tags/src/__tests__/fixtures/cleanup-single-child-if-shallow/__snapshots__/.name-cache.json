@@ -3,16 +3,14 @@
     "props": {
       "$_$": "t",
       "$init": "e",
-      "$_input__effect": "r",
-      "$_input_": "n",
-      "$_write": "o",
-      "$_setup$ifBody": "i",
-      "$_ifBody": "a",
-      "$_if": "c",
-      "$_show_effect": "s",
+      "$_input_effect": "r",
+      "$_input": "o",
+      "$_setup$if_content": "i",
+      "$_if_content": "n",
+      "$_if": "a",
+      "$_show_effect": "c",
       "$_show": "m",
-      "$_setup$if_content": "d",
-      "$_if_content": "f"
+      "$_write": "d"
     }
   }
 }

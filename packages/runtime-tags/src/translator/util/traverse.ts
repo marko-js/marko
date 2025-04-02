@@ -69,3 +69,28 @@ export function traverseContains(
 
   return false;
 }
+
+export function traverse(
+  visit: (
+    node: t.Node,
+    parent?: t.Node,
+    grandParent?: t.Node,
+  ) => void | typeof skip,
+  node: undefined | t.Node | t.Node[],
+  parent?: t.Node,
+  grandParent?: t.Node,
+) {
+  if (node) {
+    if (Array.isArray(node)) {
+      for (const item of node) {
+        traverse(visit, item, parent, grandParent);
+      }
+    } else if (visit(node, parent, grandParent) !== skip) {
+      for (const key of (t as any).VISITOR_KEYS[node.type] as VisitKeys<
+        typeof node
+      >[]) {
+        traverse(visit, (node as any)[key], node, parent);
+      }
+    }
+  }
+}

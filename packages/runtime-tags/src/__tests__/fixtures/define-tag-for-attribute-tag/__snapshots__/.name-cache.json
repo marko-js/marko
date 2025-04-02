@@ -3,19 +3,14 @@
     "props": {
       "$_$": "e",
       "$init": "t",
-      "$_inputThingRenderBody_input": "r",
-      "$_dynamicTagName": "n",
-      "$_input_thing_renderBody_": "a",
-      "$_input_thing_selected_": "o",
-      "$_input_thing_": "s",
-      "$_defineBody": "i",
-      "$_myThing": "c",
-      "$_selected_effect": "d",
-      "$_selected": "l",
-      "$_inputThingContent_input": "m",
-      "$_input_thing_content_": "u",
-      "$_define_content": "f",
-      "$_dynamicTag": "g"
+      "$_dynamicTag": "a",
+      "$_input_thing_content": "n",
+      "$_input_thing_selected": "o",
+      "$_input_thing": "c",
+      "$_define_content": "s",
+      "$_myThing": "m",
+      "$_selected_effect": "r",
+      "$_selected": "l"
     }
   }
 }

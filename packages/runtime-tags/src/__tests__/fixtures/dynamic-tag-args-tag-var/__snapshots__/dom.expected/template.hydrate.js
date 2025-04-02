@@ -1,10 +1,10 @@
-// size: 366 (min) 222 (brotli)
-const _setup_ = () => {},
-  _input_ = _$.value(2, (_scope, input) => {
+// size: 366 (min) 221 (brotli)
+const _setup = () => {},
+  _input = _$.value(2, (_scope, input) => {
     _$.data(_scope[0], input), _$.tagVarSignal(_scope, input);
   });
 const tags = [
-    _$.createTemplate("a", "<div>Child: <!></div>", "Db%l", _setup_, _input_),
+    _$.createTemplate("a", "<div>Child: <!></div>", "Db%l", _setup, _input),
   ],
   _dynamicTag = _$.dynamicTag(2, 0, () => _y),
   _y = _$.registerBoundSignal(

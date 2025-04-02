@@ -2,22 +2,16 @@
   "vars": {
     "props": {
       "$_$": "t",
-      "$init": "e",
-      "$_inputRenderBody_input": "a",
-      "$_expr_Text_x_y": "i",
-      "$_expr_x_y_effect": "n",
-      "$_expr_x_y": "o",
+      "$init": "a",
+      "$_expr_input_content_x_y": "e",
+      "$_expr_x_y_effect": "o",
+      "$_expr_x_y": "n",
+      "$_dynamicTag": "i",
       "$_y": "r",
-      "$_x": "s",
-      "$_count2$customTagBody": "c",
-      "$_count$customTagBody": "d",
-      "$_params_2$customTagBody": "m",
-      "$_inputContent_input": "v",
-      "$_count2$customTag_content": "u",
-      "$_count$customTag_content": "f",
-      "$_params_2$customTag_content": "g",
-      "$_expr_input_content_x_y": "l",
-      "$_dynamicTag": "k"
+      "$_x": "m",
+      "$_count2$customtag_content": "s",
+      "$_count$customtag_content": "c",
+      "$_params2$customtag_content": "d"
     }
   }
 }

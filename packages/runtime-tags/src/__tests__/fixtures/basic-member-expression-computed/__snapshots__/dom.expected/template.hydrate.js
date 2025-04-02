@@ -1,4 +1,4 @@
-// size: 291 (min) 194 (brotli)
+// size: 291 (min) 197 (brotli)
 const _expr_items_index_effect = _$.effect(
     "a0",
     (_scope, { 3: items, 5: index }) =>

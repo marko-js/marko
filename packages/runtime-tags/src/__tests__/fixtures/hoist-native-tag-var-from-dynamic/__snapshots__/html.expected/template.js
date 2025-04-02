@@ -6,8 +6,8 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   const _hoisted_el = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_el/hoist");
   const _child_content_subscribers = new Set();
   const _hoisted_el3 = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_el3/hoist");
-  const _inputShowChildNull_content_subscribers = new Set();
-  const _inputShowSectionNull_content_subscribers = new Set();
+  const _inputshowChildnull_content_subscribers = new Set();
+  const _inputshowsectionnull_content_subscribers = new Set();
   _child({
     content: _$.createContent("__tests__/template.marko_1_renderer", () => {
       const _scope1_id = _$.nextScopeId();
@@ -29,7 +29,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       })
     });
     _$.writeEffect(_scope2_id, "__tests__/template.marko_2__hoisted_el2");
-    _$.writeSubscribe(_inputShowChildNull_content_subscribers, _$.writeScope(_scope2_id, {
+    _$.writeSubscribe(_inputshowChildnull_content_subscribers, _$.writeScope(_scope2_id, {
       _hoisted_el2,
       _: _$.ensureScopeWithId(_scope0_id),
       "ClosureScopes:3": _child_content2_subscribers
@@ -41,7 +41,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     const _scope4_id = _$.nextScopeId();
     const el3 = _$.nodeRef();
     _$.write(`<p></p>${_$.markResumeNode(_scope4_id, "#p/0")}`);
-    _$.writeSubscribe(_inputShowSectionNull_content_subscribers, _$.writeScope(_scope4_id, {}, "__tests__/template.marko", "34:4"));
+    _$.writeSubscribe(_inputshowsectionnull_content_subscribers, _$.writeScope(_scope4_id, {}, "__tests__/template.marko", "34:4"));
   }, _scope0_id), 0, 1);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0__hoisted_el3");
@@ -50,8 +50,8 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     _hoisted_el,
     _hoisted_el3,
     "ClosureScopes:1": _child_content_subscribers,
-    "ClosureScopes:2": _inputShowChildNull_content_subscribers,
-    "ClosureScopes:4": _inputShowSectionNull_content_subscribers
+    "ClosureScopes:2": _inputshowChildnull_content_subscribers,
+    "ClosureScopes:4": _inputshowsectionnull_content_subscribers
   }, "__tests__/template.marko", 0, {
     _hoisted_el: 0,
     _hoisted_el3: 0

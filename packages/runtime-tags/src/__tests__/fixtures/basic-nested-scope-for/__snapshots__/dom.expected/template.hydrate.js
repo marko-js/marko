@@ -1,4 +1,4 @@
-// size: 259 (min) 169 (brotli)
+// size: 259 (min) 168 (brotli)
 const _expr_selected_num$for_content = _$.intersection(4, (_scope) => {
   const {
     _: { 1: selected },

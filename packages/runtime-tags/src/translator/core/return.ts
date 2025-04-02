@@ -9,6 +9,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent } from "../util/assert";
+import { generateUidIdentifier } from "../util/generate-uid";
 import { getAccessorProp } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
@@ -83,7 +84,7 @@ export default {
         }
 
         if (attrs.value) {
-          const returnId = tag.scope.generateUidIdentifier("return");
+          const returnId = generateUidIdentifier("return");
           setReturnValueIdentifier(section, returnId);
           tag
             .replaceWith(

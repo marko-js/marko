@@ -1,14 +1,9 @@
-// size: 413 (min) 224 (brotli)
+// size: 413 (min) 221 (brotli)
 const _x$for_content = _$.value(2, (_scope, x) => _$.data(_scope[0], x)),
-  _params_2$for_content = _$.value(1, (_scope, _params_2) =>
-    _x$for_content(_scope, _params_2[0]),
+  _params2$for_content = _$.value(1, (_scope, _params2) =>
+    _x$for_content(_scope, _params2[0]),
   ),
-  _for_content = _$.createRenderer(
-    "<li> </li>",
-    "D ",
-    0,
-    _params_2$for_content,
-  ),
+  _for_content = _$.createRenderer("<li> </li>", "D ", 0, _params2$for_content),
   _for = _$.loopOf(0, _for_content),
   _list_effect = _$.effect("a0", (_scope, { 4: list }) =>
     _$.on(_scope[2], "click", function () {

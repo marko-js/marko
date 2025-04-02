@@ -1,8 +1,8 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const _value1__closures = new Set();
-  const _value2__closures = new Set();
+  const _value_closures = new Set();
+  const _value2_closures = new Set();
   const {
     show,
     value1,
@@ -16,7 +16,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
         if (value1) {
           const _scope2_id = _$.nextScopeId();
           _$.write(`<span>${_$.escapeXML(value1)}${_$.markResumeNode(_scope2_id, "#text/0")}</span>`);
-          _$.writeSubscribe(_value1__closures, _$.writeScope(_scope2_id, {
+          _$.writeSubscribe(_value_closures, _$.writeScope(_scope2_id, {
             _: _$.ensureScopeWithId(_scope1_id),
             "ClosureSignalIndex:value1": 0
           }, "__tests__/template.marko", "4:6"));
@@ -27,7 +27,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
         if (value2) {
           const _scope3_id = _$.nextScopeId();
           _$.write(`<span>${_$.escapeXML(value2)}${_$.markResumeNode(_scope3_id, "#text/0")}</span>`);
-          _$.writeSubscribe(_value2__closures, _$.writeScope(_scope3_id, {
+          _$.writeSubscribe(_value2_closures, _$.writeScope(_scope3_id, {
             _: _$.ensureScopeWithId(_scope1_id),
             "ClosureSignalIndex:value2": 0
           }, "__tests__/template.marko", "5:6"));
@@ -44,8 +44,8 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.writeScope(_scope0_id, {
     value1,
     value2,
-    "ClosureScopes:value1": _value1__closures,
-    "ClosureScopes:value2": _value2__closures
+    "ClosureScopes:value1": _value_closures,
+    "ClosureScopes:value2": _value2_closures
   }, "__tests__/template.marko", 0, {
     value1: "1:15",
     value2: "1:23"

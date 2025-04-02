@@ -1,4 +1,4 @@
-// size: 420 (min) 203 (brotli)
+// size: 420 (min) 200 (brotli)
 _$.register("a0", function (_scope) {
   return function (html) {
     _scope[0].innerHTML = html;

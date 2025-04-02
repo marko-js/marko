@@ -2,9 +2,9 @@
   "vars": {
     "props": {
       "$_$": "t",
-      "$init": "o",
-      "$_b_effect": "m",
-      "$_b": "r"
+      "$init": "m",
+      "$_b_effect": "o",
+      "$_b": "a"
     }
   }
 }

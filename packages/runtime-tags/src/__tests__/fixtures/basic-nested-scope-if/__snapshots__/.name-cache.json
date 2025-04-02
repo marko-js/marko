@@ -2,21 +2,14 @@
   "vars": {
     "props": {
       "$_$": "t",
-      "$init": "e",
-      "$_clickCount$elseBody": "o",
-      "$_elseBody": "n",
-      "$_clickCount$ifBody_effect": "r",
-      "$_clickCount$ifBody": "i",
-      "$_ifBody": "a",
+      "$init": "o",
+      "$_clickCount$else_content": "e",
+      "$_else_content": "a",
+      "$_clickCount$if_content_effect": "n",
+      "$_clickCount$if_content": "r",
+      "$_if_content": "i",
       "$_if": "c",
-      "$_clickCount": "s",
-      "$_clickCount$else_content": "d",
-      "$_else_content": "m",
-      "$_clickCount$if_content_effect": "u",
-      "$_clickCount$if_content": "l",
-      "$_if_content": "p",
-      "$_setup$else_content": "_",
-      "$_setup$if_content": "f"
+      "$_clickCount": "m"
     }
   }
 }

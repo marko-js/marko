@@ -1,5 +1,5 @@
-export const _template_ = "<div>Before <!></div>";
-export const _walks_ = /* get, next(1), over(1), replace, out(1) */" Db%l";
+export const _template = "<div>Before <!></div>";
+export const _walks = /* get, next(1), over(1), replace, out(1) */" Db%l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _for_content = /* @__PURE__ */_$.createRenderer("Child");
 const _for = /* @__PURE__ */_$.loopOf("#text/1", _for_content);
@@ -16,7 +16,7 @@ const _children = /* @__PURE__ */_$.state("children/2", (_scope, children) => {
   _for(_scope, [children]);
   _children_effect(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _children(_scope, [1]);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

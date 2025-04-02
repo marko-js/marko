@@ -1,4 +1,4 @@
-// size: 122 (min) 111 (brotli)
+// size: 122 (min) 110 (brotli)
 const _b_effect = _$.effect("a0", (_scope, { 6: b }) =>
     _$.on(_scope[0], "click", () => (_b(_scope, b + 1), b)),
   ),

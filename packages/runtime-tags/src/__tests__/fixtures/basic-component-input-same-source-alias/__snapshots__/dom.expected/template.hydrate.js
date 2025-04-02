@@ -1,16 +1,16 @@
 // size: 270 (min) 163 (brotli)
-const _text_ = _$.value(6, (_scope, text) => {
+const _text = _$.value(6, (_scope, text) => {
     _$.data(_scope[1], text),
       ((_scope, textAlias) => {
         _$.data(_scope[2], textAlias);
       })(_scope, text);
   }),
-  _onClick__effect = _$.effect("a0", (_scope, { 5: onClick }) =>
+  _onClick_effect = _$.effect("a0", (_scope, { 5: onClick }) =>
     _$.on(_scope[0], "click", onClick),
   ),
-  _onClick_ = _$.value(5, (_scope) => _onClick__effect(_scope)),
+  _onClick$1 = _$.value(5, (_scope) => _onClick_effect(_scope)),
   _clickCount = _$.state(1, (_scope, clickCount) => {
-    _text_(_scope[0], clickCount), _onClick_(_scope[0], _onClick(_scope));
+    _text(_scope[0], clickCount), _onClick$1(_scope[0], _onClick(_scope));
   });
 function _onClick(_scope, { 1: clickCount } = _scope) {
   return function () {

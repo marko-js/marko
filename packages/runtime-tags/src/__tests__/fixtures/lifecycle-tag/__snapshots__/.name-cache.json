@@ -2,11 +2,9 @@
   "vars": {
     "props": {
       "$_$": "t",
-      "$init": "n",
-      "$_onMount": "e",
-      "$_onUpdate": "o",
-      "$_x_effect": "r",
-      "$_x": "c"
+      "$init": "e",
+      "$_x_effect": "n",
+      "$_x": "o"
     }
   }
 }

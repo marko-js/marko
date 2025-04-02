@@ -1,4 +1,4 @@
-// size: 323 (min) 179 (brotli)
+// size: 323 (min) 182 (brotli)
 const _expr_count_multiplier = _$.intersection(6, (_scope) => {
     const { 4: count, 5: multiplier } = _scope;
     _multipliedCount(_scope, count * multiplier);

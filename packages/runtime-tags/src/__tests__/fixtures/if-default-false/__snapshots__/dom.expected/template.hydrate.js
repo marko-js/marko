@@ -1,4 +1,4 @@
-// size: 167 (min) 145 (brotli)
+// size: 167 (min) 138 (brotli)
 const _if_content = _$.createRenderer("hi"),
   _if = _$.conditional(1, _if_content),
   _show_effect = _$.effect("a0", (_scope, { 2: show }) =>

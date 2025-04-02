@@ -10,6 +10,7 @@ import {
 } from "../visitors/program";
 import { getDynamicSourcesForBinding } from "./dynamic-sources";
 import { forEachIdentifier } from "./for-each-identifier";
+import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-char";
 import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
@@ -169,9 +170,7 @@ export function getHoistFunctionIdentifier(hoistedBinding: Binding) {
   if (!identifier) {
     idsMap.set(
       hoistedBinding,
-      (identifier = getProgram().scope.generateUidIdentifier(
-        `get${hoistedBinding.name}`,
-      )),
+      (identifier = generateUidIdentifier(`get${hoistedBinding.name}`)),
     );
   }
   return identifier;
@@ -200,9 +199,7 @@ export function getSignal(
       (signal = {
         identifier: exportName
           ? t.identifier(exportName)
-          : getProgram().scope.generateUidIdentifier(
-              name + section.name.replace("_", "$"),
-            ),
+          : generateUidIdentifier(name + section.name.replace("_", "$")),
         referencedBindings,
         section,
         values: [],
@@ -418,10 +415,9 @@ function getSignalFn(signal: Signal) {
         if (isDynamicClosure(closureSection, binding)) {
           if (!dynamicClosureArgs) {
             dynamicClosureArgs = [];
-            dynamicClosureSignalIdentifier =
-              getProgram().scope.generateUidIdentifier(
-                signal.identifier.name + "_closure",
-              );
+            dynamicClosureSignalIdentifier = generateUidIdentifier(
+              signal.identifier.name + "_closure",
+            );
 
             signal.render.push(
               t.expressionStatement(
@@ -505,8 +501,7 @@ export function getDestructureSignal(
     ? bindingIdentifiersByName
     : Object.values(bindingIdentifiersByName);
   if (bindingIdentifiers.length) {
-    const valueIdentifier =
-      getProgram().scope.generateUidIdentifier("destructure");
+    const valueIdentifier = generateUidIdentifier("destructure");
     const bindingSignals = bindingIdentifiers.map((bindingIdentifier) =>
       initValue(bindingIdentifier.extra?.binding as Binding),
     );
@@ -523,7 +518,7 @@ export function getDestructureSignal(
     return {
       get identifier() {
         if (!id) {
-          id = getProgram().scope.generateUidIdentifier("destructure");
+          id = generateUidIdentifier("destructure");
           getProgram().node.body.push(
             t.variableDeclaration("const", [
               t.variableDeclarator(id, this.build(true)),
@@ -599,7 +594,7 @@ export function subscribe(provider: ReferencedBindings, subscriber: Signal) {
 }
 
 function generateSignalName(referencedBindings?: ReferencedBindings) {
-  let name;
+  let name: string;
 
   if (referencedBindings) {
     if (Array.isArray(referencedBindings)) {
@@ -613,6 +608,7 @@ function generateSignalName(referencedBindings?: ReferencedBindings) {
   } else {
     name = "setup";
   }
+
   return name;
 }
 
@@ -1050,7 +1046,7 @@ export function writeHTMLResumeStatements(
         if (!identifier) {
           htmlDynamicClosureInstancesIdentifier.set(
             closureSignal,
-            (identifier = getProgram().scope.generateUidIdentifier(
+            (identifier = generateUidIdentifier(
               closureSignal.identifier.name + "_closures",
             )),
           );
@@ -1115,10 +1111,9 @@ export function writeHTMLResumeStatements(
           !currentSection.sectionAccessor &&
           !sectionDynamicSubscribers.has(currentSection)
         ) {
-          const subscribersIdentifier =
-            getProgram().scope.generateUidIdentifier(
-              `${currentSection.name}_subscribers`,
-            );
+          const subscribersIdentifier = generateUidIdentifier(
+            `${currentSection.name}_subscribers`,
+          );
 
           sectionDynamicSubscribers.add(currentSection);
 
@@ -1402,7 +1397,7 @@ function replaceAssignedNode(node: t.Node) {
                 extra.assignment,
               );
               if (signal?.buildAssignment) {
-                id.name = getProgram().scope.generateUid(id.name);
+                id.name = generateUid(id.name);
                 (params ||= []).push(t.identifier(id.name));
                 (assignments ||= []).push(
                   signal.buildAssignment(extra.section, t.identifier(id.name)),
@@ -1411,7 +1406,7 @@ function replaceAssignedNode(node: t.Node) {
             }
           });
           if (params && assignments) {
-            const resultId = getProgram().scope.generateUid("result");
+            const resultId = generateUid("result");
             return t.callExpression(
               t.arrowFunctionExpression(
                 [t.identifier(resultId), ...params],
@@ -1479,7 +1474,7 @@ export function replaceRegisteredFunctionNode(node: t.Node) {
 function getRegisteredFnExpression(node: t.Function) {
   const { extra } = node;
   if (isRegisteredFnExtra(extra)) {
-    const id = getProgram().scope.generateUid(extra.name);
+    const id = generateUid(extra.name);
     const referencesScope = extra.referencesScope;
     const referencedBindings = extra.referencedBindingsInFunction;
     let registedFns = registeredFnsForProgram.get(getProgram().node);

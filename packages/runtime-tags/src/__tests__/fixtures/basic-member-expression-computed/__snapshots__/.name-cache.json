@@ -2,13 +2,12 @@
   "vars": {
     "props": {
       "$_$": "t",
-      "$init": "a",
-      "$_foo": "o",
-      "$_expr_items_index_effect": "e",
-      "$_expr_items_index": "n",
-      "$_index": "m",
-      "$_items_": "s",
-      "$_items": "c"
+      "$init": "o",
+      "$_expr_items_index_effect": "a",
+      "$_expr_items_index": "e",
+      "$_index": "n",
+      "$_items_": "m",
+      "$_items": "s"
     }
   }
 }

@@ -1,9 +1,9 @@
-// size: 307 (min) 201 (brotli)
-const _input_ = _$.value(2, (_scope, input) => _$.data(_scope[0], input));
-function _setup_(_scope) {
+// size: 307 (min) 200 (brotli)
+const _input = _$.value(2, (_scope, input) => _$.data(_scope[0], input));
+function _setup(_scope) {
   _$.tagVarSignal(_scope, "hello from other");
 }
-const tags = [_$.createTemplate("a", "<div> </div>", "D l", _setup_, _input_)],
+const tags = [_$.createTemplate("a", "<div> </div>", "D l", _setup, _input)],
   _dynamicTag = _$.dynamicTag(2),
   _x_effect = _$.effect("b0", (_scope, { 3: x }) =>
     _$.on(_scope[0], "click", function () {

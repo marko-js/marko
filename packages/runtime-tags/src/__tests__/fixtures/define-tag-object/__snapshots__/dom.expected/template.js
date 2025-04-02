@@ -1,5 +1,5 @@
-export const _template_ = "<div> </div><button> </button>";
-export const _walks_ = /* next(1), get, out(1), get, next(1), get, out(1) */"D l D l";
+export const _template = "<div> </div><button> </button>";
+export const _walks = /* next(1), get, out(1), get, next(1), get, out(1) */"D l D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _myObj = /* @__PURE__ */_$.value("myObj", (_scope, myObj) => _$.data(_scope["#text/0"], JSON.stringify(myObj)));
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
@@ -15,7 +15,7 @@ const _x = /* @__PURE__ */_$.state("x/3", (_scope, x) => {
   });
   _x_effect(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _x(_scope, 1);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

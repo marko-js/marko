@@ -1,6 +1,6 @@
 import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
-export const _template_ = "<button id=tags> </button><!><!>";
-export const _walks_ = /* get, next(1), get, out(1), replace, over(1) */" D l%bD";
+export const _template = "<button id=tags> </button><!><!>";
+export const _walks = /* get, next(1), get, out(1), replace, over(1) */" D l%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import _classCounter from "./components/class-counter.marko";
 _$.register("__tests__/components/class-counter.marko", _classCounter);
@@ -17,7 +17,7 @@ const _count = /* @__PURE__ */_$.state("count/3", (_scope, count) => {
   }));
   _count_effect(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _count(_scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

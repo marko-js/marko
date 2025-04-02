@@ -1,4 +1,4 @@
-// size: 291 (min) 185 (brotli)
+// size: 291 (min) 181 (brotli)
 const _message_text$if_content = _$.conditionalClosure(
     3,
     1,

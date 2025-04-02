@@ -12,6 +12,7 @@ import {
 import { getEventHandlerName, isEventHandler } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
 import evaluate from "../util/evaluate";
+import { generateUidIdentifier } from "../util/generate-uid";
 import isInvokedFunction from "../util/is-invoked-function";
 import { isOutputHTML } from "../util/marko-config";
 import {
@@ -190,9 +191,7 @@ export default {
           const references = tag.scope.getBinding(varName)!.referencePaths;
           let getterFnIdentifier: t.Identifier | undefined;
           if (getterId) {
-            getterFnIdentifier = getProgram().scope.generateUidIdentifier(
-              `get_${varName}`,
-            );
+            getterFnIdentifier = generateUidIdentifier(`get_${varName}`);
             getProgram().node.body.push(
               t.variableDeclaration("const", [
                 t.variableDeclarator(

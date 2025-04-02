@@ -5,6 +5,7 @@ import {
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
+import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag } from "./is-core-tag";
 import { filter, Sorted } from "./optional";
 import type { Binding, ReferencedBindings } from "./references";
@@ -77,7 +78,7 @@ export function startSection(
     );
     const sectionName = path.isProgram()
       ? ""
-      : getProgram().scope.generateUid(sectionNamePath.toString() + "_content");
+      : generateUid(sectionNamePath.toString() + "_content");
     const programExtra = (path.hub.file.path.node.extra ??= {});
     const sections = (programExtra.sections ??= []);
     section = extra.section = {
@@ -145,8 +146,7 @@ export function getParentSection(path: t.NodePath) {
 
 export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
   "scopeIdIdentifier",
-  (section) =>
-    getProgram().scope.generateUidIdentifier(`scope${section.id}_id`),
+  (section) => generateUidIdentifier(`scope${section.id}_id`),
 );
 
 export const [getSectionParentIsOwner, setSectionParentIsOwner] =
@@ -163,7 +163,7 @@ export const getScopeIdentifier = (
 ) => {
   const scopeId = _getScopeIdentifier(section);
   if (!ignoreDefault && scopeId.name === "undefined") {
-    scopeId.name = getProgram().scope.generateUid(`scope${section.id}_`);
+    scopeId.name = generateUid(`scope${section.id}`);
   }
   return scopeId;
 };

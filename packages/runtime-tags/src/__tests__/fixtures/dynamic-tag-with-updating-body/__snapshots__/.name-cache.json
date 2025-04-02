@@ -4,16 +4,11 @@
       "$_$": "t",
       "$init": "n",
       "$_count_effect": "o",
-      "$_count": "r",
-      "$_setup$tagNameBody": "e",
-      "$_tagNameBody": "a",
-      "$_tagName_input": "c",
-      "$_dynamicTagName": "i",
-      "$_tagName_effect": "s",
-      "$_tagName": "m",
-      "$_setup$tagName_content": "f",
-      "$_tagName_content": "d",
-      "$_dynamicTag": "u"
+      "$_count": "a",
+      "$_tagName_content": "i",
+      "$_dynamicTag": "c",
+      "$_tagName_effect": "e",
+      "$_tagName": "m"
     }
   }
 }

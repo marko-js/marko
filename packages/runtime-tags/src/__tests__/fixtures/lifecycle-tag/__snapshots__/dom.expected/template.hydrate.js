@@ -1,4 +1,4 @@
-// size: 276 (min) 146 (brotli)
+// size: 276 (min) 156 (brotli)
 const _x_effect = _$.effect("a0", (_scope, { 1: x }) => {
     _$.lifecycle(_scope, 3, {
       onMount: function () {

@@ -10,6 +10,7 @@ import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
 import { getDynamicSourcesForExtras } from "../../util/dynamic-sources";
 import evaluate from "../../util/evaluate";
+import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorPrefix } from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
 import isInvokedFunction from "../../util/is-invoked-function";
@@ -343,9 +344,7 @@ export default {
         } else {
           let getterFnIdentifier: t.Identifier | undefined;
           if (getterId) {
-            getterFnIdentifier = getProgram().scope.generateUidIdentifier(
-              `get_${varName}`,
-            );
+            getterFnIdentifier = generateUidIdentifier(`get_${varName}`);
             getProgram().node.body.push(
               t.variableDeclaration("const", [
                 t.variableDeclarator(
@@ -451,8 +450,7 @@ export default {
                 staticControllable.attrs[1]?.value || buildUndefined(),
             });
           } else if (spreadExpression) {
-            const spreadIdentifier =
-              tag.scope.generateUidIdentifier("select_input");
+            const spreadIdentifier = generateUidIdentifier("select_input");
             tag.insertBefore(
               t.variableDeclaration("const", [
                 t.variableDeclarator(spreadIdentifier, spreadExpression),
@@ -477,8 +475,7 @@ export default {
             value = staticControllable.attrs[0]?.value;
             valueChange = staticControllable.attrs[1]?.value;
           } else if (spreadExpression) {
-            const spreadIdentifier =
-              tag.scope.generateUidIdentifier("textarea_input");
+            const spreadIdentifier = generateUidIdentifier("textarea_input");
             tag.insertBefore(
               t.variableDeclaration("const", [
                 t.variableDeclarator(spreadIdentifier, spreadExpression),

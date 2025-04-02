@@ -1,4 +1,4 @@
-// size: 339 (min) 197 (brotli)
+// size: 339 (min) 198 (brotli)
 const _setup$if_content2 = (_scope) => {
     _$.data(_scope[0], _scope.$global.x);
   },

@@ -1,4 +1,4 @@
-// size: 169 (min) 136 (brotli)
+// size: 169 (min) 146 (brotli)
 const _expr_input_x_effect = _$.effect(
     "a0",
     ({ 3: input, 5: x }) => (input.output().innerHTML = x),

@@ -1,7 +1,7 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 const _content = input => {
   const _scope0_id = _$.nextScopeId();
-  const _input_level__closures = new Set();
+  const _input_level_closures = new Set();
   _$.resumeSingleNodeConditional(() => {
     if (input.level) {
       const _scope1_id = _$.nextScopeId();
@@ -14,7 +14,7 @@ const _content = input => {
           _content({
             level: input.level - 1
           });
-          _$.writeSubscribe(_input_level__closures, _$.writeScope(_scope3_id, {
+          _$.writeSubscribe(_input_level_closures, _$.writeScope(_scope3_id, {
             "#childScope/0": _$.writeExistingScope(_childScope),
             _: _$.ensureScopeWithId(_scope2_id),
             "ClosureSignalIndex:input_level": 0
@@ -41,7 +41,7 @@ const _content = input => {
   }, _scope0_id, "#text/0", 1);
   _$.writeScope(_scope0_id, {
     input_level: input.level,
-    "ClosureScopes:input_level": _input_level__closures
+    "ClosureScopes:input_level": _input_level_closures
   }, "__tests__/tags/recurse.marko", 0, {
     input_level: ["input.level"]
   });

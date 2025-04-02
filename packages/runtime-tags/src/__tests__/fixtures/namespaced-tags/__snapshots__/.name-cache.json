@@ -1,28 +1,21 @@
 {
   "vars": {
     "props": {
-      "$_$": "e",
-      "$init": "t",
-      "$_Child_content2": "r",
-      "$_Child_content": "i",
-      "$_input_value$Parent_content": "n",
-      "$_setup$Parent_content": "a",
-      "$_Parent_content": "c",
+      "$_$": "t",
+      "$init": "e",
+      "$_Child_content2": "a",
+      "$_Child_content": "n",
+      "$_input_value$Parent_content": "r",
+      "$_Parent_content": "i",
       "$_expr_Parent_Child_effect": "o",
-      "$_expr_Parent_Child": "s",
-      "$_Parent_input": "m",
-      "$_dynamicTagName3": "d",
-      "$_Child_input2": "f",
-      "$_dynamicTagName2": "l",
-      "$_Child_input": "g",
-      "$_dynamicTagName": "u",
-      "$_Child_effect": "h",
-      "$_Child": "b",
-      "$_Parent_effect": "y",
-      "$_Parent": "A",
-      "$_dynamicTag3": "T",
-      "$_dynamicTag2": "R",
-      "$_dynamicTag": "k"
+      "$_expr_Parent_Child": "c",
+      "$_dynamicTag3": "s",
+      "$_dynamicTag2": "m",
+      "$_dynamicTag": "f",
+      "$_Child_effect": "g",
+      "$_Child": "d",
+      "$_Parent_effect": "l",
+      "$_Parent": "u"
     }
   }
 }

@@ -1,7 +1,7 @@
-export const _template_ = "<button>Toggle</button><div></div><!><!>";
-export const _walks_ = /* get, over(1), get, over(1), replace, over(1) */" b b%bD";
+export const _template = "<button>Toggle</button><div></div><!><!>";
+export const _walks = /* get, over(1), get, over(1), replace, over(1) */" b b%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-import { _setup_ as _child, _input_ as _child_input, _template_ as _child_template, _walks_ as _child_walks } from "./tags/child.marko";
+import { _setup as _child, _input as _child_input, _template as _child_template, _walks as _child_walks } from "./tags/child.marko";
 const _setup$if_content = _scope => {
   _child(_scope["#childScope/0"]);
   _child_input(_scope["#childScope/0"], {
@@ -19,7 +19,7 @@ const _show = /* @__PURE__ */_$.state("show/3", (_scope, show) => {
   _if(_scope, show ? 0 : 1);
   _show_effect(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _show(_scope, true);
 }
 function _write(_scope) {
@@ -28,4 +28,4 @@ function _write(_scope) {
   };
 }
 _$.register("__tests__/template.marko_1/write", _write);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

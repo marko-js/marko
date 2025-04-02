@@ -1,4 +1,4 @@
-// size: 1280 (min) 491 (brotli)
+// size: 1280 (min) 492 (brotli)
 const _expr_name_write_effect = _$.effect(
     "a0",
     (_scope, { 3: name, 4: write }) => {
@@ -11,17 +11,17 @@ const _expr_name_write_effect = _$.effect(
   _expr_name_write = _$.intersection(5, (_scope) => {
     _$.resetAbortSignal(_scope, 0), _expr_name_write_effect(_scope);
   }),
-  _write_ = _$.value(4, (_scope) => _expr_name_write(_scope)),
-  _name_ = _$.value(3, (_scope, name) => {
+  _write = _$.value(4, (_scope) => _expr_name_write(_scope)),
+  _name = _$.value(3, (_scope, name) => {
     _$.data(_scope[0], name), _expr_name_write(_scope);
   }),
   _write$if_content3 = _$.dynamicClosureRead(
     8,
-    (_scope, write) => _write_(_scope[0], write),
+    (_scope, write) => _write(_scope[0], write),
     (_scope) => _scope._._._,
   ),
   _setup$if_content3 = (_scope) => {
-    _scope[0], _name_(_scope[0], "Inner");
+    _scope[0], _name(_scope[0], "Inner");
   },
   _if_content3 = _$.createRenderer(
     "<p> </p>",
@@ -33,7 +33,7 @@ const _expr_name_write_effect = _$.effect(
   _if$if_content = _$.conditional(1, _if_content3),
   _write$if_content2 = _$.dynamicClosureRead(
     8,
-    (_scope, write) => _write_(_scope[0], write),
+    (_scope, write) => _write(_scope[0], write),
     (_scope) => _scope._._,
   ),
   _showInner$if_content = _$.dynamicClosureRead(
@@ -42,7 +42,7 @@ const _expr_name_write_effect = _$.effect(
     (_scope) => _scope._._,
   ),
   _setup$if_content2 = (_scope) => {
-    _scope[0], _name_(_scope[0], "Middle");
+    _scope[0], _name(_scope[0], "Middle");
   },
   _if_content2 = _$.createRenderer(
     "<div><p> </p><!></div>",
@@ -55,7 +55,7 @@ const _expr_name_write_effect = _$.effect(
   ),
   _if$if_content2 = _$.conditional(1, _if_content2),
   _write$if_content = _$.conditionalClosure(8, 4, 0, (_scope, write) =>
-    _write_(_scope[0], write),
+    _write(_scope[0], write),
   ),
   _showMiddle$if_content = _$.conditionalClosure(
     6,
@@ -64,7 +64,7 @@ const _expr_name_write_effect = _$.effect(
     (_scope, showMiddle) => _if$if_content2(_scope, showMiddle ? 0 : 1),
   ),
   _setup$if_content = (_scope) => {
-    _scope[0], _name_(_scope[0], "Outer");
+    _scope[0], _name(_scope[0], "Outer");
   },
   _if_content = _$.createRenderer(
     "<div><p> </p><!></div>",

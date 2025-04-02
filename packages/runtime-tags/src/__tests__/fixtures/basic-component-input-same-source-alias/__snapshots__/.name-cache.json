@@ -2,12 +2,12 @@
   "vars": {
     "props": {
       "$_$": "t",
-      "$init": "o",
-      "$_text_": "a",
-      "$_onClick__effect": "i",
-      "$_onClick_": "n",
-      "$_onClick": "r",
-      "$_clickCount": "e"
+      "$init": "a",
+      "$_text": "o",
+      "$_onClick_effect": "r",
+      "$_onClick$1": "e",
+      "$_clickCount": "m",
+      "$_onClick": "n"
     }
   }
 }

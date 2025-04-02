@@ -3,10 +3,10 @@ _$.enableCatch();
 const _value$await_content = _$.value(2, (_scope, value) =>
     _$.data(_scope[0], value),
   ),
-  _params_2$await_content = _$.value(1, (_scope, _params_2) =>
-    _value$await_content(_scope, _params_2[0]),
+  _params2$await_content = _$.value(1, (_scope, _params2) =>
+    _value$await_content(_scope, _params2[0]),
   ),
-  _await_content = _$.createRenderer(" ", " ", 0, _params_2$await_content);
+  _await_content = _$.createRenderer(" ", " ", 0, _params2$await_content);
 _$.registerContent("a0", "LOADING...");
 const _await$try_content = _$.awaitTag(0, _await_content),
   _clickCount$try_content = _$.dynamicClosureRead(2, (_scope, clickCount) =>

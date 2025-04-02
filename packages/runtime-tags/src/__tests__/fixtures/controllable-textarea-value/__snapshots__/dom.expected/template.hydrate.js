@@ -1,4 +1,4 @@
-// size: 205 (min) 140 (brotli)
+// size: 205 (min) 141 (brotli)
 const _value = _$.state(2, (_scope, value) => {
   _$.controllable_textarea_value(_scope, 0, value, _valueChange(_scope)),
     _$.data(_scope[1], value);

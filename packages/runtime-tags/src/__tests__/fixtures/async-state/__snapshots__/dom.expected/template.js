@@ -1,11 +1,11 @@
-export const _template_ = "<button>inc</button><!><!>";
-export const _walks_ = /* get, over(1), replace, over(1) */" b%bD";
+export const _template = "<button>inc</button><!><!>";
+export const _walks = /* get, over(1), replace, over(1) */" b%bD";
 import { resolveAfter } from "../../utils/resolve";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 _$.enableCatch();
 const _value$await_content = /* @__PURE__ */_$.value("value", (_scope, value) => _$.data(_scope["#text/0"], value));
-const _params_2$await_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _value$await_content(_scope, _params_2[0]));
-const _await_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, _params_2$await_content);
+const _params2$await_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => _value$await_content(_scope, _params2[0]));
+const _await_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, _params2$await_content);
 const _placeholder_content = _$.registerContent("__tests__/template.marko_2_renderer", "LOADING...");
 const _await$try_content = /* @__PURE__ */_$.awaitTag("#text/0", _await_content);
 const _clickCount$try_content = /* @__PURE__ */_$.dynamicClosureRead("clickCount", (_scope, clickCount) => _await$try_content(_scope, resolveAfter(clickCount, 1)));
@@ -21,7 +21,7 @@ const _clickCount = /* @__PURE__ */_$.state("clickCount/2", _scope => {
   _clickCount_closure(_scope);
   _clickCount_effect(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _clickCount(_scope, 0);
   _try(_scope, {
     placeholder: _$.attrTag({
@@ -29,4 +29,4 @@ export function _setup_(_scope) {
     })
   });
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

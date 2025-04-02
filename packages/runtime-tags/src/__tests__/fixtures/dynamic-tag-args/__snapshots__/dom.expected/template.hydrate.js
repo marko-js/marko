@@ -1,7 +1,7 @@
-// size: 273 (min) 188 (brotli)
-const _setup_ = () => {},
-  _input_ = _$.value(2, (_scope, input) => _$.data(_scope[0], input));
-const tags = [_$.createTemplate("a", "<div> </div>", "D l", _setup_, _input_)],
+// size: 273 (min) 187 (brotli)
+const _setup = () => {},
+  _input = _$.value(2, (_scope, input) => _$.data(_scope[0], input));
+const tags = [_$.createTemplate("a", "<div> </div>", "D l", _setup, _input)],
   _dynamicTag = _$.dynamicTag(2, 0, 0, 1),
   _x_effect = _$.effect("b0", (_scope, { 3: x }) =>
     _$.on(_scope[0], "click", function () {

@@ -1,5 +1,6 @@
 import { getProgram, types as t } from "@marko/compiler";
 
+import { generateUid } from "../../util/generate-uid";
 import isStatic from "../../util/is-static";
 import { getReadReplacement, isRegisteredFnExtra } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
@@ -19,7 +20,7 @@ export function getTemplateContentName() {
   if (!name) {
     templateContentIdentifierForProgram.set(
       getProgram(),
-      (name = getProgram().scope.generateUid("content")),
+      (name = generateUid("content")),
     );
   }
 

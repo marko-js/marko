@@ -1,4 +1,4 @@
-// size: 262 (min) 175 (brotli)
+// size: 262 (min) 174 (brotli)
 const _tagName_content = _$.registerContent("a0", "body content"),
   _expr_tagName_className = _$.intersection(4, (_scope) => {
     const { 2: tagName, 3: className } = _scope;

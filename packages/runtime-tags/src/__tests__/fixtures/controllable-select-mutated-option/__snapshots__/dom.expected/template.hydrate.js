@@ -1,15 +1,15 @@
-// size: 655 (min) 318 (brotli)
+// size: 655 (min) 329 (brotli)
 const _opt$for_content = _$.value(3, (_scope, opt) => {
     _$.attr(_scope[0], "value", opt), _$.data(_scope[1], opt);
   }),
-  _params_2$for_content = _$.value(2, (_scope, _params_2) =>
-    _opt$for_content(_scope, _params_2[0]),
+  _params2$for_content = _$.value(2, (_scope, _params2) =>
+    _opt$for_content(_scope, _params2[0]),
   ),
   _for_content = _$.createRenderer(
     "<option> </option>",
     " D ",
     0,
-    _params_2$for_content,
+    _params2$for_content,
   ),
   _for = _$.loopOf(0, _for_content),
   _value = _$.state(6, (_scope, value) => {

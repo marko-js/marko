@@ -1,7 +1,8 @@
-import { getProgram, types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
 
 import { getDynamicSourcesForReferences } from "./dynamic-sources";
 import { forEachIdentifier } from "./for-each-identifier";
+import { generateUid } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-char";
 import { getExprRoot, getFnRoot } from "./get-root";
 import isInvokedFunction from "./is-invoked-function";
@@ -200,7 +201,7 @@ export function trackParamsReferences(
     const paramsBinding =
       canonicalUpstreamAlias ||
       ((body.node.extra ??= {}).binding = createBinding(
-        getProgram().scope.generateUid("params_"),
+        generateUid("params"),
         type,
         section,
         canonicalUpstreamAlias,
@@ -239,7 +240,7 @@ export function trackHoistedReference(
     binding.hoists.set(
       hoistSection,
       (hoistedBinding = createBinding(
-        getProgram().scope.generateUid("hoisted_" + referencePath.node.name),
+        generateUid("hoisted_" + referencePath.node.name),
         BindingType.hoist,
         hoistSection,
         undefined,
@@ -362,7 +363,7 @@ function createBindingsAndTrackReferences(
           ? upstreamAlias!.propertyAliases.get(property)
           : upstreamAlias) ||
         ((lVal.extra ??= {}).binding = createBinding(
-          getProgram().scope.generateUid("pattern_"),
+          generateUid(property || "pattern"),
           type,
           section,
           upstreamAlias,
@@ -415,7 +416,7 @@ function createBindingsAndTrackReferences(
           ? upstreamAlias!.propertyAliases.get(property)
           : upstreamAlias) ||
         ((lVal.extra ??= {}).binding = createBinding(
-          getProgram().scope.generateUid("pattern_"),
+          generateUid(property || "pattern"),
           type,
           section,
           upstreamAlias,
@@ -637,7 +638,7 @@ export function finalizeReferences() {
               -- ${_count}
           ```
         */
-        binding.name = getProgram().scope.generateUid(name);
+        binding.name = generateUid(name);
       }
     }
 

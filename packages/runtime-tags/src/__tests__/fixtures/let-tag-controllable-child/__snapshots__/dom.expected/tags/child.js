@@ -1,6 +1,6 @@
-export const _template_ = "<button><!>|<!></button><button><!>|<!></button>";
-export const _walks_ = /* get, next(1), replace, over(2), replace, out(1), get, next(1), replace, over(2), replace, out(1) */" D%c%l D%c%l";
-export const _setup_ = () => {};
+export const _template = "<button><!>|<!></button><button><!>|<!></button>";
+export const _walks = /* get, next(1), replace, over(2), replace, out(1), get, next(1), replace, over(2), replace, out(1) */" D%c%l D%c%l";
+export const _setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _expr_input_value_input_valueChange = /* @__PURE__ */_$.intersection(10, _scope => {
   const {
@@ -33,9 +33,9 @@ const _input_value = /* @__PURE__ */_$.value("input_value", (_scope, input_value
   _$.data(_scope["#text/4"], input_value);
   _expr_input_value_input_valueChange(_scope);
 });
-export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
+export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
   _input_value(_scope, input.value);
   _input_valueChange(_scope, input.valueChange);
   _otherState(_scope, input.value, input["value" + "Change"]);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", _template_, _walks_, _setup_, _input_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", _template, _walks, _setup, _input);

@@ -1,5 +1,5 @@
-export const _template_ = "<!><!><div id=ref></div><button id=increment>Increment</button><button id=toggle>Toggle</button>";
-export const _walks_ = /* replace, over(2), get, over(1), get, over(1) */"D%c b b";
+export const _template = "<!><!><div id=ref></div><button id=increment>Increment</button><button id=toggle>Toggle</button>";
+export const _walks = /* replace, over(2), get, over(1), get, over(1) */"D%c b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _x$if_content_effect = _$.effect("__tests__/template.marko_1_x", (_scope, {
   _: {
@@ -37,8 +37,8 @@ const _x = /* @__PURE__ */_$.state("x/3", _scope => {
   _x$if_content(_scope);
   _x_effect(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _x(_scope, 0);
   _show(_scope, true);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

@@ -1,4 +1,4 @@
-// size: 288 (min) 139 (brotli)
+// size: 288 (min) 137 (brotli)
 const _count$await_content3 = _$.dynamicClosureRead(4, (_scope, count) =>
     _$.data(_scope[1], count),
   ),

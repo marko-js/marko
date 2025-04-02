@@ -1,15 +1,13 @@
 {
   "vars": {
     "props": {
-      "$_$": "e",
-      "$init": "t",
+      "$_$": "t",
+      "$init": "e",
       "$_for_content": "r",
       "$_for": "a",
       "$_children_length": "o",
       "$_children_effect": "m",
-      "$_children": "l",
-      "$_i$for_content": "d",
-      "$_params_2$for_content": "i"
+      "$_children": "n"
     }
   }
 }

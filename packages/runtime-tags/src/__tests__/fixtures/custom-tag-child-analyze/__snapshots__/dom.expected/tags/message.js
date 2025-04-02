@@ -1,5 +1,5 @@
-export const _template_ = "Frank";
-export const _walks_ = /* over(1) */"b";
-export const _setup_ = () => {};
+export const _template = "Frank";
+export const _walks = /* over(1) */"b";
+export const _setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/message.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/message.marko", _template, _walks, _setup);

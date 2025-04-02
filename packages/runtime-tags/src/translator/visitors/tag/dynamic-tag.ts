@@ -8,6 +8,7 @@ import {
 
 import { WalkCode } from "../../../common/types";
 import { getDynamicSourcesForReferences } from "../../util/dynamic-sources";
+import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorPrefix } from "../../util/get-accessor-char";
 import { isOutputHTML } from "../../util/marko-config";
 import { analyzeAttributeTags } from "../../util/nested-attribute-tags";
@@ -224,8 +225,7 @@ export default {
             );
 
         if (node.var) {
-          const dynamicScopeIdentifier =
-            getProgram().scope.generateUidIdentifier("dynamicScope");
+          const dynamicScopeIdentifier = generateUidIdentifier("dynamicScope");
           statements.push(
             t.variableDeclaration("const", [
               t.variableDeclarator(

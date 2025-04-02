@@ -1,4 +1,4 @@
-// size: 490 (min) 268 (brotli)
+// size: 490 (min) 271 (brotli)
 const noop = _noop,
   _e = _$.state(10, (_scope, e) => _$.data(_scope[5], JSON.stringify(e))),
   _d = _$.state(9, (_scope, d) => _$.data(_scope[4], d)),

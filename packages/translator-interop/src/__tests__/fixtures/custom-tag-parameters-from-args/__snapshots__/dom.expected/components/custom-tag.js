@@ -1,5 +1,5 @@
-export const _template_ = "<button class=inc><!>,<!></button><!><!>";
-export const _walks_ = /* get, next(1), replace, over(2), replace, out(1), replace, over(1) */" D%c%l%bD";
+export const _template = "<button class=inc><!>,<!></button><!><!>";
+export const _walks = /* get, next(1), replace, over(2), replace, out(1), replace, over(1) */" D%c%l%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _expr_input_content_x_y = /* @__PURE__ */_$.intersection(10, _scope => {
   const {
@@ -28,10 +28,10 @@ const _x = /* @__PURE__ */_$.state("x/7", (_scope, x) => {
   _expr_x_y(_scope);
   _expr_input_content_x_y(_scope);
 });
-export const _input_content_ = /* @__PURE__ */_$.value("input_content", _scope => _expr_input_content_x_y(_scope));
-export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => _input_content_(_scope, input.content));
-export function _setup_(_scope) {
+export const _input_content = /* @__PURE__ */_$.value("input_content", _scope => _expr_input_content_x_y(_scope));
+export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => _input_content(_scope, input.content));
+export function _setup(_scope) {
   _x(_scope, 1);
   _y(_scope, 10);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/components/custom-tag.marko", _template_, _walks_, _setup_, _input_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/custom-tag.marko", _template, _walks, _setup, _input);

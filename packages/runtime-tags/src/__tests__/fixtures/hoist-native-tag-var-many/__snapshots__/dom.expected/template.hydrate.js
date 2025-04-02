@@ -1,4 +1,4 @@
-// size: 292 (min) 170 (brotli)
+// size: 292 (min) 162 (brotli)
 _$.register("a0", _$.hoist("j0", "m0", "m2"));
 const _get_hoisted_el2 = _$.hoist("j0", "m1"),
   _get_hoisted_el3 = _$.hoist("j0", "m0");

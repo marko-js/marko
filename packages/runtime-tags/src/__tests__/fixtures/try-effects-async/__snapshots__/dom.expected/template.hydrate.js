@@ -10,20 +10,20 @@ const _value$await_content = _$.value(2, (_scope, value) =>
         : value,
     ),
   ),
-  _params_3$await_content = _$.value(1, (_scope, _params_3) =>
-    _value$await_content(_scope, _params_3[0]),
+  _params3$await_content = _$.value(1, (_scope, _params3) =>
+    _value$await_content(_scope, _params3[0]),
   ),
   _await_content = _$.createRenderer(
     "Async: <!>",
     "b%",
     0,
-    _params_3$await_content,
+    _params3$await_content,
   ),
   _err$catch_content = _$.value(2, (_scope, err) => _$.data(_scope[0], err)),
-  _params_2$catch_content = _$.value(1, (_scope, _params_2) =>
-    _err$catch_content(_scope, _params_2[0]),
+  _params2$catch_content = _$.value(1, (_scope, _params2) =>
+    _err$catch_content(_scope, _params2[0]),
   );
-_$.registerContent("a0", " ", " ", 0, _params_2$catch_content),
+_$.registerContent("a0", " ", " ", 0, _params2$catch_content),
   _$.registerContent("a1", "LOADING...");
 const _await$try_content = _$.awaitTag(0, _await_content),
   _clickCount$try_content_effect = _$.effect(

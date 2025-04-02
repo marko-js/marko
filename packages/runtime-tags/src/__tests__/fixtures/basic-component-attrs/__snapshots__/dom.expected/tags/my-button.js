@@ -1,14 +1,14 @@
-export const _template_ = "<button> </button>";
-export const _walks_ = /* get, next(1), get, out(1) */" D l";
-export const _setup_ = () => {};
+export const _template = "<button> </button>";
+export const _walks = /* get, next(1), get, out(1) */" D l";
+export const _setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-export const _text_ = /* @__PURE__ */_$.value("text", (_scope, text) => _$.data(_scope["#text/1"], text));
-const _onClick__effect = _$.effect("__tests__/tags/my-button.marko_0_onClick", (_scope, {
+export const _text = /* @__PURE__ */_$.value("text", (_scope, text) => _$.data(_scope["#text/1"], text));
+const _onClick_effect = _$.effect("__tests__/tags/my-button.marko_0_onClick", (_scope, {
   onClick
 }) => _$.on(_scope["#button/0"], "click", onClick));
-export const _onClick_ = /* @__PURE__ */_$.value("onClick", _scope => _onClick__effect(_scope));
-export const _input_ = /* @__PURE__ */_$.value("input", (_scope, input) => {
-  _onClick_(_scope, input.onClick);
-  _text_(_scope, input.text);
+export const _onClick = /* @__PURE__ */_$.value("onClick", _scope => _onClick_effect(_scope));
+export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
+  _onClick(_scope, input.onClick);
+  _text(_scope, input.text);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-button.marko", _template_, _walks_, _setup_, _input_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-button.marko", _template, _walks, _setup, _input);

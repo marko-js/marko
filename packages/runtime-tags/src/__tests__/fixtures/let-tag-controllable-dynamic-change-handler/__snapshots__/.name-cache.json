@@ -6,9 +6,8 @@
       "$_expr_x_yChange": "o",
       "$_y_effect": "a",
       "$_y": "e",
-      "$_yChange2": "c",
-      "$_x": "r",
-      "$_yChange": "i"
+      "$_yChange": "c",
+      "$_x": "i"
     }
   }
 }
