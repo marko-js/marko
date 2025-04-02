@@ -1,6 +1,6 @@
-export const _template_ = "<!><!><button id=changeTag></button>";
-export const _walks_ = /* replace, over(1), get, over(1) */"D%b b";
-import { _setup_ as _counter, _template_ as _counter_template, _walks_ as _counter_walks } from "./tags/counter.marko";
+export const _template = "<!><!><button id=changeTag></button>";
+export const _walks = /* replace, over(1), get, over(1) */"D%b b";
+import { _setup as _counter, _template as _counter_template, _walks as _counter_walks } from "./tags/counter.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _setup$tagName_content = _scope => {
   _counter(_scope["#childScope/0"]);
@@ -16,7 +16,7 @@ const _tagName = /* @__PURE__ */_$.state("tagName/2", (_scope, tagName) => {
   _dynamicTag(_scope, tagName);
   _tagName_effect(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _tagName(_scope, "div");
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

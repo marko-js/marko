@@ -3,15 +3,11 @@
     "props": {
       "$_$": "t",
       "$init": "a",
-      "$_valueChange": "n",
-      "$_x_effect": "r",
-      "$_x": "e",
-      "$_setup_": "i",
-      "$Counter": "o",
-      "$_xChange2": "c",
-      "$_x2_effect": "g",
-      "$_x2": "u",
-      "$_xChange3": "f"
+      "$_x_effect": "n",
+      "$_x": "r",
+      "$_setup": "e",
+      "$_valueChange": "o",
+      "$Counter": "i"
     }
   }
 }

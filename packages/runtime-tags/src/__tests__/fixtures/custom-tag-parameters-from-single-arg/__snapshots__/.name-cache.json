@@ -2,18 +2,13 @@
   "vars": {
     "props": {
       "$_$": "t",
-      "$init": "e",
-      "$_inputRenderBody_input": "r",
-      "$_expr_Text_x": "o",
-      "$_x_effect": "a",
+      "$init": "a",
+      "$_expr_input_content_x": "o",
+      "$_dynamicTag": "n",
+      "$_x_effect": "e",
       "$_x": "i",
-      "$_count$customTagBody": "n",
-      "$_params_2$customTagBody": "m",
-      "$_inputContent_input": "d",
-      "$_count$customTag_content": "c",
-      "$_params_2$customTag_content": "s",
-      "$_expr_input_content_x": "u",
-      "$_dynamicTag": "f"
+      "$_count$customtag_content": "m",
+      "$_params2$customtag_content": "r"
     }
   }
 }

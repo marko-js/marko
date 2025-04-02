@@ -1,9 +1,9 @@
-export const _template_ = "<ul></ul><button id=toggle>Toggle</button><button id=reverse>Reverse</button>";
-export const _walks_ = /* get, over(1), get, over(1), get, over(1) */" b b b";
+export const _template = "<ul></ul><button id=toggle>Toggle</button><button id=reverse>Reverse</button>";
+export const _walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _x$for_content = /* @__PURE__ */_$.value("x", (_scope, x) => _$.data(_scope["#text/0"], x));
-const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _x$for_content(_scope, _params_2[0]));
-const _for_content = /* @__PURE__ */_$.createRenderer("<li> </li>", /* next(1), get */"D ", 0, _params_2$for_content);
+const _params2$for_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => _x$for_content(_scope, _params2[0]));
+const _for_content = /* @__PURE__ */_$.createRenderer("<li> </li>", /* next(1), get */"D ", 0, _params2$for_content);
 const _for = /* @__PURE__ */_$.loopOf("#ul/0", _for_content);
 const _list_effect = _$.effect("__tests__/template.marko_0_list", (_scope, {
   list
@@ -25,8 +25,8 @@ const _open = /* @__PURE__ */_$.state("open/3", (_scope, open) => {
   _$.attr(_scope["#ul/0"], "hidden", !open);
   _open_effect(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _open(_scope, true);
   _list(_scope, [1, 2, 3]);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

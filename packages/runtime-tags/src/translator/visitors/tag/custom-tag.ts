@@ -11,6 +11,7 @@ import {
 import path from "path";
 
 import { getDynamicSourcesForExtras } from "../../util/dynamic-sources";
+import { generateUidIdentifier } from "../../util/generate-uid";
 import { getTagName } from "../../util/get-tag-name";
 import { isOutputHTML } from "../../util/marko-config";
 import {
@@ -196,9 +197,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 
   if (serializeReason) {
     const childScopeBinding = tagExtra[kChildScopeBinding]!;
-    const peekScopeId = tag.scope.generateUidIdentifier(
-      childScopeBinding?.name,
-    );
+    const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
     tag.insertBefore(
       t.variableDeclaration("const", [
         t.variableDeclarator(peekScopeId, callRuntime("peekNextScope")),
@@ -239,8 +238,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 
     if (contentProp) {
       const contentExpression = contentProp.value;
-      contentProp.value = contentId =
-        tag.scope.generateUidIdentifier("content");
+      contentProp.value = contentId = generateUidIdentifier("content");
       const [contentPath] = tag.insertBefore(
         t.variableDeclaration("const", [
           t.variableDeclarator(
@@ -800,7 +798,7 @@ function writeAttrsToExports(
     const referencedBindings = tag.node.extra?.referencedBindings;
     let getMissingPropValue: (name: string) => t.Expression = buildUndefined;
     if (spreadProps) {
-      const spreadId = tag.scope.generateUidIdentifier(`${importAlias}_spread`);
+      const spreadId = generateUidIdentifier(`${importAlias}_spread`);
       spreadProps.reverse();
       getMissingPropValue = (name) => toMemberExpression(spreadId, name);
       addStatement("render", info.tagSection, referencedBindings, [

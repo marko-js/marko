@@ -2,19 +2,15 @@
   "vars": {
     "props": {
       "$_$": "a",
-      "$init": "e",
-      "$_setup$ifBody2": "n",
-      "$_ifBody2": "t",
-      "$_setup$ifBody": "r",
-      "$_ifBody": "o",
-      "$_if2": "s",
-      "$_if": "i",
-      "$_show_effect": "l",
-      "$_show": "c",
-      "$_setup$if_content2": "d",
-      "$_if_content2": "m",
-      "$_setup$if_content": "g",
-      "$_if_content": "p"
+      "$init": "n",
+      "$_setup$if_content2": "o",
+      "$_if_content2": "t",
+      "$_setup$if_content": "e",
+      "$_if_content": "r",
+      "$_if2": "i",
+      "$_if": "s",
+      "$_show_effect": "c",
+      "$_show": "d"
     }
   }
 }

@@ -1,5 +1,5 @@
-export const _template_ = "<!><!><button class=once> </button><!><button class=twice> </button>";
-export const _walks_ = /* dynamicTagWithVar, over(1), get, next(1), get, out(1), dynamicTagWithVar, over(1), get, next(1), get, out(1) */"D1b D l1b D l";
+export const _template = "<!><!><button class=once> </button><!><button class=twice> </button>";
+export const _walks = /* dynamicTagWithVar, over(1), get, next(1), get, out(1), dynamicTagWithVar, over(1), get, next(1), get, out(1) */"D1b D l1b D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _expr_value_call$define_content2 = /* @__PURE__ */_$.intersection(4, _scope => {
   const {
@@ -10,12 +10,12 @@ const _expr_value_call$define_content2 = /* @__PURE__ */_$.intersection(4, _scop
 });
 const _call$define_content2 = /* @__PURE__ */_$.state("call/3", _scope => _expr_value_call$define_content2(_scope));
 const _value$define_content2 = /* @__PURE__ */_$.value("value", _scope => _expr_value_call$define_content2(_scope));
-const _pattern_2$define_content = /* @__PURE__ */_$.value("_pattern_2", (_scope, _pattern_2) => _value$define_content2(_scope, _pattern_2.value));
-const _params_3$define_content = /* @__PURE__ */_$.value("_params_3", (_scope, _params_3) => _pattern_2$define_content(_scope, _params_3?.[0]));
+const _temp2$define_content = /* @__PURE__ */_$.value("_temp2", (_scope, _temp2) => _value$define_content2(_scope, _temp2.value));
+const _params3$define_content = /* @__PURE__ */_$.value("_params3", (_scope, _params3) => _temp2$define_content(_scope, _params3?.[0]));
 const _setup$define_content2 = _scope => {
   _call$define_content2(_scope, 2);
 };
-const _define_content2 = _$.registerContent("__tests__/template.marko_2_renderer", 0, 0, _setup$define_content2, _params_3$define_content);
+const _define_content2 = _$.registerContent("__tests__/template.marko_2_renderer", 0, 0, _setup$define_content2, _params3$define_content);
 const _expr_value_call$define_content = /* @__PURE__ */_$.intersection(4, _scope => {
   const {
     value,
@@ -25,12 +25,12 @@ const _expr_value_call$define_content = /* @__PURE__ */_$.intersection(4, _scope
 });
 const _call$define_content = /* @__PURE__ */_$.state("call/3", _scope => _expr_value_call$define_content(_scope));
 const _value$define_content = /* @__PURE__ */_$.value("value", _scope => _expr_value_call$define_content(_scope));
-const _pattern_$define_content = /* @__PURE__ */_$.value("_pattern_", (_scope, _pattern_) => _value$define_content(_scope, _pattern_.value));
-const _params_2$define_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => _pattern_$define_content(_scope, _params_2?.[0]));
+const _temp$define_content = /* @__PURE__ */_$.value("_temp", (_scope, _temp) => _value$define_content(_scope, _temp.value));
+const _params2$define_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => _temp$define_content(_scope, _params2?.[0]));
 const _setup$define_content = _scope => {
   _call$define_content(_scope, 1);
 };
-const _define_content = _$.registerContent("__tests__/template.marko_1_renderer", 0, 0, _setup$define_content, _params_2$define_content);
+const _define_content = _$.registerContent("__tests__/template.marko_1_renderer", 0, 0, _setup$define_content, _params2$define_content);
 const _expr_Twice_clickTwiceCount = /* @__PURE__ */_$.intersection(14, _scope => {
   const {
     Twice,
@@ -69,7 +69,7 @@ const _clickOnceCount = /* @__PURE__ */_$.state("clickOnceCount/9", (_scope, cli
   _expr_Once_clickOnceCount(_scope);
 });
 const _Once = /* @__PURE__ */_$.value("Once", _scope => _expr_Once_clickOnceCount(_scope));
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _Once(_scope, {
     content: _define_content(_scope)
   });
@@ -119,4 +119,4 @@ _$.register("__tests__/template.marko_2/_return", _return);
 _$.register("__tests__/template.marko_1/_return", _return2);
 _$.register("__tests__/template.marko_0/onClickTwice", _onClickTwice2);
 _$.register("__tests__/template.marko_0/onClickOnce", _onClickOnce2);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

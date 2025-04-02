@@ -3,12 +3,10 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_expr_handler_y_effect": "a",
-      "$_expr_handler_y": "r",
-      "$_y": "n",
-      "$_x": "e",
-      "$_expr_x_handler": "i",
-      "$_y_effect": "m"
+      "$_expr_x_handler": "n",
+      "$_y_effect": "a",
+      "$_y": "r",
+      "$_x": "e"
     }
   }
 }

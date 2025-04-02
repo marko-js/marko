@@ -1,4 +1,4 @@
-// size: 284 (min) 180 (brotli)
+// size: 284 (min) 181 (brotli)
 const _expr_x_handler = _$.intersection(5, (_scope) => {
     const { 3: x, 4: handler } = _scope;
     _y(_scope, x, handler);

@@ -1,5 +1,5 @@
-export const _template_ = "<!><!><!>";
-export const _walks_ = /* replace, over(1) */"D%bD";
+export const _template = "<!><!><!>";
+export const _walks = /* replace, over(1) */"D%bD";
 import Child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _count$falseChild_content_effect = _$.effect("__tests__/template.marko_1_count", (_scope, {
@@ -17,8 +17,8 @@ const _falseChild_content = _$.registerContent("__tests__/template.marko_1_rende
 const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _falseChild_content);
 const _count_closure = /* @__PURE__ */_$.dynamicClosure(_count$falseChild_content);
 const _count = /* @__PURE__ */_$.state("count/1", _scope => _count_closure(_scope));
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _count(_scope, 0);
   _dynamicTag(_scope, false || Child);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

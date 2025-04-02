@@ -7,6 +7,7 @@ import path from "path";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import entryBuilder from "../../util/entry-builder";
+import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import {
   getMarkoOpts,
   isOutputDOM,
@@ -68,14 +69,13 @@ export default {
         inputBinding.nullable = false;
       }
 
-      const { scope } = program;
       // TODO: make any exports undefined if they are noops/empty
       (program.node.extra ??= {}).domExports = {
-        template: scope.generateUid("template_"),
-        walks: scope.generateUid("walks_"),
-        setup: scope.generateUid("setup_"),
+        template: generateUid("template"),
+        walks: generateUid("walks"),
+        setup: generateUid("setup"),
         input: undefined, // TODO look into recursive components with fine grained params.
-        closures: scope.generateUid("closures_"),
+        closures: generateUid("closures"),
       };
     },
 
@@ -94,10 +94,10 @@ export default {
   translate: {
     enter(program) {
       scopeIdentifier = isOutputDOM()
-        ? program.scope.generateUidIdentifier("scope")
+        ? generateUidIdentifier("scope")
         : (null as any as t.Identifier);
       cleanIdentifier = isOutputDOM()
-        ? program.scope.generateUidIdentifier("clean")
+        ? generateUidIdentifier("clean")
         : (null as any as t.Identifier);
       if (getMarkoOpts().output === "hydrate") {
         const entryFile = program.hub.file;
@@ -170,7 +170,7 @@ function buildTemplateExports(
   program: t.NodePath<t.Program>,
 ) {
   const templateExport: TemplateExport = {
-    id: (binding.export ??= program.scope.generateUid(binding.name + "_")),
+    id: (binding.export ??= generateUid(binding.name)),
     binding,
     props: undefined,
   };

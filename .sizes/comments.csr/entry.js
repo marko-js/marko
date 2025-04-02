@@ -1,9 +1,9 @@
-// size: 961 (min) 465 (brotli)
+// size: 961 (min) 466 (brotli)
 const _expr_comment_comments_id$if_content = intersection(1, (_scope) => {
     const {
       _: { 8: comment_comments, 11: id },
     } = _scope;
-    _input_$1(_scope[0], { comments: comment_comments, path: id });
+    _input$1(_scope[0], { comments: comment_comments, path: id });
   }),
   _id$if_content = conditionalClosure(11, 4, 0, (_scope) =>
     _expr_comment_comments_id$if_content(_scope),
@@ -55,9 +55,9 @@ const _expr_comment_comments_id$if_content = intersection(1, (_scope) => {
     _comment_text$for_content(_scope, comment?.text),
       _comment_comments$for_content(_scope, comment?.comments);
   }),
-  _params_2$for_content = value(5, (_scope, _params_2) => {
-    _comment$for_content(_scope, _params_2[0]),
-      _i$for_content(_scope, _params_2[1]);
+  _params2$for_content = value(5, (_scope, _params2) => {
+    _comment$for_content(_scope, _params2[0]),
+      _i$for_content(_scope, _params2[1]);
   }),
   _input_path$for_content = loopClosure(4, 0, (_scope) =>
     _expr_input_path_i$for_content(_scope),
@@ -70,28 +70,28 @@ const _expr_comment_comments_id$if_content = intersection(1, (_scope) => {
       (_scope) => {
         _open$for_content(_scope, !0);
       },
-      _params_2$for_content,
+      _params2$for_content,
       (_scope) => _input_path$for_content._(_scope),
     ),
   ),
-  _input_path_ = value(4, (_scope) => _input_path$for_content(_scope)),
-  _input_comments_ = value(3, (_scope, input_comments) =>
+  _input_path = value(4, (_scope) => _input_path$for_content(_scope)),
+  _input_comments = value(3, (_scope, input_comments) =>
     _for(_scope, [input_comments]),
   ),
-  _input_$1 = value(2, (_scope, input) => {
-    _input_comments_(_scope, input.comments), _input_path_(_scope, input.path);
+  _input$1 = value(2, (_scope, input) => {
+    _input_comments(_scope, input.comments), _input_path(_scope, input.path);
   });
-function _setup_(_scope) {
+function _setup(_scope) {
   _scope[0];
 }
 createTemplate(
   "b",
   "<ul></ul>",
   "/ b&",
-  _setup_,
+  _setup,
   value(2, (_scope, input) => {
     const _comments_input_spread = input;
-    _input_comments_(_scope[0], _comments_input_spread.comments),
-      _input_path_(_scope[0], _comments_input_spread.path);
+    _input_comments(_scope[0], _comments_input_spread.comments),
+      _input_path(_scope[0], _comments_input_spread.path);
   }),
 ).mount();

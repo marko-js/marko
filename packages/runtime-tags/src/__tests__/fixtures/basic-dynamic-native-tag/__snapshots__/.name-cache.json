@@ -1,9 +1,7 @@
 {
   "vars": {
     "props": {
-      "$_$": "r",
-      "$_tagNameBody": "e",
-      "$_tagName_content": "t"
+      "$_$": "o"
     }
   }
 }

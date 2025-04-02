@@ -1,17 +1,14 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "o",
-      "$_tags0_input": "n",
-      "$_expr_Text_x": "r",
-      "$_x_effect": "m",
-      "$_x": "a",
-      "$_input_": "e",
-      "$_params__": "i",
-      "$_setup_": "c",
-      "$tags": "l",
-      "$_dynamicTag": "d"
+      "$_$": "a",
+      "$init": "t",
+      "$_input": "o",
+      "$_setup": "m",
+      "$tags": "e",
+      "$_dynamicTag": "r",
+      "$_x_effect": "i",
+      "$_x": "n"
     }
   }
 }

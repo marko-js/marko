@@ -3,19 +3,13 @@
     "props": {
       "$_$": "o",
       "$init": "t",
-      "$_i$forBody": "e",
-      "$_params_2$forBody": "r",
-      "$_num$forBody_effect": "n",
-      "$_num$forBody": "a",
-      "$_forBody": "i",
-      "$_for": "c",
-      "$_num": "m",
-      "$_i$for_content": "s",
-      "$_params_2$for_content": "u",
-      "$_num$for_content_effect": "d",
-      "$_num$for_content": "f",
-      "$_for_content": "l",
-      "$_setup$for_content": "p"
+      "$_i$for_content": "e",
+      "$_params2$for_content": "a",
+      "$_num$for_content_effect": "r",
+      "$_num$for_content": "m",
+      "$_for_content": "n",
+      "$_for": "u",
+      "$_num": "c"
     }
   }
 }

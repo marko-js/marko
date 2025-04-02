@@ -17,8 +17,9 @@ class CompileError extends Error {
         )}`
       : `${prettyMessage}\n${indent}at ${prettyFileName}`;
     const { stackTraceLimit } = Error;
-    Error.stackTraceLimit = 0;
+    Error.stackTraceLimit = loc ? 0 : 3;
     super(message);
+    Error.captureStackTrace?.(this, buildCodeFrameError);
     this.name = "CompileError";
     Error.stackTraceLimit = stackTraceLimit;
     Object.defineProperties(this, {

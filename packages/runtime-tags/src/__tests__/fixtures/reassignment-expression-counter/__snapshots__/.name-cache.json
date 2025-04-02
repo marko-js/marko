@@ -2,9 +2,9 @@
   "vars": {
     "props": {
       "$_$": "t",
-      "$init": "n",
-      "$_count_effect": "o",
-      "$_count": "c"
+      "$init": "o",
+      "$_count_effect": "a",
+      "$_count": "n"
     }
   }
 }

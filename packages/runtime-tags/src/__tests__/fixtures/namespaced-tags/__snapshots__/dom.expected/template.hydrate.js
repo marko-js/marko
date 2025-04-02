@@ -1,4 +1,4 @@
-// size: 728 (min) 343 (brotli)
+// size: 728 (min) 336 (brotli)
 const _Child_content2 = _$.registerContent("a0", "Hi"),
   _Child_content = _$.registerContent("a1", "Hi"),
   _input_value$Parent_content = _$.dynamicClosureRead(

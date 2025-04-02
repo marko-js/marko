@@ -1,4 +1,4 @@
-// size: 318 (min) 176 (brotli)
+// size: 318 (min) 173 (brotli)
 const _expr_y_z = _$.intersection(8, (_scope) => {
     const { 6: y, 7: z } = _scope;
     _a(_scope, y + z);

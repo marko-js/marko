@@ -1,5 +1,5 @@
-// size: 1362 (min) 518 (brotli)
-const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
+// size: 1362 (min) 515 (brotli)
+const _template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _expr_name_write_effect = _$.effect("a0", (_scope, { 5: name, 6: write }) => {
     write(`${name} mounted`),
       (_$.getAbortSignal(_scope, 0).onabort = () => {
@@ -9,8 +9,8 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _expr_name_write = _$.intersection(7, (_scope) => {
     _$.resetAbortSignal(_scope, 0), _expr_name_write_effect(_scope);
   }),
-  _write_ = _$.value(6, (_scope) => _expr_name_write(_scope)),
-  _name_ = _$.value(5, (_scope, name) => {
+  _write = _$.value(6, (_scope) => _expr_name_write(_scope)),
+  _name = _$.value(5, (_scope, name) => {
     _$.data(_scope[0], name),
       _$.data(_scope[1], name),
       _$.data(_scope[2], name),
@@ -18,14 +18,14 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   }),
   _write$if_content3 = _$.dynamicClosureRead(
     8,
-    (_scope, write) => _write_(_scope[0], write),
+    (_scope, write) => _write(_scope[0], write),
     (_scope) => _scope._._._,
   ),
   _setup$if_content3 = (_scope) => {
-    _scope[0], _name_(_scope[0], "Inner");
+    _scope[0], _name(_scope[0], "Inner");
   },
   _if_content3 = _$.createRenderer(
-    _template_,
+    _template,
     "/D%lD%lD%l&",
     _setup$if_content3,
     0,
@@ -34,7 +34,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   _if$if_content = _$.conditional(1, _if_content3),
   _write$if_content2 = _$.dynamicClosureRead(
     8,
-    (_scope, write) => _write_(_scope[0], write),
+    (_scope, write) => _write(_scope[0], write),
     (_scope) => _scope._._,
   ),
   _showInner$if_content = _$.dynamicClosureRead(
@@ -43,10 +43,10 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     (_scope) => _scope._._,
   ),
   _setup$if_content2 = (_scope) => {
-    _scope[0], _name_(_scope[0], "Middle");
+    _scope[0], _name(_scope[0], "Middle");
   },
   _if_content2 = _$.createRenderer(
-    `<div>${_template_}<!></div>`,
+    `<div>${_template}<!></div>`,
     "D/D%lD%lD%l&%",
     _setup$if_content2,
     0,
@@ -56,7 +56,7 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   ),
   _if$if_content2 = _$.conditional(1, _if_content2),
   _write$if_content = _$.conditionalClosure(8, 4, 0, (_scope, write) =>
-    _write_(_scope[0], write),
+    _write(_scope[0], write),
   ),
   _showMiddle$if_content = _$.conditionalClosure(
     6,
@@ -65,10 +65,10 @@ const _template_ = "<div><!> a</div><span><!> a</span><p><!> a</p>",
     (_scope, showMiddle) => _if$if_content2(_scope, showMiddle ? 0 : 1),
   ),
   _setup$if_content = (_scope) => {
-    _scope[0], _name_(_scope[0], "Outer");
+    _scope[0], _name(_scope[0], "Outer");
   },
   _if_content = _$.createRenderer(
-    `<div>${_template_}<!></div>`,
+    `<div>${_template}<!></div>`,
     "D/D%lD%lD%l&%",
     _setup$if_content,
     0,

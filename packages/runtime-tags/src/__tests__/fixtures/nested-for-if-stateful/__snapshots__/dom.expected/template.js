@@ -1,5 +1,5 @@
-export const _template_ = "<!><!><!>";
-export const _walks_ = /* replace, over(1) */"D%bD";
+export const _template = "<!><!><!>";
+export const _walks = /* replace, over(1) */"D%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _count$else_content = /* @__PURE__ */_$.conditionalClosure("count", "#text/0", 1, (_scope, count) => _$.data(_scope["#text/1"], count));
 const _setup$else_content_effect = _$.effect("__tests__/template.marko_3", _scope => _$.on(_scope["#button/0"], "click", function () {
@@ -40,21 +40,21 @@ const _count$for_content = /* @__PURE__ */_$.value("count", _scope => {
   _count$if_content(_scope);
   _count$else_content(_scope);
 });
-const _params_2$for_content = /* @__PURE__ */_$.value("_params_2", (_scope, _params_2) => {
-  _count$for_content(_scope, _params_2[0]);
-  _i$for_content(_scope, _params_2[1]);
+const _params2$for_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => {
+  _count$for_content(_scope, _params2[0]);
+  _i$for_content(_scope, _params2[1]);
 });
 const _setup$for_content = _scope => {
   _editing$for_content(_scope, false);
 };
-const _for_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", _setup$for_content, _params_2$for_content);
+const _for_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", _setup$for_content, _params2$for_content);
 const _for = /* @__PURE__ */_$.loopOf("#text/0", _for_content);
 const _counts_closure = /* @__PURE__ */_$.dynamicClosure(_counts$if_content);
 const _counts = /* @__PURE__ */_$.state("counts/1", (_scope, counts) => {
   _for(_scope, [counts]);
   _counts_closure(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _counts(_scope, [0, 0, 0]);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

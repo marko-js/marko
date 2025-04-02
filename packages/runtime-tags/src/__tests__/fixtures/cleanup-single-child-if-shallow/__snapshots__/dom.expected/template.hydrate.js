@@ -1,15 +1,15 @@
-// size: 451 (min) 270 (brotli)
-const _input__effect = _$.effect("a0", (_scope, { 1: input }) => {
+// size: 451 (min) 269 (brotli)
+const _input_effect = _$.effect("a0", (_scope, { 1: input }) => {
     input.write("mounted"),
       (_$.getAbortSignal(_scope, 0).onabort = () => {
         input.write("destroyed");
       });
   }),
-  _input_ = _$.value(1, (_scope) => {
-    _$.resetAbortSignal(_scope, 0), _input__effect(_scope);
+  _input = _$.value(1, (_scope) => {
+    _$.resetAbortSignal(_scope, 0), _input_effect(_scope);
   }),
   _setup$if_content = (_scope) => {
-    _scope[0], _input_(_scope[0], { write: _write(_scope) });
+    _scope[0], _input(_scope[0], { write: _write(_scope) });
   },
   _if_content = _$.createRenderer("<div>child</div>", "/b&", _setup$if_content),
   _if = _$.conditional(2, _if_content),

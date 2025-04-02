@@ -1,5 +1,5 @@
-export const _template_ = "<button class=inc> </button>";
-export const _walks_ = /* get, next(1), get, out(1) */" D l";
+export const _template = "<button class=inc> </button>";
+export const _walks = /* get, next(1), get, out(1) */" D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _x_effect = _$.effect("__tests__/tags/child.marko_0_x", (_scope, {
   x
@@ -11,7 +11,7 @@ const _x = /* @__PURE__ */_$.state("x/2", (_scope, x) => {
   _$.tagVarSignal(_scope, x);
   _x_effect(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _x(_scope, 1);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", _template, _walks, _setup);

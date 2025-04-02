@@ -2,12 +2,10 @@
   "vars": {
     "props": {
       "$_$": "t",
-      "$init": "n",
-      "$_prev": "o",
-      "$_onMount": "r",
-      "$_onUpdate": "c",
-      "$_x_effect": "a",
-      "$_x": "e"
+      "$init": "o",
+      "$_prev": "a",
+      "$_x_effect": "n",
+      "$_x": "c"
     }
   }
 }

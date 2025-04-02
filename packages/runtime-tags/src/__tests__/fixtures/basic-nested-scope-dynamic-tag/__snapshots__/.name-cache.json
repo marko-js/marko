@@ -2,16 +2,11 @@
   "vars": {
     "props": {
       "$_$": "t",
-      "$init": "r",
-      "$_count$falseChildBody_effect": "e",
-      "$_count$falseChildBody": "n",
-      "$_falseChildBody": "o",
-      "$_count": "i",
-      "$_count$falseChild_content_effect": "a",
+      "$init": "o",
+      "$_count$falseChild_content_effect": "n",
       "$_count$falseChild_content": "m",
-      "$_falseChild_content": "s",
-      "$_setup$falseChild_content": "c",
-      "$_count_closure": "u"
+      "$_count_closure": "r",
+      "$_count": "a"
     }
   }
 }

@@ -1,4 +1,4 @@
-// size: 220 (min) 156 (brotli)
+// size: 220 (min) 158 (brotli)
 const _for_content = _$.createRenderer("Child"),
   _for = _$.loopOf(1, _for_content),
   _children_length = _$.value(3, (_scope, children_length) =>

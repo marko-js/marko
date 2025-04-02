@@ -1,4 +1,4 @@
-// size: 591 (min) 250 (brotli)
+// size: 591 (min) 257 (brotli)
 const _expr_input_value_input_valueChange = _$.intersection(10, (_scope) => {
     const { 8: input_value, 9: input_valueChange } = _scope;
     _state(_scope, input_value, input_valueChange);
@@ -27,14 +27,14 @@ const _expr_input_value_input_valueChange = _$.intersection(10, (_scope) => {
       _$.data(_scope[4], input_value),
       _expr_input_value_input_valueChange(_scope);
   }),
-  _input_ = _$.value(7, (_scope, input) => {
+  _input = _$.value(7, (_scope, input) => {
     _input_value(_scope, input.value),
       _input_valueChange(_scope, input.valueChange),
       _otherState(_scope, input.value, input.valueChange);
   }),
   _source = _$.state(2, (_scope, source) => {
     _$.data(_scope[1], source),
-      _input_(_scope[0], { value: source, valueChange: _valueChange(_scope) });
+      _input(_scope[0], { value: source, valueChange: _valueChange(_scope) });
   });
 function _valueChange(_scope) {
   return (_new_source) => {

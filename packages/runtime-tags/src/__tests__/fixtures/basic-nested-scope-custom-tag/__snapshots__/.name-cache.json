@@ -1,15 +1,12 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "r",
-      "$_count$childBody_effect": "e",
-      "$_count$childBody": "o",
-      "$_count": "n",
-      "$_count$child_content_effect": "i",
+      "$_$": "o",
+      "$init": "m",
+      "$_count$child_content_effect": "t",
       "$_count$child_content": "a",
-      "$_setup$child_content": "m",
-      "$_count_closure": "c"
+      "$_count_closure": "r",
+      "$_count": "e"
     }
   }
 }

@@ -1,4 +1,4 @@
-// size: 373 (min) 212 (brotli)
+// size: 373 (min) 213 (brotli)
 const _count_effect = _$.effect("a0", (_scope, { 2: count }) =>
     _$.on(_scope[0], "click", function () {
       _count(_scope, count + 1);

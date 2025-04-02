@@ -1,17 +1,12 @@
 {
   "vars": {
     "props": {
-      "$_$": "r",
-      "$init": "e",
-      "$_c$customTagBody": "t",
-      "$_b$customTagBody": "a",
-      "$_setup$customTagBody": "i",
-      "$_c": "c",
-      "$_c$customTag_content": "s",
-      "$_b$customTag_content": "m",
-      "$_setup$customTag_content": "o",
-      "$_c$if_content": "n",
-      "$_c_closure": "d"
+      "$_$": "a",
+      "$init": "o",
+      "$_c$if_content": "m",
+      "$_c$customtag_content": "t",
+      "$_c_closure": "r",
+      "$_c": "e"
     }
   }
 }

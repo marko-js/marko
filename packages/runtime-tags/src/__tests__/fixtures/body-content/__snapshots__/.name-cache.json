@@ -1,26 +1,17 @@
 {
   "vars": {
     "props": {
-      "$_$": "r",
+      "$_$": "t",
       "$init": "e",
-      "$_renderBody_input": "t",
-      "$_dynamicTagName": "i",
-      "$_attrs__effect": "n",
-      "$_renderBody_": "a",
-      "$_input_": "o",
-      "$_onClick": "s",
-      "$_clickCount$FancyButtonBody": "d",
-      "$_FancyButtonBody": "c",
-      "$_clickCount": "m",
-      "$_content_input": "u",
-      "$_content_": "b",
-      "$_clickCount$FancyButton_content": "f",
-      "$_FancyButton_content": "g",
-      "$_setup$FancyButton_content": "l",
-      "$_dynamicTag": "k",
-      "$_attrs_effect": "v",
-      "$_content": "C",
-      "$_clickCount_closure": "y"
+      "$_dynamicTag": "n",
+      "$_attrs_effect": "a",
+      "$_content": "r",
+      "$_input": "o",
+      "$_clickCount$FancyButton_content": "m",
+      "$_FancyButton_content": "i",
+      "$_clickCount_closure": "s",
+      "$_clickCount": "c",
+      "$_onClick": "u"
     }
   }
 }

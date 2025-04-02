@@ -2,9 +2,9 @@
   "vars": {
     "props": {
       "$_$": "t",
-      "$init": "o",
-      "$_clickCount_effect": "m",
-      "$_clickCount": "r"
+      "$init": "m",
+      "$_clickCount_effect": "o",
+      "$_clickCount": "a"
     }
   }
 }

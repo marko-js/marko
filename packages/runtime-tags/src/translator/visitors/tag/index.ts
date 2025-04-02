@@ -5,6 +5,7 @@ import {
   type Plugin,
 } from "@marko/compiler/babel-utils";
 
+import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getMarkoRoot, isMarko } from "../../util/get-root";
 import { isOutputHTML } from "../../util/marko-config";
 import * as hooks from "../../util/plugin-hooks";
@@ -146,7 +147,7 @@ export default {
         !tag.get("name").isIdentifier() &&
         isOutputHTML()
       ) {
-        const tagNameId = tag.scope.generateUidIdentifier("tagName");
+        const tagNameId = generateUidIdentifier("tagName");
         const [tagNameVarPath] = tag.insertBefore(
           t.variableDeclaration("const", [
             t.variableDeclarator(tagNameId, tag.node.name),
@@ -243,7 +244,7 @@ function getChangeHandler(
       throw tag.hub.buildError(attr.value, "Unable to bind to value.");
     }
 
-    const changeHandlerId = markoRoot.scope.generateUid(changeAttrName);
+    const changeHandlerId = generateUid(changeAttrName);
     const changeHandlerConst = t.markoTag(
       t.stringLiteral("const"),
       [t.markoAttribute("value", existingChangedAttr.value, null, null, true)],

@@ -1,14 +1,12 @@
 {
   "vars": {
     "props": {
-      "$_$": "r",
+      "$_$": "a",
       "$init": "t",
-      "$_value": "a",
-      "$_count$myTag_content_effect": "e",
-      "$_count$myTag_content": "n",
-      "$_setup$myTag_content": "i",
-      "$_value2": "o",
-      "$_count_closure": "m"
+      "$_value": "r",
+      "$_count$mytag_content_effect": "n",
+      "$_count$mytag_content": "o",
+      "$_count_closure": "e"
     }
   }
 }

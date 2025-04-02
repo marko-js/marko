@@ -1,11 +1,11 @@
-// size: 579 (min) 316 (brotli)
-const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
+// size: 579 (min) 314 (brotli)
+const _name = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
   _expr_outer_inner$for_content = _$.intersection(3, (_scope) => {
     const {
       _: { 2: outer },
       2: inner,
     } = _scope;
-    _name_(_scope[0], `${outer}.${inner}`);
+    _name(_scope[0], `${outer}.${inner}`);
   }),
   _outer$for_content = _$.loopClosure(2, 0, (_scope) =>
     _expr_outer_inner$for_content(_scope),
@@ -13,8 +13,8 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
   _inner$for_content = _$.value(2, (_scope) =>
     _expr_outer_inner$for_content(_scope),
   ),
-  _params_3$for_content = _$.value(1, (_scope, _params_3) =>
-    _inner$for_content(_scope, _params_3[0]),
+  _params3$for_content = _$.value(1, (_scope, _params3) =>
+    _inner$for_content(_scope, _params3[0]),
   ),
   _setup$for_content = (_scope) => {
     _scope[0];
@@ -23,7 +23,7 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
     "<div> </div>",
     "/D l&",
     _setup$for_content,
-    _params_3$for_content,
+    _params3$for_content,
     (_scope) => _outer$for_content._(_scope),
   ),
   _for$for_content = _$.loopOf(0, _for_content2),
@@ -31,14 +31,14 @@ const _name_ = _$.value(3, (_scope, name) => _$.data(_scope[0], name)),
     _for$for_content(_scope, [items]),
   ),
   _outer$for_content2 = _$.value(2, (_scope) => _outer$for_content(_scope)),
-  _params_2$for_content = _$.value(1, (_scope, _params_2) =>
-    _outer$for_content2(_scope, _params_2[0]),
+  _params2$for_content = _$.value(1, (_scope, _params2) =>
+    _outer$for_content2(_scope, _params2[0]),
   ),
   _for_content = _$.createRenderer(
     "<!><!><!>",
     "D%D",
     0,
-    _params_2$for_content,
+    _params2$for_content,
     (_scope) => _items$for_content._(_scope),
   ),
   _for = _$.loopOf(1, _for_content),

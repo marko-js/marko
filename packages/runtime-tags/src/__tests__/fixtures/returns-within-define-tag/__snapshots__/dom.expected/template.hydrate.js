@@ -1,4 +1,4 @@
-// size: 1278 (min) 424 (brotli)
+// size: 1278 (min) 439 (brotli)
 const _expr_value_call$define_content2 = _$.intersection(4, (_scope) => {
     const { 2: value, 3: call } = _scope;
     _$.tagVarSignal(_scope, _return(_scope));
@@ -9,11 +9,11 @@ const _expr_value_call$define_content2 = _$.intersection(4, (_scope) => {
   _value$define_content2 = _$.value(2, (_scope) =>
     _expr_value_call$define_content2(_scope),
   ),
-  _pattern_2$define_content = _$.value(1, (_scope, _pattern_2) =>
-    _value$define_content2(_scope, _pattern_2.value),
+  _temp2$define_content = _$.value(1, (_scope, _temp2) =>
+    _value$define_content2(_scope, _temp2.value),
   ),
-  _params_3$define_content = _$.value(0, (_scope, _params_3) =>
-    _pattern_2$define_content(_scope, _params_3?.[0]),
+  _params3$define_content = _$.value(0, (_scope, _params3) =>
+    _temp2$define_content(_scope, _params3?.[0]),
   );
 _$.registerContent(
   "a4",
@@ -22,7 +22,7 @@ _$.registerContent(
   (_scope) => {
     _call$define_content2(_scope, 2);
   },
-  _params_3$define_content,
+  _params3$define_content,
 );
 const _expr_value_call$define_content = _$.intersection(4, (_scope) => {
     const { 2: value, 3: call } = _scope;
@@ -34,11 +34,11 @@ const _expr_value_call$define_content = _$.intersection(4, (_scope) => {
   _value$define_content = _$.value(2, (_scope) =>
     _expr_value_call$define_content(_scope),
   ),
-  _pattern_$define_content = _$.value(1, (_scope, _pattern_) =>
-    _value$define_content(_scope, _pattern_.value),
+  _temp$define_content = _$.value(1, (_scope, _temp) =>
+    _value$define_content(_scope, _temp.value),
   ),
-  _params_2$define_content = _$.value(0, (_scope, _params_2) =>
-    _pattern_$define_content(_scope, _params_2?.[0]),
+  _params2$define_content = _$.value(0, (_scope, _params2) =>
+    _temp$define_content(_scope, _params2?.[0]),
   );
 _$.registerContent(
   "a5",
@@ -47,7 +47,7 @@ _$.registerContent(
   (_scope) => {
     _call$define_content(_scope, 1);
   },
-  _params_2$define_content,
+  _params2$define_content,
 );
 const _expr_Twice_clickTwiceCount = _$.intersection(14, (_scope) => {
     const { 12: Twice, 13: clickTwiceCount } = _scope;

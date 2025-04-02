@@ -1,16 +1,7 @@
 {
   "vars": {
     "props": {
-      "$_$": "a",
-      "$_data$await_content3": "e",
-      "$_params_4$await_content": "t",
-      "$_await_content3": "r",
-      "$_data$await_content2": "n",
-      "$_params_3$await_content": "l",
-      "$_await_content2": "o",
-      "$_data$await_content": "c",
-      "$_params_2$await_content": "d",
-      "$_await_content": "i"
+      "$_$": "e"
     }
   }
 }

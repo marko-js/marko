@@ -2,8 +2,8 @@
   "vars": {
     "props": {
       "$_$": "t",
-      "$init": "o",
-      "$_count_effect": "a",
+      "$init": "a",
+      "$_count_effect": "o",
       "$_count": "m"
     }
   }

@@ -7,6 +7,7 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent } from "../util/assert";
+import { generateUid } from "../util/generate-uid";
 import { isOutputDOM } from "../util/marko-config";
 import {
   type Binding,
@@ -41,7 +42,7 @@ export default {
     const tagExtra = (node.extra ??= {});
     const section = getOrCreateSection(tag);
     tagExtra[kRef] = createBinding(
-      getProgram().scope.generateUid("lifecycle"),
+      generateUid("lifecycle"),
       BindingType.derived,
       section,
       undefined,

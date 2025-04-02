@@ -3,15 +3,12 @@
     "props": {
       "$_$": "n",
       "$init": "t",
-      "$_setup$ifBody_effect": "e",
-      "$_setup$ifBody": "r",
-      "$_ifBody": "o",
+      "$_setup$if_content_effect": "e",
+      "$_setup$if_content": "o",
+      "$_if_content": "r",
       "$_if": "a",
       "$_show_effect": "i",
-      "$_show": "m",
-      "$_setup$if_content_effect": "s",
-      "$_setup$if_content": "c",
-      "$_if_content": "d"
+      "$_show": "m"
     }
   }
 }

@@ -1,5 +1,5 @@
-export const _template_ = "<div><button id=outer></button><!> hello</div>";
-export const _walks_ = /* next(1), get, over(1), replace, out(1) */"D b%l";
+export const _template = "<div><button id=outer></button><!> hello</div>";
+export const _walks = /* next(1), get, over(1), replace, out(1) */"D b%l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _count$if_content_effect = _$.effect("__tests__/template.marko_2_count", (_scope, {
   _: {
@@ -41,9 +41,9 @@ const _outer = /* @__PURE__ */_$.state("outer/2", (_scope, outer) => {
   _if(_scope, outer ? 0 : 1);
   _outer_effect(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _outer(_scope, true);
   _inner(_scope, true);
   _count(_scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

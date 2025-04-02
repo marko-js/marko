@@ -2,17 +2,16 @@
   "vars": {
     "props": {
       "$_$": "t",
-      "$init": "n",
-      "$_expr_input_onCount_clickCount_effect": "o",
-      "$_expr_input_onCount_clickCount": "e",
+      "$init": "e",
+      "$_expr_input_onCount_clickCount_effect": "n",
+      "$_expr_input_onCount_clickCount": "o",
       "$_clickCount": "r",
-      "$_input_onCount_": "i",
-      "$_setup$if_content": "a",
-      "$_if_content": "c",
+      "$_input_onCount": "i",
+      "$_onCount$if_content": "a",
+      "$_setup$if_content": "c",
+      "$_if_content": "s",
       "$_if": "u",
-      "$_show": "m",
-      "$_onCount": "s",
-      "$_onCount$if_content": "l"
+      "$_show": "m"
     }
   }
 }

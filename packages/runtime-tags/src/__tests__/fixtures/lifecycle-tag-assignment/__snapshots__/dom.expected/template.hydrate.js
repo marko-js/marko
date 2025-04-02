@@ -1,4 +1,4 @@
-// size: 261 (min) 163 (brotli)
+// size: 261 (min) 153 (brotli)
 const _prev = _$.state(4, (_scope, prev) => _$.data(_scope[1], prev)),
   _x_effect = _$.effect("a0", (_scope, { 3: x }) => {
     _$.lifecycle(_scope, 4, {

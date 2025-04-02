@@ -1,16 +1,14 @@
 {
   "vars": {
     "props": {
-      "$_$": "r",
-      "$init": "t",
-      "$_onClick__effect": "e",
-      "$_onClick_": "i",
-      "$_onClick": "n",
-      "$_clickCount$myButtonBody": "s",
-      "$_clickCount": "o",
-      "$_clickCount$myButton_content": "a",
-      "$_setup$myButton_content": "m",
-      "$_clickCount_closure": "c"
+      "$_$": "t",
+      "$init": "o",
+      "$_onClick_effect": "r",
+      "$_onClick$1": "a",
+      "$_clickCount$mybutton_content": "e",
+      "$_clickCount_closure": "m",
+      "$_clickCount": "n",
+      "$_onClick": "i"
     }
   }
 }

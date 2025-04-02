@@ -1,8 +1,8 @@
-export const _template_ = "<div>a</div><span>b</span><p>c</p>";
-export const _walks_ = /* over(3) */"d";
-export const _setup_ = () => {};
+export const _template = "<div>a</div><span>b</span><p>c</p>";
+export const _walks = /* over(3) */"d";
+export const _setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _input__effect = _$.effect("__tests__/tags/child.marko_0_input", (_scope, {
+const _input_effect = _$.effect("__tests__/tags/child.marko_0_input", (_scope, {
   input
 }) => {
   input.write('mounted');
@@ -10,8 +10,8 @@ const _input__effect = _$.effect("__tests__/tags/child.marko_0_input", (_scope, 
     input.write('destroyed');
   };
 });
-export const _input_ = /* @__PURE__ */_$.value("input", _scope => {
+export const _input = /* @__PURE__ */_$.value("input", _scope => {
   _$.resetAbortSignal(_scope, 0);
-  _input__effect(_scope);
+  _input_effect(_scope);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", _template_, _walks_, _setup_, _input_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", _template, _walks, _setup, _input);

@@ -1,5 +1,5 @@
-export const _template_ = "<!><!><button></button>";
-export const _walks_ = /* replace, over(1), get, over(1) */"D%b b";
+export const _template = "<!><!><button></button>";
+export const _walks = /* replace, over(1), get, over(1) */"D%b b";
 import child1 from "./tags/child1.marko";
 import child2 from "./tags/child2.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
@@ -23,8 +23,8 @@ const _tagName = /* @__PURE__ */_$.state("tagName/2", _scope => {
   _expr_tagName_val(_scope);
   _tagName_effect(_scope);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _tagName(_scope, child1);
   _val(_scope, 3);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

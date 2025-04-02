@@ -1,10 +1,10 @@
-// size: 827 (min) 393 (brotli)
+// size: 827 (min) 374 (brotli)
 const _dynamicTag2 = _$.dynamicTag(1),
   _dynamicTag = _$.dynamicTag(),
-  _input_content_ = _$.value(4, (_scope, input_content) => {
+  _input_content = _$.value(4, (_scope, input_content) => {
     _dynamicTag(_scope, input_content), _dynamicTag2(_scope, input_content);
   });
-function _setup_(_scope) {
+function _setup(_scope) {
   _$.tagVarSignal(_scope, _return(_scope));
 }
 function _return(_scope) {
@@ -14,7 +14,7 @@ function _return(_scope) {
 }
 _$.register("a0", _return);
 const _get_hoisted_setHtml = _$.hoist(16, "a4"),
-  _setHtml3$inputShowSectionNull_content = _$.registerBoundSignal(
+  _setHtml3$inputshowsectionnull_content = _$.registerBoundSignal(
     "c1",
     _$.value(16),
   );
@@ -23,8 +23,8 @@ _$.registerContent(
   "<div></div>",
   "0 b&",
   (_scope) => {
-    _$.setTagVar(_scope, 0, _setHtml3$inputShowSectionNull_content),
-      _setup_(_scope[0]);
+    _$.setTagVar(_scope, 0, _setHtml3$inputshowsectionnull_content),
+      _setup(_scope[0]);
   },
   0,
   0,
@@ -33,7 +33,7 @@ _$.registerContent(
 const _get_hoisted_setHtml2 = _$.hoist(11, "a3", "a2"),
   _setHtml2$thing_content = _$.registerBoundSignal("c3", _$.value(11)),
   _setup$thing_content2 = (_scope) => {
-    _$.setTagVar(_scope, 0, _setHtml2$thing_content), _setup_(_scope[0]);
+    _$.setTagVar(_scope, 0, _setHtml2$thing_content), _setup(_scope[0]);
   },
   _thing_content2 = _$.createContent(
     "c2",
@@ -49,7 +49,7 @@ _$.registerContent(
   "<!><!><!><!><!><!>",
   "D/D%b%bD&D",
   (_scope) => {
-    _scope[0], _input_content_(_scope[0], _thing_content2(_scope));
+    _scope[0], _input_content(_scope[0], _thing_content2(_scope));
   },
   0,
   0,

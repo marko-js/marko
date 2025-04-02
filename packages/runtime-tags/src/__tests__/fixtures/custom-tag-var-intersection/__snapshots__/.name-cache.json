@@ -3,11 +3,11 @@
     "props": {
       "$_$": "t",
       "$init": "a",
-      "$_x_effect": "o",
-      "$_x": "n",
-      "$_expr_name_data": "r",
-      "$_message": "e",
-      "$_expr_input_extra_x": "i"
+      "$_expr_input_extra_x": "o",
+      "$_x_effect": "n",
+      "$_x": "e",
+      "$_expr_name_data": "i",
+      "$_message": "r"
     }
   }
 }

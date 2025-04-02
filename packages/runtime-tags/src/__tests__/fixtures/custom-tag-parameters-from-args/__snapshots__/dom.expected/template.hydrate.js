@@ -1,4 +1,4 @@
-// size: 500 (min) 273 (brotli)
+// size: 500 (min) 278 (brotli)
 const _expr_input_content_x_y = _$.intersection(
     10,
     (_scope) => {
@@ -20,21 +20,21 @@ const _expr_input_content_x_y = _$.intersection(
   _x = _$.state(7, (_scope, x) => {
     _$.data(_scope[1], x), _expr_x_y(_scope), _expr_input_content_x_y(_scope);
   }),
-  _count2$customTag_content = _$.value(4, (_scope, count2) =>
+  _count2$customtag_content = _$.value(4, (_scope, count2) =>
     _$.data(_scope[1], count2),
   ),
-  _count$customTag_content = _$.value(3, (_scope, count) =>
+  _count$customtag_content = _$.value(3, (_scope, count) =>
     _$.data(_scope[0], count),
   ),
-  _params_2$customTag_content = _$.value(2, (_scope, _params_2) => {
-    _count$customTag_content(_scope, _params_2[0]),
-      _count2$customTag_content(_scope, _params_2[1]);
+  _params2$customtag_content = _$.value(2, (_scope, _params2) => {
+    _count$customtag_content(_scope, _params2[0]),
+      _count2$customtag_content(_scope, _params2[1]);
   });
 _$.registerContent(
   "b0",
   "<div>Counts: <!>,<!></div>",
   "Db%c%",
   0,
-  _params_2$customTag_content,
+  _params2$customtag_content,
 ),
   init();

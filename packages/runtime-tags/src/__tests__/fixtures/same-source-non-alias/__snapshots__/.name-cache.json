@@ -1,13 +1,13 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "a",
-      "$createWrapper": "r",
-      "$_a": "o",
-      "$_pattern_": "e",
-      "$_count_effect": "n",
-      "$_count": "m",
+      "$_$": "a",
+      "$init": "t",
+      "$createWrapper": "o",
+      "$_a": "r",
+      "$_pattern2": "e",
+      "$_count_effect": "m",
+      "$_count": "n",
       "$_createWrapper": "i"
     }
   }

@@ -1,7 +1,7 @@
-// size: 769 (min) 332 (brotli)
+// size: 769 (min) 329 (brotli)
 const _dynamicTag2 = _$.dynamicTag(1),
   _dynamicTag = _$.dynamicTag(),
-  _input_content_ = _$.value(4, (_scope, input_content) => {
+  _input_content = _$.value(4, (_scope, input_content) => {
     _dynamicTag(_scope, input_content), _dynamicTag2(_scope, input_content);
   }),
   _get_hoisted_el = _$.hoist("j0", "a4");
@@ -17,14 +17,14 @@ const _child_content2 = _$.createContent(
     0,
     "a3",
   ),
-  _hoisted_el2$inputShowChildNull_content_effect = _$.effect(
+  _hoisted_el2$inputshowChildnull_content_effect = _$.effect(
     "b5",
     ({ 1: _hoisted_el2 }) => {
       for (const element of 1) element().classList.add("inner");
     },
   ),
-  _hoisted_el2$inputShowChildNull_content = _$.value(1, (_scope) =>
-    _hoisted_el2$inputShowChildNull_content_effect(_scope),
+  _hoisted_el2$inputshowChildnull_content = _$.value(1, (_scope) =>
+    _hoisted_el2$inputshowChildnull_content_effect(_scope),
   );
 _$.registerContent(
   "b4",
@@ -32,8 +32,8 @@ _$.registerContent(
   "D/D%b%bD&D",
   (_scope) => {
     _scope[0],
-      _input_content_(_scope[0], _child_content2(_scope)),
-      _hoisted_el2$inputShowChildNull_content(_scope, _get_hoisted_el2(_scope));
+      _input_content(_scope[0], _child_content2(_scope)),
+      _hoisted_el2$inputshowChildnull_content(_scope, _get_hoisted_el2(_scope));
   },
   0,
   0,

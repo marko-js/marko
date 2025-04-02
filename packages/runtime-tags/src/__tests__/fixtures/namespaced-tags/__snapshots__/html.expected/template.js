@@ -1,7 +1,7 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
-  const _input_value__closures = new Set();
+  const _input_value_closures = new Set();
   let Parent = "div";
   let Child = "a";
   const el = _$.nodeRef();
@@ -23,7 +23,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.dynamicTag(_scope0_id, "#text/5", Parent, {}, _$.registerContent("__tests__/template.marko_1_renderer", () => {
     const _scope1_id = _$.nextScopeId();
     _$.write(`${_$.toString(input.value)}${_$.markResumeNode(_scope1_id, "#text/0")}`);
-    _$.writeSubscribe(_input_value__closures, _$.writeScope(_scope1_id, {
+    _$.writeSubscribe(_input_value_closures, _$.writeScope(_scope1_id, {
       _: _$.ensureScopeWithId(_scope0_id),
       "ClosureSignalIndex:input_value": 0
     }, "__tests__/template.marko", "12:3"));
@@ -37,7 +37,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     input_value: input.value,
     Parent,
     Child,
-    "ClosureScopes:input_value": _input_value__closures
+    "ClosureScopes:input_value": _input_value_closures
   }, "__tests__/template.marko", 0, {
     input_value: ["input.value"],
     Parent: "1:5",

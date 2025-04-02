@@ -1,14 +1,14 @@
-export const _template_ = "<textarea></textarea><span> </span>";
-export const _walks_ = /* get, over(1), next(1), get, out(1) */" bD l";
+export const _template = "<textarea></textarea><span> </span>";
+export const _walks = /* get, over(1), next(1), get, out(1) */" bD l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _value = /* @__PURE__ */_$.state("value/2", (_scope, value) => {
   _$.controllable_textarea_value(_scope, "#textarea/0", value, _valueChange(_scope));
   _$.data(_scope["#text/1"], value);
 });
-const _setup__effect = _$.effect("__tests__/template.marko_0", _scope => _$.controllable_textarea_value_effect(_scope, "#textarea/0"));
-export function _setup_(_scope) {
+const _setup_effect = _$.effect("__tests__/template.marko_0", _scope => _$.controllable_textarea_value_effect(_scope, "#textarea/0"));
+export function _setup(_scope) {
   _value(_scope, "hello");
-  _setup__effect(_scope);
+  _setup_effect(_scope);
 }
 function _valueChange(_scope) {
   return _new_value => {
@@ -16,4 +16,4 @@ function _valueChange(_scope) {
   };
 }
 _$.register("__tests__/template.marko_0/valueChange", _valueChange);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

@@ -3,26 +3,18 @@
     "props": {
       "$_$": "e",
       "$init": "t",
-      "$_expr_name_write_effect": "n",
-      "$_expr_name_write": "o",
-      "$_write_": "r",
-      "$_name_": "i",
-      "$_write$forBody": "s",
-      "$_item$forBody": "a",
-      "$_params_2$forBody": "c",
-      "$_setup$forBody": "l",
-      "$_forBody": "u",
-      "$_expr_items_items_length_effect": "d",
-      "$_expr_items_items_length": "m",
-      "$_for": "f",
-      "$_items_length": "g",
-      "$_items": "v",
-      "$_items_effect": "b",
-      "$_write$for_content": "h",
-      "$_item$for_content": "k",
-      "$_params_2$for_content": "p",
-      "$_setup$for_content": "A",
-      "$_for_content": "C"
+      "$_expr_name_write_effect": "o",
+      "$_expr_name_write": "r",
+      "$_write": "n",
+      "$_name": "a",
+      "$_write$for_content": "i",
+      "$_item$for_content": "l",
+      "$_params2$for_content": "u",
+      "$_setup$for_content": "c",
+      "$_for_content": "m",
+      "$_for": "s",
+      "$_items_effect": "f",
+      "$_items": "d"
     }
   }
 }

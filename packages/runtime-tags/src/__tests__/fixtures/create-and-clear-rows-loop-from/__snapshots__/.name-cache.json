@@ -1,11 +1,5 @@
 {
   "vars": {
-    "props": {
-      "$_$": "e",
-      "$_n$forBody": "a",
-      "$_params_2$forBody": "r",
-      "$_n$for_content": "o",
-      "$_params_2$for_content": "t"
-    }
+    "props": {}
   }
 }

@@ -1,4 +1,4 @@
-// size: 370 (min) 195 (brotli)
+// size: 370 (min) 191 (brotli)
 const _expr_x_yChange = _$.intersection(6, (_scope) => {
     const { 4: x, 5: yChange } = _scope;
     _y(_scope, x, yChange);

@@ -1,5 +1,5 @@
-export const _template_ = "<p> </p>";
-export const _walks_ = /* next(1), get, out(1) */"D l";
+export const _template = "<p> </p>";
+export const _walks = /* next(1), get, out(1) */"D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const _expr_user_fullName_user_firstName_user_middleName_user_lastName = /* @__PURE__ */_$.intersection(6, _scope => {
   const {
@@ -21,11 +21,11 @@ const _user = /* @__PURE__ */_$.value("user", (_scope, user) => {
   _user_middleName(_scope, user.middleName);
   _user_lastName(_scope, user.lastName);
 });
-export function _setup_(_scope) {
+export function _setup(_scope) {
   _user(_scope, {
     firstName: "George",
     middleName: "R.R.",
     lastName: "Martin"
   });
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template_, _walks_, _setup_);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);

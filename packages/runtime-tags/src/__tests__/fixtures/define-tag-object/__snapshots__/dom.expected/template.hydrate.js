@@ -1,4 +1,4 @@
-// size: 200 (min) 152 (brotli)
+// size: 200 (min) 144 (brotli)
 const _myObj = _$.value(4, (_scope, myObj) =>
     _$.data(_scope[0], JSON.stringify(myObj)),
   ),

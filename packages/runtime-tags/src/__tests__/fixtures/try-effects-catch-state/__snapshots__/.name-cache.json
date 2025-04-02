@@ -4,7 +4,7 @@
       "$_$": "t",
       "$init": "a",
       "$_err$catch_content": "e",
-      "$_params_2$catch_content": "o",
+      "$_params2$catch_content": "o",
       "$_clickCount$try_content_effect": "r",
       "$_clickCount$try_content": "n",
       "$_clickCount_closure": "m",
