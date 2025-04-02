@@ -1,5 +1,5 @@
-import { getFile, types as t } from "@marko/compiler";
-import { importStar } from "@marko/compiler/babel-utils";
+import { types as t } from "@marko/compiler";
+import { getFile, importStar } from "@marko/compiler/babel-utils";
 
 import type { Falsy } from "../../common/types";
 import {

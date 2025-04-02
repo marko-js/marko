@@ -1,4 +1,4 @@
-import { getFile } from "@marko/compiler";
+import { getFile } from "@marko/compiler/babel-utils";
 
 export function isOutputHTML() {
   return getMarkoOpts().output === "html";

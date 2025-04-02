@@ -1,5 +1,6 @@
-import { getProgram, types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
 import {
+  getProgram,
   isAttributeTag,
   isNativeTag,
   loadFileForTag,

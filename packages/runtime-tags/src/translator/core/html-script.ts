@@ -2,10 +2,11 @@
 // we should probably attempt to share that logic where possible.
 // Also need to ensure it stays in sync.
 
-import { getProgram, types as t } from "@marko/compiler";
+import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
   assertNoParams,
+  getProgram,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
