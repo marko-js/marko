@@ -1,9 +1,11 @@
 import traverse from "@babel/traverse";
-import { diagnosticError, getTemplateId } from "@marko/compiler/babel-utils";
 import { createHash } from "crypto";
 import path from "path";
 
 import * as t from "../babel-types";
+import { diagnosticError } from "../babel-utils/diagnostics";
+import { getFileInternal, setFileInternal } from "../babel-utils/get-file";
+import { getTemplateId } from "../babel-utils/tags";
 import { buildLookup } from "../taglib";
 import taglibConfig from "../taglib/config";
 import { buildCodeFrameError } from "../util/build-code-frame";
@@ -16,7 +18,6 @@ import { visitor as migrate } from "./plugins/migrate";
 import { visitor as transform } from "./plugins/transform";
 
 const SOURCE_FILES = new WeakMap();
-let currentFile;
 
 export default (api, markoOpts) => {
   api.assertVersion(7);
@@ -71,9 +72,9 @@ export default (api, markoOpts) => {
       const { buildError: prevBuildError } = file.hub;
       const { buildCodeFrameError: prevCodeFrameError } = file;
       const prevFS = taglibConfig.fs;
-      const prevFile = currentFile;
+      const prevFile = getFileInternal();
       taglibConfig.fs = markoOpts.fileSystem;
-      currentFile = file;
+      setFileInternal(file);
       curOpts = undefined;
       try {
         const { ast, metadata } = file;
@@ -111,7 +112,7 @@ export default (api, markoOpts) => {
         file.path.scope.crawl(); // Ensure all scopes are accurate for subsequent babel plugins
       } finally {
         taglibConfig.fs = prevFS;
-        currentFile = prevFile;
+        setFileInternal(prevFile);
         file.buildCodeFrameError = prevCodeFrameError;
         file.hub.buildError = prevBuildError;
         file.markoOpts =
@@ -144,22 +145,6 @@ export default (api, markoOpts) => {
         : undefined,
   };
 };
-
-export function getFile() {
-  if (currentFile) {
-    return currentFile;
-  }
-
-  throw new Error("Unable to access Marko File outside of a compilation");
-}
-
-export function getProgram() {
-  if (currentFile) {
-    return currentFile.path;
-  }
-
-  throw new Error("Unable to access Marko Program outside of a compilation");
-}
 
 function getMarkoFile(code, fileOpts, markoOpts) {
   const { translator } = markoOpts;
@@ -206,24 +191,26 @@ function getMarkoFile(code, fileOpts, markoOpts) {
   }
 
   const prevFs = taglibConfig.fs;
-  const prevFile = currentFile;
+  const prevFile = getFileInternal();
   taglibConfig.fs = markoOpts.fileSystem;
 
   try {
     const taglibLookup = buildLookup(path.dirname(filename), translator);
-    const file = (currentFile = new MarkoFile(fileOpts, {
-      code,
-      ast: {
-        type: "File",
-        program: {
-          type: "Program",
-          sourceType: "module",
-          body: [],
-          directives: [],
-          params: [t.identifier("input")],
+    const file = setFileInternal(
+      new MarkoFile(fileOpts, {
+        code,
+        ast: {
+          type: "File",
+          program: {
+            type: "Program",
+            sourceType: "module",
+            body: [],
+            directives: [],
+            params: [t.identifier("input")],
+          },
         },
-      },
-    }));
+      }),
+    );
 
     const meta = (file.metadata.marko = {
       id,
@@ -334,7 +321,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
     return file;
   } finally {
     taglibConfig.fs = prevFs;
-    currentFile = prevFile;
+    setFileInternal(prevFile);
   }
 }
 
