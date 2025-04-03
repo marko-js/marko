@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 0.3.81
+
+### Patch Changes
+
+- [#2625](https://github.com/marko-js/marko/pull/2625) [`88a05bc`](https://github.com/marko-js/marko/commit/88a05bc093f5491a77b9d08950ed5ff2f0390df3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix race condition with client side await tag.
+
+- [#2625](https://github.com/marko-js/marko/pull/2625) [`88a05bc`](https://github.com/marko-js/marko/commit/88a05bc093f5491a77b9d08950ed5ff2f0390df3) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where branches created in a detached await tag would be given the incorrect namespace.
+
 ## 0.3.80
 
 ### Patch Changes
