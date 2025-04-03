@@ -3,7 +3,7 @@ export const _walks = /* get, next(1), over(1), replace, out(1), replace, over(1
 import customTag from './tags/custom-tag.marko';
 const tags = [customTag];
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2");
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", 0, 0, 1);
 const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
   x
 }) => _$.on(_scope["#button/0"], "click", function () {
@@ -11,7 +11,7 @@ const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
 }));
 const _x = /* @__PURE__ */_$.state("x/3", (_scope, x) => {
   _$.data(_scope["#text/1"], x);
-  _dynamicTag(_scope, tags[0], () => x);
+  _dynamicTag(_scope, tags[0], () => [x]);
   _x_effect(_scope);
 });
 export function _setup(_scope) {

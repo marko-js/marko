@@ -16,6 +16,18 @@
       <!--M_*2 #text/0-->
     </div>
     <!--M_]1 #text/2-->
+    <div>
+      false
+      <!--M_*3 #text/0-->
+    </div>
+    <div>
+      true
+      <!--M_*4 #text/0-->
+    </div>
+    <div>
+      "spread1"
+      <!--M_*5 #text/0-->
+    </div>
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko",x:1},_.a]),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
@@ -45,6 +57,18 @@ container.querySelector("button").click();
       <!--M_*2 #text/0-->
     </div>
     <!--M_]1 #text/2-->
+    <div>
+      false
+      <!--M_*3 #text/0-->
+    </div>
+    <div>
+      true
+      <!--M_*4 #text/0-->
+    </div>
+    <div>
+      "spread1"
+      <!--M_*5 #text/0-->
+    </div>
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko",x:1},_.a]),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
@@ -55,7 +79,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE html/body/button/#text1 "1" => "2"
-UPDATE html/body/div/#text "1" => "2"
+UPDATE html/body/div0/#text "1" => "2"
 ```
 
 # Render
@@ -79,6 +103,18 @@ container.querySelector("button").click();
       <!--M_*2 #text/0-->
     </div>
     <!--M_]1 #text/2-->
+    <div>
+      false
+      <!--M_*3 #text/0-->
+    </div>
+    <div>
+      true
+      <!--M_*4 #text/0-->
+    </div>
+    <div>
+      "spread1"
+      <!--M_*5 #text/0-->
+    </div>
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko",x:1},_.a]),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
@@ -89,7 +125,7 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE html/body/button/#text1 "2" => "3"
-UPDATE html/body/div/#text "2" => "3"
+UPDATE html/body/div0/#text "2" => "3"
 ```
 
 # Render
@@ -113,6 +149,18 @@ container.querySelector("button").click();
       <!--M_*2 #text/0-->
     </div>
     <!--M_]1 #text/2-->
+    <div>
+      false
+      <!--M_*3 #text/0-->
+    </div>
+    <div>
+      true
+      <!--M_*4 #text/0-->
+    </div>
+    <div>
+      "spread1"
+      <!--M_*5 #text/0-->
+    </div>
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko",x:1},_.a]),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
@@ -123,5 +171,5 @@ container.querySelector("button").click();
 # Mutations
 ```
 UPDATE html/body/button/#text1 "3" => "4"
-UPDATE html/body/div/#text "3" => "4"
+UPDATE html/body/div0/#text "3" => "4"
 ```

@@ -6,12 +6,21 @@
 <div>
   1
 </div>
+<div>
+  false
+</div>
+<div>
+  true
+</div>
+<div>
+  "spread1"
+</div>
 <!---->
 ```
 
 # Mutations
 ```
-INSERT button, div, #comment
+INSERT button, div0, div1, div2, div3, #comment
 ```
 
 # Render
@@ -25,13 +34,22 @@ container.querySelector("button").click();
 <div>
   2
 </div>
+<div>
+  false
+</div>
+<div>
+  true
+</div>
+<div>
+  "spread1"
+</div>
 <!---->
 ```
 
 # Mutations
 ```
 UPDATE button/#text1 "1" => "2"
-UPDATE div/#text "1" => "2"
+UPDATE div0/#text "1" => "2"
 ```
 
 # Render
@@ -45,13 +63,22 @@ container.querySelector("button").click();
 <div>
   3
 </div>
+<div>
+  false
+</div>
+<div>
+  true
+</div>
+<div>
+  "spread1"
+</div>
 <!---->
 ```
 
 # Mutations
 ```
 UPDATE button/#text1 "2" => "3"
-UPDATE div/#text "2" => "3"
+UPDATE div0/#text "2" => "3"
 ```
 
 # Render
@@ -65,11 +92,20 @@ container.querySelector("button").click();
 <div>
   4
 </div>
+<div>
+  false
+</div>
+<div>
+  true
+</div>
+<div>
+  "spread1"
+</div>
 <!---->
 ```
 
 # Mutations
 ```
 UPDATE button/#text1 "3" => "4"
-UPDATE div/#text "3" => "4"
+UPDATE div0/#text "3" => "4"
 ```

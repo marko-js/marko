@@ -6,6 +6,9 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   let x = 1;
   _$.write(`<button>Count: <!>${_$.escapeXML(x)}${_$.markResumeNode(_scope0_id, "#text/1")}</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
   _$.dynamicTag(_scope0_id, "#text/2", tags[0], [x, 'foo'], 0, 1, 1);
+  _$.dynamicTag(_scope0_id, "#text/3", tags[0], [false], 0, 1);
+  _$.dynamicTag(_scope0_id, "#text/4", tags[0], [true], 0, 1);
+  _$.dynamicTag(_scope0_id, "#text/5", tags[0], [...["spread1", "spread2"]], 0, 1);
   _$.writeEffect(_scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope(_scope0_id, {
     x
