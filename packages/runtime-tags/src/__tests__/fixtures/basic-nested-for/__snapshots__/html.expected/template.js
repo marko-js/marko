@@ -4,7 +4,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   let items = [0, 1];
   _$.write(`<button>Push</button>${_$.markResumeNode(_scope0_id, "#button/0")}`);
-  _$.resumeSingleNodeForOf(items, outer => {
+  _$.resumeForOf(items, outer => {
     const _scope1_id = _$.nextScopeId();
     _$.resumeSingleNodeForOf(items, inner => {
       const _scope2_id = _$.nextScopeId();

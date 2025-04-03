@@ -3,7 +3,7 @@ import _child from "./tags/child.marko";
 export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _hoisted_el = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_el/hoist");
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (input.show) {
       const _scope1_id = _$.nextScopeId();
       _$.resumeSingleNodeConditional(() => {

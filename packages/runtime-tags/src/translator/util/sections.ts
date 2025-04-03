@@ -193,6 +193,10 @@ function getContentInfo(path: t.NodePath<t.Program | t.MarkoTagBody>) {
     if (endType !== null) {
       contentInfo.endType = endType;
 
+      if (endType === ContentType.Dynamic) {
+        contentInfo.singleChild = false;
+      }
+
       for (let startIndex = 0; startIndex < endIndex; startIndex++) {
         const startType = getNodeContentType(body[startIndex], "startType");
         if (startType !== null) {

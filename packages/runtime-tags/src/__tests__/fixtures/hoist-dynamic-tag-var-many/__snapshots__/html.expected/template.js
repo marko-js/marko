@@ -3,7 +3,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _hoisted_setHtml3 = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml3/hoist");
-  _$.resumeSingleNodeForTo(5, 0, 1, () => {
+  _$.resumeForTo(5, 0, 1, () => {
     const _scope1_id = _$.nextScopeId();
     const _dynamicScope = _$.peekNextScope();
     const setHtml = _$.dynamicTag(_scope1_id, "#text/0", 1 && Child, {}, 0, 0, 1);
@@ -14,7 +14,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   }, 0, _scope0_id, "#text/0");
   let to = 3;
   _$.write("<hr>");
-  _$.resumeSingleNodeForTo(to, 0, 1, () => {
+  _$.resumeForTo(to, 0, 1, () => {
     const _scope2_id = _$.nextScopeId();
     const _dynamicScope2 = _$.peekNextScope();
     const setHtml2 = _$.dynamicTag(_scope2_id, "#text/0", 1 && Child, {}, 0, 0, 1);
@@ -27,7 +27,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.resumeSingleNodeForTo(3, 0, 1, i => {
     const _scope3_id = _$.nextScopeId();
     _$.write("<ul>");
-    _$.resumeSingleNodeForTo(3, 0, 1, j => {
+    _$.resumeForTo(3, 0, 1, j => {
       const _scope4_id = _$.nextScopeId();
       const _dynamicScope3 = _$.peekNextScope();
       const setHtml3 = _$.dynamicTag(_scope4_id, "#text/0", 1 && Child, {}, 0, 0, 1);

@@ -1,6 +1,7 @@
 # Render `{"show":true}`
 
 ```html
+<!--M_[2-->
 <html>
   <head />
   <body>
@@ -10,155 +11,180 @@
     </div>
     <!--M_*3 #div/0-->
     <!--M_]2 #text/0-->
+    <!--M_[5 -->
     <!--M_[6-->
     <div />
     <!--M_*6 #div/0-->
     <!--M_]5 #text/0-->
+    <!--M_[8 -->
     <!--M_[9-->
     <div />
     <!--M_*9 #div/0-->
     <!--M_]8 #text/0-->
+    <!--M_[11 -->
     <!--M_[12-->
     <div />
     <!--M_*12 #div/0-->
     <!--M_]11 #text/0-->
+    <!--M_[14 -->
     <!--M_[15-->
     <div />
     <!--M_*15 #div/0-->
     <!--M_]14 #text/0-->
+    <!--M_[17 -->
     <!--M_[18-->
     <div />
     <!--M_*18 #div/0-->
     <!--M_]17 #text/0-->
-    <!--M_|1 #text/0 17 14 11 8 5 2-->
+    <!--M_]1 #text/0-->
     <hr />
+    <!--M_[20-->
     <!--M_[21-->
     <div>
       First Only
     </div>
     <!--M_*21 #div/0-->
     <!--M_]20 #text/0-->
+    <!--M_[23 -->
     <!--M_[24-->
     <div />
     <!--M_*24 #div/0-->
     <!--M_]23 #text/0-->
+    <!--M_[26 -->
     <!--M_[27-->
     <div />
     <!--M_*27 #div/0-->
     <!--M_]26 #text/0-->
+    <!--M_[29 -->
     <!--M_[30-->
     <div />
     <!--M_*30 #div/0-->
     <!--M_]29 #text/0-->
-    <!--M_|1 #text/1 29 26 23 20-->
+    <!--M_]1 #text/1-->
     <hr />
     <ul>
+      <!--M_[33-->
       <!--M_[34-->
       <div>
         All (0)
       </div>
       <!--M_*34 #div/0-->
       <!--M_]33 #text/0-->
+      <!--M_[36 -->
       <!--M_[37-->
       <div>
         All (1)
       </div>
       <!--M_*37 #div/0-->
       <!--M_]36 #text/0-->
+      <!--M_[39 -->
       <!--M_[40-->
       <div>
         All (2)
       </div>
       <!--M_*40 #div/0-->
       <!--M_]39 #text/0-->
+      <!--M_[42 -->
       <!--M_[43-->
       <div>
         All (3)
       </div>
       <!--M_*43 #div/0-->
       <!--M_]42 #text/0-->
-      <!--M_=32 #ul/0 42 39 36 33-->
+      <!--M_]32 #ul/0-->
     </ul>
     <ul>
+      <!--M_[46-->
       <!--M_[47-->
       <div>
         All (4)
       </div>
       <!--M_*47 #div/0-->
       <!--M_]46 #text/0-->
+      <!--M_[49 -->
       <!--M_[50-->
       <div>
         All (5)
       </div>
       <!--M_*50 #div/0-->
       <!--M_]49 #text/0-->
+      <!--M_[52 -->
       <!--M_[53-->
       <div>
         All (6)
       </div>
       <!--M_*53 #div/0-->
       <!--M_]52 #text/0-->
+      <!--M_[55 -->
       <!--M_[56-->
       <div>
         All (7)
       </div>
       <!--M_*56 #div/0-->
       <!--M_]55 #text/0-->
-      <!--M_=45 #ul/0 55 52 49 46-->
+      <!--M_]45 #ul/0-->
     </ul>
     <ul>
+      <!--M_[59-->
       <!--M_[60-->
       <div>
         All (8)
       </div>
       <!--M_*60 #div/0-->
       <!--M_]59 #text/0-->
+      <!--M_[62 -->
       <!--M_[63-->
       <div>
         All (9)
       </div>
       <!--M_*63 #div/0-->
       <!--M_]62 #text/0-->
+      <!--M_[65 -->
       <!--M_[66-->
       <div>
         All (10)
       </div>
       <!--M_*66 #div/0-->
       <!--M_]65 #text/0-->
+      <!--M_[68 -->
       <!--M_[69-->
       <div>
         All (11)
       </div>
       <!--M_*69 #div/0-->
       <!--M_]68 #text/0-->
-      <!--M_=58 #ul/0 68 65 62 59-->
+      <!--M_]58 #ul/0-->
     </ul>
     <ul>
+      <!--M_[72-->
       <!--M_[73-->
       <div>
         All (12)
       </div>
       <!--M_*73 #div/0-->
       <!--M_]72 #text/0-->
+      <!--M_[75 -->
       <!--M_[76-->
       <div>
         All (13)
       </div>
       <!--M_*76 #div/0-->
       <!--M_]75 #text/0-->
+      <!--M_[78 -->
       <!--M_[79-->
       <div>
         All (14)
       </div>
       <!--M_*79 #div/0-->
       <!--M_]78 #text/0-->
+      <!--M_[81 -->
       <!--M_[82-->
       <div>
         All (15)
       </div>
       <!--M_*82 #div/0-->
       <!--M_]81 #text/0-->
-      <!--M_=71 #ul/0 81 78 75 72-->
+      <!--M_]71 #ul/0-->
     </ul>
     <!--M_|1 #text/2 71 58 45 32-->
     <script>
@@ -170,14 +196,34 @@
 
 # Mutations
 ```
-REMOVE html/body/#comment0 before html
+REMOVE html/body/#comment0 after #comment
 INSERT html/body/#comment0
 INSERT html/body/#text0
 INSERT html/body/#text1
-INSERT html/body/ul0/#text
-INSERT html/body/ul1/#text
-INSERT html/body/ul2/#text
-INSERT html/body/ul3/#text
+INSERT html/body/#text2
+INSERT html/body/#text3
+INSERT html/body/#text4
+INSERT html/body/#text5
+INSERT html/body/#text6
+INSERT html/body/#text7
+INSERT html/body/#text8
+INSERT html/body/#text9
+INSERT html/body/ul0/#text0
+INSERT html/body/ul0/#text1
+INSERT html/body/ul0/#text2
+INSERT html/body/ul0/#text3
+INSERT html/body/ul1/#text0
+INSERT html/body/ul1/#text1
+INSERT html/body/ul1/#text2
+INSERT html/body/ul1/#text3
+INSERT html/body/ul2/#text0
+INSERT html/body/ul2/#text1
+INSERT html/body/ul2/#text2
+INSERT html/body/ul2/#text3
+INSERT html/body/ul3/#text0
+INSERT html/body/ul3/#text1
+INSERT html/body/ul3/#text2
+INSERT html/body/ul3/#text3
 INSERT html/body/ul0/div0/#text
 INSERT html/body/ul0/div1/#text
 INSERT html/body/ul0/div2/#text

@@ -1,5 +1,6 @@
 # Render
 ```html
+<!--M_[2-->
 <html>
   <head />
   <body>
@@ -11,6 +12,7 @@
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
+    <!--M_[4 -->
     <button>
       Increment 
       <!---->
@@ -19,6 +21,7 @@
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
+    <!--M_[6 -->
     <button>
       Increment 
       <!---->
@@ -27,7 +30,7 @@
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_|1 #text/0 6 4 2-->
+    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.d={"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.c={},count:0,i:0}],[1,_.e={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.f={},count:0,i:1}],[2,_.g={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.h={},count:0,i:2}]]),counts:[0,0,0],"ClosureScopes:counts":new Set},_.b,_.c,_.e,_.f,_.g,_.h],_.c._=_.b,_.b._=_.e._=_.g._=_.d,_.f._=_.e,_.h._=_.g,_.i),3,"__tests__/template.marko_3",5,"__tests__/template.marko_3",7,"__tests__/template.marko_3"];M._.w()
     </script>
@@ -37,7 +40,9 @@
 
 # Mutations
 ```
-INSERT html/body/#text
+INSERT html/body/#text0
+INSERT html/body/#text1
+INSERT html/body/#text2
 ```
 
 # Render
@@ -46,6 +51,7 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
+<!--M_[2-->
 <html>
   <head />
   <body>
@@ -54,6 +60,7 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
+    <!--M_[4 -->
     <button>
       Increment 
       <!---->
@@ -62,6 +69,7 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
+    <!--M_[6 -->
     <button>
       Increment 
       <!---->
@@ -70,7 +78,7 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_|1 #text/0 6 4 2-->
+    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.d={"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.c={},count:0,i:0}],[1,_.e={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.f={},count:0,i:1}],[2,_.g={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.h={},count:0,i:2}]]),counts:[0,0,0],"ClosureScopes:counts":new Set},_.b,_.c,_.e,_.f,_.g,_.h],_.c._=_.b,_.b._=_.e._=_.g._=_.d,_.f._=_.e,_.h._=_.g,_.i),3,"__tests__/template.marko_3",5,"__tests__/template.marko_3",7,"__tests__/template.marko_3"];M._.w()
     </script>
@@ -91,6 +99,7 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
+<!--M_[2-->
 <html>
   <head />
   <body>
@@ -99,11 +108,13 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
+    <!--M_[4 -->
     <button>
       Confirm 1
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
+    <!--M_[6 -->
     <button>
       Increment 
       <!---->
@@ -112,7 +123,7 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_|1 #text/0 6 4 2-->
+    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.d={"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.c={},count:0,i:0}],[1,_.e={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.f={},count:0,i:1}],[2,_.g={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.h={},count:0,i:2}]]),counts:[0,0,0],"ClosureScopes:counts":new Set},_.b,_.c,_.e,_.f,_.g,_.h],_.c._=_.b,_.b._=_.e._=_.g._=_.d,_.f._=_.e,_.h._=_.g,_.i),3,"__tests__/template.marko_3",5,"__tests__/template.marko_3",7,"__tests__/template.marko_3"];M._.w()
     </script>
@@ -133,6 +144,7 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
+<!--M_[2-->
 <html>
   <head />
   <body>
@@ -141,17 +153,19 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
+    <!--M_[4 -->
     <button>
       Confirm 1
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
+    <!--M_[6 -->
     <button>
       Confirm 1
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_|1 #text/0 6 4 2-->
+    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.d={"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.c={},count:0,i:0}],[1,_.e={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.f={},count:0,i:1}],[2,_.g={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.h={},count:0,i:2}]]),counts:[0,0,0],"ClosureScopes:counts":new Set},_.b,_.c,_.e,_.f,_.g,_.h],_.c._=_.b,_.b._=_.e._=_.g._=_.d,_.f._=_.e,_.h._=_.g,_.i),3,"__tests__/template.marko_3",5,"__tests__/template.marko_3",7,"__tests__/template.marko_3"];M._.w()
     </script>
@@ -172,6 +186,7 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
+<!--M_[2-->
 <html>
   <head />
   <body>
@@ -180,17 +195,19 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
+    <!--M_[4 -->
     <button>
       Confirm 1
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
+    <!--M_[6 -->
     <button>
       Confirm 1
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_|1 #text/0 6 4 2-->
+    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.d={"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.c={},count:0,i:0}],[1,_.e={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.f={},count:0,i:1}],[2,_.g={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.h={},count:0,i:2}]]),counts:[0,0,0],"ClosureScopes:counts":new Set},_.b,_.c,_.e,_.f,_.g,_.h],_.c._=_.b,_.b._=_.e._=_.g._=_.d,_.f._=_.e,_.h._=_.g,_.i),3,"__tests__/template.marko_3",5,"__tests__/template.marko_3",7,"__tests__/template.marko_3"];M._.w()
     </script>
@@ -211,6 +228,7 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
+<!--M_[2-->
 <html>
   <head />
   <body>
@@ -219,17 +237,19 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
+    <!--M_[4 -->
     <button>
       Increment 1
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
+    <!--M_[6 -->
     <button>
       Confirm 1
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_|1 #text/0 6 4 2-->
+    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.d={"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.c={},count:0,i:0}],[1,_.e={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.f={},count:0,i:1}],[2,_.g={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.h={},count:0,i:2}]]),counts:[0,0,0],"ClosureScopes:counts":new Set},_.b,_.c,_.e,_.f,_.g,_.h],_.c._=_.b,_.b._=_.e._=_.g._=_.d,_.f._=_.e,_.h._=_.g,_.i),3,"__tests__/template.marko_3",5,"__tests__/template.marko_3",7,"__tests__/template.marko_3"];M._.w()
     </script>
@@ -250,6 +270,7 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
+<!--M_[2-->
 <html>
   <head />
   <body>
@@ -258,17 +279,19 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
+    <!--M_[4 -->
     <button>
       Increment 1
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
+    <!--M_[6 -->
     <button>
       Increment 1
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_|1 #text/0 6 4 2-->
+    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.d={"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.c={},count:0,i:0}],[1,_.e={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.f={},count:0,i:1}],[2,_.g={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.h={},count:0,i:2}]]),counts:[0,0,0],"ClosureScopes:counts":new Set},_.b,_.c,_.e,_.f,_.g,_.h],_.c._=_.b,_.b._=_.e._=_.g._=_.d,_.f._=_.e,_.h._=_.g,_.i),3,"__tests__/template.marko_3",5,"__tests__/template.marko_3",7,"__tests__/template.marko_3"];M._.w()
     </script>
@@ -289,6 +312,7 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
+<!--M_[2-->
 <html>
   <head />
   <body>
@@ -297,17 +321,19 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
+    <!--M_[4 -->
     <button>
       Increment 1
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
+    <!--M_[6 -->
     <button>
       Increment 1
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_|1 #text/0 6 4 2-->
+    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.d={"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.c={},count:0,i:0}],[1,_.e={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.f={},count:0,i:1}],[2,_.g={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.h={},count:0,i:2}]]),counts:[0,0,0],"ClosureScopes:counts":new Set},_.b,_.c,_.e,_.f,_.g,_.h],_.c._=_.b,_.b._=_.e._=_.g._=_.d,_.f._=_.e,_.h._=_.g,_.i),3,"__tests__/template.marko_3",5,"__tests__/template.marko_3",7,"__tests__/template.marko_3"];M._.w()
     </script>
@@ -328,6 +354,7 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
+<!--M_[2-->
 <html>
   <head />
   <body>
@@ -336,17 +363,19 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
+    <!--M_[4 -->
     <button>
       Confirm 2
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
+    <!--M_[6 -->
     <button>
       Increment 1
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_|1 #text/0 6 4 2-->
+    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.d={"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.c={},count:0,i:0}],[1,_.e={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.f={},count:0,i:1}],[2,_.g={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.h={},count:0,i:2}]]),counts:[0,0,0],"ClosureScopes:counts":new Set},_.b,_.c,_.e,_.f,_.g,_.h],_.c._=_.b,_.b._=_.e._=_.g._=_.d,_.f._=_.e,_.h._=_.g,_.i),3,"__tests__/template.marko_3",5,"__tests__/template.marko_3",7,"__tests__/template.marko_3"];M._.w()
     </script>
@@ -367,6 +396,7 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
+<!--M_[2-->
 <html>
   <head />
   <body>
@@ -375,17 +405,19 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
+    <!--M_[4 -->
     <button>
       Confirm 2
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
+    <!--M_[6 -->
     <button>
       Confirm 2
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_|1 #text/0 6 4 2-->
+    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.d={"LoopScopeMap:#text/0":new Map(_.a=[[0,_.b={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.c={},count:0,i:0}],[1,_.e={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.f={},count:0,i:1}],[2,_.g={"ConditionalRenderer:#text/0":1,"ConditionalScope:#text/0":_.h={},count:0,i:2}]]),counts:[0,0,0],"ClosureScopes:counts":new Set},_.b,_.c,_.e,_.f,_.g,_.h],_.c._=_.b,_.b._=_.e._=_.g._=_.d,_.f._=_.e,_.h._=_.g,_.i),3,"__tests__/template.marko_3",5,"__tests__/template.marko_3",7,"__tests__/template.marko_3"];M._.w()
     </script>

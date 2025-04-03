@@ -4,14 +4,16 @@
 <html>
   <head />
   <body>
+    <!--M_[2-->
+    <!--M_[3-->
     <!--M_[4-->
     <div>
       Hello world
     </div>
     <!--M_*4 #div/0-->
     <!--M_]3 #text/0-->
-    <!--M_|2 #text/0 3-->
-    <!--M_|1 #text/0 2-->
+    <!--M_]2 #text/0-->
+    <!--M_]1 #text/0-->
     <!--M_[8-->
     <div>
       Hello world
@@ -33,10 +35,14 @@
 
 # Mutations
 ```
+REMOVE html/body/#comment2 after html/body/#comment1
+INSERT html/body/#comment2
+INSERT html/body/#text0
+REMOVE html/body/#comment1 after html/body/#comment0
+INSERT html/body/#comment1
+INSERT html/body/#text1
 REMOVE html/body/#comment0 before html
 INSERT html/body/#comment0
-INSERT html/body/#text0
-INSERT html/body/#text1
 INSERT html/body/div2/#text
 INSERT html/body/div0/#text
 INSERT html/body/div1/#text

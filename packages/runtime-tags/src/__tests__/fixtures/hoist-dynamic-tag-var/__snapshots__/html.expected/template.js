@@ -4,10 +4,10 @@ import _thing from "./tags/thing.marko";
 export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _hoisted_setHtml = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml/hoist");
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (input.show) {
       const _scope1_id = _$.nextScopeId();
-      _$.resumeSingleNodeConditional(() => {
+      _$.resumeConditional(() => {
         if (input.show) {
           const _scope2_id = _$.nextScopeId();
           const _dynamicScope = _$.peekNextScope();
@@ -29,7 +29,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _thing({
     value: _hoisted_setHtml
   });
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (true) {
       const _scope3_id = _$.nextScopeId();
       const _dynamicScope2 = _$.peekNextScope();
@@ -41,7 +41,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       return 0;
     }
   }, _scope0_id, "#text/2");
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (true) {
       const _scope4_id = _$.nextScopeId();
       const _dynamicScope3 = _$.peekNextScope();

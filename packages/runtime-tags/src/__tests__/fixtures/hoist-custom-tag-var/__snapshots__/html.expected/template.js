@@ -4,7 +4,7 @@ import _thing from "./tags/thing.marko";
 export default _$.createTemplate("__tests__/template.marko", input => {
   const _scope0_id = _$.nextScopeId();
   const _hoisted_setHtml = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_setHtml/hoist");
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (input.show) {
       const _scope1_id = _$.nextScopeId();
       _$.resumeSingleNodeConditional(() => {
