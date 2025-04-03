@@ -1,21 +1,21 @@
-export const _template = "a<!>c<!>e";
-export const _walks = /* over(1), replace, over(2), replace, over(2) */"b%c%c";
+export const $template = "a<!>c<!>e";
+export const $walks = /* over(1), replace, over(2), replace, over(2) */"b%c%c";
 import { resolveAfter } from "../../utils/resolve";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 _$.enableCatch();
-const _data$await_content = /* @__PURE__ */_$.value("data", (_scope, data) => _$.data(_scope["#text/0"], data));
-const _params2$await_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => _data$await_content(_scope, _params2[0]));
-const _await_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, _params2$await_content);
-const _placeholder_content = _$.registerContent("__tests__/template.marko_2_renderer", "_A_");
-const _try_content = /* @__PURE__ */_$.createRenderer("b");
-const _await = /* @__PURE__ */_$.awaitTag("#text/1", _await_content);
-const _try = /* @__PURE__ */_$.createTry("#text/0", _try_content);
-export function _setup(_scope) {
-  _try(_scope, {
+const $data$await$content = /* @__PURE__ */_$.value("data", ($scope, data) => _$.data($scope["#text/0"], data));
+const $params2$await$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $data$await$content($scope, $params2[0]));
+const $await_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, $params2$await$content);
+const $placeholder_content = _$.registerContent("__tests__/template.marko_2_renderer", "_A_");
+const $try_content = /* @__PURE__ */_$.createRenderer("b");
+const $await = /* @__PURE__ */_$.awaitTag("#text/1", $await_content);
+const $try = /* @__PURE__ */_$.createTry("#text/0", $try_content);
+export function $setup($scope) {
+  $try($scope, {
     placeholder: _$.attrTag({
-      content: _placeholder_content(_scope)
+      content: $placeholder_content($scope)
     })
   });
-  _await(_scope, resolveAfter("d", 1));
+  $await($scope, resolveAfter("d", 1));
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

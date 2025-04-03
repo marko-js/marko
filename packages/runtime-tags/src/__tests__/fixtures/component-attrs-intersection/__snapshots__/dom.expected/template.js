@@ -1,18 +1,18 @@
-export const _template = `${_displayIntersection_template}<button></button>`;
-export const _walks = /* beginChild, _displayIntersection_walks, endChild, get, over(1) */`/${_displayIntersection_walks}& b`;
-import { _setup as _displayIntersection, _value as _displayIntersection_input_value, _template as _displayIntersection_template, _walks as _displayIntersection_walks } from "./tags/display-intersection.marko";
+export const $template = `${_displayIntersection_template}<button></button>`;
+export const $walks = /* beginChild, _displayIntersection_walks, endChild, get, over(1) */`/${_displayIntersection_walks}& b`;
+import { $setup as _displayIntersection, $value as _displayIntersection_input_value, $template as _displayIntersection_template, $walks as _displayIntersection_walks } from "./tags/display-intersection.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
+const $count_effect = _$.effect("__tests__/template.marko_0_count", ($scope, {
   count
-}) => _$.on(_scope["#button/1"], "click", function () {
-  _count(_scope, count + 1), count;
+}) => _$.on($scope["#button/1"], "click", function () {
+  $count($scope, count + 1), count;
 }));
-const _count = /* @__PURE__ */_$.state("count/2", (_scope, count) => {
-  _displayIntersection_input_value(_scope["#childScope/0"], count);
-  _count_effect(_scope);
+const $count = /* @__PURE__ */_$.state("count/2", ($scope, count) => {
+  _displayIntersection_input_value($scope["#childScope/0"], count);
+  $count_effect($scope);
 });
-export function _setup(_scope) {
-  _displayIntersection(_scope["#childScope/0"]);
-  _count(_scope, 0);
+export function $setup($scope) {
+  _displayIntersection($scope["#childScope/0"]);
+  $count($scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

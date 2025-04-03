@@ -1,10 +1,10 @@
-export const _template = "<!--Body Text-->";
-export const _walks = /* get, over(1) */" b";
+export const $template = "<!--Body Text-->";
+export const $walks = /* get, over(1) */" b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _tagName = /* @__PURE__ */_$.state("tagName/1", _$.tagVarSignal);
-const _setup_effect = _$.effect("__tests__/tags/parent-el.marko_0", _scope => _tagName(_scope, _scope["#comment/0"].parentElement.tagName));
-export function _setup(_scope) {
-  _tagName(_scope, undefined);
-  _setup_effect(_scope);
+const $tagName = /* @__PURE__ */_$.state("tagName/1", _$.tagVarSignal);
+const $setup_effect = _$.effect("__tests__/tags/parent-el.marko_0", $scope => $tagName($scope, $scope["#comment/0"].parentElement.tagName));
+export function $setup($scope) {
+  $tagName($scope, undefined);
+  $setup_effect($scope);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/parent-el.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/parent-el.marko", $template, $walks, $setup);

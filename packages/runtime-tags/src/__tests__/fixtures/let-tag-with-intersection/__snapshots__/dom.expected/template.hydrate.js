@@ -1,22 +1,22 @@
 // size: 318 (min) 173 (brotli)
-const _expr_y_z = _$.intersection(8, (_scope) => {
-    const { 6: y, 7: z } = _scope;
-    _a(_scope, y + z);
+const $expr_y_z = _$.intersection(8, ($scope) => {
+    const { 6: y, 7: z } = $scope;
+    $a($scope, y + z);
   }),
-  _a = _$.value(9, (_scope, a) => _$.data(_scope[4], a)),
-  _z = _$.value(7, (_scope, z) => {
-    _$.data(_scope[3], z), _expr_y_z(_scope);
+  $a = _$.value(9, ($scope, a) => _$.data($scope[4], a)),
+  $z = _$.value(7, ($scope, z) => {
+    _$.data($scope[3], z), $expr_y_z($scope);
   }),
-  _y = _$.value(6, (_scope, y) => {
-    _$.data(_scope[2], y), _expr_y_z(_scope);
+  $y = _$.value(6, ($scope, y) => {
+    _$.data($scope[2], y), $expr_y_z($scope);
   }),
-  _x_effect = _$.effect("a0", (_scope, { 5: x }) =>
-    _$.on(_scope[0], "click", () => (_x(_scope, x + 1), x)),
+  $x_effect = _$.effect("a0", ($scope, { 5: x }) =>
+    _$.on($scope[0], "click", () => ($x($scope, x + 1), x)),
   ),
-  _x = _$.state(5, (_scope, x) => {
-    _$.data(_scope[1], x),
-      _y(_scope, x + 1),
-      _z(_scope, x + 2),
-      _x_effect(_scope);
+  $x = _$.state(5, ($scope, x) => {
+    _$.data($scope[1], x),
+      $y($scope, x + 1),
+      $z($scope, x + 2),
+      $x_effect($scope);
   });
 init();

@@ -3,9 +3,9 @@
     "props": {
       "$_$": "e",
       "$init": "o",
-      "$_get_hoisted_setHtml": "r",
-      "$_get_hoisted_setHtml2": "t",
-      "$_get_hoisted_setHtml3": "i"
+      "$$get$hoisted_setHtml": "r",
+      "$$get$hoisted_setHtml2": "t",
+      "$$get$hoisted_setHtml3": "i"
     }
   }
 }

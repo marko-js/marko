@@ -1,14 +1,14 @@
 // size: 182 (min) 129 (brotli)
-const _count$child_content_effect = _$.effect(
+const $count$child$content_effect = _$.effect(
     "b1",
-    (_scope, { _: { 1: count } }) =>
-      _$.on(_scope[0], "click", function () {
-        _count(_scope._, count + 1);
+    ($scope, { _: { 1: count } }) =>
+      _$.on($scope[0], "click", function () {
+        $count($scope._, count + 1);
       }),
   ),
-  _count$child_content = _$.dynamicClosureRead(1, (_scope, count) => {
-    _$.data(_scope[1], count), _count$child_content_effect(_scope);
+  $count$child$content = _$.dynamicClosureRead(1, ($scope, count) => {
+    _$.data($scope[1], count), $count$child$content_effect($scope);
   }),
-  _count_closure = _$.dynamicClosure(_count$child_content),
-  _count = _$.state(1, _count_closure);
+  $count_closure = _$.dynamicClosure($count$child$content),
+  $count = _$.state(1, $count_closure);
 init();

@@ -3,14 +3,14 @@
     "props": {
       "$_$": "t",
       "$init": "e",
-      "$_x$for_content": "o",
-      "$_params2$for_content": "a",
-      "$_for_content": "r",
-      "$_for": "n",
-      "$_list_effect": "c",
-      "$_list": "i",
-      "$_open_effect": "f",
-      "$_open": "m"
+      "$$x$for$content": "o",
+      "$$params2$for$content": "a",
+      "$$for_content": "r",
+      "$$for": "n",
+      "$$list_effect": "c",
+      "$$list": "i",
+      "$$open_effect": "f",
+      "$$open": "m"
     }
   }
 }

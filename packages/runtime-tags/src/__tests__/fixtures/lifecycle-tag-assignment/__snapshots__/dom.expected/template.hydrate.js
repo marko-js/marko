@@ -1,19 +1,19 @@
 // size: 261 (min) 153 (brotli)
-const _prev = _$.state(4, (_scope, prev) => _$.data(_scope[1], prev)),
-  _x_effect = _$.effect("a0", (_scope, { 3: x }) => {
-    _$.lifecycle(_scope, 4, {
+const $prev = _$.state(4, ($scope, prev) => _$.data($scope[1], prev)),
+  $x_effect = _$.effect("a0", ($scope, { 3: x }) => {
+    _$.lifecycle($scope, 4, {
       onMount: function () {
         this.cur = x;
       },
       onUpdate: function () {
-        _prev(_scope, this.cur), (this.cur = x);
+        $prev($scope, this.cur), (this.cur = x);
       },
     }),
-      _$.on(_scope[2], "click", function () {
-        _x(_scope, x + 1);
+      _$.on($scope[2], "click", function () {
+        $x($scope, x + 1);
       });
   }),
-  _x = _$.state(3, (_scope, x) => {
-    _$.data(_scope[0], x), _x_effect(_scope);
+  $x = _$.state(3, ($scope, x) => {
+    _$.data($scope[0], x), $x_effect($scope);
   });
 init();

@@ -1,23 +1,23 @@
-export const _template = "a<!>d";
-export const _walks = /* over(1), replace, over(2) */"b%c";
+export const $template = "a<!>d";
+export const $walks = /* over(1), replace, over(2) */"b%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 _$.enableCatch();
-const _error_message$catch_content = /* @__PURE__ */_$.value("error_message", (_scope, error_message) => _$.data(_scope["#text/0"], error_message));
-const _error$catch_content = /* @__PURE__ */_$.value("error", (_scope, error) => _error_message$catch_content(_scope, error?.message));
-const _params2$catch_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => _error$catch_content(_scope, _params2[0]));
-const _catch_content = _$.registerContent("__tests__/template.marko_2_renderer", " ", /* get */" ", 0, _params2$catch_content);
-const _setup$try_content = _scope => {
-  _$.data(_scope["#text/0"], (() => {
+const $error_message$catch$content = /* @__PURE__ */_$.value("error_message", ($scope, error_message) => _$.data($scope["#text/0"], error_message));
+const $error$catch$content = /* @__PURE__ */_$.value("error", ($scope, error) => $error_message$catch$content($scope, error?.message));
+const $params2$catch$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $error$catch$content($scope, $params2[0]));
+const $catch_content = _$.registerContent("__tests__/template.marko_2_renderer", " ", /* get */" ", 0, $params2$catch$content);
+const $setup$try$content = $scope => {
+  _$.data($scope["#text/0"], (() => {
     throw new Error("ERROR!");
   })());
 };
-const _try_content = /* @__PURE__ */_$.createRenderer("b<!>", /* over(1), replace */"b%", _setup$try_content);
-const _try = /* @__PURE__ */_$.createTry("#text/0", _try_content);
-export function _setup(_scope) {
-  _try(_scope, {
+const $try_content = /* @__PURE__ */_$.createRenderer("b<!>", /* over(1), replace */"b%", $setup$try$content);
+const $try = /* @__PURE__ */_$.createTry("#text/0", $try_content);
+export function $setup($scope) {
+  $try($scope, {
     catch: _$.attrTag({
-      content: _catch_content(_scope)
+      content: $catch_content($scope)
     })
   });
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

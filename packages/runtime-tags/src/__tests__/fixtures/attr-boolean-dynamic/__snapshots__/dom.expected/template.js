@@ -1,17 +1,17 @@
-export const _template = "<input><button> </button>";
-export const _walks = /* get, over(1), get, next(1), get, out(1) */" b D l";
+export const $template = "<input><button> </button>";
+export const $walks = /* get, over(1), get, next(1), get, out(1) */" b D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _disabled_effect = _$.effect("__tests__/template.marko_0_disabled", (_scope, {
+const $disabled_effect = _$.effect("__tests__/template.marko_0_disabled", ($scope, {
   disabled
-}) => _$.on(_scope["#button/1"], "click", function () {
-  _disabled(_scope, !disabled);
+}) => _$.on($scope["#button/1"], "click", function () {
+  $disabled($scope, !disabled);
 }));
-const _disabled = /* @__PURE__ */_$.state("disabled/3", (_scope, disabled) => {
-  _$.attr(_scope["#input/0"], "disabled", disabled);
-  _$.data(_scope["#text/2"], disabled ? "enable" : "disable");
-  _disabled_effect(_scope);
+const $disabled = /* @__PURE__ */_$.state("disabled/3", ($scope, disabled) => {
+  _$.attr($scope["#input/0"], "disabled", disabled);
+  _$.data($scope["#text/2"], disabled ? "enable" : "disable");
+  $disabled_effect($scope);
 });
-export function _setup(_scope) {
-  _disabled(_scope, true);
+export function $setup($scope) {
+  $disabled($scope, true);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

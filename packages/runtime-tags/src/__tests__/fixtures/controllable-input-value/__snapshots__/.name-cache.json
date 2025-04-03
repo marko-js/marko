@@ -3,8 +3,8 @@
     "props": {
       "$_$": "t",
       "$init": "a",
-      "$_value": "e",
-      "$_valueChange": "o"
+      "$$value": "e",
+      "$$valueChange": "o"
     }
   }
 }

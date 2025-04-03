@@ -1,37 +1,37 @@
-export const _template = "<button class=inc><!>,<!></button><!><!>";
-export const _walks = /* get, next(1), replace, over(2), replace, out(1), replace, over(1) */" D%c%l%bD";
+export const $template = "<button class=inc><!>,<!></button><!><!>";
+export const $walks = /* get, next(1), replace, over(2), replace, out(1), replace, over(1) */" D%c%l%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _expr_input_content_x_y = /* @__PURE__ */_$.intersection(10, _scope => {
+const $expr_input_content_x_y = /* @__PURE__ */_$.intersection(10, $scope => {
   const {
     input_content,
     x,
     y
-  } = _scope;
-  _dynamicTag(_scope, input_content, () => [x, y]);
+  } = $scope;
+  $dynamicTag($scope, input_content, () => [x, y]);
 }, 2);
-const _expr_x_y_effect = _$.effect("__tests__/tags/custom-tag.marko_0_x_y", (_scope, {
+const $expr_x_y_effect = _$.effect("__tests__/tags/custom-tag.marko_0_x_y", ($scope, {
   x,
   y
-}) => _$.on(_scope["#button/0"], "click", function () {
-  _x(_scope, x + 1), x;
-  _y(_scope, y + 1), y;
+}) => _$.on($scope["#button/0"], "click", function () {
+  $x($scope, x + 1), x;
+  $y($scope, y + 1), y;
 }));
-const _expr_x_y = /* @__PURE__ */_$.intersection(9, _expr_x_y_effect);
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3", 0, 0, 1);
-const _y = /* @__PURE__ */_$.state("y/8", (_scope, y) => {
-  _$.data(_scope["#text/2"], y);
-  _expr_x_y(_scope);
-  _expr_input_content_x_y(_scope);
+const $expr_x_y = /* @__PURE__ */_$.intersection(9, $expr_x_y_effect);
+const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3", 0, 0, 1);
+const $y = /* @__PURE__ */_$.state("y/8", ($scope, y) => {
+  _$.data($scope["#text/2"], y);
+  $expr_x_y($scope);
+  $expr_input_content_x_y($scope);
 });
-const _x = /* @__PURE__ */_$.state("x/7", (_scope, x) => {
-  _$.data(_scope["#text/1"], x);
-  _expr_x_y(_scope);
-  _expr_input_content_x_y(_scope);
+const $x = /* @__PURE__ */_$.state("x/7", ($scope, x) => {
+  _$.data($scope["#text/1"], x);
+  $expr_x_y($scope);
+  $expr_input_content_x_y($scope);
 });
-export const _input_content = /* @__PURE__ */_$.value("input_content", _expr_input_content_x_y);
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => _input_content(_scope, input.content));
-export function _setup(_scope) {
-  _x(_scope, 1);
-  _y(_scope, 10);
+export const $input_content = /* @__PURE__ */_$.value("input_content", $expr_input_content_x_y);
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_content($scope, input.content));
+export function $setup($scope) {
+  $x($scope, 1);
+  $y($scope, 10);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/custom-tag.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/custom-tag.marko", $template, $walks, $setup, $input);

@@ -1,26 +1,26 @@
-export const _template = `<!>${_child_template}<!><!><!><!>`;
-export const _walks = /* beginChildWithVar, _child_walks, endChild, dynamicTagWithVar, over(1), dynamicTagWithVar, over(1), dynamicTagWithVar, over(1) */`D0${_child_walks}&1b1b1bD`;
+export const $template = `<!>${_child_template}<!><!><!><!>`;
+export const $walks = /* beginChildWithVar, _child_walks, endChild, dynamicTagWithVar, over(1), dynamicTagWithVar, over(1), dynamicTagWithVar, over(1) */`D0${_child_walks}&1b1b1bD`;
 import child from "./tags/child/index.marko";
-import { _setup as _child, _template as _child_template, _walks as _child_walks } from "./tags/child/index.marko";
+import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child/index.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _dynamicTag3 = /* @__PURE__ */_$.dynamicTag("#text/6", 0, () => _el);
-const _dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/4", 0, () => _data3);
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", 0, () => _data2);
-const _el = _$.registerBoundSignal("__tests__/template.marko_0_el1/var", _scope => {});
-const _data3 = _$.registerBoundSignal("__tests__/template.marko_0_data3/var", _scope => {});
-export const _input_dynamic = /* @__PURE__ */_$.value("input_dynamic", _dynamicTag2);
-export const _input_show = /* @__PURE__ */_$.value("input_show", (_scope, input_show) => {
-  _dynamicTag(_scope, input_show && child);
-  _dynamicTag3(_scope, input_show && "div");
+const $dynamicTag3 = /* @__PURE__ */_$.dynamicTag("#text/6", 0, () => $el);
+const $dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/4", 0, () => $data3);
+const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", 0, () => $data2);
+const $el = _$.registerBoundSignal("__tests__/template.marko_0_el1/var", $scope => {});
+const $data3 = _$.registerBoundSignal("__tests__/template.marko_0_data3/var", $scope => {});
+export const $input_dynamic = /* @__PURE__ */_$.value("input_dynamic", $dynamicTag2);
+export const $input_show = /* @__PURE__ */_$.value("input_show", ($scope, input_show) => {
+  $dynamicTag($scope, input_show && child);
+  $dynamicTag3($scope, input_show && "div");
 });
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
-  _input_show(_scope, input.show);
-  _input_dynamic(_scope, input.dynamic);
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {
+  $input_show($scope, input.show);
+  $input_dynamic($scope, input.dynamic);
 });
-const _data2 = _$.registerBoundSignal("__tests__/template.marko_0_data2/var", _scope => {});
-const _data = _$.registerBoundSignal("__tests__/template.marko_0_data1/var", _scope => {});
-export function _setup(_scope) {
-  _$.setTagVar(_scope, "#childScope/0", _data);
-  _child(_scope["#childScope/0"]);
+const $data2 = _$.registerBoundSignal("__tests__/template.marko_0_data2/var", $scope => {});
+const $data = _$.registerBoundSignal("__tests__/template.marko_0_data1/var", $scope => {});
+export function $setup($scope) {
+  _$.setTagVar($scope, "#childScope/0", $data);
+  _child($scope["#childScope/0"]);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

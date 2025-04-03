@@ -1,12 +1,12 @@
 // size: 188 (min) 152 (brotli)
-const _x_content = _$.registerContent("a0", "Body Content"),
-  _dynamicTag = _$.dynamicTag(0, _x_content),
-  _x_effect = _$.effect("a1", (_scope, { 2: x }) =>
-    _$.on(_scope[1], "click", function () {
-      _x(_scope, x ? null : "div");
+const $x_content = _$.registerContent("a0", "Body Content"),
+  $dynamicTag = _$.dynamicTag(0, $x_content),
+  $x_effect = _$.effect("a1", ($scope, { 2: x }) =>
+    _$.on($scope[1], "click", function () {
+      $x($scope, x ? null : "div");
     }),
   ),
-  _x = _$.state(2, (_scope, x) => {
-    _dynamicTag(_scope, x), _x_effect(_scope);
+  $x = _$.state(2, ($scope, x) => {
+    $dynamicTag($scope, x), $x_effect($scope);
   });
 init();

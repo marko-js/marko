@@ -1,10 +1,10 @@
-export const _template = "<div> </div><!>";
-export const _walks = /* next(1), get, out(1), replace, over(1) */"D l%b";
+export const $template = "<div> </div><!>";
+export const $walks = /* next(1), get, out(1), replace, over(1) */"D l%b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _y = /* @__PURE__ */_$.value("y", (_scope, y) => _$.data(_scope["#text/1"], y));
-const _x = /* @__PURE__ */_$.value("x", (_scope, x) => _$.data(_scope["#text/0"], x));
-export function _setup(_scope) {
-  _x(_scope, 1);
-  _y(_scope, 1);
+const $y = /* @__PURE__ */_$.value("y", ($scope, y) => _$.data($scope["#text/1"], y));
+const $x = /* @__PURE__ */_$.value("x", ($scope, x) => _$.data($scope["#text/0"], x));
+export function $setup($scope) {
+  $x($scope, 1);
+  $y($scope, 1);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

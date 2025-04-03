@@ -3,12 +3,12 @@
     "props": {
       "$_$": "t",
       "$init": "a",
-      "$_setup$tagselect_content_effect": "o",
-      "$_tagselect_content": "e",
-      "$_expr_value_tag": "n",
-      "$_dynamicTag": "r",
-      "$_value": "s",
-      "$_valueChange": "i"
+      "$$setup$tagselect$content_effect": "o",
+      "$$tagselect_content": "e",
+      "$$expr_value_tag": "n",
+      "$$dynamicTag": "r",
+      "$$value": "s",
+      "$$valueChange": "i"
     }
   }
 }

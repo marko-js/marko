@@ -1,26 +1,26 @@
-export const _template = "<button><!>|<!></button>";
-export const _walks = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l";
+export const $template = "<button><!>|<!></button>";
+export const $walks = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _y_effect = _$.effect("__tests__/template.marko_0_y", (_scope, {
+const $y_effect = _$.effect("__tests__/template.marko_0_y", ($scope, {
   y
-}) => _$.on(_scope["#button/0"], "click", function () {
-  _y(_scope, y + 1), y;
+}) => _$.on($scope["#button/0"], "click", function () {
+  $y($scope, y + 1), y;
 }));
-const _y = /* @__PURE__ */_$.state("y/4", (_scope, y) => {
-  _$.data(_scope["#text/2"], y);
-  _y_effect(_scope);
+const $y = /* @__PURE__ */_$.state("y/4", ($scope, y) => {
+  _$.data($scope["#text/2"], y);
+  $y_effect($scope);
 });
-const _x = /* @__PURE__ */_$.state("x/3", (_scope, x) => {
-  _$.data(_scope["#text/1"], x);
-  _y(_scope, x, _valueChange(_scope));
+const $x = /* @__PURE__ */_$.state("x/3", ($scope, x) => {
+  _$.data($scope["#text/1"], x);
+  $y($scope, x, $valueChange($scope));
 });
-export function _setup(_scope) {
-  _x(_scope, 1);
+export function $setup($scope) {
+  $x($scope, 1);
 }
-function _valueChange(_scope) {
+function $valueChange($scope) {
   return function (newValue) {
-    _x(_scope, newValue + 1);
+    $x($scope, newValue + 1);
   };
 }
-_$.register("__tests__/template.marko_0/valueChange", _valueChange);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+_$.register("__tests__/template.marko_0/valueChange", $valueChange);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

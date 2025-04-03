@@ -3,15 +3,15 @@
     "props": {
       "$_$": "t",
       "$init": "a",
-      "$_expr_input_content_x_y": "e",
-      "$_expr_x_y_effect": "o",
-      "$_expr_x_y": "n",
-      "$_dynamicTag": "i",
-      "$_y": "r",
-      "$_x": "m",
-      "$_count2$customtag_content": "s",
-      "$_count$customtag_content": "c",
-      "$_params2$customtag_content": "d"
+      "$$expr_input_content_x_y": "e",
+      "$$expr_x_y_effect": "o",
+      "$$expr_x_y": "n",
+      "$$dynamicTag": "i",
+      "$$y": "r",
+      "$$x": "m",
+      "$$count2$customtag$content": "s",
+      "$$count$customtag$content": "c",
+      "$$params2$customtag$content": "d"
     }
   }
 }

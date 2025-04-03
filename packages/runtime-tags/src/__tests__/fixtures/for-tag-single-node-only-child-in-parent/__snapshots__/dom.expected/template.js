@@ -1,22 +1,22 @@
-export const _template = "<div></div>";
-export const _walks = /* get, over(1) */" b";
+export const $template = "<div></div>";
+export const $walks = /* get, over(1) */" b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _for_content = /* @__PURE__ */_$.createRenderer("<div></div>");
-const _for = /* @__PURE__ */_$.loopOf("#div/0", _for_content);
-const _children_length = /* @__PURE__ */_$.value("children_length", (_scope, children_length) => _$.attr(_scope["#div/0"], "data-children", children_length));
-const _children_effect = _$.effect("__tests__/template.marko_0_children", (_scope, {
+const $for_content = /* @__PURE__ */_$.createRenderer("<div></div>");
+const $for = /* @__PURE__ */_$.loopOf("#div/0", $for_content);
+const $children_length = /* @__PURE__ */_$.value("children_length", ($scope, children_length) => _$.attr($scope["#div/0"], "data-children", children_length));
+const $children_effect = _$.effect("__tests__/template.marko_0_children", ($scope, {
   children
 }) => {
   if (children.length === 1) {
-    _children(_scope, [...children, 2]);
+    $children($scope, [...children, 2]);
   }
 });
-const _children = /* @__PURE__ */_$.state("children/1", (_scope, children) => {
-  _children_length(_scope, children?.length);
-  _for(_scope, [children]);
-  _children_effect(_scope);
+const $children = /* @__PURE__ */_$.state("children/1", ($scope, children) => {
+  $children_length($scope, children?.length);
+  $for($scope, [children]);
+  $children_effect($scope);
 });
-export function _setup(_scope) {
-  _children(_scope, [1]);
+export function $setup($scope) {
+  $children($scope, [1]);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

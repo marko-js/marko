@@ -3,10 +3,10 @@
     "props": {
       "$_$": "a",
       "$init": "o",
-      "$_c$if_content": "m",
-      "$_c$customtag_content": "t",
-      "$_c_closure": "r",
-      "$_c": "e"
+      "$$c$if$content": "m",
+      "$$c$customtag$content": "t",
+      "$$c_closure": "r",
+      "$$c": "e"
     }
   }
 }

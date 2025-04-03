@@ -1,23 +1,23 @@
-export const _template = "<!><!><!>";
-export const _walks = /* replace, over(1) */"D%bD";
+export const $template = "<!><!><!>";
+export const $walks = /* replace, over(1) */"D%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _i$for_content = /* @__PURE__ */_$.value("i", (_scope, i) => _$.data(_scope["#text/1"], i));
-const _params2$for_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => _i$for_content(_scope, _params2[0]));
-const _num$for_content_effect = _$.effect("__tests__/template.marko_1_num", (_scope, {
+const $i$for$content = /* @__PURE__ */_$.value("i", ($scope, i) => _$.data($scope["#text/1"], i));
+const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $i$for$content($scope, $params2[0]));
+const $num$for$content_effect = _$.effect("__tests__/template.marko_1_num", ($scope, {
   _: {
     num
   }
-}) => _$.on(_scope["#button/0"], "click", function () {
-  _num(_scope._, num + 1), num;
+}) => _$.on($scope["#button/0"], "click", function () {
+  $num($scope._, num + 1), num;
 }));
-const _num$for_content = /* @__PURE__ */_$.loopClosure("num", "#text/0", _num$for_content_effect);
-const _for_content = /* @__PURE__ */_$.createRenderer("<button> </button>", /* get, next(1), get */" D ", 0, _params2$for_content, _scope => _num$for_content._(_scope));
-const _for = /* @__PURE__ */_$.loopTo("#text/0", _for_content);
-const _num = /* @__PURE__ */_$.state("num/1", (_scope, num) => {
-  _for(_scope, [num, 0, 1]);
-  _num$for_content(_scope);
+const $num$for$content = /* @__PURE__ */_$.loopClosure("num", "#text/0", $num$for$content_effect);
+const $for_content = /* @__PURE__ */_$.createRenderer("<button> </button>", /* get, next(1), get */" D ", 0, $params2$for$content, $scope => $num$for$content._($scope));
+const $for = /* @__PURE__ */_$.loopTo("#text/0", $for_content);
+const $num = /* @__PURE__ */_$.state("num/1", ($scope, num) => {
+  $for($scope, [num, 0, 1]);
+  $num$for$content($scope);
 });
-export function _setup(_scope) {
-  _num(_scope, 0);
+export function $setup($scope) {
+  $num($scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

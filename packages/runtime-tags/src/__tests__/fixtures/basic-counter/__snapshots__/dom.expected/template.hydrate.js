@@ -1,10 +1,10 @@
 // size: 126 (min) 107 (brotli)
-const _clickCount_effect = _$.effect("a0", (_scope, { 2: clickCount }) =>
-    _$.on(_scope[0], "click", function () {
-      _clickCount(_scope, clickCount + 1);
+const $clickCount_effect = _$.effect("a0", ($scope, { 2: clickCount }) =>
+    _$.on($scope[0], "click", function () {
+      $clickCount($scope, clickCount + 1);
     }),
   ),
-  _clickCount = _$.state(2, (_scope, clickCount) => {
-    _$.data(_scope[1], clickCount), _clickCount_effect(_scope);
+  $clickCount = _$.state(2, ($scope, clickCount) => {
+    _$.data($scope[1], clickCount), $clickCount_effect($scope);
   });
 init();

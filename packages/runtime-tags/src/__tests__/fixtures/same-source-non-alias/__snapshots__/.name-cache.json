@@ -4,11 +4,11 @@
       "$_$": "a",
       "$init": "t",
       "$createWrapper": "o",
-      "$_a": "r",
-      "$_pattern2": "e",
-      "$_count_effect": "m",
-      "$_count": "n",
-      "$_createWrapper": "i"
+      "$$a": "r",
+      "$$pattern2": "e",
+      "$$count_effect": "m",
+      "$$count": "n",
+      "$$createWrapper": "i"
     }
   }
 }

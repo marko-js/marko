@@ -3,18 +3,18 @@
     "props": {
       "$_$": "e",
       "$init": "t",
-      "$_expr_name_write_effect": "o",
-      "$_expr_name_write": "r",
-      "$_write": "n",
-      "$_name": "a",
-      "$_write$for_content": "i",
-      "$_item$for_content": "l",
-      "$_params2$for_content": "u",
-      "$_setup$for_content": "c",
-      "$_for_content": "m",
-      "$_for": "s",
-      "$_items_effect": "f",
-      "$_items": "d"
+      "$$expr_name_write_effect": "o",
+      "$$expr_name_write": "r",
+      "$$write$1": "n",
+      "$$name": "a",
+      "$$write$for$content": "i",
+      "$$item$for$content": "l",
+      "$$params2$for$content": "u",
+      "$$setup$for$content": "c",
+      "$$for_content": "m",
+      "$$for": "s",
+      "$$items_effect": "f",
+      "$$items": "d"
     }
   }
 }

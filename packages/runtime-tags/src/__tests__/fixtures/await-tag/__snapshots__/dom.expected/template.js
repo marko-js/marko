@@ -1,36 +1,36 @@
-export const _template = "<div><!><!><!><button>Inc</button></div>";
-export const _walks = /* next(1), replace, over(1), replace, over(1), replace, over(1), get, out(1) */"D%b%b%b l";
+export const $template = "<div><!><!><!><button>Inc</button></div>";
+export const $walks = /* next(1), replace, over(1), replace, over(1), replace, over(1), get, out(1) */"D%b%b%b l";
 import { resolveAfter } from "../../utils/resolve";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _count$await_content3 = /* @__PURE__ */_$.dynamicClosureRead("count", (_scope, count) => _$.data(_scope["#text/1"], count));
-const _value$await_content3 = /* @__PURE__ */_$.value("value", (_scope, value) => _$.data(_scope["#text/0"], value));
-const _params4$await_content = /* @__PURE__ */_$.value("_params4", (_scope, _params4) => _value$await_content3(_scope, _params4[0]));
-const _await_content3 = /* @__PURE__ */_$.createRenderer("Got: <!> <!>", /* over(1), replace, over(2), replace */"b%c%", 0, _params4$await_content, _scope => _count$await_content3(_scope));
-const _count$await_content2 = /* @__PURE__ */_$.dynamicClosureRead("count", (_scope, count) => _$.data(_scope["#text/1"], count));
-const _value$await_content2 = /* @__PURE__ */_$.value("value", (_scope, value) => _$.data(_scope["#text/0"], value));
-const _params3$await_content = /* @__PURE__ */_$.value("_params3", (_scope, _params3) => _value$await_content2(_scope, _params3[0]));
-const _await_content2 = /* @__PURE__ */_$.createRenderer("Got: <!> <!>", /* over(1), replace, over(2), replace */"b%c%", 0, _params3$await_content, _scope => _count$await_content2(_scope));
-const _count$await_content = /* @__PURE__ */_$.dynamicClosureRead("count", (_scope, count) => _$.data(_scope["#text/1"], count));
-const _value$await_content = /* @__PURE__ */_$.value("value", (_scope, value) => _$.data(_scope["#text/0"], value));
-const _params2$await_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => _value$await_content(_scope, _params2[0]));
-const _await_content = /* @__PURE__ */_$.createRenderer("Got: <!> <!>", /* over(1), replace, over(2), replace */"b%c%", 0, _params2$await_content, _scope => _count$await_content(_scope));
-const _await3 = /* @__PURE__ */_$.awaitTag("#text/2", _await_content3);
-const _await2 = /* @__PURE__ */_$.awaitTag("#text/1", _await_content2);
-const _await = /* @__PURE__ */_$.awaitTag("#text/0", _await_content);
-const _count_closure = /* @__PURE__ */_$.dynamicClosure(_count$await_content, _count$await_content2, _count$await_content3);
-const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
+const $count$await$content3 = /* @__PURE__ */_$.dynamicClosureRead("count", ($scope, count) => _$.data($scope["#text/1"], count));
+const $value$await$content3 = /* @__PURE__ */_$.value("value", ($scope, value) => _$.data($scope["#text/0"], value));
+const $params4$await$content = /* @__PURE__ */_$.value("$params4", ($scope, $params4) => $value$await$content3($scope, $params4[0]));
+const $await_content3 = /* @__PURE__ */_$.createRenderer("Got: <!> <!>", /* over(1), replace, over(2), replace */"b%c%", 0, $params4$await$content, $scope => $count$await$content3($scope));
+const $count$await$content2 = /* @__PURE__ */_$.dynamicClosureRead("count", ($scope, count) => _$.data($scope["#text/1"], count));
+const $value$await$content2 = /* @__PURE__ */_$.value("value", ($scope, value) => _$.data($scope["#text/0"], value));
+const $params3$await$content = /* @__PURE__ */_$.value("$params3", ($scope, $params3) => $value$await$content2($scope, $params3[0]));
+const $await_content2 = /* @__PURE__ */_$.createRenderer("Got: <!> <!>", /* over(1), replace, over(2), replace */"b%c%", 0, $params3$await$content, $scope => $count$await$content2($scope));
+const $count$await$content = /* @__PURE__ */_$.dynamicClosureRead("count", ($scope, count) => _$.data($scope["#text/1"], count));
+const $value$await$content = /* @__PURE__ */_$.value("value", ($scope, value) => _$.data($scope["#text/0"], value));
+const $params2$await$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $value$await$content($scope, $params2[0]));
+const $await_content = /* @__PURE__ */_$.createRenderer("Got: <!> <!>", /* over(1), replace, over(2), replace */"b%c%", 0, $params2$await$content, $scope => $count$await$content($scope));
+const $await3 = /* @__PURE__ */_$.awaitTag("#text/2", $await_content3);
+const $await2 = /* @__PURE__ */_$.awaitTag("#text/1", $await_content2);
+const $await = /* @__PURE__ */_$.awaitTag("#text/0", $await_content);
+const $count_closure = /* @__PURE__ */_$.dynamicClosure($count$await$content, $count$await$content2, $count$await$content3);
+const $count_effect = _$.effect("__tests__/template.marko_0_count", ($scope, {
   count
-}) => _$.on(_scope["#button/3"], "click", function () {
-  _count(_scope, count + 1), count;
+}) => _$.on($scope["#button/3"], "click", function () {
+  $count($scope, count + 1), count;
 }));
-const _count = /* @__PURE__ */_$.state("count/4", _scope => {
-  _count_closure(_scope);
-  _count_effect(_scope);
+const $count = /* @__PURE__ */_$.state("count/4", $scope => {
+  $count_closure($scope);
+  $count_effect($scope);
 });
-export function _setup(_scope) {
-  _count(_scope, 0);
-  _await(_scope, Promise.resolve("a"));
-  _await2(_scope, resolveAfter("b", 2));
-  _await3(_scope, resolveAfter("c", 1));
+export function $setup($scope) {
+  $count($scope, 0);
+  $await($scope, Promise.resolve("a"));
+  $await2($scope, resolveAfter("b", 2));
+  $await3($scope, resolveAfter("c", 1));
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

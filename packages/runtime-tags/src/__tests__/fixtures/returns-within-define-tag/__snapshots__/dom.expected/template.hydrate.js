@@ -1,98 +1,98 @@
 // size: 1230 (min) 429 (brotli)
-const _expr_value_call$define_content2 = _$.intersection(4, (_scope) => {
-    const { 2: value, 3: call } = _scope;
-    _$.tagVarSignal(_scope, _return(_scope));
+const $expr_value_call$define$content2 = _$.intersection(4, ($scope) => {
+    const { 2: value, 3: call } = $scope;
+    _$.tagVarSignal($scope, $_return2($scope));
   }),
-  _call$define_content2 = _$.state(3, _expr_value_call$define_content2),
-  _value$define_content2 = _$.value(2, _expr_value_call$define_content2),
-  _temp2$define_content = _$.value(1, (_scope, _temp2) =>
-    _value$define_content2(_scope, _temp2.value),
+  $call$define$content2 = _$.state(3, $expr_value_call$define$content2),
+  $value$define$content2 = _$.value(2, $expr_value_call$define$content2),
+  $temp2$define$content = _$.value(1, ($scope, $temp2) =>
+    $value$define$content2($scope, $temp2.value),
   ),
-  _params3$define_content = _$.value(0, (_scope, _params3) =>
-    _temp2$define_content(_scope, _params3?.[0]),
+  $params3$define$content = _$.value(0, ($scope, $params3) =>
+    $temp2$define$content($scope, $params3?.[0]),
   );
 _$.registerContent(
   "a4",
   0,
   0,
-  (_scope) => {
-    _call$define_content2(_scope, 2);
+  ($scope) => {
+    $call$define$content2($scope, 2);
   },
-  _params3$define_content,
+  $params3$define$content,
 );
-const _expr_value_call$define_content = _$.intersection(4, (_scope) => {
-    const { 2: value, 3: call } = _scope;
-    _$.tagVarSignal(_scope, _return2(_scope));
+const $expr_value_call$define$content = _$.intersection(4, ($scope) => {
+    const { 2: value, 3: call } = $scope;
+    _$.tagVarSignal($scope, $_return($scope));
   }),
-  _call$define_content = _$.state(3, _expr_value_call$define_content),
-  _value$define_content = _$.value(2, _expr_value_call$define_content),
-  _temp$define_content = _$.value(1, (_scope, _temp) =>
-    _value$define_content(_scope, _temp.value),
+  $call$define$content = _$.state(3, $expr_value_call$define$content),
+  $value$define$content = _$.value(2, $expr_value_call$define$content),
+  $temp$define$content = _$.value(1, ($scope, $temp) =>
+    $value$define$content($scope, $temp.value),
   ),
-  _params2$define_content = _$.value(0, (_scope, _params2) =>
-    _temp$define_content(_scope, _params2?.[0]),
+  $params2$define$content = _$.value(0, ($scope, $params2) =>
+    $temp$define$content($scope, $params2?.[0]),
   );
 _$.registerContent(
   "a5",
   0,
   0,
-  (_scope) => {
-    _call$define_content(_scope, 1);
+  ($scope) => {
+    $call$define$content($scope, 1);
   },
-  _params2$define_content,
+  $params2$define$content,
 );
-const _expr_Twice_clickTwiceCount = _$.intersection(14, (_scope) => {
-    const { 12: Twice, 13: clickTwiceCount } = _scope;
-    _dynamicTag2(_scope, Twice, () => ({ value: _onClickTwice2(_scope) }));
+const $expr_Twice_clickTwiceCount = _$.intersection(14, ($scope) => {
+    const { 12: Twice, 13: clickTwiceCount } = $scope;
+    $dynamicTag2($scope, Twice, () => ({ value: $onClickTwice($scope) }));
   }),
-  _expr_Once_clickOnceCount = _$.intersection(10, (_scope) => {
-    const { 8: Once, 9: clickOnceCount } = _scope;
-    _dynamicTag(_scope, Once, () => ({ value: _onClickOnce2(_scope) }));
+  $expr_Once_clickOnceCount = _$.intersection(10, ($scope) => {
+    const { 8: Once, 9: clickOnceCount } = $scope;
+    $dynamicTag($scope, Once, () => ({ value: $onClickOnce($scope) }));
   }),
-  _dynamicTag2 = _$.dynamicTag(4, 0, () => _onClickTwice),
-  _dynamicTag = _$.dynamicTag(0, 0, () => _onClickOnce),
-  _onClickTwice_effect = _$.effect("a6", (_scope, { 15: onClickTwice }) =>
-    _$.on(_scope[6], "click", onClickTwice),
+  $dynamicTag2 = _$.dynamicTag(4, 0, () => $onClickTwice2),
+  $dynamicTag = _$.dynamicTag(0, 0, () => $onClickOnce2),
+  $onClickTwice2_effect = _$.effect("a6", ($scope, { 15: onClickTwice }) =>
+    _$.on($scope[6], "click", onClickTwice),
   ),
-  _onClickTwice = _$.registerBoundSignal(
+  $onClickTwice2 = _$.registerBoundSignal(
     "a7",
-    _$.value(15, _onClickTwice_effect),
+    _$.value(15, $onClickTwice2_effect),
   ),
-  _clickTwiceCount = _$.state(13, (_scope, clickTwiceCount) => {
-    _$.data(_scope[7], clickTwiceCount), _expr_Twice_clickTwiceCount(_scope);
+  $clickTwiceCount = _$.state(13, ($scope, clickTwiceCount) => {
+    _$.data($scope[7], clickTwiceCount), $expr_Twice_clickTwiceCount($scope);
   }),
-  _onClickOnce_effect = _$.effect("a8", (_scope, { 11: onClickOnce }) =>
-    _$.on(_scope[2], "click", onClickOnce),
+  $onClickOnce2_effect = _$.effect("a8", ($scope, { 11: onClickOnce }) =>
+    _$.on($scope[2], "click", onClickOnce),
   ),
-  _onClickOnce = _$.registerBoundSignal(
+  $onClickOnce2 = _$.registerBoundSignal(
     "a9",
-    _$.value(11, _onClickOnce_effect),
+    _$.value(11, $onClickOnce2_effect),
   ),
-  _clickOnceCount = _$.state(9, (_scope, clickOnceCount) => {
-    _$.data(_scope[3], clickOnceCount), _expr_Once_clickOnceCount(_scope);
+  $clickOnceCount = _$.state(9, ($scope, clickOnceCount) => {
+    _$.data($scope[3], clickOnceCount), $expr_Once_clickOnceCount($scope);
   });
-function _return(_scope, { 2: value, 3: call } = _scope) {
+function $_return2($scope, { 2: value, 3: call } = $scope) {
   return function () {
-    call && (_call$define_content2(_scope, call - 1), value());
+    call && ($call$define$content2($scope, call - 1), value());
   };
 }
-function _return2(_scope, { 2: value, 3: call } = _scope) {
+function $_return($scope, { 2: value, 3: call } = $scope) {
   return function () {
-    call && (_call$define_content(_scope, call - 1), value());
+    call && ($call$define$content($scope, call - 1), value());
   };
 }
-function _onClickTwice2(_scope, { 13: clickTwiceCount } = _scope) {
+function $onClickTwice($scope, { 13: clickTwiceCount } = $scope) {
   return function () {
-    _clickTwiceCount(_scope, clickTwiceCount + 1);
+    $clickTwiceCount($scope, clickTwiceCount + 1);
   };
 }
-function _onClickOnce2(_scope, { 9: clickOnceCount } = _scope) {
+function $onClickOnce($scope, { 9: clickOnceCount } = $scope) {
   return function () {
-    _clickOnceCount(_scope, clickOnceCount + 1);
+    $clickOnceCount($scope, clickOnceCount + 1);
   };
 }
-_$.register("a2", _return),
-  _$.register("a0", _return2),
-  _$.register("a3", _onClickTwice2),
-  _$.register("a1", _onClickOnce2),
+_$.register("a2", $_return2),
+  _$.register("a0", $_return),
+  _$.register("a3", $onClickTwice),
+  _$.register("a1", $onClickOnce),
   init();

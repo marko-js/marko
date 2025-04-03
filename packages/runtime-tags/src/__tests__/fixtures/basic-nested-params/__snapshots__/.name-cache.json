@@ -3,20 +3,20 @@
     "props": {
       "$_$": "e",
       "$init": "a",
-      "$_expr_content_value": "t",
-      "$_dynamicTag": "o",
-      "$_value": "i",
-      "$_content": "n",
-      "$_inner$child_content": "r",
-      "$_outer$child_content": "d",
-      "$_params3$child_content": "m",
-      "$_child_content2": "c",
-      "$_y$child_content": "s",
-      "$_outer$child_content2_closure": "u",
-      "$_outer$child_content2": "l",
-      "$_params2$child_content": "v",
-      "$_x_effect": "f",
-      "$_x": "g"
+      "$$expr_content_value": "t",
+      "$$dynamicTag": "o",
+      "$$value": "i",
+      "$$content": "n",
+      "$$inner$child$content": "r",
+      "$$outer$child$content": "d",
+      "$$params3$child$content": "m",
+      "$$child_content2": "c",
+      "$$y$child$content": "s",
+      "$$outer$child$content2_closure": "u",
+      "$$outer$child$content2": "l",
+      "$$params2$child$content": "v",
+      "$$x_effect": "f",
+      "$$x": "g"
     }
   }
 }

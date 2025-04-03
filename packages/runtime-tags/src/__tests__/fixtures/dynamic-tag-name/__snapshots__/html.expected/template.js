@@ -3,7 +3,7 @@ import tagB from "./tags/tag-b/index.marko";
 const foo = '';
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default _$.createTemplate("__tests__/template.marko", input => {
-  const _scope0_id = _$.nextScopeId();
+  const $scope0_id = _$.nextScopeId();
   const {
     content,
     x,
@@ -14,77 +14,77 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     level,
     other
   } = input;
-  _$.dynamicTag(_scope0_id, "#text/0", content, {
+  _$.dynamicTag($scope0_id, "#text/0", content, {
     class: ["a", "b"],
     other: other
   }, 0, 0, 1);
-  _$.dynamicTag(_scope0_id, "#text/1", x, {
+  _$.dynamicTag($scope0_id, "#text/1", x, {
     class: ["a", "b"],
     other: other
   }, 0, 0, 1);
-  _$.dynamicTag(_scope0_id, "#text/2", show ? "div" : null, {
+  _$.dynamicTag($scope0_id, "#text/2", show ? "div" : null, {
     class: ["a", "b"],
     other: other
   }, 0, 0, 1);
-  _$.dynamicTag(_scope0_id, "#text/3", show && "div", {
+  _$.dynamicTag($scope0_id, "#text/3", show && "div", {
     class: ["a", "b"],
     other: other
   }, 0, 0, 1);
-  _$.dynamicTag(_scope0_id, "#text/4", isLarge ? "h1" : "h2", {
+  _$.dynamicTag($scope0_id, "#text/4", isLarge ? "h1" : "h2", {
     class: ["a", "b"],
     other: other
   }, 0, 0, 1);
-  _$.dynamicTag(_scope0_id, "#text/5", showTagA ? tagA : tagB, {
+  _$.dynamicTag($scope0_id, "#text/5", showTagA ? tagA : tagB, {
     class: ["a", "b"],
     other: other
   }, 0, 0, 1);
-  _$.dynamicTag(_scope0_id, "#text/6", showTagA && tagA, {
+  _$.dynamicTag($scope0_id, "#text/6", showTagA && tagA, {
     class: ["a", "b"],
     other: other
   }, 0, 0, 1);
-  _$.dynamicTag(_scope0_id, "#text/7", showTagA && tagA, {
+  _$.dynamicTag($scope0_id, "#text/7", showTagA && tagA, {
     class: ["a", "b"],
     other: other
   }, _$.registerContent("__tests__/template.marko_1_renderer", () => {
-    const _scope1_id = _$.nextScopeId();
+    const $scope1_id = _$.nextScopeId();
     _$.write("Body content");
-  }, _scope0_id), 0, 1);
-  _$.dynamicTag(_scope0_id, "#text/8", tag || tagA, {
+  }, $scope0_id), 0, 1);
+  _$.dynamicTag($scope0_id, "#text/8", tag || tagA, {
     class: ["a", "b"],
     other: other
   }, 0, 0, 1);
   const largeHeading = isLarge && "h1";
-  _$.dynamicTag(_scope0_id, "#text/9", largeHeading || "h2", {
+  _$.dynamicTag($scope0_id, "#text/9", largeHeading || "h2", {
     class: ["a", "b"],
     other: other
   }, 0, 0, 1);
-  _$.dynamicTag(_scope0_id, "#text/10", global.x = "a" + "b", {
+  _$.dynamicTag($scope0_id, "#text/10", global.x = "a" + "b", {
     class: ["a", "b"],
     other: other
   }, 0, 0, 1);
-  _$.dynamicTag(_scope0_id, "#text/11", "h" + level, {
+  _$.dynamicTag($scope0_id, "#text/11", "h" + level, {
     class: ["a", "b"],
     other: other
   }, 0, 0, 1);
-  _$.dynamicTag(_scope0_id, "#text/12", `h${level}`, {
+  _$.dynamicTag($scope0_id, "#text/12", `h${level}`, {
     class: ["a", "b"],
     other: other
   }, 0, 0, 1);
   const tagConstA = "a";
-  _$.dynamicTag(_scope0_id, "#text/13", tagConstA, {
+  _$.dynamicTag($scope0_id, "#text/13", tagConstA, {
     class: ["a", "b"],
     other: other
   }, 0, 0, 1);
   const tagConstB = show ? "div" : null;
-  _$.dynamicTag(_scope0_id, "#text/14", tagConstB, {
+  _$.dynamicTag($scope0_id, "#text/14", tagConstB, {
     class: ["a", "b"],
     other: other
   }, 0, 0, 1);
-  _$.dynamicTag(_scope0_id, "#text/15", `h${1}`, {});
-  _$.dynamicTag(_scope0_id, "#text/16", foo || 'div', {});
-  _$.dynamicTag(_scope0_id, "#text/17", foo + 'div', {});
-  _$.dynamicTag(_scope0_id, "#text/18", "d" + "iv", {});
-  _$.writeScope(_scope0_id, {
+  _$.dynamicTag($scope0_id, "#text/15", `h${1}`, {});
+  _$.dynamicTag($scope0_id, "#text/16", foo || 'div', {});
+  _$.dynamicTag($scope0_id, "#text/17", foo + 'div', {});
+  _$.dynamicTag($scope0_id, "#text/18", "d" + "iv", {});
+  _$.writeScope($scope0_id, {
     content,
     x,
     show,

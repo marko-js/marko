@@ -1,18 +1,18 @@
 // size: 254 (min) 171 (brotli)
-const _input_effect = _$.effect("a0", (_scope) => _$.attrsEvents(_scope, 0)),
-  _input = _$.value(2, (_scope, input) => {
-    _$.attrs(_scope, 0, { type: "checkbox", ...input }), _input_effect(_scope);
+const $input_effect = _$.effect("a0", ($scope) => _$.attrsEvents($scope, 0)),
+  $input = _$.value(2, ($scope, input) => {
+    _$.attrs($scope, 0, { type: "checkbox", ...input }), $input_effect($scope);
   }),
-  _checked = _$.state(2, (_scope, checked) => {
-    _$.data(_scope[1], String(checked)),
-      _input(_scope[0], {
+  $checked = _$.state(2, ($scope, checked) => {
+    _$.data($scope[1], String(checked)),
+      $input($scope[0], {
         checked: checked,
-        checkedChange: _checkedChange(_scope),
+        checkedChange: $checkedChange($scope),
       });
   });
-function _checkedChange(_scope) {
+function $checkedChange($scope) {
   return (_new_checked) => {
-    _checked(_scope, _new_checked);
+    $checked($scope, _new_checked);
   };
 }
-_$.register("b0", _checkedChange), init();
+_$.register("b0", $checkedChange), init();

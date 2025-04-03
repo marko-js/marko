@@ -3,11 +3,11 @@
     "props": {
       "$_$": "t",
       "$init": "e",
-      "$_for_content": "r",
-      "$_for": "a",
-      "$_children_length": "o",
-      "$_children_effect": "m",
-      "$_children": "d"
+      "$$for_content": "r",
+      "$$for": "a",
+      "$$children_length": "o",
+      "$$children_effect": "m",
+      "$$children": "d"
     }
   }
 }

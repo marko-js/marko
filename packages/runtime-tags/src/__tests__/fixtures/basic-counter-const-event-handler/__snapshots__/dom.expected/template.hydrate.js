@@ -1,14 +1,14 @@
 // size: 194 (min) 139 (brotli)
-const _increment_effect = _$.effect("a1", (_scope, { 3: increment }) =>
-    _$.on(_scope[0], "click", increment),
+const $increment2_effect = _$.effect("a1", ($scope, { 3: increment }) =>
+    _$.on($scope[0], "click", increment),
   ),
-  _increment = _$.value(3, _increment_effect),
-  _clickCount = _$.state(2, (_scope, clickCount) => {
-    _$.data(_scope[1], clickCount), _increment(_scope, _increment2(_scope));
+  $increment2 = _$.value(3, $increment2_effect),
+  $clickCount = _$.state(2, ($scope, clickCount) => {
+    _$.data($scope[1], clickCount), $increment2($scope, $increment($scope));
   });
-function _increment2(_scope, { 2: clickCount } = _scope) {
+function $increment($scope, { 2: clickCount } = $scope) {
   return function () {
-    _clickCount(_scope, clickCount + 1);
+    $clickCount($scope, clickCount + 1);
   };
 }
-_$.register("a0", _increment2), init();
+_$.register("a0", $increment), init();

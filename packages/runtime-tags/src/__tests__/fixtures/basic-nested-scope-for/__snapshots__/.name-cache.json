@@ -3,9 +3,9 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_expr_selected_num$for_content": "a",
-      "$_selected$for_content": "e",
-      "$_selected": "r"
+      "$$expr_selected_num$for$content": "a",
+      "$$selected$for$content": "e",
+      "$$selected": "r"
     }
   }
 }

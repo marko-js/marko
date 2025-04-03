@@ -3,9 +3,9 @@
     "props": {
       "$_$": "t",
       "$init": "a",
-      "$_lastClickCount": "o",
-      "$_clickCount_effect": "m",
-      "$_clickCount": "r"
+      "$$lastClickCount": "o",
+      "$$clickCount_effect": "m",
+      "$$clickCount": "r"
     }
   }
 }

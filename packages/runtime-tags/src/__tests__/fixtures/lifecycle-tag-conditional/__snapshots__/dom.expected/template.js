@@ -1,11 +1,11 @@
-export const _template = "<!><!><div id=ref></div><button id=increment>Increment</button><button id=toggle>Toggle</button>";
-export const _walks = /* replace, over(2), get, over(1), get, over(1) */"D%c b b";
+export const $template = "<!><!><div id=ref></div><button id=increment>Increment</button><button id=toggle>Toggle</button>";
+export const $walks = /* replace, over(2), get, over(1), get, over(1) */"D%c b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _x$if_content_effect = _$.effect("__tests__/template.marko_1_x", (_scope, {
+const $x$if$content_effect = _$.effect("__tests__/template.marko_1_x", ($scope, {
   _: {
     x
   }
-}) => _$.lifecycle(_scope, "_lifecycle", {
+}) => _$.lifecycle($scope, "$lifecycle", {
   onMount: function () {
     document.getElementById("ref").textContent = "Mount " + x;
   },
@@ -16,29 +16,29 @@ const _x$if_content_effect = _$.effect("__tests__/template.marko_1_x", (_scope, 
     document.getElementById("ref").textContent = "Destroy";
   }
 }));
-const _x$if_content = /* @__PURE__ */_$.conditionalClosure("x", "#text/0", 0, _x$if_content_effect);
-const _if_content = /* @__PURE__ */_$.createRenderer(0, 0, 0, 0, _scope => _x$if_content._(_scope));
-const _if = /* @__PURE__ */_$.conditional("#text/0", _if_content);
-const _show_effect = _$.effect("__tests__/template.marko_0_show", (_scope, {
+const $x$if$content = /* @__PURE__ */_$.conditionalClosure("x", "#text/0", 0, $x$if$content_effect);
+const $if_content = /* @__PURE__ */_$.createRenderer(0, 0, 0, 0, $scope => $x$if$content._($scope));
+const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);
+const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
   show
-}) => _$.on(_scope["#button/2"], "click", function () {
-  _show(_scope, !show);
+}) => _$.on($scope["#button/2"], "click", function () {
+  $show($scope, !show);
 }));
-const _show = /* @__PURE__ */_$.state("show/4", (_scope, show) => {
-  _if(_scope, show ? 0 : 1);
-  _show_effect(_scope);
+const $show = /* @__PURE__ */_$.state("show/4", ($scope, show) => {
+  $if($scope, show ? 0 : 1);
+  $show_effect($scope);
 });
-const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
+const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
   x
-}) => _$.on(_scope["#button/1"], "click", function () {
-  _x(_scope, x + 1), x;
+}) => _$.on($scope["#button/1"], "click", function () {
+  $x($scope, x + 1), x;
 }));
-const _x = /* @__PURE__ */_$.state("x/3", _scope => {
-  _x$if_content(_scope);
-  _x_effect(_scope);
+const $x = /* @__PURE__ */_$.state("x/3", $scope => {
+  $x$if$content($scope);
+  $x_effect($scope);
 });
-export function _setup(_scope) {
-  _x(_scope, 0);
-  _show(_scope, true);
+export function $setup($scope) {
+  $x($scope, 0);
+  $show($scope, true);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

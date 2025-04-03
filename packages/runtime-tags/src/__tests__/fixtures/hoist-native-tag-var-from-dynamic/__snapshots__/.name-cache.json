@@ -3,14 +3,14 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_dynamicTag2": "e",
-      "$_dynamicTag": "r",
-      "$_input_content": "s",
-      "$_get_hoisted_el": "a",
-      "$_get_hoisted_el2": "i",
-      "$_child_content2": "n",
-      "$_hoisted_el2$inputshowChildnull_content_effect": "c",
-      "$_hoisted_el2$inputshowChildnull_content": "f"
+      "$$dynamicTag2": "e",
+      "$$dynamicTag": "r",
+      "$$input_content": "s",
+      "$$get$hoisted_el": "a",
+      "$$get$hoisted_el2": "i",
+      "$$child_content2": "n",
+      "$$hoisted_el2$inputshowChildnull$content_effect": "c",
+      "$$hoisted_el2$inputshowChildnull$content": "f"
     }
   }
 }

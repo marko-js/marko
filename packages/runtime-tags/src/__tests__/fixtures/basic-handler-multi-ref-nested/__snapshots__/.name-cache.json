@@ -3,9 +3,9 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_expr_a_b_effect": "m",
-      "$_expr_a_b": "a",
-      "$_a": "i"
+      "$$expr_a_b_effect": "m",
+      "$$expr_a_b": "a",
+      "$$a": "i"
     }
   }
 }

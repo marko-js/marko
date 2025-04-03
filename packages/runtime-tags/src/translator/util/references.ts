@@ -1109,7 +1109,7 @@ export function isAssignedBindingExtra(
 
 export interface RegisteredFnExtra extends ReferencedExtra {
   registerId: string;
-  name: string | undefined;
+  name: string;
   referencesScope?: boolean;
   referencedBindingsInFunction: ReferencedBindings;
 }

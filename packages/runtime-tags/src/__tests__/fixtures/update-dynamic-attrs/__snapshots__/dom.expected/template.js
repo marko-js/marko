@@ -1,36 +1,36 @@
-export const _template = "<div></div><div></div><div></div>";
-export const _walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
+export const $template = "<div></div><div></div><div></div>";
+export const $walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _expr_input_value_a_effect = _$.effect("__tests__/template.marko_0_input_value_a", _scope => _$.attrsEvents(_scope, "#div/1"));
-const _expr_input_value_a = /* @__PURE__ */_$.intersection(7, _scope => {
+const $expr_input_value_a_effect = _$.effect("__tests__/template.marko_0_input_value_a", $scope => _$.attrsEvents($scope, "#div/1"));
+const $expr_input_value_a = /* @__PURE__ */_$.intersection(7, $scope => {
   const {
     input_value,
     a
-  } = _scope;
-  _$.attrs(_scope, "#div/1", {
+  } = $scope;
+  _$.attrs($scope, "#div/1", {
     a: a,
     ...input_value
   });
-  _expr_input_value_a_effect(_scope);
+  $expr_input_value_a_effect($scope);
 });
-const _a = /* @__PURE__ */_$.state("a/6", (_scope, a) => {
-  _$.attr(_scope["#div/2"], "a", a);
-  _expr_input_value_a(_scope);
+const $a = /* @__PURE__ */_$.state("a/6", ($scope, a) => {
+  _$.attr($scope["#div/2"], "a", a);
+  $expr_input_value_a($scope);
 });
-const _input_value_effect = _$.effect("__tests__/template.marko_0_input_value", _scope => {
-  _$.attrsEvents(_scope, "#div/0");
-  _$.attrsEvents(_scope, "#div/2");
+const $input_value_effect = _$.effect("__tests__/template.marko_0_input_value", $scope => {
+  _$.attrsEvents($scope, "#div/0");
+  _$.attrsEvents($scope, "#div/2");
 });
-export const _input_value = /* @__PURE__ */_$.value("input_value", (_scope, input_value) => {
-  _$.attrs(_scope, "#div/0", input_value);
-  _$.partialAttrs(_scope, "#div/2", input_value, {
+export const $input_value = /* @__PURE__ */_$.value("input_value", ($scope, input_value) => {
+  _$.attrs($scope, "#div/0", input_value);
+  _$.partialAttrs($scope, "#div/2", input_value, {
     a: 1
   });
-  _expr_input_value_a(_scope);
-  _input_value_effect(_scope);
+  $expr_input_value_a($scope);
+  $input_value_effect($scope);
 });
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => _input_value(_scope, input.value));
-export function _setup(_scope) {
-  _a(_scope, 0);
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_value($scope, input.value));
+export function $setup($scope) {
+  $a($scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

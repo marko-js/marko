@@ -1,44 +1,44 @@
 // size: 454 (min) 287 (brotli)
-const _expr_input_content_input_name_x = _$.intersection(
+const $expr_input_content_input_name_x = _$.intersection(
     8,
-    (_scope) => {
-      const { 5: input_content, 6: input_name, 7: x } = _scope;
-      _dynamicTag(_scope, input_content, () => ({
+    ($scope) => {
+      const { 5: input_content, 6: input_name, 7: x } = $scope;
+      $dynamicTag($scope, input_content, () => ({
         count: x,
         name: input_name,
       }));
     },
     2,
   ),
-  _dynamicTag = _$.dynamicTag(2),
-  _x_effect = _$.effect("a0", (_scope, { 7: x }) =>
-    _$.on(_scope[0], "click", function () {
-      _x(_scope, x + 1);
+  $dynamicTag = _$.dynamicTag(2),
+  $x_effect = _$.effect("a0", ($scope, { 7: x }) =>
+    _$.on($scope[0], "click", function () {
+      $x($scope, x + 1);
     }),
   ),
-  _x = _$.state(7, (_scope, x) => {
-    _$.data(_scope[1], x),
-      _expr_input_content_input_name_x(_scope),
-      _x_effect(_scope);
+  $x = _$.state(7, ($scope, x) => {
+    _$.data($scope[1], x),
+      $expr_input_content_input_name_x($scope),
+      $x_effect($scope);
   }),
-  _name$customtag_content = _$.value(5, (_scope, name) =>
-    _$.data(_scope[0], name),
+  $name$customtag$content = _$.value(5, ($scope, name) =>
+    _$.data($scope[0], name),
   ),
-  _count$customtag_content = _$.value(4, (_scope, count) =>
-    _$.data(_scope[1], count),
+  $count$customtag$content = _$.value(4, ($scope, count) =>
+    _$.data($scope[1], count),
   ),
-  _temp$customtag_content = _$.value(3, (_scope, _temp) => {
-    _count$customtag_content(_scope, _temp.count),
-      _name$customtag_content(_scope, _temp.name);
+  $temp$customtag$content = _$.value(3, ($scope, $temp) => {
+    $count$customtag$content($scope, $temp.count),
+      $name$customtag$content($scope, $temp.name);
   }),
-  _params2$customtag_content = _$.value(2, (_scope, _params2) =>
-    _temp$customtag_content(_scope, _params2?.[0]),
+  $params2$customtag$content = _$.value(2, ($scope, $params2) =>
+    $temp$customtag$content($scope, $params2?.[0]),
   );
 _$.registerContent(
   "b0",
   "<div>Count (<!>): <!></div>",
   "Db%c%",
   0,
-  _params2$customtag_content,
+  $params2$customtag$content,
 ),
   init();

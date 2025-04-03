@@ -3,12 +3,12 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_onClick_effect": "r",
-      "$_onClick$1": "a",
-      "$_clickCount$mybutton_content": "e",
-      "$_clickCount_closure": "m",
-      "$_clickCount": "n",
-      "$_onClick": "i"
+      "$$onClick_effect": "r",
+      "$$onClick$1": "a",
+      "$$clickCount$mybutton$content": "e",
+      "$$clickCount_closure": "m",
+      "$$clickCount": "n",
+      "$$onClick": "i"
     }
   }
 }

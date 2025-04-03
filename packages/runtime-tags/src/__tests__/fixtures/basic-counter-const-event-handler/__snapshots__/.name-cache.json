@@ -3,10 +3,10 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_increment_effect": "r",
-      "$_increment": "a",
-      "$_clickCount": "m",
-      "$_increment2": "e"
+      "$$increment2_effect": "r",
+      "$$increment2": "a",
+      "$$clickCount": "m",
+      "$$increment": "e"
     }
   }
 }

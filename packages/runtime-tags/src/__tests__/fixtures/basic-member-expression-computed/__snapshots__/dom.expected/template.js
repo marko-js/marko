@@ -1,30 +1,30 @@
-export const _template = "<div> </div><div> </div><button>Update</button>";
-export const _walks = /* next(1), get, out(1), next(1), get, out(1), get, over(1) */"D lD l b";
+export const $template = "<div> </div><div> </div><button>Update</button>";
+export const $walks = /* next(1), get, out(1), next(1), get, out(1), get, over(1) */"D lD l b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _expr_items_index_effect = _$.effect("__tests__/template.marko_0_items_index", (_scope, {
+const $expr_items_index_effect = _$.effect("__tests__/template.marko_0_items_index", ($scope, {
   items,
   index
-}) => _$.on(_scope["#button/2"], "click", function () {
+}) => _$.on($scope["#button/2"], "click", function () {
   const newItems = items.slice(1);
-  _items(_scope, newItems);
-  _index(_scope, (index + 1) % newItems.length);
+  $items($scope, newItems);
+  $index($scope, (index + 1) % newItems.length);
 }));
-const _expr_items_index = /* @__PURE__ */_$.intersection(6, _scope => {
+const $expr_items_index = /* @__PURE__ */_$.intersection(6, $scope => {
   const {
     items,
     index
-  } = _scope;
-  _$.data(_scope["#text/1"], items[index]);
-  _expr_items_index_effect(_scope);
+  } = $scope;
+  _$.data($scope["#text/1"], items[index]);
+  $expr_items_index_effect($scope);
 });
-const _index = /* @__PURE__ */_$.state("index/5", _expr_items_index);
-const _items_ = /* @__PURE__ */_$.value("items_0", (_scope, items_0) => _$.data(_scope["#text/0"], items_0));
-const _items = /* @__PURE__ */_$.state("items/3", (_scope, items) => {
-  _items_(_scope, items?.[0]);
-  _expr_items_index(_scope);
+const $index = /* @__PURE__ */_$.state("index/5", $expr_items_index);
+const $items_ = /* @__PURE__ */_$.value("items_0", ($scope, items_0) => _$.data($scope["#text/0"], items_0));
+const $items = /* @__PURE__ */_$.state("items/3", ($scope, items) => {
+  $items_($scope, items?.[0]);
+  $expr_items_index($scope);
 });
-export function _setup(_scope) {
-  _items(_scope, ["a", "b", "c"]);
-  _index(_scope, 0);
+export function $setup($scope) {
+  $items($scope, ["a", "b", "c"]);
+  $index($scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

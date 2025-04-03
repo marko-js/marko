@@ -1,10 +1,10 @@
 // size: 158 (min) 110 (brotli)
-const _foo = _$.state(3, (_scope, foo) => {
-  _$.classAttr(_scope[0], foo.class), _$.classAttr(_scope[1], foo.class);
+const $foo = _$.state(3, ($scope, foo) => {
+  _$.classAttr($scope[0], foo.class), _$.classAttr($scope[1], foo.class);
 });
-_$.effect("a0", (_scope) =>
-  _$.on(_scope[2], "click", function () {
-    _foo(_scope, { class: "baz" });
+_$.effect("a0", ($scope) =>
+  _$.on($scope[2], "click", function () {
+    $foo($scope, { class: "baz" });
   }),
 ),
   init();

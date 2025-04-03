@@ -1,17 +1,17 @@
-export const _template = "<div> </div>";
-export const _walks = /* next(1), get, out(1) */"D l";
+export const $template = "<div> </div>";
+export const $walks = /* next(1), get, out(1) */"D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _expr_value_dummy = /* @__PURE__ */_$.intersection(5, _scope => {
+const $expr_value_dummy = /* @__PURE__ */_$.intersection(5, $scope => {
   const {
     value,
     dummy
-  } = _scope;
-  _$.data(_scope["#text/0"], (dummy, value));
+  } = $scope;
+  _$.data($scope["#text/0"], (dummy, value));
 });
-const _dummy = /* @__PURE__ */_$.state("dummy/4", _expr_value_dummy);
-export const _value = /* @__PURE__ */_$.value("value", _expr_value_dummy);
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => _value(_scope, input.value));
-export function _setup(_scope) {
-  _dummy(_scope, {});
+const $dummy = /* @__PURE__ */_$.state("dummy/4", $expr_value_dummy);
+export const $value = /* @__PURE__ */_$.value("value", $expr_value_dummy);
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $value($scope, input.value));
+export function $setup($scope) {
+  $dummy($scope, {});
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/display-intersection.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/display-intersection.marko", $template, $walks, $setup, $input);

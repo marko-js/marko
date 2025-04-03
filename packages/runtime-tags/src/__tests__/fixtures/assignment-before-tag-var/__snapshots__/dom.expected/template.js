@@ -1,19 +1,19 @@
-export const _template = "<button>+</button><span><!> was <!></span>";
-export const _walks = /* get, over(1), next(1), replace, over(2), replace, out(1) */" bD%c%l";
+export const $template = "<button>+</button><span><!> was <!></span>";
+export const $walks = /* get, over(1), next(1), replace, over(2), replace, out(1) */" bD%c%l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _lastClickCount = /* @__PURE__ */_$.state("lastClickCount/4", (_scope, lastClickCount) => _$.data(_scope["#text/2"], lastClickCount));
-const _clickCount_effect = _$.effect("__tests__/template.marko_0_clickCount", (_scope, {
+const $lastClickCount = /* @__PURE__ */_$.state("lastClickCount/4", ($scope, lastClickCount) => _$.data($scope["#text/2"], lastClickCount));
+const $clickCount_effect = _$.effect("__tests__/template.marko_0_clickCount", ($scope, {
   clickCount
-}) => _$.on(_scope["#button/0"], "click", function () {
-  _lastClickCount(_scope, clickCount);
-  _clickCount(_scope, clickCount + 1), clickCount;
+}) => _$.on($scope["#button/0"], "click", function () {
+  $lastClickCount($scope, clickCount);
+  $clickCount($scope, clickCount + 1), clickCount;
 }));
-const _clickCount = /* @__PURE__ */_$.state("clickCount/3", (_scope, clickCount) => {
-  _$.data(_scope["#text/1"], clickCount);
-  _clickCount_effect(_scope);
+const $clickCount = /* @__PURE__ */_$.state("clickCount/3", ($scope, clickCount) => {
+  _$.data($scope["#text/1"], clickCount);
+  $clickCount_effect($scope);
 });
-export function _setup(_scope) {
-  _clickCount(_scope, 0);
-  _lastClickCount(_scope, undefined);
+export function $setup($scope) {
+  $clickCount($scope, 0);
+  $lastClickCount($scope, undefined);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

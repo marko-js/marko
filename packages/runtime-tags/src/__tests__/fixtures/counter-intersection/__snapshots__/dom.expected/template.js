@@ -1,32 +1,32 @@
-export const _template = "<div><button class=a> </button> + <button class=b> </button> = <!></div>";
-export const _walks = /* next(1), get, next(1), get, out(1), over(1), get, next(1), get, out(1), over(1), replace, out(1) */"D D lb D lb%l";
+export const $template = "<div><button class=a> </button> + <button class=b> </button> = <!></div>";
+export const $walks = /* next(1), get, next(1), get, out(1), over(1), get, next(1), get, out(1), over(1), replace, out(1) */"D D lb D lb%l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _expr_a_b = /* @__PURE__ */_$.intersection(7, _scope => {
+const $expr_a_b = /* @__PURE__ */_$.intersection(7, $scope => {
   const {
     a,
     b
-  } = _scope;
-  _$.data(_scope["#text/4"], a + b);
+  } = $scope;
+  _$.data($scope["#text/4"], a + b);
 });
-const _b = /* @__PURE__ */_$.state("b/6", (_scope, b) => {
-  _$.data(_scope["#text/3"], b);
-  _expr_a_b(_scope);
+const $b = /* @__PURE__ */_$.state("b/6", ($scope, b) => {
+  _$.data($scope["#text/3"], b);
+  $expr_a_b($scope);
 });
-const _a = /* @__PURE__ */_$.state("a/5", (_scope, a) => {
-  _$.data(_scope["#text/1"], a);
-  _expr_a_b(_scope);
+const $a = /* @__PURE__ */_$.state("a/5", ($scope, a) => {
+  _$.data($scope["#text/1"], a);
+  $expr_a_b($scope);
 });
-const _setup_effect = _$.effect("__tests__/template.marko_0", _scope => {
-  _$.on(_scope["#button/0"], "click", function () {
-    _a(_scope, 10);
+const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => {
+  _$.on($scope["#button/0"], "click", function () {
+    $a($scope, 10);
   });
-  _$.on(_scope["#button/2"], "click", function () {
-    _b(_scope, 5);
+  _$.on($scope["#button/2"], "click", function () {
+    $b($scope, 5);
   });
 });
-export function _setup(_scope) {
-  _a(_scope, 0);
-  _b(_scope, 0);
-  _setup_effect(_scope);
+export function $setup($scope) {
+  $a($scope, 0);
+  $b($scope, 0);
+  $setup_effect($scope);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

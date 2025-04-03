@@ -1,30 +1,30 @@
 // size: 373 (min) 223 (brotli)
 _$.enableCatch();
-const _err$catch_content = _$.value(2, (_scope, err) =>
-    _$.data(_scope[0], err),
+const $err$catch$content = _$.value(2, ($scope, err) =>
+    _$.data($scope[0], err),
   ),
-  _params2$catch_content = _$.value(1, (_scope, _params2) =>
-    _err$catch_content(_scope, _params2[0]),
+  $params2$catch$content = _$.value(1, ($scope, $params2) =>
+    $err$catch$content($scope, $params2[0]),
   );
-_$.registerContent("a0", " ", " ", 0, _params2$catch_content);
-const _clickCount$try_content_effect = _$.effect(
+_$.registerContent("a0", " ", " ", 0, $params2$catch$content);
+const $clickCount$try$content_effect = _$.effect(
     "a1",
-    (_scope, { _: { 2: clickCount } }) => {
-      _$.on(_scope[0], "click", function () {
-        _clickCount(_scope._, clickCount + 1);
+    ($scope, { _: { 2: clickCount } }) => {
+      _$.on($scope[0], "click", function () {
+        $clickCount($scope._, clickCount + 1);
       }),
-        (_scope._[0].textContent = clickCount);
+        ($scope._[0].textContent = clickCount);
     },
   ),
-  _clickCount$try_content = _$.dynamicClosureRead(2, (_scope, clickCount) => {
+  $clickCount$try$content = _$.dynamicClosureRead(2, ($scope, clickCount) => {
     _$.data(
-      _scope[1],
+      $scope[1],
       (() => {
         if (clickCount > 1) throw new Error("ERROR!");
       })(),
     ),
-      _clickCount$try_content_effect(_scope);
+      $clickCount$try$content_effect($scope);
   }),
-  _clickCount_closure = _$.dynamicClosure(_clickCount$try_content),
-  _clickCount = _$.state(2, _clickCount_closure);
+  $clickCount_closure = _$.dynamicClosure($clickCount$try$content),
+  $clickCount = _$.state(2, $clickCount_closure);
 init();

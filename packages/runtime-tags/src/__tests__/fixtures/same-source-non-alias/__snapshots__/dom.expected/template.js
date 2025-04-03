@@ -1,31 +1,31 @@
-export const _template = "<button><!> <!></button>";
-export const _walks = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l";
-const createWrapper = _createWrapper;
+export const $template = "<button><!> <!></button>";
+export const $walks = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l";
+const createWrapper = $createWrapper;
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _b = (_scope, b) => {
-  _$.data(_scope["#text/2"], b);
+const $b = ($scope, b) => {
+  _$.data($scope["#text/2"], b);
 };
-const _a = /* @__PURE__ */_$.value("a", (_scope, a) => {
-  _$.data(_scope["#text/1"], a);
-  _b(_scope, a);
+const $a = /* @__PURE__ */_$.value("a", ($scope, a) => {
+  _$.data($scope["#text/1"], a);
+  $b($scope, a);
 });
-const _pattern2 = /* @__PURE__ */_$.value("_pattern", (_scope, _pattern) => _a(_scope, _pattern.a));
-const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
+const $pattern2 = /* @__PURE__ */_$.value("$pattern", ($scope, $pattern) => $a($scope, $pattern.a));
+const $count_effect = _$.effect("__tests__/template.marko_0_count", ($scope, {
   count
-}) => _$.on(_scope["#button/0"], "click", function () {
-  _count(_scope, count + 1), count;
+}) => _$.on($scope["#button/0"], "click", function () {
+  $count($scope, count + 1), count;
 }));
-const _count = /* @__PURE__ */_$.state("count/3", (_scope, count) => {
-  _pattern2(_scope, createWrapper(count));
-  _count_effect(_scope);
+const $count = /* @__PURE__ */_$.state("count/3", ($scope, count) => {
+  $pattern2($scope, createWrapper(count));
+  $count_effect($scope);
 });
-export function _setup(_scope) {
-  _count(_scope, 0);
+export function $setup($scope) {
+  $count($scope, 0);
 }
-function _createWrapper(a) {
+function $createWrapper(a) {
   return {
     a
   };
 }
-_$.register("__tests__/template.marko_0/createWrapper", _createWrapper);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+_$.register("__tests__/template.marko_0/createWrapper", $createWrapper);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

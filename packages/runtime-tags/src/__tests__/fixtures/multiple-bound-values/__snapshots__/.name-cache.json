@@ -3,16 +3,16 @@
     "props": {
       "$_$": "t",
       "$init": "e",
-      "$_expr_input_count2_input_count2Change": "a",
-      "$_expr_input_count1_input_count1Change": "n",
-      "$_count2_effect": "o",
-      "$_count2$1": "r",
-      "$_count_effect": "i",
-      "$_count$1": "c",
-      "$_input_count2": "s",
-      "$_input_count": "f",
-      "$_count2": "m",
-      "$_count": "u"
+      "$$expr_input_count2_input_count2Change": "a",
+      "$$expr_input_count1_input_count1Change": "n",
+      "$$count2_effect": "o",
+      "$$count2$1": "r",
+      "$$count_effect": "i",
+      "$$count$1": "c",
+      "$$input_count2": "s",
+      "$$input_count": "f",
+      "$$count2": "m",
+      "$$count": "u"
     }
   }
 }

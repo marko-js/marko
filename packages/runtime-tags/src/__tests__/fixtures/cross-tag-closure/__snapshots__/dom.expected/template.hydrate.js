@@ -1,19 +1,19 @@
 // size: 315 (min) 202 (brotli)
-const _value = _$.state(3, _$.tagVarSignal);
-_$.register("a0", function (_scope) {
+const $value = _$.state(3, _$.tagVarSignal);
+_$.register("a0", function ($scope) {
   return (_new_value) => {
-    _value(_scope, _new_value);
+    $value($scope, _new_value);
   };
 });
-const _count$mytag_content_effect = _$.effect(
+const $count$mytag$content_effect = _$.effect(
     "c1",
-    (_scope, { _: { 3: count } }) =>
-      _$.on(_scope[0], "click", function () {
-        _$.tagVarSignalChange(_scope._[0], count + 1);
+    ($scope, { _: { 3: count } }) =>
+      _$.on($scope[0], "click", function () {
+        _$.tagVarSignalChange($scope._[0], count + 1);
       }),
   ),
-  _count$mytag_content = _$.dynamicClosureRead(3, (_scope, count) => {
-    _$.data(_scope[1], count), _count$mytag_content_effect(_scope);
+  $count$mytag$content = _$.dynamicClosureRead(3, ($scope, count) => {
+    _$.data($scope[1], count), $count$mytag$content_effect($scope);
   }),
-  _count_closure = _$.dynamicClosure(_count$mytag_content);
-_$.registerBoundSignal("c2", _$.value(3, _count_closure)), init();
+  $count_closure = _$.dynamicClosure($count$mytag$content);
+_$.registerBoundSignal("c2", _$.value(3, $count_closure)), init();

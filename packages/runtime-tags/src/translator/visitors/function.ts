@@ -5,12 +5,11 @@ import {
   isNativeTag,
 } from "@marko/compiler/babel-utils";
 
+import { generateUid } from "../util/generate-uid";
 import { getFnRoot, getMarkoRoot } from "../util/get-root";
 import { isCoreTagName } from "../util/is-core-tag";
-import { getSection, type Section } from "../util/sections";
+import { getSection } from "../util/sections";
 import type { TemplateVisitor } from "../util/visitors";
-const functionIdsBySection = new WeakMap<Section, Map<string, number>>();
-
 declare module "@marko/compiler/dist/types" {
   export interface FunctionDeclarationExtra {
     registerId?: string;
@@ -57,48 +56,34 @@ export default {
     }
 
     const { node } = fn;
+    const section = getSection(fn);
     const extra = (node.extra ??= {});
-    const name = (extra.name =
-      (fn.node as t.FunctionExpression).id?.name ||
-      (isMarkoAttribute(markoRoot)
-        ? markoRoot.node.default
-          ? t.toIdentifier(
-              markoRoot.parentPath.has("var")
-                ? markoRoot.parentPath.get("var")
-                : markoRoot.parentPath.get("name"),
-            )
-          : markoRoot.node.name
-        : t.isVariableDeclarator(fn.parent) && t.isIdentifier(fn.parent.id)
-          ? fn.parent.id.name
-          : t.isObjectMethod(node) && t.isIdentifier(node.key)
-            ? node.key.name
-            : "anonymous"));
-
     const {
       markoOpts,
       opts: { filename },
     } = getFile();
-
-    const section = getSection(fn);
-    let functionNameCounts = functionIdsBySection.get(section);
-    if (!functionNameCounts) {
-      functionNameCounts = new Map();
-      functionIdsBySection.set(section, functionNameCounts);
-    }
-    const index = functionNameCounts.get(name);
-    let id = "";
-    if (index === undefined) {
-      functionNameCounts.set(name, 0);
-    } else {
-      functionNameCounts.set(name, index + 1);
-      id = `_${index}`;
-    }
+    const name = (extra.name = generateUid(
+      (fn.node as t.FunctionExpression).id?.name ||
+        (isMarkoAttribute(markoRoot)
+          ? markoRoot.node.default
+            ? t.toIdentifier(
+                markoRoot.parentPath.has("var")
+                  ? markoRoot.parentPath.get("var")
+                  : markoRoot.parentPath.get("name"),
+              )
+            : markoRoot.node.name
+          : t.isVariableDeclarator(fn.parent) && t.isIdentifier(fn.parent.id)
+            ? fn.parent.id.name
+            : t.isObjectMethod(node) && t.isIdentifier(node.key)
+              ? node.key.name
+              : "anonymous"),
+    ));
 
     extra.section = section;
     extra.registerId = getTemplateId(
       markoOpts,
       filename as string,
-      `${section.id}/${name + id}`,
+      `${section.id}/${name.slice(1)}`,
     );
   },
 } satisfies TemplateVisitor<t.Function>;

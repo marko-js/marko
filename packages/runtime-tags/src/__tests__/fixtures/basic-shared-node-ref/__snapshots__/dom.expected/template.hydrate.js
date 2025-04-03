@@ -1,30 +1,30 @@
 // size: 413 (min) 221 (brotli)
-const _x$for_content = _$.value(2, (_scope, x) => _$.data(_scope[0], x)),
-  _params2$for_content = _$.value(1, (_scope, _params2) =>
-    _x$for_content(_scope, _params2[0]),
+const $x$for$content = _$.value(2, ($scope, x) => _$.data($scope[0], x)),
+  $params2$for$content = _$.value(1, ($scope, $params2) =>
+    $x$for$content($scope, $params2[0]),
   ),
-  _for_content = _$.createRenderer("<li> </li>", "D ", 0, _params2$for_content),
-  _for = _$.loopOf(0, _for_content),
-  _list_effect = _$.effect("a0", (_scope, { 4: list }) =>
-    _$.on(_scope[2], "click", function () {
-      _list(_scope, [].concat(list).reverse());
+  $for_content = _$.createRenderer("<li> </li>", "D ", 0, $params2$for$content),
+  $for = _$.loopOf(0, $for_content),
+  $list_effect = _$.effect("a0", ($scope, { 4: list }) =>
+    _$.on($scope[2], "click", function () {
+      $list($scope, [].concat(list).reverse());
     }),
   ),
-  _list = _$.state(4, (_scope, list) => {
-    _for(_scope, [
+  $list = _$.state(4, ($scope, list) => {
+    $for($scope, [
       list,
       function (x) {
         return x;
       },
     ]),
-      _list_effect(_scope);
+      $list_effect($scope);
   }),
-  _open_effect = _$.effect("a1", (_scope, { 3: open }) =>
-    _$.on(_scope[1], "click", function () {
-      _open(_scope, !open);
+  $open_effect = _$.effect("a1", ($scope, { 3: open }) =>
+    _$.on($scope[1], "click", function () {
+      $open($scope, !open);
     }),
   ),
-  _open = _$.state(3, (_scope, open) => {
-    _$.attr(_scope[0], "hidden", !open), _open_effect(_scope);
+  $open = _$.state(3, ($scope, open) => {
+    _$.attr($scope[0], "hidden", !open), $open_effect($scope);
   });
 init();

@@ -1,25 +1,25 @@
-export const _template = "<div></div>";
-export const _walks = /* get, over(1) */" b";
-export const _setup = () => {};
+export const $template = "<div></div>";
+export const $walks = /* get, over(1) */" b";
+export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _expr_input_foo_input_bar = /* @__PURE__ */_$.intersection(5, _scope => {
+const $expr_input_foo_input_bar = /* @__PURE__ */_$.intersection(5, $scope => {
   const {
     input_foo,
     input_bar
-  } = _scope;
-  _$.attr(_scope["#div/0"], "nested", `a ${input_foo + ` nested ${input_bar}`} b`);
+  } = $scope;
+  _$.attr($scope["#div/0"], "nested", `a ${input_foo + ` nested ${input_bar}`} b`);
 });
-export const _input_bar = /* @__PURE__ */_$.value("input_bar", (_scope, input_bar) => {
-  _$.attr(_scope["#div/0"], "bar", `a ${input_bar} b`);
-  _expr_input_foo_input_bar(_scope);
+export const $input_bar = /* @__PURE__ */_$.value("input_bar", ($scope, input_bar) => {
+  _$.attr($scope["#div/0"], "bar", `a ${input_bar} b`);
+  $expr_input_foo_input_bar($scope);
 });
-export const _input_foo = /* @__PURE__ */_$.value("input_foo", (_scope, input_foo) => {
-  _$.classAttr(_scope["#div/0"], input_foo);
-  _$.attr(_scope["#div/0"], "foo", 'a' + input_foo + 'b');
-  _expr_input_foo_input_bar(_scope);
+export const $input_foo = /* @__PURE__ */_$.value("input_foo", ($scope, input_foo) => {
+  _$.classAttr($scope["#div/0"], input_foo);
+  _$.attr($scope["#div/0"], "foo", 'a' + input_foo + 'b');
+  $expr_input_foo_input_bar($scope);
 });
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
-  _input_foo(_scope, input.foo);
-  _input_bar(_scope, input.bar);
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {
+  $input_foo($scope, input.foo);
+  $input_bar($scope, input.bar);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

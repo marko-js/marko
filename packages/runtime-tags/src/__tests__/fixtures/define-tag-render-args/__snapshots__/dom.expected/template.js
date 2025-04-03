@@ -1,38 +1,38 @@
-export const _template = "<!><!><button> </button>";
-export const _walks = /* replace, over(1), get, next(1), get, out(1) */"D%b D l";
+export const $template = "<!><!><button> </button>";
+export const $walks = /* replace, over(1), get, next(1), get, out(1) */"D%b D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _c$define_content = /* @__PURE__ */_$.value("c", (_scope, c) => _$.data(_scope["#text/2"], c));
-const _b$define_content = /* @__PURE__ */_$.value("b", (_scope, b) => _$.data(_scope["#text/1"], b));
-const _a$define_content = /* @__PURE__ */_$.value("a", (_scope, a) => _$.data(_scope["#text/0"], a));
-const _params2$define_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => {
-  _a$define_content(_scope, _params2[0]);
-  _b$define_content(_scope, _params2[1]);
-  _c$define_content(_scope, _params2[2]);
+const $c$define$content = /* @__PURE__ */_$.value("c", ($scope, c) => _$.data($scope["#text/2"], c));
+const $b$define$content = /* @__PURE__ */_$.value("b", ($scope, b) => _$.data($scope["#text/1"], b));
+const $a$define$content = /* @__PURE__ */_$.value("a", ($scope, a) => _$.data($scope["#text/0"], a));
+const $params2$define$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => {
+  $a$define$content($scope, $params2[0]);
+  $b$define$content($scope, $params2[1]);
+  $c$define$content($scope, $params2[2]);
 });
-const _define_content = _$.registerContent("__tests__/template.marko_1_renderer", "<div><!>|<!>|<!></div>", /* next(1), replace, over(2), replace, over(2), replace */"D%c%c%", 0, _params2$define_content);
-const _expr_x_MyTag = /* @__PURE__ */_$.intersection(5, _scope => {
+const $define_content = _$.registerContent("__tests__/template.marko_1_renderer", "<div><!>|<!>|<!></div>", /* next(1), replace, over(2), replace, over(2), replace */"D%c%c%", 0, $params2$define$content);
+const $expr_x_MyTag = /* @__PURE__ */_$.intersection(5, $scope => {
   const {
     x,
     MyTag
-  } = _scope;
-  _dynamicTag(_scope, MyTag, () => [1, "Hello", x]);
+  } = $scope;
+  $dynamicTag($scope, MyTag, () => [1, "Hello", x]);
 });
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", 0, 0, 1);
-const _MyTag = /* @__PURE__ */_$.value("MyTag", _expr_x_MyTag);
-const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
+const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", 0, 0, 1);
+const $MyTag = /* @__PURE__ */_$.value("MyTag", $expr_x_MyTag);
+const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
   x
-}) => _$.on(_scope["#button/1"], "click", function () {
-  _x(_scope, x + 1), x;
+}) => _$.on($scope["#button/1"], "click", function () {
+  $x($scope, x + 1), x;
 }));
-const _x = /* @__PURE__ */_$.state("x/3", (_scope, x) => {
-  _$.data(_scope["#text/2"], x);
-  _expr_x_MyTag(_scope);
-  _x_effect(_scope);
+const $x = /* @__PURE__ */_$.state("x/3", ($scope, x) => {
+  _$.data($scope["#text/2"], x);
+  $expr_x_MyTag($scope);
+  $x_effect($scope);
 });
-export function _setup(_scope) {
-  _x(_scope, 1);
-  _MyTag(_scope, {
-    content: _define_content(_scope)
+export function $setup($scope) {
+  $x($scope, 1);
+  $MyTag($scope, {
+    content: $define_content($scope)
   });
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

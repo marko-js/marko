@@ -1,7 +1,7 @@
-export const _template = "";
-export const _walks = "";
+export const $template = "";
+export const $walks = "";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-export function _setup(_scope) {
-  _$.tagVarSignal(_scope, 1);
+export function $setup($scope) {
+  _$.tagVarSignal($scope, 1);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child/index.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child/index.marko", $template, $walks, $setup);

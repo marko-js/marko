@@ -3,14 +3,14 @@
     "props": {
       "$_$": "t",
       "$init": "a",
-      "$_expr_input_content_input_name_x": "n",
-      "$_dynamicTag": "o",
-      "$_x_effect": "e",
-      "$_x": "m",
-      "$_name$customtag_content": "i",
-      "$_count$customtag_content": "c",
-      "$_temp$customtag_content": "r",
-      "$_params2$customtag_content": "u"
+      "$$expr_input_content_input_name_x": "n",
+      "$$dynamicTag": "o",
+      "$$x_effect": "e",
+      "$$x": "m",
+      "$$name$customtag$content": "i",
+      "$$count$customtag$content": "c",
+      "$$temp$customtag$content": "r",
+      "$$params2$customtag$content": "u"
     }
   }
 }

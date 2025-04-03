@@ -1,9 +1,9 @@
 // size: 137 (min) 99 (brotli)
-const _y = _$.state(3, (_scope, y) => _$.data(_scope[1], y)),
-  _x_effect = _$.effect("a0", (_scope, { 2: x }) => {
-    _y(_scope, x), _x(_scope, 2);
+const $y = _$.state(3, ($scope, y) => _$.data($scope[1], y)),
+  $x_effect = _$.effect("a0", ($scope, { 2: x }) => {
+    $y($scope, x), $x($scope, 2);
   }),
-  _x = _$.state(2, (_scope, x) => {
-    _$.data(_scope[0], x), _x_effect(_scope);
+  $x = _$.state(2, ($scope, x) => {
+    _$.data($scope[0], x), $x_effect($scope);
   });
 init();

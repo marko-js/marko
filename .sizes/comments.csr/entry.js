@@ -1,101 +1,101 @@
-// size: 921 (min) 460 (brotli)
-const _expr_comment_comments_id$if_content = intersection(1, (_scope) => {
+// size: 921 (min) 461 (brotli)
+const $expr_comment_comments_id$if$content = intersection(1, ($scope) => {
     const {
       _: { 8: comment_comments, 11: id },
-    } = _scope;
-    _input$1(_scope[0], { comments: comment_comments, path: id });
+    } = $scope;
+    $input$1($scope[0], { comments: comment_comments, path: id });
   }),
-  _id$if_content = conditionalClosure(
+  $id$if$content = conditionalClosure(
     11,
     4,
     0,
-    _expr_comment_comments_id$if_content,
+    $expr_comment_comments_id$if$content,
   ),
-  _comment_comments$if_content = conditionalClosure(
+  $comment_comments$if$content = conditionalClosure(
     8,
     4,
     0,
-    _expr_comment_comments_id$if_content,
+    $expr_comment_comments_id$if$content,
   ),
-  _if_content = createRenderer(
+  $if_content = createRenderer(
     "<ul></ul>",
     "/ b&",
-    (_scope) => {
-      _scope[0];
+    ($scope) => {
+      $scope[0];
     },
     0,
-    (_scope) => {
-      _comment_comments$if_content._(_scope), _id$if_content._(_scope);
+    ($scope) => {
+      $comment_comments$if$content._($scope), $id$if$content._($scope);
     },
   ),
-  _expr_input_path_i$for_content = intersection(10, (_scope) => {
+  $expr_input_path_i$for$content = intersection(10, ($scope) => {
     const {
       _: { 4: input_path },
       9: i,
-    } = _scope;
-    _id$for_content(_scope, `${input_path || "c"}-${i}`);
+    } = $scope;
+    $id$for$content($scope, `${input_path || "c"}-${i}`);
   }),
-  _if$for_content = conditional(4, _if_content),
-  _open$for_content_effect = effect("a0", (_scope, { 12: open }) =>
-    on(_scope[2], "click", function () {
-      _open$for_content(_scope, !open);
+  $if$for$content = conditional(4, $if_content),
+  $open$for$content_effect = effect("a0", ($scope, { 12: open }) =>
+    on($scope[2], "click", function () {
+      $open$for$content($scope, !open);
     }),
   ),
-  _open$for_content = state(12, (_scope, open) => {
-    attr(_scope[0], "hidden", !open),
-      data(_scope[3], open ? "[-]" : "[+]"),
-      _open$for_content_effect(_scope);
+  $open$for$content = state(12, ($scope, open) => {
+    attr($scope[0], "hidden", !open),
+      data($scope[3], open ? "[-]" : "[+]"),
+      $open$for$content_effect($scope);
   }),
-  _id$for_content = value(11, (_scope, id) => {
-    attr(_scope[0], "id", id), _id$if_content(_scope);
+  $id$for$content = value(11, ($scope, id) => {
+    attr($scope[0], "id", id), $id$if$content($scope);
   }),
-  _i$for_content = value(9, _expr_input_path_i$for_content),
-  _comment_comments$for_content = value(8, (_scope, comment_comments) => {
-    _if$for_content(_scope, comment_comments ? 0 : 1),
-      _comment_comments$if_content(_scope);
+  $i$for$content = value(9, $expr_input_path_i$for$content),
+  $comment_comments$for$content = value(8, ($scope, comment_comments) => {
+    $if$for$content($scope, comment_comments ? 0 : 1),
+      $comment_comments$if$content($scope);
   }),
-  _comment_text$for_content = value(7, (_scope, comment_text) =>
-    data(_scope[1], comment_text),
+  $comment_text$for$content = value(7, ($scope, comment_text) =>
+    data($scope[1], comment_text),
   ),
-  _comment$for_content = value(6, (_scope, comment) => {
-    _comment_text$for_content(_scope, comment?.text),
-      _comment_comments$for_content(_scope, comment?.comments);
+  $comment$for$content = value(6, ($scope, comment) => {
+    $comment_text$for$content($scope, comment?.text),
+      $comment_comments$for$content($scope, comment?.comments);
   }),
-  _params2$for_content = value(5, (_scope, _params2) => {
-    _comment$for_content(_scope, _params2[0]),
-      _i$for_content(_scope, _params2[1]);
+  $params2$for$content = value(5, ($scope, $params2) => {
+    $comment$for$content($scope, $params2[0]),
+      $i$for$content($scope, $params2[1]);
   }),
-  _input_path$for_content = loopClosure(4, 0, _expr_input_path_i$for_content),
-  _for = loopOf(
+  $input_path$for$content = loopClosure(4, 0, $expr_input_path_i$for$content),
+  $for = loopOf(
     0,
     createRenderer(
       "<li><span> </span><button> </button><!></li>",
       " E l D l%",
-      (_scope) => {
-        _open$for_content(_scope, !0);
+      ($scope) => {
+        $open$for$content($scope, !0);
       },
-      _params2$for_content,
-      (_scope) => _input_path$for_content._(_scope),
+      $params2$for$content,
+      ($scope) => $input_path$for$content._($scope),
     ),
   ),
-  _input_path = value(4, _input_path$for_content),
-  _input_comments = value(3, (_scope, input_comments) =>
-    _for(_scope, [input_comments]),
+  $input_path = value(4, $input_path$for$content),
+  $input_comments = value(3, ($scope, input_comments) =>
+    $for($scope, [input_comments]),
   ),
-  _input$1 = value(2, (_scope, input) => {
-    _input_comments(_scope, input.comments), _input_path(_scope, input.path);
+  $input$1 = value(2, ($scope, input) => {
+    $input_comments($scope, input.comments), $input_path($scope, input.path);
   });
-function _setup(_scope) {
-  _scope[0];
+function $setup($scope) {
+  $scope[0];
 }
 createTemplate(
   "b",
   "<ul></ul>",
   "/ b&",
-  _setup,
-  value(2, (_scope, input) => {
-    const _comments_input_spread = input;
-    _input_comments(_scope[0], _comments_input_spread.comments),
-      _input_path(_scope[0], _comments_input_spread.path);
+  $setup,
+  value(2, ($scope, input) => {
+    const $comments_input_spread = input;
+    $input_comments($scope[0], $comments_input_spread.comments),
+      $input_path($scope[0], $comments_input_spread.path);
   }),
 ).mount();

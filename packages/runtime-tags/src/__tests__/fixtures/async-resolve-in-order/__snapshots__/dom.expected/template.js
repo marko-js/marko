@@ -1,17 +1,17 @@
-export const _template = "a<!>c<!>e";
-export const _walks = /* over(1), replace, over(2), replace, over(2) */"b%c%c";
+export const $template = "a<!>c<!>e";
+export const $walks = /* over(1), replace, over(2), replace, over(2) */"b%c%c";
 import { resolveAfter } from "../../utils/resolve";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _value$await_content2 = /* @__PURE__ */_$.value("value", (_scope, value) => _$.data(_scope["#text/0"], value));
-const _params3$await_content = /* @__PURE__ */_$.value("_params3", (_scope, _params3) => _value$await_content2(_scope, _params3[0]));
-const _await_content2 = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, _params3$await_content);
-const _value$await_content = /* @__PURE__ */_$.value("value", (_scope, value) => _$.data(_scope["#text/0"], value));
-const _params2$await_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => _value$await_content(_scope, _params2[0]));
-const _await_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, _params2$await_content);
-const _await2 = /* @__PURE__ */_$.awaitTag("#text/1", _await_content2);
-const _await = /* @__PURE__ */_$.awaitTag("#text/0", _await_content);
-export function _setup(_scope) {
-  _await(_scope, resolveAfter("b", 1));
-  _await2(_scope, resolveAfter("d", 2));
+const $value$await$content2 = /* @__PURE__ */_$.value("value", ($scope, value) => _$.data($scope["#text/0"], value));
+const $params3$await$content = /* @__PURE__ */_$.value("$params3", ($scope, $params3) => $value$await$content2($scope, $params3[0]));
+const $await_content2 = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, $params3$await$content);
+const $value$await$content = /* @__PURE__ */_$.value("value", ($scope, value) => _$.data($scope["#text/0"], value));
+const $params2$await$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $value$await$content($scope, $params2[0]));
+const $await_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, $params2$await$content);
+const $await2 = /* @__PURE__ */_$.awaitTag("#text/1", $await_content2);
+const $await = /* @__PURE__ */_$.awaitTag("#text/0", $await_content);
+export function $setup($scope) {
+  $await($scope, resolveAfter("b", 1));
+  $await2($scope, resolveAfter("d", 2));
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

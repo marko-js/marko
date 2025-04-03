@@ -1,48 +1,48 @@
-export const _template = "<!><!><span> </span>";
-export const _walks = /* replace, over(1), next(1), get, out(1) */"D%bD l";
+export const $template = "<!><!><span> </span>";
+export const $walks = /* replace, over(1), next(1), get, out(1) */"D%bD l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _setup$tagselect_content_effect = _$.effect("__tests__/template.marko_1", _scope => {
-  _$.attrsEvents(_scope, "#option/0");
-  _$.attrsEvents(_scope, "#option/1");
-  _$.attrsEvents(_scope, "#option/2");
+const $setup$tagselect$content_effect = _$.effect("__tests__/template.marko_1", $scope => {
+  _$.attrsEvents($scope, "#option/0");
+  _$.attrsEvents($scope, "#option/1");
+  _$.attrsEvents($scope, "#option/2");
 });
-const _setup$tagselect_content = _scope => {
-  _$.attrs(_scope, "#option/0", {
+const $setup$tagselect$content = $scope => {
+  _$.attrs($scope, "#option/0", {
     value: "a"
   });
-  _$.attrs(_scope, "#option/1", {
+  _$.attrs($scope, "#option/1", {
     value: "b"
   });
-  _$.attrs(_scope, "#option/2", {
+  _$.attrs($scope, "#option/2", {
     value: "c"
   });
-  _setup$tagselect_content_effect(_scope);
+  $setup$tagselect$content_effect($scope);
 };
-const _tagselect_content = _$.registerContent("__tests__/template.marko_1_renderer", "<option>A</option><option>B</option><option>C</option>", /* get, over(1), get, over(1), get */" b b ", _setup$tagselect_content);
-const _expr_value_tag = /* @__PURE__ */_$.intersection(4, _scope => {
+const $tagselect_content = _$.registerContent("__tests__/template.marko_1_renderer", "<option>A</option><option>B</option><option>C</option>", /* get, over(1), get, over(1), get */" b b ", $setup$tagselect$content);
+const $expr_value_tag = /* @__PURE__ */_$.intersection(4, $scope => {
   const {
     value,
     tag
-  } = _scope;
-  _dynamicTag(_scope, tag ? "select" : {}, () => ({
+  } = $scope;
+  $dynamicTag($scope, tag ? "select" : {}, () => ({
     value,
-    valueChange: _valueChange(_scope)
+    valueChange: $valueChange($scope)
   }));
 });
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", _tagselect_content);
-const _tag = /* @__PURE__ */_$.value("tag", _expr_value_tag);
-const _value = /* @__PURE__ */_$.state("value/2", (_scope, value) => {
-  _$.data(_scope["#text/1"], value);
-  _expr_value_tag(_scope);
+const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", $tagselect_content);
+const $tag = /* @__PURE__ */_$.value("tag", $expr_value_tag);
+const $value = /* @__PURE__ */_$.state("value/2", ($scope, value) => {
+  _$.data($scope["#text/1"], value);
+  $expr_value_tag($scope);
 });
-export function _setup(_scope) {
-  _value(_scope, "b");
-  _tag(_scope, "select");
+export function $setup($scope) {
+  $value($scope, "b");
+  $tag($scope, "select");
 }
-function _valueChange(_scope) {
+function $valueChange($scope) {
   return function (v) {
-    _value(_scope, v);
+    $value($scope, v);
   };
 }
-_$.register("__tests__/template.marko_0/valueChange", _valueChange);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+_$.register("__tests__/template.marko_0/valueChange", $valueChange);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

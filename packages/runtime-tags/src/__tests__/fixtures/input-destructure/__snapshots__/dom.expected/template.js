@@ -1,11 +1,11 @@
-export const _template = "<!> <!>";
-export const _walks = /* replace, over(2), replace, over(1) */"%c%b";
-export const _setup = () => {};
+export const $template = "<!> <!>";
+export const $walks = /* replace, over(2), replace, over(1) */"%c%b";
+export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-export const _b = /* @__PURE__ */_$.value("b", (_scope, b) => _$.data(_scope["#text/1"], b));
-export const _a = /* @__PURE__ */_$.value("a", (_scope, a) => _$.data(_scope["#text/0"], a));
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
-  _a(_scope, input.a);
-  _b(_scope, input.b);
+export const $b = /* @__PURE__ */_$.value("b", ($scope, b) => _$.data($scope["#text/1"], b));
+export const $a = /* @__PURE__ */_$.value("a", ($scope, a) => _$.data($scope["#text/0"], a));
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {
+  $a($scope, input.a);
+  $b($scope, input.b);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

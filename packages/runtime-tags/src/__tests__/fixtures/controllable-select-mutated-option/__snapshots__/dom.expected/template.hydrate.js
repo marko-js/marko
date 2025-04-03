@@ -1,44 +1,44 @@
 // size: 641 (min) 320 (brotli)
-const _opt$for_content = _$.value(3, (_scope, opt) => {
-    _$.attr(_scope[0], "value", opt), _$.data(_scope[1], opt);
+const $opt$for$content = _$.value(3, ($scope, opt) => {
+    _$.attr($scope[0], "value", opt), _$.data($scope[1], opt);
   }),
-  _params2$for_content = _$.value(2, (_scope, _params2) =>
-    _opt$for_content(_scope, _params2[0]),
+  $params2$for$content = _$.value(2, ($scope, $params2) =>
+    $opt$for$content($scope, $params2[0]),
   ),
-  _for_content = _$.createRenderer(
+  $for_content = _$.createRenderer(
     "<option> </option>",
     " D ",
     0,
-    _params2$for_content,
+    $params2$for$content,
   ),
-  _for = _$.loopOf(0, _for_content),
-  _value = _$.state(6, (_scope, value) => {
-    _$.controllable_select_value(_scope, 0, value, _valueChange(_scope)),
-      _$.data(_scope[1], value);
+  $for = _$.loopOf(0, $for_content),
+  $value = _$.state(6, ($scope, value) => {
+    _$.controllable_select_value($scope, 0, value, $valueChange($scope)),
+      _$.data($scope[1], value);
   }),
-  _options_ = _$.value(5, _value),
-  _options_effect = _$.effect("a1", (_scope, { 4: options }) => {
-    _$.on(_scope[2], "click", function () {
-      _options(_scope, options.slice(1));
+  $options_ = _$.value(5, $value),
+  $options_effect = _$.effect("a1", ($scope, { 4: options }) => {
+    _$.on($scope[2], "click", function () {
+      $options($scope, options.slice(1));
     }),
-      _$.on(_scope[3], "click", function () {
-        _options(_scope, [options.length ? options[0] - 1 : 3, ...options]);
+      _$.on($scope[3], "click", function () {
+        $options($scope, [options.length ? options[0] - 1 : 3, ...options]);
       });
   }),
-  _options = _$.state(4, (_scope, options) => {
-    _options_(_scope, options?.[0]),
-      _for(_scope, [options, (v) => v]),
-      _options_effect(_scope);
+  $options = _$.state(4, ($scope, options) => {
+    $options_($scope, options?.[0]),
+      $for($scope, [options, (v) => v]),
+      $options_effect($scope);
   });
-function _valueChange(_scope) {
+function $valueChange($scope) {
   return (_new_value) => {
-    _value(_scope, _new_value);
+    $value($scope, _new_value);
   };
 }
-_$.effect("a2", (_scope) => {
-  _$.controllable_select_value_effect(_scope, 0),
-    _$.on(_scope[0], "change", console.log),
-    _$.on(_scope[0], "input", console.log);
+_$.effect("a2", ($scope) => {
+  _$.controllable_select_value_effect($scope, 0),
+    _$.on($scope[0], "change", console.log),
+    _$.on($scope[0], "input", console.log);
 }),
-  _$.register("a0", _valueChange),
+  _$.register("a0", $valueChange),
   init();

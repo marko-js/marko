@@ -1,34 +1,34 @@
-export const _template = "<input type=checkbox><input type=checkbox><input type=checkbox><span> </span>";
-export const _walks = /* get, over(1), get, over(1), get, over(1), next(1), get, out(1) */" b b bD l";
+export const $template = "<input type=checkbox><input type=checkbox><input type=checkbox><span> </span>";
+export const $walks = /* get, over(1), get, over(1), get, over(1), next(1), get, out(1) */" b b bD l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _expr_checkedValue__checkedValueChange = /* @__PURE__ */_$.intersection(6, _scope => {
+const $expr_checkedValue_$checkedValueChange = /* @__PURE__ */_$.intersection(6, $scope => {
   const {
     checkedValue,
-    _checkedValueChange
-  } = _scope;
-  _$.controllable_input_checkedValue(_scope, "#input/0", checkedValue, _checkedValueChange, "a");
-  _$.controllable_input_checkedValue(_scope, "#input/1", checkedValue, _checkedValueChange, "b");
-  _$.controllable_input_checkedValue(_scope, "#input/2", checkedValue, _checkedValueChange, "c");
+    $checkedValueChange
+  } = $scope;
+  _$.controllable_input_checkedValue($scope, "#input/0", checkedValue, $checkedValueChange, "a");
+  _$.controllable_input_checkedValue($scope, "#input/1", checkedValue, $checkedValueChange, "b");
+  _$.controllable_input_checkedValue($scope, "#input/2", checkedValue, $checkedValueChange, "c");
 });
-const _checkedValueChange2 = /* @__PURE__ */_$.value("_checkedValueChange", _expr_checkedValue__checkedValueChange);
-const _checkedValue = /* @__PURE__ */_$.state("checkedValue/4", (_scope, checkedValue) => {
-  _$.data(_scope["#text/3"], checkedValue);
-  _expr_checkedValue__checkedValueChange(_scope);
+const $checkedValueChange3 = /* @__PURE__ */_$.value("$checkedValueChange", $expr_checkedValue_$checkedValueChange);
+const $checkedValue = /* @__PURE__ */_$.state("checkedValue/4", ($scope, checkedValue) => {
+  _$.data($scope["#text/3"], checkedValue);
+  $expr_checkedValue_$checkedValueChange($scope);
 });
-const _setup_effect = _$.effect("__tests__/template.marko_0", _scope => {
-  _$.controllable_input_checkedValue_effect(_scope, "#input/0");
-  _$.controllable_input_checkedValue_effect(_scope, "#input/1");
-  _$.controllable_input_checkedValue_effect(_scope, "#input/2");
+const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => {
+  _$.controllable_input_checkedValue_effect($scope, "#input/0");
+  _$.controllable_input_checkedValue_effect($scope, "#input/1");
+  _$.controllable_input_checkedValue_effect($scope, "#input/2");
 });
-export function _setup(_scope) {
-  _checkedValue(_scope, ["a", "b"]);
-  _checkedValueChange2(_scope, _checkedValueChange3(_scope));
-  _setup_effect(_scope);
+export function $setup($scope) {
+  $checkedValue($scope, ["a", "b"]);
+  $checkedValueChange3($scope, $checkedValueChange2($scope));
+  $setup_effect($scope);
 }
-function _checkedValueChange3(_scope) {
+function $checkedValueChange2($scope) {
   return _new_checkedValue => {
-    _checkedValue(_scope, _new_checkedValue);
+    $checkedValue($scope, _new_checkedValue);
   };
 }
-_$.register("__tests__/template.marko_0/_checkedValueChange", _checkedValueChange3);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+_$.register("__tests__/template.marko_0/checkedValueChange2", $checkedValueChange2);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

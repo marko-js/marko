@@ -1,23 +1,23 @@
-export const _template = "<div><!> <!></div>";
-export const _walks = /* next(1), replace, over(2), replace, out(1) */"D%c%l";
+export const $template = "<div><!> <!></div>";
+export const $walks = /* next(1), replace, over(2), replace, out(1) */"D%c%l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _b = /* @__PURE__ */_$.state("b/6", (_scope, b) => _$.data(_scope["#text/1"], b));
-const _a = /* @__PURE__ */_$.state("a/5", (_scope, a) => _$.data(_scope["#text/0"], a));
-const _input_value_effect = _$.effect("__tests__/template.marko_0_input_value", (_scope, {
+const $b = /* @__PURE__ */_$.state("b/6", ($scope, b) => _$.data($scope["#text/1"], b));
+const $a = /* @__PURE__ */_$.state("a/5", ($scope, a) => _$.data($scope["#text/0"], a));
+const $input_value_effect = _$.effect("__tests__/template.marko_0_input_value", ($scope, {
   input_value
 }) => {
   {
-    const previousValue = _a(_scope, input_value + 1);
-    _$.getAbortSignal(_scope, 0).onabort = () => _b(_scope, previousValue);
+    const previousValue = $a($scope, input_value + 1);
+    _$.getAbortSignal($scope, 0).onabort = () => $b($scope, previousValue);
   }
 });
-export const _input_value = /* @__PURE__ */_$.value("input_value", _scope => {
-  _$.resetAbortSignal(_scope, 0);
-  _input_value_effect(_scope);
+export const $input_value = /* @__PURE__ */_$.value("input_value", $scope => {
+  _$.resetAbortSignal($scope, 0);
+  $input_value_effect($scope);
 });
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => _input_value(_scope, input.value));
-export function _setup(_scope) {
-  _a(_scope, 0);
-  _b(_scope, 0);
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_value($scope, input.value));
+export function $setup($scope) {
+  $a($scope, 0);
+  $b($scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

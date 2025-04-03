@@ -1,19 +1,19 @@
 // size: 259 (min) 162 (brotli)
-const _onClick_effect = _$.effect("a0", (_scope, { 4: onClick }) =>
-    _$.on(_scope[0], "click", onClick),
+const $onClick_effect = _$.effect("a0", ($scope, { 4: onClick }) =>
+    _$.on($scope[0], "click", onClick),
   ),
-  _onClick$1 = _$.value(4, _onClick_effect),
-  _clickCount$mybutton_content = _$.dynamicClosureRead(
+  $onClick$1 = _$.value(4, $onClick_effect),
+  $clickCount$mybutton$content = _$.dynamicClosureRead(
     1,
-    (_scope, clickCount) => _$.data(_scope[0], clickCount),
+    ($scope, clickCount) => _$.data($scope[0], clickCount),
   ),
-  _clickCount_closure = _$.dynamicClosure(_clickCount$mybutton_content),
-  _clickCount = _$.state(1, (_scope, clickCount) => {
-    _onClick$1(_scope[0], _onClick(_scope)), _clickCount_closure(_scope);
+  $clickCount_closure = _$.dynamicClosure($clickCount$mybutton$content),
+  $clickCount = _$.state(1, ($scope, clickCount) => {
+    $onClick$1($scope[0], $onClick($scope)), $clickCount_closure($scope);
   });
-function _onClick(_scope, { 1: clickCount } = _scope) {
+function $onClick($scope, { 1: clickCount } = $scope) {
   return function () {
-    _clickCount(_scope, clickCount + 1);
+    $clickCount($scope, clickCount + 1);
   };
 }
-_$.register("b0", _onClick), init();
+_$.register("b0", $onClick), init();

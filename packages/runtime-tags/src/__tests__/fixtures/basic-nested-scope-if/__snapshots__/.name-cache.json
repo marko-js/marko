@@ -3,13 +3,13 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_clickCount$else_content": "e",
-      "$_else_content": "a",
-      "$_clickCount$if_content_effect": "n",
-      "$_clickCount$if_content": "r",
-      "$_if_content": "i",
-      "$_if": "c",
-      "$_clickCount": "m"
+      "$$clickCount$else$content": "e",
+      "$$else_content": "a",
+      "$$clickCount$if$content_effect": "n",
+      "$$clickCount$if$content": "r",
+      "$$if_content": "i",
+      "$$if": "c",
+      "$$clickCount": "m"
     }
   }
 }

@@ -1,49 +1,49 @@
-export const _template = `<!><!>${_child_template}<hr><!><!>`;
-export const _walks = /* replace, over(1), beginChild, _child_walks, endChild, over(1), replace, over(1) */`D%b/${_child_walks}&b%bD`;
+export const $template = `<!><!>${_child_template}<hr><!><!>`;
+export const $walks = /* replace, over(1), beginChild, _child_walks, endChild, over(1), replace, over(1) */`D%b/${_child_walks}&b%bD`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _get_el = _$.nodeRef("__tests__/template.marko_2/#div", "Getter:#div/0");
-import { _setup as _child, _input as _child_input, _template as _child_template, _walks as _child_walks } from "./tags/child.marko";
-const _get_hoisted_el = _$.hoist("Getter:#div/0", "ConditionalScope:#text/2");
-const _if_content3 = /* @__PURE__ */_$.createRenderer("<div></div>", /* get */" ");
-const _get_hoisted_el2 = _$.register("__tests__/template.marko_0__hoisted_el/hoist", _$.hoist("Getter:#div/0", "ConditionalScope:#text/0", "ConditionalScope:#text/0"));
-const _setup$if_content = _scope => {
-  _child(_scope["#childScope/1"]);
-  _child_input(_scope["#childScope/1"], {
-    value: _get_el(_scope)
+const $get_el = _$.nodeRef("__tests__/template.marko_2/#div", "Getter:#div/0");
+import { $setup as _child, $input as _child_input, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
+const $get$hoisted_el = _$.hoist("Getter:#div/0", "ConditionalScope:#text/2");
+const $if_content3 = /* @__PURE__ */_$.createRenderer("<div></div>", /* get */" ");
+const $get$hoisted_el2 = _$.register("__tests__/template.marko_0_$hoisted_el/hoist", _$.hoist("Getter:#div/0", "ConditionalScope:#text/0", "ConditionalScope:#text/0"));
+const $setup$if$content = $scope => {
+  _child($scope["#childScope/1"]);
+  _child_input($scope["#childScope/1"], {
+    value: $get_el($scope)
   });
 };
-const _if_content2 = /* @__PURE__ */_$.createRenderer(`<div></div>${_child_template}`, /* get, over(1), beginChild, _child_walks, endChild */` b/${_child_walks}&`, _setup$if_content);
-const _if$if_content = /* @__PURE__ */_$.conditional("#text/0", _if_content2);
-const _input_show$if_content = /* @__PURE__ */_$.conditionalClosure("input_show", "#text/0", 0, (_scope, input_show) => _if$if_content(_scope, input_show ? 0 : 1));
-const _if_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", 0, 0, _scope => _input_show$if_content._(_scope));
-const _if2 = /* @__PURE__ */_$.conditional("#text/2", _if_content3);
-const _if = /* @__PURE__ */_$.conditional("#text/0", _if_content);
-const _hoisted_el3 = /* @__PURE__ */_$.value("_hoisted_el", (_scope, _hoisted_el) => _child_input(_scope["#childScope/1"], {
-  value: _hoisted_el
+const $if_content2 = /* @__PURE__ */_$.createRenderer(`<div></div>${_child_template}`, /* get, over(1), beginChild, _child_walks, endChild */` b/${_child_walks}&`, $setup$if$content);
+const $if$if$content = /* @__PURE__ */_$.conditional("#text/0", $if_content2);
+const $input_show$if$content = /* @__PURE__ */_$.conditionalClosure("input_show", "#text/0", 0, ($scope, input_show) => $if$if$content($scope, input_show ? 0 : 1));
+const $if_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", 0, 0, $scope => $input_show$if$content._($scope));
+const $if2 = /* @__PURE__ */_$.conditional("#text/2", $if_content3);
+const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);
+const $hoisted_el3 = /* @__PURE__ */_$.value("$hoisted_el", ($scope, $hoisted_el) => _child_input($scope["#childScope/1"], {
+  value: $hoisted_el
 }));
-export const _input_show = /* @__PURE__ */_$.value("input_show", (_scope, input_show) => {
-  _if(_scope, input_show ? 0 : 1);
-  _input_show$if_content(_scope);
+export const $input_show = /* @__PURE__ */_$.value("input_show", ($scope, input_show) => {
+  $if($scope, input_show ? 0 : 1);
+  $input_show$if$content($scope);
 });
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => _input_show(_scope, input.show));
-const _setup_effect = _$.effect("__tests__/template.marko_0", _scope => {
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_show($scope, input.show));
+const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => {
   {
-    const first = _get_hoisted_el2(_scope)();
+    const first = $get$hoisted_el2($scope)();
     if (first) {
       first.innerHTML = 'Hello World';
     }
   }
   {
-    const first = _get_hoisted_el(_scope)();
+    const first = $get$hoisted_el($scope)();
     if (first) {
       first.innerHTML = 'Hello World';
     }
   }
 });
-export function _setup(_scope) {
-  _child(_scope["#childScope/1"]);
-  _if2(_scope, true ? 0 : 1);
-  _hoisted_el3(_scope, _get_hoisted_el2(_scope));
-  _setup_effect(_scope);
+export function $setup($scope) {
+  _child($scope["#childScope/1"]);
+  $if2($scope, true ? 0 : 1);
+  $hoisted_el3($scope, $get$hoisted_el2($scope));
+  $setup_effect($scope);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

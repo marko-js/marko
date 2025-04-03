@@ -1,29 +1,29 @@
-export const _template = "<div>x=<span> </span>, was=<!></div><button id=increment>Increment</button>";
-export const _walks = /* next(1), over(1), next(1), get, out(1), over(1), replace, out(1), get, over(1) */"DbD lb%l b";
+export const $template = "<div>x=<span> </span>, was=<!></div><button id=increment>Increment</button>";
+export const $walks = /* next(1), over(1), next(1), get, out(1), over(1), replace, out(1), get, over(1) */"DbD lb%l b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _prev = /* @__PURE__ */_$.state("prev/4", (_scope, prev) => _$.data(_scope["#text/1"], prev));
-const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
+const $prev = /* @__PURE__ */_$.state("prev/4", ($scope, prev) => _$.data($scope["#text/1"], prev));
+const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
   x
 }) => {
-  _$.lifecycle(_scope, "_lifecycle", {
+  _$.lifecycle($scope, "$lifecycle", {
     onMount: function () {
       this.cur = x;
     },
     onUpdate: function () {
-      _prev(_scope, this.cur);
+      $prev($scope, this.cur);
       this.cur = x;
     }
   });
-  _$.on(_scope["#button/2"], "click", function () {
-    _x(_scope, x + 1), x;
+  _$.on($scope["#button/2"], "click", function () {
+    $x($scope, x + 1), x;
   });
 });
-const _x = /* @__PURE__ */_$.state("x/3", (_scope, x) => {
-  _$.data(_scope["#text/0"], x);
-  _x_effect(_scope);
+const $x = /* @__PURE__ */_$.state("x/3", ($scope, x) => {
+  _$.data($scope["#text/0"], x);
+  $x_effect($scope);
 });
-export function _setup(_scope) {
-  _x(_scope, 0);
-  _prev(_scope, false);
+export function $setup($scope) {
+  $x($scope, 0);
+  $prev($scope, false);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

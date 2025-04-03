@@ -1,15 +1,15 @@
 // size: 200 (min) 144 (brotli)
-const _myObj = _$.value(4, (_scope, myObj) =>
-    _$.data(_scope[0], JSON.stringify(myObj)),
+const $myObj = _$.value(4, ($scope, myObj) =>
+    _$.data($scope[0], JSON.stringify(myObj)),
   ),
-  _x_effect = _$.effect("a0", (_scope, { 3: x }) =>
-    _$.on(_scope[1], "click", function () {
-      _x(_scope, x + 1);
+  $x_effect = _$.effect("a0", ($scope, { 3: x }) =>
+    _$.on($scope[1], "click", function () {
+      $x($scope, x + 1);
     }),
   ),
-  _x = _$.state(3, (_scope, x) => {
-    _$.data(_scope[2], x),
-      _myObj(_scope, { foo: 1, bar: x + 1 }),
-      _x_effect(_scope);
+  $x = _$.state(3, ($scope, x) => {
+    _$.data($scope[2], x),
+      $myObj($scope, { foo: 1, bar: x + 1 }),
+      $x_effect($scope);
   });
 init();

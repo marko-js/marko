@@ -1,11 +1,11 @@
 // size: 171 (min) 129 (brotli)
-const _count_effect = _$.effect("a1", (_scope, { 1: count }) =>
-    _$.on(_scope[0], "click", function () {
-      _count(_scope, count + 1);
+const $count_effect = _$.effect("a1", ($scope, { 1: count }) =>
+    _$.on($scope[0], "click", function () {
+      $count($scope, count + 1);
     }),
   ),
-  _count = _$.state(1, (_scope, count) => {
-    _$.textContent(_scope[0], `\n  .test {\n    content: ${count}\n  }\n`),
-      _count_effect(_scope);
+  $count = _$.state(1, ($scope, count) => {
+    _$.textContent($scope[0], `\n  .test {\n    content: ${count}\n  }\n`),
+      $count_effect($scope);
   });
 init();

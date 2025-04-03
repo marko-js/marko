@@ -12,7 +12,7 @@ function getMissingBy() {
 _$.register(getMissingBy, "__tests__/template.marko_0/getMissingBy");
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default _$.createTemplate("__tests__/template.marko", input => {
-  const _scope0_id = _$.nextScopeId();
+  const $scope0_id = _$.nextScopeId();
   let items = [{
     id: 0,
     text: "first"
@@ -27,43 +27,43 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.resumeSingleNodeForOf(items, ({
     text
   }) => {
-    const _scope1_id = _$.nextScopeId();
-    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode(_scope1_id, "#text/0")}`);
-  }, "id", _scope0_id, "#div/0", 1);
+    const $scope1_id = _$.nextScopeId();
+    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode($scope1_id, "#text/0")}`);
+  }, "id", $scope0_id, "#div/0", 1);
   _$.write("</div><div class=by-function>");
   _$.resumeSingleNodeForOf(items, ({
     text
   }) => {
-    const _scope2_id = _$.nextScopeId();
-    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode(_scope2_id, "#text/0")}`);
-  }, item => item.id, _scope0_id, "#div/1", 1);
+    const $scope2_id = _$.nextScopeId();
+    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode($scope2_id, "#text/0")}`);
+  }, item => item.id, $scope0_id, "#div/1", 1);
   _$.write("</div><div class=by-unknown-string>");
   _$.resumeSingleNodeForOf(items, ({
     text
   }) => {
-    const _scope3_id = _$.nextScopeId();
-    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode(_scope3_id, "#text/0")}`);
-  }, getStringBy(), _scope0_id, "#div/2", 1);
+    const $scope3_id = _$.nextScopeId();
+    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode($scope3_id, "#text/0")}`);
+  }, getStringBy(), $scope0_id, "#div/2", 1);
   _$.write("</div><div class=by-unknown-function>");
   _$.resumeSingleNodeForOf(items, ({
     text
   }) => {
-    const _scope4_id = _$.nextScopeId();
-    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode(_scope4_id, "#text/0")}`);
-  }, getFunctionBy(), _scope0_id, "#div/3", 1);
+    const $scope4_id = _$.nextScopeId();
+    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode($scope4_id, "#text/0")}`);
+  }, getFunctionBy(), $scope0_id, "#div/3", 1);
   _$.write("</div><div class=by-unknown-missing>");
   _$.resumeSingleNodeForOf(items, ({
     text
   }) => {
-    const _scope5_id = _$.nextScopeId();
-    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode(_scope5_id, "#text/0")}`);
-  }, getMissingBy(), _scope0_id, "#div/4", 1);
-  _$.write(`</div><button>Rotate</button>${_$.markResumeNode(_scope0_id, "#button/5")}</div>`);
-  _$.writeEffect(_scope0_id, "__tests__/template.marko_0_items");
-  _$.writeScope(_scope0_id, {
+    const $scope5_id = _$.nextScopeId();
+    _$.write(`${_$.escapeXML(text)}${_$.markResumeNode($scope5_id, "#text/0")}`);
+  }, getMissingBy(), $scope0_id, "#div/4", 1);
+  _$.write(`</div><button>Rotate</button>${_$.markResumeNode($scope0_id, "#button/5")}</div>`);
+  _$.writeEffect($scope0_id, "__tests__/template.marko_0_items");
+  _$.writeScope($scope0_id, {
     items
   }, "__tests__/template.marko", 0, {
     items: "14:8"
   });
-  _$.resumeClosestBranch(_scope0_id);
+  _$.resumeClosestBranch($scope0_id);
 });

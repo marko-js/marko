@@ -1,46 +1,46 @@
-export const _template = "<form><select></select><button type=reset>reset</button></form><div> </div><button class=remove>Remove option</button><button class=add>Add option</button>";
-export const _walks = /* next(1), get, out(1), next(1), get, out(1), get, over(1), get, over(1) */"D lD l b b";
+export const $template = "<form><select></select><button type=reset>reset</button></form><div> </div><button class=remove>Remove option</button><button class=add>Add option</button>";
+export const $walks = /* next(1), get, out(1), next(1), get, out(1), get, over(1), get, over(1) */"D lD l b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _opt$for_content = /* @__PURE__ */_$.value("opt", (_scope, opt) => {
-  _$.attr(_scope["#option/0"], "value", opt);
-  _$.data(_scope["#text/1"], opt);
+const $opt$for$content = /* @__PURE__ */_$.value("opt", ($scope, opt) => {
+  _$.attr($scope["#option/0"], "value", opt);
+  _$.data($scope["#text/1"], opt);
 });
-const _params2$for_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => _opt$for_content(_scope, _params2[0]));
-const _for_content = /* @__PURE__ */_$.createRenderer("<option> </option>", /* get, next(1), get */" D ", 0, _params2$for_content);
-const _for = /* @__PURE__ */_$.loopOf("#select/0", _for_content);
-const _value = /* @__PURE__ */_$.state("value/6", (_scope, value) => {
-  _$.controllable_select_value(_scope, "#select/0", value, _valueChange(_scope));
-  _$.data(_scope["#text/1"], value);
+const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $opt$for$content($scope, $params2[0]));
+const $for_content = /* @__PURE__ */_$.createRenderer("<option> </option>", /* get, next(1), get */" D ", 0, $params2$for$content);
+const $for = /* @__PURE__ */_$.loopOf("#select/0", $for_content);
+const $value = /* @__PURE__ */_$.state("value/6", ($scope, value) => {
+  _$.controllable_select_value($scope, "#select/0", value, $valueChange($scope));
+  _$.data($scope["#text/1"], value);
 });
-const _options_ = /* @__PURE__ */_$.value("options_0", _value);
-const _options_effect = _$.effect("__tests__/template.marko_0_options", (_scope, {
+const $options_ = /* @__PURE__ */_$.value("options_0", $value);
+const $options_effect = _$.effect("__tests__/template.marko_0_options", ($scope, {
   options
 }) => {
-  _$.on(_scope["#button/2"], "click", function () {
-    _options(_scope, options.slice(1));
+  _$.on($scope["#button/2"], "click", function () {
+    $options($scope, options.slice(1));
   });
-  _$.on(_scope["#button/3"], "click", function () {
-    _options(_scope, [options.length ? options[0] - 1 : 3, ...options]);
+  _$.on($scope["#button/3"], "click", function () {
+    $options($scope, [options.length ? options[0] - 1 : 3, ...options]);
   });
 });
-const _options = /* @__PURE__ */_$.state("options/4", (_scope, options) => {
-  _options_(_scope, options?.[0]);
-  _for(_scope, [options, v => v]);
-  _options_effect(_scope);
+const $options = /* @__PURE__ */_$.state("options/4", ($scope, options) => {
+  $options_($scope, options?.[0]);
+  $for($scope, [options, v => v]);
+  $options_effect($scope);
 });
-const _setup_effect = _$.effect("__tests__/template.marko_0", _scope => {
-  _$.controllable_select_value_effect(_scope, "#select/0");
-  _$.on(_scope["#select/0"], "change", console.log);
-  _$.on(_scope["#select/0"], "input", console.log);
+const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => {
+  _$.controllable_select_value_effect($scope, "#select/0");
+  _$.on($scope["#select/0"], "change", console.log);
+  _$.on($scope["#select/0"], "input", console.log);
 });
-export function _setup(_scope) {
-  _options(_scope, [1, 2, 3]);
-  _setup_effect(_scope);
+export function $setup($scope) {
+  $options($scope, [1, 2, 3]);
+  $setup_effect($scope);
 }
-function _valueChange(_scope) {
+function $valueChange($scope) {
   return _new_value => {
-    _value(_scope, _new_value);
+    $value($scope, _new_value);
   };
 }
-_$.register("__tests__/template.marko_0/valueChange", _valueChange);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+_$.register("__tests__/template.marko_0/valueChange", $valueChange);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

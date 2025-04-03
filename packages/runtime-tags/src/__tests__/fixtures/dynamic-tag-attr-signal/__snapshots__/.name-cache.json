@@ -3,8 +3,8 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_className_effect": "m",
-      "$_className": "r"
+      "$$className_effect": "m",
+      "$$className": "r"
     }
   }
 }

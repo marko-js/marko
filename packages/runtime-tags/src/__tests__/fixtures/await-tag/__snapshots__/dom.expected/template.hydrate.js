@@ -1,24 +1,24 @@
 // size: 288 (min) 137 (brotli)
-const _count$await_content3 = _$.dynamicClosureRead(4, (_scope, count) =>
-    _$.data(_scope[1], count),
+const $count$await$content3 = _$.dynamicClosureRead(4, ($scope, count) =>
+    _$.data($scope[1], count),
   ),
-  _count$await_content2 = _$.dynamicClosureRead(4, (_scope, count) =>
-    _$.data(_scope[1], count),
+  $count$await$content2 = _$.dynamicClosureRead(4, ($scope, count) =>
+    _$.data($scope[1], count),
   ),
-  _count$await_content = _$.dynamicClosureRead(4, (_scope, count) =>
-    _$.data(_scope[1], count),
+  $count$await$content = _$.dynamicClosureRead(4, ($scope, count) =>
+    _$.data($scope[1], count),
   ),
-  _count_closure = _$.dynamicClosure(
-    _count$await_content,
-    _count$await_content2,
-    _count$await_content3,
+  $count_closure = _$.dynamicClosure(
+    $count$await$content,
+    $count$await$content2,
+    $count$await$content3,
   ),
-  _count_effect = _$.effect("a0", (_scope, { 4: count }) =>
-    _$.on(_scope[3], "click", function () {
-      _count(_scope, count + 1);
+  $count_effect = _$.effect("a0", ($scope, { 4: count }) =>
+    _$.on($scope[3], "click", function () {
+      $count($scope, count + 1);
     }),
   ),
-  _count = _$.state(4, (_scope) => {
-    _count_closure(_scope), _count_effect(_scope);
+  $count = _$.state(4, ($scope) => {
+    $count_closure($scope), $count_effect($scope);
   });
 init();

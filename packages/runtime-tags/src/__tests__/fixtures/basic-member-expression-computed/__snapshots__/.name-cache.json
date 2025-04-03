@@ -3,11 +3,11 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_expr_items_index_effect": "a",
-      "$_expr_items_index": "e",
-      "$_index": "n",
-      "$_items_": "m",
-      "$_items": "s"
+      "$$expr_items_index_effect": "a",
+      "$$expr_items_index": "e",
+      "$$index": "n",
+      "$$items_": "m",
+      "$$items": "s"
     }
   }
 }
