@@ -3,11 +3,11 @@
     "props": {
       "$_$": "t",
       "$init": "n",
-      "$_expr_x_yChange": "o",
-      "$_y_effect": "a",
-      "$_y": "e",
-      "$_yChange": "c",
-      "$_x": "i"
+      "$$expr_x_yChange": "o",
+      "$$y_effect": "a",
+      "$$y": "e",
+      "$$yChange2": "c",
+      "$$x": "i"
     }
   }
 }

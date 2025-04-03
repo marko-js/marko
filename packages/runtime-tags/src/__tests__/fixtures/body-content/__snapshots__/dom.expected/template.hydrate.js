@@ -1,31 +1,31 @@
 // size: 413 (min) 241 (brotli)
-const _dynamicTag = _$.dynamicTag(1),
-  _attrs_effect = _$.effect("a0", (_scope) => _$.attrsEvents(_scope, 0)),
-  _content = _$.value(4, _dynamicTag),
-  _input = _$.value(3, (_scope, input) => {
-    ((_scope, attrs) => {
-      _$.attrs(_scope, 0, attrs), _attrs_effect(_scope);
-    })(_scope, input),
-      _content(_scope, input.content);
+const $dynamicTag = _$.dynamicTag(1),
+  $attrs_effect = _$.effect("a0", ($scope) => _$.attrsEvents($scope, 0)),
+  $content = _$.value(4, $dynamicTag),
+  $input = _$.value(3, ($scope, input) => {
+    (($scope, attrs) => {
+      _$.attrs($scope, 0, attrs), $attrs_effect($scope);
+    })($scope, input),
+      $content($scope, input.content);
   }),
-  _clickCount$FancyButton_content = _$.dynamicClosureRead(
+  $clickCount$FancyButton$content = _$.dynamicClosureRead(
     1,
-    (_scope, clickCount) => _$.data(_scope[0], clickCount),
+    ($scope, clickCount) => _$.data($scope[0], clickCount),
   ),
-  _FancyButton_content = _$.registerContent("b1", " ", " ", 0, 0, (_scope) =>
-    _clickCount$FancyButton_content(_scope),
+  $FancyButton_content = _$.registerContent("b1", " ", " ", 0, 0, ($scope) =>
+    $clickCount$FancyButton$content($scope),
   ),
-  _clickCount_closure = _$.dynamicClosure(_clickCount$FancyButton_content),
-  _clickCount = _$.state(1, (_scope, clickCount) => {
-    _input(_scope[0], {
-      onClick: _onClick(_scope),
-      content: _FancyButton_content(_scope),
+  $clickCount_closure = _$.dynamicClosure($clickCount$FancyButton$content),
+  $clickCount = _$.state(1, ($scope, clickCount) => {
+    $input($scope[0], {
+      onClick: $onClick($scope),
+      content: $FancyButton_content($scope),
     }),
-      _clickCount_closure(_scope);
+      $clickCount_closure($scope);
   });
-function _onClick(_scope, { 1: clickCount } = _scope) {
+function $onClick($scope, { 1: clickCount } = $scope) {
   return function () {
-    _clickCount(_scope, clickCount + 1);
+    $clickCount($scope, clickCount + 1);
   };
 }
-_$.register("b0", _onClick), init();
+_$.register("b0", $onClick), init();

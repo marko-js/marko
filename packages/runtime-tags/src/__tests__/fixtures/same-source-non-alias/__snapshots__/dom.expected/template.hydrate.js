@@ -1,21 +1,21 @@
 // size: 271 (min) 160 (brotli)
-const createWrapper = _createWrapper,
-  _a = _$.value(5, (_scope, a) => {
-    _$.data(_scope[1], a),
-      ((_scope, b) => {
-        _$.data(_scope[2], b);
-      })(_scope, a);
+const createWrapper = $createWrapper,
+  $a = _$.value(5, ($scope, a) => {
+    _$.data($scope[1], a),
+      (($scope, b) => {
+        _$.data($scope[2], b);
+      })($scope, a);
   }),
-  _pattern2 = _$.value(4, (_scope, _pattern) => _a(_scope, _pattern.a)),
-  _count_effect = _$.effect("a1", (_scope, { 3: count }) =>
-    _$.on(_scope[0], "click", function () {
-      _count(_scope, count + 1);
+  $pattern2 = _$.value(4, ($scope, $pattern) => $a($scope, $pattern.a)),
+  $count_effect = _$.effect("a1", ($scope, { 3: count }) =>
+    _$.on($scope[0], "click", function () {
+      $count($scope, count + 1);
     }),
   ),
-  _count = _$.state(3, (_scope, count) => {
-    _pattern2(_scope, createWrapper(count)), _count_effect(_scope);
+  $count = _$.state(3, ($scope, count) => {
+    $pattern2($scope, createWrapper(count)), $count_effect($scope);
   });
-function _createWrapper(a) {
+function $createWrapper(a) {
   return { a: a };
 }
-_$.register("a0", _createWrapper), init();
+_$.register("a0", $createWrapper), init();

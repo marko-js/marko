@@ -3,8 +3,8 @@
     "props": {
       "$_$": "t",
       "$init": "e",
-      "$_checked": "r",
-      "$_checkedChange": "o"
+      "$$checked": "r",
+      "$$checkedChange": "o"
     }
   }
 }

@@ -3,15 +3,15 @@
     "props": {
       "$_$": "t",
       "$init": "e",
-      "$_dynamicTag": "n",
-      "$_attrs_effect": "a",
-      "$_content": "r",
-      "$_input": "o",
-      "$_clickCount$FancyButton_content": "m",
-      "$_FancyButton_content": "i",
-      "$_clickCount_closure": "s",
-      "$_clickCount": "c",
-      "$_onClick": "u"
+      "$$dynamicTag": "n",
+      "$$attrs_effect": "a",
+      "$$content": "r",
+      "$$input": "o",
+      "$$clickCount$FancyButton$content": "m",
+      "$$FancyButton_content": "i",
+      "$$clickCount_closure": "s",
+      "$$clickCount": "c",
+      "$$onClick": "u"
     }
   }
 }

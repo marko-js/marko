@@ -1,21 +1,21 @@
-export const _template = "<button>hide</button><!><!>";
-export const _walks = /* get, over(1), replace, over(1) */" b%bD";
+export const $template = "<button>hide</button><!><!>";
+export const $walks = /* get, over(1), replace, over(1) */" b%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _message_text$if_content = /* @__PURE__ */_$.conditionalClosure("message_text", "#text/1", 0, (_scope, message_text) => _$.data(_scope["#text/0"], message_text));
-const _if_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, 0, _scope => _message_text$if_content._(_scope));
-const _if = /* @__PURE__ */_$.conditional("#text/1", _if_content);
-const _show = /* @__PURE__ */_$.state("show/4", (_scope, show) => _if(_scope, show ? 0 : 1));
-const _message_text = /* @__PURE__ */_$.value("message_text", _message_text$if_content);
-const _message = /* @__PURE__ */_$.state("message/2", (_scope, message) => _message_text(_scope, message?.text));
-const _setup_effect = _$.effect("__tests__/template.marko_0", _scope => _$.on(_scope["#button/0"], "click", function () {
-  _message(_scope, null);
-  _show(_scope, false);
+const $message_text$if$content = /* @__PURE__ */_$.conditionalClosure("message_text", "#text/1", 0, ($scope, message_text) => _$.data($scope["#text/0"], message_text));
+const $if_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, 0, $scope => $message_text$if$content._($scope));
+const $if = /* @__PURE__ */_$.conditional("#text/1", $if_content);
+const $show = /* @__PURE__ */_$.state("show/4", ($scope, show) => $if($scope, show ? 0 : 1));
+const $message_text = /* @__PURE__ */_$.value("message_text", $message_text$if$content);
+const $message = /* @__PURE__ */_$.state("message/2", ($scope, message) => $message_text($scope, message?.text));
+const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => _$.on($scope["#button/0"], "click", function () {
+  $message($scope, null);
+  $show($scope, false);
 }));
-export function _setup(_scope) {
-  _message(_scope, {
+export function $setup($scope) {
+  $message($scope, {
     text: "hi"
   });
-  _show(_scope, true);
-  _setup_effect(_scope);
+  $show($scope, true);
+  $setup_effect($scope);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

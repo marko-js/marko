@@ -3,12 +3,12 @@
     "props": {
       "$_$": "t",
       "$init": "n",
-      "$_count_effect": "o",
-      "$_count": "a",
-      "$_tagName_content": "i",
-      "$_dynamicTag": "c",
-      "$_tagName_effect": "e",
-      "$_tagName": "m"
+      "$$count_effect": "o",
+      "$$count": "a",
+      "$$tagName_content": "i",
+      "$$dynamicTag": "c",
+      "$$tagName_effect": "e",
+      "$$tagName": "m"
     }
   }
 }

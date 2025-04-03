@@ -3,12 +3,12 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_expr_count_multiplier": "a",
-      "$_multipliedCount": "n",
-      "$_multiplier_effect": "c",
-      "$_multiplier": "e",
-      "$_count_effect": "i",
-      "$_count": "m"
+      "$$expr_count_multiplier": "a",
+      "$$multipliedCount": "n",
+      "$$multiplier_effect": "c",
+      "$$multiplier": "e",
+      "$$count_effect": "i",
+      "$$count": "m"
     }
   }
 }

@@ -3,7 +3,7 @@
     "props": {
       "$_$": "a",
       "$init": "t",
-      "$_tagName": "e"
+      "$$tagName": "e"
     }
   }
 }

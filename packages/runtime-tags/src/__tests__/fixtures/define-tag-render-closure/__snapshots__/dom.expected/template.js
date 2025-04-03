@@ -1,25 +1,25 @@
-export const _template = "<!><!><button> </button>";
-export const _walks = /* replace, over(1), get, next(1), get, out(1) */"D%b D l";
+export const $template = "<!><!><button> </button>";
+export const $walks = /* replace, over(1), get, next(1), get, out(1) */"D%b D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _x$define_content = /* @__PURE__ */_$.dynamicClosureRead("x", (_scope, x) => _$.data(_scope["#text/0"], x));
-const _define_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<div> </div>", /* next(1), get */"D ", 0, 0, _scope => _x$define_content(_scope));
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
-const _MyTag = /* @__PURE__ */_$.value("MyTag", _dynamicTag);
-const _x_closure = /* @__PURE__ */_$.dynamicClosure(_x$define_content);
-const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
+const $x$define$content = /* @__PURE__ */_$.dynamicClosureRead("x", ($scope, x) => _$.data($scope["#text/0"], x));
+const $define_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<div> </div>", /* next(1), get */"D ", 0, 0, $scope => $x$define$content($scope));
+const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
+const $MyTag = /* @__PURE__ */_$.value("MyTag", $dynamicTag);
+const $x_closure = /* @__PURE__ */_$.dynamicClosure($x$define$content);
+const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
   x
-}) => _$.on(_scope["#button/1"], "click", function () {
-  _x(_scope, x + 1), x;
+}) => _$.on($scope["#button/1"], "click", function () {
+  $x($scope, x + 1), x;
 }));
-const _x = /* @__PURE__ */_$.state("x/3", (_scope, x) => {
-  _$.data(_scope["#text/2"], x);
-  _x_closure(_scope);
-  _x_effect(_scope);
+const $x = /* @__PURE__ */_$.state("x/3", ($scope, x) => {
+  _$.data($scope["#text/2"], x);
+  $x_closure($scope);
+  $x_effect($scope);
 });
-export function _setup(_scope) {
-  _x(_scope, 1);
-  _MyTag(_scope, {
-    content: _define_content(_scope)
+export function $setup($scope) {
+  $x($scope, 1);
+  $MyTag($scope, {
+    content: $define_content($scope)
   });
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

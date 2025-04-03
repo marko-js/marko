@@ -3,9 +3,9 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_expr_input_count": "r",
-      "$_count_effect": "e",
-      "$_count": "n"
+      "$$expr_input_count": "r",
+      "$$count_effect": "e",
+      "$$count": "n"
     }
   }
 }

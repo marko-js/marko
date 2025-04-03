@@ -1,25 +1,25 @@
-export const _template = "<div></div>";
-export const _walks = /* get, over(1) */" b";
-export const _setup = () => {};
+export const $template = "<div></div>";
+export const $walks = /* get, over(1) */" b";
+export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _n$for_content = /* @__PURE__ */_$.value("n", (_scope, n) => _$.data(_scope["#text/0"], n));
-const _params2$for_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => _n$for_content(_scope, _params2[0]));
-const _for_content = /* @__PURE__ */_$.createRenderer("<!>, ", /* replace */"%", 0, _params2$for_content);
-const _expr_input_from_input_to_input_step = /* @__PURE__ */_$.intersection(6, _scope => {
+const $n$for$content = /* @__PURE__ */_$.value("n", ($scope, n) => _$.data($scope["#text/0"], n));
+const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $n$for$content($scope, $params2[0]));
+const $for_content = /* @__PURE__ */_$.createRenderer("<!>, ", /* replace */"%", 0, $params2$for$content);
+const $expr_input_from_input_to_input_step = /* @__PURE__ */_$.intersection(6, $scope => {
   const {
     input_from,
     input_to,
     input_step
-  } = _scope;
-  _for(_scope, [input_to, input_from, input_step]);
+  } = $scope;
+  $for($scope, [input_to, input_from, input_step]);
 }, 2);
-const _for = /* @__PURE__ */_$.loopTo("#div/0", _for_content);
-export const _input_step = /* @__PURE__ */_$.value("input_step", _expr_input_from_input_to_input_step);
-export const _input_to = /* @__PURE__ */_$.value("input_to", _expr_input_from_input_to_input_step);
-export const _input_from = /* @__PURE__ */_$.value("input_from", _expr_input_from_input_to_input_step);
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
-  _input_from(_scope, input.from);
-  _input_to(_scope, input.to);
-  _input_step(_scope, input.step);
+const $for = /* @__PURE__ */_$.loopTo("#div/0", $for_content);
+export const $input_step = /* @__PURE__ */_$.value("input_step", $expr_input_from_input_to_input_step);
+export const $input_to = /* @__PURE__ */_$.value("input_to", $expr_input_from_input_to_input_step);
+export const $input_from = /* @__PURE__ */_$.value("input_from", $expr_input_from_input_to_input_step);
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {
+  $input_from($scope, input.from);
+  $input_to($scope, input.to);
+  $input_step($scope, input.step);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

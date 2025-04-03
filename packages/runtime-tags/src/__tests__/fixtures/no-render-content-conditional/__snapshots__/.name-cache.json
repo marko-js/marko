@@ -3,8 +3,8 @@
     "props": {
       "$_$": "o",
       "$init": "t",
-      "$_expr_input_x_effect": "e",
-      "$_expr_input_x": "r"
+      "$$expr_input_x_effect": "e",
+      "$$expr_input_x": "r"
     }
   }
 }

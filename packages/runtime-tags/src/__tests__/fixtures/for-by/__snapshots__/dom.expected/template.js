@@ -1,49 +1,49 @@
-export const _template = "<div><div class=by-string></div><div class=by-function></div><div class=by-unknown-string></div><div class=by-unknown-function></div><div class=by-unknown-missing></div><button>Rotate</button></div>";
-export const _walks = /* next(1), get, over(1), get, over(1), get, over(1), get, over(1), get, over(1), get, out(1) */"D b b b b b l";
-const getStringBy = _getStringBy;
-const getFunctionBy = _getFunctionBy;
-const getMissingBy = _getMissingBy;
+export const $template = "<div><div class=by-string></div><div class=by-function></div><div class=by-unknown-string></div><div class=by-unknown-function></div><div class=by-unknown-missing></div><button>Rotate</button></div>";
+export const $walks = /* next(1), get, over(1), get, over(1), get, over(1), get, over(1), get, over(1), get, out(1) */"D b b b b b l";
+const getStringBy = $getStringBy;
+const getFunctionBy = $getFunctionBy;
+const getMissingBy = $getMissingBy;
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _text$for_content5 = /* @__PURE__ */_$.value("text", (_scope, text) => _$.data(_scope["#text/0"], text));
-const _temp5$for_content = /* @__PURE__ */_$.value("_temp5", (_scope, _temp5) => _text$for_content5(_scope, _temp5.text));
-const _params6$for_content = /* @__PURE__ */_$.value("_params6", (_scope, _params6) => _temp5$for_content(_scope, _params6?.[0]));
-const _for_content5 = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, _params6$for_content);
-const _text$for_content4 = /* @__PURE__ */_$.value("text", (_scope, text) => _$.data(_scope["#text/0"], text));
-const _temp4$for_content = /* @__PURE__ */_$.value("_temp4", (_scope, _temp4) => _text$for_content4(_scope, _temp4.text));
-const _params5$for_content = /* @__PURE__ */_$.value("_params5", (_scope, _params5) => _temp4$for_content(_scope, _params5?.[0]));
-const _for_content4 = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, _params5$for_content);
-const _text$for_content3 = /* @__PURE__ */_$.value("text", (_scope, text) => _$.data(_scope["#text/0"], text));
-const _temp3$for_content = /* @__PURE__ */_$.value("_temp3", (_scope, _temp3) => _text$for_content3(_scope, _temp3.text));
-const _params4$for_content = /* @__PURE__ */_$.value("_params4", (_scope, _params4) => _temp3$for_content(_scope, _params4?.[0]));
-const _for_content3 = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, _params4$for_content);
-const _text$for_content2 = /* @__PURE__ */_$.value("text", (_scope, text) => _$.data(_scope["#text/0"], text));
-const _temp2$for_content = /* @__PURE__ */_$.value("_temp2", (_scope, _temp2) => _text$for_content2(_scope, _temp2.text));
-const _params3$for_content = /* @__PURE__ */_$.value("_params3", (_scope, _params3) => _temp2$for_content(_scope, _params3?.[0]));
-const _for_content2 = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, _params3$for_content);
-const _text$for_content = /* @__PURE__ */_$.value("text", (_scope, text) => _$.data(_scope["#text/0"], text));
-const _temp$for_content = /* @__PURE__ */_$.value("_temp", (_scope, _temp) => _text$for_content(_scope, _temp.text));
-const _params2$for_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => _temp$for_content(_scope, _params2?.[0]));
-const _for_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, _params2$for_content);
-const _for5 = /* @__PURE__ */_$.loopOf("#div/4", _for_content5);
-const _for4 = /* @__PURE__ */_$.loopOf("#div/3", _for_content4);
-const _for3 = /* @__PURE__ */_$.loopOf("#div/2", _for_content3);
-const _for2 = /* @__PURE__ */_$.loopOf("#div/1", _for_content2);
-const _for = /* @__PURE__ */_$.loopOf("#div/0", _for_content);
-const _items_effect = _$.effect("__tests__/template.marko_0_items", (_scope, {
+const $text$for$content5 = /* @__PURE__ */_$.value("text", ($scope, text) => _$.data($scope["#text/0"], text));
+const $temp5$for$content = /* @__PURE__ */_$.value("$temp5", ($scope, $temp5) => $text$for$content5($scope, $temp5.text));
+const $params6$for$content = /* @__PURE__ */_$.value("$params6", ($scope, $params6) => $temp5$for$content($scope, $params6?.[0]));
+const $for_content5 = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, $params6$for$content);
+const $text$for$content4 = /* @__PURE__ */_$.value("text", ($scope, text) => _$.data($scope["#text/0"], text));
+const $temp4$for$content = /* @__PURE__ */_$.value("$temp4", ($scope, $temp4) => $text$for$content4($scope, $temp4.text));
+const $params5$for$content = /* @__PURE__ */_$.value("$params5", ($scope, $params5) => $temp4$for$content($scope, $params5?.[0]));
+const $for_content4 = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, $params5$for$content);
+const $text$for$content3 = /* @__PURE__ */_$.value("text", ($scope, text) => _$.data($scope["#text/0"], text));
+const $temp3$for$content = /* @__PURE__ */_$.value("$temp3", ($scope, $temp3) => $text$for$content3($scope, $temp3.text));
+const $params4$for$content = /* @__PURE__ */_$.value("$params4", ($scope, $params4) => $temp3$for$content($scope, $params4?.[0]));
+const $for_content3 = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, $params4$for$content);
+const $text$for$content2 = /* @__PURE__ */_$.value("text", ($scope, text) => _$.data($scope["#text/0"], text));
+const $temp2$for$content = /* @__PURE__ */_$.value("$temp2", ($scope, $temp2) => $text$for$content2($scope, $temp2.text));
+const $params3$for$content = /* @__PURE__ */_$.value("$params3", ($scope, $params3) => $temp2$for$content($scope, $params3?.[0]));
+const $for_content2 = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, $params3$for$content);
+const $text$for$content = /* @__PURE__ */_$.value("text", ($scope, text) => _$.data($scope["#text/0"], text));
+const $temp$for$content = /* @__PURE__ */_$.value("$temp", ($scope, $temp) => $text$for$content($scope, $temp.text));
+const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $temp$for$content($scope, $params2?.[0]));
+const $for_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, $params2$for$content);
+const $for5 = /* @__PURE__ */_$.loopOf("#div/4", $for_content5);
+const $for4 = /* @__PURE__ */_$.loopOf("#div/3", $for_content4);
+const $for3 = /* @__PURE__ */_$.loopOf("#div/2", $for_content3);
+const $for2 = /* @__PURE__ */_$.loopOf("#div/1", $for_content2);
+const $for = /* @__PURE__ */_$.loopOf("#div/0", $for_content);
+const $items_effect = _$.effect("__tests__/template.marko_0_items", ($scope, {
   items
-}) => _$.on(_scope["#button/5"], "click", function () {
-  _items(_scope, [...items.slice(1), items[0]]);
+}) => _$.on($scope["#button/5"], "click", function () {
+  $items($scope, [...items.slice(1), items[0]]);
 }));
-const _items = /* @__PURE__ */_$.state("items/6", (_scope, items) => {
-  _for(_scope, [items, "id"]);
-  _for2(_scope, [items, item => item.id]);
-  _for3(_scope, [items, getStringBy()]);
-  _for4(_scope, [items, getFunctionBy()]);
-  _for5(_scope, [items, getMissingBy()]);
-  _items_effect(_scope);
+const $items = /* @__PURE__ */_$.state("items/6", ($scope, items) => {
+  $for($scope, [items, "id"]);
+  $for2($scope, [items, item => item.id]);
+  $for3($scope, [items, getStringBy()]);
+  $for4($scope, [items, getFunctionBy()]);
+  $for5($scope, [items, getMissingBy()]);
+  $items_effect($scope);
 });
-export function _setup(_scope) {
-  _items(_scope, [{
+export function $setup($scope) {
+  $items($scope, [{
     id: 0,
     text: "first"
   }, {
@@ -54,16 +54,16 @@ export function _setup(_scope) {
     text: "third"
   }]);
 }
-function _getStringBy() {
+function $getStringBy() {
   return "id";
 }
-function _getFunctionBy() {
+function $getFunctionBy() {
   return item => item.id;
 }
-function _getMissingBy() {
+function $getMissingBy() {
   return undefined;
 }
-_$.register("__tests__/template.marko_0/getStringBy", _getStringBy);
-_$.register("__tests__/template.marko_0/getFunctionBy", _getFunctionBy);
-_$.register("__tests__/template.marko_0/getMissingBy", _getMissingBy);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+_$.register("__tests__/template.marko_0/getStringBy", $getStringBy);
+_$.register("__tests__/template.marko_0/getFunctionBy", $getFunctionBy);
+_$.register("__tests__/template.marko_0/getMissingBy", $getMissingBy);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

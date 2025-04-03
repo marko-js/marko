@@ -1,4 +1,4 @@
 // size: 74 (min) 77 (brotli)
 _$.enableCatch();
-const _params2$catch_content = _$.value(3);
-_$.registerContent("a0", "ERROR!", 0, 0, _params2$catch_content);
+const $params2$catch$content = _$.value(3);
+_$.registerContent("a0", "ERROR!", 0, 0, $params2$catch$content);

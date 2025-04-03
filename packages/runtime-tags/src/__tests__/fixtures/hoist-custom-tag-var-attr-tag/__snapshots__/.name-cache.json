@@ -3,8 +3,8 @@
     "props": {
       "$_$": "t",
       "$init": "r",
-      "$_return": "o",
-      "$_setHtml$what_content": "i"
+      "$$_return": "o",
+      "$$setHtml$what$content": "i"
     }
   }
 }

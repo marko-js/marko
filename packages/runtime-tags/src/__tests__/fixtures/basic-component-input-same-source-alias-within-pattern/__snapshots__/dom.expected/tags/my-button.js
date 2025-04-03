@@ -1,21 +1,21 @@
-export const _template = "<button><!> <!></button>";
-export const _walks = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l";
-export const _setup = () => {};
+export const $template = "<button><!> <!></button>";
+export const $walks = /* get, next(1), replace, over(2), replace, out(1) */" D%c%l";
+export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _textAlias = (_scope, textAlias) => {
-  _$.data(_scope["#text/2"], textAlias);
+const $textAlias = ($scope, textAlias) => {
+  _$.data($scope["#text/2"], textAlias);
 };
-export const _text = /* @__PURE__ */_$.value("text", (_scope, text) => {
-  _$.data(_scope["#text/1"], text);
-  _textAlias(_scope, text);
+export const $text = /* @__PURE__ */_$.value("text", ($scope, text) => {
+  _$.data($scope["#text/1"], text);
+  $textAlias($scope, text);
 });
-export const _value2 = /* @__PURE__ */_$.value("_value", (_scope, _value) => _text(_scope, _value.text));
-const _onClick_effect = _$.effect("__tests__/tags/my-button.marko_0_onClick", (_scope, {
+export const $value2 = /* @__PURE__ */_$.value("$value", ($scope, $value) => $text($scope, $value.text));
+const $onClick_effect = _$.effect("__tests__/tags/my-button.marko_0_onClick", ($scope, {
   onClick
-}) => _$.on(_scope["#button/0"], "click", onClick));
-export const _onClick = /* @__PURE__ */_$.value("onClick", _onClick_effect);
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
-  _onClick(_scope, input.onClick);
-  _value2(_scope, input.value);
+}) => _$.on($scope["#button/0"], "click", onClick));
+export const $onClick = /* @__PURE__ */_$.value("onClick", $onClick_effect);
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {
+  $onClick($scope, input.onClick);
+  $value2($scope, input.value);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-button.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-button.marko", $template, $walks, $setup, $input);

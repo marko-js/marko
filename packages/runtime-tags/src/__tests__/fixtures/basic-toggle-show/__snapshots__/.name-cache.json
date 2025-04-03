@@ -3,10 +3,10 @@
     "props": {
       "$_$": "o",
       "$init": "t",
-      "$_if_content": "e",
-      "$_if": "r",
-      "$_show_effect": "m",
-      "$_show": "a"
+      "$$if_content": "e",
+      "$$if": "r",
+      "$$show_effect": "m",
+      "$$show": "a"
     }
   }
 }

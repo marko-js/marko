@@ -1,75 +1,75 @@
-export const _template = "<button id=outer>Toggle Outer</button><button id=middle>Toggle Middle</button><button id=inner>Toggle Inner</button><pre></pre><!><!>";
-export const _walks = /* get, over(1), get, over(1), get, over(1), get, over(1), replace, over(1) */" b b b b%bD";
+export const $template = "<button id=outer>Toggle Outer</button><button id=middle>Toggle Middle</button><button id=inner>Toggle Inner</button><pre></pre><!><!>";
+export const $walks = /* get, over(1), get, over(1), get, over(1), get, over(1), replace, over(1) */" b b b b%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-import { _setup as _child, _write as _child_input_write, _name as _child_input_name, _template as _child_template, _walks as _child_walks } from "./tags/child.marko";
-const _write$if_content3 = /* @__PURE__ */_$.dynamicClosureRead("write", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._._);
-const _setup$if_content3 = _scope => {
-  _child(_scope["#childScope/0"]);
-  _child_input_name(_scope["#childScope/0"], "Inner");
+import { $setup as _child, $write as _child_input_write, $name as _child_input_name, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
+const $write$if$content3 = /* @__PURE__ */_$.dynamicClosureRead("write", ($scope, write) => _child_input_write($scope["#childScope/0"], write), $scope => $scope._._._);
+const $setup$if$content3 = $scope => {
+  _child($scope["#childScope/0"]);
+  _child_input_name($scope["#childScope/0"], "Inner");
 };
-const _if_content3 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, _setup$if_content3, 0, _scope => _write$if_content3(_scope));
-const _if$if_content = /* @__PURE__ */_$.conditional("#text/1", _if_content3);
-const _write$if_content2 = /* @__PURE__ */_$.dynamicClosureRead("write", (_scope, write) => _child_input_write(_scope["#childScope/0"], write), _scope => _scope._._);
-const _showInner$if_content = /* @__PURE__ */_$.dynamicClosureRead("showInner", (_scope, showInner) => _if$if_content(_scope, showInner ? 0 : 1), _scope => _scope._._);
-const _setup$if_content2 = _scope => {
-  _child(_scope["#childScope/0"]);
-  _child_input_name(_scope["#childScope/0"], "Middle");
+const $if_content3 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, $setup$if$content3, 0, $scope => $write$if$content3($scope));
+const $if$if$content = /* @__PURE__ */_$.conditional("#text/1", $if_content3);
+const $write$if$content2 = /* @__PURE__ */_$.dynamicClosureRead("write", ($scope, write) => _child_input_write($scope["#childScope/0"], write), $scope => $scope._._);
+const $showInner$if$content = /* @__PURE__ */_$.dynamicClosureRead("showInner", ($scope, showInner) => $if$if$content($scope, showInner ? 0 : 1), $scope => $scope._._);
+const $setup$if$content2 = $scope => {
+  _child($scope["#childScope/0"]);
+  _child_input_name($scope["#childScope/0"], "Middle");
 };
-const _if_content2 = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$if_content2, 0, _scope => {
-  _showInner$if_content(_scope);
-  _write$if_content2(_scope);
+const $if_content2 = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, $setup$if$content2, 0, $scope => {
+  $showInner$if$content($scope);
+  $write$if$content2($scope);
 });
-const _if$if_content2 = /* @__PURE__ */_$.conditional("#text/1", _if_content2);
-const _write$if_content = /* @__PURE__ */_$.conditionalClosure("write", "#text/4", 0, (_scope, write) => _child_input_write(_scope["#childScope/0"], write));
-const _showMiddle$if_content = /* @__PURE__ */_$.conditionalClosure("showMiddle", "#text/4", 0, (_scope, showMiddle) => _if$if_content2(_scope, showMiddle ? 0 : 1));
-const _setup$if_content = _scope => {
-  _child(_scope["#childScope/0"]);
-  _child_input_name(_scope["#childScope/0"], "Outer");
+const $if$if$content2 = /* @__PURE__ */_$.conditional("#text/1", $if_content2);
+const $write$if$content = /* @__PURE__ */_$.conditionalClosure("write", "#text/4", 0, ($scope, write) => _child_input_write($scope["#childScope/0"], write));
+const $showMiddle$if$content = /* @__PURE__ */_$.conditionalClosure("showMiddle", "#text/4", 0, ($scope, showMiddle) => $if$if$content2($scope, showMiddle ? 0 : 1));
+const $setup$if$content = $scope => {
+  _child($scope["#childScope/0"]);
+  _child_input_name($scope["#childScope/0"], "Outer");
 };
-const _if_content = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, _setup$if_content, 0, _scope => {
-  _showMiddle$if_content._(_scope);
-  _write$if_content._(_scope);
+const $if_content = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, $setup$if$content, 0, $scope => {
+  $showMiddle$if$content._($scope);
+  $write$if$content._($scope);
 });
-const _if = /* @__PURE__ */_$.conditional("#text/4", _if_content);
-const _write = /* @__PURE__ */_$.value("write");
-const _showInner_closure = /* @__PURE__ */_$.dynamicClosure(_showInner$if_content);
-const _showInner_effect = _$.effect("__tests__/template.marko_0_showInner", (_scope, {
+const $if = /* @__PURE__ */_$.conditional("#text/4", $if_content);
+const $write2 = /* @__PURE__ */_$.value("write");
+const $showInner_closure = /* @__PURE__ */_$.dynamicClosure($showInner$if$content);
+const $showInner_effect = _$.effect("__tests__/template.marko_0_showInner", ($scope, {
   showInner
-}) => _$.on(_scope["#button/2"], "click", function () {
-  _showInner(_scope, !showInner);
+}) => _$.on($scope["#button/2"], "click", function () {
+  $showInner($scope, !showInner);
 }));
-const _showInner = /* @__PURE__ */_$.state("showInner/7", _scope => {
-  _showInner_closure(_scope);
-  _showInner_effect(_scope);
+const $showInner = /* @__PURE__ */_$.state("showInner/7", $scope => {
+  $showInner_closure($scope);
+  $showInner_effect($scope);
 });
-const _showMiddle_effect = _$.effect("__tests__/template.marko_0_showMiddle", (_scope, {
+const $showMiddle_effect = _$.effect("__tests__/template.marko_0_showMiddle", ($scope, {
   showMiddle
-}) => _$.on(_scope["#button/1"], "click", function () {
-  _showMiddle(_scope, !showMiddle);
+}) => _$.on($scope["#button/1"], "click", function () {
+  $showMiddle($scope, !showMiddle);
 }));
-const _showMiddle = /* @__PURE__ */_$.state("showMiddle/6", _scope => {
-  _showMiddle$if_content(_scope);
-  _showMiddle_effect(_scope);
+const $showMiddle = /* @__PURE__ */_$.state("showMiddle/6", $scope => {
+  $showMiddle$if$content($scope);
+  $showMiddle_effect($scope);
 });
-const _showOuter_effect = _$.effect("__tests__/template.marko_0_showOuter", (_scope, {
+const $showOuter_effect = _$.effect("__tests__/template.marko_0_showOuter", ($scope, {
   showOuter
-}) => _$.on(_scope["#button/0"], "click", function () {
-  _showOuter(_scope, !showOuter);
+}) => _$.on($scope["#button/0"], "click", function () {
+  $showOuter($scope, !showOuter);
 }));
-const _showOuter = /* @__PURE__ */_$.state("showOuter/5", (_scope, showOuter) => {
-  _if(_scope, showOuter ? 0 : 1);
-  _showOuter_effect(_scope);
+const $showOuter = /* @__PURE__ */_$.state("showOuter/5", ($scope, showOuter) => {
+  $if($scope, showOuter ? 0 : 1);
+  $showOuter_effect($scope);
 });
-export function _setup(_scope) {
-  _showOuter(_scope, true);
-  _showMiddle(_scope, true);
-  _showInner(_scope, true);
-  _write(_scope, _write2(_scope));
+export function $setup($scope) {
+  $showOuter($scope, true);
+  $showMiddle($scope, true);
+  $showInner($scope, true);
+  $write2($scope, $write($scope));
 }
-function _write2(_scope) {
+function $write($scope) {
   return function (msg) {
-    _scope["#pre/3"].innerHTML += '\n' + msg;
+    $scope["#pre/3"].innerHTML += '\n' + msg;
   };
 }
-_$.register("__tests__/template.marko_0/write", _write2);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+_$.register("__tests__/template.marko_0/write", $write);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

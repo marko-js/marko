@@ -1,12 +1,12 @@
 // size: 145 (min) 128 (brotli)
-const _open$for_content_effect = effect("a0", (_scope, { 12: open }) =>
-    on(_scope[2], "click", function () {
-      _open$for_content(_scope, !open);
+const $open$for$content_effect = effect("a0", ($scope, { 12: open }) =>
+    on($scope[2], "click", function () {
+      $open$for$content($scope, !open);
     }),
   ),
-  _open$for_content = state(12, (_scope, open) => {
-    attr(_scope[0], "hidden", !open),
-      data(_scope[3], open ? "[-]" : "[+]"),
-      _open$for_content_effect(_scope);
+  $open$for$content = state(12, ($scope, open) => {
+    attr($scope[0], "hidden", !open),
+      data($scope[3], open ? "[-]" : "[+]"),
+      $open$for$content_effect($scope);
   });
 init();

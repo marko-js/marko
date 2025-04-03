@@ -1,19 +1,19 @@
-export const _template = "<span> </span><span> </span>";
-export const _walks = /* next(1), get, out(1), next(1), get, out(1) */"D lD l";
+export const $template = "<span> </span><span> </span>";
+export const $walks = /* next(1), get, out(1), next(1), get, out(1) */"D lD l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _y = /* @__PURE__ */_$.state("y/3", (_scope, y) => _$.data(_scope["#text/1"], y));
-const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
+const $y = /* @__PURE__ */_$.state("y/3", ($scope, y) => _$.data($scope["#text/1"], y));
+const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
   x
 }) => {
-  _y(_scope, x);
-  _x(_scope, 2);
+  $y($scope, x);
+  $x($scope, 2);
 });
-const _x = /* @__PURE__ */_$.state("x/2", (_scope, x) => {
-  _$.data(_scope["#text/0"], x);
-  _x_effect(_scope);
+const $x = /* @__PURE__ */_$.state("x/2", ($scope, x) => {
+  _$.data($scope["#text/0"], x);
+  $x_effect($scope);
 });
-export function _setup(_scope) {
-  _x(_scope, 1);
-  _y(_scope, 0);
+export function $setup($scope) {
+  $x($scope, 1);
+  $y($scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

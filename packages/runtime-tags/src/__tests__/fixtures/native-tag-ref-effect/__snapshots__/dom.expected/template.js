@@ -1,6 +1,6 @@
-export const _template = "<div></div>";
-export const _walks = /* get, over(1) */" b";
+export const $template = "<div></div>";
+export const $walks = /* get, over(1) */" b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _setup_effect = _$.effect("__tests__/template.marko_0", _scope => (_scope["#div/0"].textContent = "hello"));
-export const _setup = _setup_effect;
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => ($scope["#div/0"].textContent = "hello"));
+export const $setup = $setup_effect;
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

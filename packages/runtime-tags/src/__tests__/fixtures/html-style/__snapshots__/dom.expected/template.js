@@ -1,20 +1,20 @@
-export const _template = "<style></style>";
-export const _walks = /* get, over(1) */" b";
+export const $template = "<style></style>";
+export const $walks = /* get, over(1) */" b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _count_effect = _$.effect("__tests__/template.marko_0_count", (_scope, {
+const $count_effect = _$.effect("__tests__/template.marko_0_count", ($scope, {
   count
-}) => _$.on(_scope["#style/0"], "click", function () {
-  _count(_scope, count + 1), count;
+}) => _$.on($scope["#style/0"], "click", function () {
+  $count($scope, count + 1), count;
 }));
-const _count = /* @__PURE__ */_$.state("count/1", (_scope, count) => {
-  _$.textContent(_scope["#style/0"], `
+const $count = /* @__PURE__ */_$.state("count/1", ($scope, count) => {
+  _$.textContent($scope["#style/0"], `
   .test {
     content: ${count}
   }
 `);
-  _count_effect(_scope);
+  $count_effect($scope);
 });
-export function _setup(_scope) {
-  _count(_scope, 0);
+export function $setup($scope) {
+  $count($scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

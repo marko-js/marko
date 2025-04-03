@@ -3,12 +3,12 @@
     "props": {
       "$_$": "a",
       "$init": "o",
-      "$_count$await_content3": "m",
-      "$_count$await_content2": "t",
-      "$_count$await_content": "d",
-      "$_count_closure": "e",
-      "$_count_effect": "r",
-      "$_count": "i"
+      "$$count$await$content3": "m",
+      "$$count$await$content2": "t",
+      "$$count$await$content": "d",
+      "$$count_closure": "e",
+      "$$count_effect": "r",
+      "$$count": "i"
     }
   }
 }

@@ -3,14 +3,14 @@
     "props": {
       "$_$": "a",
       "$init": "e",
-      "$_description$for_content": "t",
-      "$_name$for_content": "i",
-      "$_temp$for_content": "o",
-      "$_params2$for_content": "r",
-      "$_for_content": "c",
-      "$_for": "n",
-      "$_items_effect": "m",
-      "$_items": "d"
+      "$$description$for$content": "t",
+      "$$name$for$content": "i",
+      "$$temp$for$content": "o",
+      "$$params2$for$content": "r",
+      "$$for_content": "c",
+      "$$for": "n",
+      "$$items_effect": "m",
+      "$$items": "d"
     }
   }
 }

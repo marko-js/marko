@@ -3,8 +3,8 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_open$for_content_effect": "a",
-      "$_open$for_content": "m"
+      "$$open$for$content_effect": "a",
+      "$$open$for$content": "m"
     }
   }
 }

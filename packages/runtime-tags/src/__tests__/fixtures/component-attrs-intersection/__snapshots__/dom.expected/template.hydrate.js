@@ -1,15 +1,15 @@
 // size: 195 (min) 147 (brotli)
-const _expr_value_dummy = _$.intersection(5, (_scope) => {
-    const { 3: value, 4: dummy } = _scope;
-    _$.data(_scope[0], value);
+const $expr_value_dummy = _$.intersection(5, ($scope) => {
+    const { 3: value, 4: dummy } = $scope;
+    _$.data($scope[0], value);
   }),
-  _value = _$.value(3, _expr_value_dummy),
-  _count_effect = _$.effect("b0", (_scope, { 2: count }) =>
-    _$.on(_scope[1], "click", function () {
-      _count(_scope, count + 1);
+  $value = _$.value(3, $expr_value_dummy),
+  $count_effect = _$.effect("b0", ($scope, { 2: count }) =>
+    _$.on($scope[1], "click", function () {
+      $count($scope, count + 1);
     }),
   ),
-  _count = _$.state(2, (_scope, count) => {
-    _value(_scope[0], count), _count_effect(_scope);
+  $count = _$.state(2, ($scope, count) => {
+    $value($scope[0], count), $count_effect($scope);
   });
 init();

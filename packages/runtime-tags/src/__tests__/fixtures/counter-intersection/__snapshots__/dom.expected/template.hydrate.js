@@ -1,20 +1,20 @@
 // size: 262 (min) 143 (brotli)
-const _expr_a_b = _$.intersection(7, (_scope) => {
-    const { 5: a, 6: b } = _scope;
-    _$.data(_scope[4], a + b);
+const $expr_a_b = _$.intersection(7, ($scope) => {
+    const { 5: a, 6: b } = $scope;
+    _$.data($scope[4], a + b);
   }),
-  _b = _$.state(6, (_scope, b) => {
-    _$.data(_scope[3], b), _expr_a_b(_scope);
+  $b = _$.state(6, ($scope, b) => {
+    _$.data($scope[3], b), $expr_a_b($scope);
   }),
-  _a = _$.state(5, (_scope, a) => {
-    _$.data(_scope[1], a), _expr_a_b(_scope);
+  $a = _$.state(5, ($scope, a) => {
+    _$.data($scope[1], a), $expr_a_b($scope);
   });
-_$.effect("a0", (_scope) => {
-  _$.on(_scope[0], "click", function () {
-    _a(_scope, 10);
+_$.effect("a0", ($scope) => {
+  _$.on($scope[0], "click", function () {
+    $a($scope, 10);
   }),
-    _$.on(_scope[2], "click", function () {
-      _b(_scope, 5);
+    _$.on($scope[2], "click", function () {
+      $b($scope, 5);
     });
 }),
   init();

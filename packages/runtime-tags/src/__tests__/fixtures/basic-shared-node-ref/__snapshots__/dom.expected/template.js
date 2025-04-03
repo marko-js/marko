@@ -1,32 +1,32 @@
-export const _template = "<ul></ul><button id=toggle>Toggle</button><button id=reverse>Reverse</button>";
-export const _walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
+export const $template = "<ul></ul><button id=toggle>Toggle</button><button id=reverse>Reverse</button>";
+export const $walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _x$for_content = /* @__PURE__ */_$.value("x", (_scope, x) => _$.data(_scope["#text/0"], x));
-const _params2$for_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => _x$for_content(_scope, _params2[0]));
-const _for_content = /* @__PURE__ */_$.createRenderer("<li> </li>", /* next(1), get */"D ", 0, _params2$for_content);
-const _for = /* @__PURE__ */_$.loopOf("#ul/0", _for_content);
-const _list_effect = _$.effect("__tests__/template.marko_0_list", (_scope, {
+const $x$for$content = /* @__PURE__ */_$.value("x", ($scope, x) => _$.data($scope["#text/0"], x));
+const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $x$for$content($scope, $params2[0]));
+const $for_content = /* @__PURE__ */_$.createRenderer("<li> </li>", /* next(1), get */"D ", 0, $params2$for$content);
+const $for = /* @__PURE__ */_$.loopOf("#ul/0", $for_content);
+const $list_effect = _$.effect("__tests__/template.marko_0_list", ($scope, {
   list
-}) => _$.on(_scope["#button/2"], "click", function () {
-  _list(_scope, [].concat(list).reverse());
+}) => _$.on($scope["#button/2"], "click", function () {
+  $list($scope, [].concat(list).reverse());
 }));
-const _list = /* @__PURE__ */_$.state("list/4", (_scope, list) => {
-  _for(_scope, [list, function (x) {
+const $list = /* @__PURE__ */_$.state("list/4", ($scope, list) => {
+  $for($scope, [list, function (x) {
     return x;
   }]);
-  _list_effect(_scope);
+  $list_effect($scope);
 });
-const _open_effect = _$.effect("__tests__/template.marko_0_open", (_scope, {
+const $open_effect = _$.effect("__tests__/template.marko_0_open", ($scope, {
   open
-}) => _$.on(_scope["#button/1"], "click", function () {
-  _open(_scope, !open);
+}) => _$.on($scope["#button/1"], "click", function () {
+  $open($scope, !open);
 }));
-const _open = /* @__PURE__ */_$.state("open/3", (_scope, open) => {
-  _$.attr(_scope["#ul/0"], "hidden", !open);
-  _open_effect(_scope);
+const $open = /* @__PURE__ */_$.state("open/3", ($scope, open) => {
+  _$.attr($scope["#ul/0"], "hidden", !open);
+  $open_effect($scope);
 });
-export function _setup(_scope) {
-  _open(_scope, true);
-  _list(_scope, [1, 2, 3]);
+export function $setup($scope) {
+  $open($scope, true);
+  $list($scope, [1, 2, 3]);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

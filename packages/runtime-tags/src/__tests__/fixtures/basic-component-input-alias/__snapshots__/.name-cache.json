@@ -3,11 +3,11 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_onClick_effect": "r",
-      "$_onClick$1": "a",
-      "$_text": "e",
-      "$_clickCount": "m",
-      "$_onClick": "n"
+      "$$onClick_effect": "r",
+      "$$onClick$1": "a",
+      "$$text": "e",
+      "$$clickCount": "m",
+      "$$onClick": "n"
     }
   }
 }

@@ -3,14 +3,14 @@
     "props": {
       "$_$": "e",
       "$init": "t",
-      "$_dynamicTag": "a",
-      "$_input_thing_content": "n",
-      "$_input_thing_selected": "o",
-      "$_input_thing": "c",
-      "$_define_content": "s",
-      "$_myThing": "m",
-      "$_selected_effect": "r",
-      "$_selected": "l"
+      "$$dynamicTag": "a",
+      "$$input_thing_content": "n",
+      "$$input_thing_selected": "o",
+      "$$input_thing": "c",
+      "$$define_content": "s",
+      "$$myThing": "m",
+      "$$selected_effect": "r",
+      "$$selected": "l"
     }
   }
 }

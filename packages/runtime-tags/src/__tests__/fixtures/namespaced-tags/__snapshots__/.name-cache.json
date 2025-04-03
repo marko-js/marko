@@ -3,19 +3,19 @@
     "props": {
       "$_$": "t",
       "$init": "e",
-      "$_Child_content2": "a",
-      "$_Child_content": "n",
-      "$_input_value$Parent_content": "r",
-      "$_Parent_content": "i",
-      "$_expr_Parent_Child_effect": "o",
-      "$_expr_Parent_Child": "c",
-      "$_dynamicTag3": "s",
-      "$_dynamicTag2": "m",
-      "$_dynamicTag": "f",
-      "$_Child_effect": "g",
-      "$_Child": "d",
-      "$_Parent_effect": "l",
-      "$_Parent": "u"
+      "$$Child_content2": "a",
+      "$$Child_content": "n",
+      "$$input_value$Parent$content": "r",
+      "$$Parent_content": "i",
+      "$$expr_Parent_Child_effect": "o",
+      "$$expr_Parent_Child": "c",
+      "$$dynamicTag3": "s",
+      "$$dynamicTag2": "m",
+      "$$dynamicTag": "f",
+      "$$Child_effect": "g",
+      "$$Child": "d",
+      "$$Parent_effect": "l",
+      "$$Parent": "u"
     }
   }
 }

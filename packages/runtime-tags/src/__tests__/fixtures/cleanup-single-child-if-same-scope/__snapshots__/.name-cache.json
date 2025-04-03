@@ -3,12 +3,12 @@
     "props": {
       "$_$": "t",
       "$init": "e",
-      "$_setup$if_content_effect": "n",
-      "$_setup$if_content": "o",
-      "$_if_content": "r",
-      "$_if": "i",
-      "$_show_effect": "a",
-      "$_show": "m"
+      "$$setup$if$content_effect": "n",
+      "$$setup$if$content": "o",
+      "$$if_content": "r",
+      "$$if": "i",
+      "$$show_effect": "a",
+      "$$show": "m"
     }
   }
 }

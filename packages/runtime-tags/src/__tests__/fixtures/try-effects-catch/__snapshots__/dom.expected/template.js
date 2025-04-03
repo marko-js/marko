@@ -1,27 +1,27 @@
-export const _template = "<div></div><!><div></div>";
-export const _walks = /* get, over(1), replace, over(1), get, over(1) */" b%b b";
+export const $template = "<div></div><!><div></div>";
+export const $walks = /* get, over(1), replace, over(1), get, over(1) */" b%b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 _$.enableCatch();
-const _err_message$catch_content = /* @__PURE__ */_$.value("err_message", (_scope, err_message) => _$.data(_scope["#text/0"], err_message));
-const _err$catch_content = /* @__PURE__ */_$.value("err", (_scope, err) => _err_message$catch_content(_scope, err?.message));
-const _params2$catch_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => _err$catch_content(_scope, _params2[0]));
-const _catch_content = _$.registerContent("__tests__/template.marko_2_renderer", " ", /* get */" ", 0, _params2$catch_content);
-const _setup$try_content_effect = _$.effect("__tests__/template.marko_1", _scope => (_scope._["#div/0"].textContent = "This shouldn't happen"));
-const _setup$try_content = _scope => {
-  _$.data(_scope["#text/0"], (() => {
+const $err_message$catch$content = /* @__PURE__ */_$.value("err_message", ($scope, err_message) => _$.data($scope["#text/0"], err_message));
+const $err$catch$content = /* @__PURE__ */_$.value("err", ($scope, err) => $err_message$catch$content($scope, err?.message));
+const $params2$catch$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $err$catch$content($scope, $params2[0]));
+const $catch_content = _$.registerContent("__tests__/template.marko_2_renderer", " ", /* get */" ", 0, $params2$catch$content);
+const $setup$try$content_effect = _$.effect("__tests__/template.marko_1", $scope => ($scope._["#div/0"].textContent = "This shouldn't happen"));
+const $setup$try$content = $scope => {
+  _$.data($scope["#text/0"], (() => {
     throw new Error("ERROR!");
   })());
-  _setup$try_content_effect(_scope);
+  $setup$try$content_effect($scope);
 };
-const _try_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", _setup$try_content);
-const _try = /* @__PURE__ */_$.createTry("#text/1", _try_content);
-const _setup_effect = _$.effect("__tests__/template.marko_0", _scope => (_scope["#div/2"].textContent = "This is good"));
-export function _setup(_scope) {
-  _try(_scope, {
+const $try_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", $setup$try$content);
+const $try = /* @__PURE__ */_$.createTry("#text/1", $try_content);
+const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => ($scope["#div/2"].textContent = "This is good"));
+export function $setup($scope) {
+  $try($scope, {
     catch: _$.attrTag({
-      content: _catch_content(_scope)
+      content: $catch_content($scope)
     })
   });
-  _setup_effect(_scope);
+  $setup_effect($scope);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

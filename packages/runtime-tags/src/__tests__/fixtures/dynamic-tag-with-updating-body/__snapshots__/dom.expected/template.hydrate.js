@@ -1,29 +1,29 @@
 // size: 373 (min) 213 (brotli)
-const _count_effect = _$.effect("a0", (_scope, { 2: count }) =>
-    _$.on(_scope[0], "click", function () {
-      _count(_scope, count + 1);
+const $count_effect = _$.effect("a0", ($scope, { 2: count }) =>
+    _$.on($scope[0], "click", function () {
+      $count($scope, count + 1);
     }),
   ),
-  _count = _$.state(2, (_scope, count) => {
-    _$.data(_scope[1], count), _count_effect(_scope);
+  $count = _$.state(2, ($scope, count) => {
+    _$.data($scope[1], count), $count_effect($scope);
   });
-const _tagName_content = _$.registerContent(
+const $tagName_content = _$.registerContent(
     "b0",
     "<button id=count> </button>",
     "/ D l&",
-    (_scope) => {
-      !(function (_scope) {
-        _count(_scope, 0);
-      })(_scope[0]);
+    ($scope) => {
+      !(function ($scope) {
+        $count($scope, 0);
+      })($scope[0]);
     },
   ),
-  _dynamicTag = _$.dynamicTag(0, _tagName_content),
-  _tagName_effect = _$.effect("b1", (_scope, { 2: tagName }) =>
-    _$.on(_scope[1], "click", function () {
-      _tagName(_scope, "span" === tagName ? "div" : "span");
+  $dynamicTag = _$.dynamicTag(0, $tagName_content),
+  $tagName_effect = _$.effect("b1", ($scope, { 2: tagName }) =>
+    _$.on($scope[1], "click", function () {
+      $tagName($scope, "span" === tagName ? "div" : "span");
     }),
   ),
-  _tagName = _$.state(2, (_scope, tagName) => {
-    _dynamicTag(_scope, tagName), _tagName_effect(_scope);
+  $tagName = _$.state(2, ($scope, tagName) => {
+    $dynamicTag($scope, tagName), $tagName_effect($scope);
   });
 init();

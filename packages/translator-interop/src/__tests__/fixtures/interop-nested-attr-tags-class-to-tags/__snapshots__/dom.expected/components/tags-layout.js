@@ -1,20 +1,20 @@
-export const _template = "<button id=tags> </button><div><!></div>";
-export const _walks = /* get, next(1), get, out(1), next(1), replace, out(1) */" D lD%l";
+export const $template = "<button id=tags> </button><div><!></div>";
+export const $walks = /* get, next(1), get, out(1), next(1), replace, out(1) */" D lD%l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2");
-const _count_effect = _$.effect("__tests__/components/tags-layout.marko_0_count", (_scope, {
+const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2");
+const $count_effect = _$.effect("__tests__/components/tags-layout.marko_0_count", ($scope, {
   count
-}) => _$.on(_scope["#button/0"], "click", function () {
-  _count(_scope, count + 1), count;
+}) => _$.on($scope["#button/0"], "click", function () {
+  $count($scope, count + 1), count;
 }));
-const _count = /* @__PURE__ */_$.state("count/7", (_scope, count) => {
-  _$.data(_scope["#text/1"], count);
-  _count_effect(_scope);
+const $count = /* @__PURE__ */_$.state("count/7", ($scope, count) => {
+  _$.data($scope["#text/1"], count);
+  $count_effect($scope);
 });
-export const _input_stuff_content = /* @__PURE__ */_$.value("input_stuff_content", _dynamicTag);
-export const _input_stuff = /* @__PURE__ */_$.value("input_stuff", (_scope, input_stuff) => _input_stuff_content(_scope, input_stuff?.content));
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => _input_stuff(_scope, input.stuff));
-export function _setup(_scope) {
-  _count(_scope, 0);
+export const $input_stuff_content = /* @__PURE__ */_$.value("input_stuff_content", $dynamicTag);
+export const $input_stuff = /* @__PURE__ */_$.value("input_stuff", ($scope, input_stuff) => $input_stuff_content($scope, input_stuff?.content));
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_stuff($scope, input.stuff));
+export function $setup($scope) {
+  $count($scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/components/tags-layout.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/components/tags-layout.marko", $template, $walks, $setup, $input);

@@ -1,13 +1,13 @@
-export const _template = `<div>${_parentEl_template} </div><span>${_parentEl_template} </span>`;
-export const _walks = /* next(1), beginChildWithVar, _parentEl_walks, endChild, get, out(1), next(1), beginChildWithVar, _parentEl_walks, endChild, get, out(1) */`D0${_parentEl_walks}& lD0${_parentEl_walks}& l`;
-import { _setup as _parentEl, _template as _parentEl_template, _walks as _parentEl_walks } from "./tags/parent-el.marko";
+export const $template = `<div>${_parentEl_template} </div><span>${_parentEl_template} </span>`;
+export const $walks = /* next(1), beginChildWithVar, _parentEl_walks, endChild, get, out(1), next(1), beginChildWithVar, _parentEl_walks, endChild, get, out(1) */`D0${_parentEl_walks}& lD0${_parentEl_walks}& l`;
+import { $setup as _parentEl, $template as _parentEl_template, $walks as _parentEl_walks } from "./tags/parent-el.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _spanName = _$.registerBoundSignal("__tests__/template.marko_0_spanName/var", /* @__PURE__ */_$.value("spanName", (_scope, spanName) => _$.data(_scope["#text/5"], spanName)));
-const _divName = _$.registerBoundSignal("__tests__/template.marko_0_divName/var", /* @__PURE__ */_$.value("divName", (_scope, divName) => _$.data(_scope["#text/2"], divName)));
-export function _setup(_scope) {
-  _$.setTagVar(_scope, "#childScope/0", _divName);
-  _parentEl(_scope["#childScope/0"]);
-  _$.setTagVar(_scope, "#childScope/3", _spanName);
-  _parentEl(_scope["#childScope/3"]);
+const $spanName = _$.registerBoundSignal("__tests__/template.marko_0_spanName/var", /* @__PURE__ */_$.value("spanName", ($scope, spanName) => _$.data($scope["#text/5"], spanName)));
+const $divName = _$.registerBoundSignal("__tests__/template.marko_0_divName/var", /* @__PURE__ */_$.value("divName", ($scope, divName) => _$.data($scope["#text/2"], divName)));
+export function $setup($scope) {
+  _$.setTagVar($scope, "#childScope/0", $divName);
+  _parentEl($scope["#childScope/0"]);
+  _$.setTagVar($scope, "#childScope/3", $spanName);
+  _parentEl($scope["#childScope/3"]);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

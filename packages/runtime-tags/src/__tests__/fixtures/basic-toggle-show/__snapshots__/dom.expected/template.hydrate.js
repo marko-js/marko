@@ -1,12 +1,12 @@
 // size: 171 (min) 145 (brotli)
-const _if_content = _$.createRenderer("Hello!"),
-  _if = _$.conditional(0, _if_content),
-  _show_effect = _$.effect("a0", (_scope, { 2: show }) =>
-    _$.on(_scope[1], "click", function () {
-      _show(_scope, !show);
+const $if_content = _$.createRenderer("Hello!"),
+  $if = _$.conditional(0, $if_content),
+  $show_effect = _$.effect("a0", ($scope, { 2: show }) =>
+    _$.on($scope[1], "click", function () {
+      $show($scope, !show);
     }),
   ),
-  _show = _$.state(2, (_scope, show) => {
-    _if(_scope, show ? 0 : 1), _show_effect(_scope);
+  $show = _$.state(2, ($scope, show) => {
+    $if($scope, show ? 0 : 1), $show_effect($scope);
   });
 init();

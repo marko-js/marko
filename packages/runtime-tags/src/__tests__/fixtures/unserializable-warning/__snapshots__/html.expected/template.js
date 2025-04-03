@@ -1,9 +1,9 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default _$.createTemplate("__tests__/template.marko", input => {
-  const _scope0_id = _$.nextScopeId();
+  const $scope0_id = _$.nextScopeId();
   const Foo = {
     content: _$.createContent("__tests__/template.marko_1_renderer", () => {
-      const _scope1_id = _$.nextScopeId();
+      const $scope1_id = _$.nextScopeId();
       const unserializable = {
         nested: {
           thing: Buffer.from("")
@@ -11,9 +11,9 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       };
       const test = _$.register(function () {
         return unserializable;
-      }, "__tests__/template.marko_1/test", _scope1_id);
-      _$.writeEffect(_scope1_id, "__tests__/template.marko_1_test");
-      _$.writeScope(_scope1_id, {
+      }, "__tests__/template.marko_1/test", $scope1_id);
+      _$.writeEffect($scope1_id, "__tests__/template.marko_1_test");
+      _$.writeScope($scope1_id, {
         unserializable,
         test
       }, "__tests__/template.marko", "1:2", {
@@ -22,5 +22,5 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       });
     })
   };
-  _$.dynamicTag(_scope0_id, "#text/0", Foo, {}, 0, 0, 1);
+  _$.dynamicTag($scope0_id, "#text/0", Foo, {}, 0, 0, 1);
 });

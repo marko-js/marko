@@ -3,10 +3,10 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_expr_value_dummy": "m",
-      "$_value": "a",
-      "$_count_effect": "n",
-      "$_count": "r"
+      "$$expr_value_dummy": "m",
+      "$$value": "a",
+      "$$count_effect": "n",
+      "$$count": "r"
     }
   }
 }

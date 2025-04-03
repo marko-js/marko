@@ -3,8 +3,8 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_count_effect": "n",
-      "$_count": "m"
+      "$$count_effect": "n",
+      "$$count": "m"
     }
   }
 }

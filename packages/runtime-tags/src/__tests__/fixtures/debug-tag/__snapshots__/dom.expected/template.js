@@ -1,15 +1,15 @@
-export const _template = "";
-export const _walks = "";
+export const $template = "";
+export const $walks = "";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _y = /* @__PURE__ */_$.state("y/1", (_scope, y) => {
+const $y = /* @__PURE__ */_$.state("y/1", ($scope, y) => {
   debugger;
 });
-const _x = /* @__PURE__ */_$.value("x", (_scope, x) => {
+const $x = /* @__PURE__ */_$.value("x", ($scope, x) => {
   debugger;
 });
-export function _setup(_scope) {
+export function $setup($scope) {
   debugger;
-  _x(_scope, 0);
-  _y(_scope, 0);
+  $x($scope, 0);
+  $y($scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

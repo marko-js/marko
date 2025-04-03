@@ -1,40 +1,40 @@
 // size: 492 (min) 271 (brotli)
-const _expr_input_content_x_y = _$.intersection(
+const $expr_input_content_x_y = _$.intersection(
     10,
-    (_scope) => {
-      const { 6: input_content, 7: x, 8: y } = _scope;
-      _dynamicTag(_scope, input_content, () => [x, y]);
+    ($scope) => {
+      const { 6: input_content, 7: x, 8: y } = $scope;
+      $dynamicTag($scope, input_content, () => [x, y]);
     },
     2,
   ),
-  _expr_x_y_effect = _$.effect("a0", (_scope, { 7: x, 8: y }) =>
-    _$.on(_scope[0], "click", function () {
-      _x(_scope, x + 1), _y(_scope, y + 1);
+  $expr_x_y_effect = _$.effect("a0", ($scope, { 7: x, 8: y }) =>
+    _$.on($scope[0], "click", function () {
+      $x($scope, x + 1), $y($scope, y + 1);
     }),
   ),
-  _expr_x_y = _$.intersection(9, _expr_x_y_effect),
-  _dynamicTag = _$.dynamicTag(3, 0, 0, 1),
-  _y = _$.state(8, (_scope, y) => {
-    _$.data(_scope[2], y), _expr_x_y(_scope), _expr_input_content_x_y(_scope);
+  $expr_x_y = _$.intersection(9, $expr_x_y_effect),
+  $dynamicTag = _$.dynamicTag(3, 0, 0, 1),
+  $y = _$.state(8, ($scope, y) => {
+    _$.data($scope[2], y), $expr_x_y($scope), $expr_input_content_x_y($scope);
   }),
-  _x = _$.state(7, (_scope, x) => {
-    _$.data(_scope[1], x), _expr_x_y(_scope), _expr_input_content_x_y(_scope);
+  $x = _$.state(7, ($scope, x) => {
+    _$.data($scope[1], x), $expr_x_y($scope), $expr_input_content_x_y($scope);
   }),
-  _count2$customtag_content = _$.value(4, (_scope, count2) =>
-    _$.data(_scope[1], count2),
+  $count2$customtag$content = _$.value(4, ($scope, count2) =>
+    _$.data($scope[1], count2),
   ),
-  _count$customtag_content = _$.value(3, (_scope, count) =>
-    _$.data(_scope[0], count),
+  $count$customtag$content = _$.value(3, ($scope, count) =>
+    _$.data($scope[0], count),
   ),
-  _params2$customtag_content = _$.value(2, (_scope, _params2) => {
-    _count$customtag_content(_scope, _params2[0]),
-      _count2$customtag_content(_scope, _params2[1]);
+  $params2$customtag$content = _$.value(2, ($scope, $params2) => {
+    $count$customtag$content($scope, $params2[0]),
+      $count2$customtag$content($scope, $params2[1]);
   });
 _$.registerContent(
   "b0",
   "<div>Counts: <!>,<!></div>",
   "Db%c%",
   0,
-  _params2$customtag_content,
+  $params2$customtag$content,
 ),
   init();

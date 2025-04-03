@@ -1,13 +1,13 @@
-export const _template = "<input>";
-export const _walks = /* get, over(1) */" b";
-export const _setup = () => {};
+export const $template = "<input>";
+export const $walks = /* get, over(1) */" b";
+export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _input_effect = _$.effect("__tests__/tags/checkbox.marko_0_input", _scope => _$.attrsEvents(_scope, "#input/0"));
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
-  _$.attrs(_scope, "#input/0", {
+const $input_effect = _$.effect("__tests__/tags/checkbox.marko_0_input", $scope => _$.attrsEvents($scope, "#input/0"));
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {
+  _$.attrs($scope, "#input/0", {
     type: "checkbox",
     ...input
   });
-  _input_effect(_scope);
+  $input_effect($scope);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/checkbox.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/checkbox.marko", $template, $walks, $setup, $input);

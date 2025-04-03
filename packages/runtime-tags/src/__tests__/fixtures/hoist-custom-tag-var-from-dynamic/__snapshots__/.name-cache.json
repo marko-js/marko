@@ -3,17 +3,17 @@
     "props": {
       "$_$": "t",
       "$init": "a",
-      "$_dynamicTag2": "e",
-      "$_dynamicTag": "i",
-      "$_input_content": "o",
-      "$_setup": "r",
-      "$_return": "n",
-      "$_get_hoisted_setHtml": "c",
-      "$_setHtml3$inputshowsectionnull_content": "s",
-      "$_get_hoisted_setHtml2": "g",
-      "$_setHtml2$thing_content": "m",
-      "$_setup$thing_content2": "f",
-      "$_thing_content2": "u"
+      "$$dynamicTag2": "e",
+      "$$dynamicTag": "i",
+      "$$input_content": "o",
+      "$$setup": "r",
+      "$$_return": "n",
+      "$$get$hoisted_setHtml": "c",
+      "$$setHtml3$inputshowsectionnull$content": "s",
+      "$$get$hoisted_setHtml2": "g",
+      "$$setHtml2$thing$content": "m",
+      "$$setup$thing$content2": "f",
+      "$$thing_content2": "u"
     }
   }
 }

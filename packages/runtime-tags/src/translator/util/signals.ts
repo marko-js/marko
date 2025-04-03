@@ -1504,7 +1504,7 @@ export function replaceRegisteredFunctionNode(node: t.Node) {
 function getRegisteredFnExpression(node: t.Function) {
   const { extra } = node;
   if (isRegisteredFnExtra(extra)) {
-    const id = generateUid(extra.name);
+    const id = extra.name;
     const referencesScope = extra.referencesScope;
     const referencedBindings = extra.referencedBindingsInFunction;
     let registedFns = registeredFnsForProgram.get(getProgram().node);

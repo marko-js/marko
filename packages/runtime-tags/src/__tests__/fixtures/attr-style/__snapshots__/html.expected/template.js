@@ -1,15 +1,15 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _customTag from "./tags/custom-tag.marko";
 export default _$.createTemplate("__tests__/template.marko", input => {
-  const _scope0_id = _$.nextScopeId();
+  const $scope0_id = _$.nextScopeId();
   const {
     color,
     test
   } = input;
   _$.write(`<div${_$.styleAttr({
     color: color
-  })}></div>${_$.markResumeNode(_scope0_id, "#div/0")}<div style=width:100px></div><div style="color: green"></div>`);
-  const _childScope = _$.peekNextScope();
+  })}></div>${_$.markResumeNode($scope0_id, "#div/0")}<div style=width:100px></div><div style="color: green"></div>`);
+  const $childScope = _$.peekNextScope();
   _customTag({
     style: {
       color: color
@@ -23,7 +23,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _customTag({
     style: "color: green"
   });
-  _$.dynamicTag(_scope0_id, "#text/4", test, {
+  _$.dynamicTag($scope0_id, "#text/4", test, {
     style: {
       color: "green"
     },
@@ -32,12 +32,12 @@ export default _$.createTemplate("__tests__/template.marko", input => {
         color: "green"
       },
       content: _$.registerContent("__tests__/template.marko_1_renderer", () => {
-        const _scope1_id = _$.nextScopeId();
+        const $scope1_id = _$.nextScopeId();
         _$.write("Hello");
-      }, _scope0_id)
+      }, $scope0_id)
     })
   }, 0, 0, 1);
-  _$.writeScope(_scope0_id, {
-    "#childScope/1": _$.writeExistingScope(_childScope)
+  _$.writeScope($scope0_id, {
+    "#childScope/1": _$.writeExistingScope($childScope)
   }, "__tests__/template.marko", 0);
 });

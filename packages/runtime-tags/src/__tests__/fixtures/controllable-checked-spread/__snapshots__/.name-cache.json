@@ -3,10 +3,10 @@
     "props": {
       "$_$": "t",
       "$init": "e",
-      "$_input_effect": "r",
-      "$_input": "a",
-      "$_checked": "o",
-      "$_checkedChange": "m"
+      "$$input_effect": "r",
+      "$$input": "a",
+      "$$checked": "o",
+      "$$checkedChange": "m"
     }
   }
 }

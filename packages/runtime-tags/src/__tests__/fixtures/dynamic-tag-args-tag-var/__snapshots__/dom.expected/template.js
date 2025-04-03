@@ -1,21 +1,21 @@
-export const _template = "<button>Count: <!></button><!><div>Parent: <!></div>";
-export const _walks = /* get, next(1), over(1), replace, out(1), dynamicTagWithVar, over(1), next(1), over(1), replace, out(1) */" Db%l1bDb%l";
+export const $template = "<button>Count: <!></button><!><div>Parent: <!></div>";
+export const $walks = /* get, next(1), over(1), replace, out(1), dynamicTagWithVar, over(1), next(1), over(1), replace, out(1) */" Db%l1bDb%l";
 import customTag from './tags/custom-tag.marko';
 const tags = [customTag];
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", 0, () => _y, 1);
-const _y = _$.registerBoundSignal("__tests__/template.marko_0_y/var", /* @__PURE__ */_$.value("y", (_scope, y) => _$.data(_scope["#text/4"], y)));
-const _x_effect = _$.effect("__tests__/template.marko_0_x", (_scope, {
+const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", 0, () => $y, 1);
+const $y = _$.registerBoundSignal("__tests__/template.marko_0_y/var", /* @__PURE__ */_$.value("y", ($scope, y) => _$.data($scope["#text/4"], y)));
+const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
   x
-}) => _$.on(_scope["#button/0"], "click", function () {
-  _x(_scope, x + 1), x;
+}) => _$.on($scope["#button/0"], "click", function () {
+  $x($scope, x + 1), x;
 }));
-const _x = /* @__PURE__ */_$.state("x/5", (_scope, x) => {
-  _$.data(_scope["#text/1"], x);
-  _dynamicTag(_scope, tags[0], () => [x]);
-  _x_effect(_scope);
+const $x = /* @__PURE__ */_$.state("x/5", ($scope, x) => {
+  _$.data($scope["#text/1"], x);
+  $dynamicTag($scope, tags[0], () => [x]);
+  $x_effect($scope);
 });
-export function _setup(_scope) {
-  _x(_scope, 1);
+export function $setup($scope) {
+  $x($scope, 1);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

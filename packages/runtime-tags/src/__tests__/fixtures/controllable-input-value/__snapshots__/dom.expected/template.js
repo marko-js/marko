@@ -1,19 +1,19 @@
-export const _template = "<input type=text><span> </span>";
-export const _walks = /* get, over(1), next(1), get, out(1) */" bD l";
+export const $template = "<input type=text><span> </span>";
+export const $walks = /* get, over(1), next(1), get, out(1) */" bD l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _value = /* @__PURE__ */_$.state("value/2", (_scope, value) => {
-  _$.controllable_input_value(_scope, "#input/0", value, _valueChange(_scope));
-  _$.data(_scope["#text/1"], value);
+const $value = /* @__PURE__ */_$.state("value/2", ($scope, value) => {
+  _$.controllable_input_value($scope, "#input/0", value, $valueChange($scope));
+  _$.data($scope["#text/1"], value);
 });
-const _setup_effect = _$.effect("__tests__/template.marko_0", _scope => _$.controllable_input_value_effect(_scope, "#input/0"));
-export function _setup(_scope) {
-  _value(_scope, "hello");
-  _setup_effect(_scope);
+const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => _$.controllable_input_value_effect($scope, "#input/0"));
+export function $setup($scope) {
+  $value($scope, "hello");
+  $setup_effect($scope);
 }
-function _valueChange(_scope) {
+function $valueChange($scope) {
   return _new_value => {
-    _value(_scope, _new_value);
+    $value($scope, _new_value);
   };
 }
-_$.register("__tests__/template.marko_0/valueChange", _valueChange);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+_$.register("__tests__/template.marko_0/valueChange", $valueChange);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

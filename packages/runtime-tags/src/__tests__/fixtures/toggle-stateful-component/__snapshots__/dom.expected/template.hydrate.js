@@ -1,18 +1,18 @@
 // size: 587 (min) 335 (brotli)
-const _expr_input_onCount_clickCount_effect = _$.effect(
+const $expr_input_onCount_clickCount_effect = _$.effect(
     "a0",
-    (_scope, { 4: input_onCount, 5: clickCount }) =>
-      _$.on(_scope[0], "click", function () {
-        input_onCount(_clickCount(_scope, clickCount + 1));
+    ($scope, { 4: input_onCount, 5: clickCount }) =>
+      _$.on($scope[0], "click", function () {
+        input_onCount($clickCount($scope, clickCount + 1));
       }),
   ),
-  _expr_input_onCount_clickCount = _$.intersection(
+  $expr_input_onCount_clickCount = _$.intersection(
     6,
-    _expr_input_onCount_clickCount_effect,
+    $expr_input_onCount_clickCount_effect,
   ),
-  _clickCount = _$.state(5, (_scope, clickCount) => {
+  $clickCount = _$.state(5, ($scope, clickCount) => {
     _$.data(
-      _scope[1],
+      $scope[1],
       ((() => {
         if (clickCount > 0)
           throw new Error(
@@ -21,29 +21,29 @@ const _expr_input_onCount_clickCount_effect = _$.effect(
       })(),
       clickCount),
     ),
-      _expr_input_onCount_clickCount(_scope);
+      $expr_input_onCount_clickCount($scope);
   }),
-  _input_onCount = _$.value(4, _expr_input_onCount_clickCount);
-const _onCount$if_content = _$.conditionalClosure(2, 0, 0, (_scope, onCount) =>
-    _input_onCount(_scope[0], onCount),
+  $input_onCount = _$.value(4, $expr_input_onCount_clickCount);
+const $onCount$if$content = _$.conditionalClosure(2, 0, 0, ($scope, onCount) =>
+    $input_onCount($scope[0], onCount),
   ),
-  _setup$if_content = (_scope) => {
-    !(function (_scope) {
-      _clickCount(_scope, 0);
-    })(_scope[0]);
+  $setup$if$content = ($scope) => {
+    !(function ($scope) {
+      $clickCount($scope, 0);
+    })($scope[0]);
   },
-  _if_content = _$.createRenderer(
+  $if_content = _$.createRenderer(
     "<div><button> </button></div>",
     "D/ D l&",
-    _setup$if_content,
+    $setup$if$content,
     0,
-    (_scope) => _onCount$if_content._(_scope),
+    ($scope) => $onCount$if$content._($scope),
   ),
-  _if = _$.conditional(0, _if_content),
-  _show = _$.state(1, (_scope, show) => _if(_scope, show ? 0 : 1));
-_$.register("b0", function (_scope) {
+  $if = _$.conditional(0, $if_content),
+  $show = _$.state(1, ($scope, show) => $if($scope, show ? 0 : 1));
+_$.register("b0", function ($scope) {
   return function (count) {
-    _show(_scope, count < 1);
+    $show($scope, count < 1);
   };
 }),
   init();

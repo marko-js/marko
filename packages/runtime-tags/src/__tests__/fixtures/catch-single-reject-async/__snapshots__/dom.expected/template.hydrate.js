@@ -1,12 +1,12 @@
 // size: 165 (min) 103 (brotli)
 _$.enableCatch();
-const _error_message$catch_content = _$.value(3, (_scope, error_message) =>
-    _$.data(_scope[0], error_message),
+const $error_message$catch$content = _$.value(3, ($scope, error_message) =>
+    _$.data($scope[0], error_message),
   ),
-  _error$catch_content = _$.value(2, (_scope, error) =>
-    _error_message$catch_content(_scope, error?.message),
+  $error$catch$content = _$.value(2, ($scope, error) =>
+    $error_message$catch$content($scope, error?.message),
   ),
-  _params2$catch_content = _$.value(1, (_scope, _params2) =>
-    _error$catch_content(_scope, _params2[0]),
+  $params2$catch$content = _$.value(1, ($scope, $params2) =>
+    $error$catch$content($scope, $params2[0]),
   );
-_$.registerContent("a0", " ", " ", 0, _params2$catch_content);
+_$.registerContent("a0", " ", " ", 0, $params2$catch$content);

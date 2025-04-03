@@ -3,10 +3,10 @@
     "props": {
       "$_$": "a",
       "$init": "t",
-      "$_value": "r",
-      "$_count$mytag_content_effect": "n",
-      "$_count$mytag_content": "o",
-      "$_count_closure": "e"
+      "$$value": "r",
+      "$$count$mytag$content_effect": "n",
+      "$$count$mytag$content": "o",
+      "$$count_closure": "e"
     }
   }
 }

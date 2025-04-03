@@ -1,16 +1,16 @@
-export const _template = "<!>";
-export const _walks = /* replace, over(1) */"%b";
+export const $template = "<!>";
+export const $walks = /* replace, over(1) */"%b";
 import testLog from "./test-log";
 const staticVar = "static var";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _output = /* @__PURE__ */_$.state("output/2", (_scope, output) => _$.data(_scope["#text/0"], output));
-const _tagVar = /* @__PURE__ */_$.value("tagVar", (_scope, tagVar) => console.log(tagVar));
-const _setup_effect = _$.effect("__tests__/template.marko_0", _scope => _output(_scope, JSON.stringify(testLog)));
-export function _setup(_scope) {
+const $output = /* @__PURE__ */_$.state("output/2", ($scope, output) => _$.data($scope["#text/0"], output));
+const $tagVar = /* @__PURE__ */_$.value("tagVar", ($scope, tagVar) => console.log(tagVar));
+const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => $output($scope, JSON.stringify(testLog)));
+export function $setup($scope) {
   console.log("identifier");
   console.log(staticVar);
-  _tagVar(_scope, "tag var");
-  _output(_scope, JSON.stringify(testLog));
-  _setup_effect(_scope);
+  $tagVar($scope, "tag var");
+  $output($scope, JSON.stringify(testLog));
+  $setup_effect($scope);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

@@ -1,34 +1,34 @@
 // size: 491 (min) 240 (brotli)
-const _setup$tagselect_content_effect = _$.effect("a2", (_scope) => {
-    _$.attrsEvents(_scope, 0),
-      _$.attrsEvents(_scope, 1),
-      _$.attrsEvents(_scope, 2);
+const $setup$tagselect$content_effect = _$.effect("a2", ($scope) => {
+    _$.attrsEvents($scope, 0),
+      _$.attrsEvents($scope, 1),
+      _$.attrsEvents($scope, 2);
   }),
-  _tagselect_content = _$.registerContent(
+  $tagselect_content = _$.registerContent(
     "a1",
     "<option>A</option><option>B</option><option>C</option>",
     " b b ",
-    (_scope) => {
-      _$.attrs(_scope, 0, { value: "a" }),
-        _$.attrs(_scope, 1, { value: "b" }),
-        _$.attrs(_scope, 2, { value: "c" }),
-        _setup$tagselect_content_effect(_scope);
+    ($scope) => {
+      _$.attrs($scope, 0, { value: "a" }),
+        _$.attrs($scope, 1, { value: "b" }),
+        _$.attrs($scope, 2, { value: "c" }),
+        $setup$tagselect$content_effect($scope);
     },
   ),
-  _expr_value_tag = _$.intersection(4, (_scope) => {
-    const { 2: value, 3: tag } = _scope;
-    _dynamicTag(_scope, tag ? "select" : {}, () => ({
+  $expr_value_tag = _$.intersection(4, ($scope) => {
+    const { 2: value, 3: tag } = $scope;
+    $dynamicTag($scope, tag ? "select" : {}, () => ({
       value: value,
-      valueChange: _valueChange(_scope),
+      valueChange: $valueChange($scope),
     }));
   }),
-  _dynamicTag = _$.dynamicTag(0, _tagselect_content),
-  _value = _$.state(2, (_scope, value) => {
-    _$.data(_scope[1], value), _expr_value_tag(_scope);
+  $dynamicTag = _$.dynamicTag(0, $tagselect_content),
+  $value = _$.state(2, ($scope, value) => {
+    _$.data($scope[1], value), $expr_value_tag($scope);
   });
-function _valueChange(_scope) {
+function $valueChange($scope) {
   return function (v) {
-    _value(_scope, v);
+    $value($scope, v);
   };
 }
-_$.register("a0", _valueChange), init();
+_$.register("a0", $valueChange), init();

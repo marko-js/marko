@@ -1,15 +1,15 @@
-export const _template = `<div></div><div class="a b"></div><div class="a b c"></div>${_customTag_template}${_customTag_template}<!><!>`;
-export const _walks = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(1) */` d/${_customTag_walks}&/${_customTag_walks}&%bD`;
+export const $template = `<div></div><div class="a b"></div><div class="a b c"></div>${_customTag_template}${_customTag_template}<!><!>`;
+export const $walks = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(1) */` d/${_customTag_walks}&/${_customTag_walks}&%bD`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
-import { _setup as _customTag, _className as _customTag_input_class, _template as _customTag_template, _walks as _customTag_walks } from "./tags/custom-tag.marko";
-const _test_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello");
-const _expr_input_test_c_d = /* @__PURE__ */_$.intersection(10, _scope => {
+import { $setup as _customTag, $className as _customTag_input_class, $template as _customTag_template, $walks as _customTag_walks } from "./tags/custom-tag.marko";
+const $test_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello");
+const $expr_input_test_c_d = /* @__PURE__ */_$.intersection(10, $scope => {
   const {
     input_test,
     c,
     d
-  } = _scope;
-  _dynamicTag(_scope, input_test, () => ({
+  } = $scope;
+  $dynamicTag($scope, input_test, () => ({
     class: ["a", {
       b: c,
       d
@@ -19,42 +19,42 @@ const _expr_input_test_c_d = /* @__PURE__ */_$.intersection(10, _scope => {
         b: c,
         d
       }],
-      content: _test_content(_scope)
+      content: $test_content($scope)
     })
   }));
 }, 2);
-const _expr_c_d = /* @__PURE__ */_$.intersection(9, _scope => {
+const $expr_c_d = /* @__PURE__ */_$.intersection(9, $scope => {
   const {
     c,
     d
-  } = _scope;
-  _$.classAttr(_scope["#div/0"], ["a", {
+  } = $scope;
+  _$.classAttr($scope["#div/0"], ["a", {
     b: c,
     d
   }]);
-  _customTag_input_class(_scope["#childScope/1"], ["a", {
+  _customTag_input_class($scope["#childScope/1"], ["a", {
     b: c,
     d
   }]);
 });
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3");
-export const _d = /* @__PURE__ */_$.value("d", _scope => {
-  _expr_c_d(_scope);
-  _expr_input_test_c_d(_scope);
+const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3");
+export const $d = /* @__PURE__ */_$.value("d", $scope => {
+  $expr_c_d($scope);
+  $expr_input_test_c_d($scope);
 });
-export const _c = /* @__PURE__ */_$.value("c", _scope => {
-  _expr_c_d(_scope);
-  _expr_input_test_c_d(_scope);
+export const $c = /* @__PURE__ */_$.value("c", $scope => {
+  $expr_c_d($scope);
+  $expr_input_test_c_d($scope);
 });
-export const _input_test = /* @__PURE__ */_$.value("input_test", _expr_input_test_c_d);
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
-  _input_test(_scope, input.test);
-  _c(_scope, input.c);
-  _d(_scope, input.d);
+export const $input_test = /* @__PURE__ */_$.value("input_test", $expr_input_test_c_d);
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {
+  $input_test($scope, input.test);
+  $c($scope, input.c);
+  $d($scope, input.d);
 });
-export function _setup(_scope) {
-  _customTag(_scope["#childScope/1"]);
-  _customTag(_scope["#childScope/2"]);
-  _customTag_input_class(_scope["#childScope/2"], ["a", false, "b"]);
+export function $setup($scope) {
+  _customTag($scope["#childScope/1"]);
+  _customTag($scope["#childScope/2"]);
+  _customTag_input_class($scope["#childScope/2"], ["a", false, "b"]);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -3,11 +3,11 @@
     "props": {
       "$_$": "t",
       "$init": "n",
-      "$_tagName_content": "o",
-      "$_expr_tagName_className": "a",
-      "$_dynamicTag": "s",
-      "$_tagName_effect": "e",
-      "$_tagName": "i"
+      "$$tagName_content": "o",
+      "$$expr_tagName_className": "a",
+      "$$dynamicTag": "s",
+      "$$tagName_effect": "e",
+      "$$tagName": "i"
     }
   }
 }

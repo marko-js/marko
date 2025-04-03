@@ -32,9 +32,9 @@ export function generateUid(name = "") {
   }
 
   name = name.replace(/^[^a-z$_]|[^a-z$_0-9]/gi, "") || "temp";
-  name = /^_?(.*?)\d*$/.exec(name)?.[1] || name;
+  name = /^\$?(.*?)\d*$/.exec(name)?.[1] || name;
   const i = (counts.get(name) || 0) + 1;
-  const uniqueName = `_${i > 1 ? name + i : name}`;
+  const uniqueName = `$${i > 1 ? name + i : name}`;
   counts.set(name, i);
   return uniqueName;
 }
@@ -47,7 +47,7 @@ function getInitialCounts(file: t.BabelFile) {
   const counts = new Map<string, number>();
   const program = file.path;
   const countName = (name: string) => {
-    const match = /^_(.*?)([1-9]\d*)?$/.exec(name);
+    const match = /^$(.*?)([1-9]\d*)?$/.exec(name);
     if (match) {
       const name = match[1];
       const count = match[2] ? +match[2] + 1 : 1;

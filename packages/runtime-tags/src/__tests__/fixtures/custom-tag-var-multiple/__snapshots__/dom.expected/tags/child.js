@@ -1,17 +1,17 @@
-export const _template = "<span>child</span>";
-export const _walks = /* over(1) */"b";
+export const $template = "<span>child</span>";
+export const $walks = /* over(1) */"b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _expr_x_y = /* @__PURE__ */_$.intersection(2, _scope => {
+const $expr_x_y = /* @__PURE__ */_$.intersection(2, $scope => {
   const {
     x,
     y
-  } = _scope;
-  _$.tagVarSignal(_scope, x + y);
+  } = $scope;
+  _$.tagVarSignal($scope, x + y);
 });
-const _y = /* @__PURE__ */_$.state("y/1", _expr_x_y);
-const _x = /* @__PURE__ */_$.state("x/0", _expr_x_y);
-export function _setup(_scope) {
-  _x(_scope, 1);
-  _y(_scope, 2);
+const $y = /* @__PURE__ */_$.state("y/1", $expr_x_y);
+const $x = /* @__PURE__ */_$.state("x/0", $expr_x_y);
+export function $setup($scope) {
+  $x($scope, 1);
+  $y($scope, 2);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", $template, $walks, $setup);

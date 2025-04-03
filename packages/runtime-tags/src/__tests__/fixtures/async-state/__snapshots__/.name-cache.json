@@ -4,14 +4,14 @@
       "$_$": "e",
       "$init": "a",
       "$resolveAfter": "t",
-      "$_value$await_content": "o",
-      "$_params2$await_content": "r",
-      "$_await_content": "m",
-      "$_await$try_content": "n",
-      "$_clickCount$try_content": "i",
-      "$_clickCount_closure": "s",
-      "$_clickCount_effect": "c",
-      "$_clickCount": "l"
+      "$$value$await$content": "o",
+      "$$params2$await$content": "r",
+      "$$await_content": "m",
+      "$$await$try$content": "n",
+      "$$clickCount$try$content": "i",
+      "$$clickCount_closure": "s",
+      "$$clickCount_effect": "c",
+      "$$clickCount": "l"
     }
   }
 }

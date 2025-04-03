@@ -1,14 +1,14 @@
-export const _template = "<div></div>";
-export const _walks = /* get, over(1) */" b";
-export const _setup = () => {};
+export const $template = "<div></div>";
+export const $walks = /* get, over(1) */" b";
+export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _child_text$for_content = /* @__PURE__ */_$.value("child_text", (_scope, child_text) => _$.data(_scope["#text/0"], child_text));
-const _child$for_content = /* @__PURE__ */_$.value("child", (_scope, child) => _child_text$for_content(_scope, child?.text));
-const _params2$for_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => _child$for_content(_scope, _params2[0]));
-const _for_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, _params2$for_content);
-const _for = /* @__PURE__ */_$.loopOf("#div/0", _for_content);
-export const _children = /* @__PURE__ */_$.value("children", (_scope, children) => _for(_scope, [children, function (c) {
+const $child_text$for$content = /* @__PURE__ */_$.value("child_text", ($scope, child_text) => _$.data($scope["#text/0"], child_text));
+const $child$for$content = /* @__PURE__ */_$.value("child", ($scope, child) => $child_text$for$content($scope, child?.text));
+const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $child$for$content($scope, $params2[0]));
+const $for_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, $params2$for$content);
+const $for = /* @__PURE__ */_$.loopOf("#div/0", $for_content);
+export const $children = /* @__PURE__ */_$.value("children", ($scope, children) => $for($scope, [children, function (c) {
   return c.id;
 }]));
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => _children(_scope, input.children));
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup, _input);
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $children($scope, input.children));
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

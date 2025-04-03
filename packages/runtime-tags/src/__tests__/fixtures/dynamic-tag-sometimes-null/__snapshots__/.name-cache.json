@@ -3,10 +3,10 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_x_content": "n",
-      "$_dynamicTag": "m",
-      "$_x_effect": "a",
-      "$_x": "r"
+      "$$x_content": "n",
+      "$$dynamicTag": "m",
+      "$$x_effect": "a",
+      "$$x": "r"
     }
   }
 }

@@ -3,8 +3,8 @@
     "props": {
       "$_$": "t",
       "$init": "o",
-      "$_get_hoisted_el2": "r",
-      "$_get_hoisted_el3": "m"
+      "$$get$hoisted_el2": "r",
+      "$$get$hoisted_el3": "m"
     }
   }
 }

@@ -4,8 +4,8 @@
       "$_$": "o",
       "$init": "e",
       "$id": "t",
-      "$_get_hoisted_el": "r",
-      "$_get_hoisted_el2": "s"
+      "$$get$hoisted_el": "r",
+      "$$get$hoisted_el2": "s"
     }
   }
 }

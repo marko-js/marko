@@ -1,41 +1,41 @@
-export const _template = "<button><!>|<!></button><button><!>|<!></button>";
-export const _walks = /* get, next(1), replace, over(2), replace, out(1), get, next(1), replace, over(2), replace, out(1) */" D%c%l D%c%l";
-export const _setup = () => {};
+export const $template = "<button><!>|<!></button><button><!>|<!></button>";
+export const $walks = /* get, next(1), replace, over(2), replace, out(1), get, next(1), replace, over(2), replace, out(1) */" D%c%l D%c%l";
+export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _expr_input_value_input_valueChange = /* @__PURE__ */_$.intersection(10, _scope => {
+const $expr_input_value_input_valueChange = /* @__PURE__ */_$.intersection(10, $scope => {
   const {
     input_value,
     input_valueChange
-  } = _scope;
-  _state(_scope, input_value, input_valueChange);
+  } = $scope;
+  $state($scope, input_value, input_valueChange);
 });
-const _otherState_effect = _$.effect("__tests__/tags/child.marko_0_otherState", (_scope, {
+const $otherState_effect = _$.effect("__tests__/tags/child.marko_0_otherState", ($scope, {
   otherState
-}) => _$.on(_scope["#button/3"], "click", function () {
-  _otherState(_scope, otherState + 1), otherState;
+}) => _$.on($scope["#button/3"], "click", function () {
+  $otherState($scope, otherState + 1), otherState;
 }));
-const _otherState = /* @__PURE__ */_$.state("otherState/12", (_scope, otherState) => {
-  _$.data(_scope["#text/5"], otherState);
-  _otherState_effect(_scope);
+const $otherState = /* @__PURE__ */_$.state("otherState/12", ($scope, otherState) => {
+  _$.data($scope["#text/5"], otherState);
+  $otherState_effect($scope);
 });
-const _state_effect = _$.effect("__tests__/tags/child.marko_0_state", (_scope, {
+const $state_effect = _$.effect("__tests__/tags/child.marko_0_state", ($scope, {
   state
-}) => _$.on(_scope["#button/0"], "click", function () {
-  _state(_scope, state + 1), state;
+}) => _$.on($scope["#button/0"], "click", function () {
+  $state($scope, state + 1), state;
 }));
-const _state = /* @__PURE__ */_$.state("state/11", (_scope, state) => {
-  _$.data(_scope["#text/2"], state);
-  _state_effect(_scope);
+const $state = /* @__PURE__ */_$.state("state/11", ($scope, state) => {
+  _$.data($scope["#text/2"], state);
+  $state_effect($scope);
 });
-const _input_valueChange = /* @__PURE__ */_$.value("input_valueChange", _expr_input_value_input_valueChange);
-const _input_value = /* @__PURE__ */_$.value("input_value", (_scope, input_value) => {
-  _$.data(_scope["#text/1"], input_value);
-  _$.data(_scope["#text/4"], input_value);
-  _expr_input_value_input_valueChange(_scope);
+const $input_valueChange = /* @__PURE__ */_$.value("input_valueChange", $expr_input_value_input_valueChange);
+const $input_value = /* @__PURE__ */_$.value("input_value", ($scope, input_value) => {
+  _$.data($scope["#text/1"], input_value);
+  _$.data($scope["#text/4"], input_value);
+  $expr_input_value_input_valueChange($scope);
 });
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
-  _input_value(_scope, input.value);
-  _input_valueChange(_scope, input.valueChange);
-  _otherState(_scope, input.value, input["value" + "Change"]);
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {
+  $input_value($scope, input.value);
+  $input_valueChange($scope, input.valueChange);
+  $otherState($scope, input.value, input["value" + "Change"]);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", $template, $walks, $setup, $input);

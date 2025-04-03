@@ -1,77 +1,77 @@
-export const _template = "<ul></ul>";
-export const _walks = /* get, over(1) */" b";
-export const _setup = () => {};
+export const $template = "<ul></ul>";
+export const $walks = /* get, over(1) */" b";
+export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-import { _template as _comments_template, _walks as _comments_walks } from "./comments.marko";
-const _expr_comment_comments_id$if_content = /* @__PURE__ */_$.intersection(1, _scope => {
+import { $template as _comments_template, $walks as _comments_walks } from "./comments.marko";
+const $expr_comment_comments_id$if$content = /* @__PURE__ */_$.intersection(1, $scope => {
   const {
     _: {
       comment_comments,
       id
     }
-  } = _scope;
-  _input(_scope["#childScope/0"], {
+  } = $scope;
+  $input($scope["#childScope/0"], {
     comments: comment_comments,
     path: id
   });
 });
-const _id$if_content = /* @__PURE__ */_$.conditionalClosure("id", "#text/4", 0, _expr_comment_comments_id$if_content);
-const _comment_comments$if_content = /* @__PURE__ */_$.conditionalClosure("comment_comments", "#text/4", 0, _expr_comment_comments_id$if_content);
-const _setup$if_content = _scope => {
-  _setup(_scope["#childScope/0"]);
+const $id$if$content = /* @__PURE__ */_$.conditionalClosure("id", "#text/4", 0, $expr_comment_comments_id$if$content);
+const $comment_comments$if$content = /* @__PURE__ */_$.conditionalClosure("comment_comments", "#text/4", 0, $expr_comment_comments_id$if$content);
+const $setup$if$content = $scope => {
+  $setup($scope["#childScope/0"]);
 };
-const _if_content = /* @__PURE__ */_$.createRenderer(_comments_template, /* beginChild, _comments_walks, endChild */`/${_comments_walks}&`, _setup$if_content, 0, _scope => {
-  _comment_comments$if_content._(_scope);
-  _id$if_content._(_scope);
+const $if_content = /* @__PURE__ */_$.createRenderer(_comments_template, /* beginChild, _comments_walks, endChild */`/${_comments_walks}&`, $setup$if$content, 0, $scope => {
+  $comment_comments$if$content._($scope);
+  $id$if$content._($scope);
 });
-const _expr_input_path_i$for_content = /* @__PURE__ */_$.intersection(10, _scope => {
+const $expr_input_path_i$for$content = /* @__PURE__ */_$.intersection(10, $scope => {
   const {
     _: {
       input_path
     },
     i
-  } = _scope;
-  _id$for_content(_scope, `${input_path || "c"}-${i}`);
+  } = $scope;
+  $id$for$content($scope, `${input_path || "c"}-${i}`);
 });
-const _if$for_content = /* @__PURE__ */_$.conditional("#text/4", _if_content);
-const _open$for_content_effect = _$.effect("__tests__/tags/comments.marko_1_open", (_scope, {
+const $if$for$content = /* @__PURE__ */_$.conditional("#text/4", $if_content);
+const $open$for$content_effect = _$.effect("__tests__/tags/comments.marko_1_open", ($scope, {
   open
-}) => _$.on(_scope["#button/2"], "click", function () {
-  _open$for_content(_scope, !open);
+}) => _$.on($scope["#button/2"], "click", function () {
+  $open$for$content($scope, !open);
 }));
-const _open$for_content = /* @__PURE__ */_$.state("open/12", (_scope, open) => {
-  _$.attr(_scope["#li/0"], "hidden", !open);
-  _$.data(_scope["#text/3"], open ? "[-]" : "[+]");
-  _open$for_content_effect(_scope);
+const $open$for$content = /* @__PURE__ */_$.state("open/12", ($scope, open) => {
+  _$.attr($scope["#li/0"], "hidden", !open);
+  _$.data($scope["#text/3"], open ? "[-]" : "[+]");
+  $open$for$content_effect($scope);
 });
-const _id$for_content = /* @__PURE__ */_$.value("id", (_scope, id) => {
-  _$.attr(_scope["#li/0"], "id", id);
-  _id$if_content(_scope);
+const $id$for$content = /* @__PURE__ */_$.value("id", ($scope, id) => {
+  _$.attr($scope["#li/0"], "id", id);
+  $id$if$content($scope);
 });
-const _i$for_content = /* @__PURE__ */_$.value("i", _expr_input_path_i$for_content);
-const _comment_comments$for_content = /* @__PURE__ */_$.value("comment_comments", (_scope, comment_comments) => {
-  _if$for_content(_scope, comment_comments ? 0 : 1);
-  _comment_comments$if_content(_scope);
+const $i$for$content = /* @__PURE__ */_$.value("i", $expr_input_path_i$for$content);
+const $comment_comments$for$content = /* @__PURE__ */_$.value("comment_comments", ($scope, comment_comments) => {
+  $if$for$content($scope, comment_comments ? 0 : 1);
+  $comment_comments$if$content($scope);
 });
-const _comment_text$for_content = /* @__PURE__ */_$.value("comment_text", (_scope, comment_text) => _$.data(_scope["#text/1"], comment_text));
-const _comment$for_content = /* @__PURE__ */_$.value("comment", (_scope, comment) => {
-  _comment_text$for_content(_scope, comment?.text);
-  _comment_comments$for_content(_scope, comment?.comments);
+const $comment_text$for$content = /* @__PURE__ */_$.value("comment_text", ($scope, comment_text) => _$.data($scope["#text/1"], comment_text));
+const $comment$for$content = /* @__PURE__ */_$.value("comment", ($scope, comment) => {
+  $comment_text$for$content($scope, comment?.text);
+  $comment_comments$for$content($scope, comment?.comments);
 });
-const _params2$for_content = /* @__PURE__ */_$.value("_params2", (_scope, _params2) => {
-  _comment$for_content(_scope, _params2[0]);
-  _i$for_content(_scope, _params2[1]);
+const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => {
+  $comment$for$content($scope, $params2[0]);
+  $i$for$content($scope, $params2[1]);
 });
-const _input_path$for_content = /* @__PURE__ */_$.loopClosure("input_path", "#ul/0", _expr_input_path_i$for_content);
-const _setup$for_content = _scope => {
-  _open$for_content(_scope, true);
+const $input_path$for$content = /* @__PURE__ */_$.loopClosure("input_path", "#ul/0", $expr_input_path_i$for$content);
+const $setup$for$content = $scope => {
+  $open$for$content($scope, true);
 };
-const _for_content = /* @__PURE__ */_$.createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", _setup$for_content, _params2$for_content, _scope => _input_path$for_content._(_scope));
-const _for = /* @__PURE__ */_$.loopOf("#ul/0", _for_content);
-export const _input_path = /* @__PURE__ */_$.value("input_path", _input_path$for_content);
-export const _input_comments = /* @__PURE__ */_$.value("input_comments", (_scope, input_comments) => _for(_scope, [input_comments]));
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {
-  _input_comments(_scope, input.comments);
-  _input_path(_scope, input.path);
+const $for_content = /* @__PURE__ */_$.createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", $setup$for$content, $params2$for$content, $scope => $input_path$for$content._($scope));
+const $for = /* @__PURE__ */_$.loopOf("#ul/0", $for_content);
+export const $input_path = /* @__PURE__ */_$.value("input_path", $input_path$for$content);
+export const $input_comments = /* @__PURE__ */_$.value("input_comments", ($scope, input_comments) => $for($scope, [input_comments]));
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {
+  $input_comments($scope, input.comments);
+  $input_path($scope, input.path);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/comments.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/comments.marko", $template, $walks, $setup, $input);

@@ -3,18 +3,18 @@
     "props": {
       "$_$": "a",
       "$init": "e",
-      "$_setup$1": "t",
-      "$_value$1": "i",
-      "$_input$1": "o",
+      "$$setup$1": "t",
+      "$$value$1": "i",
+      "$$input$1": "o",
       "$child1": "l",
-      "$_setup": "c",
-      "$_value": "m",
-      "$_input": "r",
+      "$$setup": "c",
+      "$$value": "m",
+      "$$input": "r",
       "$child2": "v",
-      "$_expr_tagName_val": "n",
-      "$_dynamicTag": "d",
-      "$_tagName_effect": "s",
-      "$_tagName": "u"
+      "$$expr_tagName_val": "n",
+      "$$dynamicTag": "d",
+      "$$tagName_effect": "s",
+      "$$tagName": "u"
     }
   }
 }

@@ -3,16 +3,16 @@
     "props": {
       "$_$": "a",
       "$init": "t",
-      "$_expr_input_value_input_valueChange": "e",
-      "$_otherState_effect": "n",
-      "$_otherState": "o",
-      "$_state_effect": "u",
-      "$_state": "r",
-      "$_input_valueChange": "c",
-      "$_input_value": "i",
-      "$_input": "l",
-      "$_source": "m",
-      "$_valueChange": "s"
+      "$$expr_input_value_input_valueChange": "e",
+      "$$otherState_effect": "n",
+      "$$otherState": "o",
+      "$$state_effect": "u",
+      "$$state": "r",
+      "$$input_valueChange": "c",
+      "$$input_value": "i",
+      "$$input": "l",
+      "$$source": "m",
+      "$$valueChange": "s"
     }
   }
 }

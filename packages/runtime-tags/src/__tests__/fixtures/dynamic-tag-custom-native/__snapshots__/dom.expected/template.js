@@ -1,20 +1,20 @@
-export const _template = "<button></button><!><!>";
-export const _walks = /* get, over(1), replace, over(1) */" b%bD";
+export const $template = "<button></button><!><!>";
+export const $walks = /* get, over(1), replace, over(1) */" b%bD";
 import child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1");
-const _tagName_effect = _$.effect("__tests__/template.marko_0_tagName", (_scope, {
+const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1");
+const $tagName_effect = _$.effect("__tests__/template.marko_0_tagName", ($scope, {
   tagName
-}) => _$.on(_scope["#button/0"], "click", function () {
-  _tagName(_scope, tagName === child ? "div" : child);
+}) => _$.on($scope["#button/0"], "click", function () {
+  $tagName($scope, tagName === child ? "div" : child);
 }));
-const _tagName = /* @__PURE__ */_$.state("tagName/2", (_scope, tagName) => {
-  _dynamicTag(_scope, tagName, () => ({
+const $tagName = /* @__PURE__ */_$.state("tagName/2", ($scope, tagName) => {
+  $dynamicTag($scope, tagName, () => ({
     id: "dynamic"
   }));
-  _tagName_effect(_scope);
+  $tagName_effect($scope);
 });
-export function _setup(_scope) {
-  _tagName(_scope, child);
+export function $setup($scope) {
+  $tagName($scope, child);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

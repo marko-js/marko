@@ -1,16 +1,16 @@
-export const _template = "<button id=count> </button>";
-export const _walks = /* get, next(1), get, out(1) */" D l";
+export const $template = "<button id=count> </button>";
+export const $walks = /* get, next(1), get, out(1) */" D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _count_effect = _$.effect("__tests__/tags/counter.marko_0_count", (_scope, {
+const $count_effect = _$.effect("__tests__/tags/counter.marko_0_count", ($scope, {
   count
-}) => _$.on(_scope["#button/0"], "click", function () {
-  _count(_scope, count + 1), count;
+}) => _$.on($scope["#button/0"], "click", function () {
+  $count($scope, count + 1), count;
 }));
-const _count = /* @__PURE__ */_$.state("count/2", (_scope, count) => {
-  _$.data(_scope["#text/1"], count);
-  _count_effect(_scope);
+const $count = /* @__PURE__ */_$.state("count/2", ($scope, count) => {
+  _$.data($scope["#text/1"], count);
+  $count_effect($scope);
 });
-export function _setup(_scope) {
-  _count(_scope, 0);
+export function $setup($scope) {
+  $count($scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/counter.marko", _template, _walks, _setup);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/counter.marko", $template, $walks, $setup);

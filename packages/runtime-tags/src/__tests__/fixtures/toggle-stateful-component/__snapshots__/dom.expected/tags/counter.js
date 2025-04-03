@@ -1,22 +1,22 @@
-export const _template = "<button> </button>";
-export const _walks = /* get, next(1), get, out(1) */" D l";
+export const $template = "<button> </button>";
+export const $walks = /* get, next(1), get, out(1) */" D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const _expr_input_onCount_clickCount_effect = _$.effect("__tests__/tags/counter.marko_0_input_onCount_clickCount", (_scope, {
+const $expr_input_onCount_clickCount_effect = _$.effect("__tests__/tags/counter.marko_0_input_onCount_clickCount", ($scope, {
   input_onCount,
   clickCount
-}) => _$.on(_scope["#button/0"], "click", function () {
-  input_onCount(_clickCount(_scope, clickCount + 1));
+}) => _$.on($scope["#button/0"], "click", function () {
+  input_onCount($clickCount($scope, clickCount + 1));
 }));
-const _expr_input_onCount_clickCount = /* @__PURE__ */_$.intersection(6, _expr_input_onCount_clickCount_effect);
-const _clickCount = /* @__PURE__ */_$.state("clickCount/5", (_scope, clickCount) => {
-  _$.data(_scope["#text/1"], ((() => {
+const $expr_input_onCount_clickCount = /* @__PURE__ */_$.intersection(6, $expr_input_onCount_clickCount_effect);
+const $clickCount = /* @__PURE__ */_$.state("clickCount/5", ($scope, clickCount) => {
+  _$.data($scope["#text/1"], ((() => {
     if (clickCount > 0) throw new Error("This should not have executed since the parent removes this component when the count is greater than 0");
   })(), clickCount));
-  _expr_input_onCount_clickCount(_scope);
+  $expr_input_onCount_clickCount($scope);
 });
-export const _input_onCount = /* @__PURE__ */_$.value("input_onCount", _expr_input_onCount_clickCount);
-export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => _input_onCount(_scope, input.onCount));
-export function _setup(_scope) {
-  _clickCount(_scope, 0);
+export const $input_onCount = /* @__PURE__ */_$.value("input_onCount", $expr_input_onCount_clickCount);
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_onCount($scope, input.onCount));
+export function $setup($scope) {
+  $clickCount($scope, 0);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/counter.marko", _template, _walks, _setup, _input);
+export default /* @__PURE__ */_$.createTemplate("__tests__/tags/counter.marko", $template, $walks, $setup, $input);

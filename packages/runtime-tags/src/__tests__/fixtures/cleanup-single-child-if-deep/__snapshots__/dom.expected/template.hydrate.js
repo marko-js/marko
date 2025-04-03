@@ -1,109 +1,109 @@
 // size: 1272 (min) 487 (brotli)
-const _expr_name_write_effect = _$.effect(
+const $expr_name_write_effect = _$.effect(
     "a0",
-    (_scope, { 3: name, 4: write }) => {
+    ($scope, { 3: name, 4: write }) => {
       write(`${name} mounted`),
-        (_$.getAbortSignal(_scope, 0).onabort = () => {
+        (_$.getAbortSignal($scope, 0).onabort = () => {
           write(`${name} destroyed`);
         });
     },
   ),
-  _expr_name_write = _$.intersection(5, (_scope) => {
-    _$.resetAbortSignal(_scope, 0), _expr_name_write_effect(_scope);
+  $expr_name_write = _$.intersection(5, ($scope) => {
+    _$.resetAbortSignal($scope, 0), $expr_name_write_effect($scope);
   }),
-  _write = _$.value(4, _expr_name_write),
-  _name = _$.value(3, (_scope, name) => {
-    _$.data(_scope[0], name), _expr_name_write(_scope);
+  $write$1 = _$.value(4, $expr_name_write),
+  $name = _$.value(3, ($scope, name) => {
+    _$.data($scope[0], name), $expr_name_write($scope);
   }),
-  _write$if_content3 = _$.dynamicClosureRead(
+  $write$if$content3 = _$.dynamicClosureRead(
     8,
-    (_scope, write) => _write(_scope[0], write),
-    (_scope) => _scope._._._,
+    ($scope, write) => $write$1($scope[0], write),
+    ($scope) => $scope._._._,
   ),
-  _setup$if_content3 = (_scope) => {
-    _scope[0], _name(_scope[0], "Inner");
+  $setup$if$content3 = ($scope) => {
+    $scope[0], $name($scope[0], "Inner");
   },
-  _if_content3 = _$.createRenderer(
+  $if_content3 = _$.createRenderer(
     "<p> </p>",
     "/D l&",
-    _setup$if_content3,
+    $setup$if$content3,
     0,
-    (_scope) => _write$if_content3(_scope),
+    ($scope) => $write$if$content3($scope),
   ),
-  _if$if_content = _$.conditional(1, _if_content3),
-  _write$if_content2 = _$.dynamicClosureRead(
+  $if$if$content = _$.conditional(1, $if_content3),
+  $write$if$content2 = _$.dynamicClosureRead(
     8,
-    (_scope, write) => _write(_scope[0], write),
-    (_scope) => _scope._._,
+    ($scope, write) => $write$1($scope[0], write),
+    ($scope) => $scope._._,
   ),
-  _showInner$if_content = _$.dynamicClosureRead(
+  $showInner$if$content = _$.dynamicClosureRead(
     7,
-    (_scope, showInner) => _if$if_content(_scope, showInner ? 0 : 1),
-    (_scope) => _scope._._,
+    ($scope, showInner) => $if$if$content($scope, showInner ? 0 : 1),
+    ($scope) => $scope._._,
   ),
-  _setup$if_content2 = (_scope) => {
-    _scope[0], _name(_scope[0], "Middle");
+  $setup$if$content2 = ($scope) => {
+    $scope[0], $name($scope[0], "Middle");
   },
-  _if_content2 = _$.createRenderer(
+  $if_content2 = _$.createRenderer(
     "<div><p> </p><!></div>",
     "D/D l&%",
-    _setup$if_content2,
+    $setup$if$content2,
     0,
-    (_scope) => {
-      _showInner$if_content(_scope), _write$if_content2(_scope);
+    ($scope) => {
+      $showInner$if$content($scope), $write$if$content2($scope);
     },
   ),
-  _if$if_content2 = _$.conditional(1, _if_content2),
-  _write$if_content = _$.conditionalClosure(8, 4, 0, (_scope, write) =>
-    _write(_scope[0], write),
+  $if$if$content2 = _$.conditional(1, $if_content2),
+  $write$if$content = _$.conditionalClosure(8, 4, 0, ($scope, write) =>
+    $write$1($scope[0], write),
   ),
-  _showMiddle$if_content = _$.conditionalClosure(
+  $showMiddle$if$content = _$.conditionalClosure(
     6,
     4,
     0,
-    (_scope, showMiddle) => _if$if_content2(_scope, showMiddle ? 0 : 1),
+    ($scope, showMiddle) => $if$if$content2($scope, showMiddle ? 0 : 1),
   ),
-  _setup$if_content = (_scope) => {
-    _scope[0], _name(_scope[0], "Outer");
+  $setup$if$content = ($scope) => {
+    $scope[0], $name($scope[0], "Outer");
   },
-  _if_content = _$.createRenderer(
+  $if_content = _$.createRenderer(
     "<div><p> </p><!></div>",
     "D/D l&%",
-    _setup$if_content,
+    $setup$if$content,
     0,
-    (_scope) => {
-      _showMiddle$if_content._(_scope), _write$if_content._(_scope);
+    ($scope) => {
+      $showMiddle$if$content._($scope), $write$if$content._($scope);
     },
   ),
-  _if = _$.conditional(4, _if_content),
-  _showInner_closure = _$.dynamicClosure(_showInner$if_content),
-  _showInner_effect = _$.effect("b1", (_scope, { 7: showInner }) =>
-    _$.on(_scope[2], "click", function () {
-      _showInner(_scope, !showInner);
+  $if = _$.conditional(4, $if_content),
+  $showInner_closure = _$.dynamicClosure($showInner$if$content),
+  $showInner_effect = _$.effect("b1", ($scope, { 7: showInner }) =>
+    _$.on($scope[2], "click", function () {
+      $showInner($scope, !showInner);
     }),
   ),
-  _showInner = _$.state(7, (_scope) => {
-    _showInner_closure(_scope), _showInner_effect(_scope);
+  $showInner = _$.state(7, ($scope) => {
+    $showInner_closure($scope), $showInner_effect($scope);
   }),
-  _showMiddle_effect = _$.effect("b2", (_scope, { 6: showMiddle }) =>
-    _$.on(_scope[1], "click", function () {
-      _showMiddle(_scope, !showMiddle);
+  $showMiddle_effect = _$.effect("b2", ($scope, { 6: showMiddle }) =>
+    _$.on($scope[1], "click", function () {
+      $showMiddle($scope, !showMiddle);
     }),
   ),
-  _showMiddle = _$.state(6, (_scope) => {
-    _showMiddle$if_content(_scope), _showMiddle_effect(_scope);
+  $showMiddle = _$.state(6, ($scope) => {
+    $showMiddle$if$content($scope), $showMiddle_effect($scope);
   }),
-  _showOuter_effect = _$.effect("b3", (_scope, { 5: showOuter }) =>
-    _$.on(_scope[0], "click", function () {
-      _showOuter(_scope, !showOuter);
+  $showOuter_effect = _$.effect("b3", ($scope, { 5: showOuter }) =>
+    _$.on($scope[0], "click", function () {
+      $showOuter($scope, !showOuter);
     }),
   ),
-  _showOuter = _$.state(5, (_scope, showOuter) => {
-    _if(_scope, showOuter ? 0 : 1), _showOuter_effect(_scope);
+  $showOuter = _$.state(5, ($scope, showOuter) => {
+    $if($scope, showOuter ? 0 : 1), $showOuter_effect($scope);
   });
-_$.register("b0", function (_scope) {
+_$.register("b0", function ($scope) {
   return function (msg) {
-    _scope[3].innerHTML += "\n" + msg;
+    $scope[3].innerHTML += "\n" + msg;
   };
 }),
   init();

@@ -1,47 +1,47 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
 export default _$.createTemplate("__tests__/template.marko", input => {
-  const _scope0_id = _$.nextScopeId();
-  const _hoisted_el = _$.hoist(_scope0_id, "__tests__/template.marko_0__hoisted_el/hoist");
+  const $scope0_id = _$.nextScopeId();
+  const $hoisted_el = _$.hoist($scope0_id, "__tests__/template.marko_0_$hoisted_el/hoist");
   _$.resumeConditional(() => {
     if (input.show) {
-      const _scope1_id = _$.nextScopeId();
+      const $scope1_id = _$.nextScopeId();
       _$.resumeSingleNodeConditional(() => {
         if (input.show) {
-          const _scope2_id = _$.nextScopeId();
-          const el = _$.nodeRef(_scope2_id, "__tests__/template.marko_2/#div");
-          _$.write(`<div></div>${_$.markResumeNode(_scope2_id, "#div/0")}`);
+          const $scope2_id = _$.nextScopeId();
+          const el = _$.nodeRef($scope2_id, "__tests__/template.marko_2/#div");
+          _$.write(`<div></div>${_$.markResumeNode($scope2_id, "#div/0")}`);
           _child({
             value: el
           });
-          _$.writeScope(_scope2_id, {}, "__tests__/template.marko", "2:4");
+          _$.writeScope($scope2_id, {}, "__tests__/template.marko", "2:4");
           return 0;
         }
-      }, _scope1_id, "#text/0", 1);
-      _$.writeScope(_scope1_id, {
-        _: _$.ensureScopeWithId(_scope0_id)
+      }, $scope1_id, "#text/0", 1);
+      _$.writeScope($scope1_id, {
+        _: _$.ensureScopeWithId($scope0_id)
       }, "__tests__/template.marko", "1:2");
       return 0;
     }
-  }, _scope0_id, "#text/0", 1);
-  const _childScope = _$.peekNextScope();
+  }, $scope0_id, "#text/0", 1);
+  const $childScope = _$.peekNextScope();
   _child({
-    value: _hoisted_el
+    value: $hoisted_el
   });
   _$.write("<hr>");
   _$.resumeSingleNodeConditional(() => {
     if (true) {
-      const _scope3_id = _$.nextScopeId();
+      const $scope3_id = _$.nextScopeId();
       const el2 = _$.nodeRef();
-      _$.write(`<div></div>${_$.markResumeNode(_scope3_id, "#div/0")}`);
-      _$.writeScope(_scope3_id, {}, "__tests__/template.marko", "19:2");
+      _$.write(`<div></div>${_$.markResumeNode($scope3_id, "#div/0")}`);
+      _$.writeScope($scope3_id, {}, "__tests__/template.marko", "19:2");
       return 0;
     }
-  }, _scope0_id, "#text/2");
-  _$.writeEffect(_scope0_id, "__tests__/template.marko_0");
-  _$.writeScope(_scope0_id, {
+  }, $scope0_id, "#text/2");
+  _$.writeEffect($scope0_id, "__tests__/template.marko_0");
+  _$.writeScope($scope0_id, {
     input_show: input.show,
-    "#childScope/1": _$.writeExistingScope(_childScope)
+    "#childScope/1": _$.writeExistingScope($childScope)
   }, "__tests__/template.marko", 0, {
     input_show: ["input.show"]
   });
