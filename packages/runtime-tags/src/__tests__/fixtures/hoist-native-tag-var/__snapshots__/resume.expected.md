@@ -4,6 +4,7 @@
 <html>
   <head />
   <body>
+    <!--M_[2-->
     <div
       class="child0 child1"
     >
@@ -11,7 +12,7 @@
     </div>
     <!--M_*3 #div/0-->
     <!--M_|2 #text/0 3-->
-    <!--M_|1 #text/0 2-->
+    <!--M_]1 #text/0-->
     <hr />
     <div>
       Hello World
@@ -27,6 +28,8 @@
 # Mutations
 ```
 INSERT html/body/#text
+REMOVE html/body/#comment0 before html
+INSERT html/body/#comment0
 UPDATE html/body/div0[class] null => "child0 child1"
 UPDATE html/body/div0[class] "child0" => "child0 child1"
 INSERT html/body/div0/#text
