@@ -37,9 +37,16 @@ enum RuntimeKey {
   Scripts = ".j",
   Done = ".d",
 }
-
 export function getChunk(): Chunk | undefined {
   return $chunk;
+}
+
+export function getContext(key: keyof NonNullable<Chunk["context"]>) {
+  return $chunk.context?.[key];
+}
+
+export function getState(): State {
+  return $chunk.boundary.state;
 }
 
 export function getScopeId(scope: unknown): number | undefined {

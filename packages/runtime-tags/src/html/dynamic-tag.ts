@@ -7,7 +7,7 @@ import {
 } from "./attrs";
 import type { ServerRenderer } from "./template";
 import {
-  getChunk,
+  getState,
   nextScopeId,
   peekNextScopeId,
   register,
@@ -46,7 +46,7 @@ export let dynamicTag = (
     }
   }
 
-  const chunk = getChunk()!;
+  const state = getState()!;
   const branchId = peekNextScopeId();
   let result: unknown;
 
@@ -96,8 +96,8 @@ export let dynamicTag = (
     }
 
     if (resume) {
-      chunk.writeHTML(
-        chunk.boundary.state.mark(
+      write(
+        state.mark(
           ResumeSymbol.BranchSingleNode,
           scopeId + " " + accessor + " " + branchId,
         ),
@@ -107,9 +107,7 @@ export let dynamicTag = (
     // TODO: this needs to set result the element getter
   } else {
     if (resume) {
-      chunk.writeHTML(
-        chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + ""),
-      );
+      write(state.mark(ResumeSymbol.BranchStart, branchId + ""));
     }
     result = withBranchId(branchId, () => {
       if (renderer) {
@@ -126,12 +124,7 @@ export let dynamicTag = (
     });
 
     if (resume) {
-      chunk.writeHTML(
-        chunk.boundary.state.mark(
-          ResumeSymbol.BranchEnd,
-          scopeId + " " + accessor,
-        ),
-      );
+      write(state.mark(ResumeSymbol.BranchEnd, scopeId + " " + accessor));
     }
   }
 

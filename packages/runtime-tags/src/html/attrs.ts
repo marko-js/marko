@@ -7,7 +7,7 @@ import {
 } from "../common/helpers";
 import { type Accessor, AccessorPrefix, ControlledType } from "../common/types";
 import { escapeTextAreaValue } from "./content";
-import { getChunk, withContext, writeScope } from "./writer";
+import { getContext, withContext, writeScope } from "./writer";
 
 export function classAttr(value: unknown) {
   return stringAttr("class", classValue(value));
@@ -18,13 +18,12 @@ export function styleAttr(value: unknown) {
 }
 
 export function optionValueAttr(value: unknown) {
-  const { [kSelectedValue]: selectedValue } =
-    getChunk()?.context || ({} as any);
+  const selectedValue = getContext(kSelectedValue);
 
   return (
     attr("value", value) +
     (!isVoid(value) &&
-    (Array.isArray(value)
+    (Array.isArray(selectedValue)
       ? selectedValue.includes(value)
       : selectedValue === value)
       ? " selected"
