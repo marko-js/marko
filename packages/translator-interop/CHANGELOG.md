@@ -1,5 +1,14 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.23
+
+### Patch Changes
+
+- [#2629](https://github.com/marko-js/marko/pull/2629) [`a0ff17e`](https://github.com/marko-js/marko/commit/a0ff17e3776a0da5fb6b325c7a0e56b89db7f04b) Thanks [@rturnq](https://github.com/rturnq)! - Fix dynamic tag end marker writen to wrong chunk
+
+- Updated dependencies [[`588a8a6`](https://github.com/marko-js/marko/commit/588a8a6e0a9ebcf9f20791e54cf386974e30c78d), [`a0ff17e`](https://github.com/marko-js/marko/commit/a0ff17e3776a0da5fb6b325c7a0e56b89db7f04b)]:
+  - @marko/runtime-tags@0.3.83
+
 ## 0.2.22
 
 ### Patch Changes

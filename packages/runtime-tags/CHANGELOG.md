@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 0.3.83
+
+### Patch Changes
+
+- [#2631](https://github.com/marko-js/marko/pull/2631) [`588a8a6`](https://github.com/marko-js/marko/commit/588a8a6e0a9ebcf9f20791e54cf386974e30c78d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Switch generated UIDs to start with `# @marko/runtime-tags to avoid conflicts with babels generated UIDs.
+
+- [#2629](https://github.com/marko-js/marko/pull/2629) [`a0ff17e`](https://github.com/marko-js/marko/commit/a0ff17e3776a0da5fb6b325c7a0e56b89db7f04b) Thanks [@rturnq](https://github.com/rturnq)! - Fix dynamic tag end marker writen to wrong chunk
+
 ## 0.3.82
 
 ### Patch Changes
