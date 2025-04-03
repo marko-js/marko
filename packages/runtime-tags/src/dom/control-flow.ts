@@ -30,7 +30,7 @@ import {
   findBranchWithKey,
   insertBranchBefore,
   removeAndDestroyBranch,
-  tempDetatchBranch,
+  tempDetachBranch,
 } from "./scope";
 import { setTagVar, type Signal, subscribeToScopeSet } from "./signals";
 
@@ -39,15 +39,13 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
   const branchAccessor = AccessorPrefix.ConditionalScope + nodeAccessor;
   return (scope: Scope, promise: Promise<unknown>) => {
     // TODO: !isPromise, render synchronously
-
+    const referenceNode = scope[nodeAccessor] as Text | Comment;
     const tryWithPlaceholder = findBranchWithKey(
       scope,
       AccessorProp.PlaceholderContent,
     );
-    const referenceNode = scope[nodeAccessor] as Text | Comment;
-    // we need to cache this parentNode since it may change when the placeholder is displayed.
-    const originalParentNode = referenceNode.parentNode;
-    let awaitBranch = scope[branchAccessor];
+    let awaitBranch = scope[branchAccessor] as BranchScope | undefined;
+
     if (tryWithPlaceholder) {
       placeholderShown.add(pendingEffects);
       if (
@@ -63,20 +61,20 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
                 queueRender(
                   tryWithPlaceholder,
                   () => {
-                    const placeholderBranch = (tryWithPlaceholder[
-                      AccessorProp.PlaceholderBranch
-                    ] = createAndSetupBranch(
-                      scope.$global,
-                      tryWithPlaceholder[AccessorProp.PlaceholderContent],
-                      tryWithPlaceholder._,
-                      tryWithPlaceholder.___startNode.parentNode!,
-                    ));
                     insertBranchBefore(
-                      placeholderBranch,
+                      (tryWithPlaceholder[AccessorProp.PlaceholderBranch] =
+                        createAndSetupBranch(
+                          scope.$global,
+                          tryWithPlaceholder[
+                            AccessorProp.PlaceholderContent
+                          ] as Renderer,
+                          tryWithPlaceholder._,
+                          tryWithPlaceholder.___startNode.parentNode!,
+                        )),
                       tryWithPlaceholder.___startNode.parentNode!,
                       tryWithPlaceholder.___startNode,
                     );
-                    tempDetatchBranch(tryWithPlaceholder);
+                    tempDetachBranch(tryWithPlaceholder);
                   },
                   -1,
                 ),
@@ -84,12 +82,12 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
             ),
         );
       }
-    } else if (awaitBranch) {
+    } else if (awaitBranch && !scope[promiseAccessor]) {
       awaitBranch.___startNode.parentNode!.insertBefore(
         referenceNode,
         awaitBranch.___startNode,
       );
-      tempDetatchBranch(awaitBranch);
+      tempDetachBranch(awaitBranch);
     }
     const thisPromise = (scope[promiseAccessor] = promise.then(
       (data) => {
@@ -100,16 +98,23 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
           queueRender(
             scope,
             () => {
-              if (!awaitBranch || !tryWithPlaceholder) {
+              if (awaitBranch) {
+                // Since this is temp detached the parent node is a document fragment with all of the children in the branch.
+                if (!tryWithPlaceholder) {
+                  referenceNode.replaceWith(
+                    awaitBranch.___startNode.parentNode!,
+                  );
+                }
+              } else {
                 // TODO: this preserves the existing scope, but we need to defer closures executing in this existing scope while it is pending.
                 // Not ideal, but we could destroy and recreate the scope everytime the promise changes to avoid this.
                 insertBranchBefore(
-                  (awaitBranch ??= scope[branchAccessor] =
+                  (awaitBranch = scope[branchAccessor] =
                     createAndSetupBranch(
                       scope.$global,
                       renderer,
                       scope,
-                      originalParentNode!,
+                      referenceNode.parentNode!,
                     )),
                   referenceNode.parentNode!,
                   referenceNode,
@@ -128,9 +133,9 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
                   ] as BranchScope;
                   tryWithPlaceholder[AccessorProp.PlaceholderBranch] = 0;
                   if (placeholderBranch) {
-                    insertBranchBefore(
-                      tryWithPlaceholder,
-                      placeholderBranch.___startNode.parentNode!,
+                    // Since this is temp detached the parent node is a document fragment with all of the children in the branch.
+                    placeholderBranch.___startNode.parentNode!.insertBefore(
+                      tryWithPlaceholder.___startNode.parentNode!,
                       placeholderBranch.___startNode,
                     );
                     removeAndDestroyBranch(placeholderBranch);

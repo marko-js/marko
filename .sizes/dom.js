@@ -1,4 +1,4 @@
-// size: 18901 (min) 7208 (brotli)
+// size: 19001 (min) 7225 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -798,8 +798,10 @@ function removeAndDestroyBranch(branch) {
 function insertBranchBefore(branch, parentNode, nextSibling) {
   insertChildNodes(parentNode, nextSibling, branch.h, branch.j);
 }
-function tempDetatchBranch(branch) {
-  insertChildNodes(new DocumentFragment(), null, branch.h, branch.j);
+function tempDetachBranch(branch) {
+  let fragment = new DocumentFragment();
+  (fragment.namespaceURI = branch.h.parentNode.namespaceURI),
+    insertChildNodes(fragment, null, branch.h, branch.j);
 }
 var walker = document.createTreeWalker(document);
 function walk(startNode, walkCodes, branch) {
@@ -1145,9 +1147,8 @@ function awaitTag(nodeAccessor, renderer) {
   let promiseAccessor = "n" + nodeAccessor,
     branchAccessor = "d" + nodeAccessor;
   return (scope, promise) => {
-    let tryWithPlaceholder = findBranchWithKey(scope, "d"),
-      referenceNode = scope[nodeAccessor],
-      originalParentNode = referenceNode.parentNode,
+    let referenceNode = scope[nodeAccessor],
+      tryWithPlaceholder = findBranchWithKey(scope, "d"),
       awaitBranch = scope[branchAccessor];
     tryWithPlaceholder
       ? (placeholderShown.add(pendingEffects),
@@ -1171,7 +1172,7 @@ function awaitTag(nodeAccessor, renderer) {
                         tryWithPlaceholder.h.parentNode,
                         tryWithPlaceholder.h,
                       ),
-                        tempDetatchBranch(tryWithPlaceholder);
+                        tempDetachBranch(tryWithPlaceholder);
                     },
                     -1,
                   ),
@@ -1179,8 +1180,9 @@ function awaitTag(nodeAccessor, renderer) {
               ),
           ))
       : awaitBranch &&
+        !scope[promiseAccessor] &&
         (awaitBranch.h.parentNode.insertBefore(referenceNode, awaitBranch.h),
-        tempDetatchBranch(awaitBranch));
+        tempDetachBranch(awaitBranch));
     let thisPromise = (scope[promiseAccessor] = promise.then(
       (data2) => {
         thisPromise === scope[promiseAccessor] &&
@@ -1190,19 +1192,21 @@ function awaitTag(nodeAccessor, renderer) {
             scope,
             () => {
               if (
-                ((!awaitBranch || !tryWithPlaceholder) &&
-                  (insertBranchBefore(
-                    (awaitBranch ??= scope[branchAccessor] =
-                      createAndSetupBranch(
-                        scope.$global,
-                        renderer,
-                        scope,
-                        originalParentNode,
-                      )),
-                    referenceNode.parentNode,
-                    referenceNode,
-                  ),
-                  referenceNode.remove()),
+                (awaitBranch
+                  ? tryWithPlaceholder ||
+                    referenceNode.replaceWith(awaitBranch.h.parentNode)
+                  : (insertBranchBefore(
+                      (awaitBranch = scope[branchAccessor] =
+                        createAndSetupBranch(
+                          scope.$global,
+                          renderer,
+                          scope,
+                          referenceNode.parentNode,
+                        )),
+                      referenceNode.parentNode,
+                      referenceNode,
+                    ),
+                    referenceNode.remove()),
                 renderer.l?.(awaitBranch, [data2]),
                 tryWithPlaceholder &&
                   (placeholderShown.add(pendingEffects),
@@ -1211,9 +1215,8 @@ function awaitTag(nodeAccessor, renderer) {
                 let placeholderBranch = tryWithPlaceholder.c;
                 (tryWithPlaceholder.c = 0),
                   placeholderBranch &&
-                    (insertBranchBefore(
-                      tryWithPlaceholder,
-                      placeholderBranch.h.parentNode,
+                    (placeholderBranch.h.parentNode.insertBefore(
+                      tryWithPlaceholder.h.parentNode,
                       placeholderBranch.h,
                     ),
                     removeAndDestroyBranch(placeholderBranch)),
