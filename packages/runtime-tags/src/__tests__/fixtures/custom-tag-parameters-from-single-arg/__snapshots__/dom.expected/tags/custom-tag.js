@@ -6,9 +6,9 @@ const _expr_input_content_x = /* @__PURE__ */_$.intersection(7, _scope => {
     input_content,
     x
   } = _scope;
-  _dynamicTag(_scope, input_content, () => x);
+  _dynamicTag(_scope, input_content, () => [x]);
 });
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2");
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", 0, 0, 1);
 const _x_effect = _$.effect("__tests__/tags/custom-tag.marko_0_x", (_scope, {
   x
 }) => _$.on(_scope["#button/0"], "click", function () {

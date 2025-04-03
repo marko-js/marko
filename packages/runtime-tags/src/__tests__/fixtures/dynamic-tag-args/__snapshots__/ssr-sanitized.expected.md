@@ -6,4 +6,13 @@
 <div>
   1
 </div>
+<div>
+  false
+</div>
+<div>
+  true
+</div>
+<div>
+  "spread1"
+</div>
 ```

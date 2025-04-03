@@ -6,7 +6,7 @@ export default _$.createTemplate("__tests__/tags/child.marko", input => {
     value
   } = input;
   _$.write("<div>");
-  _$.dynamicTag(_scope0_id, "#text/0", content, value, 0, 0, 1);
+  _$.dynamicTag(_scope0_id, "#text/0", content, [value], 0, 1, 1);
   _$.write("</div>");
   _$.writeScope(_scope0_id, {
     content,

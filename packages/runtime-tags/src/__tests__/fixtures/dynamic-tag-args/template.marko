@@ -3,3 +3,6 @@ static const tags = [customTag];
 <let/x=1 />
 <button onClick() { x++ }>Count: ${x}</button>
 <${tags[0]}(x, 'foo') />
+<${tags[0]}(false) />
+<${tags[0]}(true) />
+<${tags[0]}(...["spread1", "spread2"]) />

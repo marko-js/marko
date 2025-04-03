@@ -7,9 +7,9 @@ const _expr_content_value = /* @__PURE__ */_$.intersection(5, _scope => {
     content,
     value
   } = _scope;
-  _dynamicTag(_scope, content, () => value);
+  _dynamicTag(_scope, content, () => [value]);
 });
-const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
+const _dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", 0, 0, 1);
 export const _value = /* @__PURE__ */_$.value("value", _expr_content_value);
 export const _content = /* @__PURE__ */_$.value("content", _expr_content_value);
 export const _input = /* @__PURE__ */_$.value("input", (_scope, input) => {

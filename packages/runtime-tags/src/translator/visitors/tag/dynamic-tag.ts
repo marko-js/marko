@@ -172,17 +172,14 @@ export default {
         isClassAPI ? "renderBody" : "content",
       );
       const args: (t.Expression | t.SpreadElement)[] = [];
-      let hasMultipleArgs = false;
+      let hasTagArgs = false;
 
-      if (node.arguments?.length) {
+      if (node.arguments) {
+        hasTagArgs = true;
         args.push(...node.arguments);
 
         if (properties.length) {
-          hasMultipleArgs = true;
           args.push(propsToExpression(properties));
-        } else {
-          hasMultipleArgs =
-            node.arguments.length > 1 || t.isSpreadElement(node.arguments[0]);
         }
       } else {
         const contentProp = getTranslatedBodyContentProperty(properties);
@@ -200,7 +197,7 @@ export default {
 
         const serializeReason =
           isClassAPI || !!node.var || getDynamicSourcesForExtra(tagExtra);
-        const dynamicTagExpr = hasMultipleArgs
+        const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "dynamicTag",
               getScopeIdIdentifier(section),
@@ -295,12 +292,12 @@ export default {
             tagVarSignal
               ? t.arrowFunctionExpression([], tagVarSignal.identifier)
               : undefined,
-            hasMultipleArgs && t.numericLiteral(1),
+            hasTagArgs && t.numericLiteral(1),
           );
         };
 
         if (args.length) {
-          const argsOrInput = hasMultipleArgs
+          const argsOrInput = hasTagArgs
             ? t.arrayExpression(args)
             : (args[0] as t.Expression);
           if (

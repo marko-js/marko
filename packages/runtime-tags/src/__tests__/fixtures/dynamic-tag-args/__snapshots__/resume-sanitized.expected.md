@@ -6,6 +6,15 @@
 <div>
   1
 </div>
+<div>
+  false
+</div>
+<div>
+  true
+</div>
+<div>
+  "spread1"
+</div>
 ```
 
 
@@ -19,6 +28,15 @@ container.querySelector("button").click();
 </button>
 <div>
   2
+</div>
+<div>
+  false
+</div>
+<div>
+  true
+</div>
+<div>
+  "spread1"
 </div>
 ```
 
@@ -34,6 +52,15 @@ container.querySelector("button").click();
 <div>
   3
 </div>
+<div>
+  false
+</div>
+<div>
+  true
+</div>
+<div>
+  "spread1"
+</div>
 ```
 
 
@@ -47,5 +74,14 @@ container.querySelector("button").click();
 </button>
 <div>
   4
+</div>
+<div>
+  false
+</div>
+<div>
+  true
+</div>
+<div>
+  "spread1"
 </div>
 ```
