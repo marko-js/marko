@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 0.3.82
+
+### Patch Changes
+
+- [#2627](https://github.com/marko-js/marko/pull/2627) [`9cba851`](https://github.com/marko-js/marko/commit/9cba851a4b58704a10fdfcad749d79e85be833db) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure when tag arguments are used for a dynamic tag with a single argument that it does not become treated the same as normal input. The normal input runtime will add the `content` as well as default to an empty object which was breaking some usages of tag arguments.
+
+- [#2627](https://github.com/marko-js/marko/pull/2627) [`540bbf6`](https://github.com/marko-js/marko/commit/540bbf648415bedbcf046467964dbe95cbb6a5c5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where a single dynamic child was being marked as a single node.
+
 ## 0.3.81
 
 ### Patch Changes
