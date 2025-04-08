@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 0.3.84
+
+### Patch Changes
+
+- [#2632](https://github.com/marko-js/marko/pull/2632) [`e722c2b`](https://github.com/marko-js/marko/commit/e722c2bde4c6ab5c75cb25cf0240b2420832af12) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve capturing of serialize reasons.
+
 ## 0.3.83
 
 ### Patch Changes
