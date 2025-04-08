@@ -5,6 +5,7 @@ import {
   getTemplateId,
 } from "@marko/compiler/babel-utils";
 
+import type { AccessorPrefix, AccessorProp } from "../../common/types";
 import { toAccess } from "../../html/serializer";
 import { getSectionReturnValueIdentifier } from "../core/return";
 import {
@@ -12,7 +13,6 @@ import {
   isScopeIdentifier,
   scopeIdentifier,
 } from "../visitors/program";
-import { getDynamicSourcesForBinding } from "./dynamic-sources";
 import { forEachIdentifier } from "./for-each-identifier";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-char";
@@ -36,12 +36,17 @@ import {
 import { callRuntime } from "./runtime";
 import { createScopeReadPattern, getScopeExpression } from "./scope-read";
 import {
+  getDynamicClosureIndex,
   getScopeIdIdentifier,
   getSectionForBody,
   isDynamicClosure,
   isImmediateOwner,
   type Section,
 } from "./sections";
+import {
+  getBindingSerializeReason,
+  getPropSerializeReason,
+} from "./serialize-reasons";
 import { simplifyFunction } from "./simplify-fn";
 import { createSectionState } from "./state";
 import {
@@ -122,23 +127,45 @@ export function serializeSectionIfNeeded(
     }
   }
 }
-const [getSerializedScopeProperties] = createSectionState<
+const [getSerializedAccessors] = createSectionState<
   Map<
     string,
     { expression: t.Expression; reason: undefined | boolean | Opt<Binding> }
   >
 >("serializedScopeProperties", () => new Map());
-export function setSerializedProperty(
+export function setBindingSerializedValue(
   section: Section,
-  key: string,
+  binding: Binding,
   expression: t.Expression,
-  reason: undefined | boolean | Opt<Binding>,
+  prefix?: AccessorPrefix,
 ) {
+  const reason = getBindingSerializeReason(section, binding, prefix);
   if (reason) {
-    getSerializedScopeProperties(section).set(key, { expression, reason });
+    getSerializedAccessors(section).set(
+      (prefix || "") + getScopeAccessor(binding),
+      { expression, reason },
+    );
+  }
+}
+export function setPropSerializedValue(
+  section: Section,
+  extra: t.NodeExtra,
+  prop: AccessorProp,
+  expression: t.Expression,
+) {
+  const reason = getPropSerializeReason(section, extra, prop);
+  if (reason) {
+    getSerializedAccessors(section).set(prop, { expression, reason });
   }
 }
 
+export function setSerializedValue(
+  section: Section,
+  key: string,
+  expression: t.Expression,
+) {
+  getSerializedAccessors(section).set(key, { expression, reason: true });
+}
 const [getSectionWriteScopeBuilder, setSectionWriteScopeBuilder] =
   createSectionState<undefined | ((expr: t.Expression) => t.Expression)>(
     "sectionWriteScopeBuilder",
@@ -1066,7 +1093,10 @@ export function writeHTMLResumeStatements(
   forEach(section.referencedHoists, serializeOwnersUntilBinding);
   forEach(section.referencedClosures, (closure) => {
     if (closure.sources) {
-      const serializeReason = getDynamicSourcesForBinding(closure);
+      const serializeReason = getBindingSerializeReason(
+        closure.section,
+        closure,
+      );
       serializeOwnersUntilBinding(closure);
       serializeSectionIfNeeded(closure.section, serializeReason);
       if (isDynamicClosure(section, closure)) {
@@ -1089,19 +1119,19 @@ export function writeHTMLResumeStatements(
               ),
             ]),
           );
-          setSerializedProperty(
+          setBindingSerializedValue(
             closure.section,
-            getAccessorPrefix().ClosureScopes + getScopeAccessor(closure),
+            closure,
             identifier,
-            serializeReason,
+            getAccessorPrefix().ClosureScopes,
           );
         }
 
-        setSerializedProperty(
+        setBindingSerializedValue(
           section,
-          getAccessorPrefix().ClosureSignalIndex + getScopeAccessor(closure),
+          closure,
           t.numericLiteral(getDynamicClosureIndex(closure, section)),
-          serializeReason,
+          getAccessorPrefix().ClosureSignalIndex,
         );
         addWriteScopeBuilder(section, (expr) =>
           callRuntime("writeSubscribe", identifier, expr),
@@ -1159,11 +1189,10 @@ export function writeHTMLResumeStatements(
           addWriteScopeBuilder(currentSection, (expr) =>
             callRuntime("writeSubscribe", subscribersIdentifier, expr),
           );
-          setSerializedProperty(
+          setSerializedValue(
             parentSection,
             getSectionInstancesAccessor(currentSection)!,
             subscribersIdentifier,
-            true,
           );
         }
         currentSection = parentSection!;
@@ -1171,11 +1200,10 @@ export function writeHTMLResumeStatements(
     }
 
     if (binding.hoists.size && binding.type !== BindingType.dom) {
-      setSerializedProperty(
+      setBindingSerializedValue(
         section,
-        getScopeAccessor(binding),
+        binding,
         getDeclaredBindingExpression(binding),
-        true,
       );
     }
   });
@@ -1195,16 +1223,17 @@ export function writeHTMLResumeStatements(
     }
   }
 
-  const serializedLookup = getSerializedScopeProperties(section);
+  const serializedLookup = getSerializedAccessors(section);
   const serializedProperties: t.ObjectProperty[] = [];
   forEach(section.bindings, (binding) => {
-    if (binding.serialize && binding.type !== BindingType.dom) {
-      const accessor = getScopeAccessor(binding);
-      serializedLookup.delete(accessor);
-      serializedProperties.push(
-        toObjectProperty(accessor, getDeclaredBindingExpression(binding)),
-      );
-    }
+    if (binding.type === BindingType.dom) return;
+    const serializeReason = getBindingSerializeReason(section, binding);
+    if (!serializeReason) return;
+    const accessor = getScopeAccessor(binding);
+    serializedLookup.delete(accessor);
+    serializedProperties.push(
+      toObjectProperty(accessor, getDeclaredBindingExpression(binding)),
+    );
   });
 
   for (const [key, { expression }] of serializedLookup) {
@@ -1236,7 +1265,9 @@ export function writeHTMLResumeStatements(
     if (!isOptimize()) {
       let debugVars: t.ObjectProperty[] | undefined;
       forEach(section.bindings, (binding) => {
-        if (!binding.serialize || binding.type === BindingType.dom) return;
+        if (binding.type === BindingType.dom) return;
+        const serializeReason = getBindingSerializeReason(section, binding);
+        if (!serializeReason) return;
 
         let root = binding;
         let access = "";
@@ -1325,7 +1356,7 @@ export function serializeOwners(from: Section, to?: Section) {
   while (cur !== to) {
     const parent = cur.parent;
     if (!parent) break;
-    const serialized = getSerializedScopeProperties(cur);
+    const serialized = getSerializedAccessors(cur);
     cur = parent;
     if (!serialized.has("_")) {
       serialized.set("_", {
@@ -1527,17 +1558,4 @@ function getRegisteredFnExpression(node: t.Function) {
       return t.identifier(id);
     }
   }
-}
-
-function getDynamicClosureIndex(closure: Binding, closureSection: Section) {
-  let index = 0;
-  find(closure.closureSections, (section) => {
-    if (section === closureSection) return true;
-    if (isDynamicClosure(section, closure)) {
-      index++;
-    }
-
-    return false;
-  });
-  return index;
 }

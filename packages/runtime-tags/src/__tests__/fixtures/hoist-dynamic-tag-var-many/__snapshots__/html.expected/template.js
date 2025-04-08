@@ -10,7 +10,9 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     _$.setTagVar($scope1_id, "#scopeOffset/1", $dynamicScope, "__tests__/template.marko_1_setHtml/var");
     _$.writeScope($scope1_id, {
       setHtml
-    }, "__tests__/template.marko", "3:2");
+    }, "__tests__/template.marko", "3:2", {
+      setHtml: "4:18"
+    });
   }, 0, $scope0_id, "#text/0");
   let to = 3;
   _$.write("<hr>");
@@ -21,7 +23,9 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     _$.setTagVar($scope2_id, "#scopeOffset/1", $dynamicScope2, "__tests__/template.marko_2_setHtml2/var");
     _$.writeScope($scope2_id, {
       setHtml2
-    }, "__tests__/template.marko", "14:2");
+    }, "__tests__/template.marko", "14:2", {
+      setHtml2: "15:18"
+    });
   }, 0, $scope0_id, "#text/1");
   _$.write("<hr>");
   _$.resumeSingleNodeForTo(3, 0, 1, i => {
@@ -34,7 +38,9 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       _$.setTagVar($scope4_id, "#scopeOffset/1", $dynamicScope3, "__tests__/template.marko_4_setHtml3/var");
       _$.writeScope($scope4_id, {
         setHtml3
-      }, "__tests__/template.marko", "26:4");
+      }, "__tests__/template.marko", "26:4", {
+        setHtml3: "27:20"
+      });
     }, 0, $scope3_id, "#ul/0", 1);
     _$.write("</ul>");
   }, 0, $scope0_id, "#text/2");

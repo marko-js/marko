@@ -8,8 +8,9 @@ import {
 
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag } from "./is-core-tag";
-import { filter, Sorted } from "./optional";
-import type { Binding, ReferencedBindings } from "./references";
+import { filter, find, type OneMany, Sorted } from "./optional";
+import type { Binding, InputBinding, ReferencedBindings } from "./references";
+import { getBindingSerializeReason } from "./serialize-reasons";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
@@ -33,6 +34,7 @@ export interface Section {
   referencedHoists: ReferencedBindings;
   bindings: ReferencedBindings;
   hoisted: ReferencedBindings;
+  serializeReasons: Map<symbol, true | OneMany<InputBinding>>;
   isHoistThrough: true | undefined;
   assignments: ReferencedBindings;
   upstreamExpression: t.NodeExtra | undefined;
@@ -56,6 +58,8 @@ declare module "@marko/compiler/dist/types" {
     section?: Section;
   }
 }
+
+export const kBranchSerializeReason = Symbol("serialize branch reason");
 
 export const sectionUtil = new Sorted(function compareSections(
   a: Section,
@@ -96,6 +100,7 @@ export function startSection(
       hoisted: undefined,
       isHoistThrough: undefined,
       assignments: undefined,
+      serializeReasons: new Map(),
       content: getContentInfo(path),
       upstreamExpression: undefined,
       downstreamBinding: undefined,
@@ -274,12 +279,28 @@ export function getNodeContentType(
 }
 
 export const isSerializedSection = (section: Section) => {
-  return !(section.isBranch || section.downstreamBinding?.serialize === false);
+  if (section.isBranch) return false; // Branches handle wether to register their section/renderer.
+
+  const { downstreamBinding } = section;
+  if (downstreamBinding) {
+    // TODO: this downstream is possible from another program.
+    // This might make more sense to use "downstream sources" instead and resolve those sources
+    // (accouting from resolving input sources from the child.
+    return !!getBindingSerializeReason(
+      downstreamBinding.section,
+      downstreamBinding,
+    );
+  }
+
+  return true;
 };
 
 export function isSectionWithHoists(section: Section) {
-  if (section.hoisted || section.isHoistThrough || section.referencedHoists)
-    return true;
+  return !!(
+    section.hoisted ||
+    section.isHoistThrough ||
+    section.referencedHoists
+  );
 }
 
 export function isImmediateOwner(section: Section, binding: Binding) {
@@ -292,6 +313,22 @@ export function isDirectClosure(section: Section, closure: Binding) {
 
 export function isDynamicClosure(section: Section, closure: Binding) {
   return !isDirectClosure(section, closure);
+}
+
+export function getDynamicClosureIndex(
+  closure: Binding,
+  closureSection: Section,
+) {
+  let index = 0;
+  find(closure.closureSections, (section) => {
+    if (section === closureSection) return true;
+    if (isDynamicClosure(section, closure)) {
+      index++;
+    }
+
+    return false;
+  });
+  return index;
 }
 
 export function getDirectClosures(section: Section) {

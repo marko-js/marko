@@ -11,7 +11,6 @@ import {
 } from "@marko/compiler/babel-utils";
 import path from "path";
 
-import { getDynamicSourcesForExtras } from "../../util/dynamic-sources";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getTagName } from "../../util/get-tag-name";
 import { isOutputHTML } from "../../util/marko-config";
@@ -20,13 +19,13 @@ import {
   type AttrTagLookup,
   getAttrTagIdentifier,
 } from "../../util/nested-attribute-tags";
+import { fromIter } from "../../util/optional";
 import {
   type Binding,
   BindingType,
   createBinding,
   dropReferences,
   getAllTagReferenceNodes,
-  getScopeAccessor,
   getScopeAccessorLiteral,
   mergeReferences,
   trackParamsReferences,
@@ -43,12 +42,16 @@ import {
   startSection,
 } from "../../util/sections";
 import {
+  addBindingSerializeReasonExpr,
+  getBindingSerializeReason,
+} from "../../util/serialize-reasons";
+import {
   addStatement,
   addValue,
   getResumeRegisterId,
   initValue,
   serializeSectionIfNeeded,
-  setSerializedProperty,
+  setBindingSerializedValue,
   writeHTMLResumeStatements,
 } from "../../util/signals";
 import {
@@ -71,13 +74,11 @@ import { getTemplateContentName } from "../program/html";
 type AttrTagGroup = AttrTagLookup[string]["group"];
 const kChildScopeBinding = Symbol("custom tag child scope");
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
-const kChildAttrExprs = Symbol("custom tag child attribute expressions");
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kChildScopeBinding]?: Binding;
     [kChildOffsetScopeBinding]?: Binding;
-    [kChildAttrExprs]?: Set<t.NodeExtra>;
   }
 }
 
@@ -105,17 +106,17 @@ export default {
       const section = getOrCreateSection(tag);
       const tagBody = tag.get("body");
       const tagExtra = (tag.node.extra ??= {});
-
-      tagExtra[kChildScopeBinding] = createBinding(
+      const childScopeBinding = (tagExtra[kChildScopeBinding] = createBinding(
         "#childScope",
         BindingType.dom,
         section,
         undefined,
         tagExtra,
-      );
-      tagExtra[kChildAttrExprs] = new Set([tagExtra]);
+      ));
+      const attrExprs = new Set([tagExtra]);
+      const hasVar = !!tag.node.var;
 
-      if (tag.has("var")) {
+      if (hasVar) {
         trackVarReferences(tag, BindingType.derived);
         tag.node.var!.extra!.binding!.scopeOffset = tagExtra[
           kChildOffsetScopeBinding
@@ -140,6 +141,7 @@ export default {
           section,
           tag,
           childProgramExtra?.domExports!.input,
+          attrExprs,
         );
         // TODO: should check individual inputs to see if they are intersecting with state
         getProgram().node.extra!.hasInteractiveChild =
@@ -147,6 +149,12 @@ export default {
           childProgramExtra?.hasInteractiveChild ||
           false;
       }
+
+      addBindingSerializeReasonExpr(
+        section,
+        childScopeBinding,
+        hasVar || fromIter(attrExprs),
+      );
     },
   },
   translate: {
@@ -193,11 +201,14 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         properties: [],
         statements: [],
       };
-  const serializeReason =
-    !!tagVar || getDynamicSourcesForExtras(tagExtra[kChildAttrExprs]!);
 
-  if (serializeReason) {
-    const childScopeBinding = tagExtra[kChildScopeBinding]!;
+  const childScopeBinding = tagExtra[kChildScopeBinding]!;
+  const childScopeSerializeReason = getBindingSerializeReason(
+    section,
+    childScopeBinding,
+  );
+
+  if (childScopeSerializeReason) {
     const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
     tag.insertBefore(
       t.variableDeclaration("const", [
@@ -205,11 +216,10 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       ]),
     );
 
-    setSerializedProperty(
+    setBindingSerializedValue(
       section,
-      getScopeAccessor(childScopeBinding),
+      childScopeBinding,
       callRuntime("writeExistingScope", peekScopeId),
-      serializeReason,
     );
 
     if (tagVar) {
@@ -399,6 +409,7 @@ function analyzeAttrs(
   section: Section,
   tag: t.NodePath<t.MarkoTag>,
   templateExport: TemplateExport | undefined,
+  rootAttrExprs: Set<t.NodeExtra>,
 ) {
   if (!templateExport) {
     dropReferences(getAllTagReferenceNodes(tag.node));
@@ -456,7 +467,13 @@ function analyzeAttrs(
           const childAttrExports = templateExport.props[attrTagMeta.name];
           if (childAttrExports) {
             if (childAttrExports.props && !attrTagMeta.dynamic) {
-              analyzeAttrs(rootTagExtra, section, child, childAttrExports);
+              analyzeAttrs(
+                rootTagExtra,
+                section,
+                child,
+                childAttrExports,
+                rootAttrExprs,
+              );
             } else {
               analyzeDynamicChildGroup(attrTagMeta.group, child);
             }
@@ -487,7 +504,7 @@ function analyzeAttrs(
       referenceNodes,
     } of nodeReferencesByGroup.values()) {
       mergeReferences(section, node, referenceNodes);
-      rootTagExtra[kChildAttrExprs]!.add(node.extra!);
+      rootAttrExprs.add(node.extra!);
     }
   }
 
@@ -510,7 +527,7 @@ function analyzeAttrs(
     } else if (t.isMarkoSpreadAttribute(attr)) {
       spreadReferenceNodes = [attr.value];
     } else {
-      rootTagExtra[kChildAttrExprs]!.add((attr.value.extra ??= {}));
+      rootAttrExprs.add((attr.value.extra ??= {}));
     }
   }
 

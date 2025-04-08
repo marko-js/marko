@@ -4,8 +4,8 @@ function $_return($scope) {
     $scope[0].innerHTML = html;
   };
 }
-_$.register("a0", $_return), _$.register("c1", _$.hoist(4, "a1"));
-const $setHtml$what$content = _$.registerBoundSignal("c2", _$.value(4));
+_$.register("a0", $_return), _$.register("c1", _$.hoist(2, "a1"));
+const $setHtml$what$content = _$.registerBoundSignal("c2", _$.value(2));
 _$.registerContent(
   "c0",
   "<div></div>",

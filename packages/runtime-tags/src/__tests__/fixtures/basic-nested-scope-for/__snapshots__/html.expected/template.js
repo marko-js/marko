@@ -13,6 +13,5 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       num: "3:6"
     });
   }, 0, $scope0_id, "#text/0");
-  _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
   _$.resumeClosestBranch($scope0_id);
 });

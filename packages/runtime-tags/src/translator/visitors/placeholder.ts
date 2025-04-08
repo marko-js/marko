@@ -1,7 +1,6 @@
 import { types as t } from "@marko/compiler";
 
 import { WalkCode } from "../../common/types";
-import { getDynamicSourcesForExtra } from "../util/dynamic-sources";
 import evaluate from "../util/evaluate";
 import { isNonHTMLText } from "../util/is-non-html-text";
 import { isOutputHTML } from "../util/marko-config";
@@ -18,6 +17,10 @@ import {
   getOrCreateSection,
   getSection,
 } from "../util/sections";
+import {
+  addBindingSerializeReasonExpr,
+  getBindingSerializeReason,
+} from "../util/serialize-reasons";
 import { addStatement } from "../util/signals";
 import type { TemplateVisitor } from "../util/visitors";
 import * as walks from "../util/walks";
@@ -46,17 +49,20 @@ export default {
     if (isNonHTMLText(placeholder)) return;
 
     const { node } = placeholder;
-    const { confident, computed } = evaluate(node.value);
+    const valueExtra = evaluate(node.value);
+    const { confident, computed } = valueExtra;
 
     if (!(confident && (node.escape || isVoid(computed)))) {
-      (node.extra ??= {})[kBinding] = createBinding(
+      const section = getOrCreateSection(placeholder);
+      const binding = ((node.extra ??= {})[kBinding] = createBinding(
         "#text",
         BindingType.dom,
-        getOrCreateSection(placeholder),
+        section,
         undefined,
-        node.value.extra,
-      );
+        valueExtra,
+      ));
       analyzeSiblingText(placeholder);
+      addBindingSerializeReasonExpr(section, binding, valueExtra);
     }
   },
   translate: {
@@ -76,7 +82,7 @@ export default {
       const isHTML = isOutputHTML();
       const write = writer.writeTo(placeholder);
       const extra = node.extra || {};
-      const nodeBinding = extra[kBinding]!;
+      const nodeBinding = extra[kBinding];
       const canWriteHTML = isHTML || (confident && node.escape);
       const method = canWriteHTML
         ? node.escape
@@ -85,14 +91,17 @@ export default {
         : node.escape
           ? "data"
           : "html";
-      const serializeReason = getDynamicSourcesForExtra(valueExtra);
+
+      const section = getSection(placeholder);
+      const markerSerializeReason =
+        nodeBinding && getBindingSerializeReason(section, nodeBinding);
       const siblingText = extra[kSiblingText]!;
 
       if (confident && canWriteHTML) {
         write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
       } else {
         if (siblingText === SiblingText.Before) {
-          if (isHTML && serializeReason) {
+          if (isHTML && markerSerializeReason) {
             write`<!>`;
           }
           walks.visit(placeholder, WalkCode.Replace);
@@ -105,7 +114,7 @@ export default {
 
         if (isHTML) {
           write`${callRuntime(method as HTMLMethod | DOMMethod, value)}`;
-          if (serializeReason) {
+          if (markerSerializeReason) {
             writer.markNode(placeholder, nodeBinding);
           }
         } else {
@@ -119,7 +128,7 @@ export default {
                     "data",
                     t.memberExpression(
                       scopeIdentifier,
-                      getScopeAccessorLiteral(nodeBinding),
+                      getScopeAccessorLiteral(nodeBinding!),
                       true,
                     ),
                     value,
@@ -128,7 +137,7 @@ export default {
                     "html",
                     scopeIdentifier,
                     value,
-                    getScopeAccessorLiteral(nodeBinding),
+                    getScopeAccessorLiteral(nodeBinding!),
                   ),
             ),
           );

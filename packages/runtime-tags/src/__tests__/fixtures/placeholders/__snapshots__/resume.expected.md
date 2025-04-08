@@ -31,13 +31,11 @@
     'Hello &lt;b&gt; \x3C/script&gt;'
   
       </script>
-      <!--M_*1 #script/5-->
       <style>
         
     .test { content: 'Hello &lt;b&gt; \3C/style&gt;' }
   
       </style>
-      <!--M_*1 #style/6-->
     </div>
     <script>
       WALKER_RUNTIME("M")("_")

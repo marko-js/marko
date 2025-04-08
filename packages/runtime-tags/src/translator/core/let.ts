@@ -18,7 +18,7 @@ import {
 import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
-import { addValue, initValue, setSerializedProperty } from "../util/signals";
+import { addValue, initValue, setSerializedValue } from "../util/signals";
 import translateVar from "../util/translate-var";
 
 declare module "@marko/compiler/dist/types" {
@@ -126,11 +126,11 @@ export default {
         translateVar(tag, valueAttr.value, "let");
 
         if (valueChangeAttr) {
-          setSerializedProperty(
+          // TODO: could be based on if there are actually assignments.
+          setSerializedValue(
             section,
             getAccessorPrefix().TagVariableChange + getScopeAccessor(binding),
             valueChangeAttr.value,
-            true, // TODO: could be based on if there are actually assignments.
           );
         }
       }

@@ -32,7 +32,7 @@ export function isOnlyChildInParent(
   return (extra[kOnlyChildInParent] = false);
 }
 
-export function getOptimizedOnlyChildNodeRef(
+export function getOptimizedOnlyChildNodeBinding(
   tag: t.NodePath<t.MarkoTag>,
   section: Section,
   branchSize = 1,

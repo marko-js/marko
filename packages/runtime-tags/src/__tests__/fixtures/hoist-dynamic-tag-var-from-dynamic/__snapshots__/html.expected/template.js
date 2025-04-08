@@ -16,7 +16,9 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       _$.setTagVar($scope1_id, "#scopeOffset/1", $dynamicScope, "__tests__/template.marko_1_setHtml/var");
       _$.writeSubscribe($thing_content_subscribers, _$.writeScope($scope1_id, {
         setHtml
-      }, "__tests__/template.marko", "4:2"));
+      }, "__tests__/template.marko", "4:2", {
+        setHtml: "5:18"
+      }));
     })
   });
   _$.dynamicTag($scope0_id, "#text/1", input.show ? Thing : null, {}, _$.registerContent("__tests__/template.marko_2_renderer", () => {
@@ -30,7 +32,9 @@ export default _$.createTemplate("__tests__/template.marko", input => {
         _$.setTagVar($scope3_id, "#scopeOffset/1", $dynamicScope2, "__tests__/template.marko_3_setHtml2/var");
         _$.writeSubscribe($thing_content2_subscribers, _$.writeScope($scope3_id, {
           setHtml2
-        }, "__tests__/template.marko", "17:4"));
+        }, "__tests__/template.marko", "17:4", {
+          setHtml2: "18:20"
+        }));
       })
     });
     _$.writeSubscribe($inputshowThingnull_content_subscribers, _$.writeScope($scope2_id, {
@@ -44,7 +48,9 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     _$.setTagVar($scope4_id, "#scopeOffset/1", $dynamicScope3, "__tests__/template.marko_4_setHtml3/var");
     _$.writeSubscribe($inputshowsectionnull_content_subscribers, _$.writeScope($scope4_id, {
       setHtml3
-    }, "__tests__/template.marko", "27:4"));
+    }, "__tests__/template.marko", "27:4", {
+      setHtml3: "28:18"
+    }));
   }, $scope0_id), 0, 1);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml");

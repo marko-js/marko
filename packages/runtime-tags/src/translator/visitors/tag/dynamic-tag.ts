@@ -8,7 +8,6 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import { WalkCode } from "../../../common/types";
-import { getDynamicSourcesForExtra } from "../../util/dynamic-sources";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorPrefix } from "../../util/get-accessor-char";
 import { isOutputHTML } from "../../util/marko-config";
@@ -37,6 +36,10 @@ import {
   getSectionForBody,
   startSection,
 } from "../../util/sections";
+import {
+  addBindingSerializeReasonExpr,
+  getBindingSerializeReason,
+} from "../../util/serialize-reasons";
 import {
   addValue,
   getResumeRegisterId,
@@ -70,25 +73,27 @@ export default {
     enter(tag) {
       assertAttributesOrArgs(tag);
       analyzeAttributeTags(tag);
-      const section = getOrCreateSection(tag);
+      const tagSection = getOrCreateSection(tag);
       const tagExtra = (tag.node.extra ??= {});
       const tagBody = tag.get("body");
-      tagExtra[kDOMBinding] = createBinding(
+      const isClassAPI = tagExtra.featureType === "class";
+      const hasVar = !!tag.node.var;
+      const nodeBinding = (tagExtra[kDOMBinding] = createBinding(
         "#text",
         BindingType.dom,
-        section,
+        tagSection,
         undefined,
         tagExtra,
-      );
+      ));
 
-      if (tag.has("var")) {
+      if (hasVar) {
         trackVarReferences(tag, BindingType.derived);
         tag.node.var!.extra!.binding!.scopeOffset = tagExtra[
           kChildOffsetScopeBinding
         ] = createBinding(
           "#scopeOffset",
           BindingType.dom,
-          section,
+          tagSection,
           undefined,
           tagExtra,
         );
@@ -97,10 +102,16 @@ export default {
       startSection(tagBody);
 
       trackParamsReferences(tagBody, BindingType.param);
-      mergeReferences(section, tag.node, [
+      mergeReferences(tagSection, tag.node, [
         tag.node.name,
         ...getAllTagReferenceNodes(tag.node),
       ]);
+
+      addBindingSerializeReasonExpr(
+        tagSection,
+        nodeBinding,
+        isClassAPI || hasVar || tagExtra,
+      );
     },
   },
   translate: {
@@ -118,8 +129,8 @@ export default {
     exit(tag) {
       const { node } = tag;
       const tagExtra = node.extra!;
-      const nodeRef = tagExtra[kDOMBinding]!;
-      const section = getSection(tag);
+      const nodeBinding = tagExtra[kDOMBinding]!;
+      const tagSection = getSection(tag);
       const isClassAPI = tagExtra.featureType === "class";
       let tagExpression = node.name;
 
@@ -195,13 +206,15 @@ export default {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
 
-        const serializeReason =
-          isClassAPI || !!node.var || getDynamicSourcesForExtra(tagExtra);
+        const serializeReason = getBindingSerializeReason(
+          tagSection,
+          nodeBinding,
+        );
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "dynamicTag",
-              getScopeIdIdentifier(section),
-              getScopeAccessorLiteral(nodeRef),
+              getScopeIdIdentifier(tagSection),
+              getScopeAccessorLiteral(nodeBinding),
               tagExpression,
               t.arrayExpression(args),
               t.numericLiteral(0),
@@ -210,8 +223,8 @@ export default {
             )
           : callRuntime(
               "dynamicTag",
-              getScopeIdIdentifier(section),
-              getScopeAccessorLiteral(nodeRef),
+              getScopeIdIdentifier(tagSection),
+              getScopeAccessorLiteral(nodeBinding),
               tagExpression,
               args[0],
               args[1] || (serializeReason ? t.numericLiteral(0) : undefined),
@@ -236,14 +249,14 @@ export default {
             t.expressionStatement(
               callRuntime(
                 "setTagVar",
-                getScopeIdIdentifier(section),
+                getScopeIdIdentifier(tagSection),
                 getScopeAccessorLiteral(
                   tag.node.extra![kChildOffsetScopeBinding]!,
                 ),
                 dynamicScopeIdentifier,
                 t.stringLiteral(
                   getResumeRegisterId(
-                    section,
+                    tagSection,
                     (node.var as t.Identifier).extra?.binding, // TODO: node.var is not always an identifier.
                     "var",
                   ),
@@ -261,7 +274,7 @@ export default {
       } else {
         const section = getSection(tag);
         const bodySection = getSectionForBody(tag.get("body"));
-        const signal = getSignal(section, nodeRef, "dynamicTag");
+        const signal = getSignal(section, nodeBinding, "dynamicTag");
         let tagVarSignal: Signal | undefined;
         if (tag.node.var) {
           tagVarSignal = initValue(
@@ -275,7 +288,7 @@ export default {
                 getScopeExpression(tagVarSignal!.section, valueSection),
                 t.stringLiteral(
                   getAccessorPrefix().ConditionalScope +
-                    getScopeAccessor(nodeRef),
+                    getScopeAccessor(nodeBinding),
                 ),
                 true,
               ),
@@ -287,7 +300,7 @@ export default {
         signal.build = () => {
           return callRuntime(
             "dynamicTag",
-            getScopeAccessorLiteral(nodeRef),
+            getScopeAccessorLiteral(nodeBinding),
             bodySection && t.identifier(bodySection.name),
             tagVarSignal
               ? t.arrowFunctionExpression([], tagVarSignal.identifier)

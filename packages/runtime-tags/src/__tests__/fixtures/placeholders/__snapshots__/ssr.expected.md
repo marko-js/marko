@@ -2,9 +2,9 @@
 ```html
   <!>replaced<!--M_*1 #text/0--><span>replaced<!--M_*1 #text/1--><div></div></span><div><div>a</div>replaced<!--M_*1 #text/2-->Hello Text &lt;a/><!>replaced<!--M_*1 #text/3-->Hello HTML <span>hi</span><script>
       'Hello <b> \x3C/script>'
-    </script><!--M_*1 #script/5--><style>
+    </script><style>
       .test { content: 'Hello <b> \3C/style>' }
-    </style><!--M_*1 #style/6--></div><script>WALKER_RUNTIME("M")("_")</script>
+    </style></div><script>WALKER_RUNTIME("M")("_")</script>
 ```
 
 # Render End
@@ -39,13 +39,11 @@
     'Hello &lt;b&gt; \x3C/script&gt;'
   
       </script>
-      <!--M_*1 #script/5-->
       <style>
         
     .test { content: 'Hello &lt;b&gt; \3C/style&gt;' }
   
       </style>
-      <!--M_*1 #style/6-->
     </div>
     <script>
       WALKER_RUNTIME("M")("_")
@@ -80,10 +78,8 @@ INSERT html/body/div/span
 INSERT html/body/div/span/#text
 INSERT html/body/div/script
 INSERT html/body/div/script/#text
-INSERT html/body/div/#comment3
 INSERT html/body/div/style
 INSERT html/body/div/style/#text
-INSERT html/body/div/#comment4
 INSERT html/body/script
 INSERT html/body/script/#text
 ```

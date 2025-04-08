@@ -7,10 +7,10 @@ import {
   AccessorProp as DebugAccessorProp,
 } from "../../common/accessor.debug";
 import { isOptimize } from "./marko-config";
-export function getAccessorPrefix() {
-  return isOptimize() ? ProductionAccessorPrefix : DebugAccessorPrefix;
+export function getAccessorPrefix(): typeof DebugAccessorPrefix {
+  return (isOptimize() ? ProductionAccessorPrefix : DebugAccessorPrefix) as any;
 }
 
-export function getAccessorProp() {
-  return isOptimize() ? ProductionAccessorProp : DebugAccessorProp;
+export function getAccessorProp(): typeof DebugAccessorProp {
+  return (isOptimize() ? ProductionAccessorProp : DebugAccessorProp) as any;
 }
