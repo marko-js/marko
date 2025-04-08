@@ -4,22 +4,22 @@ export type Opt<T> = undefined | OneMany<T>;
 export type Compare<T> = (a: T, b: T) => number;
 export class Sorted<T> {
   constructor(public compare: Compare<T>) {}
-  add(data: Opt<T>, item: T): OneMany<T> {
+  add<U extends T>(data: Opt<U>, item: U): OneMany<U> {
     return data
       ? Array.isArray(data)
-        ? (addSorted(this.compare, data, item) as Many<T>)
+        ? (addSorted(this.compare, data, item) as Many<U>)
         : joinRepeatable(this.compare, data, item)
       : item;
   }
 
-  union(a: Opt<T>, b: Opt<T>): Opt<T> {
+  union<U extends T>(a: Opt<U>, b: Opt<U>): Opt<U> {
     if (a) {
       if (Array.isArray(a)) {
         if (b) {
           if (Array.isArray(b)) {
             return unionSortedRepeatable(this.compare, a, b);
           } else {
-            return addSorted(this.compare, a, b) as OneMany<T>;
+            return addSorted(this.compare, a, b) as OneMany<U>;
           }
         }
 
@@ -28,7 +28,7 @@ export class Sorted<T> {
 
       if (b) {
         if (Array.isArray(b)) {
-          return addSorted(this.compare, [...b], a) as Many<T>;
+          return addSorted(this.compare, [...b], a) as Many<U>;
         }
 
         return joinRepeatable(this.compare, b, a);
@@ -39,7 +39,7 @@ export class Sorted<T> {
 
     return b;
   }
-  find(data: Opt<T>, item: T): T | undefined {
+  find<U extends T>(data: Opt<U>, item: U): U | undefined {
     if (data) {
       if (Array.isArray(data)) {
         return findSorted(this.compare, data, item);
@@ -48,7 +48,7 @@ export class Sorted<T> {
       }
     }
   }
-  findIndex(data: Opt<T>, item: T) {
+  findIndex<U extends T>(data: Opt<U>, item: U) {
     if (data) {
       if (Array.isArray(data)) {
         let max = data.length;
@@ -72,7 +72,7 @@ export class Sorted<T> {
 
     return -1;
   }
-  isSuperset(superset: Opt<T>, subset: Opt<T>) {
+  isSuperset<U extends T>(superset: Opt<U>, subset: Opt<U>) {
     if (!subset) {
       return true;
     }
@@ -193,6 +193,22 @@ export function forEach<T>(
       cb(data, 0);
     }
   }
+}
+
+export function fromIter<T>(data: Iterable<T>) {
+  let one: T | undefined;
+  let many: Many<T> | undefined;
+  for (const item of data) {
+    if (many) {
+      many.push(item);
+    } else if (one) {
+      many = [one, item];
+    } else {
+      one = item;
+    }
+  }
+
+  return many || one;
 }
 
 export function find<T>(

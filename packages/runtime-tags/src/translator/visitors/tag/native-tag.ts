@@ -9,7 +9,6 @@ import {
 
 import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
-import { getDynamicSourcesForExtras } from "../../util/dynamic-sources";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorPrefix } from "../../util/get-accessor-char";
@@ -17,6 +16,7 @@ import { getTagName } from "../../util/get-tag-name";
 import isInvokedFunction from "../../util/is-invoked-function";
 import { isOutputHTML } from "../../util/marko-config";
 import normalizeStringExpression from "../../util/normalize-string-expression";
+import { type Opt, push } from "../../util/optional";
 import {
   type Binding,
   BindingType,
@@ -39,6 +39,11 @@ import {
   isSameOrChildSection,
 } from "../../util/sections";
 import {
+  addBindingSerializeReasonExpr,
+  forceBindingSerialize,
+  getBindingSerializeReason,
+} from "../../util/serialize-reasons";
+import {
   addHTMLEffectCall,
   addStatement,
   getRegisterUID,
@@ -54,7 +59,7 @@ import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../program";
 
 export const kNativeTagBinding = Symbol("native tag binding");
-export const kSerializeMarker = Symbol("serialize marker");
+export const kSkipMark = Symbol("skip native tag mark");
 const kGetterId = Symbol("node getter id");
 
 const htmlSelectArgs = new WeakMap<
@@ -68,7 +73,7 @@ const htmlSelectArgs = new WeakMap<
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kNativeTagBinding]?: Binding;
-    [kSerializeMarker]?: boolean;
+    [kSkipMark]?: true;
     [kGetterId]?: string;
   }
 }
@@ -205,16 +210,18 @@ export default {
       }
 
       const tagName = getTagName(tag)!;
-      const section = getOrCreateSection(tag);
-      let hasEventHandlers = false;
-      let hasDynamicAttributes = false;
-
       const seen: Record<string, t.MarkoAttribute> = {};
       const { attributes } = tag.node;
+      let hasDynamicAttributes = false;
+      let hasEventHandlers = false;
       let relatedControllable: RelatedControllable;
       let spreadReferenceNodes: t.Node[] | undefined;
+      let attrExprExtras: Opt<t.NodeExtra>;
+
       for (let i = attributes.length; i--; ) {
         const attr = attributes[i];
+        const valueExtra = (attr.value.extra ??= {});
+
         if (t.isMarkoAttribute(attr)) {
           if (seen[attr.name]) {
             // drop references for duplicated attributes.
@@ -225,15 +232,15 @@ export default {
           seen[attr.name] = attr;
 
           if (isEventHandler(attr.name) || isChangeHandler(attr.name)) {
-            (attr.value.extra ??= {}).isEffect = true;
+            valueExtra.isEffect = true;
             hasEventHandlers = true;
           } else if (!evaluate(attr.value).confident) {
             hasDynamicAttributes = true;
           }
         } else if (t.isMarkoSpreadAttribute(attr)) {
+          valueExtra.isEffect = true;
           hasEventHandlers = true;
           hasDynamicAttributes = true;
-          (attr.value.extra ??= {}).isEffect = true;
         }
 
         if (spreadReferenceNodes) {
@@ -241,67 +248,79 @@ export default {
         } else if (t.isMarkoSpreadAttribute(attr)) {
           spreadReferenceNodes = [attr.value];
           relatedControllable = getRelatedControllable(tagName, seen);
+        } else {
+          attrExprExtras = push(attrExprExtras, valueExtra);
         }
       }
 
       assertExclusiveControllableGroups(tag, seen);
 
-      if (spreadReferenceNodes) {
-        if (relatedControllable && !relatedControllable.attrs.every(Boolean)) {
-          for (const attr of relatedControllable.attrs) {
-            if (attr) {
-              spreadReferenceNodes.push(attr.value);
-            }
-          }
-          relatedControllable = undefined;
-        }
-        mergeReferences(section, tag.node, spreadReferenceNodes);
-      } else {
-        relatedControllable = getRelatedControllable(tagName, seen);
-      }
-
-      if (relatedControllable) {
-        mergeReferences(
-          section,
-          relatedControllable.attrs.find(Boolean)!.value,
-          relatedControllable.attrs.map((it) => it?.value),
-        );
-      }
-
       if (node.var || hasEventHandlers || hasDynamicAttributes) {
-        getProgram().node.extra.isInteractive ||= hasEventHandlers;
-        const tagName =
-          node.name.type === "StringLiteral"
-            ? node.name.value
-            : t.toIdentifier(tag.get("name"));
         const tagExtra = (node.extra ??= {});
-        const bindingName = "#" + tagName;
-        if (hasEventHandlers || node.var) {
-          tagExtra[kSerializeMarker] = true;
+        const tagSection = getOrCreateSection(tag);
+        const nodeBinding = (tagExtra[kNativeTagBinding] = createBinding(
+          "#" +
+            (node.name.type === "StringLiteral"
+              ? node.name.value
+              : t.toIdentifier(tag.get("name"))),
+          BindingType.dom,
+          tagSection,
+        ));
+        getProgram().node.extra.isInteractive ||= hasEventHandlers;
+
+        if (spreadReferenceNodes) {
+          if (
+            relatedControllable &&
+            !relatedControllable.attrs.every(Boolean)
+          ) {
+            for (const attr of relatedControllable.attrs) {
+              if (attr) {
+                spreadReferenceNodes.push(attr.value);
+              }
+            }
+            relatedControllable = undefined;
+          }
+          mergeReferences(tagSection, tag.node, spreadReferenceNodes);
+        } else {
+          relatedControllable = getRelatedControllable(tagName, seen);
         }
 
-        const tagBinding = (tagExtra[kNativeTagBinding] = createBinding(
-          bindingName,
-          BindingType.dom,
-          section,
-        ));
+        if (relatedControllable) {
+          mergeReferences(
+            tagSection,
+            relatedControllable.attrs.find(Boolean)!.value,
+            relatedControllable.attrs.map((it) => it?.value),
+          );
+        }
 
         if (node.var) {
+          forceBindingSerialize(tagSection, nodeBinding);
           const varBinding = tag.scope.getBinding(node.var.name)!;
           for (const referencePath of varBinding.referencePaths) {
             const referenceSection = getSection(referencePath);
 
             setReferencesScope(referencePath);
 
-            if (!isSameOrChildSection(section, referenceSection)) {
+            if (!isSameOrChildSection(tagSection, referenceSection)) {
               trackHoistedReference(
                 referencePath as t.NodePath<t.Identifier>,
-                tagBinding,
+                nodeBinding,
               );
             } else if (!isInvokedFunction(referencePath)) {
-              tagExtra[kGetterId] ||= getRegisterUID(section, bindingName);
+              tagExtra[kGetterId] ||= getRegisterUID(
+                tagSection,
+                nodeBinding.name,
+              );
             }
           }
+        } else if (hasEventHandlers || spreadReferenceNodes) {
+          forceBindingSerialize(tagSection, nodeBinding);
+        } else {
+          addBindingSerializeReasonExpr(
+            tagSection,
+            nodeBinding,
+            push(attrExprExtras, tagExtra),
+          );
         }
       }
     },
@@ -309,36 +328,36 @@ export default {
   translate: {
     enter(tag) {
       const tagName = getTagName(tag)!;
-      const extra = tag.node.extra!;
-      const nodeRef = extra[kNativeTagBinding];
+      const tagExtra = tag.node.extra!;
+      const nodeBinding = tagExtra[kNativeTagBinding];
       const isHTML = isOutputHTML();
       const name = tag.get("name");
       const tagDef = getTagDef(tag);
       const write = writer.writeTo(tag);
-      const section = getSection(tag);
+      const tagSection = getSection(tag);
 
-      if (isHTML && extra.tagNameNullable) {
+      if (isHTML && tagExtra.tagNameNullable) {
         writer.flushBefore(tag);
       }
 
       if (tag.has("var")) {
         const varName = (tag.node.var as t.Identifier).name;
         const varBinding = tag.scope.getBinding(varName)!;
-        const getterId = extra[kGetterId];
+        const getterId = tagExtra[kGetterId];
         if (isHTML) {
           for (const reference of varBinding.referencePaths) {
             const referenceSection = getSection(reference);
             if (!reference.node.extra?.hoist) {
-              serializeOwners(referenceSection, section);
+              serializeOwners(referenceSection, tagSection);
             }
           }
 
-          serializeSectionIfNeeded(section, true);
+          serializeSectionIfNeeded(tagSection, true);
           translateVar(
             tag,
             callRuntime(
               "nodeRef",
-              getterId && getScopeIdIdentifier(section),
+              getterId && getScopeIdIdentifier(tagSection),
               getterId && t.stringLiteral(getterId),
             ),
           );
@@ -355,7 +374,7 @@ export default {
                     t.stringLiteral(getterId),
                     t.stringLiteral(
                       getAccessorPrefix().Getter +
-                        getScopeAccessorLiteral(nodeRef!).value,
+                        getScopeAccessorLiteral(nodeBinding!).value,
                     ),
                   ),
                 ),
@@ -369,7 +388,7 @@ export default {
               if (isInvokedFunction(reference)) {
                 reference.parentPath.replaceWith(
                   t.expressionStatement(
-                    createScopeReadExpression(referenceSection, nodeRef!),
+                    createScopeReadExpression(referenceSection, nodeBinding!),
                   ),
                 );
               } else if (getterFnIdentifier) {
@@ -382,10 +401,10 @@ export default {
                 reference.replaceWith(
                   t.expressionStatement(
                     t.memberExpression(
-                      getScopeExpression(section, referenceSection),
+                      getScopeExpression(tagSection, referenceSection),
                       t.stringLiteral(
                         getAccessorPrefix().Getter +
-                          getScopeAccessorLiteral(nodeRef!).value,
+                          getScopeAccessorLiteral(nodeBinding!).value,
                       ),
                       true,
                     ),
@@ -397,9 +416,8 @@ export default {
         }
       }
 
-      let visitAccessor: t.StringLiteral | t.NumericLiteral | undefined;
-      if (nodeRef) {
-        visitAccessor = getScopeAccessorLiteral(nodeRef);
+      const visitAccessor = nodeBinding && getScopeAccessorLiteral(nodeBinding);
+      if (visitAccessor) {
         walks.visit(tag, WalkCode.Get);
       }
 
@@ -417,24 +435,24 @@ export default {
 
         if (isHTML) {
           if (tagName !== "select" && tagName !== "textarea") {
-            write`${callRuntime(helper, getScopeIdIdentifier(section), visitAccessor!, ...values)}`;
+            write`${callRuntime(helper, getScopeIdIdentifier(tagSection), visitAccessor, ...values)}`;
           }
-          addHTMLEffectCall(section, undefined);
+          addHTMLEffectCall(tagSection, undefined);
         } else {
           addStatement(
             "render",
-            section,
+            tagSection,
             referencedBindings,
             t.expressionStatement(
-              callRuntime(helper, scopeIdentifier, visitAccessor!, ...values),
+              callRuntime(helper, scopeIdentifier, visitAccessor, ...values),
             ),
           );
           addStatement(
             "effect",
-            section,
+            tagSection,
             undefined,
             t.expressionStatement(
-              callRuntime(`${helper}_effect`, scopeIdentifier, visitAccessor!),
+              callRuntime(`${helper}_effect`, scopeIdentifier, visitAccessor),
             ),
           );
         }
@@ -494,7 +512,7 @@ export default {
             writeAtStartOfBody = callRuntime(
               "controllable_textarea_value",
               getScopeIdIdentifier(getSection(tag)),
-              getScopeAccessorLiteral(nodeRef!),
+              getScopeAccessorLiteral(nodeBinding!),
               value,
               valueChange,
             );
@@ -523,7 +541,7 @@ export default {
             } else {
               addStatement(
                 "render",
-                section,
+                tagSection,
                 valueReferences,
                 t.expressionStatement(
                   callRuntime(
@@ -541,14 +559,14 @@ export default {
               write`${getHTMLRuntime().attr(name, computed)}`;
             } else if (isHTML) {
               if (isEventHandler(name)) {
-                addHTMLEffectCall(section, valueReferences);
+                addHTMLEffectCall(tagSection, valueReferences);
               } else {
                 write`${callRuntime("attr", t.stringLiteral(name), value)}`;
               }
             } else if (isEventHandler(name)) {
               addStatement(
                 "effect",
-                section,
+                tagSection,
                 valueReferences,
                 t.expressionStatement(
                   callRuntime(
@@ -562,7 +580,7 @@ export default {
             } else {
               addStatement(
                 "render",
-                section,
+                tagSection,
                 valueReferences,
                 t.expressionStatement(
                   callRuntime(
@@ -581,19 +599,19 @@ export default {
 
       if (spreadExpression) {
         if (isHTML) {
-          addHTMLEffectCall(section, extra.referencedBindings);
+          addHTMLEffectCall(tagSection, tagExtra.referencedBindings);
 
           if (skipExpression) {
-            write`${callRuntime("partialAttrs", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(section), name.node)}`;
+            write`${callRuntime("partialAttrs", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(tagSection), name.node)}`;
           } else {
-            write`${callRuntime("attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(section), name.node)}`;
+            write`${callRuntime("attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(tagSection), name.node)}`;
           }
         } else {
           if (skipExpression) {
             addStatement(
               "render",
-              section,
-              extra.referencedBindings,
+              tagSection,
+              tagExtra.referencedBindings,
               t.expressionStatement(
                 callRuntime(
                   "partialAttrs",
@@ -607,8 +625,8 @@ export default {
           } else {
             addStatement(
               "render",
-              section,
-              extra.referencedBindings,
+              tagSection,
+              tagExtra.referencedBindings,
               t.expressionStatement(
                 callRuntime(
                   "attrs",
@@ -622,8 +640,8 @@ export default {
 
           addStatement(
             "effect",
-            section,
-            extra.referencedBindings,
+            tagSection,
+            tagExtra.referencedBindings,
             t.expressionStatement(
               callRuntime("attrsEvents", scopeIdentifier, visitAccessor),
             ),
@@ -647,7 +665,7 @@ export default {
       }
 
       // TODO: this is broken for DOM (and select in ssr) and so is currently disabled and always becomes a dynamic tag.
-      if (isHTML && extra.tagNameNullable) {
+      if (isHTML && tagExtra.tagNameNullable) {
         tag
           .insertBefore(t.ifStatement(name.node, writer.consumeHTML(tag)!))[0]
           .skip();
@@ -660,14 +678,15 @@ export default {
       walks.enter(tag);
     },
     exit(tag) {
-      const extra = tag.node.extra!;
-      const nodeRef = extra[kNativeTagBinding];
+      const tagExtra = tag.node.extra!;
+      const nodeBinding = tagExtra[kNativeTagBinding];
       const isHTML = isOutputHTML();
       const openTagOnly = getTagDef(tag)?.parseOptions?.openTagOnly;
       const selectArgs = isHTML && htmlSelectArgs.get(tag.node);
       const tagName = getTagName(tag);
+      const tagSection = getSection(tag);
 
-      if (isHTML && extra.tagNameNullable) {
+      if (isHTML && tagExtra.tagNameNullable) {
         writer.flushInto(tag);
       }
 
@@ -679,7 +698,7 @@ export default {
             callRuntime(
               "controllable_select_value",
               getScopeIdIdentifier(getSection(tag)),
-              getScopeAccessorLiteral(nodeRef!),
+              getScopeAccessorLiteral(nodeBinding!),
               selectArgs.value,
               selectArgs.valueChange,
               t.arrowFunctionExpression(
@@ -693,17 +712,11 @@ export default {
         tag.insertBefore(tag.node.body.body).forEach((child) => child.skip());
       }
 
-      const allExtras: t.NodeExtra[] = [extra];
-      for (const attr of tag.node.attributes) {
-        if (attr.value.extra) {
-          allExtras.push(attr.value.extra);
-        }
-      }
-      const serializeReason = getDynamicSourcesForExtras(allExtras);
-      const shouldMark =
-        nodeRef &&
-        (extra[kSerializeMarker] ||
-          (extra[kSerializeMarker] === undefined && !!serializeReason));
+      const serializeMarkerReason =
+        nodeBinding &&
+        !tagExtra[kSkipMark] &&
+        getBindingSerializeReason(tagSection, nodeBinding);
+      const shouldMark = !!serializeMarkerReason;
 
       if (!openTagOnly && !selectArgs) {
         writer.writeTo(
@@ -713,7 +726,7 @@ export default {
       }
 
       // dynamic tag stuff
-      if (isHTML && extra.tagNameNullable) {
+      if (isHTML && tagExtra.tagNameNullable) {
         tag
           .insertBefore(
             t.ifStatement(tag.node.name, writer.consumeHTML(tag)!),
@@ -722,7 +735,7 @@ export default {
       }
 
       if (shouldMark) {
-        writer.markNode(tag, nodeRef);
+        writer.markNode(tag, nodeBinding);
       }
 
       walks.exit(tag);

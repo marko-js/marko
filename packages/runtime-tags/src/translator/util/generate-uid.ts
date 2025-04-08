@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getFile } from "@marko/compiler/babel-utils";
 
+import { isTranslate } from "./get-compile-stage";
 import { traverse } from "./traverse";
 
 const countsForFile = new WeakMap<t.BabelFile, Map<string, number>>();
@@ -16,14 +17,14 @@ export function generateUid(name = "") {
     counts = cache.get(cacheKey) as typeof counts;
 
     if (counts) {
-      if (isTranslate(file)) {
+      if (isTranslate()) {
         // Translate for DOM does not impact translate HTML
         // but both inherit the counts from previous stages.
         counts = new Map(counts);
       }
     } else {
       counts = getInitialCounts(file);
-      if (!isTranslate(file)) {
+      if (!isTranslate()) {
         cache.set(cacheKey, counts);
       }
     }
@@ -66,8 +67,4 @@ function getInitialCounts(file: t.BabelFile) {
   }, program.node);
 
   return counts;
-}
-
-function isTranslate(file: t.BabelFile) {
-  return (file as any).___compileStage === "translate";
 }

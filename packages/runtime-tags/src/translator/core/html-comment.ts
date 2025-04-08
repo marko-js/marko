@@ -28,17 +28,23 @@ import {
   getScopeIdIdentifier,
   getSection,
 } from "../util/sections";
+import {
+  addBindingSerializeReasonExpr,
+  forceBindingSerialize,
+  getBindingSerializeReason,
+} from "../util/serialize-reasons";
 import { addStatement, getRegisterUID } from "../util/signals";
 import translateVar from "../util/translate-var";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
 
-export const kCommentTagBinding = Symbol("comment tag binding");
+const kNodeBinding = Symbol("comment tag binding");
 const kGetterId = Symbol("node getter id");
+
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
-    [kCommentTagBinding]?: Binding;
+    [kNodeBinding]?: Binding;
     [kGetterId]?: string;
   }
 }
@@ -82,26 +88,32 @@ export default {
       }
     }
     if (needsBinding) {
-      const section = getOrCreateSection(tag);
       const tagExtra = (tag.node.extra ??= {});
-
-      if (needsGetter) {
-        tagExtra[kGetterId] = getRegisterUID(section, "comment");
-      }
-
-      tagExtra[kCommentTagBinding] = createBinding(
+      const tagSection = getOrCreateSection(tag);
+      const nodeBinding = (tagExtra[kNodeBinding] = createBinding(
         "#comment",
         BindingType.dom,
-        section,
-      );
-      mergeReferences(section, tag.node, referenceNodes);
+        tagSection,
+      ));
+
+      if (needsGetter) {
+        tagExtra[kGetterId] = getRegisterUID(tagSection, "comment");
+      }
+
+      mergeReferences(tagSection, tag.node, referenceNodes);
+
+      if (tagVar) {
+        forceBindingSerialize(tagSection, nodeBinding);
+      } else {
+        addBindingSerializeReasonExpr(tagSection, nodeBinding, tagExtra);
+      }
     }
     tag.skip();
   },
   translate: {
     enter(tag) {
       const tagExtra = tag.node.extra!;
-      const commentBinding = tagExtra[kCommentTagBinding];
+      const nodeBinding = tagExtra[kNodeBinding];
       const hasVar = !!tag.node.var;
       if (hasVar) {
         const getterId = tagExtra[kGetterId];
@@ -127,7 +139,7 @@ export default {
                   callRuntime(
                     "nodeRef",
                     t.stringLiteral(getterId),
-                    getScopeAccessorLiteral(commentBinding!),
+                    getScopeAccessorLiteral(nodeBinding!),
                   ),
                 ),
               ]),
@@ -138,7 +150,7 @@ export default {
             if (isInvokedFunction(reference)) {
               reference.parentPath.replaceWith(
                 t.expressionStatement(
-                  createScopeReadExpression(referenceSection, commentBinding!),
+                  createScopeReadExpression(referenceSection, nodeBinding!),
                 ),
               );
             } else if (getterFnIdentifier) {
@@ -152,7 +164,7 @@ export default {
         }
       }
 
-      if (tagExtra[kCommentTagBinding]) {
+      if (nodeBinding) {
         walks.visit(tag, WalkCode.Get);
       }
 
@@ -160,8 +172,9 @@ export default {
       writer.writeTo(tag)`<!--`;
     },
     exit(tag) {
+      const tagSection = getSection(tag);
       const tagExtra = tag.node.extra!;
-      const commentBinding = tagExtra[kCommentTagBinding];
+      const nodeBinding = tagExtra[kNodeBinding];
       const write = writer.writeTo(tag);
 
       // TODO: If the tag is completely empty, make the marker node the same as the comment node.
@@ -200,7 +213,7 @@ export default {
                 "data",
                 t.memberExpression(
                   scopeIdentifier,
-                  getScopeAccessorLiteral(commentBinding!),
+                  getScopeAccessorLiteral(nodeBinding!),
                   true,
                 ),
                 t.templateLiteral(templateQuasis, templateExpressions),
@@ -213,8 +226,10 @@ export default {
       walks.exit(tag);
       write`-->`;
 
-      if (commentBinding) {
-        writer.markNode(tag, commentBinding);
+      const serializeMarkerReason =
+        nodeBinding && getBindingSerializeReason(tagSection, nodeBinding);
+      if (serializeMarkerReason) {
+        writer.markNode(tag, nodeBinding);
       }
 
       tag.remove();

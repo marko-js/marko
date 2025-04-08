@@ -1,6 +1,5 @@
 import { types as t } from "@marko/compiler";
 
-import { getDynamicSourcesForExtra } from "./dynamic-sources";
 import { forEachIdentifier } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix } from "./get-accessor-char";
@@ -15,6 +14,7 @@ import {
   findSorted,
   forEach,
   type Many,
+  type OneMany,
   type Opt,
   push,
   Sorted,
@@ -23,11 +23,28 @@ import { getScopeExpression } from "./scope-read";
 import {
   forEachSection,
   getCommonSection,
+  getDirectClosures,
   getOrCreateSection,
+  isDynamicClosure,
   isSameOrChildSection,
+  isSectionWithHoists,
+  kBranchSerializeReason,
   type Section,
   sectionUtil,
 } from "./sections";
+import {
+  addBindingSerializeReason,
+  addBindingSerializeReasonExpr,
+  addPropSerializeReasonExpr,
+  addPropSerializeReasonRef,
+  consumeSerializeReasonExprs,
+  forceBindingSerialize,
+  forcePropSerialize,
+  getSerializeSourcesForExpr,
+  getSerializeSourcesForExprs,
+  isBindingForceSerialized,
+  mergeSerializeReasons,
+} from "./serialize-reasons";
 import { getHoistFunctionIdentifier } from "./signals";
 import { createProgramState } from "./state";
 import { toMemberExpression } from "./to-property-name";
@@ -54,8 +71,8 @@ export interface Binding {
   loc: t.SourceLocation | null;
   section: Section;
   closureSections: Opt<Section>;
-  serialize: boolean;
   sources: Opt<Binding>;
+  serializeSources: Opt<InputBinding> | true;
   aliases: Set<Binding>;
   hoists: Map<Section, Binding>;
   property: string | undefined;
@@ -68,6 +85,10 @@ export interface Binding {
   export: string | undefined;
   declared: boolean;
   nullable: boolean;
+}
+
+export interface InputBinding extends Binding {
+  type: BindingType.input;
 }
 
 export type ReferencedBindings = Opt<Binding>;
@@ -129,7 +150,7 @@ export function createBinding(
     declared,
     closureSections: undefined,
     excludeProperties: undefined,
-    serialize: false,
+    serializeSources: undefined,
     sources: undefined,
     aliases: new Set(),
     hoists: new Map(),
@@ -610,9 +631,9 @@ export function finalizeReferences() {
       intersectionsBySection,
     );
 
-    forEach(fn.referencedBindingsInFunction, (binding) => {
-      binding.serialize = true;
-    });
+    forEach(fn.referencedBindingsInFunction, (binding) =>
+      forceBindingSerialize(binding.section, binding),
+    );
   }
 
   for (const binding of bindings) {
@@ -625,6 +646,9 @@ export function finalizeReferences() {
     const { name, section } = binding;
     if (binding.type !== BindingType.dom) {
       resolveBindingSources(binding);
+      if (binding.hoists.size) {
+        forceBindingSerialize(binding.section, binding);
+      }
 
       if (find(section.bindings, ({ name }) => name === binding.name)) {
         /*
@@ -659,12 +683,42 @@ export function finalizeReferences() {
         );
       }
       if (isEffect) {
-        forEach(referencedBindings, (bindingReference) => {
-          bindingReference.serialize = true;
-        });
+        forEach(referencedBindings, (binding) =>
+          forceBindingSerialize(binding.section, binding),
+        );
       }
     }
   }
+
+  forEachSection((section) => {
+    if (
+      section.parent &&
+      section.isBranch &&
+      section.sectionAccessor &&
+      section.upstreamExpression
+    ) {
+      const tagSection = section.parent;
+      const tagExtra = section.upstreamExpression;
+      const nodeBinding = section.sectionAccessor.binding;
+      if (isSectionWithHoists(section)) {
+        forcePropSerialize(tagSection, tagExtra, kBranchSerializeReason);
+      } else {
+        addPropSerializeReasonRef(
+          tagSection,
+          tagExtra,
+          kBranchSerializeReason,
+          getDirectClosures(section),
+        );
+      }
+      addPropSerializeReasonExpr(
+        tagSection,
+        tagExtra,
+        kBranchSerializeReason,
+        tagExtra,
+      );
+      addBindingSerializeReasonExpr(tagSection, nodeBinding, tagExtra);
+    }
+  });
 
   forEachSection((section) => {
     const intersections = intersectionsBySection.get(section);
@@ -679,42 +733,87 @@ export function finalizeReferences() {
             const binding1 = intersection[i];
             const binding2 = intersection[j];
             if (
-              !binding1.serialize &&
+              !isBindingForceSerialized(section, binding1) &&
               !bindingUtil.isSuperset(binding1.sources, binding2.sources)
             ) {
-              binding1.serialize = true;
+              addBindingSerializeReason(
+                section,
+                binding1,
+                binding2.serializeSources,
+              );
             }
             if (
-              !binding2.serialize &&
+              !isBindingForceSerialized(section, binding2) &&
               !bindingUtil.isSuperset(binding2.sources, binding1.sources)
             ) {
-              binding2.serialize = true;
+              addBindingSerializeReason(
+                section,
+                binding2,
+                binding1.serializeSources,
+              );
             }
           }
         }
       }
     }
 
-    // mark bindings that need to be serialized due to being closed over by stateful sections
-    forEach(section.referencedClosures, (binding) => {
-      if (!binding.serialize) {
-        let serialize = false;
-        const sourceSection = binding.section;
+    forEach(section.referencedClosures, (closure) => {
+      // mark bindings that need to be serialized due to being closed over by stateful sections
+      if (!isBindingForceSerialized(closure.section, closure)) {
+        const sourceSection = closure.section;
+        let serializeReason: Opt<InputBinding> | true;
         let currentSection = section;
-        while (
-          currentSection !== sourceSection &&
-          !(serialize =
+
+        while (currentSection !== sourceSection) {
+          const upstreamReason =
             !currentSection.upstreamExpression ||
-            !!getDynamicSourcesForExtra(currentSection.upstreamExpression))
-        ) {
+            getSerializeSourcesForExpr(currentSection.upstreamExpression);
+          if (upstreamReason === true) {
+            serializeReason = true;
+            break;
+          }
+
+          serializeReason = mergeSerializeReasons(
+            serializeReason,
+            upstreamReason,
+          );
           currentSection = currentSection.parent!;
         }
-        binding.serialize = serialize;
+
+        addBindingSerializeReason(closure.section, closure, serializeReason);
+      }
+
+      if (closure.serializeSources && isDynamicClosure(section, closure)) {
+        addBindingSerializeReason(
+          closure.section,
+          closure,
+          closure.serializeSources,
+          getAccessorPrefix().ClosureScopes,
+        );
+        addBindingSerializeReason(
+          section,
+          closure,
+          closure.serializeSources,
+          getAccessorPrefix().ClosureSignalIndex,
+        );
       }
     });
   });
 
   forEachSection((section) => {
+    const serializeReasonExprs = consumeSerializeReasonExprs(section);
+    if (serializeReasonExprs) {
+      for (const [key, exprs] of serializeReasonExprs) {
+        const reason = getSerializeSourcesForExprs(exprs);
+        if (reason) {
+          section.serializeReasons.set(
+            key,
+            mergeSerializeReasons(section.serializeReasons.get(key), reason)!,
+          );
+        }
+      }
+    }
+
     let intersectionIndex = 0;
     const intersections = intersectionsBySection.get(section) || [];
     const { id, bindings } = section;
@@ -776,9 +875,15 @@ export const intersectionMeta = new WeakMap<
 
 function resolveBindingSources(binding: Binding) {
   const derived = new Set<Binding>();
+  let onlyInputSources = true;
   let sources: Opt<Binding>;
   crawl(binding);
   binding.sources = sources;
+  binding.serializeSources = sources
+    ? onlyInputSources
+      ? (sources as OneMany<InputBinding>)
+      : true
+    : undefined;
   function crawl(binding: Binding) {
     if (
       binding.type === BindingType.derived ||
@@ -796,9 +901,11 @@ function resolveBindingSources(binding: Binding) {
       } else if (curBinding.type === BindingType.input) {
         sources = bindingUtil.add(sources, binding);
       } else {
+        onlyInputSources = false;
         sources = bindingUtil.add(sources, curBinding);
       }
     } else {
+      onlyInputSources = false;
       sources = bindingUtil.add(sources, binding);
     }
   }
@@ -970,6 +1077,19 @@ export function getReadReplacement(node: t.Identifier | t.MemberExpression) {
 
 function pruneBinding(bindings: Set<Binding>, binding: Binding) {
   let shouldPrune = !binding.downstreamExpressions.size;
+
+  if (binding.hoists.size) {
+    // TODO hoists do not currently know their downstream expressions and so cannot be pruned like aliases.
+    shouldPrune = false;
+    // for (const [hoistSection, hoistAlias] of binding.hoists) {
+    //   if (pruneBinding(bindings, hoistAlias)) {
+    //     binding.hoists.delete(hoistSection);
+    //   } else {
+    //     shouldPrune = false;
+    //   }
+    // }
+  }
+
   for (const alias of binding.aliases) {
     if (pruneBinding(bindings, alias)) {
       binding.aliases.delete(alias);
@@ -1118,44 +1238,3 @@ export function isRegisteredFnExtra(
 ): extra is RegisteredFnExtra {
   return isReferencedExtra(extra) && extra.registerId !== undefined;
 }
-
-// TODO: we need this? maybe for passing input to child?
-// function aliasesToObjectPattern(
-//   aliases: Binding["downstreamAliases"],
-// ): t.ObjectPattern {
-//   // sort the properties by key, then length
-//   const properties = [...aliases].sort(([, a], [, b]) =>
-//     compareProperties(a, b),
-//   );
-//   //
-//   const stack = [t.objectPattern([])];
-//   for (const [binding, property] of properties) {
-//   }
-// }
-// function compareProperties(a: Opt<string>, b: Opt<string>) {
-//   if (a) {
-//     if (b) {
-//       if (Array.isArray(a)) {
-//         if (Array.isArray(b)) {
-//           const minLength = Math.min(a.length, b.length);
-//           for (let i = 0; i < minLength; i++) {
-//             const diff = compareStr(a[i], b[i]);
-//             if (diff) return diff;
-//           }
-
-//           return a.length - b.length;
-//         }
-//         return compareStr(a[0], b);
-//       } else if (Array.isArray(b)) {
-//         return compareStr(a, b[0]);
-//       }
-
-//       return compareStr(a, b);
-//     }
-//     return 1;
-//   }
-//   return -1;
-// }
-// function compareStr(a: string, b: string) {
-//   return a === b ? 0 : a > b ? 1 : -1;
-// }

@@ -16,7 +16,7 @@ import { getParentTag } from "../util/get-parent-tag";
 import { isControlFlowTag } from "../util/is-core-tag";
 import { importRuntime } from "../util/runtime";
 import { getSection } from "../util/sections";
-import { addValue, setSerializedProperty } from "../util/signals";
+import { addValue, setSerializedValue } from "../util/signals";
 import { createSectionState } from "../util/state";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
@@ -75,11 +75,11 @@ export default {
         writer.flushBefore(tag);
 
         if (attrs.valueChange) {
-          setSerializedProperty(
+          // TODO: this should be based on the child actually mutating the tag variable.
+          setSerializedValue(
             section,
             getAccessorProp().TagVariableChange,
             attrs.valueChange,
-            true, // TODO: this should be based on the child actually mutating the tag variable.
           );
         }
 

@@ -8,12 +8,11 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
-import { getDynamicSourcesForSection } from "../util/dynamic-sources";
 import { getAccessorPrefix } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import {
-  getOptimizedOnlyChildNodeRef,
+  getOptimizedOnlyChildNodeBinding,
   isOnlyChildInParent,
 } from "../util/is-only-child-in-parent";
 import {
@@ -31,10 +30,14 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  isSectionWithHoists,
+  kBranchSerializeReason,
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
+import {
+  getBindingSerializeReason,
+  getPropSerializeReason,
+} from "../util/serialize-reasons";
 import {
   addValue,
   getSignal,
@@ -44,7 +47,7 @@ import {
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
-import { kSerializeMarker } from "../visitors/tag/native-tag";
+import { kSkipMark } from "../visitors/tag/native-tag";
 
 type ForType = "in" | "of" | "to";
 
@@ -89,12 +92,13 @@ export default {
       return;
     }
 
-    const section = getOrCreateSection(tag);
+    const tagSection = getOrCreateSection(tag);
+    const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
     trackParamsReferences(tagBody, BindingType.param, undefined, tagExtra);
-    mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
+    mergeReferences(tagSection, tag.node, getAllTagReferenceNodes(tag.node));
 
     bodySection.sectionAccessor = {
-      binding: getOptimizedOnlyChildNodeRef(tag, section),
+      binding: nodeBinding,
       prefix: getAccessorPrefix().LoopScopeMap,
     };
 
@@ -130,23 +134,32 @@ export default {
         const tagSection = getSection(tag);
         const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
+        const tagExtra = node.extra!;
         const onlyChildInParentOptimization = isOnlyChildInParent(tag);
-        const nodeRef = getOptimizedOnlyChildNodeRef(tag, tagSection);
+        const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
         const forAttrs = getKnownAttrValues(node);
         const forType = getForType(node)!;
         const params = node.body.params;
         const statements: t.Statement[] = [];
         const bodyStatements = node.body.body as t.Statement[];
-        const sectionSources = getDynamicSourcesForSection(bodySection);
-        const hasHoists = isSectionWithHoists(bodySection);
-        const serializeReason = hasHoists || sectionSources?.all;
         const singleNodeOptimization =
           bodySection.content === null ||
           (bodySection.content.singleChild &&
             bodySection.content.startType !== ContentType.Text);
 
-        if (serializeReason && onlyChildInParentOptimization) {
-          getParentTag(tag)!.node.extra![kSerializeMarker] = false;
+        const branchSerializeReason = getPropSerializeReason(
+          tagSection,
+          tagExtra,
+          kBranchSerializeReason,
+        );
+        const markerSerializeReason = getBindingSerializeReason(
+          tagSection,
+          nodeBinding,
+        );
+        const serializeReason = branchSerializeReason || markerSerializeReason;
+
+        if (markerSerializeReason && onlyChildInParentOptimization) {
+          getParentTag(tag)!.node.extra![kSkipMark] = true;
         }
 
         writer.flushInto(tag);
@@ -164,7 +177,7 @@ export default {
           forTagArgs.push(
             forAttrs.by || t.numericLiteral(0),
             getScopeIdIdentifier(tagSection),
-            getScopeAccessorLiteral(nodeRef),
+            getScopeAccessorLiteral(nodeBinding),
           );
 
           if (onlyChildInParentOptimization) {
@@ -209,7 +222,7 @@ export default {
         const { node } = tag;
         const tagExtra = node.extra!;
         const { referencedBindings } = tagExtra;
-        const nodeRef = getOptimizedOnlyChildNodeRef(tag, tagSection);
+        const nodeRef = getOptimizedOnlyChildNodeBinding(tag, tagSection);
         setClosureSignalBuilder(tag, (closure, render) => {
           return callRuntime(
             "loopClosure",

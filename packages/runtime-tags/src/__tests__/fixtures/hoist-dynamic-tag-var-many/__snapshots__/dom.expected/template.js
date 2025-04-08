@@ -4,8 +4,8 @@ import Child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $get$hoisted_setHtml = _$.register("__tests__/template.marko_0_$hoisted_setHtml3/hoist", _$.hoist("setHtml3", "LoopScopeMap:#ul/0", "LoopScopeMap:#text/2"));
 const $dynamicTag$for$content3 = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => $setHtml3$for$content);
-const $setHtml3$for$content = _$.registerBoundSignal("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_$.value("setHtml3"));
 const $params3$for$content = /* @__PURE__ */_$.value("$params3");
+const $setHtml3$for$content = _$.registerBoundSignal("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_$.value("setHtml3"));
 const $setup$for$content3 = $scope => {
   $dynamicTag$for$content3($scope, 1 && Child);
 };

@@ -14,9 +14,11 @@ export default _$.createTemplate("__tests__/template.marko", input => {
           const setHtml = _child({});
           _$.setTagVar($scope2_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_2_setHtml/var");
           _$.writeScope($scope2_id, {
-            "#childScope/0": _$.writeExistingScope($childScope),
-            setHtml
-          }, "__tests__/template.marko", "2:4");
+            setHtml,
+            "#childScope/0": _$.writeExistingScope($childScope)
+          }, "__tests__/template.marko", "2:4", {
+            setHtml: "3:12"
+          });
           return 0;
         }
       }, $scope1_id, "#text/0", 1);
@@ -37,9 +39,11 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       const setHtml2 = _child({});
       _$.setTagVar($scope3_id, "#scopeOffset/1", $childScope3, "__tests__/template.marko_3_setHtml2/var");
       _$.writeScope($scope3_id, {
-        "#childScope/0": _$.writeExistingScope($childScope3),
-        setHtml2
-      }, "__tests__/template.marko", "13:2");
+        setHtml2,
+        "#childScope/0": _$.writeExistingScope($childScope3)
+      }, "__tests__/template.marko", "13:2", {
+        setHtml2: "14:10"
+      });
       return 0;
     }
   }, $scope0_id, "#text/2");
@@ -50,9 +54,11 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       const setHtml3 = _child({});
       _$.setTagVar($scope4_id, "#scopeOffset/1", $childScope4, "__tests__/template.marko_4_setHtml3/var");
       _$.writeScope($scope4_id, {
-        "#childScope/0": _$.writeExistingScope($childScope4),
-        setHtml3
-      }, "__tests__/template.marko", "22:2");
+        setHtml3,
+        "#childScope/0": _$.writeExistingScope($childScope4)
+      }, "__tests__/template.marko", "22:2", {
+        setHtml3: "23:10"
+      });
       return 0;
     }
   }, $scope0_id, "#text/3");

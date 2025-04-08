@@ -1,4 +1,4 @@
-// size: 827 (min) 374 (brotli)
+// size: 823 (min) 366 (brotli)
 const $dynamicTag2 = _$.dynamicTag(1),
   $dynamicTag = _$.dynamicTag(),
   $input_content = _$.value(4, ($scope, input_content) => {
@@ -13,10 +13,10 @@ function $_return($scope) {
   };
 }
 _$.register("a0", $_return);
-const $get$hoisted_setHtml = _$.hoist(16, "a4"),
+const $get$hoisted_setHtml = _$.hoist(2, "a4"),
   $setHtml3$inputshowsectionnull$content = _$.registerBoundSignal(
     "c1",
-    _$.value(16),
+    _$.value(2),
   );
 _$.registerContent(
   "c0",
@@ -30,8 +30,8 @@ _$.registerContent(
   0,
   "a4",
 );
-const $get$hoisted_setHtml2 = _$.hoist(11, "a3", "a2"),
-  $setHtml2$thing$content = _$.registerBoundSignal("c3", _$.value(11)),
+const $get$hoisted_setHtml2 = _$.hoist(2, "a3", "a2"),
+  $setHtml2$thing$content = _$.registerBoundSignal("c3", _$.value(2)),
   $setup$thing$content2 = ($scope) => {
     _$.setTagVar($scope, 0, $setHtml2$thing$content), $setup($scope[0]);
   },
@@ -55,8 +55,8 @@ _$.registerContent(
   0,
   "a2",
 ),
-  _$.register("c6", _$.hoist(5, "a1")),
-  _$.registerBoundSignal("c7", _$.value(5)),
+  _$.register("c6", _$.hoist(2, "a1")),
+  _$.registerBoundSignal("c7", _$.value(2)),
   _$.effect("c8", ({ 6: $hoisted_setHtml }) => {
     for (const fn of 6) fn("Hoist from custom tag");
   }),

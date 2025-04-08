@@ -16,7 +16,9 @@ import evaluate from "../util/evaluate";
 import { generateUidIdentifier } from "../util/generate-uid";
 import isInvokedFunction from "../util/is-invoked-function";
 import { isOutputHTML } from "../util/marko-config";
+import { type Opt, push } from "../util/optional";
 import {
+  type Binding,
   BindingType,
   createBinding,
   dropReferences,
@@ -34,6 +36,11 @@ import {
   getSection,
 } from "../util/sections";
 import {
+  addBindingSerializeReasonExpr,
+  forceBindingSerialize,
+  getBindingSerializeReason,
+} from "../util/serialize-reasons";
+import {
   addHTMLEffectCall,
   addStatement,
   getRegisterUID,
@@ -45,15 +52,13 @@ import translateVar from "../util/translate-var";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "../visitors/program";
-import {
-  kNativeTagBinding,
-  kSerializeMarker,
-} from "../visitors/tag/native-tag";
 
+const kNodeBinding = Symbol("style tag node binding");
 const kGetterId = Symbol("node getter id");
 
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
+    [kNodeBinding]?: Binding;
     [kGetterId]?: string;
   }
 }
@@ -72,15 +77,17 @@ export default {
         );
     }
 
-    const section = getOrCreateSection(tag);
-    let hasEventHandlers = false;
-    let hasDynamicAttributes = false;
-
     const seen: Record<string, t.MarkoAttribute> = {};
     const { attributes } = tag.node;
     let spreadReferenceNodes: t.Node[] | undefined;
+    let attrExprExtras: Opt<t.NodeExtra>;
+    let hasEventHandlers = false;
+    let hasDynamicAttributes = false;
+
     for (let i = attributes.length; i--; ) {
       const attr = attributes[i];
+      const valueExtra = (attr.value.extra ??= {});
+
       if (t.isMarkoAttribute(attr)) {
         if (seen[attr.name]) {
           // drop references for duplicated attributes.
@@ -91,26 +98,24 @@ export default {
         seen[attr.name] = attr;
 
         if (isEventHandler(attr.name)) {
-          (attr.value.extra ??= {}).isEffect = true;
+          valueExtra.isEffect = true;
           hasEventHandlers = true;
         } else if (!evaluate(attr.value).confident) {
           hasDynamicAttributes = true;
         }
       } else if (t.isMarkoSpreadAttribute(attr)) {
+        valueExtra.isEffect = true;
         hasEventHandlers = true;
         hasDynamicAttributes = true;
-        (attr.value.extra ??= {}).isEffect = true;
       }
 
       if (spreadReferenceNodes) {
         spreadReferenceNodes.push(attr.value);
       } else if (t.isMarkoSpreadAttribute(attr)) {
         spreadReferenceNodes = [attr.value];
+      } else {
+        attrExprExtras = push(attrExprExtras, valueExtra);
       }
-    }
-
-    if (spreadReferenceNodes) {
-      mergeReferences(section, tag.node, spreadReferenceNodes);
     }
 
     const bodyPlaceholderNodes: t.Node[] = [];
@@ -127,47 +132,60 @@ export default {
       }
     }
 
-    if (bodyPlaceholderNodes.length > 1) {
-      mergeReferences(
-        section,
-        bodyPlaceholderNodes[0],
-        bodyPlaceholderNodes.slice(1),
-      );
-    }
-
     if (
       node.var ||
       hasEventHandlers ||
       hasDynamicAttributes ||
       hasBodyPlaceholders
     ) {
-      getProgram().node.extra.isInteractive ||= hasEventHandlers;
       const tagExtra = (node.extra ??= {});
-      const bindingName = "#style";
-      tagExtra[kSerializeMarker] = hasEventHandlers || !!node.var;
-      tagExtra[kNativeTagBinding] = createBinding(
-        bindingName,
+      const tagSection = getOrCreateSection(tag);
+      const nodeBinding = (tagExtra[kNodeBinding] = createBinding(
+        "#style",
         BindingType.dom,
-        section,
-      );
+        tagSection,
+      ));
+      getProgram().node.extra.isInteractive ||= hasEventHandlers;
+
+      if (spreadReferenceNodes) {
+        mergeReferences(tagSection, tag.node, spreadReferenceNodes);
+      }
+
+      if (bodyPlaceholderNodes.length > 1) {
+        mergeReferences(
+          tagSection,
+          bodyPlaceholderNodes[0],
+          bodyPlaceholderNodes.slice(1),
+        );
+      }
 
       if (node.var) {
+        forceBindingSerialize(tagSection, nodeBinding);
+
         for (const ref of tag.scope.getBinding(node.var.name)!.referencePaths) {
           if (!isInvokedFunction(ref)) {
-            tagExtra[kGetterId] = getRegisterUID(section, bindingName);
+            tagExtra[kGetterId] = getRegisterUID(tagSection, "#style");
             break;
           }
         }
+      } else if (hasEventHandlers || spreadReferenceNodes) {
+        forceBindingSerialize(tagSection, nodeBinding);
+      } else {
+        addBindingSerializeReasonExpr(
+          tagSection,
+          nodeBinding,
+          push(attrExprExtras, tagExtra),
+        );
       }
     }
   },
   translate: {
     enter(tag) {
       const tagExtra = tag.node.extra!;
-      const nodeRef = tagExtra[kNativeTagBinding];
+      const nodeBinding = tagExtra[kNodeBinding];
       const isHTML = isOutputHTML();
       const write = writer.writeTo(tag);
-      const section = getSection(tag);
+      const tagSection = getSection(tag);
       const hasVar = !!tag.node.var;
 
       if (hasVar) {
@@ -176,14 +194,14 @@ export default {
           const varName = (tag.node.var as t.Identifier).name;
           const references = tag.scope.getBinding(varName)!.referencePaths;
           for (const reference of references) {
-            serializeOwners(getSection(reference), section);
+            serializeOwners(getSection(reference), tagSection);
           }
 
           translateVar(
             tag,
             callRuntime(
               "nodeRef",
-              getterId && getScopeIdIdentifier(section),
+              getterId && getScopeIdIdentifier(tagSection),
               getterId && t.stringLiteral(getterId),
             ),
           );
@@ -200,7 +218,7 @@ export default {
                   callRuntime(
                     "nodeRef",
                     t.stringLiteral(getterId),
-                    getScopeAccessorLiteral(nodeRef!),
+                    getScopeAccessorLiteral(nodeBinding!),
                   ),
                 ),
               ]),
@@ -212,7 +230,7 @@ export default {
             if (isInvokedFunction(reference)) {
               reference.parentPath.replaceWith(
                 t.expressionStatement(
-                  createScopeReadExpression(referenceSection, nodeRef!),
+                  createScopeReadExpression(referenceSection, nodeBinding!),
                 ),
               );
             } else if (getterFnIdentifier) {
@@ -226,9 +244,8 @@ export default {
         }
       }
 
-      let visitAccessor: t.StringLiteral | t.NumericLiteral | undefined;
-      if (nodeRef) {
-        visitAccessor = getScopeAccessorLiteral(nodeRef);
+      const visitAccessor = nodeBinding && getScopeAccessorLiteral(nodeBinding);
+      if (visitAccessor) {
         walks.visit(tag, WalkCode.Get);
       }
 
@@ -253,7 +270,7 @@ export default {
             } else {
               addStatement(
                 "render",
-                section,
+                tagSection,
                 valueReferences,
                 t.expressionStatement(
                   callRuntime(
@@ -271,14 +288,14 @@ export default {
               write`${getHTMLRuntime().attr(name, computed)}`;
             } else if (isHTML) {
               if (isEventHandler(name)) {
-                addHTMLEffectCall(section, valueReferences);
+                addHTMLEffectCall(tagSection, valueReferences);
               } else {
                 write`${callRuntime("attr", t.stringLiteral(name), value)}`;
               }
             } else if (isEventHandler(name)) {
               addStatement(
                 "effect",
-                section,
+                tagSection,
                 valueReferences,
                 t.expressionStatement(
                   callRuntime(
@@ -292,7 +309,7 @@ export default {
             } else {
               addStatement(
                 "render",
-                section,
+                tagSection,
                 valueReferences,
                 t.expressionStatement(
                   callRuntime(
@@ -311,18 +328,18 @@ export default {
 
       if (spreadExpression) {
         if (isHTML) {
-          addHTMLEffectCall(section, tagExtra.referencedBindings);
+          addHTMLEffectCall(tagSection, tagExtra.referencedBindings);
 
           if (skipExpression) {
-            write`${callRuntime("partialAttrs", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(section), t.stringLiteral("style"))}`;
+            write`${callRuntime("partialAttrs", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(tagSection), t.stringLiteral("style"))}`;
           } else {
-            write`${callRuntime("attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(section), t.stringLiteral("style"))}`;
+            write`${callRuntime("attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(tagSection), t.stringLiteral("style"))}`;
           }
         } else {
           if (skipExpression) {
             addStatement(
               "render",
-              section,
+              tagSection,
               tagExtra.referencedBindings,
               t.expressionStatement(
                 callRuntime(
@@ -337,7 +354,7 @@ export default {
           } else {
             addStatement(
               "render",
-              section,
+              tagSection,
               tagExtra.referencedBindings,
               t.expressionStatement(
                 callRuntime(
@@ -352,7 +369,7 @@ export default {
 
           addStatement(
             "effect",
-            section,
+            tagSection,
             tagExtra.referencedBindings,
             t.expressionStatement(
               callRuntime("attrsEvents", scopeIdentifier, visitAccessor),
@@ -361,15 +378,16 @@ export default {
           );
         }
       }
-    },
-    exit(tag) {
-      const tagExtra = tag.node.extra!;
-      const nodeRef = tagExtra[kNativeTagBinding];
-      const write = writer.writeTo(tag);
-      const visitAccessor = nodeRef && getScopeAccessorLiteral(nodeRef);
 
       write`>`;
       walks.enter(tag);
+    },
+    exit(tag) {
+      const tagSection = getSection(tag);
+      const tagExtra = tag.node.extra!;
+      const nodeBinding = tagExtra[kNodeBinding]!;
+      const write = writer.writeTo(tag);
+      const visitAccessor = getScopeAccessorLiteral(nodeBinding);
 
       if (isOutputHTML()) {
         for (const child of tag.node.body.body) {
@@ -406,7 +424,7 @@ export default {
             t.expressionStatement(
               callRuntime(
                 "textContent",
-                t.memberExpression(scopeIdentifier, visitAccessor!, true),
+                t.memberExpression(scopeIdentifier, visitAccessor, true),
                 t.templateLiteral(templateQuasis, templateExpressions),
               ),
             ),
@@ -416,8 +434,13 @@ export default {
 
       write`</style>`;
 
-      if (nodeRef) {
-        writer.markNode(tag, nodeRef);
+      const serializeMarkerReason = getBindingSerializeReason(
+        tagSection,
+        nodeBinding,
+      );
+
+      if (serializeMarkerReason) {
+        writer.markNode(tag, nodeBinding);
       }
 
       walks.exit(tag);

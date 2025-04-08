@@ -8,16 +8,12 @@ import {
 
 import { WalkCode } from "../../common/types";
 import { assertNoSpreadAttrs } from "../util/assert";
-import {
-  getDynamicSourcesForSection,
-  getDynamicSourcesForSections,
-} from "../util/dynamic-sources";
 import { getAccessorPrefix } from "../util/get-accessor-char";
 import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
 import {
-  getOptimizedOnlyChildNodeRef,
+  getOptimizedOnlyChildNodeBinding,
   isOnlyChildInParent,
 } from "../util/is-only-child-in-parent";
 import { getScopeAccessorLiteral, mergeReferences } from "../util/references";
@@ -28,11 +24,15 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  isSectionWithHoists,
+  kBranchSerializeReason,
   type Section,
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
+import {
+  getBindingSerializeReason,
+  getPropSerializeReason,
+} from "../util/serialize-reasons";
 import {
   addValue,
   getSignal,
@@ -43,7 +43,7 @@ import toFirstStatementOrBlock from "../util/to-first-statement-or-block";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
-import { kSerializeMarker } from "../visitors/tag/native-tag";
+import { kSkipMark } from "../visitors/tag/native-tag";
 
 const BRANCHES_LOOKUP = new WeakMap<
   t.NodePath<t.MarkoTag>,
@@ -54,30 +54,33 @@ export const IfTag = {
   analyze(tag) {
     assertValidCondition(tag);
     if (tag.node.body.attributeTags) return;
-
-    const bodySection = startSection(tag.get("body"));
-    const [isLast, branches] = getBranches(tag, bodySection);
-    if (isLast) {
-      const [rootTag] = branches[0];
-      const rootExtra = (rootTag.node.extra ??= {});
+    if (isLastBranch(tag)) {
+      const branches = getBranches(tag);
+      const [ifTag] = branches[0];
+      const ifTagSection = getOrCreateSection(ifTag);
+      const ifTagExtra = (ifTag.node.extra ??= {});
       const mergeReferenceNodes: t.Node[] = [];
+      const nodeBinding = getOptimizedOnlyChildNodeBinding(
+        ifTag,
+        ifTagSection,
+        branches.length,
+      );
+      const sectionAccessor: Section["sectionAccessor"] = {
+        binding: nodeBinding,
+        prefix: getAccessorPrefix().ConditionalScope,
+      };
       let singleNodeOptimization = true;
       // TODO: remove all branches if none have body content.
 
       for (const [branchTag, branchBodySection] of branches) {
         if (branchBodySection) {
+          singleNodeOptimization &&=
+            branchBodySection.content === null ||
+            (branchBodySection.content?.singleChild &&
+              branchBodySection.content.startType !== ContentType.Text);
           branchBodySection.isBranch = true;
-          branchBodySection.upstreamExpression = rootExtra;
-
-          if (
-            !(
-              branchBodySection.content === null ||
-              (branchBodySection.content?.singleChild &&
-                branchBodySection.content.startType !== ContentType.Text)
-            )
-          ) {
-            singleNodeOptimization = false;
-          }
+          branchBodySection.upstreamExpression = ifTagExtra;
+          branchBodySection.sectionAccessor = sectionAccessor;
         }
 
         if (branchTag.node.attributes.length) {
@@ -85,19 +88,8 @@ export const IfTag = {
         }
       }
 
-      const section = getOrCreateSection(tag);
-      mergeReferences(section, rootTag.node, mergeReferenceNodes);
-
-      bodySection!.sectionAccessor = {
-        binding: getOptimizedOnlyChildNodeRef(
-          rootTag,
-          section,
-          branches.length,
-        ),
-        prefix: getAccessorPrefix().ConditionalScope,
-      };
-
-      rootExtra.singleNodeOptimization = singleNodeOptimization;
+      mergeReferences(ifTagSection, ifTag.node, mergeReferenceNodes);
+      ifTagExtra.singleNodeOptimization = singleNodeOptimization;
     }
   },
   translate: translateByTarget({
@@ -123,35 +115,44 @@ export const IfTag = {
         if (tag.node.body.attributeTags) return;
 
         const tagBody = tag.get("body");
-        const section = getSection(tag);
         const bodySection = getSectionForBody(tagBody);
-        const [isLast, branches] = getBranches(tag, bodySection);
-        const [rootTag] = branches[0];
-        const rootExtra = rootTag.node.extra!;
-        const singleNodeOptimization = rootExtra.singleNodeOptimization;
-        const branchSources = getSourcesForBranches(branches);
-        const hasHoists = hasHoistsInBranches(branches);
-        const serializeReason = hasHoists || branchSources?.all;
 
         if (bodySection) {
           writer.flushInto(tag);
           writeHTMLResumeStatements(tagBody);
         }
 
-        if (isLast) {
-          const nodeRef = getOptimizedOnlyChildNodeRef(rootTag, section);
-          const onlyChildInParentOptimization = isOnlyChildInParent(rootTag);
+        if (isLastBranch(tag)) {
+          const branches = getBranches(tag);
+          const [ifTag] = branches[0];
+          const ifTagSection = getSection(ifTag);
+          const ifTagExtra = ifTag.node.extra!;
+          const singleNodeOptimization = ifTagExtra.singleNodeOptimization;
+          const nodeBinding = getOptimizedOnlyChildNodeBinding(
+            ifTag,
+            ifTagSection,
+          );
+          const onlyChildInParentOptimization = isOnlyChildInParent(ifTag);
+          const branchSerializeReason = getPropSerializeReason(
+            ifTagSection,
+            ifTagExtra,
+            kBranchSerializeReason,
+          );
+          const markerSerializeReason = getBindingSerializeReason(
+            ifTagSection,
+            nodeBinding,
+          );
           const nextTag = tag.getNextSibling();
           let statement: t.Statement | undefined;
 
-          if (branchSources?.referenced && onlyChildInParentOptimization) {
-            getParentTag(rootTag)!.node.extra![kSerializeMarker] = false;
+          if (markerSerializeReason && onlyChildInParentOptimization) {
+            getParentTag(ifTag)!.node.extra![kSkipMark] = true;
           }
 
           for (let i = branches.length; i--; ) {
             const [branchTag] = branches[i];
             const bodyStatements = branchTag.node.body.body;
-            if (serializeReason) {
+            if (branchSerializeReason) {
               bodyStatements.push(
                 t.returnStatement(t.numericLiteral(i)) as any,
               );
@@ -173,8 +174,7 @@ export const IfTag = {
             branchTag.remove();
           }
 
-          if (serializeReason) {
-            const conditionSerializeReason = branchSources?.referenced;
+          if (branchSerializeReason) {
             const cbNode = t.arrowFunctionExpression(
               [],
               t.blockStatement([statement!]),
@@ -184,9 +184,9 @@ export const IfTag = {
                 ? callRuntime(
                     "resumeSingleNodeConditional",
                     cbNode,
-                    getScopeIdIdentifier(section),
-                    getScopeAccessorLiteral(nodeRef),
-                    conditionSerializeReason
+                    getScopeIdIdentifier(ifTagSection),
+                    getScopeAccessorLiteral(nodeBinding),
+                    markerSerializeReason
                       ? t.numericLiteral(1)
                       : onlyChildInParentOptimization
                         ? t.numericLiteral(0)
@@ -196,9 +196,9 @@ export const IfTag = {
                 : callRuntime(
                     "resumeConditional",
                     cbNode,
-                    getScopeIdIdentifier(section),
-                    getScopeAccessorLiteral(nodeRef),
-                    conditionSerializeReason ? t.numericLiteral(1) : undefined,
+                    getScopeIdIdentifier(ifTagSection),
+                    getScopeAccessorLiteral(nodeBinding),
+                    markerSerializeReason ? t.numericLiteral(1) : undefined,
                   ),
             );
           }
@@ -226,16 +226,12 @@ export const IfTag = {
       exit(tag) {
         if (tag.node.body.attributeTags) return;
 
-        const [isLast, branches] = getBranches(
-          tag,
-          getSectionForBody(tag.get("body")),
-        );
-
-        if (isLast) {
-          const [rootTag] = branches[0];
-          const section = getSection(rootTag);
-          const rootExtra = branches[0][0].node.extra!;
-          const nodeRef = getOptimizedOnlyChildNodeRef(rootTag, section);
+        if (isLastBranch(tag)) {
+          const branches = getBranches(tag);
+          const [ifTag] = branches[0];
+          const ifTagSection = getSection(ifTag);
+          const ifTagExtra = branches[0][0].node.extra!;
+          const nodeRef = getOptimizedOnlyChildNodeBinding(ifTag, ifTagSection);
           const rendererIdentifiers: t.Identifier[] = [];
           let expr: t.Expression = t.numericLiteral(branches.length);
 
@@ -262,7 +258,7 @@ export const IfTag = {
               : consequent;
           }
 
-          const signal = getSignal(section, nodeRef, "if");
+          const signal = getSignal(ifTagSection, nodeRef, "if");
           signal.build = () => {
             return callRuntime(
               "conditional",
@@ -270,7 +266,7 @@ export const IfTag = {
               ...rendererIdentifiers.reverse(),
             );
           };
-          addValue(section, rootExtra.referencedBindings, signal, expr);
+          addValue(ifTagSection, ifTagExtra.referencedBindings, signal, expr);
         }
       },
     },
@@ -405,48 +401,29 @@ function assertOptionalIfAttribute(tag: t.NodePath<t.MarkoTag>) {
   }
 }
 
-function getBranches(
-  tag: t.NodePath<t.MarkoTag>,
-  bodySection: Section | undefined,
-) {
-  const branches = BRANCHES_LOOKUP.get(tag) ?? [];
-  let nextTag = tag.getNextSibling();
-  while (nextTag.isMarkoComment()) nextTag = nextTag.getNextSibling();
+function getBranches(tag: t.NodePath<t.MarkoTag>) {
+  let branches = BRANCHES_LOOKUP.get(tag);
 
-  const isLast = !(
-    isCoreTagName(nextTag, "else") || isCoreTagName(nextTag, "else-if")
-  );
+  if (!branches) {
+    let curTag: t.NodePath<any> = tag;
+    branches = [];
 
-  branches.push([tag, bodySection]);
-
-  if (!isLast) {
-    BRANCHES_LOOKUP.set(nextTag as t.NodePath<t.MarkoTag>, branches);
+    do {
+      BRANCHES_LOOKUP.set(curTag, branches);
+      branches.push([
+        curTag,
+        startSection((curTag as t.NodePath<t.MarkoTag>).get("body")),
+      ]);
+      while ((curTag = curTag.getNextSibling()).isMarkoComment());
+    } while (isCoreTagName(curTag, "else") || isCoreTagName(curTag, "else-if"));
   }
 
-  return [isLast, branches] as const;
+  return branches;
 }
 
-function hasHoistsInBranches(
-  branches: [tag: t.NodePath<t.MarkoTag>, bodySection: Section | undefined][],
-) {
-  for (const [, section] of branches) {
-    if (section && isSectionWithHoists(section)) return true;
-  }
-}
-
-function getSourcesForBranches(
-  branches: [tag: t.NodePath<t.MarkoTag>, bodySection: Section | undefined][],
-) {
-  if (branches.length === 1) {
-    return getDynamicSourcesForSection(branches[0][1]!);
-  }
-
-  const branchSections = [];
-  for (const [, branchSection] of branches) {
-    branchSections.push(branchSection);
-  }
-
-  return getDynamicSourcesForSections(branchSections);
+function isLastBranch(tag: t.NodePath<t.MarkoTag>) {
+  const branches = getBranches(tag);
+  return branches[branches.length - 1][0] === tag;
 }
 
 function isRoot(tag: t.NodePath<t.MarkoTag>) {
