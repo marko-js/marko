@@ -233,18 +233,26 @@ var proto = (AsyncStream.prototype = {
   },
 
   toReadable() {
+    let cancelled = false;
     return new ReadableStream({
       start: async (ctrl) => {
         const encoder = new TextEncoder();
         try {
           for await (const chunk of this) {
+            if (cancelled) {
+              return;
+            }
             ctrl.enqueue(encoder.encode(chunk));
           }
-
           ctrl.close();
         } catch (err) {
-          ctrl.error(err);
+          if (!cancelled) {
+            ctrl.error(err);
+          }
         }
+      },
+      cancel() {
+        cancelled = true;
       },
     });
   },
