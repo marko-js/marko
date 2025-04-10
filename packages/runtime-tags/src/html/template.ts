@@ -157,20 +157,30 @@ class ServerRendered implements RenderedTemplate {
   }
 
   toReadable() {
+    let cancelled = false;
+    let boundary: Boundary | undefined;
     const encoder = new TextEncoder();
     return new ReadableStream({
       start: (ctrl) => {
-        this.#read(
+        boundary = this.#read(
           (html) => {
             ctrl.enqueue(encoder.encode(html));
           },
           (err) => {
-            ctrl.error(err);
+            boundary = undefined;
+            if (!cancelled) {
+              ctrl.error(err);
+            }
           },
           () => {
+            boundary = undefined;
             ctrl.close();
           },
         );
+      },
+      cancel: (reason) => {
+        cancelled = true;
+        boundary?.abort(reason);
       },
     });
   }
