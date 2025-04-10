@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/tags/my-button.marko", input => {
+export default _$.createTemplate("__tests__/tags/my-button.marko", (input, $serialize) => {
   const $scope0_id = _$.nextScopeId();
   const {
     onClick,
@@ -12,7 +12,7 @@ export default _$.createTemplate("__tests__/tags/my-button.marko", input => {
       text: textAlias
     }
   } = input;
-  _$.write(`<button>${_$.escapeXML(text)}${_$.markResumeNode($scope0_id, "#text/1")} <!>${_$.escapeXML(textAlias)}${_$.markResumeNode($scope0_id, "#text/2")}</button>${_$.markResumeNode($scope0_id, "#button/0")}`);
+  _$.write(`<button>${_$.escapeXML(text)}${_$.markResumeNode($scope0_id, "#text/1", _$.serializeGuard($serialize, 0))} ${_$.commentSeparator(_$.serializeGuard($serialize, 1))}${_$.escapeXML(textAlias)}${_$.markResumeNode($scope0_id, "#text/2", _$.serializeGuard($serialize, 1))}</button>${_$.markResumeNode($scope0_id, "#button/0")}`);
   _$.writeEffect($scope0_id, "__tests__/tags/my-button.marko_0_onClick");
   _$.writeScope($scope0_id, {
     onClick

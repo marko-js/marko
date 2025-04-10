@@ -6,6 +6,7 @@ export default _$.createTemplate("__tests__/tags/parent-el.marko", input => {
   _$.write(`<!--Body Text-->${_$.markResumeNode($scope0_id, "#comment/0")}`);
   const $return = tagName;
   _$.writeEffect($scope0_id, "__tests__/tags/parent-el.marko_0");
+  _$.writeScope($scope0_id, {}, "__tests__/tags/parent-el.marko", 0);
   _$.resumeClosestBranch($scope0_id);
   return $return;
 });

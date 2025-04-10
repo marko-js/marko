@@ -26,8 +26,9 @@ import type { TemplateVisitor } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { scopeIdentifier } from "./program";
+import { getSerializeGuard } from "./program/html";
 
-const kBinding = Symbol("placeholder node binding");
+const kNodeBinding = Symbol("placeholder node binding");
 const kSiblingText = Symbol("placeholder has sibling text");
 enum SiblingText {
   None,
@@ -36,7 +37,7 @@ enum SiblingText {
 }
 declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
-    [kBinding]?: Binding;
+    [kNodeBinding]?: Binding;
     [kSiblingText]?: SiblingText;
   }
 }
@@ -54,7 +55,7 @@ export default {
 
     if (!(confident && (node.escape || isVoid(computed)))) {
       const section = getOrCreateSection(placeholder);
-      const binding = ((node.extra ??= {})[kBinding] = createBinding(
+      const nodeBinding = ((node.extra ??= {})[kNodeBinding] = createBinding(
         "#text",
         BindingType.dom,
         section,
@@ -62,7 +63,7 @@ export default {
         valueExtra,
       ));
       analyzeSiblingText(placeholder);
-      addBindingSerializeReasonExpr(section, binding, valueExtra);
+      addBindingSerializeReasonExpr(section, nodeBinding, valueExtra);
     }
   },
   translate: {
@@ -82,7 +83,7 @@ export default {
       const isHTML = isOutputHTML();
       const write = writer.writeTo(placeholder);
       const extra = node.extra || {};
-      const nodeBinding = extra[kBinding];
+      const nodeBinding = extra[kNodeBinding];
       const canWriteHTML = isHTML || (confident && node.escape);
       const method = canWriteHTML
         ? node.escape
@@ -102,7 +103,11 @@ export default {
       } else {
         if (siblingText === SiblingText.Before) {
           if (isHTML && markerSerializeReason) {
-            write`<!>`;
+            if (markerSerializeReason === true) {
+              write`<!>`;
+            } else {
+              write`${callRuntime("commentSeparator", getSerializeGuard(markerSerializeReason))}`;
+            }
           }
           walks.visit(placeholder, WalkCode.Replace);
         } else if (siblingText === SiblingText.After) {
@@ -114,8 +119,8 @@ export default {
 
         if (isHTML) {
           write`${callRuntime(method as HTMLMethod | DOMMethod, value)}`;
-          if (markerSerializeReason) {
-            writer.markNode(placeholder, nodeBinding);
+          if (nodeBinding) {
+            writer.markNode(placeholder, nodeBinding, markerSerializeReason);
           }
         } else {
           addStatement(

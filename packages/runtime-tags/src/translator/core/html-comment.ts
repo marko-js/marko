@@ -88,8 +88,8 @@ export default {
       }
     }
     if (needsBinding) {
-      const tagExtra = (tag.node.extra ??= {});
       const tagSection = getOrCreateSection(tag);
+      const tagExtra = mergeReferences(tagSection, tag.node, referenceNodes);
       const nodeBinding = (tagExtra[kNodeBinding] = createBinding(
         "#comment",
         BindingType.dom,
@@ -99,8 +99,6 @@ export default {
       if (needsGetter) {
         tagExtra[kGetterId] = getRegisterUID(tagSection, "comment");
       }
-
-      mergeReferences(tagSection, tag.node, referenceNodes);
 
       if (tagVar) {
         forceBindingSerialize(tagSection, nodeBinding);
@@ -226,10 +224,12 @@ export default {
       walks.exit(tag);
       write`-->`;
 
-      const serializeMarkerReason =
-        nodeBinding && getBindingSerializeReason(tagSection, nodeBinding);
-      if (serializeMarkerReason) {
-        writer.markNode(tag, nodeBinding);
+      if (nodeBinding) {
+        writer.markNode(
+          tag,
+          nodeBinding,
+          getBindingSerializeReason(tagSection, nodeBinding),
+        );
       }
 
       tag.remove();

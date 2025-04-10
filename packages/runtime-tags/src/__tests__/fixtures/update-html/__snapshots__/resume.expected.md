@@ -7,16 +7,10 @@
     <em>
       Testing
     </em>
-     
-    <!---->
-    Hello 
+     Hello 
     <strong>
       World
     </strong>
-    <!--M_*1 #text/0-->
-    <script>
-      WALKER_RUNTIME("M")("_")
-    </script>
   </body>
 </html>
 ```

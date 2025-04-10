@@ -6,5 +6,6 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.write("<section>");
   _child({});
   _$.write(`</section><div>${_$.escapeXML(count)}${_$.markResumeNode($scope0_id, "#text/1")}</div>`);
+  _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
   _$.resumeClosestBranch($scope0_id);
 });

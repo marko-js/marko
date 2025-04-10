@@ -13,6 +13,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       _$.write(`Async: <!>${_$.escapeXML(value > 1 ? (() => {
         throw new Error("ERROR!");
       })() : value)}${_$.markResumeNode($scope4_id, "#text/0")}`);
+      _$.writeScope($scope4_id, {}, "__tests__/template.marko", "11:4");
     });
     _$.writeEffect($scope1_id, "__tests__/template.marko_1_clickCount");
     _$.writeSubscribe($clickCount_closures, _$.writeScope($scope1_id, {
@@ -25,6 +26,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       content: _$.registerContent("__tests__/template.marko_3_renderer", err => {
         const $scope3_id = _$.nextScopeId();
         _$.write(`${_$.escapeXML(err)}${_$.markResumeNode($scope3_id, "#text/0")}`);
+        _$.writeScope($scope3_id, {}, "__tests__/template.marko", "17:4");
       }, $scope0_id)
     }),
     placeholder: _$.attrTag({

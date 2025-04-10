@@ -20,6 +20,7 @@ export { forIn, forInBy, forOf, forOfBy, forTo, forToBy } from "./html/for";
 export { createTemplate } from "./html/template";
 export {
   $global,
+  commentSeparator,
   ensureScopeWithId,
   fork,
   getScopeById,
@@ -28,7 +29,7 @@ export {
   nextScopeId,
   nextTagId,
   nodeRef,
-  peekNextScope,
+  peekNextScopeId,
   register,
   resumeClosestBranch,
   resumeConditional,
@@ -39,6 +40,8 @@ export {
   resumeSingleNodeForIn,
   resumeSingleNodeForOf,
   resumeSingleNodeForTo,
+  serializeGuard,
+  serializeIf,
   setTagVar,
   tryContent,
   write,

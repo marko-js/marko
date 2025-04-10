@@ -68,7 +68,7 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
                           tryWithPlaceholder[
                             AccessorProp.PlaceholderContent
                           ] as Renderer,
-                          tryWithPlaceholder._,
+                          tryWithPlaceholder[AccessorProp.Owner],
                           tryWithPlaceholder.___startNode.parentNode!,
                         )),
                       tryWithPlaceholder.___startNode.parentNode!,
@@ -191,12 +191,13 @@ export function renderCatch(scope: Scope, error: unknown) {
   if (!tryWithCatch) {
     throw error;
   } else {
+    const owner = tryWithCatch[AccessorProp.Owner]!;
     const placeholderBranch = tryWithCatch[
       AccessorProp.PlaceholderBranch
     ] as BranchScope;
     if (placeholderBranch) {
       tryWithCatch.___pendingAsyncCount = 0;
-      tryWithCatch._![
+      owner[
         AccessorPrefix.ConditionalScope +
           tryWithCatch[AccessorProp.BranchAccessor]
       ] = placeholderBranch;
@@ -204,13 +205,13 @@ export function renderCatch(scope: Scope, error: unknown) {
     }
     caughtError.add(pendingEffects);
     setConditionalRenderer(
-      tryWithCatch._!,
+      owner,
       tryWithCatch[AccessorProp.BranchAccessor],
       tryWithCatch[AccessorProp.CatchContent],
       createAndSetupBranch,
     );
     tryWithCatch[AccessorProp.CatchContent].___params?.(
-      tryWithCatch._![
+      owner[
         AccessorPrefix.ConditionalScope +
           tryWithCatch[AccessorProp.BranchAccessor]
       ],

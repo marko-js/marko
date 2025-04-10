@@ -3,10 +3,10 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default _$.createTemplate("__tests__/template.marko", input => {
   const $scope0_id = _$.nextScopeId();
   let count = 0;
-  const $childScope = _$.peekNextScope();
+  const $childScope = _$.peekNextScopeId();
   _displayIntersection({
     value: count
-  });
+  }, 1);
   _$.write(`<button></button>${_$.markResumeNode($scope0_id, "#button/1")}`);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope($scope0_id, {

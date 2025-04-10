@@ -3,7 +3,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default _$.createTemplate("__tests__/template.marko", input => {
   const $scope0_id = _$.nextScopeId();
   let name = "Marko";
-  const $childScope = _$.peekNextScope();
+  const $childScope = _$.peekNextScopeId();
   const data = _child({
     extra: 1
   });

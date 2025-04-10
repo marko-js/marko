@@ -40,8 +40,12 @@ export default {
     assertNoBodyContent(tag);
 
     const { node } = tag;
-    const tagExtra = (node.extra ??= {});
     const section = getOrCreateSection(tag);
+    const tagExtra = mergeReferences(
+      section,
+      tag.node,
+      getAllTagReferenceNodes(tag.node),
+    );
     tagExtra[kRef] = createBinding(
       generateUid("lifecycle"),
       BindingType.derived,
@@ -70,7 +74,6 @@ export default {
     }
 
     (getProgram().node.extra ??= {}).isInteractive = true;
-    mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
   },
   translate: {
     exit(tag) {

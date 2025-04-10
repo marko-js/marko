@@ -41,6 +41,7 @@ import {
 import {
   addBindingSerializeReasonExpr,
   forceBindingSerialize,
+  forceSectionSerialize,
   getBindingSerializeReason,
 } from "../../util/serialize-reasons";
 import {
@@ -48,7 +49,6 @@ import {
   addStatement,
   getRegisterUID,
   serializeOwners,
-  serializeSectionIfNeeded,
 } from "../../util/signals";
 import { toObjectProperty } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
@@ -294,6 +294,7 @@ export default {
         }
 
         if (node.var) {
+          forceSectionSerialize(tagSection);
           forceBindingSerialize(tagSection, nodeBinding);
           const varBinding = tag.scope.getBinding(node.var.name)!;
           for (const referencePath of varBinding.referencePaths) {
@@ -352,7 +353,6 @@ export default {
             }
           }
 
-          serializeSectionIfNeeded(tagSection, true);
           translateVar(
             tag,
             callRuntime(
@@ -712,16 +712,17 @@ export default {
         tag.insertBefore(tag.node.body.body).forEach((child) => child.skip());
       }
 
-      const serializeMarkerReason =
+      const markerSerializeReason =
         nodeBinding &&
         !tagExtra[kSkipMark] &&
         getBindingSerializeReason(tagSection, nodeBinding);
-      const shouldMark = !!serializeMarkerReason;
 
       if (!openTagOnly && !selectArgs) {
         writer.writeTo(
           tag,
-          isHTML && !shouldMark && (tagName === "html" || tagName === "body"),
+          isHTML &&
+            !markerSerializeReason &&
+            (tagName === "html" || tagName === "body"),
         )`</${tag.node.name}>`;
       }
 
@@ -734,8 +735,8 @@ export default {
           .skip();
       }
 
-      if (shouldMark) {
-        writer.markNode(tag, nodeBinding);
+      if (markerSerializeReason) {
+        writer.markNode(tag, nodeBinding, markerSerializeReason);
       }
 
       walks.exit(tag);

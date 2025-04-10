@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 
 import { scopeIdentifier } from "../visitors/program";
+import { getAccessorProp } from "./get-accessor-char";
 import { forEach } from "./optional";
 import {
   type Binding,
@@ -33,7 +34,10 @@ export function createScopeReadPattern(
       for (; i <= relativeDepth; i++) {
         const nestedPattern = t.objectPattern([]);
         prev.properties.push(
-          t.objectProperty(t.identifier("_"), nestedPattern),
+          t.objectProperty(
+            t.identifier(getAccessorProp().Owner),
+            nestedPattern,
+          ),
         );
         nestedPatterns.push(nestedPattern);
         prev = nestedPattern;
@@ -59,7 +63,7 @@ export function getScopeExpression(section: Section, targetSection: Section) {
   let scope: t.Expression = scopeIdentifier ?? t.identifier("undefined");
   const diff = section.depth - targetSection.depth;
   for (let i = 0; i < diff; i++) {
-    scope = t.memberExpression(scope, t.identifier("_"));
+    scope = t.memberExpression(scope, t.identifier(getAccessorProp().Owner));
   }
   if (diff < 0) {
     // TODO: handle hoisted references

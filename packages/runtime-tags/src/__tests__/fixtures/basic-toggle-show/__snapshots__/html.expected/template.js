@@ -7,9 +7,10 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     if (show) {
       const $scope1_id = _$.nextScopeId();
       _$.write("Hello!");
+      _$.writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
       return 0;
     }
-  }, $scope0_id, "#text/0", 1);
+  }, $scope0_id, "#text/0", 1, 1);
   _$.write(`<button>Toggle</button>${_$.markResumeNode($scope0_id, "#button/1")}</div>`);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_show");
   _$.writeScope($scope0_id, {

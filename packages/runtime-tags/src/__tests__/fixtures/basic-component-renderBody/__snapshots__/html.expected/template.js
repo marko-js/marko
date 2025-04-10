@@ -4,7 +4,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   const $scope0_id = _$.nextScopeId();
   const $clickCount_closures = new Set();
   let clickCount = 0;
-  const $childScope = _$.peekNextScope();
+  const $childScope = _$.peekNextScopeId();
   _myButton({
     onClick: _$.register(function () {
       clickCount++;

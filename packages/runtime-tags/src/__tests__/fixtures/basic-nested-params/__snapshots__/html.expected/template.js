@@ -6,13 +6,13 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   let x = 1;
   let y = 2;
   _$.write(`<button>Inc</button>${_$.markResumeNode($scope0_id, "#button/0")}`);
-  const $childScope2 = _$.peekNextScope();
+  const $childScope2 = _$.peekNextScopeId();
   _child({
     value: x,
     content: _$.registerContent("__tests__/template.marko_1_renderer", outer => {
       const $scope1_id = _$.nextScopeId();
       const $outer$child$content_closures = new Set();
-      const $childScope = _$.peekNextScope();
+      const $childScope = _$.peekNextScopeId();
       _child({
         value: y,
         content: _$.registerContent("__tests__/template.marko_2_renderer", inner => {
@@ -24,6 +24,9 @@ export default _$.createTemplate("__tests__/template.marko", input => {
           }, "__tests__/template.marko", "7:6"));
           _$.resumeClosestBranch($scope2_id);
         }, $scope1_id)
+      }, {
+        0: 1,
+        2: 1
       });
       _$.writeSubscribe($y_closures, _$.writeScope($scope1_id, {
         outer,
@@ -36,6 +39,9 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       }));
       _$.resumeClosestBranch($scope1_id);
     }, $scope0_id)
+  }, {
+    0: 1,
+    2: 1
   });
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope($scope0_id, {

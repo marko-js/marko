@@ -13,9 +13,13 @@ import {
   isScopeIdentifier,
   scopeIdentifier,
 } from "../visitors/program";
+import {
+  getExprIfSerialized,
+  getSerializeGuard,
+} from "../visitors/program/html";
 import { forEachIdentifier } from "./for-each-identifier";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
-import { getAccessorPrefix } from "./get-accessor-char";
+import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
 import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
 import { find, forEach, type Opt, push } from "./optional";
@@ -23,6 +27,7 @@ import {
   type Binding,
   BindingType,
   bindingUtil,
+  compareSerializeReasons,
   getReadReplacement,
   getScopeAccessor,
   getScopeAccessorLiteral,
@@ -45,7 +50,8 @@ import {
 } from "./sections";
 import {
   getBindingSerializeReason,
-  getPropSerializeReason,
+  getSectionSerializeReason,
+  type SerializeReason,
 } from "./serialize-reasons";
 import { simplifyFunction } from "./simplify-fn";
 import { createSectionState } from "./state";
@@ -107,32 +113,19 @@ export function setClosureSignalBuilder(
   _setClosureSignalBuilder(getSectionForBody(tag.get("body"))!, builder);
 }
 
-const [serializeSectionReason, setSerializeSectionReason] = createSectionState<
-  undefined | true | Opt<Binding>
->("serializeSectionSources");
-export function serializeSectionIfNeeded(
+const [getSerializedAccessors] = createSectionState<
+  Map<string, { expression: t.Expression; reason: SerializeReason }>
+>("serializedScopeProperties", () => new Map());
+export function setSectionSerializedValue(
   section: Section,
-  reason: undefined | boolean | Opt<Binding>,
+  prop: AccessorProp,
+  expression: t.Expression,
 ) {
+  const reason = getSectionSerializeReason(section, prop);
   if (reason) {
-    const existingReason = serializeSectionReason(section);
-    if (existingReason === true) return;
-    if (!existingReason || reason === true) {
-      setSerializeSectionReason(section, reason);
-    } else {
-      setSerializeSectionReason(
-        section,
-        bindingUtil.union(existingReason, reason),
-      );
-    }
+    getSerializedAccessors(section).set(prop, { expression, reason });
   }
 }
-const [getSerializedAccessors] = createSectionState<
-  Map<
-    string,
-    { expression: t.Expression; reason: undefined | boolean | Opt<Binding> }
-  >
->("serializedScopeProperties", () => new Map());
 export function setBindingSerializedValue(
   section: Section,
   binding: Binding,
@@ -147,23 +140,14 @@ export function setBindingSerializedValue(
     );
   }
 }
-export function setPropSerializedValue(
-  section: Section,
-  extra: t.NodeExtra,
-  prop: AccessorProp,
-  expression: t.Expression,
-) {
-  const reason = getPropSerializeReason(section, extra, prop);
-  if (reason) {
-    getSerializedAccessors(section).set(prop, { expression, reason });
-  }
-}
 
+const nonAnalyzedForceSerializedSection = new WeakSet<Section>();
 export function setSerializedValue(
   section: Section,
   key: string,
   expression: t.Expression,
 ) {
+  nonAnalyzedForceSerializedSection.add(section);
   getSerializedAccessors(section).set(key, { expression, reason: true });
 }
 const [getSectionWriteScopeBuilder, setSectionWriteScopeBuilder] =
@@ -1093,12 +1077,7 @@ export function writeHTMLResumeStatements(
   forEach(section.referencedHoists, serializeOwnersUntilBinding);
   forEach(section.referencedClosures, (closure) => {
     if (closure.sources) {
-      const serializeReason = getBindingSerializeReason(
-        closure.section,
-        closure,
-      );
       serializeOwnersUntilBinding(closure);
-      serializeSectionIfNeeded(closure.section, serializeReason);
       if (isDynamicClosure(section, closure)) {
         const closureSignal = getSignal(closure.section, closure);
         let identifier =
@@ -1225,28 +1204,39 @@ export function writeHTMLResumeStatements(
 
   const serializedLookup = getSerializedAccessors(section);
   const serializedProperties: t.ObjectProperty[] = [];
+  const sectionSerializeReason = nonAnalyzedForceSerializedSection.has(section)
+    ? true
+    : section.serializeReason;
+
   forEach(section.bindings, (binding) => {
     if (binding.type === BindingType.dom) return;
-    const serializeReason = getBindingSerializeReason(section, binding);
-    if (!serializeReason) return;
+    const reason = getBindingSerializeReason(section, binding);
+    if (!reason) return;
     const accessor = getScopeAccessor(binding);
     serializedLookup.delete(accessor);
     serializedProperties.push(
-      toObjectProperty(accessor, getDeclaredBindingExpression(binding)),
+      toObjectProperty(
+        accessor,
+        sectionSerializeReason &&
+          (sectionSerializeReason === reason ||
+            (sectionSerializeReason !== true &&
+              reason !== true &&
+              compareSerializeReasons(sectionSerializeReason, reason) === 0))
+          ? getDeclaredBindingExpression(binding)
+          : getExprIfSerialized(reason, getDeclaredBindingExpression(binding)),
+      ),
     );
   });
 
-  for (const [key, { expression }] of serializedLookup) {
-    serializedProperties.push(toObjectProperty(key, expression));
+  for (const [key, { expression, reason }] of serializedLookup) {
+    serializedProperties.push(
+      toObjectProperty(key, getExprIfSerialized(reason, expression)),
+    );
   }
 
   const writeScopeBuilder = getSectionWriteScopeBuilder(section);
-  const forceSerializeReason = serializeSectionReason(section);
-  if (
-    writeScopeBuilder ||
-    serializedProperties.length ||
-    forceSerializeReason
-  ) {
+
+  if (sectionSerializeReason) {
     for (const prop of serializedProperties) {
       if (
         prop.key.type === "Identifier" &&
@@ -1311,13 +1301,19 @@ export function writeHTMLResumeStatements(
       }
     }
 
-    body.push(
-      t.expressionStatement(
-        writeScopeBuilder
-          ? writeScopeBuilder(callRuntime("writeScope", ...writeScopeArgs))
-          : callRuntime("writeScope", ...writeScopeArgs),
-      ),
-    );
+    let writeScopeCall = writeScopeBuilder
+      ? writeScopeBuilder(callRuntime("writeScope", ...writeScopeArgs))
+      : callRuntime("writeScope", ...writeScopeArgs);
+
+    if (sectionSerializeReason !== true) {
+      writeScopeCall = t.logicalExpression(
+        "&&",
+        getSerializeGuard(sectionSerializeReason),
+        writeScopeCall,
+      );
+    }
+
+    body.push(t.expressionStatement(writeScopeCall));
   }
 
   const resumeClosestBranch =
@@ -1351,15 +1347,17 @@ export function writeHTMLResumeStatements(
 }
 
 export function serializeOwners(from: Section, to?: Section) {
+  const ownerProp = getAccessorProp().Owner;
   // TODO: need to do this based on sources.
   let cur = from;
   while (cur !== to) {
     const parent = cur.parent;
     if (!parent) break;
     const serialized = getSerializedAccessors(cur);
+    nonAnalyzedForceSerializedSection.add(cur);
     cur = parent;
-    if (!serialized.has("_")) {
-      serialized.set("_", {
+    if (!serialized.has(ownerProp)) {
+      serialized.set(ownerProp, {
         expression: callRuntime("ensureScopeWithId", getScopeIdIdentifier(cur)),
         reason: true,
       });

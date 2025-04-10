@@ -56,6 +56,7 @@ import {
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
+import { getSerializeGuard } from "../program/html";
 import { getTagRelativePath } from "./custom-tag";
 
 const kDOMBinding = Symbol("dynamic tag dom binding");
@@ -74,7 +75,10 @@ export default {
       assertAttributesOrArgs(tag);
       analyzeAttributeTags(tag);
       const tagSection = getOrCreateSection(tag);
-      const tagExtra = (tag.node.extra ??= {});
+      const tagExtra = mergeReferences(tagSection, tag.node, [
+        tag.node.name,
+        ...getAllTagReferenceNodes(tag.node),
+      ]);
       const tagBody = tag.get("body");
       const isClassAPI = tagExtra.featureType === "class";
       const hasVar = !!tag.node.var;
@@ -100,13 +104,7 @@ export default {
       }
 
       startSection(tagBody);
-
       trackParamsReferences(tagBody, BindingType.param);
-      mergeReferences(tagSection, tag.node, [
-        tag.node.name,
-        ...getAllTagReferenceNodes(tag.node),
-      ]);
-
       addBindingSerializeReasonExpr(
         tagSection,
         nodeBinding,
@@ -219,7 +217,7 @@ export default {
               t.arrayExpression(args),
               t.numericLiteral(0),
               t.numericLiteral(1),
-              serializeReason ? t.numericLiteral(1) : undefined,
+              getSerializeGuard(serializeReason),
             )
           : callRuntime(
               "dynamicTag",
@@ -229,16 +227,18 @@ export default {
               args[0],
               args[1] || (serializeReason ? t.numericLiteral(0) : undefined),
               serializeReason ? t.numericLiteral(0) : undefined,
-              serializeReason ? t.numericLiteral(1) : undefined,
+              getSerializeGuard(serializeReason),
             );
 
         if (node.var) {
-          const dynamicScopeIdentifier = generateUidIdentifier("dynamicScope");
+          const dynamicScopeIdentifier = generateUidIdentifier(
+            tag.get("name").toString() + "_scope",
+          );
           statements.push(
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 dynamicScopeIdentifier,
-                callRuntime("peekNextScope"),
+                callRuntime("peekNextScopeId"),
               ),
             ]),
           );

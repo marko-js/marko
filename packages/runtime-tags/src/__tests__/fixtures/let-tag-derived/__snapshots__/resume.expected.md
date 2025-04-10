@@ -8,9 +8,7 @@
       Increment
     </button>
     <!--M_*1 #button/0-->
-    2
-    <!--M_*1 #text/1-->
-     
+    2 
     <!---->
     4
     <!--M_*1 #text/2-->
@@ -34,9 +32,7 @@ container.querySelector("button").click();
       Increment
     </button>
     <!--M_*1 #button/0-->
-    2
-    <!--M_*1 #text/1-->
-     
+    2 
     <!---->
     5
     <!--M_*1 #text/2-->
@@ -49,5 +45,5 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/#text2 "4" => "5"
+UPDATE html/body/#text1 "4" => "5"
 ```

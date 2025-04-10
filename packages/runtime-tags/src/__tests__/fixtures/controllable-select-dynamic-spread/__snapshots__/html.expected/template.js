@@ -18,6 +18,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       value: "c"
     }, "#option/2", $scope1_id, "option")}>C</option>${_$.markResumeNode($scope1_id, "#option/2")}`);
     _$.writeEffect($scope1_id, "__tests__/template.marko_1");
+    _$.writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
   }, $scope0_id), 0, 1);
   _$.write(`<span>${_$.escapeXML(value)}${_$.markResumeNode($scope0_id, "#text/1")}</span>`);
   _$.writeScope($scope0_id, {

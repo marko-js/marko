@@ -21,14 +21,14 @@ export default _$.createTemplate("__tests__/template.marko", input => {
           }, "__tests__/template.marko", "8:6"));
           return 0;
         }
-      }, $scope1_id, "#text/1", 1);
+      }, $scope1_id, "#text/1", 1, 1);
       _$.writeEffect($scope1_id, "__tests__/template.marko_1_inner");
       _$.writeScope($scope1_id, {
         _: _$.ensureScopeWithId($scope0_id)
       }, "__tests__/template.marko", "6:4");
       return 0;
     }
-  }, $scope0_id, "#text/1", 1);
+  }, $scope0_id, "#text/1", 1, 1);
   _$.write(" hello</div>");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_outer");
   _$.writeScope($scope0_id, {

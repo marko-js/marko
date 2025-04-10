@@ -1,28 +1,19 @@
 # Render `{"x":"replaced"}`
 
 ```html
-<!---->
 <html>
   <head />
   <body>
     replaced
-    <!--M_*1 #text/0-->
     <span>
       replaced
-      <!--M_*1 #text/1-->
       <div />
     </span>
     <div>
       <div>
         a
       </div>
-      replaced
-      <!--M_*1 #text/2-->
-      Hello Text &lt;a/&gt;
-      <!---->
-      replaced
-      <!--M_*1 #text/3-->
-      Hello HTML 
+      replacedHello Text &lt;a/&gt;replacedHello HTML 
       <span>
         hi
       </span>
@@ -37,9 +28,6 @@
   
       </style>
     </div>
-    <script>
-      WALKER_RUNTIME("M")("_")
-    </script>
   </body>
 </html>
 ```

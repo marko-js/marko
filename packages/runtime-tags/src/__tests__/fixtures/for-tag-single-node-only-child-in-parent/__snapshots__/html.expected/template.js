@@ -6,7 +6,8 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.resumeSingleNodeForOf(children, () => {
     const $scope1_id = _$.nextScopeId();
     _$.write("<div></div>");
-  }, 0, $scope0_id, "#div/0", 1);
+    _$.writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
+  }, 0, $scope0_id, "#div/0", 1, 1);
   _$.write("</div>");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_children");
   _$.writeScope($scope0_id, {

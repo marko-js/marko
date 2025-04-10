@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div><span>Hello<!--M_*2 #text/0--></span><!--M_|1 #text/0 2--><span></span><span></span></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ConditionalRenderer:#text/0":0,"ConditionalScope:#text/0":_.b={},value:"Hello"},_.b],_.b._=_.a,_.c)]</script>
+  <div><span>Hello</span><span></span><span></span></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,1,{_:{}}])]</script>
 ```
 
 # Render End
@@ -11,14 +11,12 @@
     <div>
       <span>
         Hello
-        <!--M_*2 #text/0-->
       </span>
-      <!--M_|1 #text/0 2-->
       <span />
       <span />
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/0":0,"ConditionalScope:#text/0":_.b={},value:"Hello"},_.b],_.b._=_.a,_.c)]
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,1,{_:{}}])]
     </script>
   </body>
 </html>
@@ -32,8 +30,6 @@ INSERT html/body
 INSERT html/body/div
 INSERT html/body/div/span0
 INSERT html/body/div/span0/#text
-INSERT html/body/div/span0/#comment
-INSERT html/body/div/#comment
 INSERT html/body/div/span1
 INSERT html/body/div/span2
 INSERT html/body/script

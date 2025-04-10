@@ -10,7 +10,8 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     _$.resumeSingleNodeForOf(options, opt => {
       const $scope1_id = _$.nextScopeId();
       _$.write(`<option${_$.optionValueAttr(opt)}>${_$.escapeXML(opt)}${_$.markResumeNode($scope1_id, "#text/1")}</option>${_$.markResumeNode($scope1_id, "#option/0")}`);
-    }, v => v, $scope0_id, "#select/0", 1);
+      _$.writeScope($scope1_id, {}, "__tests__/template.marko", "5:6");
+    }, v => v, $scope0_id, "#select/0", 1, 1);
     _$.write("</select>");
   });
   _$.write(`<button type=reset>reset</button></form><div>${_$.escapeXML(value)}${_$.markResumeNode($scope0_id, "#text/1")}</div><button class=remove>Remove option</button>${_$.markResumeNode($scope0_id, "#button/2")}<button class=add>Add option</button>${_$.markResumeNode($scope0_id, "#button/3")}`);

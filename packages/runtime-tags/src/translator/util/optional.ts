@@ -4,7 +4,7 @@ export type Opt<T> = undefined | OneMany<T>;
 export type Compare<T> = (a: T, b: T) => number;
 export class Sorted<T> {
   constructor(public compare: Compare<T>) {}
-  add<U extends T>(data: Opt<U>, item: U): OneMany<U> {
+  add<U extends NonNullable<T>>(data: Opt<U>, item: U): OneMany<U> {
     return data
       ? Array.isArray(data)
         ? (addSorted(this.compare, data, item) as Many<U>)
@@ -12,7 +12,7 @@ export class Sorted<T> {
       : item;
   }
 
-  union<U extends T>(a: Opt<U>, b: Opt<U>): Opt<U> {
+  union<U extends NonNullable<T>>(a: Opt<U>, b: Opt<U>): Opt<U> {
     if (a) {
       if (Array.isArray(a)) {
         if (b) {
@@ -39,7 +39,7 @@ export class Sorted<T> {
 
     return b;
   }
-  find<U extends T>(data: Opt<U>, item: U): U | undefined {
+  find<U extends NonNullable<T>>(data: Opt<U>, item: U): U | undefined {
     if (data) {
       if (Array.isArray(data)) {
         return findSorted(this.compare, data, item);
@@ -48,31 +48,18 @@ export class Sorted<T> {
       }
     }
   }
-  findIndex<U extends T>(data: Opt<U>, item: U) {
+  findIndex<U extends NonNullable<T>>(data: Opt<U>, item: U) {
     if (data) {
       if (Array.isArray(data)) {
-        let max = data.length;
-        let pos = 0;
-
-        while (pos < max) {
-          const mid = (pos + max) >>> 1;
-          const compareResult = this.compare(data[mid], item);
-          if (compareResult === 0) return mid;
-          if (compareResult > 0) max = mid;
-          else pos = mid + 1;
-        }
-
-        return -1;
-      }
-
-      if (this.compare(data, item) === 0) {
+        return findIndexSorted(this.compare, data, item);
+      } else if (this.compare(data, item) === 0) {
         return 0;
       }
     }
 
     return -1;
   }
-  isSuperset<U extends T>(superset: Opt<U>, subset: Opt<U>) {
+  isSuperset<U extends NonNullable<T>>(superset: Opt<U>, subset: Opt<U>) {
     if (!subset) {
       return true;
     }
@@ -226,11 +213,56 @@ export function find<T>(
   }
 }
 
-export function map<T, R>(
+export function toArray<T, R>(
   data: Opt<T>,
   cb: (item: T, index: number) => R,
 ): R[] {
   return data ? (Array.isArray(data) ? data.map(cb) : [cb(data, 0)]) : [];
+}
+
+export function filterMap<T, R>(
+  data: Opt<T>,
+  cb: (item: T) => undefined | R,
+): Opt<R> {
+  if (data) {
+    if (Array.isArray(data)) {
+      const len = data.length;
+      let result: Opt<R>;
+      let i = 0;
+
+      while (i < len) {
+        let item = cb(data[i++]);
+
+        if (item) {
+          result = item;
+
+          while (i < len) {
+            item = cb(data[i++]);
+
+            if (item) {
+              result = [result, item];
+
+              while (i < len) {
+                item = cb(data[i++]);
+
+                if (item) {
+                  result.push(item);
+                }
+              }
+
+              return result;
+            }
+          }
+
+          return result;
+        }
+      }
+
+      return result;
+    } else {
+      return cb(data);
+    }
+  }
 }
 
 export function findSorted<T>(
@@ -251,7 +283,30 @@ export function findSorted<T>(
   }
 }
 
-export function addSorted<T>(compare: Compare<T>, data: T[], item: T): T[] {
+export function findIndexSorted<T>(
+  compare: Compare<T>,
+  data: T[],
+  item: T,
+): number {
+  let max = data.length;
+  let pos = 0;
+
+  while (pos < max) {
+    const mid = (pos + max) >>> 1;
+    const compareResult = compare(data[mid], item);
+    if (compareResult === 0) return mid;
+    if (compareResult > 0) max = mid;
+    else pos = mid + 1;
+  }
+
+  return -1;
+}
+
+export function addSorted<T, U extends T[]>(
+  compare: Compare<T>,
+  data: U,
+  item: T,
+): U {
   const len = data.length;
   let max = len;
   let pos = 0;
@@ -264,7 +319,7 @@ export function addSorted<T>(compare: Compare<T>, data: T[], item: T): T[] {
     else pos = mid + 1;
   }
 
-  const result = new Array(len + 1) as Many<T>;
+  const result = new Array(len + 1) as U;
   for (let i = 0; i < pos; i++) {
     result[i] = data[i];
   }

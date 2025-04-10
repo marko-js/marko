@@ -6,6 +6,7 @@ import {
   getSection,
   type Section,
 } from "../util/sections";
+import { getSerializeGuard } from "../visitors/program/html";
 import { isOutputHTML } from "./marko-config";
 import normalizeStringExpression, {
   appendLiteral,
@@ -16,6 +17,7 @@ import {
   getScopeAccessorLiteral,
 } from "./references";
 import { callRuntime } from "./runtime";
+import type { SerializeReason } from "./serialize-reasons";
 import { getSetup } from "./signals";
 import { createSectionState } from "./state";
 import { getWalkString } from "./walks";
@@ -106,21 +108,24 @@ export function getSectionMeta(section: Section) {
 
 export function markNode(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder>,
-  binding: Binding,
+  nodeBinding: Binding,
+  reason: undefined | false | SerializeReason,
 ) {
-  const section = getSection(path);
-
-  if (binding.type !== BindingType.dom) {
+  if (nodeBinding.type !== BindingType.dom) {
     throw path.buildCodeFrameError(
       "Tried to mark a node that was not determined to need a mark during analyze.",
     );
   }
 
   if (isOutputHTML()) {
-    writeTo(path)`${callRuntime(
-      "markResumeNode",
-      getScopeIdIdentifier(section),
-      getScopeAccessorLiteral(binding),
-    )}`;
+    if (reason) {
+      const section = getSection(path);
+      writeTo(path)`${callRuntime(
+        "markResumeNode",
+        getScopeIdIdentifier(section),
+        getScopeAccessorLiteral(nodeBinding),
+        reason === true ? undefined : getSerializeGuard(reason),
+      )}`;
+    }
   }
 }

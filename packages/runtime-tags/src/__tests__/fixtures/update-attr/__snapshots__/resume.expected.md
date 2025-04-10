@@ -8,10 +8,6 @@
       a="0"
       b="1"
     />
-    <!--M_*1 #div/0-->
-    <script>
-      WALKER_RUNTIME("M")("_")
-    </script>
   </body>
 </html>
 ```

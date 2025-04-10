@@ -4,16 +4,11 @@
 <html>
   <head />
   <body>
-    <!--M_[3-->
     <h1>
-      Hello 
-      <!---->
-      World
-      <!--M_*3 #text/0-->
+      Hello World
     </h1>
-    <!--M_]2 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={name:"World","ClosureScopes:name":_.d=new Set},{"ConditionalScope:#text/0":_.b={_:_.a,"ClosureSignalIndex:name":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"},_.b],(_.d).add(_.b),_.c)];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={name:"World"},1,_.d={_:_.a}],(_.c=new Set).add(_.d),_.b)];M._.w()
     </script>
   </body>
 </html>

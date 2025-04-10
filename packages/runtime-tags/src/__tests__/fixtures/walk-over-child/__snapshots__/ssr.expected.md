@@ -1,6 +1,6 @@
 # Write
 ```html
-  <section><span>Hello</span></section><div>0<!--M_*1 #text/1--></div><script>WALKER_RUNTIME("M")("_")</script>
+  <section><span>Hello</span></section><div>0<!--M_*1 #text/1--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{}])]</script>
 ```
 
 # Render End
@@ -18,7 +18,7 @@
       <!--M_*1 #text/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_")
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{}])]
     </script>
   </body>
 </html>

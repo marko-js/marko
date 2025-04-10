@@ -195,7 +195,7 @@ export function dynamicClosureRead<T>(
     scope[closureSignal.___signalIndexAccessor] = closureSignal.___index;
     childSignal(scope);
     subscribeToScopeSet(
-      getOwnerScope ? getOwnerScope(scope) : scope._!,
+      getOwnerScope ? getOwnerScope(scope) : scope[AccessorProp.Owner]!,
       closureSignal.___scopeInstancesAccessor,
       scope,
     );
@@ -217,7 +217,12 @@ function closure<T>(
   getOwnerScope?: (scope: Scope) => Scope,
 ): (scope: Scope) => void {
   return (scope) => {
-    fn(scope, (getOwnerScope ? getOwnerScope(scope) : scope._!)[valueAccessor]);
+    fn(
+      scope,
+      (getOwnerScope ? getOwnerScope(scope) : scope[AccessorProp.Owner]!)[
+        valueAccessor
+      ],
+    );
   };
 }
 

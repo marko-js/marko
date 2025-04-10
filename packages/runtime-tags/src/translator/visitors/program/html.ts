@@ -1,31 +1,68 @@
 import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
 
-import { generateUid } from "../../util/generate-uid";
+import { getSharedUid, usedSharedUid } from "../../util/generate-uid";
 import isStatic from "../../util/is-static";
 import { getReadReplacement, isRegisteredFnExtra } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import { getScopeIdIdentifier } from "../../util/sections";
+import type { DynamicSerializeReason } from "../../util/serialize-reasons";
 import { writeHTMLResumeStatements } from "../../util/signals";
 import { simplifyFunction } from "../../util/simplify-fn";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
 import { flushInto } from "../../util/writer";
+import { resolveSerializeReasonId } from ".";
 
-const templateContentIdentifierForProgram = new WeakMap<
-  t.NodePath<t.Program>,
-  string
->();
 export function getTemplateContentName() {
-  let name = templateContentIdentifierForProgram.get(getProgram());
-  if (!name) {
-    templateContentIdentifierForProgram.set(
-      getProgram(),
-      (name = generateUid("content")),
-    );
-  }
+  return getSharedUid("content");
+}
 
-  return name;
+export function getExprIfSerialized<
+  T extends undefined | boolean | DynamicSerializeReason,
+  U extends t.Expression,
+>(reason: T, expr: U) {
+  return (
+    reason
+      ? reason === true
+        ? expr
+        : t.logicalExpression(
+            "&&",
+            callRuntime(
+              "serializeIf",
+              t.identifier(getSharedUid("serialize")),
+              t.numericLiteral(
+                resolveSerializeReasonId(
+                  getProgram().node.extra.inputSerializeReasons!,
+                  reason,
+                ),
+              ),
+            ),
+            expr,
+          )
+      : undefined
+  ) as T extends {} ? U : undefined;
+}
+
+export function getSerializeGuard<
+  T extends undefined | boolean | DynamicSerializeReason,
+>(reason: T) {
+  return (
+    reason
+      ? reason === true
+        ? t.numericLiteral(1)
+        : callRuntime(
+            "serializeGuard",
+            t.identifier(getSharedUid("serialize")),
+            t.numericLiteral(
+              resolveSerializeReasonId(
+                getProgram().node.extra.inputSerializeReasons!,
+                reason,
+              ),
+            ),
+          )
+      : undefined
+  ) as T extends {} ? t.Expression : undefined;
 }
 
 export default {
@@ -49,9 +86,13 @@ export default {
         }
       }
 
-      const contentId = templateContentIdentifierForProgram.get(program);
+      const serializeId =
+        usedSharedUid("serialize") && getSharedUid("serialize");
+      const contentId = usedSharedUid("content") && getTemplateContentName();
       const contentFn = t.arrowFunctionExpression(
-        [t.identifier("input")],
+        serializeId
+          ? [t.identifier("input"), t.identifier(serializeId)]
+          : [t.identifier("input")],
         t.blockStatement(renderContent),
       );
       const exportDefault = t.exportDefaultDeclaration(

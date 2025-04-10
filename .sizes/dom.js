@@ -1,4 +1,4 @@
-// size: 19001 (min) 7236 (brotli)
+// size: 19001 (min) 7241 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1257,19 +1257,20 @@ function renderCatch(scope, error) {
   let tryWithCatch = findBranchWithKey(scope, "b");
   if (!tryWithCatch) throw error;
   {
-    let placeholderBranch = tryWithCatch.c;
+    let owner = tryWithCatch._,
+      placeholderBranch = tryWithCatch.c;
     placeholderBranch &&
       ((tryWithCatch.n = 0),
-      (tryWithCatch._["d" + tryWithCatch.a] = placeholderBranch),
+      (owner["d" + tryWithCatch.a] = placeholderBranch),
       destroyBranch(tryWithCatch)),
       caughtError.add(pendingEffects),
       setConditionalRenderer(
-        tryWithCatch._,
+        owner,
         tryWithCatch.a,
         tryWithCatch.b,
         createAndSetupBranch,
       ),
-      tryWithCatch.b.l?.(tryWithCatch._["d" + tryWithCatch.a], [error]);
+      tryWithCatch.b.l?.(owner["d" + tryWithCatch.a], [error]);
   }
 }
 function conditional(nodeAccessor, ...branches) {
