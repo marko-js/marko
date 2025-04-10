@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.28
+
+### Patch Changes
+
+- [#2634](https://github.com/marko-js/marko/pull/2634) [`fa702ed`](https://github.com/marko-js/marko/commit/fa702ed89878bcb96add7011f98e972130fa9292) Thanks [@rturnq](https://github.com/rturnq)! - Prevents error when readable stream is cancelled externally
+
 ## 5.37.27
 
 ### Patch Changes
