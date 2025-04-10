@@ -3,7 +3,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default _$.createTemplate("__tests__/template.marko", input => {
   const $scope0_id = _$.nextScopeId();
   let clickCount = 0;
-  const $childScope = _$.peekNextScope();
+  const $childScope = _$.peekNextScopeId();
   _myButton({
     value: {
       text: clickCount
@@ -11,8 +11,8 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     onClick: _$.register(function () {
       clickCount++;
     }, "__tests__/template.marko_0/onClick", $scope0_id)
-  });
-  const $childScope2 = _$.peekNextScope();
+  }, 1);
+  const $childScope2 = _$.peekNextScopeId();
   _myButton({
     onClick: _$.register(function () {
       clickCount++;
@@ -20,7 +20,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     value: _$.attrTag({
       text: clickCount
     })
-  });
+  }, 1);
   _$.writeScope($scope0_id, {
     clickCount,
     "#childScope/0": _$.writeExistingScope($childScope),

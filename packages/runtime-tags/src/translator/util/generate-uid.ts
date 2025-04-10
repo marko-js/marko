@@ -5,7 +5,6 @@ import { isTranslate } from "./get-compile-stage";
 import { traverse } from "./traverse";
 
 const countsForFile = new WeakMap<t.BabelFile, Map<string, number>>();
-
 export function generateUid(name = "") {
   const file = getFile();
   let counts = countsForFile.get(file);
@@ -42,6 +41,50 @@ export function generateUid(name = "") {
 
 export function generateUidIdentifier(name?: string) {
   return t.identifier(generateUid(name));
+}
+
+const sharedUIDsForFile = new WeakMap<t.BabelFile, Map<string, string>>();
+export function getSharedUid(name: string) {
+  const file = getFile();
+  let sharedUIDs = sharedUIDsForFile.get(file);
+
+  if (!sharedUIDs) {
+    const { cache } = file.markoOpts;
+    const { filename } = file.opts;
+    const cacheKey = `uid-shared:${filename}`;
+    sharedUIDs = cache.get(cacheKey) as typeof sharedUIDs;
+
+    if (sharedUIDs) {
+      if (isTranslate()) {
+        // Translate for DOM does not impact translate HTML
+        // but both inherit the counts from previous stages.
+        sharedUIDs = new Map(sharedUIDs);
+      }
+    } else {
+      sharedUIDs = new Map();
+      if (!isTranslate()) {
+        cache.set(cacheKey, sharedUIDs);
+      }
+    }
+
+    sharedUIDsForFile.set(file, sharedUIDs);
+  }
+
+  let uniqueName = sharedUIDs.get(name);
+  if (!uniqueName) {
+    uniqueName = generateUid(name);
+    sharedUIDs.set(name, uniqueName);
+  }
+
+  return uniqueName;
+}
+
+export function usedSharedUid(name: string) {
+  return !!sharedUIDsForFile.get(getFile())?.has(name);
+}
+
+export function getSharedUidIdentifier(name: string) {
+  return t.identifier(getSharedUid(name));
 }
 
 function getInitialCounts(file: t.BabelFile) {

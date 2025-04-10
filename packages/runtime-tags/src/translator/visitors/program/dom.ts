@@ -2,8 +2,9 @@ import { types as t } from "@marko/compiler";
 import { importDefault } from "@marko/compiler/babel-utils";
 
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
+import { getAccessorProp } from "../../util/get-accessor-char";
 import getStyleFile from "../../util/get-style-file";
-import { map } from "../../util/optional";
+import { toArray } from "../../util/optional";
 import { getSectionInstancesAccessorLiteral } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {
@@ -58,7 +59,7 @@ export default {
             ? t.arrowFunctionExpression(
                 [scopeIdentifier],
                 toFirstExpressionOrBlock(
-                  map(childSection.referencedClosures, (closure) => {
+                  toArray(childSection.referencedClosures, (closure) => {
                     const closureSignal = getSignal(childSection, closure);
                     return t.expressionStatement(
                       t.callExpression(
@@ -66,7 +67,7 @@ export default {
                           ? closureSignal.identifier
                           : t.memberExpression(
                               closureSignal.identifier,
-                              t.identifier("_"),
+                              t.identifier(getAccessorProp().Owner),
                             ),
                         [scopeIdentifier],
                       ),

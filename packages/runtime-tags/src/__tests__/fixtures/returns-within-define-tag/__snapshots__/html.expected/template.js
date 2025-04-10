@@ -25,13 +25,13 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     }, $scope0_id)
   };
   let clickOnceCount = 0;
-  const $dynamicScope = _$.peekNextScope();
+  const $Once_scope = _$.peekNextScopeId();
   const onClickOnce = _$.dynamicTag($scope0_id, "#text/0", Once, {
     value: _$.register(function () {
       clickOnceCount++;
     }, "__tests__/template.marko_0/onClickOnce", $scope0_id)
   }, 0, 0, 1);
-  _$.setTagVar($scope0_id, "#scopeOffset/1", $dynamicScope, "__tests__/template.marko_0_onClickOnce/var");
+  _$.setTagVar($scope0_id, "#scopeOffset/1", $Once_scope, "__tests__/template.marko_0_onClickOnce/var");
   _$.write(`<button class=once>${_$.escapeXML(clickOnceCount)}${_$.markResumeNode($scope0_id, "#text/3")}</button>${_$.markResumeNode($scope0_id, "#button/2")}`);
   const Twice = {
     content: _$.registerContent("__tests__/template.marko_2_renderer", ({
@@ -57,13 +57,13 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     }, $scope0_id)
   };
   let clickTwiceCount = 0;
-  const $dynamicScope2 = _$.peekNextScope();
+  const $Twice_scope = _$.peekNextScopeId();
   const onClickTwice = _$.dynamicTag($scope0_id, "#text/4", Twice, {
     value: _$.register(function () {
       clickTwiceCount++;
     }, "__tests__/template.marko_0/onClickTwice", $scope0_id)
   }, 0, 0, 1);
-  _$.setTagVar($scope0_id, "#scopeOffset/5", $dynamicScope2, "__tests__/template.marko_0_onClickTwice/var");
+  _$.setTagVar($scope0_id, "#scopeOffset/5", $Twice_scope, "__tests__/template.marko_0_onClickTwice/var");
   _$.write(`<button class=twice>${_$.escapeXML(clickTwiceCount)}${_$.markResumeNode($scope0_id, "#text/7")}</button>${_$.markResumeNode($scope0_id, "#button/6")}`);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_onClickTwice");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_onClickOnce");

@@ -17,6 +17,7 @@ export enum AccessorPrefix {
 }
 
 export enum AccessorProp {
+  Owner = "_", // TODO: should be a full name.
   BranchAccessor = "#BranchAccessor",
   CatchContent = "#CatchContent",
   PlaceholderBranch = "#PlaceholderBranch",

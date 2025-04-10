@@ -6,10 +6,10 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _child({
     value: 3
   });
-  const $childScope = _$.peekNextScope();
+  const $childScope = _$.peekNextScopeId();
   _child({
     value: x
-  });
+  }, 1);
   _$.writeScope($scope0_id, {
     "#childScope/1": _$.writeExistingScope($childScope)
   }, "__tests__/template.marko", 0);

@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/tags/2counters.marko", input => {
+export default _$.createTemplate("__tests__/tags/2counters.marko", (input, $serialize) => {
   const $scope0_id = _$.nextScopeId();
   let count1 = input.count1;
   let count2 = input.count2;
@@ -7,10 +7,10 @@ export default _$.createTemplate("__tests__/tags/2counters.marko", input => {
   _$.writeEffect($scope0_id, "__tests__/tags/2counters.marko_0_count2");
   _$.writeEffect($scope0_id, "__tests__/tags/2counters.marko_0_count1");
   _$.writeScope($scope0_id, {
-    input_count1: input.count1,
-    input_count1Change: input.count1Change,
-    input_count2: input.count2,
-    input_count2Change: input.count2Change,
+    input_count1: _$.serializeIf($serialize, 1) && input.count1,
+    input_count1Change: _$.serializeIf($serialize, 0) && input.count1Change,
+    input_count2: _$.serializeIf($serialize, 3) && input.count2,
+    input_count2Change: _$.serializeIf($serialize, 2) && input.count2Change,
     count1,
     count2,
     "TagVariableChange:count1": input.count1Change,

@@ -7,9 +7,10 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.resumeSingleNodeForOf(list, x => {
     const $scope1_id = _$.nextScopeId();
     _$.write(`<li>${_$.escapeXML(x)}${_$.markResumeNode($scope1_id, "#text/0")}</li>`);
+    _$.writeScope($scope1_id, {}, "__tests__/template.marko", "4:4");
   }, function (x) {
     return x;
-  }, $scope0_id, "#ul/0", 1);
+  }, $scope0_id, "#ul/0", 1, 1);
   _$.write(`</ul><button id=toggle>Toggle</button>${_$.markResumeNode($scope0_id, "#button/1")}<button id=reverse>Reverse</button>${_$.markResumeNode($scope0_id, "#button/2")}`);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_list");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_open");

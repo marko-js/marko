@@ -17,6 +17,7 @@ import {
 } from "../util/is-only-child-in-parent";
 import {
   BindingType,
+  bindingUtil,
   dropReferences,
   getAllTagReferenceNodes,
   getScopeAccessorLiteral,
@@ -30,13 +31,12 @@ import {
   getScopeIdIdentifier,
   getSection,
   getSectionForBody,
-  kBranchSerializeReason,
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
 import {
   getBindingSerializeReason,
-  getPropSerializeReason,
+  getSectionSerializeReason,
 } from "../util/serialize-reasons";
 import {
   addValue,
@@ -47,6 +47,7 @@ import {
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
+import { getSerializeGuard } from "../visitors/program/html";
 import { kSkipMark } from "../visitors/tag/native-tag";
 
 type ForType = "in" | "of" | "to";
@@ -134,7 +135,6 @@ export default {
         const tagSection = getSection(tag);
         const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
-        const tagExtra = node.extra!;
         const onlyChildInParentOptimization = isOnlyChildInParent(tag);
         const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
         const forAttrs = getKnownAttrValues(node);
@@ -147,16 +147,11 @@ export default {
           (bodySection.content.singleChild &&
             bodySection.content.startType !== ContentType.Text);
 
-        const branchSerializeReason = getPropSerializeReason(
-          tagSection,
-          tagExtra,
-          kBranchSerializeReason,
-        );
+        const branchSerializeReason = getSectionSerializeReason(bodySection);
         const markerSerializeReason = getBindingSerializeReason(
           tagSection,
           nodeBinding,
         );
-        const serializeReason = branchSerializeReason || markerSerializeReason;
 
         if (markerSerializeReason && onlyChildInParentOptimization) {
           getParentTag(tag)!.node.extra![kSkipMark] = true;
@@ -166,18 +161,31 @@ export default {
         writeHTMLResumeStatements(tagBody);
 
         const forTagArgs = getBaseArgsInForTag(forType, forAttrs);
-        const forTagHTMLRuntime = serializeReason
+        const forTagHTMLRuntime = branchSerializeReason
           ? forTypeToHTMLResumeRuntime(forType, singleNodeOptimization)
           : forTypeToRuntime(forType);
         forTagArgs.push(
           t.arrowFunctionExpression(params, t.blockStatement(bodyStatements)),
         );
 
-        if (serializeReason) {
+        if (branchSerializeReason) {
           forTagArgs.push(
             forAttrs.by || t.numericLiteral(0),
             getScopeIdIdentifier(tagSection),
             getScopeAccessorLiteral(nodeBinding),
+            branchSerializeReason !== true &&
+              markerSerializeReason &&
+              markerSerializeReason !== true &&
+              !bindingUtil.isSuperset(
+                branchSerializeReason,
+                markerSerializeReason,
+              )
+              ? t.logicalExpression(
+                  "||",
+                  getSerializeGuard(branchSerializeReason),
+                  getSerializeGuard(markerSerializeReason),
+                )
+              : getSerializeGuard(branchSerializeReason),
           );
 
           if (onlyChildInParentOptimization) {

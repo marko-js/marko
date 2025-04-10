@@ -6,19 +6,19 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   const $checkedValueChange = _$.register(_new_checkedValue => {
     checkedValue = _new_checkedValue;
   }, "__tests__/template.marko_0/checkedValueChange2", $scope0_id);
-  const $childScope = _$.peekNextScope();
+  const $childScope = _$.peekNextScopeId();
   _checkbox({
     checkedValue: checkedValue,
     checkedValueChange: $checkedValueChange,
     value: "a"
   });
-  const $childScope2 = _$.peekNextScope();
+  const $childScope2 = _$.peekNextScopeId();
   _checkbox({
     checkedValue: checkedValue,
     checkedValueChange: $checkedValueChange,
     value: "b"
   });
-  const $childScope3 = _$.peekNextScope();
+  const $childScope3 = _$.peekNextScopeId();
   _checkbox({
     checkedValue: checkedValue,
     checkedValueChange: $checkedValueChange,

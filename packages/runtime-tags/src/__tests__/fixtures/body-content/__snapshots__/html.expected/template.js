@@ -4,7 +4,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   const $scope0_id = _$.nextScopeId();
   const $clickCount_closures = new Set();
   let clickCount = 0;
-  const $childScope = _$.peekNextScope();
+  const $childScope = _$.peekNextScopeId();
   _FancyButton({
     onClick: _$.register(function () {
       clickCount++;
@@ -18,7 +18,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "2:2"));
       _$.resumeClosestBranch($scope1_id);
     }, $scope0_id)
-  });
+  }, 1);
   _$.writeScope($scope0_id, {
     clickCount,
     "ClosureScopes:clickCount": $clickCount_closures,

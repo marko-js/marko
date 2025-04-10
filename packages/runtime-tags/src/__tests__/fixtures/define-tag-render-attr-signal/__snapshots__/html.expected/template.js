@@ -8,6 +8,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     }) => {
       const $scope1_id = _$.nextScopeId();
       _$.write(`<div>${_$.escapeXML(number)}${_$.markResumeNode($scope1_id, "#text/0")}</div>`);
+      _$.writeScope($scope1_id, {}, "__tests__/template.marko", "2:2");
     }, $scope0_id)
   };
   _$.dynamicTag($scope0_id, "#text/0", MyTag, {

@@ -17,6 +17,7 @@ export enum AccessorPrefix {
 }
 
 export enum AccessorProp {
+  Owner = "_",
   BranchAccessor = "a",
   CatchContent = "b",
   PlaceholderBranch = "c",

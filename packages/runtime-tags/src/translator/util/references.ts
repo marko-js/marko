@@ -1,4 +1,5 @@
 import { types as t } from "@marko/compiler";
+import { getProgram } from "@marko/compiler/babel-utils";
 
 import { forEachIdentifier } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
@@ -28,22 +29,25 @@ import {
   isDynamicClosure,
   isSameOrChildSection,
   isSectionWithHoists,
-  kBranchSerializeReason,
   type Section,
   sectionUtil,
 } from "./sections";
 import {
   addBindingSerializeReason,
   addBindingSerializeReasonExpr,
-  addPropSerializeReasonExpr,
-  addPropSerializeReasonRef,
-  consumeSerializeReasonExprs,
+  addSectionSerializeReason,
+  addSectionSerializeReasonExpr,
+  addSectionSerializeReasonRef,
+  applySerializeReasonExprs,
+  type DynamicSerializeReasons,
+  finalizeSectionSerializeReasons,
   forceBindingSerialize,
-  forcePropSerialize,
+  forceSectionSerialize,
+  getBindingSerializeReason,
   getSerializeSourcesForExpr,
-  getSerializeSourcesForExprs,
   isBindingForceSerialized,
   mergeSerializeReasons,
+  type SerializeReason,
 } from "./serialize-reasons";
 import { getHoistFunctionIdentifier } from "./signals";
 import { createProgramState } from "./state";
@@ -72,7 +76,7 @@ export interface Binding {
   section: Section;
   closureSections: Opt<Section>;
   sources: Opt<Binding>;
-  serializeSources: Opt<InputBinding> | true;
+  serializeSources: undefined | SerializeReason;
   aliases: Set<Binding>;
   hoists: Map<Section, Binding>;
   property: string | undefined;
@@ -552,13 +556,28 @@ function trackReference(
 const [getMergedReferences] = createProgramState(
   () => new Map<t.Node, (t.Node | undefined)[]>(),
 );
-export function mergeReferences(
+export function mergeReferences<T extends t.Node>(
   section: Section,
-  target: t.Node,
+  target: T,
   nodes: (t.Node | undefined)[],
-) {
-  (target.extra ??= {}).section = section;
+): NonNullable<T["extra"]> {
+  const targetExtra = (target.extra ??= {});
+  targetExtra.section = section;
   getMergedReferences().set(target, nodes);
+  return targetExtra;
+}
+
+export function compareSerializeReasons(
+  a: OneMany<InputBinding>,
+  b: OneMany<InputBinding>,
+) {
+  return Array.isArray(a)
+    ? Array.isArray(b)
+      ? compareIntersections(a, b)
+      : -1
+    : Array.isArray(b)
+      ? 1
+      : bindingUtil.compare(a, b);
 }
 
 /**
@@ -691,34 +710,27 @@ export function finalizeReferences() {
   }
 
   forEachSection((section) => {
+    if (isSectionWithHoists(section)) {
+      forceSectionSerialize(section);
+    }
+
     if (
       section.parent &&
       section.isBranch &&
       section.sectionAccessor &&
       section.upstreamExpression
     ) {
-      const tagSection = section.parent;
-      const tagExtra = section.upstreamExpression;
-      const nodeBinding = section.sectionAccessor.binding;
-      if (isSectionWithHoists(section)) {
-        forcePropSerialize(tagSection, tagExtra, kBranchSerializeReason);
-      } else {
-        addPropSerializeReasonRef(
-          tagSection,
-          tagExtra,
-          kBranchSerializeReason,
-          getDirectClosures(section),
-        );
-      }
-      addPropSerializeReasonExpr(
-        tagSection,
-        tagExtra,
-        kBranchSerializeReason,
-        tagExtra,
+      addSectionSerializeReasonRef(section, getDirectClosures(section));
+      addSectionSerializeReasonExpr(section, section.upstreamExpression);
+      addBindingSerializeReasonExpr(
+        section.parent,
+        section.sectionAccessor.binding,
+        section.upstreamExpression,
       );
-      addBindingSerializeReasonExpr(tagSection, nodeBinding, tagExtra);
     }
   });
+
+  forEachSection(applySerializeReasonExprs);
 
   forEachSection((section) => {
     const intersections = intersectionsBySection.get(section);
@@ -761,7 +773,7 @@ export function finalizeReferences() {
       // mark bindings that need to be serialized due to being closed over by stateful sections
       if (!isBindingForceSerialized(closure.section, closure)) {
         const sourceSection = closure.section;
-        let serializeReason: Opt<InputBinding> | true;
+        let serializeReason: undefined | SerializeReason;
         let currentSection = section;
 
         while (currentSection !== sourceSection) {
@@ -783,6 +795,13 @@ export function finalizeReferences() {
         addBindingSerializeReason(closure.section, closure, serializeReason);
       }
 
+      if (closure.sources) {
+        addSectionSerializeReason(
+          closure.section,
+          getBindingSerializeReason(closure.section, closure),
+        );
+      }
+
       if (closure.serializeSources && isDynamicClosure(section, closure)) {
         addBindingSerializeReason(
           closure.section,
@@ -800,20 +819,34 @@ export function finalizeReferences() {
     });
   });
 
+  let inputSerializeReasons: undefined | DynamicSerializeReasons;
   forEachSection((section) => {
-    const serializeReasonExprs = consumeSerializeReasonExprs(section);
-    if (serializeReasonExprs) {
-      for (const [key, exprs] of serializeReasonExprs) {
-        const reason = getSerializeSourcesForExprs(exprs);
-        if (reason) {
-          section.serializeReasons.set(
-            key,
-            mergeSerializeReasons(section.serializeReasons.get(key), reason)!,
-          );
-        }
-      }
+    finalizeSectionSerializeReasons(section);
+
+    if (section.serializeReason && section.serializeReason !== true) {
+      inputSerializeReasons = inputSerializeReasons
+        ? addSorted(
+            compareSerializeReasons,
+            inputSerializeReasons,
+            section.serializeReason,
+          )
+        : [section.serializeReason];
     }
 
+    for (const [, reason] of section.serializeReasons) {
+      if (reason !== true) {
+        inputSerializeReasons = inputSerializeReasons
+          ? addSorted(compareSerializeReasons, inputSerializeReasons, reason)
+          : [reason];
+      }
+    }
+  });
+
+  if (inputSerializeReasons) {
+    getProgram().node.extra!.inputSerializeReasons = inputSerializeReasons;
+  }
+
+  forEachSection((section) => {
     let intersectionIndex = 0;
     const intersections = intersectionsBySection.get(section) || [];
     const { id, bindings } = section;
@@ -905,7 +938,9 @@ function resolveBindingSources(binding: Binding) {
         sources = bindingUtil.add(sources, curBinding);
       }
     } else {
-      onlyInputSources = false;
+      if (binding.type !== BindingType.input) {
+        onlyInputSources = false;
+      }
       sources = bindingUtil.add(sources, binding);
     }
   }

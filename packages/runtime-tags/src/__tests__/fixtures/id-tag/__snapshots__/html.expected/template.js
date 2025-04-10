@@ -4,4 +4,5 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   const x = _$.nextTagId();
   const y = _$.nextTagId();
   _$.write(`<div>${_$.escapeXML(x)}${_$.markResumeNode($scope0_id, "#text/0")}</div>${_$.escapeXML(y)}${_$.markResumeNode($scope0_id, "#text/1")}`);
+  _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 });

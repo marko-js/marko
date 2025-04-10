@@ -6,11 +6,15 @@ import {
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
+import type { AccessorPrefix } from "../../common/accessor.debug";
 import { generateUid, generateUidIdentifier } from "./generate-uid";
 import { isCoreTag } from "./is-core-tag";
-import { filter, find, type OneMany, Sorted } from "./optional";
-import type { Binding, InputBinding, ReferencedBindings } from "./references";
-import { getBindingSerializeReason } from "./serialize-reasons";
+import { filter, find, Sorted } from "./optional";
+import type { Binding, ReferencedBindings } from "./references";
+import {
+  getBindingSerializeReason,
+  type SerializeReason,
+} from "./serialize-reasons";
 import { createSectionState } from "./state";
 import analyzeTagNameType, { TagNameType } from "./tag-name-type";
 
@@ -28,13 +32,14 @@ export interface Section {
   loc: t.SourceLocation | undefined;
   depth: number;
   parent: Section | undefined;
-  sectionAccessor: { binding: Binding; prefix: string } | undefined;
+  sectionAccessor: { binding: Binding; prefix: AccessorPrefix } | undefined;
   params: undefined | Binding;
   referencedClosures: ReferencedBindings;
   referencedHoists: ReferencedBindings;
   bindings: ReferencedBindings;
   hoisted: ReferencedBindings;
-  serializeReasons: Map<symbol, true | OneMany<InputBinding>>;
+  serializeReason: undefined | SerializeReason;
+  serializeReasons: Map<symbol, SerializeReason>;
   isHoistThrough: true | undefined;
   assignments: ReferencedBindings;
   upstreamExpression: t.NodeExtra | undefined;
@@ -58,8 +63,6 @@ declare module "@marko/compiler/dist/types" {
     section?: Section;
   }
 }
-
-export const kBranchSerializeReason = Symbol("serialize branch reason");
 
 export const sectionUtil = new Sorted(function compareSections(
   a: Section,
@@ -100,6 +103,7 @@ export function startSection(
       hoisted: undefined,
       isHoistThrough: undefined,
       assignments: undefined,
+      serializeReason: undefined,
       serializeReasons: new Map(),
       content: getContentInfo(path),
       upstreamExpression: undefined,

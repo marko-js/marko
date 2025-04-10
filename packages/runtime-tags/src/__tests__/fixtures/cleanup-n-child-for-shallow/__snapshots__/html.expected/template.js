@@ -10,15 +10,15 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.write(`<button>Toggle</button>${_$.markResumeNode($scope0_id, "#button/0")}<div></div>${_$.markResumeNode($scope0_id, "#div/1")}`);
   _$.resumeForOf(items, item => {
     const $scope1_id = _$.nextScopeId();
-    const $childScope = _$.peekNextScope();
+    const $childScope = _$.peekNextScopeId();
     _child({
       write: write,
       name: item
-    });
+    }, 1);
     _$.writeScope($scope1_id, {
       "#childScope/0": _$.writeExistingScope($childScope)
     }, "__tests__/template.marko", "7:2");
-  }, 0, $scope0_id, "#text/2");
+  }, 0, $scope0_id, "#text/2", 1);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope($scope0_id, {
     items,

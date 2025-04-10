@@ -60,10 +60,12 @@ export default {
     assertNoAttributes(tag);
     assertNoSpreadAttrs(tag);
     analyzeAttributeTags(tag);
-    const { node } = tag;
     const section = getOrCreateSection(tag);
-    const tagExtra = (tag.node.extra ??= {});
-    const tagBody = tag.get("body");
+    const tagExtra = mergeReferences(
+      section,
+      tag.node,
+      getAllTagReferenceNodes(tag.node),
+    );
     tagExtra[kDOMBinding] = createBinding(
       "#text",
       BindingType.dom,
@@ -72,14 +74,13 @@ export default {
       tagExtra,
     );
 
-    if (!node.body.body.length) {
+    if (!tag.node.body.body.length) {
       throw tag
         .get("name")
         .buildCodeFrameError("The `try` tag requires body content.");
     }
 
-    startSection(tagBody)!;
-    mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
+    startSection(tag.get("body"));
   },
   translate: translateByTarget({
     html: {

@@ -19,7 +19,7 @@ import {
   type AttrTagLookup,
   getAttrTagIdentifier,
 } from "../../util/nested-attribute-tags";
-import { fromIter } from "../../util/optional";
+import { filterMap, fromIter } from "../../util/optional";
 import {
   type Binding,
   BindingType,
@@ -27,6 +27,7 @@ import {
   dropReferences,
   getAllTagReferenceNodes,
   getScopeAccessorLiteral,
+  type InputBinding,
   mergeReferences,
   trackParamsReferences,
   trackVarReferences,
@@ -43,6 +44,7 @@ import {
 } from "../../util/sections";
 import {
   addBindingSerializeReasonExpr,
+  forceSectionSerialize,
   getBindingSerializeReason,
 } from "../../util/serialize-reasons";
 import {
@@ -50,7 +52,6 @@ import {
   addValue,
   getResumeRegisterId,
   initValue,
-  serializeSectionIfNeeded,
   setBindingSerializedValue,
   writeHTMLResumeStatements,
 } from "../../util/signals";
@@ -69,16 +70,25 @@ import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { scopeIdentifier, type TemplateExport } from "../program";
-import { getTemplateContentName } from "../program/html";
+import { getSerializeGuard, getTemplateContentName } from "../program/html";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
+interface InputExpr {
+  known?: Record<string, InputExpr>;
+  value?: t.NodeExtra;
+}
+
 const kChildScopeBinding = Symbol("custom tag child scope");
 const kChildOffsetScopeBinding = Symbol("custom tag scope offset");
+const kChildInputSerializePropIds = Symbol(
+  "custom tag child serialize reasons",
+);
 
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     [kChildScopeBinding]?: Binding;
     [kChildOffsetScopeBinding]?: Binding;
+    [kChildInputSerializePropIds]?: [symbol, ...symbol[]];
   }
 }
 
@@ -117,6 +127,7 @@ export default {
       const hasVar = !!tag.node.var;
 
       if (hasVar) {
+        forceSectionSerialize(section);
         trackVarReferences(tag, BindingType.derived);
         tag.node.var!.extra!.binding!.scopeOffset = tagExtra[
           kChildOffsetScopeBinding
@@ -131,23 +142,58 @@ export default {
       startSection(tagBody);
       trackParamsReferences(tagBody, BindingType.param);
 
-      const childFile = loadFileForTag(tag)!;
+      const childFile = loadFileForTag(tag);
+
+      if (!childFile) {
+        throw tag
+          .get("name")
+          .buildCodeFrameError("Unable to resolve file for tag.");
+      }
+
       if (childFile.opts.filename === tag.hub.file.opts.filename) {
         mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
       } else {
-        const childProgramExtra = childFile.ast.program.extra;
+        const childProgram = childFile.ast.program;
+        const childExtra = childProgram.extra;
+        const childInputBinding = childProgram.params[0].extra?.binding as
+          | undefined
+          | InputBinding;
+        const inputExpr: InputExpr = {};
         analyzeAttrs(
           tagExtra,
           section,
           tag,
-          childProgramExtra?.domExports!.input,
+          childExtra?.domExports!.input,
           attrExprs,
+          inputExpr,
         );
+
+        if (childInputBinding && childExtra.inputSerializeReasons) {
+          const childInputSerializePropIds = (tagExtra[
+            kChildInputSerializePropIds
+          ] = [] as unknown as NonNullable<
+            (typeof tagExtra)[typeof kChildInputSerializePropIds]
+          >);
+          for (const reason of childExtra.inputSerializeReasons) {
+            const propId = Symbol();
+            childInputSerializePropIds.push(propId);
+            addBindingSerializeReasonExpr(
+              section,
+              childScopeBinding,
+              filterMap(reason, (inputBinding) =>
+                resolveChildInputExpr(
+                  childInputBinding,
+                  inputBinding,
+                  inputExpr,
+                ),
+              ),
+              propId,
+            );
+          }
+        }
         // TODO: should check individual inputs to see if they are intersecting with state
         getProgram().node.extra!.hasInteractiveChild =
-          childProgramExtra?.isInteractive ||
-          childProgramExtra?.hasInteractiveChild ||
-          false;
+          childExtra?.isInteractive || childExtra?.hasInteractiveChild || false;
       }
 
       addBindingSerializeReasonExpr(
@@ -194,7 +240,9 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
 
   const tagVar = node.var;
   const section = getSection(tag);
-  const inputExport = loadFileForTag(tag)?.ast.program.extra?.domExports?.input;
+  const childProgram = loadFileForTag(tag)!.ast.program;
+  const childExtra = childProgram.extra;
+  const inputExport = childExtra.domExports?.input;
   const { properties, statements } = inputExport
     ? translateAttrs(tag, inputExport.props)
     : {
@@ -207,12 +255,53 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     section,
     childScopeBinding,
   );
+  const childSerializeReasonIds = tagExtra[kChildInputSerializePropIds];
+  let childSerializeReasonExpr: t.Expression | undefined;
+
+  if (childSerializeReasonIds) {
+    if (childSerializeReasonIds.length === 1) {
+      // Special case single reason to pass either 1 or undefined.
+      childSerializeReasonExpr = getSerializeGuard(
+        getBindingSerializeReason(
+          section,
+          childScopeBinding,
+          childSerializeReasonIds[0],
+        ),
+      );
+    } else {
+      const props: t.ObjectExpression["properties"] = [];
+      let hasDynamicReasons = false;
+      let hasSkippedReasons = false;
+      for (let i = 0; i < childSerializeReasonIds.length; i++) {
+        const reason = getBindingSerializeReason(
+          section,
+          childScopeBinding,
+          childSerializeReasonIds[i],
+        );
+        if (reason) {
+          hasDynamicReasons ||= reason !== true;
+          props.push(
+            t.objectProperty(t.numericLiteral(i), getSerializeGuard(reason)),
+          );
+        } else {
+          hasSkippedReasons = true;
+        }
+      }
+
+      if (props.length) {
+        childSerializeReasonExpr =
+          hasDynamicReasons || hasSkippedReasons
+            ? t.objectExpression(props)
+            : t.numericLiteral(1);
+      }
+    }
+  }
 
   if (childScopeSerializeReason) {
     const peekScopeId = generateUidIdentifier(childScopeBinding?.name);
     tag.insertBefore(
       t.variableDeclaration("const", [
-        t.variableDeclarator(peekScopeId, callRuntime("peekNextScope")),
+        t.variableDeclarator(peekScopeId, callRuntime("peekNextScopeId")),
       ]),
     );
 
@@ -265,6 +354,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
     let renderTagExpr: t.Expression = callExpression(
       tagIdentifier,
       propsToExpression(properties),
+      childSerializeReasonExpr,
     );
 
     if (tagVar) {
@@ -282,12 +372,19 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   } else if (tagVar) {
     translateVar(
       tag,
-      callExpression(tagIdentifier, propsToExpression(properties)),
+      callExpression(
+        tagIdentifier,
+        propsToExpression(properties),
+        childSerializeReasonExpr,
+      ),
     );
-    serializeSectionIfNeeded(section, true); // TODO should be based on if tag var definition is stateful.
   } else {
     statements.push(
-      callStatement(tagIdentifier, propsToExpression(properties)),
+      callStatement(
+        tagIdentifier,
+        propsToExpression(properties),
+        childSerializeReasonExpr,
+      ),
     );
   }
 
@@ -410,6 +507,7 @@ function analyzeAttrs(
   tag: t.NodePath<t.MarkoTag>,
   templateExport: TemplateExport | undefined,
   rootAttrExprs: Set<t.NodeExtra>,
+  inputExpr: InputExpr,
 ) {
   if (!templateExport) {
     dropReferences(getAllTagReferenceNodes(tag.node));
@@ -417,17 +515,15 @@ function analyzeAttrs(
   }
 
   if (!templateExport.props || tag.node.arguments?.length) {
-    mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
+    inputExpr.value = mergeReferences(
+      section,
+      tag.node,
+      getAllTagReferenceNodes(tag.node),
+    );
     return;
   }
 
-  const bodySection = getSectionForBody(tag.get("body"));
-  if (bodySection) {
-    bodySection.downstreamBinding = (
-      templateExport.props.content || templateExport.props
-    ).binding;
-  }
-
+  const known: NonNullable<InputExpr["known"]> = (inputExpr.known = {});
   const attrTagLookup = analyzeAttributeTags(tag);
   const seen = new Set<string>();
   if (attrTagLookup) {
@@ -473,6 +569,7 @@ function analyzeAttrs(
                 child,
                 childAttrExports,
                 rootAttrExprs,
+                (known[attrTagMeta.name] = {}),
               );
             } else {
               analyzeDynamicChildGroup(attrTagMeta.group, child);
@@ -499,12 +596,31 @@ function analyzeAttrs(
       }
     }
 
-    for (const {
-      firstTag: { node },
-      referenceNodes,
-    } of nodeReferencesByGroup.values()) {
-      mergeReferences(section, node, referenceNodes);
-      rootAttrExprs.add(node.extra!);
+    for (const [
+      group,
+      {
+        firstTag: { node },
+        referenceNodes,
+      },
+    ] of nodeReferencesByGroup) {
+      const groupExtra = mergeReferences(section, node, referenceNodes);
+      const groupKnownValue: InputExpr = { value: groupExtra };
+      rootAttrExprs.add(groupExtra);
+
+      for (const name of group) {
+        known[attrTagLookup[name].name] = groupKnownValue;
+      }
+    }
+  }
+
+  if (!seen.has("content")) {
+    const bodySection = getSectionForBody(tag.get("body"));
+    if (bodySection) {
+      seen.add("content");
+      known.content = { value: undefined }; // Should probably be default params extra.
+      bodySection.downstreamBinding = (
+        templateExport.props.content || templateExport.props
+      ).binding;
     }
   }
 
@@ -527,12 +643,14 @@ function analyzeAttrs(
     } else if (t.isMarkoSpreadAttribute(attr)) {
       spreadReferenceNodes = [attr.value];
     } else {
-      rootAttrExprs.add((attr.value.extra ??= {}));
+      const attrValueExtra = (attr.value.extra ??= {});
+      known[attr.name] = { value: attrValueExtra };
+      rootAttrExprs.add(attrValueExtra);
     }
   }
 
   if (spreadReferenceNodes) {
-    mergeReferences(section, tag.node, spreadReferenceNodes);
+    inputExpr.value = mergeReferences(section, tag.node, spreadReferenceNodes);
   }
 }
 
@@ -856,6 +974,37 @@ function importOrSelfReferenceName(
   }
 
   return importNamed(file, request, name, nameHint);
+}
+
+function resolveChildInputExpr(
+  inputBinding: InputBinding,
+  propBinding: InputBinding,
+  expr: InputExpr | undefined,
+) {
+  if (expr) {
+    let curExpr = expr;
+
+    if (inputBinding !== propBinding) {
+      const props = [propBinding.property!];
+      let curBinding = propBinding;
+      while (
+        inputBinding !== (curBinding = curBinding.upstreamAlias as InputBinding)
+      ) {
+        props.push(curBinding.property!);
+      }
+
+      for (let i = props.length; i--; ) {
+        const nestedExpr = curExpr.known?.[props[i]];
+        if (nestedExpr) {
+          curExpr = nestedExpr;
+        } else {
+          break;
+        }
+      }
+    }
+
+    return curExpr.value;
+  }
 }
 
 function isCircularRequest(file: t.BabelFile, request: string) {

@@ -10,6 +10,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     _$.fork($scope1_id, "#text/0", resolveAfter(clickCount, 1), value => {
       const $scope3_id = _$.nextScopeId();
       _$.write(`${_$.escapeXML(value)}${_$.markResumeNode($scope3_id, "#text/0")}`);
+      _$.writeScope($scope3_id, {}, "__tests__/template.marko", "7:4");
     });
     _$.writeSubscribe($clickCount_closures, _$.writeScope($scope1_id, {
       _: _$.ensureScopeWithId($scope0_id),

@@ -1,6 +1,6 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
-export default _$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", (input, $serialize) => {
   const $scope0_id = _$.nextScopeId();
   const $hoisted_el = _$.hoist($scope0_id, "__tests__/template.marko_0_$hoisted_el/hoist");
   _$.resumeConditional(() => {
@@ -17,14 +17,14 @@ export default _$.createTemplate("__tests__/template.marko", input => {
           _$.writeScope($scope2_id, {}, "__tests__/template.marko", "2:4");
           return 0;
         }
-      }, $scope1_id, "#text/0", 1);
+      }, $scope1_id, "#text/0", 1, _$.serializeGuard($serialize, 0));
       _$.writeScope($scope1_id, {
         _: _$.ensureScopeWithId($scope0_id)
       }, "__tests__/template.marko", "1:2");
       return 0;
     }
-  }, $scope0_id, "#text/0", 1);
-  const $childScope = _$.peekNextScope();
+  }, $scope0_id, "#text/0", 1, _$.serializeGuard($serialize, 0));
+  const $childScope = _$.peekNextScopeId();
   _child({
     value: $hoisted_el
   });
@@ -40,7 +40,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   }, $scope0_id, "#text/2");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0");
   _$.writeScope($scope0_id, {
-    input_show: input.show,
+    input_show: _$.serializeIf($serialize, 0) && input.show,
     "#childScope/1": _$.writeExistingScope($childScope)
   }, "__tests__/template.marko", 0, {
     input_show: ["input.show"]

@@ -11,25 +11,25 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.resumeSingleNodeForOf(items, outerItem => {
     const $scope1_id = _$.nextScopeId();
     _$.write("<div>");
-    const $childScope = _$.peekNextScope();
+    const $childScope = _$.peekNextScopeId();
     _child({
       write: write,
       name: `${outerItem}`
-    });
+    }, 1);
     _$.resumeSingleNodeForOf(items, middleItem => {
       const $scope2_id = _$.nextScopeId();
       _$.write("<div>");
-      const $childScope2 = _$.peekNextScope();
+      const $childScope2 = _$.peekNextScopeId();
       _child({
         write: write,
         name: `${outerItem}.${middleItem}`
-      });
+      }, 1);
       _$.write("</div>");
       _$.writeScope($scope2_id, {
         "#childScope/0": _$.writeExistingScope($childScope2),
         _: _$.ensureScopeWithId($scope1_id)
       }, "__tests__/template.marko", "10:6");
-    }, 0, $scope1_id, "#text/1");
+    }, 0, $scope1_id, "#text/1", 1);
     _$.write("</div>");
     _$.writeScope($scope1_id, {
       outerItem,
@@ -38,7 +38,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     }, "__tests__/template.marko", "7:2", {
       outerItem: "7:6"
     });
-  }, 0, $scope0_id, "#text/2");
+  }, 0, $scope0_id, "#text/2", 1);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope($scope0_id, {
     items,

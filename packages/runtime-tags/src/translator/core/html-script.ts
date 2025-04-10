@@ -434,13 +434,12 @@ export default {
 
       write`</script>`;
 
-      const serializeMarkerReason = getBindingSerializeReason(
-        tagSection,
-        nodeBinding,
-      );
-
-      if (serializeMarkerReason) {
-        writer.markNode(tag, nodeBinding);
+      if (nodeBinding) {
+        writer.markNode(
+          tag,
+          nodeBinding,
+          getBindingSerializeReason(tagSection, nodeBinding),
+        );
       }
 
       walks.exit(tag);

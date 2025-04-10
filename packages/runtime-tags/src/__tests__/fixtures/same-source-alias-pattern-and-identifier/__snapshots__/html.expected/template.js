@@ -1,5 +1,5 @@
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
+export default _$.createTemplate("__tests__/template.marko", (input, $serialize) => {
   const $scope0_id = _$.nextScopeId();
   const {
     a: {
@@ -12,5 +12,6 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   const {
     b: c
   } = a;
-  _$.write(`<button>${_$.escapeXML(b)}${_$.markResumeNode($scope0_id, "#text/0")} <!>${_$.escapeXML(c)}${_$.markResumeNode($scope0_id, "#text/1")}</button>`);
+  _$.write(`<button>${_$.escapeXML(b)}${_$.markResumeNode($scope0_id, "#text/0", _$.serializeGuard($serialize, 1))} ${_$.commentSeparator(_$.serializeGuard($serialize, 2))}${_$.escapeXML(c)}${_$.markResumeNode($scope0_id, "#text/1", _$.serializeGuard($serialize, 2))}</button>`);
+  _$.serializeGuard($serialize, 0) && _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 });

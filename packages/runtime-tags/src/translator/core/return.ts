@@ -16,7 +16,8 @@ import { getParentTag } from "../util/get-parent-tag";
 import { isControlFlowTag } from "../util/is-core-tag";
 import { importRuntime } from "../util/runtime";
 import { getSection } from "../util/sections";
-import { addValue, setSerializedValue } from "../util/signals";
+import { forceSectionSerialize } from "../util/serialize-reasons";
+import { addValue, setSectionSerializedValue } from "../util/signals";
 import { createSectionState } from "../util/state";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
@@ -61,10 +62,19 @@ export default {
       tagsWithReturn.add(tag.parentPath);
     }
 
-    if (!getKnownAttrValues(tag.node).value) {
+    const attrs = getKnownAttrValues(tag.node);
+    if (!attrs.value) {
       throw tag
         .get("name")
         .buildCodeFrameError("The `return` tag requires a value.");
+    }
+
+    if (attrs.valueChange) {
+      // TODO: this should be based on the child actually mutating the tag variable.
+      forceSectionSerialize(
+        getSection(tag),
+        getAccessorProp().TagVariableChange,
+      );
     }
   },
   translate: translateByTarget({
@@ -75,8 +85,7 @@ export default {
         writer.flushBefore(tag);
 
         if (attrs.valueChange) {
-          // TODO: this should be based on the child actually mutating the tag variable.
-          setSerializedValue(
+          setSectionSerializedValue(
             section,
             getAccessorProp().TagVariableChange,
             attrs.valueChange,

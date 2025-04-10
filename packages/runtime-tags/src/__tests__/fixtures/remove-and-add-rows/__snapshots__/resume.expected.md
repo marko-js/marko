@@ -5,17 +5,8 @@
   <head />
   <body>
     <div>
-      a
-      <!--M_*2 #text/0-->
-      b
-      <!--M_*3 #text/0-->
-      c
-      <!--M_*4 #text/0-->
-      <!--M_=1 #div/0 4 3 2-->
+      abc
     </div>
-    <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e=[0,{"LoopScopeMap:#div/0":new Map(_.a=[[1,_.b={}],[2,_.c={}],[3,_.d={}]])},_.b,_.c,_.d])]
-    </script>
   </body>
 </html>
 ```

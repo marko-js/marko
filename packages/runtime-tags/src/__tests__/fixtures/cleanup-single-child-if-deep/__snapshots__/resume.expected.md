@@ -31,16 +31,13 @@ Inner mounted
     <div>
       <p>
         Outer
-        <!--M_*3 #text/0-->
       </p>
       <div>
         <p>
           Middle
-          <!--M_*5 #text/0-->
         </p>
         <p>
           Inner
-          <!--M_*7 #text/0-->
         </p>
         <!--M_|4 #text/1 6-->
       </div>
@@ -100,12 +97,10 @@ Inner destroyed
     <div>
       <p>
         Outer
-        <!--M_*3 #text/0-->
       </p>
       <div>
         <p>
           Middle
-          <!--M_*5 #text/0-->
         </p>
         <!--M_|4 #text/1 6-->
       </div>
@@ -166,7 +161,6 @@ Middle destroyed
     <div>
       <p>
         Outer
-        <!--M_*3 #text/0-->
       </p>
       <!--M_|2 #text/1 4-->
     </div>

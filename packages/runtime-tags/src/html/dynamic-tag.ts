@@ -5,7 +5,7 @@ import {
   controllable_select_value,
   controllable_textarea_value,
 } from "./attrs";
-import type { ServerRenderer } from "./template";
+import { isTemplate, type ServerRenderer } from "./template";
 import {
   getState,
   nextScopeId,
@@ -32,7 +32,7 @@ export let dynamicTag = (
   inputOrArgs: unknown,
   content?: (() => void) | 0,
   inputIsArgs?: 1,
-  resume?: 1,
+  shouldResume?: 1 | 0,
 ) => {
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
 
@@ -58,7 +58,7 @@ export let dynamicTag = (
     write(`<${renderer}${attrs(input, accessor, scopeId, renderer)}>`);
 
     if (!voidElementsReg.test(renderer)) {
-      withBranchId(branchId, () => {
+      const renderNativeTag = () => {
         if (renderer === "textarea") {
           if (MARKO_DEBUG && content) {
             throw new Error(
@@ -89,13 +89,19 @@ export let dynamicTag = (
             content();
           }
         }
-      });
+      };
+
+      if (shouldResume) {
+        withBranchId(branchId, renderNativeTag);
+      } else {
+        renderNativeTag();
+      }
       write(`</${renderer}>`);
     } else if (MARKO_DEBUG && content) {
       throw new Error(`Body content is not supported for a "${renderer}" tag.`);
     }
 
-    if (resume) {
+    if (shouldResume) {
       write(
         state.mark(
           ResumeSymbol.BranchSingleNode,
@@ -106,11 +112,23 @@ export let dynamicTag = (
 
     // TODO: this needs to set result the element getter
   } else {
-    if (resume) {
+    if (shouldResume) {
       write(state.mark(ResumeSymbol.BranchStart, branchId + ""));
     }
-    result = withBranchId(branchId, () => {
+
+    const render = () => {
       if (renderer) {
+        if (isTemplate(renderer)) {
+          const input = inputIsArgs
+            ? (inputOrArgs as unknown[])[0]
+            : inputOrArgs;
+          return renderer(
+            content
+              ? { ...(input as Record<string, unknown>), content }
+              : input,
+            shouldResume,
+          );
+        }
         return inputIsArgs
           ? renderer(...(inputOrArgs as unknown[]))
           : renderer(
@@ -121,16 +139,17 @@ export let dynamicTag = (
       } else if (content) {
         return content();
       }
-    });
+    };
+    result = shouldResume ? withBranchId(branchId, render) : render();
 
-    if (resume) {
+    if (shouldResume) {
       write(state.mark(ResumeSymbol.BranchEnd, scopeId + " " + accessor));
     }
   }
 
   const rendered = peekNextScopeId() !== branchId;
   if (rendered) {
-    if (resume) {
+    if (shouldResume) {
       writeScope(scopeId, {
         [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
         [AccessorPrefix.ConditionalRenderer + accessor]:

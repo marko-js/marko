@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div a=0 b=1></div><!--M_*1 #div/0--><script>WALKER_RUNTIME("M")("_")</script>
+  <div a=0 b=1></div>
 ```
 
 # Render End
@@ -12,10 +12,6 @@
       a="0"
       b="1"
     />
-    <!--M_*1 #div/0-->
-    <script>
-      WALKER_RUNTIME("M")("_")
-    </script>
   </body>
 </html>
 ```
@@ -26,7 +22,4 @@ INSERT html
 INSERT html/head
 INSERT html/body
 INSERT html/body/div
-INSERT html/body/#comment
-INSERT html/body/script
-INSERT html/body/script/#text
 ```

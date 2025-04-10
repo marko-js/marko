@@ -13,14 +13,20 @@ import {
   isOutputDOM,
   isOutputHTML,
 } from "../../util/marko-config";
+import { findIndexSorted } from "../../util/optional";
 import {
   type Binding,
   BindingType,
+  compareSerializeReasons,
   finalizeReferences,
   trackParamsReferences,
 } from "../../util/references";
 import { getCompatRuntimeFile } from "../../util/runtime";
 import { startSection } from "../../util/sections";
+import type {
+  DynamicSerializeReason,
+  DynamicSerializeReasons,
+} from "../../util/serialize-reasons";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
 import programHTML from "./html";
@@ -40,12 +46,12 @@ export type TemplateExports = TemplateExport["props"];
 
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
+    inputSerializeReasons?: DynamicSerializeReasons;
     domExports?: {
       template: string;
       walks: string;
       setup: string;
       input: TemplateExport | undefined;
-      closures: string;
     };
   }
 }
@@ -64,18 +70,18 @@ export default {
       startSection(program);
       trackParamsReferences(program, BindingType.input);
 
+      const programExtra = (program.node.extra ??= {});
       const inputBinding = program.node.params[0].extra?.binding;
       if (inputBinding) {
         inputBinding.nullable = false;
       }
 
       // TODO: make any exports undefined if they are noops/empty
-      (program.node.extra ??= {}).domExports = {
+      programExtra.domExports = {
         template: generateUid("template"),
         walks: generateUid("walks"),
         setup: generateUid("setup"),
         input: undefined, // TODO look into recursive components with fine grained params.
-        closures: generateUid("closures"),
       };
     },
 
@@ -149,6 +155,23 @@ export default {
     },
   },
 } satisfies TemplateVisitor<t.Program>;
+
+export function resolveSerializeReasonId(
+  inputSerializeReasons: DynamicSerializeReasons,
+  reason: DynamicSerializeReason,
+) {
+  const id = findIndexSorted(
+    compareSerializeReasons,
+    inputSerializeReasons,
+    reason,
+  );
+
+  if (id === -1) {
+    throw new Error("Unable to resolve serialize reason against input");
+  }
+
+  return id;
+}
 
 function resolveRelativeToEntry(
   entryFile: t.BabelFile,

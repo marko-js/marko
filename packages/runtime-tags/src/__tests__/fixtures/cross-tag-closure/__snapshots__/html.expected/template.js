@@ -4,7 +4,7 @@ import _myTag from "./tags/my-tag.marko";
 export default _$.createTemplate("__tests__/template.marko", input => {
   const $scope0_id = _$.nextScopeId();
   const $count_closures = new Set();
-  const $childScope = _$.peekNextScope();
+  const $childScope = _$.peekNextScopeId();
   const count = _myLet({
     value: 0
   });

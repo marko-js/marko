@@ -10,10 +10,10 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       _$.write("<span>The thing</span>");
     })
   };
-  const $childScope = _$.peekNextScope();
+  const $childScope = _$.peekNextScopeId();
   _child({
     thing: myThing
-  });
+  }, 1);
   _$.write(`<button>Toggle</button>${_$.markResumeNode($scope0_id, "#button/1")}`);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_selected");
   _$.writeScope($scope0_id, {

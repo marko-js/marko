@@ -83,11 +83,11 @@ export function withContext<T>(key: PropertyKey, value: unknown, cb: () => T) {
 export function setTagVar(
   parentScopeId: number,
   scopeOffsetAccessor: Accessor,
-  childScope: PartialScope,
+  childScopeId: number,
   registryId: string,
 ) {
   ensureScopeWithId(parentScopeId)[scopeOffsetAccessor] = nextScopeId();
-  childScope[AccessorProp.TagVariable] = register(
+  ensureScopeWithId(childScopeId)[AccessorProp.TagVariable] = register(
     {},
     registryId,
     parentScopeId,
@@ -120,20 +120,40 @@ export function peekNextScopeId() {
   return $chunk.boundary.state.scopeId;
 }
 
-export function peekNextScope() {
-  return ensureScopeWithId(peekNextScopeId());
-}
-
 export function getScopeById(scopeId: number | undefined) {
   if (scopeId !== undefined) {
     return $chunk.boundary.state.scopes.get(scopeId);
   }
 }
 
-export function markResumeNode(scopeId: number, accessor: Accessor) {
+export function serializeIf(
+  condition: undefined | 1 | Record<string, 1>,
+  key: string,
+) {
+  return condition && (condition === 1 || condition[key]) ? 1 : undefined;
+}
+
+export function serializeGuard(
+  condition: undefined | 1 | Record<string, 1>,
+  key: string,
+) {
+  return condition && (condition === 1 || condition[key]) ? 1 : 0;
+}
+
+export function markResumeNode(
+  scopeId: number,
+  accessor: Accessor,
+  shouldResume?: 0 | 1,
+) {
+  if (shouldResume === 0) return "";
+
   const { state } = $chunk.boundary;
   state.needsMainRuntime = true;
   return state.mark(ResumeSymbol.Node, scopeId + " " + accessor);
+}
+
+export function commentSeparator(shouldResume: 0 | 1) {
+  return shouldResume === 0 ? "" : "<!>";
 }
 
 export function nodeRef(scopeId: number, id?: string) {
@@ -174,7 +194,12 @@ export function resumeForOf(
   by: Falsy | ((item: unknown, index: number) => unknown),
   scopeId: number,
   accessor: Accessor,
+  serializeBranch?: 0 | 1,
 ): void {
+  if (serializeBranch === 0) {
+    return forOf(list, cb);
+  }
+
   const loopScopes = new Map<unknown, ScopeInternals>();
   forOf(list, (item, index) => {
     const branchId = peekNextScopeId();
@@ -209,8 +234,13 @@ export function resumeSingleNodeForOf(
   by: Falsy | ((item: unknown, index: number) => unknown),
   scopeId: number,
   accessor: Accessor,
+  serializeBranch?: 0 | 1,
   onlyChildInParent?: 1,
 ): void {
+  if (serializeBranch === 0) {
+    return forOf(list, cb);
+  }
+
   const loopScopes = new Map<unknown, ScopeInternals>();
   let branchIds = "";
   forOf(list, (item, index) => {
@@ -254,7 +284,12 @@ export function resumeForIn(
   by: Falsy | ((key: string, v: unknown) => unknown),
   scopeId: number,
   accessor: Accessor,
+  serializeBranch?: 0 | 1,
 ): void {
+  if (serializeBranch === 0) {
+    return forIn(obj, cb);
+  }
+
   const loopScopes = new Map<unknown, ScopeInternals>();
   let sep = "";
   forIn(obj, (key, value) => {
@@ -287,8 +322,13 @@ export function resumeSingleNodeForIn(
   by: Falsy | ((key: string, v: unknown) => unknown),
   scopeId: number,
   accessor: Accessor,
+  serializeBranch?: 0 | 1,
   onlyChild?: 1,
 ): void {
+  if (serializeBranch === 0) {
+    return forIn(obj, cb);
+  }
+
   const loopScopes = new Map<unknown, ScopeInternals>();
   let branchIds = "";
   forIn(obj, (key, value) => {
@@ -330,7 +370,12 @@ export function resumeForTo(
   by: Falsy | ((v: number) => unknown),
   scopeId: number,
   accessor: Accessor,
+  serializeBranch?: 0 | 1,
 ): void {
+  if (serializeBranch === 0) {
+    return forTo(to, from, step, cb);
+  }
+
   const loopScopes = new Map<unknown, ScopeInternals>();
   let sep = "";
   forTo(to, from, step, (index) => {
@@ -365,8 +410,13 @@ export function resumeSingleNodeForTo(
   by: Falsy | ((v: number) => unknown),
   scopeId: number,
   accessor: Accessor,
+  serializeBranch?: 0 | 1,
   onlyChild?: 1,
 ): void {
+  if (serializeBranch === 0) {
+    return forTo(to, from, step, cb);
+  }
+
   const loopScopes = new Map<unknown, ScopeInternals>();
   let branchIds = "";
   forTo(to, from, step, (index) => {
@@ -404,10 +454,15 @@ export function resumeConditional(
   cb: () => void | number,
   scopeId: number,
   accessor: Accessor,
-  dynamic?: 1,
+  serializeBranch?: 0 | 1,
+  serializeMarker?: 1,
 ) {
+  if (serializeBranch === 0) {
+    return cb();
+  }
+
   const branchId = peekNextScopeId();
-  if (dynamic) {
+  if (serializeMarker) {
     $chunk.writeHTML(
       $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + ""),
     );
@@ -417,7 +472,7 @@ export function resumeConditional(
 
   if (branchIndex !== undefined) {
     writeScope(scopeId, {
-      [AccessorPrefix.ConditionalRenderer + accessor]: dynamic
+      [AccessorPrefix.ConditionalRenderer + accessor]: serializeMarker
         ? branchIndex
         : undefined,
       [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
@@ -426,7 +481,7 @@ export function resumeConditional(
     nextScopeId();
   }
 
-  if (dynamic) {
+  if (serializeMarker) {
     $chunk.writeHTML(
       $chunk.boundary.state.mark(
         ResumeSymbol.BranchEnd,
@@ -440,16 +495,21 @@ export function resumeSingleNodeConditional(
   cb: () => void | number,
   scopeId: number,
   accessor: Accessor,
-  dynamic?: 0 | 1,
+  serializeBranch?: 0 | 1,
+  serializeMarker?: 0 | 1,
   onlyChild?: 1,
 ) {
+  if (serializeBranch === 0) {
+    return cb();
+  }
+
   const branchId = peekNextScopeId();
   const branchIndex = withBranchId(branchId, cb);
   const rendered = branchIndex !== undefined;
 
   if (rendered) {
     writeScope(scopeId, {
-      [AccessorPrefix.ConditionalRenderer + accessor]: dynamic
+      [AccessorPrefix.ConditionalRenderer + accessor]: serializeMarker
         ? branchIndex
         : undefined,
       [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
@@ -458,7 +518,7 @@ export function resumeSingleNodeConditional(
     nextScopeId();
   }
 
-  if (dynamic) {
+  if (serializeMarker) {
     $chunk.writeHTML(
       $chunk.boundary.state.mark(
         onlyChild
@@ -514,8 +574,8 @@ if (MARKO_DEBUG) {
 
 export { writeScope };
 
-export function writeExistingScope(scope: ScopeInternals) {
-  return writeScope(scope[K_SCOPE_ID]!, scope);
+export function writeExistingScope(scopeId: number) {
+  return writeScope(scopeId, ensureScopeWithId(scopeId));
 }
 
 export function ensureScopeWithId(scopeId: number) {

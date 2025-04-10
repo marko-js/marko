@@ -3,7 +3,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default _$.createTemplate("__tests__/template.marko", input => {
   const $scope0_id = _$.nextScopeId();
   let checked = false;
-  const $childScope = _$.peekNextScope();
+  const $childScope = _$.peekNextScopeId();
   _checkbox({
     checked: checked,
     checkedChange: _$.register(_new_checked => {

@@ -11,14 +11,18 @@ import { getAccessorPrefix } from "../util/get-accessor-char";
 import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
-  getScopeAccessor,
   mergeReferences,
   trackVarReferences,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getScopeExpression } from "../util/scope-read";
 import { getOrCreateSection, getSection } from "../util/sections";
-import { addValue, initValue, setSerializedValue } from "../util/signals";
+import { forceBindingSerialize } from "../util/serialize-reasons";
+import {
+  addValue,
+  initValue,
+  setBindingSerializedValue,
+} from "../util/signals";
 import translateVar from "../util/translate-var";
 
 declare module "@marko/compiler/dist/types" {
@@ -85,12 +89,25 @@ export default {
         );
     }
 
-    mergeReferences(getOrCreateSection(tag), tag.node, [
-      valueAttr?.value,
-      valueChangeAttr?.value,
-    ]);
+    trackVarReferences(
+      tag,
+      BindingType.let,
+      undefined,
+      mergeReferences(getOrCreateSection(tag), tag.node, [
+        valueAttr?.value,
+        valueChangeAttr?.value,
+      ]),
+    );
 
-    trackVarReferences(tag, BindingType.let, undefined, tag.node.extra);
+    const binding = tagVar.extra!.binding!;
+    if (valueChangeAttr) {
+      // TODO: could be based on if there are actually assignments.
+      forceBindingSerialize(
+        getSection(tag),
+        binding,
+        getAccessorPrefix().TagVariableChange,
+      );
+    }
   },
   translate: {
     exit(tag) {
@@ -126,11 +143,11 @@ export default {
         translateVar(tag, valueAttr.value, "let");
 
         if (valueChangeAttr) {
-          // TODO: could be based on if there are actually assignments.
-          setSerializedValue(
+          setBindingSerializedValue(
             section,
-            getAccessorPrefix().TagVariableChange + getScopeAccessor(binding),
+            binding,
             valueChangeAttr.value,
+            getAccessorPrefix().TagVariableChange,
           );
         }
       }

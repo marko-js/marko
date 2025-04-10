@@ -10,7 +10,7 @@
 
 # Write
 ```html
-  <!--M_!b--><!--M_]1 #text/0-->d<!--M_[3-->e<!--M_]1 #text/1-->f<style M_>t{display:none}</style><t M_=b>ERROR!<!--M_*4 #text/0--></t><script>REORDER_RUNTIME(M._);M._.w()</script>
+  <!--M_!b--><!--M_]1 #text/0-->d<!--M_[3-->e<!--M_]1 #text/1-->f<style M_>t{display:none}</style><t M_=b>ERROR!<!--M_*4 #text/0--></t><script>M._.r.push(_=>(_.f=[{}]));REORDER_RUNTIME(M._);M._.w()</script>
 ```
 
 # Render End
@@ -35,7 +35,7 @@
     <!--M_]1 #text/1-->
     f
     <script>
-      REORDER_RUNTIME(M._);M._.w()
+      M._.r.push(_=&gt;(_.f=[{}]));REORDER_RUNTIME(M._);M._.w()
     </script>
   </body>
 </html>

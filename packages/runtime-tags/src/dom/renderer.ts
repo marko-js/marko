@@ -1,5 +1,6 @@
 import {
   type Accessor,
+  AccessorProp,
   type BranchScope,
   NodeType,
   type Scope,
@@ -32,7 +33,7 @@ export function createBranch(
 ) {
   const branch = createScope($global) as BranchScope;
   const parentBranch = parentScope?.___closestBranch;
-  branch._ = (renderer as Renderer).___owner || parentScope;
+  branch[AccessorProp.Owner] = (renderer as Renderer).___owner || parentScope;
   branch.___closestBranch = branch;
 
   if (parentBranch) {

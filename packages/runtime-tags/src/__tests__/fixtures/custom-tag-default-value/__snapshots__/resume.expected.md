@@ -1,12 +1,9 @@
 # Render
 ```html
-<!---->
 <html>
   <head />
   <body>
-    3
-    <!--M_*2 #text/0-->
-     
+    3 
     <!---->
     y
     <!--M_*3 #text/0-->

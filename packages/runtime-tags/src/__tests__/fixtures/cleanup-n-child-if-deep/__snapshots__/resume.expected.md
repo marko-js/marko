@@ -30,51 +30,33 @@ Inner mounted
     <!--M_*1 #pre/3-->
     <div>
       <div>
-        Outer
-        <!--M_*3 #text/0-->
-         a
+        Outer a
       </div>
       <span>
-        Outer
-        <!--M_*3 #text/1-->
-         a
+        Outer a
       </span>
       <p>
-        Outer
-        <!--M_*3 #text/2-->
-         a
+        Outer a
       </p>
       <div>
         <div>
-          Middle
-          <!--M_*5 #text/0-->
-           a
+          Middle a
         </div>
         <span>
-          Middle
-          <!--M_*5 #text/1-->
-           a
+          Middle a
         </span>
         <p>
-          Middle
-          <!--M_*5 #text/2-->
-           a
+          Middle a
         </p>
         <!--M_[6-->
         <div>
-          Inner
-          <!--M_*7 #text/0-->
-           a
+          Inner a
         </div>
         <span>
-          Inner
-          <!--M_*7 #text/1-->
-           a
+          Inner a
         </span>
         <p>
-          Inner
-          <!--M_*7 #text/2-->
-           a
+          Inner a
         </p>
         <!--M_]4 #text/1-->
       </div>
@@ -133,35 +115,23 @@ Inner destroyed
     <!--M_*1 #pre/3-->
     <div>
       <div>
-        Outer
-        <!--M_*3 #text/0-->
-         a
+        Outer a
       </div>
       <span>
-        Outer
-        <!--M_*3 #text/1-->
-         a
+        Outer a
       </span>
       <p>
-        Outer
-        <!--M_*3 #text/2-->
-         a
+        Outer a
       </p>
       <div>
         <div>
-          Middle
-          <!--M_*5 #text/0-->
-           a
+          Middle a
         </div>
         <span>
-          Middle
-          <!--M_*5 #text/1-->
-           a
+          Middle a
         </span>
         <p>
-          Middle
-          <!--M_*5 #text/2-->
-           a
+          Middle a
         </p>
         <!--M_]4 #text/1-->
       </div>
@@ -224,19 +194,13 @@ Middle destroyed
     <!--M_*1 #pre/3-->
     <div>
       <div>
-        Outer
-        <!--M_*3 #text/0-->
-         a
+        Outer a
       </div>
       <span>
-        Outer
-        <!--M_*3 #text/1-->
-         a
+        Outer a
       </span>
       <p>
-        Outer
-        <!--M_*3 #text/2-->
-         a
+        Outer a
       </p>
       <!--M_|2 #text/1 4-->
     </div>

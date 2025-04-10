@@ -6,6 +6,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     content: _$.registerContent("__tests__/template.marko_1_renderer", count => {
       const $scope1_id = _$.nextScopeId();
       _$.write(`<div>Count: <!>${_$.escapeXML(count)}${_$.markResumeNode($scope1_id, "#text/0")}</div>`);
+      _$.writeScope($scope1_id, {}, "__tests__/template.marko", "1:2");
     }, $scope0_id)
   });
 });

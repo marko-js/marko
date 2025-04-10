@@ -20,7 +20,7 @@
     <!--M_]1 #text/1-->
     f
     <script>
-      REORDER_RUNTIME(M._);M._.w()
+      M._.r.push(_=&gt;(_.f=[{}]));REORDER_RUNTIME(M._);M._.w()
     </script>
   </body>
 </html>
