@@ -9,7 +9,11 @@ import {
 
 import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
-import { BindingType, trackVarReferences } from "../util/references";
+import {
+  BindingType,
+  setBindingValueExpr,
+  trackVarReferences,
+} from "../util/references";
 import { callRuntime } from "../util/runtime";
 import runtimeInfo from "../util/runtime-info";
 import { getSection } from "../util/sections";
@@ -37,7 +41,10 @@ export default {
         .buildCodeFrameError("The `id` tag cannot be destructured");
     }
 
-    trackVarReferences(tag, BindingType.derived);
+    const binding = trackVarReferences(tag, BindingType.derived);
+    if (binding) {
+      setBindingValueExpr(binding, false);
+    }
   },
   translate: {
     exit(tag) {
