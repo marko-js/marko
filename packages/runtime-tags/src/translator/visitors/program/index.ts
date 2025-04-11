@@ -95,6 +95,8 @@ export default {
           if (value) {
             programExtra.returnValueExpr = value.extra ??= {};
           }
+
+          break;
         }
       }
     },
