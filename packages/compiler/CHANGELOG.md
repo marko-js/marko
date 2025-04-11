@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.18
+
+### Patch Changes
+
+- [#2636](https://github.com/marko-js/marko/pull/2636) [`dc748b4`](https://github.com/marko-js/marko/commit/dc748b4932c1db3f556d4fc898ab47911828b6b6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add parenthesized expressions to the list of computable values.
+
 ## 5.39.17
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.24
+
+### Patch Changes
+
+- [#2636](https://github.com/marko-js/marko/pull/2636) [`04a9267`](https://github.com/marko-js/marko/commit/04a9267a6fc865da0f083e19116198e4a675b2b9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reduce serialized data and markers by providing input based serialize reasons from parent to child and guarding in the child.
+
+- Updated dependencies [[`ff1776f`](https://github.com/marko-js/marko/commit/ff1776f4ac97771da6a254620a0f95d6b2c8d3e9), [`04a9267`](https://github.com/marko-js/marko/commit/04a9267a6fc865da0f083e19116198e4a675b2b9), [`04a9267`](https://github.com/marko-js/marko/commit/04a9267a6fc865da0f083e19116198e4a675b2b9)]:
+  - @marko/runtime-tags@0.3.86
+
 ## 0.2.23
 
 ### Patch Changes
