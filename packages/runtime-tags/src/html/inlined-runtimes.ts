@@ -1,42 +1,43 @@
 export const WALKER_RUNTIME_CODE = MARKO_DEBUG
-  ? /* js */ `((runtimeId) =>
-(self[runtimeId] =
-  self[runtimeId] ||
-  ((renderId) => {
-    let id,
-      lookup = {},
-      visits = [],
-      doc = document,
-      walker = doc.createTreeWalker(
-        doc,
-        129,
-      ) /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */,
-      op = (self[runtimeId][renderId] = {
-        i: (renderId = runtimeId + renderId),
-        d: doc,
-        l: lookup,
-        v: visits,
-        x() {},
-        w(node) {
-          while ((node = walker.nextNode())) {
-            this.x(
-              (op =
-                (op = node.data) &&
-                !op.indexOf(renderId) &&
-                ((lookup[(id = op.slice(prefix + 1))] = node), op[prefix])),
-              id,
-              node,
-            );
+  ? /* js */ `((runtimeId) => (
+(self[runtimeId] = (
+  renderId,
+  prefix = runtimeId + renderId,
+  prefixLen = prefix.length,
+  lookup = {},
+  visits = [],
+  doc = document,
+  walker = doc.createTreeWalker(
+    doc,
+    129 /* NodeFilter.SHOW_COMMENT | NodeFilter.SHOW_ELEMENT */,
+  ),
+) =>
+  (self[runtimeId][renderId] = {
+    i: prefix,
+    d: doc,
+    l: lookup,
+    v: visits,
+    x() {},
+    w(node, op, id) {
+      while ((node = walker.nextNode())) {
+        this.x(
+          (op =
+            (op = node.data) &&
+            !op.indexOf(prefix) &&
+            ((lookup[(id = op.slice(prefixLen + 1))] = node), op[prefixLen])),
+          id,
+          node,
+        );
 
-            if (op > "#") {
-              visits.push(node);
-            }
-          }
-        },
-      }),
-      prefix = renderId.length;
-  })))`
-  : `(e=>self[e]=self[e]||(l=>{let t,d={},s=[],f=document,i=f.createTreeWalker(f,129),n=self[e][l]={i:l=e+l,d:f,l:d,v:s,x(){},w(e){for(;e=i.nextNode();)this.x(n=(n=e.data)&&!n.indexOf(l)&&(d[t=n.slice(x+1)]=e,n[x]),t,e),n>"#"&&s.push(e)}},x=l.length}))`;
+        if (op > "#") {
+          visits.push(node);
+        }
+      }
+    },
+  })),
+self[runtimeId]
+))`
+  : `(e=>(self[e]=(l,t=e+l,d=t.length,f={},s=[],x=document,a=x.createTreeWalker(x,129))=>self[e][l]={i:t,d:x,l:f,v:s,x(){},w(e,l,x){for(;e=a.nextNode();)this.x(l=(l=e.data)&&!l.indexOf(t)&&(f[x=l.slice(d+1)]=e,l[d]),x,e),l>"#"&&s.push(e)}},self[e]))`;
 export const REORDER_RUNTIME_CODE = MARKO_DEBUG
   ? /* js */ `((runtime) => {
 let onNextSibling,
