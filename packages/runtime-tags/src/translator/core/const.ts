@@ -50,7 +50,7 @@ export default {
         );
     }
 
-    const valueExtra = evaluate(valueAttr.value); // TODO could perform a more extensive "nullable" check.
+    const valueExtra = evaluate(valueAttr.value);
     const upstreamAlias = t.isIdentifier(valueAttr.value)
       ? tag.scope.getBinding(valueAttr.value.name)?.identifier.extra?.binding
       : undefined;
@@ -62,6 +62,7 @@ export default {
     const binding = trackVarReferences(tag, BindingType.derived, upstreamAlias);
 
     if (binding) {
+      if (!valueExtra.nullable) binding.nullable = false;
       setBindingValueExpr(binding, valueExtra);
     }
   },

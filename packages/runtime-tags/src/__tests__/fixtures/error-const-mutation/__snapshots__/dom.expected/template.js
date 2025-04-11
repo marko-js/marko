@@ -16,10 +16,10 @@ const $user_middleName = /* @__PURE__ */_$.value("user_middleName", $expr_user_f
 const $user_firstName = /* @__PURE__ */_$.value("user_firstName", $expr_user_fullName_user_firstName_user_middleName_user_lastName);
 const $user_fullName = /* @__PURE__ */_$.value("user_fullName", $expr_user_fullName_user_firstName_user_middleName_user_lastName);
 const $user = /* @__PURE__ */_$.value("user", ($scope, user) => {
-  $user_fullName($scope, user?.fullName);
-  $user_firstName($scope, user?.firstName);
-  $user_middleName($scope, user?.middleName);
-  $user_lastName($scope, user?.lastName);
+  $user_fullName($scope, user.fullName);
+  $user_firstName($scope, user.firstName);
+  $user_middleName($scope, user.middleName);
+  $user_lastName($scope, user.lastName);
 });
 export function $setup($scope) {
   $user($scope, {
