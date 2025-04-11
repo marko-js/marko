@@ -8,7 +8,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   _child({
     foo: input.foo,
     output: output
-  });
+  }, _$.serializeGuard($serialize, 0));
   _$.writeScope($scope0_id, {
     "#childScope/1": _$.serializeIf($serialize, 0) && _$.writeExistingScope($childScope)
   }, "__tests__/template.marko", 0);

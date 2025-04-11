@@ -8,6 +8,8 @@ import path from "path";
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import entryBuilder from "../../util/entry-builder";
 import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
+import { getKnownAttrValues } from "../../util/get-known-attr-values";
+import { isCoreTagName } from "../../util/is-core-tag";
 import {
   getMarkoOpts,
   isOutputDOM,
@@ -26,6 +28,7 @@ import { startSection } from "../../util/sections";
 import type {
   DynamicSerializeReason,
   DynamicSerializeReasons,
+  SerializeReason,
 } from "../../util/serialize-reasons";
 import type { TemplateVisitor } from "../../util/visitors";
 import programDOM from "./dom";
@@ -47,6 +50,8 @@ export type TemplateExports = TemplateExport["props"];
 declare module "@marko/compiler/dist/types" {
   export interface ProgramExtra {
     inputSerializeReasons?: DynamicSerializeReasons;
+    returnSerializeReason?: SerializeReason;
+    returnValueExpr?: t.NodeExtra;
     domExports?: {
       template: string;
       walks: string;
@@ -83,6 +88,15 @@ export default {
         setup: generateUid("setup"),
         input: undefined, // TODO look into recursive components with fine grained params.
       };
+
+      for (const child of program.get("body")) {
+        if (isCoreTagName(child, "return")) {
+          const { value } = getKnownAttrValues(child.node);
+          if (value) {
+            programExtra.returnValueExpr = value.extra ??= {};
+          }
+        }
+      }
     },
 
     exit(program) {

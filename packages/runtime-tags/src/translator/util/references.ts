@@ -83,7 +83,6 @@ export interface Binding {
   propertyAliases: Map<string, Binding>;
   excludeProperties: undefined | string[];
   upstreamAlias: Binding | undefined;
-  upstreamExpression: t.NodeExtra | undefined;
   downstreamExpressions: Set<ReferencedExtra>;
   scopeOffset: Binding | undefined;
   export: string | undefined;
@@ -138,7 +137,6 @@ export function createBinding(
   type: Binding["type"],
   section: Section,
   upstreamAlias?: Binding["upstreamAlias"],
-  upstreamExpression?: Binding["upstreamExpression"],
   property?: string,
   loc: t.SourceLocation | null = null,
   declared = false,
@@ -160,12 +158,10 @@ export function createBinding(
     hoists: new Map(),
     propertyAliases: new Map(),
     upstreamAlias,
-    upstreamExpression,
     downstreamExpressions: new Set(),
     scopeOffset: undefined,
     export: undefined,
-    nullable:
-      !upstreamExpression?.confident || upstreamExpression.computed == null,
+    nullable: true,
   };
 
   if (property) {
@@ -193,22 +189,20 @@ export function trackVarReferences(
   tag: t.NodePath<t.MarkoTag>,
   type: BindingType,
   upstreamAlias?: Binding["upstreamAlias"],
-  upstreamExpression?: Binding["upstreamExpression"],
 ) {
   const tagVar = tag.node.var;
   if (tagVar) {
     const section = getOrCreateSection(tag);
     const canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
-    if (upstreamAlias && upstreamExpression) upstreamExpression.pruned = true;
     createBindingsAndTrackReferences(
       tagVar,
       type,
       tag.scope,
       section,
       canonicalUpstreamAlias,
-      upstreamExpression,
       undefined,
     );
+    return tagVar.extra?.binding;
   }
 }
 
@@ -216,11 +210,9 @@ export function trackParamsReferences(
   body: t.NodePath<t.MarkoTagBody | t.Program>,
   type: BindingType,
   upstreamAlias?: Binding["upstreamAlias"],
-  upstreamExpression?: Binding["upstreamExpression"],
 ) {
   const params = body.node.params;
   if (body.node.body.length && params.length) {
-    if (upstreamAlias && upstreamExpression) upstreamExpression.pruned = true;
     const section = getOrCreateSection(body);
     const canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
     const paramsBinding =
@@ -230,7 +222,6 @@ export function trackParamsReferences(
         type,
         section,
         canonicalUpstreamAlias,
-        upstreamExpression,
         undefined,
       ));
 
@@ -244,10 +235,11 @@ export function trackParamsReferences(
         body.scope,
         section,
         paramsBinding,
-        upstreamExpression,
         i + "",
       );
     }
+
+    return paramsBinding;
   }
 }
 
@@ -268,7 +260,6 @@ export function trackHoistedReference(
         generateUid("hoisted_" + referencePath.node.name),
         BindingType.hoist,
         hoistSection,
-        undefined,
         undefined,
         undefined,
         binding.loc,
@@ -301,9 +292,8 @@ export function trackHoistedReference(
   );
 }
 
-function trackReferencesForBinding(babelBinding: t.Binding) {
-  const { identifier, referencePaths, constantViolations } = babelBinding;
-  const binding = identifier.extra!.binding!;
+function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
+  const { referencePaths, constantViolations } = babelBinding;
 
   for (const referencePath of referencePaths) {
     const referenceSection = getOrCreateSection(referencePath);
@@ -365,22 +355,22 @@ function createBindingsAndTrackReferences(
   scope: t.Scope,
   section: Section,
   upstreamAlias: Binding["upstreamAlias"] | undefined,
-  upstreamExpression: Binding["upstreamExpression"] | undefined,
   property: string | undefined,
 ) {
   switch (lVal.type) {
     case "Identifier":
-      (lVal.extra ??= {}).binding = createBinding(
-        lVal.name,
-        type,
-        section,
-        upstreamAlias,
-        upstreamExpression,
-        property,
-        lVal.loc,
-        true,
+      trackReferencesForBinding(
+        scope.getBinding(lVal.name)!,
+        ((lVal.extra ??= {}).binding = createBinding(
+          lVal.name,
+          type,
+          section,
+          upstreamAlias,
+          property,
+          lVal.loc,
+          true,
+        )),
       );
-      trackReferencesForBinding(scope.getBinding(lVal.name)!);
       break;
     case "ObjectPattern": {
       const patternBinding =
@@ -392,7 +382,6 @@ function createBindingsAndTrackReferences(
           type,
           section,
           upstreamAlias,
-          undefined,
           property,
           lVal.loc,
         ));
@@ -407,7 +396,6 @@ function createBindingsAndTrackReferences(
             scope,
             section,
             patternBinding,
-            undefined,
             property,
           );
         } else {
@@ -428,7 +416,6 @@ function createBindingsAndTrackReferences(
             scope,
             section,
             patternBinding,
-            undefined,
             key,
           );
         }
@@ -445,7 +432,6 @@ function createBindingsAndTrackReferences(
           type,
           section,
           upstreamAlias,
-          undefined,
           property,
           lVal.loc,
         ));
@@ -463,7 +449,6 @@ function createBindingsAndTrackReferences(
               scope,
               section,
               patternBinding,
-              undefined,
               property,
             );
           } else {
@@ -473,7 +458,6 @@ function createBindingsAndTrackReferences(
               scope,
               section,
               patternBinding,
-              undefined,
               `${i}`,
             );
           }
@@ -490,7 +474,6 @@ function createBindingsAndTrackReferences(
         scope,
         section,
         upstreamAlias,
-        undefined,
         property,
       );
       break;
@@ -530,7 +513,6 @@ function trackReference(
       reference.type,
       reference.section,
       reference,
-      undefined,
       prop,
     );
   }
@@ -842,9 +824,11 @@ export function finalizeReferences() {
     }
   });
 
-  if (inputSerializeReasons) {
-    getProgram().node.extra!.inputSerializeReasons = inputSerializeReasons;
-  }
+  const programExtra = getProgram().node.extra;
+  programExtra.returnSerializeReason =
+    programExtra.returnValueExpr &&
+    getSerializeSourcesForExpr(programExtra.returnValueExpr);
+  programExtra.inputSerializeReasons = inputSerializeReasons;
 
   forEachSection((section) => {
     let intersectionIndex = 0;
@@ -906,6 +890,14 @@ export const intersectionMeta = new WeakMap<
   { id: number; scopeOffset: Binding | undefined }
 >();
 
+export function setBindingValueExpr(
+  binding: Binding,
+  valueExpr: undefined | boolean | Opt<t.NodeExtra>,
+) {
+  bindingValueExprs.set(binding, valueExpr || false);
+}
+
+const bindingValueExprs = new WeakMap<Binding, boolean | Opt<t.NodeExtra>>();
 function resolveBindingSources(binding: Binding) {
   const derived = new Set<Binding>();
   let onlyInputSources = true;
@@ -927,10 +919,23 @@ function resolveBindingSources(binding: Binding) {
       while ((alias = curBinding.upstreamAlias)) {
         curBinding = alias;
       }
-      if (curBinding.upstreamExpression) {
+
+      const sourceExpressions = bindingValueExprs.get(curBinding);
+      if (sourceExpressions !== undefined) {
         if (derived.has(curBinding)) return;
         derived.add(curBinding);
-        forEach(curBinding.upstreamExpression.referencedBindings, crawl);
+        if (sourceExpressions) {
+          if (sourceExpressions === true) {
+            onlyInputSources = false;
+            sources = bindingUtil.add(sources, binding);
+          } else {
+            forEach(sourceExpressions, (expr) => {
+              if (isReferencedExtra(expr)) {
+                forEach(expr.referencedBindings, crawl);
+              }
+            });
+          }
+        }
       } else if (curBinding.type === BindingType.input) {
         sources = bindingUtil.add(sources, binding);
       } else {

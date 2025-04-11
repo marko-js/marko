@@ -22,6 +22,7 @@ import {
   getAllTagReferenceNodes,
   getScopeAccessorLiteral,
   mergeReferences,
+  setBindingValueExpr,
   trackParamsReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
@@ -54,7 +55,6 @@ type ForType = "in" | "of" | "to";
 
 export default {
   analyze(tag) {
-    const tagExtra = (tag.node.extra ??= {});
     const isAttrTag = tag.node.body.attributeTags;
     let allowAttrs: string[];
     assertNoVar(tag);
@@ -95,8 +95,16 @@ export default {
 
     const tagSection = getOrCreateSection(tag);
     const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
-    trackParamsReferences(tagBody, BindingType.param, undefined, tagExtra);
-    mergeReferences(tagSection, tag.node, getAllTagReferenceNodes(tag.node));
+    const paramsBinding = trackParamsReferences(tagBody, BindingType.param);
+    const tagExtra = mergeReferences(
+      tagSection,
+      tag.node,
+      getAllTagReferenceNodes(tag.node),
+    );
+
+    if (paramsBinding) {
+      setBindingValueExpr(paramsBinding, tagExtra);
+    }
 
     bodySection.sectionAccessor = {
       binding: nodeBinding,

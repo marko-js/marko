@@ -59,8 +59,6 @@ export default {
         "#text",
         BindingType.dom,
         section,
-        undefined,
-        valueExtra,
       ));
       analyzeSiblingText(placeholder);
       addBindingSerializeReasonExpr(section, nodeBinding, valueExtra);

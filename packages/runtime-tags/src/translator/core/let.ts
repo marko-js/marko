@@ -12,6 +12,7 @@ import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
   mergeReferences,
+  setBindingValueExpr,
   trackVarReferences,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
@@ -89,17 +90,15 @@ export default {
         );
     }
 
-    trackVarReferences(
-      tag,
-      BindingType.let,
-      undefined,
+    const binding = trackVarReferences(tag, BindingType.let)!;
+    setBindingValueExpr(
+      binding,
       mergeReferences(getOrCreateSection(tag), tag.node, [
         valueAttr?.value,
         valueChangeAttr?.value,
       ]),
     );
 
-    const binding = tagVar.extra!.binding!;
     if (valueChangeAttr) {
       // TODO: could be based on if there are actually assignments.
       forceBindingSerialize(

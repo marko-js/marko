@@ -70,7 +70,7 @@ export default {
     }
 
     if (attrs.valueChange) {
-      // TODO: this should be based on the child actually mutating the tag variable.
+      // TODO: this should be based on the parent actually mutating the tag variable.
       forceSectionSerialize(
         getSection(tag),
         getAccessorProp().TagVariableChange,

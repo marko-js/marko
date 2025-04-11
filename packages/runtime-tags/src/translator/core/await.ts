@@ -14,6 +14,7 @@ import {
   BindingType,
   createBinding,
   getScopeAccessorLiteral,
+  setBindingValueExpr,
   trackParamsReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
@@ -55,13 +56,7 @@ export default {
     const section = getOrCreateSection(tag);
     const [valueAttr] = node.attributes;
     const tagExtra = (tag.node.extra ??= {});
-    tagExtra[kDOMBinding] = createBinding(
-      "#text",
-      BindingType.dom,
-      section,
-      undefined,
-      tagExtra,
-    );
+    tagExtra[kDOMBinding] = createBinding("#text", BindingType.dom, section);
 
     if (!valueAttr) {
       throw tag
@@ -99,14 +94,14 @@ export default {
     }
 
     const bodySection = startSection(tagBody)!;
+    const valueExtra = evaluate(valueAttr.value);
 
     getOrCreateSection(tag);
-    trackParamsReferences(
-      tagBody,
-      BindingType.param,
-      undefined,
-      evaluate(valueAttr.value),
-    );
+    const paramsBinding = trackParamsReferences(tagBody, BindingType.param);
+
+    if (paramsBinding) {
+      setBindingValueExpr(paramsBinding, valueExtra);
+    }
 
     bodySection.upstreamExpression = valueAttr.value.extra;
   },

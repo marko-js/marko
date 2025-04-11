@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div></div><!--M_*4 #div/0--><div></div><!--M_*7 #div/0--><div></div><!--M_*13 #div/0--><div></div><!--M_*16 #div/0--><div></div><!--M_*21 #div/0--><div></div><!--M_*24 #div/0--><section><div></div><!--M_*28 #div/0--></section><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.p=[0,_.a={"ClosureScopes:1":_.q=new Set,"ClosureScopes:2":_.s=new Set,"ClosureScopes:4":_.w=new Set},1,_.b={"#scopeOffset/1":5,setHtml:_.c={},"#childScope/0":_.c},_.c,1,_.d={"#scopeOffset/1":8,setHtml:_.e={},"#childScope/0":_.e},_.e,2,_.t={"ClosureScopes:3":_.r=new Set},1,_.f={"#scopeOffset/1":14,setHtml2:_.g={},"#childScope/0":_.g},_.g,1,_.h={"#scopeOffset/1":17,setHtml2:_.i={},"#childScope/0":_.i},_.i,1,_.v={"ClosureScopes:3":_.u=new Set},1,_.j={"#scopeOffset/1":22,setHtml2:_.k={},"#childScope/0":_.k},_.k,1,_.l={"#scopeOffset/1":25,setHtml2:_.m={},"#childScope/0":_.m},_.m,2,_.n={"#scopeOffset/1":29,setHtml3:_.o={},"#childScope/0":_.o},_.o],_.a.$hoisted_setHtml=_._["__tests__/template.marko_0_$hoisted_setHtml/hoist"](_.a),_.c["#TagVariable"]=_._["__tests__/template.marko_1_setHtml/var"](_.b),_.b.setHtml=_._["__tests__/tags/child.marko_0/_return"](_.c),_.e["#TagVariable"]=_._["__tests__/template.marko_1_setHtml/var"](_.d),_.d.setHtml=_._["__tests__/tags/child.marko_0/_return"](_.e),_.g["#TagVariable"]=_._["__tests__/template.marko_3_setHtml2/var"](_.f),_.f.setHtml2=_._["__tests__/tags/child.marko_0/_return"](_.g),_.i["#TagVariable"]=_._["__tests__/template.marko_3_setHtml2/var"](_.h),_.h.setHtml2=_._["__tests__/tags/child.marko_0/_return"](_.i),_.k["#TagVariable"]=_._["__tests__/template.marko_3_setHtml2/var"](_.j),_.j.setHtml2=_._["__tests__/tags/child.marko_0/_return"](_.k),_.m["#TagVariable"]=_._["__tests__/template.marko_3_setHtml2/var"](_.l),_.l.setHtml2=_._["__tests__/tags/child.marko_0/_return"](_.m),_.o["#TagVariable"]=_._["__tests__/template.marko_4_setHtml3/var"](_.n),_.n.setHtml3=_._["__tests__/tags/child.marko_0/_return"](_.o),(_.q).add(_.b),(_.q).add(_.d),(_.r).add(_.f),(_.r).add(_.h),(_.s).add(_.t),(_.u).add(_.j),(_.u).add(_.l),(_.s).add(_.v),(_.w).add(_.n),_.p),1,"__tests__/template.marko_0",1,"__tests__/template.marko_0_$hoisted_setHtml"];M._.w()</script>
+  <div></div><!--M_*4 #div/0--><div></div><!--M_*6 #div/0--><div></div><!--M_*11 #div/0--><div></div><!--M_*13 #div/0--><div></div><!--M_*17 #div/0--><div></div><!--M_*19 #div/0--><section><div></div><!--M_*22 #div/0--></section><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.i=[0,_.a={"ClosureScopes:1":_.j=new Set,"ClosureScopes:2":_.p=new Set,"ClosureScopes:4":_.v=new Set},1,_.k={setHtml:_._["__tests__/tags/child.marko_0/_return"](_.b={})},_.b,_.l={setHtml:_._["__tests__/tags/child.marko_0/_return"](_.c={})},_.c,1,_.q={"ClosureScopes:3":_.m=new Set},1,_.n={setHtml2:_._["__tests__/tags/child.marko_0/_return"](_.d={})},_.d,_.o={setHtml2:_._["__tests__/tags/child.marko_0/_return"](_.e={})},_.e,_.u={"ClosureScopes:3":_.r=new Set},1,_.s={setHtml2:_._["__tests__/tags/child.marko_0/_return"](_.f={})},_.f,_.t={setHtml2:_._["__tests__/tags/child.marko_0/_return"](_.g={})},_.g,1,_.w={setHtml3:_._["__tests__/tags/child.marko_0/_return"](_.h={})},_.h],_.a.$hoisted_setHtml=_._["__tests__/template.marko_0_$hoisted_setHtml/hoist"](_.a),(_.j).add(_.k),(_.j).add(_.l),(_.m).add(_.n),(_.m).add(_.o),(_.p).add(_.q),(_.r).add(_.s),(_.r).add(_.t),(_.p).add(_.u),(_.v).add(_.w),_.i),1,"__tests__/template.marko_0",1,"__tests__/template.marko_0_$hoisted_setHtml"];M._.w()</script>
 ```
 
 # Render End
@@ -11,21 +11,21 @@
     <div />
     <!--M_*4 #div/0-->
     <div />
-    <!--M_*7 #div/0-->
+    <!--M_*6 #div/0-->
+    <div />
+    <!--M_*11 #div/0-->
     <div />
     <!--M_*13 #div/0-->
     <div />
-    <!--M_*16 #div/0-->
+    <!--M_*17 #div/0-->
     <div />
-    <!--M_*21 #div/0-->
-    <div />
-    <!--M_*24 #div/0-->
+    <!--M_*19 #div/0-->
     <section>
       <div />
-      <!--M_*28 #div/0-->
+      <!--M_*22 #div/0-->
     </section>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.p=[0,_.a={"ClosureScopes:1":_.q=new Set,"ClosureScopes:2":_.s=new Set,"ClosureScopes:4":_.w=new Set},1,_.b={"#scopeOffset/1":5,setHtml:_.c={},"#childScope/0":_.c},_.c,1,_.d={"#scopeOffset/1":8,setHtml:_.e={},"#childScope/0":_.e},_.e,2,_.t={"ClosureScopes:3":_.r=new Set},1,_.f={"#scopeOffset/1":14,setHtml2:_.g={},"#childScope/0":_.g},_.g,1,_.h={"#scopeOffset/1":17,setHtml2:_.i={},"#childScope/0":_.i},_.i,1,_.v={"ClosureScopes:3":_.u=new Set},1,_.j={"#scopeOffset/1":22,setHtml2:_.k={},"#childScope/0":_.k},_.k,1,_.l={"#scopeOffset/1":25,setHtml2:_.m={},"#childScope/0":_.m},_.m,2,_.n={"#scopeOffset/1":29,setHtml3:_.o={},"#childScope/0":_.o},_.o],_.a.$hoisted_setHtml=_._["__tests__/template.marko_0_$hoisted_setHtml/hoist"](_.a),_.c["#TagVariable"]=_._["__tests__/template.marko_1_setHtml/var"](_.b),_.b.setHtml=_._["__tests__/tags/child.marko_0/_return"](_.c),_.e["#TagVariable"]=_._["__tests__/template.marko_1_setHtml/var"](_.d),_.d.setHtml=_._["__tests__/tags/child.marko_0/_return"](_.e),_.g["#TagVariable"]=_._["__tests__/template.marko_3_setHtml2/var"](_.f),_.f.setHtml2=_._["__tests__/tags/child.marko_0/_return"](_.g),_.i["#TagVariable"]=_._["__tests__/template.marko_3_setHtml2/var"](_.h),_.h.setHtml2=_._["__tests__/tags/child.marko_0/_return"](_.i),_.k["#TagVariable"]=_._["__tests__/template.marko_3_setHtml2/var"](_.j),_.j.setHtml2=_._["__tests__/tags/child.marko_0/_return"](_.k),_.m["#TagVariable"]=_._["__tests__/template.marko_3_setHtml2/var"](_.l),_.l.setHtml2=_._["__tests__/tags/child.marko_0/_return"](_.m),_.o["#TagVariable"]=_._["__tests__/template.marko_4_setHtml3/var"](_.n),_.n.setHtml3=_._["__tests__/tags/child.marko_0/_return"](_.o),(_.q).add(_.b),(_.q).add(_.d),(_.r).add(_.f),(_.r).add(_.h),(_.s).add(_.t),(_.u).add(_.j),(_.u).add(_.l),(_.s).add(_.v),(_.w).add(_.n),_.p),1,"__tests__/template.marko_0",1,"__tests__/template.marko_0_$hoisted_setHtml"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.i=[0,_.a={"ClosureScopes:1":_.j=new Set,"ClosureScopes:2":_.p=new Set,"ClosureScopes:4":_.v=new Set},1,_.k={setHtml:_._["__tests__/tags/child.marko_0/_return"](_.b={})},_.b,_.l={setHtml:_._["__tests__/tags/child.marko_0/_return"](_.c={})},_.c,1,_.q={"ClosureScopes:3":_.m=new Set},1,_.n={setHtml2:_._["__tests__/tags/child.marko_0/_return"](_.d={})},_.d,_.o={setHtml2:_._["__tests__/tags/child.marko_0/_return"](_.e={})},_.e,_.u={"ClosureScopes:3":_.r=new Set},1,_.s={setHtml2:_._["__tests__/tags/child.marko_0/_return"](_.f={})},_.f,_.t={setHtml2:_._["__tests__/tags/child.marko_0/_return"](_.g={})},_.g,1,_.w={setHtml3:_._["__tests__/tags/child.marko_0/_return"](_.h={})},_.h],_.a.$hoisted_setHtml=_._["__tests__/template.marko_0_$hoisted_setHtml/hoist"](_.a),(_.j).add(_.k),(_.j).add(_.l),(_.m).add(_.n),(_.m).add(_.o),(_.p).add(_.q),(_.r).add(_.s),(_.r).add(_.t),(_.p).add(_.u),(_.v).add(_.w),_.i),1,"__tests__/template.marko_0",1,"__tests__/template.marko_0_$hoisted_setHtml"];M._.w()
     </script>
   </body>
 </html>

@@ -66,13 +66,7 @@ export default {
       tag.node,
       getAllTagReferenceNodes(tag.node),
     );
-    tagExtra[kDOMBinding] = createBinding(
-      "#text",
-      BindingType.dom,
-      section,
-      undefined,
-      tagExtra,
-    );
+    tagExtra[kDOMBinding] = createBinding("#text", BindingType.dom, section);
 
     if (!tag.node.body.body.length) {
       throw tag
