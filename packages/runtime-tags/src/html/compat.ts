@@ -7,7 +7,7 @@ import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
 import type { Scope } from "../common/types";
 import { patchDynamicTag } from "./dynamic-tag";
 import { getRegistered, register } from "./serializer";
-import type { ServerRenderer } from "./template";
+import { isTemplate, type ServerRenderer } from "./template";
 import {
   Boundary,
   Chunk,
@@ -97,7 +97,12 @@ export const compat = {
         writeScope(scopeId, { m5c: component.id });
         writeEffect(scopeId, SET_SCOPE_REGISTER_ID);
       }
-      renderer(normalizedInput);
+
+      if (isTemplate(renderer) && willRerender) {
+        renderer(normalizedInput, 1);
+      } else {
+        renderer(normalizedInput);
+      }
     });
 
     const asyncOut = classAPIOut.beginAsync();

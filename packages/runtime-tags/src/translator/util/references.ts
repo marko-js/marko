@@ -196,7 +196,7 @@ export function trackVarReferences(
     const canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
     createBindingsAndTrackReferences(
       tagVar,
-      type,
+      upstreamAlias ? upstreamAlias.type : type,
       tag.scope,
       section,
       canonicalUpstreamAlias,
@@ -897,56 +897,72 @@ export function setBindingValueExpr(
   bindingValueExprs.set(binding, valueExpr || false);
 }
 
+const resolvedSources = new WeakSet<Binding>();
 const bindingValueExprs = new WeakMap<Binding, boolean | Opt<t.NodeExtra>>();
 function resolveBindingSources(binding: Binding) {
-  const derived = new Set<Binding>();
-  let onlyInputSources = true;
-  let sources: Opt<Binding>;
-  crawl(binding);
-  binding.sources = sources;
-  binding.serializeSources = sources
-    ? onlyInputSources
-      ? (sources as OneMany<InputBinding>)
-      : true
-    : undefined;
-  function crawl(binding: Binding) {
-    if (
-      binding.type === BindingType.derived ||
-      binding.type === BindingType.param
-    ) {
-      let alias: Binding | undefined;
-      let curBinding = binding;
-      while ((alias = curBinding.upstreamAlias)) {
-        curBinding = alias;
-      }
+  if (resolvedSources.has(binding)) return;
+  resolvedSources.add(binding);
 
-      const sourceExpressions = bindingValueExprs.get(curBinding);
-      if (sourceExpressions !== undefined) {
-        if (derived.has(curBinding)) return;
-        derived.add(curBinding);
-        if (sourceExpressions) {
-          if (sourceExpressions === true) {
-            onlyInputSources = false;
-            sources = bindingUtil.add(sources, binding);
-          } else {
-            forEach(sourceExpressions, (expr) => {
-              if (isReferencedExtra(expr)) {
-                forEach(expr.referencedBindings, crawl);
-              }
-            });
+  switch (binding.type) {
+    case BindingType.let:
+      binding.sources = binding;
+      binding.serializeSources = true;
+      return;
+    case BindingType.input:
+      binding.sources = binding;
+      binding.serializeSources = binding as InputBinding;
+      return;
+  }
+
+  let alias: Binding | undefined;
+  let source = binding;
+  while ((alias = source.upstreamAlias)) {
+    source = alias;
+  }
+
+  if (source === binding) {
+    resolveDerivedSources(binding);
+    return;
+  }
+
+  if (!resolvedSources.has(source)) {
+    resolvedSources.add(source);
+    resolveDerivedSources(source);
+  }
+
+  binding.sources = source.sources;
+  binding.serializeSources = source.serializeSources;
+}
+
+function resolveDerivedSources(binding: Binding) {
+  const exprs = bindingValueExprs.get(binding);
+  bindingValueExprs.delete(binding);
+
+  if (exprs === undefined || exprs === true) {
+    binding.serializeSources = true;
+    binding.sources = binding;
+  } else if (exprs) {
+    const seen = new Set<Binding>();
+    let onlyInputSources = true;
+    let sources: Opt<Binding>;
+    forEach(exprs, (expr) => {
+      if (isReferencedExtra(expr)) {
+        forEach(expr.referencedBindings, (ref) => {
+          if (!seen.has(ref)) {
+            seen.add(ref);
+            resolveBindingSources(ref);
+            sources = bindingUtil.union(sources, ref.sources);
+            onlyInputSources &&= ref.serializeSources !== true;
           }
-        }
-      } else if (curBinding.type === BindingType.input) {
-        sources = bindingUtil.add(sources, binding);
-      } else {
-        onlyInputSources = false;
-        sources = bindingUtil.add(sources, curBinding);
+        });
       }
-    } else {
-      if (binding.type !== BindingType.input) {
-        onlyInputSources = false;
-      }
-      sources = bindingUtil.add(sources, binding);
+    });
+
+    if (sources) {
+      binding.sources = sources;
+      binding.serializeSources = onlyInputSources
+        ? (sources as OneMany<InputBinding>)
+        : true;
     }
   }
 }
