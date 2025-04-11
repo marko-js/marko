@@ -1,5 +1,18 @@
 # @marko/runtime-tags
 
+## 0.3.86
+
+### Patch Changes
+
+- [#2636](https://github.com/marko-js/marko/pull/2636) [`ff1776f`](https://github.com/marko-js/marko/commit/ff1776f4ac97771da6a254620a0f95d6b2c8d3e9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add better nullable check to node evaluation.
+
+- [#2636](https://github.com/marko-js/marko/pull/2636) [`04a9267`](https://github.com/marko-js/marko/commit/04a9267a6fc865da0f083e19116198e4a675b2b9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reduce serialized data and markers by providing input based serialize reasons from parent to child and guarding in the child.
+
+- [#2636](https://github.com/marko-js/marko/pull/2636) [`04a9267`](https://github.com/marko-js/marko/commit/04a9267a6fc865da0f083e19116198e4a675b2b9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Analyze return tag values from child templates to determine if they are stateful.
+
+- Updated dependencies [[`dc748b4`](https://github.com/marko-js/marko/commit/dc748b4932c1db3f556d4fc898ab47911828b6b6)]:
+  - @marko/compiler@5.39.18
+
 ## 0.3.85
 
 ### Patch Changes
