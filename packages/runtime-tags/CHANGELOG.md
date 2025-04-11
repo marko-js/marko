@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.0.0
+
+### Major Changes
+
+- [#2640](https://github.com/marko-js/marko/pull/2640) [`5346eb9`](https://github.com/marko-js/marko/commit/5346eb92884e91a410de8e77f557c33861da89b0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Release Tags API as 6.0.0.
+
+### Patch Changes
+
+- [#2638](https://github.com/marko-js/marko/pull/2638) [`8386d6e`](https://github.com/marko-js/marko/commit/8386d6edfb63c0b33ab1a44e00049a7b0ae57f15) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid id tag variable seen as stateful.
+
 ## 0.3.86
 
 ### Patch Changes
