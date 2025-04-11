@@ -24,6 +24,8 @@ export function computeNode(node) {
       }
     case "BigIntLiteral":
       return { value: BigInt(node.value) };
+    case "ParenthesizedExpression":
+      return computeNode(node.expression);
     case "BinaryExpression": {
       const left = computeNode(node.left);
       if (!left) return;
