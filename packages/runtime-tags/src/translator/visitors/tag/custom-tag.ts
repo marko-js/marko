@@ -29,6 +29,7 @@ import {
   getScopeAccessorLiteral,
   type InputBinding,
   mergeReferences,
+  setBindingValueExpr,
   trackParamsReferences,
   trackVarReferences,
 } from "../../util/references";
@@ -44,8 +45,8 @@ import {
 } from "../../util/sections";
 import {
   addBindingSerializeReasonExpr,
-  forceSectionSerialize,
   getBindingSerializeReason,
+  type SerializeReason,
 } from "../../util/serialize-reasons";
 import {
   addStatement,
@@ -120,25 +121,8 @@ export default {
         "#childScope",
         BindingType.dom,
         section,
-        undefined,
-        tagExtra,
       ));
       const attrExprs = new Set([tagExtra]);
-      const hasVar = !!tag.node.var;
-
-      if (hasVar) {
-        forceSectionSerialize(section);
-        trackVarReferences(tag, BindingType.derived);
-        tag.node.var!.extra!.binding!.scopeOffset = tagExtra[
-          kChildOffsetScopeBinding
-        ] = createBinding(
-          "#scopeOffset",
-          BindingType.dom,
-          section,
-          undefined,
-          tagExtra,
-        );
-      }
       startSection(tagBody);
       trackParamsReferences(tagBody, BindingType.param);
 
@@ -150,8 +134,24 @@ export default {
           .buildCodeFrameError("Unable to resolve file for tag.");
       }
 
+      const varBinding = trackVarReferences(tag, BindingType.derived);
+      if (varBinding) {
+        varBinding.scopeOffset = tagExtra[kChildOffsetScopeBinding] =
+          createBinding("#scopeOffset", BindingType.dom, section);
+      }
+
       if (childFile.opts.filename === tag.hub.file.opts.filename) {
         mergeReferences(section, tag.node, getAllTagReferenceNodes(tag.node));
+
+        if (varBinding) {
+          const varSerializeReason = getProgram().node.extra.returnValueExpr;
+          setBindingValueExpr(varBinding, varSerializeReason);
+          addBindingSerializeReasonExpr(
+            section,
+            childScopeBinding,
+            varSerializeReason,
+          );
+        }
       } else {
         const childProgram = childFile.ast.program;
         const childExtra = childProgram.extra;
@@ -168,7 +168,21 @@ export default {
           inputExpr,
         );
 
-        if (childInputBinding && childExtra.inputSerializeReasons) {
+        if (varBinding) {
+          const varSerializeReason = mapChildReasonToLocalReason(
+            childExtra.returnSerializeReason,
+            childInputBinding,
+            inputExpr,
+          );
+          setBindingValueExpr(varBinding, varSerializeReason);
+          addBindingSerializeReasonExpr(
+            section,
+            childScopeBinding,
+            varSerializeReason,
+          );
+        }
+
+        if (childExtra.inputSerializeReasons) {
           const childInputSerializePropIds = (tagExtra[
             kChildInputSerializePropIds
           ] = [] as unknown as NonNullable<
@@ -180,13 +194,7 @@ export default {
             addBindingSerializeReasonExpr(
               section,
               childScopeBinding,
-              filterMap(reason, (inputBinding) =>
-                resolveChildInputExpr(
-                  childInputBinding,
-                  inputBinding,
-                  inputExpr,
-                ),
-              ),
+              mapChildReasonToLocalReason(reason, childInputBinding, inputExpr),
               propId,
             );
           }
@@ -199,7 +207,7 @@ export default {
       addBindingSerializeReasonExpr(
         section,
         childScopeBinding,
-        hasVar || fromIter(attrExprs),
+        fromIter(attrExprs),
       );
     },
   },
@@ -974,6 +982,19 @@ function importOrSelfReferenceName(
   }
 
   return importNamed(file, request, name, nameHint);
+}
+
+function mapChildReasonToLocalReason(
+  childReason: undefined | false | SerializeReason,
+  childInputBinding: InputBinding | undefined,
+  inputExpr: InputExpr,
+) {
+  if (childReason) {
+    if (childReason === true) return true;
+    return filterMap(childReason, (inputBinding) =>
+      resolveChildInputExpr(childInputBinding!, inputBinding, inputExpr),
+    );
+  }
 }
 
 function resolveChildInputExpr(

@@ -8,7 +8,11 @@ import {
 import { assertNoBodyContent } from "../util/assert";
 import evaluate from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
-import { BindingType, trackVarReferences } from "../util/references";
+import {
+  BindingType,
+  setBindingValueExpr,
+  trackVarReferences,
+} from "../util/references";
 import runtimeInfo from "../util/runtime-info";
 import { getSection } from "../util/sections";
 import { addValue, initValue } from "../util/signals";
@@ -46,16 +50,20 @@ export default {
         );
     }
 
+    const valueExtra = evaluate(valueAttr.value); // TODO could perform a more extensive "nullable" check.
     const upstreamAlias = t.isIdentifier(valueAttr.value)
       ? tag.scope.getBinding(valueAttr.value.name)?.identifier.extra?.binding
       : undefined;
 
-    trackVarReferences(
-      tag,
-      BindingType.derived,
-      upstreamAlias,
-      evaluate(valueAttr.value), // TODO could perform a more extensive "nullable" check.
-    );
+    if (upstreamAlias) {
+      valueExtra.pruned = true;
+    }
+
+    const binding = trackVarReferences(tag, BindingType.derived, upstreamAlias);
+
+    if (binding) {
+      setBindingValueExpr(binding, valueExtra);
+    }
   },
   translate: {
     exit(tag) {

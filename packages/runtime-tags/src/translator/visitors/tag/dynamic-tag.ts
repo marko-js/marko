@@ -86,21 +86,13 @@ export default {
         "#text",
         BindingType.dom,
         tagSection,
-        undefined,
-        tagExtra,
       ));
 
       if (hasVar) {
         trackVarReferences(tag, BindingType.derived);
         tag.node.var!.extra!.binding!.scopeOffset = tagExtra[
           kChildOffsetScopeBinding
-        ] = createBinding(
-          "#scopeOffset",
-          BindingType.dom,
-          tagSection,
-          undefined,
-          tagExtra,
-        );
+        ] = createBinding("#scopeOffset", BindingType.dom, tagSection);
       }
 
       startSection(tagBody);

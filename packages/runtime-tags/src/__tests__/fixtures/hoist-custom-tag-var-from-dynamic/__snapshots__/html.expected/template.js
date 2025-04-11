@@ -11,12 +11,9 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   _thing({
     content: _$.createContent("__tests__/template.marko_1_renderer", () => {
       const $scope1_id = _$.nextScopeId();
-      const $childScope = _$.peekNextScopeId();
       const setHtml = _child({});
-      _$.setTagVar($scope1_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_1_setHtml/var");
       _$.writeSubscribe($thing_content_subscribers, _$.writeScope($scope1_id, {
-        setHtml,
-        "#childScope/0": _$.writeExistingScope($childScope)
+        setHtml
       }, "__tests__/template.marko", "3:2", {
         setHtml: "4:10"
       }));
@@ -28,12 +25,9 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
     _thing({
       content: _$.createContent("__tests__/template.marko_3_renderer", () => {
         const $scope3_id = _$.nextScopeId();
-        const $childScope2 = _$.peekNextScopeId();
         const setHtml2 = _child({});
-        _$.setTagVar($scope3_id, "#scopeOffset/1", $childScope2, "__tests__/template.marko_3_setHtml2/var");
         _$.writeSubscribe($thing_content2_subscribers, _$.writeScope($scope3_id, {
-          setHtml2,
-          "#childScope/0": _$.writeExistingScope($childScope2)
+          setHtml2
         }, "__tests__/template.marko", "16:4", {
           setHtml2: "17:12"
         }));
@@ -45,12 +39,9 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   }, $scope0_id), 0, _$.serializeGuard($serialize, 0));
   _$.dynamicTag($scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.registerContent("__tests__/template.marko_4_renderer", () => {
     const $scope4_id = _$.nextScopeId();
-    const $childScope3 = _$.peekNextScopeId();
     const setHtml3 = _child({});
-    _$.setTagVar($scope4_id, "#scopeOffset/1", $childScope3, "__tests__/template.marko_4_setHtml3/var");
     _$.writeSubscribe($inputshowsectionnull_content_subscribers, _$.writeScope($scope4_id, {
-      setHtml3,
-      "#childScope/0": _$.writeExistingScope($childScope3)
+      setHtml3
     }, "__tests__/template.marko", "26:4", {
       setHtml3: "27:10"
     }));

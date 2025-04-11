@@ -50,8 +50,6 @@ export default {
       generateUid("lifecycle"),
       BindingType.derived,
       section,
-      undefined,
-      tagExtra,
     );
 
     if (node.attributes.length === 0) {
