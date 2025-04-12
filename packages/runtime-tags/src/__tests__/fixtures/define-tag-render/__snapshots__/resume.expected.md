@@ -3,7 +3,6 @@
 <html>
   <head />
   <body>
-    <!--M_[2-->
     <div>
       Hello 
       <!---->
@@ -19,19 +18,13 @@
       <!--M_*2 #text/3-->
     </button>
     <!--M_*2 #button/2-->
-    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={y:1},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"},_.a]),2,"__tests__/template.marko_1_y"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,1,{y:1}]),2,"__tests__/template.marko_1_y"];M._.w()
     </script>
   </body>
 </html>
 ```
 
-# Mutations
-```
-REMOVE html/body/#comment0 before html
-INSERT html/body/#comment0
-```
 
 # Render
 ```js
@@ -41,7 +34,6 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
     <div>
       Hello 
       <!---->
@@ -57,9 +49,8 @@ container.querySelector("button").click();
       <!--M_*2 #text/3-->
     </button>
     <!--M_*2 #button/2-->
-    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={y:1},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"},_.a]),2,"__tests__/template.marko_1_y"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,1,{y:1}]),2,"__tests__/template.marko_1_y"];M._.w()
     </script>
   </body>
 </html>
@@ -79,7 +70,6 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
     <div>
       Hello 
       <!---->
@@ -95,9 +85,8 @@ container.querySelector("button").click();
       <!--M_*2 #text/3-->
     </button>
     <!--M_*2 #button/2-->
-    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={y:1},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"},_.a]),2,"__tests__/template.marko_1_y"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,1,{y:1}]),2,"__tests__/template.marko_1_y"];M._.w()
     </script>
   </body>
 </html>
@@ -117,7 +106,6 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
     <div>
       Hello 
       <!---->
@@ -133,9 +121,8 @@ container.querySelector("button").click();
       <!--M_*2 #text/3-->
     </button>
     <!--M_*2 #button/2-->
-    <!--M_]1 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={y:1},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"},_.a]),2,"__tests__/template.marko_1_y"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,1,{y:1}]),2,"__tests__/template.marko_1_y"];M._.w()
     </script>
   </body>
 </html>
