@@ -14,7 +14,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       _$.resumeClosestBranch($scope1_id);
     })
   };
-  _$.dynamicTag($scope0_id, "#text/0", MyTag, {}, 0, 0, 1);
+  _$.dynamicTag($scope0_id, "#text/0", MyTag, {});
   _$.write(`<button>${_$.escapeXML(x)}${_$.markResumeNode($scope0_id, "#text/2")}</button>${_$.markResumeNode($scope0_id, "#button/1")}`);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope($scope0_id, {

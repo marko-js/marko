@@ -7,6 +7,7 @@ import {
   BindingType,
   getAllTagReferenceNodes,
   mergeReferences,
+  setBindingValueExpr,
   trackParamsReferences,
   trackVarReferences,
 } from "../util/references";
@@ -33,10 +34,9 @@ export default {
 
     const tagBody = tag.get("body");
     const bodySection = startSection(tagBody);
-    trackVarReferences(tag, BindingType.derived);
+    const varBinding = trackVarReferences(tag, BindingType.derived);
 
     if (bodySection) {
-      const varBinding = tag.node.var?.extra?.binding;
       if (varBinding) {
         // TODO: need to do this for attr tags.
         // Should probably allow passing a binding to analyzeAttrTags.
@@ -47,11 +47,15 @@ export default {
     // TODO: should determine if var bindings are nullable based on attrs.
     trackParamsReferences(tagBody, BindingType.param);
     analyzeAttributeTags(tag);
-    mergeReferences(
+    const tagExtra = mergeReferences(
       getOrCreateSection(tag),
       tag.node,
       getAllTagReferenceNodes(tag.node),
     );
+
+    if (varBinding) {
+      setBindingValueExpr(varBinding, tagExtra);
+    }
   },
   translate: {
     enter(tag) {
