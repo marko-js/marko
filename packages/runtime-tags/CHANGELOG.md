@@ -1,5 +1,14 @@
 # @marko/runtime-tags
 
+## 6.0.1
+
+### Patch Changes
+
+- [#2641](https://github.com/marko-js/marko/pull/2641) [`55f0e5b`](https://github.com/marko-js/marko/commit/55f0e5b3f1cc414626dbf4947956b14b8aae34ae) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid serializing markers for stateless define tag instances.
+
+- [#2641](https://github.com/marko-js/marko/pull/2641) [`6a09e6e`](https://github.com/marko-js/marko/commit/6a09e6ee4a32b56131843fad7a28442e7fc25aff) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix race condition when runtime loads before initial flush.
+  Refactor inline runtime to be slightly smaller.
+
 ## 6.0.0
 
 ### Major Changes
