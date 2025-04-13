@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.2
+
+### Patch Changes
+
+- [#2643](https://github.com/marko-js/marko/pull/2643) [`2872b44`](https://github.com/marko-js/marko/commit/2872b44bf5fdd39ec70dc65c9e29abddbaefd63b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Move owner and closure serialization tracking to analyze phase.
+
 ## 6.0.1
 
 ### Patch Changes
