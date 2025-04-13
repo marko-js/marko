@@ -90,10 +90,11 @@ export default {
         );
     }
 
+    const tagSection = getOrCreateSection(tag);
     const binding = trackVarReferences(tag, BindingType.let)!;
     setBindingValueExpr(
       binding,
-      mergeReferences(getOrCreateSection(tag), tag.node, [
+      mergeReferences(tagSection, tag.node, [
         valueAttr?.value,
         valueChangeAttr?.value,
       ]),
@@ -102,7 +103,7 @@ export default {
     if (valueChangeAttr) {
       // TODO: could be based on if there are actually assignments.
       forceBindingSerialize(
-        getSection(tag),
+        tagSection,
         binding,
         getAccessorPrefix().TagVariableChange,
       );

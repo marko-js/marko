@@ -23,7 +23,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   _$.dynamicTag($scope0_id, "#text/5", Parent, {}, _$.registerContent("__tests__/template.marko_1_renderer", () => {
     const $scope1_id = _$.nextScopeId();
     _$.write(`${_$.toString(input.value)}${_$.markResumeNode($scope1_id, "#text/0", _$.serializeGuard($serialize, 0))}`);
-    _$.writeSubscribe($input_value_closures, _$.writeScope($scope1_id, {
+    _$.serializeGuard($serialize, 0) && _$.writeSubscribe($input_value_closures, _$.writeScope($scope1_id, {
       _: _$.ensureScopeWithId($scope0_id),
       "ClosureSignalIndex:input_value": _$.serializeIf($serialize, 0) && 0
     }, "__tests__/template.marko", "12:3"));

@@ -11,7 +11,10 @@ import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
-import { getAccessorPrefix } from "../../util/get-accessor-char";
+import {
+  getAccessorPrefix,
+  getAccessorProp,
+} from "../../util/get-accessor-char";
 import { getTagName } from "../../util/get-tag-name";
 import isInvokedFunction from "../../util/is-invoked-function";
 import { isOutputHTML } from "../../util/marko-config";
@@ -41,14 +44,13 @@ import {
 import {
   addBindingSerializeReasonExpr,
   forceBindingSerialize,
-  forceSectionSerialize,
+  forceOwnersSerialize,
   getBindingSerializeReason,
 } from "../../util/serialize-reasons";
 import {
   addHTMLEffectCall,
   addStatement,
   getRegisterUID,
-  serializeOwners,
 } from "../../util/signals";
 import { toObjectProperty } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
@@ -294,23 +296,28 @@ export default {
         }
 
         if (node.var) {
-          forceSectionSerialize(tagSection);
           forceBindingSerialize(tagSection, nodeBinding);
-          const varBinding = tag.scope.getBinding(node.var.name)!;
-          for (const referencePath of varBinding.referencePaths) {
-            const referenceSection = getSection(referencePath);
+          for (const ref of tag.scope.getBinding(node.var.name)!
+            .referencePaths) {
+            const refSection = getOrCreateSection(ref);
+            setReferencesScope(ref);
 
-            setReferencesScope(referencePath);
-
-            if (!isSameOrChildSection(tagSection, referenceSection)) {
-              trackHoistedReference(
-                referencePath as t.NodePath<t.Identifier>,
-                nodeBinding,
-              );
-            } else if (!isInvokedFunction(referencePath)) {
-              tagExtra[kGetterId] ||= getRegisterUID(
+            if (isSameOrChildSection(tagSection, refSection)) {
+              forceOwnersSerialize(
+                refSection,
                 tagSection,
-                nodeBinding.name,
+                getAccessorProp().Owner,
+              );
+              if (!isInvokedFunction(ref)) {
+                tagExtra[kGetterId] ||= getRegisterUID(
+                  tagSection,
+                  nodeBinding.name,
+                );
+              }
+            } else {
+              trackHoistedReference(
+                ref as t.NodePath<t.Identifier>,
+                nodeBinding,
               );
             }
           }
@@ -346,13 +353,6 @@ export default {
         const varBinding = tag.scope.getBinding(varName)!;
         const getterId = tagExtra[kGetterId];
         if (isHTML) {
-          for (const reference of varBinding.referencePaths) {
-            const referenceSection = getSection(reference);
-            if (!reference.node.extra?.hoist) {
-              serializeOwners(referenceSection, tagSection);
-            }
-          }
-
           translateVar(
             tag,
             callRuntime(
@@ -383,8 +383,8 @@ export default {
           }
 
           for (const reference of varBinding.referencePaths) {
-            if (!reference.node.extra?.hoistedBinding) {
-              const referenceSection = getSection(reference);
+            const referenceSection = getSection(reference);
+            if (isSameOrChildSection(tagSection, referenceSection)) {
               if (isInvokedFunction(reference)) {
                 reference.parentPath.replaceWith(
                   t.expressionStatement(

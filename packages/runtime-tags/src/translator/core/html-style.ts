@@ -14,6 +14,7 @@ import { getEventHandlerName, isEventHandler } from "../../common/helpers";
 import { WalkCode } from "../../common/types";
 import evaluate from "../util/evaluate";
 import { generateUidIdentifier } from "../util/generate-uid";
+import { getAccessorProp } from "../util/get-accessor-char";
 import isInvokedFunction from "../util/is-invoked-function";
 import { isOutputHTML } from "../util/marko-config";
 import { type Opt, push } from "../util/optional";
@@ -24,6 +25,8 @@ import {
   dropReferences,
   getScopeAccessorLiteral,
   mergeReferences,
+  setReferencesScope,
+  trackHoistedReference,
 } from "../util/references";
 import { callRuntime, getHTMLRuntime } from "../util/runtime";
 import {
@@ -34,17 +37,18 @@ import {
   getOrCreateSection,
   getScopeIdIdentifier,
   getSection,
+  isSameOrChildSection,
 } from "../util/sections";
 import {
   addBindingSerializeReasonExpr,
   forceBindingSerialize,
+  forceOwnersSerialize,
   getBindingSerializeReason,
 } from "../util/serialize-reasons";
 import {
   addHTMLEffectCall,
   addStatement,
   getRegisterUID,
-  serializeOwners,
 } from "../util/signals";
 import { toObjectProperty } from "../util/to-property-name";
 import { propsToExpression } from "../util/translate-attrs";
@@ -163,9 +167,20 @@ export default {
         forceBindingSerialize(tagSection, nodeBinding);
 
         for (const ref of tag.scope.getBinding(node.var.name)!.referencePaths) {
-          if (!isInvokedFunction(ref)) {
-            tagExtra[kGetterId] = getRegisterUID(tagSection, "#style");
-            break;
+          const refSection = getOrCreateSection(ref);
+          setReferencesScope(ref);
+
+          if (isSameOrChildSection(tagSection, refSection)) {
+            forceOwnersSerialize(
+              refSection,
+              tagSection,
+              getAccessorProp().Owner,
+            );
+            if (!tagExtra[kGetterId] && !isInvokedFunction(ref)) {
+              tagExtra[kGetterId] = getRegisterUID(tagSection, "#style");
+            }
+          } else {
+            trackHoistedReference(ref as t.NodePath<t.Identifier>, nodeBinding);
           }
         }
       } else if (hasEventHandlers || spreadReferenceNodes) {
@@ -191,12 +206,6 @@ export default {
       if (hasVar) {
         const getterId = tagExtra[kGetterId];
         if (isHTML) {
-          const varName = (tag.node.var as t.Identifier).name;
-          const references = tag.scope.getBinding(varName)!.referencePaths;
-          for (const reference of references) {
-            serializeOwners(getSection(reference), tagSection);
-          }
-
           translateVar(
             tag,
             callRuntime(

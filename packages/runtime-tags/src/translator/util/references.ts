@@ -3,7 +3,7 @@ import { getProgram } from "@marko/compiler/babel-utils";
 
 import { forEachIdentifier } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
-import { getAccessorPrefix } from "./get-accessor-char";
+import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
 import { getExprRoot, getFnRoot } from "./get-root";
 import isInvokedFunction from "./is-invoked-function";
 import { isOptimize } from "./marko-config";
@@ -28,13 +28,13 @@ import {
   getOrCreateSection,
   isDynamicClosure,
   isSameOrChildSection,
-  isSectionWithHoists,
   type Section,
   sectionUtil,
 } from "./sections";
 import {
   addBindingSerializeReason,
   addBindingSerializeReasonExpr,
+  addOwnersSerializeReason,
   addSectionSerializeReason,
   addSectionSerializeReasonExpr,
   addSectionSerializeReasonRef,
@@ -42,6 +42,7 @@ import {
   type DynamicSerializeReasons,
   finalizeSectionSerializeReasons,
   forceBindingSerialize,
+  forceOwnersSerialize,
   forceSectionSerialize,
   getBindingSerializeReason,
   getSerializeSourcesForExpr,
@@ -75,6 +76,7 @@ export interface Binding {
   loc: t.SourceLocation | null;
   section: Section;
   closureSections: Opt<Section>;
+  assignmentSections: Opt<Section>;
   sources: Opt<Binding>;
   serializeSources: undefined | SerializeReason;
   aliases: Set<Binding>;
@@ -113,7 +115,6 @@ declare module "@marko/compiler/dist/types" {
     section?: Section;
     referencedBindings?: ReferencedBindings;
     binding?: Binding;
-    hoistedBinding?: Binding;
     assignment?: Binding;
     read?: { binding: Binding; props: Opt<string> };
     pruned?: true;
@@ -151,6 +152,7 @@ export function createBinding(
     property,
     declared,
     closureSections: undefined,
+    assignmentSections: undefined,
     excludeProperties: undefined,
     serializeSources: undefined,
     sources: undefined,
@@ -276,8 +278,6 @@ export function trackHoistedReference(
     }
   }
 
-  extra.hoistedBinding = hoistedBinding;
-
   if (isInvokedFunction(referencePath)) {
     extra.read = createRead(hoistedBinding, undefined);
     extra.section = referenceSection;
@@ -335,7 +335,10 @@ function trackAssignment(
   forEachIdentifier(assignment.node, (id) => {
     if (id.name === binding.name) {
       const extra = (id.extra ??= {});
-      section.assignments = bindingUtil.add(section.assignments, binding);
+      binding.assignmentSections = sectionUtil.add(
+        binding.assignmentSections,
+        section,
+      );
       extra.assignment = binding;
       extra.section = section;
     }
@@ -651,6 +654,10 @@ export function finalizeReferences() {
         forceBindingSerialize(binding.section, binding);
       }
 
+      forEach(binding.assignmentSections, (assignedSection) =>
+        forceOwnersSerialize(assignedSection, section, getAccessorProp().Owner),
+      );
+
       if (find(section.bindings, ({ name }) => name === binding.name)) {
         /*
           TODO: this will break if parent sections use the generated UID.
@@ -682,6 +689,13 @@ export function finalizeReferences() {
           section.referencedClosures,
           binding,
         );
+
+        addOwnersSerializeReason(
+          section,
+          binding.section,
+          binding.serializeSources,
+          getAccessorProp().Owner,
+        );
       }
       if (isEffect) {
         forEach(referencedBindings, (binding) =>
@@ -692,9 +706,17 @@ export function finalizeReferences() {
   }
 
   forEachSection((section) => {
-    if (isSectionWithHoists(section)) {
+    if (section.isHoistThrough) {
       forceSectionSerialize(section);
     }
+
+    forEach(section.referencedHoists, (hoistedBinding) => {
+      forceOwnersSerialize(
+        section,
+        hoistedBinding.section,
+        getAccessorProp().Owner,
+      );
+    });
 
     if (
       section.parent &&

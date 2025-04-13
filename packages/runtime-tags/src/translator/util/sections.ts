@@ -41,7 +41,6 @@ export interface Section {
   serializeReason: undefined | SerializeReason;
   serializeReasons: Map<symbol, SerializeReason>;
   isHoistThrough: true | undefined;
-  assignments: ReferencedBindings;
   upstreamExpression: t.NodeExtra | undefined;
   downstreamBinding: Binding | undefined;
   hasAbortSignal: boolean;
@@ -102,7 +101,6 @@ export function startSection(
       bindings: undefined,
       hoisted: undefined,
       isHoistThrough: undefined,
-      assignments: undefined,
       serializeReason: undefined,
       serializeReasons: new Map(),
       content: getContentInfo(path),
@@ -148,10 +146,6 @@ export function getSection(path: t.NodePath) {
   }
 
   return section;
-}
-
-export function getParentSection(path: t.NodePath) {
-  return getSection(path.parentPath!);
 }
 
 export const [getScopeIdIdentifier] = createSectionState<t.Identifier>(
