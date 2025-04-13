@@ -1071,13 +1071,8 @@ export function writeHTMLResumeStatements(
   const body = path.node.body as t.Statement[];
   const allSignals = Array.from(getSignals(section).values());
   const scopeIdIdentifier = getScopeIdIdentifier(section);
-  const serializeOwnersUntilBinding = (binding: Binding) =>
-    serializeOwners(section, binding.section);
-  forEach(section.assignments, serializeOwnersUntilBinding);
-  forEach(section.referencedHoists, serializeOwnersUntilBinding);
   forEach(section.referencedClosures, (closure) => {
     if (closure.sources) {
-      serializeOwnersUntilBinding(closure);
       if (isDynamicClosure(section, closure)) {
         const closureSignal = getSignal(closure.section, closure);
         let identifier =
@@ -1228,6 +1223,31 @@ export function writeHTMLResumeStatements(
     );
   });
 
+  if (section.parent) {
+    const ownerAccessor = getAccessorProp().Owner;
+    const ownerReason = getSectionSerializeReason(section, ownerAccessor);
+    if (ownerReason) {
+      const getOwnerExpr = callRuntime(
+        "ensureScopeWithId",
+        getScopeIdIdentifier(section.parent),
+      );
+      serializedLookup.delete(ownerAccessor);
+      serializedProperties.push(
+        toObjectProperty(
+          ownerAccessor,
+          sectionSerializeReason &&
+            (sectionSerializeReason === ownerReason ||
+              (sectionSerializeReason !== true &&
+                ownerReason !== true &&
+                compareSerializeReasons(sectionSerializeReason, ownerReason) ===
+                  0))
+            ? getOwnerExpr
+            : getExprIfSerialized(ownerReason, getOwnerExpr),
+        ),
+      );
+    }
+  }
+
   for (const [key, { expression, reason }] of serializedLookup) {
     serializedProperties.push(
       toObjectProperty(key, getExprIfSerialized(reason, expression)),
@@ -1343,25 +1363,6 @@ export function writeHTMLResumeStatements(
   const returnIdentifier = getSectionReturnValueIdentifier(section);
   if (returnIdentifier !== undefined) {
     body.push(t.returnStatement(returnIdentifier));
-  }
-}
-
-export function serializeOwners(from: Section, to?: Section) {
-  const ownerProp = getAccessorProp().Owner;
-  // TODO: need to do this based on sources.
-  let cur = from;
-  while (cur !== to) {
-    const parent = cur.parent;
-    if (!parent) break;
-    const serialized = getSerializedAccessors(cur);
-    nonAnalyzedForceSerializedSection.add(cur);
-    cur = parent;
-    if (!serialized.has(ownerProp)) {
-      serialized.set(ownerProp, {
-        expression: callRuntime("ensureScopeWithId", getScopeIdIdentifier(cur)),
-        reason: true,
-      });
-    }
   }
 }
 

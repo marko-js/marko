@@ -15,9 +15,9 @@ const $content = (input, $serialize) => {
           comments: comment.comments,
           path: id
         });
-        _$.writeScope($scope2_id, {
-          "#childScope/0": _$.serializeIf($serialize, 0) && _$.writeExistingScope($childScope),
-          _: _$.ensureScopeWithId($scope1_id)
+        _$.serializeGuard($serialize, 0) && _$.writeScope($scope2_id, {
+          _: _$.ensureScopeWithId($scope1_id),
+          "#childScope/0": _$.serializeIf($serialize, 0) && _$.writeExistingScope($childScope)
         }, "__tests__/tags/comments.marko", "10:8");
         return 0;
       }
@@ -29,7 +29,7 @@ const $content = (input, $serialize) => {
       i: _$.serializeIf($serialize, 2) && i,
       id: _$.serializeIf($serialize, 1) && id,
       open,
-      _: _$.ensureScopeWithId($scope0_id)
+      _: _$.serializeIf($serialize, 2) && _$.ensureScopeWithId($scope0_id)
     }, "__tests__/tags/comments.marko", "2:4", {
       comment_comments: ["comment.comments", "2:8"],
       i: "2:17",

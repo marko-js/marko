@@ -34,14 +34,30 @@ const serializeKeyBySourceModifier: Record<
   WeakMap<Section | Binding, SerializeKey>
 > = {};
 
-export function forceParentSectionsSerialize(from: Section, to?: Section) {
-  // TODO: need to do this based on sources.
+export function forceOwnersSerialize(
+  from: Section,
+  to: Section,
+  prop?: AccessorProp | symbol,
+) {
   let cur = from;
-  while (cur !== to) {
-    const parent = cur.parent;
-    if (!parent) break;
-    forceSectionSerialize(parent);
-    cur = parent;
+  while (cur !== to && cur.parent) {
+    forceSectionSerialize(cur, prop);
+    cur = cur.parent;
+  }
+}
+
+export function addOwnersSerializeReason(
+  from: Section,
+  to: Section,
+  reason: undefined | boolean | SerializeReason,
+  prop?: AccessorProp | symbol,
+) {
+  if (reason) {
+    let cur = from;
+    while (cur !== to && cur.parent) {
+      addSectionSerializeReason(cur, reason, prop);
+      cur = cur.parent;
+    }
   }
 }
 

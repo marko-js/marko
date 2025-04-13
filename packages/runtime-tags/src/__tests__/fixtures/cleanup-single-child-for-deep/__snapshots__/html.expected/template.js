@@ -26,15 +26,15 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       }, 1);
       _$.write("</div>");
       _$.writeScope($scope2_id, {
-        "#childScope/0": _$.writeExistingScope($childScope2),
-        _: _$.ensureScopeWithId($scope1_id)
+        _: _$.ensureScopeWithId($scope1_id),
+        "#childScope/0": _$.writeExistingScope($childScope2)
       }, "__tests__/template.marko", "10:6");
     }, 0, $scope1_id, "#text/1", 1);
     _$.write("</div>");
     _$.writeScope($scope1_id, {
       outerItem,
-      "#childScope/0": _$.writeExistingScope($childScope),
-      _: _$.ensureScopeWithId($scope0_id)
+      _: _$.ensureScopeWithId($scope0_id),
+      "#childScope/0": _$.writeExistingScope($childScope)
     }, "__tests__/template.marko", "7:2", {
       outerItem: "7:6"
     });

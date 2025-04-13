@@ -15,7 +15,7 @@ import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import { isControlFlowTag } from "../util/is-core-tag";
 import { importRuntime } from "../util/runtime";
-import { getSection } from "../util/sections";
+import { getOrCreateSection, getSection } from "../util/sections";
 import { forceSectionSerialize } from "../util/serialize-reasons";
 import { addValue, setSectionSerializedValue } from "../util/signals";
 import { createSectionState } from "../util/state";
@@ -72,7 +72,7 @@ export default {
     if (attrs.valueChange) {
       // TODO: this should be based on the parent actually mutating the tag variable.
       forceSectionSerialize(
-        getSection(tag),
+        getOrCreateSection(tag),
         getAccessorProp().TagVariableChange,
       );
     }

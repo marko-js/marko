@@ -30,9 +30,9 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       });
       _$.writeSubscribe($y_closures, _$.writeScope($scope1_id, {
         outer,
+        _: _$.ensureScopeWithId($scope0_id),
         "ClosureScopes:outer": $outer$child$content_closures,
         "#childScope/0": _$.writeExistingScope($childScope),
-        _: _$.ensureScopeWithId($scope0_id),
         "ClosureSignalIndex:y": 0
       }, "__tests__/template.marko", "6:2", {
         outer: "6:8"

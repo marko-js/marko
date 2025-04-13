@@ -31,7 +31,6 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
     _$.writeEffect($scope2_id, "__tests__/template.marko_2_$hoisted_el2");
     _$.writeSubscribe($inputshowChildnull_content_subscribers, _$.writeScope($scope2_id, {
       $hoisted_el2,
-      _: _$.ensureScopeWithId($scope0_id),
       "ClosureScopes:3": $child_content2_subscribers
     }, "__tests__/template.marko", "15:4", {
       $hoisted_el2: 0

@@ -24,7 +24,7 @@
       <!--M_]2 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,_.d={x:1,y:2,"ClosureScopes:y":_.h=new Set,"#childScope/1":_.e={"ConditionalScope:#text/0":_.a={outer:1,"ClosureScopes:outer":_.g=new Set,"#childScope/0":_.c={"ConditionalScope:#text/0":_.b={"ClosureSignalIndex:outer":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_2_renderer"},"ClosureSignalIndex:y":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"}},_.e,_.a,_.c,_.b],_.b._=_.a,_.c.content=_._["__tests__/template.marko_2_renderer"](_.a),_.a._=_.d,_.e.content=_._["__tests__/template.marko_1_renderer"](_.d),(_.g).add(_.b),(_.h).add(_.a),_.f),1,"__tests__/template.marko_0_x"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,_.a={x:1,y:2,"ClosureScopes:y":_.h=new Set,"#childScope/1":_.e={"ConditionalScope:#text/0":_.b={outer:1,"ClosureScopes:outer":_.g=new Set,"#childScope/0":_.d={"ConditionalScope:#text/0":_.c={"ClosureSignalIndex:outer":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_2_renderer"},"ClosureSignalIndex:y":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"}},_.e,_.b,_.d,_.c],_.b._=_.a,_.c._=_.b,_.d.content=_._["__tests__/template.marko_2_renderer"](_.b),_.e.content=_._["__tests__/template.marko_1_renderer"](_.a),(_.g).add(_.c),(_.h).add(_.b),_.f),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
   </body>
 </html>
@@ -60,7 +60,7 @@ container.querySelector("button").click();
       <!--M_]2 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,_.d={x:1,y:2,"ClosureScopes:y":_.h=new Set,"#childScope/1":_.e={"ConditionalScope:#text/0":_.a={outer:1,"ClosureScopes:outer":_.g=new Set,"#childScope/0":_.c={"ConditionalScope:#text/0":_.b={"ClosureSignalIndex:outer":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_2_renderer"},"ClosureSignalIndex:y":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"}},_.e,_.a,_.c,_.b],_.b._=_.a,_.c.content=_._["__tests__/template.marko_2_renderer"](_.a),_.a._=_.d,_.e.content=_._["__tests__/template.marko_1_renderer"](_.d),(_.g).add(_.b),(_.h).add(_.a),_.f),1,"__tests__/template.marko_0_x"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,_.a={x:1,y:2,"ClosureScopes:y":_.h=new Set,"#childScope/1":_.e={"ConditionalScope:#text/0":_.b={outer:1,"ClosureScopes:outer":_.g=new Set,"#childScope/0":_.d={"ConditionalScope:#text/0":_.c={"ClosureSignalIndex:outer":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_2_renderer"},"ClosureSignalIndex:y":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"}},_.e,_.b,_.d,_.c],_.b._=_.a,_.c._=_.b,_.d.content=_._["__tests__/template.marko_2_renderer"](_.b),_.e.content=_._["__tests__/template.marko_1_renderer"](_.a),(_.g).add(_.c),(_.h).add(_.b),_.f),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
   </body>
 </html>
@@ -100,7 +100,7 @@ container.querySelector("button").click();
       <!--M_]2 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,_.d={x:1,y:2,"ClosureScopes:y":_.h=new Set,"#childScope/1":_.e={"ConditionalScope:#text/0":_.a={outer:1,"ClosureScopes:outer":_.g=new Set,"#childScope/0":_.c={"ConditionalScope:#text/0":_.b={"ClosureSignalIndex:outer":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_2_renderer"},"ClosureSignalIndex:y":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"}},_.e,_.a,_.c,_.b],_.b._=_.a,_.c.content=_._["__tests__/template.marko_2_renderer"](_.a),_.a._=_.d,_.e.content=_._["__tests__/template.marko_1_renderer"](_.d),(_.g).add(_.b),(_.h).add(_.a),_.f),1,"__tests__/template.marko_0_x"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,_.a={x:1,y:2,"ClosureScopes:y":_.h=new Set,"#childScope/1":_.e={"ConditionalScope:#text/0":_.b={outer:1,"ClosureScopes:outer":_.g=new Set,"#childScope/0":_.d={"ConditionalScope:#text/0":_.c={"ClosureSignalIndex:outer":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_2_renderer"},"ClosureSignalIndex:y":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"}},_.e,_.b,_.d,_.c],_.b._=_.a,_.c._=_.b,_.d.content=_._["__tests__/template.marko_2_renderer"](_.b),_.e.content=_._["__tests__/template.marko_1_renderer"](_.a),(_.g).add(_.c),(_.h).add(_.b),_.f),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
   </body>
 </html>
@@ -140,7 +140,7 @@ container.querySelector("button").click();
       <!--M_]2 #text/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,_.d={x:1,y:2,"ClosureScopes:y":_.h=new Set,"#childScope/1":_.e={"ConditionalScope:#text/0":_.a={outer:1,"ClosureScopes:outer":_.g=new Set,"#childScope/0":_.c={"ConditionalScope:#text/0":_.b={"ClosureSignalIndex:outer":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_2_renderer"},"ClosureSignalIndex:y":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"}},_.e,_.a,_.c,_.b],_.b._=_.a,_.c.content=_._["__tests__/template.marko_2_renderer"](_.a),_.a._=_.d,_.e.content=_._["__tests__/template.marko_1_renderer"](_.d),(_.g).add(_.b),(_.h).add(_.a),_.f),1,"__tests__/template.marko_0_x"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,_.a={x:1,y:2,"ClosureScopes:y":_.h=new Set,"#childScope/1":_.e={"ConditionalScope:#text/0":_.b={outer:1,"ClosureScopes:outer":_.g=new Set,"#childScope/0":_.d={"ConditionalScope:#text/0":_.c={"ClosureSignalIndex:outer":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_2_renderer"},"ClosureSignalIndex:y":0},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer"}},_.e,_.b,_.d,_.c],_.b._=_.a,_.c._=_.b,_.d.content=_._["__tests__/template.marko_2_renderer"](_.b),_.e.content=_._["__tests__/template.marko_1_renderer"](_.a),(_.g).add(_.c),(_.h).add(_.b),_.f),1,"__tests__/template.marko_0_x"];M._.w()
     </script>
   </body>
 </html>

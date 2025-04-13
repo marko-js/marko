@@ -20,7 +20,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
         }
       }, $scope1_id, "#text/0", 1, _$.serializeGuard($serialize, 0));
       _$.writeScope($scope1_id, {
-        _: _$.ensureScopeWithId($scope0_id)
+        _: _$.serializeIf($serialize, 0) && _$.ensureScopeWithId($scope0_id)
       }, "__tests__/template.marko", "1:2");
       return 0;
     }

@@ -13,8 +13,8 @@ export default _$.createTemplate("__tests__/template.marko", input => {
         name: `${outer}.${inner}`
       }, 1);
       _$.writeScope($scope2_id, {
-        "#childScope/0": _$.writeExistingScope($childScope),
-        _: _$.ensureScopeWithId($scope1_id)
+        _: _$.ensureScopeWithId($scope1_id),
+        "#childScope/0": _$.writeExistingScope($childScope)
       }, "__tests__/template.marko", "5:4");
     }, 0, $scope1_id, "#text/0", 1);
     _$.writeScope($scope1_id, {

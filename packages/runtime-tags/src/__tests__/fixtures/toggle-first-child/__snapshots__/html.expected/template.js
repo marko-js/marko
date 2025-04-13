@@ -9,7 +9,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
     if (value) {
       const $scope1_id = _$.nextScopeId();
       _$.write(`<span>${_$.escapeXML(value)}${_$.markResumeNode($scope1_id, "#text/0", _$.serializeGuard($serialize, 0))}</span>`);
-      _$.writeScope($scope1_id, {
+      _$.serializeGuard($serialize, 0) && _$.writeScope($scope1_id, {
         _: _$.ensureScopeWithId($scope0_id)
       }, "__tests__/template.marko", "3:4");
       return 0;
