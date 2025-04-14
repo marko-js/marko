@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.37.29
+
+### Patch Changes
+
+- [#2648](https://github.com/marko-js/marko/pull/2648) [`3b883d4`](https://github.com/marko-js/marko/commit/3b883d4d9729e5b13bb0e8d19850c087d0e8245f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where tags added from the translator were given lower priority than tags added by the core compiler.
+
+- Updated dependencies [[`3b883d4`](https://github.com/marko-js/marko/commit/3b883d4d9729e5b13bb0e8d19850c087d0e8245f)]:
+  - @marko/compiler@5.39.19
+
 ## 5.37.28
 
 ### Patch Changes
