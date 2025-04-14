@@ -56,7 +56,7 @@ import { toMemberExpression } from "./to-property-name";
 import withPreviousLocation from "./with-previous-location";
 
 const kIsInvoked = Symbol("hoist is invoked");
-
+export const kBranchSerializeReason = Symbol("branch serialize reason");
 export type Aliases = undefined | Binding | { [property: string]: Aliases };
 
 export enum BindingType {
@@ -724,8 +724,17 @@ export function finalizeReferences() {
       section.sectionAccessor &&
       section.upstreamExpression
     ) {
-      addSectionSerializeReasonRef(section, getDirectClosures(section));
-      addSectionSerializeReasonExpr(section, section.upstreamExpression);
+      addSectionSerializeReasonRef(
+        section,
+        !!(section.isHoistThrough || section.hoisted) ||
+          getDirectClosures(section),
+        kBranchSerializeReason,
+      );
+      addSectionSerializeReasonExpr(
+        section,
+        section.upstreamExpression,
+        kBranchSerializeReason,
+      );
       addBindingSerializeReasonExpr(
         section.parent,
         section.sectionAccessor.binding,

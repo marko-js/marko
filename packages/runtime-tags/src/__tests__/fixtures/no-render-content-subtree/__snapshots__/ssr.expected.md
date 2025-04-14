@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div></div><!--M_*1 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d=[0,_.a={"ConditionalScope:#text/1":_.b={}},_.b,{"#scopeOffset/1":5,input:_.c={foo:"bar"},x:"bar"}],_.b._=_.a,_.c.output=_._["__tests__/template.marko_0/#div"](_.a),_.d),"__tests__/tags/child.marko_0_input_x",3];M._.w()</script>
+  <div></div><!--M_*1 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.a={},{_:_.a},{"#scopeOffset/1":5,input:{foo:"bar",output:_._["__tests__/template.marko_0/#div"](_.a)},x:"bar"}]),"__tests__/tags/child.marko_0_input_x",3];M._.w()</script>
 ```
 
 # Render End
@@ -11,7 +11,7 @@
     <div />
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.a={"ConditionalScope:#text/1":_.b={}},_.b,{"#scopeOffset/1":5,input:_.c={foo:"bar"},x:"bar"}],_.b._=_.a,_.c.output=_._["__tests__/template.marko_0/#div"](_.a),_.d),"__tests__/tags/child.marko_0_input_x",3];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={},{_:_.a},{"#scopeOffset/1":5,input:{foo:"bar",output:_._["__tests__/template.marko_0/#div"](_.a)},x:"bar"}]),"__tests__/tags/child.marko_0_input_x",3];M._.w()
     </script>
   </body>
 </html>

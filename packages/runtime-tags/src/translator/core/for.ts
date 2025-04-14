@@ -20,6 +20,7 @@ import {
   dropReferences,
   getAllTagReferenceNodes,
   getScopeAccessorLiteral,
+  kBranchSerializeReason,
   mergeReferences,
   setBindingValueExpr,
   trackParamsReferences,
@@ -154,7 +155,10 @@ export default {
           (bodySection.content.singleChild &&
             bodySection.content.startType !== ContentType.Text);
 
-        const branchSerializeReason = getSectionSerializeReason(bodySection);
+        const branchSerializeReason = getSectionSerializeReason(
+          bodySection,
+          kBranchSerializeReason,
+        );
         const markerSerializeReason = getBindingSerializeReason(
           tagSection,
           nodeBinding,
