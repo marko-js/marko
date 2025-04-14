@@ -131,8 +131,8 @@ function find(dirname, registeredTaglibs, tagDiscoveryDirs) {
     });
   }
 
-  for (const registeredTaglib of registeredTaglibs) {
-    helper.addTaglib(registeredTaglib);
+  for (let i = registeredTaglibs.length; i--; ) {
+    helper.addTaglib(registeredTaglibs[i]);
   }
 
   findCache[dirname] = found;
