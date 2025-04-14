@@ -1,5 +1,20 @@
 # @marko/runtime-tags
 
+## 6.0.4
+
+### Patch Changes
+
+- [#2648](https://github.com/marko-js/marko/pull/2648) [`73399fe`](https://github.com/marko-js/marko/commit/73399fefe3478140b7a4feec437ed739ae306201) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize to avoid for/if branch markers in some cases.
+
+- [#2648](https://github.com/marko-js/marko/pull/2648) [`cdf24a3`](https://github.com/marko-js/marko/commit/cdf24a3d0eee7718be0b176dea1c1434f3bd49ac) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Isolate branch serialization reasons from the branch itself.
+
+- [#2648](https://github.com/marko-js/marko/pull/2648) [`4cfdcb5`](https://github.com/marko-js/marko/commit/4cfdcb5ccaab5a15117cfff4c4d1ba09aecd7cc0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix marker serialization for if and dynamic tag in some optimized cases.
+
+- [#2648](https://github.com/marko-js/marko/pull/2648) [`3b883d4`](https://github.com/marko-js/marko/commit/3b883d4d9729e5b13bb0e8d19850c087d0e8245f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where tags added from the translator were given lower priority than tags added by the core compiler.
+
+- Updated dependencies [[`3b883d4`](https://github.com/marko-js/marko/commit/3b883d4d9729e5b13bb0e8d19850c087d0e8245f)]:
+  - @marko/compiler@5.39.19
+
 ## 6.0.3
 
 ### Patch Changes
