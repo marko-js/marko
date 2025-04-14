@@ -455,39 +455,40 @@ export function resumeConditional(
   scopeId: number,
   accessor: Accessor,
   serializeBranch?: 0 | 1,
-  serializeMarker?: 1,
+  serializeMarker?: 0 | 1,
 ) {
-  if (serializeBranch === 0) {
-    return cb();
-  }
-
+  const resumeBranch = serializeBranch !== 0;
+  const resumeMarker = serializeMarker !== 0;
   const branchId = peekNextScopeId();
-  if (serializeMarker) {
+  if (resumeMarker && resumeBranch) {
     $chunk.writeHTML(
       $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + ""),
     );
   }
 
-  const branchIndex = withBranchId(branchId, cb);
+  const branchIndex = resumeBranch ? withBranchId(branchId, cb) : cb();
+  const rendered = branchIndex !== undefined;
 
-  if (branchIndex !== undefined) {
+  if (resumeBranch && rendered) {
     writeScope(scopeId, {
-      [AccessorPrefix.ConditionalRenderer + accessor]: serializeMarker
+      [AccessorPrefix.ConditionalRenderer + accessor]: resumeMarker
         ? branchIndex
         : undefined,
       [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
     });
-  } else {
-    nextScopeId();
   }
 
-  if (serializeMarker) {
-    $chunk.writeHTML(
-      $chunk.boundary.state.mark(
-        ResumeSymbol.BranchEnd,
-        scopeId + " " + accessor,
-      ),
-    );
+  if (resumeMarker) {
+    if (resumeBranch) {
+      $chunk.writeHTML(
+        $chunk.boundary.state.mark(
+          ResumeSymbol.BranchEnd,
+          scopeId + " " + accessor,
+        ),
+      );
+    } else {
+      markResumeNode(scopeId, accessor);
+    }
   }
 }
 
@@ -499,26 +500,22 @@ export function resumeSingleNodeConditional(
   serializeMarker?: 0 | 1,
   onlyChild?: 1,
 ) {
-  if (serializeBranch === 0) {
-    return cb();
-  }
-
+  const resumeBranch = serializeBranch !== 0;
+  const resumeMarker = serializeMarker !== 0;
   const branchId = peekNextScopeId();
-  const branchIndex = withBranchId(branchId, cb);
+  const branchIndex = resumeBranch ? withBranchId(branchId, cb) : cb();
   const rendered = branchIndex !== undefined;
 
-  if (rendered) {
+  if (resumeBranch && rendered) {
     writeScope(scopeId, {
-      [AccessorPrefix.ConditionalRenderer + accessor]: serializeMarker
+      [AccessorPrefix.ConditionalRenderer + accessor]: resumeMarker
         ? branchIndex
         : undefined,
       [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
     });
-  } else {
-    nextScopeId();
   }
 
-  if (serializeMarker) {
+  if (resumeMarker || (resumeBranch && onlyChild)) {
     $chunk.writeHTML(
       $chunk.boundary.state.mark(
         onlyChild

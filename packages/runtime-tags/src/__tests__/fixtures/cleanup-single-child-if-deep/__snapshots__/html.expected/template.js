@@ -37,7 +37,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
               _$.writeScope($scope3_id, {}, "__tests__/template.marko", "17:10");
               return 0;
             }
-          }, $scope2_id, "#text/1", 1, 1);
+          }, $scope2_id, "#text/1");
           _$.write("</div>");
           _$.writeSubscribe($showInner_closures, _$.writeScope($scope2_id, {
             _: _$.ensureScopeWithId($scope1_id),
@@ -45,14 +45,14 @@ export default _$.createTemplate("__tests__/template.marko", input => {
           }, "__tests__/template.marko", "14:6"));
           return 0;
         }
-      }, $scope1_id, "#text/1", 1, 1);
+      }, $scope1_id, "#text/1");
       _$.write("</div>");
       _$.writeScope($scope1_id, {
         _: _$.ensureScopeWithId($scope0_id)
       }, "__tests__/template.marko", "11:2");
       return 0;
     }
-  }, $scope0_id, "#text/4", 1, 1);
+  }, $scope0_id, "#text/4");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_showInner");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_showMiddle");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_showOuter");

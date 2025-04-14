@@ -6,7 +6,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.dynamicTag($scope0_id, "#text/0", tagName, {}, _$.registerContent("__tests__/template.marko_1_renderer", () => {
     const $scope1_id = _$.nextScopeId();
     _counter({});
-  }, $scope0_id), 0, 1);
+  }, $scope0_id));
   _$.write(`<button id=changeTag></button>${_$.markResumeNode($scope0_id, "#button/1")}`);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_tagName");
   _$.writeScope($scope0_id, {

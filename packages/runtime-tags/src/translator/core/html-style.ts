@@ -163,6 +163,10 @@ export default {
         );
       }
 
+      if (hasEventHandlers || spreadReferenceNodes) {
+        forceBindingSerialize(tagSection, nodeBinding);
+      }
+
       if (node.var) {
         forceBindingSerialize(tagSection, nodeBinding);
 
@@ -183,15 +187,13 @@ export default {
             trackHoistedReference(ref as t.NodePath<t.Identifier>, nodeBinding);
           }
         }
-      } else if (hasEventHandlers || spreadReferenceNodes) {
-        forceBindingSerialize(tagSection, nodeBinding);
-      } else {
-        addBindingSerializeReasonExpr(
-          tagSection,
-          nodeBinding,
-          push(attrExprExtras, tagExtra),
-        );
       }
+
+      addBindingSerializeReasonExpr(
+        tagSection,
+        nodeBinding,
+        push(attrExprExtras, tagExtra),
+      );
     }
   },
   translate: {

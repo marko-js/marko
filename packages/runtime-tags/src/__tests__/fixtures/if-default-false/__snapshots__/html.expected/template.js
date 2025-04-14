@@ -10,7 +10,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       _$.writeScope($scope1_id, {}, "__tests__/template.marko", "3:2");
       return 0;
     }
-  }, $scope0_id, "#text/1", 1, 1);
+  }, $scope0_id, "#text/1");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_show");
   _$.writeScope($scope0_id, {
     show

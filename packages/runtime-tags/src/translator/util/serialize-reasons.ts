@@ -69,7 +69,7 @@ export function forceSectionSerialize(
     forceSerializeKey(section, getSectionPropSerializeReasonKey(section, prop));
   } else if (section.serializeReason !== true) {
     reasonExprs.delete(section);
-    section.serializeReason = true;
+    setSectionSerializeReason(section, true);
   }
 }
 export function forceBindingSerialize(
@@ -81,7 +81,7 @@ export function forceBindingSerialize(
 }
 function forceSerializeKey(section: Section, key: SerializeKey) {
   if (section.serializeReasons.get(key) !== true) {
-    section.serializeReasons.set(key, true);
+    setSectionKeyedSerializeReason(section, key, true);
     keyedReasonExprs.get(section)?.delete(key);
   }
 }
@@ -188,9 +188,9 @@ export function addSectionSerializeReasonRef(
           if (reason === true) {
             forceSectionSerialize(section);
           } else {
-            section.serializeReason = mergeSerializeReasons(
-              existingReason,
-              reason,
+            setSectionSerializeReason(
+              section,
+              mergeSerializeReasons(existingReason, reason),
             );
           }
         }
@@ -227,7 +227,8 @@ function addKeyedSerializeReasonRef(
       if (reason === true) {
         forceSerializeKey(section, key);
       } else {
-        section.serializeReasons.set(
+        setSectionKeyedSerializeReason(
+          section,
           key,
           mergeSerializeReasons(existingReason, reason)!,
         );
@@ -254,9 +255,9 @@ export function addSectionSerializeReason(
         if (reason === true) {
           forceSectionSerialize(section);
         } else {
-          section.serializeReason = mergeSerializeReasons(
-            existingReason,
-            reason,
+          setSectionSerializeReason(
+            section,
+            mergeSerializeReasons(existingReason, reason),
           );
         }
       }
@@ -287,7 +288,8 @@ function addKeyedSerializeReason(
     if (reason === true) {
       forceSerializeKey(section, key);
     } else {
-      section.serializeReasons.set(
+      setSectionKeyedSerializeReason(
+        section,
         key,
         mergeSerializeReasons(existingReason, reason)!,
       );
@@ -365,7 +367,8 @@ export function applySerializeReasonExprs(section: Section) {
     for (const [key, exprs] of keyedExprs) {
       const reason = getSerializeSourcesForExprs(exprs);
       if (reason) {
-        section.serializeReasons.set(
+        setSectionKeyedSerializeReason(
+          section,
           key,
           mergeSerializeReasons(section.serializeReasons.get(key), reason)!,
         );
@@ -373,10 +376,14 @@ export function applySerializeReasonExprs(section: Section) {
     }
   }
 
-  section.serializeReason = mergeSerializeReasons(
-    section.serializeReason,
-    getSerializeSourcesForExprs(reasonExprs.get(section)),
-  );
+  const reason = getSerializeSourcesForExprs(reasonExprs.get(section));
+  if (reason) {
+    setSectionSerializeReason(
+      section,
+      mergeSerializeReasons(section.serializeReason, reason),
+    );
+  }
+
   reasonExprs.delete(section);
 }
 
@@ -394,7 +401,7 @@ export function finalizeSectionSerializeReasons(section: Section) {
       reason = mergeSerializeReasons(reason, keyedReason);
     }
 
-    section.serializeReason = reason;
+    setSectionSerializeReason(section, reason);
   }
 }
 
@@ -445,4 +452,21 @@ export function mergeSerializeReasons<T extends undefined | SerializeReason>(
 ) {
   if (a === true || b === true) return true as T;
   return bindingUtil.union(a, b) as T;
+}
+
+// Exists as the single point of assigning section reasons to aid in debugging.
+function setSectionSerializeReason(
+  section: Section,
+  reason: SerializeReason | undefined,
+) {
+  section.serializeReason = reason;
+}
+
+// Exists as the single point of assigning section reasons to aid in debugging.
+function setSectionKeyedSerializeReason(
+  section: Section,
+  key: SerializeKey,
+  reason: SerializeReason,
+) {
+  section.serializeReasons.set(key, reason);
 }

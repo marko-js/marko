@@ -40,7 +40,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
       });
       return 0;
     }
-  }, $scope0_id, "#text/2");
+  }, $scope0_id, "#text/2", 1, 0);
   _$.resumeSingleNodeConditional(() => {
     if (true) {
       const $scope4_id = _$.nextScopeId();
@@ -52,7 +52,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
       });
       return 0;
     }
-  }, $scope0_id, "#text/3");
+  }, $scope0_id, "#text/3", 1, 0);
   _$.resumeSingleNodeConditional(() => {
     if (true) {
       const $scope5_id = _$.nextScopeId();
@@ -62,7 +62,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
       }, "__tests__/template.marko", "26:2");
       return 0;
     }
-  }, $scope0_id, "#text/4");
+  }, $scope0_id, "#text/4", 1, 0);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0");
   _$.writeScope($scope0_id, {
     input_show: _$.serializeIf($serialize, 0) && input.show,

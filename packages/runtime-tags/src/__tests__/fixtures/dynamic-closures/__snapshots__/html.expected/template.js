@@ -32,13 +32,13 @@ export default _$.createTemplate("__tests__/template.marko", input => {
           }, "__tests__/template.marko", "11:6"));
           return 0;
         }
-      }, $scope2_id, "#text/0");
+      }, $scope2_id, "#text/0", 1, 0);
       _$.writeScope($scope2_id, {
         _: _$.ensureScopeWithId($scope0_id)
       }, "__tests__/template.marko", "10:4");
       return 0;
     }
-  }, $scope0_id, "#div/2", 1);
+  }, $scope0_id, "#div/2", 1, 0);
   _$.write("</div>");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0");
   _$.writeScope($scope0_id, {

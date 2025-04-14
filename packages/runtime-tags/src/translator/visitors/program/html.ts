@@ -44,25 +44,17 @@ export function getExprIfSerialized<
   ) as T extends {} ? U : undefined;
 }
 
-export function getSerializeGuard<
-  T extends undefined | boolean | DynamicSerializeReason,
->(reason: T) {
-  return (
-    reason
-      ? reason === true
-        ? t.numericLiteral(1)
-        : callRuntime(
-            "serializeGuard",
-            t.identifier(getSharedUid("serialize")),
-            t.numericLiteral(
-              resolveSerializeReasonId(
-                getProgram().node.extra.inputSerializeReasons!,
-                reason,
-              ),
-            ),
-          )
-      : undefined
-  ) as T extends {} ? t.Expression : undefined;
+export function getSerializeGuard(reason: DynamicSerializeReason) {
+  return callRuntime(
+    "serializeGuard",
+    t.identifier(getSharedUid("serialize")),
+    t.numericLiteral(
+      resolveSerializeReasonId(
+        getProgram().node.extra.inputSerializeReasons!,
+        reason,
+      ),
+    ),
+  );
 }
 
 export default {

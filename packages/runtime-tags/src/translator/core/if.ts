@@ -197,12 +197,6 @@ export const IfTag = {
           }
 
           if (branchSerializeReasons) {
-            const branchSerializeExpr =
-              branchSerializeReasons === true
-                ? !onlyChildInParentOptimization && !markerSerializeReason
-                  ? undefined
-                  : getSerializeGuard(branchSerializeReasons)
-                : getSerializeGuardForAny(branchSerializeReasons);
             const cbNode = t.arrowFunctionExpression(
               [],
               t.blockStatement([statement!]),
@@ -214,12 +208,19 @@ export const IfTag = {
                     cbNode,
                     getScopeIdIdentifier(ifTagSection),
                     getScopeAccessorLiteral(nodeBinding),
-                    branchSerializeExpr,
-                    markerSerializeReason
-                      ? getSerializeGuard(markerSerializeReason)
-                      : onlyChildInParentOptimization
-                        ? t.numericLiteral(0)
-                        : undefined,
+                    branchSerializeReasons === true
+                      ? markerSerializeReason === true &&
+                        !onlyChildInParentOptimization
+                        ? undefined
+                        : t.numericLiteral(1)
+                      : getSerializeGuardForAny(branchSerializeReasons),
+                    !markerSerializeReason
+                      ? t.numericLiteral(0)
+                      : markerSerializeReason === true
+                        ? onlyChildInParentOptimization
+                          ? t.numericLiteral(1)
+                          : undefined
+                        : getSerializeGuard(markerSerializeReason),
                     onlyChildInParentOptimization && t.numericLiteral(1),
                   )
                 : callRuntime(
@@ -227,8 +228,16 @@ export const IfTag = {
                     cbNode,
                     getScopeIdIdentifier(ifTagSection),
                     getScopeAccessorLiteral(nodeBinding),
-                    branchSerializeExpr,
-                    getSerializeGuard(markerSerializeReason),
+                    branchSerializeReasons === true
+                      ? markerSerializeReason === true
+                        ? undefined
+                        : t.numericLiteral(1)
+                      : getSerializeGuardForAny(branchSerializeReasons),
+                    !markerSerializeReason
+                      ? t.numericLiteral(0)
+                      : markerSerializeReason === true
+                        ? undefined
+                        : getSerializeGuard(markerSerializeReason),
                   ),
             );
           }
@@ -452,7 +461,7 @@ function getBranches(tag: t.NodePath<t.MarkoTag>) {
 }
 
 function getSerializeGuardForAny(reasons: DynamicSerializeReasons) {
-  let expr = getSerializeGuard(reasons[0]);
+  let expr: t.Expression = getSerializeGuard(reasons[0]);
   for (let i = 1; i < reasons.length; i++) {
     expr = t.logicalExpression("||", expr, getSerializeGuard(reasons[i]));
   }

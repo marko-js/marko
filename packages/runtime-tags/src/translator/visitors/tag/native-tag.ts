@@ -295,6 +295,10 @@ export default {
           );
         }
 
+        if (hasEventHandlers || spreadReferenceNodes) {
+          forceBindingSerialize(tagSection, nodeBinding);
+        }
+
         if (node.var) {
           forceBindingSerialize(tagSection, nodeBinding);
           for (const ref of tag.scope.getBinding(node.var.name)!
@@ -308,8 +312,8 @@ export default {
                 tagSection,
                 getAccessorProp().Owner,
               );
-              if (!isInvokedFunction(ref)) {
-                tagExtra[kGetterId] ||= getRegisterUID(
+              if (!tagExtra[kGetterId] && !isInvokedFunction(ref)) {
+                tagExtra[kGetterId] = getRegisterUID(
                   tagSection,
                   nodeBinding.name,
                 );
@@ -321,15 +325,13 @@ export default {
               );
             }
           }
-        } else if (hasEventHandlers || spreadReferenceNodes) {
-          forceBindingSerialize(tagSection, nodeBinding);
-        } else {
-          addBindingSerializeReasonExpr(
-            tagSection,
-            nodeBinding,
-            push(attrExprExtras, tagExtra),
-          );
         }
+
+        addBindingSerializeReasonExpr(
+          tagSection,
+          nodeBinding,
+          push(attrExprExtras, tagExtra),
+        );
       }
     },
   },
