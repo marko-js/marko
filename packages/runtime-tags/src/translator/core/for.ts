@@ -181,19 +181,19 @@ export default {
             forAttrs.by || t.numericLiteral(0),
             getScopeIdIdentifier(tagSection),
             getScopeAccessorLiteral(nodeBinding),
-            branchSerializeReason !== true &&
-              markerSerializeReason &&
-              markerSerializeReason !== true &&
-              !bindingUtil.isSuperset(
-                branchSerializeReason,
-                markerSerializeReason,
-              )
-              ? t.logicalExpression(
-                  "||",
-                  getSerializeGuard(branchSerializeReason),
-                  getSerializeGuard(markerSerializeReason),
-                )
-              : getSerializeGuard(branchSerializeReason),
+            branchSerializeReason === true || markerSerializeReason === true
+              ? t.numericLiteral(1)
+              : markerSerializeReason &&
+                  !bindingUtil.isSuperset(
+                    branchSerializeReason,
+                    markerSerializeReason,
+                  )
+                ? t.logicalExpression(
+                    "||",
+                    getSerializeGuard(branchSerializeReason),
+                    getSerializeGuard(markerSerializeReason),
+                  )
+                : getSerializeGuard(branchSerializeReason),
           );
 
           if (onlyChildInParentOptimization) {
