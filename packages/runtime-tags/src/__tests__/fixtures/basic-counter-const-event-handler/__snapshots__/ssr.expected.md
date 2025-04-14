@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.a={clickCount:0}],_.a.increment=_._["__tests__/template.marko_0/increment"](_.a),_.b),1,"__tests__/template.marko_0_increment"];M._.w()</script>
+  <button>0<!--M_*1 #text/1--></button><!--M_*1 #button/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.a={clickCount:0}],_.a.increment=_._["__tests__/template.marko_0/increment"](_.a),_.b),"__tests__/template.marko_0_increment",1];M._.w()</script>
 ```
 
 # Render End
@@ -14,7 +14,7 @@
     </button>
     <!--M_*1 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={clickCount:0}],_.a.increment=_._["__tests__/template.marko_0/increment"](_.a),_.b),1,"__tests__/template.marko_0_increment"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={clickCount:0}],_.a.increment=_._["__tests__/template.marko_0/increment"](_.a),_.b),"__tests__/template.marko_0_increment",1];M._.w()
     </script>
   </body>
 </html>

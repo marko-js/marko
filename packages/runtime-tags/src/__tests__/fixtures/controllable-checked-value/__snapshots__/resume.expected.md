@@ -24,7 +24,7 @@
       <!--M_*1 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={"ControlledType:#input/0":1,"ControlledValue:#input/0":"a","ControlledType:#input/1":1,"ControlledValue:#input/1":"a","ControlledType:#input/2":1,"ControlledValue:#input/2":"a",checkedValue:"a"}],_.a["ControlledHandler:#input/0"]=_.a["ControlledHandler:#input/1"]=_.a["ControlledHandler:#input/2"]=_.a.$checkedValueChange=_._["__tests__/template.marko_0/checkedValueChange2"](_.a),_.b),1,"__tests__/template.marko_0"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={"ControlledType:#input/0":1,"ControlledValue:#input/0":"a","ControlledType:#input/1":1,"ControlledValue:#input/1":"a","ControlledType:#input/2":1,"ControlledValue:#input/2":"a",checkedValue:"a"}],_.a["ControlledHandler:#input/0"]=_.a["ControlledHandler:#input/1"]=_.a["ControlledHandler:#input/2"]=_.a.$checkedValueChange=_._["__tests__/template.marko_0/checkedValueChange2"](_.a),_.b),"__tests__/template.marko_0",1];M._.w()
     </script>
   </body>
 </html>
@@ -60,7 +60,7 @@ container.querySelectorAll(`input`)[1].click();
       <!--M_*1 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={"ControlledType:#input/0":1,"ControlledValue:#input/0":"a","ControlledType:#input/1":1,"ControlledValue:#input/1":"a","ControlledType:#input/2":1,"ControlledValue:#input/2":"a",checkedValue:"a"}],_.a["ControlledHandler:#input/0"]=_.a["ControlledHandler:#input/1"]=_.a["ControlledHandler:#input/2"]=_.a.$checkedValueChange=_._["__tests__/template.marko_0/checkedValueChange2"](_.a),_.b),1,"__tests__/template.marko_0"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={"ControlledType:#input/0":1,"ControlledValue:#input/0":"a","ControlledType:#input/1":1,"ControlledValue:#input/1":"a","ControlledType:#input/2":1,"ControlledValue:#input/2":"a",checkedValue:"a"}],_.a["ControlledHandler:#input/0"]=_.a["ControlledHandler:#input/1"]=_.a["ControlledHandler:#input/2"]=_.a.$checkedValueChange=_._["__tests__/template.marko_0/checkedValueChange2"](_.a),_.b),"__tests__/template.marko_0",1];M._.w()
     </script>
   </body>
 </html>
@@ -100,7 +100,7 @@ container.querySelectorAll(`input`)[2].click();
       <!--M_*1 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={"ControlledType:#input/0":1,"ControlledValue:#input/0":"a","ControlledType:#input/1":1,"ControlledValue:#input/1":"a","ControlledType:#input/2":1,"ControlledValue:#input/2":"a",checkedValue:"a"}],_.a["ControlledHandler:#input/0"]=_.a["ControlledHandler:#input/1"]=_.a["ControlledHandler:#input/2"]=_.a.$checkedValueChange=_._["__tests__/template.marko_0/checkedValueChange2"](_.a),_.b),1,"__tests__/template.marko_0"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={"ControlledType:#input/0":1,"ControlledValue:#input/0":"a","ControlledType:#input/1":1,"ControlledValue:#input/1":"a","ControlledType:#input/2":1,"ControlledValue:#input/2":"a",checkedValue:"a"}],_.a["ControlledHandler:#input/0"]=_.a["ControlledHandler:#input/1"]=_.a["ControlledHandler:#input/2"]=_.a.$checkedValueChange=_._["__tests__/template.marko_0/checkedValueChange2"](_.a),_.b),"__tests__/template.marko_0",1];M._.w()
     </script>
   </body>
 </html>
@@ -140,7 +140,7 @@ container.querySelectorAll(`input`)[0].click();
       <!--M_*1 #text/3-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={"ControlledType:#input/0":1,"ControlledValue:#input/0":"a","ControlledType:#input/1":1,"ControlledValue:#input/1":"a","ControlledType:#input/2":1,"ControlledValue:#input/2":"a",checkedValue:"a"}],_.a["ControlledHandler:#input/0"]=_.a["ControlledHandler:#input/1"]=_.a["ControlledHandler:#input/2"]=_.a.$checkedValueChange=_._["__tests__/template.marko_0/checkedValueChange2"](_.a),_.b),1,"__tests__/template.marko_0"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={"ControlledType:#input/0":1,"ControlledValue:#input/0":"a","ControlledType:#input/1":1,"ControlledValue:#input/1":"a","ControlledType:#input/2":1,"ControlledValue:#input/2":"a",checkedValue:"a"}],_.a["ControlledHandler:#input/0"]=_.a["ControlledHandler:#input/1"]=_.a["ControlledHandler:#input/2"]=_.a.$checkedValueChange=_._["__tests__/template.marko_0/checkedValueChange2"](_.a),_.b),"__tests__/template.marko_0",1];M._.w()
     </script>
   </body>
 </html>

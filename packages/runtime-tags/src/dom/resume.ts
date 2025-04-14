@@ -64,6 +64,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         };
         const branchIds = new Set<number>();
         const parentBranchIds = new Map<number, number>();
+        let lastEffect: string | undefined;
         let currentBranchId: number | undefined;
         let $global: Scope["$global"] | undefined;
         let lastScopeId = 0;
@@ -170,7 +171,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
               render.r = [];
               isResuming = 1;
               for (let i = 0; i < resumes.length; i++) {
-                const serialized = resumes[i];
+                let serialized = resumes[i];
                 if (typeof serialized === "function") {
                   for (const scope of serialized(serializeContext)) {
                     if (!$global) {
@@ -221,7 +222,12 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                     }
                   }
                 } else {
-                  (registeredValues[resumes[++i] as string] as any)(
+                  if (typeof serialized === "string") {
+                    lastEffect = serialized;
+                    serialized = resumes[++i] as number;
+                  }
+
+                  (registeredValues[lastEffect!] as any)(
                     scopeLookup[serialized],
                     scopeLookup[serialized],
                   );

@@ -778,7 +778,7 @@ function tryCatch(content: () => void, catchContent: (err: unknown) => void) {
             cur.async = false;
             cur.next = bodyNext;
             cur.html = endMarker;
-            cur.scripts = cur.effects = "";
+            cur.scripts = cur.effects = cur.lastEffect = "";
             cur.placeholderBody = cur.placeholderRender = cur.reorderId = null;
           }
 
@@ -923,6 +923,7 @@ export class Chunk {
   public html = "";
   public scripts = "";
   public effects = "";
+  public lastEffect = "";
   public async = false;
   public consumed = false;
   public reorderId: string | null = null;
@@ -943,10 +944,15 @@ export class Chunk {
   }
 
   writeEffect(scopeId: number, registryId: string) {
-    this.effects = concatEffects(
-      this.effects,
-      scopeId + ',"' + registryId + '"',
-    );
+    if (this.lastEffect === registryId) {
+      this.effects += "," + scopeId;
+    } else {
+      this.effects = concatEffects(
+        this.effects,
+        '"' + registryId + '",' + scopeId,
+      );
+    }
+    this.lastEffect = registryId;
   }
 
   writeScript(script: string) {
@@ -957,6 +963,7 @@ export class Chunk {
     this.html += chunk.html;
     this.effects = concatEffects(this.effects, chunk.effects);
     this.scripts = concatScripts(this.scripts, chunk.scripts);
+    this.lastEffect = chunk.lastEffect || this.lastEffect;
   }
   flushPlaceholder() {
     if (this.placeholderBody) {
@@ -992,11 +999,13 @@ export class Chunk {
       let html = "";
       let effects = "";
       let scripts = "";
+      let lastEffect = "";
       do {
         cur.flushPlaceholder();
         html += cur.html;
         effects = concatEffects(effects, cur.effects);
         scripts = concatScripts(scripts, cur.scripts);
+        lastEffect = cur.lastEffect || lastEffect;
         cur.consumed = true;
         cur = cur.next;
       } while (cur.next && !cur.async);
@@ -1004,6 +1013,7 @@ export class Chunk {
       cur.html = html + cur.html;
       cur.effects = concatEffects(effects, cur.effects);
       cur.scripts = concatScripts(scripts, cur.scripts);
+      cur.lastEffect = lastEffect;
     }
 
     return cur;
@@ -1104,7 +1114,7 @@ export class Chunk {
               Mark.ReorderMarker,
               (cur.reorderId = state.nextReorderId()),
             );
-            cur.html = cur.effects = cur.scripts = "";
+            cur.html = cur.effects = cur.scripts = cur.lastEffect = "";
             cur.next = null;
           }
 

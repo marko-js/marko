@@ -26,7 +26,7 @@
       "spread1"
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko",x:1},_.a]),1,"__tests__/template.marko_0_x"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko",x:1},_.a]),"__tests__/template.marko_0_x",1];M._.w()
     </script>
   </body>
 </html>
@@ -64,7 +64,7 @@ container.querySelector("button").click();
       "spread1"
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko",x:1},_.a]),1,"__tests__/template.marko_0_x"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko",x:1},_.a]),"__tests__/template.marko_0_x",1];M._.w()
     </script>
   </body>
 </html>
@@ -107,7 +107,7 @@ container.querySelector("button").click();
       "spread1"
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko",x:1},_.a]),1,"__tests__/template.marko_0_x"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko",x:1},_.a]),"__tests__/template.marko_0_x",1];M._.w()
     </script>
   </body>
 </html>
@@ -150,7 +150,7 @@ container.querySelector("button").click();
       "spread1"
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko",x:1},_.a]),1,"__tests__/template.marko_0_x"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko",x:1},_.a]),"__tests__/template.marko_0_x",1];M._.w()
     </script>
   </body>
 </html>
