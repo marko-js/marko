@@ -18,7 +18,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       baseCount: "2:15"
     }));
     _$.resumeClosestBranch($scope1_id);
-  }, $scope0_id), 0, 1);
+  }, $scope0_id));
   _$.writeScope($scope0_id, {
     multiplier,
     "ClosureScopes:multiplier": $multiplier_closures

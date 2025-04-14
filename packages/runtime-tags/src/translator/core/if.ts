@@ -150,10 +150,6 @@ export const IfTag = {
             | DynamicSerializeReasons;
           let statement: t.Statement | undefined;
 
-          if (markerSerializeReason && onlyChildInParentOptimization) {
-            getParentTag(ifTag)!.node.extra![kSkipMark] = true;
-          }
-
           for (let i = branches.length; i--; ) {
             const [branchTag, branchBody] = branches[i];
             const bodyStatements = branchTag.node.body.body;
@@ -197,6 +193,10 @@ export const IfTag = {
           }
 
           if (branchSerializeReasons) {
+            if (onlyChildInParentOptimization && markerSerializeReason) {
+              getParentTag(ifTag)!.node.extra![kSkipMark] = true;
+            }
+
             const cbNode = t.arrowFunctionExpression(
               [],
               t.blockStatement([statement!]),

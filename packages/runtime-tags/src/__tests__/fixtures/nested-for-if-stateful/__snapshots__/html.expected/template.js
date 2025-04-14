@@ -34,7 +34,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       count: "2:6",
       i: "2:13"
     });
-  }, 0, $scope0_id, "#text/0", 1);
+  }, 0, $scope0_id, "#text/0");
   _$.writeScope($scope0_id, {
     counts,
     "ClosureScopes:counts": $counts_closures

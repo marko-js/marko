@@ -14,7 +14,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     const $scope1_id = _$.nextScopeId();
     _$.write(`<div>${_$.escapeXML(name)}${_$.markResumeNode($scope1_id, "#text/0")}: <!>${_$.escapeXML(description)}${_$.markResumeNode($scope1_id, "#text/1")}</div>`);
     _$.writeScope($scope1_id, {}, "__tests__/template.marko", "5:4");
-  }, 0, $scope0_id, "#text/0", 1);
+  }, 0, $scope0_id, "#text/0");
   _$.write(`<button id=add>Add</button>${_$.markResumeNode($scope0_id, "#button/1")}<button id=remove>Remove</button>${_$.markResumeNode($scope0_id, "#button/2")}</div>`);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope($scope0_id, {

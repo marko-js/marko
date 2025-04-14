@@ -29,7 +29,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
         _: _$.ensureScopeWithId($scope1_id),
         "#childScope/0": _$.writeExistingScope($childScope2)
       }, "__tests__/template.marko", "10:6");
-    }, 0, $scope1_id, "#text/1", 1);
+    }, 0, $scope1_id, "#text/1");
     _$.write("</div>");
     _$.writeScope($scope1_id, {
       outerItem,
@@ -38,7 +38,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     }, "__tests__/template.marko", "7:2", {
       outerItem: "7:6"
     });
-  }, 0, $scope0_id, "#text/2", 1);
+  }, 0, $scope0_id, "#text/2");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope($scope0_id, {
     items,
