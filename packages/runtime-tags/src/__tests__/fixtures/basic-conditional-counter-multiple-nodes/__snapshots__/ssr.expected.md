@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button class=inc></button><!--M_*1 #button/0--><button class=toggle></button><!--M_*1 #button/1--><!--M_[2-->The count is <!>0<!--M_*2 #text/0--><!--M_]1 #text/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={},show:!0,count:0},_.b],_.b._=_.a,_.c),1,"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count"];M._.w()</script>
+  <button class=inc></button><!--M_*1 #button/0--><button class=toggle></button><!--M_*1 #button/1--><!--M_[2-->The count is <!>0<!--M_*2 #text/0--><!--M_]1 #text/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={},show:!0,count:0},_.b],_.b._=_.a,_.c),"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count",1];M._.w()</script>
 ```
 
 # Render End
@@ -23,7 +23,7 @@
     <!--M_*2 #text/0-->
     <!--M_]1 #text/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={},show:!0,count:0},_.b],_.b._=_.a,_.c),1,"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={},show:!0,count:0},_.b],_.b._=_.a,_.c),"__tests__/template.marko_0_show",1,"__tests__/template.marko_0_count",1];M._.w()
     </script>
   </body>
 </html>

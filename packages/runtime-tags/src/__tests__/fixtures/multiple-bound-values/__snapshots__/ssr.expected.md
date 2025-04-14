@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>0<!--M_*2 #text/1--></button><!--M_*2 #button/0--><button>0<!--M_*2 #text/3--></button><!--M_*2 #button/2--><div>0<!--M_*1 #text/1--> <!>0<!--M_*1 #text/2--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"#childScope/0":_.b={count1:0,count2:0}},_.b],_.b.input_count1Change=_.b["TagVariableChange:count1"]=_._["__tests__/template.marko_0/count1Change"](_.a),_.b.input_count2Change=_.b["TagVariableChange:count2"]=_._["__tests__/template.marko_0/count2Change"](_.a),_.c),2,"__tests__/tags/2counters.marko_0_count2",2,"__tests__/tags/2counters.marko_0_count1"];M._.w()</script>
+  <button>0<!--M_*2 #text/1--></button><!--M_*2 #button/0--><button>0<!--M_*2 #text/3--></button><!--M_*2 #button/2--><div>0<!--M_*1 #text/1--> <!>0<!--M_*1 #text/2--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"#childScope/0":_.b={count1:0,count2:0}},_.b],_.b.input_count1Change=_.b["TagVariableChange:count1"]=_._["__tests__/template.marko_0/count1Change"](_.a),_.b.input_count2Change=_.b["TagVariableChange:count2"]=_._["__tests__/template.marko_0/count2Change"](_.a),_.c),"__tests__/tags/2counters.marko_0_count2",2,"__tests__/tags/2counters.marko_0_count1",2];M._.w()</script>
 ```
 
 # Render End
@@ -27,7 +27,7 @@
       <!--M_*1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"#childScope/0":_.b={count1:0,count2:0}},_.b],_.b.input_count1Change=_.b["TagVariableChange:count1"]=_._["__tests__/template.marko_0/count1Change"](_.a),_.b.input_count2Change=_.b["TagVariableChange:count2"]=_._["__tests__/template.marko_0/count2Change"](_.a),_.c),2,"__tests__/tags/2counters.marko_0_count2",2,"__tests__/tags/2counters.marko_0_count1"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"#childScope/0":_.b={count1:0,count2:0}},_.b],_.b.input_count1Change=_.b["TagVariableChange:count1"]=_._["__tests__/template.marko_0/count1Change"](_.a),_.b.input_count2Change=_.b["TagVariableChange:count2"]=_._["__tests__/template.marko_0/count2Change"](_.a),_.c),"__tests__/tags/2counters.marko_0_count2",2,"__tests__/tags/2counters.marko_0_count1",2];M._.w()
     </script>
   </body>
 </html>

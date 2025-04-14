@@ -1,6 +1,6 @@
 # Write
 ```html
-  <p class=A>paragraph</p><!--M_*1 #p/0--><button></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{className:"A"}]),1,"__tests__/template.marko_0_className"];M._.w()</script>
+  <p class=A>paragraph</p><!--M_*1 #p/0--><button></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.a=[0,{className:"A"}]),"__tests__/template.marko_0_className",1];M._.w()</script>
 ```
 
 # Render End
@@ -17,7 +17,7 @@
     <button />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{className:"A"}]),1,"__tests__/template.marko_0_className"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{className:"A"}]),"__tests__/template.marko_0_className",1];M._.w()
     </script>
   </body>
 </html>

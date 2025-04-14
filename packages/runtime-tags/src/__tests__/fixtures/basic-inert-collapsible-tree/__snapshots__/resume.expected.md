@@ -50,7 +50,7 @@
       <!--M_=2 #ul/0 7 3-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,1,{"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.b={open:!0}],[1,_.e={open:!0}]])},_.b,1,{"LoopScopeMap:#ul/0":new Map(_.c=[[0,_.d={open:!0}]])},_.d,_.e]),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",7,"__tests__/tags/comments.marko_1_open"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,1,{"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.b={open:!0}],[1,_.e={open:!0}]])},_.b,1,{"LoopScopeMap:#ul/0":new Map(_.c=[[0,_.d={open:!0}]])},_.d,_.e]),"__tests__/tags/comments.marko_1_open",6,3,7];M._.w()
     </script>
   </body>
 </html>
@@ -112,7 +112,7 @@ container.querySelector(`#c-${id} > button`).click();
       <!--M_=2 #ul/0 7 3-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,1,{"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.b={open:!0}],[1,_.e={open:!0}]])},_.b,1,{"LoopScopeMap:#ul/0":new Map(_.c=[[0,_.d={open:!0}]])},_.d,_.e]),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",7,"__tests__/tags/comments.marko_1_open"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,1,{"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.b={open:!0}],[1,_.e={open:!0}]])},_.b,1,{"LoopScopeMap:#ul/0":new Map(_.c=[[0,_.d={open:!0}]])},_.d,_.e]),"__tests__/tags/comments.marko_1_open",6,3,7];M._.w()
     </script>
   </body>
 </html>
@@ -178,7 +178,7 @@ container.querySelector(`#c-${id} > button`).click();
       <!--M_=2 #ul/0 7 3-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,1,{"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.b={open:!0}],[1,_.e={open:!0}]])},_.b,1,{"LoopScopeMap:#ul/0":new Map(_.c=[[0,_.d={open:!0}]])},_.d,_.e]),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",7,"__tests__/tags/comments.marko_1_open"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,1,{"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.b={open:!0}],[1,_.e={open:!0}]])},_.b,1,{"LoopScopeMap:#ul/0":new Map(_.c=[[0,_.d={open:!0}]])},_.d,_.e]),"__tests__/tags/comments.marko_1_open",6,3,7];M._.w()
     </script>
   </body>
 </html>
@@ -245,7 +245,7 @@ container.querySelector(`#c-${id} > button`).click();
       <!--M_=2 #ul/0 7 3-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,1,{"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.b={open:!0}],[1,_.e={open:!0}]])},_.b,1,{"LoopScopeMap:#ul/0":new Map(_.c=[[0,_.d={open:!0}]])},_.d,_.e]),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",7,"__tests__/tags/comments.marko_1_open"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,1,{"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.b={open:!0}],[1,_.e={open:!0}]])},_.b,1,{"LoopScopeMap:#ul/0":new Map(_.c=[[0,_.d={open:!0}]])},_.d,_.e]),"__tests__/tags/comments.marko_1_open",6,3,7];M._.w()
     </script>
   </body>
 </html>
@@ -313,7 +313,7 @@ container.querySelector(`#c-${id} > button`).click();
       <!--M_=2 #ul/0 7 3-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,1,{"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.b={open:!0}],[1,_.e={open:!0}]])},_.b,1,{"LoopScopeMap:#ul/0":new Map(_.c=[[0,_.d={open:!0}]])},_.d,_.e]),6,"__tests__/tags/comments.marko_1_open",3,"__tests__/tags/comments.marko_1_open",7,"__tests__/tags/comments.marko_1_open"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,1,{"LoopScopeMap:#ul/0":new Map(_.a=[[0,_.b={open:!0}],[1,_.e={open:!0}]])},_.b,1,{"LoopScopeMap:#ul/0":new Map(_.c=[[0,_.d={open:!0}]])},_.d,_.e]),"__tests__/tags/comments.marko_1_open",6,3,7];M._.w()
     </script>
   </body>
 </html>

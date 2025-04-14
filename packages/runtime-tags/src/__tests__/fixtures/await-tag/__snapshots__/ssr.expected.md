@@ -10,7 +10,7 @@
 
 # Write
 ```html
-  <!--M_[4-->Got: b <!>0<!--M_*4 #text/1--><!--M_]1 #text/1--><!--M_[3-->Got: c <!>0<!--M_*3 #text/1--><!--M_]1 #text/2--><button>Inc</button><!--M_*1 #button/3--></div><script>M._.r.push(_=>(_.h=[_.i={_:_.b,"ClosureSignalIndex:count":1}],(_.d).add(_.i),(_.b["ConditionalScope:#text/1"]=_.i),_.h),1,"__tests__/template.marko_0_count");M._.w()</script>
+  <!--M_[4-->Got: b <!>0<!--M_*4 #text/1--><!--M_]1 #text/1--><!--M_[3-->Got: c <!>0<!--M_*3 #text/1--><!--M_]1 #text/2--><button>Inc</button><!--M_*1 #button/3--></div><script>M._.r.push(_=>(_.h=[_.i={_:_.b,"ClosureSignalIndex:count":1}],(_.d).add(_.i),(_.b["ConditionalScope:#text/1"]=_.i),_.h),"__tests__/template.marko_0_count",1);M._.w()</script>
 ```
 
 # Render End
@@ -49,7 +49,7 @@
       <!--M_*1 #button/3-->
     </div>
     <script>
-      M._.r.push(_=&gt;(_.h=[_.i={_:_.b,"ClosureSignalIndex:count":1}],(_.d).add(_.i),(_.b["ConditionalScope:#text/1"]=_.i),_.h),1,"__tests__/template.marko_0_count");M._.w()
+      M._.r.push(_=&gt;(_.h=[_.i={_:_.b,"ClosureSignalIndex:count":1}],(_.d).add(_.i),(_.b["ConditionalScope:#text/1"]=_.i),_.h),"__tests__/template.marko_0_count",1);M._.w()
     </script>
   </body>
 </html>

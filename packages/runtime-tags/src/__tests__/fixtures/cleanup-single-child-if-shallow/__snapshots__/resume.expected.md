@@ -16,7 +16,7 @@
     </div>
     <!--M_|1 #text/2 2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={},show:!0},_.b,{input:{write:_._["__tests__/template.marko_1/write"](_.b)},"#ClosestBranchId":2}],_.b._=_.a,_.c),3,"__tests__/tags/child.marko_0_input",1,"__tests__/template.marko_0_show"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={},show:!0},_.b,{input:{write:_._["__tests__/template.marko_1/write"](_.b)},"#ClosestBranchId":2}],_.b._=_.a,_.c),"__tests__/tags/child.marko_0_input",3,"__tests__/template.marko_0_show",1];M._.w()
     </script>
   </body>
 </html>
@@ -45,7 +45,7 @@ container.querySelector("button").click();
     <!--M_*1 #div/1-->
     <!--M_|1 #text/2 2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={},show:!0},_.b,{input:{write:_._["__tests__/template.marko_1/write"](_.b)},"#ClosestBranchId":2}],_.b._=_.a,_.c),3,"__tests__/tags/child.marko_0_input",1,"__tests__/template.marko_0_show"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={},show:!0},_.b,{input:{write:_._["__tests__/template.marko_1/write"](_.b)},"#ClosestBranchId":2}],_.b._=_.a,_.c),"__tests__/tags/child.marko_0_input",3,"__tests__/template.marko_0_show",1];M._.w()
     </script>
   </body>
 </html>
@@ -80,7 +80,7 @@ container.querySelector("button").click();
       child
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={},show:!0},_.b,{input:{write:_._["__tests__/template.marko_1/write"](_.b)},"#ClosestBranchId":2}],_.b._=_.a,_.c),3,"__tests__/tags/child.marko_0_input",1,"__tests__/template.marko_0_show"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={},show:!0},_.b,{input:{write:_._["__tests__/template.marko_1/write"](_.b)},"#ClosestBranchId":2}],_.b._=_.a,_.c),"__tests__/tags/child.marko_0_input",3,"__tests__/template.marko_0_show",1];M._.w()
     </script>
   </body>
 </html>
@@ -112,7 +112,7 @@ container.querySelector("button").click();
     <!--M_*1 #div/1-->
     <!--M_|1 #text/2 2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={},show:!0},_.b,{input:{write:_._["__tests__/template.marko_1/write"](_.b)},"#ClosestBranchId":2}],_.b._=_.a,_.c),3,"__tests__/tags/child.marko_0_input",1,"__tests__/template.marko_0_show"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/2":0,"ConditionalScope:#text/2":_.b={},show:!0},_.b,{input:{write:_._["__tests__/template.marko_1/write"](_.b)},"#ClosestBranchId":2}],_.b._=_.a,_.c),"__tests__/tags/child.marko_0_input",3,"__tests__/template.marko_0_show",1];M._.w()
     </script>
   </body>
 </html>

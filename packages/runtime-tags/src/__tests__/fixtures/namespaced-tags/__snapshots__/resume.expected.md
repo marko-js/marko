@@ -53,7 +53,7 @@
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
     </script>
   </body>
 </html>
@@ -125,7 +125,7 @@ container.querySelector(".toggle-parent").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
     </script>
   </body>
 </html>
@@ -198,7 +198,7 @@ container.querySelector(".toggle-parent").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
     </script>
   </body>
 </html>
@@ -271,7 +271,7 @@ container.querySelector(".toggle-parent").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
     </script>
   </body>
 </html>
@@ -334,7 +334,7 @@ container.querySelector(".toggle-child").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
     </script>
   </body>
 </html>
@@ -405,7 +405,7 @@ container.querySelector(".toggle-child").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
     </script>
   </body>
 </html>
@@ -472,7 +472,7 @@ container.querySelector(".toggle-child").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),1,"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
     </script>
   </body>
 </html>

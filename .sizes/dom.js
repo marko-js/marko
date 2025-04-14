@@ -1,4 +1,4 @@
-// size: 19001 (min) 7241 (brotli)
+// size: 19032 (min) 7217 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -105,7 +105,8 @@ function init(runtimeId = "M") {
     initRuntime = (renders2) => {
       defineRuntime({
         value: (resumeRender = (renderId) => {
-          let currentBranchId,
+          let lastEffect,
+            currentBranchId,
             $global,
             render = (resumeRender[renderId] =
               renders2[renderId] || renders2(renderId)),
@@ -238,10 +239,13 @@ function init(runtimeId = "M") {
                             ($global.renderId = renderId),
                             ($global.o = 1e6);
                     else
-                      registeredValues[resumes[++i]](
-                        scopeLookup[serialized],
-                        scopeLookup[serialized],
-                      );
+                      "string" == typeof serialized &&
+                        ((lastEffect = serialized),
+                        (serialized = resumes[++i])),
+                        registeredValues[lastEffect](
+                          scopeLookup[serialized],
+                          scopeLookup[serialized],
+                        );
                   }
                 } finally {
                   isResuming = 0;

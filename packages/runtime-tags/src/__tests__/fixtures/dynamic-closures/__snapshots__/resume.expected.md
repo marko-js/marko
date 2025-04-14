@@ -18,7 +18,7 @@
       <!--M_*5 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.c={"ConditionalScope:#div/2":_.a={"ConditionalScope:#text/0":_.b={"ClosureSignalIndex:c":1}},b:2,c:3,"ClosureScopes:c":_.e=new Set},1,_.f={_:_.c,"ClosureSignalIndex:c":0},_.a,_.b],_.b._=_.a,_.a._=_.c,(_.e).add(_.f),(_.e).add(_.b),_.d),1,"__tests__/template.marko_0"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.c={"ConditionalScope:#div/2":_.a={"ConditionalScope:#text/0":_.b={"ClosureSignalIndex:c":1}},b:2,c:3,"ClosureScopes:c":_.e=new Set},1,_.f={_:_.c,"ClosureSignalIndex:c":0},_.a,_.b],_.b._=_.a,_.a._=_.c,(_.e).add(_.f),(_.e).add(_.b),_.d),"__tests__/template.marko_0",1];M._.w()
     </script>
   </body>
 </html>
@@ -48,7 +48,7 @@ container.querySelector("button").click();
       <!--M_*5 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.c={"ConditionalScope:#div/2":_.a={"ConditionalScope:#text/0":_.b={"ClosureSignalIndex:c":1}},b:2,c:3,"ClosureScopes:c":_.e=new Set},1,_.f={_:_.c,"ClosureSignalIndex:c":0},_.a,_.b],_.b._=_.a,_.a._=_.c,(_.e).add(_.f),(_.e).add(_.b),_.d),1,"__tests__/template.marko_0"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.c={"ConditionalScope:#div/2":_.a={"ConditionalScope:#text/0":_.b={"ClosureSignalIndex:c":1}},b:2,c:3,"ClosureScopes:c":_.e=new Set},1,_.f={_:_.c,"ClosureSignalIndex:c":0},_.a,_.b],_.b._=_.a,_.a._=_.c,(_.e).add(_.f),(_.e).add(_.b),_.d),"__tests__/template.marko_0",1];M._.w()
     </script>
   </body>
 </html>

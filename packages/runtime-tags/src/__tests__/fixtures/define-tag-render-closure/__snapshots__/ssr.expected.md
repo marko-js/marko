@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div>1<!--M_*2 #text/0--></div><button>1<!--M_*1 #text/2--></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.a={x:1,"ClosureScopes:x":_.c=new Set},_.d={_:_.a,"ClosureSignalIndex:x":0}],(_.c).add(_.d),_.b),1,"__tests__/template.marko_0_x"];M._.w()</script>
+  <div>1<!--M_*2 #text/0--></div><button>1<!--M_*1 #text/2--></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,_.a={x:1,"ClosureScopes:x":_.c=new Set},_.d={_:_.a,"ClosureSignalIndex:x":0}],(_.c).add(_.d),_.b),"__tests__/template.marko_0_x",1];M._.w()</script>
 ```
 
 # Render End
@@ -18,7 +18,7 @@
     </button>
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={x:1,"ClosureScopes:x":_.c=new Set},_.d={_:_.a,"ClosureSignalIndex:x":0}],(_.c).add(_.d),_.b),1,"__tests__/template.marko_0_x"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={x:1,"ClosureScopes:x":_.c=new Set},_.d={_:_.a,"ClosureSignalIndex:x":0}],(_.c).add(_.d),_.b),"__tests__/template.marko_0_x",1];M._.w()
     </script>
   </body>
 </html>

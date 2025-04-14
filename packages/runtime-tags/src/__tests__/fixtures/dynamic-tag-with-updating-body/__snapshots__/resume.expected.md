@@ -18,7 +18,7 @@
     />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"div",tagName:"div"},_.a,1,{count:0,"#ClosestBranchId":2}]),4,"__tests__/tags/counter.marko_0_count",1,"__tests__/template.marko_0_tagName"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"div",tagName:"div"},_.a,1,{count:0,"#ClosestBranchId":2}]),"__tests__/tags/counter.marko_0_count",4,"__tests__/template.marko_0_tagName",1];M._.w()
     </script>
   </body>
 </html>
@@ -48,7 +48,7 @@ container.querySelector("#count").click();
     />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"div",tagName:"div"},_.a,1,{count:0,"#ClosestBranchId":2}]),4,"__tests__/tags/counter.marko_0_count",1,"__tests__/template.marko_0_tagName"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"div",tagName:"div"},_.a,1,{count:0,"#ClosestBranchId":2}]),"__tests__/tags/counter.marko_0_count",4,"__tests__/template.marko_0_tagName",1];M._.w()
     </script>
   </body>
 </html>
@@ -80,7 +80,7 @@ container.querySelector("#changeTag").click();
     />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"div",tagName:"div"},_.a,1,{count:0,"#ClosestBranchId":2}]),4,"__tests__/tags/counter.marko_0_count",1,"__tests__/template.marko_0_tagName"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"div",tagName:"div"},_.a,1,{count:0,"#ClosestBranchId":2}]),"__tests__/tags/counter.marko_0_count",4,"__tests__/template.marko_0_tagName",1];M._.w()
     </script>
   </body>
 </html>
@@ -115,7 +115,7 @@ container.querySelector("#count").click();
     />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"div",tagName:"div"},_.a,1,{count:0,"#ClosestBranchId":2}]),4,"__tests__/tags/counter.marko_0_count",1,"__tests__/template.marko_0_tagName"];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"div",tagName:"div"},_.a,1,{count:0,"#ClosestBranchId":2}]),"__tests__/tags/counter.marko_0_count",4,"__tests__/template.marko_0_tagName",1];M._.w()
     </script>
   </body>
 </html>
