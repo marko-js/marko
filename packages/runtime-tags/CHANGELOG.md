@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.3
+
+### Patch Changes
+
+- [#2647](https://github.com/marko-js/marko/pull/2647) [`b355d52`](https://github.com/marko-js/marko/commit/b355d52f26869b13faec1fa266240234ce5cd101) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix for loop marker serialization when marker has more serialize reasons than the branch.
+
+- [#2645](https://github.com/marko-js/marko/pull/2645) [`eec34f2`](https://github.com/marko-js/marko/commit/eec34f2d889ff540718660c1daa7e93dbf321659) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize duplicate adjacent effect calls to reuse the effect id.
+
 ## 6.0.2
 
 ### Patch Changes
