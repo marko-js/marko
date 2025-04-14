@@ -13,7 +13,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   };
   _$.dynamicTag($scope0_id, "#text/0", MyTag, {
     number: x
-  }, 0, 0, 1);
+  });
   _$.write(`<button>${_$.escapeXML(x)}${_$.markResumeNode($scope0_id, "#text/2")}</button>${_$.markResumeNode($scope0_id, "#button/1")}`);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope($scope0_id, {

@@ -80,10 +80,10 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
     class: ["a", "b"],
     other: other
   }, 0, 0, _$.serializeGuard($serialize, 2));
-  _$.dynamicTag($scope0_id, "#text/15", `h${1}`, {});
-  _$.dynamicTag($scope0_id, "#text/16", foo || 'div', {});
-  _$.dynamicTag($scope0_id, "#text/17", foo + 'div', {});
-  _$.dynamicTag($scope0_id, "#text/18", "d" + "iv", {});
+  _$.dynamicTag($scope0_id, "#text/15", `h${1}`, {}, 0, 0, 0);
+  _$.dynamicTag($scope0_id, "#text/16", foo || 'div', {}, 0, 0, 0);
+  _$.dynamicTag($scope0_id, "#text/17", foo + 'div', {}, 0, 0, 0);
+  _$.dynamicTag($scope0_id, "#text/18", "d" + "iv", {}, 0, 0, 0);
   _$.serializeGuard($serialize, 8) && _$.writeScope($scope0_id, {
     content: _$.serializeIf($serialize, 9) && content,
     x: _$.serializeIf($serialize, 9) && x,

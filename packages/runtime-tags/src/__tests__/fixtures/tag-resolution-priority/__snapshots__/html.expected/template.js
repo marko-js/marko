@@ -7,5 +7,5 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   const $scope0_id = _$.nextScopeId();
   _$.write("<div></div>");
   _foo({});
-  _$.dynamicTag($scope0_id, "#text/1", Bar, {});
+  _$.dynamicTag($scope0_id, "#text/1", Bar, {}, 0, 0, 0);
 });

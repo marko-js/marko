@@ -32,8 +32,9 @@ export let dynamicTag = (
   inputOrArgs: unknown,
   content?: (() => void) | 0,
   inputIsArgs?: 1,
-  shouldResume?: 1 | 0,
+  serializeReason?: 1 | 0,
 ) => {
+  const shouldResume = serializeReason !== 0;
   const renderer = normalizeDynamicRenderer<ServerRenderer>(tag);
 
   if (MARKO_DEBUG) {
@@ -126,7 +127,7 @@ export let dynamicTag = (
             content
               ? { ...(input as Record<string, unknown>), content }
               : input,
-            shouldResume,
+            shouldResume ? 1 : 0,
           );
         }
         return inputIsArgs

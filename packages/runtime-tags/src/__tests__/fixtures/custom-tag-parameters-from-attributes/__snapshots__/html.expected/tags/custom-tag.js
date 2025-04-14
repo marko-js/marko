@@ -6,7 +6,7 @@ export default _$.createTemplate("__tests__/tags/custom-tag.marko", input => {
   _$.dynamicTag($scope0_id, "#text/2", input.content, {
     count: x,
     name: input.name
-  }, 0, 0, 1);
+  });
   _$.writeEffect($scope0_id, "__tests__/tags/custom-tag.marko_0_x");
   _$.writeScope($scope0_id, {
     input_content: input.content,

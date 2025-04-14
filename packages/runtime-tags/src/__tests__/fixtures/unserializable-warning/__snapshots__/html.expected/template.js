@@ -22,5 +22,5 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       });
     })
   };
-  _$.dynamicTag($scope0_id, "#text/0", Foo, {});
+  _$.dynamicTag($scope0_id, "#text/0", Foo, {}, 0, 0, 0);
 });

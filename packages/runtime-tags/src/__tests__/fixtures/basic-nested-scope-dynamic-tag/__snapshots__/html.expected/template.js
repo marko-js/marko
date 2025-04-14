@@ -13,7 +13,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       "ClosureSignalIndex:count": 0
     }, "__tests__/template.marko", "4:4"));
     _$.resumeClosestBranch($scope1_id);
-  }, $scope0_id));
+  }, $scope0_id), 0, 0);
   _$.writeScope($scope0_id, {
     count,
     "ClosureScopes:count": $count_closures

@@ -12,6 +12,6 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "2:2");
       return 0;
     }
-  }, $scope0_id, "#text/1");
+  }, $scope0_id, "#text/1", 1, 0);
   _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 });

@@ -200,6 +200,11 @@ export default {
           tagSection,
           nodeBinding,
         );
+        const serializeArg = !serializeReason
+          ? t.numericLiteral(0)
+          : serializeReason === true
+            ? undefined
+            : getSerializeGuard(serializeReason);
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "dynamicTag",
@@ -209,7 +214,7 @@ export default {
               t.arrayExpression(args),
               t.numericLiteral(0),
               t.numericLiteral(1),
-              getSerializeGuard(serializeReason),
+              serializeArg,
             )
           : callRuntime(
               "dynamicTag",
@@ -217,9 +222,9 @@ export default {
               getScopeAccessorLiteral(nodeBinding),
               tagExpression,
               args[0],
-              args[1] || (serializeReason ? t.numericLiteral(0) : undefined),
-              serializeReason ? t.numericLiteral(0) : undefined,
-              getSerializeGuard(serializeReason),
+              args[1] || (serializeArg ? t.numericLiteral(0) : undefined),
+              serializeArg ? t.numericLiteral(0) : undefined,
+              serializeArg,
             );
 
         if (node.var) {

@@ -37,7 +37,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
       _$.writeScope($scope3_id, {}, "__tests__/template.marko", "19:2");
       return 0;
     }
-  }, $scope0_id, "#text/2");
+  }, $scope0_id, "#text/2", 1, 0);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0");
   _$.writeScope($scope0_id, {
     input_show: _$.serializeIf($serialize, 0) && input.show,

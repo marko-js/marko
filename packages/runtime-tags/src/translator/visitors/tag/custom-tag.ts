@@ -269,13 +269,16 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
   if (childSerializeReasonIds) {
     if (childSerializeReasonIds.length === 1) {
       // Special case single reason to pass either 1 or undefined.
-      childSerializeReasonExpr = getSerializeGuard(
-        getBindingSerializeReason(
-          section,
-          childScopeBinding,
-          childSerializeReasonIds[0],
-        ),
+      const reason = getBindingSerializeReason(
+        section,
+        childScopeBinding,
+        childSerializeReasonIds[0],
       );
+      childSerializeReasonExpr = !reason
+        ? undefined
+        : reason == true
+          ? t.numericLiteral(1)
+          : getSerializeGuard(reason);
     } else {
       const props: t.ObjectExpression["properties"] = [];
       let hasDynamicReasons = false;
@@ -289,7 +292,10 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         if (reason) {
           hasDynamicReasons ||= reason !== true;
           props.push(
-            t.objectProperty(t.numericLiteral(i), getSerializeGuard(reason)),
+            t.objectProperty(
+              t.numericLiteral(i),
+              reason === true ? t.numericLiteral(1) : getSerializeGuard(reason),
+            ),
           );
         } else {
           hasSkippedReasons = true;
