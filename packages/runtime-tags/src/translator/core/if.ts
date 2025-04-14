@@ -20,6 +20,7 @@ import { addSorted } from "../util/optional";
 import {
   compareSerializeReasons,
   getScopeAccessorLiteral,
+  kBranchSerializeReason,
   mergeReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
@@ -154,8 +155,10 @@ export const IfTag = {
             const [branchTag, branchBody] = branches[i];
             const bodyStatements = branchTag.node.body.body;
             if (branchBody) {
-              const branchSerializeReason =
-                getSectionSerializeReason(branchBody);
+              const branchSerializeReason = getSectionSerializeReason(
+                branchBody,
+                kBranchSerializeReason,
+              );
               if (branchSerializeReason) {
                 if (branchSerializeReasons !== true) {
                   if (branchSerializeReason === true) {

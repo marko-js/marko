@@ -19,26 +19,20 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     })
   });
   _$.write("<div>");
-  _$.resumeConditional(() => {
+  if (Math.random()) {
+    const $scope2_id = _$.nextScopeId();
     if (Math.random()) {
-      const $scope2_id = _$.nextScopeId();
-      _$.resumeConditional(() => {
-        if (Math.random()) {
-          const $scope3_id = _$.nextScopeId();
-          _$.write(`${_$.escapeXML(a)} ${_$.escapeXML(b)} <!>${_$.escapeXML(c)}${_$.markResumeNode($scope3_id, "#text/2")}`);
-          _$.writeSubscribe($c_closures, _$.writeScope($scope3_id, {
-            _: _$.ensureScopeWithId($scope2_id),
-            "ClosureSignalIndex:c": 1
-          }, "__tests__/template.marko", "11:6"));
-          return 0;
-        }
-      }, $scope2_id, "#text/0", 1, 0);
-      _$.writeScope($scope2_id, {
-        _: _$.ensureScopeWithId($scope0_id)
-      }, "__tests__/template.marko", "10:4");
-      return 0;
+      const $scope3_id = _$.nextScopeId();
+      _$.write(`${_$.escapeXML(a)} ${_$.escapeXML(b)} <!>${_$.escapeXML(c)}${_$.markResumeNode($scope3_id, "#text/2")}`);
+      _$.writeSubscribe($c_closures, _$.writeScope($scope3_id, {
+        _: _$.ensureScopeWithId($scope2_id),
+        "ClosureSignalIndex:c": 1
+      }, "__tests__/template.marko", "11:6"));
     }
-  }, $scope0_id, "#div/2", 1, 0);
+    _$.writeScope($scope2_id, {
+      _: _$.ensureScopeWithId($scope0_id)
+    }, "__tests__/template.marko", "10:4");
+  }
   _$.write("</div>");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0");
   _$.writeScope($scope0_id, {
