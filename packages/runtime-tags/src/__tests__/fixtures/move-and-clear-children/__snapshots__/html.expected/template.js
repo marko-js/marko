@@ -11,7 +11,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
     _$.serializeGuard($serialize, 0) && _$.writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
   }, function (c) {
     return c.id;
-  }, $scope0_id, "#div/0", _$.serializeGuard($serialize, 0), 1);
+  }, $scope0_id, "#div/0", _$.serializeGuard($serialize, 0), _$.serializeGuard($serialize, 0), 1);
   _$.write("</div>");
   _$.serializeGuard($serialize, 0) && _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 });

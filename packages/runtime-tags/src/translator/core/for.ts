@@ -17,7 +17,6 @@ import {
 } from "../util/is-only-child-in-parent";
 import {
   BindingType,
-  bindingUtil,
   dropReferences,
   getAllTagReferenceNodes,
   getScopeAccessorLiteral,
@@ -161,14 +160,13 @@ export default {
           nodeBinding,
         );
 
-        if (markerSerializeReason && onlyChildInParentOptimization) {
-          getParentTag(tag)!.node.extra![kSkipMark] = true;
-        }
-
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
 
-        const forTagArgs = getBaseArgsInForTag(forType, forAttrs);
+        const forTagArgs = getBaseArgsInForTag(forType, forAttrs) as (
+          | t.Expression
+          | undefined
+        )[];
         const forTagHTMLRuntime = branchSerializeReason
           ? forTypeToHTMLResumeRuntime(forType, singleNodeOptimization)
           : forTypeToRuntime(forType);
@@ -177,23 +175,26 @@ export default {
         );
 
         if (branchSerializeReason) {
+          if (markerSerializeReason && onlyChildInParentOptimization) {
+            getParentTag(tag)!.node.extra![kSkipMark] = true;
+          }
+
           forTagArgs.push(
             forAttrs.by || t.numericLiteral(0),
             getScopeIdIdentifier(tagSection),
             getScopeAccessorLiteral(nodeBinding),
-            branchSerializeReason === true || markerSerializeReason === true
-              ? t.numericLiteral(1)
-              : markerSerializeReason &&
-                  !bindingUtil.isSuperset(
-                    branchSerializeReason,
-                    markerSerializeReason,
-                  )
-                ? t.logicalExpression(
-                    "||",
-                    getSerializeGuard(branchSerializeReason),
-                    getSerializeGuard(markerSerializeReason),
-                  )
-                : getSerializeGuard(branchSerializeReason),
+            branchSerializeReason === true
+              ? markerSerializeReason === true && !onlyChildInParentOptimization
+                ? undefined
+                : t.numericLiteral(1)
+              : getSerializeGuard(branchSerializeReason),
+            !markerSerializeReason
+              ? t.numericLiteral(0)
+              : markerSerializeReason === true
+                ? onlyChildInParentOptimization
+                  ? t.numericLiteral(1)
+                  : undefined
+                : getSerializeGuard(markerSerializeReason),
           );
 
           if (onlyChildInParentOptimization) {

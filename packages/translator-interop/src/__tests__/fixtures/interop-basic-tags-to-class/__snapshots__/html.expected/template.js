@@ -8,7 +8,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.write(`<button id=tags>${_$.escapeXML(count)}${_$.markResumeNode($scope0_id, "#text/1")}</button>${_$.markResumeNode($scope0_id, "#button/0")}`);
   _$.dynamicTag($scope0_id, "#text/2", _classCounter, {
     count: count
-  }, 0, 0, 1);
+  });
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope($scope0_id, {
     count

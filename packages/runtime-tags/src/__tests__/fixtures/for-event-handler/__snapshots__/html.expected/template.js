@@ -9,7 +9,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     _$.writeScope($scope1_id, {
       _: _$.ensureScopeWithId($scope0_id)
     }, "__tests__/template.marko", "3:2");
-  }, 0, $scope0_id, "#text/0", 1);
+  }, 0, $scope0_id, "#text/0");
   _$.writeScope($scope0_id, {
     num
   }, "__tests__/template.marko", 0, {

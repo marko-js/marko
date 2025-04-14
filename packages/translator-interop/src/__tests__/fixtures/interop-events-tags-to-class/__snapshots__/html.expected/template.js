@@ -9,7 +9,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     onCount: _$.register(function (newCount) {
       count = newCount;
     }, "__tests__/template.marko_0/onCount", $scope0_id)
-  }, 0, 0, 1);
+  });
   _$.write(`<div id=tags-api>${_$.escapeXML(count)}${_$.markResumeNode($scope0_id, "#text/1")}</div>`);
   _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
   _$.resumeClosestBranch($scope0_id);

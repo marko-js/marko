@@ -16,14 +16,14 @@ export default _$.createTemplate("__tests__/template.marko", input => {
         _: _$.ensureScopeWithId($scope1_id),
         "#childScope/0": _$.writeExistingScope($childScope)
       }, "__tests__/template.marko", "5:4");
-    }, 0, $scope1_id, "#text/0", 1);
+    }, 0, $scope1_id, "#text/0");
     _$.writeScope($scope1_id, {
       outer,
       _: _$.ensureScopeWithId($scope0_id)
     }, "__tests__/template.marko", "4:2", {
       outer: "4:6"
     });
-  }, 0, $scope0_id, "#text/1", 1);
+  }, 0, $scope0_id, "#text/1");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope($scope0_id, {
     items
