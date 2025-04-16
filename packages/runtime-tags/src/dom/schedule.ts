@@ -1,21 +1,7 @@
 import { run } from "./queue";
 let runTask: undefined | (() => void);
-const port2 = /* @__PURE__ */ (() => {
-  const { port1, port2 } = new MessageChannel();
-  port1.onmessage = () => {
-    isScheduled = 0;
-    if (MARKO_DEBUG) {
-      const run = runTask!;
-      runTask = undefined;
-      run();
-    } else {
-      run();
-    }
-  };
-  return port2;
-})();
-
 let isScheduled: undefined | 0 | 1;
+let channel: MessageChannel | undefined;
 
 export function schedule() {
   if (!isScheduled) {
@@ -44,5 +30,18 @@ function flushAndWaitFrame() {
 }
 
 function triggerMacroTask() {
-  port2.postMessage(0);
+  if (!channel) {
+    channel = new MessageChannel();
+    channel.port1.onmessage = () => {
+      isScheduled = 0;
+      if (MARKO_DEBUG) {
+        const run = runTask!;
+        runTask = undefined;
+        run();
+      } else {
+        run();
+      }
+    };
+  }
+  channel.port2.postMessage(0);
 }
