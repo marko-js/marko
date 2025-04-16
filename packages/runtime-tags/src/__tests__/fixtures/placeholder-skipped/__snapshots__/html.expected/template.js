@@ -18,6 +18,6 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.fork($scope0_id, "#text/1", resolveAfter("d", 1), data => {
     const $scope3_id = _$.nextScopeId();
     _$.write(_$.escapeXML(data));
-  });
+  }, 0);
   _$.write("e");
 });

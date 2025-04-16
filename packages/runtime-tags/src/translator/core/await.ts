@@ -27,6 +27,7 @@ import {
   setSectionParentIsOwner,
   startSection,
 } from "../util/sections";
+import { getSectionSerializeReason } from "../util/serialize-reasons";
 import {
   addValue,
   getSignal,
@@ -36,6 +37,7 @@ import { toFirstExpressionOrBlock } from "../util/to-first-expression-or-block";
 import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
+import { getSerializeGuard } from "../visitors/program/html";
 
 const kDOMBinding = Symbol("await tag dom binding");
 
@@ -126,6 +128,9 @@ export default {
         const nodeRef = tagExtra[kDOMBinding]!;
         const tagBody = tag.get("body");
         const section = getSection(tag);
+        const bodySection = getSectionForBody(tagBody);
+        const serializeReason =
+          bodySection && getSectionSerializeReason(bodySection);
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
 
@@ -141,6 +146,11 @@ export default {
                   node.body.params,
                   toFirstExpressionOrBlock(node.body.body),
                 ),
+                !serializeReason
+                  ? t.numericLiteral(0)
+                  : serializeReason === true
+                    ? undefined
+                    : getSerializeGuard(serializeReason),
               ),
             ),
           )[0]

@@ -6,11 +6,11 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.fork($scope0_id, "#text/0", resolveAfter("b", 2), value => {
     const $scope1_id = _$.nextScopeId();
     _$.write(_$.escapeXML(value));
-  });
+  }, 0);
   _$.write("c");
   _$.fork($scope0_id, "#text/1", resolveAfter("d", 1), value => {
     const $scope2_id = _$.nextScopeId();
     _$.write(_$.escapeXML(value));
-  });
+  }, 0);
   _$.write("e");
 });
