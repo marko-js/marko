@@ -38,7 +38,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
       );
     }
 
-    const descriptor = Object.getOwnPropertyDescriptor(window, runtimeId);
+    const descriptor = Object.getOwnPropertyDescriptor(self, runtimeId);
     if (descriptor && (descriptor.set || descriptor.configurable === false)) {
       throw new Error(
         `Marko initialized multiple times with the same $global.runtimeId of ${JSON.stringify(runtimeId)}. It could be that there are multiple copies of Marko running on the page.`,
@@ -46,9 +46,9 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
     }
   }
 
-  const renders = (window as any)[runtimeId] as Renders | undefined;
+  const renders = (self as any)[runtimeId] as Renders | undefined;
   const defineRuntime = (desc: PropertyDescriptor) =>
-    Object.defineProperty(window, runtimeId, desc);
+    Object.defineProperty(self, runtimeId, desc);
   let resumeRender: Renders;
   const initRuntime = (renders: Renders) => {
     defineRuntime({
@@ -64,45 +64,39 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         };
         const branchIds = new Set<number>();
         const parentBranchIds = new Map<number, number>();
-        let lastEffect: string | undefined;
+        const branchEnd = (branchId: number, reference: ChildNode) => {
+          const branch = (scopeLookup[branchId] ||=
+            {} as BranchScope) as BranchScope;
+          let endNode = reference;
+          let prevNode: ChildNode | null;
+
+          while (
+            (prevNode = endNode.previousSibling) !== branch.___startNode &&
+            ~visits.indexOf((endNode = prevNode as Comment))
+          );
+
+          branch.___endNode = lastEndNode =
+            endNode === lastEndNode
+              ? reference.parentNode!.insertBefore(new Text(), reference)
+              : endNode;
+          branch.___startNode ||= lastEndNode;
+
+          branchIds.add(branchId);
+          return branch;
+        };
         let currentBranchId: number | undefined;
         let $global: Scope["$global"] | undefined;
         let lastScopeId = 0;
+        let lastEffect: string | undefined;
+        let lastEndNode: ChildNode | undefined;
+        let visits: RenderData["v"];
+        let resumes: NonNullable<RenderData["r"]>;
         render.w = () => {
-          walk.call(render);
+          try {
+            walk.call(render);
+            isResuming = 1;
 
-          const visits = render.v;
-          const resumes = render.r;
-
-          if (visits.length) {
-            const visitNodes = new Set<Comment>(visits);
-            let lastEndNode: ChildNode | undefined;
-            visits.length = 0;
-
-            const branchEnd = (branchId: number, reference: ChildNode) => {
-              const branch = (scopeLookup[branchId] ||=
-                {} as BranchScope) as BranchScope;
-
-              let endNode = reference;
-              while (
-                endNode.previousSibling !== branch.___startNode &&
-                visitNodes.has((endNode = endNode.previousSibling as Comment))
-              );
-              if (endNode === lastEndNode) {
-                endNode = reference.parentNode!.insertBefore(
-                  new Text(),
-                  reference,
-                );
-              }
-
-              branch.___endNode = lastEndNode = endNode;
-              branch.___startNode ||= endNode;
-
-              branchIds.add(branchId);
-              return branch;
-            };
-
-            for (const visit of visitNodes) {
+            for (const visit of (visits = render.v)) {
               const commentText = visit.data!;
               const dataIndex = commentText.indexOf(" ") + 1;
               const scopeId = +commentText.slice(
@@ -164,78 +158,68 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 }
               }
             }
-          }
 
-          if (resumes) {
-            try {
-              render.r = [];
-              isResuming = 1;
-              for (let i = 0; i < resumes.length; i++) {
-                let serialized = resumes[i];
-                if (typeof serialized === "function") {
-                  for (const scope of serialized(serializeContext)) {
-                    if (!$global) {
-                      $global = (scope || {}) as Scope["$global"];
-                      $global.runtimeId = runtimeId;
-                      $global.renderId = renderId;
-                      $global.___nextScopeId = 1e6;
-                    } else if (typeof scope === "number") {
-                      lastScopeId += scope;
-                    } else {
-                      const scopeId = ++lastScopeId;
-                      const prevScope = scopeLookup[scopeId];
-                      scope.$global = $global;
-                      scope.___id = scopeId;
-                      if (prevScope !== scope) {
-                        scopeLookup[scopeId] = Object.assign(
-                          scope,
-                          prevScope,
-                        ) as Scope;
-                      }
+            for (const serialized of (resumes = render.r || [])) {
+              if (typeof serialized === "string") {
+                lastEffect = serialized;
+              } else if (typeof serialized === "number") {
+                (registeredValues[lastEffect!] as any)(
+                  scopeLookup[serialized],
+                  scopeLookup[serialized],
+                );
+              } else {
+                for (const scope of serialized(serializeContext)) {
+                  if (!$global) {
+                    $global = (scope || {}) as Scope["$global"];
+                    $global.runtimeId = runtimeId;
+                    $global.renderId = renderId;
+                    $global.___nextScopeId = 1e6;
+                  } else if (typeof scope === "number") {
+                    lastScopeId += scope;
+                  } else {
+                    const scopeId = ++lastScopeId;
+                    const prevScope = scopeLookup[scopeId];
+                    scope.$global = $global;
+                    scope.___id = scopeId;
+                    if (prevScope !== scope) {
+                      scopeLookup[scopeId] = Object.assign(
+                        scope,
+                        prevScope,
+                      ) as Scope;
+                    }
 
-                      const parentBranchId =
-                        (scope[AccessorProp.ClosestBranchId] as
-                          | number
-                          | undefined) || parentBranchIds.get(scopeId);
-                      if (parentBranchId) {
-                        scope.___closestBranch = scopeLookup[
-                          parentBranchId
-                        ] as BranchScope;
-                      }
+                    const parentBranchId =
+                      (scope[AccessorProp.ClosestBranchId] as
+                        | number
+                        | undefined) || parentBranchIds.get(scopeId);
+                    if (parentBranchId) {
+                      scope.___closestBranch = scopeLookup[
+                        parentBranchId
+                      ] as BranchScope;
+                    }
 
-                      if (branchIds.has(scopeId)) {
-                        const branch = scope as BranchScope;
-                        const parentBranch = branch.___closestBranch;
+                    if (branchIds.has(scopeId)) {
+                      const branch = scope as BranchScope;
+                      const parentBranch = branch.___closestBranch;
 
-                        scope.___closestBranch = branch;
-                        if (parentBranch) {
-                          branch.___parentBranch = parentBranch;
-                          (parentBranch.___branchScopes ||= new Set()).add(
-                            branch,
-                          );
-                        }
-                      }
-
-                      if (MARKO_DEBUG) {
-                        scope.___debugId = "server-" + scopeId;
+                      scope.___closestBranch = branch;
+                      if (parentBranch) {
+                        branch.___parentBranch = parentBranch;
+                        (parentBranch.___branchScopes ||= new Set()).add(
+                          branch,
+                        );
                       }
                     }
-                  }
-                } else {
-                  if (typeof serialized === "string") {
-                    lastEffect = serialized;
-                    serialized = resumes[++i] as number;
-                  }
 
-                  (registeredValues[lastEffect!] as any)(
-                    scopeLookup[serialized],
-                    scopeLookup[serialized],
-                  );
+                    if (MARKO_DEBUG) {
+                      scope.___debugId = "server-" + scopeId;
+                    }
+                  }
                 }
               }
-            } finally {
-              isResuming = 0;
             }
+          } finally {
+            isResuming = visits.length = resumes.length = 0;
           }
         };
         return render;

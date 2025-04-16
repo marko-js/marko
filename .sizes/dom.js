@@ -1,4 +1,4 @@
-// size: 19139 (min) 7257 (brotli)
+// size: 19053 (min) 7210 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -91,14 +91,17 @@ var isResuming,
   registeredValues = {};
 function init(runtimeId = "M") {
   let resumeRender,
-    renders = window[runtimeId],
-    defineRuntime = (desc) => Object.defineProperty(window, runtimeId, desc),
+    renders = self[runtimeId],
+    defineRuntime = (desc) => Object.defineProperty(self, runtimeId, desc),
     initRuntime = (renders2) => {
       defineRuntime({
         value: (resumeRender = (renderId) => {
-          let lastEffect,
-            currentBranchId,
+          let currentBranchId,
             $global,
+            lastEffect,
+            lastEndNode,
+            visits,
+            resumes,
             render = (resumeRender[renderId] =
               renders2[renderId] || renders2(renderId)),
             walk2 = render.w,
@@ -108,38 +111,32 @@ function init(runtimeId = "M") {
             serializeContext = { _: registeredValues },
             branchIds = new Set(),
             parentBranchIds = new Map(),
+            branchEnd = (branchId, reference) => {
+              let prevNode,
+                branch = (scopeLookup[branchId] ||= {}),
+                endNode = reference;
+              for (
+                ;
+                (prevNode = endNode.previousSibling) !== branch.h &&
+                ~visits.indexOf((endNode = prevNode));
+
+              );
+              return (
+                (branch.j = lastEndNode =
+                  endNode === lastEndNode
+                    ? reference.parentNode.insertBefore(new Text(), reference)
+                    : endNode),
+                (branch.h ||= lastEndNode),
+                branchIds.add(branchId),
+                branch
+              );
+            },
             lastScopeId = 0;
           return (
             (render.w = () => {
-              walk2.call(render);
-              let visits = render.v,
-                resumes = render.r;
-              if (visits.length) {
-                let lastEndNode,
-                  visitNodes = new Set(visits);
-                visits.length = 0;
-                let branchEnd = (branchId, reference) => {
-                  let branch = (scopeLookup[branchId] ||= {}),
-                    endNode = reference;
-                  for (
-                    ;
-                    endNode.previousSibling !== branch.h &&
-                    visitNodes.has((endNode = endNode.previousSibling));
-
-                  );
-                  return (
-                    endNode === lastEndNode &&
-                      (endNode = reference.parentNode.insertBefore(
-                        new Text(),
-                        reference,
-                      )),
-                    (branch.j = lastEndNode = endNode),
-                    (branch.h ||= endNode),
-                    branchIds.add(branchId),
-                    branch
-                  );
-                };
-                for (let visit of visitNodes) {
+              try {
+                walk2.call(render), (isResuming = 1);
+                for (let visit of (visits = render.v)) {
                   let commentText = visit.data,
                     dataIndex = commentText.indexOf(" ") + 1,
                     scopeId = +commentText.slice(
@@ -189,58 +186,50 @@ function init(runtimeId = "M") {
                     }
                   }
                 }
-              }
-              if (resumes)
-                try {
-                  (render.r = []), (isResuming = 1);
-                  for (let i = 0; i < resumes.length; i++) {
-                    let serialized = resumes[i];
-                    if ("function" == typeof serialized)
-                      for (let scope of serialized(serializeContext))
-                        if ($global)
-                          if ("number" == typeof scope) lastScopeId += scope;
-                          else {
-                            let scopeId = ++lastScopeId,
-                              prevScope = scopeLookup[scopeId];
-                            (scope.$global = $global),
-                              (scope.m = scopeId),
-                              prevScope !== scope &&
-                                (scopeLookup[scopeId] = Object.assign(
-                                  scope,
-                                  prevScope,
-                                ));
-                            let parentBranchId =
-                              scope.g || parentBranchIds.get(scopeId);
-                            if (
-                              (parentBranchId &&
-                                (scope.k = scopeLookup[parentBranchId]),
-                              branchIds.has(scopeId))
-                            ) {
-                              let branch = scope,
-                                parentBranch = branch.k;
-                              (scope.k = branch),
-                                parentBranch &&
-                                  ((branch.t = parentBranch),
-                                  (parentBranch.z ||= new Set()).add(branch));
-                            }
+                for (let serialized of (resumes = render.r || []))
+                  if ("string" == typeof serialized) lastEffect = serialized;
+                  else if ("number" == typeof serialized)
+                    registeredValues[lastEffect](
+                      scopeLookup[serialized],
+                      scopeLookup[serialized],
+                    );
+                  else
+                    for (let scope of serialized(serializeContext))
+                      if ($global)
+                        if ("number" == typeof scope) lastScopeId += scope;
+                        else {
+                          let scopeId = ++lastScopeId,
+                            prevScope = scopeLookup[scopeId];
+                          (scope.$global = $global),
+                            (scope.m = scopeId),
+                            prevScope !== scope &&
+                              (scopeLookup[scopeId] = Object.assign(
+                                scope,
+                                prevScope,
+                              ));
+                          let parentBranchId =
+                            scope.g || parentBranchIds.get(scopeId);
+                          if (
+                            (parentBranchId &&
+                              (scope.k = scopeLookup[parentBranchId]),
+                            branchIds.has(scopeId))
+                          ) {
+                            let branch = scope,
+                              parentBranch = branch.k;
+                            (scope.k = branch),
+                              parentBranch &&
+                                ((branch.t = parentBranch),
+                                (parentBranch.z ||= new Set()).add(branch));
                           }
-                        else
-                          ($global = scope || {}),
-                            ($global.runtimeId = runtimeId),
-                            ($global.renderId = renderId),
-                            ($global.o = 1e6);
-                    else
-                      "string" == typeof serialized &&
-                        ((lastEffect = serialized),
-                        (serialized = resumes[++i])),
-                        registeredValues[lastEffect](
-                          scopeLookup[serialized],
-                          scopeLookup[serialized],
-                        );
-                  }
-                } finally {
-                  isResuming = 0;
-                }
+                        }
+                      else
+                        ($global = scope || {}),
+                          ($global.runtimeId = runtimeId),
+                          ($global.renderId = renderId),
+                          ($global.o = 1e6);
+              } finally {
+                isResuming = visits.length = resumes.length = 0;
+              }
             }),
             render
           );
@@ -1758,7 +1747,7 @@ var classIdToBranch = new Map(),
           })(
             value2[0],
             2 === value2.length &&
-              window[runtimeId]?.[
+              self[runtimeId]?.[
                 "s" === componentIdPrefix ? "_" : componentIdPrefix
               ]?.s[value2[1]],
           )
