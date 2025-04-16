@@ -983,12 +983,12 @@ export class Chunk {
     if (this.lastEffect === registryId) {
       this.effects += "," + scopeId;
     } else {
+      this.lastEffect = registryId;
       this.effects = concatEffects(
         this.effects,
         '"' + registryId + '",' + scopeId,
       );
     }
-    this.lastEffect = registryId;
   }
 
   writeScript(script: string) {
@@ -1205,9 +1205,9 @@ export class Chunk {
       scripts = concatScripts(scripts, runtimePrefix + RuntimeKey.Walk + "()");
     }
 
-    this.effects = state.resumes = "";
     this.html = html;
     this.scripts = scripts;
+    this.effects = this.lastEffect = state.resumes = "";
     return this;
   }
 
