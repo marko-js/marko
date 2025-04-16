@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.6
+
+### Patch Changes
+
+- [#2654](https://github.com/marko-js/marko/pull/2654) [`42b380f`](https://github.com/marko-js/marko/commit/42b380f6bdcf6eab8deb22f254772ee43e3c91ea) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid using "this" in inline resume code to reduce inline code and bundle size.
+
 ## 6.0.5
 
 ### Patch Changes
