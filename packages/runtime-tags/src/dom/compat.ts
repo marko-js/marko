@@ -58,7 +58,7 @@ export const compat = {
       return getRegisteredWithScope(
         value[0],
         value.length === 2 &&
-          (window as any)[runtimeId]?.[
+          (self as any)[runtimeId]?.[
             componentIdPrefix === "s" ? "_" : componentIdPrefix
           ]?.s[value[1]],
       );
