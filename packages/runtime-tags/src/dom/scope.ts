@@ -1,7 +1,6 @@
 import type { BranchScope, Scope } from "../common/types";
 import { insertChildNodes, removeChildNodes } from "./dom";
-
-let pendingScopes: Scope[] = [];
+import { pendingScopes } from "./queue";
 
 export function createScope(
   $global: Scope["$global"],
@@ -15,20 +14,11 @@ export function createScope(
   } as Scope;
 
   pendingScopes.push(scope);
-
   return scope;
 }
 
 export function skipScope(scope: Scope) {
   return scope.$global.___nextScopeId++;
-}
-
-export function finishPendingScopes() {
-  for (const scope of pendingScopes) {
-    scope.___creating = 0;
-  }
-
-  pendingScopes = [];
 }
 
 export function findBranchWithKey(

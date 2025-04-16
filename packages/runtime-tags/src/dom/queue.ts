@@ -1,6 +1,5 @@
 import type { BranchScope, Scope } from "../common/types";
 import { renderCatch } from "./control-flow";
-import { finishPendingScopes } from "./scope";
 import type { Signal } from "./signals";
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
@@ -16,6 +15,7 @@ let pendingRendersLookup = new Map<number, PendingRender>();
 export const caughtError = new WeakSet<unknown[]>();
 export const placeholderShown = new WeakSet<unknown[]>();
 export let pendingEffects: unknown[] = [];
+export let pendingScopes: Scope[] = [];
 export let rendering: undefined | 0 | 1;
 
 const scopeKeyOffset = 1e3;
@@ -139,7 +139,11 @@ function runRenders() {
     }
   }
 
-  finishPendingScopes();
+  for (const scope of pendingScopes) {
+    scope.___creating = 0;
+  }
+
+  pendingScopes = [];
 }
 
 let runRender = (render: PendingRender) =>
