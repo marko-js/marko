@@ -93,7 +93,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
         let resumes: NonNullable<RenderData["r"]>;
         render.w = () => {
           try {
-            walk.call(render);
+            walk();
             isResuming = 1;
 
             for (const visit of (visits = render.v)) {
