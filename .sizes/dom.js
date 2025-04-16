@@ -1,4 +1,4 @@
-// size: 19053 (min) 7210 (brotli)
+// size: 19047 (min) 7207 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -135,7 +135,7 @@ function init(runtimeId = "M") {
           return (
             (render.w = () => {
               try {
-                walk2.call(render), (isResuming = 1);
+                walk2(), (isResuming = 1);
                 for (let visit of (visits = render.v)) {
                   let commentText = visit.data,
                     dataIndex = commentText.indexOf(" ") + 1,
