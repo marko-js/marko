@@ -50,8 +50,34 @@ export function classAttr(element: Element, value: unknown) {
   setAttribute(element, "class", classValue(value) || undefined);
 }
 
+export function classItems(element: Element, items: Record<string, unknown>) {
+  for (const key in items) {
+    classItem(element, key, items[key]);
+  }
+}
+
+export function classItem(element: Element, name: string, value: unknown) {
+  element.classList.toggle(name, !!value);
+}
+
 export function styleAttr(element: Element, value: unknown) {
   setAttribute(element, "style", styleValue(value) || undefined);
+}
+
+export function styleItems(
+  element: HTMLElement,
+  items: Record<string, unknown>,
+) {
+  for (const key in items) {
+    styleItem(element, key, items[key]);
+  }
+}
+
+export function styleItem(element: HTMLElement, name: string, value: unknown) {
+  element.style.setProperty(name, value || value === 0 ? value + "" : "");
+}
+export function styleItemValue(value: unknown) {
+  return value && typeof value === "number" ? value + "px" : value;
 }
 
 export function data(node: Text | Comment, value: unknown) {

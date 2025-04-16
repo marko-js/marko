@@ -1,4 +1,4 @@
-// size: 19032 (min) 7217 (brotli)
+// size: 19279 (min) 7293 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -37,7 +37,7 @@ function stringifyClassObject(name, value2) {
 }
 function stringifyStyleObject(name, value2) {
   return value2 || 0 === value2
-    ? `${name}:${"number" == typeof value2 && value2 && !/^(--|ta|or|li|z)|cou|nk|it|ag|we|do|w$/.test(name) ? value2 + "px" : value2}`
+    ? `${name}:${value2 && "number" == typeof value2 && !/^(--|ta|or|li|z)|cou|nk|it|ag|we|do|w$/.test(name) ? value2 + "px" : value2}`
     : "";
 }
 function toDelimitedString(val, delimiter, stringify) {
@@ -561,6 +561,12 @@ function classAttr(element, value2) {
     })(value2) || void 0,
   );
 }
+function classItems(element, items) {
+  for (let key in items) classItem(element, key, items[key]);
+}
+function classItem(element, name, value2) {
+  element.classList.toggle(name, !!value2);
+}
 function styleAttr(element, value2) {
   setAttribute(
     element,
@@ -569,6 +575,15 @@ function styleAttr(element, value2) {
       return toDelimitedString(value2, ";", stringifyStyleObject);
     })(value2) || void 0,
   );
+}
+function styleItems(element, items) {
+  for (let key in items) styleItem(element, key, items[key]);
+}
+function styleItem(element, name, value2) {
+  element.style.setProperty(name, value2 || 0 === value2 ? value2 + "" : "");
+}
+function styleItemValue(value2) {
+  return value2 && "number" == typeof value2 ? value2 + "px" : value2;
 }
 function data(node, value2) {
   let normalizedValue = normalizeString(value2);

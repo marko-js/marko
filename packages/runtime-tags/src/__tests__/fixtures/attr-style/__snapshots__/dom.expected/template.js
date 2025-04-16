@@ -16,9 +16,7 @@ export const $test = /* @__PURE__ */_$.value("test", ($scope, test) => $dynamicT
   })
 })));
 export const $color = /* @__PURE__ */_$.value("color", ($scope, color) => {
-  _$.styleAttr($scope["#div/0"], {
-    color: color
-  });
+  _$.styleItem($scope["#div/0"], "color", color);
   _customTag_input_style($scope["#childScope/1"], {
     color: color
   });

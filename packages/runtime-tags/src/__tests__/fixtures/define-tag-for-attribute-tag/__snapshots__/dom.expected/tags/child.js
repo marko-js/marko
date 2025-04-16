@@ -4,9 +4,7 @@ export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1");
 export const $input_thing_content = /* @__PURE__ */_$.value("input_thing_content", $dynamicTag);
-export const $input_thing_selected = /* @__PURE__ */_$.value("input_thing_selected", ($scope, input_thing_selected) => _$.classAttr($scope["#div/0"], {
-  "selected": input_thing_selected
-}));
+export const $input_thing_selected = /* @__PURE__ */_$.value("input_thing_selected", ($scope, input_thing_selected) => _$.classItem($scope["#div/0"], "selected", input_thing_selected));
 export const $input_thing = /* @__PURE__ */_$.value("input_thing", ($scope, input_thing) => {
   $input_thing_selected($scope, input_thing?.selected);
   $input_thing_content($scope, input_thing?.content);

@@ -30,12 +30,17 @@ export {
   attrs,
   attrsEvents,
   classAttr,
+  classItem,
+  classItems,
   data,
   html,
   lifecycle,
   partialAttrs,
   props,
   styleAttr,
+  styleItem,
+  styleItems,
+  styleItemValue,
   textContent,
 } from "./dom/dom";
 export { on } from "./dom/event";
