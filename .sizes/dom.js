@@ -1,4 +1,4 @@
-// size: 19158 (min) 7262 (brotli)
+// size: 19139 (min) 7257 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -963,17 +963,9 @@ function registerContent(
 function createRenderer(template, walks, setup, params, closures) {
   return createContent("", template, walks, setup, params, closures)();
 }
-var cloneCache = {};
 var isScheduled,
-  port2 = (() => {
-    let { port1: port1, port2: port22 } = new MessageChannel();
-    return (
-      (port1.onmessage = () => {
-        (isScheduled = 0), run();
-      }),
-      port22
-    );
-  })();
+  channel,
+  cloneCache = {};
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
@@ -981,7 +973,11 @@ function flushAndWaitFrame() {
   run(), requestAnimationFrame(triggerMacroTask);
 }
 function triggerMacroTask() {
-  port2.postMessage(0);
+  channel ||
+    ((channel = new MessageChannel()).port1.onmessage = () => {
+      (isScheduled = 0), run();
+    }),
+    channel.port2.postMessage(0);
 }
 function state(valueAccessor, fn) {
   let valueChangeAccessor = "o" + valueAccessor,
