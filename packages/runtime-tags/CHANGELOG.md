@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.7
+
+### Patch Changes
+
+- [#2656](https://github.com/marko-js/marko/pull/2656) [`9fd1eb4`](https://github.com/marko-js/marko/commit/9fd1eb4840d757e883b761d478f743499368fa7b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where lastEffect was not being cleared.
+
+- [#2656](https://github.com/marko-js/marko/pull/2656) [`cc140c2`](https://github.com/marko-js/marko/commit/cc140c21611b7fa006cc2ffa8b6d01d6aacfd3e1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid serialize markers for await tags when static.
+
 ## 6.0.6
 
 ### Patch Changes
