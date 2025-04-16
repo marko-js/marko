@@ -34,7 +34,9 @@ container.querySelector("button").click();
 container.querySelector("button").click();
 ```
 ```html
-<div>
+<div
+  class=""
+>
   <span>
     The thing
   </span>

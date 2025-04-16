@@ -65,7 +65,9 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <div>
+    <div
+      class=""
+    >
       <!--M_[3-->
       <span>
         The thing
@@ -86,7 +88,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/div[class] "selected" => null
+UPDATE html/body/div[class] "selected" => ""
 ```
 
 # Render
@@ -120,5 +122,5 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE html/body/div[class] null => "selected"
+UPDATE html/body/div[class] "" => "selected"
 ```

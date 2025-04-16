@@ -42,7 +42,9 @@ UPDATE div[class] null => "selected"
 container.querySelector("button").click();
 ```
 ```html
-<div>
+<div
+  class=""
+>
   <span>
     The thing
   </span>
@@ -54,7 +56,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE div[class] "selected" => null
+UPDATE div[class] "selected" => ""
 ```
 
 # Render
@@ -76,5 +78,5 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-UPDATE div[class] null => "selected"
+UPDATE div[class] "" => "selected"
 ```

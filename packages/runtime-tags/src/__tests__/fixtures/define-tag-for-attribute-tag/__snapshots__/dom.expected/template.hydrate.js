@@ -1,8 +1,8 @@
-// size: 365 (min) 205 (brotli)
+// size: 365 (min) 206 (brotli)
 const $dynamicTag = _$.dynamicTag(1),
   $input_thing_content = _$.value(6, $dynamicTag),
   $input_thing_selected = _$.value(5, ($scope, input_thing_selected) =>
-    _$.classAttr($scope[0], { selected: input_thing_selected }),
+    _$.classItem($scope[0], "selected", input_thing_selected),
   ),
   $input_thing = _$.value(4, ($scope, input_thing) => {
     $input_thing_selected($scope, input_thing?.selected),

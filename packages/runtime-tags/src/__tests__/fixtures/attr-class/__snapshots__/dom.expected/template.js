@@ -28,10 +28,10 @@ const $expr_c_d = /* @__PURE__ */_$.intersection(9, $scope => {
     c,
     d
   } = $scope;
-  _$.classAttr($scope["#div/0"], ["a", {
+  _$.classItems($scope["#div/0"], {
     b: c,
-    d
-  }]);
+    d: d
+  });
   _customTag_input_class($scope["#childScope/1"], ["a", {
     b: c,
     d

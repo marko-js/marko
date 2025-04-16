@@ -9,6 +9,7 @@ import {
 
 import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
+import cssPxProps from "../../util/css-px-props";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import {
@@ -51,7 +52,7 @@ import {
   addStatement,
   getRegisterUID,
 } from "../../util/signals";
-import { toObjectProperty } from "../../util/to-property-name";
+import { toObjectProperty, toPropertyName } from "../../util/to-property-name";
 import { propsToExpression } from "../../util/translate-attrs";
 import translateVar from "../../util/translate-var";
 import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
@@ -603,18 +604,72 @@ export default {
               if (confident) {
                 write`${getHTMLRuntime()[helper](computed)}`;
               } else {
-                addStatement(
-                  "render",
-                  tagSection,
-                  valueReferences,
-                  t.expressionStatement(
-                    callRuntime(
-                      helper,
-                      t.memberExpression(scopeIdentifier, visitAccessor!, true),
-                      value,
-                    ),
-                  ),
+                const nodeExpr = t.memberExpression(
+                  scopeIdentifier,
+                  visitAccessor!,
+                  true,
                 );
+                const meta: DelimitedAttrMeta = {
+                  staticItems: undefined,
+                  dynamicItems: undefined,
+                  dynamicValues: undefined,
+                };
+                let stmt: undefined | t.Statement;
+                trackDelimitedAttrValue(value, meta);
+
+                if (meta.dynamicItems) {
+                  stmt = t.expressionStatement(
+                    callRuntime(helper, nodeExpr, value),
+                  );
+                } else {
+                  if (meta.staticItems) {
+                    write`${getHTMLRuntime()[helper](computed)}`;
+                  }
+
+                  if (meta.dynamicValues) {
+                    const keys = Object.keys(meta.dynamicValues);
+
+                    if (keys.length === 1) {
+                      const [key] = keys;
+                      const value = meta.dynamicValues[key];
+                      stmt = t.expressionStatement(
+                        callRuntime(
+                          `${name}Item`,
+                          nodeExpr,
+                          t.stringLiteral(key),
+                          name === "style" && cssPxProps.has(name)
+                            ? callRuntime("styleItemValue", value)
+                            : value,
+                        ),
+                      );
+                    } else {
+                      const props: t.ObjectExpression["properties"] = [];
+                      for (const key of keys) {
+                        const value = meta.dynamicValues[key];
+                        props.push(
+                          t.objectProperty(
+                            toPropertyName(key),
+                            name === "style" && cssPxProps.has(name)
+                              ? callRuntime("styleItemValue", value)
+                              : value,
+                          ),
+                        );
+                      }
+
+                      stmt = t.expressionStatement(
+                        callRuntime(
+                          `${name}Items`,
+                          nodeExpr,
+                          t.objectExpression(props),
+                        ),
+                      );
+                    }
+                  }
+                }
+
+                if (stmt) {
+                  addStatement("render", tagSection, valueReferences, stmt);
+                }
               }
               break;
             }
@@ -901,6 +956,104 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
     spreadExpression,
     skipExpression,
   };
+}
+
+interface DelimitedAttrMeta {
+  staticItems: undefined | unknown[];
+  dynamicItems: undefined | (t.Expression | t.SpreadElement)[];
+  dynamicValues: undefined | Record<string, t.Expression>;
+}
+function trackDelimitedAttrValue(expr: t.Expression, meta: DelimitedAttrMeta) {
+  switch (expr.type) {
+    case "ObjectExpression":
+      trackDelimitedAttrObjectProperties(expr, meta);
+      break;
+    case "ArrayExpression":
+      trackDelimitedAttrArrayItems(expr, meta);
+      break;
+    default:
+      (meta.dynamicItems ||= []).push(expr);
+      break;
+  }
+}
+
+function trackDelimitedAttrArrayItems(
+  arr: t.ArrayExpression,
+  meta: DelimitedAttrMeta,
+) {
+  for (const item of arr.elements) {
+    if (item) {
+      switch (item.type) {
+        case "ArrayExpression": {
+          trackDelimitedAttrArrayItems(item, meta);
+          break;
+        }
+        case "ObjectExpression": {
+          trackDelimitedAttrObjectProperties(item, meta);
+          break;
+        }
+        case "SpreadElement":
+          if (item.argument.type === "ArrayExpression") {
+            trackDelimitedAttrArrayItems(item.argument, meta);
+          } else {
+            (meta.dynamicItems ||= []).push(item);
+          }
+          break;
+        default: {
+          const evalItem = evaluate(item);
+          if (evalItem.confident) {
+            (meta.staticItems ||= []).push(evalItem.computed);
+          } else {
+            (meta.dynamicItems ||= []).push(item);
+          }
+          break;
+        }
+      }
+    }
+  }
+}
+
+function trackDelimitedAttrObjectProperties(
+  obj: t.ObjectExpression,
+  meta: DelimitedAttrMeta,
+) {
+  let staticProps: Record<string, unknown> | undefined;
+  let dynamicProps: t.ObjectExpression["properties"] | undefined;
+  for (const prop of obj.properties) {
+    if (prop.type !== "ObjectProperty" || prop.computed) {
+      (dynamicProps ||= []).push(prop);
+      continue;
+    }
+
+    let key: string;
+    if (prop.key.type === "Identifier") {
+      key = prop.key.name;
+    } else {
+      const keyEval = evaluate(prop.key as t.Expression);
+      if (keyEval.confident) {
+        key = keyEval.computed + "";
+      } else {
+        (dynamicProps ||= []).push(prop);
+        continue;
+      }
+    }
+
+    const value = prop.value as t.Expression;
+    const propEval = evaluate(value);
+    if (propEval.confident) {
+      (staticProps ||= {})[key] = propEval.computed;
+    } else {
+      (meta.dynamicValues ||= {})[key] = value;
+    }
+  }
+
+  if (staticProps) {
+    (meta.staticItems ||= []).push(staticProps);
+  }
+
+  if (dynamicProps) {
+    (meta.dynamicItems ||= []).push(t.objectExpression(dynamicProps));
+  }
 }
 
 function isChangeHandler(propName: string) {
