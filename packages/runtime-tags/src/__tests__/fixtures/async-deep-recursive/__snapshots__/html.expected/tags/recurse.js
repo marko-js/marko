@@ -20,7 +20,7 @@ const $content = (input, $serialize) => {
             "ClosureSignalIndex:input_level": _$.serializeIf($serialize, 0) && 0
           }, "__tests__/tags/recurse.marko", "5:7"));
           _$.resumeClosestBranch($scope3_id);
-        });
+        }, _$.serializeGuard($serialize, 0));
         _$.serializeGuard($serialize, 0) && _$.writeScope($scope2_id, {
           _: _$.ensureScopeWithId($scope1_id)
         }, "__tests__/tags/recurse.marko", "3:5");

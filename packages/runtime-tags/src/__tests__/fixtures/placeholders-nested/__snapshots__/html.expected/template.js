@@ -9,7 +9,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     _$.fork($scope1_id, "#text/0", resolveAfter("c", 2), data => {
       const $scope3_id = _$.nextScopeId();
       _$.write(_$.escapeXML(data));
-    });
+    }, 0);
     _$.write("d");
     _$.tryContent($scope1_id, "#text/1", _$.registerContent("__tests__/template.marko_4_renderer", () => {
       const $scope4_id = _$.nextScopeId();
@@ -17,7 +17,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       _$.fork($scope4_id, "#text/0", resolveAfter("f", 3), data => {
         const $scope6_id = _$.nextScopeId();
         _$.write(_$.escapeXML(data));
-      });
+      }, 0);
       _$.write("g");
     }, $scope1_id), {
       placeholder: _$.attrTag({
@@ -39,6 +39,6 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.fork($scope0_id, "#text/1", resolveAfter("i", 1), data => {
     const $scope7_id = _$.nextScopeId();
     _$.write(_$.escapeXML(data));
-  });
+  }, 0);
   _$.write("j");
 });

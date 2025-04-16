@@ -623,22 +623,29 @@ export function fork<T>(
   accessor: Accessor,
   promise: Promise<T> | T,
   content: (value: T) => void,
+  serializeMarker?: 0 | 1,
 ) {
+  const resumeMarker = serializeMarker !== 0;
+
   if (!isPromise(promise)) {
-    const branchId = peekNextScopeId();
-    $chunk.writeHTML(
-      $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + ""),
-    );
-    content(promise);
-    writeScope(scopeId, {
-      [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
-    });
-    $chunk.writeHTML(
-      $chunk.boundary.state.mark(
-        ResumeSymbol.BranchEnd,
-        scopeId + " " + accessor,
-      ),
-    );
+    if (resumeMarker) {
+      const branchId = peekNextScopeId();
+      $chunk.writeHTML(
+        $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + ""),
+      );
+      content(promise);
+      writeScope(scopeId, {
+        [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
+      });
+      $chunk.writeHTML(
+        $chunk.boundary.state.mark(
+          ResumeSymbol.BranchEnd,
+          scopeId + " " + accessor,
+        ),
+      );
+    } else {
+      content(promise);
+    }
     return;
   }
 
@@ -657,25 +664,29 @@ export function fork<T>(
 
         if (!boundary.signal.aborted) {
           chunk.render(() => {
-            const branchId = peekNextScopeId();
-            $chunk.writeHTML(
-              $chunk.boundary.state.mark(
-                ResumeSymbol.BranchStart,
-                branchId + "",
-              ),
-            );
-            content(value);
-            boundary.state.serializer.writeAssign(
-              writeScope(branchId, {}),
-              ensureScopeWithId(scopeId),
-              AccessorPrefix.ConditionalScope + accessor,
-            );
-            $chunk.writeHTML(
-              $chunk.boundary.state.mark(
-                ResumeSymbol.BranchEnd,
-                scopeId + " " + accessor,
-              ),
-            );
+            if (resumeMarker) {
+              const branchId = peekNextScopeId();
+              $chunk.writeHTML(
+                $chunk.boundary.state.mark(
+                  ResumeSymbol.BranchStart,
+                  branchId + "",
+                ),
+              );
+              content(value);
+              boundary.state.serializer.writeAssign(
+                writeScope(branchId, {}),
+                ensureScopeWithId(scopeId),
+                AccessorPrefix.ConditionalScope + accessor,
+              );
+              $chunk.writeHTML(
+                $chunk.boundary.state.mark(
+                  ResumeSymbol.BranchEnd,
+                  scopeId + " " + accessor,
+                ),
+              );
+            } else {
+              content(value);
+            }
           });
           boundary.endAsync(chunk);
         }

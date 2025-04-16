@@ -9,7 +9,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     _$.fork($scope1_id, "#text/0", resolveAfter("c", 2), data => {
       const $scope3_id = _$.nextScopeId();
       _$.write(_$.escapeXML(data));
-    });
+    }, 0);
     _$.write("d");
   }, $scope0_id), {
     catch: _$.attrTag({
@@ -23,6 +23,6 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.fork($scope0_id, "#text/1", resolveAfter("g", 1), data => {
     const $scope4_id = _$.nextScopeId();
     _$.write(_$.escapeXML(data));
-  });
+  }, 0);
   _$.write("h");
 });

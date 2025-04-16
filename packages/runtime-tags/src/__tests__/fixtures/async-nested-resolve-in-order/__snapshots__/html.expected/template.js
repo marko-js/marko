@@ -12,11 +12,11 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       _$.fork($scope2_id, "#text/1", resolveAfter("d", 1), result3 => {
         const $scope3_id = _$.nextScopeId();
         _$.write(_$.escapeXML(result3));
-      });
+      }, 0);
       _$.write("e");
-    });
+    }, 0);
     _$.write("f");
-  });
+  }, 0);
   _$.write("g");
   _$.fork($scope0_id, "#text/1", resolveAfter("h", 1), result4 => {
     const $scope4_id = _$.nextScopeId();
@@ -27,10 +27,10 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       _$.fork($scope5_id, "#text/1", resolveAfter("j", 1), result6 => {
         const $scope6_id = _$.nextScopeId();
         _$.write(_$.escapeXML(result6));
-      });
+      }, 0);
       _$.write("k");
-    });
+    }, 0);
     _$.write("l");
-  });
+  }, 0);
   _$.write("m");
 });

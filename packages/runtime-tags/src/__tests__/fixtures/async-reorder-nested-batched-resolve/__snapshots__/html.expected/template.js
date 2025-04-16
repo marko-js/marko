@@ -24,7 +24,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
                 _$.fork($scope9_id, "#text/0", promiseB, value => {
                   const $scope12_id = _$.nextScopeId();
                   _$.write(`<div${_$.classAttr(value)} level=4></div>`);
-                });
+                }, 0);
                 _$.resumeClosestBranch($scope9_id);
               }, $scope8_id), {
                 placeholder: _$.attrTag({
@@ -35,7 +35,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
                 })
               });
               _$.write("</div>");
-            });
+            }, 0);
             _$.resumeClosestBranch($scope7_id);
           }, $scope6_id), {
             placeholder: _$.attrTag({
@@ -62,7 +62,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
         })
       });
       _$.write("</div>");
-    });
+    }, 0);
     _$.resumeClosestBranch($scope1_id);
   }, $scope0_id), {
     placeholder: _$.attrTag({
