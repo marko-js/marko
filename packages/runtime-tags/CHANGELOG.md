@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.0.5
+
+### Patch Changes
+
+- [#2653](https://github.com/marko-js/marko/pull/2653) [`ad4998b`](https://github.com/marko-js/marko/commit/ad4998b1e62c5ae328ddb0d65f835ff02bee3864) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize bundled size of resume runtime.
+
+- [#2652](https://github.com/marko-js/marko/pull/2652) [`83c44e4`](https://github.com/marko-js/marko/commit/83c44e4220c3490ef4b8a62e2feb84fdb4d0ba01) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Micro optimize scheduler bundle size.
+
+- [#2650](https://github.com/marko-js/marko/pull/2650) [`b8ddadb`](https://github.com/marko-js/marko/commit/b8ddadbe411209e972cc4ef61dd45391f309bb17) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Optimize statically known values for delimited attr helpers (class/style) for client side rendering.
+
 ## 6.0.4
 
 ### Patch Changes
