@@ -1,4 +1,4 @@
-// size: 19177 (min) 7273 (brotli)
+// size: 19158 (min) 7262 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -775,7 +775,6 @@ function toInsertNode(startNode, endNode) {
   }
   return parent;
 }
-var pendingScopes = [];
 function createScope($global, closestBranch) {
   let scope = { m: $global.o++, p: 1, k: closestBranch, $global: $global };
   return pendingScopes.push(scope), scope;
@@ -1597,6 +1596,7 @@ var rendering,
   caughtError = new WeakSet(),
   placeholderShown = new WeakSet(),
   pendingEffects = [],
+  pendingScopes = [],
   scopeKeyOffset = 1e3;
 function queueRender(scope, signal, signalKey, value2, scopeKey = scope.m) {
   let key = scopeKey * scopeKeyOffset + signalKey,
@@ -1674,10 +1674,8 @@ function runRenders() {
     }
     render.D.k?.A || runRender(render);
   }
-  !(function () {
-    for (let scope of pendingScopes) scope.p = 0;
-    pendingScopes = [];
-  })();
+  for (let scope of pendingScopes) scope.p = 0;
+  pendingScopes = [];
 }
 var runRender = (render) => render.L(render.D, render.I),
   enableCatch = () => {
