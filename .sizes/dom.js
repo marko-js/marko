@@ -1,4 +1,4 @@
-// size: 19279 (min) 7293 (brotli)
+// size: 19177 (min) 7273 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -41,29 +41,20 @@ function stringifyStyleObject(name, value2) {
     : "";
 }
 function toDelimitedString(val, delimiter, stringify) {
-  switch (typeof val) {
-    case "string":
-      return val;
-    case "object":
-      if (null !== val) {
-        let result = "",
-          curDelimiter = "";
-        if (Array.isArray(val))
-          for (let v of val) {
-            let part = toDelimitedString(v, delimiter, stringify);
-            "" !== part &&
-              ((result += curDelimiter + part), (curDelimiter = delimiter));
-          }
-        else
-          for (let name in val) {
-            let part = stringify(name, val[name]);
-            "" !== part &&
-              ((result += curDelimiter + part), (curDelimiter = delimiter));
-          }
-        return result;
-      }
-  }
-  return "";
+  let part,
+    str = "",
+    sep = "";
+  if (val)
+    if ("object" != typeof val) str += val;
+    else if (Array.isArray(val))
+      for (let v of val)
+        (part = toDelimitedString(v, delimiter, stringify)),
+          part && ((str += sep + part), (sep = delimiter));
+    else
+      for (let name in val)
+        (part = stringify(name, val[name])),
+          part && ((str += sep + part), (sep = delimiter));
+  return str;
 }
 function isEventHandler(name) {
   return /^on[A-Z-]/.test(name);
@@ -556,9 +547,7 @@ function classAttr(element, value2) {
   setAttribute(
     element,
     "class",
-    (function (value2) {
-      return toDelimitedString(value2, " ", stringifyClassObject);
-    })(value2) || void 0,
+    toDelimitedString(value2, " ", stringifyClassObject) || void 0,
   );
 }
 function classItems(element, items) {
@@ -571,9 +560,7 @@ function styleAttr(element, value2) {
   setAttribute(
     element,
     "style",
-    (function (value2) {
-      return toDelimitedString(value2, ";", stringifyStyleObject);
-    })(value2) || void 0,
+    toDelimitedString(value2, ";", stringifyStyleObject) || void 0,
   );
 }
 function styleItems(element, items) {

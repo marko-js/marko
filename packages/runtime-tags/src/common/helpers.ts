@@ -1,13 +1,13 @@
-export function classValue(value: unknown) {
-  return toDelimitedString(value, " ", stringifyClassObject);
+export function classValue(classValue: unknown) {
+  return toDelimitedString(classValue, " ", stringifyClassObject);
 }
 
 function stringifyClassObject(name: string, value: unknown) {
   return value ? name : "";
 }
 
-export function styleValue(value: unknown) {
-  return toDelimitedString(value, ";", stringifyStyleObject);
+export function styleValue(styleValue: unknown) {
+  return toDelimitedString(styleValue, ";", stringifyStyleObject);
 }
 
 function stringifyStyleObject(name: string, value: unknown) {
@@ -27,38 +27,32 @@ function toDelimitedString(
   delimiter: string,
   stringify: (n: string, v: unknown) => string | undefined,
 ) {
-  switch (typeof val) {
-    case "string":
-      return val;
-    case "object":
-      if (val !== null) {
-        let result = "";
-        let curDelimiter = "";
-
-        if (Array.isArray(val)) {
-          for (const v of val) {
-            const part = toDelimitedString(v, delimiter, stringify);
-            if (part !== "") {
-              result += curDelimiter + part;
-              curDelimiter = delimiter;
-            }
-          }
-        } else {
-          for (const name in val) {
-            const v = (val as Record<string, unknown>)[name];
-            const part = stringify(name, v);
-            if (part !== "") {
-              result += curDelimiter + part;
-              curDelimiter = delimiter;
-            }
-          }
+  let str = "";
+  let sep = "";
+  let part: string | undefined;
+  if (val) {
+    if (typeof val !== "object") {
+      str += val;
+    } else if (Array.isArray(val)) {
+      for (const v of val) {
+        part = toDelimitedString(v, delimiter, stringify);
+        if (part) {
+          str += sep + part;
+          sep = delimiter;
         }
-
-        return result;
       }
+    } else {
+      for (const name in val) {
+        part = stringify(name, (val as Record<string, unknown>)[name]);
+        if (part) {
+          str += sep + part;
+          sep = delimiter;
+        }
+      }
+    }
   }
 
-  return "";
+  return str;
 }
 
 export function isEventHandler(name: string): name is `on${string}` {
