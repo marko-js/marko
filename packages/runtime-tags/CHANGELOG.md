@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.0.8
+
+### Patch Changes
+
+- [#2660](https://github.com/marko-js/marko/pull/2660) [`033ca6c`](https://github.com/marko-js/marko/commit/033ca6cb05b3c8d692dc507626d9ca54fabce64b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with class/style attributes that have a mix of dynamic and static properties/items.
+
+- [#2660](https://github.com/marko-js/marko/pull/2660) [`bf6a0a2`](https://github.com/marko-js/marko/commit/bf6a0a2dc8fcbd2befe067f47a57c8a9978d6d7d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove automatic appending of `px` to (some) style properties when an number was passed as the value.
+
+- [#2658](https://github.com/marko-js/marko/pull/2658) [`21049fa`](https://github.com/marko-js/marko/commit/21049fa6107de68a636e4d6567167e7c22cc0247) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with static html-script and html-style.
+
 ## 6.0.7
 
 ### Patch Changes
