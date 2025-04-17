@@ -623,7 +623,7 @@ export default {
                   );
                 } else {
                   if (meta.staticItems) {
-                    write`${getHTMLRuntime()[helper](computed)}`;
+                    write`${getHTMLRuntime()[helper](meta.staticItems)}`;
                   }
 
                   if (meta.dynamicValues) {
