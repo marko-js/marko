@@ -17,7 +17,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   }, _$.serializeGuard($serialize, 1));
   _customTag({
     style: {
-      width: 100
+      width: "100px"
     }
   });
   _customTag({

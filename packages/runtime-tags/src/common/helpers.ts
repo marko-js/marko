@@ -11,15 +11,7 @@ export function styleValue(styleValue: unknown) {
 }
 
 function stringifyStyleObject(name: string, value: unknown) {
-  return value || value === 0
-    ? `${name}:${
-        value &&
-        typeof value === "number" &&
-        !/^(--|ta|or|li|z)|cou|nk|it|ag|we|do|w$/.test(name)
-          ? value + "px"
-          : value
-      }`
-    : "";
+  return value || value === 0 ? name + ":" + value : "";
 }
 
 function toDelimitedString(
