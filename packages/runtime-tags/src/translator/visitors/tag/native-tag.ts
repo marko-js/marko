@@ -9,7 +9,6 @@ import {
 
 import { getEventHandlerName, isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
-import cssPxProps from "../../util/css-px-props";
 import evaluate from "../../util/evaluate";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import {
@@ -637,9 +636,7 @@ export default {
                           `${name}Item`,
                           nodeExpr,
                           t.stringLiteral(key),
-                          name === "style" && cssPxProps.has(name)
-                            ? callRuntime("styleItemValue", value)
-                            : value,
+                          value,
                         ),
                       );
                     } else {
@@ -647,12 +644,7 @@ export default {
                       for (const key of keys) {
                         const value = meta.dynamicValues[key];
                         props.push(
-                          t.objectProperty(
-                            toPropertyName(key),
-                            name === "style" && cssPxProps.has(name)
-                              ? callRuntime("styleItemValue", value)
-                              : value,
-                          ),
+                          t.objectProperty(toPropertyName(key), value),
                         );
                       }
 

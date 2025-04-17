@@ -76,9 +76,6 @@ export function styleItems(
 export function styleItem(element: HTMLElement, name: string, value: unknown) {
   element.style.setProperty(name, value || value === 0 ? value + "" : "");
 }
-export function styleItemValue(value: unknown) {
-  return value && typeof value === "number" ? value + "px" : value;
-}
 
 export function data(node: Text | Comment, value: unknown) {
   const normalizedValue = normalizeString(value);

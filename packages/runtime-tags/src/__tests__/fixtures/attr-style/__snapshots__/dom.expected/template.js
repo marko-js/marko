@@ -30,7 +30,7 @@ export function $setup($scope) {
   _customTag($scope["#childScope/2"]);
   _customTag($scope["#childScope/3"]);
   _customTag_input_style($scope["#childScope/2"], {
-    width: 100
+    width: "100px"
   });
   _customTag_input_style($scope["#childScope/3"], "color: green");
 }

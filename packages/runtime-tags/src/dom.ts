@@ -40,7 +40,6 @@ export {
   styleAttr,
   styleItem,
   styleItems,
-  styleItemValue,
   textContent,
 } from "./dom/dom";
 export { on } from "./dom/event";

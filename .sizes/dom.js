@@ -1,4 +1,4 @@
-// size: 19047 (min) 7207 (brotli)
+// size: 18910 (min) 7140 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -36,9 +36,7 @@ function stringifyClassObject(name, value2) {
   return value2 ? name : "";
 }
 function stringifyStyleObject(name, value2) {
-  return value2 || 0 === value2
-    ? `${name}:${value2 && "number" == typeof value2 && !/^(--|ta|or|li|z)|cou|nk|it|ag|we|do|w$/.test(name) ? value2 + "px" : value2}`
-    : "";
+  return value2 || 0 === value2 ? name + ":" + value2 : "";
 }
 function toDelimitedString(val, delimiter, stringify) {
   let part,
@@ -557,9 +555,6 @@ function styleItems(element, items) {
 }
 function styleItem(element, name, value2) {
   element.style.setProperty(name, value2 || 0 === value2 ? value2 + "" : "");
-}
-function styleItemValue(value2) {
-  return value2 && "number" == typeof value2 ? value2 + "px" : value2;
 }
 function data(node, value2) {
   let normalizedValue = normalizeString(value2);
