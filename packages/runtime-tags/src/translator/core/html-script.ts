@@ -396,9 +396,8 @@ export default {
     exit(tag) {
       const tagSection = getSection(tag);
       const tagExtra = tag.node.extra!;
-      const nodeBinding = tagExtra[kNodeBinding]!;
+      const nodeBinding = tagExtra[kNodeBinding];
       const write = writer.writeTo(tag);
-      const visitAccessor = getScopeAccessorLiteral(nodeBinding);
 
       if (isOutputHTML()) {
         for (const child of tag.node.body.body) {
@@ -435,7 +434,11 @@ export default {
             t.expressionStatement(
               callRuntime(
                 "textContent",
-                t.memberExpression(scopeIdentifier, visitAccessor, true),
+                t.memberExpression(
+                  scopeIdentifier,
+                  getScopeAccessorLiteral(nodeBinding!),
+                  true,
+                ),
                 t.templateLiteral(templateQuasis, templateExpressions),
               ),
             ),
