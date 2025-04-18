@@ -35,13 +35,13 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
     }, "__tests__/template.marko", "15:4", {
       $hoisted_el2: 0
     }));
-  }, $scope0_id), 0, _$.serializeGuard($serialize, 0));
+  }, $scope0_id), 0, _$.serializeGuard($serialize, /* input.show */0));
   _$.dynamicTag($scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.registerContent("__tests__/template.marko_4_renderer", () => {
     const $scope4_id = _$.nextScopeId();
     const el3 = _$.nodeRef();
     _$.write(`<p></p>${_$.markResumeNode($scope4_id, "#p/0")}`);
     _$.writeSubscribe($inputshowsectionnull_content_subscribers, _$.writeScope($scope4_id, {}, "__tests__/template.marko", "34:4"));
-  }, $scope0_id), 0, _$.serializeGuard($serialize, 0));
+  }, $scope0_id), 0, _$.serializeGuard($serialize, /* input.show */0));
   _$.writeEffect($scope0_id, "__tests__/template.marko_0");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_$hoisted_el3");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_$hoisted_el");

@@ -9,17 +9,17 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   _layout({
     content: _$.createContent("__tests__/template.marko_1_renderer", () => {
       const $scope1_id = _$.nextScopeId();
-      _$.write(`<h1>Hello ${_$.commentSeparator(_$.serializeGuard($serialize, 0))}${_$.escapeXML(name)}${_$.markResumeNode($scope1_id, "#text/0", _$.serializeGuard($serialize, 0))}</h1>`);
-      _$.serializeGuard($serialize, 0) && _$.writeSubscribe($name_closures, _$.writeScope($scope1_id, {
+      _$.write(`<h1>Hello ${_$.commentSeparator(_$.serializeGuard($serialize, /* name */0))}${_$.escapeXML(name)}${_$.markResumeNode($scope1_id, "#text/0", _$.serializeGuard($serialize, /* name */0))}</h1>`);
+      _$.serializeGuard($serialize, /* name */0) && _$.writeSubscribe($name_closures, _$.writeScope($scope1_id, {
         _: _$.ensureScopeWithId($scope0_id),
-        "ClosureSignalIndex:name": _$.serializeIf($serialize, 0) && 0
+        "ClosureSignalIndex:name": _$.serializeIf($serialize, /* input.name */0) && 0
       }, "__tests__/template.marko", "2:2"));
       _$.resumeClosestBranch($scope1_id);
     })
   });
   _$.writeScope($scope0_id, {
     name,
-    "ClosureScopes:name": _$.serializeIf($serialize, 0) && $name_closures
+    "ClosureScopes:name": _$.serializeIf($serialize, /* input.name */0) && $name_closures
   }, "__tests__/template.marko", 0, {
     name: "1:10"
   });

@@ -36,7 +36,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
     _$.writeSubscribe($inputshowThingnull_content_subscribers, _$.writeScope($scope2_id, {
       "ClosureScopes:3": $thing_content2_subscribers
     }, "__tests__/template.marko", "15:4"));
-  }, $scope0_id), 0, _$.serializeGuard($serialize, 0));
+  }, $scope0_id), 0, _$.serializeGuard($serialize, /* input.show */0));
   _$.dynamicTag($scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.registerContent("__tests__/template.marko_4_renderer", () => {
     const $scope4_id = _$.nextScopeId();
     const setHtml3 = _child({});
@@ -45,7 +45,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
     }, "__tests__/template.marko", "26:4", {
       setHtml3: "27:10"
     }));
-  }, $scope0_id), 0, _$.serializeGuard($serialize, 0));
+  }, $scope0_id), 0, _$.serializeGuard($serialize, /* input.show */0));
   _$.writeEffect($scope0_id, "__tests__/template.marko_0");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml");
   _$.writeScope($scope0_id, {

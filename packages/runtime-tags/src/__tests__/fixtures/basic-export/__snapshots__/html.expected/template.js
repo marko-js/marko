@@ -5,6 +5,6 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   const {
     value
   } = input;
-  _$.write(`<div>${_$.escapeXML(value)}${_$.markResumeNode($scope0_id, "#text/0", _$.serializeGuard($serialize, 0))}</div>`);
-  _$.serializeGuard($serialize, 0) && _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+  _$.write(`<div>${_$.escapeXML(value)}${_$.markResumeNode($scope0_id, "#text/0", _$.serializeGuard($serialize, /* value */0))}</div>`);
+  _$.serializeGuard($serialize, /* value */0) && _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 });

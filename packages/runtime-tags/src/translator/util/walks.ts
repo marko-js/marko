@@ -7,6 +7,7 @@ import normalizeStringExpression, {
   appendLiteral,
 } from "./normalize-string-expression";
 import { createSectionState } from "./state";
+import { withLeadingComment } from "./with-comment";
 import { writeTo } from "./writer";
 
 const [getWalks] = createSectionState<(string | t.Expression)[]>(
@@ -194,12 +195,7 @@ export function getWalkString(section: Section) {
   const walks = getWalks(section);
   const walkLiteral = normalizeStringExpression([prefix, ...walks, postfix]);
   if (walkLiteral && (walkLiteral as t.StringLiteral).value !== "") {
-    walkLiteral.leadingComments = [
-      {
-        type: "CommentBlock",
-        value: " " + getWalkComment(section).join(", ") + " ",
-      } as t.CommentBlock,
-    ] as const;
+    withLeadingComment(walkLiteral, getWalkComment(section).join(", "));
   }
   return walkLiteral;
 }

@@ -7,7 +7,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     const $scope1_id = _$.nextScopeId();
     _$.write("<div></div>");
     _$.writeScope($scope1_id, {}, "__tests__/template.marko", "3:4");
-  }, 0, $scope0_id, "#div/0", 1, 1, 1);
+  }, 0, $scope0_id, "#div/0", /* state: children */1, /* state: children, children.length */1, 1);
   _$.write("</div>");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_children");
   _$.writeScope($scope0_id, {

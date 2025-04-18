@@ -27,11 +27,11 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   _customTag({
     thing: $thing
   }, {
-    0: _$.serializeGuard($serialize, 0),
-    1: _$.serializeGuard($serialize, 0),
-    2: _$.serializeGuard($serialize, 0)
+    /* input.thing.x, input.thing.content */0: _$.serializeGuard($serialize, /* x */0),
+    /* input.thing.x */1: _$.serializeGuard($serialize, /* x */0),
+    /* input.thing.content */2: _$.serializeGuard($serialize, /* x */0)
   });
-  _$.serializeGuard($serialize, 0) && _$.writeScope($scope0_id, {
-    "#childScope/0": _$.serializeIf($serialize, 0) && _$.writeExistingScope($childScope)
+  _$.serializeGuard($serialize, /* x */0) && _$.writeScope($scope0_id, {
+    "#childScope/0": _$.serializeIf($serialize, /* input.x */0) && _$.writeExistingScope($childScope)
   }, "__tests__/template.marko", 0);
 });

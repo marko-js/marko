@@ -17,13 +17,13 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
           _$.writeScope($scope2_id, {}, "__tests__/template.marko", "2:4");
           return 0;
         }
-      }, $scope1_id, "#text/0", 1, _$.serializeGuard($serialize, 0));
+      }, $scope1_id, "#text/0", 1, _$.serializeGuard($serialize, /* input.show */0));
       _$.writeScope($scope1_id, {
-        _: _$.serializeIf($serialize, 0) && _$.ensureScopeWithId($scope0_id)
+        _: _$.serializeIf($serialize, /* input.show */0) && _$.ensureScopeWithId($scope0_id)
       }, "__tests__/template.marko", "1:2");
       return 0;
     }
-  }, $scope0_id, "#text/0", 1, _$.serializeGuard($serialize, 0));
+  }, $scope0_id, "#text/0", 1, _$.serializeGuard($serialize, /* input.show */0));
   const $childScope = _$.peekNextScopeId();
   _child({
     value: $hoisted_el
@@ -40,7 +40,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   }, $scope0_id, "#text/2", 1, 0);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0");
   _$.writeScope($scope0_id, {
-    input_show: _$.serializeIf($serialize, 0) && input.show,
+    input_show: _$.serializeIf($serialize, /* input.show */0) && input.show,
     "#childScope/1": _$.writeExistingScope($childScope)
   }, "__tests__/template.marko", 0, {
     input_show: ["input.show"]

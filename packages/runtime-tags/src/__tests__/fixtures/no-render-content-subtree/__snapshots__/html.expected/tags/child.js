@@ -11,7 +11,7 @@ export default _$.createTemplate("__tests__/tags/child.marko", (input, $serializ
   _$.writeScope($scope0_id, {
     input,
     x,
-    "#childScope/0": _$.serializeIf($serialize, 0) && _$.writeExistingScope($childScope)
+    "#childScope/0": _$.serializeIf($serialize, /* input.foo */0) && _$.writeExistingScope($childScope)
   }, "__tests__/tags/child.marko", 0, {
     input: 0,
     x: "1:10"

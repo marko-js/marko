@@ -3,7 +3,13 @@ import { getProgram } from "@marko/compiler/babel-utils";
 
 import { getSharedUid, usedSharedUid } from "../../util/generate-uid";
 import isStatic from "../../util/is-static";
-import { getReadReplacement, isRegisteredFnExtra } from "../../util/references";
+import { mapToString } from "../../util/optional";
+import {
+  getDebugName,
+  getInputDebugName,
+  getReadReplacement,
+  isRegisteredFnExtra,
+} from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import { getScopeIdIdentifier } from "../../util/sections";
 import type {
@@ -14,6 +20,7 @@ import { writeHTMLResumeStatements } from "../../util/signals";
 import { simplifyFunction } from "../../util/simplify-fn";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
+import { withLeadingComment } from "../../util/with-comment";
 import { flushInto } from "../../util/writer";
 import { type InputSerializeReason, resolveSerializeReasonId } from ".";
 
@@ -30,7 +37,12 @@ export function getSerializeGuard(
     : reason === true || reason.state
       ? optional
         ? undefined
-        : t.numericLiteral(1)
+        : reason === true
+          ? t.numericLiteral(1)
+          : withLeadingComment(
+              t.numericLiteral(1),
+              `state: ${mapToString(reason.state, ", ", getDebugName)}`,
+            )
       : getInputSerializeReasonGuard(reason.input!);
 }
 
@@ -49,7 +61,12 @@ export function getSerializeGuardForAny(
   let expr!: t.Expression;
   for (const reason of reasons) {
     if (reason.state) {
-      return optional ? undefined : t.numericLiteral(1);
+      return optional
+        ? undefined
+        : withLeadingComment(
+            t.numericLiteral(1),
+            `state: ${mapToString(reason.state, ", ", getDebugName)}`,
+          );
     }
 
     const guard = getSerializeGuard(reason, false)!;
@@ -72,11 +89,14 @@ export function getExprIfSerialized<
             callRuntime(
               "serializeIf",
               t.identifier(getSharedUid("serialize")),
-              t.numericLiteral(
-                resolveSerializeReasonId(
-                  getProgram().node.extra.inputSerializeReasons!,
-                  reason.input!,
+              withLeadingComment(
+                t.numericLiteral(
+                  resolveSerializeReasonId(
+                    getProgram().node.extra.inputSerializeReasons!,
+                    reason.input!,
+                  ),
                 ),
+                mapToString(reason.input!, ", ", getInputDebugName),
               ),
             ),
             expr,
@@ -89,11 +109,14 @@ function getInputSerializeReasonGuard(reason: InputSerializeReason) {
   return callRuntime(
     "serializeGuard",
     t.identifier(getSharedUid("serialize")),
-    t.numericLiteral(
-      resolveSerializeReasonId(
-        getProgram().node.extra.inputSerializeReasons!,
-        reason,
+    withLeadingComment(
+      t.numericLiteral(
+        resolveSerializeReasonId(
+          getProgram().node.extra.inputSerializeReasons!,
+          reason,
+        ),
       ),
+      mapToString(reason, ",", getDebugName),
     ),
   );
 }

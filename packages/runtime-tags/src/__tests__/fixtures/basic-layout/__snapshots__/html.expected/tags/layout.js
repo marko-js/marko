@@ -5,7 +5,7 @@ export default _$.createTemplate("__tests__/tags/layout.marko", (input, $seriali
     content
   } = input;
   _$.write("<body>");
-  _$.dynamicTag($scope0_id, "#text/0", content, {}, 0, 0, _$.serializeGuard($serialize, 0));
+  _$.dynamicTag($scope0_id, "#text/0", content, {}, 0, 0, _$.serializeGuard($serialize, /* content */0));
   _$.writeTrailers("</body>");
-  _$.serializeGuard($serialize, 0) && _$.writeScope($scope0_id, {}, "__tests__/tags/layout.marko", 0);
+  _$.serializeGuard($serialize, /* content */0) && _$.writeScope($scope0_id, {}, "__tests__/tags/layout.marko", 0);
 });

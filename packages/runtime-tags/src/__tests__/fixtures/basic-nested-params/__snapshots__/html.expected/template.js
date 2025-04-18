@@ -25,8 +25,8 @@ export default _$.createTemplate("__tests__/template.marko", input => {
           _$.resumeClosestBranch($scope2_id);
         }, $scope1_id)
       }, {
-        0: 1,
-        2: 1
+        /* input.content, input.value */0: 1,
+        /* input.value */2: 1
       });
       _$.writeSubscribe($y_closures, _$.writeScope($scope1_id, {
         outer,
@@ -40,8 +40,8 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       _$.resumeClosestBranch($scope1_id);
     }, $scope0_id)
   }, {
-    0: 1,
-    2: 1
+    /* input.content, input.value */0: 1,
+    /* input.value */2: 1
   });
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_x");
   _$.writeScope($scope0_id, {

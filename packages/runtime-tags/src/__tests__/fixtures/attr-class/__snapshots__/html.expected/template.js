@@ -9,14 +9,14 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   _$.write(`<div${_$.classAttr(["a", {
     b: c,
     d
-  }])}></div>${_$.markResumeNode($scope0_id, "#div/0", _$.serializeGuard($serialize, 2))}<div class="a b"></div><div class="a b c"></div>`);
+  }])}></div>${_$.markResumeNode($scope0_id, "#div/0", _$.serializeGuard($serialize, /* c,d */2))}<div class="a b"></div><div class="a b c"></div>`);
   const $childScope = _$.peekNextScopeId();
   _customTag({
     class: ["a", {
       b: c,
       d
     }]
-  }, _$.serializeGuard($serialize, 2));
+  }, _$.serializeGuard($serialize, /* c,d */2));
   _customTag({
     class: ["a", false, "b"]
   });
@@ -35,12 +35,12 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
         _$.write("Hello");
       }, $scope0_id)
     })
-  }, 0, 0, _$.serializeGuard($serialize, 3));
-  _$.serializeGuard($serialize, 3) && _$.writeScope($scope0_id, {
-    input_test: _$.serializeIf($serialize, 2) && input.test,
-    c: _$.serializeIf($serialize, 1) && c,
-    d: _$.serializeIf($serialize, 0) && d,
-    "#childScope/1": _$.serializeIf($serialize, 2) && _$.writeExistingScope($childScope)
+  }, 0, 0, _$.serializeGuard($serialize, /* input.test,c,d */3));
+  _$.serializeGuard($serialize, /* input.test,c,d */3) && _$.writeScope($scope0_id, {
+    input_test: _$.serializeIf($serialize, /* input.c, input.d */2) && input.test,
+    c: _$.serializeIf($serialize, /* input.test, input.d */1) && c,
+    d: _$.serializeIf($serialize, /* input.test, input.c */0) && d,
+    "#childScope/1": _$.serializeIf($serialize, /* input.c, input.d */2) && _$.writeExistingScope($childScope)
   }, "__tests__/template.marko", 0, {
     input_test: ["input.test"],
     c: "2:10",

@@ -4,6 +4,6 @@ export default _$.createTemplate("__tests__/tags/child1.marko", (input, $seriali
   const {
     value
   } = input;
-  _$.write(`<div>Child 1 has ${_$.commentSeparator(_$.serializeGuard($serialize, 0))}${_$.escapeXML(value)}${_$.markResumeNode($scope0_id, "#text/0", _$.serializeGuard($serialize, 0))}</div>`);
-  _$.serializeGuard($serialize, 0) && _$.writeScope($scope0_id, {}, "__tests__/tags/child1.marko", 0);
+  _$.write(`<div>Child 1 has ${_$.commentSeparator(_$.serializeGuard($serialize, /* value */0))}${_$.escapeXML(value)}${_$.markResumeNode($scope0_id, "#text/0", _$.serializeGuard($serialize, /* value */0))}</div>`);
+  _$.serializeGuard($serialize, /* value */0) && _$.writeScope($scope0_id, {}, "__tests__/tags/child1.marko", 0);
 });

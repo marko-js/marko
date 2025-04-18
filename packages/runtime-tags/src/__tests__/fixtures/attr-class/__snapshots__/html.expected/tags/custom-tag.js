@@ -4,6 +4,6 @@ export default _$.createTemplate("__tests__/tags/custom-tag.marko", (input, $ser
   const {
     class: className
   } = input;
-  _$.write(`<div${_$.classAttr(className)}></div>${_$.markResumeNode($scope0_id, "#div/0", _$.serializeGuard($serialize, 0))}`);
-  _$.serializeGuard($serialize, 0) && _$.writeScope($scope0_id, {}, "__tests__/tags/custom-tag.marko", 0);
+  _$.write(`<div${_$.classAttr(className)}></div>${_$.markResumeNode($scope0_id, "#div/0", _$.serializeGuard($serialize, /* className */0))}`);
+  _$.serializeGuard($serialize, /* className */0) && _$.writeScope($scope0_id, {}, "__tests__/tags/custom-tag.marko", 0);
 });

@@ -19,13 +19,14 @@ import {
   type AttrTagLookup,
   getAttrTagIdentifier,
 } from "../../util/nested-attribute-tags";
-import { filterMap, fromIter } from "../../util/optional";
+import { filterMap, fromIter, mapToString } from "../../util/optional";
 import {
   type Binding,
   BindingType,
   createBinding,
   dropReferences,
   getAllTagReferenceNodes,
+  getInputDebugName,
   getScopeAccessorLiteral,
   type InputBinding,
   mergeReferences,
@@ -68,6 +69,7 @@ import {
 import translateVar from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
+import { withLeadingComment } from "../../util/with-comment";
 import * as writer from "../../util/writer";
 import {
   type InputSerializeReason,
@@ -294,9 +296,13 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         );
         if (reason) {
           hasDynamicReasons ||= reason !== true && !reason.state;
+          const childReason = childExtra.inputSerializeReasons![i];
           props.push(
             t.objectProperty(
-              t.numericLiteral(i),
+              withLeadingComment(
+                t.numericLiteral(i),
+                mapToString(childReason, ", ", getInputDebugName),
+              ),
               reason === true || reason.state
                 ? t.numericLiteral(1)
                 : getSerializeGuard(reason, false)!,
