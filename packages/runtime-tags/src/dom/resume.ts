@@ -29,7 +29,7 @@ interface RenderData {
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
 const registeredValues: Record<string, unknown> = {};
-export let branchesEnabled: undefined | 1;
+let branchesEnabled: undefined | 1;
 export function enableBranches() {
   branchesEnabled = 1;
 }
@@ -60,107 +60,150 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
           renders[renderId] || renders(renderId));
         const walk = render.w;
         const commentPrefixLen = render.i.length;
-        const branchStack: number[] = [];
         const scopeLookup: Record<string | number, Scope> = (render.s = {});
         const serializeContext: Record<string, unknown> = {
           _: registeredValues,
         };
-        const branchIds = new Set<number>();
-        const parentBranchIds = new Map<number, number>();
-        const branchEnd = (branchId: number, reference: ChildNode) => {
-          const branch = (scopeLookup[branchId] ||=
-            {} as BranchScope) as BranchScope;
-          let endNode = reference;
-          let prevNode: ChildNode | null;
+        const branches =
+          branchesEnabled &&
+          (() => {
+            const branchStack: number[] = [];
+            const branchIds = new Set<number>();
+            const parentBranchIds = new Map<number, number>();
+            let lastEndNode: ChildNode | undefined;
+            let currentBranchId: number | undefined;
+            const endBranch = (branchId: number, reference: ChildNode) => {
+              const branch = (scopeLookup[branchId] ||=
+                {} as BranchScope) as BranchScope;
+              let endNode = reference;
+              let prevNode: ChildNode | null;
 
-          while (
-            (prevNode = endNode.previousSibling) !== branch.___startNode &&
-            ~visits.indexOf((endNode = prevNode as Comment))
-          );
+              while (
+                (prevNode = endNode.previousSibling) !== branch.___startNode &&
+                ~visits.indexOf((endNode = prevNode as Comment))
+              );
 
-          branch.___endNode = lastEndNode =
-            endNode === lastEndNode
-              ? reference.parentNode!.insertBefore(new Text(), reference)
-              : endNode;
-          branch.___startNode ||= lastEndNode;
+              branch.___endNode = lastEndNode =
+                endNode === lastEndNode
+                  ? reference.parentNode!.insertBefore(new Text(), reference)
+                  : endNode;
+              branch.___startNode ||= lastEndNode;
 
-          branchIds.add(branchId);
-          return branch;
-        };
-        let currentBranchId: number | undefined;
+              branchIds.add(branchId);
+              return branch;
+            };
+
+            return {
+              ___visit() {
+                if (visitToken === ResumeSymbol.BranchStart) {
+                  if (currentBranchId && visitDataIndex) {
+                    endBranch(currentBranchId, visit);
+                    currentBranchId = branchStack.pop();
+                  }
+                  if (currentBranchId) {
+                    branchStack.push(currentBranchId);
+                    parentBranchIds!.set(scopeId, currentBranchId);
+                  }
+                  currentBranchId = scopeId;
+                  (visitScope as BranchScope).___startNode = visit;
+                } else if (visitToken === ResumeSymbol.BranchEnd) {
+                  const curParent = visit.parentNode!;
+                  const startNode = endBranch(
+                    currentBranchId!,
+                    visit,
+                  ).___startNode;
+                  visitScope[visitData] = visit;
+
+                  if (curParent !== startNode.parentNode) {
+                    curParent.prepend(startNode);
+                  }
+                  currentBranchId = branchStack.pop();
+                } else {
+                  /**
+                   * visitToken === ResumeSymbol.BranchSingleNode ||
+                   * visitToken === ResumeSymbol.BranchSingleNodeOnlyChildInParent
+                   */
+                  let next = visitData.indexOf(" ");
+                  let curNode: ChildNode = visit;
+                  visitScope[~next ? visitData.slice(0, next) : visitData] =
+                    visitToken ===
+                    ResumeSymbol.BranchSingleNodeOnlyChildInParent
+                      ? visit.parentNode
+                      : visit;
+                  while (~next) {
+                    const start = next + 1;
+                    next = visitData.indexOf(" ", start);
+                    const childScopeId = +visitData.slice(
+                      start,
+                      ~next ? next : visitData.length,
+                    );
+                    curNode = endBranch(childScopeId, curNode).___endNode;
+                    parentBranchIds.set(childScopeId, scopeId);
+                  }
+                }
+              },
+              ___scope(scope: Scope) {
+                const parentBranchId =
+                  (scope[AccessorProp.ClosestBranchId] as number | undefined) ||
+                  parentBranchIds.get(scopeId);
+                if (parentBranchId) {
+                  scope.___closestBranch = scopeLookup[
+                    parentBranchId
+                  ] as BranchScope;
+                }
+
+                if (branchIds.has(scopeId)) {
+                  const branch = scope as BranchScope;
+                  const parentBranch = branch.___closestBranch;
+
+                  scope.___closestBranch = branch;
+                  if (parentBranch) {
+                    branch.___parentBranch = parentBranch;
+                    (parentBranch.___branchScopes ||= new Set()).add(branch);
+                  }
+                }
+              },
+            };
+          })();
         let $global: Scope["$global"] | undefined;
         let lastScopeId = 0;
         let lastEffect: string | undefined;
-        let lastEndNode: ChildNode | undefined;
         let visits: RenderData["v"];
         let resumes: NonNullable<RenderData["r"]>;
+        let scopeId: number;
+        let visit: Comment;
+        let visitText: string;
+        let visitData: string;
+        let visitDataIndex: number;
+        let visitToken: ResumeSymbol;
+        let visitScope: Scope;
         render.w = () => {
           try {
             walk();
             isResuming = 1;
 
-            for (const visit of (visits = render.v)) {
-              const commentText = visit.data!;
-              const dataIndex = commentText.indexOf(" ") + 1;
-              const scopeId = +commentText.slice(
+            for (visit of (visits = render.v)) {
+              visitText = visit.data!;
+              visitDataIndex = visitText.indexOf(" ") + 1;
+              scopeId = +visitText.slice(
                 commentPrefixLen + 1,
-                dataIndex ? dataIndex - 1 : commentText.length,
+                visitDataIndex ? visitDataIndex - 1 : visitText.length,
               );
-              const scope = (scopeLookup[scopeId] ||= {
+              visitData = visitDataIndex ? visitText.slice(visitDataIndex) : "";
+              visitToken = visitText[commentPrefixLen] as ResumeSymbol;
+              visitScope = scopeLookup[scopeId] ||= {
                 ___id: scopeId,
-              } as Scope);
-              const data = dataIndex ? commentText.slice(dataIndex) : "";
-              const token = commentText[commentPrefixLen];
+              } as Scope;
 
               // TODO: switch?
-              if (token === ResumeSymbol.Node) {
+              if (visitToken === ResumeSymbol.Node) {
                 // TODO: could we use attr marker?
-                const node = (scope[data] = visit.previousSibling);
-                scope[AccessorPrefix.Getter + data] = () => node;
-              } else if (branchesEnabled) {
-                if (token === ResumeSymbol.BranchStart) {
-                  if (currentBranchId && dataIndex) {
-                    branchEnd(currentBranchId, visit);
-                    currentBranchId = branchStack.pop();
-                  }
-                  if (currentBranchId) {
-                    branchStack.push(currentBranchId);
-                    parentBranchIds.set(scopeId, currentBranchId);
-                  }
-                  currentBranchId = scopeId;
-                  (scope as BranchScope).___startNode = visit;
-                } else if (token === ResumeSymbol.BranchEnd) {
-                  scope[data] = visit;
-                  const curParent = visit.parentNode!;
-                  const startNode = branchEnd(
-                    currentBranchId!,
-                    visit,
-                  ).___startNode;
-                  if (curParent !== startNode.parentNode) {
-                    curParent.prepend(startNode);
-                  }
-                  currentBranchId = branchStack.pop();
-                } else if (
-                  token === ResumeSymbol.BranchSingleNode ||
-                  token === ResumeSymbol.BranchSingleNodeOnlyChildInParent
-                ) {
-                  let next = data.indexOf(" ");
-                  let curNode: ChildNode = visit;
-                  scope[~next ? data.slice(0, next) : data] =
-                    token === ResumeSymbol.BranchSingleNodeOnlyChildInParent
-                      ? visit.parentNode
-                      : visit;
-                  while (~next) {
-                    const start = next + 1;
-                    next = data.indexOf(" ", start);
-                    const childScopeId = +data.slice(
-                      start,
-                      ~next ? next : data.length,
-                    );
-                    curNode = branchEnd(childScopeId, curNode).___endNode;
-                    parentBranchIds.set(childScopeId, scopeId);
-                  }
-                }
+                visitScope[AccessorPrefix.Getter + visitData] = (
+                  (node) => () =>
+                    node
+                )((visitScope[visitData] = visit.previousSibling));
+              } else if (branches) {
+                branches.___visit();
               }
             }
 
@@ -182,40 +225,18 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   } else if (typeof scope === "number") {
                     lastScopeId += scope;
                   } else {
-                    const scopeId = ++lastScopeId;
-                    const prevScope = scopeLookup[scopeId];
+                    scopeId = ++lastScopeId;
                     scope.$global = $global;
                     scope.___id = scopeId;
-                    if (prevScope !== scope) {
+                    if (scopeLookup[scopeId] !== scope) {
                       scopeLookup[scopeId] = Object.assign(
                         scope,
-                        prevScope,
+                        scopeLookup[scopeId],
                       ) as Scope;
                     }
 
-                    if (branchesEnabled) {
-                      const parentBranchId =
-                        (scope[AccessorProp.ClosestBranchId] as
-                          | number
-                          | undefined) || parentBranchIds.get(scopeId);
-                      if (parentBranchId) {
-                        scope.___closestBranch = scopeLookup[
-                          parentBranchId
-                        ] as BranchScope;
-                      }
-
-                      if (branchIds.has(scopeId)) {
-                        const branch = scope as BranchScope;
-                        const parentBranch = branch.___closestBranch;
-
-                        scope.___closestBranch = branch;
-                        if (parentBranch) {
-                          branch.___parentBranch = parentBranch;
-                          (parentBranch.___branchScopes ||= new Set()).add(
-                            branch,
-                          );
-                        }
-                      }
+                    if (branches) {
+                      branches.___scope(scope);
                     }
 
                     if (MARKO_DEBUG) {
