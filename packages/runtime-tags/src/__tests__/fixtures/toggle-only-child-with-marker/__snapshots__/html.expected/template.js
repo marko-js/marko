@@ -9,8 +9,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
       _$.serializeGuard($serialize, /* input.show */0) && _$.writeScope($scope1_id, {}, "__tests__/template.marko", "2:4");
       return 0;
     }
-  }, $scope0_id, "#button/0", _$.serializeGuard($serialize, /* input.show */0), 1, 1);
-  _$.write("</button>");
+  }, $scope0_id, "#button/0", _$.serializeGuard($serialize, /* input.show */0), 1, "</button>");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0");
   _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 });

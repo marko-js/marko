@@ -13,8 +13,8 @@ import { getParentTag } from "../util/get-parent-tag";
 import { getTagName } from "../util/get-tag-name";
 import { isConditionTag, isCoreTagName } from "../util/is-core-tag";
 import {
+  getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
-  isOnlyChildInParent,
 } from "../util/is-only-child-in-parent";
 import { addSorted } from "../util/optional";
 import {
@@ -53,7 +53,7 @@ import {
   getSerializeGuard,
   getSerializeGuardForAny,
 } from "../visitors/program/html";
-import { kSkipMark } from "../visitors/tag/native-tag";
+import { kSkipEndTag } from "../visitors/tag/native-tag";
 
 const BRANCHES_LOOKUP = new WeakMap<
   t.NodePath<t.MarkoTag>,
@@ -110,7 +110,7 @@ export const IfTag = {
         const tagBody = tag.get("body");
         const bodySection = getSectionForBody(tagBody);
 
-        if (isRoot(tag) && !isOnlyChildInParent(tag)) {
+        if (isRoot(tag) && !getOnlyChildParentTagName(tag)) {
           walks.visit(tag, WalkCode.Replace);
           walks.enterShallow(tag);
         }
@@ -142,7 +142,7 @@ export const IfTag = {
             ifTag,
             ifTagSection,
           );
-          const onlyChildInParentOptimization = isOnlyChildInParent(ifTag);
+          const onlyChildParentTagName = getOnlyChildParentTagName(ifTag);
           const markerSerializeReason = getBindingSerializeReason(
             ifTagSection,
             nodeBinding,
@@ -199,53 +199,38 @@ export const IfTag = {
           }
 
           if (branchSerializeReasons) {
-            if (onlyChildInParentOptimization && markerSerializeReason) {
-              getParentTag(ifTag)!.node.extra![kSkipMark] = true;
+            const skipParentEnd =
+              onlyChildParentTagName && markerSerializeReason;
+            if (skipParentEnd) {
+              getParentTag(ifTag)!.node.extra![kSkipEndTag] = true;
             }
 
+            const markerSerializeArg = getSerializeGuard(
+              markerSerializeReason,
+              !skipParentEnd,
+            );
             const cbNode = t.arrowFunctionExpression(
               [],
               t.blockStatement([statement!]),
             );
 
-            if (singleNodeOptimization) {
-              const markerSerializeArg = getSerializeGuard(
-                markerSerializeReason,
-                !onlyChildInParentOptimization,
-              );
-              statement = t.expressionStatement(
-                callRuntime(
-                  "resumeSingleNodeConditional",
-                  cbNode,
-                  getScopeIdIdentifier(ifTagSection),
-                  getScopeAccessorLiteral(nodeBinding),
-                  getSerializeGuardForAny(
-                    branchSerializeReasons,
-                    !markerSerializeArg,
-                  ),
-                  markerSerializeArg,
-                  onlyChildInParentOptimization && t.numericLiteral(1),
+            statement = t.expressionStatement(
+              callRuntime(
+                singleNodeOptimization
+                  ? "resumeSingleNodeConditional"
+                  : "resumeConditional",
+                cbNode,
+                getScopeIdIdentifier(ifTagSection),
+                getScopeAccessorLiteral(nodeBinding),
+                getSerializeGuardForAny(
+                  branchSerializeReasons,
+                  !markerSerializeArg,
                 ),
-              );
-            } else {
-              const markerSerializeArg = getSerializeGuard(
-                markerSerializeReason,
-                true,
-              );
-              statement = t.expressionStatement(
-                callRuntime(
-                  "resumeConditional",
-                  cbNode,
-                  getScopeIdIdentifier(ifTagSection),
-                  getScopeAccessorLiteral(nodeBinding),
-                  getSerializeGuardForAny(
-                    branchSerializeReasons,
-                    !markerSerializeArg,
-                  ),
-                  markerSerializeArg,
-                ),
-              );
-            }
+                markerSerializeArg,
+                skipParentEnd &&
+                  t.stringLiteral(`</${onlyChildParentTagName}>`),
+              ),
+            );
           }
 
           nextTag.insertBefore(statement!);
@@ -263,7 +248,7 @@ export const IfTag = {
           setSectionParentIsOwner(bodySection, true);
         }
 
-        if (isRoot(tag) && !isOnlyChildInParent(tag)) {
+        if (isRoot(tag) && !getOnlyChildParentTagName(tag)) {
           walks.visit(tag, WalkCode.Replace);
           walks.enterShallow(tag);
         }

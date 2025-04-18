@@ -25,7 +25,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       const el3 = _$.nodeRef();
       _$.write(`<li${_$.attr("data-index", i * 4 + j)}></li>${_$.markResumeNode($scope4_id, "#li/0")}`);
       _$.writeScope($scope4_id, {}, "__tests__/template.marko", "30:4");
-    }, 0, $scope3_id, "#ul/0", 1, 0, 1);
+    }, 0, $scope3_id, "#ul/0", 1, 0);
     _$.write("</ul>");
     _$.writeScope($scope3_id, {}, "__tests__/template.marko", "28:2");
   }, 0, $scope0_id, "#text/2", 1, 0);
