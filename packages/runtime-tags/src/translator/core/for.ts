@@ -12,8 +12,8 @@ import { getAccessorPrefix } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import {
+  getOnlyChildParentTagName,
   getOptimizedOnlyChildNodeBinding,
-  isOnlyChildInParent,
 } from "../util/is-only-child-in-parent";
 import {
   BindingType,
@@ -49,7 +49,7 @@ import { translateByTarget } from "../util/visitors";
 import * as walks from "../util/walks";
 import * as writer from "../util/writer";
 import { getSerializeGuard } from "../visitors/program/html";
-import { kSkipMark } from "../visitors/tag/native-tag";
+import { kSkipEndTag } from "../visitors/tag/native-tag";
 
 type ForType = "in" | "of" | "to";
 
@@ -129,7 +129,7 @@ export default {
 
         setSectionParentIsOwner(bodySection, true);
 
-        if (!isOnlyChildInParent(tag)) {
+        if (!getOnlyChildParentTagName(tag)) {
           walks.visit(tag, WalkCode.Replace);
           walks.enterShallow(tag);
         }
@@ -143,7 +143,7 @@ export default {
         const tagSection = getSection(tag);
         const bodySection = getSectionForBody(tagBody)!;
         const { node } = tag;
-        const onlyChildInParentOptimization = isOnlyChildInParent(tag);
+        const onlyChildParentTagName = getOnlyChildParentTagName(tag);
         const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
         const forAttrs = getKnownAttrValues(node);
         const forType = getForType(node)!;
@@ -179,13 +179,10 @@ export default {
         );
 
         if (branchSerializeReason) {
-          if (markerSerializeReason && onlyChildInParentOptimization) {
-            getParentTag(tag)!.node.extra![kSkipMark] = true;
-          }
-
+          const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
           const markerSerializeArg = getSerializeGuard(
             markerSerializeReason,
-            !onlyChildInParentOptimization,
+            !skipParentEnd,
           );
 
           forTagArgs.push(
@@ -196,8 +193,9 @@ export default {
             markerSerializeArg,
           );
 
-          if (onlyChildInParentOptimization) {
-            forTagArgs.push(t.numericLiteral(1));
+          if (skipParentEnd) {
+            getParentTag(tag)!.node.extra![kSkipEndTag] = true;
+            forTagArgs.push(t.stringLiteral(`</${onlyChildParentTagName}>`));
           }
         }
 
@@ -224,7 +222,7 @@ export default {
 
         setSectionParentIsOwner(bodySection, true);
 
-        if (!isOnlyChildInParent(tag)) {
+        if (!getOnlyChildParentTagName(tag)) {
           walks.visit(tag, WalkCode.Replace);
           walks.enterShallow(tag);
         }

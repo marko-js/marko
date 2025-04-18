@@ -60,7 +60,7 @@ import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../program";
 
 export const kNativeTagBinding = Symbol("native tag binding");
-export const kSkipMark = Symbol("skip native tag mark");
+export const kSkipEndTag = Symbol("skip native tag mark");
 const kGetterId = Symbol("node getter id");
 
 const htmlSelectArgs = new WeakMap<
@@ -74,7 +74,7 @@ const htmlSelectArgs = new WeakMap<
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     [kNativeTagBinding]?: Binding;
-    [kSkipMark]?: true;
+    [kSkipEndTag]?: true;
     [kGetterId]?: string;
   }
 }
@@ -439,7 +439,10 @@ export default {
         }
 
         if (selectArgs) {
-          writer.writeTo(tag)`</${tag.node.name}>`;
+          if (!tagExtra[kSkipEndTag]) {
+            writer.writeTo(tag)`</${tag.node.name}>`;
+          }
+
           writer.flushInto(tag);
           tag.insertBefore(
             t.expressionStatement(
@@ -461,11 +464,11 @@ export default {
         }
 
         const markerSerializeReason =
+          !tagExtra[kSkipEndTag] &&
           nodeBinding &&
-          !tagExtra[kSkipMark] &&
           getBindingSerializeReason(tagSection, nodeBinding);
 
-        if (!openTagOnly && !selectArgs) {
+        if (!tagExtra[kSkipEndTag] && !openTagOnly && !selectArgs) {
           writer.writeTo(
             tag,
             !markerSerializeReason &&

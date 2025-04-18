@@ -10,12 +10,12 @@ const kOnlyChildInParent = Symbol("only child in parent");
 const kNodeRef = Symbol("potential only child node ref");
 declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
-    [kOnlyChildInParent]?: boolean;
+    [kOnlyChildInParent]?: false | string;
     [kNodeRef]?: Binding;
   }
 }
 
-export function isOnlyChildInParent(
+export function getOnlyChildParentTagName(
   tag: t.NodePath<t.MarkoTag>,
   branchSize = 1,
 ) {
@@ -25,11 +25,13 @@ export function isOnlyChildInParent(
   }
 
   const parentTag = getParentTag(tag);
-  if (parentTag && getTagDef(parentTag)?.html) {
-    return (extra[kOnlyChildInParent] =
-      (tag.parent as t.MarkoTagBody).body.length === branchSize);
-  }
-  return (extra[kOnlyChildInParent] = false);
+  return (extra[kOnlyChildInParent] =
+    parentTag &&
+    getTagDef(parentTag)?.html &&
+    parentTag.node.name.type === "StringLiteral" &&
+    (tag.parent as t.MarkoTagBody).body.length === branchSize
+      ? parentTag.node.name.value
+      : false);
 }
 
 export function getOptimizedOnlyChildNodeBinding(
@@ -37,7 +39,7 @@ export function getOptimizedOnlyChildNodeBinding(
   section: Section,
   branchSize = 1,
 ) {
-  if (isOnlyChildInParent(tag, branchSize)) {
+  if (getOnlyChildParentTagName(tag, branchSize)) {
     const parentTag = getParentTag(tag)!.node;
     const parentTagName = (parentTag.name as t.StringLiteral)?.value;
     return ((parentTag.extra ??= {})[kNativeTagBinding] ??= createBinding(

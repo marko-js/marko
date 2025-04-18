@@ -36,8 +36,7 @@ const $content = (input, $serialize) => {
       id: "3:12",
       open: "4:10"
     });
-  }, 0, $scope0_id, "#ul/0", _$.serializeGuard($serialize, /* input.comments,input.path */0), _$.serializeGuard($serialize, /* input.comments */1), 1);
-  _$.write("</ul>");
+  }, 0, $scope0_id, "#ul/0", _$.serializeGuard($serialize, /* input.comments,input.path */0), _$.serializeGuard($serialize, /* input.comments */1), "</ul>");
   _$.serializeGuard($serialize, /* input.comments */1) && _$.writeScope($scope0_id, {
     input_path: input.path
   }, "__tests__/tags/comments.marko", 0, {

@@ -41,7 +41,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "26:4", {
         setHtml3: "27:20"
       });
-    }, 0, $scope3_id, "#ul/0", 1, 0, 1);
+    }, 0, $scope3_id, "#ul/0", 1, 0);
     _$.write("</ul>");
     _$.writeScope($scope3_id, {}, "__tests__/template.marko", "24:2");
   }, 0, $scope0_id, "#text/2", 1, 0);
