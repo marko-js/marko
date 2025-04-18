@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.10
+
+### Patch Changes
+
+- [#2664](https://github.com/marko-js/marko/pull/2664) [`5f6d9b4`](https://github.com/marko-js/marko/commit/5f6d9b481d80218bdc143e2b2905b0391ec7da9f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Prefer node markers for stateless control flow.
+
 ## 6.0.9
 
 ### Patch Changes
