@@ -27,7 +27,7 @@ import {
   type Binding,
   BindingType,
   bindingUtil,
-  compareSerializeReasons,
+  compareSources,
   getReadReplacement,
   getScopeAccessor,
   getScopeAccessorLiteral,
@@ -1216,7 +1216,7 @@ export function writeHTMLResumeStatements(
           (sectionSerializeReason === reason ||
             (sectionSerializeReason !== true &&
               reason !== true &&
-              compareSerializeReasons(sectionSerializeReason, reason) === 0))
+              compareSources(sectionSerializeReason, reason) === 0))
           ? getDeclaredBindingExpression(binding)
           : getExprIfSerialized(reason, getDeclaredBindingExpression(binding)),
       ),
@@ -1239,8 +1239,7 @@ export function writeHTMLResumeStatements(
             (sectionSerializeReason === ownerReason ||
               (sectionSerializeReason !== true &&
                 ownerReason !== true &&
-                compareSerializeReasons(sectionSerializeReason, ownerReason) ===
-                  0))
+                compareSources(sectionSerializeReason, ownerReason) === 0))
             ? getOwnerExpr
             : getExprIfSerialized(ownerReason, getOwnerExpr),
         ),
@@ -1325,10 +1324,10 @@ export function writeHTMLResumeStatements(
       ? writeScopeBuilder(callRuntime("writeScope", ...writeScopeArgs))
       : callRuntime("writeScope", ...writeScopeArgs);
 
-    if (sectionSerializeReason !== true) {
+    if (sectionSerializeReason !== true && !sectionSerializeReason.state) {
       writeScopeCall = t.logicalExpression(
         "&&",
-        getSerializeGuard(sectionSerializeReason),
+        getSerializeGuard(sectionSerializeReason, false)!,
         writeScopeCall,
       );
     }

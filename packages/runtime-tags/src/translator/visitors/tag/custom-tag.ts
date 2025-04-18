@@ -46,7 +46,6 @@ import {
 import {
   addBindingSerializeReasonExpr,
   getBindingSerializeReason,
-  type SerializeReason,
 } from "../../util/serialize-reasons";
 import {
   addStatement,
@@ -70,7 +69,11 @@ import translateVar from "../../util/translate-var";
 import type { TemplateVisitor } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
-import { scopeIdentifier, type TemplateExport } from "../program";
+import {
+  type InputSerializeReason,
+  scopeIdentifier,
+  type TemplateExport,
+} from "../program";
 import { getSerializeGuard, getTemplateContentName } from "../program/html";
 
 type AttrTagGroup = AttrTagLookup[string]["group"];
@@ -276,9 +279,9 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
       );
       childSerializeReasonExpr = !reason
         ? undefined
-        : reason == true
+        : reason == true || reason.state
           ? t.numericLiteral(1)
-          : getSerializeGuard(reason);
+          : getSerializeGuard(reason, true);
     } else {
       const props: t.ObjectExpression["properties"] = [];
       let hasDynamicReasons = false;
@@ -290,11 +293,13 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
           childSerializeReasonIds[i],
         );
         if (reason) {
-          hasDynamicReasons ||= reason !== true;
+          hasDynamicReasons ||= reason !== true && !reason.state;
           props.push(
             t.objectProperty(
               t.numericLiteral(i),
-              reason === true ? t.numericLiteral(1) : getSerializeGuard(reason),
+              reason === true || reason.state
+                ? t.numericLiteral(1)
+                : getSerializeGuard(reason, false)!,
             ),
           );
         } else {
@@ -991,7 +996,7 @@ function importOrSelfReferenceName(
 }
 
 function mapChildReasonToLocalReason(
-  childReason: undefined | false | SerializeReason,
+  childReason: undefined | boolean | InputSerializeReason,
   childInputBinding: InputBinding | undefined,
   inputExpr: InputExpr,
 ) {

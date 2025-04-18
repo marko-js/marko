@@ -101,10 +101,10 @@ export default {
       } else {
         if (siblingText === SiblingText.Before) {
           if (isHTML && markerSerializeReason) {
-            if (markerSerializeReason === true) {
+            if (markerSerializeReason === true || markerSerializeReason.state) {
               write`<!>`;
             } else {
-              write`${callRuntime("commentSeparator", getSerializeGuard(markerSerializeReason))}`;
+              write`${callRuntime("commentSeparator", getSerializeGuard(markerSerializeReason, true))}`;
             }
           }
           walks.visit(placeholder, WalkCode.Replace);

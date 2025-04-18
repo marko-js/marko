@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
 
+import type { InputSerializeReasons } from "../visitors/program";
 import { forEachIdentifier } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
@@ -39,7 +40,6 @@ import {
   addSectionSerializeReasonExpr,
   addSectionSerializeReasonRef,
   applySerializeReasonExprs,
-  type DynamicSerializeReasons,
   finalizeSectionSerializeReasons,
   forceBindingSerialize,
   forceOwnersSerialize,
@@ -69,6 +69,11 @@ export enum BindingType {
   // todo: constant
 }
 
+export interface Sources {
+  state: Opt<Binding>;
+  input: Opt<InputBinding>;
+}
+
 export interface Binding {
   id: number;
   name: string;
@@ -77,8 +82,7 @@ export interface Binding {
   section: Section;
   closureSections: Opt<Section>;
   assignmentSections: Opt<Section>;
-  sources: Opt<Binding>;
-  serializeSources: undefined | SerializeReason;
+  sources: undefined | Sources;
   aliases: Set<Binding>;
   hoists: Map<Section, Binding>;
   property: string | undefined;
@@ -154,7 +158,6 @@ export function createBinding(
     closureSections: undefined,
     assignmentSections: undefined,
     excludeProperties: undefined,
-    serializeSources: undefined,
     sources: undefined,
     aliases: new Set(),
     hoists: new Map(),
@@ -552,17 +555,16 @@ export function mergeReferences<T extends t.Node>(
   return targetExtra;
 }
 
-export function compareSerializeReasons(
-  a: OneMany<InputBinding>,
-  b: OneMany<InputBinding>,
-) {
-  return Array.isArray(a)
-    ? Array.isArray(b)
-      ? compareIntersections(a, b)
-      : -1
-    : Array.isArray(b)
-      ? 1
-      : bindingUtil.compare(a, b);
+export function compareReferences(a: OneMany<Binding>, b: OneMany<Binding>) {
+  return a === b
+    ? 0
+    : Array.isArray(a)
+      ? Array.isArray(b)
+        ? compareIntersections(a, b)
+        : -1
+      : Array.isArray(b)
+        ? 1
+        : bindingUtil.compare(a, b);
 }
 
 /**
@@ -693,7 +695,7 @@ export function finalizeReferences() {
         addOwnersSerializeReason(
           section,
           binding.section,
-          binding.serializeSources,
+          binding.sources,
           getAccessorProp().Owner,
         );
       }
@@ -759,22 +761,47 @@ export function finalizeReferences() {
             const binding2 = intersection[j];
             if (
               !isBindingForceSerialized(section, binding1) &&
-              !bindingUtil.isSuperset(binding1.sources, binding2.sources)
+              !isSupersetSources(binding1, binding2)
             ) {
+              if (!isSameOrChildSection(section, binding1.section)) {
+                addOwnersSerializeReason(
+                  section,
+                  binding1.section,
+                  mergeSerializeReasons(
+                    // TODO should check for an actual intersection, not just stateful
+                    binding1.sources,
+                    binding2.sources,
+                  ),
+                  getAccessorProp().Owner,
+                );
+              }
+
               addBindingSerializeReason(
-                section,
+                binding1.section,
                 binding1,
-                binding2.serializeSources,
+                binding2.sources, // TODO should check for an actual intersection, not just binding2.sources stateful
               );
             }
             if (
               !isBindingForceSerialized(section, binding2) &&
-              !bindingUtil.isSuperset(binding2.sources, binding1.sources)
+              !isSupersetSources(binding2, binding1)
             ) {
+              if (!isSameOrChildSection(section, binding2.section)) {
+                addOwnersSerializeReason(
+                  section,
+                  binding2.section,
+                  mergeSerializeReasons(
+                    // TODO should check for an actual intersection, not just stateful
+                    binding1.sources,
+                    binding2.sources,
+                  ),
+                  getAccessorProp().Owner,
+                );
+              }
               addBindingSerializeReason(
-                section,
+                binding2.section,
                 binding2,
-                binding1.serializeSources,
+                binding1.sources, // TODO should check for an actual intersection, not just binding1.sources stateful
               );
             }
           }
@@ -815,50 +842,61 @@ export function finalizeReferences() {
         );
       }
 
-      if (closure.serializeSources && isDynamicClosure(section, closure)) {
+      if (closure.sources && isDynamicClosure(section, closure)) {
         addBindingSerializeReason(
           closure.section,
           closure,
-          closure.serializeSources,
+          closure.sources,
           getAccessorPrefix().ClosureScopes,
         );
         addBindingSerializeReason(
           section,
           closure,
-          closure.serializeSources,
+          closure.sources,
           getAccessorPrefix().ClosureSignalIndex,
         );
       }
     });
   });
 
-  let inputSerializeReasons: undefined | DynamicSerializeReasons;
+  let inputSerializeReasons: undefined | InputSerializeReasons;
   forEachSection((section) => {
     finalizeSectionSerializeReasons(section);
 
-    if (section.serializeReason && section.serializeReason !== true) {
+    if (
+      section.serializeReason &&
+      section.serializeReason !== true &&
+      section.serializeReason.input
+    ) {
       inputSerializeReasons = inputSerializeReasons
         ? addSorted(
-            compareSerializeReasons,
+            compareReferences,
             inputSerializeReasons,
-            section.serializeReason,
+            section.serializeReason.input,
           )
-        : [section.serializeReason];
+        : [section.serializeReason.input];
     }
 
     for (const [, reason] of section.serializeReasons) {
-      if (reason !== true) {
+      if (reason !== true && reason.input) {
         inputSerializeReasons = inputSerializeReasons
-          ? addSorted(compareSerializeReasons, inputSerializeReasons, reason)
-          : [reason];
+          ? addSorted(compareReferences, inputSerializeReasons, reason.input)
+          : [reason.input];
       }
     }
   });
 
   const programExtra = getProgram().node.extra;
-  programExtra.returnSerializeReason =
-    programExtra.returnValueExpr &&
-    getSerializeSourcesForExpr(programExtra.returnValueExpr);
+  if (programExtra.returnValueExpr) {
+    const returnSources = getSerializeSourcesForExpr(
+      programExtra.returnValueExpr,
+    );
+    if (returnSources) {
+      programExtra.returnSerializeReason = returnSources.state
+        ? true
+        : returnSources.input;
+    }
+  }
   programExtra.inputSerializeReasons = inputSerializeReasons;
 
   forEachSection((section) => {
@@ -901,15 +939,17 @@ function getMaxOwnSourceOffset(intersection: Intersection, section: Section) {
   let scopeOffset: Binding | undefined;
 
   for (const binding of intersection) {
-    if (binding.section === section) {
-      forEach(binding.sources, (source) => {
+    if (binding.section === section && binding.sources) {
+      const trackScopeOffset = (source: Binding) => {
         if (
           source.scopeOffset &&
           (!scopeOffset || scopeOffset.id < source.scopeOffset.id)
         ) {
           scopeOffset = source.scopeOffset;
         }
-      });
+      };
+      forEach(binding.sources.state, trackScopeOffset);
+      forEach(binding.sources.input, trackScopeOffset);
     }
   }
 
@@ -923,7 +963,7 @@ export const intersectionMeta = new WeakMap<
 
 export function setBindingValueExpr(
   binding: Binding,
-  valueExpr: undefined | boolean | Opt<t.NodeExtra>,
+  valueExpr: boolean | Opt<t.NodeExtra>,
 ) {
   bindingValueExprs.set(binding, valueExpr || false);
 }
@@ -936,33 +976,29 @@ function resolveBindingSources(binding: Binding) {
 
   switch (binding.type) {
     case BindingType.let:
-      binding.sources = binding;
-      binding.serializeSources = true;
+      binding.sources = createSources(binding, undefined);
       return;
     case BindingType.input:
-      binding.sources = binding;
-      binding.serializeSources = binding as InputBinding;
+      binding.sources = createSources(undefined, binding as InputBinding);
       return;
   }
 
-  let alias: Binding | undefined;
-  let source = binding;
-  while ((alias = source.upstreamAlias)) {
-    source = alias;
-  }
+  if (binding.upstreamAlias) {
+    let alias: Binding | undefined;
+    let source = binding;
+    while ((alias = source.upstreamAlias)) {
+      source = alias;
+    }
 
-  if (source === binding) {
+    if (!resolvedSources.has(source)) {
+      resolvedSources.add(source);
+      resolveDerivedSources(source);
+    }
+
+    binding.sources = source.sources;
+  } else {
     resolveDerivedSources(binding);
-    return;
   }
-
-  if (!resolvedSources.has(source)) {
-    resolvedSources.add(source);
-    resolveDerivedSources(source);
-  }
-
-  binding.sources = source.sources;
-  binding.serializeSources = source.serializeSources;
 }
 
 function resolveDerivedSources(binding: Binding) {
@@ -970,43 +1006,77 @@ function resolveDerivedSources(binding: Binding) {
   bindingValueExprs.delete(binding);
 
   if (exprs === undefined || exprs === true) {
-    binding.serializeSources = true;
-    binding.sources = binding;
+    binding.sources = createSources(binding, undefined);
   } else if (exprs) {
     const seen = new Set<Binding>();
-    let onlyInputSources = true;
-    let sources: Opt<Binding>;
     forEach(exprs, (expr) => {
       if (isReferencedExtra(expr)) {
         forEach(expr.referencedBindings, (ref) => {
           if (!seen.has(ref)) {
             seen.add(ref);
             resolveBindingSources(ref);
-            sources = bindingUtil.union(sources, ref.sources);
-            onlyInputSources &&= ref.serializeSources !== true;
+            binding.sources = mergeSources(binding.sources, ref.sources);
           }
         });
       }
     });
-
-    if (sources) {
-      binding.sources = sources;
-      binding.serializeSources = onlyInputSources
-        ? (sources as OneMany<InputBinding>)
-        : true;
-    }
   }
+}
+
+export function createSources(
+  state: Sources["state"],
+  input: Sources["input"],
+): Sources {
+  if (!(state || input)) {
+    throw new Error(
+      "Cannot create a serialize reason that does not reference state or input.",
+    );
+  }
+
+  return { state, input } as Sources;
+}
+
+export function compareSources(a: Sources, b: Sources) {
+  let delta = 0;
+
+  if (a.input) {
+    if (!b.input) return 1;
+    if ((delta = compareReferences(a.input, b.input))) return delta;
+  } else if (b.input) {
+    return -1;
+  }
+
+  if (a.state) {
+    if (!b.state) return 1;
+    if ((delta = compareReferences(a.state, b.state))) return delta;
+  } else if (b.state) {
+    return -1;
+  }
+
+  return 0;
+}
+
+export function mergeSources(a: undefined | Sources, b: undefined | Sources) {
+  if (!a) return b;
+  if (!b) return a;
+  if (a.state === b.state && a.input === b.input) return a;
+  return createSources(
+    bindingUtil.union(a.state, b.state),
+    bindingUtil.union(a.input, b.input),
+  );
 }
 
 export const bindingUtil = new Sorted(function compareBindings(
   a: Binding,
   b: Binding,
 ) {
-  return a.section.id - b.section.id ||
-    (a.type !== b.type &&
-      (a.type === BindingType.dom || b.type === BindingType.dom))
-    ? a.type - b.type || a.id - b.id
-    : a.id - b.id;
+  return a === b
+    ? 0
+    : a.section.id - b.section.id ||
+        (a.type !== b.type &&
+          (a.type === BindingType.dom || b.type === BindingType.dom))
+      ? a.type - b.type || a.id - b.id
+      : a.id - b.id;
 });
 
 const [getReadsByExpression] = createProgramState(
@@ -1270,6 +1340,15 @@ function resolveExpressionReference(
   }
 
   return createRead(readBinding, readProps);
+}
+
+function isSupersetSources(a: Binding, b: Binding) {
+  if (!b.sources) return true;
+  if (!a.sources) return false;
+  return (
+    bindingUtil.isSuperset(a.sources.state, b.sources.state) &&
+    bindingUtil.isSuperset(a.sources.input, b.sources.input)
+  );
 }
 
 function getCanonicalProperty(binding: Binding) {

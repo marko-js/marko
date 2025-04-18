@@ -25,11 +25,11 @@ const $content = (input, $serialize) => {
     _$.write(`</li>${_$.markResumeNode($scope1_id, "#li/0")}`);
     _$.writeEffect($scope1_id, "__tests__/tags/comments.marko_1_open");
     _$.writeScope($scope1_id, {
-      comment_comments: _$.serializeIf($serialize, 1) && comment?.comments,
+      comment_comments: _$.serializeIf($serialize, 0) && comment?.comments,
       i: _$.serializeIf($serialize, 2) && i,
       id: _$.serializeIf($serialize, 1) && id,
       open,
-      _: _$.serializeIf($serialize, 2) && _$.ensureScopeWithId($scope0_id)
+      _: _$.serializeIf($serialize, 0) && _$.ensureScopeWithId($scope0_id)
     }, "__tests__/tags/comments.marko", "2:4", {
       comment_comments: ["comment.comments", "2:8"],
       i: "2:17",

@@ -129,8 +129,6 @@ export default {
         const tagBody = tag.get("body");
         const section = getSection(tag);
         const bodySection = getSectionForBody(tagBody);
-        const serializeReason =
-          bodySection && getSectionSerializeReason(bodySection);
         writer.flushInto(tag);
         writeHTMLResumeStatements(tagBody);
 
@@ -146,11 +144,10 @@ export default {
                   node.body.params,
                   toFirstExpressionOrBlock(node.body.body),
                 ),
-                !serializeReason
-                  ? t.numericLiteral(0)
-                  : serializeReason === true
-                    ? undefined
-                    : getSerializeGuard(serializeReason),
+                getSerializeGuard(
+                  bodySection && getSectionSerializeReason(bodySection),
+                  true,
+                ),
               ),
             ),
           )[0]
