@@ -29,7 +29,10 @@ interface RenderData {
 type RegisteredFn<S extends Scope = Scope> = (scope: S) => void;
 
 const registeredValues: Record<string, unknown> = {};
-
+export let branchesEnabled: undefined | 1;
+export function enableBranches() {
+  branchesEnabled = 1;
+}
 export function init(runtimeId = DEFAULT_RUNTIME_ID) {
   if (MARKO_DEBUG) {
     if (!runtimeId.match(/^[_$a-z][_$a-z0-9]*$/i)) {
@@ -114,47 +117,49 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 // TODO: could we use attr marker?
                 const node = (scope[data] = visit.previousSibling);
                 scope[AccessorPrefix.Getter + data] = () => node;
-              } else if (token === ResumeSymbol.BranchStart) {
-                if (currentBranchId && dataIndex) {
-                  branchEnd(currentBranchId, visit);
+              } else if (branchesEnabled) {
+                if (token === ResumeSymbol.BranchStart) {
+                  if (currentBranchId && dataIndex) {
+                    branchEnd(currentBranchId, visit);
+                    currentBranchId = branchStack.pop();
+                  }
+                  if (currentBranchId) {
+                    branchStack.push(currentBranchId);
+                    parentBranchIds.set(scopeId, currentBranchId);
+                  }
+                  currentBranchId = scopeId;
+                  (scope as BranchScope).___startNode = visit;
+                } else if (token === ResumeSymbol.BranchEnd) {
+                  scope[data] = visit;
+                  const curParent = visit.parentNode!;
+                  const startNode = branchEnd(
+                    currentBranchId!,
+                    visit,
+                  ).___startNode;
+                  if (curParent !== startNode.parentNode) {
+                    curParent.prepend(startNode);
+                  }
                   currentBranchId = branchStack.pop();
-                }
-                if (currentBranchId) {
-                  branchStack.push(currentBranchId);
-                  parentBranchIds.set(scopeId, currentBranchId);
-                }
-                currentBranchId = scopeId;
-                (scope as BranchScope).___startNode = visit;
-              } else if (token === ResumeSymbol.BranchEnd) {
-                scope[data] = visit;
-                const curParent = visit.parentNode!;
-                const startNode = branchEnd(
-                  currentBranchId!,
-                  visit,
-                ).___startNode;
-                if (curParent !== startNode.parentNode) {
-                  curParent.prepend(startNode);
-                }
-                currentBranchId = branchStack.pop();
-              } else if (
-                token === ResumeSymbol.BranchSingleNode ||
-                token === ResumeSymbol.BranchSingleNodeOnlyChildInParent
-              ) {
-                let next = data.indexOf(" ");
-                let curNode: ChildNode = visit;
-                scope[~next ? data.slice(0, next) : data] =
+                } else if (
+                  token === ResumeSymbol.BranchSingleNode ||
                   token === ResumeSymbol.BranchSingleNodeOnlyChildInParent
-                    ? visit.parentNode
-                    : visit;
-                while (~next) {
-                  const start = next + 1;
-                  next = data.indexOf(" ", start);
-                  const childScopeId = +data.slice(
-                    start,
-                    ~next ? next : data.length,
-                  );
-                  curNode = branchEnd(childScopeId, curNode).___endNode;
-                  parentBranchIds.set(childScopeId, scopeId);
+                ) {
+                  let next = data.indexOf(" ");
+                  let curNode: ChildNode = visit;
+                  scope[~next ? data.slice(0, next) : data] =
+                    token === ResumeSymbol.BranchSingleNodeOnlyChildInParent
+                      ? visit.parentNode
+                      : visit;
+                  while (~next) {
+                    const start = next + 1;
+                    next = data.indexOf(" ", start);
+                    const childScopeId = +data.slice(
+                      start,
+                      ~next ? next : data.length,
+                    );
+                    curNode = branchEnd(childScopeId, curNode).___endNode;
+                    parentBranchIds.set(childScopeId, scopeId);
+                  }
                 }
               }
             }
@@ -188,26 +193,28 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                       ) as Scope;
                     }
 
-                    const parentBranchId =
-                      (scope[AccessorProp.ClosestBranchId] as
-                        | number
-                        | undefined) || parentBranchIds.get(scopeId);
-                    if (parentBranchId) {
-                      scope.___closestBranch = scopeLookup[
-                        parentBranchId
-                      ] as BranchScope;
-                    }
+                    if (branchesEnabled) {
+                      const parentBranchId =
+                        (scope[AccessorProp.ClosestBranchId] as
+                          | number
+                          | undefined) || parentBranchIds.get(scopeId);
+                      if (parentBranchId) {
+                        scope.___closestBranch = scopeLookup[
+                          parentBranchId
+                        ] as BranchScope;
+                      }
 
-                    if (branchIds.has(scopeId)) {
-                      const branch = scope as BranchScope;
-                      const parentBranch = branch.___closestBranch;
+                      if (branchIds.has(scopeId)) {
+                        const branch = scope as BranchScope;
+                        const parentBranch = branch.___closestBranch;
 
-                      scope.___closestBranch = branch;
-                      if (parentBranch) {
-                        branch.___parentBranch = parentBranch;
-                        (parentBranch.___branchScopes ||= new Set()).add(
-                          branch,
-                        );
+                        scope.___closestBranch = branch;
+                        if (parentBranch) {
+                          branch.___parentBranch = parentBranch;
+                          (parentBranch.___branchScopes ||= new Set()).add(
+                            branch,
+                          );
+                        }
                       }
                     }
 

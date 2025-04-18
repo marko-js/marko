@@ -24,6 +24,7 @@ import {
   type Renderer,
   setupBranch,
 } from "./renderer";
+import { enableBranches } from "./resume";
 import { schedule } from "./schedule";
 import {
   destroyBranch,
@@ -222,6 +223,7 @@ export function renderCatch(scope: Scope, error: unknown) {
 
 export function conditional(nodeAccessor: Accessor, ...branches: Renderer[]) {
   const branchAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
+  enableBranches();
   return (scope: Scope, newBranch: number) => {
     if (newBranch !== (scope[branchAccessor] as number)) {
       setConditionalRenderer(
@@ -248,6 +250,7 @@ export let dynamicTag = function dynamicTag(
 ): Signal<Renderer | string | undefined> {
   const childScopeAccessor = AccessorPrefix.ConditionalScope + nodeAccessor;
   const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
+  enableBranches();
   return (scope, newRenderer, getInput?: () => any) => {
     const normalizedRenderer = normalizeDynamicRenderer<Renderer>(newRenderer);
     if (
@@ -410,6 +413,7 @@ function loop<T extends unknown[] = unknown[]>(
   forEach: (value: T, cb: (key: unknown, args: unknown[]) => void) => void,
 ) {
   const params = renderer.___params;
+  enableBranches();
   return (scope: Scope, value: T) => {
     const referenceNode = scope[nodeAccessor] as Element | Comment | Text;
     const oldMap = scope[AccessorPrefix.LoopScopeMap + nodeAccessor] as
