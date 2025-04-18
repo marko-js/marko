@@ -195,16 +195,10 @@ export default {
       if (isOutputHTML()) {
         writer.flushInto(tag);
         writeHTMLResumeStatements(tag.get("body"));
-
-        const serializeReason = getBindingSerializeReason(
-          tagSection,
-          nodeBinding,
+        const serializeArg = getSerializeGuard(
+          getBindingSerializeReason(tagSection, nodeBinding),
+          true,
         );
-        const serializeArg = !serializeReason
-          ? t.numericLiteral(0)
-          : serializeReason === true
-            ? undefined
-            : getSerializeGuard(serializeReason);
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
               "dynamicTag",

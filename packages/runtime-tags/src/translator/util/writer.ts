@@ -124,7 +124,7 @@ export function markNode(
         "markResumeNode",
         getScopeIdIdentifier(section),
         getScopeAccessorLiteral(nodeBinding),
-        reason === true ? undefined : getSerializeGuard(reason),
+        getSerializeGuard(reason, true),
       )}`;
     }
   }

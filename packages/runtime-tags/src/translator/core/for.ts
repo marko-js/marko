@@ -183,22 +183,17 @@ export default {
             getParentTag(tag)!.node.extra![kSkipMark] = true;
           }
 
+          const markerSerializeArg = getSerializeGuard(
+            markerSerializeReason,
+            !onlyChildInParentOptimization,
+          );
+
           forTagArgs.push(
             forAttrs.by || t.numericLiteral(0),
             getScopeIdIdentifier(tagSection),
             getScopeAccessorLiteral(nodeBinding),
-            branchSerializeReason === true
-              ? markerSerializeReason === true && !onlyChildInParentOptimization
-                ? undefined
-                : t.numericLiteral(1)
-              : getSerializeGuard(branchSerializeReason),
-            !markerSerializeReason
-              ? t.numericLiteral(0)
-              : markerSerializeReason === true
-                ? onlyChildInParentOptimization
-                  ? t.numericLiteral(1)
-                  : undefined
-                : getSerializeGuard(markerSerializeReason),
+            getSerializeGuard(branchSerializeReason, !markerSerializeArg),
+            markerSerializeArg,
           );
 
           if (onlyChildInParentOptimization) {

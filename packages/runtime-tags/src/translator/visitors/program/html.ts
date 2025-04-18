@@ -6,25 +6,66 @@ import isStatic from "../../util/is-static";
 import { getReadReplacement, isRegisteredFnExtra } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import { getScopeIdIdentifier } from "../../util/sections";
-import type { DynamicSerializeReason } from "../../util/serialize-reasons";
+import type {
+  SerializeReason,
+  SerializeReasons,
+} from "../../util/serialize-reasons";
 import { writeHTMLResumeStatements } from "../../util/signals";
 import { simplifyFunction } from "../../util/simplify-fn";
 import { traverseReplace } from "../../util/traverse";
 import type { TemplateVisitor } from "../../util/visitors";
 import { flushInto } from "../../util/writer";
-import { resolveSerializeReasonId } from ".";
+import { type InputSerializeReason, resolveSerializeReasonId } from ".";
 
 export function getTemplateContentName() {
   return getSharedUid("content");
 }
 
+export function getSerializeGuard(
+  reason: undefined | SerializeReason,
+  optional: boolean,
+) {
+  return !reason
+    ? t.numericLiteral(0)
+    : reason === true || reason.state
+      ? optional
+        ? undefined
+        : t.numericLiteral(1)
+      : getInputSerializeReasonGuard(reason.input!);
+}
+
+export function getSerializeGuardForAny(
+  reasons: undefined | SerializeReasons,
+  optional: boolean,
+) {
+  if (!reasons || reasons === true) {
+    return getSerializeGuard(reasons, optional);
+  }
+
+  if (reasons.length === 1) {
+    return getSerializeGuard(reasons[0], optional);
+  }
+
+  let expr!: t.Expression;
+  for (const reason of reasons) {
+    if (reason.state) {
+      return optional ? undefined : t.numericLiteral(1);
+    }
+
+    const guard = getSerializeGuard(reason, false)!;
+    expr = expr ? t.logicalExpression("||", expr, guard) : guard;
+  }
+
+  return expr;
+}
+
 export function getExprIfSerialized<
-  T extends undefined | boolean | DynamicSerializeReason,
+  T extends undefined | SerializeReason,
   U extends t.Expression,
 >(reason: T, expr: U) {
   return (
     reason
-      ? reason === true
+      ? reason === true || reason.state
         ? expr
         : t.logicalExpression(
             "&&",
@@ -34,7 +75,7 @@ export function getExprIfSerialized<
               t.numericLiteral(
                 resolveSerializeReasonId(
                   getProgram().node.extra.inputSerializeReasons!,
-                  reason,
+                  reason.input!,
                 ),
               ),
             ),
@@ -44,7 +85,7 @@ export function getExprIfSerialized<
   ) as T extends {} ? U : undefined;
 }
 
-export function getSerializeGuard(reason: DynamicSerializeReason) {
+function getInputSerializeReasonGuard(reason: InputSerializeReason) {
   return callRuntime(
     "serializeGuard",
     t.identifier(getSharedUid("serialize")),

@@ -28,7 +28,7 @@ export class Sorted<T> {
 
       if (b) {
         if (Array.isArray(b)) {
-          return addSorted(this.compare, [...b], a) as Many<U>;
+          return addSorted(this.compare, b, a) as Many<U>;
         }
 
         return joinRepeatable(this.compare, b, a);

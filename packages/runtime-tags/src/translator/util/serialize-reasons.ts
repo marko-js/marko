@@ -8,19 +8,15 @@ import {
 import { concat, type OneMany, type Opt } from "./optional";
 import {
   type Binding,
-  bindingUtil,
-  type InputBinding,
   isReferencedExtra,
+  mergeSources,
   type ReferencedBindings,
+  type Sources,
 } from "./references";
 import type { Section } from "./sections";
 
-export type DynamicSerializeReason = OneMany<InputBinding>;
-export type DynamicSerializeReasons = [
-  DynamicSerializeReason,
-  ...DynamicSerializeReason[],
-];
-export type SerializeReason = true | DynamicSerializeReason;
+export type SerializeReasons = true | [Sources, ...Sources[]];
+export type SerializeReason = true | Sources;
 export type SerializeKey = symbol & { __serialize_key__: 1 };
 
 const reasonExprs = new WeakMap<Section, OneMany<t.NodeExtra>>();
@@ -184,10 +180,7 @@ export function addSectionSerializeReasonRef(
           forceSectionSerialize(section);
         } else {
           const reason = getSerializeSourcesForRef(ref);
-
-          if (reason === true) {
-            forceSectionSerialize(section);
-          } else {
+          if (reason) {
             setSectionSerializeReason(
               section,
               mergeSerializeReasons(existingReason, reason),
@@ -223,14 +216,11 @@ function addKeyedSerializeReasonRef(
       forceSerializeKey(section, key);
     } else {
       const reason = getSerializeSourcesForRef(ref);
-
-      if (reason === true) {
-        forceSerializeKey(section, key);
-      } else {
+      if (reason) {
         setSectionKeyedSerializeReason(
           section,
           key,
-          mergeSerializeReasons(existingReason, reason)!,
+          mergeSerializeReasons(existingReason, reason),
         );
       }
     }
@@ -370,7 +360,7 @@ export function applySerializeReasonExprs(section: Section) {
         setSectionKeyedSerializeReason(
           section,
           key,
-          mergeSerializeReasons(section.serializeReasons.get(key), reason)!,
+          mergeSerializeReasons(section.serializeReasons.get(key), reason),
         );
       }
     }
@@ -401,7 +391,9 @@ export function finalizeSectionSerializeReasons(section: Section) {
       reason = mergeSerializeReasons(reason, keyedReason);
     }
 
-    setSectionSerializeReason(section, reason);
+    if (reason) {
+      setSectionSerializeReason(section, reason);
+    }
   }
 }
 
@@ -414,13 +406,11 @@ export function getSerializeSourcesForExpr(expr: t.NodeExtra) {
 export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra>) {
   if (exprs) {
     if (Array.isArray(exprs)) {
-      let serializeSource: Opt<InputBinding>;
+      let allSources: Sources | undefined;
       for (const expr of exprs) {
-        const exprSources = getSerializeSourcesForExpr(expr);
-        if (exprSources === true) return true as const;
-        serializeSource = bindingUtil.union(serializeSource, exprSources);
+        allSources = mergeSources(allSources, getSerializeSourcesForExpr(expr));
       }
-      return serializeSource;
+      return allSources;
     } else {
       return getSerializeSourcesForExpr(exprs);
     }
@@ -429,36 +419,41 @@ export function getSerializeSourcesForExprs(exprs: Opt<t.NodeExtra>) {
 
 export function getSerializeSourcesForRef(ref: ReferencedBindings) {
   if (ref) {
-    let allSerializeSources: Opt<InputBinding>;
+    let allSources: Sources | undefined;
     if (Array.isArray(ref)) {
-      for (const { serializeSources } of ref) {
-        if (serializeSources === true) return serializeSources;
-        allSerializeSources = bindingUtil.union(
-          allSerializeSources,
-          serializeSources,
-        );
+      for (const { sources } of ref) {
+        allSources = mergeSources(allSources, sources);
       }
 
-      return allSerializeSources;
+      return allSources;
     } else {
-      return ref.serializeSources;
+      return ref.sources;
     }
   }
 }
 
-export function mergeSerializeReasons<T extends undefined | SerializeReason>(
-  a: T,
-  b: T,
-) {
-  if (a === true || b === true) return true as T;
-  return bindingUtil.union(a, b) as T;
+export function mergeSerializeReasons(
+  a: SerializeReason,
+  b: undefined | SerializeReason,
+): SerializeReason;
+export function mergeSerializeReasons(
+  a: undefined | SerializeReason,
+  b: SerializeReason,
+): SerializeReason;
+export function mergeSerializeReasons(
+  a: undefined | SerializeReason,
+  b: undefined | SerializeReason,
+): SerializeReason | undefined;
+export function mergeSerializeReasons(
+  a: undefined | SerializeReason,
+  b: undefined | SerializeReason,
+): SerializeReason | undefined {
+  if (a === true || b === true) return true;
+  return mergeSources(a, b);
 }
 
 // Exists as the single point of assigning section reasons to aid in debugging.
-function setSectionSerializeReason(
-  section: Section,
-  reason: SerializeReason | undefined,
-) {
+function setSectionSerializeReason(section: Section, reason: SerializeReason) {
   section.serializeReason = reason;
 }
 
