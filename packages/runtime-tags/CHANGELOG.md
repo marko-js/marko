@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.0.9
+
+### Patch Changes
+
+- [#2663](https://github.com/marko-js/marko/pull/2663) [`b56bb18`](https://github.com/marko-js/marko/commit/b56bb18c3aaee1951f83658773354c584593d72a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow branch resume logic to be better treeshaken.
+
+- [#2661](https://github.com/marko-js/marko/pull/2661) [`d4969a2`](https://github.com/marko-js/marko/commit/d4969a29b9fffcd73b2e1a159ac8b9a7a1557558) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor serialize reasons to keep track of all source states.
+
+- [#2663](https://github.com/marko-js/marko/pull/2663) [`3e74c2f`](https://github.com/marko-js/marko/commit/3e74c2fec0a6a3ac6a2225ce54f40f288bbb96af) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Add debug comments to serialize reasons.
+
 ## 6.0.8
 
 ### Patch Changes
