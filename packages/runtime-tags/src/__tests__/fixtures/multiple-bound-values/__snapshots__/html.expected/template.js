@@ -15,8 +15,8 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       count2 = _new_count2;
     }, "__tests__/template.marko_0/count2Change", $scope0_id)
   }, {
-    0: 1,
-    2: 1
+    /* input.count1 */0: 1,
+    /* input.count2 */2: 1
   });
   _$.write(`<div>${_$.escapeXML(count1)}${_$.markResumeNode($scope0_id, "#text/1")} <!>${_$.escapeXML(count2)}${_$.markResumeNode($scope0_id, "#text/2")}</div>`);
   _$.writeScope($scope0_id, {

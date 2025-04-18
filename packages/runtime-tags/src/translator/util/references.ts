@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
 
+import { toAccess } from "../../html/serializer";
 import type { InputSerializeReasons } from "../visitors/program";
 import { forEachIdentifier } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
@@ -1169,6 +1170,40 @@ export function getScopeAccessor(binding: Binding, includeId?: boolean) {
     binding.name +
     (includeId || binding.type === BindingType.dom ? `/${binding.id}` : "")
   );
+}
+
+export function getDebugScopeAccess(binding: Binding) {
+  let root = binding;
+  let access = "";
+  while (!(root.loc || root.declared) && root.upstreamAlias) {
+    if (root.property !== undefined) {
+      access = toAccess(root.property) + access;
+    }
+    root = root.upstreamAlias;
+  }
+
+  return {
+    root,
+    access,
+  };
+}
+
+export function getDebugName(binding: Binding) {
+  const { root, access } = getDebugScopeAccess(binding);
+  return root.name + access;
+}
+
+export function getInputDebugName(binding: InputBinding) {
+  let root = binding;
+  let access = "";
+  while (root.upstreamAlias !== root.section.params) {
+    if (root.property !== undefined) {
+      access = toAccess(root.property) + access;
+    }
+    root = root.upstreamAlias as InputBinding;
+  }
+
+  return root.name + access;
 }
 
 export function getSectionInstancesAccessor(section: Section) {

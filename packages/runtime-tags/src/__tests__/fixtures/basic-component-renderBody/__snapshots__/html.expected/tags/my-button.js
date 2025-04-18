@@ -6,7 +6,7 @@ export default _$.createTemplate("__tests__/tags/my-button.marko", (input, $seri
     content
   } = input;
   _$.write("<button>");
-  _$.dynamicTag($scope0_id, "#text/1", content, {}, 0, 0, _$.serializeGuard($serialize, 0));
+  _$.dynamicTag($scope0_id, "#text/1", content, {}, 0, 0, _$.serializeGuard($serialize, /* content */0));
   _$.write(`</button>${_$.markResumeNode($scope0_id, "#button/0")}`);
   _$.writeEffect($scope0_id, "__tests__/tags/my-button.marko_0_onClick");
   _$.writeScope($scope0_id, {

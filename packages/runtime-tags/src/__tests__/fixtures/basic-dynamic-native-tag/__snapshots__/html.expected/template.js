@@ -9,6 +9,6 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   }, _$.registerContent("__tests__/template.marko_1_renderer", () => {
     const $scope1_id = _$.nextScopeId();
     _$.write("Hello World");
-  }, $scope0_id), 0, _$.serializeGuard($serialize, 0));
-  _$.serializeGuard($serialize, 0) && _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+  }, $scope0_id), 0, _$.serializeGuard($serialize, /* tagName */0));
+  _$.serializeGuard($serialize, /* tagName */0) && _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 });

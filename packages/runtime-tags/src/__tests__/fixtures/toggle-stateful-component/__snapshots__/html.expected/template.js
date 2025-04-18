@@ -18,7 +18,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       _$.writeScope($scope1_id, {}, "__tests__/template.marko", "6:4");
       return 0;
     }
-  }, $scope0_id, "#div/0", 1, 1, 1);
+  }, $scope0_id, "#div/0", 1, /* state: show */1, 1);
   _$.write("</div>");
   _$.writeScope($scope0_id, {
     onCount

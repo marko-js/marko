@@ -5,7 +5,7 @@ export default _$.createTemplate("__tests__/tags/child.marko", (input, $serializ
     name,
     write
   } = input;
-  _$.write(`<div>${_$.escapeXML(name)}${_$.markResumeNode($scope0_id, "#text/0", _$.serializeGuard($serialize, 0))}</div><span>${_$.escapeXML(name)}${_$.markResumeNode($scope0_id, "#text/1", _$.serializeGuard($serialize, 0))}</span><p>${_$.escapeXML(name)}${_$.markResumeNode($scope0_id, "#text/2", _$.serializeGuard($serialize, 0))}</p>`);
+  _$.write(`<div>${_$.escapeXML(name)}${_$.markResumeNode($scope0_id, "#text/0", _$.serializeGuard($serialize, /* name */0))}</div><span>${_$.escapeXML(name)}${_$.markResumeNode($scope0_id, "#text/1", _$.serializeGuard($serialize, /* name */0))}</span><p>${_$.escapeXML(name)}${_$.markResumeNode($scope0_id, "#text/2", _$.serializeGuard($serialize, /* name */0))}</p>`);
   _$.writeEffect($scope0_id, "__tests__/tags/child.marko_0_name_write");
   _$.writeScope($scope0_id, {
     name,

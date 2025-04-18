@@ -14,14 +14,14 @@ const $content = (input, $serialize) => {
           $content({
             level: input.level - 1
           });
-          _$.serializeGuard($serialize, 0) && _$.writeSubscribe($input_level_closures, _$.writeScope($scope3_id, {
+          _$.serializeGuard($serialize, /* input.level */0) && _$.writeSubscribe($input_level_closures, _$.writeScope($scope3_id, {
             _: _$.ensureScopeWithId($scope2_id),
-            "#childScope/0": _$.serializeIf($serialize, 0) && _$.writeExistingScope($childScope),
-            "ClosureSignalIndex:input_level": _$.serializeIf($serialize, 0) && 0
+            "#childScope/0": _$.serializeIf($serialize, /* input.level */0) && _$.writeExistingScope($childScope),
+            "ClosureSignalIndex:input_level": _$.serializeIf($serialize, /* input.level */0) && 0
           }, "__tests__/tags/recurse.marko", "5:7"));
           _$.resumeClosestBranch($scope3_id);
-        }, _$.serializeGuard($serialize, 0));
-        _$.serializeGuard($serialize, 0) && _$.writeScope($scope2_id, {
+        }, _$.serializeGuard($serialize, /* input.level */0));
+        _$.serializeGuard($serialize, /* input.level */0) && _$.writeScope($scope2_id, {
           _: _$.ensureScopeWithId($scope1_id)
         }, "__tests__/tags/recurse.marko", "3:5");
       }, $scope1_id), {
@@ -32,16 +32,16 @@ const $content = (input, $serialize) => {
           }, $scope1_id)
         })
       });
-      _$.write(`</div>${_$.markResumeNode($scope1_id, "#div/0", _$.serializeGuard($serialize, 0))}`);
-      _$.serializeGuard($serialize, 0) && _$.writeScope($scope1_id, {
+      _$.write(`</div>${_$.markResumeNode($scope1_id, "#div/0", _$.serializeGuard($serialize, /* input.level */0))}`);
+      _$.serializeGuard($serialize, /* input.level */0) && _$.writeScope($scope1_id, {
         _: _$.ensureScopeWithId($scope0_id)
       }, "__tests__/tags/recurse.marko", "1:1");
       return 0;
     }
-  }, $scope0_id, "#text/0", _$.serializeGuard($serialize, 0), _$.serializeGuard($serialize, 0));
+  }, $scope0_id, "#text/0", _$.serializeGuard($serialize, /* input.level */0), _$.serializeGuard($serialize, /* input.level */0));
   _$.writeScope($scope0_id, {
     input_level: input.level,
-    "ClosureScopes:input_level": _$.serializeIf($serialize, 0) && $input_level_closures
+    "ClosureScopes:input_level": _$.serializeIf($serialize, /* input.level */0) && $input_level_closures
   }, "__tests__/tags/recurse.marko", 0, {
     input_level: ["input.level"]
   });

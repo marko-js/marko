@@ -220,6 +220,27 @@ export function toArray<T, R>(
   return data ? (Array.isArray(data) ? data.map(cb) : [cb(data, 0)]) : [];
 }
 
+export function mapToString<T>(
+  data: Opt<T>,
+  sep: string,
+  cb: (item: T, index: number) => string,
+): string {
+  if (data) {
+    if (Array.isArray(data)) {
+      let str = "";
+      let curSep = "";
+      for (let i = 0; i < data.length; i++) {
+        str += curSep + cb(data[i], i);
+        curSep = sep;
+      }
+      return str;
+    }
+
+    return cb(data, 0);
+  }
+  return "";
+}
+
 export function filterMap<T, R>(
   data: Opt<T>,
   cb: (item: T) => undefined | R,

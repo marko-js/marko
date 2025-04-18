@@ -6,7 +6,6 @@ import {
 } from "@marko/compiler/babel-utils";
 
 import type { AccessorPrefix, AccessorProp } from "../../common/types";
-import { toAccess } from "../../html/serializer";
 import { getSectionReturnValueIdentifier } from "../core/return";
 import {
   cleanIdentifier,
@@ -28,6 +27,7 @@ import {
   BindingType,
   bindingUtil,
   compareSources,
+  getDebugScopeAccess,
   getReadReplacement,
   getScopeAccessor,
   getScopeAccessorLiteral,
@@ -1278,15 +1278,7 @@ export function writeHTMLResumeStatements(
         const serializeReason = getBindingSerializeReason(section, binding);
         if (!serializeReason) return;
 
-        let root = binding;
-        let access = "";
-        while (!(root.loc || root.declared) && root.upstreamAlias) {
-          if (root.property !== undefined) {
-            access = toAccess(root.property) + access;
-          }
-          root = root.upstreamAlias;
-        }
-
+        const { root, access } = getDebugScopeAccess(binding);
         const locExpr =
           root.loc &&
           t.stringLiteral(

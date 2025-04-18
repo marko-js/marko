@@ -8,13 +8,13 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   } = input;
   _$.write(`<div${_$.styleAttr({
     color: color
-  })}></div>${_$.markResumeNode($scope0_id, "#div/0", _$.serializeGuard($serialize, 1))}<div style=width:100px></div><div style="color: green"></div>`);
+  })}></div>${_$.markResumeNode($scope0_id, "#div/0", _$.serializeGuard($serialize, /* color */1))}<div style=width:100px></div><div style="color: green"></div>`);
   const $childScope = _$.peekNextScopeId();
   _customTag({
     style: {
       color: color
     }
-  }, _$.serializeGuard($serialize, 1));
+  }, _$.serializeGuard($serialize, /* color */1));
   _customTag({
     style: {
       width: "100px"
@@ -36,8 +36,8 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
         _$.write("Hello");
       }, $scope0_id)
     })
-  }, 0, 0, _$.serializeGuard($serialize, 2));
-  _$.serializeGuard($serialize, 0) && _$.writeScope($scope0_id, {
-    "#childScope/1": _$.serializeIf($serialize, 1) && _$.writeExistingScope($childScope)
+  }, 0, 0, _$.serializeGuard($serialize, /* test */2));
+  _$.serializeGuard($serialize, /* color,test */0) && _$.writeScope($scope0_id, {
+    "#childScope/1": _$.serializeIf($serialize, /* input.color */1) && _$.writeExistingScope($childScope)
   }, "__tests__/template.marko", 0);
 });

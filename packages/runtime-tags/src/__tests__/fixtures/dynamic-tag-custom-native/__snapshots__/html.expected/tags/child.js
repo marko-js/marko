@@ -4,6 +4,6 @@ export default _$.createTemplate("__tests__/tags/child.marko", (input, $serializ
   const {
     id
   } = input;
-  _$.write(`<div>Id is ${_$.commentSeparator(_$.serializeGuard($serialize, 0))}${_$.escapeXML(id)}${_$.markResumeNode($scope0_id, "#text/0", _$.serializeGuard($serialize, 0))}</div>`);
-  _$.serializeGuard($serialize, 0) && _$.writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
+  _$.write(`<div>Id is ${_$.commentSeparator(_$.serializeGuard($serialize, /* id */0))}${_$.escapeXML(id)}${_$.markResumeNode($scope0_id, "#text/0", _$.serializeGuard($serialize, /* id */0))}</div>`);
+  _$.serializeGuard($serialize, /* id */0) && _$.writeScope($scope0_id, {}, "__tests__/tags/child.marko", 0);
 });
