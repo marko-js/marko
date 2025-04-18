@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.11
+
+### Patch Changes
+
+- [#2666](https://github.com/marko-js/marko/pull/2666) [`c5369b2`](https://github.com/marko-js/marko/commit/c5369b24dc2850fe6e4f4bdc7c5dcdccd169c886) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor resume branch logic to be better treeshaken with esbuild.
+
 ## 6.0.10
 
 ### Patch Changes
