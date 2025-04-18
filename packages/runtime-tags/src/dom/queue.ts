@@ -1,5 +1,6 @@
 import type { BranchScope, Scope } from "../common/types";
 import { renderCatch } from "./control-flow";
+import { enableBranches } from "./resume";
 import type { Signal } from "./signals";
 
 type ExecFn<S extends Scope = Scope> = (scope: S, arg?: any) => void;
@@ -151,6 +152,7 @@ let runRender = (render: PendingRender) =>
 
 export let enableCatch = () => {
   enableCatch = () => {};
+  enableBranches();
   const handlePendingTry = (
     fn: ExecFn,
     scope: Scope,
