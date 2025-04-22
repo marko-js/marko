@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.12
+
+### Patch Changes
+
+- [#2668](https://github.com/marko-js/marko/pull/2668) [`2bd16d4`](https://github.com/marko-js/marko/commit/2bd16d4fd15092af9ae3e2742444166ca19a2842) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix misc issues with aliases and especially aliases which are within a closure.
+
 ## 6.0.11
 
 ### Patch Changes
