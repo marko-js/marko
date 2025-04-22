@@ -3,11 +3,11 @@ export const $walks = /* beginChild, _checkbox_walks, endChild, next(1), get, ou
 import { $setup as _checkbox, $input as _checkbox_input, $template as _checkbox_template, $walks as _checkbox_walks } from "./tags/checkbox.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $checked = /* @__PURE__ */_$.state("checked/2", ($scope, checked) => {
-  _$.data($scope["#text/1"], String(checked));
   _checkbox_input($scope["#childScope/0"], {
     checked: checked,
     checkedChange: $checkedChange($scope)
   });
+  _$.data($scope["#text/1"], String(checked));
 });
 export function $setup($scope) {
   _checkbox($scope["#childScope/0"]);

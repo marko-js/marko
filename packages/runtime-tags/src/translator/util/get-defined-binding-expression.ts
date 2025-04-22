@@ -1,20 +1,21 @@
 import { types as t } from "@marko/compiler";
 
-import type { Binding } from "./references";
+import { type Binding, getCanonicalBinding } from "./references";
 import { toMemberExpression } from "./to-property-name";
 
 export function getDeclaredBindingExpression(
   binding: Binding,
 ): t.Identifier | t.OptionalMemberExpression | t.MemberExpression {
-  if (binding.declared || !binding.upstreamAlias) {
-    return t.identifier(binding.name);
-  } else if (binding.property !== undefined) {
+  const canonicalBinding = getCanonicalBinding(binding)!;
+  if (canonicalBinding.declared || !canonicalBinding.upstreamAlias) {
+    return t.identifier(canonicalBinding.name);
+  } else if (canonicalBinding.property !== undefined) {
     return toMemberExpression(
-      getDeclaredBindingExpression(binding.upstreamAlias),
-      binding.property,
-      binding.upstreamAlias.nullable,
+      getDeclaredBindingExpression(canonicalBinding.upstreamAlias),
+      canonicalBinding.property,
+      canonicalBinding.upstreamAlias.nullable,
     );
   } else {
-    return getDeclaredBindingExpression(binding.upstreamAlias);
+    return getDeclaredBindingExpression(canonicalBinding.upstreamAlias);
   }
 }

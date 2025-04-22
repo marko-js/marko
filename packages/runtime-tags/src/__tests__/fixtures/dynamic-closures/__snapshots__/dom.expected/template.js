@@ -35,9 +35,9 @@ const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => _$.on($s
 }));
 export function $setup($scope) {
   _customTag($scope["#childScope/1"]);
+  _customTag_input_content($scope["#childScope/1"], $customtag_content($scope));
   $b($scope, 2);
   $c($scope, 3);
-  _customTag_input_content($scope["#childScope/1"], $customtag_content($scope));
   $if($scope, Math.random() ? 0 : 1);
   $setup_effect($scope);
 }

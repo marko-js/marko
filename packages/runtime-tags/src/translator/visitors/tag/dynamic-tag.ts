@@ -321,7 +321,6 @@ export default {
           }
         }
 
-        signal.hasDownstreamIntersections = () => true;
         addValue(section, tagExtra.referencedBindings, signal, tagExpression);
         tag.remove();
       }

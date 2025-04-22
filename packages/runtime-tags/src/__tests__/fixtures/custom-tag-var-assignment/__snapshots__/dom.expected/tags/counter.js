@@ -12,8 +12,8 @@ const $x = /* @__PURE__ */_$.state("x/2", ($scope, x) => {
   $x_effect($scope);
 });
 export function $setup($scope) {
-  $x($scope, 1);
   _$.setTagVarChange($scope, $valueChange($scope));
+  $x($scope, 1);
 }
 function $valueChange($scope) {
   return _new_x => {

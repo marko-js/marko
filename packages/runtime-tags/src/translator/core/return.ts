@@ -14,13 +14,14 @@ import { getAccessorProp } from "../util/get-accessor-char";
 import { getKnownAttrValues } from "../util/get-known-attr-values";
 import { getParentTag } from "../util/get-parent-tag";
 import { isControlFlowTag } from "../util/is-core-tag";
-import { importRuntime } from "../util/runtime";
+import { callRuntime } from "../util/runtime";
 import { getOrCreateSection, getSection } from "../util/sections";
 import { forceSectionSerialize } from "../util/serialize-reasons";
-import { addValue, setSectionSerializedValue } from "../util/signals";
+import { addStatement, setSectionSerializedValue } from "../util/signals";
 import { createSectionState } from "../util/state";
 import { translateByTarget } from "../util/visitors";
 import * as writer from "../util/writer";
+import { scopeIdentifier } from "../visitors/program";
 
 const tagsWithReturn = new WeakSet<t.NodePath>();
 const [getSectionReturnValueIdentifier, setReturnValueIdentifier] =
@@ -111,26 +112,28 @@ export default {
         const attrs = getKnownAttrValues(tag.node);
 
         if (attrs.value) {
-          addValue(
+          addStatement(
+            "render",
             section,
             attrs.value.extra?.referencedBindings,
-            {
-              identifier: importRuntime("tagVarSignal"),
-              hasDownstreamIntersections: () => true,
-            },
-            attrs.value,
+            t.expressionStatement(
+              callRuntime("tagVarSignal", scopeIdentifier, attrs.value),
+            ),
           );
         }
 
         if (attrs.valueChange) {
-          addValue(
+          addStatement(
+            "render",
             section,
             attrs.valueChange.extra?.referencedBindings,
-            {
-              identifier: importRuntime("setTagVarChange"),
-              hasDownstreamIntersections: () => false,
-            },
-            attrs.valueChange,
+            t.expressionStatement(
+              callRuntime(
+                "setTagVarChange",
+                scopeIdentifier,
+                attrs.valueChange,
+              ),
+            ),
           );
         }
 

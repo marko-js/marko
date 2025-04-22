@@ -16,14 +16,14 @@ const $text = _$.value(7, ($scope, text) => {
       $text($scope[1], clickCount),
       $onClick$1($scope[1], $onClick2($scope));
   });
-function $onClick($scope, { 2: clickCount } = $scope) {
-  return function () {
-    $clickCount($scope, clickCount + 1);
-  };
-}
 function $onClick2($scope, { 2: clickCount } = $scope) {
   return function () {
     $clickCount($scope, clickCount + 1);
   };
 }
-_$.register("b0", $onClick), _$.register("b1", $onClick2), init();
+function $onClick($scope, { 2: clickCount } = $scope) {
+  return function () {
+    $clickCount($scope, clickCount + 1);
+  };
+}
+_$.register("b1", $onClick2), _$.register("b0", $onClick), init();

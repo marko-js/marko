@@ -20,8 +20,8 @@ const $count = _$.registerBoundSignal("__tests__/template.marko_0_count/var", /*
 export function $setup($scope) {
   _$.setTagVar($scope, "#childScope/0", $count);
   _myLet($scope["#childScope/0"]);
-  _myTag($scope["#childScope/2"]);
   _myLet_input_value($scope["#childScope/0"], 0);
+  _myTag($scope["#childScope/2"]);
   _myTag_input_content($scope["#childScope/2"], $mytag_content($scope));
 }
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

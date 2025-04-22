@@ -5,8 +5,8 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $x = /* @__PURE__ */_$.state("x/2", ($scope, x) => _child_input_value($scope["#childScope/1"], x));
 export function $setup($scope) {
   _child($scope["#childScope/0"]);
+  _child_input_value($scope["#childScope/0"], 3);
   _child($scope["#childScope/1"]);
   $x($scope, "y");
-  _child_input_value($scope["#childScope/0"], 3);
 }
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

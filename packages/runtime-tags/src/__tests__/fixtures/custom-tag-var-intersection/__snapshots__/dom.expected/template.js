@@ -15,7 +15,7 @@ const $name = /* @__PURE__ */_$.state("name/3", $expr_name_data);
 export function $setup($scope) {
   _$.setTagVar($scope, "#childScope/0", $data);
   _child($scope["#childScope/0"]);
-  $name($scope, "Marko");
   _child_input_extra($scope["#childScope/0"], 1);
+  $name($scope, "Marko");
 }
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

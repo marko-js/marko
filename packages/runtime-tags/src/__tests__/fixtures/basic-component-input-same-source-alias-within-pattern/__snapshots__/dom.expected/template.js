@@ -15,13 +15,6 @@ export function $setup($scope) {
   _myButton($scope["#childScope/1"]);
   $clickCount($scope, 0);
 }
-function $onClick($scope, {
-  clickCount
-} = $scope) {
-  return function () {
-    $clickCount($scope, clickCount + 1), clickCount;
-  };
-}
 function $onClick2($scope, {
   clickCount
 } = $scope) {
@@ -29,6 +22,13 @@ function $onClick2($scope, {
     $clickCount($scope, clickCount + 1), clickCount;
   };
 }
-_$.register("__tests__/template.marko_0/onClick", $onClick);
+function $onClick($scope, {
+  clickCount
+} = $scope) {
+  return function () {
+    $clickCount($scope, clickCount + 1), clickCount;
+  };
+}
 _$.register("__tests__/template.marko_0/onClick2", $onClick2);
+_$.register("__tests__/template.marko_0/onClick", $onClick);
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

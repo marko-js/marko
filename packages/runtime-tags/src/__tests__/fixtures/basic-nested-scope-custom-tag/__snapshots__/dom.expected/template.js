@@ -18,7 +18,7 @@ const $count_closure = /* @__PURE__ */_$.dynamicClosure($count$child$content);
 const $count = /* @__PURE__ */_$.state("count/1", $count_closure);
 export function $setup($scope) {
   _child($scope["#childScope/0"]);
-  $count($scope, 0);
   _child_input_content($scope["#childScope/0"], $child_content($scope));
+  $count($scope, 0);
 }
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

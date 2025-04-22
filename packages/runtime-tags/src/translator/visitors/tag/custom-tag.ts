@@ -50,7 +50,6 @@ import {
 } from "../../util/serialize-reasons";
 import {
   addStatement,
-  addValue,
   getResumeRegisterId,
   initValue,
   setBindingSerializedValue,
@@ -440,21 +439,6 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
     tagName,
   );
   const inputExport = childExports.input;
-  if (inputExport) {
-    writeAttrsToExports(tag, inputExport, `${getTagName(tag) || "tag"}_input`, {
-      circular: childFile.opts.filename === file.opts.filename,
-      tagSection,
-      relativePath,
-      childScopeBinding,
-      attrTagCallsByTag: undefined,
-    });
-  }
-
-  write`${importNamed(file, relativePath, childExports.template, `${tagName}_template`)}`;
-  walks.injectWalks(
-    tag,
-    importNamed(file, relativePath, childExports.walks, `${tagName}_walks`),
-  );
 
   if (node.var) {
     const source = initValue(
@@ -492,6 +476,23 @@ function translateDOM(tag: t.NodePath<t.MarkoTag>) {
       ]),
     ),
   );
+
+  if (inputExport) {
+    writeAttrsToExports(tag, inputExport, `${getTagName(tag) || "tag"}_input`, {
+      circular: childFile.opts.filename === file.opts.filename,
+      tagSection,
+      relativePath,
+      childScopeBinding,
+      attrTagCallsByTag: undefined,
+    });
+  }
+
+  write`${importNamed(file, relativePath, childExports.template, `${tagName}_template`)}`;
+  walks.injectWalks(
+    tag,
+    importNamed(file, relativePath, childExports.walks, `${tagName}_walks`),
+  );
+
   tag.remove();
 }
 
@@ -708,16 +709,20 @@ function writeAttrsToExports(
       templateExport.id,
       importAlias,
     );
-    addValue(
+    addStatement(
+      "render",
       info.tagSection,
       // technically this should be `arg.extra?.referencedBindings`
       // but we should probably ensure all other references are dropped in this case before we do that.
       tag.node.extra?.referencedBindings,
-      identifierToSignal(tagInputIdentifier),
-      t.isSpreadElement(arg)
-        ? t.memberExpression(arg.argument, t.numericLiteral(0), true)
-        : arg,
-      createScopeReadExpression(info.tagSection, info.childScopeBinding),
+      t.expressionStatement(
+        t.callExpression(tagInputIdentifier, [
+          createScopeReadExpression(info.tagSection, info.childScopeBinding),
+          t.isSpreadElement(arg)
+            ? t.memberExpression(arg.argument, t.numericLiteral(0), true)
+            : arg,
+        ]),
+      ),
     );
     return;
   }
@@ -784,12 +789,16 @@ function writeAttrsToExports(
       }
     }
 
-    addValue(
+    addStatement(
+      "render",
       info.tagSection,
       referencedBindings,
-      identifierToSignal(tagInputIdentifier),
-      translatedProps,
-      createScopeReadExpression(info.tagSection, info.childScopeBinding),
+      t.expressionStatement(
+        t.callExpression(tagInputIdentifier, [
+          createScopeReadExpression(info.tagSection, info.childScopeBinding),
+          translatedProps,
+        ]),
+      ),
     );
     return;
   }
@@ -876,19 +885,25 @@ function writeAttrsToExports(
           `${importAlias}_${attrTagMeta.name}`,
         );
         decls.push(t.variableDeclarator(getAttrTagIdentifier(attrTagMeta)));
-        addValue(
+        addStatement("render", info.tagSection, referencedBindings, [
+          t.variableDeclaration("let", decls),
+          ...statements,
+        ]);
+        addStatement(
+          "render",
           info.tagSection,
           referencedBindings,
-          identifierToSignal(attrExportIdentifier),
-          getAttrTagIdentifier(attrTagMeta),
-          createScopeReadExpression(info.tagSection, info.childScopeBinding),
+          t.expressionStatement(
+            t.callExpression(attrExportIdentifier, [
+              createScopeReadExpression(
+                info.tagSection,
+                info.childScopeBinding,
+              ),
+              getAttrTagIdentifier(attrTagMeta),
+            ]),
+          ),
         );
       }
-
-      addStatement("render", info.tagSection, referencedBindings, [
-        t.variableDeclaration("let", decls),
-        ...statements,
-      ]);
     }
   }
 
@@ -902,12 +917,16 @@ function writeAttrsToExports(
         templateExport.props.content.id,
         `${importAlias}_content`,
       );
-      addValue(
+      addStatement(
+        "render",
         info.tagSection,
         undefined, // TODO: pretty sure content needs to have the reference group of it's param defaults.
-        identifierToSignal(contentExportIdentifier),
-        t.callExpression(t.identifier(bodySection.name), [scopeIdentifier]),
-        createScopeReadExpression(info.tagSection, info.childScopeBinding),
+        t.expressionStatement(
+          t.callExpression(contentExportIdentifier, [
+            createScopeReadExpression(info.tagSection, info.childScopeBinding),
+            t.callExpression(t.identifier(bodySection.name), [scopeIdentifier]),
+          ]),
+        ),
       );
     }
   }
@@ -943,12 +962,16 @@ function writeAttrsToExports(
       childAttrExports.id,
       `${importAlias}_${attr.name}`,
     );
-    addValue(
+    addStatement(
+      "render",
       info.tagSection,
       attr.value.extra?.referencedBindings,
-      identifierToSignal(attrExportIdentifier),
-      attr.value,
-      createScopeReadExpression(info.tagSection, info.childScopeBinding),
+      t.expressionStatement(
+        t.callExpression(attrExportIdentifier, [
+          createScopeReadExpression(info.tagSection, info.childScopeBinding),
+          attr.value,
+        ]),
+      ),
     );
   }
 
@@ -977,12 +1000,16 @@ function writeAttrsToExports(
         childAttrExports.id,
         `${importAlias}_${name}`,
       );
-      addValue(
+      addStatement(
+        "render",
         info.tagSection,
         referencedBindings,
-        identifierToSignal(attrExportIdentifier),
-        getMissingPropValue(name),
-        createScopeReadExpression(info.tagSection, info.childScopeBinding),
+        t.expressionStatement(
+          t.callExpression(attrExportIdentifier, [
+            createScopeReadExpression(info.tagSection, info.childScopeBinding),
+            getMissingPropValue(name),
+          ]),
+        ),
       );
     }
   }
@@ -1067,19 +1094,8 @@ function callExpression(
   return t.callExpression(id, args.filter(Boolean) as t.Expression[]);
 }
 
-function identifierToSignal(identifier: t.Identifier) {
-  return {
-    identifier,
-    hasDownstreamIntersections: always,
-  };
-}
-
 function buildUndefined() {
   return t.unaryExpression("void", t.numericLiteral(0));
-}
-
-function always() {
-  return true;
 }
 
 export function getChildScopeBinding(path: t.NodePath<t.MarkoTag>) {
