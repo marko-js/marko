@@ -30,10 +30,10 @@ source=2
 
 # Mutations
 ```
-UPDATE #text1 "1" => "2"
 UPDATE button0/#text0 "1" => "2"
 UPDATE button1/#text0 "1" => "2"
 UPDATE button1/#text2 "1" => "2"
+UPDATE #text1 "1" => "2"
 UPDATE button0/#text2 "1" => "2"
 ```
 
@@ -53,10 +53,10 @@ source=3
 
 # Mutations
 ```
-UPDATE #text1 "2" => "3"
 UPDATE button0/#text0 "2" => "3"
 UPDATE button1/#text0 "2" => "3"
 UPDATE button1/#text2 "2" => "3"
+UPDATE #text1 "2" => "3"
 UPDATE button0/#text2 "2" => "3"
 ```
 
@@ -76,9 +76,9 @@ source=4
 
 # Mutations
 ```
-UPDATE #text1 "3" => "4"
 UPDATE button0/#text0 "3" => "4"
 UPDATE button1/#text0 "3" => "4"
 UPDATE button1/#text2 "3" => "4"
+UPDATE #text1 "3" => "4"
 UPDATE button0/#text2 "3" => "4"
 ```

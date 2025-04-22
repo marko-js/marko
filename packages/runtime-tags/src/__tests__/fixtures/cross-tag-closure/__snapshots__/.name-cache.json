@@ -6,7 +6,8 @@
       "$$value": "r",
       "$$count$mytag$content_effect": "n",
       "$$count$mytag$content": "o",
-      "$$count_closure": "e"
+      "$$count_closure": "e",
+      "$$valueChange": "i"
     }
   }
 }

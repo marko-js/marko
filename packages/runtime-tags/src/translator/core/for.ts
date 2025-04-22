@@ -256,29 +256,6 @@ export default {
           );
         };
 
-        const params = node.body.params;
-        signal.hasDownstreamIntersections = () => {
-          for (const param of params) {
-            const binding = param.extra?.binding;
-            if (binding) {
-              for (const {
-                referencedBindings,
-              } of binding.downstreamExpressions) {
-                if (
-                  getSignal(
-                    bodySection,
-                    referencedBindings,
-                  ).hasDownstreamIntersections()
-                ) {
-                  return true;
-                }
-              }
-            }
-          }
-
-          return false;
-        };
-
         const forAttrs = getKnownAttrValues(node);
         const loopArgs = getBaseArgsInForTag(forType, forAttrs);
         if (forAttrs.by) {

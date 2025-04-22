@@ -28,8 +28,8 @@ const $x = /* @__PURE__ */_$.state("x/2", ($scope, x) => {
 });
 export function $setup($scope) {
   _child($scope["#childScope/1"]);
+  _child_input_content($scope["#childScope/1"], $child_content($scope));
   $x($scope, 1);
   $y($scope, 2);
-  _child_input_content($scope["#childScope/1"], $child_content($scope));
 }
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

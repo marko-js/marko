@@ -11,8 +11,8 @@ const $clickCount = /* @__PURE__ */_$.state("clickCount/1", ($scope, clickCount)
 });
 export function $setup($scope) {
   _myButton($scope["#childScope/0"]);
-  $clickCount($scope, 0);
   _myButton_input_content($scope["#childScope/0"], $mybutton_content($scope));
+  $clickCount($scope, 0);
 }
 function $onClick($scope, {
   clickCount

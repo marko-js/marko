@@ -5,10 +5,10 @@ const formatNumber2 = $formatNumber2;
 import { $setup as _counter, $input as _counter_input, $template as _counter_template, $walks as _counter_walks } from "./tags/counter.marko";
 export function $setup($scope) {
   _counter($scope["#childScope/0"]);
-  _counter($scope["#childScope/1"]);
   _counter_input($scope["#childScope/0"], {
     format: formatNumber
   });
+  _counter($scope["#childScope/1"]);
   _counter_input($scope["#childScope/1"], {
     format: formatNumber2
   });

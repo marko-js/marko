@@ -7,11 +7,7 @@ import {
 
 import type { AccessorPrefix, AccessorProp } from "../../common/types";
 import { getSectionReturnValueIdentifier } from "../core/return";
-import {
-  cleanIdentifier,
-  isScopeIdentifier,
-  scopeIdentifier,
-} from "../visitors/program";
+import { isScopeIdentifier, scopeIdentifier } from "../visitors/program";
 import {
   getExprIfSerialized,
   getSerializeGuard,
@@ -27,6 +23,7 @@ import {
   BindingType,
   bindingUtil,
   compareSources,
+  getCanonicalBinding,
   getDebugScopeAccess,
   getReadReplacement,
   getScopeAccessor,
@@ -70,21 +67,14 @@ export type Signal = {
   build: () => t.Expression;
   register?: boolean;
   values: Array<{
-    signal: {
-      identifier: t.Identifier | t.MemberExpression;
-      hasDownstreamIntersections: () => boolean;
-      buildDeclaration?: () => t.VariableDeclaration;
-      extraArgs?: t.Expression[];
-    };
+    signal: Signal;
     value: t.Expression;
-    scope: t.Expression;
   }>;
   intersection: Opt<t.Expression>;
   render: t.Statement[];
   renderReferencedBindings: ReferencedBindings;
   effect: t.Statement[];
   effectReferencedBindings: ReferencedBindings;
-  hasDownstreamIntersections: () => boolean;
   hasDynamicSubscribers?: true;
   export: boolean;
   extraArgs?: t.Expression[];
@@ -224,38 +214,6 @@ export function getSignal(
         effect: [],
         effectReferencedBindings: undefined,
         subscribers: [],
-        hasDownstreamIntersections: () => {
-          let hasDownstreamIntersections: boolean =
-            !!(signal.intersection /* || signal.closures.size */);
-          if (!hasDownstreamIntersections) {
-            for (const value of signal.values) {
-              if (value.signal.hasDownstreamIntersections()) {
-                hasDownstreamIntersections = true;
-                break;
-              }
-            }
-          }
-          if (!hasDownstreamIntersections) {
-            if (!Array.isArray(referencedBindings) && referencedBindings) {
-              for (const alias of referencedBindings.aliases) {
-                if (getSignal(section, alias).hasDownstreamIntersections()) {
-                  hasDownstreamIntersections = true;
-                  break;
-                }
-              }
-              if (!hasDownstreamIntersections) {
-                for (const [, alias] of referencedBindings.propertyAliases) {
-                  if (getSignal(section, alias).hasDownstreamIntersections()) {
-                    hasDownstreamIntersections = true;
-                    break;
-                  }
-                }
-              }
-            }
-          }
-          signal.hasDownstreamIntersections = () => hasDownstreamIntersections;
-          return hasDownstreamIntersections;
-        },
         build: unimplementedBuild,
         export: !!exportName,
       } as Signal),
@@ -284,22 +242,23 @@ export function getSignal(
       bindingUtil.find(section.referencedClosures, referencedBindings)
     ) {
       signal.build = () => {
+        const canonicalClosure = getCanonicalBinding(referencedBindings)!;
         const render = getSignalFn(signal);
         const closureSignalBuilder = getClosureSignalBuilder(section);
         return !closureSignalBuilder ||
-          isDynamicClosure(section, referencedBindings)
+          isDynamicClosure(section, canonicalClosure)
           ? callRuntime(
               "dynamicClosureRead",
-              getScopeAccessorLiteral(referencedBindings),
+              getScopeAccessorLiteral(canonicalClosure),
               render,
-              isImmediateOwner(section, referencedBindings)
+              isImmediateOwner(section, canonicalClosure)
                 ? undefined
                 : t.arrowFunctionExpression(
                     [scopeIdentifier],
-                    getScopeExpression(section, referencedBindings.section),
+                    getScopeExpression(section, canonicalClosure.section),
                   ),
             )
-          : getClosureSignalBuilder(section)!(referencedBindings, render);
+          : getClosureSignalBuilder(section)!(canonicalClosure, render);
       };
     }
   }
@@ -321,7 +280,8 @@ export function initValue(
     const isNakedAlias = binding.upstreamAlias && !binding.property;
     const needsGuard =
       !isNakedAlias &&
-      (binding.downstreamExpressions.size ||
+      (binding.closureSections ||
+        binding.downstreamExpressions.size ||
         (fn.type === "ArrowFunctionExpression" &&
           (fn.body as t.BlockStatement).body.length > 0));
     const needsCache = needsGuard || signal.intersection;
@@ -357,7 +317,6 @@ function getSignalFn(signal: Signal): t.Expression {
   const isIntersection = Array.isArray(binding);
   const isBinding = binding && !isIntersection;
   const isValue = isBinding && binding.section === section;
-  let canUseCalleeDirectly = !signal.render.length;
 
   if (
     isBinding &&
@@ -377,15 +336,21 @@ function getSignalFn(signal: Signal): t.Expression {
   if (isValue) {
     for (const alias of binding.aliases) {
       const aliasSignal = getSignal(alias.section, alias);
-      signal.render.push(
-        t.expressionStatement(
-          t.callExpression(aliasSignal.identifier, [
-            scopeIdentifier,
-            t.identifier(binding.name),
-            ...getTranslatedExtraArgs(aliasSignal),
-          ]),
-        ),
-      );
+      if (
+        aliasSignal.render.length ||
+        aliasSignal.values.length ||
+        aliasSignal.effect.length
+      ) {
+        signal.render.push(
+          t.expressionStatement(
+            t.callExpression(aliasSignal.identifier, [
+              scopeIdentifier,
+              t.identifier(binding.name),
+              ...getTranslatedExtraArgs(aliasSignal),
+            ]),
+          ),
+        );
+      }
     }
 
     for (const [key, alias] of binding.propertyAliases) {
@@ -407,15 +372,28 @@ function getSignalFn(signal: Signal): t.Expression {
   }
 
   for (const value of signal.values) {
-    signal.render.push(
-      t.expressionStatement(
-        t.callExpression(value.signal.identifier, [
-          value.scope,
-          value.value,
-          ...getTranslatedExtraArgs(value.signal),
-        ]),
-      ),
-    );
+    const valSignal = value.signal;
+    if (
+      !valSignal.referencedBindings ||
+      Array.isArray(valSignal.referencedBindings) ||
+      !valSignal.referencedBindings.upstreamAlias ||
+      valSignal.referencedBindings.property ||
+      valSignal.effect.length ||
+      valSignal.render.length ||
+      valSignal.values.length
+    ) {
+      signal.render.push(
+        t.expressionStatement(
+          t.callExpression(value.signal.identifier, [
+            scopeIdentifier,
+            value.value,
+            ...getTranslatedExtraArgs(value.signal),
+          ]),
+        ),
+      );
+    } else {
+      signal.render.push(t.expressionStatement(value.value));
+    }
   }
 
   forEach(signal.intersection, (intersection) => {
@@ -424,11 +402,11 @@ function getSignalFn(signal: Signal): t.Expression {
     );
   });
 
-  if (isValue) {
+  if (isValue && binding.sources) {
     let dynamicClosureArgs: t.Expression[] | undefined;
     let dynamicClosureSignalIdentifier: t.Identifier | undefined;
-    forEach(binding.closureSections, (closureSection) => {
-      if (binding.sources) {
+    if (binding.sources) {
+      forEach(binding.closureSections, (closureSection) => {
         if (isDynamicClosure(closureSection, binding)) {
           if (!dynamicClosureArgs) {
             dynamicClosureArgs = [];
@@ -457,18 +435,18 @@ function getSignalFn(signal: Signal): t.Expression {
             ),
           );
         }
-      }
-    });
+      });
 
-    if (dynamicClosureSignalIdentifier) {
-      (signal.prependStatements ||= []).push(
-        t.variableDeclaration("const", [
-          t.variableDeclarator(
-            dynamicClosureSignalIdentifier,
-            callRuntime("dynamicClosure", ...dynamicClosureArgs!),
-          ),
-        ]),
-      );
+      if (dynamicClosureSignalIdentifier) {
+        (signal.prependStatements ||= []).push(
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              dynamicClosureSignalIdentifier,
+              callRuntime("dynamicClosure", ...dynamicClosureArgs!),
+            ),
+          ]),
+        );
+      }
     }
   }
 
@@ -492,23 +470,23 @@ function getSignalFn(signal: Signal): t.Expression {
     );
   }
 
-  if (canUseCalleeDirectly && signal.render.length === 1) {
+  if (signal.render.length === 1) {
     const render = signal.render[0];
     if (render.type === "ExpressionStatement") {
       const { expression } = render;
       if (expression.type === "CallExpression") {
         const args = expression.arguments;
         if (params.length >= args.length) {
-          for (let i = args.length; i--; ) {
+          let i = args.length;
+          for (; i--; ) {
             const param = params[i];
             const arg = args[i];
             if (arg.type !== "Identifier" || param.name !== arg.name) {
-              canUseCalleeDirectly = false;
               break;
             }
           }
 
-          if (canUseCalleeDirectly) {
+          if (i === -1) {
             return expression.callee as t.Expression;
           }
         }
@@ -532,94 +510,6 @@ function getTranslatedExtraArgs(signal: { extraArgs?: t.Expression[] }) {
   }
 
   return emptyExtraArgs;
-}
-
-export function getDestructureSignal(
-  bindingIdentifiersByName: Record<string, t.Identifier> | t.Identifier[],
-  destructurePattern: t.LVal,
-) {
-  const bindingIdentifiers = Array.isArray(bindingIdentifiersByName)
-    ? bindingIdentifiersByName
-    : Object.values(bindingIdentifiersByName);
-  if (bindingIdentifiers.length) {
-    const valueIdentifier = generateUidIdentifier("destructure");
-    const bindingSignals = bindingIdentifiers.map((bindingIdentifier) =>
-      initValue(bindingIdentifier.extra?.binding as Binding),
-    );
-
-    const declarations = t.variableDeclaration(
-      "let",
-      bindingIdentifiers.map((bindingIdentifier) =>
-        t.variableDeclarator(bindingIdentifier),
-      ),
-    );
-
-    let id: t.Identifier | undefined;
-
-    return {
-      get identifier() {
-        if (!id) {
-          id = generateUidIdentifier("destructure");
-          getProgram().node.body.push(
-            t.variableDeclaration("const", [
-              t.variableDeclarator(id, this.build(true)),
-            ]),
-          );
-        }
-        return id;
-      },
-      build(canCallOnlyWhenDirty?: boolean) {
-        if (canCallOnlyWhenDirty && !this.hasDownstreamIntersections()) {
-          return t.arrowFunctionExpression(
-            [scopeIdentifier, destructurePattern as t.Pattern],
-            t.blockStatement(
-              bindingSignals.map((signal, i) =>
-                t.expressionStatement(
-                  t.callExpression(signal.identifier, [
-                    scopeIdentifier,
-                    bindingIdentifiers[i],
-                    ...getTranslatedExtraArgs(signal),
-                  ]),
-                ),
-              ),
-            ),
-          );
-        }
-        return t.arrowFunctionExpression(
-          [scopeIdentifier, valueIdentifier, cleanIdentifier],
-          t.blockStatement([
-            declarations,
-            t.ifStatement(
-              t.unaryExpression("!", cleanIdentifier),
-              t.expressionStatement(
-                t.assignmentExpression(
-                  "=",
-                  destructurePattern,
-                  valueIdentifier,
-                ),
-              ),
-            ),
-            ...bindingSignals.map((signal, i) =>
-              t.expressionStatement(
-                t.callExpression(signal.identifier, [
-                  scopeIdentifier,
-                  bindingIdentifiers[i],
-                  ...getTranslatedExtraArgs(signal),
-                ]),
-              ),
-            ),
-          ]),
-        );
-      },
-      hasDownstreamIntersections() {
-        return bindingIdentifiers.some((bindingIdentifier) => {
-          const binding = bindingIdentifier.extra!.binding!;
-          const signal = getSignal(binding.section, binding);
-          return signal.hasDownstreamIntersections();
-        });
-      },
-    };
-  }
 }
 
 export function subscribe(provider: ReferencedBindings, subscriber: Signal) {
@@ -742,14 +632,12 @@ export function addValue(
   referencedBindings: ReferencedBindings,
   signal: Signal["values"][number]["signal"],
   value: t.Expression,
-  scope: t.Expression = scopeIdentifier,
 ) {
   const parentSignal = getSignal(targetSection, referencedBindings);
   addRenderReferences(parentSignal, referencedBindings);
   parentSignal.values.push({
     signal,
     value,
-    scope,
   });
 }
 
@@ -902,6 +790,21 @@ export function writeSignals(section: Section) {
     }
 
     let value = signal.build();
+
+    if (
+      // It's possible for aliases to render nothing
+      // if they're only consumed in effects/closures.
+      // This ignores writing out those signals in that case.
+      signal.referencedBindings &&
+      !Array.isArray(signal.referencedBindings) &&
+      signal.referencedBindings.upstreamAlias &&
+      !signal.referencedBindings.property &&
+      t.isFunction(value) &&
+      t.isBlockStatement(value.body) &&
+      !value.body.body.length
+    ) {
+      continue;
+    }
 
     if (t.isCallExpression(value)) {
       replaceNullishAndEmptyFunctionsWith0(value.arguments as t.Expression[]);

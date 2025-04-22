@@ -28,10 +28,10 @@ export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {
 export function $setup($scope) {
   _customTag($scope["#childScope/1"]);
   _customTag($scope["#childScope/2"]);
-  _customTag($scope["#childScope/3"]);
   _customTag_input_style($scope["#childScope/2"], {
     width: "100px"
   });
+  _customTag($scope["#childScope/3"]);
   _customTag_input_style($scope["#childScope/3"], "color: green");
 }
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

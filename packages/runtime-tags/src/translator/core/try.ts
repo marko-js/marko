@@ -186,7 +186,6 @@ export default {
           propsToExpression(translatedAttrs.properties),
         );
 
-        signal.hasDownstreamIntersections = () => true;
         tag.remove();
       },
     },

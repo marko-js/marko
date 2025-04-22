@@ -198,14 +198,25 @@ export function trackVarReferences(
 ) {
   const tagVar = tag.node.var;
   if (tagVar) {
-    const section = getOrCreateSection(tag);
     const canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
+    if (canonicalUpstreamAlias) {
+      createBindingsAndTrackReferences(
+        tagVar,
+        canonicalUpstreamAlias.type,
+        tag.scope,
+        canonicalUpstreamAlias.section,
+        canonicalUpstreamAlias,
+        undefined,
+      );
+      return canonicalUpstreamAlias;
+    }
+
     createBindingsAndTrackReferences(
       tagVar,
-      upstreamAlias ? upstreamAlias.type : type,
+      type,
       tag.scope,
-      section,
-      canonicalUpstreamAlias,
+      getOrCreateSection(tag),
+      undefined,
       undefined,
     );
     return tagVar.extra?.binding;
@@ -219,15 +230,21 @@ export function trackParamsReferences(
 ) {
   const params = body.node.params;
   if (body.node.body.length && params.length) {
-    const section = getOrCreateSection(body);
     const canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
+    let section: Section;
+    if (canonicalUpstreamAlias) {
+      section = canonicalUpstreamAlias.section;
+      type = canonicalUpstreamAlias.type;
+    } else {
+      section = getOrCreateSection(body);
+    }
     const paramsBinding =
       canonicalUpstreamAlias ||
       ((body.node.extra ??= {}).binding = createBinding(
         generateUid("params"),
         type,
         section,
-        canonicalUpstreamAlias,
+        undefined,
         undefined,
       ));
 
@@ -684,8 +701,9 @@ export function finalizeReferences() {
       section,
     } of binding.downstreamExpressions) {
       if (section !== binding.section) {
-        binding.closureSections = sectionUtil.add(
-          binding.closureSections,
+        const canonicalUpstreamAlias = getCanonicalBinding(binding)!;
+        canonicalUpstreamAlias.closureSections = sectionUtil.add(
+          canonicalUpstreamAlias.closureSections,
           section,
         );
         section.referencedClosures = bindingUtil.add(
@@ -695,8 +713,8 @@ export function finalizeReferences() {
 
         addOwnersSerializeReason(
           section,
-          binding.section,
-          binding.sources,
+          canonicalUpstreamAlias.section,
+          !!isEffect || canonicalUpstreamAlias.sources,
           getAccessorProp().Owner,
         );
       }
@@ -1151,24 +1169,30 @@ export function getAllTagReferenceNodes(
 }
 
 export function getScopeAccessorLiteral(binding: Binding, includeId?: boolean) {
+  const canonicalBinding = getCanonicalBinding(binding)!;
   if (isOptimize()) {
-    return t.numericLiteral(binding.id);
+    return t.numericLiteral(canonicalBinding.id);
   }
 
   return t.stringLiteral(
-    binding.name +
-      (includeId || binding.type === BindingType.dom ? `/${binding.id}` : ""),
+    canonicalBinding.name +
+      (includeId || canonicalBinding.type === BindingType.dom
+        ? `/${canonicalBinding.id}`
+        : ""),
   );
 }
 
 export function getScopeAccessor(binding: Binding, includeId?: boolean) {
+  const canonicalBinding = getCanonicalBinding(binding)!;
   if (isOptimize()) {
-    return binding.id + "";
+    return canonicalBinding.id + "";
   }
 
   return (
-    binding.name +
-    (includeId || binding.type === BindingType.dom ? `/${binding.id}` : "")
+    canonicalBinding.name +
+    (includeId || canonicalBinding.type === BindingType.dom
+      ? `/${canonicalBinding.id}`
+      : "")
   );
 }
 

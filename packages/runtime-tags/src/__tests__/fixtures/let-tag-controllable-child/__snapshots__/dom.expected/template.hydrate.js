@@ -1,4 +1,4 @@
-// size: 583 (min) 254 (brotli)
+// size: 583 (min) 256 (brotli)
 const $expr_input_value_input_valueChange = _$.intersection(10, ($scope) => {
     const { 8: input_value, 9: input_valueChange } = $scope;
     $state($scope, input_value, input_valueChange);
@@ -31,8 +31,8 @@ const $expr_input_value_input_valueChange = _$.intersection(10, ($scope) => {
       $otherState($scope, input.value, input.valueChange);
   }),
   $source = _$.state(2, ($scope, source) => {
-    _$.data($scope[1], source),
-      $input($scope[0], { value: source, valueChange: $valueChange($scope) });
+    $input($scope[0], { value: source, valueChange: $valueChange($scope) }),
+      _$.data($scope[1], source);
   });
 function $valueChange($scope) {
   return (_new_source) => {

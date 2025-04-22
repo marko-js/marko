@@ -5,7 +5,8 @@
       "$init": "t",
       "$$x_effect": "n",
       "$$x": "o",
-      "$$count_effect": "e"
+      "$$count_effect": "e",
+      "$$valueChange": "r"
     }
   }
 }

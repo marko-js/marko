@@ -72,10 +72,10 @@ container.querySelectorAll("button").forEach(item => item.click());
 
 # Mutations
 ```
-UPDATE html/body/#text1 "1" => "2"
 UPDATE html/body/button0/#text0 "1" => "2"
 UPDATE html/body/button1/#text0 "1" => "2"
 UPDATE html/body/button1/#text2 "1" => "2"
+UPDATE html/body/#text1 "1" => "2"
 UPDATE html/body/button0/#text2 "1" => "2"
 ```
 
@@ -118,10 +118,10 @@ container.querySelectorAll("button").forEach(item => item.click());
 
 # Mutations
 ```
-UPDATE html/body/#text1 "2" => "3"
 UPDATE html/body/button0/#text0 "2" => "3"
 UPDATE html/body/button1/#text0 "2" => "3"
 UPDATE html/body/button1/#text2 "2" => "3"
+UPDATE html/body/#text1 "2" => "3"
 UPDATE html/body/button0/#text2 "2" => "3"
 ```
 
@@ -164,9 +164,9 @@ container.querySelectorAll("button").forEach(item => item.click());
 
 # Mutations
 ```
-UPDATE html/body/#text1 "3" => "4"
 UPDATE html/body/button0/#text0 "3" => "4"
 UPDATE html/body/button1/#text0 "3" => "4"
 UPDATE html/body/button1/#text2 "3" => "4"
+UPDATE html/body/#text1 "3" => "4"
 UPDATE html/body/button0/#text2 "3" => "4"
 ```
