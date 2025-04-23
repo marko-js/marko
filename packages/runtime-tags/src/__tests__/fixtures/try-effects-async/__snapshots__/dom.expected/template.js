@@ -23,7 +23,6 @@ const $clickCount$try$content = /* @__PURE__ */_$.dynamicClosureRead("clickCount
   $clickCount$try$content_effect($scope);
 });
 const $try_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", 0, 0, $scope => $clickCount$try$content($scope));
-const $try = /* @__PURE__ */_$.createTry("#text/2", $try_content);
 const $clickCount_closure = /* @__PURE__ */_$.dynamicClosure($clickCount$try$content);
 const $clickCount_effect = _$.effect("__tests__/template.marko_0_clickCount", ($scope, {
   clickCount
@@ -34,6 +33,7 @@ const $clickCount = /* @__PURE__ */_$.state("clickCount/3", $scope => {
   $clickCount_closure($scope);
   $clickCount_effect($scope);
 });
+const $try = /* @__PURE__ */_$.createTry("#text/2", $try_content);
 export function $setup($scope) {
   $clickCount($scope, 0);
   $try($scope, {

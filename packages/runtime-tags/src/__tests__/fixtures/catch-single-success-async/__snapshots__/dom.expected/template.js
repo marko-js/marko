@@ -16,8 +16,8 @@ const $setup$try$content = $scope => {
   $await$try$content($scope, resolveAfter("c", 2));
 };
 const $try_content = /* @__PURE__ */_$.createRenderer("b<!>d", /* over(1), replace */"b%", $setup$try$content);
-const $await = /* @__PURE__ */_$.awaitTag("#text/1", $await_content2);
 const $try = /* @__PURE__ */_$.createTry("#text/0", $try_content);
+const $await = /* @__PURE__ */_$.awaitTag("#text/1", $await_content2);
 export function $setup($scope) {
   $try($scope, {
     catch: _$.attrTag({

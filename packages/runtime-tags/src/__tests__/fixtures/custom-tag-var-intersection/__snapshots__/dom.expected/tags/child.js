@@ -18,9 +18,9 @@ const $x = /* @__PURE__ */_$.state("x/5", ($scope, x) => {
   $expr_input_extra_x($scope);
   $x_effect($scope);
 });
-export const $input_extra = /* @__PURE__ */_$.value("input_extra", $expr_input_extra_x);
-export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_extra($scope, input.extra));
 export function $setup($scope) {
   $x($scope, 0);
 }
+export const $input_extra = /* @__PURE__ */_$.value("input_extra", $expr_input_extra_x);
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_extra($scope, input.extra));
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/child.marko", $template, $walks, $setup, $input);

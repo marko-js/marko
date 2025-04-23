@@ -8,8 +8,8 @@ const $params2$await$content = /* @__PURE__ */_$.value("$params2", ($scope, $par
 const $await_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, $params2$await$content);
 const $placeholder_content = _$.registerContent("__tests__/template.marko_2_renderer", "_A_");
 const $try_content = /* @__PURE__ */_$.createRenderer("b");
-const $await = /* @__PURE__ */_$.awaitTag("#text/1", $await_content);
 const $try = /* @__PURE__ */_$.createTry("#text/0", $try_content);
+const $await = /* @__PURE__ */_$.awaitTag("#text/1", $await_content);
 export function $setup($scope) {
   $try($scope, {
     placeholder: _$.attrTag({

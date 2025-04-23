@@ -15,11 +15,11 @@ const $expr_name_write = /* @__PURE__ */_$.intersection(5, $scope => {
   _$.resetAbortSignal($scope, 0);
   $expr_name_write_effect($scope);
 });
-export const $write = /* @__PURE__ */_$.value("write", $expr_name_write);
 export const $name = /* @__PURE__ */_$.value("name", ($scope, name) => {
   _$.data($scope["#text/0"], name);
   $expr_name_write($scope);
 });
+export const $write = /* @__PURE__ */_$.value("write", $expr_name_write);
 export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {
   $name($scope, input.name);
   $write($scope, input.write);

@@ -6,12 +6,12 @@ const $expr_x_y_effect = _$.effect("__tests__/template.marko_0_x_y", ($scope, {
   y
 }) => _$.on($scope["#button/0"], "click", () => $x($scope, $y($scope, x + y))));
 const $expr_x_y = /* @__PURE__ */_$.intersection(5, $expr_x_y_effect);
-const $y = /* @__PURE__ */_$.state("y/4", ($scope, y) => {
-  _$.data($scope["#text/2"], y);
-  $expr_x_y($scope);
-});
 const $x = /* @__PURE__ */_$.state("x/3", ($scope, x) => {
   _$.data($scope["#text/1"], x);
+  $expr_x_y($scope);
+});
+const $y = /* @__PURE__ */_$.state("y/4", ($scope, y) => {
+  _$.data($scope["#text/2"], y);
   $expr_x_y($scope);
 });
 export function $setup($scope) {

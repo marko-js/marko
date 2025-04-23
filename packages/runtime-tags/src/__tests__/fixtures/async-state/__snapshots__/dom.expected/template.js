@@ -10,7 +10,6 @@ const $placeholder_content = _$.registerContent("__tests__/template.marko_2_rend
 const $await$try$content = /* @__PURE__ */_$.awaitTag("#text/0", $await_content);
 const $clickCount$try$content = /* @__PURE__ */_$.dynamicClosureRead("clickCount", ($scope, clickCount) => $await$try$content($scope, resolveAfter(clickCount, 1)));
 const $try_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", 0, 0, $scope => $clickCount$try$content($scope));
-const $try = /* @__PURE__ */_$.createTry("#text/1", $try_content);
 const $clickCount_closure = /* @__PURE__ */_$.dynamicClosure($clickCount$try$content);
 const $clickCount_effect = _$.effect("__tests__/template.marko_0_clickCount", ($scope, {
   clickCount
@@ -21,6 +20,7 @@ const $clickCount = /* @__PURE__ */_$.state("clickCount/2", $scope => {
   $clickCount_closure($scope);
   $clickCount_effect($scope);
 });
+const $try = /* @__PURE__ */_$.createTry("#text/1", $try_content);
 export function $setup($scope) {
   $clickCount($scope, 0);
   $try($scope, {

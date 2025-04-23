@@ -1,14 +1,14 @@
-// size: 318 (min) 173 (brotli)
-const $expr_y_z = _$.intersection(8, ($scope) => {
+// size: 318 (min) 179 (brotli)
+const $a = _$.value(9, ($scope, a) => _$.data($scope[4], a)),
+  $expr_y_z = _$.intersection(8, ($scope) => {
     const { 6: y, 7: z } = $scope;
     $a($scope, y + z);
   }),
-  $a = _$.value(9, ($scope, a) => _$.data($scope[4], a)),
-  $z = _$.value(7, ($scope, z) => {
-    _$.data($scope[3], z), $expr_y_z($scope);
-  }),
   $y = _$.value(6, ($scope, y) => {
     _$.data($scope[2], y), $expr_y_z($scope);
+  }),
+  $z = _$.value(7, ($scope, z) => {
+    _$.data($scope[3], z), $expr_y_z($scope);
   }),
   $x_effect = _$.effect("a0", ($scope, { 5: x }) =>
     _$.on($scope[0], "click", () => ($x($scope, x + 1), x)),

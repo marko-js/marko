@@ -70,7 +70,7 @@ export type Signal = {
     signal: Signal;
     value: t.Expression;
   }>;
-  intersection: Opt<t.Expression>;
+  intersection: Opt<Signal>;
   render: t.Statement[];
   renderReferencedBindings: ReferencedBindings;
   effect: t.Statement[];
@@ -398,7 +398,9 @@ function getSignalFn(signal: Signal): t.Expression {
 
   forEach(signal.intersection, (intersection) => {
     signal.render.push(
-      t.expressionStatement(t.callExpression(intersection, [scopeIdentifier])),
+      t.expressionStatement(
+        t.callExpression(intersection.identifier, [scopeIdentifier]),
+      ),
     );
   });
 
@@ -518,10 +520,7 @@ export function subscribe(provider: ReferencedBindings, subscriber: Signal) {
     return;
   }
   const providerSignal = getSignal(subscriber.section, provider);
-  providerSignal.intersection = push(
-    providerSignal.intersection,
-    subscriber.identifier,
-  );
+  providerSignal.intersection = push(providerSignal.intersection, subscriber);
 }
 
 function generateSignalName(referencedBindings?: ReferencedBindings) {
@@ -696,6 +695,118 @@ export function getRegisterUID(section: Section, name: string) {
 }
 
 export function writeSignals(section: Section) {
+  const seen = new Set<Signal>();
+  writeHoists(section);
+
+  for (const signal of getSignals(section).values()) {
+    writeSignal(signal);
+  }
+
+  function writeSignal(signal: Signal) {
+    if (seen.has(signal)) return;
+    seen.add(signal);
+
+    for (const value of signal.values) {
+      writeSignal(value.signal);
+      traverseReplace(value, "value", replaceRenderNode);
+    }
+
+    forEach(signal.intersection, writeSignal);
+    traverseReplace(signal, "render", replaceRenderNode);
+
+    let effectDeclarator: t.VariableDeclarator | undefined;
+    if (signal.effect.length) {
+      traverseReplace(signal, "effect", replaceEffectNode);
+      const effectIdentifier = t.identifier(`${signal.identifier.name}_effect`);
+      const referencedBindings = signal.effectReferencedBindings;
+      const referencesScope = traverseContains(
+        signal.effect,
+        isScopeIdentifier,
+      );
+      effectDeclarator = t.variableDeclarator(
+        effectIdentifier,
+        callRuntime(
+          "effect",
+          t.stringLiteral(
+            getResumeRegisterId(section, signal.referencedBindings),
+          ),
+          t.arrowFunctionExpression(
+            referencedBindings
+              ? referencesScope
+                ? [
+                    scopeIdentifier,
+                    createScopeReadPattern(section, referencedBindings),
+                  ]
+                : [createScopeReadPattern(section, referencedBindings)]
+              : referencesScope
+                ? [scopeIdentifier]
+                : [],
+            toFirstExpressionOrBlock(signal.effect),
+          ),
+        ),
+      );
+    }
+
+    let value = signal.build();
+
+    if (
+      // It's possible for aliases to render nothing
+      // if they're only consumed in effects/closures.
+      // This ignores writing out those signals in that case.
+      signal.referencedBindings &&
+      !Array.isArray(signal.referencedBindings) &&
+      signal.referencedBindings.upstreamAlias &&
+      !signal.referencedBindings.property &&
+      t.isFunction(value) &&
+      t.isBlockStatement(value.body) &&
+      !value.body.body.length
+    ) {
+      return;
+    }
+
+    if (t.isCallExpression(value)) {
+      replaceNullishAndEmptyFunctionsWith0(value.arguments as t.Expression[]);
+    }
+
+    if (signal.register) {
+      value = callRuntime(
+        "registerBoundSignal",
+        t.stringLiteral(
+          getResumeRegisterId(section, signal.referencedBindings, "var"),
+        ),
+        value,
+      );
+    }
+
+    const signalDeclarator = t.variableDeclarator(signal.identifier, value);
+    let signalDeclaration: t.Statement =
+      !section.parent &&
+      !signal.referencedBindings &&
+      (t.isFunctionExpression(value) || t.isArrowFunctionExpression(value))
+        ? t.functionDeclaration(
+            signal.identifier,
+            value.params,
+            t.isExpression(value.body)
+              ? t.blockStatement([t.expressionStatement(value.body)])
+              : value.body,
+          )
+        : t.variableDeclaration("const", [signalDeclarator]);
+    if (signal.export) {
+      signalDeclaration = t.exportNamedDeclaration(signalDeclaration);
+    }
+
+    const signalStatements = signal.prependStatements || [];
+
+    if (effectDeclarator) {
+      signalStatements.push(t.variableDeclaration("const", [effectDeclarator]));
+    }
+
+    signalStatements.push(signalDeclaration);
+    getProgram().node.body.push(...signalStatements);
+  }
+}
+
+function writeHoists(section: Section) {
   forEach(section.hoisted, (binding) => {
     for (const hoistedBinding of binding.hoists.values()) {
       const accessors: t.Expression[] = [
@@ -747,105 +858,6 @@ export function writeSignals(section: Section) {
       }
     }
   });
-
-  const signals = [...getSignals(section).values()].sort(sortSignals);
-  for (const signal of signals) {
-    traverseReplace(signal, "render", replaceRenderNode);
-
-    for (const value of signal.values) {
-      traverseReplace(value, "value", replaceRenderNode);
-    }
-
-    let effectDeclarator: t.VariableDeclarator | undefined;
-    if (signal.effect.length) {
-      traverseReplace(signal, "effect", replaceEffectNode);
-      const effectIdentifier = t.identifier(`${signal.identifier.name}_effect`);
-      const referencedBindings = signal.effectReferencedBindings;
-      const referencesScope = traverseContains(
-        signal.effect,
-        isScopeIdentifier,
-      );
-      effectDeclarator = t.variableDeclarator(
-        effectIdentifier,
-        callRuntime(
-          "effect",
-          t.stringLiteral(
-            getResumeRegisterId(section, signal.referencedBindings),
-          ),
-          t.arrowFunctionExpression(
-            referencedBindings
-              ? referencesScope
-                ? [
-                    scopeIdentifier,
-                    createScopeReadPattern(section, referencedBindings),
-                  ]
-                : [createScopeReadPattern(section, referencedBindings)]
-              : referencesScope
-                ? [scopeIdentifier]
-                : [],
-            toFirstExpressionOrBlock(signal.effect),
-          ),
-        ),
-      );
-    }
-
-    let value = signal.build();
-
-    if (
-      // It's possible for aliases to render nothing
-      // if they're only consumed in effects/closures.
-      // This ignores writing out those signals in that case.
-      signal.referencedBindings &&
-      !Array.isArray(signal.referencedBindings) &&
-      signal.referencedBindings.upstreamAlias &&
-      !signal.referencedBindings.property &&
-      t.isFunction(value) &&
-      t.isBlockStatement(value.body) &&
-      !value.body.body.length
-    ) {
-      continue;
-    }
-
-    if (t.isCallExpression(value)) {
-      replaceNullishAndEmptyFunctionsWith0(value.arguments as t.Expression[]);
-    }
-
-    if (signal.register) {
-      value = callRuntime(
-        "registerBoundSignal",
-        t.stringLiteral(
-          getResumeRegisterId(section, signal.referencedBindings, "var"),
-        ),
-        value,
-      );
-    }
-
-    const signalDeclarator = t.variableDeclarator(signal.identifier, value);
-    let signalDeclaration: t.Statement =
-      !section.parent &&
-      !signal.referencedBindings &&
-      (t.isFunctionExpression(value) || t.isArrowFunctionExpression(value))
-        ? t.functionDeclaration(
-            signal.identifier,
-            value.params,
-            t.isExpression(value.body)
-              ? t.blockStatement([t.expressionStatement(value.body)])
-              : value.body,
-          )
-        : t.variableDeclaration("const", [signalDeclarator]);
-    if (signal.export) {
-      signalDeclaration = t.exportNamedDeclaration(signalDeclaration);
-    }
-
-    const signalStatements = signal.prependStatements || [];
-
-    if (effectDeclarator) {
-      signalStatements.push(t.variableDeclaration("const", [effectDeclarator]));
-    }
-
-    signalStatements.push(signalDeclaration);
-    getProgram().node.body.push(...signalStatements);
-  }
 }
 
 export function writeRegisteredFns() {
@@ -922,39 +934,6 @@ function toReturnedFunction(rawFn: t.Function) {
   return fn.type === "FunctionDeclaration"
     ? [fn, t.returnStatement(fn.id!)]
     : [t.returnStatement(fn)];
-}
-
-function sortSignals(a: Signal, b: Signal) {
-  const aReferencedBindings = getReferencedBindings(a);
-  const bReferencedBindings = getReferencedBindings(b);
-
-  for (
-    let i =
-      Math.max(aReferencedBindings.length, bReferencedBindings.length) - 1;
-    i >= 0;
-    i--
-  ) {
-    const diff =
-      (bReferencedBindings[i] ?? -1) - (aReferencedBindings[i] ?? -1);
-    if (diff !== 0) return diff;
-  }
-
-  return 0;
-}
-
-function getReferencedBindings({ referencedBindings: reserve }: Signal) {
-  if (!reserve) {
-    return [];
-  } else if (Array.isArray(reserve)) {
-    return reserve.map(getMappedId).sort();
-  } else {
-    return [getMappedId(reserve)];
-  }
-}
-
-function getMappedId(reference: Binding) {
-  // TODO: this is wrong.
-  return (reference.type === BindingType.dom ? 1 : 0) * 10000 + reference.id;
 }
 
 export function addHTMLEffectCall(

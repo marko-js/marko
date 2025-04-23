@@ -17,7 +17,6 @@ import {
   findSorted,
   forEach,
   type Many,
-  type OneMany,
   type Opt,
   push,
   Sorted,
@@ -573,16 +572,25 @@ export function mergeReferences<T extends t.Node>(
   return targetExtra;
 }
 
-export function compareReferences(a: OneMany<Binding>, b: OneMany<Binding>) {
+export function compareReferences(
+  a: ReferencedBindings,
+  b: ReferencedBindings,
+) {
   return a === b
     ? 0
-    : Array.isArray(a)
-      ? Array.isArray(b)
-        ? compareIntersections(a, b)
-        : -1
-      : Array.isArray(b)
-        ? 1
-        : bindingUtil.compare(a, b);
+    : a
+      ? b
+        ? Array.isArray(a)
+          ? Array.isArray(b)
+            ? compareIntersections(a, b)
+            : -1
+          : Array.isArray(b)
+            ? 1
+            : bindingUtil.compare(a, b)
+        : 1
+      : b
+        ? -1
+        : 0;
 }
 
 /**

@@ -8,7 +8,8 @@
       "$$pattern2": "e",
       "$$count_effect": "m",
       "$$count": "n",
-      "$$createWrapper": "i"
+      "$$createWrapper": "i",
+      "$$b": "u"
     }
   }
 }

@@ -15,6 +15,7 @@ const $setup$tagselect$content_effect = _$.effect("a2", ($scope) => {
         $setup$tagselect$content_effect($scope);
     },
   ),
+  $dynamicTag = _$.dynamicTag(0, $tagselect_content),
   $expr_value_tag = _$.intersection(4, ($scope) => {
     const { 2: value, 3: tag } = $scope;
     $dynamicTag($scope, tag ? "select" : {}, () => ({
@@ -22,7 +23,6 @@ const $setup$tagselect$content_effect = _$.effect("a2", ($scope) => {
       valueChange: $valueChange($scope),
     }));
   }),
-  $dynamicTag = _$.dynamicTag(0, $tagselect_content),
   $value = _$.state(2, ($scope, value) => {
     _$.data($scope[1], value), $expr_value_tag($scope);
   });

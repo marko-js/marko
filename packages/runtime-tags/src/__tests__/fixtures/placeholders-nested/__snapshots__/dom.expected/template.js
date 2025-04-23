@@ -20,8 +20,8 @@ const $data$await$content = /* @__PURE__ */_$.value("data", ($scope, data) => _$
 const $params2$await$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $data$await$content($scope, $params2[0]));
 const $await_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, $params2$await$content);
 const $placeholder_content = _$.registerContent("__tests__/template.marko_2_renderer", "_B_");
-const $try$try$content = /* @__PURE__ */_$.createTry("#text/1", $try_content2);
 const $await$try$content = /* @__PURE__ */_$.awaitTag("#text/0", $await_content);
+const $try$try$content = /* @__PURE__ */_$.createTry("#text/1", $try_content2);
 const $setup$try$content = $scope => {
   $await$try$content($scope, resolveAfter("c", 2));
   $try$try$content($scope, {
@@ -31,8 +31,8 @@ const $setup$try$content = $scope => {
   });
 };
 const $try_content = /* @__PURE__ */_$.createRenderer("b<!>d<!><!>", /* over(1), replace, over(2), replace */"b%c%D", $setup$try$content);
-const $await = /* @__PURE__ */_$.awaitTag("#text/1", $await_content3);
 const $try = /* @__PURE__ */_$.createTry("#text/0", $try_content);
+const $await = /* @__PURE__ */_$.awaitTag("#text/1", $await_content3);
 export function $setup($scope) {
   $try($scope, {
     placeholder: _$.attrTag({

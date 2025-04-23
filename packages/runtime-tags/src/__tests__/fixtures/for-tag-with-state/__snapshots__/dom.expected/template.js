@@ -15,10 +15,10 @@ const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $param
   $i$for$content($scope, $params2[1]);
 });
 const $for_content = /* @__PURE__ */_$.createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", 0, $params2$for$content);
-const $for2 = /* @__PURE__ */_$.loopOf("#text/1", $for_content2);
 const $for = /* @__PURE__ */_$.loopOf("#text/0", $for_content);
-const $arrB = /* @__PURE__ */_$.state("arrB/3", ($scope, arrB) => $for2($scope, [arrB]));
 const $arrA = /* @__PURE__ */_$.value("arrA", ($scope, arrA) => $for($scope, [arrA]));
+const $for2 = /* @__PURE__ */_$.loopOf("#text/1", $for_content2);
+const $arrB = /* @__PURE__ */_$.state("arrB/3", ($scope, arrB) => $for2($scope, [arrB]));
 export function $setup($scope) {
   $arrA($scope, [1, 2, 3]);
   $arrB($scope, [1, 2, 3]);

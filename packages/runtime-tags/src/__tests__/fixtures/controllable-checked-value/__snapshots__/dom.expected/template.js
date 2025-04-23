@@ -10,11 +10,11 @@ const $expr_checkedValue_$checkedValueChange = /* @__PURE__ */_$.intersection(6,
   _$.controllable_input_checkedValue($scope, "#input/1", checkedValue, $checkedValueChange, "b");
   _$.controllable_input_checkedValue($scope, "#input/2", checkedValue, $checkedValueChange, "c");
 });
-const $checkedValueChange3 = /* @__PURE__ */_$.value("$checkedValueChange", $expr_checkedValue_$checkedValueChange);
 const $checkedValue = /* @__PURE__ */_$.state("checkedValue/4", ($scope, checkedValue) => {
   _$.data($scope["#text/3"], checkedValue);
   $expr_checkedValue_$checkedValueChange($scope);
 });
+const $checkedValueChange3 = /* @__PURE__ */_$.value("$checkedValueChange", $expr_checkedValue_$checkedValueChange);
 const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => {
   _$.controllable_input_checkedValue_effect($scope, "#input/0");
   _$.controllable_input_checkedValue_effect($scope, "#input/1");

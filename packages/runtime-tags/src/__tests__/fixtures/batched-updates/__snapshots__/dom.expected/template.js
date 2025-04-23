@@ -16,8 +16,8 @@ const $expr_a_b = /* @__PURE__ */_$.intersection(4, $scope => {
   _$.data($scope["#text/1"], a + b);
   $expr_a_b_effect($scope);
 });
-const $b = /* @__PURE__ */_$.state("b/3", $expr_a_b);
 const $a = /* @__PURE__ */_$.state("a/2", $expr_a_b);
+const $b = /* @__PURE__ */_$.state("b/3", $expr_a_b);
 export function $setup($scope) {
   $a($scope, 0);
   $b($scope, 0);

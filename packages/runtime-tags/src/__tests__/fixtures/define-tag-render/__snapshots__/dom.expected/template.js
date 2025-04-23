@@ -11,12 +11,12 @@ const $y$define$content = /* @__PURE__ */_$.state("y/7", ($scope, y) => {
   _$.data($scope["#text/3"], y);
   $y$define$content_effect($scope);
 });
-const $name$define$content = /* @__PURE__ */_$.value("name", ($scope, name) => _$.data($scope["#text/0"], name));
-const $temp$define$content = /* @__PURE__ */_$.value("$temp", ($scope, $temp) => $name$define$content($scope, $temp.name));
-const $params2$define$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $temp$define$content($scope, $params2?.[0]));
 const $setup$define$content = $scope => {
   $y$define$content($scope, 1);
 };
+const $name$define$content = /* @__PURE__ */_$.value("name", ($scope, name) => _$.data($scope["#text/0"], name));
+const $params2$define$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $temp$define$content($scope, $params2?.[0]));
+const $temp$define$content = /* @__PURE__ */_$.value("$temp", ($scope, $temp) => $name$define$content($scope, $temp.name));
 const $define_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<div>Hello <!> <!></div><button> </button>", /* next(1), over(1), replace, over(2), replace, out(1), get, next(1), get */"Db%c%l D ", $setup$define$content, $params2$define$content);
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
 const $MyTag = /* @__PURE__ */_$.value("MyTag", ($scope, MyTag) => $dynamicTag($scope, MyTag, () => ({

@@ -1,11 +1,11 @@
 export const $template = "<!><!><!>";
 export const $walks = /* replace, over(1) */"D%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const $count$else$content = /* @__PURE__ */_$.conditionalClosure("count", "#text/0", 1, ($scope, count) => _$.data($scope["#text/1"], count));
 const $setup$else$content_effect = _$.effect("__tests__/template.marko_3", $scope => _$.on($scope["#button/0"], "click", function () {
   $editing$for$content($scope._, true);
 }));
 const $setup$else$content = $setup$else$content_effect;
+const $count$else$content = /* @__PURE__ */_$.conditionalClosure("count", "#text/0", 1, ($scope, count) => _$.data($scope["#text/1"], count));
 const $else_content = /* @__PURE__ */_$.createRenderer("<button>Increment <!></button>", /* get, next(1), over(1), replace */" Db%", $setup$else$content, 0, $scope => $count$else$content._($scope));
 const $expr_counts_count_i$if$content_effect = _$.effect("__tests__/template.marko_2_counts_count_i", ($scope, {
   _: {
@@ -20,12 +20,12 @@ const $expr_counts_count_i$if$content_effect = _$.effect("__tests__/template.mar
   $editing$for$content($scope._, false);
 }));
 const $expr_counts_count_i$if$content = /* @__PURE__ */_$.intersection(2, $expr_counts_count_i$if$content_effect, 2);
-const $i$if$content = /* @__PURE__ */_$.conditionalClosure("i", "#text/0", 0, $expr_counts_count_i$if$content);
+const $counts$if$content = /* @__PURE__ */_$.dynamicClosureRead("counts", $expr_counts_count_i$if$content, $scope => $scope._._);
 const $count$if$content = /* @__PURE__ */_$.conditionalClosure("count", "#text/0", 0, ($scope, count) => {
   _$.data($scope["#text/1"], count + 1);
   $expr_counts_count_i$if$content($scope);
 });
-const $counts$if$content = /* @__PURE__ */_$.dynamicClosureRead("counts", $expr_counts_count_i$if$content, $scope => $scope._._);
+const $i$if$content = /* @__PURE__ */_$.conditionalClosure("i", "#text/0", 0, $expr_counts_count_i$if$content);
 const $if_content = /* @__PURE__ */_$.createRenderer("<button>Confirm <!></button>", /* get, next(1), over(1), replace */" Db%", 0, 0, $scope => {
   $counts$if$content($scope);
   $count$if$content._($scope);
@@ -33,18 +33,18 @@ const $if_content = /* @__PURE__ */_$.createRenderer("<button>Confirm <!></butto
 });
 const $if$for$content = /* @__PURE__ */_$.conditional("#text/0", $if_content, $else_content);
 const $editing$for$content = /* @__PURE__ */_$.state("editing/4", ($scope, editing) => $if$for$content($scope, editing ? 0 : 1));
-const $i$for$content = /* @__PURE__ */_$.value("i", $i$if$content);
-const $count$for$content = /* @__PURE__ */_$.value("count", $scope => {
-  $count$if$content($scope);
-  $count$else$content($scope);
-});
+const $setup$for$content = $scope => {
+  $editing$for$content($scope, false);
+};
 const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => {
   $count$for$content($scope, $params2[0]);
   $i$for$content($scope, $params2[1]);
 });
-const $setup$for$content = $scope => {
-  $editing$for$content($scope, false);
-};
+const $count$for$content = /* @__PURE__ */_$.value("count", $scope => {
+  $count$if$content($scope);
+  $count$else$content($scope);
+});
+const $i$for$content = /* @__PURE__ */_$.value("i", $i$if$content);
 const $for_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", $setup$for$content, $params2$for$content);
 const $for = /* @__PURE__ */_$.loopOf("#text/0", $for_content);
 const $counts_closure = /* @__PURE__ */_$.dynamicClosure($counts$if$content);

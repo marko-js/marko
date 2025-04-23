@@ -30,16 +30,15 @@ const $if_content2 = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* dynamicTag
 const $if$if$content = /* @__PURE__ */_$.conditional("#text/0", $if_content2);
 const $input_show$if$content = /* @__PURE__ */_$.conditionalClosure("input_show", "#text/0", 0, ($scope, input_show) => $if$if$content($scope, input_show ? 0 : 1));
 const $if_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", 0, 0, $scope => $input_show$if$content._($scope));
-const $if4 = /* @__PURE__ */_$.conditional("#text/4", $if_content5);
-const $if3 = /* @__PURE__ */_$.conditional("#text/3", $if_content4);
-const $if2 = /* @__PURE__ */_$.conditional("#text/2", $if_content3);
 const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);
-const $hoisted_setHtml4 = /* @__PURE__ */_$.value("$hoisted_setHtml", ($scope, $hoisted_setHtml) => _thing_input_value($scope["#childScope/1"], $hoisted_setHtml));
 export const $input_show = /* @__PURE__ */_$.value("input_show", ($scope, input_show) => {
   $if($scope, input_show ? 0 : 1);
   $input_show$if$content($scope);
 });
-export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_show($scope, input.show));
+const $if2 = /* @__PURE__ */_$.conditional("#text/2", $if_content3);
+const $if3 = /* @__PURE__ */_$.conditional("#text/3", $if_content4);
+const $if4 = /* @__PURE__ */_$.conditional("#text/4", $if_content5);
+const $hoisted_setHtml4 = /* @__PURE__ */_$.value("$hoisted_setHtml", ($scope, $hoisted_setHtml) => _thing_input_value($scope["#childScope/1"], $hoisted_setHtml));
 const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => {
   $get$hoisted_setHtml3($scope)("Hello world");
   $get$hoisted_setHtml2($scope)("Hello world");
@@ -52,4 +51,5 @@ export function $setup($scope) {
   $hoisted_setHtml4($scope, $get$hoisted_setHtml3($scope));
   $setup_effect($scope);
 }
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_show($scope, input.show));
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

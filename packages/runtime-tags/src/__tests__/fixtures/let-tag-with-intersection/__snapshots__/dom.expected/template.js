@@ -1,6 +1,7 @@
 export const $template = "<button> </button><!> <!> <!>";
 export const $walks = /* get, next(1), get, out(1), replace, over(2), replace, over(2), replace, over(1) */" D l%c%c%b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
+const $a = /* @__PURE__ */_$.value("a", ($scope, a) => _$.data($scope["#text/4"], a));
 const $expr_y_z = /* @__PURE__ */_$.intersection(8, $scope => {
   const {
     y,
@@ -8,13 +9,12 @@ const $expr_y_z = /* @__PURE__ */_$.intersection(8, $scope => {
   } = $scope;
   $a($scope, y + z);
 });
-const $a = /* @__PURE__ */_$.value("a", ($scope, a) => _$.data($scope["#text/4"], a));
-const $z = /* @__PURE__ */_$.value("z", ($scope, z) => {
-  _$.data($scope["#text/3"], z);
-  $expr_y_z($scope);
-});
 const $y = /* @__PURE__ */_$.value("y", ($scope, y) => {
   _$.data($scope["#text/2"], y);
+  $expr_y_z($scope);
+});
+const $z = /* @__PURE__ */_$.value("z", ($scope, z) => {
+  _$.data($scope["#text/3"], z);
   $expr_y_z($scope);
 });
 const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {

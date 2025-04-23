@@ -1,15 +1,17 @@
 // size: 463 (min) 238 (brotli)
-const $description$for$content = _$.value(5, ($scope, description) =>
+const $name$for$content = _$.value(4, ($scope, name) =>
+    _$.data($scope[0], name),
+  ),
+  $description$for$content = _$.value(5, ($scope, description) =>
     _$.data($scope[1], description),
   ),
-  $name$for$content = _$.value(4, ($scope, name) => _$.data($scope[0], name)),
+  $params2$for$content = _$.value(2, ($scope, $params2) =>
+    $temp$for$content($scope, $params2?.[0]),
+  ),
   $temp$for$content = _$.value(3, ($scope, $temp) => {
     $name$for$content($scope, $temp.name),
       $description$for$content($scope, $temp.description);
   }),
-  $params2$for$content = _$.value(2, ($scope, $params2) =>
-    $temp$for$content($scope, $params2?.[0]),
-  ),
   $for_content = _$.createRenderer(
     "<div><!>: <!></div>",
     "D%c%",

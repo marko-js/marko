@@ -1,9 +1,9 @@
-// size: 343 (min) 219 (brotli)
-const $expr_input_content_x = _$.intersection(7, ($scope) => {
+// size: 343 (min) 226 (brotli)
+const $dynamicTag = _$.dynamicTag(2, 0, 0, 1),
+  $expr_input_content_x = _$.intersection(7, ($scope) => {
     const { 5: input_content, 6: x } = $scope;
     $dynamicTag($scope, input_content, () => [x]);
   }),
-  $dynamicTag = _$.dynamicTag(2, 0, 0, 1),
   $x_effect = _$.effect("a0", ($scope, { 6: x }) =>
     _$.on($scope[0], "click", function () {
       $x($scope, x + 1);
