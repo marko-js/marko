@@ -1,10 +1,10 @@
 export const $template = "";
 export const $walks = "";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const $y = /* @__PURE__ */_$.state("y/1", ($scope, y) => {
+const $x = /* @__PURE__ */_$.value("x", ($scope, x) => {
   debugger;
 });
-const $x = /* @__PURE__ */_$.value("x", ($scope, x) => {
+const $y = /* @__PURE__ */_$.state("y/1", ($scope, y) => {
   debugger;
 });
 export function $setup($scope) {

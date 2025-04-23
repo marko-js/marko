@@ -17,6 +17,9 @@ const $a = /* @__PURE__ */_$.state("a/6", ($scope, a) => {
   _$.attr($scope["#div/2"], "a", a);
   $expr_input_value_a($scope);
 });
+export function $setup($scope) {
+  $a($scope, 0);
+}
 const $input_value_effect = _$.effect("__tests__/template.marko_0_input_value", $scope => {
   _$.attrsEvents($scope, "#div/0");
   _$.attrsEvents($scope, "#div/2");
@@ -30,7 +33,4 @@ export const $input_value = /* @__PURE__ */_$.value("input_value", ($scope, inpu
   $input_value_effect($scope);
 });
 export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_value($scope, input.value));
-export function $setup($scope) {
-  $a($scope, 0);
-}
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

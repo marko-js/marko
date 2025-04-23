@@ -4,7 +4,6 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $message$if$content = /* @__PURE__ */_$.conditionalClosure("message", "#text/1", 0, ($scope, message) => _$.data($scope["#text/0"], message));
 const $if_content = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", 0, 0, $scope => $message$if$content._($scope));
 const $if = /* @__PURE__ */_$.conditional("#text/1", $if_content);
-const $message = /* @__PURE__ */_$.state("message/3", $message$if$content);
 const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
   show
 }) => _$.on($scope["#button/0"], "click", function () {
@@ -15,6 +14,7 @@ const $show = /* @__PURE__ */_$.state("show/2", ($scope, show) => {
   $if($scope, show ? 0 : 1);
   $show_effect($scope);
 });
+const $message = /* @__PURE__ */_$.state("message/3", $message$if$content);
 export function $setup($scope) {
   $show($scope, true);
   $message($scope, "hi");

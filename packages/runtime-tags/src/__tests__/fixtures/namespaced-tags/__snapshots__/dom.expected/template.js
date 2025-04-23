@@ -5,6 +5,7 @@ const $Child_content2 = _$.registerContent("__tests__/template.marko_3_renderer"
 const $Child_content = _$.registerContent("__tests__/template.marko_2_renderer", "Hi");
 const $input_value$Parent$content = /* @__PURE__ */_$.dynamicClosureRead("input_value", ($scope, input_value) => _$.html($scope, input_value, "#text/0"));
 const $Parent_content = _$.registerContent("__tests__/template.marko_1_renderer", " ", /* get */" ", 0, 0, $scope => $input_value$Parent$content($scope));
+const $dynamicTag3 = /* @__PURE__ */_$.dynamicTag("#text/5", $Parent_content);
 const $expr_Parent_Child_effect = _$.effect("__tests__/template.marko_0_Parent_Child", ($scope, {
   Parent,
   Child
@@ -18,9 +19,18 @@ const $expr_Parent_Child_effect = _$.effect("__tests__/template.marko_0_Parent_C
   }
 });
 const $expr_Parent_Child = /* @__PURE__ */_$.intersection(13, $expr_Parent_Child_effect);
-const $dynamicTag3 = /* @__PURE__ */_$.dynamicTag("#text/5", $Parent_content);
-const $dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/4", $Child_content2);
+const $Parent_effect = _$.effect("__tests__/template.marko_0_Parent", ($scope, {
+  Parent
+}) => _$.on($scope["#button/6"], "click", function () {
+  $Parent($scope, Parent === "div" ? "svg" : "div");
+}));
+const $Parent = /* @__PURE__ */_$.state("Parent/11", ($scope, Parent) => {
+  $dynamicTag3($scope, Parent);
+  $expr_Parent_Child($scope);
+  $Parent_effect($scope);
+});
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", $Child_content);
+const $dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/4", $Child_content2);
 const $Child_effect = _$.effect("__tests__/template.marko_0_Child", ($scope, {
   Child
 }) => _$.on($scope["#button/7"], "click", function () {
@@ -36,16 +46,10 @@ const $Child = /* @__PURE__ */_$.state("Child/12", ($scope, Child) => {
   $expr_Parent_Child($scope);
   $Child_effect($scope);
 });
-const $Parent_effect = _$.effect("__tests__/template.marko_0_Parent", ($scope, {
-  Parent
-}) => _$.on($scope["#button/6"], "click", function () {
-  $Parent($scope, Parent === "div" ? "svg" : "div");
-}));
-const $Parent = /* @__PURE__ */_$.state("Parent/11", ($scope, Parent) => {
-  $dynamicTag3($scope, Parent);
-  $expr_Parent_Child($scope);
-  $Parent_effect($scope);
-});
+export function $setup($scope) {
+  $Parent($scope, "div");
+  $Child($scope, "a");
+}
 const $input_value_closure = /* @__PURE__ */_$.dynamicClosure($input_value$Parent$content);
 export const $input_value = /* @__PURE__ */_$.value("input_value", ($scope, input_value) => {
   _$.html($scope, input_value, "#text/1");
@@ -53,8 +57,4 @@ export const $input_value = /* @__PURE__ */_$.value("input_value", ($scope, inpu
   $input_value_closure($scope);
 });
 export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_value($scope, input.value));
-export function $setup($scope) {
-  $Parent($scope, "div");
-  $Child($scope, "a");
-}
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

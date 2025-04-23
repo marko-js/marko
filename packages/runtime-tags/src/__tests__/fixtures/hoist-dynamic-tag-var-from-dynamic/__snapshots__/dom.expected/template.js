@@ -30,8 +30,6 @@ const $setup$thing$content = $scope => {
   $dynamicTag$thing$content($scope, 1 && Child);
 };
 const $thing_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<!><!><!>", /* dynamicTagWithVar */"D1D", $setup$thing$content, 0, 0, "ClosureScopes:1");
-const $dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/2", $inputshowsectionnull_content);
-const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1", $inputshowThingnull_content);
 const $hoisted_setHtml4_effect = _$.effect("__tests__/template.marko_0_$hoisted_setHtml", ({
   $hoisted_setHtml
 }) => {
@@ -40,11 +38,6 @@ const $hoisted_setHtml4_effect = _$.effect("__tests__/template.marko_0_$hoisted_
   }
 });
 const $hoisted_setHtml4 = /* @__PURE__ */_$.value("$hoisted_setHtml", $hoisted_setHtml4_effect);
-export const $input_show = /* @__PURE__ */_$.value("input_show", ($scope, input_show) => {
-  $dynamicTag($scope, input_show ? Thing : null);
-  $dynamicTag2($scope, input_show ? 'section' : null);
-});
-export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_show($scope, input.show));
 const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => {
   $get$hoisted_setHtml2($scope)('Hoist from dynamic tag');
   $get$hoisted_setHtml($scope)('Hoist from dynamic tag');
@@ -55,4 +48,11 @@ export function $setup($scope) {
   $hoisted_setHtml4($scope, $get$hoisted_setHtml3($scope));
   $setup_effect($scope);
 }
+const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1", $inputshowThingnull_content);
+const $dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/2", $inputshowsectionnull_content);
+export const $input_show = /* @__PURE__ */_$.value("input_show", ($scope, input_show) => {
+  $dynamicTag($scope, input_show ? Thing : null);
+  $dynamicTag2($scope, input_show ? 'section' : null);
+});
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_show($scope, input.show));
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

@@ -1,4 +1,4 @@
-// size: 641 (min) 320 (brotli)
+// size: 641 (min) 317 (brotli)
 const $opt$for$content = _$.value(3, ($scope, opt) => {
     _$.attr($scope[0], "value", opt), _$.data($scope[1], opt);
   }),
@@ -12,11 +12,6 @@ const $opt$for$content = _$.value(3, ($scope, opt) => {
     $params2$for$content,
   ),
   $for = _$.loopOf(0, $for_content),
-  $value = _$.state(6, ($scope, value) => {
-    _$.controllable_select_value($scope, 0, value, $valueChange($scope)),
-      _$.data($scope[1], value);
-  }),
-  $options_ = _$.value(5, $value),
   $options_effect = _$.effect("a1", ($scope, { 4: options }) => {
     _$.on($scope[2], "click", function () {
       $options($scope, options.slice(1));
@@ -29,7 +24,12 @@ const $opt$for$content = _$.value(3, ($scope, opt) => {
     $options_($scope, options?.[0]),
       $for($scope, [options, (v) => v]),
       $options_effect($scope);
-  });
+  }),
+  $value = _$.state(6, ($scope, value) => {
+    _$.controllable_select_value($scope, 0, value, $valueChange($scope)),
+      _$.data($scope[1], value);
+  }),
+  $options_ = _$.value(5, $value);
 function $valueChange($scope) {
   return (_new_value) => {
     $value($scope, _new_value);

@@ -23,11 +23,11 @@ const $expr_checkedValue_$checkedValueChange = /* @__PURE__ */_$.intersection(6,
     value: "c"
   });
 });
-const $checkedValueChange3 = /* @__PURE__ */_$.value("$checkedValueChange", $expr_checkedValue_$checkedValueChange);
 const $checkedValue = /* @__PURE__ */_$.state("checkedValue/4", ($scope, checkedValue) => {
   _$.data($scope["#text/3"], checkedValue);
   $expr_checkedValue_$checkedValueChange($scope);
 });
+const $checkedValueChange3 = /* @__PURE__ */_$.value("$checkedValueChange", $expr_checkedValue_$checkedValueChange);
 export function $setup($scope) {
   _checkbox($scope["#childScope/0"]);
   _checkbox($scope["#childScope/1"]);

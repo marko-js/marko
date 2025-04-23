@@ -8,12 +8,12 @@ const $expr_a_b = /* @__PURE__ */_$.intersection(7, $scope => {
   } = $scope;
   _$.data($scope["#text/4"], a + b);
 });
-const $b = /* @__PURE__ */_$.state("b/6", ($scope, b) => {
-  _$.data($scope["#text/3"], b);
-  $expr_a_b($scope);
-});
 const $a = /* @__PURE__ */_$.state("a/5", ($scope, a) => {
   _$.data($scope["#text/1"], a);
+  $expr_a_b($scope);
+});
+const $b = /* @__PURE__ */_$.state("b/6", ($scope, b) => {
+  _$.data($scope["#text/3"], b);
   $expr_a_b($scope);
 });
 const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => {

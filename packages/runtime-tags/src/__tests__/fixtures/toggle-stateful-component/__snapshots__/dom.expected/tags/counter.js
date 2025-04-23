@@ -14,9 +14,9 @@ const $clickCount = /* @__PURE__ */_$.state("clickCount/5", ($scope, clickCount)
   })(), clickCount));
   $expr_input_onCount_clickCount($scope);
 });
-export const $input_onCount = /* @__PURE__ */_$.value("input_onCount", $expr_input_onCount_clickCount);
-export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_onCount($scope, input.onCount));
 export function $setup($scope) {
   $clickCount($scope, 0);
 }
+export const $input_onCount = /* @__PURE__ */_$.value("input_onCount", $expr_input_onCount_clickCount);
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_onCount($scope, input.onCount));
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/counter.marko", $template, $walks, $setup, $input);

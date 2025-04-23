@@ -8,8 +8,8 @@ const $await_content2 = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, $
 const $value$await$content = /* @__PURE__ */_$.value("value", ($scope, value) => _$.data($scope["#text/0"], value));
 const $params2$await$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $value$await$content($scope, $params2[0]));
 const $await_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, $params2$await$content);
-const $await2 = /* @__PURE__ */_$.awaitTag("#text/1", $await_content2);
 const $await = /* @__PURE__ */_$.awaitTag("#text/0", $await_content);
+const $await2 = /* @__PURE__ */_$.awaitTag("#text/1", $await_content2);
 export function $setup($scope) {
   $await($scope, resolveAfter("b", 1));
   $await2($scope, resolveAfter("d", 2));

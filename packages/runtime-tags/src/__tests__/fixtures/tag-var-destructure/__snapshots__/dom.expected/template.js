@@ -2,11 +2,11 @@ export const $template = "<button><pre>a    1    <!></pre><pre>b    2    <!></pr
 export const $walks = /* get, next(2), over(1), replace, out(1), next(1), over(1), replace, out(1), next(1), over(1), replace, out(1), next(1), over(1), replace, out(1), next(1), over(1), replace, out(2) */" Eb%lDb%lDb%lDb%lDb%m";
 const noop = $noop;
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const $e = /* @__PURE__ */_$.state("e/10", ($scope, e) => _$.data($scope["#text/5"], JSON.stringify(e)));
-const $d = /* @__PURE__ */_$.state("d/9", ($scope, d) => _$.data($scope["#text/4"], d));
-const $c = /* @__PURE__ */_$.state("c/8", ($scope, c) => _$.data($scope["#text/3"], JSON.stringify(c)));
-const $b = /* @__PURE__ */_$.state("b/7", ($scope, b) => _$.data($scope["#text/2"], b));
 const $a = /* @__PURE__ */_$.state("a/6", ($scope, a) => _$.data($scope["#text/1"], a));
+const $b = /* @__PURE__ */_$.state("b/7", ($scope, b) => _$.data($scope["#text/2"], b));
+const $c = /* @__PURE__ */_$.state("c/8", ($scope, c) => _$.data($scope["#text/3"], JSON.stringify(c)));
+const $d = /* @__PURE__ */_$.state("d/9", ($scope, d) => _$.data($scope["#text/4"], d));
+const $e = /* @__PURE__ */_$.state("e/10", ($scope, e) => _$.data($scope["#text/5"], JSON.stringify(e)));
 const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => _$.on($scope["#button/0"], "click", function () {
   let local;
   (($result2, $a2, $b2, $c2) => ({

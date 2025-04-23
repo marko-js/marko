@@ -1,4 +1,4 @@
-// size: 720 (min) 337 (brotli)
+// size: 720 (min) 338 (brotli)
 const $Child_content2 = _$.registerContent("a0", "Hi"),
   $Child_content = _$.registerContent("a1", "Hi"),
   $input_value$Parent$content = _$.dynamicClosureRead(
@@ -8,6 +8,7 @@ const $Child_content2 = _$.registerContent("a0", "Hi"),
   $Parent_content = _$.registerContent("a2", " ", " ", 0, 0, ($scope) =>
     $input_value$Parent$content($scope),
   ),
+  $dynamicTag3 = _$.dynamicTag(5, $Parent_content),
   $expr_Parent_Child_effect = _$.effect(
     "a3",
     ($scope, { 11: Parent, 12: Child }) => {
@@ -17,10 +18,19 @@ const $Child_content2 = _$.registerContent("a0", "Hi"),
     },
   ),
   $expr_Parent_Child = _$.intersection(13, $expr_Parent_Child_effect),
-  $dynamicTag3 = _$.dynamicTag(5, $Parent_content),
-  $dynamicTag2 = _$.dynamicTag(4, $Child_content2),
+  $Parent_effect = _$.effect("a4", ($scope, { 11: Parent }) =>
+    _$.on($scope[6], "click", function () {
+      $Parent($scope, "div" === Parent ? "svg" : "div");
+    }),
+  ),
+  $Parent = _$.state(11, ($scope, Parent) => {
+    $dynamicTag3($scope, Parent),
+      $expr_Parent_Child($scope),
+      $Parent_effect($scope);
+  }),
   $dynamicTag = _$.dynamicTag(2, $Child_content),
-  $Child_effect = _$.effect("a4", ($scope, { 12: Child }) =>
+  $dynamicTag2 = _$.dynamicTag(4, $Child_content2),
+  $Child_effect = _$.effect("a5", ($scope, { 12: Child }) =>
     _$.on($scope[7], "click", function () {
       $Child($scope, "a" === Child ? null : "a");
     }),
@@ -30,15 +40,5 @@ const $Child_content2 = _$.registerContent("a0", "Hi"),
       $dynamicTag2($scope, Child, () => ({ href: "#bar" })),
       $expr_Parent_Child($scope),
       $Child_effect($scope);
-  }),
-  $Parent_effect = _$.effect("a5", ($scope, { 11: Parent }) =>
-    _$.on($scope[6], "click", function () {
-      $Parent($scope, "div" === Parent ? "svg" : "div");
-    }),
-  ),
-  $Parent = _$.state(11, ($scope, Parent) => {
-    $dynamicTag3($scope, Parent),
-      $expr_Parent_Child($scope),
-      $Parent_effect($scope);
   });
 init();

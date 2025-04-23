@@ -1,5 +1,6 @@
-// size: 454 (min) 287 (brotli)
-const $expr_input_content_input_name_x = _$.intersection(
+// size: 454 (min) 271 (brotli)
+const $dynamicTag = _$.dynamicTag(2),
+  $expr_input_content_input_name_x = _$.intersection(
     8,
     ($scope) => {
       const { 5: input_content, 6: input_name, 7: x } = $scope;
@@ -10,7 +11,6 @@ const $expr_input_content_input_name_x = _$.intersection(
     },
     2,
   ),
-  $dynamicTag = _$.dynamicTag(2),
   $x_effect = _$.effect("a0", ($scope, { 7: x }) =>
     _$.on($scope[0], "click", function () {
       $x($scope, x + 1);
@@ -27,13 +27,13 @@ const $expr_input_content_input_name_x = _$.intersection(
   $count$customtag$content = _$.value(4, ($scope, count) =>
     _$.data($scope[1], count),
   ),
+  $params2$customtag$content = _$.value(2, ($scope, $params2) =>
+    $temp$customtag$content($scope, $params2?.[0]),
+  ),
   $temp$customtag$content = _$.value(3, ($scope, $temp) => {
     $count$customtag$content($scope, $temp.count),
       $name$customtag$content($scope, $temp.name);
-  }),
-  $params2$customtag$content = _$.value(2, ($scope, $params2) =>
-    $temp$customtag$content($scope, $params2?.[0]),
-  );
+  });
 _$.registerContent(
   "b0",
   "<div>Count (<!>): <!></div>",

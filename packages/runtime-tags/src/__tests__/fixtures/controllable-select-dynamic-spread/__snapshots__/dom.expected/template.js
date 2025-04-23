@@ -19,6 +19,7 @@ const $setup$tagselect$content = $scope => {
   $setup$tagselect$content_effect($scope);
 };
 const $tagselect_content = _$.registerContent("__tests__/template.marko_1_renderer", "<option>A</option><option>B</option><option>C</option>", /* get, over(1), get, over(1), get */" b b ", $setup$tagselect$content);
+const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", $tagselect_content);
 const $expr_value_tag = /* @__PURE__ */_$.intersection(4, $scope => {
   const {
     value,
@@ -29,12 +30,11 @@ const $expr_value_tag = /* @__PURE__ */_$.intersection(4, $scope => {
     valueChange: $valueChange($scope)
   }));
 });
-const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", $tagselect_content);
-const $tag = /* @__PURE__ */_$.value("tag", $expr_value_tag);
 const $value = /* @__PURE__ */_$.state("value/2", ($scope, value) => {
   _$.data($scope["#text/1"], value);
   $expr_value_tag($scope);
 });
+const $tag = /* @__PURE__ */_$.value("tag", $expr_value_tag);
 export function $setup($scope) {
   $value($scope, "b");
   $tag($scope, "select");

@@ -24,8 +24,6 @@ const $setup$inputshowChildnull$content = $scope => {
 const $inputshowChildnull_content = _$.registerContent("__tests__/template.marko_2_renderer", `<!>${_child_template}<!>`, /* beginChild, _child_walks, endChild */`D/${_child_walks}&D`, $setup$inputshowChildnull$content, 0, 0, "ClosureScopes:2");
 const $get$hoisted_el4 = _$.register("__tests__/template.marko_0_$hoisted_el/hoist", _$.hoist("Getter:#span/0", "ClosureScopes:1"));
 const $child_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<span></span>", /* get */" ", 0, 0, 0, "ClosureScopes:1");
-const $dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/2", $inputshowsectionnull_content);
-const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1", $inputshowChildnull_content);
 const $hoisted_el6_effect = _$.effect("__tests__/template.marko_0_$hoisted_el3", ({
   $hoisted_el3
 }) => {
@@ -42,11 +40,6 @@ const $hoisted_el5_effect = _$.effect("__tests__/template.marko_0_$hoisted_el", 
   }
 });
 const $hoisted_el5 = /* @__PURE__ */_$.value("$hoisted_el", $hoisted_el5_effect);
-export const $input_show = /* @__PURE__ */_$.value("input_show", ($scope, input_show) => {
-  $dynamicTag($scope, input_show ? Child : null);
-  $dynamicTag2($scope, input_show ? 'section' : null);
-});
-export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_show($scope, input.show));
 const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => {
   {
     const element = $get$hoisted_el($scope)();
@@ -62,4 +55,11 @@ export function $setup($scope) {
   $hoisted_el5($scope, $get$hoisted_el4($scope));
   $setup_effect($scope);
 }
+const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1", $inputshowChildnull_content);
+const $dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/2", $inputshowsectionnull_content);
+export const $input_show = /* @__PURE__ */_$.value("input_show", ($scope, input_show) => {
+  $dynamicTag($scope, input_show ? Child : null);
+  $dynamicTag2($scope, input_show ? 'section' : null);
+});
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_show($scope, input.show));
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

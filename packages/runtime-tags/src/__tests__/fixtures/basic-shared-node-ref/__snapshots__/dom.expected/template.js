@@ -4,6 +4,15 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $x$for$content = /* @__PURE__ */_$.value("x", ($scope, x) => _$.data($scope["#text/0"], x));
 const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $x$for$content($scope, $params2[0]));
 const $for_content = /* @__PURE__ */_$.createRenderer("<li> </li>", /* next(1), get */"D ", 0, $params2$for$content);
+const $open_effect = _$.effect("__tests__/template.marko_0_open", ($scope, {
+  open
+}) => _$.on($scope["#button/1"], "click", function () {
+  $open($scope, !open);
+}));
+const $open = /* @__PURE__ */_$.state("open/3", ($scope, open) => {
+  _$.attr($scope["#ul/0"], "hidden", !open);
+  $open_effect($scope);
+});
 const $for = /* @__PURE__ */_$.loopOf("#ul/0", $for_content);
 const $list_effect = _$.effect("__tests__/template.marko_0_list", ($scope, {
   list
@@ -15,15 +24,6 @@ const $list = /* @__PURE__ */_$.state("list/4", ($scope, list) => {
     return x;
   }]);
   $list_effect($scope);
-});
-const $open_effect = _$.effect("__tests__/template.marko_0_open", ($scope, {
-  open
-}) => _$.on($scope["#button/1"], "click", function () {
-  $open($scope, !open);
-}));
-const $open = /* @__PURE__ */_$.state("open/3", ($scope, open) => {
-  _$.attr($scope["#ul/0"], "hidden", !open);
-  $open_effect($scope);
 });
 export function $setup($scope) {
   $open($scope, true);

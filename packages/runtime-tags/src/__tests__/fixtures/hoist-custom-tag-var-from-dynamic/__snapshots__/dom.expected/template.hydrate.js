@@ -1,6 +1,6 @@
-// size: 823 (min) 366 (brotli)
-const $dynamicTag2 = _$.dynamicTag(1),
-  $dynamicTag = _$.dynamicTag(),
+// size: 823 (min) 364 (brotli)
+const $dynamicTag = _$.dynamicTag(),
+  $dynamicTag2 = _$.dynamicTag(1),
   $input_content = _$.value(4, ($scope, input_content) => {
     $dynamicTag($scope, input_content), $dynamicTag2($scope, input_content);
   });

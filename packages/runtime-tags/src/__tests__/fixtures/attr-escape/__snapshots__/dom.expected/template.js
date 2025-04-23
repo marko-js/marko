@@ -9,13 +9,13 @@ const $expr_input_foo_input_bar = /* @__PURE__ */_$.intersection(5, $scope => {
   } = $scope;
   _$.attr($scope["#div/0"], "nested", `a ${input_foo + ` nested ${input_bar}`} b`);
 });
-export const $input_bar = /* @__PURE__ */_$.value("input_bar", ($scope, input_bar) => {
-  _$.attr($scope["#div/0"], "bar", `a ${input_bar} b`);
-  $expr_input_foo_input_bar($scope);
-});
 export const $input_foo = /* @__PURE__ */_$.value("input_foo", ($scope, input_foo) => {
   _$.classAttr($scope["#div/0"], input_foo);
   _$.attr($scope["#div/0"], "foo", 'a' + input_foo + 'b');
+  $expr_input_foo_input_bar($scope);
+});
+export const $input_bar = /* @__PURE__ */_$.value("input_bar", ($scope, input_bar) => {
+  _$.attr($scope["#div/0"], "bar", `a ${input_bar} b`);
   $expr_input_foo_input_bar($scope);
 });
 export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {

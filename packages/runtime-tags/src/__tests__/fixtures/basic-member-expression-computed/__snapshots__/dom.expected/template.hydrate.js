@@ -1,4 +1,4 @@
-// size: 283 (min) 199 (brotli)
+// size: 283 (min) 197 (brotli)
 const $expr_items_index_effect = _$.effect(
     "a0",
     ($scope, { 3: items, 5: index }) =>
@@ -11,9 +11,9 @@ const $expr_items_index_effect = _$.effect(
     const { 3: items, 5: index } = $scope;
     _$.data($scope[1], items[index]), $expr_items_index_effect($scope);
   }),
-  $index = _$.state(5, $expr_items_index),
-  $items_ = _$.value(4, ($scope, items_0) => _$.data($scope[0], items_0)),
   $items = _$.state(3, ($scope, items) => {
     $items_($scope, items?.[0]), $expr_items_index($scope);
-  });
+  }),
+  $items_ = _$.value(4, ($scope, items_0) => _$.data($scope[0], items_0)),
+  $index = _$.state(5, $expr_items_index);
 init();

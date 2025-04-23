@@ -7,7 +7,6 @@ export const $input_x = /* @__PURE__ */_$.value("input_x", ($scope, input_x) => 
   _$.data($scope["#text/2"], input_x);
   _$.html($scope, input_x, "#text/3");
 });
-export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_x($scope, input.x));
 export function $setup($scope) {
   _$.html($scope, "Hello HTML <span>hi</span>", "#text/4");
   _$.textContent($scope["#script/5"], `
@@ -17,4 +16,5 @@ export function $setup($scope) {
     ${".test { content: 'Hello <b> </style>' }"}
   `);
 }
+export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_x($scope, input.x));
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);

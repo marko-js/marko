@@ -1,4 +1,4 @@
-// size: 999 (min) 463 (brotli)
+// size: 999 (min) 479 (brotli)
 const $expr_name_write_effect = _$.effect(
     "a0",
     ($scope, { 3: name, 4: write }) =>
@@ -9,10 +9,18 @@ const $expr_name_write_effect = _$.effect(
   $expr_name_write = _$.intersection(5, ($scope) => {
     _$.resetAbortSignal($scope, 0), $expr_name_write_effect($scope);
   }),
-  $write$1 = _$.value(4, $expr_name_write),
   $name = _$.value(3, ($scope, name) => {
     _$.data($scope[0], name), $expr_name_write($scope);
   }),
+  $write$1 = _$.value(4, $expr_name_write),
+  $setup$for$content2 = ($scope) => {
+    $scope[0];
+  },
+  $write$for$content2 = _$.dynamicClosureRead(
+    4,
+    ($scope, write) => $write$1($scope[0], write),
+    ($scope) => $scope._._,
+  ),
   $expr_outerItem_middleItem$for$content = _$.intersection(3, ($scope) => {
     const {
       _: { 3: outerItem },
@@ -20,11 +28,6 @@ const $expr_name_write_effect = _$.effect(
     } = $scope;
     $name($scope[0], `${outerItem}.${middleItem}`);
   }),
-  $write$for$content2 = _$.dynamicClosureRead(
-    4,
-    ($scope, write) => $write$1($scope[0], write),
-    ($scope) => $scope._._,
-  ),
   $outerItem$for$content2 = _$.loopClosure(
     3,
     1,
@@ -34,9 +37,6 @@ const $expr_name_write_effect = _$.effect(
   $params3$for$content = _$.value(1, ($scope, $params3) =>
     $middleItem$for$content($scope, $params3[0]),
   ),
-  $setup$for$content2 = ($scope) => {
-    $scope[0];
-  },
   $for_content2 = _$.createRenderer(
     "<div><div> </div></div>",
     "D/D l&",
@@ -46,22 +46,22 @@ const $expr_name_write_effect = _$.effect(
       $outerItem$for$content2._($scope), $write$for$content2($scope);
     },
   ),
-  $for$for$content = _$.loopOf(1, $for_content2),
+  $setup$for$content = ($scope) => {
+    $scope[0];
+  },
   $write$for$content = _$.loopClosure(4, 2, ($scope, write) =>
     $write$1($scope[0], write),
   ),
   $outerItem$for$content = _$.value(3, ($scope, outerItem) => {
     $name($scope[0], `${outerItem}`), $outerItem$for$content2($scope);
   }),
+  $for$for$content = _$.loopOf(1, $for_content2),
   $items$for$content = _$.loopClosure(3, 2, ($scope, items) =>
     $for$for$content($scope, [items]),
   ),
   $params2$for$content = _$.value(2, ($scope, $params2) =>
     $outerItem$for$content($scope, $params2[0]),
   ),
-  $setup$for$content = ($scope) => {
-    $scope[0];
-  },
   $for_content = _$.createRenderer(
     "<div><div> </div><!></div>",
     "D/D l&%",

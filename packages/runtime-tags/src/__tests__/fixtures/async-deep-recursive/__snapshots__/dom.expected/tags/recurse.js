@@ -5,20 +5,20 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $template as _recurse_template, $walks as _recurse_walks } from "./recurse.marko";
 _$.enableCatch();
 const $placeholder_content = _$.registerContent("__tests__/tags/recurse.marko_4_renderer", "LOADING...");
-const $input_level$await$content = /* @__PURE__ */_$.dynamicClosureRead("input_level", ($scope, input_level) => $input($scope["#childScope/0"], {
-  level: input_level - 1
-}), $scope => $scope._._._);
 const $setup$await$content = $scope => {
   $setup($scope["#childScope/0"]);
 };
+const $input_level$await$content = /* @__PURE__ */_$.dynamicClosureRead("input_level", ($scope, input_level) => $input($scope["#childScope/0"], {
+  level: input_level - 1
+}), $scope => $scope._._._);
 const $await_content = /* @__PURE__ */_$.createRenderer(`<!>${_recurse_template}<!>`, /* beginChild, _recurse_walks, endChild */`D/${_recurse_walks}&D`, $setup$await$content, 0, $scope => $input_level$await$content($scope));
 const $await$try$content = /* @__PURE__ */_$.awaitTag("#text/0", $await_content);
 const $setup$try$content = $scope => {
   $await$try$content($scope, new Promise(setImmediate));
 };
 const $try_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", $setup$try$content);
-const $try$if$content = /* @__PURE__ */_$.createTry("#text/1", $try_content);
 const $input_level$if$content = /* @__PURE__ */_$.conditionalClosure("input_level", "#text/0", 0, ($scope, input_level) => _$.attr($scope["#div/0"], "data-level", input_level));
+const $try$if$content = /* @__PURE__ */_$.createTry("#text/1", $try_content);
 const $setup$if$content = $scope => {
   $try$if$content($scope, {
     placeholder: _$.attrTag({

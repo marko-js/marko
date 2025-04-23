@@ -17,8 +17,8 @@ const $count = /* @__PURE__ */_$.state("count/4", $scope => {
   $expr_input_count($scope);
   $count_effect($scope);
 });
-export const $input = /* @__PURE__ */_$.value("input", $expr_input_count);
 export function $setup($scope) {
   $count($scope, 0);
 }
+export const $input = /* @__PURE__ */_$.value("input", $expr_input_count);
 export default /* @__PURE__ */_$.createTemplate("__tests__/tags/counter.marko", $template, $walks, $setup, $input);

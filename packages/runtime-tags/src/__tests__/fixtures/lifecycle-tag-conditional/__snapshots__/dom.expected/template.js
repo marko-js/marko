@@ -18,6 +18,15 @@ const $x$if$content_effect = _$.effect("__tests__/template.marko_1_x", ($scope, 
 }));
 const $x$if$content = /* @__PURE__ */_$.conditionalClosure("x", "#text/0", 0, $x$if$content_effect);
 const $if_content = /* @__PURE__ */_$.createRenderer(0, 0, 0, 0, $scope => $x$if$content._($scope));
+const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
+  x
+}) => _$.on($scope["#button/1"], "click", function () {
+  $x($scope, x + 1), x;
+}));
+const $x = /* @__PURE__ */_$.state("x/3", $scope => {
+  $x$if$content($scope);
+  $x_effect($scope);
+});
 const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);
 const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
   show
@@ -27,15 +36,6 @@ const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
 const $show = /* @__PURE__ */_$.state("show/4", ($scope, show) => {
   $if($scope, show ? 0 : 1);
   $show_effect($scope);
-});
-const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
-  x
-}) => _$.on($scope["#button/1"], "click", function () {
-  $x($scope, x + 1), x;
-}));
-const $x = /* @__PURE__ */_$.state("x/3", $scope => {
-  $x$if$content($scope);
-  $x_effect($scope);
 });
 export function $setup($scope) {
   $x($scope, 0);

@@ -9,7 +9,8 @@
       "$$onClick$1": "o",
       "$$clickCount": "i",
       "$$onClick": "u",
-      "$$onClick2": "m"
+      "$$onClick2": "m",
+      "$$textAlias": "c"
     }
   }
 }

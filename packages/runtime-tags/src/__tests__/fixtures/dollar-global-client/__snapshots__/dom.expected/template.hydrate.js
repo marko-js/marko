@@ -11,8 +11,8 @@ const $setup$if$content2 = ($scope) => {
     _$.data($scope[0], $scope.$global.x);
   },
   $if_content = _$.createRenderer("<span> </span>", "D ", $setup$if$content),
-  $if2 = _$.conditional(1, $if_content2),
   $if = _$.conditional(0, $if_content),
+  $if2 = _$.conditional(1, $if_content2),
   $show_effect = _$.effect("a0", ($scope, { 3: show }) =>
     _$.on($scope[2], "click", function () {
       $show($scope, !show);

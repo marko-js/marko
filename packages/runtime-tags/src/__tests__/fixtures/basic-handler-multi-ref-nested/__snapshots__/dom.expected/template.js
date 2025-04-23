@@ -8,11 +8,11 @@ const $expr_a_b_effect = _$.effect("__tests__/template.marko_0_a_b", ($scope, {
   $a($scope, a.map(a => b));
 }));
 const $expr_a_b = /* @__PURE__ */_$.intersection(4, $expr_a_b_effect);
-const $b = /* @__PURE__ */_$.state("b/3", $expr_a_b);
 const $a = /* @__PURE__ */_$.state("a/2", ($scope, a) => {
   _$.data($scope["#text/1"], a.join(""));
   $expr_a_b($scope);
 });
+const $b = /* @__PURE__ */_$.state("b/3", $expr_a_b);
 export function $setup($scope) {
   $a($scope, [0]);
   $b($scope, 1);

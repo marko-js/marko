@@ -1,4 +1,4 @@
-// size: 696 (min) 372 (brotli)
+// size: 696 (min) 371 (brotli)
 const $expr_name_write_effect = _$.effect(
     "a0",
     ($scope, { 5: name, 6: write }) => {
@@ -11,13 +11,16 @@ const $expr_name_write_effect = _$.effect(
   $expr_name_write = _$.intersection(7, ($scope) => {
     _$.resetAbortSignal($scope, 0), $expr_name_write_effect($scope);
   }),
-  $write$1 = _$.value(6, $expr_name_write),
   $name = _$.value(5, ($scope, name) => {
     _$.data($scope[0], name),
       _$.data($scope[1], name),
       _$.data($scope[2], name),
       $expr_name_write($scope);
   }),
+  $write$1 = _$.value(6, $expr_name_write),
+  $setup$for$content = ($scope) => {
+    $scope[0];
+  },
   $write$for$content = _$.loopClosure(4, 2, ($scope, write) =>
     $write$1($scope[0], write),
   ),
@@ -25,9 +28,6 @@ const $expr_name_write_effect = _$.effect(
   $params2$for$content = _$.value(1, ($scope, $params2) =>
     $item$for$content($scope, $params2[0]),
   ),
-  $setup$for$content = ($scope) => {
-    $scope[0];
-  },
   $for_content = _$.createRenderer(
     "<div> </div><span> </span><p> </p>",
     "/D lD lD l&",

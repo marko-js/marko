@@ -1,6 +1,6 @@
 // size: 413 (min) 241 (brotli)
-const $dynamicTag = _$.dynamicTag(1),
-  $attrs_effect = _$.effect("a0", ($scope) => _$.attrsEvents($scope, 0)),
+const $attrs_effect = _$.effect("a0", ($scope) => _$.attrsEvents($scope, 0)),
+  $dynamicTag = _$.dynamicTag(1),
   $content = _$.value(4, $dynamicTag),
   $input = _$.value(3, ($scope, input) => {
     (($scope, attrs) => {

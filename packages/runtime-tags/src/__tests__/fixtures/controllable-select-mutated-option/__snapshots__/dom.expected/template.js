@@ -8,11 +8,6 @@ const $opt$for$content = /* @__PURE__ */_$.value("opt", ($scope, opt) => {
 const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $opt$for$content($scope, $params2[0]));
 const $for_content = /* @__PURE__ */_$.createRenderer("<option> </option>", /* get, next(1), get */" D ", 0, $params2$for$content);
 const $for = /* @__PURE__ */_$.loopOf("#select/0", $for_content);
-const $value = /* @__PURE__ */_$.state("value/6", ($scope, value) => {
-  _$.controllable_select_value($scope, "#select/0", value, $valueChange($scope));
-  _$.data($scope["#text/1"], value);
-});
-const $options_ = /* @__PURE__ */_$.value("options_0", $value);
 const $options_effect = _$.effect("__tests__/template.marko_0_options", ($scope, {
   options
 }) => {
@@ -28,6 +23,11 @@ const $options = /* @__PURE__ */_$.state("options/4", ($scope, options) => {
   $for($scope, [options, v => v]);
   $options_effect($scope);
 });
+const $value = /* @__PURE__ */_$.state("value/6", ($scope, value) => {
+  _$.controllable_select_value($scope, "#select/0", value, $valueChange($scope));
+  _$.data($scope["#text/1"], value);
+});
+const $options_ = /* @__PURE__ */_$.value("options_0", $value);
 const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => {
   _$.controllable_select_value_effect($scope, "#select/0");
   _$.on($scope["#select/0"], "change", console.log);

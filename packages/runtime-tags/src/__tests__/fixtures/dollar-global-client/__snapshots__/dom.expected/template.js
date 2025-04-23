@@ -9,8 +9,8 @@ const $setup$if$content = $scope => {
   _$.data($scope["#text/0"], $scope.$global.x);
 };
 const $if_content = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", $setup$if$content);
-const $if2 = /* @__PURE__ */_$.conditional("#text/1", $if_content2);
 const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);
+const $if2 = /* @__PURE__ */_$.conditional("#text/1", $if_content2);
 const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
   show
 }) => _$.on($scope["#button/2"], "click", function () {

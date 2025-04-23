@@ -14,6 +14,7 @@ const $expr_id_items_effect = _$.effect("__tests__/template.marko_0_id_items", (
   $items($scope, [...items, nextId]);
 }));
 const $expr_id_items = /* @__PURE__ */_$.intersection(5, $expr_id_items_effect);
+const $id = /* @__PURE__ */_$.state("id/3", $expr_id_items);
 const $for = /* @__PURE__ */_$.loopOf("#text/0", $for_content);
 const $items_effect = _$.effect("__tests__/template.marko_0_items", ($scope, {
   items
@@ -25,7 +26,6 @@ const $items = /* @__PURE__ */_$.state("items/4", ($scope, items) => {
   $expr_id_items($scope);
   $items_effect($scope);
 });
-const $id = /* @__PURE__ */_$.state("id/3", $expr_id_items);
 export function $setup($scope) {
   $id($scope, 0);
   $items($scope, []);

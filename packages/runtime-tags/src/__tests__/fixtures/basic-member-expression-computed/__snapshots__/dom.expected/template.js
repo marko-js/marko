@@ -17,12 +17,12 @@ const $expr_items_index = /* @__PURE__ */_$.intersection(6, $scope => {
   _$.data($scope["#text/1"], items[index]);
   $expr_items_index_effect($scope);
 });
-const $index = /* @__PURE__ */_$.state("index/5", $expr_items_index);
-const $items_ = /* @__PURE__ */_$.value("items_0", ($scope, items_0) => _$.data($scope["#text/0"], items_0));
 const $items = /* @__PURE__ */_$.state("items/3", ($scope, items) => {
   $items_($scope, items?.[0]);
   $expr_items_index($scope);
 });
+const $items_ = /* @__PURE__ */_$.value("items_0", ($scope, items_0) => _$.data($scope["#text/0"], items_0));
+const $index = /* @__PURE__ */_$.state("index/5", $expr_items_index);
 export function $setup($scope) {
   $items($scope, ["a", "b", "c"]);
   $index($scope, 0);
