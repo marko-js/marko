@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.13
+
+### Patch Changes
+
+- [#2670](https://github.com/marko-js/marko/pull/2670) [`42fff26`](https://github.com/marko-js/marko/commit/42fff26f85d311339835a05233ebf4767f2cd262) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Sort signals by their downstream values and intersections.
+
 ## 6.0.12
 
 ### Patch Changes
