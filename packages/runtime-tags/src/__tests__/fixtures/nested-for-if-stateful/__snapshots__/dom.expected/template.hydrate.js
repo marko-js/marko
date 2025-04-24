@@ -1,4 +1,4 @@
-// size: 865 (min) 407 (brotli)
+// size: 855 (min) 403 (brotli)
 const $setup$else$content = _$.effect("a0", ($scope) =>
     _$.on($scope[0], "click", function () {
       $editing$for$content($scope._, !0);
@@ -12,7 +12,7 @@ const $setup$else$content = _$.effect("a0", ($scope) =>
     " Db%",
     $setup$else$content,
     0,
-    ($scope) => $count$else$content._($scope),
+    $count$else$content,
   ),
   $expr_counts_count_i$if$content_effect = _$.effect(
     "a1",

@@ -1,7 +1,22 @@
 {
   "vars": {
     "props": {
-      "$_$": "t"
+      "$_$": "t",
+      "$$placeholder_content": "e",
+      "$$setup$await$content": "a",
+      "$$input_level$await$content": "r",
+      "$$await_content": "n",
+      "$$await$try$content": "l",
+      "$$setup$try$content": "o",
+      "$$try_content": "d",
+      "$$input_level$if$content": "i",
+      "$$try$if$content": "c",
+      "$$setup$if$content": "m",
+      "$$if_content": "s",
+      "$$if": "D",
+      "$$input_level_closure": "v",
+      "$$input_level": "u",
+      "$$input": "C"
     }
   }
 }

@@ -1,4 +1,4 @@
-// size: 18972 (min) 7212 (brotli)
+// size: 18979 (min) 7217 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -907,7 +907,7 @@ function createContent(
   (walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
     (setup ||= void 0),
     (params ||= void 0),
-    (closures ||= void 0);
+    (closures = closures ? closures._ || closures : void 0);
   let clone = template
     ? (branch, ns) => {
         ((cloneCache[ns] ||= {})[template] ||= (function (html2, ns) {

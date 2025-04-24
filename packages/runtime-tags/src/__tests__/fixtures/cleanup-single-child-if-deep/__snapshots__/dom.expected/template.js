@@ -7,7 +7,7 @@ const $setup$if$content3 = $scope => {
   _child_input_name($scope["#childScope/0"], "Inner");
 };
 const $write$if$content3 = /* @__PURE__ */_$.dynamicClosureRead("write", ($scope, write) => _child_input_write($scope["#childScope/0"], write), $scope => $scope._._._);
-const $if_content3 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, $setup$if$content3, 0, $scope => $write$if$content3($scope));
+const $if_content3 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, $setup$if$content3, 0, $write$if$content3);
 const $setup$if$content2 = $scope => {
   _child($scope["#childScope/0"]);
   _child_input_name($scope["#childScope/0"], "Middle");

@@ -1,4 +1,4 @@
-// size: 427 (min) 239 (brotli)
+// size: 407 (min) 236 (brotli)
 const $clickCount$else$content = _$.conditionalClosure(
     1,
     0,
@@ -10,7 +10,7 @@ const $clickCount$else$content = _$.conditionalClosure(
     "Db%",
     0,
     0,
-    ($scope) => $clickCount$else$content._($scope),
+    $clickCount$else$content,
   ),
   $clickCount$if$content_effect = _$.effect(
     "a0",
@@ -27,8 +27,12 @@ const $clickCount$else$content = _$.conditionalClosure(
       _$.data($scope[1], clickCount), $clickCount$if$content_effect($scope);
     },
   ),
-  $if_content = _$.createRenderer("<button> </button>", " D ", 0, 0, ($scope) =>
-    $clickCount$if$content._($scope),
+  $if_content = _$.createRenderer(
+    "<button> </button>",
+    " D ",
+    0,
+    0,
+    $clickCount$if$content,
   ),
   $if = _$.conditional(0, $if_content, $else_content),
   $clickCount = _$.state(1, ($scope, clickCount) => {

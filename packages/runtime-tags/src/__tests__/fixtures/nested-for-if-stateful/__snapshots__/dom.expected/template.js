@@ -6,7 +6,7 @@ const $setup$else$content_effect = _$.effect("__tests__/template.marko_3", $scop
 }));
 const $setup$else$content = $setup$else$content_effect;
 const $count$else$content = /* @__PURE__ */_$.conditionalClosure("count", "#text/0", 1, ($scope, count) => _$.data($scope["#text/1"], count));
-const $else_content = /* @__PURE__ */_$.createRenderer("<button>Increment <!></button>", /* get, next(1), over(1), replace */" Db%", $setup$else$content, 0, $scope => $count$else$content._($scope));
+const $else_content = /* @__PURE__ */_$.createRenderer("<button>Increment <!></button>", /* get, next(1), over(1), replace */" Db%", $setup$else$content, 0, $count$else$content);
 const $expr_counts_count_i$if$content_effect = _$.effect("__tests__/template.marko_2_counts_count_i", ($scope, {
   _: {
     _: {

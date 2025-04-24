@@ -21,7 +21,7 @@ const $clickCount$try$content = /* @__PURE__ */_$.dynamicClosureRead("clickCount
   })());
   $clickCount$try$content_effect($scope);
 });
-const $try_content = /* @__PURE__ */_$.createRenderer("<button>inc</button> -- <!>", /* get, over(2), replace */" c%", 0, 0, $scope => $clickCount$try$content($scope));
+const $try_content = /* @__PURE__ */_$.createRenderer("<button>inc</button> -- <!>", /* get, over(2), replace */" c%", 0, 0, $clickCount$try$content);
 const $clickCount_closure = /* @__PURE__ */_$.dynamicClosure($clickCount$try$content);
 const $clickCount = /* @__PURE__ */_$.state("clickCount/2", $clickCount_closure);
 const $try = /* @__PURE__ */_$.createTry("#text/1", $try_content);

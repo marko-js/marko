@@ -1,4 +1,4 @@
-// size: 929 (min) 476 (brotli)
+// size: 919 (min) 461 (brotli)
 const $setup$if$content = ($scope) => {
     $scope[0];
   },
@@ -77,7 +77,7 @@ const $setup$if$content = ($scope) => {
       " E l D l%",
       $setup$for$content,
       $params2$for$content,
-      ($scope) => $input_path$for$content._($scope),
+      $input_path$for$content,
     ),
   ),
   $input_comments = value(3, ($scope, input_comments) =>

@@ -1,4 +1,4 @@
-// size: 555 (min) 327 (brotli)
+// size: 535 (min) 306 (brotli)
 const $name = _$.value(3, ($scope, name) => _$.data($scope[0], name)),
   $setup$for$content = ($scope) => {
     $scope[0];
@@ -20,7 +20,7 @@ const $name = _$.value(3, ($scope, name) => _$.data($scope[0], name)),
     "/D l&",
     $setup$for$content,
     $params3$for$content,
-    ($scope) => $outer$for$content._($scope),
+    $outer$for$content,
   ),
   $for$for$content = _$.loopOf(0, $for_content2),
   $items$for$content = _$.loopClosure(2, 1, ($scope, items) =>
@@ -35,7 +35,7 @@ const $name = _$.value(3, ($scope, name) => _$.data($scope[0], name)),
     "D%D",
     0,
     $params2$for$content,
-    ($scope) => $items$for$content._($scope),
+    $items$for$content,
   ),
   $for = _$.loopOf(1, $for_content),
   $items_effect = _$.effect("b0", ($scope, { 2: items }) =>

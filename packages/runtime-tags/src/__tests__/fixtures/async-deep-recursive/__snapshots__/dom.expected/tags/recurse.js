@@ -11,7 +11,7 @@ const $setup$await$content = $scope => {
 const $input_level$await$content = /* @__PURE__ */_$.dynamicClosureRead("input_level", ($scope, input_level) => $input($scope["#childScope/0"], {
   level: input_level - 1
 }), $scope => $scope._._._);
-const $await_content = /* @__PURE__ */_$.createRenderer(`<!>${_recurse_template}<!>`, /* beginChild, _recurse_walks, endChild */`D/${_recurse_walks}&D`, $setup$await$content, 0, $scope => $input_level$await$content($scope));
+const $await_content = /* @__PURE__ */_$.createRenderer(`<!>${_recurse_template}<!>`, /* beginChild, _recurse_walks, endChild */`D/${_recurse_walks}&D`, $setup$await$content, 0, $input_level$await$content);
 const $await$try$content = /* @__PURE__ */_$.awaitTag("#text/0", $await_content);
 const $setup$try$content = $scope => {
   $await$try$content($scope, new Promise(setImmediate));
@@ -26,7 +26,7 @@ const $setup$if$content = $scope => {
     })
   });
 };
-const $if_content = /* @__PURE__ */_$.createRenderer("<div><!></div>", /* get, next(1), replace */" D%", $setup$if$content, 0, $scope => $input_level$if$content._($scope));
+const $if_content = /* @__PURE__ */_$.createRenderer("<div><!></div>", /* get, next(1), replace */" D%", $setup$if$content, 0, $input_level$if$content);
 const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);
 const $input_level_closure = /* @__PURE__ */_$.dynamicClosure($input_level$await$content);
 export const $input_level = /* @__PURE__ */_$.value("input_level", ($scope, input_level) => {

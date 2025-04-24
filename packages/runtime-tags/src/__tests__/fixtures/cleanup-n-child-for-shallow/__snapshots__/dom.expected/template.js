@@ -8,7 +8,7 @@ const $setup$for$content = $scope => {
 const $write$for$content = /* @__PURE__ */_$.loopClosure("write", "#text/2", ($scope, write) => _child_input_write($scope["#childScope/0"], write));
 const $item$for$content = /* @__PURE__ */_$.value("item", ($scope, item) => _child_input_name($scope["#childScope/0"], item));
 const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $item$for$content($scope, $params2[0]));
-const $for_content = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, $setup$for$content, $params2$for$content, $scope => $write$for$content._($scope));
+const $for_content = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, $setup$for$content, $params2$for$content, $write$for$content);
 const $for = /* @__PURE__ */_$.loopOf("#text/2", $for_content);
 const $items_effect = _$.effect("__tests__/template.marko_0_items", ($scope, {
   items

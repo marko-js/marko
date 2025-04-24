@@ -22,7 +22,7 @@ const $clickCount$try$content = /* @__PURE__ */_$.dynamicClosureRead("clickCount
   $await$try$content($scope, resolveAfter(clickCount, 1));
   $clickCount$try$content_effect($scope);
 });
-const $try_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", 0, 0, $scope => $clickCount$try$content($scope));
+const $try_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", 0, 0, $clickCount$try$content);
 const $clickCount_closure = /* @__PURE__ */_$.dynamicClosure($clickCount$try$content);
 const $clickCount_effect = _$.effect("__tests__/template.marko_0_clickCount", ($scope, {
   clickCount

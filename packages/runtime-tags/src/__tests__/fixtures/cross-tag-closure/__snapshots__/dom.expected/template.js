@@ -14,7 +14,7 @@ const $count$mytag$content = /* @__PURE__ */_$.dynamicClosureRead("count", ($sco
   _$.data($scope["#text/1"], count);
   $count$mytag$content_effect($scope);
 });
-const $mytag_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", 0, 0, $scope => $count$mytag$content($scope));
+const $mytag_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", 0, 0, $count$mytag$content);
 const $count_closure = /* @__PURE__ */_$.dynamicClosure($count$mytag$content);
 const $count = _$.registerBoundSignal("__tests__/template.marko_0_count/var", /* @__PURE__ */_$.value("count", $count_closure));
 export function $setup($scope) {
