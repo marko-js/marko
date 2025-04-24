@@ -4,7 +4,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   let show = true;
   let count = 0;
   _$.write(`<button class=inc></button>${_$.markResumeNode($scope0_id, "#button/0")}<button class=toggle></button>${_$.markResumeNode($scope0_id, "#button/1")}`);
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (show) {
       const $scope1_id = _$.nextScopeId();
       _$.write(`<span>${_$.escapeXML(count)}${_$.markResumeNode($scope1_id, "#text/0")}</span>`);
@@ -13,7 +13,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "5:2");
       return 0;
     }
-  }, $scope0_id, "#text/2");
+  }, $scope0_id, "#text/2", 1, /* state: show */1, 0, 1);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_show");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_count");
   _$.writeScope($scope0_id, {

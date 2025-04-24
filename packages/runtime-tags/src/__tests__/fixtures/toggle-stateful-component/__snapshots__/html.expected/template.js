@@ -7,7 +7,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     show = count < 1;
   }, "__tests__/template.marko_0/onCount", $scope0_id);
   _$.write("<div>");
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (show) {
       const $scope1_id = _$.nextScopeId();
       _$.write("<div>");
@@ -18,7 +18,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       _$.writeScope($scope1_id, {}, "__tests__/template.marko", "6:4");
       return 0;
     }
-  }, $scope0_id, "#div/0", 1, /* state: show */1, "</div>");
+  }, $scope0_id, "#div/0", 1, /* state: show */1, "</div>", 1);
   _$.writeScope($scope0_id, {
     onCount
   }, "__tests__/template.marko", 0, {

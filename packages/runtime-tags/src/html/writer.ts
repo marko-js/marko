@@ -197,22 +197,26 @@ export function resumeForOf(
   accessor: Accessor,
   serializeBranch?: 0 | 1,
   serializeMarker?: 0 | 1,
-  parentEndTag?: string,
+  parentEndTag?: string | 0,
+  singleNode?: 1,
 ): void {
+  const { state } = $chunk.boundary;
   const resumeBranch = serializeBranch !== 0;
   const resumeMarker = serializeMarker !== 0;
+  let singleNodeBranchIds = "";
 
   if (resumeBranch) {
     const loopScopes = new Map<unknown, ScopeInternals>();
     forOf(list, (item, index) => {
       const branchId = peekNextScopeId();
       if (resumeMarker) {
-        $chunk.writeHTML(
-          $chunk.boundary.state.mark(
-            ResumeSymbol.BranchStart,
-            branchId + (index ? " " : ""),
-          ),
-        );
+        if (singleNode) {
+          singleNodeBranchIds = " " + branchId + singleNodeBranchIds;
+        } else {
+          $chunk.writeHTML(
+            state.mark(ResumeSymbol.BranchStart, branchId + (index ? " " : "")),
+          );
+        }
       }
 
       withBranchId(branchId, () => {
@@ -237,61 +241,14 @@ export function resumeForOf(
     parentEndTag,
     resumeMarker &&
       (!parentEndTag || resumeBranch) &&
-      $chunk.boundary.state.mark(
-        ResumeSymbol.BranchEnd,
-        scopeId + " " + accessor,
-      ),
-  );
-}
-export function resumeSingleNodeForOf(
-  list: Falsy | Iterable<unknown>,
-  cb: (item: unknown, index: number) => void,
-  by: Falsy | ((item: unknown, index: number) => unknown),
-  scopeId: number,
-  accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  parentEndTag?: string,
-): void {
-  const resumeBranch = serializeBranch !== 0;
-  const resumeMarker = serializeMarker !== 0;
-  let branchIds = "";
-
-  if (resumeBranch) {
-    const loopScopes = new Map<unknown, ScopeInternals>();
-    forOf(list, (item, index) => {
-      const branchId = peekNextScopeId();
-      if (resumeMarker) {
-        branchIds = " " + branchId + branchIds;
-      }
-      withBranchId(branchId, () => {
-        cb(item, index);
-        loopScopes.set(forOfBy(by, item, index), writeScope(branchId, {}));
-      });
-    });
-
-    if (loopScopes.size) {
-      writeScope(scopeId, {
-        [AccessorPrefix.LoopScopeMap + accessor]: loopScopes,
-      });
-    }
-  } else {
-    forOf(list, cb);
-  }
-
-  writeBranchEnd(
-    scopeId,
-    accessor,
-    resumeMarker,
-    parentEndTag,
-    resumeMarker &&
-      (!parentEndTag || resumeBranch) &&
-      $chunk.boundary.state.mark(
-        parentEndTag
-          ? ResumeSymbol.BranchSingleNodeOnlyChildInParent
-          : ResumeSymbol.BranchSingleNode,
-        scopeId + " " + accessor + branchIds,
-      ),
+      (singleNode
+        ? state.mark(
+            parentEndTag
+              ? ResumeSymbol.BranchSingleNodeOnlyChildInParent
+              : ResumeSymbol.BranchSingleNode,
+            scopeId + " " + accessor + singleNodeBranchIds,
+          )
+        : state.mark(ResumeSymbol.BranchEnd, scopeId + " " + accessor)),
   );
 }
 
@@ -303,10 +260,13 @@ export function resumeForIn(
   accessor: Accessor,
   serializeBranch?: 0 | 1,
   serializeMarker?: 0 | 1,
-  parentEndTag?: string,
+  parentEndTag?: string | 0,
+  singleNode?: 1,
 ): void {
+  const { state } = $chunk.boundary;
   const resumeBranch = serializeBranch !== 0;
   const resumeMarker = serializeMarker !== 0;
+  let singleNodeBranchIds = "";
 
   if (resumeBranch) {
     const loopScopes = new Map<unknown, ScopeInternals>();
@@ -314,10 +274,14 @@ export function resumeForIn(
     forIn(obj, (key, value) => {
       const branchId = peekNextScopeId();
       if (resumeMarker) {
-        $chunk.writeHTML(
-          $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + sep),
-        );
-        sep = " ";
+        if (singleNode) {
+          singleNodeBranchIds = " " + branchId + singleNodeBranchIds;
+        } else {
+          $chunk.writeHTML(
+            state.mark(ResumeSymbol.BranchStart, branchId + sep),
+          );
+          sep = " ";
+        }
       }
 
       withBranchId(branchId, () => {
@@ -342,61 +306,14 @@ export function resumeForIn(
     parentEndTag,
     resumeMarker &&
       (!parentEndTag || resumeBranch) &&
-      $chunk.boundary.state.mark(
-        ResumeSymbol.BranchEnd,
-        scopeId + " " + accessor,
-      ),
-  );
-}
-export function resumeSingleNodeForIn(
-  obj: Falsy | {},
-  cb: (key: string, value: unknown) => void,
-  by: Falsy | ((key: string, v: unknown) => unknown),
-  scopeId: number,
-  accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  parentEndTag?: string,
-): void {
-  const resumeBranch = serializeBranch !== 0;
-  const resumeMarker = serializeMarker !== 0;
-  let branchIds = "";
-
-  if (resumeBranch) {
-    const loopScopes = new Map<unknown, ScopeInternals>();
-    forIn(obj, (key, value) => {
-      const branchId = peekNextScopeId();
-      if (resumeMarker) {
-        branchIds = " " + branchId + branchIds;
-      }
-      withBranchId(branchId, () => {
-        cb(key, value);
-        loopScopes.set(forInBy(by, key, value), writeScope(branchId, {}));
-      });
-    });
-
-    if (loopScopes.size) {
-      writeScope(scopeId, {
-        [AccessorPrefix.LoopScopeMap + accessor]: loopScopes,
-      });
-    }
-  } else {
-    forIn(obj, cb);
-  }
-
-  writeBranchEnd(
-    scopeId,
-    accessor,
-    resumeMarker,
-    parentEndTag,
-    resumeMarker &&
-      (!parentEndTag || resumeBranch) &&
-      $chunk.boundary.state.mark(
-        parentEndTag
-          ? ResumeSymbol.BranchSingleNodeOnlyChildInParent
-          : ResumeSymbol.BranchSingleNode,
-        scopeId + " " + accessor + branchIds,
-      ),
+      (singleNode
+        ? state.mark(
+            parentEndTag
+              ? ResumeSymbol.BranchSingleNodeOnlyChildInParent
+              : ResumeSymbol.BranchSingleNode,
+            scopeId + " " + accessor + singleNodeBranchIds,
+          )
+        : state.mark(ResumeSymbol.BranchEnd, scopeId + " " + accessor)),
   );
 }
 
@@ -410,10 +327,13 @@ export function resumeForTo(
   accessor: Accessor,
   serializeBranch?: 0 | 1,
   serializeMarker?: 0 | 1,
-  parentEndTag?: string,
+  parentEndTag?: string | 0,
+  singleNode?: 1,
 ): void {
+  const { state } = $chunk.boundary;
   const resumeBranch = serializeBranch !== 0;
   const resumeMarker = serializeMarker !== 0;
+  let singleNodeBranchIds = "";
 
   if (resumeBranch) {
     const loopScopes = new Map<unknown, ScopeInternals>();
@@ -421,10 +341,14 @@ export function resumeForTo(
     forTo(to, from, step, (i) => {
       const branchId = peekNextScopeId();
       if (resumeMarker) {
-        $chunk.writeHTML(
-          $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + sep),
-        );
-        sep = " ";
+        if (singleNode) {
+          singleNodeBranchIds = " " + branchId + singleNodeBranchIds;
+        } else {
+          $chunk.writeHTML(
+            state.mark(ResumeSymbol.BranchStart, branchId + sep),
+          );
+          sep = " ";
+        }
       }
 
       withBranchId(branchId, () => {
@@ -449,63 +373,14 @@ export function resumeForTo(
     parentEndTag,
     resumeMarker &&
       (!parentEndTag || resumeBranch) &&
-      $chunk.boundary.state.mark(
-        ResumeSymbol.BranchEnd,
-        scopeId + " " + accessor,
-      ),
-  );
-}
-export function resumeSingleNodeForTo(
-  to: number,
-  from: number | Falsy,
-  step: number | Falsy,
-  cb: (index: number) => void,
-  by: Falsy | ((v: number) => unknown),
-  scopeId: number,
-  accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  parentEndTag?: string,
-): void {
-  const resumeBranch = serializeBranch !== 0;
-  const resumeMarker = serializeMarker !== 0;
-  let branchIds = "";
-
-  if (resumeBranch) {
-    const loopScopes = new Map<unknown, ScopeInternals>();
-    forTo(to, from, step, (i) => {
-      const branchId = peekNextScopeId();
-      if (resumeMarker) {
-        branchIds = " " + branchId + branchIds;
-      }
-      withBranchId(branchId, () => {
-        cb(i);
-        loopScopes.set(forToBy(by, i), writeScope(branchId, {}));
-      });
-    });
-
-    if (loopScopes.size) {
-      writeScope(scopeId, {
-        [AccessorPrefix.LoopScopeMap + accessor]: loopScopes,
-      });
-    }
-  } else {
-    forTo(to, from, step, cb);
-  }
-
-  writeBranchEnd(
-    scopeId,
-    accessor,
-    resumeMarker,
-    parentEndTag,
-    resumeMarker &&
-      (!parentEndTag || resumeBranch) &&
-      $chunk.boundary.state.mark(
-        parentEndTag
-          ? ResumeSymbol.BranchSingleNodeOnlyChildInParent
-          : ResumeSymbol.BranchSingleNode,
-        scopeId + " " + accessor + branchIds,
-      ),
+      (singleNode
+        ? state.mark(
+            parentEndTag
+              ? ResumeSymbol.BranchSingleNodeOnlyChildInParent
+              : ResumeSymbol.BranchSingleNode,
+            scopeId + " " + accessor + singleNodeBranchIds,
+          )
+        : state.mark(ResumeSymbol.BranchEnd, scopeId + " " + accessor)),
   );
 }
 
@@ -515,54 +390,17 @@ export function resumeConditional(
   accessor: Accessor,
   serializeBranch?: 0 | 1,
   serializeMarker?: 0 | 1,
-  parentEndTag?: string,
+  parentEndTag?: string | 0,
+  singleNode?: 1,
 ) {
+  const { state } = $chunk.boundary;
   const resumeBranch = serializeBranch !== 0;
   const resumeMarker = serializeMarker !== 0;
   const branchId = peekNextScopeId();
-  if (resumeMarker && resumeBranch) {
-    $chunk.writeHTML(
-      $chunk.boundary.state.mark(ResumeSymbol.BranchStart, branchId + ""),
-    );
+  if (resumeMarker && resumeBranch && !singleNode) {
+    $chunk.writeHTML(state.mark(ResumeSymbol.BranchStart, branchId + ""));
   }
 
-  const branchIndex = resumeBranch ? withBranchId(branchId, cb) : cb();
-  const rendered = branchIndex !== undefined;
-
-  if (resumeBranch && rendered) {
-    writeScope(scopeId, {
-      [AccessorPrefix.ConditionalRenderer + accessor]: resumeMarker
-        ? branchIndex
-        : undefined,
-      [AccessorPrefix.ConditionalScope + accessor]: writeScope(branchId, {}),
-    });
-  }
-
-  writeBranchEnd(
-    scopeId,
-    accessor,
-    resumeMarker,
-    parentEndTag,
-    resumeMarker &&
-      (!parentEndTag || resumeBranch) &&
-      $chunk.boundary.state.mark(
-        ResumeSymbol.BranchEnd,
-        scopeId + " " + accessor,
-      ),
-  );
-}
-
-export function resumeSingleNodeConditional(
-  cb: () => void | number,
-  scopeId: number,
-  accessor: Accessor,
-  serializeBranch?: 0 | 1,
-  serializeMarker?: 0 | 1,
-  parentEndTag?: string,
-) {
-  const resumeBranch = serializeBranch !== 0;
-  const resumeMarker = serializeMarker !== 0;
-  const branchId = peekNextScopeId();
   const branchIndex = resumeBranch ? withBranchId(branchId, cb) : cb();
   const shouldWriteBranch = resumeBranch && branchIndex !== undefined;
 
@@ -582,12 +420,17 @@ export function resumeSingleNodeConditional(
     parentEndTag,
     resumeMarker &&
       (!parentEndTag || resumeBranch) &&
-      $chunk.boundary.state.mark(
-        parentEndTag
-          ? ResumeSymbol.BranchSingleNodeOnlyChildInParent
-          : ResumeSymbol.BranchSingleNode,
-        scopeId + " " + accessor + (shouldWriteBranch ? " " + branchId : ""),
-      ),
+      (singleNode
+        ? state.mark(
+            parentEndTag
+              ? ResumeSymbol.BranchSingleNodeOnlyChildInParent
+              : ResumeSymbol.BranchSingleNode,
+            scopeId +
+              " " +
+              accessor +
+              (shouldWriteBranch ? " " + branchId : ""),
+          )
+        : state.mark(ResumeSymbol.BranchEnd, scopeId + " " + accessor)),
   );
 }
 
@@ -595,7 +438,7 @@ function writeBranchEnd(
   scopeId: number,
   accessor: Accessor,
   resumeMarker: boolean,
-  parentEndTag: string | undefined,
+  parentEndTag: string | undefined | 0,
   mark: string | undefined | false,
 ) {
   const endTag = parentEndTag || "";

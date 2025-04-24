@@ -28,7 +28,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     });
   }, 0, $scope0_id, "#text/1");
   _$.write("<hr>");
-  _$.resumeSingleNodeForTo(3, 0, 1, i => {
+  _$.resumeForTo(3, 0, 1, i => {
     const $scope3_id = _$.nextScopeId();
     _$.write("<ul>");
     _$.resumeForTo(3, 0, 1, j => {
@@ -44,7 +44,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     }, 0, $scope3_id, "#ul/0", 1, 0);
     _$.write("</ul>");
     _$.writeScope($scope3_id, {}, "__tests__/template.marko", "24:2");
-  }, 0, $scope0_id, "#text/2", 1, 0);
+  }, 0, $scope0_id, "#text/2", 1, 0, 0, 1);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml3");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0");
   _$.writeScope($scope0_id, {

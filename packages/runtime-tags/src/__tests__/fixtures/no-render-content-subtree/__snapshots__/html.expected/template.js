@@ -4,7 +4,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   const $scope0_id = _$.nextScopeId();
   const output = _$.nodeRef($scope0_id, "__tests__/template.marko_0/#div");
   _$.write(`<div></div>${_$.markResumeNode($scope0_id, "#div/0")}`);
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (input.show) {
       const $scope1_id = _$.nextScopeId();
       _child({
@@ -16,6 +16,6 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
       }, "__tests__/template.marko", "3:1");
       return 0;
     }
-  }, $scope0_id, "#text/1", _$.serializeGuard($serialize, /* input.show */0), _$.serializeGuard($serialize, /* input.show */0));
+  }, $scope0_id, "#text/1", _$.serializeGuard($serialize, /* input.show */0), _$.serializeGuard($serialize, /* input.show */0), 0, 1);
   _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
 });

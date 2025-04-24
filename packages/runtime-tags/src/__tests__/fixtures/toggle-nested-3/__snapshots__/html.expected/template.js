@@ -10,7 +10,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     if (outer) {
       const $scope1_id = _$.nextScopeId();
       _$.write(`<button id=inner></button>${_$.markResumeNode($scope1_id, "#button/0")}`);
-      _$.resumeSingleNodeConditional(() => {
+      _$.resumeConditional(() => {
         if (inner) {
           const $scope2_id = _$.nextScopeId();
           _$.write(`<button id=count>${_$.escapeXML(count)}${_$.markResumeNode($scope2_id, "#text/1")}</button>${_$.markResumeNode($scope2_id, "#button/0")}`);
@@ -21,7 +21,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
           }, "__tests__/template.marko", "8:6"));
           return 0;
         }
-      }, $scope1_id, "#text/1");
+      }, $scope1_id, "#text/1", 1, /* state: inner */1, 0, 1);
       _$.writeEffect($scope1_id, "__tests__/template.marko_1_inner");
       _$.writeScope($scope1_id, {
         _: _$.ensureScopeWithId($scope0_id)

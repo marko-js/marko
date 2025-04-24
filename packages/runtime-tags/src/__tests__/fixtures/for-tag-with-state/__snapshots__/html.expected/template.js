@@ -7,11 +7,11 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     _$.write(`<div>${_$.escapeXML(i)}: ${_$.escapeXML(val)}</div>`);
   });
   let arrB = [1, 2, 3];
-  _$.resumeSingleNodeForOf(arrB, (val, i) => {
+  _$.resumeForOf(arrB, (val, i) => {
     const $scope2_id = _$.nextScopeId();
     _$.write(`<div>${_$.escapeXML(i)}${_$.markResumeNode($scope2_id, "#text/0")}: <!>${_$.escapeXML(val)}${_$.markResumeNode($scope2_id, "#text/1")}</div>`);
     _$.writeScope($scope2_id, {}, "__tests__/template.marko", "9:2");
-  }, 0, $scope0_id, "#text/1");
+  }, 0, $scope0_id, "#text/1", /* state: arrB */1, /* state: arrB */1, 0, 1);
   _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
   _$.resumeClosestBranch($scope0_id);
 });

@@ -12,7 +12,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   _$.resumeConditional(() => {
     if (show) {
       const $scope1_id = _$.nextScopeId();
-      _$.resumeSingleNodeConditional(() => {
+      _$.resumeConditional(() => {
         if (value1) {
           const $scope2_id = _$.nextScopeId();
           _$.write(`<span>${_$.escapeXML(value1)}${_$.markResumeNode($scope2_id, "#text/0", _$.serializeGuard($serialize, /* value1 */5))}</span>`);
@@ -22,8 +22,8 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
           }, "__tests__/template.marko", "4:6"));
           return 0;
         }
-      }, $scope1_id, "#text/0", _$.serializeGuard($serialize, /* value1 */5), _$.serializeGuard($serialize, /* value1 */5));
-      _$.resumeSingleNodeConditional(() => {
+      }, $scope1_id, "#text/0", _$.serializeGuard($serialize, /* value1 */5), _$.serializeGuard($serialize, /* value1 */5), 0, 1);
+      _$.resumeConditional(() => {
         if (value2) {
           const $scope3_id = _$.nextScopeId();
           _$.write(`<span>${_$.escapeXML(value2)}${_$.markResumeNode($scope3_id, "#text/0", _$.serializeGuard($serialize, /* value2 */6))}</span>`);
@@ -33,7 +33,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
           }, "__tests__/template.marko", "5:6"));
           return 0;
         }
-      }, $scope1_id, "#text/1", _$.serializeGuard($serialize, /* value2 */6), _$.serializeGuard($serialize, /* value2 */6));
+      }, $scope1_id, "#text/1", _$.serializeGuard($serialize, /* value2 */6), _$.serializeGuard($serialize, /* value2 */6), 0, 1);
       _$.serializeGuard($serialize, /* show,value1,value2 */3) && _$.writeScope($scope1_id, {
         _: _$.serializeIf($serialize, /* input.value1, input.value2 */2) && _$.ensureScopeWithId($scope0_id)
       }, "__tests__/template.marko", "3:4");
