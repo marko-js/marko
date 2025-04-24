@@ -101,10 +101,11 @@ export function loopClosure<T>(
   const loopScopeMapAccessor =
     AccessorPrefix.LoopScopeMap + ownerLoopNodeAccessor;
   const ownerSignal = (ownerScope: Scope) => {
-    const scopes =
-      ownerScope[loopScopeAccessor] ||
-      ownerScope[loopScopeMapAccessor]?.values() ||
-      [];
+    const scopes = (ownerScope[loopScopeAccessor] ||= ownerScope[
+      loopScopeMapAccessor
+    ]
+      ? [...ownerScope[loopScopeMapAccessor].values()]
+      : []);
     const [firstScope] = scopes;
     if (firstScope) {
       queueRender(
