@@ -1,4 +1,4 @@
-// size: 18979 (min) 7217 (brotli)
+// size: 18988 (min) 7245 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1027,10 +1027,11 @@ function loopClosure(valueAccessor, ownerLoopNodeAccessor, fn) {
     loopScopeAccessor = "l" + ownerLoopNodeAccessor,
     loopScopeMapAccessor = "m" + ownerLoopNodeAccessor,
     ownerSignal = (ownerScope) => {
-      let scopes =
-          ownerScope[loopScopeAccessor] ||
-          ownerScope[loopScopeMapAccessor]?.values() ||
-          [],
+      let scopes = (ownerScope[loopScopeAccessor] ||= ownerScope[
+          loopScopeMapAccessor
+        ]
+          ? [...ownerScope[loopScopeMapAccessor].values()]
+          : []),
         [firstScope] = scopes;
       firstScope &&
         queueRender(
