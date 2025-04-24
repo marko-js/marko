@@ -1,4 +1,4 @@
-// size: 587 (min) 339 (brotli)
+// size: 577 (min) 333 (brotli)
 const $expr_input_onCount_clickCount_effect = _$.effect(
     "a0",
     ($scope, { 4: input_onCount, 5: clickCount }) =>
@@ -37,7 +37,7 @@ const $input_onCount = _$.value(4, $expr_input_onCount_clickCount),
     "D/ D l&",
     $setup$if$content,
     0,
-    ($scope) => $onCount$if$content._($scope),
+    $onCount$if$content,
   ),
   $if = _$.conditional(0, $if_content),
   $show = _$.state(1, ($scope, show) => $if($scope, show ? 0 : 1));

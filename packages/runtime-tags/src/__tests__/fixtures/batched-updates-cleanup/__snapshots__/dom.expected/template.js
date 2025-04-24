@@ -2,7 +2,7 @@ export const $template = "<button></button><!><!>";
 export const $walks = /* get, over(1), replace, over(1) */" b%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $message$if$content = /* @__PURE__ */_$.conditionalClosure("message", "#text/1", 0, ($scope, message) => _$.data($scope["#text/0"], message));
-const $if_content = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", 0, 0, $scope => $message$if$content._($scope));
+const $if_content = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", 0, 0, $message$if$content);
 const $if = /* @__PURE__ */_$.conditional("#text/1", $if_content);
 const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
   show

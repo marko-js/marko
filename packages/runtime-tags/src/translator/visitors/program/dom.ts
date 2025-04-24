@@ -56,25 +56,28 @@ export default {
           const { walks, writes, setup } = writer.getSectionMeta(childSection);
           const identifier = t.identifier(childSection.name);
           const referencedClosures = childSection.referencedClosures
-            ? t.arrowFunctionExpression(
-                [scopeIdentifier],
-                toFirstExpressionOrBlock(
-                  toArray(childSection.referencedClosures, (closure) => {
-                    const closureSignal = getSignal(childSection, closure);
-                    return t.expressionStatement(
-                      t.callExpression(
-                        isDynamicClosure(childSection, closure)
-                          ? closureSignal.identifier
-                          : t.memberExpression(
-                              closureSignal.identifier,
-                              t.identifier(getAccessorProp().Owner),
-                            ),
-                        [scopeIdentifier],
-                      ),
-                    );
-                  }),
-                ),
-              )
+            ? Array.isArray(childSection.referencedClosures)
+              ? t.arrowFunctionExpression(
+                  [scopeIdentifier],
+                  toFirstExpressionOrBlock(
+                    toArray(childSection.referencedClosures, (closure) => {
+                      const closureSignal = getSignal(childSection, closure);
+                      return t.expressionStatement(
+                        t.callExpression(
+                          isDynamicClosure(childSection, closure)
+                            ? closureSignal.identifier
+                            : t.memberExpression(
+                                closureSignal.identifier,
+                                t.identifier(getAccessorProp().Owner),
+                              ),
+                          [scopeIdentifier],
+                        ),
+                      );
+                    }),
+                  ),
+                )
+              : getSignal(childSection, childSection.referencedClosures)
+                  .identifier
             : undefined;
           const renderer = getSectionParentIsOwner(childSection)
             ? callRuntime(

@@ -1,4 +1,4 @@
-// size: 649 (min) 306 (brotli)
+// size: 631 (min) 307 (brotli)
 const $count$if$content_effect = _$.effect(
     "a0",
     (
@@ -25,7 +25,7 @@ const $count$if$content_effect = _$.effect(
     " D ",
     0,
     0,
-    ($scope) => $count$if$content($scope),
+    $count$if$content,
   ),
   $if$if$content = _$.conditional(1, $if_content2),
   $inner$if$content_effect = _$.effect("a1", ($scope, { _: { 3: inner } }) =>
@@ -41,7 +41,7 @@ const $count$if$content_effect = _$.effect(
     " b%D",
     0,
     0,
-    ($scope) => $inner$if$content._($scope),
+    $inner$if$content,
   ),
   $if = _$.conditional(1, $if_content),
   $outer_effect = _$.effect("a2", ($scope, { 2: outer }) =>

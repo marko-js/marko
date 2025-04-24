@@ -2,7 +2,7 @@ export const $template = "<button class=inc></button><button class=toggle></butt
 export const $walks = /* get, over(1), get, over(1), replace, over(1) */" b b%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $count$if$content = /* @__PURE__ */_$.conditionalClosure("count", "#text/2", 0, ($scope, count) => _$.data($scope["#text/0"], count));
-const $if_content = /* @__PURE__ */_$.createRenderer("The count is <!>", /* over(1), replace */"b%", 0, 0, $scope => $count$if$content._($scope));
+const $if_content = /* @__PURE__ */_$.createRenderer("The count is <!>", /* over(1), replace */"b%", 0, 0, $count$if$content);
 const $if = /* @__PURE__ */_$.conditional("#text/2", $if_content);
 const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
   show

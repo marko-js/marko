@@ -13,7 +13,7 @@ const $count$child$content = /* @__PURE__ */_$.dynamicClosureRead("count", ($sco
   _$.data($scope["#text/1"], count);
   $count$child$content_effect($scope);
 });
-const $child_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", 0, 0, $scope => $count$child$content($scope));
+const $child_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", 0, 0, $count$child$content);
 const $count_closure = /* @__PURE__ */_$.dynamicClosure($count$child$content);
 const $count = /* @__PURE__ */_$.state("count/1", $count_closure);
 export function $setup($scope) {

@@ -85,7 +85,7 @@ export function createContent(
   walks?: string | 0,
   setup?: SetupFn | 0,
   params?: Signal<unknown> | 0,
-  closures?: Signal<unknown> | 0,
+  closures?: { _: Signal<unknown> } | Signal<unknown> | 0,
   dynamicScopesAccessor?: Accessor,
 ) {
   // Walks are required to encode how to "exit" the content
@@ -97,7 +97,9 @@ export function createContent(
   walks = walks ? walks.replace(/[^\0-1]+$/, "") : "";
   setup ||= undefined;
   params ||= undefined;
-  closures ||= undefined;
+  closures = closures
+    ? (closures as { _: Signal<unknown> })._ || closures
+    : undefined;
   const clone: Renderer["___clone"] = template
     ? (branch, ns) => {
         ((cloneCache[ns] ||= {})[template] ||= createCloneableHTML(
@@ -132,7 +134,7 @@ export function registerContent(
   walks?: string | 0,
   setup?: SetupFn | 0,
   params?: Signal<unknown> | 0,
-  closures?: Signal<unknown> | 0,
+  closures?: { _: Signal<unknown> } | Signal<unknown> | 0,
   dynamicScopesAccessor?: Accessor,
 ) {
   return register(
@@ -154,7 +156,7 @@ export function createRenderer(
   walks?: string | 0,
   setup?: SetupFn | 0,
   params?: Signal<unknown> | 0,
-  closures?: Signal<unknown> | 0,
+  closures?: { _: Signal<unknown> } | Signal<unknown> | 0,
 ) {
   return createContent("", template, walks, setup, params, closures)();
 }

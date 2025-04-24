@@ -3,7 +3,7 @@ export const $walks = /* beginChild, _FancyButton_walks, endChild */`/${_FancyBu
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $setup as _FancyButton, $input as _FancyButton_input, $template as _FancyButton_template, $walks as _FancyButton_walks } from "./tags/FancyButton.marko";
 const $clickCount$FancyButton$content = /* @__PURE__ */_$.dynamicClosureRead("clickCount", ($scope, clickCount) => _$.data($scope["#text/0"], clickCount));
-const $FancyButton_content = _$.registerContent("__tests__/template.marko_1_renderer", " ", /* get */" ", 0, 0, $scope => $clickCount$FancyButton$content($scope));
+const $FancyButton_content = _$.registerContent("__tests__/template.marko_1_renderer", " ", /* get */" ", 0, 0, $clickCount$FancyButton$content);
 const $clickCount_closure = /* @__PURE__ */_$.dynamicClosure($clickCount$FancyButton$content);
 const $clickCount = /* @__PURE__ */_$.state("clickCount/1", ($scope, clickCount) => {
   _FancyButton_input($scope["#childScope/0"], {

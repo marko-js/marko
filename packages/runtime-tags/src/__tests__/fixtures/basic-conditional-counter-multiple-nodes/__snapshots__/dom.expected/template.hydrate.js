@@ -1,9 +1,13 @@
-// size: 358 (min) 203 (brotli)
+// size: 348 (min) 193 (brotli)
 const $count$if$content = _$.conditionalClosure(4, 2, 0, ($scope, count) =>
     _$.data($scope[0], count),
   ),
-  $if_content = _$.createRenderer("The count is <!>", "b%", 0, 0, ($scope) =>
-    $count$if$content._($scope),
+  $if_content = _$.createRenderer(
+    "The count is <!>",
+    "b%",
+    0,
+    0,
+    $count$if$content,
   ),
   $if = _$.conditional(2, $if_content),
   $show_effect = _$.effect("a0", ($scope, { 3: show }) =>

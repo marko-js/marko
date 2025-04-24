@@ -1,4 +1,4 @@
-// size: 1272 (min) 487 (brotli)
+// size: 1264 (min) 488 (brotli)
 const $expr_name_write_effect = _$.effect(
     "a0",
     ($scope, { 3: name, 4: write }) => {
@@ -28,7 +28,7 @@ const $expr_name_write_effect = _$.effect(
     "/D l&",
     $setup$if$content3,
     0,
-    ($scope) => $write$if$content3($scope),
+    $write$if$content3,
   ),
   $setup$if$content2 = ($scope) => {
     $scope[0], $name($scope[0], "Middle");

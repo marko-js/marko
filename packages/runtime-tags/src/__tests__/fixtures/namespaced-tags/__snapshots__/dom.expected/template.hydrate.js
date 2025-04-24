@@ -1,12 +1,17 @@
-// size: 720 (min) 338 (brotli)
+// size: 712 (min) 341 (brotli)
 const $Child_content2 = _$.registerContent("a0", "Hi"),
   $Child_content = _$.registerContent("a1", "Hi"),
   $input_value$Parent$content = _$.dynamicClosureRead(
     10,
     ($scope, input_value) => _$.html($scope, input_value, 0),
   ),
-  $Parent_content = _$.registerContent("a2", " ", " ", 0, 0, ($scope) =>
-    $input_value$Parent$content($scope),
+  $Parent_content = _$.registerContent(
+    "a2",
+    " ",
+    " ",
+    0,
+    0,
+    $input_value$Parent$content,
   ),
   $dynamicTag3 = _$.dynamicTag(5, $Parent_content),
   $expr_Parent_Child_effect = _$.effect(
