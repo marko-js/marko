@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.15
+
+### Patch Changes
+
+- [#2676](https://github.com/marko-js/marko/pull/2676) [`e906fa0`](https://github.com/marko-js/marko/commit/e906fa0945c125519cf4cd1e3d0c27a6c775f27c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where section was missing in translate for a node that was already removed.
+
 ## 6.0.14
 
 ### Patch Changes
