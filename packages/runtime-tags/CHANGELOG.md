@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.14
+
+### Patch Changes
+
+- [#2674](https://github.com/marko-js/marko/pull/2674) [`8c0f463`](https://github.com/marko-js/marko/commit/8c0f46353f8555283e966ce683fe1f07df0d7ef8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with hydrating a closure within a non stateful for loop.
+
+- [#2672](https://github.com/marko-js/marko/pull/2672) [`2da2ca0`](https://github.com/marko-js/marko/commit/2da2ca00770125725e257c667ed4c2a5f379f8d0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Inline closures functions when single closure for section.
+
 ## 6.0.13
 
 ### Patch Changes
