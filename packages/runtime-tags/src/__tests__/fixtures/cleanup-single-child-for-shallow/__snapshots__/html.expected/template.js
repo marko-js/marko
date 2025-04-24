@@ -8,7 +8,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     el().innerHTML += '\n' + msg;
   }, "__tests__/template.marko_0/write", $scope0_id);
   _$.write(`<button>Toggle</button>${_$.markResumeNode($scope0_id, "#button/0")}<div></div>${_$.markResumeNode($scope0_id, "#div/1")}`);
-  _$.resumeSingleNodeForOf(items, item => {
+  _$.resumeForOf(items, item => {
     const $scope1_id = _$.nextScopeId();
     const $childScope = _$.peekNextScopeId();
     _child({
@@ -18,7 +18,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     _$.writeScope($scope1_id, {
       "#childScope/0": _$.writeExistingScope($childScope)
     }, "__tests__/template.marko", "7:2");
-  }, 0, $scope0_id, "#text/2");
+  }, 0, $scope0_id, "#text/2", /* state: items */1, /* state: items */1, 0, 1);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_items");
   _$.writeScope($scope0_id, {
     items,

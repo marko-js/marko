@@ -2,7 +2,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 const $content = (input, $serialize) => {
   const $scope0_id = _$.nextScopeId();
   const $input_level_closures = new Set();
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (input.level) {
       const $scope1_id = _$.nextScopeId();
       _$.write(`<div${_$.attr("data-level", input.level)}>`);
@@ -38,7 +38,7 @@ const $content = (input, $serialize) => {
       }, "__tests__/tags/recurse.marko", "1:1");
       return 0;
     }
-  }, $scope0_id, "#text/0", _$.serializeGuard($serialize, /* input.level */0), _$.serializeGuard($serialize, /* input.level */0));
+  }, $scope0_id, "#text/0", _$.serializeGuard($serialize, /* input.level */0), _$.serializeGuard($serialize, /* input.level */0), 0, 1);
   _$.writeScope($scope0_id, {
     input_level: input.level,
     "ClosureScopes:input_level": _$.serializeIf($serialize, /* input.level */0) && $input_level_closures

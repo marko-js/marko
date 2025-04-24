@@ -7,7 +7,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   _$.resumeConditional(() => {
     if (input.show) {
       const $scope1_id = _$.nextScopeId();
-      _$.resumeSingleNodeConditional(() => {
+      _$.resumeConditional(() => {
         if (input.show) {
           const $scope2_id = _$.nextScopeId();
           const setHtml = _child({});
@@ -18,7 +18,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
           });
           return 0;
         }
-      }, $scope1_id, "#text/0", 1, _$.serializeGuard($serialize, /* input.show */0));
+      }, $scope1_id, "#text/0", 1, _$.serializeGuard($serialize, /* input.show */0), 0, 1);
       _$.writeScope($scope1_id, {
         _: _$.serializeIf($serialize, /* input.show */0) && _$.ensureScopeWithId($scope0_id)
       }, "__tests__/template.marko", "1:2");
@@ -29,7 +29,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   _thing({
     value: $hoisted_setHtml
   });
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (true) {
       const $scope3_id = _$.nextScopeId();
       const setHtml2 = _child({});
@@ -40,8 +40,8 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
       });
       return 0;
     }
-  }, $scope0_id, "#text/2", 1, 0);
-  _$.resumeSingleNodeConditional(() => {
+  }, $scope0_id, "#text/2", 1, 0, 0, 1);
+  _$.resumeConditional(() => {
     if (true) {
       const $scope4_id = _$.nextScopeId();
       const setHtml3 = _child({});
@@ -52,7 +52,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
       });
       return 0;
     }
-  }, $scope0_id, "#text/3", 1, 0);
+  }, $scope0_id, "#text/3", 1, 0, 0, 1);
   if (true) {
     const $scope5_id = _$.nextScopeId();
     _$.writeEffect($scope5_id, "__tests__/template.marko_5");

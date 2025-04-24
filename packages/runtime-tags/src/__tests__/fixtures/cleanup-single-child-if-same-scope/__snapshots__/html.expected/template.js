@@ -4,7 +4,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   let show = true;
   const el = _$.nodeRef();
   _$.write(`<button>Toggle</button>${_$.markResumeNode($scope0_id, "#button/0")}<pre></pre>${_$.markResumeNode($scope0_id, "#pre/1")}`);
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (show) {
       const $scope1_id = _$.nextScopeId();
       _$.write("<div>child</div>");
@@ -14,7 +14,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "6:2");
       return 0;
     }
-  }, $scope0_id, "#text/2");
+  }, $scope0_id, "#text/2", 1, /* state: show */1, 0, 1);
   _$.writeEffect($scope0_id, "__tests__/template.marko_0_show");
   _$.writeScope($scope0_id, {
     show

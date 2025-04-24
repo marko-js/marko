@@ -207,7 +207,7 @@ export const IfTag = {
 
             const markerSerializeArg = getSerializeGuard(
               markerSerializeReason,
-              !skipParentEnd,
+              !(skipParentEnd || singleNodeOptimization),
             );
             const cbNode = t.arrowFunctionExpression(
               [],
@@ -216,9 +216,7 @@ export const IfTag = {
 
             statement = t.expressionStatement(
               callRuntime(
-                singleNodeOptimization
-                  ? "resumeSingleNodeConditional"
-                  : "resumeConditional",
+                "resumeConditional",
                 cbNode,
                 getScopeIdIdentifier(ifTagSection),
                 getScopeAccessorLiteral(nodeBinding),
@@ -227,8 +225,12 @@ export const IfTag = {
                   !markerSerializeArg,
                 ),
                 markerSerializeArg,
-                skipParentEnd &&
-                  t.stringLiteral(`</${onlyChildParentTagName}>`),
+                skipParentEnd
+                  ? t.stringLiteral(`</${onlyChildParentTagName}>`)
+                  : singleNodeOptimization
+                    ? t.numericLiteral(0)
+                    : undefined,
+                singleNodeOptimization ? t.numericLiteral(1) : undefined,
               ),
             );
           }

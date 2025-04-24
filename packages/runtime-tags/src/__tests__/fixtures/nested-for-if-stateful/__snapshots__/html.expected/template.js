@@ -6,7 +6,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.resumeForOf(counts, (count, i) => {
     const $scope1_id = _$.nextScopeId();
     let editing = false;
-    _$.resumeSingleNodeConditional(() => {
+    _$.resumeConditional(() => {
       if (editing) {
         const $scope2_id = _$.nextScopeId();
         _$.write(`<button>Confirm <!>${_$.escapeXML(count + 1)}${_$.markResumeNode($scope2_id, "#text/1")}</button>${_$.markResumeNode($scope2_id, "#button/0")}`);
@@ -25,7 +25,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
         }, "__tests__/template.marko", "12:4");
         return 1;
       }
-    }, $scope1_id, "#text/0");
+    }, $scope1_id, "#text/0", 1, /* state: editing */1, 0, 1);
     _$.writeScope($scope1_id, {
       count,
       i,

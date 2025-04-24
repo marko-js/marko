@@ -3,7 +3,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   const $scope0_id = _$.nextScopeId();
   let clickCount = 0;
   _$.write("<div>");
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (clickCount < 3) {
       const $scope1_id = _$.nextScopeId();
       _$.write(`<button>${_$.escapeXML(clickCount)}${_$.markResumeNode($scope1_id, "#text/1")}</button>${_$.markResumeNode($scope1_id, "#button/0")}`);
@@ -20,7 +20,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       }, "__tests__/template.marko", "8:4");
       return 1;
     }
-  }, $scope0_id, "#text/0");
+  }, $scope0_id, "#text/0", 1, /* state: clickCount */1, 0, 1);
   _$.write("</div>");
   _$.writeScope($scope0_id, {
     clickCount

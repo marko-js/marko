@@ -5,7 +5,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
     value
   } = input;
   _$.write("<div>");
-  _$.resumeSingleNodeConditional(() => {
+  _$.resumeConditional(() => {
     if (value) {
       const $scope1_id = _$.nextScopeId();
       _$.write(`<span>${_$.escapeXML(value)}${_$.markResumeNode($scope1_id, "#text/0", _$.serializeGuard($serialize, /* value */0))}</span>`);
@@ -14,7 +14,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
       }, "__tests__/template.marko", "3:4");
       return 0;
     }
-  }, $scope0_id, "#text/0", _$.serializeGuard($serialize, /* value */0), _$.serializeGuard($serialize, /* value */0));
+  }, $scope0_id, "#text/0", _$.serializeGuard($serialize, /* value */0), _$.serializeGuard($serialize, /* value */0), 0, 1);
   _$.write("<span></span><span></span></div>");
   _$.serializeGuard($serialize, /* value */0) && _$.writeScope($scope0_id, {
     value

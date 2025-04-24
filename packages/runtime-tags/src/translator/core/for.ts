@@ -172,7 +172,7 @@ export default {
           | undefined
         )[];
         const forTagHTMLRuntime = branchSerializeReason
-          ? forTypeToHTMLResumeRuntime(forType, singleNodeOptimization)
+          ? forTypeToHTMLResumeRuntime(forType)
           : forTypeToRuntime(forType);
         forTagArgs.push(
           t.arrowFunctionExpression(params, t.blockStatement(bodyStatements)),
@@ -182,7 +182,7 @@ export default {
           const skipParentEnd = onlyChildParentTagName && markerSerializeReason;
           const markerSerializeArg = getSerializeGuard(
             markerSerializeReason,
-            !skipParentEnd,
+            !(skipParentEnd || singleNodeOptimization),
           );
 
           forTagArgs.push(
@@ -196,6 +196,14 @@ export default {
           if (skipParentEnd) {
             getParentTag(tag)!.node.extra![kSkipEndTag] = true;
             forTagArgs.push(t.stringLiteral(`</${onlyChildParentTagName}>`));
+          }
+
+          if (singleNodeOptimization) {
+            if (!skipParentEnd) {
+              forTagArgs.push(t.numericLiteral(0));
+            }
+
+            forTagArgs.push(t.numericLiteral(1));
           }
         }
 
@@ -377,28 +385,14 @@ function forTypeToRuntime(type: ForType) {
   }
 }
 
-function forTypeToHTMLResumeRuntime(
-  type: ForType,
-  singleNodeOptimization: boolean,
-) {
-  if (singleNodeOptimization) {
-    switch (type) {
-      case "of":
-        return "resumeSingleNodeForOf";
-      case "in":
-        return "resumeSingleNodeForIn";
-      case "to":
-        return "resumeSingleNodeForTo";
-    }
-  } else {
-    switch (type) {
-      case "of":
-        return "resumeForOf";
-      case "in":
-        return "resumeForIn";
-      case "to":
-        return "resumeForTo";
-    }
+function forTypeToHTMLResumeRuntime(type: ForType) {
+  switch (type) {
+    case "of":
+      return "resumeForOf";
+    case "in":
+      return "resumeForIn";
+    case "to":
+      return "resumeForTo";
   }
 }
 
