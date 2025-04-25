@@ -2,7 +2,8 @@ export const $template = "<!><!><!>";
 export const $walks = /* replace, over(1) */"D%bD";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $baz$if$content = /* @__PURE__ */_$.conditionalClosure("foo", "#text/0", 0, ($scope, baz) => _$.data($scope["#text/0"], baz));
-const $if_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, 0, $baz$if$content);
+const $setup$if$content = $baz$if$content;
+const $if_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", $setup$if$content);
 const $if$for$content = /* @__PURE__ */_$.conditional("#text/0", $if_content);
 const $setup$for$content = $scope => {
   $if$for$content($scope, true ? 0 : 1);

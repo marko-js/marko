@@ -14,7 +14,8 @@ const $count$if$content = /* @__PURE__ */_$.dynamicClosureRead("count", ($scope,
   _$.data($scope["#text/1"], count);
   $count$if$content_effect($scope);
 }, $scope => $scope._._);
-const $if_content2 = /* @__PURE__ */_$.createRenderer("<button id=count> </button>", /* get, next(1), get */" D ", 0, 0, $count$if$content);
+const $setup$if$content = $count$if$content;
+const $if_content2 = /* @__PURE__ */_$.createRenderer("<button id=count> </button>", /* get, next(1), get */" D ", $setup$if$content);
 const $if$if$content = /* @__PURE__ */_$.conditional("#text/1", $if_content2);
 const $inner$if$content_effect = _$.effect("__tests__/template.marko_1_inner", ($scope, {
   _: {
@@ -27,7 +28,8 @@ const $inner$if$content = /* @__PURE__ */_$.conditionalClosure("inner", "#text/1
   $if$if$content($scope, inner ? 0 : 1);
   $inner$if$content_effect($scope);
 });
-const $if_content = /* @__PURE__ */_$.createRenderer("<button id=inner></button><!><!>", /* get, over(1), replace */" b%D", 0, 0, $inner$if$content);
+const $setup$if$content2 = $inner$if$content;
+const $if_content = /* @__PURE__ */_$.createRenderer("<button id=inner></button><!><!>", /* get, over(1), replace */" b%D", $setup$if$content2);
 const $if = /* @__PURE__ */_$.conditional("#text/1", $if_content);
 const $outer_effect = _$.effect("__tests__/template.marko_0_outer", ($scope, {
   outer

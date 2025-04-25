@@ -1,4 +1,4 @@
-// size: 876 (min) 373 (brotli)
+// size: 870 (min) 391 (brotli)
 function $setup$1($scope) {
   _$.tagVarSignal($scope, $_return($scope));
 }
@@ -32,7 +32,6 @@ _$.registerContent(
     $dynamicTag$inputshowsectionnull$content($scope, Child);
   },
   0,
-  0,
   "a4",
 );
 const $get$hoisted_setHtml2 = _$.hoist(2, "a3", "a2"),
@@ -51,7 +50,6 @@ const $get$hoisted_setHtml2 = _$.hoist(2, "a3", "a2"),
     "D1D",
     $setup$thing$content2,
     0,
-    0,
     "a3",
   );
 _$.registerContent(
@@ -61,7 +59,6 @@ _$.registerContent(
   ($scope) => {
     $scope[0], $input_content($scope[0], $thing_content2($scope));
   },
-  0,
   0,
   "a2",
 ),

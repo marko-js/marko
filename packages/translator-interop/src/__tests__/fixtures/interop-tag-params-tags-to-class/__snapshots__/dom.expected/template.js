@@ -30,11 +30,12 @@ const $baseCount$classlayout$content = /* @__PURE__ */_$.value("baseCount", ($sc
   _$.data($scope["#text/3"], baseCount);
   $expr_multiplier_baseCount$classlayout$content($scope);
 });
+const $setup$classlayout$content = $multiplier$classlayout$content;
 const $params2$classlayout$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => {
   $baseCount$classlayout$content($scope, $params2[0]);
   $message$classlayout$content($scope, $params2[1]);
 });
-const $classlayout_content = _$.registerContent("__tests__/template.marko_1_renderer", "<h1> </h1><button id=tags><!> * <!> = <!></button>", /* next(1), get, out(1), get, next(1), replace, over(2), replace, over(2), replace */"D l D%c%c%", 0, $params2$classlayout$content, $multiplier$classlayout$content);
+const $classlayout_content = _$.registerContent("__tests__/template.marko_1_renderer", "<h1> </h1><button id=tags><!> * <!> = <!></button>", /* next(1), get, out(1), get, next(1), replace, over(2), replace, over(2), replace */"D l D%c%c%", $setup$classlayout$content, $params2$classlayout$content);
 const $multiplier_closure = /* @__PURE__ */_$.dynamicClosure($multiplier$classlayout$content);
 const $multiplier = /* @__PURE__ */_$.state("multiplier/1", $multiplier_closure);
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", $classlayout_content);

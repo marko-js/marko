@@ -5,7 +5,12 @@
       "$init": "o",
       "$$get$hoisted_setHtml": "r",
       "$$get$hoisted_setHtml2": "t",
-      "$$get$hoisted_setHtml3": "i"
+      "$$get$hoisted_setHtml3": "i",
+      "$$_return": "n",
+      "$$setHtml$if$content": "a",
+      "$$setup$if$content": "l",
+      "$$if_content2": "c",
+      "$$if$if$content": "d"
     }
   }
 }

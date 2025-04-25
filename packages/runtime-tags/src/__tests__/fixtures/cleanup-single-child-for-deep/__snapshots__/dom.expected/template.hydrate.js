@@ -1,4 +1,4 @@
-// size: 999 (min) 479 (brotli)
+// size: 985 (min) 472 (brotli)
 const $expr_name_write_effect = _$.effect(
     "a0",
     ($scope, { 3: name, 4: write }) =>
@@ -14,7 +14,7 @@ const $expr_name_write_effect = _$.effect(
   }),
   $write$1 = _$.value(4, $expr_name_write),
   $setup$for$content2 = ($scope) => {
-    $scope[0];
+    $scope[0], $outerItem$for$content2._($scope), $write$for$content2($scope);
   },
   $write$for$content2 = _$.dynamicClosureRead(
     4,
@@ -42,12 +42,9 @@ const $expr_name_write_effect = _$.effect(
     "D/D l&",
     $setup$for$content2,
     $params3$for$content,
-    ($scope) => {
-      $outerItem$for$content2._($scope), $write$for$content2($scope);
-    },
   ),
   $setup$for$content = ($scope) => {
-    $scope[0];
+    $scope[0], $items$for$content._($scope), $write$for$content._($scope);
   },
   $write$for$content = _$.loopClosure(4, 2, ($scope, write) =>
     $write$1($scope[0], write),
@@ -67,9 +64,6 @@ const $expr_name_write_effect = _$.effect(
     "D/D l&%",
     $setup$for$content,
     $params2$for$content,
-    ($scope) => {
-      $items$for$content._($scope), $write$for$content._($scope);
-    },
   ),
   $for = _$.loopOf(2, $for_content),
   $items_effect = _$.effect("b1", ($scope, { 3: items }) =>

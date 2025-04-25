@@ -13,8 +13,9 @@ const $expr_i_j$for$content = /* @__PURE__ */_$.intersection(3, $scope => {
 });
 const $i$for$content = /* @__PURE__ */_$.loopClosure("i", "#ul/0", $expr_i_j$for$content);
 const $j$for$content = /* @__PURE__ */_$.value("j", $expr_i_j$for$content);
+const $setup$for$content2 = $i$for$content;
 const $params3$for$content = /* @__PURE__ */_$.value("$params3", ($scope, $params3) => $j$for$content($scope, $params3[0]));
-const $for_content4 = /* @__PURE__ */_$.createRenderer("<li></li>", /* get */" ", 0, $params3$for$content, $i$for$content);
+const $for_content4 = /* @__PURE__ */_$.createRenderer("<li></li>", /* get */" ", $setup$for$content2, $params3$for$content);
 const $for$for$content = /* @__PURE__ */_$.loopTo("#ul/0", $for_content4);
 const $setup$for$content = $scope => {
   $for$for$content($scope, [3, 0, 1]);

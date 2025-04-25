@@ -1,4 +1,4 @@
-// size: 613 (min) 310 (brotli)
+// size: 618 (min) 316 (brotli)
 const $dynamicTag = _$.dynamicTag(0, 0, 0, 1),
   $expr_content_value = _$.intersection(5, ($scope) => {
     const { 3: content, 4: value } = $scope;
@@ -12,6 +12,7 @@ const $dynamicTag = _$.dynamicTag(0, 0, 0, 1),
   $inner$child$content = _$.value(3, ($scope, inner) =>
     _$.data($scope[1], inner),
   ),
+  $setup$child$content2 = $outer$child$content,
   $params3$child$content = _$.value(2, ($scope, $params3) =>
     $inner$child$content($scope, $params3[0]),
   ),
@@ -19,9 +20,8 @@ const $dynamicTag = _$.dynamicTag(0, 0, 0, 1),
     "b0",
     "<div><!>.<!></div>",
     "D%c%",
-    0,
+    $setup$child$content2,
     $params3$child$content,
-    $outer$child$content,
   ),
   $y$child$content = _$.dynamicClosureRead(3, ($scope, y) =>
     $value($scope[0], y),
@@ -36,10 +36,11 @@ _$.registerContent(
   "<div><!></div>",
   "/D%l&",
   ($scope) => {
-    $scope[0], $content($scope[0], $child_content2($scope));
+    $scope[0],
+      $content($scope[0], $child_content2($scope)),
+      $y$child$content($scope);
   },
   $params2$child$content,
-  $y$child$content,
 );
 const $x_effect = _$.effect("b2", ($scope, { 2: x }) =>
     _$.on($scope[0], "click", function () {

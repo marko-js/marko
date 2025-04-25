@@ -21,7 +21,9 @@
       "$$for_content": "k",
       "$$for": "D",
       "$$counts_closure": "R",
-      "$$counts": "p"
+      "$$counts": "p",
+      "$$setup$else$content_effect": "v",
+      "$$setup$if$content": "g"
     }
   }
 }

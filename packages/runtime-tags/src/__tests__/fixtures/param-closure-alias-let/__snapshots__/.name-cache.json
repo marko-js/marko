@@ -2,7 +2,8 @@
   "vars": {
     "props": {
       "$_$": "m",
-      "$init": "o"
+      "$init": "o",
+      "$$baz$if$content": "t"
     }
   }
 }

@@ -9,7 +9,7 @@ const $setup$what$content = $scope => {
   _$.setTagVar($scope, "#childScope/0", $setHtml$what$content);
   _child($scope["#childScope/0"]);
 };
-const $what_content = _$.registerContent("__tests__/template.marko_1_renderer", _child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $setup$what$content, 0, 0, "ClosureScopes:1");
+const $what_content = _$.registerContent("__tests__/template.marko_1_renderer", _child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $setup$what$content, 0, "ClosureScopes:1");
 const $hoisted_setHtml2_effect = _$.effect("__tests__/template.marko_0_$hoisted_setHtml", ({
   $hoisted_setHtml
 }) => {

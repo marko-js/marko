@@ -13,7 +13,8 @@ const $count$falseChild$content = /* @__PURE__ */_$.dynamicClosureRead("count", 
   _$.data($scope["#text/1"], count);
   $count$falseChild$content_effect($scope);
 });
-const $falseChild_content = _$.registerContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", 0, 0, $count$falseChild$content);
+const $setup$falseChild$content = $count$falseChild$content;
+const $falseChild_content = _$.registerContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", $setup$falseChild$content);
 const $count_closure = /* @__PURE__ */_$.dynamicClosure($count$falseChild$content);
 const $count = /* @__PURE__ */_$.state("count/1", $count_closure);
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", $falseChild_content);

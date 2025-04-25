@@ -5,7 +5,15 @@
       "$init": "o",
       "$$get$hoisted_setHtml": "r",
       "$$get$hoisted_setHtml2": "t",
-      "$$get$hoisted_setHtml3": "i"
+      "$$get$hoisted_setHtml3": "i",
+      "$$setup": "n",
+      "$$_return": "a",
+      "$Child": "c",
+      "$$dynamicTag$if$content": "l",
+      "$$setHtml$if$content": "d",
+      "$$setup$if$content": "s",
+      "$$if_content2": "g",
+      "$$if$if$content": "u"
     }
   }
 }

@@ -17,7 +17,8 @@ const $x$if$content_effect = _$.effect("__tests__/template.marko_1_x", ($scope, 
   }
 }));
 const $x$if$content = /* @__PURE__ */_$.conditionalClosure("x", "#text/0", 0, $x$if$content_effect);
-const $if_content = /* @__PURE__ */_$.createRenderer(0, 0, 0, 0, $x$if$content);
+const $setup$if$content = $x$if$content;
+const $if_content = /* @__PURE__ */_$.createRenderer(0, 0, $setup$if$content);
 const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
   x
 }) => _$.on($scope["#button/1"], "click", function () {

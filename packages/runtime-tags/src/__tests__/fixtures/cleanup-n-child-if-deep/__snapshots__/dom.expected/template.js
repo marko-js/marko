@@ -5,31 +5,30 @@ import { $setup as _child, $write as _child_input_write, $name as _child_input_n
 const $setup$if$content3 = $scope => {
   _child($scope["#childScope/0"]);
   _child_input_name($scope["#childScope/0"], "Inner");
+  $write$if$content3($scope);
 };
 const $write$if$content3 = /* @__PURE__ */_$.dynamicClosureRead("write", ($scope, write) => _child_input_write($scope["#childScope/0"], write), $scope => $scope._._._);
-const $if_content3 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, $setup$if$content3, 0, $write$if$content3);
+const $if_content3 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChild, _child_walks, endChild */`/${_child_walks}&`, $setup$if$content3);
 const $setup$if$content2 = $scope => {
   _child($scope["#childScope/0"]);
   _child_input_name($scope["#childScope/0"], "Middle");
+  $showInner$if$content($scope);
+  $write$if$content2($scope);
 };
 const $write$if$content2 = /* @__PURE__ */_$.dynamicClosureRead("write", ($scope, write) => _child_input_write($scope["#childScope/0"], write), $scope => $scope._._);
 const $if$if$content = /* @__PURE__ */_$.conditional("#text/1", $if_content3);
 const $showInner$if$content = /* @__PURE__ */_$.dynamicClosureRead("showInner", ($scope, showInner) => $if$if$content($scope, showInner ? 0 : 1), $scope => $scope._._);
-const $if_content2 = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, $setup$if$content2, 0, $scope => {
-  $showInner$if$content($scope);
-  $write$if$content2($scope);
-});
+const $if_content2 = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, $setup$if$content2);
 const $setup$if$content = $scope => {
   _child($scope["#childScope/0"]);
   _child_input_name($scope["#childScope/0"], "Outer");
+  $showMiddle$if$content._($scope);
+  $write$if$content._($scope);
 };
 const $write$if$content = /* @__PURE__ */_$.conditionalClosure("write", "#text/4", 0, ($scope, write) => _child_input_write($scope["#childScope/0"], write));
 const $if$if$content2 = /* @__PURE__ */_$.conditional("#text/1", $if_content2);
 const $showMiddle$if$content = /* @__PURE__ */_$.conditionalClosure("showMiddle", "#text/4", 0, ($scope, showMiddle) => $if$if$content2($scope, showMiddle ? 0 : 1));
-const $if_content = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, $setup$if$content, 0, $scope => {
-  $showMiddle$if$content._($scope);
-  $write$if$content._($scope);
-});
+const $if_content = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, $setup$if$content);
 const $if = /* @__PURE__ */_$.conditional("#text/4", $if_content);
 const $showOuter_effect = _$.effect("__tests__/template.marko_0_showOuter", ($scope, {
   showOuter

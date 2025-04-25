@@ -1,4 +1,4 @@
-// size: 348 (min) 209 (brotli)
+// size: 346 (min) 209 (brotli)
 function $_return($scope) {
   return function (html) {
     $scope[0].innerHTML = html;
@@ -16,7 +16,6 @@ _$.registerContent(
         _$.tagVarSignal($scope, $_return($scope));
       })($scope[0]);
   },
-  0,
   0,
   "a1",
 ),

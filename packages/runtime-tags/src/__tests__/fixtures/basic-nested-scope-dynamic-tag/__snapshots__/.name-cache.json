@@ -6,7 +6,8 @@
       "$$count$falseChild$content_effect": "n",
       "$$count$falseChild$content": "m",
       "$$count_closure": "r",
-      "$$count": "a"
+      "$$count": "a",
+      "$$setup$falseChild$content": "e"
     }
   }
 }
