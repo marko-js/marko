@@ -9,7 +9,8 @@
       "$$num$for$content": "m",
       "$$for_content": "n",
       "$$for": "u",
-      "$$num": "c"
+      "$$num": "c",
+      "$$setup$for$content": "i"
     }
   }
 }

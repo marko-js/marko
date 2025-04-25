@@ -4,9 +4,12 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $setup$else$content_effect = _$.effect("__tests__/template.marko_3", $scope => _$.on($scope["#button/0"], "click", function () {
   $editing$for$content($scope._, true);
 }));
-const $setup$else$content = $setup$else$content_effect;
+const $setup$else$content = $scope => {
+  $count$else$content._($scope);
+  $setup$else$content_effect($scope);
+};
 const $count$else$content = /* @__PURE__ */_$.conditionalClosure("count", "#text/0", 1, ($scope, count) => _$.data($scope["#text/1"], count));
-const $else_content = /* @__PURE__ */_$.createRenderer("<button>Increment <!></button>", /* get, next(1), over(1), replace */" Db%", $setup$else$content, 0, $count$else$content);
+const $else_content = /* @__PURE__ */_$.createRenderer("<button>Increment <!></button>", /* get, next(1), over(1), replace */" Db%", $setup$else$content);
 const $expr_counts_count_i$if$content_effect = _$.effect("__tests__/template.marko_2_counts_count_i", ($scope, {
   _: {
     _: {
@@ -26,11 +29,12 @@ const $count$if$content = /* @__PURE__ */_$.conditionalClosure("count", "#text/0
   $expr_counts_count_i$if$content($scope);
 });
 const $i$if$content = /* @__PURE__ */_$.conditionalClosure("i", "#text/0", 0, $expr_counts_count_i$if$content);
-const $if_content = /* @__PURE__ */_$.createRenderer("<button>Confirm <!></button>", /* get, next(1), over(1), replace */" Db%", 0, 0, $scope => {
+const $setup$if$content = $scope => {
   $counts$if$content($scope);
   $count$if$content._($scope);
   $i$if$content._($scope);
-});
+};
+const $if_content = /* @__PURE__ */_$.createRenderer("<button>Confirm <!></button>", /* get, next(1), over(1), replace */" Db%", $setup$if$content);
 const $if$for$content = /* @__PURE__ */_$.conditional("#text/0", $if_content, $else_content);
 const $editing$for$content = /* @__PURE__ */_$.state("editing/4", ($scope, editing) => $if$for$content($scope, editing ? 0 : 1));
 const $setup$for$content = $scope => {

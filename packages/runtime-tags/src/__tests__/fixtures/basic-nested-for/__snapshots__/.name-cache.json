@@ -17,7 +17,8 @@
       "$$for_content": "f",
       "$$for": "v",
       "$$items_effect": "p",
-      "$$items": "g"
+      "$$items": "g",
+      "$$setup$for$content2": "k"
     }
   }
 }

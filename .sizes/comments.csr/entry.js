@@ -1,6 +1,6 @@
-// size: 919 (min) 461 (brotli)
+// size: 915 (min) 464 (brotli)
 const $setup$if$content = ($scope) => {
-    $scope[0];
+    $scope[0], $comment_comments$if$content._($scope), $id$if$content._($scope);
   },
   $expr_comment_comments_id$if$content = intersection(1, ($scope) => {
     const {
@@ -20,15 +20,7 @@ const $setup$if$content = ($scope) => {
     0,
     $expr_comment_comments_id$if$content,
   ),
-  $if_content = createRenderer(
-    "<ul></ul>",
-    "/ b&",
-    $setup$if$content,
-    0,
-    ($scope) => {
-      $comment_comments$if$content._($scope), $id$if$content._($scope);
-    },
-  ),
+  $if_content = createRenderer("<ul></ul>", "/ b&", $setup$if$content),
   $id$for$content = value(11, ($scope, id) => {
     attr($scope[0], "id", id), $id$if$content($scope);
   }),
@@ -52,7 +44,7 @@ const $setup$if$content = ($scope) => {
       $open$for$content_effect($scope);
   }),
   $setup$for$content = ($scope) => {
-    $open$for$content($scope, !0);
+    $input_path$for$content._($scope), $open$for$content($scope, !0);
   },
   $comment_text$for$content = value(7, ($scope, comment_text) =>
     data($scope[1], comment_text),
@@ -77,7 +69,6 @@ const $setup$if$content = ($scope) => {
       " E l D l%",
       $setup$for$content,
       $params2$for$content,
-      $input_path$for$content,
     ),
   ),
   $input_comments = value(3, ($scope, input_comments) =>

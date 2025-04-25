@@ -1,4 +1,4 @@
-// size: 1264 (min) 488 (brotli)
+// size: 1247 (min) 496 (brotli)
 const $expr_name_write_effect = _$.effect(
     "a0",
     ($scope, { 3: name, 4: write }) => {
@@ -16,22 +16,19 @@ const $expr_name_write_effect = _$.effect(
   }),
   $write$1 = _$.value(4, $expr_name_write),
   $setup$if$content3 = ($scope) => {
-    $scope[0], $name($scope[0], "Inner");
+    $scope[0], $name($scope[0], "Inner"), $write$if$content3($scope);
   },
   $write$if$content3 = _$.dynamicClosureRead(
     8,
     ($scope, write) => $write$1($scope[0], write),
     ($scope) => $scope._._._,
   ),
-  $if_content3 = _$.createRenderer(
-    "<p> </p>",
-    "/D l&",
-    $setup$if$content3,
-    0,
-    $write$if$content3,
-  ),
+  $if_content3 = _$.createRenderer("<p> </p>", "/D l&", $setup$if$content3),
   $setup$if$content2 = ($scope) => {
-    $scope[0], $name($scope[0], "Middle");
+    $scope[0],
+      $name($scope[0], "Middle"),
+      $showInner$if$content($scope),
+      $write$if$content2($scope);
   },
   $write$if$content2 = _$.dynamicClosureRead(
     8,
@@ -48,13 +45,12 @@ const $expr_name_write_effect = _$.effect(
     "<div><p> </p><!></div>",
     "D/D l&%",
     $setup$if$content2,
-    0,
-    ($scope) => {
-      $showInner$if$content($scope), $write$if$content2($scope);
-    },
   ),
   $setup$if$content = ($scope) => {
-    $scope[0], $name($scope[0], "Outer");
+    $scope[0],
+      $name($scope[0], "Outer"),
+      $showMiddle$if$content._($scope),
+      $write$if$content._($scope);
   },
   $write$if$content = _$.conditionalClosure(8, 4, 0, ($scope, write) =>
     $write$1($scope[0], write),
@@ -70,10 +66,6 @@ const $expr_name_write_effect = _$.effect(
     "<div><p> </p><!></div>",
     "D/D l&%",
     $setup$if$content,
-    0,
-    ($scope) => {
-      $showMiddle$if$content._($scope), $write$if$content._($scope);
-    },
   ),
   $if = _$.conditional(4, $if_content),
   $showOuter_effect = _$.effect("b1", ($scope, { 5: showOuter }) =>

@@ -15,7 +15,9 @@
       "$$count": "f",
       "$$inner": "s",
       "$$outer_effect": "l",
-      "$$outer": "_"
+      "$$outer": "_",
+      "$$setup$if$content": "b",
+      "$$setup$if$content2": "k"
     }
   }
 }

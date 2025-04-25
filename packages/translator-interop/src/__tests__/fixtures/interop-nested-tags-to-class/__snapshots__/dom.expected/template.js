@@ -15,7 +15,8 @@ const $count$classlayout$content = /* @__PURE__ */_$.dynamicClosureRead("count",
   _$.data($scope["#text/1"], count);
   $count$classlayout$content_effect($scope);
 });
-const $classlayout_content = _$.registerContent("__tests__/template.marko_1_renderer", "<button id=tags> </button>", /* get, next(1), get */" D ", 0, 0, $count$classlayout$content);
+const $setup$classlayout$content = $count$classlayout$content;
+const $classlayout_content = _$.registerContent("__tests__/template.marko_1_renderer", "<button id=tags> </button>", /* get, next(1), get */" D ", $setup$classlayout$content);
 const $count_closure = /* @__PURE__ */_$.dynamicClosure($count$classlayout$content);
 const $count = /* @__PURE__ */_$.state("count/1", $count_closure);
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", $classlayout_content);

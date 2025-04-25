@@ -4,6 +4,8 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $setup as _child, $write as _child_input_write, $name as _child_input_name, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 const $setup$for$content2 = $scope => {
   _child($scope["#childScope/0"]);
+  $outerItem$for$content2._($scope);
+  $write$for$content2($scope);
 };
 const $write$for$content2 = /* @__PURE__ */_$.dynamicClosureRead("write", ($scope, write) => _child_input_write($scope["#childScope/0"], write), $scope => $scope._._);
 const $expr_outerItem_middleItem$for$content = /* @__PURE__ */_$.intersection(3, $scope => {
@@ -18,12 +20,11 @@ const $expr_outerItem_middleItem$for$content = /* @__PURE__ */_$.intersection(3,
 const $outerItem$for$content2 = /* @__PURE__ */_$.loopClosure("outerItem", "#text/1", $expr_outerItem_middleItem$for$content);
 const $middleItem$for$content = /* @__PURE__ */_$.value("middleItem", $expr_outerItem_middleItem$for$content);
 const $params3$for$content = /* @__PURE__ */_$.value("$params3", ($scope, $params3) => $middleItem$for$content($scope, $params3[0]));
-const $for_content2 = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}</div>`, /* next(1), beginChild, _child_walks, endChild */`D/${_child_walks}&`, $setup$for$content2, $params3$for$content, $scope => {
-  $outerItem$for$content2._($scope);
-  $write$for$content2($scope);
-});
+const $for_content2 = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}</div>`, /* next(1), beginChild, _child_walks, endChild */`D/${_child_walks}&`, $setup$for$content2, $params3$for$content);
 const $setup$for$content = $scope => {
   _child($scope["#childScope/0"]);
+  $items$for$content._($scope);
+  $write$for$content._($scope);
 };
 const $write$for$content = /* @__PURE__ */_$.loopClosure("write", "#text/2", ($scope, write) => _child_input_write($scope["#childScope/0"], write));
 const $outerItem$for$content = /* @__PURE__ */_$.value("outerItem", ($scope, outerItem) => {
@@ -33,10 +34,7 @@ const $outerItem$for$content = /* @__PURE__ */_$.value("outerItem", ($scope, out
 const $for$for$content = /* @__PURE__ */_$.loopOf("#text/1", $for_content2);
 const $items$for$content = /* @__PURE__ */_$.loopClosure("items", "#text/2", ($scope, items) => $for$for$content($scope, [items]));
 const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $outerItem$for$content($scope, $params2[0]));
-const $for_content = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, $setup$for$content, $params2$for$content, $scope => {
-  $items$for$content._($scope);
-  $write$for$content._($scope);
-});
+const $for_content = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, $setup$for$content, $params2$for$content);
 const $for = /* @__PURE__ */_$.loopOf("#text/2", $for_content);
 const $items_effect = _$.effect("__tests__/template.marko_0_items", ($scope, {
   items

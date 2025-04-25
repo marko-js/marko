@@ -489,6 +489,15 @@ function getSignalFn(signal: Signal): t.Expression {
           }
 
           if (i === -1) {
+            if (
+              expression.callee.type === "MemberExpression" &&
+              expression.callee.property.type === "Identifier" &&
+              expression.callee.property.name === "_"
+            ) {
+              // Special case closure reads of `IDENTIFIER._`.
+              return expression.callee.object;
+            }
+
             return expression.callee as t.Expression;
           }
         }

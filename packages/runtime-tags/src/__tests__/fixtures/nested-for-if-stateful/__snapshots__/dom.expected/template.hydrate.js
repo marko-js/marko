@@ -1,9 +1,12 @@
-// size: 855 (min) 403 (brotli)
-const $setup$else$content = _$.effect("a0", ($scope) =>
+// size: 868 (min) 411 (brotli)
+const $setup$else$content_effect = _$.effect("a0", ($scope) =>
     _$.on($scope[0], "click", function () {
       $editing$for$content($scope._, !0);
     }),
   ),
+  $setup$else$content = ($scope) => {
+    $count$else$content._($scope), $setup$else$content_effect($scope);
+  },
   $count$else$content = _$.conditionalClosure(2, 0, 1, ($scope, count) =>
     _$.data($scope[1], count),
   ),
@@ -11,8 +14,6 @@ const $setup$else$content = _$.effect("a0", ($scope) =>
     "<button>Increment <!></button>",
     " Db%",
     $setup$else$content,
-    0,
-    $count$else$content,
   ),
   $expr_counts_count_i$if$content_effect = _$.effect(
     "a1",
@@ -54,16 +55,15 @@ const $setup$else$content = _$.effect("a0", ($scope) =>
     0,
     $expr_counts_count_i$if$content,
   ),
+  $setup$if$content = ($scope) => {
+    $counts$if$content($scope),
+      $count$if$content._($scope),
+      $i$if$content._($scope);
+  },
   $if_content = _$.createRenderer(
     "<button>Confirm <!></button>",
     " Db%",
-    0,
-    0,
-    ($scope) => {
-      $counts$if$content($scope),
-        $count$if$content._($scope),
-        $i$if$content._($scope);
-    },
+    $setup$if$content,
   ),
   $if$for$content = _$.conditional(0, $if_content, $else_content),
   $editing$for$content = _$.state(4, ($scope, editing) =>

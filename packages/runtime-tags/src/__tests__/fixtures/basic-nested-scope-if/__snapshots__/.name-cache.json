@@ -9,7 +9,9 @@
       "$$clickCount$if$content": "r",
       "$$if_content": "i",
       "$$if": "c",
-      "$$clickCount": "m"
+      "$$clickCount": "m",
+      "$$setup$else$content": "s",
+      "$$setup$if$content": "d"
     }
   }
 }

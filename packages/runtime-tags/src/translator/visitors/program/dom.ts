@@ -4,7 +4,7 @@ import { importDefault } from "@marko/compiler/babel-utils";
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import { getAccessorProp } from "../../util/get-accessor-char";
 import getStyleFile from "../../util/get-style-file";
-import { toArray } from "../../util/optional";
+import { forEach } from "../../util/optional";
 import { getSectionInstancesAccessorLiteral } from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {
@@ -15,6 +15,7 @@ import {
   isSerializedSection,
 } from "../../util/sections";
 import {
+  addStatement,
   getResumeRegisterId,
   getSignal,
   initValue,
@@ -22,7 +23,6 @@ import {
   writeRegisteredFns,
   writeSignals,
 } from "../../util/signals";
-import { toFirstExpressionOrBlock } from "../../util/to-first-expression-or-block";
 import type { TemplateVisitor } from "../../util/visitors";
 import { visit } from "../../util/walks";
 import * as writer from "../../util/writer";
@@ -51,34 +51,29 @@ export default {
 
       forEachSectionReverse((childSection) => {
         if (childSection !== section) {
+          forEach(childSection.referencedClosures, (closure) => {
+            const closureSignal = getSignal(childSection, closure);
+            addStatement(
+              "render",
+              childSection,
+              undefined,
+              t.expressionStatement(
+                t.callExpression(
+                  isDynamicClosure(childSection, closure)
+                    ? closureSignal.identifier
+                    : t.memberExpression(
+                        closureSignal.identifier,
+                        t.identifier(getAccessorProp().Owner),
+                      ),
+                  [scopeIdentifier],
+                ),
+              ),
+            );
+          });
           const tagParamsSignal =
             childSection.params && initValue(childSection.params);
           const { walks, writes, setup } = writer.getSectionMeta(childSection);
           const identifier = t.identifier(childSection.name);
-          const referencedClosures = childSection.referencedClosures
-            ? Array.isArray(childSection.referencedClosures)
-              ? t.arrowFunctionExpression(
-                  [scopeIdentifier],
-                  toFirstExpressionOrBlock(
-                    toArray(childSection.referencedClosures, (closure) => {
-                      const closureSignal = getSignal(childSection, closure);
-                      return t.expressionStatement(
-                        t.callExpression(
-                          isDynamicClosure(childSection, closure)
-                            ? closureSignal.identifier
-                            : t.memberExpression(
-                                closureSignal.identifier,
-                                t.identifier(getAccessorProp().Owner),
-                              ),
-                          [scopeIdentifier],
-                        ),
-                      );
-                    }),
-                  ),
-                )
-              : getSignal(childSection, childSection.referencedClosures)
-                  .identifier
-            : undefined;
           const renderer = getSectionParentIsOwner(childSection)
             ? callRuntime(
                 "createRenderer",
@@ -87,7 +82,6 @@ export default {
                   walks,
                   setup,
                   tagParamsSignal?.identifier,
-                  referencedClosures,
                 ]),
               )
             : callRuntime(
@@ -100,7 +94,6 @@ export default {
                   walks,
                   setup,
                   tagParamsSignal?.identifier,
-                  referencedClosures,
                   childSection.hoisted || childSection.isHoistThrough
                     ? getSectionInstancesAccessorLiteral(childSection)
                     : undefined,

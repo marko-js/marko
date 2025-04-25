@@ -1,4 +1,4 @@
-// size: 405 (min) 232 (brotli)
+// size: 405 (min) 237 (brotli)
 const $attrs_effect = _$.effect("a0", ($scope) => _$.attrsEvents($scope, 0)),
   $dynamicTag = _$.dynamicTag(1),
   $content = _$.value(4, $dynamicTag),
@@ -12,13 +12,12 @@ const $attrs_effect = _$.effect("a0", ($scope) => _$.attrsEvents($scope, 0)),
     1,
     ($scope, clickCount) => _$.data($scope[0], clickCount),
   ),
+  $setup$FancyButton$content = $clickCount$FancyButton$content,
   $FancyButton_content = _$.registerContent(
     "b1",
     " ",
     " ",
-    0,
-    0,
-    $clickCount$FancyButton$content,
+    $setup$FancyButton$content,
   ),
   $clickCount_closure = _$.dynamicClosure($clickCount$FancyButton$content),
   $clickCount = _$.state(1, ($scope, clickCount) => {

@@ -1,4 +1,4 @@
-// size: 18988 (min) 7245 (brotli)
+// size: 18936 (min) 7194 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -147,7 +147,7 @@ function init(runtimeId = "M") {
                     );
                   };
                 return {
-                  J() {
+                  I() {
                     if ("[" === visitToken)
                       currentBranchId &&
                         visitDataIndex &&
@@ -225,7 +225,7 @@ function init(runtimeId = "M") {
                           (node) => () =>
                             node
                         )((visitScope[visitData] = visit.previousSibling)))
-                      : branches && branches.J();
+                      : branches && branches.I();
                 for (let serialized of (resumes = render.r || []))
                   if ("string" == typeof serialized) lastEffect = serialized;
                   else if ("number" == typeof serialized)
@@ -803,7 +803,7 @@ function destroyBranch(branch) {
 function destroyNestedBranches(branch) {
   (branch.B = 1),
     branch.A?.forEach(destroyNestedBranches),
-    branch.K?.forEach((scope) => {
+    branch.J?.forEach((scope) => {
       for (let id in scope.x) scope.x[id]?.abort();
     });
 }
@@ -883,17 +883,7 @@ function createAndSetupBranch($global, renderer, parentScope, parentNode) {
   );
 }
 function setupBranch(renderer, branch) {
-  return (
-    (renderer.D || renderer.E) &&
-      queueRender(
-        branch,
-        (branch2) => {
-          renderer.D?.(branch2), renderer.E?.(branch2);
-        },
-        -1,
-      ),
-    branch
-  );
+  return renderer.D && queueRender(branch, renderer.D, -1), branch;
 }
 function createContent(
   id,
@@ -901,13 +891,11 @@ function createContent(
   walks,
   setup,
   params,
-  closures,
   dynamicScopesAccessor,
 ) {
   (walks = walks ? walks.replace(/[^\0-1]+$/, "") : ""),
-    (setup ||= void 0),
-    (params ||= void 0),
-    (closures = closures ? closures._ || closures : void 0);
+    (setup = setup ? setup._ || setup : void 0),
+    (params ||= void 0);
   let clone = template
     ? (branch, ns) => {
         ((cloneCache[ns] ||= {})[template] ||= (function (html2, ns) {
@@ -944,7 +932,6 @@ function createContent(
     y: owner,
     D: setup,
     l: params,
-    E: closures,
     z: dynamicScopesAccessor,
   });
 }
@@ -954,24 +941,15 @@ function registerContent(
   walks,
   setup,
   params,
-  closures,
   dynamicScopesAccessor,
 ) {
   return register(
     id,
-    createContent(
-      id,
-      template,
-      walks,
-      setup,
-      params,
-      closures,
-      dynamicScopesAccessor,
-    ),
+    createContent(id, template, walks, setup, params, dynamicScopesAccessor),
   );
 }
-function createRenderer(template, walks, setup, params, closures) {
-  return createContent("", template, walks, setup, params, closures)();
+function createRenderer(template, walks, setup, params) {
+  return createContent("", template, walks, setup, params)();
 }
 var isScheduled,
   channel,
@@ -1074,9 +1052,9 @@ function subscribeToScopeSet(ownerScope, accessor, scope) {
     ));
 }
 function dynamicClosure(...closureSignals) {
-  let [{ F: ___scopeInstancesAccessor, G: ___signalIndexAccessor }] =
+  let [{ E: ___scopeInstancesAccessor, F: ___signalIndexAccessor }] =
     closureSignals;
-  for (let i = closureSignals.length; i--; ) closureSignals[i].L = i;
+  for (let i = closureSignals.length; i--; ) closureSignals[i].K = i;
   return (scope) => {
     if (scope[___scopeInstancesAccessor])
       for (let childScope of scope[___scopeInstancesAccessor])
@@ -1091,17 +1069,17 @@ function dynamicClosure(...closureSignals) {
 function dynamicClosureRead(valueAccessor, fn, getOwnerScope) {
   let childSignal = closure(valueAccessor, fn, getOwnerScope),
     closureSignal = (scope) => {
-      (scope[closureSignal.G] = closureSignal.L),
+      (scope[closureSignal.F] = closureSignal.K),
         childSignal(scope),
         subscribeToScopeSet(
           getOwnerScope ? getOwnerScope(scope) : scope._,
-          closureSignal.F,
+          closureSignal.E,
           scope,
         );
     };
   return (
-    (closureSignal.F = "a" + valueAccessor),
-    (closureSignal.G = "b" + valueAccessor),
+    (closureSignal.E = "a" + valueAccessor),
+    (closureSignal.F = "b" + valueAccessor),
     closureSignal
   );
 }
@@ -1232,7 +1210,7 @@ function awaitTag(nodeAccessor, renderer) {
                       placeholderBranch.h,
                     ),
                     removeAndDestroyBranch(placeholderBranch)),
-                  tryWithPlaceholder.H && runEffects(tryWithPlaceholder.H, !0);
+                  tryWithPlaceholder.G && runEffects(tryWithPlaceholder.G, !0);
               }
             },
             -1,
@@ -1628,9 +1606,9 @@ var rendering,
 function queueRender(scope, signal, signalKey, value2, scopeKey = scope.m) {
   let key = scopeKey * scopeKeyOffset + signalKey,
     existingRender = signalKey >= 0 && pendingRendersLookup.get(key);
-  if (existingRender) existingRender.I = value2;
+  if (existingRender) existingRender.H = value2;
   else {
-    let render = { t: key, o: scope, M: signal, I: value2 },
+    let render = { t: key, o: scope, L: signal, H: value2 },
       i = pendingRenders.push(render) - 1;
     for (; i; ) {
       let parentIndex = (i - 1) >> 1,
@@ -1704,12 +1682,12 @@ function runRenders() {
   for (let scope of pendingScopes) scope.q = 0;
   pendingScopes = [];
 }
-var runRender = (render) => render.M(render.o, render.I),
+var runRender = (render) => render.L(render.o, render.H),
   enableCatch = () => {
     (enableCatch = () => {}), enableBranches();
     let handlePendingTry = (fn, scope, branch) => {
       for (; branch; ) {
-        if (branch.n) return (branch.H ||= []).push(fn, scope);
+        if (branch.n) return (branch.G ||= []).push(fn, scope);
         branch = branch.u;
       }
     };
@@ -1745,7 +1723,7 @@ function resetAbortSignal(scope, id) {
 }
 function getAbortSignal(scope, id) {
   return (
-    scope.k && (scope.k.K ||= new Set()).add(scope),
+    scope.k && (scope.k.J ||= new Set()).add(scope),
     ((scope.x ||= {})[id] ||= new AbortController()).signal
   );
 }

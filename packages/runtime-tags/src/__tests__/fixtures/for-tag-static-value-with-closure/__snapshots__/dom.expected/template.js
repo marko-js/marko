@@ -3,8 +3,9 @@ export const $walks = /* replace, over(1), get, next(1), get, out(1) */"D%b D l"
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $index$for$content = /* @__PURE__ */_$.value("index", ($scope, index) => _$.data($scope["#text/0"], index));
 const $count$for$content = /* @__PURE__ */_$.loopClosure("count", "#text/0", ($scope, count) => _$.data($scope["#text/1"], count));
+const $setup$for$content = $count$for$content;
 const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $index$for$content($scope, $params2[0]));
-const $for_content = /* @__PURE__ */_$.createRenderer("<!>-<!>", /* replace, over(2), replace */"%c%", 0, $params2$for$content, $count$for$content);
+const $for_content = /* @__PURE__ */_$.createRenderer("<!>-<!>", /* replace, over(2), replace */"%c%", $setup$for$content, $params2$for$content);
 const $count_effect = _$.effect("__tests__/template.marko_0_count", ($scope, {
   count
 }) => _$.on($scope["#button/1"], "click", function () {

@@ -47,9 +47,9 @@ INSERT div/#comment1, div/#comment2, #text, div/#comment3, div/#comment4
 REMOVE #text after div/#comment4
 INSERT div/div
 REMOVE #text after div/div
+UPDATE div/div[data-level] null => "3"
 INSERT div/div/#comment0, div/div/#text, div/div/#comment1
 REMOVE #text after div/div/#comment1
-UPDATE div/div[data-level] null => "3"
 ```
 
 # Render ASYNC
@@ -123,9 +123,9 @@ INSERT div/div/#comment0, div/div/#comment1, div/div/#comment2, #text, div/div/#
 REMOVE #text after div/div/#comment5
 INSERT div/div/div
 REMOVE #text after div/div/div
+UPDATE div/div/div[data-level] null => "2"
 INSERT div/div/div/#comment0, div/div/div/#text, div/div/div/#comment1
 REMOVE #text after div/div/div/#comment1
-UPDATE div/div/div[data-level] null => "2"
 ```
 
 # Render ASYNC
@@ -178,9 +178,9 @@ INSERT div/div/div/#comment1, div/div/div/#comment2, #text, div/div/div/#comment
 REMOVE #text after div/div/div/#comment4
 INSERT div/div/div/div
 REMOVE #text after div/div/div/div
+UPDATE div/div/div/div[data-level] null => "1"
 INSERT div/div/div/div/#comment0, div/div/div/div/#text, div/div/div/div/#comment1
 REMOVE #text after div/div/div/div/#comment1
-UPDATE div/div/div/div[data-level] null => "1"
 ```
 
 # Render ASYNC

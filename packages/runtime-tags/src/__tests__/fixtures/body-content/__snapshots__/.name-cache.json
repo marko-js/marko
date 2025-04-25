@@ -11,7 +11,8 @@
       "$$FancyButton_content": "i",
       "$$clickCount_closure": "s",
       "$$clickCount": "c",
-      "$$onClick": "u"
+      "$$onClick": "u",
+      "$$setup$FancyButton$content": "d"
     }
   }
 }

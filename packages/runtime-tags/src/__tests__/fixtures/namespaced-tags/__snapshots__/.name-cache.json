@@ -15,7 +15,8 @@
       "$$Child_effect": "g",
       "$$Child": "d",
       "$$Parent_effect": "l",
-      "$$Parent": "u"
+      "$$Parent": "u",
+      "$$setup$Parent$content": "y"
     }
   }
 }

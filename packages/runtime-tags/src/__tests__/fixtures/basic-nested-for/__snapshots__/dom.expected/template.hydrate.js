@@ -1,7 +1,7 @@
-// size: 535 (min) 306 (brotli)
+// size: 542 (min) 312 (brotli)
 const $name = _$.value(3, ($scope, name) => _$.data($scope[0], name)),
   $setup$for$content = ($scope) => {
-    $scope[0];
+    $scope[0], $outer$for$content._($scope);
   },
   $expr_outer_inner$for$content = _$.intersection(3, ($scope) => {
     const {
@@ -20,12 +20,12 @@ const $name = _$.value(3, ($scope, name) => _$.data($scope[0], name)),
     "/D l&",
     $setup$for$content,
     $params3$for$content,
-    $outer$for$content,
   ),
   $for$for$content = _$.loopOf(0, $for_content2),
   $items$for$content = _$.loopClosure(2, 1, ($scope, items) =>
     $for$for$content($scope, [items]),
   ),
+  $setup$for$content2 = $items$for$content,
   $params2$for$content = _$.value(1, ($scope, $params2) =>
     $outer$for$content2($scope, $params2[0]),
   ),
@@ -33,9 +33,8 @@ const $name = _$.value(3, ($scope, name) => _$.data($scope[0], name)),
   $for_content = _$.createRenderer(
     "<!><!><!>",
     "D%D",
-    0,
+    $setup$for$content2,
     $params2$for$content,
-    $items$for$content,
   ),
   $for = _$.loopOf(1, $for_content),
   $items_effect = _$.effect("b0", ($scope, { 2: items }) =>

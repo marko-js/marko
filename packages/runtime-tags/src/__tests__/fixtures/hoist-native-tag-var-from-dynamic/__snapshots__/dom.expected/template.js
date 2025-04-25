@@ -4,10 +4,10 @@ import Child from "./tags/child.marko";
 import { $setup as _child, $input_content as _child_input_content, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $get$hoisted_el = _$.hoist("Getter:#p/0", "ClosureScopes:4");
-const $inputshowsectionnull_content = _$.registerContent("__tests__/template.marko_4_renderer", "<p></p>", /* get */" ", 0, 0, 0, "ClosureScopes:4");
+const $inputshowsectionnull_content = _$.registerContent("__tests__/template.marko_4_renderer", "<p></p>", /* get */" ", 0, 0, "ClosureScopes:4");
 const $get$hoisted_el2 = _$.register("__tests__/template.marko_2_$hoisted_el2/hoist", _$.hoist("Getter:#div/0", "ClosureScopes:3"));
 const $get$hoisted_el3 = _$.register("__tests__/template.marko_0_$hoisted_el3/hoist", _$.hoist("Getter:#div/0", "ClosureScopes:3", "ClosureScopes:2"));
-const $child_content2 = /* @__PURE__ */_$.createContent("__tests__/template.marko_3_renderer", "<div></div>", /* get */" ", 0, 0, 0, "ClosureScopes:3");
+const $child_content2 = /* @__PURE__ */_$.createContent("__tests__/template.marko_3_renderer", "<div></div>", /* get */" ", 0, 0, "ClosureScopes:3");
 const $hoisted_el2$inputshowChildnull$content_effect = _$.effect("__tests__/template.marko_2_$hoisted_el2", ({
   $hoisted_el2
 }) => {
@@ -21,9 +21,9 @@ const $setup$inputshowChildnull$content = $scope => {
   _child_input_content($scope["#childScope/0"], $child_content2($scope));
   $hoisted_el2$inputshowChildnull$content($scope, $get$hoisted_el2($scope));
 };
-const $inputshowChildnull_content = _$.registerContent("__tests__/template.marko_2_renderer", `<!>${_child_template}<!>`, /* beginChild, _child_walks, endChild */`D/${_child_walks}&D`, $setup$inputshowChildnull$content, 0, 0, "ClosureScopes:2");
+const $inputshowChildnull_content = _$.registerContent("__tests__/template.marko_2_renderer", `<!>${_child_template}<!>`, /* beginChild, _child_walks, endChild */`D/${_child_walks}&D`, $setup$inputshowChildnull$content, 0, "ClosureScopes:2");
 const $get$hoisted_el4 = _$.register("__tests__/template.marko_0_$hoisted_el/hoist", _$.hoist("Getter:#span/0", "ClosureScopes:1"));
-const $child_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<span></span>", /* get */" ", 0, 0, 0, "ClosureScopes:1");
+const $child_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<span></span>", /* get */" ", 0, 0, "ClosureScopes:1");
 const $hoisted_el6_effect = _$.effect("__tests__/template.marko_0_$hoisted_el3", ({
   $hoisted_el3
 }) => {

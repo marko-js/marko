@@ -8,7 +8,8 @@
       "$$if": "n",
       "$$message": "r",
       "$$show_effect": "i",
-      "$$show": "m"
+      "$$show": "m",
+      "$$setup$if$content": "s"
     }
   }
 }

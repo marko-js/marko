@@ -16,7 +16,8 @@
       "$$dynamicTag$thing$content2": "u",
       "$$setHtml2$thing$content": "d",
       "$$setup$thing$content2": "l",
-      "$$thing_content2": "D"
+      "$$thing_content2": "D",
+      "$$setup": "v"
     }
   }
 }
