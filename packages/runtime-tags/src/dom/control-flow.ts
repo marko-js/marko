@@ -301,29 +301,39 @@ export let dynamicTag = function dynamicTag(
     }
 
     if (normalizedRenderer) {
+      const childScope = scope[childScopeAccessor] as Scope;
       const args = getInput?.();
       if (typeof normalizedRenderer === "string") {
         attrs(
-          scope[childScopeAccessor],
+          childScope,
           MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0,
           (inputIsArgs ? args[0] : args) || {},
         );
-      } else if (normalizedRenderer.___params) {
-        if (inputIsArgs) {
-          normalizedRenderer.___params(
-            scope[childScopeAccessor],
-            (normalizedRenderer as any)._ ? args[0] : args,
+      } else {
+        for (const accessor in normalizedRenderer.___localClosures) {
+          normalizedRenderer.___localClosures[accessor](
+            childScope,
+            normalizedRenderer.___localClosureValues![accessor],
           );
-        } else {
-          const inputWithContent = getContent
-            ? { ...args, content: getContent(scope) }
-            : args || {};
-          normalizedRenderer.___params(
-            scope[childScopeAccessor],
-            (normalizedRenderer as any)._
-              ? inputWithContent
-              : [inputWithContent],
-          );
+        }
+
+        if (normalizedRenderer.___params) {
+          if (inputIsArgs) {
+            normalizedRenderer.___params(
+              childScope,
+              (normalizedRenderer as any)._ ? args[0] : args,
+            );
+          } else {
+            const inputWithContent = getContent
+              ? { ...args, content: getContent(scope) }
+              : args || {};
+            normalizedRenderer.___params(
+              childScope,
+              (normalizedRenderer as any)._
+                ? inputWithContent
+                : [inputWithContent],
+            );
+          }
         }
       }
     }

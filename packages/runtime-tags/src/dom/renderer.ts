@@ -10,7 +10,7 @@ import { parseHTML } from "./parse-html";
 import { queueRender } from "./queue";
 import { register } from "./resume";
 import { createScope } from "./scope";
-import type { Signal } from "./signals";
+import { type Signal, type SignalFn, value } from "./signals";
 import { walk } from "./walker";
 
 export type Renderer = {
@@ -20,6 +20,8 @@ export type Renderer = {
   ___params: Signal<unknown> | undefined;
   ___owner: Scope | undefined;
   ___accessor: Accessor | undefined;
+  ___localClosures?: Record<Accessor, Signal<unknown>>;
+  ___localClosureValues?: Record<Accessor, unknown>;
 };
 
 type SetupFn = (scope: Scope) => void;
@@ -127,6 +129,22 @@ export function registerContent(
     id,
     createContent(id, template, walks, setup, params, dynamicScopesAccessor),
   );
+}
+
+export function localClosures(
+  renderer: ReturnType<typeof createContent>,
+  closureFns: Record<Accessor, SignalFn<unknown>>,
+) {
+  const closureSignals: NonNullable<Renderer["___localClosures"]> = {};
+  for (const key in closureFns) {
+    closureSignals[key] = value(key, closureFns[key]);
+  }
+  return (owner: Scope, closureValues: Record<Accessor, unknown>): Renderer => {
+    const instance = renderer(owner);
+    instance.___localClosures = closureSignals;
+    instance.___localClosureValues = closureValues;
+    return instance;
+  };
 }
 
 export function createRenderer(

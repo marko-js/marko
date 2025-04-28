@@ -12,6 +12,8 @@ import {
   type AttrTagLookup,
   getAttrTagIdentifier,
 } from "./nested-attribute-tags";
+import { toArray } from "./optional";
+import { getScopeAccessor } from "./references";
 import { callRuntime } from "./runtime";
 import {
   getScopeIdIdentifier,
@@ -19,7 +21,7 @@ import {
   isSerializedSection,
 } from "./sections";
 import { getResumeRegisterId } from "./signals";
-import { toObjectProperty } from "./to-property-name";
+import { toObjectProperty, toPropertyName } from "./to-property-name";
 
 const contentProps = new WeakSet<t.Node>();
 type ContentKey = "renderBody" | "content";
@@ -427,9 +429,26 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
           : undefined,
       );
     } else {
-      return t.callExpression(t.identifier(bodySection.name), [
-        scopeIdentifier,
-      ]);
+      return t.callExpression(
+        t.identifier(bodySection.name),
+        bodySection.referencedLocalClosures
+          ? [
+              scopeIdentifier,
+              t.objectExpression(
+                toArray(bodySection.referencedLocalClosures, (ref) => {
+                  const accessor = getScopeAccessor(ref);
+                  const isShorthand = accessor === ref.name;
+                  return t.objectProperty(
+                    toPropertyName(accessor),
+                    t.identifier(ref.name),
+                    false,
+                    isShorthand,
+                  );
+                }),
+              ),
+            ]
+          : [scopeIdentifier],
+      );
     }
   }
 }

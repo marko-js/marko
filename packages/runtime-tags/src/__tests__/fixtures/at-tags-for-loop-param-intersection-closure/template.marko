@@ -1,0 +1,6 @@
+let/mult = 2
+list
+  for|item| of=[1, 2, 3]
+    @item -- ${item * mult}
+
+button onClick() { mult++; } -- Multiplier: ${mult}
