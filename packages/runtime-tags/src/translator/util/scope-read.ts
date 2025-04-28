@@ -5,6 +5,7 @@ import { getAccessorProp } from "./get-accessor-char";
 import { forEach } from "./optional";
 import {
   type Binding,
+  BindingType,
   getScopeAccessor,
   type ReferencedBindings,
 } from "./references";
@@ -25,7 +26,7 @@ export function createScopeReadPattern(
     const propertyKey = getScopeAccessor(ref);
     const isShorthand = propertyKey === propertyValue;
     let pattern: t.ObjectPattern = rootPattern;
-    if (ref.section !== section) {
+    if (ref.section !== section && ref.type !== BindingType.local) {
       if (!nestedPatterns) nestedPatterns = [rootPattern];
 
       const relativeDepth = rootDepth - ref.section.depth;

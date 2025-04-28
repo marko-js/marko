@@ -4,8 +4,11 @@ import { importDefault } from "@marko/compiler/babel-utils";
 import { bindingHasDownstreamExpressions } from "../../util/binding-has-downstream-expressions";
 import { getAccessorProp } from "../../util/get-accessor-char";
 import getStyleFile from "../../util/get-style-file";
-import { forEach } from "../../util/optional";
-import { getSectionInstancesAccessorLiteral } from "../../util/references";
+import { forEach, toArray } from "../../util/optional";
+import {
+  getScopeAccessor,
+  getSectionInstancesAccessorLiteral,
+} from "../../util/references";
 import { callRuntime } from "../../util/runtime";
 import {
   forEachSectionReverse,
@@ -18,11 +21,13 @@ import {
   addStatement,
   getResumeRegisterId,
   getSignal,
+  getSignalFn,
   initValue,
   replaceNullishAndEmptyFunctionsWith0,
   writeRegisteredFns,
   writeSignals,
 } from "../../util/signals";
+import { toPropertyName } from "../../util/to-property-name";
 import type { TemplateVisitor } from "../../util/visitors";
 import { visit } from "../../util/walks";
 import * as writer from "../../util/writer";
@@ -74,7 +79,7 @@ export default {
             childSection.params && initValue(childSection.params);
           const { walks, writes, setup } = writer.getSectionMeta(childSection);
           const identifier = t.identifier(childSection.name);
-          const renderer = getSectionParentIsOwner(childSection)
+          let renderer = getSectionParentIsOwner(childSection)
             ? callRuntime(
                 "createRenderer",
                 ...replaceNullishAndEmptyFunctionsWith0([
@@ -99,6 +104,28 @@ export default {
                     : undefined,
                 ]),
               );
+          if (childSection.referencedLocalClosures) {
+            renderer = callRuntime(
+              "localClosures",
+              renderer,
+              t.objectExpression(
+                toArray(childSection.referencedLocalClosures, (closure) => {
+                  const expr = getSignalFn(getSignal(childSection, closure));
+                  const key = toPropertyName(getScopeAccessor(closure));
+                  if (t.isFunction(expr) && t.isBlockStatement(expr.body)) {
+                    return t.objectMethod(
+                      "method",
+                      key,
+                      expr.params,
+                      expr.body,
+                    );
+                  }
+
+                  return t.objectProperty(key, expr);
+                }),
+              ),
+            );
+          }
           writeSignals(childSection);
           program.node.body.push(
             t.variableDeclaration("const", [

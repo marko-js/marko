@@ -55,7 +55,14 @@ type ForType = "in" | "of" | "to";
 
 export default {
   analyze(tag) {
+    const tagSection = getOrCreateSection(tag);
     const isAttrTag = tag.node.body.attributeTags;
+    const tagBody = tag.get("body");
+    const paramsBinding = trackParamsReferences(
+      tagBody,
+      isAttrTag ? BindingType.local : BindingType.param,
+    );
+
     let allowAttrs: string[];
     assertNoVar(tag);
     assertNoArgs(tag);
@@ -85,7 +92,6 @@ export default {
 
     if (isAttrTag) return;
 
-    const tagBody = tag.get("body");
     const bodySection = startSection(tagBody);
 
     if (!bodySection) {
@@ -93,19 +99,15 @@ export default {
       return;
     }
 
-    const tagSection = getOrCreateSection(tag);
     const nodeBinding = getOptimizedOnlyChildNodeBinding(tag, tagSection);
-    const paramsBinding = trackParamsReferences(tagBody, BindingType.param);
     const tagExtra = mergeReferences(
       tagSection,
       tag.node,
       getAllTagReferenceNodes(tag.node),
     );
-
     if (paramsBinding) {
       setBindingValueExpr(paramsBinding, tagExtra);
     }
-
     bodySection.sectionAccessor = {
       binding: nodeBinding,
       prefix: getAccessorPrefix().LoopScopeMap,

@@ -1,0 +1,14 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "o",
+      "$$expr_mult_item$item$content": "a",
+      "$$mult$item$content": "e",
+      "$$setup$item$content": "n",
+      "$$mult_closure": "r",
+      "$$mult_effect": "m",
+      "$$mult": "s"
+    }
+  }
+}

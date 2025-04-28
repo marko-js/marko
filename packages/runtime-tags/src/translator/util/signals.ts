@@ -64,7 +64,7 @@ export type Signal = {
   valueAccessor?: t.Expression;
   referencedBindings: ReferencedBindings;
   section: Section;
-  build: () => t.Expression;
+  build: undefined | (() => t.Expression);
   register?: boolean;
   values: Array<{
     signal: Signal;
@@ -181,10 +181,6 @@ export function getHoistFunctionIdentifier(hoistedBinding: Binding) {
   return identifier;
 }
 
-const unimplementedBuild = () => {
-  return t.stringLiteral("SIGNAL NOT INITIALIZED");
-};
-
 export function getSignal(
   section: Section,
   referencedBindings: ReferencedBindings,
@@ -214,7 +210,7 @@ export function getSignal(
         effect: [],
         effectReferencedBindings: undefined,
         subscribers: [],
-        build: unimplementedBuild,
+        build: undefined,
         export: !!exportName,
       } as Signal),
     );
@@ -276,6 +272,7 @@ export function initValue(
     const isParamBinding =
       !binding.upstreamAlias &&
       (binding.type === BindingType.param ||
+        binding.type === BindingType.local ||
         binding.type === BindingType.input);
     const isNakedAlias = binding.upstreamAlias && !binding.property;
     const needsGuard =
@@ -310,7 +307,7 @@ export function initValue(
   return signal;
 }
 
-function getSignalFn(signal: Signal): t.Expression {
+export function getSignalFn(signal: Signal): t.Expression {
   const section = signal.section;
   const binding = signal.referencedBindings;
   const params: t.Identifier[] = [scopeIdentifier];
@@ -404,7 +401,7 @@ function getSignalFn(signal: Signal): t.Expression {
     );
   });
 
-  if (isValue && binding.sources) {
+  if (isValue && binding.sources && binding.type !== BindingType.local) {
     let dynamicClosureArgs: t.Expression[] | undefined;
     let dynamicClosureSignalIdentifier: t.Identifier | undefined;
     if (binding.sources) {
@@ -712,7 +709,7 @@ export function writeSignals(section: Section) {
   }
 
   function writeSignal(signal: Signal) {
-    if (seen.has(signal)) return;
+    if (!signal.build || seen.has(signal)) return;
     seen.add(signal);
 
     for (const value of signal.values) {
@@ -1088,14 +1085,15 @@ export function writeHTMLResumeStatements(
     }
   }
 
+  const debug = !isOptimize();
+  const writeScopeBuilder = getSectionWriteScopeBuilder(section);
   const serializedLookup = getSerializedAccessors(section);
   const serializedProperties: t.ObjectProperty[] = [];
   const sectionSerializeReason = nonAnalyzedForceSerializedSection.has(section)
     ? true
     : section.serializeReason;
-
-  forEach(section.bindings, (binding) => {
-    if (binding.type === BindingType.dom) return;
+  let debugVars: t.ObjectProperty[] | undefined;
+  const writeSerializedBinding = (binding: Binding) => {
     const reason = getBindingSerializeReason(section, binding);
     if (!reason) return;
     const accessor = getScopeAccessor(binding);
@@ -1112,7 +1110,37 @@ export function writeHTMLResumeStatements(
           : getExprIfSerialized(reason, getDeclaredBindingExpression(binding)),
       ),
     );
+
+    if (debug) {
+      const { root, access } = getDebugScopeAccess(binding);
+      const locExpr =
+        root.loc &&
+        t.stringLiteral(`${root.loc.start.line}:${root.loc.start.column + 1}`);
+      (debugVars ||= []).push(
+        toObjectProperty(
+          getScopeAccessor(binding),
+          root !== binding
+            ? t.arrayExpression(
+                locExpr
+                  ? [t.stringLiteral(root.name + access), locExpr]
+                  : [t.stringLiteral(root.name + access)],
+              )
+            : locExpr || t.numericLiteral(0),
+        ),
+      );
+    }
+  };
+
+  forEach(section.bindings, (binding) => {
+    if (
+      binding.type !== BindingType.dom &&
+      binding.type !== BindingType.local
+    ) {
+      writeSerializedBinding(binding);
+    }
   });
+
+  forEach(section.referencedLocalClosures, writeSerializedBinding);
 
   if (section.parent) {
     const ownerAccessor = getAccessorProp().Owner;
@@ -1144,8 +1172,6 @@ export function writeHTMLResumeStatements(
     );
   }
 
-  const writeScopeBuilder = getSectionWriteScopeBuilder(section);
-
   if (sectionSerializeReason) {
     for (const prop of serializedProperties) {
       if (
@@ -1162,33 +1188,7 @@ export function writeHTMLResumeStatements(
       t.objectExpression(serializedProperties),
     ];
 
-    if (!isOptimize()) {
-      let debugVars: t.ObjectProperty[] | undefined;
-      forEach(section.bindings, (binding) => {
-        if (binding.type === BindingType.dom) return;
-        const serializeReason = getBindingSerializeReason(section, binding);
-        if (!serializeReason) return;
-
-        const { root, access } = getDebugScopeAccess(binding);
-        const locExpr =
-          root.loc &&
-          t.stringLiteral(
-            `${root.loc.start.line}:${root.loc.start.column + 1}`,
-          );
-        (debugVars ||= []).push(
-          toObjectProperty(
-            getScopeAccessor(binding),
-            root !== binding
-              ? t.arrayExpression(
-                  locExpr
-                    ? [t.stringLiteral(root.name + access), locExpr]
-                    : [t.stringLiteral(root.name + access)],
-                )
-              : locExpr || t.numericLiteral(0),
-          ),
-        );
-      });
-
+    if (debug) {
       writeScopeArgs.push(
         t.stringLiteral(path.hub.file.opts.filenameRelative as string),
         section.loc && section.loc.start.line != null

@@ -34,6 +34,7 @@ export interface Section {
   parent: Section | undefined;
   sectionAccessor: { binding: Binding; prefix: AccessorPrefix } | undefined;
   params: undefined | Binding;
+  referencedLocalClosures: ReferencedBindings;
   referencedClosures: ReferencedBindings;
   referencedHoists: ReferencedBindings;
   bindings: ReferencedBindings;
@@ -96,6 +97,7 @@ export function startSection(
       parent: parentSection,
       sectionAccessor: undefined,
       params: undefined,
+      referencedLocalClosures: undefined,
       referencedClosures: undefined,
       referencedHoists: undefined,
       bindings: undefined,

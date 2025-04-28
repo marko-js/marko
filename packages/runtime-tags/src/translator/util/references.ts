@@ -64,6 +64,7 @@ export enum BindingType {
   let,
   input,
   param,
+  local,
   derived,
   hoist,
   // todo: constant
@@ -714,17 +715,25 @@ export function finalizeReferences() {
           canonicalUpstreamAlias.closureSections,
           section,
         );
-        section.referencedClosures = bindingUtil.add(
-          section.referencedClosures,
-          binding,
-        );
 
-        addOwnersSerializeReason(
-          section,
-          canonicalUpstreamAlias.section,
-          !!isEffect || canonicalUpstreamAlias.sources,
-          getAccessorProp().Owner,
-        );
+        if (binding.type === BindingType.local) {
+          section.referencedLocalClosures = bindingUtil.add(
+            section.referencedLocalClosures,
+            binding,
+          );
+        } else {
+          section.referencedClosures = bindingUtil.add(
+            section.referencedClosures,
+            binding,
+          );
+
+          addOwnersSerializeReason(
+            section,
+            canonicalUpstreamAlias.section,
+            !!isEffect || canonicalUpstreamAlias.sources,
+            getAccessorProp().Owner,
+          );
+        }
       }
       if (isEffect) {
         forEach(referencedBindings, (binding) =>
@@ -835,6 +844,40 @@ export function finalizeReferences() {
         }
       }
     }
+
+    forEach(section.referencedLocalClosures, (closure) => {
+      // mark bindings that need to be serialized due to being closed over by stateful sections
+      if (!isBindingForceSerialized(section, closure)) {
+        const sourceSection = closure.section;
+        let serializeReason: undefined | SerializeReason;
+        let currentSection = section;
+
+        while (currentSection !== sourceSection) {
+          const upstreamReason =
+            !currentSection.upstreamExpression ||
+            getSerializeSourcesForExpr(currentSection.upstreamExpression);
+          if (upstreamReason === true) {
+            serializeReason = true;
+            break;
+          }
+
+          serializeReason = mergeSerializeReasons(
+            serializeReason,
+            upstreamReason,
+          );
+          currentSection = currentSection.parent!;
+        }
+
+        addBindingSerializeReason(section, closure, serializeReason);
+      }
+
+      if (closure.sources) {
+        addSectionSerializeReason(
+          section,
+          getBindingSerializeReason(section, closure),
+        );
+      }
+    });
 
     forEach(section.referencedClosures, (closure) => {
       // mark bindings that need to be serialized due to being closed over by stateful sections
