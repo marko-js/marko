@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.16
+
+### Patch Changes
+
+- [#2680](https://github.com/marko-js/marko/pull/2680) [`692c9a2`](https://github.com/marko-js/marko/commit/692c9a25ac73011c7d2b440f2688bb2d24b7d566) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with closures over a for tag param inside attribute tags.
+
+- [#2678](https://github.com/marko-js/marko/pull/2678) [`ddf2b54`](https://github.com/marko-js/marko/commit/ddf2b54ed093eb47f2135cd780a57397f5f477e8) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Merge closure setup calls into setup functions.
+
 ## 6.0.15
 
 ### Patch Changes
