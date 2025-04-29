@@ -1,1 +1,9 @@
-<div/>
+for|item| of=input.list.item
+  div.item ...item
+    ${item.content}
+
+for|col| of=input.col
+  div.col ...col
+  for|row| of=col.row
+    div.row ...row
+      ${row.content}

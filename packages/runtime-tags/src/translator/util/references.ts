@@ -319,6 +319,12 @@ function trackReferencesForBinding(babelBinding: t.Binding, binding: Binding) {
   for (const referencePath of referencePaths) {
     const referenceSection = getOrCreateSection(referencePath);
     if (isSameOrChildSection(binding.section, referenceSection)) {
+      if (
+        binding.type === BindingType.local &&
+        referenceSection === binding.section
+      ) {
+        continue;
+      }
       trackReference(referencePath as t.NodePath<t.Identifier>, binding);
     } else {
       trackHoistedReference(referencePath as t.NodePath<t.Identifier>, binding);
