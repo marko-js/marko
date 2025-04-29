@@ -1,2 +1,7 @@
-<const/{ style }=input/>
-<div style=style/>
+<div style=input.style/>
+
+<if=input.test>
+  <div#test style=input.test.style>
+    <${input.test.content}/>
+  </div>
+</if>

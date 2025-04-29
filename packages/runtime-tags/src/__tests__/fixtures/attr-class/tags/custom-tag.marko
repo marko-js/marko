@@ -1,2 +1,7 @@
-<const/{ class: className }=input/>
-<div class=className/>
+<div class=input.class/>
+
+<if=input.test>
+  <div#test class=input.test.class>
+    <${input.test.content}/>
+  </div>
+</if>

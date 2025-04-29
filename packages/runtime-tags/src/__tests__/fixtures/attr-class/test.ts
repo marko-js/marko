@@ -1,2 +1,1 @@
-export const skip_csr = true;
-export const skip_ssr = true;
+export const steps = [{ c: true, d: true }, { c: false, d: false }];

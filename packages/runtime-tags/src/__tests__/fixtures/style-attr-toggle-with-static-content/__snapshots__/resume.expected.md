@@ -30,7 +30,7 @@ container.querySelector("button").click();
     <button />
     <!--M_*1 #button/0-->
     <div
-      style="border: 1px solid black; display: none;"
+      style="border:1px solid black;display:none"
     >
       foo bar
     </div>
@@ -58,7 +58,7 @@ container.querySelector("button").click();
     <button />
     <!--M_*1 #button/0-->
     <div
-      style="border: 1px solid black;"
+      style="border:1px solid black"
     >
       foo bar
     </div>
@@ -86,7 +86,7 @@ container.querySelector("button").click();
     <button />
     <!--M_*1 #button/0-->
     <div
-      style="border: 1px solid black; display: none;"
+      style="border:1px solid black;display:none"
     >
       foo bar
     </div>

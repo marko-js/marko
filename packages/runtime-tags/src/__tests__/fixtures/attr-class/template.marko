@@ -1,4 +1,6 @@
-<attrs/input/>
+import CustomTag from "<custom-tag>";
+static const TestTag = CustomTag;
+
 <const/{ c, d }=input/>
 
 <div class=["a", { b: c, d }]/>
@@ -8,6 +10,6 @@
 <custom-tag class=["a", { b: c, d }]/>
 <custom-tag class=["a", false, "b"]/>
 
-<${input.test} class=["a", { b: c, d }]>
+<${TestTag} class=["a", { b: c, d }]>
   <@test class=["a", { b: c, d }]>Hello</@test>
 </>

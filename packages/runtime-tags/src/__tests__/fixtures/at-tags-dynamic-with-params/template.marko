@@ -1,8 +1,10 @@
-<attrs/{ x }/>
+<let/x=true>
 <hello>
     <if=x>
         <@item|y|>
-            ${y}
+            y: ${y}
         </@item>
     </if>
 </hello>
+
+<button onClick() { x = !x }>Toggle</>

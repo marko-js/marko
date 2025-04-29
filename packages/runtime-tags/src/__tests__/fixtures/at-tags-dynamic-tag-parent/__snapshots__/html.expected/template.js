@@ -1,9 +1,8 @@
+import Hello from "./tags/hello/index.marko";
+const x = Hello;
 import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", (input, $serialize) => {
+export default _$.createTemplate("__tests__/template.marko", input => {
   const $scope0_id = _$.nextScopeId();
-  const {
-    x
-  } = input;
   _$.dynamicTag($scope0_id, "#text/0", x, {
     footer: _$.attrTag({
       class: "my-footer",
@@ -22,6 +21,5 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   }, _$.registerContent("__tests__/template.marko_1_renderer", () => {
     const $scope1_id = _$.nextScopeId();
     _$.write("Body content");
-  }, $scope0_id), 0, _$.serializeGuard($serialize, /* x */0));
-  _$.serializeGuard($serialize, /* x */0) && _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+  }, $scope0_id), 0, 0);
 });

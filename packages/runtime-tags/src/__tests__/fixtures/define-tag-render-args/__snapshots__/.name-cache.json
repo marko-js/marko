@@ -1,0 +1,16 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "a",
+      "$init": "t",
+      "$$a$define$content": "o",
+      "$$b$define$content": "e",
+      "$$c$define$content": "n",
+      "$$params2$define$content": "i",
+      "$$dynamicTag": "c",
+      "$$expr_x_MyTag": "m",
+      "$$x_effect": "r",
+      "$$x": "d"
+    }
+  }
+}
