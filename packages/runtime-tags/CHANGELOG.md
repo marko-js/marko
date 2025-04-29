@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.17
+
+### Patch Changes
+
+- [#2681](https://github.com/marko-js/marko/pull/2681) [`dffd5ee`](https://github.com/marko-js/marko/commit/dffd5ee981e67a564568852305e41769b8c5e57b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with local binding reference in same scope
+
 ## 6.0.16
 
 ### Patch Changes
