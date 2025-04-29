@@ -1,0 +1,78 @@
+# Render
+```html
+<!---->
+<!---->
+<div
+  class="item"
+  style="color:red"
+>
+  foo
+</div>
+<div
+  class="item"
+  style="color:blue"
+>
+  bar
+</div>
+<div
+  class="item"
+  style="color:green"
+>
+  bar
+</div>
+<div
+  class="col"
+  row="[object Object]"
+  x="0"
+/>
+<div
+  class="row"
+  row="a"
+>
+  a
+</div>
+<div
+  class="row"
+  row="b"
+>
+  b
+</div>
+<!---->
+<div
+  class="col"
+  row="[object Object]"
+  x="1"
+/>
+<div
+  class="row"
+  row="c"
+>
+  c
+</div>
+<div
+  class="row"
+  row="d"
+>
+  d
+</div>
+<!---->
+<div
+  class="col"
+  outside=""
+  row="[object Object]"
+/>
+<div
+  class="row"
+  row="-1"
+>
+  Outside
+</div>
+<!---->
+<!---->
+<!---->
+```
+
+# Mutations
+```
+INSERT #comment0, #comment1, div0, div1, div2, div3, div4, div5, #comment2, div6, div7, div8, #comment3, div9, div10, #comment4, #comment5, #comment6
+```
