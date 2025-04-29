@@ -154,6 +154,27 @@ function normalizeTree(
 ) {
   if (shouldIgnore?.(target)) return;
   if (isElement(target) && isElement(source)) {
+    const style = target.getAttribute("style");
+    if (style) {
+      target.setAttribute(
+        "style",
+        style
+          .split(";")
+          .map((decl) => decl.trim())
+          .filter((decl) => decl !== "")
+          .map((decl) => {
+            const [property, value] = decl.split(":");
+            return `${property
+              .trim()
+              .replace(/-([a-z])/g, (_, letter) =>
+                letter.toUpperCase(),
+              )}:${value.trim()}`;
+          })
+          .sort()
+          .join(";"),
+      );
+    }
+
     if (isInputElement(target) && isInputElement(source)) {
       if (target.type === "checkbox" || target.type === "radio") {
         if (source.checked) {
@@ -357,7 +378,7 @@ function isDocument(node: Node): node is Document {
   return node.nodeType === 9;
 }
 
-function isElement(node: Node): node is Element {
+function isElement(node: Node): node is HTMLElement {
   return node.nodeType === 1;
 }
 

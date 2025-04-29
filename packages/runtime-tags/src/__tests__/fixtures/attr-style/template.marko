@@ -1,12 +1,14 @@
-<attrs/{ color, test }/>
-<div style={ color: color }/>
+import CustomTag from "<custom-tag>";
+static const TestTag = CustomTag;
+
+<div style={ color: input.color }/>
 <div style={ width: "100px" }/>
 <div style="color: green"/>
 
-<custom-tag style={ color: color }/>
+<custom-tag style={ color: input.color }/>
 <custom-tag style={ width: "100px" }/>
 <custom-tag style="color: green"/>
 
-<${test} style={ color: "green" }>
+<${TestTag} style={ color: "green" }>
   <@test style={ color: "green" }>Hello</@test>
 </>

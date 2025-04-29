@@ -1,1 +1,1 @@
-export const skip_resume = true;
+export const skip_equivalent = true;

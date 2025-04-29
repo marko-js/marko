@@ -20,7 +20,7 @@ container.querySelector("button").click();
 ```html
 <button />
 <div
-  style="border: 1px solid black; display: none;"
+  style="border:1px solid black;display:none"
 >
   foo bar
 </div>
@@ -38,7 +38,7 @@ container.querySelector("button").click();
 ```html
 <button />
 <div
-  style="border: 1px solid black;"
+  style="border:1px solid black"
 >
   foo bar
 </div>
@@ -56,7 +56,7 @@ container.querySelector("button").click();
 ```html
 <button />
 <div
-  style="border: 1px solid black; display: none;"
+  style="border:1px solid black;display:none"
 >
   foo bar
 </div>

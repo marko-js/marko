@@ -1,6 +1,6 @@
 <hello>
-    <for|a| in={ a: 1, b: 2 }>
-      <@item/>
+    <for|a, v| in={ a: 1, b: 2 }>
+      <@item>${a}:${v}</>
     </for>
-    <@other/>
+    <@other>other</>
 </hello>

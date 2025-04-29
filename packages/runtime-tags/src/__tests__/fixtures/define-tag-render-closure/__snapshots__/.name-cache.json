@@ -1,0 +1,12 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "a",
+      "$init": "o",
+      "$$x$define$content": "t",
+      "$$x_closure": "m",
+      "$$x_effect": "r",
+      "$$x": "e"
+    }
+  }
+}

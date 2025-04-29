@@ -1,20 +1,21 @@
+import CustomTag from "./tags/custom-tag.marko";
+const TestTag = CustomTag;
 import * as _$ from "@marko/runtime-tags/debug/html";
 import _customTag from "./tags/custom-tag.marko";
 export default _$.createTemplate("__tests__/template.marko", (input, $serialize) => {
   const $scope0_id = _$.nextScopeId();
-  const {
-    color,
-    test
-  } = input;
   _$.write(`<div${_$.styleAttr({
-    color: color
-  })}></div>${_$.markResumeNode($scope0_id, "#div/0", _$.serializeGuard($serialize, /* color */1))}<div style=width:100px></div><div style="color: green"></div>`);
+    color: input.color
+  })}></div>${_$.markResumeNode($scope0_id, "#div/0", _$.serializeGuard($serialize, /* input.color */0))}<div style=width:100px></div><div style="color: green"></div>`);
   const $childScope = _$.peekNextScopeId();
   _customTag({
     style: {
-      color: color
+      color: input.color
     }
-  }, _$.serializeGuard($serialize, /* color */1));
+  }, {
+    /* input.style, input.test */0: _$.serializeGuard($serialize, /* input.color */0),
+    /* input.style */3: _$.serializeGuard($serialize, /* input.color */0)
+  });
   _customTag({
     style: {
       width: "100px"
@@ -23,7 +24,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   _customTag({
     style: "color: green"
   });
-  _$.dynamicTag($scope0_id, "#text/4", test, {
+  _$.dynamicTag($scope0_id, "#text/4", TestTag, {
     style: {
       color: "green"
     },
@@ -36,8 +37,8 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
         _$.write("Hello");
       }, $scope0_id)
     })
-  }, 0, 0, _$.serializeGuard($serialize, /* test */2));
-  _$.serializeGuard($serialize, /* color,test */0) && _$.writeScope($scope0_id, {
-    "#childScope/1": _$.serializeIf($serialize, /* input.color */1) && _$.writeExistingScope($childScope)
+  }, 0, 0, 0);
+  _$.serializeGuard($serialize, /* input.color */0) && _$.writeScope($scope0_id, {
+    "#childScope/1": _$.serializeIf($serialize, /* input.color */0) && _$.writeExistingScope($childScope)
   }, "__tests__/template.marko", 0);
 });
