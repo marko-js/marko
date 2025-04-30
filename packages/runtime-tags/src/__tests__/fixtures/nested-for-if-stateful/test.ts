@@ -1,4 +1,15 @@
-export const steps = [{}, click, click, click, click, click, click, click, click, click];
+export const steps = [
+  {},
+  click,
+  click,
+  click,
+  click,
+  click,
+  click,
+  click,
+  click,
+  click,
+];
 
 let buttonIndex = 0;
 

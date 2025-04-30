@@ -1,4 +1,13 @@
-export const steps = [{}, clickInner, clickMiddle, clickOuter, clickInner, clickMiddle, clickOuter, clickOuter];
+export const steps = [
+  {},
+  clickInner,
+  clickMiddle,
+  clickOuter,
+  clickInner,
+  clickMiddle,
+  clickOuter,
+  clickOuter,
+];
 
 function clickOuter(container: Element) {
   container.querySelector<HTMLButtonElement>("button#outer")!.click();

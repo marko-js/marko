@@ -1,1 +1,1 @@
-export const steps = [{ show: true }]
+export const steps = [{ show: true }];

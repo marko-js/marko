@@ -25,4 +25,3 @@ function toggle(id: string) {
     (container.querySelector(`#c-${id} > button`) as HTMLButtonElement).click();
   };
 }
-

@@ -1,5 +1,5 @@
 export default {
-  "identifier": false,
+  identifier: false,
   "tag var": false,
-  "static var": false
-}
+  "static var": false,
+};
