@@ -1,5 +1,7 @@
-export const steps = [{
-  a: {
-    b: 1
-  }
-}];
+export const steps = [
+  {
+    a: {
+      b: 1,
+    },
+  },
+];

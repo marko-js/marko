@@ -1,2 +1,2 @@
-export const steps = [{}]
-export const error_compiler = ['template.marko']
+export const steps = [{}];
+export const error_compiler = ["template.marko"];

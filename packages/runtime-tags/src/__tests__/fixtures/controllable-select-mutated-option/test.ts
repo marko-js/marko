@@ -1,4 +1,12 @@
-export const steps = [{}, clickRemove, clickRemove, clickRemove, clickAdd, clickAdd, clickAdd];
+export const steps = [
+  {},
+  clickRemove,
+  clickRemove,
+  clickRemove,
+  clickAdd,
+  clickAdd,
+  clickAdd,
+];
 
 function clickAdd(container: Element) {
   container.querySelector<HTMLButtonElement>(".add")!.click();

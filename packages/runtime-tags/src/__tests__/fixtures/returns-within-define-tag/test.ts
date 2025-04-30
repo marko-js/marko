@@ -5,4 +5,11 @@ const clickTwice = (container: Element) => {
   container.querySelector<HTMLButtonElement>("button.twice")!.click();
 };
 
-export const steps = [{}, clickOnce, clickOnce, clickTwice, clickTwice, clickTwice];
+export const steps = [
+  {},
+  clickOnce,
+  clickOnce,
+  clickTwice,
+  clickTwice,
+  clickTwice,
+];

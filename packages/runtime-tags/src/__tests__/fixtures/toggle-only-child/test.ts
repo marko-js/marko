@@ -4,6 +4,8 @@ function type(value: string) {
   return (container: Element) => {
     const input = container.querySelector("input")!;
     input.value = value;
-    input.dispatchEvent(new input.ownerDocument.defaultView!.Event("input", { bubbles: true }));
-  }
+    input.dispatchEvent(
+      new input.ownerDocument.defaultView!.Event("input", { bubbles: true }),
+    );
+  };
 }

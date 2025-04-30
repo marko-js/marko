@@ -1,1 +1,1 @@
-export const steps = [{}]
+export const steps = [{}];

@@ -6,5 +6,5 @@ function type(value: string) {
     const window = textarea.ownerDocument.defaultView!;
     textarea.value = value;
     textarea.dispatchEvent(new window.Event("input", { bubbles: true }));
-  }
+  };
 }
