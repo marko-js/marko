@@ -122,6 +122,107 @@ declare global {
       var: NativeTag<Marko.HTML.Var, HTMLElement>;
       video: NativeTag<Marko.HTML.Video, HTMLVideoElement>;
       wbr: NativeTag<Marko.HTML.WBr, HTMLElement>;
+
+      animate: NativeTag<Marko.SVG.Animate, SVGAnimateElement>;
+      animateMotion: NativeTag<
+        Marko.SVG.AnimateMotion,
+        SVGAnimateMotionElement
+      >;
+      animateTransform: NativeTag<
+        Marko.SVG.AnimateTransform,
+        SVGAnimateTransformElement
+      >;
+      circle: NativeTag<Marko.SVG.Circle, SVGCircleElement>;
+      clipPath: NativeTag<Marko.SVG.ClipPath, SVGClipPathElement>;
+      defs: NativeTag<Marko.SVG.Defs, SVGDefsElement>;
+      desc: NativeTag<Marko.SVG.Desc, SVGDescElement>;
+      discard: NativeTag<Marko.SVG.Discard, SVGElement>;
+      ellipse: NativeTag<Marko.SVG.Ellipse, SVGEllipseElement>;
+      feBlend: NativeTag<Marko.SVG.FEBlend, SVGFEBlendElement>;
+      feColorMatrix: NativeTag<
+        Marko.SVG.FEColorMatrix,
+        SVGFEColorMatrixElement
+      >;
+      feComponentTransfer: NativeTag<
+        Marko.SVG.FEComponentTransfer,
+        SVGFEComponentTransferElement
+      >;
+      feComposite: NativeTag<Marko.SVG.FEComposite, SVGFECompositeElement>;
+      feConvolveMatrix: NativeTag<
+        Marko.SVG.FEConvolveMatrix,
+        SVGFEConvolveMatrixElement
+      >;
+      feDiffuseLighting: NativeTag<
+        Marko.SVG.FEDiffuseLighting,
+        SVGFEDiffuseLightingElement
+      >;
+      feDisplacementMap: NativeTag<
+        Marko.SVG.FEDisplacementMap,
+        SVGFEDisplacementMapElement
+      >;
+      feDistantLight: NativeTag<
+        Marko.SVG.FEDistantLight,
+        SVGFEDistantLightElement
+      >;
+      feDropShadow: NativeTag<Marko.SVG.FEDropShadow, SVGFEDropShadowElement>;
+      feFlood: NativeTag<Marko.SVG.FEFlood, SVGFEFloodElement>;
+      feFuncA: NativeTag<Marko.SVG.FEFuncA, SVGFEFuncAElement>;
+      feFuncB: NativeTag<Marko.SVG.FEFuncB, SVGFEFuncBElement>;
+      feFuncG: NativeTag<Marko.SVG.FEFuncG, SVGFEFuncGElement>;
+      feFuncR: NativeTag<Marko.SVG.FEFuncR, SVGFEFuncRElement>;
+      feGaussianBlur: NativeTag<
+        Marko.SVG.FEGaussianBlur,
+        SVGFEGaussianBlurElement
+      >;
+      feImage: NativeTag<Marko.SVG.FEImage, SVGFEImageElement>;
+      feMerge: NativeTag<Marko.SVG.FEMerge, SVGFEMergeElement>;
+      feMergeNode: NativeTag<Marko.SVG.FEMergeNode, SVGFEMergeNodeElement>;
+      feMorphology: NativeTag<Marko.SVG.FEMorphology, SVGFEMorphologyElement>;
+      feOffset: NativeTag<Marko.SVG.FEOffset, SVGFEOffsetElement>;
+      fePointLight: NativeTag<Marko.SVG.FEPointLight, SVGFEPointLightElement>;
+      feSpecularLighting: NativeTag<
+        Marko.SVG.FESpecularLighting,
+        SVGFESpecularLightingElement
+      >;
+      feSpotLight: NativeTag<Marko.SVG.FESpotLight, SVGFESpotLightElement>;
+      feTile: NativeTag<Marko.SVG.FETile, SVGFETileElement>;
+      feTurbulence: NativeTag<Marko.SVG.FETurbulence, SVGFETurbulenceElement>;
+      filter: NativeTag<Marko.SVG.Filter, SVGFilterElement>;
+      foreignObject: NativeTag<
+        Marko.SVG.ForeignObject,
+        SVGForeignObjectElement
+      >;
+      g: NativeTag<Marko.SVG.G, SVGGElement>;
+      image: NativeTag<Marko.SVG.Image, SVGImageElement>;
+      line: NativeTag<Marko.SVG.Line, SVGLineElement>;
+      linearGradient: NativeTag<
+        Marko.SVG.LinearGradient,
+        SVGLinearGradientElement
+      >;
+      marker: NativeTag<Marko.SVG.Marker, SVGMarkerElement>;
+      mask: NativeTag<Marko.SVG.Mask, SVGMaskElement>;
+      metadata: NativeTag<Marko.SVG.Metadata, SVGMetadataElement>;
+      mpath: NativeTag<Marko.SVG.MPath, SVGMPathElement>;
+      path: NativeTag<Marko.SVG.Path, SVGPathElement>;
+      pattern: NativeTag<Marko.SVG.Pattern, SVGPatternElement>;
+      polygon: NativeTag<Marko.SVG.Polygon, SVGPolygonElement>;
+      polyline: NativeTag<Marko.SVG.Polyline, SVGPolylineElement>;
+      radialGradient: NativeTag<
+        Marko.SVG.RadialGradient,
+        SVGRadialGradientElement
+      >;
+      rect: NativeTag<Marko.SVG.Rect, SVGRectElement>;
+      set: NativeTag<Marko.SVG.Set, SVGSetElement>;
+      stop: NativeTag<Marko.SVG.Stop, SVGStopElement>;
+      svg: NativeTag<Marko.SVG.SVG, SVGSVGElement>;
+      switch: NativeTag<Marko.SVG.Switch, SVGSwitchElement>;
+      symbol: NativeTag<Marko.SVG.Symbol, SVGSymbolElement>;
+      text: NativeTag<Marko.SVG.Text, SVGTextElement>;
+      textPath: NativeTag<Marko.SVG.TextPath, SVGTextPathElement>;
+      title: NativeTag<Marko.SVG.Title, SVGTitleElement>;
+      tspan: NativeTag<Marko.SVG.TSpan, SVGTSpanElement>;
+      use: NativeTag<Marko.SVG.Use, SVGUseElement>;
+      view: NativeTag<Marko.SVG.View, SVGViewElement>;
     }
 
     namespace CSS {
@@ -2395,6 +2496,1611 @@ declare global {
       interface WBr extends HTMLAttributes<HTMLElement> {}
     }
 
+    /**
+     * Elements pulled from https://www.w3.org/TR/SVG2/eltindex.html and a few other spec sources
+     */
+    namespace SVG {
+      /**
+       * @see https://www.w3.org/TR/SVG2/linking.html#AElement
+       */
+      interface A
+        extends SVGCoreAttributes<SVGAElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/SVG2/linking.html#AElementHrefAttribute
+         */
+        href?: AttrString;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/linking.html#AElementTargetAttribute
+         */
+        target?: AttrTarget;
+
+        /**
+         * any value (if non-empty, value represents a suggested file name)
+         * @see https://www.w3.org/TR/SVG2/linking.html#AElementDownloadAttribute
+         */
+        download?: AttrString;
+
+        /**
+         * space-separated valid non-empty URL tokens
+         * @see https://www.w3.org/TR/SVG2/linking.html#AElementPingAttribute
+         */
+        ping?: HTML.A["ping"];
+
+        /**
+         * space-separated keyword tokens
+         * @see https://www.w3.org/TR/SVG2/linking.html#AElementRelAttribute
+         */
+        rel?: HTML.A["rel"];
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/linking.html#AElementHreflangAttribute
+         */
+        hreflang?: HTML.A["hreflang"];
+
+        /**
+         * A MIME type string
+         * @see https://www.w3.org/TR/SVG2/linking.html#AElementTypeAttribute
+         */
+        type?: HTML.A["type"];
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/linking.html#AElementReferrerpolicyAttribute
+         */
+        referrerPolicy?: AttrReferrerPolicy;
+      }
+
+      /**
+       * @see https://svgwg.org/specs/animations/#AnimateElement
+       */
+      interface Animate
+        extends SVGCoreAttributes<SVGAnimateElement>,
+          SVGAnimationAdditionAttributes,
+          SVGAnimationTargetElementAttributes,
+          SVGAnimationAttributeTargetAttributes,
+          SVGAnimationTimingAttributes,
+          SVGAnimationValueAttributes {}
+
+      /**
+       * @see https://svgwg.org/specs/animations/#AnimateMotionElement
+       */
+      interface AnimateMotion
+        extends SVGCoreAttributes<SVGAnimateMotionElement>,
+          SVGAnimationAdditionAttributes,
+          SVGAnimationTargetElementAttributes,
+          SVGAnimationTimingAttributes,
+          SVGAnimationValueAttributes {
+        /**
+         * @see https://svgwg.org/specs/animations/#AnimateMotionElementPathAttribute
+         */
+        path?: AttrString;
+
+        /**
+         * A semicolon-separated list of floating point values between 0 and 1
+         * @see https://svgwg.org/specs/animations/#KeyPointsAttribute
+         */
+        keyPoints?: AttrString;
+
+        /**
+         * @see https://svgwg.org/specs/animations/#RotateAttribute
+         */
+        rotate?: AttrMissing | number | "auto" | "auto-reverse" | (string & {});
+
+        /**
+         * @see https://svgwg.org/specs/animations/#OriginAttribute
+         */
+        origin?: AttrMissing | "default";
+      }
+
+      /**
+       * @see https://svgwg.org/specs/animations/#AnimateTransformElement
+       */
+      interface AnimateTransform
+        extends SVGCoreAttributes<SVGAnimateTransformElement>,
+          SVGAnimationAdditionAttributes,
+          SVGAnimationTargetElementAttributes,
+          SVGAnimationAttributeTargetAttributes,
+          SVGAnimationTimingAttributes,
+          SVGAnimationValueAttributes {
+        /**
+         * @see https://svgwg.org/specs/animations/#AnimateTransformElementTypeAttribute
+         */
+        type?:
+          | AttrMissing
+          | "translate"
+          | "scale"
+          | "rotate"
+          | "skewX"
+          | "skewY";
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/shapes.html#CircleElement
+       */
+      interface Circle
+        extends SVGCoreAttributes<SVGCircleElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
+         */
+        pathLength?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#CxProperty
+         */
+        cx?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#CyProperty
+         */
+        cy?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#RProperty
+         */
+        r?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/css-masking-1/#elementdef-clippath
+       */
+      interface ClipPath
+        extends SVGCoreAttributes<SVGClipPathElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute
+         */
+        externalResourcesRequired?: AttrBooleanString;
+
+        /**
+         * @see https://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#TransformAttribute
+         */
+        transform?: AttrString;
+
+        /**
+         * @see https://www.w3.org/TR/css-masking-1/#element-attrdef-clippath-clippathunits
+         */
+        clipPathUnits?: AttrMissing | "userSpaceOnUse" | "objectBoundingBox";
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/struct.html#DefsElement
+       */
+      interface Defs extends SVGCoreAttributes<SVGDefsElement> {}
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/struct.html#DescElement
+       */
+      interface Desc extends SVGCoreAttributes<SVGDescElement> {}
+
+      /**
+       * @see https://svgwg.org/specs/animations/#DiscardElement
+       */
+      interface Discard
+        extends SVGCoreAttributes<SVGElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://svgwg.org/specs/animations/#DiscardElementBeginAttribute
+         */
+        begin?: AttrString;
+
+        /**
+         * @see https://svgwg.org/specs/animations/#DiscardElementHrefAttribute
+         */
+        href?: AttrString;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/shapes.html#EllipseElement
+       */
+      interface Ellipse
+        extends SVGCoreAttributes<SVGEllipseElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
+         */
+        pathLength?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#CxProperty
+         */
+        cx?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#CyProperty
+         */
+        cy?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#RxProperty
+         */
+        rx?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#RyProperty
+         */
+        ry?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feblend
+       */
+      interface FEBlend
+        extends SVGCoreAttributes<SVGFEBlendElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in2?: AttrFEIn;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feblend-mode
+         */
+        mode?: AttrBlendMode;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fecolormatrix
+       */
+      interface FEColorMatrix
+        extends SVGCoreAttributes<SVGFEColorMatrixElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecolormatrix-type
+         */
+        type?:
+          | AttrMissing
+          | "matrix"
+          | "saturate"
+          | "hueRotate"
+          | "luminanceToAlpha";
+
+        /**
+         * A list of numbers
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecolormatrix-values
+         */
+        values?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fecomponenttransfer
+       */
+      interface FEComponentTransfer
+        extends SVGCoreAttributes<SVGFEComponentTransferElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fecomposite
+       */
+      interface FEComposite
+        extends SVGCoreAttributes<SVGFECompositeElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in2?: AttrFEIn;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomposite-operator
+         */
+        operator?:
+          | AttrMissing
+          | "over"
+          | "in"
+          | "out"
+          | "atop"
+          | "xor"
+          | "lighter"
+          | "arithmetic";
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomposite-k1
+         */
+        k1?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomposite-k2
+         */
+        k2?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomposite-k3
+         */
+        k3?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomposite-k4
+         */
+        k4?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feconvolvematrix
+       */
+      interface FEConvolveMatrix
+        extends SVGCoreAttributes<SVGFEConvolveMatrixElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-order
+         */
+        order?: AttrStringOrNumber;
+
+        /**
+         * List of numbers
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feconvolvematrix-kernelmatrix
+         */
+        kernelMatrix?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feconvolvematrix-divisor
+         */
+        divisor?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feconvolvematrix-bias
+         */
+        bias?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feconvolvematrix-targetx
+         */
+        targetX?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feconvolvematrix-targety
+         */
+        targetY?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feconvolvematrix-edgemode
+         */
+        edgeMode?: AttrMissing | "duplicate" | "wrap" | "none";
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feconvolvematrix-kernelunitlength
+         */
+        kernelUnitLength?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feconvolvematrix-preservealpha
+         */
+        preserveAlpha?: AttrBooleanString;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fediffuselighting
+       */
+      interface FEDiffuseLighting
+        extends SVGCoreAttributes<SVGFEDiffuseLightingElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fediffuselighting-surfacescale
+         */
+        surfaceScale?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fediffuselighting-diffuseconstant
+         */
+        diffuseConstant?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fediffuselighting-kernelunitlength
+         */
+        kernelUnitLength?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fedisplacementmap
+       */
+      interface FEDisplacementMap
+        extends SVGCoreAttributes<SVGFEDisplacementMapElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in2?: AttrFEIn;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fedisplacementmap-scale
+         */
+        scale?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fedisplacementmap-xchannelselector
+         */
+        xChannelSelector?: "R" | "G" | "B" | "A";
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fedisplacementmap-ychannelselector
+         */
+        yChannelSelector?: "R" | "G" | "B" | "A";
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fedistantlight
+       */
+      interface FEDistantLight
+        extends SVGCoreAttributes<SVGFEDistantLightElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fedistantlight-azimuth
+         */
+        azimuth?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fedistantlight-elevation
+         */
+        elevation?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fedropshadow
+       */
+      interface FEDropShadow
+        extends SVGCoreAttributes<SVGFEDropShadowElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fedropshadow-stddeviation
+         */
+        stdDeviation?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fedropshadow-dx
+         */
+        dx?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fedropshadow-dy
+         */
+        dy?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feflood
+       */
+      interface FEFlood
+        extends SVGCoreAttributes<SVGFEFloodElement>,
+          SVGFilterPrimitiveAttributes {}
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fefunca
+       */
+      interface FEFuncA
+        extends SVGCoreAttributes<SVGFEFuncAElement>,
+          SVGTransferFunctionElementAttributes {}
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fefuncb
+       */
+      interface FEFuncB
+        extends SVGCoreAttributes<SVGFEFuncBElement>,
+          SVGTransferFunctionElementAttributes {}
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fefuncg
+       */
+      interface FEFuncG
+        extends SVGCoreAttributes<SVGFEFuncGElement>,
+          SVGTransferFunctionElementAttributes {}
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fefuncr
+       */
+      interface FEFuncR
+        extends SVGCoreAttributes<SVGFEFuncRElement>,
+          SVGTransferFunctionElementAttributes {}
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fegaussianblur
+       */
+      interface FEGaussianBlur
+        extends SVGCoreAttributes<SVGFEGaussianBlurElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fegaussianblur-stddeviation
+         */
+        stdDeviation?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fegaussianblur-edgemode
+         */
+        edgeMode?: AttrMissing | "duplicate" | "wrap" | "none";
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feimage
+       */
+      interface FEImage
+        extends SVGCoreAttributes<SVGFEImageElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute
+         */
+        externalResourcesRequired?: AttrBooleanString;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feimage-preserveaspectratio
+         */
+        preserveAspectRatio?: AttrPreserveAspectRatio;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feimage-crossorigin
+         */
+        crossorigin?: AttrMissing | "anonymous" | "use-credentials";
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-femerge
+       */
+      interface FEMerge
+        extends SVGCoreAttributes<SVGFEMergeElement>,
+          SVGFilterPrimitiveAttributes {}
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-femergenode
+       */
+      interface FEMergeNode extends SVGCoreAttributes<SVGFEMergeNodeElement> {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-femorphology
+       */
+      interface FEMorphology extends SVGCoreAttributes<SVGFEMorphologyElement> {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feoffset
+       */
+      interface FEOffset
+        extends SVGCoreAttributes<SVGFEOffsetElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-femorphology-operator
+         */
+        operator?: AttrMissing | "erode" | "dilate";
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-femorphology-radius
+         */
+        radius?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fepointlight
+       */
+      interface FEPointLight extends SVGCoreAttributes<SVGFEPointLightElement> {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fepointlight-x
+         */
+        x?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fepointlight-y
+         */
+        y?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fepointlight-z
+         */
+        z?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fespecularlighting
+       */
+      interface FESpecularLighting
+        extends SVGCoreAttributes<SVGFESpecularLightingElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fespecularlighting-surfacescale
+         */
+        surfaceScale?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fespecularlighting-specularconstant
+         */
+        specularConstant?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fespecularlighting-specularexponent
+         */
+        specularExponent?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fespecularlighting-kernelunitlength
+         */
+        kernelUnitLength?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fespotlight
+       */
+      interface FESpotLight extends SVGCoreAttributes<SVGFESpotLightElement> {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fespotlight-x
+         */
+        x?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fespotlight-y
+         */
+        y?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fespotlight-z
+         */
+        z?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fespotlight-pointsatx
+         */
+        pointsAtX?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fespotlight-pointsaty
+         */
+        pointsAtY?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fespotlight-pointsatz
+         */
+        pointsAtZ?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fespotlight-specularexponent
+         */
+        specularExponent?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fespotlight-limitingconeangle
+         */
+        limitingConeAngle?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fetile
+       */
+      interface FETile
+        extends SVGCoreAttributes<SVGFETileElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
+         */
+        in?: AttrFEIn;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feturbulence
+       */
+      interface FETurbulence
+        extends SVGCoreAttributes<SVGFETurbulenceElement>,
+          SVGFilterPrimitiveAttributes {
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feturbulence-basefrequency
+         */
+        baseFrequency?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feturbulence-numoctaves
+         */
+        numOctaves?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feturbulence-seed
+         */
+        seed?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feturbulence-stitchtiles
+         */
+        stichTiles?: AttrMissing | "stitch" | "noStitch";
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feturbulence-type
+         */
+        type?: AttrMissing | "fractalNoise" | "turbulence";
+      }
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#elementdef-filter
+       */
+      interface Filter extends SVGCoreAttributes<SVGFilterElement> {
+        /**
+         * @see https://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute
+         */
+        externalResourcesRequired?: AttrBooleanString;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-x
+         */
+        x?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-y
+         */
+        y?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-width
+         */
+        width?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-height
+         */
+        height?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-filterunits
+         */
+        filterUnits?: AttrMissing | "userSpaceOnUse" | "objectBoundingBox";
+
+        /**
+         * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitiveunits
+         */
+        primitiveUnits?: AttrMissing | "userSpaceOnUse" | "objectBoundingBox";
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/embedded.html#ForeignObjectElement
+       */
+      interface ForeignObject
+        extends SVGCoreAttributes<SVGForeignObjectElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#XProperty
+         */
+        x?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#YProperty
+         */
+        y?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#Sizing
+         */
+        width?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#Sizing
+         */
+        height?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/struct.html#GElement
+       */
+      interface G
+        extends SVGCoreAttributes<SVGGElement>,
+          SVGConditionalProcessingAttributes {}
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/embedded.html#ImageElement
+       */
+      interface Image
+        extends SVGCoreAttributes<SVGImageElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/SVG2/coords.html#PreserveAspectRatioAttribute
+         */
+        preserveAspectRatio?: AttrPreserveAspectRatio;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/embedded.html#ImageElementHrefAttribute
+         */
+        href?: AttrString;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/embedded.html#ImageElementCrossoriginAttribute
+         */
+        crossorigin?: AttrMissing | "anonymous" | "use-credentials";
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#XProperty
+         */
+        x?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#YProperty
+         */
+        y?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#Sizing
+         */
+        width?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#Sizing
+         */
+        height?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/shapes.html#LineElement
+       */
+      interface Line
+        extends SVGCoreAttributes<SVGLineElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
+         */
+        pathLength?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/shapes.html#LineElementX1Attribute
+         */
+        x1?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/shapes.html#LineElementY1Attribute
+         */
+        y1?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/shapes.html#LineElementX2Attribute
+         */
+        x2?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/shapes.html#LineElementY2Attribute
+         */
+        y2?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/pservers.html#LinearGradientElement
+       */
+      interface LinearGradient
+        extends SVGCoreAttributes<SVGLinearGradientElement> {
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#LinearGradientElementX1Attribute
+         */
+        x1?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#LinearGradientElementY1Attribute
+         */
+        y1?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#LinearGradientElementX2Attribute
+         */
+        x2?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#LinearGradientElementY2Attribute
+         */
+        y2?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#LinearGradientElementGradientUnitsAttribute
+         */
+        gradientUnits?: AttrMissing | "userSpaceOnUse" | "objectBoundingBox";
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#LinearGradientElementGradientTransformAttribute
+         */
+        gradientTransform?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#LinearGradientElementSpreadMethodAttribute
+         */
+        spreadMethod?: AttrMissing | "pad" | "reflect" | "repeat";
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#LinearGradientElementHrefAttribute
+         */
+        href?: AttrString;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/painting.html#MarkerElement
+       */
+      interface Marker extends SVGCoreAttributes<SVGMarkerElement> {
+        /**
+         * @see https://www.w3.org/TR/SVG2/coords.html#ViewBoxAttribute
+         */
+        viewBox?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/coords.html#PreserveAspectRatioAttribute
+         */
+        preserveAspectRatio?: AttrPreserveAspectRatio;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/painting.html#MarkerElementRefXAttribute
+         */
+        refX?: AttrMissing | "left" | "center" | "right" | (string & {});
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/painting.html#MarkerElementRefYAttribute
+         */
+        refY?: AttrMissing | "left" | "center" | "right" | (string & {});
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/painting.html#MarkerUnitsAttribute
+         */
+        markerUnits?: AttrMissing | "strokeWidth" | "userSpaceOnUse";
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/painting.html#MarkerWidthAttribute
+         */
+        markerWidth?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/painting.html#MarkerHeightAttribute
+         */
+        markerHeight?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/painting.html#OrientAttribute
+         */
+        orient?:
+          | AttrMissing
+          | "auto"
+          | "auto-start-reverse"
+          | number
+          | (string & {});
+      }
+
+      /**
+       * @see https://www.w3.org/TR/css-masking-1/#elementdef-mask
+       */
+      interface Mask
+        extends SVGCoreAttributes<SVGMaskElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/css-masking-1/#element-attrdef-mask-x
+         */
+        x?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/css-masking-1/#element-attrdef-mask-y
+         */
+        y?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/css-masking-1/#element-attrdef-mask-width
+         */
+        width?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/css-masking-1/#element-attrdef-mask-height
+         */
+        height?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/css-masking-1/#element-attrdef-mask-maskunits
+         */
+        maskUnits?: AttrMissing | "userSpaceOnUse" | "objectBoundingBox";
+
+        /**
+         * @see https://www.w3.org/TR/css-masking-1/#element-attrdef-mask-maskcontentunits
+         */
+        maskContentUnits?: AttrMissing | "userSpaceOnUse" | "objectBoundingBox";
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/struct.html#MetadataElement
+       */
+      interface Metadata extends SVGCoreAttributes<SVGMetadataElement> {}
+
+      /**
+       * @see https://svgwg.org/specs/animations/#MPathElement
+       */
+      interface MPath
+        extends SVGCoreAttributes<SVGMPathElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://svgwg.org/specs/animations/#MPathElementHrefAttribute
+         */
+        href?: AttrString;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/paths.html#PathElement
+       */
+      interface Path
+        extends SVGCoreAttributes<SVGPathElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
+         */
+        pathLength?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/paths.html#DProperty
+         */
+        d?: AttrString;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/pservers.html#PatternElement
+       */
+      interface Pattern extends SVGCoreAttributes<SVGPatternElement> {
+        /**
+         * @see https://www.w3.org/TR/SVG2/coords.html#ViewBoxAttribute
+         */
+        viewBox?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/coords.html#PreserveAspectRatioAttribute
+         */
+        preserveAspectRatio?: AttrPreserveAspectRatio;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#PatternElementXAttribute
+         */
+        x?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#PatternElementYAttribute
+         */
+        y?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#PatternElementWidthAttribute
+         */
+        width?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#PatternElementHeightAttribute
+         */
+        height?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#PatternElementPatternUnitsAttribute
+         */
+        patternUnits?: AttrMissing | "userSpaceOnUse" | "objectBoundingBox";
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#PatternElementPatternContentUnitsAttribute
+         */
+        patternContentUnits?:
+          | AttrMissing
+          | "userSpaceOnUse"
+          | "objectBoundingBox";
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#PatternElementPatternTransformAttribute
+         */
+        patternTransform?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#PatternElementHrefAttribute
+         */
+        href?: AttrString;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/shapes.html#PolygonElement
+       */
+      interface Polygon
+        extends SVGCoreAttributes<SVGPolygonElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
+         */
+        pathLength?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/shapes.html#PolygonElementPointsAttribute
+         */
+        points?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/shapes.html#PolylineElement
+       */
+      interface Polyline
+        extends SVGCoreAttributes<SVGPolylineElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
+         */
+        pathLength?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/shapes.html#PolygonElementPointsAttribute
+         */
+        points?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/pservers.html#RadialGradientElement
+       */
+      interface RadialGradient
+        extends SVGCoreAttributes<SVGRadialGradientElement> {
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#RadialGradientElementCXAttribute
+         */
+        cx?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#RadialGradientElementCYAttribute
+         */
+        cy?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#RadialGradientElementRAttribute
+         */
+        r?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#RadialGradientElementFXAttribute
+         */
+        fx?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#RadialGradientElementFYAttribute
+         */
+        fy?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#RadialGradientElementFRAttribute
+         */
+        fr?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#RadialGradientElementGradientUnitsAttribute
+         */
+        gradientUnits?: AttrMissing | "userSpaceOnUse" | "objectBoundingBox";
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#RadialGradientElementGradientTransformAttribute
+         */
+        gradientTransform?: AttrString;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#RadialGradientElementSpreadMethodAttribute
+         */
+        spreadMethod?: AttrMissing | "pad" | "reflect" | "repeat";
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#RadialGradientElementHrefAttribute
+         */
+        href?: AttrString;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/shapes.html#RectElement
+       */
+      interface Rect
+        extends SVGCoreAttributes<SVGRectElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
+         */
+        pathLength?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#XProperty
+         */
+        x?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#YProperty
+         */
+        y?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#Sizing
+         */
+        width?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#Sizing
+         */
+        height?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#RxProperty
+         */
+        rx?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#RyProperty
+         */
+        ry?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://svgwg.org/specs/animations/#SetElement
+       */
+      interface Set
+        extends SVGCoreAttributes<SVGSetElement>,
+          SVGAnimationTargetElementAttributes,
+          SVGAnimationAttributeTargetAttributes,
+          SVGAnimationTimingAttributes,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://svgwg.org/specs/animations/#SetElementToAttribute
+         */
+        to?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/pservers.html#StopElement
+       */
+      interface Stop extends SVGCoreAttributes<SVGStopElement> {
+        /**
+         * @see https://www.w3.org/TR/SVG2/pservers.html#StopElementOffsetAttribute
+         */
+        offset?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/struct.html#SVGElement
+       */
+      interface SVG
+        extends SVGCoreAttributes<SVGSVGElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * A list of four numbers `<min-x>`, `<min-y>`, `<width>` and `<height>`, separated by whitespace and/or a comma
+         * @see https://www.w3.org/TR/SVG2/coords.html#ViewBoxAttribute
+         */
+        viewBox?: AttrString;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/coords.html#PreserveAspectRatioAttribute
+         */
+        preserveAspectRatio?: AttrPreserveAspectRatio;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/interact.html#ZoomAndPanAttribute
+         */
+        zoomAndPan?: AttrMissing | "disable" | "magnify";
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/coords.html#TransformProperty
+         */
+        transform?: AttrString;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#XProperty
+         */
+        x?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#YProperty
+         */
+        y?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#Sizing
+         */
+        width?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#Sizing
+         */
+        height?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/struct.html#SwitchElement
+       */
+      interface Switch
+        extends SVGCoreAttributes<SVGSwitchElement>,
+          SVGConditionalProcessingAttributes {}
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/struct.html#SymbolElement
+       */
+      interface Symbol extends SVGCoreAttributes<SVGSymbolElement> {
+        /**
+         * @see https://www.w3.org/TR/SVG2/coords.html#PreserveAspectRatioAttribute
+         */
+        preserveAspectRatio?: AttrPreserveAspectRatio;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/coords.html#ViewBoxAttribute
+         */
+        viewBox?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/struct.html#SymbolElementRefXAttribute
+         */
+        refX?:
+          | AttrMissing
+          | "left"
+          | "center"
+          | "right"
+          | number
+          | (string & {});
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/struct.html#SymbolElementRefYAttribute
+         */
+        refY?:
+          | AttrMissing
+          | "top"
+          | "center"
+          | "bottom"
+          | number
+          | (string & {});
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#XProperty
+         */
+        x?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#YProperty
+         */
+        y?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#Sizing
+         */
+        width?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#Sizing
+         */
+        height?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/text.html#TextElement
+       */
+      interface Text
+        extends SVGCoreAttributes<SVGTextElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementLengthAdjustAttribute
+         */
+        lengthAdjust?: AttrMissing | "spacing" | "spacingAndGlyphs";
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementXAttribute
+         */
+        x?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementYAttribute
+         */
+        y?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementDXAttribute
+         */
+        dx?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementDYAttribute
+         */
+        dy?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementRotateAttribute
+         */
+        rotate?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementTextLengthAttribute
+         */
+        textLength?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/text.html#TextPathElement
+       */
+      interface TextPath
+        extends SVGCoreAttributes<SVGTextPathElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementLengthAdjustAttribute
+         */
+        lengthAdjust?: AttrMissing | "spacing" | "spacingAndGlyphs";
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementTextLengthAttribute
+         */
+        textLength?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextPathElementPathAttribute
+         */
+        path?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextPathElementHrefAttribute
+         */
+        href?: AttrString;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextPathElementStartOffsetAttribute
+         */
+        startOffset?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextPathElementMethodAttribute
+         */
+        method?: AttrMissing | "align" | "stretch";
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextPathElementSpacingAttribute
+         */
+        spacing?: AttrMissing | "auto" | "exact";
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextPathElementSideAttribute
+         */
+        side?: AttrMissing | "left" | "right";
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/struct.html#TitleElement
+       */
+      interface Title extends SVGCoreAttributes<SVGTitleElement> {}
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/text.html#TextElement
+       */
+      interface TSpan
+        extends SVGCoreAttributes<SVGTSpanElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementLengthAdjustAttribute
+         */
+        lengthAdjust?: AttrMissing | "spacing" | "spacingAndGlyphs";
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementXAttribute
+         */
+        x?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementYAttribute
+         */
+        y?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementDXAttribute
+         */
+        dx?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementDYAttribute
+         */
+        dy?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementRotateAttribute
+         */
+        rotate?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/text.html#TextElementTextLengthAttribute
+         */
+        textLength?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/struct.html#UseElement
+       */
+      interface Use
+        extends SVGCoreAttributes<SVGUseElement>,
+          SVGConditionalProcessingAttributes {
+        /**
+         * @see https://www.w3.org/TR/SVG2/struct.html#UseElementHrefAttribute
+         */
+        href?: AttrString;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#XProperty
+         */
+        x?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#YProperty
+         */
+        y?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#Sizing
+         */
+        width?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/geometry.html#Sizing
+         */
+        height?: AttrStringOrNumber;
+      }
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/linking.html#ViewElement
+       */
+      interface View extends SVGCoreAttributes<SVGViewElement> {
+        /**
+         * @see https://www.w3.org/TR/SVG2/coords.html#ViewBoxAttribute
+         */
+        viewBox?: AttrStringOrNumber;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/coords.html#PreserveAspectRatioAttribute
+         */
+        preserveAspectRatio?: AttrPreserveAspectRatio;
+
+        /**
+         * @see https://www.w3.org/TR/SVG2/interact.html#ZoomAndPanAttribute
+         */
+        zoomAndPan?: AttrMissing | "disable" | "magnify";
+      }
+    }
+
     interface Directives {
       /**
        * Used to uniquely identify a tag within a template in order
@@ -2428,7 +4134,8 @@ declare global {
     }
 
     interface HTMLAttributes<T extends Element = Element>
-      extends AriaAttributes {
+      extends AriaAttributes,
+        EventAttributes<T> {
       /**
        * Specifies a keyboard shortcut to activate or focus on an element.
        * @see https://html.spec.whatwg.org/multipage/interaction.html#the-accesskey-attribute
@@ -2651,6 +4358,350 @@ declare global {
        */
       content?: Marko.Body<[], void>;
 
+      /**
+       * data-* global attributes form a class of attributes called custom data attributes, that allow proprietary
+       * information to be exchanged between the HTML and its DOM representation by scripts.
+       * @see https://html.spec.whatwg.org/multipage/dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes
+       */
+      [data: `data-${string}`]: AttrMissing | string | number | boolean;
+    }
+
+    interface SVGCoreAttributes<T extends Element = Element>
+      extends AriaAttributes,
+        EventAttributes,
+        SVGPresentationAttributes {
+      /**
+       * @see https://www.w3.org/TR/SVG2/struct.html#IDAttribute
+       */
+      id?: AttrString;
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/struct.html#SVGElementTabindexAttribute
+       */
+      tabindex?: AttrStringOrNumber;
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/struct.html#LangAttribute
+       */
+      lang?: string;
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/struct.html#XMLSpaceAttribute
+       * @deprecated New content should use the white-space property instead
+       */
+      "xml:space"?: AttrMissing | "default" | "preserve";
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/styling.html#ClassAttribute
+       */
+      class?: AttrClass;
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/styling.html#StyleAttribute
+       */
+      style?: AttrStyle;
+
+      /**
+       * Provide body content for the tag as a Marko.Body.
+       * @see Marko.Body
+       */
+      content?: Marko.Body<[], void>;
+
+      /**
+       * @see https://www.w3.org/TR/SVG2/struct.html#DataAttributes
+       */
+      [data: `data-${string}`]: AttrMissing | string | number | boolean;
+    }
+
+    /**
+     * The SVG spec isn't _exactly_ the same as the CSS spec so
+     * some of these properties might have extra or incorrect values.
+     * If you need something that's missing, please submit a PR
+     */
+    interface SVGPresentationAttributes {
+      "alignment-baseline"?: AttrMissing | csstype.Property.AlignmentBaseline;
+      "baseline-shift"?: AttrMissing | csstype.Property.BaselineShift | number;
+      clip?: AttrMissing | csstype.Property.Clip | number;
+      "clip-path"?: AttrMissing | csstype.Property.ClipPath;
+      "clip-rule"?: AttrMissing | csstype.Property.ClipRule;
+      color?: AttrMissing | csstype.Property.Color;
+      "color-interpolation"?: AttrMissing | csstype.Property.ColorInterpolation;
+      "color-interpolation-filters"?:
+        | AttrMissing
+        | csstype.Property.ColorInterpolation;
+      "color-rendering"?: AttrMissing | csstype.Property.ColorRendering;
+      cursor?: AttrMissing | csstype.Property.Cursor;
+      direction?: AttrMissing | csstype.Property.Direction;
+      display?: AttrMissing | csstype.Property.Display;
+      "dominant-baseline"?:
+        | AttrMissing
+        | csstype.Property.DominantBaseline
+        | number;
+      /**
+       * @see https://www.w3.org/TR/SVG11/filters.html#EnableBackgroundProperty
+       */
+      "enable-background"?: AttrMissing | "accumulate" | "new" | (string & {});
+      fill?: AttrMissing | csstype.Property.Fill;
+      "fill-opacity"?: AttrMissing | csstype.Property.FillOpacity | number;
+      "fill-rule"?: AttrMissing | csstype.Property.FillRule;
+      filter?: AttrMissing | csstype.Property.Filter;
+      "flood-color"?: AttrMissing | csstype.Property.FloodColor;
+      "flood-opacity"?: AttrMissing | csstype.Property.FloodOpacity | number;
+      font?: AttrMissing | csstype.Property.Font;
+      "font-family"?: AttrMissing | csstype.Property.FontFamily;
+      "font-size"?: AttrMissing | csstype.Property.FontSize | number;
+      "font-size-adjust"?:
+        | AttrMissing
+        | csstype.Property.FontSizeAdjust
+        | number;
+      "font-stretch"?: AttrMissing | csstype.Property.FontStretch;
+      "font-style"?: AttrMissing | csstype.Property.FontStyle;
+      "font-variant"?: AttrMissing | csstype.Property.FontVariant;
+      "font-weight"?: AttrMissing | csstype.Property.FontWeight | number;
+      "glyph-orientation-horizontal"?:
+        | AttrMissing
+        | csstype.Property.GlyphOrientationVertical;
+      "glyph-orientation-vertical"?:
+        | AttrMissing
+        | csstype.Property.GlyphOrientationVertical;
+      "image-rendering"?: AttrMissing | csstype.Property.ImageRendering;
+      isolation?: AttrMissing | csstype.Property.Isolation;
+      kerning?: AttrMissing | csstype.Property.FontKerning | number;
+      "letter-spacing"?: AttrMissing | csstype.Property.LetterSpacing | number;
+      "lighting-color"?: AttrMissing | csstype.Property.LightingColor;
+      marker?: AttrMissing | csstype.Property.Marker;
+      "marker-end"?: AttrMissing | csstype.Property.MarkerEnd;
+      "marker-mid"?: AttrMissing | csstype.Property.MarkerMid;
+      "marker-start"?: AttrMissing | csstype.Property.MarkerStart;
+      mask?: AttrMissing | csstype.Property.Mask;
+      opacity?: AttrMissing | csstype.Property.Opacity | number;
+      overflow?: AttrMissing | csstype.Property.Overflow;
+      "pointer-events"?: AttrMissing | csstype.Property.PointerEvents;
+      "shape-rendering"?: AttrMissing | csstype.Property.ShapeRendering;
+      "stop-color"?: AttrMissing | csstype.Property.StopColor;
+      "stop-opacity"?: AttrMissing | csstype.Property.StopOpacity | number;
+      stroke?: AttrMissing | csstype.Property.Stroke;
+      "stroke-dasharray"?:
+        | AttrMissing
+        | csstype.Property.StrokeDasharray
+        | number;
+      "stroke-dashoffset"?:
+        | AttrMissing
+        | csstype.Property.StrokeDashoffset
+        | number;
+      "stroke-linecap"?: AttrMissing | csstype.Property.StrokeLinecap;
+      "stroke-linejoin"?: AttrMissing | csstype.Property.StrokeLinejoin;
+      "stroke-miterlimit"?:
+        | AttrMissing
+        | csstype.Property.StrokeMiterlimit
+        | number;
+      "stroke-opacity"?: AttrMissing | csstype.Property.StrokeOpacity | number;
+      "stroke-width"?: AttrMissing | csstype.Property.StrokeWidth | number;
+      "text-anchor"?: AttrMissing | csstype.Property.TextAnchor;
+      "text-decoration"?: AttrMissing | csstype.Property.TextDecoration;
+      "text-rendering"?: AttrMissing | csstype.Property.TextRendering;
+      "unicode-bidi"?: AttrMissing | csstype.Property.UnicodeBidi;
+      visibility?: AttrMissing | csstype.Property.Visibility;
+      "word-spacing"?: AttrMissing | csstype.Property.WordSpacing | number;
+      "writing-mode"?: AttrMissing | csstype.Property.WritingMode;
+    }
+
+    interface SVGTransferFunctionElementAttributes {
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-type
+       */
+      type?:
+        | AttrMissing
+        | "identity"
+        | "table"
+        | "discrete"
+        | "linear"
+        | "gamma";
+
+      /**
+       * List of numbers
+       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-tablevalues
+       */
+      tableValues?: AttrStringOrNumber;
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-slope
+       */
+      slope?: AttrStringOrNumber;
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-intercept
+       */
+      intercept?: AttrStringOrNumber;
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-amplitude
+       */
+      amplitude?: AttrStringOrNumber;
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-exponent
+       */
+      exponent?: AttrStringOrNumber;
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-offset
+       */
+      offset?: AttrStringOrNumber;
+    }
+
+    interface SVGAnimationAdditionAttributes {
+      /**
+       * @see https://svgwg.org/specs/animations/#AdditiveAttribute
+       */
+      additive?: AttrMissing | "replace" | "sum";
+
+      /**
+       * @see https://svgwg.org/specs/animations/#AccumulateAttribute
+       */
+      accumulate?: AttrMissing | "none" | "sum";
+    }
+
+    interface SVGAnimationTargetElementAttributes {
+      /**
+       * @see https://svgwg.org/specs/animations/#HrefAttribute
+       */
+      href?: AttrString;
+    }
+
+    interface SVGAnimationAttributeTargetAttributes {
+      /**
+       * @see https://svgwg.org/specs/animations/#AttributeNameAttribute
+       */
+      attributeName?: AttrString;
+    }
+
+    interface SVGAnimationTimingAttributes {
+      /**
+       * A semicolon separated list of values
+       * @see https://svgwg.org/specs/animations/#BeginAttribute
+       */
+      begin?: AttrString;
+
+      /**
+       * @see https://svgwg.org/specs/animations/#DurAttribute
+       */
+      dur?: AttrMissing | "media" | "indefinite" | number | (string & {});
+
+      /**
+       * A semicolon separated list of values
+       * @see https://svgwg.org/specs/animations/#EndAttribute
+       */
+      end?: AttrString;
+
+      /**
+       * @see https://svgwg.org/specs/animations/#MinAttribute
+       */
+      min?: AttrMissing | "media" | number | (string & {});
+
+      /**
+       * @see https://svgwg.org/specs/animations/#MaxAttribute
+       */
+      max?: AttrMissing | "media" | number | (string & {});
+
+      /**
+       * @see https://svgwg.org/specs/animations/#RestartAttribute
+       */
+      restart?: AttrMissing | "always" | "whenNotActive" | "never";
+
+      /**
+       * @see https://svgwg.org/specs/animations/#RepeatCountAttribute
+       */
+      repeatCount?: AttrMissing | AttrNumber | "indefinite";
+
+      /**
+       * @see https://svgwg.org/specs/animations/#RepeatDurAttribute
+       */
+      repeatDur?: AttrMissing | AttrNumber | "indefinite";
+
+      /**
+       * @see https://svgwg.org/specs/animations/#FillAttribute
+       */
+      fill?: AttrMissing | "freeze" | "remove";
+    }
+
+    interface SVGAnimationValueAttributes {
+      /**
+       * @see https://svgwg.org/specs/animations/#CalcModeAttribute
+       */
+      calcMode?: AttrMissing | "discrete" | "linear" | "paced" | "spline";
+
+      /**
+       * A semicolon-separated list of values
+       * @see https://svgwg.org/specs/animations/#ValuesAttribute
+       */
+      values?: AttrString;
+
+      /**
+       * A semicolon-separated list of numbers
+       * @see https://svgwg.org/specs/animations/#KeyTimesAttribute
+       */
+      keyTimes?: AttrStringOrNumber;
+
+      /**
+       * A semicolon-separated list of Bézier control points
+       * @see https://svgwg.org/specs/animations/#KeySplinesAttribute
+       */
+      keySplines?: AttrString;
+
+      /**
+       * @see https://svgwg.org/specs/animations/#FromAttribute
+       */
+      from?: AttrStringOrNumber;
+
+      /**
+       * @see https://svgwg.org/specs/animations/#FromAttribute
+       */
+      to?: AttrStringOrNumber;
+
+      /**
+       * @see https://svgwg.org/specs/animations/#FromAttribute
+       */
+      by?: AttrStringOrNumber;
+    }
+
+    interface SVGConditionalProcessingAttributes {
+      /**
+       * Set of space-separated tokens
+       * @see https://www.w3.org/TR/SVG2/struct.html#RequiredExtensionsAttribute
+       */
+      requiredExtensions?: AttrString;
+
+      /**
+       * Set of comma-separated tokens
+       * @see https://www.w3.org/TR/SVG2/struct.html#SystemLanguageAttribute
+       */
+      systemLanguage?: AttrString;
+    }
+
+    interface SVGFilterPrimitiveAttributes {
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-x
+       */
+      x?: AttrStringOrNumber;
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-y
+       */
+      y?: AttrStringOrNumber;
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-height
+       */
+      height?: AttrStringOrNumber;
+
+      /**
+       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-result
+       */
+      result?: AttrString;
+    }
+
+    interface EventAttributes<T extends Element> {
       /**
        * Fired when resource was not fully loaded, but not as the result of an error.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-abort
@@ -3441,13 +5492,6 @@ declare global {
       onWheel?: AttrEventHandler<WheelEvent, T>;
       "on-wheel"?: this["onWheel"];
       onwheel?: AttrString;
-
-      /**
-       * data-* global attributes form a class of attributes called custom data attributes, that allow proprietary
-       * information to be exchanged between the HTML and its DOM representation by scripts.
-       * @see https://html.spec.whatwg.org/multipage/dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes
-       */
-      [data: `data-${string}`]: AttrMissing | string | number | boolean;
     }
 
     interface AriaAttributes {
@@ -3620,7 +5664,7 @@ declare global {
        * Defines the hierarchical level of an element within a structure.
        * @see https://www.w3.org/TR/wai-aria-1.1/#aria-level
        */
-      "aria-level"?: AttrMissing | number | string;
+      "aria-level"?: AttrString;
       /**
        * Indicates that an element will be updated, and describes the types of updates the user agents, assistive technologies,
        * and user can expect from the live region.
@@ -3932,4 +5976,17 @@ type AttrAutoComplete =
   | "mobile"
   | "fax"
   | "pager"
+  | (string & {});
+type AttrPreserveAspectRatio =
+  | AttrMissing
+  | `${"none" | `x${"Min" | "Mid" | "Max"}Y${"Min" | "Mid" | "Max"}`}${" meet" | " slice" | ""}`;
+
+type AttrFEIn =
+  | AttrMissing
+  | "SourceGraphic"
+  | "SourceAlpha"
+  | "BackgroundImage"
+  | "BackgroundAlpha"
+  | "FillPaint"
+  | "StrokePaint"
   | (string & {});
