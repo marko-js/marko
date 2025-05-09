@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.30
+
+### Patch Changes
+
+- [#2684](https://github.com/marko-js/marko/pull/2684) [`ef5960b`](https://github.com/marko-js/marko/commit/ef5960bbcca467627eaaaa501e0ce0b23211e590) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add types for SVG tags
+
 ## 5.37.29
 
 ### Patch Changes
