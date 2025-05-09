@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.18
+
+### Patch Changes
+
+- [#2684](https://github.com/marko-js/marko/pull/2684) [`ef5960b`](https://github.com/marko-js/marko/commit/ef5960bbcca467627eaaaa501e0ce0b23211e590) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add types for SVG tags
+
+- [#2685](https://github.com/marko-js/marko/pull/2685) [`00828b0`](https://github.com/marko-js/marko/commit/00828b092e2279f0bc48183b4b6eb8c8bda81890) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with html-style and html-script not being resumed when they only contain stateful placeholder content.
+
 ## 6.0.17
 
 ### Patch Changes
