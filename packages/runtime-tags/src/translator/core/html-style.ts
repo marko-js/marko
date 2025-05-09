@@ -84,7 +84,7 @@ export default {
     const seen: Record<string, t.MarkoAttribute> = {};
     const { attributes } = tag.node;
     let spreadReferenceNodes: t.Node[] | undefined;
-    let attrExprExtras: Opt<t.NodeExtra>;
+    let exprExtras: Opt<t.NodeExtra>;
     let hasEventHandlers = false;
     let hasDynamicAttributes = false;
 
@@ -118,7 +118,7 @@ export default {
       } else if (t.isMarkoSpreadAttribute(attr)) {
         spreadReferenceNodes = [attr.value];
       } else {
-        attrExprExtras = push(attrExprExtras, valueExtra);
+        exprExtras = push(exprExtras, valueExtra);
       }
     }
 
@@ -155,11 +155,16 @@ export default {
         mergeReferences(tagSection, tag.node, spreadReferenceNodes);
       }
 
-      if (bodyPlaceholderNodes.length > 1) {
-        mergeReferences(
-          tagSection,
-          bodyPlaceholderNodes[0],
-          bodyPlaceholderNodes.slice(1),
+      if (hasBodyPlaceholders) {
+        exprExtras = push(
+          exprExtras,
+          bodyPlaceholderNodes.length === 1
+            ? (bodyPlaceholderNodes[0].extra ??= {})
+            : mergeReferences(
+                tagSection,
+                bodyPlaceholderNodes[0],
+                bodyPlaceholderNodes.slice(1),
+              ),
         );
       }
 
@@ -192,7 +197,7 @@ export default {
       addBindingSerializeReasonExpr(
         tagSection,
         nodeBinding,
-        push(attrExprExtras, tagExtra),
+        push(exprExtras, tagExtra),
       );
     }
   },
