@@ -4476,6 +4476,7 @@ declare global {
       mask?: AttrMissing | csstype.Property.Mask;
       opacity?: AttrMissing | csstype.Property.Opacity | number;
       overflow?: AttrMissing | csstype.Property.Overflow;
+      "paint-order"?: AttrMissing | csstype.Property.PaintOrder;
       "pointer-events"?: AttrMissing | csstype.Property.PointerEvents;
       "shape-rendering"?: AttrMissing | csstype.Property.ShapeRendering;
       "stop-color"?: AttrMissing | csstype.Property.StopColor;
@@ -4500,7 +4501,9 @@ declare global {
       "text-anchor"?: AttrMissing | csstype.Property.TextAnchor;
       "text-decoration"?: AttrMissing | csstype.Property.TextDecoration;
       "text-rendering"?: AttrMissing | csstype.Property.TextRendering;
+      transform?: AttrMissing | csstype.Property.Transform;
       "unicode-bidi"?: AttrMissing | csstype.Property.UnicodeBidi;
+      "vector-effect"?: AttrMissing | csstype.Property.VectorEffect;
       visibility?: AttrMissing | csstype.Property.Visibility;
       "word-spacing"?: AttrMissing | csstype.Property.WordSpacing | number;
       "writing-mode"?: AttrMissing | csstype.Property.WritingMode;
