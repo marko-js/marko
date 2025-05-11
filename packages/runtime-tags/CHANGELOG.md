@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.19
+
+### Patch Changes
+
+- [#2687](https://github.com/marko-js/marko/pull/2687) [`219eae8`](https://github.com/marko-js/marko/commit/219eae83665709ae756304adedeed31d2d241c89) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Correct SVG types
+
 ## 6.0.18
 
 ### Patch Changes
