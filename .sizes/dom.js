@@ -1,4 +1,4 @@
-// size: 19073 (min) 7240 (brotli)
+// size: 19069 (min) 7258 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {

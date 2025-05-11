@@ -2654,11 +2654,6 @@ declare global {
         externalResourcesRequired?: AttrBooleanString;
 
         /**
-         * @see https://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#TransformAttribute
-         */
-        transform?: AttrString;
-
-        /**
          * @see https://www.w3.org/TR/css-masking-1/#element-attrdef-clippath-clippathunits
          */
         clipPathUnits?: AttrMissing | "userSpaceOnUse" | "objectBoundingBox";
@@ -3821,11 +3816,6 @@ declare global {
          * @see https://www.w3.org/TR/SVG2/interact.html#ZoomAndPanAttribute
          */
         zoomAndPan?: AttrMissing | "disable" | "magnify";
-
-        /**
-         * @see https://www.w3.org/TR/SVG2/coords.html#TransformProperty
-         */
-        transform?: AttrString;
 
         /**
          * @see https://www.w3.org/TR/SVG2/geometry.html#XProperty
