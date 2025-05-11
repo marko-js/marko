@@ -2654,11 +2654,6 @@ declare global {
         externalResourcesRequired?: AttrBooleanString;
 
         /**
-         * @see https://www.w3.org/TR/2011/REC-SVG11-20110816/coords.html#TransformAttribute
-         */
-        transform?: AttrString;
-
-        /**
          * @see https://www.w3.org/TR/css-masking-1/#element-attrdef-clippath-clippathunits
          */
         clipPathUnits?: AttrMissing | "userSpaceOnUse" | "objectBoundingBox";
@@ -3823,11 +3818,6 @@ declare global {
         zoomAndPan?: AttrMissing | "disable" | "magnify";
 
         /**
-         * @see https://www.w3.org/TR/SVG2/coords.html#TransformProperty
-         */
-        transform?: AttrString;
-
-        /**
          * @see https://www.w3.org/TR/SVG2/geometry.html#XProperty
          */
         x?: AttrStringOrNumber;
@@ -4476,6 +4466,7 @@ declare global {
       mask?: AttrMissing | csstype.Property.Mask;
       opacity?: AttrMissing | csstype.Property.Opacity | number;
       overflow?: AttrMissing | csstype.Property.Overflow;
+      "paint-order"?: AttrMissing | csstype.Property.PaintOrder;
       "pointer-events"?: AttrMissing | csstype.Property.PointerEvents;
       "shape-rendering"?: AttrMissing | csstype.Property.ShapeRendering;
       "stop-color"?: AttrMissing | csstype.Property.StopColor;
@@ -4500,7 +4491,9 @@ declare global {
       "text-anchor"?: AttrMissing | csstype.Property.TextAnchor;
       "text-decoration"?: AttrMissing | csstype.Property.TextDecoration;
       "text-rendering"?: AttrMissing | csstype.Property.TextRendering;
+      transform?: AttrMissing | csstype.Property.Transform;
       "unicode-bidi"?: AttrMissing | csstype.Property.UnicodeBidi;
+      "vector-effect"?: AttrMissing | csstype.Property.VectorEffect;
       visibility?: AttrMissing | csstype.Property.Visibility;
       "word-spacing"?: AttrMissing | csstype.Property.WordSpacing | number;
       "writing-mode"?: AttrMissing | csstype.Property.WritingMode;
