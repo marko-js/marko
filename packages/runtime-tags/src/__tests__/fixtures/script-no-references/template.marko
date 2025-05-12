@@ -1,0 +1,6 @@
+<div#foo/>
+<script>
+  const el = document.getElementById("foo")!;
+  el.innerHTML = "foo";
+  $signal.onabort = () => el.innerHTML = "";
+</script>
