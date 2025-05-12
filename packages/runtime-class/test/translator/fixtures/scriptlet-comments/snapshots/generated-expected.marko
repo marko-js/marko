@@ -1,0 +1,22 @@
+static console.log("hello");
+static {
+  console.log("world"); // after
+}
+static {
+  /** before */console.log("again");
+}
+$ console.log("hello");
+$ {
+  console.log("world"); // after
+}
+$ {
+  /** before */console.log("again");
+}
+static {
+  // We
+  // Got
+  // COMMENTS
+  if (typeof window === "object") {
+    console.log(window);
+  }
+}

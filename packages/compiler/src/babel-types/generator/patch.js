@@ -282,7 +282,14 @@ function expressionCouldHaveUnenclosedWhitespace(node) {
   }
 }
 
+/**
+ * @param {import("@marko/compiler").types.Expression} node
+ */
 function statementCouldHaveUnenclosedNewline(node) {
+  if (node.leadingComments?.length || node.trailingComments?.length) {
+    return true;
+  }
+
   switch (node.type) {
     case "VariableDeclaration":
       return node.declarations.length > 1;
