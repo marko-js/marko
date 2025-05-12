@@ -1,5 +1,16 @@
 # @marko/runtime-tags
 
+## 6.0.20
+
+### Patch Changes
+
+- [#2691](https://github.com/marko-js/marko/pull/2691) [`0758ae7`](https://github.com/marko-js/marko/commit/0758ae72e3a3da9fdf1dca37001aa6e8479655f9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where scriptlets with comments were being printed without brackets when printing the marko ast.
+
+- [#2689](https://github.com/marko-js/marko/pull/2689) [`7185a53`](https://github.com/marko-js/marko/commit/7185a537b45c848706f091c3301f831e9da16589) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Lazily create scopes for effects that run without referencing anything from scope (scope not serialized).
+
+- Updated dependencies [[`0758ae7`](https://github.com/marko-js/marko/commit/0758ae72e3a3da9fdf1dca37001aa6e8479655f9)]:
+  - @marko/compiler@5.39.20
+
 ## 6.0.19
 
 ### Patch Changes
