@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.37.31
+
+### Patch Changes
+
+- [#2691](https://github.com/marko-js/marko/pull/2691) [`0758ae7`](https://github.com/marko-js/marko/commit/0758ae72e3a3da9fdf1dca37001aa6e8479655f9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where scriptlets with comments were being printed without brackets when printing the marko ast.
+
+- Updated dependencies [[`0758ae7`](https://github.com/marko-js/marko/commit/0758ae72e3a3da9fdf1dca37001aa6e8479655f9)]:
+  - @marko/compiler@5.39.20
+
 ## 5.37.30
 
 ### Patch Changes
