@@ -212,7 +212,9 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                 lastEffect = serialized;
               } else if (typeof serialized === "number") {
                 (registeredValues[lastEffect!] as any)(
-                  scopeLookup[serialized],
+                  (scopeLookup[serialized] ||= {
+                    ___id: scopeId,
+                  } as Scope),
                   scopeLookup[serialized],
                 );
               } else {
