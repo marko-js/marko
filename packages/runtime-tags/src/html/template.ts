@@ -284,7 +284,9 @@ class ServerRendered implements RenderedTemplate {
     const head = this.#head;
     this.#head = null;
     if (!head) throw new Error("Cannot read from a consumed render result");
-    if (!head.boundary.done) throw new Error("Cannot fork in sync mode");
+    const { boundary } = head;
+    if (!boundary.done) throw new Error("Cannot fork in sync mode");
+    if (boundary.signal.aborted) throw boundary.signal.reason;
     return head.consume().flushHTML();
   }
 }
