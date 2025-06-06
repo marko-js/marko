@@ -1,5 +1,18 @@
 # @marko/runtime-tags
 
+## 6.0.21
+
+### Patch Changes
+
+- [#2693](https://github.com/marko-js/marko/pull/2693) [`9f99426`](https://github.com/marko-js/marko/commit/9f99426bf6389d7eebe28a70dcc81405772fda5a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Prefer namespace imports for inline css modules.
+
+- [#2696](https://github.com/marko-js/marko/pull/2696) [`eefa829`](https://github.com/marko-js/marko/commit/eefa829038b5bdd6edbbf95cef61e152e91ca9ec) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve internal module loading api. Ensure all taglib requires happen relative to project dir.
+
+- [#2692](https://github.com/marko-js/marko/pull/2692) [`c97be4e`](https://github.com/marko-js/marko/commit/c97be4e1476266ee4f4b43533e2a39f47b8ed710) Thanks [@paperclover](https://github.com/paperclover)! - Ensure errors are rethrown when rendering sync in SSR via `.toString`
+
+- Updated dependencies [[`eefa829`](https://github.com/marko-js/marko/commit/eefa829038b5bdd6edbbf95cef61e152e91ca9ec)]:
+  - @marko/compiler@5.39.21
+
 ## 6.0.20
 
 ### Patch Changes

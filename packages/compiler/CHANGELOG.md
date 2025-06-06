@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.21
+
+### Patch Changes
+
+- [#2696](https://github.com/marko-js/marko/pull/2696) [`eefa829`](https://github.com/marko-js/marko/commit/eefa829038b5bdd6edbbf95cef61e152e91ca9ec) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve internal module loading api. Ensure all taglib requires happen relative to project dir.
+
 ## 5.39.20
 
 ### Patch Changes
