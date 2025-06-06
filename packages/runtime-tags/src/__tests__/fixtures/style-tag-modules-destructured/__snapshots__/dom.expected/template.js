@@ -1,6 +1,6 @@
 export const $template = "<div>Hello</div>";
 export const $walks = /* get, over(1) */" b";
-import _style from "virtual:./template.marko.module.css \n  .content {\n    color: green;\n  }\n";
+import * as _style from "virtual:./template.marko.module.css \n  .content {\n    color: green;\n  }\n";
 const {
   content
 } = _style;

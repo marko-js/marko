@@ -6,7 +6,7 @@ import {
   getEnd,
   getProgram,
   getStart,
-  importDefault,
+  importStar,
   type Tag,
 } from "@marko/compiler/babel-utils";
 import MagicString, { type SourceMap } from "magic-string";
@@ -118,7 +118,7 @@ export default {
       } else if (t.isIdentifier(node.var)) {
         getProgram().node.body.push(
           t.importDeclaration(
-            [t.importDefaultSpecifier(node.var)],
+            [t.importNamespaceSpecifier(node.var)],
             t.stringLiteral(importPath),
           ),
         );
@@ -127,7 +127,7 @@ export default {
           t.variableDeclaration("const", [
             t.variableDeclarator(
               node.var,
-              importDefault(file, importPath, "style"),
+              importStar(file, importPath, "style"),
             ),
           ]),
         );
