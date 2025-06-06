@@ -1,11 +1,11 @@
 import markoModules from "../../modules";
-import config from "../config";
 const cache = {};
 
-export default function (requested = config.translator) {
+export default function (requested) {
   if (typeof requested === "string") {
     return (
-      cache[requested] || (cache[requested] = markoModules.require(requested))
+      cache[requested] ||
+      (cache[requested] = markoModules.require(markoModules.resolve(requested)))
     );
   }
 

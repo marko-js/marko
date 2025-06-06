@@ -1,8 +1,8 @@
 import { types as t } from "@marko/compiler";
+import markoModules from "@marko/compiler/modules";
 import { createHash } from "crypto";
 import { getRootDir } from "lasso-package-root";
 import { basename, dirname, join, relative, resolve } from "path";
-import resolveFrom from "resolve-from";
 
 import { diagnosticWarn } from "./diagnostics";
 import { resolveRelativePath } from "./imports";
@@ -281,7 +281,7 @@ export function loadFileForImport(file, request) {
     const filename =
       relativeRequest[0] === "."
         ? resolve(file.opts.filename, "..", relativeRequest)
-        : resolveFrom(dirname(file.opts.filename), relativeRequest);
+        : markoModules.resolve(relativeRequest, dirname(file.opts.filename));
     const markoMeta = file.metadata.marko;
     const { analyzedTags } = markoMeta;
     if (analyzedTags) {

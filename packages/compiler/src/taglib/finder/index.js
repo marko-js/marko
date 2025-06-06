@@ -1,7 +1,7 @@
 "use strict";
 var nodePath = require("path");
 var lassoPackageRoot = require("lasso-package-root");
-var resolveFrom = require("resolve-from").silent;
+var markoModules = require("../../../modules");
 var taglibConfig = require("../config");
 var taglibLoader = require("../loader");
 var findCache = {};
@@ -119,9 +119,9 @@ function find(dirname, registeredTaglibs, tagDiscoveryDirs) {
     // Now look for `marko.json` from installed packages
     getAllDependencyNames(rootPkg).forEach((name) => {
       if (!excludedPackages[name]) {
-        let taglibPath = resolveFrom(
-          rootPkg.__dirname,
+        let taglibPath = markoModules.tryResolve(
           nodePath.join(name, "marko.json"),
+          rootPkg.__dirname,
         );
         if (taglibPath) {
           var taglib = taglibLoader.loadTaglibFromFile(taglibPath, true);
