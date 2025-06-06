@@ -4,7 +4,6 @@ var ok = require("assert").ok;
 var nodePath = require("path");
 var createError = require("raptor-util/createError");
 var isObjectEmpty = require("raptor-util/isObjectEmpty");
-var resolveFrom = require("resolve-from").silent;
 var markoModules = require("../../../modules");
 var taglibConfig = require("../config");
 var loaders = require("./loaders");
@@ -13,7 +12,9 @@ var types = require("./types");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function resolveRelative(dirname, value) {
-  return value[0] === "." ? resolveFrom(dirname, value) || value : value;
+  return value[0] === "."
+    ? markoModules.tryResolve(value, dirname) || value
+    : value;
 }
 
 function resolveWithMarkoExt(dirname, value) {
@@ -25,13 +26,13 @@ function resolveWithMarkoExt(dirname, value) {
   ) {
     markoModules.require.extensions[".marko"] = undefined;
     try {
-      return resolveFrom(dirname, value) || value;
+      return markoModules.tryResolve(value, dirname) || value;
     } finally {
       delete markoModules.require.extensions[".marko"];
     }
   }
 
-  return resolveFrom(dirname, value);
+  return markoModules.tryResolve(value, dirname) || value;
 }
 
 function removeDashes(str) {

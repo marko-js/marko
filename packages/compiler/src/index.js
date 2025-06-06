@@ -6,6 +6,7 @@ import tsTransformPlugin from "@babel/plugin-transform-typescript";
 import { DiagnosticType } from "@marko/compiler/babel-utils";
 import path from "path";
 
+import markoModules from "../modules";
 import corePlugin from "./babel-plugin";
 import defaultConfig from "./config";
 import * as taglib from "./taglib";
@@ -14,8 +15,6 @@ import throwAggregateError from "./util/merge-errors";
 import shouldOptimize from "./util/should-optimize";
 import tryLoadTranslator from "./util/try-load-translator";
 export { taglib };
-
-const CWD = process.cwd();
 
 export let globalConfig = { ...defaultConfig };
 export function configure(newConfig) {
@@ -103,7 +102,9 @@ function getBaseBabelConfig(filename, { babelConfig, ...markoConfig }) {
     ],
   ];
   const baseBabelConfig = {
-    filenameRelative: filename ? path.relative(CWD, filename) : undefined,
+    filenameRelative: filename
+      ? path.relative(markoModules.cwd, filename)
+      : undefined,
     sourceRoot: filename ? path.dirname(filename) : undefined,
     sourceFileName: filename ? path.basename(filename) : undefined,
     configFile: isTranslated,

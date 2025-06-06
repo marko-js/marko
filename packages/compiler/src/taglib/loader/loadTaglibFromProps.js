@@ -3,7 +3,6 @@
 var ok = require("assert").ok;
 var nodePath = require("path");
 var createError = require("raptor-util/createError");
-var resolveFrom = require("resolve-from").silent;
 var markoModules = require("../../../modules");
 var taglibFS = require("../config");
 var DependencyChain = require("./DependencyChain");
@@ -15,7 +14,9 @@ var types = require("./types");
 var hasOwnProperty = Object.prototype.hasOwnProperty;
 
 function resolveRelative(dirname, value) {
-  return value[0] === "." ? resolveFrom(dirname, value) || value : value;
+  return value[0] === "."
+    ? markoModules.tryResolve(value, dirname) || value
+    : value;
 }
 
 function normalizeHook(dirname, value) {
@@ -289,7 +290,7 @@ class TaglibLoader {
         if (typeof curImport === "string") {
           var basename = nodePath.basename(curImport);
           if (basename === "package.json") {
-            var packagePath = resolveFrom(dirname, curImport);
+            var packagePath = markoModules.tryResolve(curImport, dirname);
             var packageDir = nodePath.dirname(packagePath);
             var pkg = jsonFileReader.readFileSync(packagePath);
             var dependencies = pkg.dependencies;
@@ -298,9 +299,9 @@ class TaglibLoader {
               for (var j = 0; j < dependencyNames.length; j++) {
                 var dependencyName = dependencyNames[j];
 
-                importPath = resolveFrom(
-                  packageDir,
+                importPath = markoModules.tryResolve(
                   nodePath.join(dependencyName, "marko.json"),
+                  packageDir,
                 );
 
                 if (importPath) {
@@ -309,7 +310,7 @@ class TaglibLoader {
               }
             }
           } else {
-            importPath = resolveFrom(dirname, curImport);
+            importPath = markoModules.tryResolve(curImport, dirname);
             if (importPath) {
               taglib.addImport(importPath);
             } else {

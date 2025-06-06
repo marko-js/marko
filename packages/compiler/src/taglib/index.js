@@ -139,7 +139,7 @@ function resolveTaglib(id) {
       break;
   }
 
-  const resolved = markoModules.require.resolve(id);
+  const resolved = markoModules.resolve(id);
   return [resolved, markoModules.require(resolved)];
 }
 

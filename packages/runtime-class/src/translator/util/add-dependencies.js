@@ -4,9 +4,9 @@ import {
   parseStatements,
   resolveRelativePath,
 } from "@marko/compiler/babel-utils";
+import markoModules from "@marko/compiler/modules";
 import MagicString from "magic-string";
 import path from "path";
-import resolveFrom from "resolve-from";
 const kEntryState = Symbol();
 const lassoDepPrefix = "package: ";
 
@@ -282,7 +282,10 @@ function tryGetTemplateImports(file, rendererRelativePath) {
       const resolvedTemplatePath =
         request[0] === "."
           ? path.resolve(resolvedRendererPath, "..", request)
-          : resolveFrom.silent(path.dirname(resolvedRendererPath), request);
+          : markoModules.tryResolve(
+              request,
+              path.dirname(resolvedRendererPath),
+            );
       if (resolvedTemplatePath) {
         if (templateImports) {
           templateImports.push(resolvedTemplatePath);
