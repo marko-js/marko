@@ -1,5 +1,5 @@
 import { t as _t } from "marko/dist/runtime/vdom/index.js";
-const _marko_componentType = "nJBb8Wf",
+const _marko_componentType = "jdN51oR",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import _testBodyFunction from "./tags/test-body-function/renderer.js";

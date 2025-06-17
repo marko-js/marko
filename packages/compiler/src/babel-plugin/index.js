@@ -1,5 +1,4 @@
 import traverse from "@babel/traverse";
-import { createHash } from "crypto";
 import path from "path";
 
 import * as t from "../babel-types";
@@ -10,6 +9,7 @@ import { buildLookup } from "../taglib";
 import taglibConfig from "../taglib/config";
 import { buildCodeFrameError } from "../util/build-code-frame";
 import throwAggregateError from "../util/merge-errors";
+import { Hash } from "../util/quick-hash";
 import shouldOptimize from "../util/should-optimize";
 import tryLoadTranslator from "../util/try-load-translator";
 import { MarkoFile } from "./file";
@@ -159,10 +159,8 @@ function getMarkoFile(code, fileOpts, markoOpts) {
   const isMigrate = markoOpts.output === "migrate";
   const canCache = !(isSource || isMigrate);
   const id = getTemplateId(markoOpts, filename);
-  const contentHash = canCache && createHash("MD5").update(code).digest("hex");
-  const cacheKey = canCache && createHash("MD5").update(id).digest("hex");
-
-  let cached = canCache && compileCache.get(cacheKey);
+  const contentHash = canCache && new Hash().update(code).digest();
+  let cached = canCache && compileCache.get(id);
 
   if (cached) {
     if (cached.contentHash !== contentHash) {
@@ -302,7 +300,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
       }
     }
 
-    compileCache.set(cacheKey, {
+    compileCache.set(id, {
       time: Date.now(),
       file,
       contentHash,
@@ -313,7 +311,7 @@ function getMarkoFile(code, fileOpts, markoOpts) {
         file.___compileStage = "analyze";
         traverseAll(file, translator.analyze);
       } catch (e) {
-        compileCache.delete(cacheKey);
+        compileCache.delete(id);
         throw e;
       }
     }

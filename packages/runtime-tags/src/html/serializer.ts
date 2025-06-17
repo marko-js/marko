@@ -1675,22 +1675,14 @@ function nextRefAccess(state: State) {
 }
 
 function nextId(state: State) {
-  const encodeChars =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
-  const encodeLen = encodeChars.length;
-  const encodeStartLen = encodeLen - 11; // Avoids chars that cannot start a property name and _ (reserved).
-  let index = state.ids++;
-  let mod = index % encodeStartLen;
-  let id = encodeChars[mod];
-  index = (index - mod) / encodeStartLen;
-
-  while (index > 0) {
-    mod = index % encodeLen;
-    id += encodeChars[mod];
-    index = (index - mod) / encodeLen;
+  const c = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
+  let n = state.ids++;
+  let r = c[n % 53]; // Avoids chars that cannot start a property name and _ (reserved).
+  for (n = (n / 53) | 0; n; n >>>= 6) {
+    r += c[n & 63];
   }
 
-  return id;
+  return r;
 }
 
 function hasSymbolIterator(

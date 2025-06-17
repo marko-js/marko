@@ -780,22 +780,15 @@ export class State {
   }
 
   nextReorderId() {
-    const encodeChars =
+    const c =
       "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
-    const encodeLen = encodeChars.length;
-    const encodeStartLen = encodeLen - 10; // Avoids chars that cannot start a property name.
-    let index = this.reorderId++;
-    let mod = index % encodeStartLen;
-    let id = encodeChars[mod];
-    index = (index - mod) / encodeStartLen;
-
-    while (index > 0) {
-      mod = index % encodeLen;
-      id += encodeChars[mod];
-      index = (index - mod) / encodeLen;
+    let n = this.reorderId++;
+    let r = c[n % 54]; // Avoids chars that cannot start a property name.
+    for (n = (n / 54) | 0; n; n >>>= 6) {
+      r += c[n & 63];
     }
 
-    return id;
+    return r;
   }
 
   mark(code: ResumeSymbol | Mark, str: string) {

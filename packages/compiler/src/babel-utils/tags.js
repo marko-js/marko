@@ -1,9 +1,9 @@
 import { types as t } from "@marko/compiler";
 import markoModules from "@marko/compiler/modules";
-import { createHash } from "crypto";
 import { getRootDir } from "lasso-package-root";
 import { basename, dirname, join, relative, resolve } from "path";
 
+import { Hash } from "../util/quick-hash";
 import { diagnosticWarn } from "./diagnostics";
 import { resolveRelativePath } from "./imports";
 import { getTagDefForTagName } from "./taglib";
@@ -350,12 +350,12 @@ export function getTemplateId(opts, request, child) {
       }
     }
 
-    const hash = createHash("shake256", templateIdHashOpts).update(id);
+    const hash = new Hash().update(id);
     if (child) {
       hash.update(child);
     }
 
-    return encodeTemplateId(parseInt(hash.digest("hex"), 16));
+    return encodeTemplateId(hash.digest());
   }
 
   return id + (child ? `_${child}` : "");
@@ -408,21 +408,16 @@ function createNewFileOpts(opts, filename) {
   };
 }
 
-function encodeTemplateId(index) {
-  const encodeChars =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
-  const encodeLen = encodeChars.length;
-  const encodeStartLen = encodeLen - 11; // Avoids chars that cannot start a property name and _ (reserved).
-  let cur = index;
-  let mod = cur % encodeStartLen;
-  let id = encodeChars[mod];
-  cur = (cur - mod) / encodeStartLen;
+function encodeTemplateId(id) {
+  const c = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$_0123456789";
+  let n = id;
+  let r = c[n % 53]; // Avoids chars that cannot start a property name and _ (reserved).
+  n = Math.floor(n / 53);
 
-  while (cur > 0) {
-    mod = cur % encodeLen;
-    id += encodeChars[mod];
-    cur = (cur - mod) / encodeLen;
+  // ensure at most 7 characters.
+  for (let i = 6; n > 0 && i--; n = Math.floor(n / 64)) {
+    r += c[n & 63];
   }
 
-  return id;
+  return r;
 }
