@@ -68,6 +68,10 @@ function loadMarkoConfig(config) {
     markoConfig.stripTypes = isTranslatedOutput(markoConfig.output);
   }
 
+  if (markoConfig.translator === undefined) {
+    markoConfig.translator = globalConfig.translator;
+  }
+
   return markoConfig;
 }
 
