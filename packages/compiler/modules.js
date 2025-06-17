@@ -3,21 +3,28 @@
 if (process.env.BUNDLE || typeof document === "object") {
   exports.cwd = "/";
   exports.root = "/";
-  exports.require = undefined;
-  exports.resolve = undefined;
-  exports.tryResolve = undefined;
+  exports.pkg = null;
+  exports.require = null;
+  exports.resolve = null;
+  exports.tryResolve = null;
 } else {
   const resolveFrom = require("resolve-from");
-  const cwd = process.cwd();
-  const root = (() => {
+  let cwd = "/";
+  let root = cwd;
+  let pkg = null;
+
+  if (typeof process === "object" && typeof process.cwd === "function") {
     try {
-      return require("lasso-package-root").getRootDir(cwd) || cwd;
+      cwd = process.cwd();
+      pkg = require("lasso-package-root").getRootPackage(cwd);
+      if (pkg) root = pkg.__dirname;
     } catch {
-      return cwd;
+      // ignore
     }
-  })();
+  }
   exports.cwd = cwd;
   exports.root = root;
+  exports.pkg = pkg;
   exports.require = require;
   exports.resolve = (id, from) => {
     return resolveFrom(from || root, id);

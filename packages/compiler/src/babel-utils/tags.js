@@ -3,6 +3,7 @@ import markoModules from "@marko/compiler/modules";
 import { getRootDir } from "lasso-package-root";
 import { basename, dirname, join, relative, resolve } from "path";
 
+import { cwd, root } from "../../modules";
 import { Hash } from "../util/quick-hash";
 import { diagnosticWarn } from "./diagnostics";
 import { resolveRelativePath } from "./imports";
@@ -18,13 +19,6 @@ const TRANSPARENT_TAGS = new Set([
   "else-if",
   "_no-update",
 ]);
-
-const CWD = process.cwd();
-let ROOT = CWD;
-try {
-  ROOT = getRootDir(ROOT) || ROOT;
-  // eslint-disable-next-line no-empty
-} catch {}
 
 export function isNativeTag(path) {
   if (path.node._isDynamicString) {
@@ -317,7 +311,7 @@ function resolveMarkoFile(file, filename) {
 const idCache = new WeakMap();
 const templateIdHashOpts = { outputLength: 5 };
 export function getTemplateId(opts, request, child) {
-  const id = relative(ROOT, request).replace(/[^a-zA-Z0-9_$./-]/g, "/");
+  const id = relative(root, request).replace(/[^a-zA-Z0-9_$./-]/g, "/");
   const optimize = typeof opts === "object" ? opts.optimize : opts;
 
   if (optimize) {
@@ -388,7 +382,7 @@ export function resolveTagImport(path, request) {
 function createNewFileOpts(opts, filename) {
   const sourceFileName = basename(filename);
   const sourceRoot = dirname(filename);
-  const filenameRelative = relative(CWD, filename);
+  const filenameRelative = relative(cwd, filename);
   return {
     ...opts,
     filename,

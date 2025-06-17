@@ -1,5 +1,6 @@
 import fs from "fs";
-import { getRootPackage } from "lasso-package-root";
+
+import { pkg } from "../modules";
 
 const config = {
   // The default output mode for compiled templates
@@ -55,12 +56,6 @@ const config = {
     const translatorReg = /^(?:@marko\/|marko-)runtime-/;
     const translatorInterop = "@marko/translator-interop-class-tags";
     let translator;
-    let pkg;
-
-    try {
-      pkg = getRootPackage(process.cwd());
-      // eslint-disable-next-line no-empty
-    } catch {}
 
     if (pkg) {
       if (
@@ -176,7 +171,11 @@ const config = {
   applyFixes: undefined,
 };
 
-if (process.env.MARKO_CONFIG) {
+if (
+  typeof process === "object" &&
+  typeof process.env === "object" &&
+  process.env.MARKO_CONFIG
+) {
   Object.assign(config, JSON.parse(process.env.MARKO_CONFIG));
 }
 

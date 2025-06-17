@@ -2,8 +2,10 @@ import { types as t } from "@marko/compiler";
 import path from "path";
 import { relativeImportPath } from "relative-import-path";
 
+import { cwd } from "../../modules";
+
 const IMPORTS_KEY = Symbol();
-const FS_START = path.sep === "/" ? path.sep : /^(.*?:)/.exec(process.cwd())[1];
+const FS_START = path.sep === "/" ? path.sep : /^(.*?:)/.exec(cwd)[1];
 
 export function resolveRelativePath(file, request) {
   if (request.startsWith(FS_START)) {
