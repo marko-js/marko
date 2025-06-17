@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.23
+
+### Patch Changes
+
+- [#2701](https://github.com/marko-js/marko/pull/2701) [`8f68b6e`](https://github.com/marko-js/marko/commit/8f68b6efc960a3e59f59cbb49c549a248a03a79f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix regression where explicitly passing in `undefined` for translator was not loading the default translator.
+
 ## 5.39.22
 
 ### Patch Changes
