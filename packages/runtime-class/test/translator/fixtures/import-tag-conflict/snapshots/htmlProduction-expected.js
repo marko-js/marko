@@ -1,5 +1,5 @@
 import { t as _t } from "marko/dist/runtime/html/index.js";
-const _marko_componentType = "Z$As7Ie",
+const _marko_componentType = "UzlbUvc",
   _marko_template = _t(_marko_componentType);
 export default _marko_template;
 import { asset as test } from "./test1/asset";
