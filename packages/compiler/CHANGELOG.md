@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.24
+
+### Patch Changes
+
+- [#2703](https://github.com/marko-js/marko/pull/2703) [`f67361b`](https://github.com/marko-js/marko/commit/f67361bc52191c9092833438868f09bb583252e1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Load interop translator by default if installed.
+
 ## 5.39.23
 
 ### Patch Changes
