@@ -1,5 +1,14 @@
 # @marko/runtime-tags
 
+## 6.0.25
+
+### Patch Changes
+
+- [#2705](https://github.com/marko-js/marko/pull/2705) [`75eaa9d`](https://github.com/marko-js/marko/commit/75eaa9d833f6711b5b60757ef02ca987fc310b01) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid using process api in compiler to make it easier to load in environments without it.
+
+- Updated dependencies [[`75eaa9d`](https://github.com/marko-js/marko/commit/75eaa9d833f6711b5b60757ef02ca987fc310b01)]:
+  - @marko/compiler@5.39.25
+
 ## 6.0.24
 
 ### Patch Changes
