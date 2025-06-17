@@ -53,6 +53,7 @@ const config = {
    */
   translator: (() => {
     const translatorReg = /^(?:@marko\/|marko-)runtime-/;
+    const translatorInterop = "@marko/translator-interop-class-tags";
     let translator;
     let pkg;
 
@@ -62,6 +63,13 @@ const config = {
     } catch {}
 
     if (pkg) {
+      if (
+        pkg.dependencies?.[translatorInterop] ||
+        pkg.devDependencies?.[translatorInterop]
+      ) {
+        return translatorInterop;
+      }
+
       for (const name in pkg.dependencies) {
         if (translatorReg.test(name)) {
           if (translator && translator !== name) {
