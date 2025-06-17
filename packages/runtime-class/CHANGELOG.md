@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.37.33
+
+### Patch Changes
+
+- [#2699](https://github.com/marko-js/marko/pull/2699) [`dc3ee34`](https://github.com/marko-js/marko/commit/dc3ee348e9b95c12bf74d4212a82756d7ad90a18) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid node:crypto - use custom hash algo for component ids.
+
+- Updated dependencies [[`dc3ee34`](https://github.com/marko-js/marko/commit/dc3ee348e9b95c12bf74d4212a82756d7ad90a18)]:
+  - @marko/compiler@5.39.22
+
 ## 5.37.32
 
 ### Patch Changes
