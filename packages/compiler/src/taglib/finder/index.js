@@ -72,7 +72,7 @@ function find(dirname, registeredTaglibs, tagDiscoveryDirs) {
     foundTaglibPackages: {},
   };
 
-  var rootDirname = process.cwd(); // Don't search up past this directory
+  var rootDirname = markoModules.cwd; // Don't search up past this directory
   var rootPkg = getModuleRootPackage(dirname);
   if (rootPkg) {
     rootDirname = rootPkg.__dirname; // Use the package's root directory as the top-level directory

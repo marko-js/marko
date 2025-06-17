@@ -2,8 +2,8 @@ import { codeFrameColumns } from "@babel/code-frame";
 import color from "kleur";
 import path from "path";
 
+import { cwd } from "../../modules";
 import { stripAnsi } from "./strip-ansi";
-const CWD = process.cwd();
 const indent = "    ";
 
 class CompileError extends Error {
@@ -102,7 +102,7 @@ function buildMessage(code, loc, message) {
 }
 
 function buildFileName(filename, loc) {
-  return `${color.cyan(path.relative(CWD, filename))}${
+  return `${color.cyan(path.relative(cwd, filename))}${
     loc
       ? `:${color.yellow(loc.start.line)}:${color.yellow(loc.start.column + 1)}`
       : ""

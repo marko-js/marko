@@ -144,6 +144,9 @@ function resolveTaglib(id) {
 }
 
 function hasRootDependency(id) {
-  const pkg = getRootPackage(process.cwd());
-  return !!(pkg && (pkg.dependencies?.[id] || pkg.devDependencies?.[id]));
+  return !!(
+    markoModules.pkg &&
+    (markoModules.pkg.dependencies?.[id] ||
+      markoModules.pkg.devDependencies?.[id])
+  );
 }
