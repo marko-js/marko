@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.38
+
+### Patch Changes
+
+- [#2709](https://github.com/marko-js/marko/pull/2709) [`99eccd8`](https://github.com/marko-js/marko/commit/99eccd8faa061a54d8ffcbb25b5990572598f242) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Move body translate logic into a transformer to improve tags/class interop support.
+
 ## 5.37.37
 
 ### Patch Changes
