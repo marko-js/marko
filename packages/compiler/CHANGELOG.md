@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.26
+
+### Patch Changes
+
+- [#2707](https://github.com/marko-js/marko/pull/2707) [`89d0196`](https://github.com/marko-js/marko/commit/89d019678ecfb004af9b5892482d6af9d6178c4d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix false positive interop checks.
+
 ## 5.39.25
 
 ### Patch Changes

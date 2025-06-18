@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.28
+
+### Patch Changes
+
+- [#2707](https://github.com/marko-js/marko/pull/2707) [`89d0196`](https://github.com/marko-js/marko/commit/89d019678ecfb004af9b5892482d6af9d6178c4d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix false positive interop checks.
+
+- Updated dependencies [[`89d0196`](https://github.com/marko-js/marko/commit/89d019678ecfb004af9b5892482d6af9d6178c4d)]:
+  - marko@5.37.37
+  - @marko/runtime-tags@6.0.26
+
 ## 0.2.27
 
 ### Patch Changes
