@@ -1,5 +1,5 @@
 import type { types as t } from "@marko/compiler";
-import { getTagDef } from "@marko/compiler/babel-utils";
+import { getFile, getTagDef } from "@marko/compiler/babel-utils";
 import { taglibs as taglibs6 } from "@marko/runtime-tags/translator";
 import { taglibs as taglibs5 } from "marko/translator";
 
@@ -21,8 +21,7 @@ type FeatureState = {
 
 const DEFAULT_FEATURE_TYPE = FeatureType.Class;
 
-export function isTagsAPI(path: t.NodePath) {
-  const { file } = path.hub;
+export function isTagsAPI(file = getFile()) {
   let featureType = file.path.node.extra?.featureType;
 
   if (!featureType) {
@@ -39,7 +38,7 @@ export function isTagsAPI(path: t.NodePath) {
       if (forceTags) {
         if (state.feature?.type === FeatureType.Class) {
           throw buildAggregateError(
-            path.hub.file,
+            file,
             'Cannot use "class api" features under a "tags/" directory',
             [state.feature.name, state.feature.path],
           );
@@ -182,6 +181,14 @@ const getFeatureByTagName = (() => {
   }
 
   return (tagName: string) => {
+    switch (tagName) {
+      case "html":
+      case "head":
+      case "body":
+      case "script":
+      case "style":
+        return;
+    }
     if (taglib5UniqueTags.has(tagName)) return FeatureType.Class;
     if (taglib6UniqueTags.has(tagName)) return FeatureType.Tags;
   };

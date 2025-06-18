@@ -193,7 +193,6 @@ function getMarkoFile(code, fileOpts, markoOpts) {
   taglibConfig.fs = markoOpts.fileSystem;
 
   try {
-    const taglibLookup = buildLookup(path.dirname(filename), translator);
     const file = setFileInternal(
       new MarkoFile(fileOpts, {
         code,
@@ -209,7 +208,13 @@ function getMarkoFile(code, fileOpts, markoOpts) {
         },
       }),
     );
-
+    file.markoOpts = markoOpts;
+    file.___compileStage = "parse";
+    file.___getMarkoFile = getMarkoFile;
+    const taglibLookup = (file.___taglibLookup = buildLookup(
+      path.dirname(filename),
+      translator,
+    ));
     const meta = (file.metadata.marko = {
       id,
       deps: [],
@@ -218,11 +223,6 @@ function getMarkoFile(code, fileOpts, markoOpts) {
       diagnostics: [],
     });
 
-    file.markoOpts = markoOpts;
-    file.___taglibLookup = taglibLookup;
-    file.___getMarkoFile = getMarkoFile;
-
-    file.___compileStage = "parse";
     parseMarko(file);
 
     if (isSource) {

@@ -123,7 +123,7 @@ function patchTranslateProgram(visitor: t.Visitor) {
         has6: false,
       });
 
-      if (isTagsAPI(file.path)) {
+      if (isTagsAPI(file)) {
         state.has6 = true;
         internalEntryBuilder6.visit(file, entryFile, visitChild);
       } else {
@@ -206,10 +206,10 @@ function mergedVisitor<A, B extends t.Node>(
   const exit6 = getVisitorExit(visitor6);
   const visitor = {
     enter(path, state) {
-      return (isTagsAPI(path) ? enter6 : enter5)?.call(this, path, state);
+      return (isTagsAPI() ? enter6 : enter5)?.call(this, path, state);
     },
     exit(path, state) {
-      return (isTagsAPI(path) ? exit6 : exit5)?.call(this, path, state);
+      return (isTagsAPI() ? exit6 : exit5)?.call(this, path, state);
     },
   } satisfies t.VisitNodeObject<A, B>;
 
