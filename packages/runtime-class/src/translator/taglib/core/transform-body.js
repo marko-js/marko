@@ -1,10 +1,9 @@
 import { types as t } from "@marko/compiler";
 
-export function enter(path) {
-  if (path.hub.file.markoOpts.output === "html") {
-    const body = path.get("body");
-
-    body.pushContainer("body", [
+export default function (path) {
+  path
+    .get("body")
+    .pushContainer("body", [
       t.markoTag(t.stringLiteral("init-components"), [], t.markoTagBody()),
       t.markoTag(t.stringLiteral("await-reorderer"), [], t.markoTagBody()),
       t.markoTag(
@@ -13,5 +12,4 @@ export function enter(path) {
         t.markoTagBody(),
       ),
     ]);
-  }
 }

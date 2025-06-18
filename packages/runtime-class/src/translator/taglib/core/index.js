@@ -8,9 +8,9 @@ import * as parseExport from "./parse-export";
 import * as parseImport from "./parse-import";
 import * as parseModuleCode from "./parse-module-code";
 import * as parseStatic from "./parse-static";
+import * as transformBody from "./transform-body";
 import * as transformStyle from "./transform-style";
 import * as translateAwait from "./translate-await";
-import * as translateBody from "./translate-body";
 import * as translateFor from "./translate-for";
 import * as translateHTMLComment from "./translate-html-comment";
 import * as translateIncludeContent from "./translate-include-content";
@@ -284,7 +284,7 @@ export default {
     renderer: "marko/src/core-tags/components/preferred-script-location-tag.js",
   },
   "<body>": {
-    "code-generator": translateBody,
+    transformer: transformBody,
   },
   "<await>": {
     renderer: "marko/src/core-tags/core/await/renderer.js",
