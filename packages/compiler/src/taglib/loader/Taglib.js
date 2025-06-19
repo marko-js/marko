@@ -47,9 +47,7 @@ class Taglib {
     attribute.filePath = this.filePath;
 
     if (!attribute.pattern && !attribute.name) {
-      throw new Error(
-        "Invalid attribute: " + require("util").inspect(attribute),
-      );
+      throw new Error("Invalid attribute: " + JSON.stringify(attribute));
     }
 
     this.attributes[attribute.key] = attribute;
