@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.27
+
+### Patch Changes
+
+- [#2711](https://github.com/marko-js/marko/pull/2711) [`791cbb8`](https://github.com/marko-js/marko/commit/791cbb80dfc329610fc42b26bdf3649087f445b2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix rendering the body tag in the interop translator with the tags api.
+
 ## 6.0.26
 
 ### Patch Changes
