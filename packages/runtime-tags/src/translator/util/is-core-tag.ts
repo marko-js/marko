@@ -15,7 +15,13 @@ export function isCoreTag(
     if (tagDef) {
       switch (tagDef.taglibId) {
         case taglibId:
+          return true;
         case interopTaglibId:
+          switch (tagDef.name) {
+            // The body tag is registered in the v5 translator, without this it'd be seen as a core tag.
+            case "body":
+              return false;
+          }
           return true;
         case htmlTaglibId:
           switch (tagDef.name) {
