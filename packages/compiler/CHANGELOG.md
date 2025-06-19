@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.27
+
+### Patch Changes
+
+- [#2713](https://github.com/marko-js/marko/pull/2713) [`2d11230`](https://github.com/marko-js/marko/commit/2d11230f012397681f63071ea9b33b246b45f9ad) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid using "util" module to improve browser compat of compiler.
+
 ## 5.39.26
 
 ### Patch Changes

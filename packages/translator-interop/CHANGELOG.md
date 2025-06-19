@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.31
+
+### Patch Changes
+
+- [#2713](https://github.com/marko-js/marko/pull/2713) [`2d11230`](https://github.com/marko-js/marko/commit/2d11230f012397681f63071ea9b33b246b45f9ad) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid using "util" module to improve browser compat of compiler.
+
+- Updated dependencies [[`2d11230`](https://github.com/marko-js/marko/commit/2d11230f012397681f63071ea9b33b246b45f9ad)]:
+  - marko@5.37.39
+  - @marko/runtime-tags@6.0.28
+
 ## 0.2.30
 
 ### Patch Changes
