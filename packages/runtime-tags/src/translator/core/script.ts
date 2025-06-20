@@ -138,7 +138,6 @@ export default {
       tag.remove();
     },
   },
-  html: false,
   parseOptions: {
     text: true,
     preserveWhitespace: true,
