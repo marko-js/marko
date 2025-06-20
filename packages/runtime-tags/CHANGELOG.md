@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.30
+
+### Patch Changes
+
+- [#2717](https://github.com/marko-js/marko/pull/2717) [`3519383`](https://github.com/marko-js/marko/commit/3519383a66d2459154e36b9f9abca4d7333d2145) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where lifecycle tag binding was pruned due to having no tracked references.
+
 ## 6.0.29
 
 ### Patch Changes
