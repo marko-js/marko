@@ -1,6 +1,6 @@
 // size: 255 (min) 157 (brotli)
 const $x_effect = _$.effect("a0", ($scope, { 1: x }) => {
-    _$.lifecycle($scope, 3, {
+    _$.lifecycle($scope, 2, {
       onMount: function () {
         this.onUpdate();
       },
