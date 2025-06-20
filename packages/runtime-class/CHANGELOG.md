@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.37.40
+
+### Patch Changes
+
+- [#2715](https://github.com/marko-js/marko/pull/2715) [`dc178ce`](https://github.com/marko-js/marko/commit/dc178ced9f75aac923f3c5b043aa40d62e8d0f4d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Move translator loading logic back into shared utility. Moving this out caused a regression for tools that call `getRuntimeEntryFiles` or `taglib.buildLookup` directly.
+
+- Updated dependencies [[`e60a20f`](https://github.com/marko-js/marko/commit/e60a20f7e2dcbdb2dcfa45bc15f2901ffd0443c7), [`dc178ce`](https://github.com/marko-js/marko/commit/dc178ced9f75aac923f3c5b043aa40d62e8d0f4d)]:
+  - @marko/compiler@5.39.28
+
 ## 5.37.39
 
 ### Patch Changes
