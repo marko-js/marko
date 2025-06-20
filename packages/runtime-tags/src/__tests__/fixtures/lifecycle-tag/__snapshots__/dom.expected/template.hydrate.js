@@ -1,6 +1,6 @@
 // size: 268 (min) 136 (brotli)
 const $x_effect = _$.effect("a0", ($scope, { 1: x }) => {
-    _$.lifecycle($scope, 3, {
+    _$.lifecycle($scope, 2, {
       onMount: function () {
         document.getElementById("ref").textContent = "Mount " + x;
       },

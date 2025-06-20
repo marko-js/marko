@@ -46,11 +46,13 @@ export default {
       tag.node,
       getAllTagReferenceNodes(tag.node),
     );
-    tagExtra[kRef] = createBinding(
+    const binding = (tagExtra[kRef] = createBinding(
       generateUid("lifecycle"),
       BindingType.derived,
       section,
-    );
+    ));
+
+    binding.downstreamExpressions.add(tagExtra);
 
     if (node.attributes.length === 0) {
       throw tag

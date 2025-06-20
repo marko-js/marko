@@ -1,6 +1,6 @@
-// size: 261 (min) 153 (brotli)
+// size: 261 (min) 155 (brotli)
 const $x_effect = _$.effect("a0", ($scope, { 3: x }) => {
-    _$.lifecycle($scope, 4, {
+    _$.lifecycle($scope, 5, {
       onMount: function () {
         this.cur = x;
       },

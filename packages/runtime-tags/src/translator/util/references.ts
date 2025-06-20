@@ -572,11 +572,11 @@ export function mergeReferences<T extends t.Node>(
   section: Section,
   target: T,
   nodes: (t.Node | undefined)[],
-): NonNullable<T["extra"]> {
+): NonNullable<T["extra"]> & ReferencedExtra {
   const targetExtra = (target.extra ??= {});
   targetExtra.section = section;
   getMergedReferences().set(target, nodes);
-  return targetExtra;
+  return targetExtra as NonNullable<T["extra"]> & ReferencedExtra;
 }
 
 export function compareReferences(
