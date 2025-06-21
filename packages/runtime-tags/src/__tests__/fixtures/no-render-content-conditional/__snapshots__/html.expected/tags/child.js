@@ -3,7 +3,7 @@ import * as _$ from "@marko/runtime-tags/debug/html";
 export default _$.createTemplate("__tests__/tags/child.marko", (input, $serialize) => {
   const $scope0_id = _$.nextScopeId();
   const $childScope = _$.peekNextScopeId();
-  const x = _myConst({
+  let x = _myConst({
     value: input.foo
   });
   _$.setTagVar($scope0_id, "#scopeOffset/1", $childScope, "__tests__/tags/child.marko_0_x/var");

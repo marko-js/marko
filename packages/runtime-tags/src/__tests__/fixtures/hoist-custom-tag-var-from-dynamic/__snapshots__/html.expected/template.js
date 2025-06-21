@@ -11,7 +11,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   _thing({
     content: _$.createContent("__tests__/template.marko_1_renderer", () => {
       const $scope1_id = _$.nextScopeId();
-      const setHtml = _child({});
+      let setHtml = _child({});
       _$.writeSubscribe($thing_content_subscribers, _$.writeScope($scope1_id, {
         setHtml
       }, "__tests__/template.marko", "3:2", {
@@ -25,7 +25,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
     _thing({
       content: _$.createContent("__tests__/template.marko_3_renderer", () => {
         const $scope3_id = _$.nextScopeId();
-        const setHtml2 = _child({});
+        let setHtml2 = _child({});
         _$.writeSubscribe($thing_content2_subscribers, _$.writeScope($scope3_id, {
           setHtml2
         }, "__tests__/template.marko", "16:4", {
@@ -39,7 +39,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   }, $scope0_id), 0, _$.serializeGuard($serialize, /* input.show */0));
   _$.dynamicTag($scope0_id, "#text/2", input.show ? 'section' : null, {}, _$.registerContent("__tests__/template.marko_4_renderer", () => {
     const $scope4_id = _$.nextScopeId();
-    const setHtml3 = _child({});
+    let setHtml3 = _child({});
     _$.writeSubscribe($inputshowsectionnull_content_subscribers, _$.writeScope($scope4_id, {
       setHtml3
     }, "__tests__/template.marko", "26:4", {

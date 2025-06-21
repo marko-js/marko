@@ -401,6 +401,7 @@ function translateHTML(tag: t.NodePath<t.MarkoTag>) {
         propsToExpression(properties),
         childSerializeReasonExpr,
       ),
+      "let",
     );
   } else {
     statements.push(

@@ -5,7 +5,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   const $hoisted_setHtml3 = _$.hoist($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml3/hoist");
   _$.resumeForTo(5, 0, 1, () => {
     const $scope1_id = _$.nextScopeId();
-    const setHtml = _child({});
+    let setHtml = _child({});
     _$.writeScope($scope1_id, {
       setHtml
     }, "__tests__/template.marko", "1:2", {
@@ -16,7 +16,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.write("<hr>");
   _$.resumeForTo(to, 0, 1, () => {
     const $scope2_id = _$.nextScopeId();
-    const setHtml2 = _child({});
+    let setHtml2 = _child({});
     _$.writeScope($scope2_id, {
       setHtml2
     }, "__tests__/template.marko", "12:2", {
@@ -29,7 +29,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     _$.write("<ul>");
     _$.resumeForTo(3, 0, 1, j => {
       const $scope4_id = _$.nextScopeId();
-      const setHtml3 = _child({});
+      let setHtml3 = _child({});
       _$.writeScope($scope4_id, {
         setHtml3
       }, "__tests__/template.marko", "24:4", {

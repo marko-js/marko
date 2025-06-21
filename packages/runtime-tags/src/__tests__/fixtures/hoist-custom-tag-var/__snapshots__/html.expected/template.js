@@ -10,7 +10,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
       _$.resumeConditional(() => {
         if (input.show) {
           const $scope2_id = _$.nextScopeId();
-          const setHtml = _child({});
+          let setHtml = _child({});
           _$.writeScope($scope2_id, {
             setHtml
           }, "__tests__/template.marko", "2:4", {
@@ -32,7 +32,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   _$.resumeConditional(() => {
     if (true) {
       const $scope3_id = _$.nextScopeId();
-      const setHtml2 = _child({});
+      let setHtml2 = _child({});
       _$.writeScope($scope3_id, {
         setHtml2
       }, "__tests__/template.marko", "13:2", {
@@ -44,7 +44,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
   _$.resumeConditional(() => {
     if (true) {
       const $scope4_id = _$.nextScopeId();
-      const setHtml3 = _child({});
+      let setHtml3 = _child({});
       _$.writeScope($scope4_id, {
         setHtml3
       }, "__tests__/template.marko", "22:2", {
