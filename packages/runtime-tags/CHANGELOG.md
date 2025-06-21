@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.31
+
+### Patch Changes
+
+- [#2719](https://github.com/marko-js/marko/pull/2719) [`0c65dc4`](https://github.com/marko-js/marko/commit/0c65dc40f85757c40de0a68977c64c6cfc339b2e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where custom tags were incorrectly outputting tag variables as a const in ssr.
+
 ## 6.0.30
 
 ### Patch Changes
