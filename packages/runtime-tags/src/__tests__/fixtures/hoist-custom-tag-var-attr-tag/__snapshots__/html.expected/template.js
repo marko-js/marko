@@ -9,7 +9,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
     what: _$.attrTag({
       content: _$.registerContent("__tests__/template.marko_1_renderer", () => {
         const $scope1_id = _$.nextScopeId();
-        const setHtml = _child({});
+        let setHtml = _child({});
         _$.writeSubscribe($what_content_subscribers, _$.writeScope($scope1_id, {
           setHtml
         }, "__tests__/template.marko", "3:4", {

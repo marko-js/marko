@@ -5,7 +5,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   const $scope0_id = _$.nextScopeId();
   const $count_closures = new Set();
   const $childScope = _$.peekNextScopeId();
-  const count = _myLet({
+  let count = _myLet({
     value: 0
   });
   _$.setTagVar($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_count/var");
