@@ -106,6 +106,7 @@ export interface Template {
 }
 
 export interface MountedTemplate {
+  value: unknown;
   update(input: unknown): void;
   destroy(): void;
 }

@@ -46,7 +46,8 @@ declare global {
       };
 
     /** The result of calling `template.mount`. */
-    export type MountedTemplate<Input = unknown> = {
+    export type MountedTemplate<Input = unknown, Return = unknown> = {
+      value: Return;
       update(input: Marko.TemplateInput<Input>): void;
       destroy(): void;
     };
@@ -95,7 +96,7 @@ declare global {
         input: Marko.TemplateInput<Input>,
         reference: Node,
         position?: "afterbegin" | "afterend" | "beforebegin" | "beforeend",
-      ): Marko.MountedTemplate<typeof input>;
+      ): Marko.MountedTemplate<typeof input, Return>;
       /** @marko-overload-end */
     }
 

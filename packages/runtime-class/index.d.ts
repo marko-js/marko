@@ -43,7 +43,7 @@ declare global {
       };
 
     /** The result of calling `template.mount`. */
-    export type MountedTemplate<Input = unknown> = {
+    export type MountedTemplate<Input = unknown, Return = unknown> = {
       update(input: Marko.TemplateInput<Input>): void;
       destroy(): void;
     };
