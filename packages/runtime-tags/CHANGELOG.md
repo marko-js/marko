@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.32
+
+### Patch Changes
+
+- [#2724](https://github.com/marko-js/marko/pull/2724) [`54c8d2b`](https://github.com/marko-js/marko/commit/54c8d2bb5613e6496372e8be1842f8ffad0b9acf) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where intersections were being added to an alias rather than the source binding.
+
+- [#2723](https://github.com/marko-js/marko/pull/2723) [`67562dc`](https://github.com/marko-js/marko/commit/67562dc3e63491d90f9168550f33a441e8ddafd0) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Expose programatic api for reading and writing to a manually mounted template (eg for use in testing).
+
 ## 6.0.31
 
 ### Patch Changes
