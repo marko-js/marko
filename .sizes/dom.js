@@ -1,4 +1,4 @@
-// size: 19077 (min) 7238 (brotli)
+// size: 19136 (min) 7262 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1857,9 +1857,13 @@ function mount(input = {}, reference, position) {
       (parentNode = reference.parentNode),
         (nextSibling = reference.nextSibling);
   }
-  let args = this.m,
+  let curValue,
+    args = this.m,
     effects = prepareEffects(() => {
       (branch = createBranch($global, this, void 0, parentNode)),
+        (branch.e = (newValue) => {
+          curValue = newValue;
+        }),
         this.D?.(branch),
         args?.(branch, input);
     });
@@ -1867,6 +1871,12 @@ function mount(input = {}, reference, position) {
     insertChildNodes(parentNode, nextSibling, branch.h, branch.j),
     runEffects(effects),
     {
+      get value() {
+        return curValue;
+      },
+      set value(newValue) {
+        tagVarSignalChange(branch, newValue);
+      },
       update(newInput) {
         args &&
           runEffects(

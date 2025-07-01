@@ -1,17 +1,18 @@
 import { DEFAULT_RENDER_ID, DEFAULT_RUNTIME_ID } from "../common/meta";
-import type {
-  BranchScope,
-  MountedTemplate,
-  Scope,
-  Template,
-  TemplateInput,
+import {
+  AccessorProp,
+  type BranchScope,
+  type MountedTemplate,
+  type Scope,
+  type Template,
+  type TemplateInput,
 } from "../common/types";
 import { insertChildNodes } from "./dom";
 import { prepareEffects, runEffects } from "./queue";
 import { createBranch, createContent, type Renderer } from "./renderer";
 import { register } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
-import type { Signal } from "./signals";
+import { type Signal, tagVarSignalChange } from "./signals";
 
 export const createTemplate = (
   id: string,
@@ -88,6 +89,7 @@ function mount(
       break;
   }
 
+  let curValue: unknown;
   const args = this.___params;
   const effects = prepareEffects(() => {
     branch = createBranch(
@@ -97,6 +99,9 @@ function mount(
       parentNode,
     );
 
+    branch[AccessorProp.TagVariable] = (newValue: unknown) => {
+      curValue = newValue;
+    };
     this.___setup?.(branch);
     args?.(branch, input);
   });
@@ -110,6 +115,12 @@ function mount(
   runEffects(effects);
 
   return {
+    get value() {
+      return curValue;
+    },
+    set value(newValue) {
+      tagVarSignalChange(branch, newValue);
+    },
     update(newInput: unknown) {
       if (args) {
         runEffects(
