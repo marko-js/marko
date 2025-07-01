@@ -520,13 +520,18 @@ function getTranslatedExtraArgs(signal: { extraArgs?: t.Expression[] }) {
   return emptyExtraArgs;
 }
 
-export function subscribe(provider: ReferencedBindings, subscriber: Signal) {
-  if (Array.isArray(provider)) {
-    provider.forEach((p) => subscribe(p, subscriber));
-    return;
+export function subscribe(references: ReferencedBindings, subscriber: Signal) {
+  if (references) {
+    forEach(references, (binding) => {
+      const source =
+        (binding.property === undefined && binding.upstreamAlias) || binding;
+      const providerSignal = getSignal(subscriber.section, source);
+      providerSignal.intersection = push(
+        providerSignal.intersection,
+        subscriber,
+      );
+    });
   }
-  const providerSignal = getSignal(subscriber.section, provider);
-  providerSignal.intersection = push(providerSignal.intersection, subscriber);
 }
 
 function generateSignalName(referencedBindings?: ReferencedBindings) {
