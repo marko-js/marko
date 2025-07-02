@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.33
+
+### Patch Changes
+
+- [#2726](https://github.com/marko-js/marko/pull/2726) [`79cfb0f`](https://github.com/marko-js/marko/commit/79cfb0fbd1e093434cc1d74493a8cb755f5eef83) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix support for assigning to tag variables from a destructure.
+
 ## 6.0.32
 
 ### Patch Changes
