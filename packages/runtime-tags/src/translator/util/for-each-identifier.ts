@@ -42,3 +42,37 @@ export function forEachIdentifier(
       break;
   }
 }
+
+export function forEachIdentifierPath(
+  nodePath: t.NodePath<any>,
+  cb: (identifier: t.NodePath<t.Identifier>) => void,
+) {
+  if (nodePath.isIdentifier()) {
+    cb(nodePath);
+  } else if (nodePath.isObjectPattern()) {
+    for (const prop of nodePath.get("properties")) {
+      if (prop.isObjectProperty()) {
+        const value = prop.get("value");
+        if (value.isAssignmentPattern()) {
+          forEachIdentifierPath(value.get("left"), cb);
+        } else {
+          forEachIdentifierPath(value, cb);
+        }
+      } else if (prop.isRestElement()) {
+        forEachIdentifierPath(prop.get("argument"), cb);
+      }
+    }
+  } else if (nodePath.isArrayPattern()) {
+    for (const el of nodePath.get("elements")) {
+      if (el) {
+        if (el.isRestElement()) {
+          forEachIdentifierPath(el.get("argument"), cb);
+        } else if (el.isAssignmentPattern()) {
+          forEachIdentifierPath(el.get("left"), cb);
+        } else {
+          forEachIdentifierPath(el, cb);
+        }
+      }
+    }
+  }
+}
