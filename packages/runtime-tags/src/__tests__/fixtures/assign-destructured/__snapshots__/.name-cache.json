@@ -1,0 +1,12 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "o",
+      "$$bar_effect": "r",
+      "$$bar": "n",
+      "$$expr_bar_$fooChange_effect": "i",
+      "$$expr_bar_$fooChange": "a"
+    }
+  }
+}

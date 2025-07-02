@@ -19,6 +19,7 @@ import { getDeclaredBindingExpression } from "./get-defined-binding-expression";
 import { isOptimize, isOutputHTML } from "./marko-config";
 import { find, forEach, type Opt, push } from "./optional";
 import {
+  type AssignedBindingExtra,
   type Binding,
   BindingType,
   bindingUtil,
@@ -1283,10 +1284,7 @@ function replaceAssignedNode(node: t.Node) {
     case "UpdateExpression": {
       const { extra } = node.argument;
       if (isAssignedBindingExtra(extra)) {
-        const { buildAssignment } = getSignal(
-          extra.assignment.section,
-          extra.assignment,
-        );
+        const buildAssignment = getBuildAssignment(extra);
         if (buildAssignment) {
           const replacement = buildAssignment(
             extra.section,
@@ -1310,10 +1308,7 @@ function replaceAssignedNode(node: t.Node) {
         case "Identifier": {
           const { extra } = node.left;
           if (isAssignedBindingExtra(extra)) {
-            const { buildAssignment } = getSignal(
-              extra.assignment.section,
-              extra.assignment,
-            );
+            const buildAssignment = getBuildAssignment(extra);
             if (buildAssignment) {
               return buildAssignment(
                 extra.section,
@@ -1339,15 +1334,12 @@ function replaceAssignedNode(node: t.Node) {
           forEachIdentifier(node.left, (id) => {
             const { extra } = id;
             if (isAssignedBindingExtra(extra)) {
-              const signal = getSignal(
-                extra.assignment.section,
-                extra.assignment,
-              );
-              if (signal?.buildAssignment) {
+              const buildAssignment = getBuildAssignment(extra);
+              if (buildAssignment) {
                 id.name = generateUid(id.name);
                 (params ||= []).push(t.identifier(id.name));
                 (assignments ||= []).push(
-                  signal.buildAssignment(extra.section, t.identifier(id.name)),
+                  buildAssignment(extra.section, t.identifier(id.name)),
                 );
               }
             }
@@ -1375,6 +1367,17 @@ function replaceAssignedNode(node: t.Node) {
       }
       break;
   }
+}
+
+function getBuildAssignment(extra: AssignedBindingExtra) {
+  const { assignmentTo, assignment } = extra;
+  if (assignmentTo) {
+    return (_section: Section, value: t.Expression) => {
+      return t.callExpression(t.identifier(assignmentTo.name), [value]);
+    };
+  }
+
+  return getSignal(assignment.section, assignment).buildAssignment;
 }
 
 const registeredFnsForProgram = new WeakMap<

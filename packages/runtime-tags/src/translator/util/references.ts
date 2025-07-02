@@ -3,7 +3,7 @@ import { getProgram } from "@marko/compiler/babel-utils";
 
 import { toAccess } from "../../html/serializer";
 import type { InputSerializeReasons } from "../visitors/program";
-import { forEachIdentifier } from "./for-each-identifier";
+import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
 import { getAccessorPrefix, getAccessorProp } from "./get-accessor-char";
 import { getExprRoot, getFnRoot } from "./get-root";
@@ -121,6 +121,7 @@ declare module "@marko/compiler/dist/types" {
     referencedBindings?: ReferencedBindings;
     binding?: Binding;
     assignment?: Binding;
+    assignmentTo?: Binding;
     read?: { binding: Binding; props: Opt<string> };
     pruned?: true;
     isEffect?: true;
@@ -359,9 +360,27 @@ function trackAssignment(
 ) {
   const section = getOrCreateSection(assignment);
   setReferencesScope(assignment);
-  forEachIdentifier(assignment.node, (id) => {
-    if (id.name === binding.name) {
-      const extra = (id.extra ??= {});
+  forEachIdentifierPath(assignment, (id) => {
+    if (id.node.name === binding.name) {
+      const extra = (id.node.extra ??= {});
+
+      if (binding.upstreamAlias && binding.property !== undefined) {
+        const changePropName = binding.property + "Change";
+        const changeBinding =
+          binding.upstreamAlias.propertyAliases.get(changePropName) ||
+          createBinding(
+            generateUid(changePropName),
+            BindingType.derived,
+            binding.section,
+            binding.upstreamAlias,
+            changePropName,
+            id.node.loc,
+            true,
+          );
+        extra.assignmentTo = changeBinding;
+        addReadToExpression(id, changeBinding);
+      }
+
       binding.assignmentSections = sectionUtil.add(
         binding.assignmentSections,
         section,
@@ -547,22 +566,7 @@ function trackReference(
     );
   }
 
-  const fnRoot = getFnRoot(root);
-  const exprRoot = getExprRoot(fnRoot || root);
-  const { section } = addReadToExpression(exprRoot, reference, root.node);
-
-  if (fnRoot) {
-    const readsByFn = getReadsByFunction();
-    const fnExtra = (fnRoot.node.extra ??= {}) as FnExtra;
-    fnExtra.section = section;
-    readsByFn.set(
-      fnExtra,
-      push(readsByFn.get(fnExtra), {
-        binding: reference,
-        node: root.node,
-      }),
-    );
-  }
+  addReadToExpression(root, reference);
 }
 
 const [getMergedReferences] = createProgramState(
@@ -1162,19 +1166,28 @@ const [getReadsByFunction] = createProgramState(
   () => new Map<FnExtra, Opt<Read>>(),
 );
 
-export function addReadToExpression(
-  path: t.NodePath,
+function addReadToExpression(
+  root: t.NodePath<t.Identifier> | t.NodePath<t.MemberExpression>,
   binding: Binding,
-  node?: t.Identifier | t.MemberExpression,
 ) {
-  const exprExtra = (path.node.extra ??= {}) as ReferencedExtra;
+  const { node } = root;
+  const fnRoot = getFnRoot(root);
+  const exprRoot = getExprRoot(fnRoot || root);
+  const exprExtra = (exprRoot.node.extra ??= {}) as ReferencedExtra;
   const readsByExpression = getReadsByExpression();
-  exprExtra.section = getOrCreateSection(path);
+  const section = (exprExtra.section = getOrCreateSection(exprRoot));
+  const read: Read = { binding, node };
   readsByExpression.set(
     exprExtra,
-    push(readsByExpression.get(exprExtra), { binding, node }),
+    push(readsByExpression.get(exprExtra), read),
   );
-  return exprExtra;
+
+  if (fnRoot) {
+    const readsByFn = getReadsByFunction();
+    const fnExtra = (fnRoot.node.extra ??= {}) as FnExtra;
+    fnExtra.section = section;
+    readsByFn.set(fnExtra, push(readsByFn.get(fnExtra), read));
+  }
 }
 
 export function dropReferences(node: t.Node | t.Node[]) {
