@@ -1,0 +1,17 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "o",
+      "$$bar_effect": "r",
+      "$$bar": "n",
+      "$$expr_bar_$fooChange_effect": "i",
+      "$$expr_bar_$fooChange": "a",
+      "$$obj": "e",
+      "$$partialObj": "d",
+      "$$partialObj_a": "m",
+      "$$a": "f",
+      "$$partialObj_b": "s"
+    }
+  }
+}

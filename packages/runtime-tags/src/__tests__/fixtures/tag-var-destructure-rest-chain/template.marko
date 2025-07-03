@@ -1,0 +1,7 @@
+const/{ a, ...rest }={ a: 1, b: 2, c: 3, d: 4 }
+const/{ b, ...rest2 }=rest
+const/{ c, ...rest3 }=rest2
+.abc -- ${a} ${b} ${c}
+.rest -- ${JSON.stringify(rest)}
+.rest2 -- ${JSON.stringify(rest2)}
+.rest3 -- ${JSON.stringify(rest3)}
