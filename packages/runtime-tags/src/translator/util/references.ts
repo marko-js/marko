@@ -88,7 +88,7 @@ export interface Binding {
   hoists: Map<Section, Binding>;
   property: string | undefined;
   propertyAliases: Map<string, Binding>;
-  excludeProperties: undefined | string[];
+  excludeProperties: Opt<string>;
   upstreamAlias: Binding | undefined;
   downstreamExpressions: Set<ReferencedExtra>;
   scopeOffset: Binding | undefined;
@@ -145,6 +145,7 @@ export function createBinding(
   section: Section,
   upstreamAlias?: Binding["upstreamAlias"],
   property?: string,
+  excludeProperties?: Opt<string>,
   loc: t.SourceLocation | null = null,
   declared = false,
 ): Binding {
@@ -159,7 +160,7 @@ export function createBinding(
     declared,
     closureSections: undefined,
     assignmentSections: undefined,
-    excludeProperties: undefined,
+    excludeProperties,
     sources: undefined,
     aliases: new Set(),
     hoists: new Map(),
@@ -168,7 +169,7 @@ export function createBinding(
     downstreamExpressions: new Set(),
     scopeOffset: undefined,
     export: undefined,
-    nullable: true,
+    nullable: excludeProperties === undefined,
   };
 
   if (property) {
@@ -208,6 +209,7 @@ export function trackVarReferences(
         canonicalUpstreamAlias.section,
         canonicalUpstreamAlias,
         undefined,
+        undefined,
       );
       return canonicalUpstreamAlias;
     }
@@ -217,6 +219,7 @@ export function trackVarReferences(
       type,
       tag.scope,
       getOrCreateSection(tag),
+      undefined,
       undefined,
       undefined,
     );
@@ -252,15 +255,28 @@ export function trackParamsReferences(
     section.params = paramsBinding;
 
     for (let i = 0; i < params.length; i++) {
-      // TODO: need to support spread here.
-      createBindingsAndTrackReferences(
-        params[i],
-        type,
-        body.scope,
-        section,
-        paramsBinding,
-        i + "",
-      );
+      const param = params[i];
+      if (param.type === "RestElement") {
+        createBindingsAndTrackReferences(
+          param.argument,
+          type,
+          body.scope,
+          section,
+          paramsBinding,
+          undefined,
+          addNumericPropertiesUntil(undefined, i - 1),
+        );
+      } else {
+        createBindingsAndTrackReferences(
+          param,
+          type,
+          body.scope,
+          section,
+          paramsBinding,
+          i + "",
+          undefined,
+        );
+      }
     }
 
     return paramsBinding;
@@ -284,6 +300,7 @@ export function trackHoistedReference(
         generateUid("hoisted_" + referencePath.node.name),
         BindingType.hoist,
         hoistSection,
+        undefined,
         undefined,
         undefined,
         binding.loc,
@@ -374,6 +391,7 @@ function trackAssignment(
             binding.section,
             binding.upstreamAlias,
             changePropName,
+            undefined,
             id.node.loc,
             true,
           );
@@ -405,6 +423,7 @@ function createBindingsAndTrackReferences(
   section: Section,
   upstreamAlias: Binding["upstreamAlias"] | undefined,
   property: string | undefined,
+  excludeProperties: Opt<string>,
 ) {
   switch (lVal.type) {
     case "Identifier":
@@ -416,6 +435,7 @@ function createBindingsAndTrackReferences(
           section,
           upstreamAlias,
           property,
+          excludeProperties,
           lVal.loc,
           true,
         )),
@@ -432,13 +452,14 @@ function createBindingsAndTrackReferences(
           section,
           upstreamAlias,
           property,
+          excludeProperties,
           lVal.loc,
         ));
 
+      const hasRest =
+        lVal.properties[lVal.properties.length - 1]?.type === "RestElement";
       for (const prop of lVal.properties) {
         if (prop.type === "RestElement") {
-          // TODO: this makes rest an alias, but it really should be
-          // a partial alias with some keys removed
           createBindingsAndTrackReferences(
             prop.argument,
             type,
@@ -446,6 +467,7 @@ function createBindingsAndTrackReferences(
             section,
             patternBinding,
             property,
+            excludeProperties,
           );
         } else {
           let key: string;
@@ -459,6 +481,10 @@ function createBindingsAndTrackReferences(
             throw new Error("computed keys not supported in object pattern");
           }
 
+          if (hasRest) {
+            excludeProperties = propsUtil.add(excludeProperties, key);
+          }
+
           createBindingsAndTrackReferences(
             prop.value as t.LVal,
             type,
@@ -466,6 +492,7 @@ function createBindingsAndTrackReferences(
             section,
             patternBinding,
             key,
+            undefined,
           );
         }
       }
@@ -482,6 +509,7 @@ function createBindingsAndTrackReferences(
           section,
           upstreamAlias,
           property,
+          excludeProperties,
           lVal.loc,
         ));
 
@@ -490,8 +518,10 @@ function createBindingsAndTrackReferences(
         i++;
         if (element) {
           if (element.type === "RestElement") {
-            // TODO: this makes rest an alias, but it really should be
-            // a partial alias with some keys removed
+            excludeProperties = addNumericPropertiesUntil(
+              excludeProperties,
+              i - 1,
+            );
             createBindingsAndTrackReferences(
               element.argument,
               type,
@@ -499,6 +529,7 @@ function createBindingsAndTrackReferences(
               section,
               patternBinding,
               property,
+              excludeProperties,
             );
           } else {
             createBindingsAndTrackReferences(
@@ -508,6 +539,7 @@ function createBindingsAndTrackReferences(
               section,
               patternBinding,
               `${i}`,
+              undefined,
             );
           }
         }
@@ -524,6 +556,7 @@ function createBindingsAndTrackReferences(
         section,
         upstreamAlias,
         property,
+        undefined,
       );
       break;
   }
@@ -544,6 +577,14 @@ function trackReference(
 
     const prop = getMemberExpressionPropString(parent);
     if (prop === undefined) break;
+
+    if (
+      reference.upstreamAlias &&
+      reference.excludeProperties !== undefined &&
+      !propsUtil.has(reference.excludeProperties, prop)
+    ) {
+      reference = reference.upstreamAlias;
+    }
 
     if (reference.propertyAliases.has(prop)) {
       root = root.parentPath as t.NodePath<t.MemberExpression>;
@@ -1159,6 +1200,10 @@ export const bindingUtil = new Sorted(function compareBindings(
       : a.id - b.id;
 });
 
+const propsUtil = new Sorted(function compareProps(a: string, b: string) {
+  return a < b ? -1 : a > b ? 1 : 0;
+});
+
 const [getReadsByExpression] = createProgramState(
   () => new Map<ReferencedExtra, Opt<Read>>(),
 );
@@ -1201,9 +1246,16 @@ export function dropReferences(node: t.Node | t.Node[]) {
 }
 
 export function getCanonicalBinding(binding?: Binding) {
-  return (
-    binding && (binding.property ? binding : binding.upstreamAlias || binding)
-  );
+  const alias = binding?.upstreamAlias;
+  if (
+    alias &&
+    binding.property === undefined &&
+    binding.excludeProperties === undefined
+  ) {
+    return alias;
+  }
+
+  return binding;
 }
 
 export function getAllTagReferenceNodes(
@@ -1269,7 +1321,11 @@ export function getScopeAccessor(binding: Binding, includeId?: boolean) {
 export function getDebugScopeAccess(binding: Binding) {
   let root = binding;
   let access = "";
-  while (!(root.loc || root.declared) && root.upstreamAlias) {
+  while (
+    !(root.loc || root.declared) &&
+    root.upstreamAlias &&
+    root.excludeProperties === undefined
+  ) {
     if (root.property !== undefined) {
       access = toAccess(root.property) + access;
     }
@@ -1481,7 +1537,13 @@ function isSupersetSources(a: Binding, b: Binding) {
 }
 
 function getCanonicalProperty(binding: Binding) {
-  return binding.property ?? binding.upstreamAlias?.property;
+  if (binding.property !== undefined) {
+    return binding.property;
+  }
+
+  if (binding.upstreamAlias && binding.excludeProperties === undefined) {
+    return binding.upstreamAlias.property;
+  }
 }
 
 function createRead(binding: Binding, props: Opt<string>) {
@@ -1532,4 +1594,12 @@ export function isRegisteredFnExtra(
   extra: t.NodeExtra | undefined,
 ): extra is RegisteredFnExtra {
   return isReferencedExtra(extra) && extra.registerId !== undefined;
+}
+
+function addNumericPropertiesUntil(props: Opt<string>, len: number) {
+  let result = props;
+  for (let i = len; i--; ) {
+    result = propsUtil.add(result, i + "");
+  }
+  return result;
 }

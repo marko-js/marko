@@ -7,7 +7,11 @@ export function getDeclaredBindingExpression(
   binding: Binding,
 ): t.Identifier | t.OptionalMemberExpression | t.MemberExpression {
   const canonicalBinding = getCanonicalBinding(binding)!;
-  if (canonicalBinding.declared || !canonicalBinding.upstreamAlias) {
+  if (
+    canonicalBinding.declared ||
+    !canonicalBinding.upstreamAlias ||
+    canonicalBinding.excludeProperties !== undefined
+  ) {
     return t.identifier(canonicalBinding.name);
   } else if (canonicalBinding.property !== undefined) {
     return toMemberExpression(
