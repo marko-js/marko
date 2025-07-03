@@ -200,8 +200,12 @@ export function trackVarReferences(
 ) {
   const tagVar = tag.node.var;
   if (tagVar) {
-    const canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
+    let canonicalUpstreamAlias = getCanonicalBinding(upstreamAlias);
     if (canonicalUpstreamAlias) {
+      const { excludeProperties } = canonicalUpstreamAlias;
+      if (excludeProperties !== undefined) {
+        canonicalUpstreamAlias = canonicalUpstreamAlias.upstreamAlias!;
+      }
       createBindingsAndTrackReferences(
         tagVar,
         canonicalUpstreamAlias.type,
@@ -209,7 +213,7 @@ export function trackVarReferences(
         canonicalUpstreamAlias.section,
         canonicalUpstreamAlias,
         undefined,
-        undefined,
+        excludeProperties,
       );
       return canonicalUpstreamAlias;
     }
