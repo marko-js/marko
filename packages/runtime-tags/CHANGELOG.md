@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.34
+
+### Patch Changes
+
+- [#2728](https://github.com/marko-js/marko/pull/2728) [`7dd3fda`](https://github.com/marko-js/marko/commit/7dd3fda1349d2e557997f060b85738f8670d760f) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix support for rest patterns in tag variables not creating a new object.
+
 ## 6.0.33
 
 ### Patch Changes
