@@ -48,6 +48,9 @@ export class Sorted<T> {
       }
     }
   }
+  has<U extends NonNullable<T>>(data: Opt<U>, item: U): boolean {
+    return this.findIndex(data, item) !== -1;
+  }
   findIndex<U extends NonNullable<T>>(data: Opt<U>, item: U) {
     if (data) {
       if (Array.isArray(data)) {

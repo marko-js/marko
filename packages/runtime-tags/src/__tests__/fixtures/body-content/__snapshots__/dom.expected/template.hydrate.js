@@ -1,11 +1,14 @@
-// size: 405 (min) 237 (brotli)
+// size: 447 (min) 251 (brotli)
 const $attrs_effect = _$.effect("a0", ($scope) => _$.attrsEvents($scope, 0)),
+  $attrs = _$.value(5, ($scope, attrs) => {
+    _$.attrs($scope, 0, attrs), $attrs_effect($scope);
+  }),
   $dynamicTag = _$.dynamicTag(1),
   $content = _$.value(4, $dynamicTag),
   $input = _$.value(3, ($scope, input) => {
-    (($scope, attrs) => {
-      _$.attrs($scope, 0, attrs), $attrs_effect($scope);
-    })($scope, input),
+    (({ content: content, ...attrs }) => {
+      $attrs($scope, attrs);
+    })(input),
       $content($scope, input.content);
   }),
   $clickCount$FancyButton$content = _$.dynamicClosureRead(

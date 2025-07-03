@@ -10,8 +10,8 @@ export default _$.createTemplate("__tests__/tags/FancyButton.marko", (input, $se
   _$.write(`</button>${_$.markResumeNode($scope0_id, "#button/0")}`);
   _$.writeEffect($scope0_id, "__tests__/tags/FancyButton.marko_0_attrs");
   _$.writeScope($scope0_id, {
-    input
+    attrs
   }, "__tests__/tags/FancyButton.marko", 0, {
-    input: "1:22"
+    attrs: "1:22"
   });
 });

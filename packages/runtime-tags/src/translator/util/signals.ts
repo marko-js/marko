@@ -57,7 +57,11 @@ import {
   toFirstExpressionOrBlock,
   toParenthesizedExpressionIfNeeded,
 } from "./to-first-expression-or-block";
-import { toMemberExpression, toObjectProperty } from "./to-property-name";
+import {
+  toMemberExpression,
+  toObjectProperty,
+  toPropertyName,
+} from "./to-property-name";
 import { traverseContains, traverseReplace } from "./traverse";
 
 export type Signal = {
@@ -275,7 +279,10 @@ export function initValue(
       (binding.type === BindingType.param ||
         binding.type === BindingType.local ||
         binding.type === BindingType.input);
-    const isNakedAlias = binding.upstreamAlias && !binding.property;
+    const isNakedAlias =
+      binding.upstreamAlias &&
+      binding.property === undefined &&
+      binding.excludeProperties === undefined;
     const needsGuard =
       !isNakedAlias &&
       (binding.closureSections ||
@@ -311,7 +318,7 @@ export function initValue(
 export function getSignalFn(signal: Signal): t.Expression {
   const section = signal.section;
   const binding = signal.referencedBindings;
-  const params: t.Identifier[] = [scopeIdentifier];
+  const params: (t.Identifier | t.ObjectPattern)[] = [scopeIdentifier];
   const isIntersection = Array.isArray(binding);
   const isBinding = binding && !isIntersection;
   const isValue = isBinding && binding.section === section;
@@ -328,6 +335,7 @@ export function getSignalFn(signal: Signal): t.Expression {
       valueParam.start = (binding.loc.start as any).index;
       valueParam.end = (binding.loc.end as any).index;
     }
+
     params.push(valueParam);
   }
 
@@ -339,15 +347,49 @@ export function getSignalFn(signal: Signal): t.Expression {
         aliasSignal.values.length ||
         aliasSignal.effect.length
       ) {
-        signal.render.push(
-          t.expressionStatement(
-            t.callExpression(aliasSignal.identifier, [
-              scopeIdentifier,
-              t.identifier(binding.name),
-              ...getTranslatedExtraArgs(aliasSignal),
-            ]),
-          ),
-        );
+        if (alias.excludeProperties !== undefined) {
+          const props: t.ObjectPattern["properties"] = [];
+          const aliasId = t.identifier(alias.name);
+          forEach(alias.excludeProperties, (name) => {
+            const propId = toPropertyName(name);
+            const shorthand = propId.type === "Identifier";
+            props.push(
+              t.objectProperty(
+                propId,
+                propId.type === "Identifier" ? propId : t.objectPattern([]),
+                false,
+                shorthand,
+              ),
+            );
+          });
+
+          props.push(t.restElement(aliasId));
+          signal.render.push(
+            t.expressionStatement(
+              t.callExpression(
+                t.arrowFunctionExpression(
+                  [t.objectPattern(props)],
+                  t.callExpression(aliasSignal.identifier, [
+                    scopeIdentifier,
+                    aliasId,
+                    ...getTranslatedExtraArgs(aliasSignal),
+                  ]),
+                ),
+                [t.identifier(binding.name)],
+              ),
+            ),
+          );
+        } else {
+          signal.render.push(
+            t.expressionStatement(
+              t.callExpression(aliasSignal.identifier, [
+                scopeIdentifier,
+                t.identifier(binding.name),
+                ...getTranslatedExtraArgs(aliasSignal),
+              ]),
+            ),
+          );
+        }
       }
     }
 
@@ -375,7 +417,8 @@ export function getSignalFn(signal: Signal): t.Expression {
       !valSignal.referencedBindings ||
       Array.isArray(valSignal.referencedBindings) ||
       !valSignal.referencedBindings.upstreamAlias ||
-      valSignal.referencedBindings.property ||
+      valSignal.referencedBindings.property !== undefined ||
+      valSignal.referencedBindings.excludeProperties !== undefined ||
       valSignal.effect.length ||
       valSignal.render.length ||
       valSignal.values.length
@@ -481,7 +524,11 @@ export function getSignalFn(signal: Signal): t.Expression {
           for (; i--; ) {
             const param = params[i];
             const arg = args[i];
-            if (arg.type !== "Identifier" || param.name !== arg.name) {
+            if (
+              arg.type !== "Identifier" ||
+              param.type !== "Identifier" ||
+              param.name !== arg.name
+            ) {
               break;
             }
           }
@@ -525,7 +572,10 @@ export function subscribe(references: ReferencedBindings, subscriber: Signal) {
   if (references) {
     forEach(references, (binding) => {
       const source =
-        (binding.property === undefined && binding.upstreamAlias) || binding;
+        (binding.property === undefined &&
+          binding.excludeProperties === undefined &&
+          binding.upstreamAlias) ||
+        binding;
       const providerSignal = getSignal(subscriber.section, source);
       providerSignal.intersection = push(
         providerSignal.intersection,
@@ -768,7 +818,8 @@ export function writeSignals(section: Section) {
       signal.referencedBindings &&
       !Array.isArray(signal.referencedBindings) &&
       signal.referencedBindings.upstreamAlias &&
-      !signal.referencedBindings.property &&
+      signal.referencedBindings.property === undefined &&
+      signal.referencedBindings.excludeProperties === undefined &&
       t.isFunction(value) &&
       t.isBlockStatement(value.body) &&
       !value.body.body.length

@@ -1,0 +1,24 @@
+let/obj={
+  a: 1,
+  b: 2,
+  c: 3,
+}
+
+const/{
+  a,
+  ...partialObj
+}=obj
+
+.obj -- ${JSON.stringify(obj)}
+.partialObj -- ${JSON.stringify(partialObj)}
+.a -- ${a}
+.b -- ${partialObj.b}
+.a -- ${partialObj.a === undefined ? "removed a" : "didn't remove a"}
+
+button onClick() {
+  obj = {
+    a: 4,
+    b: 5,
+    d: 6
+  }
+} -- Update
