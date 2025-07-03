@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.35
+
+### Patch Changes
+
+- [#2730](https://github.com/marko-js/marko/pull/2730) [`7c00601`](https://github.com/marko-js/marko/commit/7c00601356d3b41d0aa083688f90484c7e692a4d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with multi level rest destructuring tag vars.
+
 ## 6.0.34
 
 ### Patch Changes
