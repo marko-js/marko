@@ -31,8 +31,6 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
     | t.NodePath<
         t.FunctionExpression | t.ArrowFunctionExpression | t.ObjectMember
       >;
-  if (curPath.isProgram()) return;
-
   while (!isMarko(curPath)) {
     if (isFunction(curPath)) {
       fnPath = curPath;
@@ -45,7 +43,12 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
       }
     }
 
-    curPath = (curPath as t.NodePath<t.Node>).parentPath!;
+    const parentPath = curPath.parentPath;
+    if (parentPath) {
+      curPath = parentPath;
+    } else {
+      break;
+    }
   }
 
   return fnPath;
