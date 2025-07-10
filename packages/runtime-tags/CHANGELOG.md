@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.36
+
+### Patch Changes
+
+- [#2732](https://github.com/marko-js/marko/pull/2732) [`74332ef`](https://github.com/marko-js/marko/commit/74332ef7fedb1f49a39ef884f7421c45749330c9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue reading trying to get the root function from a exported function.
+
 ## 6.0.35
 
 ### Patch Changes
