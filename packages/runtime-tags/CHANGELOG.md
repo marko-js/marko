@@ -1,5 +1,14 @@
 # @marko/runtime-tags
 
+## 6.0.37
+
+### Patch Changes
+
+- [#2734](https://github.com/marko-js/marko/pull/2734) [`b6ba333`](https://github.com/marko-js/marko/commit/b6ba333ee289ff27a549d1a2ea60b06338cb7ef5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade all deps. Fix support for [discard binding proposal](https://github.com/tc39/proposal-discard-binding).
+
+- Updated dependencies [[`b6ba333`](https://github.com/marko-js/marko/commit/b6ba333ee289ff27a549d1a2ea60b06338cb7ef5)]:
+  - @marko/compiler@5.39.29
+
 ## 6.0.36
 
 ### Patch Changes

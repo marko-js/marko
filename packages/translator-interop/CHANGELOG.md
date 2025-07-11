@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.33
+
+### Patch Changes
+
+- [#2734](https://github.com/marko-js/marko/pull/2734) [`b6ba333`](https://github.com/marko-js/marko/commit/b6ba333ee289ff27a549d1a2ea60b06338cb7ef5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade all deps. Fix support for [discard binding proposal](https://github.com/tc39/proposal-discard-binding).
+
+- Updated dependencies [[`b6ba333`](https://github.com/marko-js/marko/commit/b6ba333ee289ff27a549d1a2ea60b06338cb7ef5)]:
+  - marko@5.37.41
+  - @marko/runtime-tags@6.0.37
+
 ## 0.2.32
 
 ### Patch Changes
@@ -551,7 +561,6 @@
 ### Patch Changes
 
 - [#2246](https://github.com/marko-js/marko/pull/2246) [`a699cd9`](https://github.com/marko-js/marko/commit/a699cd9434996b8da0a14acba39fd1db03c0329a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Misc backward compat improvements:
-
   - Expose `marko/browser-refresh` as a noop
   - Allow translators to specify "optional" taglibs to load if they're installed (used for automatically loading compat taglibs)
   - `marko/node-require` legacy require hook now disables user babel transforms by default
