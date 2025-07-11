@@ -1,5 +1,14 @@
 # Change Log
 
+## 5.37.41
+
+### Patch Changes
+
+- [#2734](https://github.com/marko-js/marko/pull/2734) [`b6ba333`](https://github.com/marko-js/marko/commit/b6ba333ee289ff27a549d1a2ea60b06338cb7ef5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade all deps. Fix support for [discard binding proposal](https://github.com/tc39/proposal-discard-binding).
+
+- Updated dependencies [[`b6ba333`](https://github.com/marko-js/marko/commit/b6ba333ee289ff27a549d1a2ea60b06338cb7ef5)]:
+  - @marko/compiler@5.39.29
+
 ## 5.37.40
 
 ### Patch Changes
@@ -729,7 +738,6 @@
 ### Patch Changes
 
 - [#2246](https://github.com/marko-js/marko/pull/2246) [`a699cd9`](https://github.com/marko-js/marko/commit/a699cd9434996b8da0a14acba39fd1db03c0329a) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Misc backward compat improvements:
-
   - Expose `marko/browser-refresh` as a noop
   - Allow translators to specify "optional" taglibs to load if they're installed (used for automatically loading compat taglibs)
   - `marko/node-require` legacy require hook now disables user babel transforms by default
@@ -1562,7 +1570,6 @@
 ### Patch Changes
 
 - [#1947](https://github.com/marko-js/marko/pull/1947) [`7264e6ce6`](https://github.com/marko-js/marko/commit/7264e6ce6361c55ca73a25b9c2d2a36d4e48ee38) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Improve TS native tag event handler types
-
   - add onToggle
   - add onFormData
   - move onSubmit into form
