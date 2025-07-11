@@ -1,4 +1,4 @@
-// size: 343 (min) 226 (brotli)
+// size: 329 (min) 226 (brotli)
 const $dynamicTag = _$.dynamicTag(2, 0, 0, 1),
   $expr_input_content_x = _$.intersection(7, ($scope) => {
     const { 5: input_content, 6: x } = $scope;
@@ -10,7 +10,7 @@ const $dynamicTag = _$.dynamicTag(2, 0, 0, 1),
     }),
   ),
   $x = _$.state(6, ($scope, x) => {
-    _$.data($scope[1], x), $expr_input_content_x($scope), $x_effect($scope);
+    (_$.data($scope[1], x), $expr_input_content_x($scope), $x_effect($scope));
   }),
   $count$customtag$content = _$.value(2, ($scope, count) =>
     _$.data($scope[0], count),
@@ -18,11 +18,11 @@ const $dynamicTag = _$.dynamicTag(2, 0, 0, 1),
   $params2$customtag$content = _$.value(1, ($scope, $params2) =>
     $count$customtag$content($scope, $params2[0]),
   );
-_$.registerContent(
+(_$.registerContent(
   "b0",
   "<div>Count: <!></div>",
   "Db%",
   0,
   $params2$customtag$content,
 ),
-  init();
+  init());

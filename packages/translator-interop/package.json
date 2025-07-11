@@ -29,8 +29,8 @@
     "build": "node -r ~ts ./scripts/bundle.ts"
   },
   "dependencies": {
-    "@babel/code-frame": "^7.26.2",
-    "@marko/runtime-tags": "^6.0.29",
+    "@babel/code-frame": "^7.27.1",
+    "@marko/runtime-tags": "^6.0.36",
     "marko": "^5.37.40"
   },
   "peerDependencies": {

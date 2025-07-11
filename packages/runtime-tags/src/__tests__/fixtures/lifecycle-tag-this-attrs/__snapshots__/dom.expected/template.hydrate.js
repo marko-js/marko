@@ -1,6 +1,6 @@
-// size: 153 (min) 115 (brotli)
+// size: 149 (min) 118 (brotli)
 const $x = _$.state(1, ($scope, x) => _$.data($scope[0], x));
-_$.effect("a0", ($scope) =>
+(_$.effect("a0", ($scope) =>
   _$.lifecycle($scope, 2, {
     x: 1,
     setX: function (value) {
@@ -11,4 +11,4 @@ _$.effect("a0", ($scope) =>
     },
   }),
 ),
-  init();
+  init());

@@ -1,4 +1,4 @@
-// size: 708 (min) 337 (brotli)
+// size: 688 (min) 328 (brotli)
 const $Child_content2 = _$.registerContent("a0", "Hi"),
   $Child_content = _$.registerContent("a1", "Hi"),
   $setup$Parent$content = _$.dynamicClosureRead(10, ($scope, input_value) =>
@@ -21,9 +21,9 @@ const $Child_content2 = _$.registerContent("a0", "Hi"),
     }),
   ),
   $Parent = _$.state(11, ($scope, Parent) => {
-    $dynamicTag3($scope, Parent),
+    ($dynamicTag3($scope, Parent),
       $expr_Parent_Child($scope),
-      $Parent_effect($scope);
+      $Parent_effect($scope));
   }),
   $dynamicTag = _$.dynamicTag(2, $Child_content),
   $dynamicTag2 = _$.dynamicTag(4, $Child_content2),
@@ -33,9 +33,9 @@ const $Child_content2 = _$.registerContent("a0", "Hi"),
     }),
   ),
   $Child = _$.state(12, ($scope, Child) => {
-    $dynamicTag($scope, Child, () => ({ href: "#bar" })),
+    ($dynamicTag($scope, Child, () => ({ href: "#bar" })),
       $dynamicTag2($scope, Child, () => ({ href: "#bar" })),
       $expr_Parent_Child($scope),
-      $Child_effect($scope);
+      $Child_effect($scope));
   });
 init();

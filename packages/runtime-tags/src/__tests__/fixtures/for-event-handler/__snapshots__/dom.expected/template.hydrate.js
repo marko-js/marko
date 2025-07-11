@@ -1,4 +1,4 @@
-// size: 293 (min) 200 (brotli)
+// size: 283 (min) 195 (brotli)
 const $num$for$content_effect = _$.effect("a0", ($scope, { _: { 1: num } }) =>
     _$.on($scope[0], "click", function () {
       $num($scope._, num + 1);
@@ -18,6 +18,6 @@ const $num$for$content_effect = _$.effect("a0", ($scope, { _: { 1: num } }) =>
   ),
   $for = _$.loopTo(0, $for_content),
   $num = _$.state(1, ($scope, num) => {
-    $for($scope, [num, 0, 1]), $num$for$content($scope);
+    ($for($scope, [num, 0, 1]), $num$for$content($scope));
   });
 init();

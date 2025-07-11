@@ -1,4 +1,4 @@
-// size: 313 (min) 205 (brotli)
+// size: 305 (min) 205 (brotli)
 const $expr_mult_item$item$content = _$.intersection(1, ($scope) => {
     const {
       _: { 3: mult },
@@ -18,6 +18,6 @@ const $mult_closure = _$.dynamicClosure($mult$item$content),
     }),
   ),
   $mult = _$.state(3, ($scope, mult) => {
-    _$.data($scope[2], mult), $mult_closure($scope), $mult_effect($scope);
+    (_$.data($scope[2], mult), $mult_closure($scope), $mult_effect($scope));
   });
 init();

@@ -1,11 +1,11 @@
-// size: 459 (min) 252 (brotli)
+// size: 441 (min) 247 (brotli)
 const $a$define$content = _$.value(4, ($scope, a) => _$.data($scope[0], a)),
   $b$define$content = _$.value(5, ($scope, b) => _$.data($scope[1], b)),
   $c$define$content = _$.value(6, ($scope, c) => _$.data($scope[2], c)),
   $params2$define$content = _$.value(3, ($scope, $params2) => {
-    $a$define$content($scope, $params2[0]),
+    ($a$define$content($scope, $params2[0]),
       $b$define$content($scope, $params2[1]),
-      $c$define$content($scope, $params2[2]);
+      $c$define$content($scope, $params2[2]));
   });
 _$.registerContent(
   "a0",
@@ -25,6 +25,6 @@ const $dynamicTag = _$.dynamicTag(0, 0, 0, 1),
     }),
   ),
   $x = _$.state(3, ($scope, x) => {
-    _$.data($scope[2], x), $expr_x_MyTag($scope), $x_effect($scope);
+    (_$.data($scope[2], x), $expr_x_MyTag($scope), $x_effect($scope));
   });
 init();

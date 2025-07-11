@@ -1,4 +1,4 @@
-// size: 335 (min) 200 (brotli)
+// size: 321 (min) 206 (brotli)
 const $dynamicTag = _$.dynamicTag(0, 0, 0, 1),
   $input_item = _$.value(3, ($scope, input_item) =>
     $dynamicTag($scope, input_item, () => [1]),
@@ -21,8 +21,8 @@ const $dynamicTag = _$.dynamicTag(0, 0, 0, 1),
   ),
   $x = _$.state(2, ($scope, x) => {
     let $item;
-    x && ($item = _$.attrTag({ content: $item_content($scope) })),
+    (x && ($item = _$.attrTag({ content: $item_content($scope) })),
       $input_item($scope[0], $item),
-      $x_effect($scope);
+      $x_effect($scope));
   });
 init();

@@ -1,4 +1,4 @@
-// size: 373 (min) 223 (brotli)
+// size: 363 (min) 219 (brotli)
 _$.enableCatch();
 const $err$catch$content = _$.value(2, ($scope, err) =>
     _$.data($scope[0], err),
@@ -10,20 +10,20 @@ _$.registerContent("a0", " ", " ", 0, $params2$catch$content);
 const $clickCount$try$content_effect = _$.effect(
     "a1",
     ($scope, { _: { 2: clickCount } }) => {
-      _$.on($scope[0], "click", function () {
+      (_$.on($scope[0], "click", function () {
         $clickCount($scope._, clickCount + 1);
       }),
-        ($scope._[0].textContent = clickCount);
+        ($scope._[0].textContent = clickCount));
     },
   ),
   $clickCount$try$content = _$.dynamicClosureRead(2, ($scope, clickCount) => {
-    _$.data(
+    (_$.data(
       $scope[1],
       (() => {
         if (clickCount > 1) throw new Error("ERROR!");
       })(),
     ),
-      $clickCount$try$content_effect($scope);
+      $clickCount$try$content_effect($scope));
   }),
   $clickCount_closure = _$.dynamicClosure($clickCount$try$content),
   $clickCount = _$.state(2, $clickCount_closure);

@@ -1,4 +1,4 @@
-// size: 273 (min) 183 (brotli)
+// size: 263 (min) 172 (brotli)
 const $message_text$if$content = _$.conditionalClosure(
     3,
     1,
@@ -13,9 +13,9 @@ const $message_text$if$content = _$.conditionalClosure(
   $message_text = _$.value(3, $message_text$if$content),
   $if = _$.conditional(1, $if_content),
   $show = _$.state(4, ($scope, show) => $if($scope, show ? 0 : 1));
-_$.effect("a0", ($scope) =>
+(_$.effect("a0", ($scope) =>
   _$.on($scope[0], "click", function () {
-    $message($scope, null), $show($scope, !1);
+    ($message($scope, null), $show($scope, !1));
   }),
 ),
-  init();
+  init());

@@ -13,7 +13,6 @@
 - Check if “upstream” connections are `keep-alive`: overhead from closing and reopening connections may delay responses.
 
 - For typical modern webpage filesizes, the following bullet points probably won’t matter. But if you want to stream **small chunks of data with the lowest latency**, investigate these sources of buffering:
-
   - Automatic gzip/brotli compression may have their buffer sizes set too high; you can tune their buffers to be smaller for faster streaming in exchange for slightly worse compression.
 
   - You can [tune HTTPS record sizes for lower latency, as described in High Performance Browser Networking](https://hpbn.co/transport-layer-security-tls/#optimize-tls-record-size).

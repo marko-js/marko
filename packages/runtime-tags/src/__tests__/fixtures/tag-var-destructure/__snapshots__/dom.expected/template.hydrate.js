@@ -1,4 +1,4 @@
-// size: 490 (min) 254 (brotli)
+// size: 476 (min) 265 (brotli)
 const noop = $noop,
   $a = _$.state(6, ($scope, a) => _$.data($scope[1], a)),
   $b = _$.state(7, ($scope, b) => _$.data($scope[2], b)),
@@ -6,11 +6,11 @@ const noop = $noop,
   $d = _$.state(9, ($scope, d) => _$.data($scope[4], d)),
   $e = _$.state(10, ($scope, e) => _$.data($scope[5], JSON.stringify(e)));
 function $noop(_) {}
-_$.effect("a1", ($scope) =>
+(_$.effect("a1", ($scope) =>
   _$.on($scope[0], "click", function () {
     let local;
     var $result2, $a2, $b2, $c2, $result, $d2, $e2;
-    ($result2 = { a: 1, _b: { _b: 2 }, local: 3, c: 4 }),
+    (($result2 = { a: 1, _b: { _b: 2 }, local: 3, c: 4 }),
       ({
         a: $a2,
         _b: { _b: $b2 },
@@ -30,8 +30,8 @@ _$.effect("a1", ($scope) =>
         $d($scope, $d2),
         $e($scope, $e2),
         $result),
-      );
+      ));
   }),
 ),
   _$.register("a0", $noop),
-  init();
+  init());

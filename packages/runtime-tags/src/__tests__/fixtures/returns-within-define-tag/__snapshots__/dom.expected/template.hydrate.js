@@ -1,4 +1,4 @@
-// size: 1230 (min) 431 (brotli)
+// size: 1194 (min) 427 (brotli)
 const $expr_value_call$define$content2 = _$.intersection(4, ($scope) => {
     const { 2: value, 3: call } = $scope;
     _$.tagVarSignal($scope, $_return2($scope));
@@ -47,7 +47,7 @@ const $dynamicTag = _$.dynamicTag(0, 0, () => $onClickOnce2),
     $dynamicTag($scope, Once, () => ({ value: $onClickOnce($scope) }));
   }),
   $clickOnceCount = _$.state(9, ($scope, clickOnceCount) => {
-    _$.data($scope[3], clickOnceCount), $expr_Once_clickOnceCount($scope);
+    (_$.data($scope[3], clickOnceCount), $expr_Once_clickOnceCount($scope));
   }),
   $dynamicTag2 = _$.dynamicTag(4, 0, () => $onClickTwice2),
   $expr_Twice_clickTwiceCount = _$.intersection(14, ($scope) => {
@@ -55,7 +55,7 @@ const $dynamicTag = _$.dynamicTag(0, 0, () => $onClickOnce2),
     $dynamicTag2($scope, Twice, () => ({ value: $onClickTwice($scope) }));
   }),
   $clickTwiceCount = _$.state(13, ($scope, clickTwiceCount) => {
-    _$.data($scope[7], clickTwiceCount), $expr_Twice_clickTwiceCount($scope);
+    (_$.data($scope[7], clickTwiceCount), $expr_Twice_clickTwiceCount($scope));
   }),
   $onClickOnce2_effect = _$.effect("a6", ($scope, { 11: onClickOnce }) =>
     _$.on($scope[2], "click", onClickOnce),
@@ -91,8 +91,8 @@ function $onClickTwice($scope, { 13: clickTwiceCount } = $scope) {
     $clickTwiceCount($scope, clickTwiceCount + 1);
   };
 }
-_$.register("a2", $_return2),
+(_$.register("a2", $_return2),
   _$.register("a0", $_return),
   _$.register("a1", $onClickOnce),
   _$.register("a3", $onClickTwice),
-  init();
+  init());

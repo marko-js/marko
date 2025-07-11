@@ -77,13 +77,13 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
     "class": "a b",
     "other": input.other
   }, "11", _component, 0, 0);
-  const _tagName10 = "h" + input.level;
-  out.e(_tagName10, {
+  const _tagName0 = "h" + input.level;
+  out.e(_tagName0, {
     "class": "a b",
     "other": input.other
   }, "12", _component, 0, 0);
-  const _tagName11 = `h${input.level}`;
-  out.e(_tagName11, {
+  const _tagName1 = `h${input.level}`;
+  out.e(_tagName1, {
     "class": "a b",
     "other": input.other
   }, "13", _component, 0, 0);

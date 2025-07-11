@@ -1,4 +1,4 @@
-// size: 175 (min) 127 (brotli)
+// size: 169 (min) 123 (brotli)
 const $setup$if$content = _$.effect("a0", ($scope) =>
     _$.on($scope[0], "click", function () {
       $hide($scope._, !0);

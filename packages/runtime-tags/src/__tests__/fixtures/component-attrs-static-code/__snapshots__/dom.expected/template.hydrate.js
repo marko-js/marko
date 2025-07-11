@@ -1,4 +1,4 @@
-// size: 291 (min) 177 (brotli)
+// size: 279 (min) 168 (brotli)
 const $expr_input_count = _$.intersection(5, ($scope) => {
     const { 3: input, 4: count } = $scope;
     _$.data($scope[1], input.format(count));
@@ -9,12 +9,12 @@ const $expr_input_count = _$.intersection(5, ($scope) => {
     }),
   ),
   $count = _$.state(4, ($scope) => {
-    $expr_input_count($scope), $count_effect($scope);
+    ($expr_input_count($scope), $count_effect($scope));
   });
-_$.register("b0", function (n) {
+(_$.register("b0", function (n) {
   return "$" + n.toFixed(2);
 }),
   _$.register("b1", function (n) {
     return "$" + n.toFixed(2);
   }),
-  init();
+  init());

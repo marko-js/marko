@@ -1,4 +1,4 @@
-// size: 618 (min) 316 (brotli)
+// size: 596 (min) 323 (brotli)
 const $dynamicTag = _$.dynamicTag(0, 0, 0, 1),
   $expr_content_value = _$.intersection(5, ($scope) => {
     const { 3: content, 4: value } = $scope;
@@ -36,9 +36,9 @@ _$.registerContent(
   "<div><!></div>",
   "/D%l&",
   ($scope) => {
-    $scope[0],
+    ($scope[0],
       $content($scope[0], $child_content2($scope)),
-      $y$child$content($scope);
+      $y$child$content($scope));
   },
   $params2$child$content,
 );
@@ -48,6 +48,6 @@ const $x_effect = _$.effect("b2", ($scope, { 2: x }) =>
     }),
   ),
   $x = _$.state(2, ($scope, x) => {
-    $value($scope[1], x), $x_effect($scope);
+    ($value($scope[1], x), $x_effect($scope));
   });
 init();

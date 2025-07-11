@@ -1,11 +1,11 @@
-// size: 243 (min) 168 (brotli)
+// size: 238 (min) 164 (brotli)
 const $expr_selected_num$for$content = _$.intersection(4, ($scope) => {
   const {
     _: { 1: selected },
     3: num,
   } = $scope;
-  _$.attr($scope[0], "data-selected", selected === num),
-    _$.attr($scope[0], "data-multiple", num % selected == 0);
+  (_$.attr($scope[0], "data-selected", selected === num),
+    _$.attr($scope[0], "data-multiple", num % selected === 0));
 });
 _$.effect("a0", ($scope, { 3: num }) =>
   _$.on($scope[0], "click", function () {
