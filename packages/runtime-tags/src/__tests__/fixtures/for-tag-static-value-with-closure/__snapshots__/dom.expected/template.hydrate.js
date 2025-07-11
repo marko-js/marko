@@ -1,4 +1,4 @@
-// size: 176 (min) 123 (brotli)
+// size: 168 (min) 129 (brotli)
 const $count$for$content = _$.loopClosure(3, 0, ($scope, count) =>
     _$.data($scope[1], count),
   ),
@@ -8,8 +8,8 @@ const $count$for$content = _$.loopClosure(3, 0, ($scope, count) =>
     }),
   ),
   $count = _$.state(3, ($scope, count) => {
-    _$.data($scope[2], count),
+    (_$.data($scope[2], count),
       $count$for$content($scope),
-      $count_effect($scope);
+      $count_effect($scope));
   });
 init();

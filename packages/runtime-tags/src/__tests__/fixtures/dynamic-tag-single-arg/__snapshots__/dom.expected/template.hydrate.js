@@ -1,4 +1,4 @@
-// size: 315 (min) 210 (brotli)
+// size: 305 (min) 202 (brotli)
 const $input = _$.value(2, ($scope, input) => _$.data($scope[0], input));
 function $setup($scope) {
   _$.tagVarSignal($scope, "hello from other");
@@ -11,8 +11,8 @@ const tags = [_$.createTemplate("a", "<div> </div>", "D l", $setup, $input)],
     }),
   ),
   $x = _$.state(3, ($scope, x) => {
-    _$.data($scope[1], x),
+    (_$.data($scope[1], x),
       $dynamicTag($scope, tags[0], () => [x]),
-      $x_effect($scope);
+      $x_effect($scope));
   });
 init();

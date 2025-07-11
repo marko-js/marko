@@ -1,4 +1,4 @@
-// size: 315 (min) 205 (brotli)
+// size: 303 (min) 210 (brotli)
 const $setup = () => {},
   $id = _$.value(3, ($scope, id) => _$.data($scope[0], id)),
   $input = _$.value(2, ($scope, input) => $id($scope, input.id));
@@ -16,7 +16,7 @@ const $dynamicTag = _$.dynamicTag(1),
     }),
   ),
   $tagName = _$.state(2, ($scope, tagName) => {
-    $dynamicTag($scope, tagName, () => ({ id: "dynamic" })),
-      $tagName_effect($scope);
+    ($dynamicTag($scope, tagName, () => ({ id: "dynamic" })),
+      $tagName_effect($scope));
   });
 init();

@@ -1,4 +1,4 @@
-// size: 262 (min) 178 (brotli)
+// size: 252 (min) 183 (brotli)
 const $tagName_content = _$.registerContent("a0", "body content"),
   $dynamicTag = _$.dynamicTag(0, $tagName_content),
   $expr_tagName_className = _$.intersection(4, ($scope) => {
@@ -11,6 +11,6 @@ const $tagName_content = _$.registerContent("a0", "body content"),
     }),
   ),
   $tagName = _$.state(2, ($scope) => {
-    $expr_tagName_className($scope), $tagName_effect($scope);
+    ($expr_tagName_className($scope), $tagName_effect($scope));
   });
 init();

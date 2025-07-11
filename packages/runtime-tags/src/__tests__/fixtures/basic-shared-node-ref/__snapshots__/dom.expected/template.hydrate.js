@@ -1,4 +1,4 @@
-// size: 413 (min) 226 (brotli)
+// size: 397 (min) 222 (brotli)
 const $x$for$content = _$.value(2, ($scope, x) => _$.data($scope[0], x)),
   $params2$for$content = _$.value(1, ($scope, $params2) =>
     $x$for$content($scope, $params2[0]),
@@ -10,7 +10,7 @@ const $x$for$content = _$.value(2, ($scope, x) => _$.data($scope[0], x)),
     }),
   ),
   $open = _$.state(3, ($scope, open) => {
-    _$.attr($scope[0], "hidden", !open), $open_effect($scope);
+    (_$.attr($scope[0], "hidden", !open), $open_effect($scope));
   }),
   $for = _$.loopOf(0, $for_content),
   $list_effect = _$.effect("a1", ($scope, { 4: list }) =>
@@ -19,12 +19,12 @@ const $x$for$content = _$.value(2, ($scope, x) => _$.data($scope[0], x)),
     }),
   ),
   $list = _$.state(4, ($scope, list) => {
-    $for($scope, [
+    ($for($scope, [
       list,
       function (x) {
         return x;
       },
     ]),
-      $list_effect($scope);
+      $list_effect($scope));
   });
 init();

@@ -1,4 +1,4 @@
-// size: 195 (min) 147 (brotli)
+// size: 187 (min) 142 (brotli)
 const $expr_value_dummy = _$.intersection(5, ($scope) => {
     const { 3: value, 4: dummy } = $scope;
     _$.data($scope[0], value);
@@ -10,6 +10,6 @@ const $expr_value_dummy = _$.intersection(5, ($scope) => {
     }),
   ),
   $count = _$.state(2, ($scope, count) => {
-    $value($scope[0], count), $count_effect($scope);
+    ($value($scope[0], count), $count_effect($scope));
   });
 init();

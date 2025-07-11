@@ -1,4 +1,4 @@
-// size: 1098 (min) 335 (brotli)
+// size: 1062 (min) 355 (brotli)
 const getStringBy = $getStringBy,
   getFunctionBy = $getFunctionBy,
   getMissingBy = $getMissingBy,
@@ -53,12 +53,12 @@ const getStringBy = $getStringBy,
     }),
   ),
   $items = _$.state(6, ($scope, items) => {
-    $for($scope, [items, "id"]),
+    ($for($scope, [items, "id"]),
       $for2($scope, [items, (item) => item.id]),
       $for3($scope, [items, getStringBy()]),
       $for4($scope, [items, getFunctionBy()]),
       $for5($scope, [items, getMissingBy()]),
-      $items_effect($scope);
+      $items_effect($scope));
   });
 function $getStringBy() {
   return "id";
@@ -67,7 +67,7 @@ function $getFunctionBy() {
   return (item) => item.id;
 }
 function $getMissingBy() {}
-_$.register("a0", $getStringBy),
+(_$.register("a0", $getStringBy),
   _$.register("a1", $getFunctionBy),
   _$.register("a2", $getMissingBy),
-  init();
+  init());

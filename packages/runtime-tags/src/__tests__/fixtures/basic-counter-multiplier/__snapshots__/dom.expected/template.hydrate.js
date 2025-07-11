@@ -1,4 +1,4 @@
-// size: 323 (min) 179 (brotli)
+// size: 307 (min) 179 (brotli)
 const $multipliedCount = _$.value(7, ($scope, multipliedCount) =>
     _$.data($scope[3], multipliedCount),
   ),
@@ -12,7 +12,7 @@ const $multipliedCount = _$.value(7, ($scope, multipliedCount) =>
     }),
   ),
   $count = _$.state(4, ($scope) => {
-    $expr_count_multiplier($scope), $count_effect($scope);
+    ($expr_count_multiplier($scope), $count_effect($scope));
   }),
   $multiplier_effect = _$.effect("a1", ($scope, { 5: multiplier }) =>
     _$.on($scope[0], "click", function () {
@@ -20,8 +20,8 @@ const $multipliedCount = _$.value(7, ($scope, multipliedCount) =>
     }),
   ),
   $multiplier = _$.state(5, ($scope, multiplier) => {
-    _$.data($scope[1], multiplier),
+    (_$.data($scope[1], multiplier),
       $expr_count_multiplier($scope),
-      $multiplier_effect($scope);
+      $multiplier_effect($scope));
   });
 init();

@@ -1,4 +1,4 @@
-// size: 631 (min) 295 (brotli)
+// size: 611 (min) 289 (brotli)
 const $count$if$content_effect = _$.effect(
     "a0",
     (
@@ -16,7 +16,7 @@ const $count$if$content_effect = _$.effect(
   $count$if$content = _$.dynamicClosureRead(
     4,
     ($scope, count) => {
-      _$.data($scope[1], count), $count$if$content_effect($scope);
+      (_$.data($scope[1], count), $count$if$content_effect($scope));
     },
     ($scope) => $scope._._,
   ),
@@ -33,7 +33,7 @@ const $count$if$content_effect = _$.effect(
     }),
   ),
   $inner$if$content = _$.conditionalClosure(3, 1, 0, ($scope, inner) => {
-    $if$if$content($scope, inner ? 0 : 1), $inner$if$content_effect($scope);
+    ($if$if$content($scope, inner ? 0 : 1), $inner$if$content_effect($scope));
   }),
   $setup$if$content2 = $inner$if$content,
   $if_content = _$.createRenderer(
@@ -48,7 +48,7 @@ const $count$if$content_effect = _$.effect(
     }),
   ),
   $outer = _$.state(2, ($scope, outer) => {
-    $if($scope, outer ? 0 : 1), $outer_effect($scope);
+    ($if($scope, outer ? 0 : 1), $outer_effect($scope));
   }),
   $inner = _$.state(3, $inner$if$content),
   $count_closure = _$.dynamicClosure($count$if$content),

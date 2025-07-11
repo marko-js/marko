@@ -1,4 +1,4 @@
-// size: 870 (min) 391 (brotli)
+// size: 856 (min) 368 (brotli)
 function $setup$1($scope) {
   _$.tagVarSignal($scope, $_return($scope));
 }
@@ -12,7 +12,7 @@ var Child = _$.createTemplate("a", "<div></div>", " b", $setup$1);
 const $dynamicTag = _$.dynamicTag(),
   $dynamicTag2 = _$.dynamicTag(1),
   $input_content = _$.value(4, ($scope, input_content) => {
-    $dynamicTag($scope, input_content), $dynamicTag2($scope, input_content);
+    ($dynamicTag($scope, input_content), $dynamicTag2($scope, input_content));
   }),
   $get$hoisted_setHtml = _$.hoist(2, "a4"),
   $dynamicTag$inputshowsectionnull$content = _$.dynamicTag(
@@ -52,12 +52,12 @@ const $get$hoisted_setHtml2 = _$.hoist(2, "a3", "a2"),
     0,
     "a3",
   );
-_$.registerContent(
+(_$.registerContent(
   "c4",
   "<!><!><!><!><!><!>",
   "D/D%b%bD&D",
   ($scope) => {
-    $scope[0], $input_content($scope[0], $thing_content2($scope));
+    ($scope[0], $input_content($scope[0], $thing_content2($scope)));
   },
   0,
   "a2",
@@ -68,7 +68,7 @@ _$.registerContent(
     for (const fn of 6) fn("Hoist from custom tag");
   }),
   _$.effect("c9", ($scope) => {
-    $get$hoisted_setHtml2($scope)("Hoist from dynamic tag"),
-      $get$hoisted_setHtml($scope)("Hoist from dynamic tag");
+    ($get$hoisted_setHtml2($scope)("Hoist from dynamic tag"),
+      $get$hoisted_setHtml($scope)("Hoist from dynamic tag"));
   }),
-  init();
+  init());

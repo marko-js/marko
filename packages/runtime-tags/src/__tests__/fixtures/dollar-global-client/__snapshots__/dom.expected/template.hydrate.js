@@ -1,4 +1,4 @@
-// size: 339 (min) 198 (brotli)
+// size: 333 (min) 192 (brotli)
 const $setup$if$content2 = ($scope) => {
     _$.data($scope[0], $scope.$global.x);
   },
@@ -19,6 +19,8 @@ const $setup$if$content2 = ($scope) => {
     }),
   ),
   $show = _$.state(3, ($scope, show) => {
-    $if($scope, show ? 0 : 1), $if2($scope, show ? 1 : 0), $show_effect($scope);
+    ($if($scope, show ? 0 : 1),
+      $if2($scope, show ? 1 : 0),
+      $show_effect($scope));
   });
 init();

@@ -32,7 +32,7 @@ import _marko_merge_attrs from "marko/dist/runtime/vdom/helpers/merge-attrs.js";
 const _marko_node9 = _marko_constElement("div", {
   "b": "1"
 }, 0);
-const _marko_node10 = _marko_constElement("div", null, 1).t("123 abc 123");
+const _marko_node0 = _marko_constElement("div", null, 1).t("123 abc 123");
 import _marko_attrs from "marko/dist/runtime/vdom/helpers/attrs.js";
 import _marko_renderer from "marko/dist/runtime/components/renderer.js";
 import { r as _marko_registerComponent } from "marko/dist/runtime/components/registry.js";
@@ -147,7 +147,7 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   }
   out.ee();
   out.n(_marko_node9, _component);
-  out.n(_marko_node10, _component);
+  out.n(_marko_node0, _component);
   out.e("span", _marko_attrs(abc), "23", _component, 0, 4);
   if (cond) {
     out.t("Hello ", _component);

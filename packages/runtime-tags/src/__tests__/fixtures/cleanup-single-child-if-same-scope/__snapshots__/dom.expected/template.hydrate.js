@@ -1,12 +1,12 @@
-// size: 343 (min) 211 (brotli)
+// size: 335 (min) 207 (brotli)
 const $setup$if$content_effect = _$.effect("a0", ($scope) => {
-    ($scope._[1].innerHTML += "\nmounted"),
+    (($scope._[1].innerHTML += "\nmounted"),
       (_$.getAbortSignal($scope, 0).onabort = () => {
         $scope._[1].innerHTML += "\ndestroyed";
-      });
+      }));
   }),
   $setup$if$content = ($scope) => {
-    _$.resetAbortSignal($scope, 0), $setup$if$content_effect($scope);
+    (_$.resetAbortSignal($scope, 0), $setup$if$content_effect($scope));
   },
   $if_content = _$.createRenderer("<div>child</div>", 0, $setup$if$content),
   $if = _$.conditional(2, $if_content),
@@ -16,6 +16,6 @@ const $setup$if$content_effect = _$.effect("a0", ($scope) => {
     }),
   ),
   $show = _$.state(3, ($scope, show) => {
-    $if($scope, show ? 0 : 1), $show_effect($scope);
+    ($if($scope, show ? 0 : 1), $show_effect($scope));
   });
 init();

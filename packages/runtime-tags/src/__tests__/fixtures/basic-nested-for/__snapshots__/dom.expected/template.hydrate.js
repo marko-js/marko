@@ -1,7 +1,7 @@
-// size: 542 (min) 312 (brotli)
+// size: 526 (min) 319 (brotli)
 const $name = _$.value(3, ($scope, name) => _$.data($scope[0], name)),
   $setup$for$content = ($scope) => {
-    $scope[0], $outer$for$content._($scope);
+    ($scope[0], $outer$for$content._($scope));
   },
   $expr_outer_inner$for$content = _$.intersection(3, ($scope) => {
     const {
@@ -43,6 +43,6 @@ const $name = _$.value(3, ($scope, name) => _$.data($scope[0], name)),
     }),
   ),
   $items = _$.state(2, ($scope, items) => {
-    $for($scope, [items]), $items$for$content($scope), $items_effect($scope);
+    ($for($scope, [items]), $items$for$content($scope), $items_effect($scope));
   });
 init();

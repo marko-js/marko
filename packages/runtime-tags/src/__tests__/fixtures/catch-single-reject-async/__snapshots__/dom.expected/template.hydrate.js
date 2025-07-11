@@ -1,4 +1,4 @@
-// size: 165 (min) 105 (brotli)
+// size: 159 (min) 105 (brotli)
 _$.enableCatch();
 const $error_message$catch$content = _$.value(3, ($scope, error_message) =>
     _$.data($scope[0], error_message),

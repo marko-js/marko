@@ -1,11 +1,11 @@
-// size: 373 (min) 213 (brotli)
+// size: 359 (min) 214 (brotli)
 const $count_effect = _$.effect("a0", ($scope, { 2: count }) =>
     _$.on($scope[0], "click", function () {
       $count($scope, count + 1);
     }),
   ),
   $count = _$.state(2, ($scope, count) => {
-    _$.data($scope[1], count), $count_effect($scope);
+    (_$.data($scope[1], count), $count_effect($scope));
   });
 const $tagName_content = _$.registerContent(
     "b0",
@@ -24,6 +24,6 @@ const $tagName_content = _$.registerContent(
     }),
   ),
   $tagName = _$.state(2, ($scope, tagName) => {
-    $dynamicTag($scope, tagName), $tagName_effect($scope);
+    ($dynamicTag($scope, tagName), $tagName_effect($scope));
   });
 init();

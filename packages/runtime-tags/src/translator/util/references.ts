@@ -270,7 +270,7 @@ export function trackParamsReferences(
           undefined,
           addNumericPropertiesUntil(undefined, i - 1),
         );
-      } else {
+      } else if (t.isLVal(param)) {
         createBindingsAndTrackReferences(
           param,
           type,
@@ -489,15 +489,17 @@ function createBindingsAndTrackReferences(
             excludeProperties = propsUtil.add(excludeProperties, key);
           }
 
-          createBindingsAndTrackReferences(
-            prop.value as t.LVal,
-            type,
-            scope,
-            section,
-            patternBinding,
-            key,
-            undefined,
-          );
+          if (t.isLVal(prop.value)) {
+            createBindingsAndTrackReferences(
+              prop.value,
+              type,
+              scope,
+              section,
+              patternBinding,
+              key,
+              undefined,
+            );
+          }
         }
       }
       break;
@@ -535,7 +537,7 @@ function createBindingsAndTrackReferences(
               property,
               excludeProperties,
             );
-          } else {
+          } else if (t.isLVal(element)) {
             createBindingsAndTrackReferences(
               element,
               type,

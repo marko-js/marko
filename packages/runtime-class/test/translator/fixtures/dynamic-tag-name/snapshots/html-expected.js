@@ -58,10 +58,10 @@ _marko_template._ = _marko_renderer(function (input, out, _componentDef, _compon
   if (_tagName8) out.w(`<${_tagName8} class="a b"${_marko_attr("other", input.other)}></${_tagName8}>`);
   const _tagName9 = global.x = "a" + "b";
   out.w(`<${_tagName9} class="a b"${_marko_attr("other", input.other)}></${_tagName9}>`);
-  const _tagName10 = "h" + input.level;
-  out.w(`<${_tagName10} class="a b"${_marko_attr("other", input.other)}></${_tagName10}>`);
-  const _tagName11 = `h${input.level}`;
-  out.w(`<${_tagName11} class="a b"${_marko_attr("other", input.other)}></${_tagName11}>`);
+  const _tagName0 = "h" + input.level;
+  out.w(`<${_tagName0} class="a b"${_marko_attr("other", input.other)}></${_tagName0}>`);
+  const _tagName1 = `h${input.level}`;
+  out.w(`<${_tagName1} class="a b"${_marko_attr("other", input.other)}></${_tagName1}>`);
   const tagConstA = "a";
   out.w(`<${tagConstA} class="a b"${_marko_attr("other", input.other)}></${tagConstA}>`);
   const tagConstB = input.show ? "div" : null;

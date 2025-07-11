@@ -1,4 +1,4 @@
-// size: 463 (min) 238 (brotli)
+// size: 447 (min) 239 (brotli)
 const $name$for$content = _$.value(4, ($scope, name) =>
     _$.data($scope[0], name),
   ),
@@ -9,8 +9,8 @@ const $name$for$content = _$.value(4, ($scope, name) =>
     $temp$for$content($scope, $params2?.[0]),
   ),
   $temp$for$content = _$.value(3, ($scope, $temp) => {
-    $name$for$content($scope, $temp.name),
-      $description$for$content($scope, $temp.description);
+    ($name$for$content($scope, $temp.name),
+      $description$for$content($scope, $temp.description));
   }),
   $for_content = _$.createRenderer(
     "<div><!>: <!></div>",
@@ -20,7 +20,7 @@ const $name$for$content = _$.value(4, ($scope, name) =>
   ),
   $for = _$.loopOf(0, $for_content),
   $items_effect = _$.effect("a0", ($scope, { 3: items }) => {
-    _$.on($scope[1], "click", function () {
+    (_$.on($scope[1], "click", function () {
       $items($scope, [
         ...items,
         { name: "JavaScript", description: "Java, but scriptier" },
@@ -28,9 +28,9 @@ const $name$for$content = _$.value(4, ($scope, name) =>
     }),
       _$.on($scope[2], "click", function () {
         $items($scope, items.slice(0, -1));
-      });
+      }));
   }),
   $items = _$.state(3, ($scope, items) => {
-    $for($scope, [items]), $items_effect($scope);
+    ($for($scope, [items]), $items_effect($scope));
   });
 init();

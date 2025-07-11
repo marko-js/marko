@@ -1,11 +1,11 @@
-// size: 868 (min) 411 (brotli)
+// size: 846 (min) 405 (brotli)
 const $setup$else$content_effect = _$.effect("a0", ($scope) =>
     _$.on($scope[0], "click", function () {
       $editing$for$content($scope._, !0);
     }),
   ),
   $setup$else$content = ($scope) => {
-    $count$else$content._($scope), $setup$else$content_effect($scope);
+    ($count$else$content._($scope), $setup$else$content_effect($scope));
   },
   $count$else$content = _$.conditionalClosure(2, 0, 1, ($scope, count) =>
     _$.data($scope[1], count),
@@ -28,12 +28,12 @@ const $setup$else$content_effect = _$.effect("a0", ($scope) =>
       },
     ) =>
       _$.on($scope[0], "click", function () {
-        $counts($scope._._, [
+        ($counts($scope._._, [
           ...counts.slice(0, i),
           count + 1,
           ...counts.slice(i + 1),
         ]),
-          $editing$for$content($scope._, !1);
+          $editing$for$content($scope._, !1));
       }),
   ),
   $expr_counts_count_i$if$content = _$.intersection(
@@ -47,7 +47,7 @@ const $setup$else$content_effect = _$.effect("a0", ($scope) =>
     ($scope) => $scope._._,
   ),
   $count$if$content = _$.conditionalClosure(2, 0, 0, ($scope, count) => {
-    _$.data($scope[1], count + 1), $expr_counts_count_i$if$content($scope);
+    (_$.data($scope[1], count + 1), $expr_counts_count_i$if$content($scope));
   }),
   $i$if$content = _$.conditionalClosure(
     3,
@@ -56,9 +56,9 @@ const $setup$else$content_effect = _$.effect("a0", ($scope) =>
     $expr_counts_count_i$if$content,
   ),
   $setup$if$content = ($scope) => {
-    $counts$if$content($scope),
+    ($counts$if$content($scope),
       $count$if$content._($scope),
-      $i$if$content._($scope);
+      $i$if$content._($scope));
   },
   $if_content = _$.createRenderer(
     "<button>Confirm <!></button>",
@@ -73,11 +73,11 @@ const $setup$else$content_effect = _$.effect("a0", ($scope) =>
     $editing$for$content($scope, !1);
   },
   $params2$for$content = _$.value(1, ($scope, $params2) => {
-    $count$for$content($scope, $params2[0]),
-      $i$for$content($scope, $params2[1]);
+    ($count$for$content($scope, $params2[0]),
+      $i$for$content($scope, $params2[1]));
   }),
   $count$for$content = _$.value(2, ($scope) => {
-    $count$if$content($scope), $count$else$content($scope);
+    ($count$if$content($scope), $count$else$content($scope));
   }),
   $i$for$content = _$.value(3, $i$if$content),
   $for_content = _$.createRenderer(
@@ -89,6 +89,6 @@ const $setup$else$content_effect = _$.effect("a0", ($scope) =>
   $for = _$.loopOf(0, $for_content),
   $counts_closure = _$.dynamicClosure($counts$if$content),
   $counts = _$.state(1, ($scope, counts) => {
-    $for($scope, [counts]), $counts_closure($scope);
+    ($for($scope, [counts]), $counts_closure($scope));
   });
 init();

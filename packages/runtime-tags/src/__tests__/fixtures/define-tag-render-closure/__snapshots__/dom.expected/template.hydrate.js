@@ -1,4 +1,4 @@
-// size: 203 (min) 129 (brotli)
+// size: 195 (min) 130 (brotli)
 const $x$define$content = _$.dynamicClosureRead(3, ($scope, x) =>
     _$.data($scope[0], x),
   ),
@@ -9,6 +9,6 @@ const $x$define$content = _$.dynamicClosureRead(3, ($scope, x) =>
     }),
   ),
   $x = _$.state(3, ($scope, x) => {
-    _$.data($scope[2], x), $x_closure($scope), $x_effect($scope);
+    (_$.data($scope[2], x), $x_closure($scope), $x_effect($scope));
   });
 init();

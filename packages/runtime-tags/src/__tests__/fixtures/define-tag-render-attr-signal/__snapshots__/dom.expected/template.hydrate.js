@@ -1,4 +1,4 @@
-// size: 379 (min) 231 (brotli)
+// size: 363 (min) 225 (brotli)
 const $number$define$content = _$.value(3, ($scope, number) =>
     _$.data($scope[0], number),
   ),
@@ -20,6 +20,6 @@ const $dynamicTag = _$.dynamicTag(),
     }),
   ),
   $x = _$.state(3, ($scope, x) => {
-    _$.data($scope[2], x), $expr_x_MyTag($scope), $x_effect($scope);
+    (_$.data($scope[2], x), $expr_x_MyTag($scope), $x_effect($scope));
   });
 init();
