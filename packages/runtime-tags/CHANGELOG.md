@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.39
+
+### Patch Changes
+
+- [#2739](https://github.com/marko-js/marko/pull/2739) [`ecfafff`](https://github.com/marko-js/marko/commit/ecfafff13b73062afb056798ba61605ef52d410c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Loosen return tag types.
+
 ## 6.0.38
 
 ### Patch Changes
