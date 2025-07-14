@@ -46,13 +46,7 @@ declare global {
       };
 
     /** The result of calling `template.mount`. */
-    export type MountedTemplate<
-      Input = unknown,
-      Return extends void | {
-        value: unknown;
-        valueChange?(next: unknown): void;
-      } = void,
-    > = {
+    export type MountedTemplate<Input = unknown, Return = unknown> = {
       get value(): Return extends { value: infer Value } ? Value : void;
       set value(
         next: Return extends { valueChange?(next: infer Next): any }
@@ -85,13 +79,7 @@ declare global {
       B extends Body<infer Params, any> ? Params : never;
 
     /** The top level api for a Marko Template. */
-    export abstract class Template<
-      Input = unknown,
-      Return extends void | {
-        value: unknown;
-        valueChange?(next: unknown): void;
-      } = void,
-    > {
+    export abstract class Template<Input = unknown, Return = unknown> {
       /**
        * The folowing types are processed up by the @marko/language-tools
        * and inlined into the compiled template.
