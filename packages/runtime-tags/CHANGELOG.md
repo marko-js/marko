@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.38
+
+### Patch Changes
+
+- [#2737](https://github.com/marko-js/marko/pull/2737) [`234d6f4`](https://github.com/marko-js/marko/commit/234d6f41be611f11a03a4e6361f7878408168868) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix types for return of mounted templates.
+
 ## 6.0.37
 
 ### Patch Changes
