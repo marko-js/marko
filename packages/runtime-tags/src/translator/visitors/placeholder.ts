@@ -30,6 +30,9 @@ import { getSerializeGuard } from "./program/html";
 
 const kNodeBinding = Symbol("placeholder node binding");
 const kSiblingText = Symbol("placeholder has sibling text");
+const kSharedText = Symbol(
+  "placeholder will merge its visitor with a another node",
+);
 enum SiblingText {
   None,
   Before,
@@ -39,6 +42,7 @@ declare module "@marko/compiler/dist/types" {
   export interface MarkoPlaceholderExtra {
     [kNodeBinding]?: Binding;
     [kSiblingText]?: SiblingText;
+    [kSharedText]?: true;
   }
 }
 
@@ -52,8 +56,13 @@ export default {
     const { node } = placeholder;
     const valueExtra = evaluate(node.value);
     const { confident, computed } = valueExtra;
+    if (confident && isVoid(computed)) return;
 
-    if (!(confident && (node.escape || isVoid(computed)))) {
+    if (isStaticText(node)) {
+      if (isStaticText(getPrev(placeholder))) {
+        (node.extra ??= {})[kSharedText] = true;
+      }
+    } else {
       const section = getOrCreateSection(placeholder);
       const nodeBinding = ((node.extra ??= {})[kNodeBinding] = createBinding(
         "#text",
@@ -91,14 +100,14 @@ export default {
           ? "data"
           : "html";
 
-      const section = getSection(placeholder);
-      const markerSerializeReason =
-        nodeBinding && getBindingSerializeReason(section, nodeBinding);
-      const siblingText = extra[kSiblingText]!;
-
       if (confident && canWriteHTML) {
         write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
       } else {
+        const section = getSection(placeholder);
+        const siblingText = extra[kSiblingText]!;
+        const markerSerializeReason =
+          nodeBinding && getBindingSerializeReason(section, nodeBinding);
+
         if (siblingText === SiblingText.Before) {
           if (isHTML && markerSerializeReason) {
             if (markerSerializeReason === true || markerSerializeReason.state) {
@@ -147,7 +156,9 @@ export default {
         }
       }
 
-      walks.enterShallow(placeholder);
+      if (!extra[kSharedText]) {
+        walks.enterShallow(placeholder);
+      }
       placeholder.remove();
     },
   },
@@ -203,4 +214,37 @@ function analyzeSiblingText(placeholder: t.NodePath<t.MarkoPlaceholder>) {
 
 function isVoid(value: unknown) {
   return value == null || value === false;
+}
+
+function isStaticText(node?: t.Node) {
+  switch (node?.type) {
+    case "MarkoText":
+      return true;
+    case "MarkoPlaceholder": {
+      if (node.escape) {
+        const { confident, computed } = evaluate(node.value);
+        return confident && !isVoid(computed);
+      } else {
+        return false;
+      }
+    }
+  }
+}
+
+function getPrev(path: t.NodePath) {
+  let prev = path.getPrevSibling();
+  while (
+    prev.node &&
+    (prev.isMarkoComment() ||
+      (prev.isMarkoPlaceholder() && isEmptyPlaceholder(prev.node)))
+  ) {
+    prev = prev.getPrevSibling();
+  }
+
+  return prev.node;
+}
+
+function isEmptyPlaceholder(placeholder: t.MarkoPlaceholder) {
+  const { confident, computed } = evaluate(placeholder.value);
+  return confident && isVoid(computed);
 }
