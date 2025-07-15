@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.40
+
+### Patch Changes
+
+- [#2741](https://github.com/marko-js/marko/pull/2741) [`023768a`](https://github.com/marko-js/marko/commit/023768a87452b9983de92d29576a7372febb8585) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix incorrect walks string generated when static placeholder text used with adjacent text node.
+
 ## 6.0.39
 
 ### Patch Changes
