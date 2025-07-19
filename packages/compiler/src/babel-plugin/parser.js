@@ -103,14 +103,9 @@ export function parseMarko(file) {
           );
           if (t.isStringLiteral(result)) {
             // convert to template literal just so that we don't mistake it for a native tag if this is a tag name.
-            return t.templateLiteral(
-              [
-                t.templateElement({
-                  raw: result.value,
-                  cooked: result.value,
-                }),
-              ],
-              [],
+            return withLoc(
+              t.templateLiteral([templateElement(result.value, true)], []),
+              value,
             );
           } else {
             return result;
@@ -481,22 +476,30 @@ export function parseMarko(file) {
         for (const attr of attributes) {
           if (attr.name === "class") {
             foundClassAttr = true;
-            if (t.isArrayExpression(attr.value)) {
-              if (t.isArrayExpression(classShorthandValue)) {
-                attr.value.elements.push(...classShorthandValue.elements);
-              } else {
-                attr.value.elements.push(classShorthandValue);
-              }
-            } else if (
+            if (
               t.isStringLiteral(attr.value) &&
               t.isStringLiteral(classShorthandValue)
             ) {
-              attr.value.value = `${classShorthandValue.value} ${attr.value.value}`;
-            } else if (t.isArrayExpression(classShorthandValue)) {
-              classShorthandValue.elements.push(attr.value);
-              attr.value = classShorthandValue;
+              attr.value = t.templateLiteral(
+                [
+                  templateElement("", false),
+                  templateElement(" ", false),
+                  templateElement("", true),
+                ],
+                [classShorthandValue, attr.value],
+              );
             } else {
-              attr.value = t.arrayExpression([classShorthandValue, attr.value]);
+              attr.value = t.arrayExpression(
+                t.isArrayExpression(classShorthandValue)
+                  ? classShorthandValue.elements.concat(
+                      t.isArrayExpression(attr.value)
+                        ? attr.value.elements
+                        : attr.value,
+                    )
+                  : t.isArrayExpression(attr.value)
+                    ? [classShorthandValue].concat(attr.value.elements)
+                    : [classShorthandValue, attr.value],
+              );
             }
             break;
           }
@@ -518,9 +521,7 @@ export function parseMarko(file) {
             );
           }
         }
-        currentTag.node.attributes.push(
-          t.markoAttribute("id", currentShorthandId),
-        );
+        attributes.push(t.markoAttribute("id", currentShorthandId));
         currentShorthandId = undefined;
       }
 
@@ -648,4 +649,12 @@ export function parseMarko(file) {
 
 function sortByStart(a, b) {
   return a.start - b.start;
+}
+
+function templateElement(value, tail) {
+  return t.templateElement({
+    tail,
+    raw: value,
+    cooked: value,
+  });
 }
