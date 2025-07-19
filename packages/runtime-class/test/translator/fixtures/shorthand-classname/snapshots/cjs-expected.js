@@ -19,8 +19,8 @@ _marko_template._ = (0, _renderer.default)(function (input, out, _componentDef, 
   out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)([dynamic1, "inline"]))}></div>`);
   out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)([dynamic1, "shorthand2", "inline"]))}></div>`);
   out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)([dynamic1, "shorthand2", dynamic2]))}></div>`);
-  out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)([dynamic2, dynamic3, dynamic1, "shorthand2"]))}></div>`);
-  out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)([dynamic1, dynamic2, "shorthand"]))}></div>`);
+  out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)([dynamic1, "shorthand2", dynamic2, dynamic3]))}></div>`);
+  out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)(["shorthand", dynamic1, dynamic2]))}></div>`);
   out.w(`<div${(0, _attr.default)("class", (0, _classValue.default)([`partially-${dynamic1}`, "shorthand2", dynamic2]))}></div>`);
 }, {
   t: _marko_componentType,
