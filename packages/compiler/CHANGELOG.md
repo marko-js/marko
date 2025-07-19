@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.30
+
+### Patch Changes
+
+- [#2743](https://github.com/marko-js/marko/pull/2743) [`5b3ca5c`](https://github.com/marko-js/marko/commit/5b3ca5ce79b2a90ef505f290c6b17344ebcf3372) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Minor improvements to class/id shorthand parsing.
+
 ## 5.39.29
 
 ### Patch Changes
