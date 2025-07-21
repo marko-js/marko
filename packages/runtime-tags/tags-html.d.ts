@@ -4346,7 +4346,10 @@ declare global {
        * Provide body content for the tag as a Marko.Body.
        * @see Marko.Body
        */
-      content?: Marko.Body<[], void>;
+      content?:
+        | AttrMissing
+        | Marko.Body<[], void>
+        | Marko.Template<Record<any, never>, void>;
 
       /**
        * data-* global attributes form a class of attributes called custom data attributes, that allow proprietary

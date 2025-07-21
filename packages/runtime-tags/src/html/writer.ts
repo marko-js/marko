@@ -67,6 +67,23 @@ export function writeEffect(scopeId: number, registryId: string) {
   $chunk.writeEffect(scopeId, registryId);
 }
 
+export function writeContent(content: unknown) {
+  normalizeServerRender(content)?.();
+}
+
+export function normalizeServerRender(value: unknown) {
+  const renderer = normalizeDynamicRenderer<ServerRenderer>(value);
+  if (renderer) {
+    if (typeof renderer === "function") {
+      return renderer;
+    } else if (MARKO_DEBUG) {
+      throw new Error(
+        `Invalid \`content\` attribute. Received ${typeof value}`,
+      );
+    }
+  }
+}
+
 const kPendingContexts = Symbol("Pending Contexts");
 export function withContext<T>(key: PropertyKey, value: unknown, cb: () => T) {
   const ctx = ($chunk.context ||= { [kPendingContexts]: 0 } as any);

@@ -1,4 +1,4 @@
-// size: 19080 (min) 7252 (brotli)
+// size: 19288 (min) 7300 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -188,7 +188,7 @@ function init(runtimeId = "M") {
                       }
                     }
                   },
-                  o(scope) {
+                  p(scope) {
                     let parentBranchId =
                       scope.g || parentBranchIds.get(scopeId);
                     if (
@@ -200,8 +200,8 @@ function init(runtimeId = "M") {
                         parentBranch = branch.k;
                       ((scope.k = branch),
                         parentBranch &&
-                          ((branch.u = parentBranch),
-                          (parentBranch.A ||= new Set()).add(branch)));
+                          ((branch.y = parentBranch),
+                          (parentBranch.A ||= new Set()).add(branch));
                     }
                   },
                 };
@@ -248,11 +248,11 @@ function init(runtimeId = "M") {
                                 scope,
                                 scopeLookup[scopeId],
                               )),
-                            branches && branches.o(scope))
+                            branches && branches.p(scope))
                         : (($global = scope || {}),
                           ($global.runtimeId = runtimeId),
                           ($global.renderId = renderId),
-                          ($global.p = 1e6));
+                          ($global.q = 1e6));
               } finally {
                 isResuming = visits.length = resumes.length = 0;
               }
@@ -544,270 +544,34 @@ function normalizeBoolProp(value2) {
 function toValueProp(it) {
   return it.value;
 }
-var parsers = {};
+var isScheduled,
+  channel,
+  parsers = {};
 function parseHTML(html2, ns) {
   let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
   return ((parser.innerHTML = html2), parser.content || parser);
 }
-function attr(element, name, value2) {
-  setAttribute(element, name, normalizeAttrValue(value2));
-}
-function setAttribute(element, name, value2) {
-  element.getAttribute(name) != value2 &&
-    (void 0 === value2
-      ? element.removeAttribute(name)
-      : element.setAttribute(name, value2));
-}
-function classAttr(element, value2) {
-  setAttribute(
-    element,
-    "class",
-    toDelimitedString(value2, " ", stringifyClassObject) || void 0,
-  );
-}
-function classItems(element, items) {
-  for (let key in items) classItem(element, key, items[key]);
-}
-function classItem(element, name, value2) {
-  element.classList.toggle(name, !!value2);
-}
-function styleAttr(element, value2) {
-  setAttribute(
-    element,
-    "style",
-    toDelimitedString(value2, ";", stringifyStyleObject) || void 0,
-  );
-}
-function styleItems(element, items) {
-  for (let key in items) styleItem(element, key, items[key]);
-}
-function styleItem(element, name, value2) {
-  element.style.setProperty(name, value2 || 0 === value2 ? value2 + "" : "");
-}
-function data(node, value2) {
-  let normalizedValue = normalizeString(value2);
-  node.data !== normalizedValue && (node.data = normalizedValue);
-}
-function textContent(node, value2) {
-  let normalizedValue = normalizeString(value2);
-  node.textContent !== normalizedValue && (node.textContent = normalizedValue);
-}
-function attrs(scope, nodeAccessor, nextAttrs) {
-  let el = scope[nodeAccessor];
-  for (let i = el.attributes.length; i--; ) {
-    let { name: name } = el.attributes.item(i);
-    (nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))) ||
-      el.removeAttribute(name);
-  }
-  attrsInternal(scope, nodeAccessor, nextAttrs);
-}
-function hasAttrAlias(element, attr2, nextAttrs) {
-  return (
-    "checked" === attr2 &&
-    "INPUT" === element.tagName &&
-    "checkedValue" in nextAttrs
-  );
-}
-function partialAttrs(scope, nodeAccessor, nextAttrs, skip) {
-  let el = scope[nodeAccessor],
-    partial = {};
-  for (let i = el.attributes.length; i--; ) {
-    let { name: name } = el.attributes.item(i);
-    !skip[name] &&
-      (!nextAttrs || !(name in nextAttrs)) &&
-      el.removeAttribute(name);
-  }
-  for (let key in nextAttrs) skip[key] || (partial[key] = nextAttrs[key]);
-  attrsInternal(scope, nodeAccessor, partial);
-}
-function attrsInternal(scope, nodeAccessor, nextAttrs) {
-  let events,
-    skip,
-    el = scope[nodeAccessor];
-  switch (el.tagName) {
-    case "INPUT":
-      if ("checked" in nextAttrs || "checkedChange" in nextAttrs)
-        controllable_input_checked(
-          scope,
-          nodeAccessor,
-          nextAttrs.checked,
-          nextAttrs.checkedChange,
-        );
-      else if ("checkedValue" in nextAttrs || "checkedValueChange" in nextAttrs)
-        controllable_input_checkedValue(
-          scope,
-          nodeAccessor,
-          nextAttrs.checkedValue,
-          nextAttrs.checkedValueChange,
-          nextAttrs.value,
-        );
-      else {
-        if (!("value" in nextAttrs) && !("valueChange" in nextAttrs)) break;
-        controllable_input_value(
-          scope,
-          nodeAccessor,
-          nextAttrs.value,
-          nextAttrs.valueChange,
-        );
-      }
-      skip = /^(?:value|checked(?:Value)?)(?:Change)?$/;
-      break;
-    case "SELECT":
-      ("value" in nextAttrs || "valueChange" in nextAttrs) &&
-        (controllable_select_value(
-          scope,
-          nodeAccessor,
-          nextAttrs.value,
-          nextAttrs.valueChange,
-        ),
-        (skip = /^value(?:Change)?$/));
-      break;
-    case "TEXTAREA":
-      ("value" in nextAttrs || "valueChange" in nextAttrs) &&
-        (controllable_input_value(
-          scope,
-          nodeAccessor,
-          nextAttrs.value,
-          nextAttrs.valueChange,
-        ),
-        (skip = /^value(?:Change)?$/));
-      break;
-    case "DETAILS":
-    case "DIALOG":
-      ("open" in nextAttrs || "openChange" in nextAttrs) &&
-        (controllable_detailsOrDialog_open(
-          scope,
-          nodeAccessor,
-          nextAttrs.open,
-          nextAttrs.openChange,
-        ),
-        (skip = /^open(?:Change)?$/));
-  }
-  for (let name in nextAttrs) {
-    let value2 = nextAttrs[name];
-    switch (name) {
-      case "class":
-        classAttr(el, value2);
-        break;
-      case "style":
-        styleAttr(el, value2);
-        break;
-      case "content":
-        break;
-      default:
-        isEventHandler(name)
-          ? ((events ||= scope["i" + nodeAccessor] = {})[
-              getEventHandlerName(name)
-            ] = value2)
-          : skip?.test(name) || attr(el, name, value2);
-    }
-  }
-}
-function attrsEvents(scope, nodeAccessor) {
-  let el = scope[nodeAccessor],
-    events = scope["i" + nodeAccessor];
-  switch (scope["f" + nodeAccessor]) {
-    case 0:
-      controllable_input_checked_effect(scope, nodeAccessor);
-      break;
-    case 1:
-      controllable_input_checkedValue_effect(scope, nodeAccessor);
-      break;
-    case 2:
-      controllable_input_value_effect(scope, nodeAccessor);
-      break;
-    case 3:
-      controllable_select_value_effect(scope, nodeAccessor);
-      break;
-    case 4:
-      controllable_detailsOrDialog_open_effect(scope, nodeAccessor);
-  }
-  for (let name in events) on(el, name, events[name]);
-}
-function html(scope, value2, accessor) {
-  let firstChild = scope[accessor],
-    parentNode = firstChild.parentNode,
-    lastChild = scope["h" + accessor] || firstChild,
-    newContent = parseHTML(
-      value2 || 0 === value2 ? value2 + "" : "",
-      parentNode.namespaceURI,
-    );
-  (insertChildNodes(
-    parentNode,
-    firstChild,
-    (scope[accessor] =
-      newContent.firstChild || newContent.appendChild(new Text())),
-    (scope["h" + accessor] = newContent.lastChild),
-  ),
-    removeChildNodes(firstChild, lastChild));
-}
-function props(scope, nodeIndex, index) {
-  let nextProps = scope[index],
-    prevProps = scope[index + "-"],
-    node = scope[nodeIndex];
-  if (prevProps)
-    for (let name in prevProps) name in nextProps || (node[name] = void 0);
-  for (let name in nextProps) node[name] = nextProps[name];
-  scope[index + "-"] = nextProps;
-}
-function normalizeAttrValue(value2) {
-  if (value2 || 0 === value2) return !0 === value2 ? "" : value2 + "";
-}
-function normalizeString(value2) {
-  return value2 || 0 === value2 ? value2 + "" : "‍";
-}
-function lifecycle(scope, index, thisObj) {
-  let instance = scope[index];
-  instance
-    ? (Object.assign(instance, thisObj), instance.onUpdate?.())
-    : ((scope[index] = thisObj),
-      thisObj.onMount?.(),
-      (getAbortSignal(scope, "k" + index).onabort = () =>
-        thisObj.onDestroy?.()));
-}
-function removeChildNodes(startNode, endNode) {
-  let stop = endNode.nextSibling,
-    current = startNode;
-  for (; current !== stop; ) {
-    let next = current.nextSibling;
-    (current.remove(), (current = next));
-  }
-}
-function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
-  parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
-}
-function toInsertNode(startNode, endNode) {
-  if (startNode === endNode) return startNode;
-  let parent = new DocumentFragment(),
-    stop = endNode.nextSibling,
-    current = startNode;
-  for (; current !== stop; ) {
-    let next = current.nextSibling;
-    (parent.appendChild(current), (current = next));
-  }
-  return parent;
-}
 function createScope($global, closestBranch) {
-  let scope = { l: $global.p++, q: 1, k: closestBranch, $global: $global };
-  return (pendingScopes.push(scope), scope);
+  let scope = { l: $global.q++, t: 1, k: closestBranch, $global: $global };
+  return pendingScopes.push(scope), scope;
 }
 function skipScope(scope) {
-  return scope.$global.p++;
+  return scope.$global.q++;
 }
 function findBranchWithKey(scope, key) {
   let branch = scope.k;
-  for (; branch && !branch[key]; ) branch = branch.u;
+  for (; branch && !branch[key]; ) branch = branch.y;
   return branch;
 }
 function destroyBranch(branch) {
-  (branch.u?.A?.delete(branch), destroyNestedBranches(branch));
+  branch.y?.A?.delete(branch), destroyNestedBranches(branch);
 }
 function destroyNestedBranches(branch) {
   ((branch.B = 1),
     branch.A?.forEach(destroyNestedBranches),
     branch.K?.forEach((scope) => {
-      for (let id in scope.x) scope.x[id]?.abort();
-    }));
+      for (let id in scope.z) scope.z[id]?.abort();
+    });
 }
 function removeAndDestroyBranch(branch) {
   (destroyBranch(branch), removeChildNodes(branch.h, branch.j));
@@ -820,7 +584,6 @@ function tempDetachBranch(branch) {
   ((fragment.namespaceURI = branch.h.parentNode.namespaceURI),
     insertChildNodes(fragment, null, branch.h, branch.j));
 }
-var isScheduled, channel;
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
@@ -860,7 +623,7 @@ function value(valueAccessor, fn = () => {}) {
 }
 function intersection(id, fn, defaultPending = 1, scopeIdAccessor = "l") {
   return (scope) => {
-    scope.q
+    scope.t
       ? void 0 === scope[id]
         ? (scope[id] = defaultPending)
         : --scope[id] || fn(scope)
@@ -883,7 +646,7 @@ function loopClosure(valueAccessor, ownerLoopNodeAccessor, fn) {
           ownerScope,
           () => {
             for (let scope of scopes)
-              !scope.q && !scope.B && childSignal(scope);
+              !scope.t && !scope.B && childSignal(scope);
           },
           -1,
           0,
@@ -904,7 +667,7 @@ function conditionalClosure(
     ownerSignal = (scope) => {
       let ifScope = scope[scopeAccessor];
       ifScope &&
-        !ifScope.q &&
+        !ifScope.t &&
         scope[branchAccessor] === branch &&
         queueRender(ifScope, childSignal, -1);
     };
@@ -925,7 +688,7 @@ function dynamicClosure(...closureSignals) {
   return (scope) => {
     if (scope[___scopeInstancesAccessor])
       for (let childScope of scope[___scopeInstancesAccessor])
-        childScope.q ||
+        childScope.t ||
           queueRender(
             childScope,
             closureSignals[childScope[___signalIndexAccessor]],
@@ -1050,10 +813,10 @@ function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global),
     parentBranch = parentScope?.k;
   return (
-    (branch._ = renderer.y || parentScope),
+    (branch._ = renderer.u || parentScope),
     (branch.k = branch),
     parentBranch &&
-      ((branch.u = parentBranch), (parentBranch.A ||= new Set()).add(branch)),
+      ((branch.y = parentBranch), (parentBranch.A ||= new Set()).add(branch)),
     renderer.C?.(branch, parentNode.namespaceURI),
     branch
   );
@@ -1111,10 +874,10 @@ function createContent(
   return (owner) => ({
     l: id,
     C: clone,
-    y: owner,
+    u: owner,
     D: setup,
     m: params,
-    z: dynamicScopesAccessor,
+    n: dynamicScopesAccessor,
   });
 }
 function registerContent(
@@ -1146,6 +909,261 @@ function createRenderer(template, walks, setup, params) {
   return createContent("", template, walks, setup, params)();
 }
 var cloneCache = {};
+function attr(element, name, value2) {
+  setAttribute(element, name, normalizeAttrValue(value2));
+}
+function setAttribute(element, name, value2) {
+  element.getAttribute(name) != value2 &&
+    (void 0 === value2
+      ? element.removeAttribute(name)
+      : element.setAttribute(name, value2));
+}
+function classAttr(element, value2) {
+  setAttribute(
+    element,
+    "class",
+    toDelimitedString(value2, " ", stringifyClassObject) || void 0,
+  );
+}
+function classItems(element, items) {
+  for (let key in items) classItem(element, key, items[key]);
+}
+function classItem(element, name, value2) {
+  element.classList.toggle(name, !!value2);
+}
+function styleAttr(element, value2) {
+  setAttribute(
+    element,
+    "style",
+    toDelimitedString(value2, ";", stringifyStyleObject) || void 0,
+  );
+}
+function styleItems(element, items) {
+  for (let key in items) styleItem(element, key, items[key]);
+}
+function styleItem(element, name, value2) {
+  element.style.setProperty(name, value2 || 0 === value2 ? value2 + "" : "");
+}
+function data(node, value2) {
+  let normalizedValue = normalizeString(value2);
+  node.data !== normalizedValue && (node.data = normalizedValue);
+}
+function textContent(node, value2) {
+  let normalizedValue = normalizeString(value2);
+  node.textContent !== normalizedValue && (node.textContent = normalizedValue);
+}
+function attrs(scope, nodeAccessor, nextAttrs) {
+  let el = scope[nodeAccessor];
+  for (let i = el.attributes.length; i--; ) {
+    let { name: name } = el.attributes.item(i);
+    (nextAttrs && (name in nextAttrs || hasAttrAlias(el, name, nextAttrs))) ||
+      el.removeAttribute(name);
+  }
+  attrsInternal(scope, nodeAccessor, nextAttrs);
+}
+function attrsAndContent(scope, nodeAccessor, nextAttrs) {
+  attrs(scope, nodeAccessor, nextAttrs),
+    insertContent(scope, nodeAccessor, nextAttrs?.content);
+}
+function hasAttrAlias(element, attr2, nextAttrs) {
+  return (
+    "checked" === attr2 &&
+    "INPUT" === element.tagName &&
+    "checkedValue" in nextAttrs
+  );
+}
+function partialAttrs(scope, nodeAccessor, nextAttrs, skip) {
+  let el = scope[nodeAccessor],
+    partial = {};
+  for (let i = el.attributes.length; i--; ) {
+    let { name: name } = el.attributes.item(i);
+    !skip[name] &&
+      (!nextAttrs || !(name in nextAttrs)) &&
+      el.removeAttribute(name);
+  }
+  for (let key in nextAttrs) skip[key] || (partial[key] = nextAttrs[key]);
+  attrsInternal(scope, nodeAccessor, partial);
+}
+function partialAttrsAndContent(scope, nodeAccessor, nextAttrs, skip) {
+  partialAttrs(scope, nodeAccessor, nextAttrs, skip),
+    insertContent(scope, nodeAccessor, nextAttrs?.content);
+}
+function attrsInternal(scope, nodeAccessor, nextAttrs) {
+  let events,
+    skip,
+    el = scope[nodeAccessor];
+  switch (el.tagName) {
+    case "INPUT":
+      if ("checked" in nextAttrs || "checkedChange" in nextAttrs)
+        controllable_input_checked(
+          scope,
+          nodeAccessor,
+          nextAttrs.checked,
+          nextAttrs.checkedChange,
+        );
+      else if ("checkedValue" in nextAttrs || "checkedValueChange" in nextAttrs)
+        controllable_input_checkedValue(
+          scope,
+          nodeAccessor,
+          nextAttrs.checkedValue,
+          nextAttrs.checkedValueChange,
+          nextAttrs.value,
+        );
+      else {
+        if (!("value" in nextAttrs) && !("valueChange" in nextAttrs)) break;
+        controllable_input_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        );
+      }
+      skip = /^(?:value|checked(?:Value)?)(?:Change)?$/;
+      break;
+    case "SELECT":
+      ("value" in nextAttrs || "valueChange" in nextAttrs) &&
+        (controllable_select_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        ),
+        (skip = /^value(?:Change)?$/));
+      break;
+    case "TEXTAREA":
+      ("value" in nextAttrs || "valueChange" in nextAttrs) &&
+        (controllable_input_value(
+          scope,
+          nodeAccessor,
+          nextAttrs.value,
+          nextAttrs.valueChange,
+        ),
+        (skip = /^value(?:Change)?$/));
+      break;
+    case "DETAILS":
+    case "DIALOG":
+      ("open" in nextAttrs || "openChange" in nextAttrs) &&
+        (controllable_detailsOrDialog_open(
+          scope,
+          nodeAccessor,
+          nextAttrs.open,
+          nextAttrs.openChange,
+        ),
+        (skip = /^open(?:Change)?$/));
+  }
+  for (let name in nextAttrs) {
+    let value2 = nextAttrs[name];
+    switch (name) {
+      case "class":
+        classAttr(el, value2);
+        break;
+      case "style":
+        styleAttr(el, value2);
+        break;
+      case "content":
+        break;
+      default:
+        isEventHandler(name)
+          ? ((events ||= scope["i" + nodeAccessor] = {})[
+              getEventHandlerName(name)
+            ] = value2)
+          : skip?.test(name) || attr(el, name, value2);
+    }
+  }
+}
+function insertContent(scope, nodeAccessor, value2) {
+  let content = (function (value2) {
+    let renderer = normalizeDynamicRenderer(value2);
+    if (renderer && renderer.l) return renderer;
+  })(value2);
+  setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
+    content?.n &&
+      subscribeToScopeSet(content.u, content.n, scope["d" + nodeAccessor]);
+}
+function attrsEvents(scope, nodeAccessor) {
+  let el = scope[nodeAccessor],
+    events = scope["i" + nodeAccessor];
+  switch (scope["f" + nodeAccessor]) {
+    case 0:
+      controllable_input_checked_effect(scope, nodeAccessor);
+      break;
+    case 1:
+      controllable_input_checkedValue_effect(scope, nodeAccessor);
+      break;
+    case 2:
+      controllable_input_value_effect(scope, nodeAccessor);
+      break;
+    case 3:
+      controllable_select_value_effect(scope, nodeAccessor);
+      break;
+    case 4:
+      controllable_detailsOrDialog_open_effect(scope, nodeAccessor);
+  }
+  for (let name in events) on(el, name, events[name]);
+}
+function html(scope, value2, accessor) {
+  let firstChild = scope[accessor],
+    parentNode = firstChild.parentNode,
+    lastChild = scope["h" + accessor] || firstChild,
+    newContent = parseHTML(
+      value2 || 0 === value2 ? value2 + "" : "",
+      parentNode.namespaceURI,
+    );
+  insertChildNodes(
+    parentNode,
+    firstChild,
+    (scope[accessor] =
+      newContent.firstChild || newContent.appendChild(new Text())),
+    (scope["h" + accessor] = newContent.lastChild),
+  ),
+    removeChildNodes(firstChild, lastChild);
+}
+function props(scope, nodeIndex, index) {
+  let nextProps = scope[index],
+    prevProps = scope[index + "-"],
+    node = scope[nodeIndex];
+  if (prevProps)
+    for (let name in prevProps) name in nextProps || (node[name] = void 0);
+  for (let name in nextProps) node[name] = nextProps[name];
+  scope[index + "-"] = nextProps;
+}
+function normalizeAttrValue(value2) {
+  if (value2 || 0 === value2) return !0 === value2 ? "" : value2 + "";
+}
+function normalizeString(value2) {
+  return value2 || 0 === value2 ? value2 + "" : "‍";
+}
+function lifecycle(scope, index, thisObj) {
+  let instance = scope[index];
+  instance
+    ? (Object.assign(instance, thisObj), instance.onUpdate?.())
+    : ((scope[index] = thisObj),
+      thisObj.onMount?.(),
+      (getAbortSignal(scope, "k" + index).onabort = () =>
+        thisObj.onDestroy?.()));
+}
+function removeChildNodes(startNode, endNode) {
+  let stop = endNode.nextSibling,
+    current = startNode;
+  for (; current !== stop; ) {
+    let next = current.nextSibling;
+    current.remove(), (current = next);
+  }
+}
+function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
+  parentNode.insertBefore(toInsertNode(startNode, endNode), referenceNode);
+}
+function toInsertNode(startNode, endNode) {
+  if (startNode === endNode) return startNode;
+  let parent = new DocumentFragment(),
+    stop = endNode.nextSibling,
+    current = startNode;
+  for (; current !== stop; ) {
+    let next = current.nextSibling;
+    parent.appendChild(current), (current = next);
+  }
+  return parent;
+}
 function awaitTag(nodeAccessor, renderer) {
   let promiseAccessor = "n" + nodeAccessor,
     branchAccessor = "d" + nodeAccessor;
@@ -1156,10 +1174,10 @@ function awaitTag(nodeAccessor, renderer) {
     tryWithPlaceholder
       ? (placeholderShown.add(pendingEffects),
         !scope[promiseAccessor] &&
-          1 === (tryWithPlaceholder.n = (tryWithPlaceholder.n || 0) + 1) &&
+          1 === (tryWithPlaceholder.o = (tryWithPlaceholder.o || 0) + 1) &&
           requestAnimationFrame(
             () =>
-              tryWithPlaceholder.n &&
+              tryWithPlaceholder.o &&
               runEffects(
                 prepareEffects(() =>
                   queueRender(
@@ -1213,7 +1231,7 @@ function awaitTag(nodeAccessor, renderer) {
                 renderer.m?.(awaitBranch, [data2]),
                 tryWithPlaceholder &&
                   (placeholderShown.add(pendingEffects),
-                  !--tryWithPlaceholder.n))
+                  !--tryWithPlaceholder.o))
               ) {
                 let placeholderBranch = tryWithPlaceholder.c;
                 ((tryWithPlaceholder.c = 0),
@@ -1231,7 +1249,7 @@ function awaitTag(nodeAccessor, renderer) {
       },
       (error) => {
         thisPromise === scope[promiseAccessor] &&
-          (tryWithPlaceholder && (tryWithPlaceholder.n = 0),
+          (tryWithPlaceholder && (tryWithPlaceholder.o = 0),
           (scope[promiseAccessor] = 0),
           schedule(),
           queueRender(scope, renderCatch, -1, error));
@@ -1262,8 +1280,8 @@ function renderCatch(scope, error) {
   {
     let owner = tryWithCatch._,
       placeholderBranch = tryWithCatch.c;
-    (placeholderBranch &&
-      ((tryWithCatch.n = 0),
+    placeholderBranch &&
+      ((tryWithCatch.o = 0),
       (owner["d" + tryWithCatch.a] = placeholderBranch),
       destroyBranch(tryWithCatch)),
       caughtError.add(pendingEffects),
@@ -1322,18 +1340,18 @@ var dynamicTag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
               content,
               createAndSetupBranch,
             ),
-              content.z &&
+              content.n &&
                 subscribeToScopeSet(
-                  content.y,
-                  content.z,
+                  content.u,
+                  content.n,
                   scope[childScopeAccessor].d0,
                 ));
           }
         } else
-          normalizedRenderer?.z &&
+          normalizedRenderer?.n &&
             subscribeToScopeSet(
-              normalizedRenderer.y,
-              normalizedRenderer.z,
+              normalizedRenderer.u,
+              normalizedRenderer.n,
               scope[childScopeAccessor],
             );
       if (normalizedRenderer) {
@@ -1627,13 +1645,13 @@ function queueRender(scope, signal, signalKey, value2, scopeKey = scope.l) {
     existingRender = signalKey >= 0 && pendingRendersLookup.get(key);
   if (existingRender) existingRender.I = value2;
   else {
-    let render = { t: key, o: scope, N: signal, I: value2 },
+    let render = { x: key, p: scope, N: signal, I: value2 },
       i = pendingRenders.push(render) - 1;
     for (; i; ) {
       let parentIndex = (i - 1) >> 1,
         parent = pendingRenders[parentIndex];
-      if (key - parent.t >= 0) break;
-      ((pendingRenders[i] = parent), (i = parentIndex));
+      if (key - parent.x >= 0) break;
+      (pendingRenders[i] = parent), (i = parentIndex);
     }
     (signalKey >= 0 && pendingRendersLookup.set(key, render),
       (pendingRenders[i] = render));
@@ -1681,33 +1699,33 @@ function runRenders() {
     if (render !== item) {
       let i = 0,
         mid = pendingRenders.length >> 1,
-        key = (pendingRenders[0] = item).t;
+        key = (pendingRenders[0] = item).x;
       for (; i < mid; ) {
         let bestChild = 1 + (i << 1),
           right = bestChild + 1;
         if (
           (right < pendingRenders.length &&
-            pendingRenders[right].t - pendingRenders[bestChild].t < 0 &&
+            pendingRenders[right].x - pendingRenders[bestChild].x < 0 &&
             (bestChild = right),
-          pendingRenders[bestChild].t - key >= 0)
+          pendingRenders[bestChild].x - key >= 0)
         )
           break;
         ((pendingRenders[i] = pendingRenders[bestChild]), (i = bestChild));
       }
       pendingRenders[i] = item;
     }
-    render.o.k?.B || runRender(render);
+    render.p.k?.B || runRender(render);
   }
-  for (let scope of pendingScopes) scope.q = 0;
+  for (let scope of pendingScopes) scope.t = 0;
   pendingScopes = [];
 }
-var runRender = (render) => render.N(render.o, render.I),
+var runRender = (render) => render.N(render.p, render.I),
   enableCatch = () => {
     ((enableCatch = () => {}), enableBranches());
     let handlePendingTry = (fn, scope, branch) => {
       for (; branch; ) {
-        if (branch.n) return (branch.H ||= []).push(fn, scope);
-        branch = branch.u;
+        if (branch.o) return (branch.H ||= []).push(fn, scope);
+        branch = branch.y;
       }
     };
     ((runEffects = (
@@ -1732,18 +1750,18 @@ var runRender = (render) => render.N(render.o, render.I),
         try {
           runRender2(render);
         } catch (error) {
-          renderCatch(render.o, error);
+          renderCatch(render.p, error);
         }
       })(runRender)));
   };
 function resetAbortSignal(scope, id) {
-  let ctrl = scope.x?.[id];
-  ctrl && (queueEffect(ctrl, abort), (scope.x[id] = void 0));
+  let ctrl = scope.z?.[id];
+  ctrl && (queueEffect(ctrl, abort), (scope.z[id] = void 0));
 }
 function getAbortSignal(scope, id) {
   return (
     scope.k && (scope.k.K ||= new Set()).add(scope),
-    ((scope.x ||= {})[id] ||= new AbortController()).signal
+    ((scope.z ||= {})[id] ||= new AbortController()).signal
   );
 }
 function abort(ctrl) {
@@ -1820,12 +1838,12 @@ var classIdToBranch = new Map(),
         ((component.effects = prepareEffects(() => {
           (branch
             ? (existing = 1)
-            : ((out.global.p ||= 0),
+            : ((out.global.q ||= 0),
               (branch = component.scope =
                 createAndSetupBranch(
                   out.global,
                   renderer,
-                  renderer.y,
+                  renderer.u,
                   document.body,
                 ))),
             renderer.m?.(branch, renderer._ ? args[0] : args));
@@ -1851,8 +1869,8 @@ function mount(input = {}, reference, position) {
   switch (
     ($global
       ? (({ $global: $global, ...input } = input),
-        ($global = { p: 0, runtimeId: "M", renderId: "_", ...$global }))
-      : ($global = { p: 0, runtimeId: "M", renderId: "_" }),
+        ($global = { q: 0, runtimeId: "M", renderId: "_", ...$global }))
+      : ($global = { q: 0, runtimeId: "M", renderId: "_" }),
     position)
   ) {
     case "beforebegin":

@@ -62,6 +62,7 @@ import { scopeIdentifier } from "../program";
 export const kNativeTagBinding = Symbol("native tag binding");
 export const kSkipEndTag = Symbol("skip native tag mark");
 const kGetterId = Symbol("node getter id");
+const kTagContentAttr = Symbol("tag could have dynamic content attribute");
 
 const htmlSelectArgs = new WeakMap<
   t.MarkoTag,
@@ -76,6 +77,7 @@ declare module "@marko/compiler/dist/types" {
     [kNativeTagBinding]?: Binding;
     [kSkipEndTag]?: true;
     [kGetterId]?: string;
+    [kTagContentAttr]?: true;
   }
 }
 
@@ -389,17 +391,22 @@ export default {
           }
         }
 
+        const isOpenOnly = !!(tagDef && tagDef.parseOptions?.openTagOnly);
+        const hasChildren = !!tag.node.body.body.length;
+
         if (spreadExpression) {
           addHTMLEffectCall(tagSection, tagExtra.referencedBindings);
 
-          if (skipExpression) {
-            write`${callRuntime("partialAttrs", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(tagSection), tag.node.name)}`;
-          } else {
-            write`${callRuntime("attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(tagSection), tag.node.name)}`;
+          if (isOpenOnly || hasChildren || usedAttrs.staticContentAttr) {
+            if (skipExpression) {
+              write`${callRuntime("partialAttrs", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(tagSection), tag.node.name)}`;
+            } else {
+              write`${callRuntime("attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(tagSection), tag.node.name)}`;
+            }
           }
         }
 
-        if (tagDef && tagDef.parseOptions?.openTagOnly) {
+        if (isOpenOnly) {
           switch (tagDef.htmlType) {
             case "svg":
             case "math":
@@ -410,7 +417,41 @@ export default {
               break;
           }
         } else {
-          write`>`;
+          if (usedAttrs.staticContentAttr) {
+            write`>`;
+            tagExtra[kTagContentAttr] = true;
+            (tag.node.body.body as t.Statement[]) = [
+              t.expressionStatement(
+                callRuntime("writeContent", usedAttrs.staticContentAttr.value),
+              ),
+            ];
+          } else if (spreadExpression && !hasChildren) {
+            tagExtra[kTagContentAttr] = true;
+            (tag.node.body.body as t.Statement[]) = [
+              skipExpression
+                ? t.expressionStatement(
+                    callRuntime(
+                      "writePartialAttrsAndContent",
+                      spreadExpression,
+                      skipExpression,
+                      visitAccessor,
+                      getScopeIdIdentifier(tagSection),
+                      tag.node.name,
+                    ),
+                  )
+                : t.expressionStatement(
+                    callRuntime(
+                      "writeAttrsAndContent",
+                      spreadExpression,
+                      visitAccessor,
+                      getScopeIdIdentifier(tagSection),
+                      tag.node.name,
+                    ),
+                  ),
+            ];
+          } else {
+            write`>`;
+          }
         }
 
         // TODO: this is broken for DOM (and select in ssr) and so is currently disabled and always becomes a dynamic tag.
@@ -433,6 +474,10 @@ export default {
         const selectArgs = htmlSelectArgs.get(tag.node);
         const tagName = getTagName(tag);
         const tagSection = getSection(tag);
+
+        if (tagExtra[kTagContentAttr]) {
+          writer.flushBefore(tag);
+        }
 
         if (tagExtra.tagNameNullable) {
           writer.flushInto(tag);
@@ -570,6 +615,9 @@ export default {
         const { staticAttrs, staticControllable, skipExpression } = usedAttrs;
         const { spreadExpression } = usedAttrs;
 
+        const isOpenOnly = !!(tagDef && tagDef.parseOptions?.openTagOnly);
+        const hasChildren = !!tag.node.body.body.length;
+
         if (staticControllable) {
           const { helper, attrs } = staticControllable;
           const firstAttr = attrs.find(Boolean)!;
@@ -706,6 +754,11 @@ export default {
         }
 
         if (spreadExpression) {
+          const canHaveAttrContent = !(
+            isOpenOnly ||
+            hasChildren ||
+            usedAttrs.staticContentAttr
+          );
           if (skipExpression) {
             addStatement(
               "render",
@@ -713,7 +766,9 @@ export default {
               tagExtra.referencedBindings,
               t.expressionStatement(
                 callRuntime(
-                  "partialAttrs",
+                  canHaveAttrContent
+                    ? "partialAttrsAndContent"
+                    : "partialAttrs",
                   scopeIdentifier,
                   visitAccessor,
                   spreadExpression,
@@ -728,7 +783,7 @@ export default {
               tagExtra.referencedBindings,
               t.expressionStatement(
                 callRuntime(
-                  "attrs",
+                  canHaveAttrContent ? "attrsAndContent" : "attrs",
                   scopeIdentifier,
                   visitAccessor,
                   spreadExpression,
@@ -748,7 +803,24 @@ export default {
           );
         }
 
-        if (tagDef && tagDef.parseOptions?.openTagOnly) {
+        if (usedAttrs.staticContentAttr) {
+          const contentAttrValue = usedAttrs.staticContentAttr.value;
+          addStatement(
+            "render",
+            tagSection,
+            contentAttrValue.extra?.referencedBindings,
+            t.expressionStatement(
+              callRuntime(
+                "insertContent",
+                scopeIdentifier,
+                visitAccessor,
+                contentAttrValue,
+              ),
+            ),
+          );
+        }
+
+        if (isOpenOnly) {
           switch (tagDef.htmlType) {
             case "svg":
             case "math":
@@ -872,6 +944,8 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
   let spreadProps: undefined | t.ObjectExpression["properties"];
   let skipProps: undefined | t.ObjectExpression["properties"];
   let staticControllable: RelatedControllable;
+  let staticContentAttr: undefined | t.MarkoAttribute;
+
   for (let i = attributes.length; i--; ) {
     const attr = attributes[i];
     const { value } = attr;
@@ -891,10 +965,15 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
         }
       }
       spreadProps.push(t.spreadElement(value));
-    } else if (!seen[attr.name]) {
+    } else if (
+      !seen[attr.name] ||
+      !(attr.name === "content" && tag.body.body.length)
+    ) {
       seen[attr.name] = attr;
       if (spreadProps) {
         spreadProps.push(toObjectProperty(attr.name, attr.value));
+      } else if (attr.name === "content") {
+        staticContentAttr = attr;
       } else {
         maybeStaticAttrs.add(attr);
       }
@@ -938,15 +1017,16 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
       (skipProps ||= []).push(toObjectProperty(name, t.numericLiteral(1)));
     }
 
-    if (skipProps) {
-      skipExpression = t.objectExpression(skipProps);
-    }
-
     spreadExpression = propsToExpression(spreadProps);
+  }
+
+  if (skipProps) {
+    skipExpression = t.objectExpression(skipProps);
   }
 
   return {
     staticAttrs,
+    staticContentAttr,
     staticControllable,
     spreadExpression,
     skipExpression,

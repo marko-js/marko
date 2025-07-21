@@ -7,7 +7,7 @@ const $expr_input_value_a = /* @__PURE__ */_$.intersection(7, $scope => {
     input_value,
     a
   } = $scope;
-  _$.attrs($scope, "#div/1", {
+  _$.attrsAndContent($scope, "#div/1", {
     a: a,
     ...input_value
   });
@@ -25,8 +25,8 @@ const $input_value_effect = _$.effect("__tests__/template.marko_0_input_value", 
   _$.attrsEvents($scope, "#div/2");
 });
 export const $input_value = /* @__PURE__ */_$.value("input_value", ($scope, input_value) => {
-  _$.attrs($scope, "#div/0", input_value);
-  _$.partialAttrs($scope, "#div/2", input_value, {
+  _$.attrsAndContent($scope, "#div/0", input_value);
+  _$.partialAttrsAndContent($scope, "#div/2", input_value, {
     a: 1
   });
   $expr_input_value_a($scope);
