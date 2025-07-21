@@ -11,7 +11,7 @@ const $expr_input_count = /* @__PURE__ */_$.intersection(5, $scope => {
 const $count_effect = _$.effect("__tests__/tags/counter.marko_0_count", ($scope, {
   count
 }) => _$.on($scope["#button/0"], "click", function () {
-  $count($scope, count + 1), count;
+  $count($scope, ++count)
 }));
 const $count = /* @__PURE__ */_$.state("count/4", $scope => {
   $expr_input_count($scope);

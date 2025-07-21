@@ -10,8 +10,8 @@ const $expr_id_items_effect = _$.effect("__tests__/template.marko_0_id_items", (
 }) => _$.on($scope["#button/1"], "click", function () {
   // TODO: nested writes ([...items, id++]) don't work
   const nextId = id + 1;
-  $id($scope, nextId);
-  $items($scope, [...items, nextId]);
+  $id($scope, id = nextId);
+  $items($scope, items = [...items, nextId]);
 }));
 const $expr_id_items = /* @__PURE__ */_$.intersection(5, $expr_id_items_effect);
 const $id = /* @__PURE__ */_$.state("id/3", $expr_id_items);
@@ -19,7 +19,7 @@ const $for = /* @__PURE__ */_$.loopOf("#text/0", $for_content);
 const $items_effect = _$.effect("__tests__/template.marko_0_items", ($scope, {
   items
 }) => _$.on($scope["#button/2"], "click", function () {
-  $items($scope, items.slice(0, -1));
+  $items($scope, items = items.slice(0, -1));
 }));
 const $items = /* @__PURE__ */_$.state("items/4", ($scope, items) => {
   $for($scope, [items]);

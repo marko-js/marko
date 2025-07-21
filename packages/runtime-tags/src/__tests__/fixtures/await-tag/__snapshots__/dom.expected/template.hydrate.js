@@ -15,7 +15,7 @@ const $count$await$content3 = _$.dynamicClosureRead(4, ($scope, count) =>
   ),
   $count_effect = _$.effect("a0", ($scope, { 4: count }) =>
     _$.on($scope[3], "click", function () {
-      $count($scope, count + 1);
+      $count($scope, ++count);
     }),
   ),
   $count = _$.state(4, ($scope) => {

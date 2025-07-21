@@ -1,4 +1,4 @@
-// size: 526 (min) 319 (brotli)
+// size: 528 (min) 302 (brotli)
 const $name = _$.value(3, ($scope, name) => _$.data($scope[0], name)),
   $setup$for$content = ($scope) => {
     ($scope[0], $outer$for$content._($scope));
@@ -39,7 +39,7 @@ const $name = _$.value(3, ($scope, name) => _$.data($scope[0], name)),
   $for = _$.loopOf(1, $for_content),
   $items_effect = _$.effect("b0", ($scope, { 2: items }) =>
     _$.on($scope[0], "click", function () {
-      $items($scope, [...items, items.length]);
+      $items($scope, (items = [...items, items.length]));
     }),
   ),
   $items = _$.state(2, ($scope, items) => {

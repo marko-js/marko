@@ -1,7 +1,7 @@
-// size: 474 (min) 272 (brotli)
+// size: 474 (min) 271 (brotli)
 const $expr_x_y_effect = _$.effect("a0", ($scope, { 7: x, 8: y }) =>
     _$.on($scope[0], "click", function () {
-      ($x($scope, x + 1), $y($scope, y + 1));
+      ($x($scope, ++x), $y($scope, ++y));
     }),
   ),
   $expr_x_y = _$.intersection(9, $expr_x_y_effect),

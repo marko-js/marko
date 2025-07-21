@@ -1,0 +1,10 @@
+<div>
+  <let/clickCount = 0/>
+  <button onClick() {
+    $a().innerHTML = clickCount++;
+    $b().innerHTML = clickCount;
+  }>${clickCount}</button>
+
+  <div/$a/>
+  <div/$b/>
+</div>

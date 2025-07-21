@@ -1,7 +1,7 @@
-// size: 148 (min) 131 (brotli)
+// size: 150 (min) 120 (brotli)
 const $open_effect = _$.effect("a0", ($scope, { 2: open }) =>
     _$.on($scope[0], "click", function () {
-      $open($scope, !open);
+      $open($scope, (open = !open));
     }),
   ),
   $open = _$.state(2, ($scope, open) => {

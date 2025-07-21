@@ -8,7 +8,7 @@ const $count$if$content_effect = _$.effect("__tests__/template.marko_2_count", (
     }
   }
 }) => _$.on($scope["#button/0"], "click", function () {
-  $count($scope._._, count + 1), count;
+  $count($scope._._, ++count)
 }));
 const $count$if$content = /* @__PURE__ */_$.dynamicClosureRead("count", ($scope, count) => {
   _$.data($scope["#text/1"], count);
@@ -22,7 +22,7 @@ const $inner$if$content_effect = _$.effect("__tests__/template.marko_1_inner", (
     inner
   }
 }) => _$.on($scope["#button/0"], "click", function () {
-  $inner($scope._, !inner);
+  $inner($scope._, inner = !inner);
 }));
 const $inner$if$content = /* @__PURE__ */_$.conditionalClosure("inner", "#text/1", 0, ($scope, inner) => {
   $if$if$content($scope, inner ? 0 : 1);
@@ -34,7 +34,7 @@ const $if = /* @__PURE__ */_$.conditional("#text/1", $if_content);
 const $outer_effect = _$.effect("__tests__/template.marko_0_outer", ($scope, {
   outer
 }) => _$.on($scope["#button/0"], "click", function () {
-  $outer($scope, !outer);
+  $outer($scope, outer = !outer);
 }));
 const $outer = /* @__PURE__ */_$.state("outer/2", ($scope, outer) => {
   $if($scope, outer ? 0 : 1);

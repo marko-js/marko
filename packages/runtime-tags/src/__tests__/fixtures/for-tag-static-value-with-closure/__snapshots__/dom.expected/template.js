@@ -9,7 +9,7 @@ const $for_content = /* @__PURE__ */_$.createRenderer("<!>-<!>", /* replace, ove
 const $count_effect = _$.effect("__tests__/template.marko_0_count", ($scope, {
   count
 }) => _$.on($scope["#button/1"], "click", function () {
-  $count($scope, count + 1), count;
+  $count($scope, ++count)
 }));
 const $count = /* @__PURE__ */_$.state("count/3", ($scope, count) => {
   _$.data($scope["#text/2"], count);

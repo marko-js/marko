@@ -12,7 +12,7 @@ const $expr_input_content_count = /* @__PURE__ */_$.intersection(7, $scope => {
 const $count_effect = _$.effect("__tests__/components/tags-layout.marko_0_count", ($scope, {
   count
 }) => _$.on($scope["#button/0"], "click", function () {
-  $count($scope, count + 1), count;
+  $count($scope, ++count)
 }));
 const $count = /* @__PURE__ */_$.state("count/6", ($scope, count) => {
   _$.data($scope["#text/1"], count);

@@ -12,7 +12,7 @@ const $expr_count_multiplier = /* @__PURE__ */_$.intersection(6, $scope => {
 const $count_effect = _$.effect("__tests__/template.marko_0_count", ($scope, {
   count
 }) => _$.on($scope["#button/2"], "click", function () {
-  $count($scope, count + 1), count;
+  $count($scope, ++count)
 }));
 const $count = /* @__PURE__ */_$.state("count/4", $scope => {
   $expr_count_multiplier($scope);
@@ -21,7 +21,7 @@ const $count = /* @__PURE__ */_$.state("count/4", $scope => {
 const $multiplier_effect = _$.effect("__tests__/template.marko_0_multiplier", ($scope, {
   multiplier
 }) => _$.on($scope["#button/0"], "click", function () {
-  $multiplier($scope, multiplier + 1), multiplier;
+  $multiplier($scope, ++multiplier)
 }));
 const $multiplier = /* @__PURE__ */_$.state("multiplier/5", ($scope, multiplier) => {
   _$.data($scope["#text/1"], multiplier);

@@ -1,4 +1,4 @@
-// size: 1205 (min) 494 (brotli)
+// size: 1211 (min) 490 (brotli)
 const $expr_name_write_effect = _$.effect(
     "a0",
     ($scope, { 3: name, 4: write }) => {
@@ -70,7 +70,7 @@ const $expr_name_write_effect = _$.effect(
   $if = _$.conditional(4, $if_content),
   $showOuter_effect = _$.effect("b1", ($scope, { 5: showOuter }) =>
     _$.on($scope[0], "click", function () {
-      $showOuter($scope, !showOuter);
+      $showOuter($scope, (showOuter = !showOuter));
     }),
   ),
   $showOuter = _$.state(5, ($scope, showOuter) => {
@@ -78,7 +78,7 @@ const $expr_name_write_effect = _$.effect(
   }),
   $showMiddle_effect = _$.effect("b2", ($scope, { 6: showMiddle }) =>
     _$.on($scope[1], "click", function () {
-      $showMiddle($scope, !showMiddle);
+      $showMiddle($scope, (showMiddle = !showMiddle));
     }),
   ),
   $showMiddle = _$.state(6, ($scope) => {
@@ -87,7 +87,7 @@ const $expr_name_write_effect = _$.effect(
   $showInner_closure = _$.dynamicClosure($showInner$if$content),
   $showInner_effect = _$.effect("b3", ($scope, { 7: showInner }) =>
     _$.on($scope[2], "click", function () {
-      $showInner($scope, !showInner);
+      $showInner($scope, (showInner = !showInner));
     }),
   ),
   $showInner = _$.state(7, ($scope) => {

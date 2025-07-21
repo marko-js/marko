@@ -10,7 +10,7 @@ const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", $tagName_content);
 const $tagName_effect = _$.effect("__tests__/template.marko_0_tagName", ($scope, {
   tagName
 }) => _$.on($scope["#button/1"], "click", function () {
-  $tagName($scope, tagName === "span" ? "div" : "span");
+  $tagName($scope, tagName = tagName === "span" ? "div" : "span");
 }));
 const $tagName = /* @__PURE__ */_$.state("tagName/2", ($scope, tagName) => {
   $dynamicTag($scope, tagName);

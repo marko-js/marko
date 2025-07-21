@@ -15,13 +15,13 @@ const $items_effect = _$.effect("__tests__/template.marko_0_items", ($scope, {
   items
 }) => {
   _$.on($scope["#button/1"], "click", function () {
-    $items($scope, [...items, {
+    $items($scope, items = [...items, {
       name: "JavaScript",
       description: "Java, but scriptier"
     }]);
   });
   _$.on($scope["#button/2"], "click", function () {
-    $items($scope, items.slice(0, -1));
+    $items($scope, items = items.slice(0, -1));
   });
 });
 const $items = /* @__PURE__ */_$.state("items/3", ($scope, items) => {

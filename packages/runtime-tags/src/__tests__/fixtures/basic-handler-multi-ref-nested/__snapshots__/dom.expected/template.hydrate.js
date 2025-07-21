@@ -1,10 +1,7 @@
-// size: 163 (min) 136 (brotli)
+// size: 165 (min) 139 (brotli)
 const $expr_a_b_effect = _$.effect("a0", ($scope, { 2: a, 3: b }) =>
     _$.on($scope[0], "click", function () {
-      $a(
-        $scope,
-        a.map((a) => b),
-      );
+      $a($scope, (a = a.map((a) => b)));
     }),
   ),
   $expr_a_b = _$.intersection(4, $expr_a_b_effect),

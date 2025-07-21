@@ -1,7 +1,7 @@
-// size: 431 (min) 200 (brotli)
+// size: 431 (min) 201 (brotli)
 const $x_effect = _$.effect("a1", ($scope, { 2: x }) =>
     _$.on($scope[0], "click", function () {
-      $x($scope, x + 1);
+      $x($scope, ++x);
     }),
   ),
   $x = _$.state(2, ($scope, x) => {
@@ -14,7 +14,7 @@ _$.register("a0", function ($scope) {
 });
 const $count_effect = _$.effect("b0", ($scope, { 5: count }) =>
   _$.on($scope[2], "click", function () {
-    _$.tagVarSignalChange($scope[0], count + 1);
+    _$.tagVarSignalChange($scope[0], ++count);
   }),
 );
 (_$.registerBoundSignal(

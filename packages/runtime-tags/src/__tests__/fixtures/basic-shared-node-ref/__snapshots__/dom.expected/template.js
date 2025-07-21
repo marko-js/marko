@@ -7,7 +7,7 @@ const $for_content = /* @__PURE__ */_$.createRenderer("<li> </li>", /* next(1), 
 const $open_effect = _$.effect("__tests__/template.marko_0_open", ($scope, {
   open
 }) => _$.on($scope["#button/1"], "click", function () {
-  $open($scope, !open);
+  $open($scope, open = !open);
 }));
 const $open = /* @__PURE__ */_$.state("open/3", ($scope, open) => {
   _$.attr($scope["#ul/0"], "hidden", !open);
@@ -17,7 +17,7 @@ const $for = /* @__PURE__ */_$.loopOf("#ul/0", $for_content);
 const $list_effect = _$.effect("__tests__/template.marko_0_list", ($scope, {
   list
 }) => _$.on($scope["#button/2"], "click", function () {
-  $list($scope, [].concat(list).reverse());
+  $list($scope, list = [].concat(list).reverse());
 }));
 const $list = /* @__PURE__ */_$.state("list/4", ($scope, list) => {
   $for($scope, [list, function (x) {

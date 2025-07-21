@@ -85,7 +85,7 @@ function $_return2($scope, {
 } = $scope) {
   return function () {
     if (call) {
-      $call$define$content2($scope, call - 1), call;
+      $call$define$content2($scope, --call)
       value();
     }
   };
@@ -96,7 +96,7 @@ function $_return($scope, {
 } = $scope) {
   return function () {
     if (call) {
-      $call$define$content($scope, call - 1), call;
+      $call$define$content($scope, --call)
       value();
     }
   };
@@ -105,14 +105,14 @@ function $onClickOnce($scope, {
   clickOnceCount
 } = $scope) {
   return function () {
-    $clickOnceCount($scope, clickOnceCount + 1), clickOnceCount;
+    $clickOnceCount($scope, ++clickOnceCount)
   };
 }
 function $onClickTwice($scope, {
   clickTwiceCount
 } = $scope) {
   return function () {
-    $clickTwiceCount($scope, clickTwiceCount + 1), clickTwiceCount;
+    $clickTwiceCount($scope, ++clickTwiceCount)
   };
 }
 _$.register("__tests__/template.marko_2/_return2", $_return2);

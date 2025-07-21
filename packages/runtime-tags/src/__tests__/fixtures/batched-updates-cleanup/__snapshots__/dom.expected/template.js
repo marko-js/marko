@@ -9,7 +9,7 @@ const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
   show
 }) => _$.on($scope["#button/0"], "click", function () {
   $message($scope, "bye");
-  $show($scope, !show);
+  $show($scope, show = !show);
 }));
 const $show = /* @__PURE__ */_$.state("show/2", ($scope, show) => {
   $if($scope, show ? 0 : 1);

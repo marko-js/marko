@@ -33,7 +33,7 @@ const $if = /* @__PURE__ */_$.conditional("#text/4", $if_content);
 const $showOuter_effect = _$.effect("__tests__/template.marko_0_showOuter", ($scope, {
   showOuter
 }) => _$.on($scope["#button/0"], "click", function () {
-  $showOuter($scope, !showOuter);
+  $showOuter($scope, showOuter = !showOuter);
 }));
 const $showOuter = /* @__PURE__ */_$.state("showOuter/5", ($scope, showOuter) => {
   $if($scope, showOuter ? 0 : 1);
@@ -42,7 +42,7 @@ const $showOuter = /* @__PURE__ */_$.state("showOuter/5", ($scope, showOuter) =>
 const $showMiddle_effect = _$.effect("__tests__/template.marko_0_showMiddle", ($scope, {
   showMiddle
 }) => _$.on($scope["#button/1"], "click", function () {
-  $showMiddle($scope, !showMiddle);
+  $showMiddle($scope, showMiddle = !showMiddle);
 }));
 const $showMiddle = /* @__PURE__ */_$.state("showMiddle/6", $scope => {
   $showMiddle$if$content($scope);
@@ -52,7 +52,7 @@ const $showInner_closure = /* @__PURE__ */_$.dynamicClosure($showInner$if$conten
 const $showInner_effect = _$.effect("__tests__/template.marko_0_showInner", ($scope, {
   showInner
 }) => _$.on($scope["#button/2"], "click", function () {
-  $showInner($scope, !showInner);
+  $showInner($scope, showInner = !showInner);
 }));
 const $showInner = /* @__PURE__ */_$.state("showInner/7", $scope => {
   $showInner_closure($scope);

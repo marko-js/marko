@@ -3,7 +3,7 @@ const createWrapper = $createWrapper,
   $pattern2 = _$.value(4, ($scope, $pattern) => $a($scope, $pattern.a)),
   $count_effect = _$.effect("a1", ($scope, { 3: count }) =>
     _$.on($scope[0], "click", function () {
-      $count($scope, count + 1);
+      $count($scope, ++count);
     }),
   ),
   $count = _$.state(3, ($scope, count) => {

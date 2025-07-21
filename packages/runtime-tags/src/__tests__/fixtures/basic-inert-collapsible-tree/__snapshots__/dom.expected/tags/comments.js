@@ -41,7 +41,7 @@ const $i$for$content = /* @__PURE__ */_$.value("i", $expr_input_path_i$for$conte
 const $open$for$content_effect = _$.effect("__tests__/tags/comments.marko_1_open", ($scope, {
   open
 }) => _$.on($scope["#button/2"], "click", function () {
-  $open$for$content($scope, !open);
+  $open$for$content($scope, open = !open);
 }));
 const $open$for$content = /* @__PURE__ */_$.state("open/12", ($scope, open) => {
   _$.attr($scope["#li/0"], "hidden", !open);

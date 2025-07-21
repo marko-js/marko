@@ -1,4 +1,4 @@
-// size: 1062 (min) 355 (brotli)
+// size: 1064 (min) 353 (brotli)
 const getStringBy = $getStringBy,
   getFunctionBy = $getFunctionBy,
   getMissingBy = $getMissingBy,
@@ -49,7 +49,7 @@ const getStringBy = $getStringBy,
   $for5 = _$.loopOf(4, $for_content5),
   $items_effect = _$.effect("a3", ($scope, { 6: items }) =>
     _$.on($scope[5], "click", function () {
-      $items($scope, [...items.slice(1), items[0]]);
+      $items($scope, (items = [...items.slice(1), items[0]]));
     }),
   ),
   $items = _$.state(6, ($scope, items) => {

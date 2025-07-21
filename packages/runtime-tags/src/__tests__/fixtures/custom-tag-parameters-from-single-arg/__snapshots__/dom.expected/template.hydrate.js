@@ -6,7 +6,7 @@ const $dynamicTag = _$.dynamicTag(2, 0, 0, 1),
   }),
   $x_effect = _$.effect("a0", ($scope, { 6: x }) =>
     _$.on($scope[0], "click", function () {
-      $x($scope, x + 1);
+      $x($scope, ++x);
     }),
   ),
   $x = _$.state(6, ($scope, x) => {

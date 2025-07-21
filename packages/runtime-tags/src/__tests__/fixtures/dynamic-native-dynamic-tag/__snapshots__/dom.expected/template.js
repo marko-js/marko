@@ -15,7 +15,7 @@ const $expr_tagName_className = /* @__PURE__ */_$.intersection(4, $scope => {
 const $tagName_effect = _$.effect("__tests__/template.marko_0_tagName", ($scope, {
   tagName
 }) => _$.on($scope["#button/1"], "click", function () {
-  $tagName($scope, tagName === "span" ? "div" : "span");
+  $tagName($scope, tagName = tagName === "span" ? "div" : "span");
 }));
 const $tagName = /* @__PURE__ */_$.state("tagName/2", $scope => {
   $expr_tagName_className($scope);

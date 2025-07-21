@@ -1,4 +1,4 @@
-// size: 363 (min) 225 (brotli)
+// size: 363 (min) 227 (brotli)
 const $number$define$content = _$.value(3, ($scope, number) =>
     _$.data($scope[0], number),
   ),
@@ -16,7 +16,7 @@ const $dynamicTag = _$.dynamicTag(),
   }),
   $x_effect = _$.effect("a1", ($scope, { 3: x }) =>
     _$.on($scope[1], "click", function () {
-      $x($scope, x + 1);
+      $x($scope, ++x);
     }),
   ),
   $x = _$.state(3, ($scope, x) => {

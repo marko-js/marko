@@ -1,4 +1,4 @@
-// size: 375 (min) 223 (brotli)
+// size: 381 (min) 225 (brotli)
 const $item$for$content = _$.value(2, ($scope, item) =>
     _$.data($scope[0], item),
   ),
@@ -9,7 +9,8 @@ const $item$for$content = _$.value(2, ($scope, item) =>
   $expr_id_items_effect = _$.effect("a0", ($scope, { 3: id, 4: items }) =>
     _$.on($scope[1], "click", function () {
       const nextId = id + 1;
-      ($id($scope, nextId), $items($scope, [...items, nextId]));
+      ($id($scope, (id = nextId)),
+        $items($scope, (items = [...items, nextId])));
     }),
   ),
   $expr_id_items = _$.intersection(5, $expr_id_items_effect),
@@ -17,7 +18,7 @@ const $item$for$content = _$.value(2, ($scope, item) =>
   $for = _$.loopOf(0, $for_content),
   $items_effect = _$.effect("a1", ($scope, { 4: items }) =>
     _$.on($scope[2], "click", function () {
-      $items($scope, items.slice(0, -1));
+      $items($scope, (items = items.slice(0, -1)));
     }),
   ),
   $items = _$.state(4, ($scope, items) => {

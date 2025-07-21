@@ -1,4 +1,4 @@
-// size: 251 (min) 179 (brotli)
+// size: 251 (min) 155 (brotli)
 const $x_effect = _$.effect("a0", ($scope, { 1: x }) => {
     (_$.lifecycle($scope, 2, {
       onMount: function () {
@@ -11,7 +11,7 @@ const $x_effect = _$.effect("a0", ($scope, { 1: x }) => {
       },
     }),
       _$.on($scope[0], "click", function () {
-        $x($scope, x + 1);
+        $x($scope, ++x);
       }));
   }),
   $x = _$.state(1, $x_effect);

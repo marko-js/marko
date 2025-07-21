@@ -5,7 +5,7 @@ const $expr_a_b_effect = _$.effect("__tests__/template.marko_0_a_b", ($scope, {
   a,
   b
 }) => _$.on($scope["#button/0"], "click", function () {
-  $a($scope, a.map(a => b));
+  $a($scope, a = a.map(a => b));
 }));
 const $expr_a_b = /* @__PURE__ */_$.intersection(4, $expr_a_b_effect);
 const $a = /* @__PURE__ */_$.state("a/2", ($scope, a) => {

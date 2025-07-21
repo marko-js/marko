@@ -39,7 +39,7 @@ const $for = /* @__PURE__ */_$.loopOf("#text/2", $for_content);
 const $items_effect = _$.effect("__tests__/template.marko_0_items", ($scope, {
   items
 }) => _$.on($scope["#button/0"], "click", function () {
-  $items($scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
+  $items($scope, items = items.length ? items.slice(0, -1) : [1, 2, 3]);
 }));
 const $items = /* @__PURE__ */_$.state("items/3", ($scope, items) => {
   $for($scope, [items]);

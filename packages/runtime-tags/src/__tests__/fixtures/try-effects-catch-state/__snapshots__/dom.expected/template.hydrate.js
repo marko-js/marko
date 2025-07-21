@@ -11,7 +11,7 @@ const $clickCount$try$content_effect = _$.effect(
     "a1",
     ($scope, { _: { 2: clickCount } }) => {
       (_$.on($scope[0], "click", function () {
-        $clickCount($scope._, clickCount + 1);
+        $clickCount($scope._, ++clickCount);
       }),
         ($scope._[0].textContent = clickCount));
     },

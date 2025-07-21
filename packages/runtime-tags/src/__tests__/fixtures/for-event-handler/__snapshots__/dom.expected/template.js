@@ -6,7 +6,7 @@ const $num$for$content_effect = _$.effect("__tests__/template.marko_1_num", ($sc
     num
   }
 }) => _$.on($scope["#button/0"], "click", function () {
-  $num($scope._, num + 1), num;
+  $num($scope._, ++num)
 }));
 const $num$for$content = /* @__PURE__ */_$.loopClosure("num", "#text/0", $num$for$content_effect);
 const $i$for$content = /* @__PURE__ */_$.value("i", ($scope, i) => _$.data($scope["#text/1"], i));

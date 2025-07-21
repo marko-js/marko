@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $y_effect = _$.effect("__tests__/template.marko_0_y", ($scope, {
   y
 }) => _$.on($scope["#button/0"], "click", function () {
-  $y($scope, y + 1), y;
+  $y($scope, ++y)
 }));
 const $y = /* @__PURE__ */_$.state("y/4", ($scope, y) => {
   _$.data($scope["#text/2"], y);

@@ -8,7 +8,7 @@ const $if = /* @__PURE__ */_$.conditional("#text/2", $if_content);
 const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
   show
 }) => _$.on($scope["#button/1"], "click", function () {
-  $show($scope, !show);
+  $show($scope, show = !show);
 }));
 const $show = /* @__PURE__ */_$.state("show/3", ($scope, show) => {
   $if($scope, show ? 0 : 1);
@@ -17,7 +17,7 @@ const $show = /* @__PURE__ */_$.state("show/3", ($scope, show) => {
 const $count_effect = _$.effect("__tests__/template.marko_0_count", ($scope, {
   count
 }) => _$.on($scope["#button/0"], "click", function () {
-  $count($scope, count + 1), count;
+  $count($scope, ++count)
 }));
 const $count = /* @__PURE__ */_$.state("count/4", $scope => {
   $count$if$content($scope);

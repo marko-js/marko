@@ -5,13 +5,13 @@ const $count_effect = _$.effect("__tests__/template.marko_0_count", ($scope, {
   count
 }) => {
   _$.on($scope["#button/0"], "click", function () {
-    $count($scope, count + 2);
+    $count($scope, count += 2);
   });
   _$.on($scope["#button/2"], "click", function () {
-    $count($scope, count * 3);
+    $count($scope, count *= 3);
   });
   _$.on($scope["#button/4"], "click", function () {
-    $count($scope, count ** 3);
+    $count($scope, count **= 3);
   });
 });
 const $count = /* @__PURE__ */_$.state("count/6", ($scope, count) => {

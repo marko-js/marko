@@ -7,7 +7,7 @@ const $myThing = /* @__PURE__ */_$.value("myThing", ($scope, myThing) => _child_
 const $selected_effect = _$.effect("__tests__/template.marko_0_selected", ($scope, {
   selected
 }) => _$.on($scope["#button/1"], "click", function () {
-  $selected($scope, !selected);
+  $selected($scope, selected = !selected);
 }));
 const $selected = /* @__PURE__ */_$.state("selected/2", ($scope, selected) => {
   $myThing($scope, {

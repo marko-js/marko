@@ -4,7 +4,7 @@ const $myObj = _$.value(4, ($scope, myObj) =>
   ),
   $x_effect = _$.effect("a0", ($scope, { 3: x }) =>
     _$.on($scope[1], "click", function () {
-      $x($scope, x + 1);
+      $x($scope, ++x);
     }),
   ),
   $x = _$.state(3, ($scope, x) => {

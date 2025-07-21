@@ -16,7 +16,7 @@ const $expr_tagName_val = /* @__PURE__ */_$.intersection(4, $scope => {
 const $tagName_effect = _$.effect("__tests__/template.marko_0_tagName", ($scope, {
   tagName
 }) => _$.on($scope["#button/1"], "click", function () {
-  $tagName($scope, tagName === child1 ? child2 : child1);
+  $tagName($scope, tagName = tagName === child1 ? child2 : child1);
 }));
 const $tagName = /* @__PURE__ */_$.state("tagName/2", $scope => {
   $expr_tagName_val($scope);

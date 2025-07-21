@@ -22,7 +22,7 @@ const $if_content = /* @__PURE__ */_$.createRenderer(0, 0, $setup$if$content);
 const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
   x
 }) => _$.on($scope["#button/1"], "click", function () {
-  $x($scope, x + 1), x;
+  $x($scope, ++x)
 }));
 const $x = /* @__PURE__ */_$.state("x/3", $scope => {
   $x$if$content($scope);
@@ -32,7 +32,7 @@ const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);
 const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
   show
 }) => _$.on($scope["#button/2"], "click", function () {
-  $show($scope, !show);
+  $show($scope, show = !show);
 }));
 const $show = /* @__PURE__ */_$.state("show/4", ($scope, show) => {
   $if($scope, show ? 0 : 1);

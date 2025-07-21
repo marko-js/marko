@@ -1,4 +1,4 @@
-// size: 356 (min) 230 (brotli)
+// size: 356 (min) 220 (brotli)
 const $setup = () => {},
   $input = _$.value(2, ($scope, input) => {
     (_$.data($scope[0], input), _$.tagVarSignal($scope, input));
@@ -9,7 +9,7 @@ const tags = [
   $dynamicTag = _$.dynamicTag(2, 0, () => $y, 1),
   $x_effect = _$.effect("b0", ($scope, { 5: x }) =>
     _$.on($scope[0], "click", function () {
-      $x($scope, x + 1);
+      $x($scope, ++x);
     }),
   ),
   $x = _$.state(5, ($scope, x) => {

@@ -1,4 +1,4 @@
-// size: 611 (min) 289 (brotli)
+// size: 615 (min) 298 (brotli)
 const $count$if$content_effect = _$.effect(
     "a0",
     (
@@ -10,7 +10,7 @@ const $count$if$content_effect = _$.effect(
       },
     ) =>
       _$.on($scope[0], "click", function () {
-        $count($scope._._, count + 1);
+        $count($scope._._, ++count);
       }),
   ),
   $count$if$content = _$.dynamicClosureRead(
@@ -29,7 +29,7 @@ const $count$if$content_effect = _$.effect(
   $if$if$content = _$.conditional(1, $if_content2),
   $inner$if$content_effect = _$.effect("a1", ($scope, { _: { 3: inner } }) =>
     _$.on($scope[0], "click", function () {
-      $inner($scope._, !inner);
+      $inner($scope._, (inner = !inner));
     }),
   ),
   $inner$if$content = _$.conditionalClosure(3, 1, 0, ($scope, inner) => {
@@ -44,7 +44,7 @@ const $count$if$content_effect = _$.effect(
   $if = _$.conditional(1, $if_content),
   $outer_effect = _$.effect("a2", ($scope, { 2: outer }) =>
     _$.on($scope[0], "click", function () {
-      $outer($scope, !outer);
+      $outer($scope, (outer = !outer));
     }),
   ),
   $outer = _$.state(2, ($scope, outer) => {

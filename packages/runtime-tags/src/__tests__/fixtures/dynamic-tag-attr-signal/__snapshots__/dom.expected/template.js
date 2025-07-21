@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $className_effect = _$.effect("__tests__/template.marko_0_className", ($scope, {
   className
 }) => _$.on($scope["#button/1"], "click", function () {
-  $className($scope, className === "A" ? "B" : "A");
+  $className($scope, className = className === "A" ? "B" : "A");
 }));
 const $className = /* @__PURE__ */_$.state("className/2", ($scope, className) => {
   _$.classAttr($scope["#p/0"], className);

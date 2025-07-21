@@ -5,8 +5,8 @@ const $expr_a_b_effect = _$.effect("__tests__/template.marko_0_a_b", ($scope, {
   a,
   b
 }) => _$.on($scope["#button/0"], "click", function () {
-  $a($scope, a + 1), a;
-  $b($scope, b + 1), b;
+  $a($scope, ++a)
+  $b($scope, ++b)
 }));
 const $expr_a_b = /* @__PURE__ */_$.intersection(4, $scope => {
   const {

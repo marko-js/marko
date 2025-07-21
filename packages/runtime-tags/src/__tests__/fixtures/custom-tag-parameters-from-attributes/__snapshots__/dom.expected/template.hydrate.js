@@ -1,4 +1,4 @@
-// size: 436 (min) 272 (brotli)
+// size: 436 (min) 274 (brotli)
 const $dynamicTag = _$.dynamicTag(2),
   $expr_input_content_input_name_x = _$.intersection(
     8,
@@ -13,7 +13,7 @@ const $dynamicTag = _$.dynamicTag(2),
   ),
   $x_effect = _$.effect("a0", ($scope, { 7: x }) =>
     _$.on($scope[0], "click", function () {
-      $x($scope, x + 1);
+      $x($scope, ++x);
     }),
   ),
   $x = _$.state(7, ($scope, x) => {

@@ -32,7 +32,7 @@ const $for5 = /* @__PURE__ */_$.loopOf("#div/4", $for_content5);
 const $items_effect = _$.effect("__tests__/template.marko_0_items", ($scope, {
   items
 }) => _$.on($scope["#button/5"], "click", function () {
-  $items($scope, [...items.slice(1), items[0]]);
+  $items($scope, items = [...items.slice(1), items[0]]);
 }));
 const $items = /* @__PURE__ */_$.state("items/6", ($scope, items) => {
   $for($scope, [items, "id"]);

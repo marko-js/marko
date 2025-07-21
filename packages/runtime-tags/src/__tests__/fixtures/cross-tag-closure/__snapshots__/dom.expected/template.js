@@ -8,7 +8,7 @@ const $count$mytag$content_effect = _$.effect("__tests__/template.marko_1_count"
     count
   }
 }) => _$.on($scope["#button/0"], "click", function () {
-  _$.tagVarSignalChange($scope._["#childScope/0"], count + 1), count;
+  _$.tagVarSignalChange($scope._["#childScope/0"], ++count)
 }));
 const $count$mytag$content = /* @__PURE__ */_$.dynamicClosureRead("count", ($scope, count) => {
   _$.data($scope["#text/1"], count);

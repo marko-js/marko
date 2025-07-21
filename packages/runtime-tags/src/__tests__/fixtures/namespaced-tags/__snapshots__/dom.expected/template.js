@@ -23,7 +23,7 @@ const $expr_Parent_Child = /* @__PURE__ */_$.intersection(13, $expr_Parent_Child
 const $Parent_effect = _$.effect("__tests__/template.marko_0_Parent", ($scope, {
   Parent
 }) => _$.on($scope["#button/6"], "click", function () {
-  $Parent($scope, Parent === "div" ? "svg" : "div");
+  $Parent($scope, Parent = Parent === "div" ? "svg" : "div");
 }));
 const $Parent = /* @__PURE__ */_$.state("Parent/11", ($scope, Parent) => {
   $dynamicTag3($scope, Parent);
@@ -35,7 +35,7 @@ const $dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/4", $Child_content2);
 const $Child_effect = _$.effect("__tests__/template.marko_0_Child", ($scope, {
   Child
 }) => _$.on($scope["#button/7"], "click", function () {
-  $Child($scope, Child === "a" ? null : "a");
+  $Child($scope, Child = Child === "a" ? null : "a");
 }));
 const $Child = /* @__PURE__ */_$.state("Child/12", ($scope, Child) => {
   $dynamicTag($scope, Child, () => ({

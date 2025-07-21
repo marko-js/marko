@@ -1,7 +1,7 @@
-// size: 272 (min) 168 (brotli)
+// size: 272 (min) 170 (brotli)
 const $y_effect = _$.effect("a1", ($scope, { 6: y }) =>
     _$.on($scope[0], "click", function () {
-      $y($scope, y + 1);
+      $y($scope, ++y);
     }),
   ),
   $y = _$.state(6, ($scope, y) => {

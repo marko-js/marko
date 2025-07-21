@@ -20,7 +20,7 @@ const $mult_closure = /* @__PURE__ */_$.dynamicClosure($mult$item$content);
 const $mult_effect = _$.effect("__tests__/template.marko_0_mult", ($scope, {
   mult
 }) => _$.on($scope["#button/1"], "click", function () {
-  $mult($scope, mult + 1), mult;
+  $mult($scope, ++mult)
 }));
 const $mult = /* @__PURE__ */_$.state("mult/3", ($scope, mult) => {
   _$.data($scope["#text/2"], mult);

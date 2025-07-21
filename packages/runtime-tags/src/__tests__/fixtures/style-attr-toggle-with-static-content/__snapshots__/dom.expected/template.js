@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $open_effect = _$.effect("__tests__/template.marko_0_open", ($scope, {
   open
 }) => _$.on($scope["#button/0"], "click", function () {
-  $open($scope, !open);
+  $open($scope, open = !open);
 }));
 const $open = /* @__PURE__ */_$.state("open/2", ($scope, open) => {
   _$.styleItem($scope["#div/1"], "display", open ? undefined : "none");

@@ -73,22 +73,22 @@ const $dynamicTag = _$.dynamicTag(0, 0, () => $onClickOnce2),
   );
 function $_return2($scope, { 2: value, 3: call } = $scope) {
   return function () {
-    call && ($call$define$content2($scope, call - 1), value());
+    call && ($call$define$content2($scope, --call), value());
   };
 }
 function $_return($scope, { 2: value, 3: call } = $scope) {
   return function () {
-    call && ($call$define$content($scope, call - 1), value());
+    call && ($call$define$content($scope, --call), value());
   };
 }
 function $onClickOnce($scope, { 9: clickOnceCount } = $scope) {
   return function () {
-    $clickOnceCount($scope, clickOnceCount + 1);
+    $clickOnceCount($scope, ++clickOnceCount);
   };
 }
 function $onClickTwice($scope, { 13: clickTwiceCount } = $scope) {
   return function () {
-    $clickTwiceCount($scope, clickTwiceCount + 1);
+    $clickTwiceCount($scope, ++clickTwiceCount);
   };
 }
 (_$.register("a2", $_return2),

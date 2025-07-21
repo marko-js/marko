@@ -1,8 +1,8 @@
-// size: 214 (min) 153 (brotli)
+// size: 216 (min) 155 (brotli)
 const $for_content = _$.createRenderer("Child"),
   $for = _$.loopOf(1, $for_content),
   $children_effect = _$.effect("a0", ($scope, { 2: children }) => {
-    1 === children.length && $children($scope, [...children, 2]);
+    1 === children.length && $children($scope, (children = [...children, 2]));
   }),
   $children = _$.state(2, ($scope, children) => {
     ($children_length($scope, children?.length),

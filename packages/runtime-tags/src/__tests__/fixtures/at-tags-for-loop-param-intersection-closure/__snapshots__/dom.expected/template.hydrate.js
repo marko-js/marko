@@ -14,7 +14,7 @@ _$.localClosures(_$.registerContent("b0", " ", " ", $setup$item$content), {
 const $mult_closure = _$.dynamicClosure($mult$item$content),
   $mult_effect = _$.effect("b1", ($scope, { 3: mult }) =>
     _$.on($scope[1], "click", function () {
-      $mult($scope, mult + 1);
+      $mult($scope, ++mult);
     }),
   ),
   $mult = _$.state(3, ($scope, mult) => {

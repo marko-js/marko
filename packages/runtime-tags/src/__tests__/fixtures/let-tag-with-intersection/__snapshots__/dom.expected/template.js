@@ -19,7 +19,7 @@ const $z = /* @__PURE__ */_$.value("z", ($scope, z) => {
 });
 const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
   x
-}) => _$.on($scope["#button/0"], "click", () => ($x($scope, x + 1), x)));
+}) => _$.on($scope["#button/0"], "click", () => ($x($scope, ++x), x - 1)));
 const $x = /* @__PURE__ */_$.state("x/5", ($scope, x) => {
   _$.data($scope["#text/1"], x);
   $y($scope, x + 1);
