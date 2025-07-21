@@ -19,14 +19,14 @@ function $onClick2($scope, {
   clickCount
 } = $scope) {
   return function () {
-    $clickCount($scope, clickCount + 1), clickCount;
+    $clickCount($scope, ++clickCount)
   };
 }
 function $onClick($scope, {
   clickCount
 } = $scope) {
   return function () {
-    $clickCount($scope, clickCount + 1), clickCount;
+    $clickCount($scope, ++clickCount)
   };
 }
 _$.register("__tests__/template.marko_0/onClick2", $onClick2);

@@ -1,4 +1,4 @@
-// size: 955 (min) 467 (brotli)
+// size: 957 (min) 466 (brotli)
 const $expr_name_write_effect = _$.effect(
     "a0",
     ($scope, { 3: name, 4: write }) =>
@@ -68,7 +68,7 @@ const $expr_name_write_effect = _$.effect(
   $for = _$.loopOf(2, $for_content),
   $items_effect = _$.effect("b1", ($scope, { 3: items }) =>
     _$.on($scope[0], "click", function () {
-      $items($scope, items.length ? items.slice(0, -1) : [1, 2, 3]);
+      $items($scope, (items = items.length ? items.slice(0, -1) : [1, 2, 3]));
     }),
   ),
   $items = _$.state(3, ($scope, items) => {

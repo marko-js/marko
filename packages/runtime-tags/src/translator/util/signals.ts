@@ -1330,26 +1330,38 @@ function replaceBindingReadNode(node: t.Node) {
   }
 }
 
-function replaceAssignedNode(node: t.Node) {
+const updateExpressions = new WeakSet<t.Node>();
+function replaceAssignedNode(node: t.Node): t.Node | undefined {
   switch (node.type) {
+    case "ExpressionStatement": {
+      if (
+        node.expression.type === "SequenceExpression" &&
+        updateExpressions.delete(node.expression)
+      ) {
+        return node.expression.expressions[0];
+      }
+      break;
+    }
     case "UpdateExpression": {
       const { extra } = node.argument;
       if (isAssignedBindingExtra(extra)) {
         const buildAssignment = getBuildAssignment(extra);
         if (buildAssignment) {
-          const replacement = buildAssignment(
-            extra.section,
-            t.binaryExpression(
-              node.operator === "++" ? "+" : "-",
-              node.argument,
-              t.numericLiteral(1),
-            ),
-          );
-
           if (!node.prefix) {
-            return t.sequenceExpression([replacement, node.argument]);
+            node.prefix = true;
+            const replacement = t.sequenceExpression([
+              buildAssignment(extra.section, node),
+              t.binaryExpression(
+                node.operator === "++" ? "-" : "+",
+                node.argument,
+                t.numericLiteral(1),
+              ),
+            ]);
+            updateExpressions.add(replacement);
+            return replacement;
           }
-          return replacement;
+
+          return buildAssignment(extra.section, node);
         }
       }
       break;
@@ -1361,19 +1373,28 @@ function replaceAssignedNode(node: t.Node) {
           if (isAssignedBindingExtra(extra)) {
             const buildAssignment = getBuildAssignment(extra);
             if (buildAssignment) {
-              return buildAssignment(
-                extra.section,
-                node.operator === "="
-                  ? node.right
-                  : t.binaryExpression(
-                      node.operator.slice(
-                        0,
-                        -1,
-                      ) as t.BinaryExpression["operator"],
-                      node.left as t.Identifier,
-                      node.right,
-                    ),
-              );
+              if (
+                bindingUtil.has(
+                  extra.fnExtra?.referencedBindingsInFunction,
+                  extra.assignment,
+                )
+              ) {
+                return buildAssignment(extra.section, node);
+              } else {
+                return buildAssignment(
+                  extra.section,
+                  node.operator === "="
+                    ? node.right
+                    : t.binaryExpression(
+                        node.operator.slice(
+                          0,
+                          -1,
+                        ) as t.BinaryExpression["operator"],
+                        node.left as t.Identifier,
+                        node.right,
+                      ),
+                );
+              }
             }
           }
           break;
@@ -1387,19 +1408,27 @@ function replaceAssignedNode(node: t.Node) {
             if (isAssignedBindingExtra(extra)) {
               const buildAssignment = getBuildAssignment(extra);
               if (buildAssignment) {
-                id.name = generateUid(id.name);
-                (params ||= []).push(t.identifier(id.name));
+                if (
+                  !bindingUtil.has(
+                    extra.fnExtra?.referencedBindingsInFunction,
+                    extra.assignment,
+                  )
+                ) {
+                  id.name = generateUid(id.name);
+                  (params ||= []).push(t.identifier(id.name));
+                }
+
                 (assignments ||= []).push(
                   buildAssignment(extra.section, t.identifier(id.name)),
                 );
               }
             }
           });
-          if (params && assignments) {
+          if (assignments) {
             const resultId = generateUid("result");
             return t.callExpression(
               t.arrowFunctionExpression(
-                [t.identifier(resultId), ...params],
+                [t.identifier(resultId), ...(params || [])],
                 t.sequenceExpression([
                   t.assignmentExpression(
                     "=",

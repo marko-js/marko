@@ -5,8 +5,8 @@ const $expr_x_y_effect = _$.effect("__tests__/components/custom-tag.marko_0_x_y"
   x,
   y
 }) => _$.on($scope["#button/0"], "click", function () {
-  $x($scope, x + 1), x;
-  $y($scope, y + 1), y;
+  $x($scope, ++x)
+  $y($scope, ++y)
 }));
 const $expr_x_y = /* @__PURE__ */_$.intersection(9, $expr_x_y_effect);
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3", 0, 0, 1);

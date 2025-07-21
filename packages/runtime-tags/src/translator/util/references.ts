@@ -379,11 +379,13 @@ function trackAssignment(
   >,
   binding: Binding,
 ) {
+  const fnRoot = getFnRoot(assignment);
+  const fnExtra = fnRoot && ((fnRoot.node.extra ??= {}) as FnExtra);
   const section = getOrCreateSection(assignment);
   setReferencesScope(assignment);
   forEachIdentifierPath(assignment, (id) => {
     if (id.node.name === binding.name) {
-      const extra = (id.node.extra ??= {});
+      const extra = (id.node.extra ??= {}) as AssignedBindingExtra;
 
       if (binding.upstreamAlias && binding.property !== undefined) {
         const changePropName = binding.property + "Change";
@@ -409,6 +411,7 @@ function trackAssignment(
       );
       extra.assignment = binding;
       extra.section = section;
+      extra.fnExtra = fnExtra;
     }
   });
 }
@@ -1236,6 +1239,7 @@ function addReadToExpression(
   if (fnRoot) {
     const readsByFn = getReadsByFunction();
     const fnExtra = (fnRoot.node.extra ??= {}) as FnExtra;
+    exprExtra.fnExtra = fnExtra;
     fnExtra.section = section;
     readsByFn.set(fnExtra, push(readsByFn.get(fnExtra), read));
   }
@@ -1574,6 +1578,7 @@ function isEventOrChangeHandler(prop: string) {
 
 export interface ReferencedExtra extends t.NodeExtra {
   section: Section;
+  fnExtra?: FnExtra;
 }
 export function isReferencedExtra(
   extra: t.NodeExtra | undefined,

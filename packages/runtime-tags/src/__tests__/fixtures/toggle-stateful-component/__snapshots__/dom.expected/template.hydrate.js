@@ -1,9 +1,9 @@
-// size: 568 (min) 328 (brotli)
+// size: 568 (min) 329 (brotli)
 const $expr_input_onCount_clickCount_effect = _$.effect(
     "a0",
     ($scope, { 4: input_onCount, 5: clickCount }) =>
       _$.on($scope[0], "click", function () {
-        input_onCount($clickCount($scope, clickCount + 1));
+        input_onCount($clickCount($scope, ++clickCount));
       }),
   ),
   $expr_input_onCount_clickCount = _$.intersection(

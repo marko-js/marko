@@ -14,7 +14,7 @@ const $if2 = /* @__PURE__ */_$.conditional("#text/1", $if_content2);
 const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
   show
 }) => _$.on($scope["#button/2"], "click", function () {
-  $show($scope, !show);
+  $show($scope, show = !show);
 }));
 const $show = /* @__PURE__ */_$.state("show/3", ($scope, show) => {
   $if($scope, show ? 0 : 1);

@@ -18,7 +18,7 @@ const $expr_x_MyTag = /* @__PURE__ */_$.intersection(5, $scope => {
 const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
   x
 }) => _$.on($scope["#button/1"], "click", function () {
-  $x($scope, x + 1), x;
+  $x($scope, ++x)
 }));
 const $x = /* @__PURE__ */_$.state("x/3", ($scope, x) => {
   _$.data($scope["#text/2"], x);

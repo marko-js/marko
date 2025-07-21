@@ -7,7 +7,7 @@ const $count$falseChild$content_effect = _$.effect("__tests__/template.marko_1_c
     count
   }
 }) => _$.on($scope["#button/0"], "click", function () {
-  $count($scope._, count + 1), count;
+  $count($scope._, ++count)
 }));
 const $count$falseChild$content = /* @__PURE__ */_$.dynamicClosureRead("count", ($scope, count) => {
   _$.data($scope["#text/1"], count);

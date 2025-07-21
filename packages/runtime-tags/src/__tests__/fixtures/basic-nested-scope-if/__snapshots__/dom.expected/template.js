@@ -9,7 +9,7 @@ const $clickCount$if$content_effect = _$.effect("__tests__/template.marko_1_clic
     clickCount
   }
 }) => _$.on($scope["#button/0"], "click", function () {
-  $clickCount($scope._, clickCount + 1), clickCount;
+  $clickCount($scope._, ++clickCount)
 }));
 const $clickCount$if$content = /* @__PURE__ */_$.conditionalClosure("clickCount", "#text/0", 0, ($scope, clickCount) => {
   _$.data($scope["#text/1"], clickCount);

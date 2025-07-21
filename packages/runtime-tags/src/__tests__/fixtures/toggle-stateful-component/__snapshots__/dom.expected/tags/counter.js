@@ -5,7 +5,7 @@ const $expr_input_onCount_clickCount_effect = _$.effect("__tests__/tags/counter.
   input_onCount,
   clickCount
 }) => _$.on($scope["#button/0"], "click", function () {
-  input_onCount($clickCount($scope, clickCount + 1));
+  input_onCount($clickCount($scope, ++clickCount));
 }));
 const $expr_input_onCount_clickCount = /* @__PURE__ */_$.intersection(6, $expr_input_onCount_clickCount_effect);
 const $clickCount = /* @__PURE__ */_$.state("clickCount/5", ($scope, clickCount) => {

@@ -9,7 +9,7 @@ const $count$classlayout$content_effect = _$.effect("__tests__/template.marko_1_
     count
   }
 }) => _$.on($scope["#button/0"], "click", function () {
-  $count($scope._, count + 1), count;
+  $count($scope._, ++count)
 }));
 const $count$classlayout$content = /* @__PURE__ */_$.dynamicClosureRead("count", ($scope, count) => {
   _$.data($scope["#text/1"], count);

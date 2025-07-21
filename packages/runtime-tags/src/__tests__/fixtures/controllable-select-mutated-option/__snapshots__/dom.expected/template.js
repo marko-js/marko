@@ -12,10 +12,10 @@ const $options_effect = _$.effect("__tests__/template.marko_0_options", ($scope,
   options
 }) => {
   _$.on($scope["#button/2"], "click", function () {
-    $options($scope, options.slice(1));
+    $options($scope, options = options.slice(1));
   });
   _$.on($scope["#button/3"], "click", function () {
-    $options($scope, [options.length ? options[0] - 1 : 3, ...options]);
+    $options($scope, options = [options.length ? options[0] - 1 : 3, ...options]);
   });
 });
 const $options = /* @__PURE__ */_$.state("options/4", ($scope, options) => {

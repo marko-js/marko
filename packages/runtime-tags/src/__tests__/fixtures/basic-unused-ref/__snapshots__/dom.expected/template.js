@@ -6,7 +6,7 @@ const $unused_2 = $scope => {};
 const $clickCount_effect = _$.effect("__tests__/template.marko_0_clickCount", ($scope, {
   clickCount
 }) => _$.on($scope["#button/0"], "click", function () {
-  $clickCount($scope, clickCount + 1), clickCount;
+  $clickCount($scope, ++clickCount)
 }));
 const $clickCount = /* @__PURE__ */_$.state("clickCount/2", ($scope, clickCount) => {
   _$.data($scope["#text/1"], clickCount);

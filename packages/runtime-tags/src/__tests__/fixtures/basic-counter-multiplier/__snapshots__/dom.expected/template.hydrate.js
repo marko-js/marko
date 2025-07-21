@@ -8,7 +8,7 @@ const $multipliedCount = _$.value(7, ($scope, multipliedCount) =>
   }),
   $count_effect = _$.effect("a0", ($scope, { 4: count }) =>
     _$.on($scope[2], "click", function () {
-      $count($scope, count + 1);
+      $count($scope, ++count);
     }),
   ),
   $count = _$.state(4, ($scope) => {
@@ -16,7 +16,7 @@ const $multipliedCount = _$.value(7, ($scope, multipliedCount) =>
   }),
   $multiplier_effect = _$.effect("a1", ($scope, { 5: multiplier }) =>
     _$.on($scope[0], "click", function () {
-      $multiplier($scope, multiplier + 1);
+      $multiplier($scope, ++multiplier);
     }),
   ),
   $multiplier = _$.state(5, ($scope, multiplier) => {

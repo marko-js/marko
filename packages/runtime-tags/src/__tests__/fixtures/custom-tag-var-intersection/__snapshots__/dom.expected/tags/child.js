@@ -11,7 +11,7 @@ const $expr_input_extra_x = /* @__PURE__ */_$.intersection(6, $scope => {
 const $x_effect = _$.effect("__tests__/tags/child.marko_0_x", ($scope, {
   x
 }) => _$.on($scope["#button/0"], "click", function () {
-  $x($scope, x + 1), x;
+  $x($scope, ++x)
 }));
 const $x = /* @__PURE__ */_$.state("x/5", ($scope, x) => {
   _$.data($scope["#text/1"], x);

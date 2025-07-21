@@ -4,7 +4,7 @@ export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $b_effect = _$.effect("__tests__/template.marko_0_b", ($scope, {
   b
-}) => _$.on($scope["#button/0"], "click", () => ($b($scope, b + 1), b)));
+}) => _$.on($scope["#button/0"], "click", () => ($b($scope, ++b), b - 1)));
 const $b = /* @__PURE__ */_$.state("b/6", ($scope, b) => {
   _$.data($scope["#text/2"], b);
   $b_effect($scope);

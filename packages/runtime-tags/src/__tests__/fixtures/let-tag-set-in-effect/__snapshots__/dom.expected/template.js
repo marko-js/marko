@@ -5,7 +5,7 @@ const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
   x
 }) => {
   $y($scope, x);
-  $x($scope, 2);
+  $x($scope, x = 2);
 });
 const $x = /* @__PURE__ */_$.state("x/2", ($scope, x) => {
   _$.data($scope["#text/0"], x);

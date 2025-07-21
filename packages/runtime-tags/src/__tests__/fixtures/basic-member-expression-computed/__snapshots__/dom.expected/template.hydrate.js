@@ -1,11 +1,11 @@
-// size: 273 (min) 199 (brotli)
+// size: 277 (min) 192 (brotli)
 const $expr_items_index_effect = _$.effect(
     "a0",
     ($scope, { 3: items, 5: index }) =>
       _$.on($scope[2], "click", function () {
         const newItems = items.slice(1);
-        ($items($scope, newItems),
-          $index($scope, (index + 1) % newItems.length));
+        ($items($scope, (items = newItems)),
+          $index($scope, (index = (index + 1) % newItems.length)));
       }),
   ),
   $expr_items_index = _$.intersection(6, ($scope) => {

@@ -1,4 +1,4 @@
-// size: 353 (min) 212 (brotli)
+// size: 355 (min) 213 (brotli)
 const $input_thing_selected = _$.value(5, ($scope, input_thing_selected) =>
     _$.classItem($scope[0], "selected", input_thing_selected),
   ),
@@ -12,7 +12,7 @@ const $input_thing_selected = _$.value(5, ($scope, input_thing_selected) =>
   $myThing = _$.value(3, ($scope, myThing) => $input_thing($scope[0], myThing)),
   $selected_effect = _$.effect("b1", ($scope, { 2: selected }) =>
     _$.on($scope[1], "click", function () {
-      $selected($scope, !selected);
+      $selected($scope, (selected = !selected));
     }),
   ),
   $selected = _$.state(2, ($scope, selected) => {

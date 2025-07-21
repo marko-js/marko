@@ -1,4 +1,4 @@
-// size: 1287 (min) 507 (brotli)
+// size: 1293 (min) 508 (brotli)
 const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   $expr_name_write_effect = _$.effect("a0", ($scope, { 5: name, 6: write }) => {
     (write(`${name} mounted`),
@@ -75,7 +75,7 @@ const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   $if = _$.conditional(4, $if_content),
   $showOuter_effect = _$.effect("b1", ($scope, { 5: showOuter }) =>
     _$.on($scope[0], "click", function () {
-      $showOuter($scope, !showOuter);
+      $showOuter($scope, (showOuter = !showOuter));
     }),
   ),
   $showOuter = _$.state(5, ($scope, showOuter) => {
@@ -83,7 +83,7 @@ const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   }),
   $showMiddle_effect = _$.effect("b2", ($scope, { 6: showMiddle }) =>
     _$.on($scope[1], "click", function () {
-      $showMiddle($scope, !showMiddle);
+      $showMiddle($scope, (showMiddle = !showMiddle));
     }),
   ),
   $showMiddle = _$.state(6, ($scope) => {
@@ -92,7 +92,7 @@ const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   $showInner_closure = _$.dynamicClosure($showInner$if$content),
   $showInner_effect = _$.effect("b3", ($scope, { 7: showInner }) =>
     _$.on($scope[2], "click", function () {
-      $showInner($scope, !showInner);
+      $showInner($scope, (showInner = !showInner));
     }),
   ),
   $showInner = _$.state(7, ($scope) => {

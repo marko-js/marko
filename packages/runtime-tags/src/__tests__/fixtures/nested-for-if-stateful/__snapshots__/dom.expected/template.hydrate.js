@@ -1,4 +1,4 @@
-// size: 846 (min) 405 (brotli)
+// size: 848 (min) 405 (brotli)
 const $setup$else$content_effect = _$.effect("a0", ($scope) =>
     _$.on($scope[0], "click", function () {
       $editing$for$content($scope._, !0);
@@ -28,11 +28,10 @@ const $setup$else$content_effect = _$.effect("a0", ($scope) =>
       },
     ) =>
       _$.on($scope[0], "click", function () {
-        ($counts($scope._._, [
-          ...counts.slice(0, i),
-          count + 1,
-          ...counts.slice(i + 1),
-        ]),
+        ($counts(
+          $scope._._,
+          (counts = [...counts.slice(0, i), count + 1, ...counts.slice(i + 1)]),
+        ),
           $editing$for$content($scope._, !1));
       }),
   ),

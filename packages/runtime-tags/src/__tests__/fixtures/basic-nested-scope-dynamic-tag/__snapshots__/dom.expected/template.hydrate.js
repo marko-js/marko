@@ -1,9 +1,9 @@
-// size: 239 (min) 160 (brotli)
+// size: 239 (min) 156 (brotli)
 const $count$falseChild$content_effect = _$.effect(
     "b1",
     ($scope, { _: { 1: count } }) =>
       _$.on($scope[0], "click", function () {
-        $count($scope._, count + 1);
+        $count($scope._, ++count);
       }),
   ),
   $count$falseChild$content = _$.dynamicClosureRead(1, ($scope, count) => {

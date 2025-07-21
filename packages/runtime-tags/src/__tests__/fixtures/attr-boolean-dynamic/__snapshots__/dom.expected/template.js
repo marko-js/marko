@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $disabled_effect = _$.effect("__tests__/template.marko_0_disabled", ($scope, {
   disabled
 }) => _$.on($scope["#button/1"], "click", function () {
-  $disabled($scope, !disabled);
+  $disabled($scope, disabled = !disabled);
 }));
 const $disabled = /* @__PURE__ */_$.state("disabled/3", ($scope, disabled) => {
   _$.attr($scope["#input/0"], "disabled", disabled);

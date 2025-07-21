@@ -38,7 +38,7 @@ const $await$try$content = _$.awaitTag(0, $await_content),
   $clickCount_closure = _$.dynamicClosure($clickCount$try$content),
   $clickCount_effect = _$.effect("a3", ($scope, { 3: clickCount }) =>
     _$.on($scope[0], "click", function () {
-      $clickCount($scope, clickCount + 1);
+      $clickCount($scope, ++clickCount);
     }),
   ),
   $clickCount = _$.state(3, ($scope) => {

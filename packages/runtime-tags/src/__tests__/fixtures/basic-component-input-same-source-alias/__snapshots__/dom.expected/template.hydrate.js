@@ -1,4 +1,4 @@
-// size: 258 (min) 164 (brotli)
+// size: 258 (min) 172 (brotli)
 const $onClick_effect = _$.effect("a0", ($scope, { 5: onClick }) =>
     _$.on($scope[0], "click", onClick),
   ),
@@ -14,7 +14,7 @@ const $onClick_effect = _$.effect("a0", ($scope, { 5: onClick }) =>
   });
 function $onClick($scope, { 1: clickCount } = $scope) {
   return function () {
-    $clickCount($scope, clickCount + 1);
+    $clickCount($scope, ++clickCount);
   };
 }
 (_$.register("b0", $onClick), init());

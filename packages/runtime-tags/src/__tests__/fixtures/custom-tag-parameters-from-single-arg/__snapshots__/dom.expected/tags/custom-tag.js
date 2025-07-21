@@ -12,7 +12,7 @@ const $expr_input_content_x = /* @__PURE__ */_$.intersection(7, $scope => {
 const $x_effect = _$.effect("__tests__/tags/custom-tag.marko_0_x", ($scope, {
   x
 }) => _$.on($scope["#button/0"], "click", function () {
-  $x($scope, x + 1), x;
+  $x($scope, ++x)
 }));
 const $x = /* @__PURE__ */_$.state("x/6", ($scope, x) => {
   _$.data($scope["#text/1"], x);

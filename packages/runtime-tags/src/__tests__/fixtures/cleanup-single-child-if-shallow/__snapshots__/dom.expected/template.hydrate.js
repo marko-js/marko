@@ -1,4 +1,4 @@
-// size: 441 (min) 266 (brotli)
+// size: 443 (min) 265 (brotli)
 const $input_effect = _$.effect("a0", ($scope, { 1: input }) => {
     (input.write("mounted"),
       (_$.getAbortSignal($scope, 0).onabort = () => {
@@ -15,7 +15,7 @@ const $input_effect = _$.effect("a0", ($scope, { 1: input }) => {
   $if = _$.conditional(2, $if_content),
   $show_effect = _$.effect("b1", ($scope, { 3: show }) =>
     _$.on($scope[0], "click", function () {
-      $show($scope, !show);
+      $show($scope, (show = !show));
     }),
   ),
   $show = _$.state(3, ($scope, show) => {

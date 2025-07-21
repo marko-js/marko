@@ -7,7 +7,7 @@ const $children_effect = _$.effect("__tests__/template.marko_0_children", ($scop
   children
 }) => {
   if (children.length === 1) {
-    $children($scope, [...children, 2]);
+    $children($scope, children = [...children, 2]);
   }
 });
 const $children = /* @__PURE__ */_$.state("children/1", ($scope, children) => {

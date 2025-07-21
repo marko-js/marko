@@ -1,7 +1,7 @@
-// size: 563 (min) 259 (brotli)
+// size: 563 (min) 251 (brotli)
 const $state_effect = _$.effect("a0", ($scope, { 11: state }) =>
     _$.on($scope[0], "click", function () {
-      $state($scope, state + 1);
+      $state($scope, ++state);
     }),
   ),
   $state = _$.state(11, ($scope, state) => {
@@ -19,7 +19,7 @@ const $state_effect = _$.effect("a0", ($scope, { 11: state }) =>
   $input_valueChange = _$.value(9, $expr_input_value_input_valueChange),
   $otherState_effect = _$.effect("a1", ($scope, { 12: otherState }) =>
     _$.on($scope[3], "click", function () {
-      $otherState($scope, otherState + 1);
+      $otherState($scope, ++otherState);
     }),
   ),
   $otherState = _$.state(12, ($scope, otherState) => {

@@ -1,4 +1,4 @@
-// size: 327 (min) 203 (brotli)
+// size: 327 (min) 210 (brotli)
 let sideEffect = 3;
 const $count$define$content = _$.dynamicClosureRead(1, ($scope, count) =>
   _$.data($scope[0], count),
@@ -13,7 +13,7 @@ const $expr_count_MyThing = _$.intersection(3, ($scope) => {
   $count_closure = _$.dynamicClosure($count$define$content),
   $count_effect = _$.effect("a1", ($scope, { 1: count }) =>
     _$.on($scope[0], "click", function () {
-      $count($scope, count + 1);
+      $count($scope, ++count);
     }),
   ),
   $count = _$.state(1, ($scope) => {

@@ -1,4 +1,4 @@
-// size: 447 (min) 239 (brotli)
+// size: 451 (min) 242 (brotli)
 const $name$for$content = _$.value(4, ($scope, name) =>
     _$.data($scope[0], name),
   ),
@@ -21,13 +21,16 @@ const $name$for$content = _$.value(4, ($scope, name) =>
   $for = _$.loopOf(0, $for_content),
   $items_effect = _$.effect("a0", ($scope, { 3: items }) => {
     (_$.on($scope[1], "click", function () {
-      $items($scope, [
-        ...items,
-        { name: "JavaScript", description: "Java, but scriptier" },
-      ]);
+      $items(
+        $scope,
+        (items = [
+          ...items,
+          { name: "JavaScript", description: "Java, but scriptier" },
+        ]),
+      );
     }),
       _$.on($scope[2], "click", function () {
-        $items($scope, items.slice(0, -1));
+        $items($scope, (items = items.slice(0, -1)));
       }));
   }),
   $items = _$.state(3, ($scope, items) => {

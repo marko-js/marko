@@ -7,7 +7,7 @@ const tags = [_$.createTemplate("a", "<div> </div>", "D l", $setup, $input)],
   $dynamicTag = _$.dynamicTag(2, 0, 0, 1),
   $x_effect = _$.effect("b0", ($scope, { 3: x }) =>
     _$.on($scope[0], "click", function () {
-      $x($scope, x + 1);
+      $x($scope, ++x);
     }),
   ),
   $x = _$.state(3, ($scope, x) => {

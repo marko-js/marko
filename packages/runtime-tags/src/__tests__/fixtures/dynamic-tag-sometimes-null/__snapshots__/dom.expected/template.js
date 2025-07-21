@@ -6,7 +6,7 @@ const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", $x_content);
 const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
   x
 }) => _$.on($scope["#button/1"], "click", function () {
-  $x($scope, x ? null : "div");
+  $x($scope, x = x ? null : "div");
 }));
 const $x = /* @__PURE__ */_$.state("x/2", ($scope, x) => {
   $dynamicTag($scope, x);

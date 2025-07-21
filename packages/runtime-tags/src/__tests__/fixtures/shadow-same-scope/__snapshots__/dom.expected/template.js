@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $count4_effect = _$.effect("__tests__/template.marko_0_count", ($scope, {
   count
 }) => _$.on($scope["#button/0"], "click", function () {
-  $count4($scope, count + 1), count;
+  $count4($scope, ++count)
 }));
 const $count4 = /* @__PURE__ */_$.state("count/8", ($scope, count) => {
   _$.data($scope["#text/1"], count);
@@ -13,7 +13,7 @@ const $count4 = /* @__PURE__ */_$.state("count/8", ($scope, count) => {
 const $count5_effect = _$.effect("__tests__/template.marko_0_$count", ($scope, {
   $count
 }) => _$.on($scope["#button/2"], "click", function () {
-  $count5($scope, $count + 1), $count;
+  $count5($scope, ++$count)
 }));
 const $count5 = /* @__PURE__ */_$.state("$count/9", ($scope, $count) => {
   _$.data($scope["#text/3"], $count);
@@ -22,7 +22,7 @@ const $count5 = /* @__PURE__ */_$.state("$count/9", ($scope, $count) => {
 const $count6_effect = _$.effect("__tests__/template.marko_0_$count2", ($scope, {
   $count2
 }) => _$.on($scope["#button/4"], "click", function () {
-  $count6($scope, $count2 + 1), $count2;
+  $count6($scope, ++$count2)
 }));
 const $count6 = /* @__PURE__ */_$.state("$count2/10", ($scope, $count2) => {
   _$.data($scope["#text/5"], $count2);
@@ -31,7 +31,7 @@ const $count6 = /* @__PURE__ */_$.state("$count2/10", ($scope, $count2) => {
 const $count7_effect = _$.effect("__tests__/template.marko_0_$count3", ($scope, {
   $count3
 }) => _$.on($scope["#button/6"], "click", function () {
-  $count7($scope, $count3 + 1), $count3;
+  $count7($scope, ++$count3)
 }));
 const $count7 = /* @__PURE__ */_$.state("$count3/11", ($scope, $count3) => {
   _$.data($scope["#text/7"], $count3);

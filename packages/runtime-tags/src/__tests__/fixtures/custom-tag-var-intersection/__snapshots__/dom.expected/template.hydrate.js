@@ -5,7 +5,7 @@ const $expr_input_extra_x = _$.intersection(6, ($scope) => {
   }),
   $x_effect = _$.effect("a0", ($scope, { 5: x }) =>
     _$.on($scope[0], "click", function () {
-      $x($scope, x + 1);
+      $x($scope, ++x);
     }),
   ),
   $x = _$.state(5, ($scope, x) => {

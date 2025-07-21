@@ -1,4 +1,4 @@
-// size: 252 (min) 183 (brotli)
+// size: 254 (min) 180 (brotli)
 const $tagName_content = _$.registerContent("a0", "body content"),
   $dynamicTag = _$.dynamicTag(0, $tagName_content),
   $expr_tagName_className = _$.intersection(4, ($scope) => {
@@ -7,7 +7,7 @@ const $tagName_content = _$.registerContent("a0", "body content"),
   }),
   $tagName_effect = _$.effect("a1", ($scope, { 2: tagName }) =>
     _$.on($scope[1], "click", function () {
-      $tagName($scope, "span" === tagName ? "div" : "span");
+      $tagName($scope, (tagName = "span" === tagName ? "div" : "span"));
     }),
   ),
   $tagName = _$.state(2, ($scope) => {

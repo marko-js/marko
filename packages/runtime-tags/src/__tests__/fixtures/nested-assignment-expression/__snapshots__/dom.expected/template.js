@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $clickCount_effect = _$.effect("__tests__/template.marko_0_clickCount", ($scope, {
   clickCount
 }) => _$.on($scope["#button/0"], "click", function () {
-  const last = $lastCount($scope, ($clickCount($scope, clickCount + 1), clickCount));
+  const last = $lastCount($scope, ($clickCount($scope, ++clickCount), clickCount - 1));
   $lastCount2($scope, last);
 }));
 const $clickCount = /* @__PURE__ */_$.state("clickCount/4", ($scope, clickCount) => {

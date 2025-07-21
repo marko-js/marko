@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $toggle_effect = _$.effect("__tests__/template.marko_0_toggle", ($scope, {
   toggle
 }) => _$.on($scope["#button/1"], "click", function () {
-  $toggle($scope, !toggle);
+  $toggle($scope, toggle = !toggle);
 }));
 const $toggle = /* @__PURE__ */_$.state("toggle/2", ($scope, toggle) => {
   _$.attr($scope["#body/0"], "data-toggle", toggle);

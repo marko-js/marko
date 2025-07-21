@@ -1,7 +1,7 @@
-// size: 164 (min) 124 (brotli)
+// size: 166 (min) 136 (brotli)
 const $disabled_effect = _$.effect("a0", ($scope, { 3: disabled }) =>
     _$.on($scope[1], "click", function () {
-      $disabled($scope, !disabled);
+      $disabled($scope, (disabled = !disabled));
     }),
   ),
   $disabled = _$.state(3, ($scope, disabled) => {

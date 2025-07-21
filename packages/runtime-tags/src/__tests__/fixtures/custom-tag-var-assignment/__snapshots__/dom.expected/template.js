@@ -5,7 +5,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $count_effect = _$.effect("__tests__/template.marko_0_count", ($scope, {
   count
 }) => _$.on($scope["#button/2"], "click", function () {
-  _$.tagVarSignalChange($scope["#childScope/0"], count + 1), count;
+  _$.tagVarSignalChange($scope["#childScope/0"], ++count)
 }));
 const $count = _$.registerBoundSignal("__tests__/template.marko_0_count/var", /* @__PURE__ */_$.value("count", ($scope, count) => {
   _$.data($scope["#text/3"], count);

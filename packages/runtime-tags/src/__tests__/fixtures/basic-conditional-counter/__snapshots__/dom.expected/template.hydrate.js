@@ -1,4 +1,4 @@
-// size: 332 (min) 194 (brotli)
+// size: 334 (min) 192 (brotli)
 const $count$if$content = _$.conditionalClosure(4, 2, 0, ($scope, count) =>
     _$.data($scope[0], count),
   ),
@@ -7,7 +7,7 @@ const $count$if$content = _$.conditionalClosure(4, 2, 0, ($scope, count) =>
   $if = _$.conditional(2, $if_content),
   $show_effect = _$.effect("a0", ($scope, { 3: show }) =>
     _$.on($scope[1], "click", function () {
-      $show($scope, !show);
+      $show($scope, (show = !show));
     }),
   ),
   $show = _$.state(3, ($scope, show) => {
@@ -15,7 +15,7 @@ const $count$if$content = _$.conditionalClosure(4, 2, 0, ($scope, count) =>
   }),
   $count_effect = _$.effect("a1", ($scope, { 4: count }) =>
     _$.on($scope[0], "click", function () {
-      $count($scope, count + 1);
+      $count($scope, ++count);
     }),
   ),
   $count = _$.state(4, ($scope) => {

@@ -15,7 +15,7 @@ const $clickCount$else$content = _$.conditionalClosure(
     "a0",
     ($scope, { _: { 1: clickCount } }) =>
       _$.on($scope[0], "click", function () {
-        $clickCount($scope._, clickCount + 1);
+        $clickCount($scope._, ++clickCount);
       }),
   ),
   $clickCount$if$content = _$.conditionalClosure(

@@ -1,4 +1,4 @@
-// size: 891 (min) 455 (brotli)
+// size: 893 (min) 458 (brotli)
 const $setup$if$content = ($scope) => {
     ($scope[0],
       $comment_comments$if$content._($scope),
@@ -37,7 +37,7 @@ const $setup$if$content = ($scope) => {
   $i$for$content = value(9, $expr_input_path_i$for$content),
   $open$for$content_effect = effect("a0", ($scope, { 12: open }) =>
     on($scope[2], "click", function () {
-      $open$for$content($scope, !open);
+      $open$for$content($scope, (open = !open));
     }),
   ),
   $open$for$content = state(12, ($scope, open) => {

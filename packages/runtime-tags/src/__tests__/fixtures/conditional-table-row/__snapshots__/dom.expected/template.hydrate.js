@@ -1,9 +1,9 @@
-// size: 179 (min) 132 (brotli)
+// size: 181 (min) 146 (brotli)
 const $if_content = _$.createRenderer("<tr><td>Hi</td></tr>"),
   $if = _$.conditional(0, $if_content),
   $show_effect = _$.effect("a0", ($scope, { 2: show }) =>
     _$.on($scope[1], "click", function () {
-      $show($scope, !show);
+      $show($scope, (show = !show));
     }),
   ),
   $show = _$.state(2, ($scope, show) => {

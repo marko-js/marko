@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_x_y_effect = _$.effect("__tests__/template.marko_0_x_y", ($scope, {
   x,
   y
-}) => _$.on($scope["#button/0"], "click", () => $x($scope, $y($scope, x + y))));
+}) => _$.on($scope["#button/0"], "click", () => $x($scope, x = $y($scope, y = x + y))));
 const $expr_x_y = /* @__PURE__ */_$.intersection(5, $expr_x_y_effect);
 const $x = /* @__PURE__ */_$.state("x/3", ($scope, x) => {
   _$.data($scope["#text/1"], x);

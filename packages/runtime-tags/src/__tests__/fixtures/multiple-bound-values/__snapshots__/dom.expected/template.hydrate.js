@@ -1,7 +1,7 @@
-// size: 560 (min) 237 (brotli)
+// size: 560 (min) 234 (brotli)
 const $count_effect = _$.effect("a0", ($scope, { 12: count1 }) =>
     _$.on($scope[0], "click", function () {
-      $count$1($scope, count1 + 1);
+      $count$1($scope, ++count1);
     }),
   ),
   $count$1 = _$.state(12, ($scope, count1) => {
@@ -14,7 +14,7 @@ const $count_effect = _$.effect("a0", ($scope, { 12: count1 }) =>
   $input_count = _$.value(6, $expr_input_count1_input_count1Change),
   $count2_effect = _$.effect("a1", ($scope, { 13: count2 }) =>
     _$.on($scope[2], "click", function () {
-      $count2$1($scope, count2 + 1);
+      $count2$1($scope, ++count2);
     }),
   ),
   $count2$1 = _$.state(13, ($scope, count2) => {

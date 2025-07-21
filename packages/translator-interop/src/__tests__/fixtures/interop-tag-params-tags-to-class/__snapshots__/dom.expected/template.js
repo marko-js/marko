@@ -19,7 +19,7 @@ const $multiplier$classlayout$content_effect = _$.effect("__tests__/template.mar
     multiplier
   }
 }) => _$.on($scope["#button/1"], "click", function () {
-  $multiplier($scope._, multiplier + 1), multiplier;
+  $multiplier($scope._, ++multiplier)
 }));
 const $multiplier$classlayout$content = /* @__PURE__ */_$.dynamicClosureRead("multiplier", ($scope, multiplier) => {
   _$.data($scope["#text/2"], multiplier);
