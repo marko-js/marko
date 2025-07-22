@@ -17,9 +17,11 @@ export default _$.createTemplate("__tests__/tags/hello/index.marko", (input, $se
   }, 0, $scope0_id, "#text/0", _$.serializeGuard($serialize, /* input.list.item */1), _$.serializeGuard($serialize, /* input.list.item */1), 0, 1);
   _$.resumeForOf(input.col, col => {
     const $scope2_id = _$.nextScopeId();
-    _$.write(`<div class=col${_$.partialAttrs(col, {
+    _$.write("<div class=col");
+    _$.writePartialAttrsAndContent(col, {
       class: 1
-    }, "#div/0", $scope2_id, "div")}></div>${_$.markResumeNode($scope2_id, "#div/0")}`);
+    }, "#div/0", $scope2_id, "div");
+    _$.write(`</div>${_$.markResumeNode($scope2_id, "#div/0")}`);
     _$.resumeForOf(col.row, row => {
       const $scope3_id = _$.nextScopeId();
       _$.write(`<div class=row${_$.partialAttrs(row, {

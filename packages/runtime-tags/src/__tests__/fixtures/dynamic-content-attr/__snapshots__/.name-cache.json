@@ -1,0 +1,17 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "o",
+      "$$className_effect": "m",
+      "$$className": "r",
+      "$$count$define$content": "n",
+      "$$setup$define$content": "e",
+      "$$expr_count_MyThing": "a",
+      "$$count_closure": "i",
+      "$$count_effect": "s",
+      "$$count": "c",
+      "$sideEffect": "d"
+    }
+  }
+}

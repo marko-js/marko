@@ -55,6 +55,8 @@ export let dynamicTag = (
     const input = ((inputIsArgs
       ? (inputOrArgs as unknown[])[0]
       : inputOrArgs) || {}) as Record<string, unknown>;
+    const renderContent =
+      content || normalizeDynamicRenderer<ServerRenderer>(input.content);
     nextScopeId();
     write(`<${renderer}${attrs(input, accessor, scopeId, renderer)}>`);
 
@@ -74,7 +76,12 @@ export let dynamicTag = (
               input.valueChange,
             ),
           );
-        } else if (content) {
+        } else if (renderContent) {
+          if (typeof renderContent !== "function") {
+            throw new Error(
+              `Body content is not supported for the \`<${renderer}>\` tag.`,
+            );
+          }
           if (
             renderer === "select" &&
             ("value" in input || "valueChange" in input)
@@ -84,10 +91,10 @@ export let dynamicTag = (
               accessor,
               input.value,
               input.valueChange,
-              content,
+              renderContent,
             );
           } else {
-            content();
+            renderContent();
           }
         }
       };
@@ -99,7 +106,9 @@ export let dynamicTag = (
       }
       write(`</${renderer}>`);
     } else if (MARKO_DEBUG && content) {
-      throw new Error(`Body content is not supported for a "${renderer}" tag.`);
+      throw new Error(
+        `Body content is not supported for the \`<${renderer}>\` tag.`,
+      );
     }
 
     if (shouldResume) {

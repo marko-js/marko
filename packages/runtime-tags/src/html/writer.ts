@@ -67,6 +67,52 @@ export function writeEffect(scopeId: number, registryId: string) {
   $chunk.writeEffect(scopeId, registryId);
 }
 
+export function writeContent(
+  nodeAccessor: Accessor,
+  scopeId: number,
+  content: unknown,
+  serializeReason?: 1 | 0,
+) {
+  const shouldResume = serializeReason !== 0;
+  const render = normalizeServerRender(content);
+  const branchId = peekNextScopeId();
+  if (render) {
+    if (shouldResume) {
+      withBranchId(branchId, render);
+    } else {
+      render();
+    }
+  }
+
+  const rendered = peekNextScopeId() !== branchId;
+  if (rendered) {
+    if (shouldResume) {
+      writeScope(scopeId, {
+        [AccessorPrefix.ConditionalScope + nodeAccessor]: writeScope(
+          branchId,
+          {},
+        ),
+        [AccessorPrefix.ConditionalRenderer + nodeAccessor]: render?.___id,
+      });
+    }
+  } else {
+    nextScopeId();
+  }
+}
+
+export function normalizeServerRender(value: unknown) {
+  const renderer = normalizeDynamicRenderer<ServerRenderer>(value);
+  if (renderer) {
+    if (typeof renderer === "function") {
+      return renderer;
+    } else if (MARKO_DEBUG) {
+      throw new Error(
+        `Invalid \`content\` attribute. Received ${typeof value}`,
+      );
+    }
+  }
+}
+
 const kPendingContexts = Symbol("Pending Contexts");
 export function withContext<T>(key: PropertyKey, value: unknown, cb: () => T) {
   const ctx = ($chunk.context ||= { [kPendingContexts]: 0 } as any);

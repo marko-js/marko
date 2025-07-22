@@ -7,7 +7,13 @@ import {
 } from "../common/helpers";
 import { type Accessor, AccessorPrefix, ControlledType } from "../common/types";
 import { escapeTextAreaValue } from "./content";
-import { getContext, withContext, writeScope } from "./writer";
+import {
+  getContext,
+  withContext,
+  write,
+  writeContent,
+  writeScope,
+} from "./writer";
 
 export function classAttr(value: unknown) {
   return stringAttr("class", classValue(value));
@@ -253,6 +259,17 @@ export function attrs(
   return result;
 }
 
+export function writeAttrsAndContent(
+  data: Record<string, unknown>,
+  nodeAccessor: Accessor,
+  scopeId: number,
+  tagName: string,
+  serializeReason?: 1 | 0,
+) {
+  write(`${attrs(data, nodeAccessor, scopeId, tagName)}>`);
+  writeContent(nodeAccessor, scopeId, data?.content, serializeReason);
+}
+
 export function partialAttrs(
   data: Record<string, unknown>,
   skip: Record<string, 1>,
@@ -266,6 +283,18 @@ export function partialAttrs(
   }
 
   return attrs(partial, nodeAccessor, scopeId, tagName);
+}
+
+export function writePartialAttrsAndContent(
+  data: Record<string, unknown>,
+  skip: Record<string, 1>,
+  nodeAccessor: Accessor,
+  scopeId: number,
+  tagName: string,
+  serializeReason?: 1 | 0,
+) {
+  write(`${partialAttrs(data, skip, nodeAccessor, scopeId, tagName)}>`);
+  writeContent(nodeAccessor, scopeId, data?.content, serializeReason);
 }
 
 function writeControlledScope(

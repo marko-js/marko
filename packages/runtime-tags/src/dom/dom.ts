@@ -2,6 +2,7 @@ import {
   classValue,
   getEventHandlerName,
   isEventHandler,
+  normalizeDynamicRenderer,
   styleValue,
 } from "../common/helpers";
 import {
@@ -11,6 +12,7 @@ import {
   type Scope,
 } from "../common/types";
 import { getAbortSignal } from "./abort-signal";
+import { setConditionalRenderer } from "./control-flow";
 import {
   controllable_detailsOrDialog_open,
   controllable_detailsOrDialog_open_effect,
@@ -26,6 +28,8 @@ import {
 } from "./controllable";
 import { on } from "./event";
 import { parseHTML } from "./parse-html";
+import { createAndSetupBranch, type Renderer } from "./renderer";
+import { subscribeToScopeSet } from "./signals";
 
 export function attr(element: Element, name: string, value: unknown) {
   setAttribute(element, name, normalizeAttrValue(value));
@@ -111,6 +115,15 @@ export function attrs(
   attrsInternal(scope, nodeAccessor, nextAttrs);
 }
 
+export function attrsAndContent(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  nextAttrs: Record<string, unknown>,
+) {
+  attrs(scope, nodeAccessor, nextAttrs);
+  insertContent(scope, nodeAccessor, nextAttrs?.content);
+}
+
 function hasAttrAlias(
   element: Element,
   attr: string,
@@ -144,6 +157,16 @@ export function partialAttrs(
   }
 
   attrsInternal(scope, nodeAccessor, partial);
+}
+
+export function partialAttrsAndContent(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  nextAttrs: Record<string, unknown>,
+  skip: Record<string, 1>,
+) {
+  partialAttrs(scope, nodeAccessor, nextAttrs, skip);
+  insertContent(scope, nodeAccessor, nextAttrs?.content);
 }
 
 function attrsInternal(
@@ -232,8 +255,9 @@ function attrsInternal(
       case "style":
         styleAttr(el, value);
         break;
-      case "content":
+      case "content": {
         break;
+      }
       default: {
         if (isEventHandler(name)) {
           (events ||= scope[AccessorPrefix.EventAttributes + nodeAccessor] =
@@ -242,6 +266,25 @@ function attrsInternal(
           attr(el, name, value);
         }
       }
+    }
+  }
+}
+
+export function insertContent(
+  scope: Scope,
+  nodeAccessor: Accessor,
+  value: unknown,
+) {
+  const content = normalizeClientRender(value);
+  const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
+  if (scope[rendererAccessor] !== (scope[rendererAccessor] = content?.___id)) {
+    setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch);
+    if (content?.___accessor) {
+      subscribeToScopeSet(
+        content.___owner!,
+        content.___accessor,
+        scope[AccessorPrefix.ConditionalScope + nodeAccessor],
+      );
     }
   }
 }
@@ -296,6 +339,19 @@ export function html(scope: Scope, value: unknown, accessor: Accessor) {
       newContent.lastChild!),
   );
   removeChildNodes(firstChild, lastChild);
+}
+
+export function normalizeClientRender(value: any) {
+  const renderer = normalizeDynamicRenderer<Renderer>(value);
+  if (renderer) {
+    if ((renderer as Renderer).___id) {
+      return renderer as Renderer;
+    } else if (MARKO_DEBUG) {
+      throw new Error(
+        `Invalid \`content\` attribute. Received ${typeof value}`,
+      );
+    }
+  }
 }
 
 export function props(scope: Scope, nodeIndex: number, index: number) {

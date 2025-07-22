@@ -1,0 +1,17 @@
+div ...input
+
+button foo=1 ...input
+
+span ...input
+  -- Overridden
+
+output ...input content=undefined
+
+define/CustomContent
+  -- Custom content
+
+strong ...input content=CustomContent.content
+
+p content=CustomContent.content ...input
+
+em content=CustomContent

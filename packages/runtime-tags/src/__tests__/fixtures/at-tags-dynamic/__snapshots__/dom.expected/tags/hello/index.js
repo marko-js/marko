@@ -16,7 +16,7 @@ const $params4$for$content = /* @__PURE__ */_$.value("$params4", ($scope, $param
 const $for_content3 = /* @__PURE__ */_$.createRenderer("<div class=row><!></div>", /* get, next(1), replace */" D%", 0, $params4$for$content);
 const $col$for$content_effect = _$.effect("__tests__/tags/hello/index.marko_2_col", $scope => _$.attrsEvents($scope, "#div/0"));
 const $col$for$content = /* @__PURE__ */_$.value("col", ($scope, col) => {
-  _$.partialAttrs($scope, "#div/0", col, {
+  _$.partialAttrsAndContent($scope, "#div/0", col, {
     class: 1
   });
   $col_row$for$content($scope, col?.row);

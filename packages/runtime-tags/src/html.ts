@@ -12,6 +12,8 @@ export {
   optionValueAttr,
   partialAttrs,
   styleAttr,
+  writeAttrsAndContent,
+  writePartialAttrsAndContent,
 } from "./html/attrs";
 export { compat } from "./html/compat";
 export { escapeScript, escapeStyle, escapeXML, toString } from "./html/content";
@@ -41,6 +43,7 @@ export {
   setTagVar,
   tryContent,
   write,
+  writeContent,
   writeEffect,
   writeExistingScope,
   writeScope,
