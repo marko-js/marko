@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.41
+
+### Patch Changes
+
+- [#2745](https://github.com/marko-js/marko/pull/2745) [`742fca5`](https://github.com/marko-js/marko/commit/742fca55e359d3635d87d7b7d61aab4c83673f12) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow reading proposed tag variable value after writing.
+
+- [#2746](https://github.com/marko-js/marko/pull/2746) [`064f068`](https://github.com/marko-js/marko/commit/064f068fdb0e16f5dc2534dce5f5edb706a71df5) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Allow `content` attribute in native tags
+
 ## 6.0.40
 
 ### Patch Changes

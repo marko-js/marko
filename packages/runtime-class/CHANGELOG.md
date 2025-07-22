@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.42
+
+### Patch Changes
+
+- [#2746](https://github.com/marko-js/marko/pull/2746) [`064f068`](https://github.com/marko-js/marko/commit/064f068fdb0e16f5dc2534dce5f5edb706a71df5) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Allow `content` attribute in native tags
+
 ## 5.37.41
 
 ### Patch Changes
