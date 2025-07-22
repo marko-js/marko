@@ -1,4 +1,4 @@
-// size: 19291 (min) 7320 (brotli)
+// size: 19321 (min) 7333 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1073,10 +1073,12 @@ function attrsInternal(scope, nodeAccessor, nextAttrs) {
 }
 function insertContent(scope, nodeAccessor, value2) {
   let content = (function (value2) {
-    let renderer = normalizeDynamicRenderer(value2);
-    if (renderer && renderer.l) return renderer;
-  })(value2);
-  (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
+      let renderer = normalizeDynamicRenderer(value2);
+      if (renderer && renderer.l) return renderer;
+    })(value2),
+    rendererAccessor = "c" + nodeAccessor;
+  scope[rendererAccessor] !== (scope[rendererAccessor] = content?.l) &&
+    (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
     content?.n &&
       subscribeToScopeSet(content.u, content.n, scope["d" + nodeAccessor]));
 }

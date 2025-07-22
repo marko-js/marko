@@ -276,13 +276,16 @@ export function insertContent(
   value: unknown,
 ) {
   const content = normalizeClientRender(value);
-  setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch);
-  if (content?.___accessor) {
-    subscribeToScopeSet(
-      content.___owner!,
-      content.___accessor,
-      scope[AccessorPrefix.ConditionalScope + nodeAccessor],
-    );
+  const rendererAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
+  if (scope[rendererAccessor] !== (scope[rendererAccessor] = content?.___id)) {
+    setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch);
+    if (content?.___accessor) {
+      subscribeToScopeSet(
+        content.___owner!,
+        content.___accessor,
+        scope[AccessorPrefix.ConditionalScope + nodeAccessor],
+      );
+    }
   }
 }
 

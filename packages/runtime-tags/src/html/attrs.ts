@@ -264,9 +264,10 @@ export function writeAttrsAndContent(
   nodeAccessor: Accessor,
   scopeId: number,
   tagName: string,
+  serializeReason?: 1 | 0,
 ) {
   write(`${attrs(data, nodeAccessor, scopeId, tagName)}>`);
-  writeContent(data?.content);
+  writeContent(nodeAccessor, scopeId, data?.content, serializeReason);
 }
 
 export function partialAttrs(
@@ -290,11 +291,10 @@ export function writePartialAttrsAndContent(
   nodeAccessor: Accessor,
   scopeId: number,
   tagName: string,
+  serializeReason?: 1 | 0,
 ) {
   write(`${partialAttrs(data, skip, nodeAccessor, scopeId, tagName)}>`);
-  if (!skip.content) {
-    writeContent(data?.content);
-  }
+  writeContent(nodeAccessor, scopeId, data?.content, serializeReason);
 }
 
 function writeControlledScope(

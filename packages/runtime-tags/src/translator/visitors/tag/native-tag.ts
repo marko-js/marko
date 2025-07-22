@@ -58,6 +58,7 @@ import { type TemplateVisitor, translateByTarget } from "../../util/visitors";
 import * as walks from "../../util/walks";
 import * as writer from "../../util/writer";
 import { scopeIdentifier } from "../program";
+import { getSerializeGuard } from "../program/html";
 
 export const kNativeTagBinding = Symbol("native tag binding");
 export const kSkipEndTag = Symbol("skip native tag mark");
@@ -422,10 +423,24 @@ export default {
             tagExtra[kTagContentAttr] = true;
             (tag.node.body.body as t.Statement[]) = [
               t.expressionStatement(
-                callRuntime("writeContent", usedAttrs.staticContentAttr.value),
+                callRuntime(
+                  "writeContent",
+                  visitAccessor,
+                  getScopeIdIdentifier(tagSection),
+                  usedAttrs.staticContentAttr.value,
+                  getSerializeGuard(
+                    nodeBinding &&
+                      getBindingSerializeReason(tagSection, nodeBinding),
+                    true,
+                  ),
+                ),
               ),
             ];
           } else if (spreadExpression && !hasChildren) {
+            const serializeReason = getSerializeGuard(
+              nodeBinding && getBindingSerializeReason(tagSection, nodeBinding),
+              true,
+            );
             tagExtra[kTagContentAttr] = true;
             (tag.node.body.body as t.Statement[]) = [
               skipExpression
@@ -437,6 +452,7 @@ export default {
                       visitAccessor,
                       getScopeIdIdentifier(tagSection),
                       tag.node.name,
+                      serializeReason,
                     ),
                   )
                 : t.expressionStatement(
@@ -446,6 +462,7 @@ export default {
                       visitAccessor,
                       getScopeIdIdentifier(tagSection),
                       tag.node.name,
+                      serializeReason,
                     ),
                   ),
             ];

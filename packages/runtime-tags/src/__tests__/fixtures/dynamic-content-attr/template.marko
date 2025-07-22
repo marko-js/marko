@@ -1,0 +1,9 @@
+static let sideEffect = 3
+
+let/count=0
+
+define/MyThing
+  debug
+  -- ${count} ${sideEffect++}
+
+button onClick() { count++ } content=(count, MyThing)
