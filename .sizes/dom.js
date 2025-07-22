@@ -1,4 +1,4 @@
-// size: 19288 (min) 7300 (brotli)
+// size: 19291 (min) 7320 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -201,7 +201,7 @@ function init(runtimeId = "M") {
                       ((scope.k = branch),
                         parentBranch &&
                           ((branch.y = parentBranch),
-                          (parentBranch.A ||= new Set()).add(branch));
+                          (parentBranch.A ||= new Set()).add(branch)));
                     }
                   },
                 };
@@ -553,7 +553,7 @@ function parseHTML(html2, ns) {
 }
 function createScope($global, closestBranch) {
   let scope = { l: $global.q++, t: 1, k: closestBranch, $global: $global };
-  return pendingScopes.push(scope), scope;
+  return (pendingScopes.push(scope), scope);
 }
 function skipScope(scope) {
   return scope.$global.q++;
@@ -564,14 +564,14 @@ function findBranchWithKey(scope, key) {
   return branch;
 }
 function destroyBranch(branch) {
-  branch.y?.A?.delete(branch), destroyNestedBranches(branch);
+  (branch.y?.A?.delete(branch), destroyNestedBranches(branch));
 }
 function destroyNestedBranches(branch) {
   ((branch.B = 1),
     branch.A?.forEach(destroyNestedBranches),
     branch.K?.forEach((scope) => {
       for (let id in scope.z) scope.z[id]?.abort();
-    });
+    }));
 }
 function removeAndDestroyBranch(branch) {
   (destroyBranch(branch), removeChildNodes(branch.h, branch.j));
@@ -962,8 +962,8 @@ function attrs(scope, nodeAccessor, nextAttrs) {
   attrsInternal(scope, nodeAccessor, nextAttrs);
 }
 function attrsAndContent(scope, nodeAccessor, nextAttrs) {
-  attrs(scope, nodeAccessor, nextAttrs),
-    insertContent(scope, nodeAccessor, nextAttrs?.content);
+  (attrs(scope, nodeAccessor, nextAttrs),
+    insertContent(scope, nodeAccessor, nextAttrs?.content));
 }
 function hasAttrAlias(element, attr2, nextAttrs) {
   return (
@@ -985,8 +985,8 @@ function partialAttrs(scope, nodeAccessor, nextAttrs, skip) {
   attrsInternal(scope, nodeAccessor, partial);
 }
 function partialAttrsAndContent(scope, nodeAccessor, nextAttrs, skip) {
-  partialAttrs(scope, nodeAccessor, nextAttrs, skip),
-    insertContent(scope, nodeAccessor, nextAttrs?.content);
+  (partialAttrs(scope, nodeAccessor, nextAttrs, skip),
+    insertContent(scope, nodeAccessor, nextAttrs?.content));
 }
 function attrsInternal(scope, nodeAccessor, nextAttrs) {
   let events,
@@ -1076,9 +1076,9 @@ function insertContent(scope, nodeAccessor, value2) {
     let renderer = normalizeDynamicRenderer(value2);
     if (renderer && renderer.l) return renderer;
   })(value2);
-  setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
+  (setConditionalRenderer(scope, nodeAccessor, content, createAndSetupBranch),
     content?.n &&
-      subscribeToScopeSet(content.u, content.n, scope["d" + nodeAccessor]);
+      subscribeToScopeSet(content.u, content.n, scope["d" + nodeAccessor]));
 }
 function attrsEvents(scope, nodeAccessor) {
   let el = scope[nodeAccessor],
@@ -1109,14 +1109,14 @@ function html(scope, value2, accessor) {
       value2 || 0 === value2 ? value2 + "" : "",
       parentNode.namespaceURI,
     );
-  insertChildNodes(
+  (insertChildNodes(
     parentNode,
     firstChild,
     (scope[accessor] =
       newContent.firstChild || newContent.appendChild(new Text())),
     (scope["h" + accessor] = newContent.lastChild),
   ),
-    removeChildNodes(firstChild, lastChild);
+    removeChildNodes(firstChild, lastChild));
 }
 function props(scope, nodeIndex, index) {
   let nextProps = scope[index],
@@ -1147,7 +1147,7 @@ function removeChildNodes(startNode, endNode) {
     current = startNode;
   for (; current !== stop; ) {
     let next = current.nextSibling;
-    current.remove(), (current = next);
+    (current.remove(), (current = next));
   }
 }
 function insertChildNodes(parentNode, referenceNode, startNode, endNode) {
@@ -1160,7 +1160,7 @@ function toInsertNode(startNode, endNode) {
     current = startNode;
   for (; current !== stop; ) {
     let next = current.nextSibling;
-    parent.appendChild(current), (current = next);
+    (parent.appendChild(current), (current = next));
   }
   return parent;
 }
@@ -1280,7 +1280,7 @@ function renderCatch(scope, error) {
   {
     let owner = tryWithCatch._,
       placeholderBranch = tryWithCatch.c;
-    placeholderBranch &&
+    (placeholderBranch &&
       ((tryWithCatch.o = 0),
       (owner["d" + tryWithCatch.a] = placeholderBranch),
       destroyBranch(tryWithCatch)),
@@ -1651,7 +1651,7 @@ function queueRender(scope, signal, signalKey, value2, scopeKey = scope.l) {
       let parentIndex = (i - 1) >> 1,
         parent = pendingRenders[parentIndex];
       if (key - parent.x >= 0) break;
-      (pendingRenders[i] = parent), (i = parentIndex);
+      ((pendingRenders[i] = parent), (i = parentIndex));
     }
     (signalKey >= 0 && pendingRendersLookup.set(key, render),
       (pendingRenders[i] = render));
