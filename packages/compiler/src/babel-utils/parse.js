@@ -134,9 +134,15 @@ function tryParse(
     parserOpts.startColumn = startColumn;
 
     try {
-      return isExpression
-        ? babelParser.parseExpression(code, parserOpts)
-        : babelParser.parse(code, parserOpts).program.body;
+      if (isExpression) {
+        return babelParser.parseExpression(code, parserOpts);
+      } else {
+        const { program } = babelParser.parse(code, parserOpts);
+        if (program.innerComments) {
+          return babelParser.parse(`;${code}`, parserOpts).program.body;
+        }
+        return program.body;
+      }
     } catch (err) {
       const parseError = createParseError(
         file,
