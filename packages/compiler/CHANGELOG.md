@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.39.31
+
+### Patch Changes
+
+- [#2749](https://github.com/marko-js/marko/pull/2749) [`9e0684f`](https://github.com/marko-js/marko/commit/9e0684f1171d7ab8364be719c4cf5b62df78126c) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Prevent loss of comments in a scriptlet without statements
+
 ## 5.39.30
 
 ### Patch Changes
