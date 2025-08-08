@@ -1,5 +1,16 @@
 # @marko/runtime-tags
 
+## 6.0.42
+
+### Patch Changes
+
+- [#2752](https://github.com/marko-js/marko/pull/2752) [`6a75d80`](https://github.com/marko-js/marko/commit/6a75d80655601e5dadfa4972455bea7d3b4aa28b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Treat optional call expressions as call expressions during analysis.
+
+- [#2752](https://github.com/marko-js/marko/pull/2752) [`cc069bc`](https://github.com/marko-js/marko/commit/cc069bcbd169b8d0a7dc9a81f559db1c2536cbf5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with "0" being stripped from function calls by normalizer in cases with a literal 0.
+
+- Updated dependencies [[`9e0684f`](https://github.com/marko-js/marko/commit/9e0684f1171d7ab8364be719c4cf5b62df78126c)]:
+  - @marko/compiler@5.39.31
+
 ## 6.0.41
 
 ### Patch Changes
