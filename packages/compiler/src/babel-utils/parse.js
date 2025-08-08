@@ -139,7 +139,9 @@ function tryParse(
       } else {
         const { program } = babelParser.parse(code, parserOpts);
         if (program.innerComments) {
-          return babelParser.parse(`;${code}`, parserOpts).program.body;
+          const lastNode = t.emptyStatement();
+          lastNode.trailingComments = program.innerComments;
+          program.body.push(lastNode);
         }
         return program.body;
       }
