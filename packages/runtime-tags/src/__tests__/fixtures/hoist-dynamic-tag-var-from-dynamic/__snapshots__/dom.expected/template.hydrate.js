@@ -1,4 +1,4 @@
-// size: 856 (min) 368 (brotli)
+// size: 857 (min) 369 (brotli)
 function $setup$1($scope) {
   _$.tagVarSignal($scope, $_return($scope));
 }
@@ -9,7 +9,7 @@ function $_return($scope) {
 }
 _$.register("a0", $_return);
 var Child = _$.createTemplate("a", "<div></div>", " b", $setup$1);
-const $dynamicTag = _$.dynamicTag(),
+const $dynamicTag = _$.dynamicTag(0),
   $dynamicTag2 = _$.dynamicTag(1),
   $input_content = _$.value(4, ($scope, input_content) => {
     ($dynamicTag($scope, input_content), $dynamicTag2($scope, input_content));
