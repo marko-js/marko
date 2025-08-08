@@ -607,37 +607,42 @@ function generateSignalName(referencedBindings?: ReferencedBindings) {
 export function replaceNullishAndEmptyFunctionsWith0(
   args: (t.Expression | undefined | false)[],
 ): t.Expression[] {
-  for (let i = args.length; i--; ) {
+  const len = args.length;
+  let finalLen: undefined | number = undefined;
+
+  for (let i = len; i--; ) {
     const arg = args[i];
     if (!arg) {
       args[i] = t.numericLiteral(0);
-    } else if (
-      t.isArrowFunctionExpression(arg) &&
-      t.isBlockStatement(arg.body)
-    ) {
-      const body = arg.body.body;
-      if (body.length === 0) {
-        args[i] = t.numericLiteral(0);
-      } else if (body.length === 1 && t.isExpressionStatement(body[0])) {
-        arg.body = toParenthesizedExpressionIfNeeded(body[0].expression);
-      }
-    } else if (
+      continue;
+    }
+
+    if (
       t.isNullLiteral(arg) ||
       (t.isUnaryExpression(arg) && arg.operator === "void")
     ) {
       args[i] = t.numericLiteral(0);
+      continue;
+    }
+
+    if (t.isArrowFunctionExpression(arg) && t.isBlockStatement(arg.body)) {
+      const body = arg.body.body;
+      if (body.length === 0) {
+        args[i] = t.numericLiteral(0);
+        continue;
+      }
+
+      if (body.length === 1 && t.isExpressionStatement(body[0])) {
+        arg.body = toParenthesizedExpressionIfNeeded(body[0].expression);
+      }
+    }
+
+    if (finalLen === undefined) {
+      finalLen = i + 1;
     }
   }
 
-  for (
-    let i = args.length - 1;
-    t.isNumericLiteral(args[i] as any) &&
-    (args[i] as t.NumericLiteral).value === 0;
-
-  ) {
-    args.length = i--;
-  }
-
+  args.length = finalLen || 0;
   return args as t.Expression[];
 }
 export function addStatement(
