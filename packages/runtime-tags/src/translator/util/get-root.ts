@@ -36,6 +36,7 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
       fnPath = curPath;
     } else {
       switch (curPath.type) {
+        case "OptionalCallExpression":
         case "CallExpression":
         case "NewExpression":
           fnPath = undefined;
