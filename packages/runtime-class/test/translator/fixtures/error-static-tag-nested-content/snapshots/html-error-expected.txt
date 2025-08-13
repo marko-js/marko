@@ -1,6 +1,6 @@
 CompileError: 
-    at __tests__/template.marko:2:2
+    at __tests__/template.marko:2:6
       1 | static { console.log(x); }
     > 2 |  <div/>
-        |  ^ Line has extra indentation at the beginning
+        |      ^ Unexpected token, expected ","
       3 |
