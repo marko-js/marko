@@ -1,5 +1,16 @@
 # Change Log
 
+## 5.37.43
+
+### Patch Changes
+
+- [#2753](https://github.com/marko-js/marko/pull/2753) [`9ba0cab`](https://github.com/marko-js/marko/commit/9ba0cab6474e7cd483b93992be5b8b5e7c8df0aa) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Update package dependencies.
+
+- [#2753](https://github.com/marko-js/marko/pull/2753) [`9ba0cab`](https://github.com/marko-js/marko/commit/9ba0cab6474e7cd483b93992be5b8b5e7c8df0aa) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve source location information for static statements.
+
+- Updated dependencies [[`9ba0cab`](https://github.com/marko-js/marko/commit/9ba0cab6474e7cd483b93992be5b8b5e7c8df0aa)]:
+  - @marko/compiler@5.39.32
+
 ## 5.37.42
 
 ### Patch Changes
