@@ -69,8 +69,8 @@
     "build": "babel ./src --out-dir ./dist --extensions .js --copy-files --config-file ../../babel.config.js --env-name=production"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.6",
-    "@marko/compiler": "^5.39.29",
+    "@babel/runtime": "^7.28.2",
+    "@marko/compiler": "^5.39.31",
     "app-module-path": "^2.2.0",
     "argly": "^1.2.0",
     "browser-refresh-client": "1.1.4",

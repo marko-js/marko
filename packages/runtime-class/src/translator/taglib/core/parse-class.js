@@ -12,11 +12,7 @@ export default function (path) {
     node,
     hub: { file },
   } = path;
-  const {
-    rawValue: code,
-    name: { start },
-    end,
-  } = node;
+  const { rawValue: code, start, end } = node;
   const meta = file.metadata.marko;
 
   if (meta.hasComponent) {

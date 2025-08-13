@@ -5,10 +5,7 @@ export default function (path) {
     node,
     hub: { file },
   } = path;
-  const {
-    rawValue,
-    name: { start, end },
-  } = node;
+  const { rawValue, start, end } = node;
   const [exportNode] = parseStatements(file, rawValue, start, end);
   path.replaceWith(exportNode);
 }

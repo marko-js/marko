@@ -1,6 +1,6 @@
 CompileError: 
-    at __tests__/template.marko:2:2
+    at __tests__/template.marko:2:7
       1 | class {}
     > 2 |  <div/>
-        |  ^ Line has extra indentation at the beginning
+        |       ^ Unexpected token
       3 |
