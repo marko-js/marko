@@ -1,6 +1,7 @@
 "use strict";
 // eslint-disable-next-line no-constant-binary-expression
 var complain = "MARKO_DEBUG" && require("complain");
+var getRenderId = require("../../../runtime/html/get-render-id");
 var AsyncValue = require("./AsyncValue");
 
 function safeRenderBody(renderBody, targetOut, data) {
@@ -124,7 +125,7 @@ module.exports = function awaitTag(input, out) {
 
     var id = (awaitInfo.id =
       input.name ||
-      (out.global.componentIdPrefix || 0) + clientReorderContext.nextId++);
+      (getRenderId(out.global) || 0) + clientReorderContext.nextId++);
     var placeholderIdAttrValue = reorderFunctionId + "ph" + id;
 
     if (placeholderRenderer) {

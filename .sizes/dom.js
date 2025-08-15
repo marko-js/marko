@@ -1,4 +1,4 @@
-// size: 19321 (min) 7333 (brotli)
+// size: 19296 (min) 7316 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1795,10 +1795,7 @@ var classIdToBranch = new Map(),
     runComponentDestroy() {
       this.scope && destroyBranch(this.scope);
     },
-    resolveRegistered: (
-      value2,
-      { runtimeId: runtimeId, componentIdPrefix: componentIdPrefix },
-    ) =>
+    resolveRegistered: (value2, $global) =>
       Array.isArray(value2) && "string" == typeof value2[0]
         ? (function (id, scope) {
             let val = registeredValues[id];
@@ -1806,9 +1803,7 @@ var classIdToBranch = new Map(),
           })(
             value2[0],
             2 === value2.length &&
-              self[runtimeId]?.[
-                "s" === componentIdPrefix ? "_" : componentIdPrefix
-              ]?.s[value2[1]],
+              self[$global.runtimeId]?.[$global.renderId]?.s[value2[1]],
           )
         : value2,
     createRenderer(params, clone) {

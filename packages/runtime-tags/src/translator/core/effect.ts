@@ -40,5 +40,5 @@ export default {
     },
   ],
   attributes: {},
-  types: runtimeInfo.name + "/tag-types/effect.d.marko",
+  types: runtimeInfo.name + "/tags/effect.d.marko",
 } as Tag;

@@ -23,9 +23,7 @@ declare global {
       /** Used to uniquely identify a instance of a Marko runtime. */
       runtimeId?: string;
       /** A list of globals that should be serialized to the browser. */
-      serializedGlobals?:
-        | (string | number)[]
-        | Record<string | number, boolean>;
+      serializedGlobals?: string[] | Record<string, boolean>;
     }
 
     export type TemplateInput<Input> = Input & {

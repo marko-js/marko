@@ -76,5 +76,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#id",
     },
   ],
-  types: runtimeInfo.name + "/tag-types/id.d.marko",
+  types: runtimeInfo.name + "/tags/id.d.marko",
 } as Tag;

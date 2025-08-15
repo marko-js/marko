@@ -61,5 +61,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#debug",
     },
   ],
-  types: runtimeInfo.name + "/tag-types/debug.d.marko",
+  types: runtimeInfo.name + "/tags/debug.d.marko",
 } as Tag;

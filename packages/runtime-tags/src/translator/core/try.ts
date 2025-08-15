@@ -198,5 +198,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#try",
     },
   ],
-  types: runtimeInfo.name + "/tag-types/try.d.marko",
+  types: runtimeInfo.name + "/tags/try.d.marko",
 } as Tag;

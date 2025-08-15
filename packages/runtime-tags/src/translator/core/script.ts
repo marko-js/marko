@@ -149,7 +149,7 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#script",
     },
   ],
-  types: runtimeInfo.name + "/tag-types/script.d.marko",
+  types: runtimeInfo.name + "/tags/script.d.marko",
 } as Tag;
 
 function isAwaitExpression(node: t.Node) {

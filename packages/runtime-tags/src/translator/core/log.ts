@@ -71,5 +71,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#log",
     },
   ],
-  types: runtimeInfo.name + "/tag-types/log.d.marko",
+  types: runtimeInfo.name + "/tags/log.d.marko",
 } as Tag;

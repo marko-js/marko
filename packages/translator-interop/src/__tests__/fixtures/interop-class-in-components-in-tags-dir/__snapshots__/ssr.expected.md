@@ -1,20 +1,20 @@
 # Write
-  <!--M_[2--><!--M#s0--><h1>Hello world</h1><!--M/--><!--M_]1 #text/0--><script>$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/tags/components/hello-internal.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,{"ConditionalScope:#text/0":_.a={m5c:"s0"},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/tags/components/hello-internal.marko"])},_.a]),"$compat_setScope",2];M._.w()</script>
+  <!--Ms[2--><!--M#s1--><h1>Hello world</h1><!--M/--><!--Ms]1 #text/0--><script>$MC=(window.$MC||[]).concat({"w":[["s1",0,{},{"f":1}]],"t":["__tests__/tags/components/hello-internal.marko"]});WALKER_RUNTIME("M")("s");M.s.r=[_=>(_.b=[0,{"ConditionalScope:#text/0":_.a={m5c:"s1"},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/tags/components/hello-internal.marko"])},_.a]),"$compat_setScope",2];M.s.w()</script>
 
 # Render End
 ```html
 <html>
   <head />
   <body>
-    <!--M_[2-->
-    <!--M#s0-->
+    <!--Ms[2-->
+    <!--M#s1-->
     <h1>
       Hello world
     </h1>
     <!--M/-->
-    <!--M_]1 #text/0-->
+    <!--Ms]1 #text/0-->
     <script>
-      $MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/tags/components/hello-internal.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={m5c:"s0"},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/tags/components/hello-internal.marko"])},_.a]),"$compat_setScope",2];M._.w()
+      $MC=(window.$MC||[]).concat({"w":[["s1",0,{},{"f":1}]],"t":["__tests__/tags/components/hello-internal.marko"]});WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/0":_.a={m5c:"s1"},"ConditionalRenderer:#text/0":_._.$compat_renderer(_._["__tests__/tags/components/hello-internal.marko"])},_.a]),"$compat_setScope",2];M.s.w()
     </script>
   </body>
 </html>

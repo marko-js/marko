@@ -9,6 +9,7 @@ import { patchDynamicTag } from "./dynamic-tag";
 import { getRegistered, register } from "./serializer";
 import { isTemplate, type ServerRenderer } from "./template";
 import {
+  $global,
   Boundary,
   Chunk,
   fork,
@@ -30,6 +31,7 @@ const COMPAT_REGISTRY = new WeakMap<
 >();
 
 export const compat = {
+  $global,
   fork,
   write,
   writeScript,
@@ -73,7 +75,10 @@ export const compat = {
       getChunk()?.boundary.state);
     if (!state) {
       $global.runtimeId ||= DEFAULT_RUNTIME_ID;
-      $global.renderId ||= $global.componentIdPrefix || DEFAULT_RENDER_ID;
+      $global.renderId ||=
+        $global.componentIdPrefix ||
+        $global.widgetIdPrefix ||
+        DEFAULT_RENDER_ID;
       $global[K_TAGS_API_STATE] = state = new State($global);
     }
 

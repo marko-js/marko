@@ -97,5 +97,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#const",
     },
   ],
-  types: runtimeInfo.name + "/tag-types/const.d.marko",
+  types: runtimeInfo.name + "/tags/const.d.marko",
 } as Tag;
