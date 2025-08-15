@@ -114,10 +114,7 @@ declare global {
 
     /** Valid data types which can be passed in as a <${dynamic}/> tag name. */
     export type Renderable =
-      | {
-          content?: Body<any, any> | Template | string;
-          renderBody?: Body<any, any> | Template | string;
-        }
+      | { renderBody: Body<any, any> | Template | string }
       | Body<any, any>
       | Template
       | string;
