@@ -28,7 +28,7 @@
   "types": "index.d.ts",
   "files": [
     "dist",
-    "tag-types",
+    "tags",
     "index.d.ts",
     "tags-html.d.ts",
     "!**/meta.*.json",
