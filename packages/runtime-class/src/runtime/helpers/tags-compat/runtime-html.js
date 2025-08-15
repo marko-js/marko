@@ -78,7 +78,7 @@ exports.p = function (htmlCompat) {
       htmlCompat.registerRenderBody(renderBody5);
     }
     return (input, ...args) => {
-      const out = defaultCreateOut();
+      const out = defaultCreateOut(htmlCompat.$global());
       let customEvents;
 
       if (renderer5) {

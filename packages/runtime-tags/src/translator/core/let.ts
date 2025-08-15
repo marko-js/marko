@@ -165,5 +165,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#let",
     },
   ],
-  types: runtimeInfo.name + "/tag-types/let.d.marko",
+  types: runtimeInfo.name + "/tags/let.d.marko",
 } as Tag;

@@ -2572,6 +2572,12 @@ declare global {
       renderBody?: Marko.Body<[], void>;
 
       /**
+       * Provide body content for the tag as a Marko.Body.
+       * @see Marko.Body
+       */
+      content?: Marko.Body<[], void>;
+
+      /**
        * Fired when resource was not fully loaded, but not as the result of an error.
        * @see https://html.spec.whatwg.org/multipage/media.html#event-media-abort
        */

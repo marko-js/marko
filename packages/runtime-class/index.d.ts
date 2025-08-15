@@ -13,15 +13,21 @@ declare global {
   namespace Marko {
     /** A mutable global object for the current render. */
     export interface Global {
-      /** A list of globals that should be serialized to the browser. */
-      serializedGlobals?: Record<string, boolean>;
+      [x: PropertyKey]: unknown;
+      /** An AbortSignal instance that, when aborted, stops further streamed content. */
+      signal?: AbortSignal;
       /** A CSP Nonce to add to each script output from Marko. */
       cspNonce?: string;
+      /** Used for rendering multiple Marko templates in a single hydrated page. */
+      renderId?: string;
       /** Used to uniquely identify a instance of a Marko runtime. */
       runtimeId?: string;
-      /** Used for rendering multiple Marko templates in a single hydrated page. */
+      /** A list of globals that should be serialized to the browser. */
+      serializedGlobals?: Record<string, boolean>;
+      /** @deprecated prefer `renderId` */
+      widgetIdPrefix?: string;
+      /** @deprecated prefer `renderId` */
       componentIdPrefix?: string;
-      [attr: PropertyKey]: unknown;
     }
 
     export type TemplateInput<Input> = Input & {
@@ -29,9 +35,9 @@ declare global {
     };
 
     /** The result of calling `template.render`. */
-    export type RenderedTemplate<
-      Component extends Marko.Component = Marko.Component,
-    > = Promise<RenderResult<Component>> &
+    export type RenderedTemplate<Component = unknown> = Promise<
+      Component extends Marko.Component ? RenderResult<Component> : string
+    > &
       AsyncIterable<string> & {
         toReadable(): ReadableStream<Uint8Array<ArrayBufferLike>>;
         pipe(stream: {
@@ -44,11 +50,17 @@ declare global {
 
     /** The result of calling `template.mount`. */
     export type MountedTemplate<Input = unknown, Return = unknown> = {
+      get value(): Return extends { value: infer Value } ? Value : void;
+      set value(
+        next: Return extends { valueChange?(next: infer Next): any }
+          ? Next
+          : never,
+      ): void;
       update(input: Marko.TemplateInput<Input>): void;
       destroy(): void;
     };
 
-    export interface Out<Component extends Marko.Component = Marko.Component>
+    export interface Out<Component = unknown>
       extends Marko.RenderedTemplate<Component> {
       /** The underlying ReadableStream Marko is writing into. */
       stream: unknown;
@@ -102,7 +114,10 @@ declare global {
 
     /** Valid data types which can be passed in as a <${dynamic}/> tag name. */
     export type Renderable =
-      | { renderBody: Body<any, any> | Template | string }
+      | {
+          content?: Body<any, any> | Template | string;
+          renderBody?: Body<any, any> | Template | string;
+        }
       | Body<any, any>
       | Template
       | string;
@@ -337,11 +352,6 @@ declare global {
       [Symbol.iterator](): Iterator<T>;
     };
 
-    /**
-     * @deprecated Prefer to use AttrTag
-     */
-    export type RepeatableAttrTag<T> = AttrTag<T>;
-
     export interface NativeTag<
       Input extends Record<string, any>,
       Return extends Element,
@@ -387,6 +397,9 @@ declare global {
               | Body<any, infer Return>
           ? Return
           : never;
+
+    /** @deprecated @see {@link Marko.AttrTag} */
+    export type RepeatableAttrTag<T> = AttrTag<T>;
 
     /** @deprecated @see {@link Marko.Input} */
     export type NativeTagInput<Name extends keyof NativeTags> =

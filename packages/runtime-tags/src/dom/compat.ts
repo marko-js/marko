@@ -49,18 +49,13 @@ export const compat = {
   },
   resolveRegistered(
     value: any,
-    {
-      runtimeId,
-      componentIdPrefix,
-    }: { runtimeId: string; componentIdPrefix: string },
+    $global: { runtimeId: string; renderId: string },
   ) {
     if (Array.isArray(value) && typeof value[0] === "string") {
       return getRegisteredWithScope(
         value[0],
         value.length === 2 &&
-          (self as any)[runtimeId]?.[
-            componentIdPrefix === "s" ? "_" : componentIdPrefix
-          ]?.s[value[1]],
+          (self as any)[$global.runtimeId]?.[$global.renderId]?.s[value[1]],
       );
     }
 

@@ -21,7 +21,7 @@
       "types": "./index.d.ts"
     },
     "./translator": "./src/translator/index.ts",
-    "./tag-types/*": "./tag-types/*",
+    "./tags/*": "./tags/*",
     "./debug/*": "./src/*.ts",
     "./*": "./src/*.ts"
   },
@@ -52,7 +52,7 @@
     },
     "./package.json": "./package.json",
     "./translator": "./dist/translator/index.js",
-    "./tag-types/*": "./tag-types/*",
+    "./tags/*": "./tags/*",
     "./debug/*": {
       "types": "./dist/*.d.ts",
       "import": "./dist/debug/*.mjs",

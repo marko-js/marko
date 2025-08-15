@@ -119,5 +119,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#effect",
     },
   ],
-  types: runtimeInfo.name + "/tag-types/lifecycle.d.marko",
+  types: runtimeInfo.name + "/tags/lifecycle.d.marko",
 } as Tag;

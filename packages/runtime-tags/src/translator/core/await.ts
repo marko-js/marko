@@ -204,5 +204,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#await",
     },
   ],
-  types: runtimeInfo.name + "/tag-types/await.d.marko",
+  types: runtimeInfo.name + "/tags/await.d.marko",
 } as Tag;

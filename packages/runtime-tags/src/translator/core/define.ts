@@ -104,5 +104,5 @@ export default {
       descriptionMoreURL: "https://markojs.com/docs/core-tags/#define",
     },
   ],
-  types: runtimeInfo.name + "/tag-types/define.d.marko",
+  types: runtimeInfo.name + "/tags/define.d.marko",
 } as Tag;
