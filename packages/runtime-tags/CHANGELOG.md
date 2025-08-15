@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.45
+
+### Patch Changes
+
+- [#2758](https://github.com/marko-js/marko/pull/2758) [`5abf496`](https://github.com/marko-js/marko/commit/5abf496c6ce9cc5d2d0ade3e92015a14c51ba9b9) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix tags api types folder regression.
+
 ## 6.0.44
 
 ### Patch Changes
