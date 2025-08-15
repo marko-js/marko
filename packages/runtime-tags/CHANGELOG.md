@@ -1,5 +1,14 @@
 # @marko/runtime-tags
 
+## 6.0.44
+
+### Patch Changes
+
+- [#2756](https://github.com/marko-js/marko/pull/2756) [`46f1f90`](https://github.com/marko-js/marko/commit/46f1f9075043754aadec1175db5885f72c84e016) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve tags api compat.
+
+- Updated dependencies [[`46f1f90`](https://github.com/marko-js/marko/commit/46f1f9075043754aadec1175db5885f72c84e016)]:
+  - @marko/compiler@5.39.33
+
 ## 6.0.43
 
 ### Patch Changes
