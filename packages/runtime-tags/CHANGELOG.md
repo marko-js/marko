@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.47
+
+### Patch Changes
+
+- [#2763](https://github.com/marko-js/marko/pull/2763) [`b7776cf`](https://github.com/marko-js/marko/commit/b7776cf76231a5cb1110ae779f91a75b0b9a9be7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure runtime id is provided through init.
+
 ## 6.0.46
 
 ### Patch Changes
