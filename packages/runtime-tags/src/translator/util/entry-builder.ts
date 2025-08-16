@@ -41,8 +41,14 @@ export default {
           ),
         ),
       );
+      const { runtimeId } = entryFile.markoOpts;
       body.push(
-        t.expressionStatement(t.callExpression(t.identifier("init"), [])),
+        t.expressionStatement(
+          t.callExpression(
+            t.identifier("init"),
+            runtimeId ? [t.stringLiteral(runtimeId)] : [],
+          ),
+        ),
       );
     }
     return body;
