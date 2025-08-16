@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.45
+
+### Patch Changes
+
+- [`a96a328`](https://github.com/marko-js/marko/commit/a96a3289e3b5e4ebc174a3448c935201f761c1d5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix types for renderable.
+
 ## 5.37.44
 
 ### Patch Changes
