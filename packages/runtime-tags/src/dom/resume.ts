@@ -35,12 +35,6 @@ export function enableBranches() {
 }
 export function init(runtimeId = DEFAULT_RUNTIME_ID) {
   if (MARKO_DEBUG) {
-    if (!runtimeId.match(/^[_$a-z][_$a-z0-9]*$/i)) {
-      throw new Error(
-        `Invalid runtimeId: "${runtimeId}". The runtimeId must be a valid JavaScript identifier.`,
-      );
-    }
-
     const descriptor = Object.getOwnPropertyDescriptor(self, runtimeId);
     if (descriptor && (descriptor.set || descriptor.configurable === false)) {
       throw new Error(

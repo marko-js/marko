@@ -44,6 +44,20 @@ function render(this: Template & ServerRenderer, input: TemplateInput = {}) {
       renderId: DEFAULT_RENDER_ID,
       ...$global,
     };
+
+    if (MARKO_DEBUG) {
+      if (!String($global.runtimeId).match(/^[_$a-z][_$a-z0-9]*$/i)) {
+        throw new Error(
+          `Invalid runtimeId: "${$global.runtimeId}". The runtimeId must be a valid JavaScript identifier.`,
+        );
+      }
+
+      if (!String($global.renderId).match(/^[_$a-z][_$a-z0-9]*$/i)) {
+        throw new Error(
+          `Invalid renderId: "${$global.renderId}". The renderId must be a valid JavaScript identifier.`,
+        );
+      }
+    }
   } else {
     $global = { runtimeId: DEFAULT_RUNTIME_ID, renderId: DEFAULT_RENDER_ID };
   }
