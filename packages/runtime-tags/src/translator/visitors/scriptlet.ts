@@ -1,4 +1,5 @@
 import type { types as t } from "@marko/compiler";
+import { getProgram } from "@marko/compiler/babel-utils";
 
 import { isOutputHTML } from "../util/marko-config";
 import { mergeReferences } from "../util/references";
@@ -19,6 +20,10 @@ export default {
       scriptlet.node,
       scriptlet.node.body,
     );
+
+    if (scriptlet.node.target === "client") {
+      getProgram().node.extra.isInteractive ||= true;
+    }
   },
   translate: {
     exit(scriptlet) {
