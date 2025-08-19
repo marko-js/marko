@@ -36,14 +36,14 @@ export const compat = {
   write,
   writeScript,
   nextScopeId,
+  peekNextScopeId,
   isTagsAPI(fn: any) {
     return !!fn.___id;
   },
   patchDynamicTag,
-  writeSetScopeForComponent(m5c: string) {
-    const scopeId = nextScopeId();
-    writeScope(scopeId, { m5c });
-    writeEffect(scopeId, SET_SCOPE_REGISTER_ID);
+  writeSetScopeForComponent(branchId: number, m5c: string) {
+    writeScope(branchId, { m5c });
+    writeEffect(branchId, SET_SCOPE_REGISTER_ID);
   },
   toJSON(this: WeakKey) {
     let compatRegistered = COMPAT_REGISTRY.get(this);
@@ -119,7 +119,10 @@ export const compat = {
           const { scripts, html } = head.consume().flushScript();
           asyncOut.script(scripts);
           asyncOut.write(html);
-          asyncOut.end();
+
+          if (boundary.done) {
+            asyncOut.end();
+          }
         }
       }),
     );

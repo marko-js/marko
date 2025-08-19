@@ -9,6 +9,8 @@ const defaultCreateOut = require("../../createOut");
 const morphdom = require("../../vdom/morphdom");
 const { ___createFragmentNode } = require("../../vdom/morphdom/fragment");
 const dynamicTag = require("../dynamic-tag");
+const Component = require("../../components/Component");
+const noopRenderer = require("../serialize-noop").___noop;
 
 exports.p = function (domCompat) {
   dynamicTag.___runtimeCompat = function tagsToVdom(
@@ -29,6 +31,19 @@ exports.p = function (domCompat) {
     }
 
     return renderer;
+  };
+
+  Component.prototype.___setCustomEventsOriginal =
+    Component.prototype.___setCustomEvents;
+  Component.prototype.___setCustomEvents = function (customEvents, scopeId) {
+    for (const customEvent of customEvents) {
+      customEvent[1] = domCompat.resolveRegistered(
+        customEvent[1],
+        this.___global,
+      );
+    }
+
+    this.___setCustomEventsOriginal(customEvents, scopeId);
   };
 
   const TagsCompatId = "tags-compat";
@@ -68,13 +83,6 @@ exports.p = function (domCompat) {
     ),
   }));
 
-  // (
-  //   nodeAccessor: Accessor,
-  //   dynamicTagAttrs?: IntersectionSignal,
-  //   intersection?: IntersectionSignal,
-  //   valueWithIntersection?: ValueSignal
-  // )
-
   const rendererCache = new WeakMap();
 
   domCompat.patchDynamicTag((dynamicTag) => (...args) => {
@@ -87,6 +95,10 @@ exports.p = function (domCompat) {
   function create5to6Renderer(renderer) {
     let newRenderer = renderer;
     if (renderer && typeof renderer !== "string") {
+      if (renderer === noopRenderer) {
+        return noopRenderer;
+      }
+
       const rendererFromAnywhere =
         renderer._ ||
         renderer.render ||
@@ -96,24 +108,6 @@ exports.p = function (domCompat) {
       if (!domCompat.isRenderer(rendererFromAnywhere || renderer)) {
         newRenderer = rendererCache.get(renderer);
         if (!newRenderer) {
-          const { Component } = renderer;
-          if (Component) {
-            const setCustomEvents = Component.prototype.___setCustomEvents;
-            Component.prototype.___setCustomEvents = function (
-              customEvents,
-              scopeId,
-            ) {
-              const global = this.___global;
-              for (const customEvent of customEvents) {
-                customEvent[1] = domCompat.resolveRegistered(
-                  customEvent[1],
-                  global,
-                );
-              }
-
-              setCustomEvents.call(this, customEvents, scopeId);
-            };
-          }
           newRenderer = domCompat.createRenderer(
             (scope, input) =>
               renderAndMorph(scope, rendererFromAnywhere, renderer, input),
@@ -127,7 +121,7 @@ exports.p = function (domCompat) {
   }
 
   domCompat.registerRenderer(create5to6Renderer);
-  domCompat.init(require("../serialize-noop").___noop);
+  domCompat.init(noopRenderer);
 
   function renderAndMorph(scope, renderer, renderBody, input) {
     const out = defaultCreateOut();

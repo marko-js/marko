@@ -1,2 +1,2 @@
-// size: 30 (min) 34 (brotli)
-_$.register("b0", function () {});
+// size: 34 (min) 38 (brotli)
+(_$.register("b0", function () {}), init());
