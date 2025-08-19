@@ -219,7 +219,6 @@ declare global {
       symbol: NativeTag<Marko.SVG.Symbol, SVGSymbolElement>;
       text: NativeTag<Marko.SVG.Text, SVGTextElement>;
       textPath: NativeTag<Marko.SVG.TextPath, SVGTextPathElement>;
-      title: NativeTag<Marko.SVG.Title, SVGTitleElement>;
       tspan: NativeTag<Marko.SVG.TSpan, SVGTSpanElement>;
       use: NativeTag<Marko.SVG.Use, SVGUseElement>;
       view: NativeTag<Marko.SVG.View, SVGViewElement>;
@@ -2504,7 +2503,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/linking.html#AElement
        */
       interface A
-        extends SVGCoreAttributes<SVGAElement>,
+        extends SVGAttributes<SVGAElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/linking.html#AElementHrefAttribute
@@ -2555,7 +2554,7 @@ declare global {
        * @see https://svgwg.org/specs/animations/#AnimateElement
        */
       interface Animate
-        extends SVGCoreAttributes<SVGAnimateElement>,
+        extends Omit<SVGAttributes<SVGAnimateElement>, "fill">,
           SVGAnimationAdditionAttributes,
           SVGAnimationTargetElementAttributes,
           SVGAnimationAttributeTargetAttributes,
@@ -2566,7 +2565,7 @@ declare global {
        * @see https://svgwg.org/specs/animations/#AnimateMotionElement
        */
       interface AnimateMotion
-        extends SVGCoreAttributes<SVGAnimateMotionElement>,
+        extends Omit<SVGAttributes<SVGAnimateMotionElement>, "fill">,
           SVGAnimationAdditionAttributes,
           SVGAnimationTargetElementAttributes,
           SVGAnimationTimingAttributes,
@@ -2597,7 +2596,7 @@ declare global {
        * @see https://svgwg.org/specs/animations/#AnimateTransformElement
        */
       interface AnimateTransform
-        extends SVGCoreAttributes<SVGAnimateTransformElement>,
+        extends Omit<SVGAttributes<SVGAnimateTransformElement>, "fill">,
           SVGAnimationAdditionAttributes,
           SVGAnimationTargetElementAttributes,
           SVGAnimationAttributeTargetAttributes,
@@ -2619,7 +2618,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/shapes.html#CircleElement
        */
       interface Circle
-        extends SVGCoreAttributes<SVGCircleElement>,
+        extends SVGAttributes<SVGCircleElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
@@ -2646,7 +2645,7 @@ declare global {
        * @see https://www.w3.org/TR/css-masking-1/#elementdef-clippath
        */
       interface ClipPath
-        extends SVGCoreAttributes<SVGClipPathElement>,
+        extends SVGAttributes<SVGClipPathElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute
@@ -2662,18 +2661,18 @@ declare global {
       /**
        * @see https://www.w3.org/TR/SVG2/struct.html#DefsElement
        */
-      interface Defs extends SVGCoreAttributes<SVGDefsElement> {}
+      interface Defs extends SVGAttributes<SVGDefsElement> {}
 
       /**
        * @see https://www.w3.org/TR/SVG2/struct.html#DescElement
        */
-      interface Desc extends SVGCoreAttributes<SVGDescElement> {}
+      interface Desc extends SVGAttributes<SVGDescElement> {}
 
       /**
        * @see https://svgwg.org/specs/animations/#DiscardElement
        */
       interface Discard
-        extends SVGCoreAttributes<SVGElement>,
+        extends SVGAttributes<SVGElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://svgwg.org/specs/animations/#DiscardElementBeginAttribute
@@ -2690,7 +2689,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/shapes.html#EllipseElement
        */
       interface Ellipse
-        extends SVGCoreAttributes<SVGEllipseElement>,
+        extends SVGAttributes<SVGEllipseElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
@@ -2722,7 +2721,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feblend
        */
       interface FEBlend
-        extends SVGCoreAttributes<SVGFEBlendElement>,
+        extends SVGAttributes<SVGFEBlendElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2737,14 +2736,31 @@ declare global {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feblend-mode
          */
-        mode?: AttrBlendMode;
+        mode?:
+          | AttrMissing
+          | "normal"
+          | "darken"
+          | "multiply"
+          | "color-burn"
+          | "lighten"
+          | "screen"
+          | "color-dodge"
+          | "overlay"
+          | "soft-light"
+          | "hard-light"
+          | "difference"
+          | "exclusion"
+          | "hue"
+          | "saturation"
+          | "color"
+          | "luminosity";
       }
 
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fecolormatrix
        */
       interface FEColorMatrix
-        extends SVGCoreAttributes<SVGFEColorMatrixElement>,
+        extends SVGAttributes<SVGFEColorMatrixElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2772,7 +2788,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fecomponenttransfer
        */
       interface FEComponentTransfer
-        extends SVGCoreAttributes<SVGFEComponentTransferElement>,
+        extends SVGAttributes<SVGFEComponentTransferElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2784,7 +2800,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fecomposite
        */
       interface FEComposite
-        extends SVGCoreAttributes<SVGFECompositeElement>,
+        extends SVGAttributes<SVGFECompositeElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2834,7 +2850,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feconvolvematrix
        */
       interface FEConvolveMatrix
-        extends SVGCoreAttributes<SVGFEConvolveMatrixElement>,
+        extends SVGAttributes<SVGFEConvolveMatrixElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2892,7 +2908,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fediffuselighting
        */
       interface FEDiffuseLighting
-        extends SVGCoreAttributes<SVGFEDiffuseLightingElement>,
+        extends SVGAttributes<SVGFEDiffuseLightingElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2919,7 +2935,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fedisplacementmap
        */
       interface FEDisplacementMap
-        extends SVGCoreAttributes<SVGFEDisplacementMapElement>,
+        extends SVGAttributes<SVGFEDisplacementMapElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2951,7 +2967,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fedistantlight
        */
       interface FEDistantLight
-        extends SVGCoreAttributes<SVGFEDistantLightElement>,
+        extends SVGAttributes<SVGFEDistantLightElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -2973,7 +2989,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fedropshadow
        */
       interface FEDropShadow
-        extends SVGCoreAttributes<SVGFEDropShadowElement>,
+        extends SVGAttributes<SVGFEDropShadowElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -3000,42 +3016,42 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feflood
        */
       interface FEFlood
-        extends SVGCoreAttributes<SVGFEFloodElement>,
+        extends SVGAttributes<SVGFEFloodElement>,
           SVGFilterPrimitiveAttributes {}
 
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fefunca
        */
       interface FEFuncA
-        extends SVGCoreAttributes<SVGFEFuncAElement>,
+        extends SVGAttributes<SVGFEFuncAElement>,
           SVGTransferFunctionElementAttributes {}
 
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fefuncb
        */
       interface FEFuncB
-        extends SVGCoreAttributes<SVGFEFuncBElement>,
+        extends SVGAttributes<SVGFEFuncBElement>,
           SVGTransferFunctionElementAttributes {}
 
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fefuncg
        */
       interface FEFuncG
-        extends SVGCoreAttributes<SVGFEFuncGElement>,
+        extends SVGAttributes<SVGFEFuncGElement>,
           SVGTransferFunctionElementAttributes {}
 
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fefuncr
        */
       interface FEFuncR
-        extends SVGCoreAttributes<SVGFEFuncRElement>,
+        extends SVGAttributes<SVGFEFuncRElement>,
           SVGTransferFunctionElementAttributes {}
 
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fegaussianblur
        */
       interface FEGaussianBlur
-        extends SVGCoreAttributes<SVGFEGaussianBlurElement>,
+        extends SVGAttributes<SVGFEGaussianBlurElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -3057,7 +3073,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feimage
        */
       interface FEImage
-        extends SVGCoreAttributes<SVGFEImageElement>,
+        extends SVGAttributes<SVGFEImageElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute
@@ -3079,13 +3095,13 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-femerge
        */
       interface FEMerge
-        extends SVGCoreAttributes<SVGFEMergeElement>,
+        extends SVGAttributes<SVGFEMergeElement>,
           SVGFilterPrimitiveAttributes {}
 
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-femergenode
        */
-      interface FEMergeNode extends SVGCoreAttributes<SVGFEMergeNodeElement> {
+      interface FEMergeNode extends SVGAttributes<SVGFEMergeNodeElement> {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
          */
@@ -3095,7 +3111,7 @@ declare global {
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-femorphology
        */
-      interface FEMorphology extends SVGCoreAttributes<SVGFEMorphologyElement> {
+      interface FEMorphology extends SVGAttributes<SVGFEMorphologyElement> {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
          */
@@ -3106,7 +3122,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feoffset
        */
       interface FEOffset
-        extends SVGCoreAttributes<SVGFEOffsetElement>,
+        extends SVGAttributes<SVGFEOffsetElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -3127,7 +3143,7 @@ declare global {
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fepointlight
        */
-      interface FEPointLight extends SVGCoreAttributes<SVGFEPointLightElement> {
+      interface FEPointLight extends SVGAttributes<SVGFEPointLightElement> {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fepointlight-x
          */
@@ -3148,7 +3164,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fespecularlighting
        */
       interface FESpecularLighting
-        extends SVGCoreAttributes<SVGFESpecularLightingElement>,
+        extends SVGAttributes<SVGFESpecularLightingElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -3179,7 +3195,7 @@ declare global {
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fespotlight
        */
-      interface FESpotLight extends SVGCoreAttributes<SVGFESpotLightElement> {
+      interface FESpotLight extends SVGAttributes<SVGFESpotLightElement> {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fespotlight-x
          */
@@ -3225,7 +3241,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-fetile
        */
       interface FETile
-        extends SVGCoreAttributes<SVGFETileElement>,
+        extends SVGAttributes<SVGFETileElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-in
@@ -3237,7 +3253,7 @@ declare global {
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-feturbulence
        */
       interface FETurbulence
-        extends SVGCoreAttributes<SVGFETurbulenceElement>,
+        extends SVGAttributes<SVGFETurbulenceElement>,
           SVGFilterPrimitiveAttributes {
         /**
          * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-feturbulence-basefrequency
@@ -3268,7 +3284,7 @@ declare global {
       /**
        * @see https://www.w3.org/TR/filter-effects-1/#elementdef-filter
        */
-      interface Filter extends SVGCoreAttributes<SVGFilterElement> {
+      interface Filter extends SVGAttributes<SVGFilterElement> {
         /**
          * @see https://www.w3.org/TR/2011/REC-SVG11-20110816/struct.html#ExternalResourcesRequiredAttribute
          */
@@ -3309,7 +3325,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/embedded.html#ForeignObjectElement
        */
       interface ForeignObject
-        extends SVGCoreAttributes<SVGForeignObjectElement>,
+        extends SVGAttributes<SVGForeignObjectElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/geometry.html#XProperty
@@ -3336,14 +3352,14 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/struct.html#GElement
        */
       interface G
-        extends SVGCoreAttributes<SVGGElement>,
+        extends SVGAttributes<SVGGElement>,
           SVGConditionalProcessingAttributes {}
 
       /**
        * @see https://www.w3.org/TR/SVG2/embedded.html#ImageElement
        */
       interface Image
-        extends SVGCoreAttributes<SVGImageElement>,
+        extends SVGAttributes<SVGImageElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/coords.html#PreserveAspectRatioAttribute
@@ -3385,7 +3401,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/shapes.html#LineElement
        */
       interface Line
-        extends SVGCoreAttributes<SVGLineElement>,
+        extends SVGAttributes<SVGLineElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
@@ -3416,8 +3432,7 @@ declare global {
       /**
        * @see https://www.w3.org/TR/SVG2/pservers.html#LinearGradientElement
        */
-      interface LinearGradient
-        extends SVGCoreAttributes<SVGLinearGradientElement> {
+      interface LinearGradient extends SVGAttributes<SVGLinearGradientElement> {
         /**
          * @see https://www.w3.org/TR/SVG2/pservers.html#LinearGradientElementX1Attribute
          */
@@ -3462,7 +3477,7 @@ declare global {
       /**
        * @see https://www.w3.org/TR/SVG2/painting.html#MarkerElement
        */
-      interface Marker extends SVGCoreAttributes<SVGMarkerElement> {
+      interface Marker extends SVGAttributes<SVGMarkerElement> {
         /**
          * @see https://www.w3.org/TR/SVG2/coords.html#ViewBoxAttribute
          */
@@ -3513,7 +3528,7 @@ declare global {
        * @see https://www.w3.org/TR/css-masking-1/#elementdef-mask
        */
       interface Mask
-        extends SVGCoreAttributes<SVGMaskElement>,
+        extends SVGAttributes<SVGMaskElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/css-masking-1/#element-attrdef-mask-x
@@ -3549,13 +3564,13 @@ declare global {
       /**
        * @see https://www.w3.org/TR/SVG2/struct.html#MetadataElement
        */
-      interface Metadata extends SVGCoreAttributes<SVGMetadataElement> {}
+      interface Metadata extends SVGAttributes<SVGMetadataElement> {}
 
       /**
        * @see https://svgwg.org/specs/animations/#MPathElement
        */
       interface MPath
-        extends SVGCoreAttributes<SVGMPathElement>,
+        extends SVGAttributes<SVGMPathElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://svgwg.org/specs/animations/#MPathElementHrefAttribute
@@ -3567,7 +3582,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/paths.html#PathElement
        */
       interface Path
-        extends SVGCoreAttributes<SVGPathElement>,
+        extends SVGAttributes<SVGPathElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
@@ -3583,7 +3598,7 @@ declare global {
       /**
        * @see https://www.w3.org/TR/SVG2/pservers.html#PatternElement
        */
-      interface Pattern extends SVGCoreAttributes<SVGPatternElement> {
+      interface Pattern extends SVGAttributes<SVGPatternElement> {
         /**
          * @see https://www.w3.org/TR/SVG2/coords.html#ViewBoxAttribute
          */
@@ -3642,7 +3657,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/shapes.html#PolygonElement
        */
       interface Polygon
-        extends SVGCoreAttributes<SVGPolygonElement>,
+        extends SVGAttributes<SVGPolygonElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
@@ -3659,7 +3674,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/shapes.html#PolylineElement
        */
       interface Polyline
-        extends SVGCoreAttributes<SVGPolylineElement>,
+        extends SVGAttributes<SVGPolylineElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
@@ -3675,8 +3690,7 @@ declare global {
       /**
        * @see https://www.w3.org/TR/SVG2/pservers.html#RadialGradientElement
        */
-      interface RadialGradient
-        extends SVGCoreAttributes<SVGRadialGradientElement> {
+      interface RadialGradient extends SVGAttributes<SVGRadialGradientElement> {
         /**
          * @see https://www.w3.org/TR/SVG2/pservers.html#RadialGradientElementCXAttribute
          */
@@ -3732,7 +3746,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/shapes.html#RectElement
        */
       interface Rect
-        extends SVGCoreAttributes<SVGRectElement>,
+        extends SVGAttributes<SVGRectElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/paths.html#PathLengthAttribute
@@ -3774,7 +3788,7 @@ declare global {
        * @see https://svgwg.org/specs/animations/#SetElement
        */
       interface Set
-        extends SVGCoreAttributes<SVGSetElement>,
+        extends Omit<SVGAttributes<SVGSetElement>, "fill">,
           SVGAnimationTargetElementAttributes,
           SVGAnimationAttributeTargetAttributes,
           SVGAnimationTimingAttributes,
@@ -3788,7 +3802,7 @@ declare global {
       /**
        * @see https://www.w3.org/TR/SVG2/pservers.html#StopElement
        */
-      interface Stop extends SVGCoreAttributes<SVGStopElement> {
+      interface Stop extends SVGAttributes<SVGStopElement> {
         /**
          * @see https://www.w3.org/TR/SVG2/pservers.html#StopElementOffsetAttribute
          */
@@ -3799,7 +3813,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/struct.html#SVGElement
        */
       interface SVG
-        extends SVGCoreAttributes<SVGSVGElement>,
+        extends SVGAttributes<SVGSVGElement>,
           SVGConditionalProcessingAttributes {
         /**
          * A list of four numbers `<min-x>`, `<min-y>`, `<width>` and `<height>`, separated by whitespace and/or a comma
@@ -3842,13 +3856,13 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/struct.html#SwitchElement
        */
       interface Switch
-        extends SVGCoreAttributes<SVGSwitchElement>,
+        extends SVGAttributes<SVGSwitchElement>,
           SVGConditionalProcessingAttributes {}
 
       /**
        * @see https://www.w3.org/TR/SVG2/struct.html#SymbolElement
        */
-      interface Symbol extends SVGCoreAttributes<SVGSymbolElement> {
+      interface Symbol extends SVGAttributes<SVGSymbolElement> {
         /**
          * @see https://www.w3.org/TR/SVG2/coords.html#PreserveAspectRatioAttribute
          */
@@ -3906,7 +3920,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/text.html#TextElement
        */
       interface Text
-        extends SVGCoreAttributes<SVGTextElement>,
+        extends SVGAttributes<SVGTextElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/text.html#TextElementLengthAdjustAttribute
@@ -3948,7 +3962,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/text.html#TextPathElement
        */
       interface TextPath
-        extends SVGCoreAttributes<SVGTextPathElement>,
+        extends SVGAttributes<SVGTextPathElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/text.html#TextElementLengthAdjustAttribute
@@ -3994,13 +4008,13 @@ declare global {
       /**
        * @see https://www.w3.org/TR/SVG2/struct.html#TitleElement
        */
-      interface Title extends SVGCoreAttributes<SVGTitleElement> {}
+      interface Title extends SVGAttributes<SVGTitleElement> {}
 
       /**
        * @see https://www.w3.org/TR/SVG2/text.html#TextElement
        */
       interface TSpan
-        extends SVGCoreAttributes<SVGTSpanElement>,
+        extends SVGAttributes<SVGTSpanElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/text.html#TextElementLengthAdjustAttribute
@@ -4042,7 +4056,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG2/struct.html#UseElement
        */
       interface Use
-        extends SVGCoreAttributes<SVGUseElement>,
+        extends SVGAttributes<SVGUseElement>,
           SVGConditionalProcessingAttributes {
         /**
          * @see https://www.w3.org/TR/SVG2/struct.html#UseElementHrefAttribute
@@ -4073,7 +4087,7 @@ declare global {
       /**
        * @see https://www.w3.org/TR/SVG2/linking.html#ViewElement
        */
-      interface View extends SVGCoreAttributes<SVGViewElement> {
+      interface View extends SVGAttributes<SVGViewElement> {
         /**
          * @see https://www.w3.org/TR/SVG2/coords.html#ViewBoxAttribute
          */
@@ -4091,41 +4105,8 @@ declare global {
       }
     }
 
-    interface Directives {
-      /**
-       * Used to uniquely identify a tag within a template in order
-       * to get an element reference to it later.
-       *
-       * @see Marko.Component.getEl
-       * @see Marko.Component.getComponent
-       */
-      key?: AttrString;
-
-      /**
-       * Tells Marko to avoid updating the element or its contents (excluding custom tags which may rerender independently).
-       */
-      "no-update"?: AttrBoolean;
-
-      /**
-       * Tells Marko to avoid updating an element's contents (excluding custom tags which may rerender independently). Used instead of no-update when runtime functionality is needed.
-       */
-      "no-update-if"?: AttrBoolean;
-
-      /**
-       * Tells Marko to avoid updating an element's body.
-       */
-      "no-update-body"?: AttrBoolean;
-
-      /**
-       * Tells Marko to avoid updating an element's body. Used instead of no-update-body when runtime functionality is needed.
-       * @see https://markojs.com/docs/syntax/#conditional-rendering
-       */
-      "no-update-body-if"?: AttrBoolean;
-    }
-
     interface HTMLAttributes<T extends Element = Element>
-      extends AriaAttributes,
-        EventAttributes<T> {
+      extends CommonAttributes<T> {
       /**
        * Specifies a keyboard shortcut to activate or focus on an element.
        * @see https://html.spec.whatwg.org/multipage/interaction.html#the-accesskey-attribute
@@ -4347,7 +4328,7 @@ declare global {
        * @see Marko.Body
        */
       content?:
-        | AttrMissing
+        | AttrString
         | Marko.Body<[], void>
         | Marko.Template<Record<any, never>, void>;
 
@@ -4356,13 +4337,11 @@ declare global {
        * information to be exchanged between the HTML and its DOM representation by scripts.
        * @see https://html.spec.whatwg.org/multipage/dom.html#embedding-custom-non-visible-data-with-the-data-*-attributes
        */
-      [data: `data-${string}`]: AttrMissing | string | number | boolean;
+      [data: `data-${string}`]: AttrStringOrNumber | boolean;
     }
 
-    interface SVGCoreAttributes<T extends Element = Element>
-      extends AriaAttributes,
-        EventAttributes,
-        SVGPresentationAttributes {
+    interface SVGAttributes<T extends Element = Element>
+      extends CommonAttributes<T> {
       /**
        * @see https://www.w3.org/TR/SVG2/struct.html#IDAttribute
        */
@@ -4398,20 +4377,11 @@ declare global {
        * Provide body content for the tag as a Marko.Body.
        * @see Marko.Body
        */
-      content?: Marko.Body<[], void>;
+      content?:
+        | AttrString
+        | Marko.Body<[], void>
+        | Marko.Template<Record<any, never>, void>;
 
-      /**
-       * @see https://www.w3.org/TR/SVG2/struct.html#DataAttributes
-       */
-      [data: `data-${string}`]: AttrMissing | string | number | boolean;
-    }
-
-    /**
-     * The SVG spec isn't _exactly_ the same as the CSS spec so
-     * some of these properties might have extra or incorrect values.
-     * If you need something that's missing, please submit a PR
-     */
-    interface SVGPresentationAttributes {
       "alignment-baseline"?: AttrMissing | csstype.Property.AlignmentBaseline;
       "baseline-shift"?: AttrMissing | csstype.Property.BaselineShift | number;
       clip?: AttrMissing | csstype.Property.Clip | number;
@@ -4434,7 +4404,7 @@ declare global {
        * @see https://www.w3.org/TR/SVG11/filters.html#EnableBackgroundProperty
        */
       "enable-background"?: AttrMissing | "accumulate" | "new" | (string & {});
-      fill?: AttrMissing | csstype.Property.Fill;
+      fill?: AttrMissing | "freeze" | "remove" | csstype.Property.Fill;
       "fill-opacity"?: AttrMissing | csstype.Property.FillOpacity | number;
       "fill-rule"?: AttrMissing | csstype.Property.FillRule;
       filter?: AttrMissing | csstype.Property.Filter;
@@ -4500,1389 +4470,1382 @@ declare global {
       visibility?: AttrMissing | csstype.Property.Visibility;
       "word-spacing"?: AttrMissing | csstype.Property.WordSpacing | number;
       "writing-mode"?: AttrMissing | csstype.Property.WritingMode;
-    }
 
-    interface SVGTransferFunctionElementAttributes {
       /**
-       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-type
+       * @see https://www.w3.org/TR/SVG2/struct.html#DataAttributes
        */
-      type?:
-        | AttrMissing
-        | "identity"
-        | "table"
-        | "discrete"
-        | "linear"
-        | "gamma";
-
-      /**
-       * List of numbers
-       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-tablevalues
-       */
-      tableValues?: AttrStringOrNumber;
-
-      /**
-       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-slope
-       */
-      slope?: AttrStringOrNumber;
-
-      /**
-       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-intercept
-       */
-      intercept?: AttrStringOrNumber;
-
-      /**
-       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-amplitude
-       */
-      amplitude?: AttrStringOrNumber;
-
-      /**
-       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-exponent
-       */
-      exponent?: AttrStringOrNumber;
-
-      /**
-       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-offset
-       */
-      offset?: AttrStringOrNumber;
-    }
-
-    interface SVGAnimationAdditionAttributes {
-      /**
-       * @see https://svgwg.org/specs/animations/#AdditiveAttribute
-       */
-      additive?: AttrMissing | "replace" | "sum";
-
-      /**
-       * @see https://svgwg.org/specs/animations/#AccumulateAttribute
-       */
-      accumulate?: AttrMissing | "none" | "sum";
-    }
-
-    interface SVGAnimationTargetElementAttributes {
-      /**
-       * @see https://svgwg.org/specs/animations/#HrefAttribute
-       */
-      href?: AttrString;
-    }
-
-    interface SVGAnimationAttributeTargetAttributes {
-      /**
-       * @see https://svgwg.org/specs/animations/#AttributeNameAttribute
-       */
-      attributeName?: AttrString;
-    }
-
-    interface SVGAnimationTimingAttributes {
-      /**
-       * A semicolon separated list of values
-       * @see https://svgwg.org/specs/animations/#BeginAttribute
-       */
-      begin?: AttrString;
-
-      /**
-       * @see https://svgwg.org/specs/animations/#DurAttribute
-       */
-      dur?: AttrMissing | "media" | "indefinite" | number | (string & {});
-
-      /**
-       * A semicolon separated list of values
-       * @see https://svgwg.org/specs/animations/#EndAttribute
-       */
-      end?: AttrString;
-
-      /**
-       * @see https://svgwg.org/specs/animations/#MinAttribute
-       */
-      min?: AttrMissing | "media" | number | (string & {});
-
-      /**
-       * @see https://svgwg.org/specs/animations/#MaxAttribute
-       */
-      max?: AttrMissing | "media" | number | (string & {});
-
-      /**
-       * @see https://svgwg.org/specs/animations/#RestartAttribute
-       */
-      restart?: AttrMissing | "always" | "whenNotActive" | "never";
-
-      /**
-       * @see https://svgwg.org/specs/animations/#RepeatCountAttribute
-       */
-      repeatCount?: AttrMissing | AttrNumber | "indefinite";
-
-      /**
-       * @see https://svgwg.org/specs/animations/#RepeatDurAttribute
-       */
-      repeatDur?: AttrMissing | AttrNumber | "indefinite";
-
-      /**
-       * @see https://svgwg.org/specs/animations/#FillAttribute
-       */
-      fill?: AttrMissing | "freeze" | "remove";
-    }
-
-    interface SVGAnimationValueAttributes {
-      /**
-       * @see https://svgwg.org/specs/animations/#CalcModeAttribute
-       */
-      calcMode?: AttrMissing | "discrete" | "linear" | "paced" | "spline";
-
-      /**
-       * A semicolon-separated list of values
-       * @see https://svgwg.org/specs/animations/#ValuesAttribute
-       */
-      values?: AttrString;
-
-      /**
-       * A semicolon-separated list of numbers
-       * @see https://svgwg.org/specs/animations/#KeyTimesAttribute
-       */
-      keyTimes?: AttrStringOrNumber;
-
-      /**
-       * A semicolon-separated list of Bézier control points
-       * @see https://svgwg.org/specs/animations/#KeySplinesAttribute
-       */
-      keySplines?: AttrString;
-
-      /**
-       * @see https://svgwg.org/specs/animations/#FromAttribute
-       */
-      from?: AttrStringOrNumber;
-
-      /**
-       * @see https://svgwg.org/specs/animations/#FromAttribute
-       */
-      to?: AttrStringOrNumber;
-
-      /**
-       * @see https://svgwg.org/specs/animations/#FromAttribute
-       */
-      by?: AttrStringOrNumber;
-    }
-
-    interface SVGConditionalProcessingAttributes {
-      /**
-       * Set of space-separated tokens
-       * @see https://www.w3.org/TR/SVG2/struct.html#RequiredExtensionsAttribute
-       */
-      requiredExtensions?: AttrString;
-
-      /**
-       * Set of comma-separated tokens
-       * @see https://www.w3.org/TR/SVG2/struct.html#SystemLanguageAttribute
-       */
-      systemLanguage?: AttrString;
-    }
-
-    interface SVGFilterPrimitiveAttributes {
-      /**
-       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-x
-       */
-      x?: AttrStringOrNumber;
-
-      /**
-       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-y
-       */
-      y?: AttrStringOrNumber;
-
-      /**
-       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-height
-       */
-      height?: AttrStringOrNumber;
-
-      /**
-       * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-result
-       */
-      result?: AttrString;
-    }
-
-    interface EventAttributes<T extends Element> {
-      /**
-       * Fired when resource was not fully loaded, but not as the result of an error.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-abort
-       */
-      onAbort?: AttrEventHandler<Event, T>;
-      "on-abort"?: this["onAbort"];
-      onabort?: AttrString;
-
-      /**
-       * Fired when an Animation unexpectedly aborts.
-       * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationcancel
-       */
-      onAnimationCancel?: AttrEventHandler<AnimationEvent, T>;
-      "on-animationcancel"?: this["onAnimationCancel"];
-
-      /**
-       * Fired when an animation has completed.
-       * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationend
-       */
-      onAnimationEnd?: AttrEventHandler<AnimationEvent, T>;
-      "on-animationend"?: this["onAnimationEnd"];
-
-      /**
-       * Fired at the end of each iteration of an animation, except when an animationend event would fire at the same time.
-       * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationiteration
-       */
-      onAnimationIteration?: AttrEventHandler<AnimationEvent, T>;
-      "on-animationiteration"?: this["onAnimationIteration"];
-
-      /**
-       * Fired when an animation has started.
-       * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationstart
-       */
-      onAnimationStart?: AttrEventHandler<AnimationEvent, T>;
-      "on-animationstart"?: this["onAnimationStart"];
-
-      /**
-       * Fired when a non-primary pointing device button (any mouse button other than the primary—usually leftmost—button)
-       * has been pressed and released both within the same element.
-       * @see https://w3c.github.io/uievents/#event-type-auxclick
-       */
-      onAuxClick?: AttrEventHandler<PointerEvent, T>;
-      "on-auxclick"?: this["onAuxClick"];
-      onauxclick?: AttrString;
-
-      /**
-       * Fires when the value of an <input>, or <textarea> element is about to be modified.
-       * @see https://w3c.github.io/uievents/#event-type-beforeinput
-       */
-      onBeforeInput?: AttrEventHandler<InputEvent, T>;
-      "on-beforeinput"?: this["onBeforeInput"];
-      onbeforeinput?: AttrString;
-
-      /**
-       * Fired on elements with the hidden=until-found attribute before they are revealed.
-       * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforematch
-       */
-      onBeforeMatch?: AttrEventHandler<Event, T>;
-      "on-beforematch"?: this["onBeforeMatch"];
-      onbeforematch?: AttrString;
-
-      /**
-       * Fired on elements with the popover attribute when they are transitioning between showing and hidden
-       * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforetoggle
-       */
-      onBeforeToggle?: AttrEventHandler<Event, T>;
-      "on-beforetoggle"?: this["onBeforeToggle"];
-      onbeforetoggle?: AttrString;
-
-      /**
-       * Fires when a node loses focus.
-       * @see https://html.spec.whatwg.org/multipage/indices.html#event-blur
-       */
-      onBlur?: AttrEventHandler<Event, T>;
-      "on-blur"?: this["onBlur"];
-      onblur?: AttrString;
-
-      /**
-       * Fired at controls when the user commits a value change (see also the input event)
-       * @see https://html.spec.whatwg.org/multipage/indices.html#event-cancel
-       */
-      onCancel?: AttrEventHandler<Event, T>;
-      "on-cancel"?: this["onCancel"];
-      oncancel?: AttrString;
-
-      /**
-       * Fires when the user agent can resume playback of the media data,
-       * but estimates that if playback were to be started now, the media resource could not be rendered at the current
-       * playback rate up to its end without having to stop for further buffering of content.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-canplay
-       */
-      onCanPlay?: AttrEventHandler<Event, T>;
-      "on-canplay"?: this["onCanPlay"];
-      oncanplay?: AttrString;
-
-      /**
-       * Fires when the user agent can play through the media data without having to stop for further buffering of content.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-canplaythrough
-       */
-      onCanPlayThrough?: AttrEventHandler<Event, T>;
-      "on-canplaythrough"?: this["onCanPlayThrough"];
-      oncanplaythrough?: AttrString;
-
-      /**
-       * Fired when the form elements value is modified.
-       * @see https://html.spec.whatwg.org/multipage/indices.html#event-change
-       */
-      onChange?: AttrEventHandler<Event, T>;
-      "on-change"?: this["onChange"];
-      onchange?: AttrString;
-
-      /**
-       * Normally a mouse event; also synthetically fired at an element before its activation behavior is run,
-       * when an element is activated from a non-pointer input device (e.g. a keyboard).
-       * @see https://w3c.github.io/uievents/#event-type-click
-       */
-      onClick?: AttrEventHandler<PointerEvent, T>;
-      "on-click"?: this["onClick"];
-      onclick?: AttrString;
-
-      /**
-       * Fired at dialog elements when they are closed
-       * @see https://html.spec.whatwg.org/multipage/indices.html#event-close
-       */
-      onClose?: AttrEventHandler<Event, T>;
-      "on-close"?: this["onClose"];
-      onclose?: AttrString;
-
-      /**
-       * Fired when a text composition system such as an input method editor completes or cancels the current composition session.
-       * @see https://w3c.github.io/uievents/#event-type-compositionend
-       */
-      onCompositionEnd?: AttrEventHandler<CompositionEvent, T>;
-      "on-compositionend"?: this["onCompositionEnd"];
-
-      /**
-       * Fired when a text composition system such as an input method editor starts a new composition session.
-       * @see https://w3c.github.io/uievents/#event-type-compositionstart
-       */
-      onCompositionStart?: AttrEventHandler<CompositionEvent, T>;
-      "on-compositionstart"?: this["onCompositionStart"];
-
-      /**
-       * Fired when a new character is received in the context of a text composition session controlled by a text
-       * composition system such as an input method editor.
-       * @see https://w3c.github.io/uievents/#event-type-compositionupdate
-       */
-      onCompositionUpdate?: AttrEventHandler<CompositionEvent, T>;
-      "on-compositionupdate"?: this["onCompositionUpdate"];
-
-      /**
-       * Fired when the corresponding CanvasRenderingContext2D or OffscreenCanvasRenderingContext2D is lost
-       * @see https://html.spec.whatwg.org/multipage/indices.html#event-contextlost
-       */
-      onContextLost?: AttrEventHandler<Event, T>;
-      "on-contextlost"?: this["onContextLost"];
-      oncontextlost?: AttrString;
-
-      /**
-       * Fired when the user attempts to open a context menu.
-       * This event is typically triggered by clicking the right mouse button, or by pressing the context menu key.
-       * @see https://w3c.github.io/uievents/#event-type-contextmenu
-       */
-      onContextMenu?: AttrEventHandler<PointerEvent, T>;
-      "on-contextmenu"?: this["onContextMenu"];
-      oncontextmenu?: AttrString;
-
-      /**
-       * Fired when the corresponding CanvasRenderingContext2D or OffscreenCanvasRenderingContext2D is restored after being lost
-       * @see https://html.spec.whatwg.org/multipage/indices.html#event-contextrestored
-       */
-      onContextRestored?: AttrEventHandler<Event, T>;
-      "on-contextrestored"?: this["onContextRestored"];
-      oncontextrestored?: AttrString;
-
-      /**
-       * Fired when the user copies the content of an element.
-       * @see https://w3c.github.io/clipboard-apis/#clipboard-event-copy
-       */
-      onCopy?: AttrEventHandler<ClipboardEvent, T>;
-      "on-copy"?: this["onCopy"];
-      oncopy?: AttrString;
-
-      /**
-       * Fired when one or more cues in the track have become active or stopped being active.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-cuechange
-       */
-      onCueChange?: AttrEventHandler<Event, T>;
-      "on-cuechange"?: this["onCueChange"];
-      oncuechange?: AttrString;
-
-      /**
-       * Fired when the user cuts the content of an element.
-       * @see https://w3c.github.io/clipboard-apis/#clipboard-event-cut
-       */
-      onCut?: AttrEventHandler<ClipboardEvent, T>;
-      "on-cut"?: this["onCut"];
-      oncut?: AttrString;
-
-      /**
-       * Fired when the user double-clicks on an element.
-       * @see https://w3c.github.io/uievents/#event-type-dblclick
-       */
-      onDblClick?: AttrEventHandler<MouseEvent, T>;
-      "on-dblclick"?: this["onDblClick"];
-      ondblclick?: AttrString;
-
-      /**
-       * Fired every few hundred milliseconds as an element or text selection is being dragged by the user.
-       * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-drag
-       */
-      onDrag?: AttrEventHandler<DragEvent, T>;
-      "on-drag"?: this["onDrag"];
-      ondrag?: AttrString;
-
-      /**
-       * Fired when a drag operation is being ended (by releasing a mouse button or hitting the escape key).
-       * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragend
-       */
-      onDragEnd?: AttrEventHandler<DragEvent, T>;
-      "on-dragend"?: this["onDragEnd"];
-      ondragend?: AttrString;
-
-      /**
-       * Fired when a drag operation is being ended (by releasing a mouse button or hitting the escape key).
-       * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragenter
-       */
-      onDragEnter?: AttrEventHandler<DragEvent, T>;
-      "on-dragenter"?: this["onDragEnter"];
-      ondragenter?: AttrString;
-
-      /**
-       * Fired when a dragged element or text selection leaves a valid drop target.
-       * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragleave
-       */
-      onDragLeave?: AttrEventHandler<DragEvent, T>;
-      "on-dragleave"?: this["onDragLeave"];
-      ondragleave?: AttrString;
-
-      /**
-       * Fired an element or text selection is being dragged over a valid drop target (every few hundred milliseconds).
-       * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragover
-       */
-      onDragOver?: AttrEventHandler<DragEvent, T>;
-      "on-dragover"?: this["onDragOver"];
-      ondragover?: AttrString;
-
-      /**
-       * Fired when an element or text selection has started being dragged.
-       * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragstart
-       */
-      onDragStart?: AttrEventHandler<DragEvent, T>;
-      "on-dragstart"?: this["onDragStart"];
-      ondragstart?: AttrString;
-
-      /**
-       * Fired when an element or text selection is dropped on a valid drop target.
-       * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-drop
-       */
-      onDrop?: AttrEventHandler<DragEvent, T>;
-      "on-drop"?: this["onDrop"];
-      ondrop?: AttrString;
-
-      /**
-       * Fired when the duration attribute of a media element has just been updated.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-durationchange
-       */
-      onDurationChange?: AttrEventHandler<Event, T>;
-      "on-durationchange"?: this["onDurationChange"];
-      ondurationchange?: AttrString;
-
-      /**
-       * Fired when a media element's playback stops because its source data has been fully consumed and not looped.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-emptied
-       */
-      onEmptied?: AttrEventHandler<Event, T>;
-      "on-emptied"?: this["onEmptied"];
-      onemptied?: AttrString;
-
-      /**
-       * Fired when an encrypted media stream is encountered and the user agent recognizes the stream's encryption scheme.
-       * @see https://w3c.github.io/encrypted-media/#dom-evt-encrypted
-       */
-      onEncrypted?: AttrEventHandler<MediaEncryptedEvent, T>;
-      "on-encrypted"?: this["onEncrypted"];
-
-      /**
-       * Fired when playback of a media element reaches its end, either because the media has reached its end or the loop attribute is not set.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-ended
-       */
-      onEnded?: AttrEventHandler<Event, T>;
-      "on-ended"?: this["onEnded"];
-      onended?: AttrString;
-
-      /**
-       * Fired when an error occurs while fetching an external resource, such as a script, image, or video.
-       * @see https://html.spec.whatwg.org/multipage/indices.html#event-error
-       */
-      onError?: AttrEventHandler<ErrorEvent | Event, T>;
-      "on-error"?: this["onError"];
-      onerror?: AttrString;
-
-      /**
-       * Fired when an element receives focus, either by user input or via script.
-       * @see https://html.spec.whatwg.org/multipage/interaction.html#event-focus
-       */
-      onFocus?: AttrEventHandler<FocusEvent, T>;
-      "on-focus"?: this["onFocus"];
-      onfocus?: AttrString;
-
-      /**
-       * Fires when an element has received focus, after the focus event. The two events differ in that focusin bubbles, while focus does not.
-       * @see HTMLAttributes.onFocus
-       * @see https://w3c.github.io/uievents/#event-type-focusin
-       */
-      onFocusIn?: AttrEventHandler<FocusEvent, T>;
-      "on-focusin"?: this["onFocusIn"];
-
-      /**
-       * Fires when an element has lost focus, after the blur event. The two events differ in that focusout bubbles, while blur does not.
-       * @see HTMLAttributes.onBlur
-       * @see https://w3c.github.io/uievents/#event-type-focusout
-       */
-      onFocusOut?: AttrEventHandler<FocusEvent, T>;
-      "on-focusout"?: this["onFocusOut"];
-
-      /**
-       * Fired at a form element when it is constructing the entry list
-       * @see https://html.spec.whatwg.org/multipage/indices.html#event-formdata
-       */
-      onFormData?: AttrEventHandler<FormDataEvent, T>;
-      "on-formdata"?: this["onFormData"];
-      onformdata?: AttrString;
-
-      /**
-       * Fired immediately after an Element switches into or out of fullscreen mode.
-       * @see https://fullscreen.spec.whatwg.org/#handler-document-onfullscreenchange
-       */
-      onFullscreenChange?: AttrEventHandler<Event, T>;
-      "on-fullscreenchange"?: this["onFullscreenChange"];
-
-      /**
-       * Fired when the browser cannot switch to fullscreen mode.
-       * @see https://fullscreen.spec.whatwg.org/#handler-document-onfullscreenerror
-       */
-      onFullscreenError?: AttrEventHandler<Event, T>;
-      "on-fullscreenerror"?: this["onFullscreenError"];
-
-      /**
-       * Fired when an element captures a pointer using setPointerCapture().
-       *
-       * @see Element.setPointerCapture
-       * @see https://w3c.github.io/pointerevents/#the-gotpointercapture-event
-       */
-      onGotPointerCapture?: AttrEventHandler<PointerEvent, T>;
-      "on-gotpointercapture"?: this["onGotPointerCapture"];
-
-      /**
-       * Fired when the form element's value changes, as a result of user input.
-       * @see https://w3c.github.io/uievents/#event-type-input
-       */
-      onInput?: AttrEventHandler<InputEvent, T>;
-      "on-input"?: this["onInput"];
-      oninput?: AttrString;
-
-      /**
-       * Fired when a form element is found to be invalid during submission or constraint validation.
-       * @see https://html.spec.whatwg.org/multipage/indices.html#event-invalid
-       */
-      onInvalid?: AttrEventHandler<Event, T>;
-      "on-invalid"?: this["onInvalid"];
-      oninvalid?: AttrString;
-
-      /**
-       * Fired when a key is first pressed down.
-       * @see https://w3c.github.io/uievents/#event-type-keydown
-       */
-      onKeyDown?: AttrEventHandler<KeyboardEvent, T>;
-      "on-keydown"?: this["onKeyDown"];
-      onkeydown?: AttrString;
-
-      /**
-       * Fired when a key is pressed down and then released, while the element has focus.
-       * @see https://w3c.github.io/uievents/#event-type-keypress
-       */
-      onKeyPress?: AttrEventHandler<KeyboardEvent, T>;
-      "on-keypress"?: this["onKeyPress"];
-      onkeypress?: AttrString;
-
-      /**
-       * Fired when a key is released after being pressed down.
-       * @see https://w3c.github.io/uievents/#event-type-keyup
-       */
-      onKeyUp?: AttrEventHandler<KeyboardEvent, T>;
-      "on-keyup"?: this["onKeyUp"];
-      onkeyup?: AttrString;
-
-      /**
-       * Fired when an element or resource, such as an image, has completely loaded.
-       * @see https://html.spec.whatwg.org/multipage/indices.html#event-load
-       */
-      onLoad?: AttrEventHandler<Event, T>;
-      "on-load"?: this["onLoad"];
-      onload?: AttrString;
-
-      /**
-       * Fired when the user agent can render the media data at the current playback position for the first time.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadeddata
-       */
-      onLoadedData?: AttrEventHandler<Event, T>;
-      "on-loadeddata"?: this["onLoadedData"];
-      onloadeddata?: AttrString;
-
-      /**
-       * Fired when the user agent has just determined the duration and dimensions of the media resource.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadedmetadata
-       */
-      onLoadedMetadata?: AttrEventHandler<Event, T>;
-      "on-loadedmetadata"?: this["onLoadedMetadata"];
-      onloadedmetadata?: AttrString;
-
-      /**
-       * Fired when the user agent begins looking for media data, before the media has begun to load.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadstart
-       */
-      onLoadStart?: AttrEventHandler<Event, T>;
-      "on-loadstart"?: this["onLoadStart"];
-      onloadstart?: AttrString;
-
-      /**
-       * Fired when a captured pointer is released.
-       * @see https://w3c.github.io/pointerevents/#dfn-lostpointercapture
-       */
-      onLostPointerCapture?: AttrEventHandler<PointerEvent, T>;
-      "on-lostpointercapture"?: this["onLostPointerCapture"];
-
-      /**
-       * Fired when a pointing device button is pressed down over an element.
-       * @see https://w3c.github.io/uievents/#event-type-mousedown
-       */
-      onMouseDown?: AttrEventHandler<MouseEvent, T>;
-      "on-mousedown"?: this["onMouseDown"];
-      onmousedown?: AttrString;
-
-      /**
-       * Fired when a pointing device is moved onto the element.
-       * @see https://w3c.github.io/uievents/#event-type-mouseenter
-       */
-      onMouseEnter?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseenter"?: this["onMouseEnter"];
-      onmouseenter?: AttrString;
-
-      /**
-       * Fired when a pointing device is moved off the element.
-       * @see https://w3c.github.io/uievents/#event-type-mouseleave
-       */
-      onMouseLeave?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseleave"?: this["onMouseLeave"];
-      onmouseleave?: AttrString;
-
-      /**
-       * Fired when a pointing device is moved over an element.
-       * @see https://w3c.github.io/uievents/#event-type-mousemove
-       */
-      onMouseMove?: AttrEventHandler<MouseEvent, T>;
-      "on-mousemove"?: this["onMouseMove"];
-      onmousemove?: AttrString;
-
-      /**
-       * Fired when a pointing device is moved off the element or off one of its children.
-       * @see https://w3c.github.io/uievents/#event-type-mouseout
-       */
-      onMouseOut?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseout"?: this["onMouseOut"];
-      onmouseout?: AttrString;
-
-      /**
-       * Fired when a pointing device is moved onto the element or onto one of its children.
-       * @see https://w3c.github.io/uievents/#event-type-mouseover
-       */
-      onMouseOver?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseover"?: this["onMouseOver"];
-      onmouseover?: AttrString;
-
-      /**
-       * Fired when a pointing device button is released over an element.
-       * @see https://w3c.github.io/uievents/#event-type-mouseup
-       */
-      onMouseUp?: AttrEventHandler<MouseEvent, T>;
-      "on-mouseup"?: this["onMouseUp"];
-      onmouseup?: AttrString;
-
-      /**
-       * Fired when the user has completed a "paste" action, usually through a context menu or keyboard shortcut.
-       * @see https://w3c.github.io/clipboard-apis/#clipboard-event-paste
-       */
-      onPaste?: AttrEventHandler<ClipboardEvent, T>;
-      "on-paste"?: this["onPaste"];
-      onpaste?: AttrString;
-
-      /**
-       * Fired when playback of a media element is paused.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-pause
-       */
-      onPause?: AttrEventHandler<Event, T>;
-      "on-pause"?: this["onPause"];
-      onpause?: AttrString;
-
-      /**
-       * Fired when playback of a media element is ready to start after having been paused.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-play
-       */
-      onPlay?: AttrEventHandler<Event, T>;
-      "on-play"?: this["onPlay"];
-      onplay?: AttrString;
-
-      /**
-       * Fired when playback of a media element is ready to start, or when playback is resumed after a pause event.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-playing
-       */
-      onPlaying?: AttrEventHandler<Event, T>;
-      "on-playing"?: this["onPlaying"];
-      onplaying?: AttrString;
-
-      /**
-       * Fired when the pointing device's hardware triggers a cancellation of the pointer event, such as due to a system event.
-       * @see https://w3c.github.io/pointerevents/#the-pointercancel-event
-       */
-      onPointerCancel?: AttrEventHandler<PointerEvent, T>;
-      "on-pointercancel"?: this["onPointerCancel"];
-
-      /**
-       * Fired when a pointing device's button is pressed down on an element.
-       * @see https://w3c.github.io/pointerevents/#the-pointerdown-event
-       */
-      onPointerDown?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerdown"?: this["onPointerDown"];
-
-      /**
-       * Fired when a pointing device is moved onto the element.
-       * @see https://w3c.github.io/pointerevents/#the-pointerenter-event
-       */
-      onPointerEnter?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerenter"?: this["onPointerEnter"];
-
-      /**
-       * Fired when a pointing device is moved off the element.
-       * @see https://w3c.github.io/pointerevents/#the-pointerleave-event
-       */
-      onPointerLeave?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerleave"?: this["onPointerLeave"];
-
-      /**
-       * Fired when a pointing device is moved over an element.
-       * @see https://w3c.github.io/pointerevents/#the-pointermove-event
-       */
-      onPointerMove?: AttrEventHandler<PointerEvent, T>;
-      "on-pointermove"?: this["onPointerMove"];
-
-      /**
-       * Fired when a pointing device is moved off the element or off one of its children.
-       * @see https://w3c.github.io/pointerevents/#the-pointerout-event
-       */
-      onPointerOut?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerout"?: this["onPointerOut"];
-
-      /**
-       * Fired when a pointing device is moved onto the element or onto one of its children.
-       * @see https://w3c.github.io/pointerevents/#the-pointerover-event
-       */
-      onPointerOver?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerover"?: this["onPointerOver"];
-
-      /**
-       * Fired when a pointing device's button is released over an element.
-       * @see https://w3c.github.io/pointerevents/#the-pointerup-event
-       */
-      onPointerUp?: AttrEventHandler<PointerEvent, T>;
-      "on-pointerup"?: this["onPointerUp"];
-
-      /**
-       * Fired when the user agent is downloading media data or resources, to indicate progress.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-progress
-       */
-      onProgress?: AttrEventHandler<Event, T>;
-      "on-progress"?: this["onProgress"];
-      onprogress?: AttrString;
-
-      /**
-       * Fired when the playback rate of a media element has changed.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-ratechange
-       */
-      onRateChange?: AttrEventHandler<Event, T>;
-      "on-ratechange"?: this["onRateChange"];
-      onratechange?: AttrString;
-
-      /**
-       * Fired when a form is reset, either by user interaction or through a script.
-       * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#event-reset
-       */
-      onReset?: AttrEventHandler<Event, T>;
-      "on-reset"?: this["onReset"];
-      onreset?: AttrString;
-
-      /**
-       * Fired at the Window when the viewport is resized. Fired at VisualViewport when the visual viewport is resized or the layout viewport is scaled.
-       * @see https://drafts.csswg.org/cssom-view/#eventdef-window-resize
-       */
-      onResize?: AttrEventHandler<Event, T>;
-      "on-resize"?: this["onResize"];
-      onresize?: AttrString;
-
-      /**
-       * Fired when an element's scrollbar is being scrolled.
-       * @see https://drafts.csswg.org/cssom-view/#eventdef-document-scroll
-       */
-      onScroll?: AttrEventHandler<Event, T>;
-      "on-scroll"?: this["onScroll"];
-      onscroll?: AttrString;
-
-      /**
-       * Fired when element scrolling has completed. Scrolling is considered completed when the scroll position has no more pending updates and the user has completed their gesture.
-       * @see https://drafts.csswg.org/cssom-view/#eventdef-document-scrollend
-       */
-      onScrollEnd?: AttrEventHandler<Event, T>;
-      "on-scrollend"?: this["onScrollEnd"];
-      onscrollend?: AttrString;
-
-      /**
-       * Fired when a security policy violation occurs, such as when an attempted resource load is blocked due to the security settings of the browser or when an inline script violates the Content Security Policy (CSP) of the page.
-       * @see https://w3c.github.io/webappsec-csp/#eventdef-globaleventhandlers-securitypolicyviolation
-       */
-      onSecurityPolicyViolation?: AttrEventHandler<
-        SecurityPolicyViolationEvent,
-        T
-      >;
-      "on-securitypolicyviolation"?: this["onSecurityPolicyViolation"];
-      onsecuritypolicyviolation?: AttrString;
-
-      /**
-       * Fired when a seek operation on a media element completes.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-seeked
-       */
-      onSeeked?: AttrEventHandler<Event, T>;
-      "on-seeked"?: this["onSeeked"];
-      onseeked?: AttrString;
-
-      /**
-       * Fired when a seek operation on a media element begins.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-seeking
-       */
-      onSeeking?: AttrEventHandler<Event, T>;
-      "on-seeking"?: this["onSeeking"];
-      onseeking?: AttrString;
-
-      /**
-       * Fired when some text is selected within an input or textarea element.
-       * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#event-select
-       */
-      onSelect?: AttrEventHandler<Event, T>;
-      "on-select"?: this["onSelect"];
-      onselect?: AttrString;
-
-      /**
-       * Fired when a <slot> element's distributed nodes change.
-       * @see https://dom.spec.whatwg.org/#eventdef-htmlslotelement-slotchange
-       */
-      onSlotChange?: AttrEventHandler<Event, T>;
-      "on-slotchange"?: this["onSlotChange"];
-      onslotchange?: AttrString;
-
-      /**
-       * Fired when a media element's data downloading has been stalled due to an issue, such as a lack of data.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-stalled
-       */
-      onStalled?: AttrEventHandler<Event, T>;
-      "on-stalled"?: this["onStalled"];
-      onstalled?: AttrString;
-
-      /**
-       * Fired at a form element when it is submitted
-       * @see https://html.spec.whatwg.org/multipage/indices.html#event-submit
-       */
-      onSubmit?: AttrEventHandler<SubmitEvent, T>;
-      "on-submit"?: this["onSubmit"];
-      onsubmit?: AttrString;
-
-      /**
-       * Fired when the user agent intentionally does not download media data.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-suspend
-       */
-      onSuspend?: AttrEventHandler<Event, T>;
-      "on-suspend"?: this["onSuspend"];
-      onsuspend?: AttrString;
-
-      /**
-       * Fired when the current playback position of a media element changes as part of normal playback or due to a seek operation.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-timeupdate
-       */
-      onTimeUpdate?: AttrEventHandler<Event, T>;
-      "on-timeupdate"?: this["onTimeUpdate"];
-      ontimeupdate?: AttrString;
-
-      /**
-       * Fired at details elements when they open or close; fired on elements with the popover attribute when they are transitioning between showing and hidden
-       * @see https://html.spec.whatwg.org/multipage/indices.html#event-toggle
-       */
-      onToggle?: AttrEventHandler<Event, T>;
-      "on-toggle"?: this["onToggle"];
-      ontoggle?: AttrString;
-
-      /**
-       * Fired when a touch event is interrupted, such as by a modal window or an incoming phone call.
-       * @see https://w3c.github.io/touch-events/#event-touchcancel
-       */
-      onTouchCancel?: AttrEventHandler<TouchEvent, T>;
-      "on-touchcancel"?: this["onTouchCancel"];
-
-      /**
-       * Fired when a finger is lifted from a touch surface.
-       * @see https://w3c.github.io/touch-events/#event-touchend
-       */
-      onTouchEnd?: AttrEventHandler<TouchEvent, T>;
-      "on-touchend"?: this["onTouchEnd"];
-
-      /**
-       * Fired when a finger is moved along a touch surface.
-       * @see https://w3c.github.io/touch-events/#event-touchmove
-       */
-      onTouchMove?: AttrEventHandler<TouchEvent, T>;
-      "on-touchmove"?: this["onTouchMove"];
-
-      /**
-       * Fired when a finger is placed on a touch surface.
-       * @see https://w3c.github.io/touch-events/#event-touchstart
-       */
-      onTouchStart?: AttrEventHandler<TouchEvent, T>;
-      "on-touchstart"?: this["onTouchStart"];
-
-      /**
-       * Fired when a CSS transition is canceled.
-       * @see https://drafts.csswg.org/css-transitions/#transitioncancel
-       */
-      onTransitionCancel?: AttrEventHandler<TransitionEvent, T>;
-      "on-transitioncancel"?: this["onTransitionCancel"];
-
-      /**
-       * Fired when a CSS transition has completed.
-       * @see https://drafts.csswg.org/css-transitions/#transitionend
-       */
-      onTransitionEnd?: AttrEventHandler<TransitionEvent, T>;
-      "on-transitionend"?: this["onTransitionEnd"];
-
-      /**
-       * Fired when a CSS transition is first created, i.e. before any transition-delay has begun.
-       * @see https://drafts.csswg.org/css-transitions/#transitionrun
-       */
-      onTransitionRun?: AttrEventHandler<TransitionEvent, T>;
-      "on-transitionrun"?: this["onTransitionRun"];
-
-      /**
-       * Fired when a CSS transition has actually started, i.e., after any transition-delay has ended.
-       * @see https://drafts.csswg.org/css-transitions/#transitionstart
-       */
-      onTransitionStart?: AttrEventHandler<TransitionEvent, T>;
-      "on-transitionstart"?: this["onTransitionStart"];
-
-      /**
-       * Fired when the volume level or muted state of a media element changes.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-volumechange
-       */
-      onVolumeChange?: AttrEventHandler<Event, T>;
-      "on-volumechange"?: this["onVolumeChange"];
-      onvolumechange?: AttrString;
-
-      /**
-       * Fired when a media element is waiting for data to continue playback, such as when buffering.
-       * @see https://html.spec.whatwg.org/multipage/media.html#event-media-waiting
-       */
-      onWaiting?: AttrEventHandler<Event, T>;
-      "on-waiting"?: this["onWaiting"];
-      onwaiting?: AttrString;
-
-      /**
-       * Fired when a user rotates a mouse wheel or similar input device over an element.
-       * @see https://w3c.github.io/uievents/#event-type-wheel
-       */
-      onWheel?: AttrEventHandler<WheelEvent, T>;
-      "on-wheel"?: this["onWheel"];
-      onwheel?: AttrString;
-    }
-
-    interface AriaAttributes {
-      /**
-       * Identifies the currently active element when DOM focus is on a composite widget, textbox, group, or application.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-activedescendant
-       */
-      "aria-activedescendant"?: AttrString;
-      /**
-       * Indicates whether assistive technologies will present all, or only parts of, the changed region based on the change notifications defined by the aria-relevant attribute.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-atomic
-       * @see aria-relevant
-       */
-      "aria-atomic"?: AttrBooleanString;
-      /**
-       * Indicates whether inputting text could trigger display of one or more predictions of the user's intended value for an input and specifies how predictions would be
-       * presented if they are made.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-autocomplete
-       */
-      "aria-autocomplete"?: AttrMissing | "both" | "inline" | "list" | "none";
-      /**
-       * Indicates an element is being modified and that assistive technologies MAY want to wait until the modifications are complete before exposing them to the user.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-busy
-       */
-      "aria-busy"?: AttrBooleanString;
-      /**
-       * Indicates the current "checked" state of checkboxes, radio buttons, and other widgets.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-checked
-       */
-      "aria-checked"?: AttrTriState;
-      /**
-       * Defines the total number of columns in a table, grid, or treegrid.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-colcount
-       */
-      "aria-colcount"?: AttrStringOrNumber;
-      /**
-       * Defines an element's column index or position with respect to the total number of columns within a table, grid, or treegrid.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-colindex
-       */
-      "aria-colindex"?: AttrStringOrNumber;
-      /**
-       * Defines a human readable text alternative of aria-colindex.
-       * @see https://w3c.github.io/aria/#aria-colindextext
-       * @see aria-colindex
-       */
-      "aria-colindextext"?: AttrString;
-      /**
-       * Defines the number of columns spanned by a cell or gridcell within a table, grid, or treegrid.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-colspan
-       */
-      "aria-colspan"?: AttrStringOrNumber;
-      /**
-       * Identifies the element (or elements) whose contents or presence are controlled by the current element.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-controls
-       * @see aria-owns
-       */
-      "aria-controls"?: AttrString;
-      /**
-       * Indicates the element that represents the current item within a container or set of related elements.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-current
-       */
-      "aria-current"?:
-        | AttrBooleanString
-        | "date"
-        | "location"
-        | "page"
-        | "step"
-        | "time"
-        | "true";
-      /**
-       * Identifies the element (or elements) that describes the object.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-describedby
-       * @see aria-labelledby
-       */
-      "aria-describedby"?: AttrString;
-      /**
-       * Defines a string value that describes or annotates the current element.
-       * @see https://w3c.github.io/aria/#aria-description
-       * @see aria-describedby
-       */
-      "aria-description"?: AttrString;
-      /**
-       * Identifies the element that provides a detailed, extended description for the object.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-details
-       * @see aria-describedby
-       */
-      "aria-details"?: AttrString;
-      /**
-       * Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-disabled
-       */
-      "aria-disabled"?: AttrBooleanString;
-      /**
-       * @deprecated Indicates what functions can be performed when a dragged object is released on the drop target.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-dropeffect
-       * */
-      "aria-dropeffect"?:
-        | AttrMissing
-        | "copy"
-        | "execute"
-        | "link"
-        | "move"
-        | "none"
-        | "popup";
-      /**
-       * Identifies the element that provides an error message for the object.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-errormessage
-       * @see aria-invalid
-       * @see aria-describedby
-       */
-      "aria-errormessage"?: AttrString;
-      /**
-       * Indicates whether the element, or another grouping element it controls, is currently expanded or collapsed.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-expanded
-       * @see aria-controls
-       */
-      "aria-expanded"?: AttrBooleanString;
-      /**
-       * Identifies the next element (or elements) in an alternate reading order of content which, at the user's discretion,
-       * allows assistive technology to override the general default of reading in document source order.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-flowto
-       */
-      "aria-flowto"?: AttrString;
-      /**
-       * @deprecated Indicates an element's "grabbed" state in a drag-and-drop operation.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-grabbed
-       */
-      "aria-grabbed"?: AttrBooleanString;
-      /**
-       * Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-haspopup
-       */
-      "aria-haspopup"?:
-        | AttrBooleanString
-        | "dialog"
-        | "grid"
-        | "listbox"
-        | "menu"
-        | "tree";
-      /**
-       * Indicates whether the element is exposed to an accessibility API.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-hidden
-       * @see aria-disabled
-       */
-      "aria-hidden"?: AttrBooleanString;
-      /**
-       * Indicates the entered value does not conform to the format expected by the application.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-invalid
-       * @see aria-errormessage
-       */
-      "aria-invalid"?: AttrBooleanString | "grammar" | "spelling";
-      /**
-       * Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-keyshortcuts
-       */
-      "aria-keyshortcuts"?: AttrString;
-      /**
-       * Defines a string value that labels the current element.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-label
-       * @see aria-labelledby
-       */
-      "aria-label"?: AttrString;
-      /**
-       * Identifies the element (or elements) that labels the current element.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-labelledby
-       * @see aria-decribedby
-       */
-      "aria-labelledby"?: AttrString;
-      /**
-       * Defines the hierarchical level of an element within a structure.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-level
-       */
-      "aria-level"?: AttrString;
-      /**
-       * Indicates that an element will be updated, and describes the types of updates the user agents, assistive technologies,
-       * and user can expect from the live region.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-live
-       */
-      "aria-live"?: AttrMissing | "assertive" | "off" | "polite";
-      /**
-       * Indicates whether an element is modal when displayed.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-modal
-       */
-      "aria-modal"?: AttrBooleanString;
-      /**
-       * Indicates whether a text box accepts multiple lines of input or only a single line.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-multiline
-       */
-      "aria-multiline"?: AttrBooleanString;
-      /**
-       * Indicates that the user may select more than one item from the current selectable descendants.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-multiselectable
-       */
-      "aria-multiselectable"?: AttrBooleanString;
-      /**
-       * Indicates whether the element's orientation is horizontal, vertical, or unknown/ambiguous.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-orientation
-       */
-      "aria-orientation"?: AttrMissing | "horizontal" | "vertical";
-      /**
-       * Identifies an element (or elements) in order to define a visual, functional, or contextual parent/child relationship
-       * between DOM elements where the DOM hierarchy cannot be used to represent the relationship.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-owns
-       */
-      "aria-owns"?: AttrString;
-      /**
-       * Defines a short hint (a word or short phrase) intended to aid the user with data entry when the control has no value.
-       * A hint could be a sample value or a brief description of the expected format.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-placeholder
-       */
-      "aria-placeholder"?: AttrString;
-      /**
-       * Defines an element's number or position in the current set of listitems or treeitems.
-       * Not required if all elements in the set are present in the DOM.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-posinset
-       */
-      "aria-posinset"?: AttrStringOrNumber;
-      /**
-       * Indicates the current "pressed" state of toggle buttons.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-pressed
-       */
-      "aria-pressed"?: AttrTriState;
-      /**
-       * Indicates that the element is not editable, but is otherwise operable.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-readonly
-       */
-      "aria-readonly"?: AttrBooleanString;
-      /**
-       * Indicates what notifications the user agent will trigger when the accessibility tree within a live region is modified.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-relevant
-       */
-      "aria-relevant"?:
-        | AttrMissing
-        | "additions removals"
-        | "additions text"
-        | "additions"
-        | "all"
-        | "removals additions"
-        | "removals text"
-        | "removals"
-        | "text additions"
-        | "text removals"
-        | "text";
-      /**
-       * Indicates that user input is required on the element before a form may be submitted.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-required
-       */
-      "aria-required"?: AttrBooleanString;
-      /**
-       * Defines a human-readable, author-localized description for the role of an element.
-       */
-      "aria-roledescription"?: AttrString;
-      /**
-       * Defines the total number of rows in a table, grid, or treegrid.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-rowcount
-       */
-      "aria-rowcount"?: AttrStringOrNumber;
-      /**
-       * Defines an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-rowindex
-       */
-      "aria-rowindex"?: AttrStringOrNumber;
-      /**
-       * Defines a human readable text alternative of aria-rowindex.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-rowindextext
-       * @see aria-rowindex
-       */
-      "aria-rowindextext"?: AttrString;
-      /**
-       * Defines the number of rows spanned by a cell or gridcell within a table, grid, or treegrid.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-rowspan
-       */
-      "aria-rowspan"?: AttrStringOrNumber;
-      /**
-       * Indicates the current "selected" state of various widgets.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-selected
-       */
-      "aria-selected"?: AttrBooleanString;
-      /**
-       * Defines the number of items in the current set of listitems or treeitems.
-       * Not required if all elements in the set are present in the DOM.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-setsize
-       */
-      "aria-setsize"?: AttrStringOrNumber;
-      /**
-       * Indicates if items in a table or grid are sorted in ascending or descending order.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-sort
-       */
-      "aria-sort"?: "ascending" | "descending" | "none" | "other";
-      /**
-       * Defines the maximum allowed value for a range widget.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-valuemax
-       * @see aria-valuenow
-       */
-      "aria-valuemax"?: AttrStringOrNumber;
-      /**
-       * Defines the minimum allowed value for a range widget.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-valuemin
-       * @see aria-valuenow
-       */
-      "aria-valuemin"?: AttrStringOrNumber;
-      /**
-       * Defines the current value for a range widget.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-valuenow
-       * @see aria-valuetext
-       * @see aria-valuemin
-       * @see aria-valuemax
-       */
-      "aria-valuenow"?: AttrStringOrNumber;
-      /**
-       * Defines the human readable text alternative of aria-valuenow for a range widget.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#aria-valuetext
-       * @see aria-valuenow
-       */
-      "aria-valuetext"?: AttrString;
-      /**
-       * Defines the ARIA role of an element.
-       * @see https://www.w3.org/TR/wai-aria-1.1/#role_definitions
-       */
-      role?:
-        | AttrMissing
-        | "alert"
-        | "alertdialog"
-        | "application"
-        | "article"
-        | "banner"
-        | "button"
-        | "cell"
-        | "checkbox"
-        | "columnheader"
-        | "combobox"
-        | "complementary"
-        | "contentinfo"
-        | "definition"
-        | "dialog"
-        | "directory"
-        | "document"
-        | "feed"
-        | "figure"
-        | "form"
-        | "grid"
-        | "gridcell"
-        | "group"
-        | "heading"
-        | "img"
-        | "link"
-        | "list"
-        | "listbox"
-        | "listitem"
-        | "log"
-        | "main"
-        | "marquee"
-        | "math"
-        | "menu"
-        | "menubar"
-        | "menuitem"
-        | "menuitemcheckbox"
-        | "menuitemradio"
-        | "meter"
-        | "navigation"
-        | "none"
-        | "note"
-        | "option"
-        | "presentation"
-        | "progressbar"
-        | "radio"
-        | "radiogroup"
-        | "region"
-        | "row"
-        | "rowgroup"
-        | "rowheader"
-        | "scrollbar"
-        | "search"
-        | "searchbox"
-        | "separator"
-        | "slider"
-        | "spinbutton"
-        | "status"
-        | "switch"
-        | "tab"
-        | "table"
-        | "tablist"
-        | "tabpanel"
-        | "term"
-        | "textbox"
-        | "timer"
-        | "toolbar"
-        | "tooltip"
-        | "tree"
-        | "treegrid"
-        | "treeitem";
+      [data: `data-${string}`]: AttrStringOrNumber | boolean;
     }
   }
 }
 
+interface SVGTransferFunctionElementAttributes {
+  /**
+   * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-type
+   */
+  type?: AttrMissing | "identity" | "table" | "discrete" | "linear" | "gamma";
+
+  /**
+   * List of numbers
+   * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-tablevalues
+   */
+  tableValues?: AttrStringOrNumber;
+
+  /**
+   * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-slope
+   */
+  slope?: AttrStringOrNumber;
+
+  /**
+   * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-intercept
+   */
+  intercept?: AttrStringOrNumber;
+
+  /**
+   * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-amplitude
+   */
+  amplitude?: AttrStringOrNumber;
+
+  /**
+   * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-exponent
+   */
+  exponent?: AttrStringOrNumber;
+
+  /**
+   * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-fecomponenttransfer-offset
+   */
+  offset?: AttrStringOrNumber;
+}
+
+interface SVGAnimationAdditionAttributes {
+  /**
+   * @see https://svgwg.org/specs/animations/#AdditiveAttribute
+   */
+  additive?: AttrMissing | "replace" | "sum";
+
+  /**
+   * @see https://svgwg.org/specs/animations/#AccumulateAttribute
+   */
+  accumulate?: AttrMissing | "none" | "sum";
+}
+
+interface SVGAnimationTargetElementAttributes {
+  /**
+   * @see https://svgwg.org/specs/animations/#HrefAttribute
+   */
+  href?: AttrString;
+}
+
+interface SVGAnimationAttributeTargetAttributes {
+  /**
+   * @see https://svgwg.org/specs/animations/#AttributeNameAttribute
+   */
+  attributeName?: AttrString;
+}
+
+interface SVGAnimationTimingAttributes {
+  /**
+   * A semicolon separated list of values
+   * @see https://svgwg.org/specs/animations/#BeginAttribute
+   */
+  begin?: AttrString;
+
+  /**
+   * @see https://svgwg.org/specs/animations/#DurAttribute
+   */
+  dur?: AttrMissing | "media" | "indefinite" | number | (string & {});
+
+  /**
+   * A semicolon separated list of values
+   * @see https://svgwg.org/specs/animations/#EndAttribute
+   */
+  end?: AttrString;
+
+  /**
+   * @see https://svgwg.org/specs/animations/#MinAttribute
+   */
+  min?: AttrMissing | "media" | number | (string & {});
+
+  /**
+   * @see https://svgwg.org/specs/animations/#MaxAttribute
+   */
+  max?: AttrMissing | "media" | number | (string & {});
+
+  /**
+   * @see https://svgwg.org/specs/animations/#RestartAttribute
+   */
+  restart?: AttrMissing | "always" | "whenNotActive" | "never";
+
+  /**
+   * @see https://svgwg.org/specs/animations/#RepeatCountAttribute
+   */
+  repeatCount?: AttrStringOrNumber;
+
+  /**
+   * @see https://svgwg.org/specs/animations/#RepeatDurAttribute
+   */
+  repeatDur?: AttrStringOrNumber;
+
+  /**
+   * @see https://svgwg.org/specs/animations/#FillAttribute
+   */
+  fill?: AttrMissing | "freeze" | "remove";
+}
+
+interface SVGAnimationValueAttributes {
+  /**
+   * @see https://svgwg.org/specs/animations/#CalcModeAttribute
+   */
+  calcMode?: AttrMissing | "discrete" | "linear" | "paced" | "spline";
+
+  /**
+   * A semicolon-separated list of values
+   * @see https://svgwg.org/specs/animations/#ValuesAttribute
+   */
+  values?: AttrString;
+
+  /**
+   * A semicolon-separated list of numbers
+   * @see https://svgwg.org/specs/animations/#KeyTimesAttribute
+   */
+  keyTimes?: AttrStringOrNumber;
+
+  /**
+   * A semicolon-separated list of Bézier control points
+   * @see https://svgwg.org/specs/animations/#KeySplinesAttribute
+   */
+  keySplines?: AttrString;
+
+  /**
+   * @see https://svgwg.org/specs/animations/#FromAttribute
+   */
+  from?: AttrStringOrNumber;
+
+  /**
+   * @see https://svgwg.org/specs/animations/#FromAttribute
+   */
+  to?: AttrStringOrNumber;
+
+  /**
+   * @see https://svgwg.org/specs/animations/#FromAttribute
+   */
+  by?: AttrStringOrNumber;
+}
+
+interface SVGConditionalProcessingAttributes {
+  /**
+   * Set of space-separated tokens
+   * @see https://www.w3.org/TR/SVG2/struct.html#RequiredExtensionsAttribute
+   */
+  requiredExtensions?: AttrString;
+
+  /**
+   * Set of comma-separated tokens
+   * @see https://www.w3.org/TR/SVG2/struct.html#SystemLanguageAttribute
+   */
+  systemLanguage?: AttrString;
+}
+
+interface SVGFilterPrimitiveAttributes {
+  /**
+   * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-x
+   */
+  x?: AttrStringOrNumber;
+
+  /**
+   * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-y
+   */
+  y?: AttrStringOrNumber;
+
+  /**
+   * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-height
+   */
+  height?: AttrStringOrNumber;
+
+  /**
+   * @see https://www.w3.org/TR/filter-effects-1/#element-attrdef-filter-primitive-result
+   */
+  result?: AttrString;
+}
+
+interface CommonAttributes<T extends Element> {
+  /**
+   * Fired when resource was not fully loaded, but not as the result of an error.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-abort
+   */
+  onAbort?: AttrEventHandler<Event, T>;
+  "on-abort"?: this["onAbort"];
+  onabort?: AttrString;
+
+  /**
+   * Fired when an Animation unexpectedly aborts.
+   * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationcancel
+   */
+  onAnimationCancel?: AttrEventHandler<AnimationEvent, T>;
+  "on-animationcancel"?: this["onAnimationCancel"];
+
+  /**
+   * Fired when an animation has completed.
+   * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationend
+   */
+  onAnimationEnd?: AttrEventHandler<AnimationEvent, T>;
+  "on-animationend"?: this["onAnimationEnd"];
+
+  /**
+   * Fired at the end of each iteration of an animation, except when an animationend event would fire at the same time.
+   * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationiteration
+   */
+  onAnimationIteration?: AttrEventHandler<AnimationEvent, T>;
+  "on-animationiteration"?: this["onAnimationIteration"];
+
+  /**
+   * Fired when an animation has started.
+   * @see https://w3c.github.io/csswg-drafts/css-animations/#eventdef-globaleventhandlers-animationstart
+   */
+  onAnimationStart?: AttrEventHandler<AnimationEvent, T>;
+  "on-animationstart"?: this["onAnimationStart"];
+
+  /**
+   * Fired when a non-primary pointing device button (any mouse button other than the primary—usually leftmost—button)
+   * has been pressed and released both within the same element.
+   * @see https://w3c.github.io/uievents/#event-type-auxclick
+   */
+  onAuxClick?: AttrEventHandler<PointerEvent, T>;
+  "on-auxclick"?: this["onAuxClick"];
+  onauxclick?: AttrString;
+
+  /**
+   * Fires when the value of an <input>, or <textarea> element is about to be modified.
+   * @see https://w3c.github.io/uievents/#event-type-beforeinput
+   */
+  onBeforeInput?: AttrEventHandler<InputEvent, T>;
+  "on-beforeinput"?: this["onBeforeInput"];
+  onbeforeinput?: AttrString;
+
+  /**
+   * Fired on elements with the hidden=until-found attribute before they are revealed.
+   * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforematch
+   */
+  onBeforeMatch?: AttrEventHandler<Event, T>;
+  "on-beforematch"?: this["onBeforeMatch"];
+  onbeforematch?: AttrString;
+
+  /**
+   * Fired on elements with the popover attribute when they are transitioning between showing and hidden
+   * @see https://html.spec.whatwg.org/multipage/indices.html#event-beforetoggle
+   */
+  onBeforeToggle?: AttrEventHandler<Event, T>;
+  "on-beforetoggle"?: this["onBeforeToggle"];
+  onbeforetoggle?: AttrString;
+
+  /**
+   * Fires when a node loses focus.
+   * @see https://html.spec.whatwg.org/multipage/indices.html#event-blur
+   */
+  onBlur?: AttrEventHandler<Event, T>;
+  "on-blur"?: this["onBlur"];
+  onblur?: AttrString;
+
+  /**
+   * Fired at controls when the user commits a value change (see also the input event)
+   * @see https://html.spec.whatwg.org/multipage/indices.html#event-cancel
+   */
+  onCancel?: AttrEventHandler<Event, T>;
+  "on-cancel"?: this["onCancel"];
+  oncancel?: AttrString;
+
+  /**
+   * Fires when the user agent can resume playback of the media data,
+   * but estimates that if playback were to be started now, the media resource could not be rendered at the current
+   * playback rate up to its end without having to stop for further buffering of content.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-canplay
+   */
+  onCanPlay?: AttrEventHandler<Event, T>;
+  "on-canplay"?: this["onCanPlay"];
+  oncanplay?: AttrString;
+
+  /**
+   * Fires when the user agent can play through the media data without having to stop for further buffering of content.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-canplaythrough
+   */
+  onCanPlayThrough?: AttrEventHandler<Event, T>;
+  "on-canplaythrough"?: this["onCanPlayThrough"];
+  oncanplaythrough?: AttrString;
+
+  /**
+   * Fired when the form elements value is modified.
+   * @see https://html.spec.whatwg.org/multipage/indices.html#event-change
+   */
+  onChange?: AttrEventHandler<Event, T>;
+  "on-change"?: this["onChange"];
+  onchange?: AttrString;
+
+  /**
+   * Normally a mouse event; also synthetically fired at an element before its activation behavior is run,
+   * when an element is activated from a non-pointer input device (e.g. a keyboard).
+   * @see https://w3c.github.io/uievents/#event-type-click
+   */
+  onClick?: AttrEventHandler<PointerEvent, T>;
+  "on-click"?: this["onClick"];
+  onclick?: AttrString;
+
+  /**
+   * Fired at dialog elements when they are closed
+   * @see https://html.spec.whatwg.org/multipage/indices.html#event-close
+   */
+  onClose?: AttrEventHandler<Event, T>;
+  "on-close"?: this["onClose"];
+  onclose?: AttrString;
+
+  /**
+   * Fired when a text composition system such as an input method editor completes or cancels the current composition session.
+   * @see https://w3c.github.io/uievents/#event-type-compositionend
+   */
+  onCompositionEnd?: AttrEventHandler<CompositionEvent, T>;
+  "on-compositionend"?: this["onCompositionEnd"];
+
+  /**
+   * Fired when a text composition system such as an input method editor starts a new composition session.
+   * @see https://w3c.github.io/uievents/#event-type-compositionstart
+   */
+  onCompositionStart?: AttrEventHandler<CompositionEvent, T>;
+  "on-compositionstart"?: this["onCompositionStart"];
+
+  /**
+   * Fired when a new character is received in the context of a text composition session controlled by a text
+   * composition system such as an input method editor.
+   * @see https://w3c.github.io/uievents/#event-type-compositionupdate
+   */
+  onCompositionUpdate?: AttrEventHandler<CompositionEvent, T>;
+  "on-compositionupdate"?: this["onCompositionUpdate"];
+
+  /**
+   * Fired when the corresponding CanvasRenderingContext2D or OffscreenCanvasRenderingContext2D is lost
+   * @see https://html.spec.whatwg.org/multipage/indices.html#event-contextlost
+   */
+  onContextLost?: AttrEventHandler<Event, T>;
+  "on-contextlost"?: this["onContextLost"];
+  oncontextlost?: AttrString;
+
+  /**
+   * Fired when the user attempts to open a context menu.
+   * This event is typically triggered by clicking the right mouse button, or by pressing the context menu key.
+   * @see https://w3c.github.io/uievents/#event-type-contextmenu
+   */
+  onContextMenu?: AttrEventHandler<PointerEvent, T>;
+  "on-contextmenu"?: this["onContextMenu"];
+  oncontextmenu?: AttrString;
+
+  /**
+   * Fired when the corresponding CanvasRenderingContext2D or OffscreenCanvasRenderingContext2D is restored after being lost
+   * @see https://html.spec.whatwg.org/multipage/indices.html#event-contextrestored
+   */
+  onContextRestored?: AttrEventHandler<Event, T>;
+  "on-contextrestored"?: this["onContextRestored"];
+  oncontextrestored?: AttrString;
+
+  /**
+   * Fired when the user copies the content of an element.
+   * @see https://w3c.github.io/clipboard-apis/#clipboard-event-copy
+   */
+  onCopy?: AttrEventHandler<ClipboardEvent, T>;
+  "on-copy"?: this["onCopy"];
+  oncopy?: AttrString;
+
+  /**
+   * Fired when one or more cues in the track have become active or stopped being active.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-cuechange
+   */
+  onCueChange?: AttrEventHandler<Event, T>;
+  "on-cuechange"?: this["onCueChange"];
+  oncuechange?: AttrString;
+
+  /**
+   * Fired when the user cuts the content of an element.
+   * @see https://w3c.github.io/clipboard-apis/#clipboard-event-cut
+   */
+  onCut?: AttrEventHandler<ClipboardEvent, T>;
+  "on-cut"?: this["onCut"];
+  oncut?: AttrString;
+
+  /**
+   * Fired when the user double-clicks on an element.
+   * @see https://w3c.github.io/uievents/#event-type-dblclick
+   */
+  onDblClick?: AttrEventHandler<MouseEvent, T>;
+  "on-dblclick"?: this["onDblClick"];
+  ondblclick?: AttrString;
+
+  /**
+   * Fired every few hundred milliseconds as an element or text selection is being dragged by the user.
+   * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-drag
+   */
+  onDrag?: AttrEventHandler<DragEvent, T>;
+  "on-drag"?: this["onDrag"];
+  ondrag?: AttrString;
+
+  /**
+   * Fired when a drag operation is being ended (by releasing a mouse button or hitting the escape key).
+   * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragend
+   */
+  onDragEnd?: AttrEventHandler<DragEvent, T>;
+  "on-dragend"?: this["onDragEnd"];
+  ondragend?: AttrString;
+
+  /**
+   * Fired when a drag operation is being ended (by releasing a mouse button or hitting the escape key).
+   * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragenter
+   */
+  onDragEnter?: AttrEventHandler<DragEvent, T>;
+  "on-dragenter"?: this["onDragEnter"];
+  ondragenter?: AttrString;
+
+  /**
+   * Fired when a dragged element or text selection leaves a valid drop target.
+   * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragleave
+   */
+  onDragLeave?: AttrEventHandler<DragEvent, T>;
+  "on-dragleave"?: this["onDragLeave"];
+  ondragleave?: AttrString;
+
+  /**
+   * Fired an element or text selection is being dragged over a valid drop target (every few hundred milliseconds).
+   * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragover
+   */
+  onDragOver?: AttrEventHandler<DragEvent, T>;
+  "on-dragover"?: this["onDragOver"];
+  ondragover?: AttrString;
+
+  /**
+   * Fired when an element or text selection has started being dragged.
+   * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-dragstart
+   */
+  onDragStart?: AttrEventHandler<DragEvent, T>;
+  "on-dragstart"?: this["onDragStart"];
+  ondragstart?: AttrString;
+
+  /**
+   * Fired when an element or text selection is dropped on a valid drop target.
+   * @see https://html.spec.whatwg.org/multipage/dnd.html#event-dnd-drop
+   */
+  onDrop?: AttrEventHandler<DragEvent, T>;
+  "on-drop"?: this["onDrop"];
+  ondrop?: AttrString;
+
+  /**
+   * Fired when the duration attribute of a media element has just been updated.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-durationchange
+   */
+  onDurationChange?: AttrEventHandler<Event, T>;
+  "on-durationchange"?: this["onDurationChange"];
+  ondurationchange?: AttrString;
+
+  /**
+   * Fired when a media element's playback stops because its source data has been fully consumed and not looped.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-emptied
+   */
+  onEmptied?: AttrEventHandler<Event, T>;
+  "on-emptied"?: this["onEmptied"];
+  onemptied?: AttrString;
+
+  /**
+   * Fired when an encrypted media stream is encountered and the user agent recognizes the stream's encryption scheme.
+   * @see https://w3c.github.io/encrypted-media/#dom-evt-encrypted
+   */
+  onEncrypted?: AttrEventHandler<MediaEncryptedEvent, T>;
+  "on-encrypted"?: this["onEncrypted"];
+
+  /**
+   * Fired when playback of a media element reaches its end, either because the media has reached its end or the loop attribute is not set.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-ended
+   */
+  onEnded?: AttrEventHandler<Event, T>;
+  "on-ended"?: this["onEnded"];
+  onended?: AttrString;
+
+  /**
+   * Fired when an error occurs while fetching an external resource, such as a script, image, or video.
+   * @see https://html.spec.whatwg.org/multipage/indices.html#event-error
+   */
+  onError?: AttrEventHandler<ErrorEvent | Event, T>;
+  "on-error"?: this["onError"];
+  onerror?: AttrString;
+
+  /**
+   * Fired when an element receives focus, either by user input or via script.
+   * @see https://html.spec.whatwg.org/multipage/interaction.html#event-focus
+   */
+  onFocus?: AttrEventHandler<FocusEvent, T>;
+  "on-focus"?: this["onFocus"];
+  onfocus?: AttrString;
+
+  /**
+   * Fires when an element has received focus, after the focus event. The two events differ in that focusin bubbles, while focus does not.
+   * @see HTMLAttributes.onFocus
+   * @see https://w3c.github.io/uievents/#event-type-focusin
+   */
+  onFocusIn?: AttrEventHandler<FocusEvent, T>;
+  "on-focusin"?: this["onFocusIn"];
+
+  /**
+   * Fires when an element has lost focus, after the blur event. The two events differ in that focusout bubbles, while blur does not.
+   * @see HTMLAttributes.onBlur
+   * @see https://w3c.github.io/uievents/#event-type-focusout
+   */
+  onFocusOut?: AttrEventHandler<FocusEvent, T>;
+  "on-focusout"?: this["onFocusOut"];
+
+  /**
+   * Fired at a form element when it is constructing the entry list
+   * @see https://html.spec.whatwg.org/multipage/indices.html#event-formdata
+   */
+  onFormData?: AttrEventHandler<FormDataEvent, T>;
+  "on-formdata"?: this["onFormData"];
+  onformdata?: AttrString;
+
+  /**
+   * Fired immediately after an Element switches into or out of fullscreen mode.
+   * @see https://fullscreen.spec.whatwg.org/#handler-document-onfullscreenchange
+   */
+  onFullscreenChange?: AttrEventHandler<Event, T>;
+  "on-fullscreenchange"?: this["onFullscreenChange"];
+
+  /**
+   * Fired when the browser cannot switch to fullscreen mode.
+   * @see https://fullscreen.spec.whatwg.org/#handler-document-onfullscreenerror
+   */
+  onFullscreenError?: AttrEventHandler<Event, T>;
+  "on-fullscreenerror"?: this["onFullscreenError"];
+
+  /**
+   * Fired when an element captures a pointer using setPointerCapture().
+   *
+   * @see Element.setPointerCapture
+   * @see https://w3c.github.io/pointerevents/#the-gotpointercapture-event
+   */
+  onGotPointerCapture?: AttrEventHandler<PointerEvent, T>;
+  "on-gotpointercapture"?: this["onGotPointerCapture"];
+
+  /**
+   * Fired when the form element's value changes, as a result of user input.
+   * @see https://w3c.github.io/uievents/#event-type-input
+   */
+  onInput?: AttrEventHandler<InputEvent, T>;
+  "on-input"?: this["onInput"];
+  oninput?: AttrString;
+
+  /**
+   * Fired when a form element is found to be invalid during submission or constraint validation.
+   * @see https://html.spec.whatwg.org/multipage/indices.html#event-invalid
+   */
+  onInvalid?: AttrEventHandler<Event, T>;
+  "on-invalid"?: this["onInvalid"];
+  oninvalid?: AttrString;
+
+  /**
+   * Fired when a key is first pressed down.
+   * @see https://w3c.github.io/uievents/#event-type-keydown
+   */
+  onKeyDown?: AttrEventHandler<KeyboardEvent, T>;
+  "on-keydown"?: this["onKeyDown"];
+  onkeydown?: AttrString;
+
+  /**
+   * Fired when a key is pressed down and then released, while the element has focus.
+   * @see https://w3c.github.io/uievents/#event-type-keypress
+   */
+  onKeyPress?: AttrEventHandler<KeyboardEvent, T>;
+  "on-keypress"?: this["onKeyPress"];
+  onkeypress?: AttrString;
+
+  /**
+   * Fired when a key is released after being pressed down.
+   * @see https://w3c.github.io/uievents/#event-type-keyup
+   */
+  onKeyUp?: AttrEventHandler<KeyboardEvent, T>;
+  "on-keyup"?: this["onKeyUp"];
+  onkeyup?: AttrString;
+
+  /**
+   * Fired when an element or resource, such as an image, has completely loaded.
+   * @see https://html.spec.whatwg.org/multipage/indices.html#event-load
+   */
+  onLoad?: AttrEventHandler<Event, T>;
+  "on-load"?: this["onLoad"];
+  onload?: AttrString;
+
+  /**
+   * Fired when the user agent can render the media data at the current playback position for the first time.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadeddata
+   */
+  onLoadedData?: AttrEventHandler<Event, T>;
+  "on-loadeddata"?: this["onLoadedData"];
+  onloadeddata?: AttrString;
+
+  /**
+   * Fired when the user agent has just determined the duration and dimensions of the media resource.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadedmetadata
+   */
+  onLoadedMetadata?: AttrEventHandler<Event, T>;
+  "on-loadedmetadata"?: this["onLoadedMetadata"];
+  onloadedmetadata?: AttrString;
+
+  /**
+   * Fired when the user agent begins looking for media data, before the media has begun to load.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-loadstart
+   */
+  onLoadStart?: AttrEventHandler<Event, T>;
+  "on-loadstart"?: this["onLoadStart"];
+  onloadstart?: AttrString;
+
+  /**
+   * Fired when a captured pointer is released.
+   * @see https://w3c.github.io/pointerevents/#dfn-lostpointercapture
+   */
+  onLostPointerCapture?: AttrEventHandler<PointerEvent, T>;
+  "on-lostpointercapture"?: this["onLostPointerCapture"];
+
+  /**
+   * Fired when a pointing device button is pressed down over an element.
+   * @see https://w3c.github.io/uievents/#event-type-mousedown
+   */
+  onMouseDown?: AttrEventHandler<MouseEvent, T>;
+  "on-mousedown"?: this["onMouseDown"];
+  onmousedown?: AttrString;
+
+  /**
+   * Fired when a pointing device is moved onto the element.
+   * @see https://w3c.github.io/uievents/#event-type-mouseenter
+   */
+  onMouseEnter?: AttrEventHandler<MouseEvent, T>;
+  "on-mouseenter"?: this["onMouseEnter"];
+  onmouseenter?: AttrString;
+
+  /**
+   * Fired when a pointing device is moved off the element.
+   * @see https://w3c.github.io/uievents/#event-type-mouseleave
+   */
+  onMouseLeave?: AttrEventHandler<MouseEvent, T>;
+  "on-mouseleave"?: this["onMouseLeave"];
+  onmouseleave?: AttrString;
+
+  /**
+   * Fired when a pointing device is moved over an element.
+   * @see https://w3c.github.io/uievents/#event-type-mousemove
+   */
+  onMouseMove?: AttrEventHandler<MouseEvent, T>;
+  "on-mousemove"?: this["onMouseMove"];
+  onmousemove?: AttrString;
+
+  /**
+   * Fired when a pointing device is moved off the element or off one of its children.
+   * @see https://w3c.github.io/uievents/#event-type-mouseout
+   */
+  onMouseOut?: AttrEventHandler<MouseEvent, T>;
+  "on-mouseout"?: this["onMouseOut"];
+  onmouseout?: AttrString;
+
+  /**
+   * Fired when a pointing device is moved onto the element or onto one of its children.
+   * @see https://w3c.github.io/uievents/#event-type-mouseover
+   */
+  onMouseOver?: AttrEventHandler<MouseEvent, T>;
+  "on-mouseover"?: this["onMouseOver"];
+  onmouseover?: AttrString;
+
+  /**
+   * Fired when a pointing device button is released over an element.
+   * @see https://w3c.github.io/uievents/#event-type-mouseup
+   */
+  onMouseUp?: AttrEventHandler<MouseEvent, T>;
+  "on-mouseup"?: this["onMouseUp"];
+  onmouseup?: AttrString;
+
+  /**
+   * Fired when the user has completed a "paste" action, usually through a context menu or keyboard shortcut.
+   * @see https://w3c.github.io/clipboard-apis/#clipboard-event-paste
+   */
+  onPaste?: AttrEventHandler<ClipboardEvent, T>;
+  "on-paste"?: this["onPaste"];
+  onpaste?: AttrString;
+
+  /**
+   * Fired when playback of a media element is paused.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-pause
+   */
+  onPause?: AttrEventHandler<Event, T>;
+  "on-pause"?: this["onPause"];
+  onpause?: AttrString;
+
+  /**
+   * Fired when playback of a media element is ready to start after having been paused.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-play
+   */
+  onPlay?: AttrEventHandler<Event, T>;
+  "on-play"?: this["onPlay"];
+  onplay?: AttrString;
+
+  /**
+   * Fired when playback of a media element is ready to start, or when playback is resumed after a pause event.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-playing
+   */
+  onPlaying?: AttrEventHandler<Event, T>;
+  "on-playing"?: this["onPlaying"];
+  onplaying?: AttrString;
+
+  /**
+   * Fired when the pointing device's hardware triggers a cancellation of the pointer event, such as due to a system event.
+   * @see https://w3c.github.io/pointerevents/#the-pointercancel-event
+   */
+  onPointerCancel?: AttrEventHandler<PointerEvent, T>;
+  "on-pointercancel"?: this["onPointerCancel"];
+
+  /**
+   * Fired when a pointing device's button is pressed down on an element.
+   * @see https://w3c.github.io/pointerevents/#the-pointerdown-event
+   */
+  onPointerDown?: AttrEventHandler<PointerEvent, T>;
+  "on-pointerdown"?: this["onPointerDown"];
+
+  /**
+   * Fired when a pointing device is moved onto the element.
+   * @see https://w3c.github.io/pointerevents/#the-pointerenter-event
+   */
+  onPointerEnter?: AttrEventHandler<PointerEvent, T>;
+  "on-pointerenter"?: this["onPointerEnter"];
+
+  /**
+   * Fired when a pointing device is moved off the element.
+   * @see https://w3c.github.io/pointerevents/#the-pointerleave-event
+   */
+  onPointerLeave?: AttrEventHandler<PointerEvent, T>;
+  "on-pointerleave"?: this["onPointerLeave"];
+
+  /**
+   * Fired when a pointing device is moved over an element.
+   * @see https://w3c.github.io/pointerevents/#the-pointermove-event
+   */
+  onPointerMove?: AttrEventHandler<PointerEvent, T>;
+  "on-pointermove"?: this["onPointerMove"];
+
+  /**
+   * Fired when a pointing device is moved off the element or off one of its children.
+   * @see https://w3c.github.io/pointerevents/#the-pointerout-event
+   */
+  onPointerOut?: AttrEventHandler<PointerEvent, T>;
+  "on-pointerout"?: this["onPointerOut"];
+
+  /**
+   * Fired when a pointing device is moved onto the element or onto one of its children.
+   * @see https://w3c.github.io/pointerevents/#the-pointerover-event
+   */
+  onPointerOver?: AttrEventHandler<PointerEvent, T>;
+  "on-pointerover"?: this["onPointerOver"];
+
+  /**
+   * Fired when a pointing device's button is released over an element.
+   * @see https://w3c.github.io/pointerevents/#the-pointerup-event
+   */
+  onPointerUp?: AttrEventHandler<PointerEvent, T>;
+  "on-pointerup"?: this["onPointerUp"];
+
+  /**
+   * Fired when the user agent is downloading media data or resources, to indicate progress.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-progress
+   */
+  onProgress?: AttrEventHandler<Event, T>;
+  "on-progress"?: this["onProgress"];
+  onprogress?: AttrString;
+
+  /**
+   * Fired when the playback rate of a media element has changed.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-ratechange
+   */
+  onRateChange?: AttrEventHandler<Event, T>;
+  "on-ratechange"?: this["onRateChange"];
+  onratechange?: AttrString;
+
+  /**
+   * Fired when a form is reset, either by user interaction or through a script.
+   * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#event-reset
+   */
+  onReset?: AttrEventHandler<Event, T>;
+  "on-reset"?: this["onReset"];
+  onreset?: AttrString;
+
+  /**
+   * Fired at the Window when the viewport is resized. Fired at VisualViewport when the visual viewport is resized or the layout viewport is scaled.
+   * @see https://drafts.csswg.org/cssom-view/#eventdef-window-resize
+   */
+  onResize?: AttrEventHandler<Event, T>;
+  "on-resize"?: this["onResize"];
+  onresize?: AttrString;
+
+  /**
+   * Fired when an element's scrollbar is being scrolled.
+   * @see https://drafts.csswg.org/cssom-view/#eventdef-document-scroll
+   */
+  onScroll?: AttrEventHandler<Event, T>;
+  "on-scroll"?: this["onScroll"];
+  onscroll?: AttrString;
+
+  /**
+   * Fired when element scrolling has completed. Scrolling is considered completed when the scroll position has no more pending updates and the user has completed their gesture.
+   * @see https://drafts.csswg.org/cssom-view/#eventdef-document-scrollend
+   */
+  onScrollEnd?: AttrEventHandler<Event, T>;
+  "on-scrollend"?: this["onScrollEnd"];
+  onscrollend?: AttrString;
+
+  /**
+   * Fired when a security policy violation occurs, such as when an attempted resource load is blocked due to the security settings of the browser or when an inline script violates the Content Security Policy (CSP) of the page.
+   * @see https://w3c.github.io/webappsec-csp/#eventdef-globaleventhandlers-securitypolicyviolation
+   */
+  onSecurityPolicyViolation?: AttrEventHandler<SecurityPolicyViolationEvent, T>;
+  "on-securitypolicyviolation"?: this["onSecurityPolicyViolation"];
+  onsecuritypolicyviolation?: AttrString;
+
+  /**
+   * Fired when a seek operation on a media element completes.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-seeked
+   */
+  onSeeked?: AttrEventHandler<Event, T>;
+  "on-seeked"?: this["onSeeked"];
+  onseeked?: AttrString;
+
+  /**
+   * Fired when a seek operation on a media element begins.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-seeking
+   */
+  onSeeking?: AttrEventHandler<Event, T>;
+  "on-seeking"?: this["onSeeking"];
+  onseeking?: AttrString;
+
+  /**
+   * Fired when some text is selected within an input or textarea element.
+   * @see https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#event-select
+   */
+  onSelect?: AttrEventHandler<Event, T>;
+  "on-select"?: this["onSelect"];
+  onselect?: AttrString;
+
+  /**
+   * Fired when a <slot> element's distributed nodes change.
+   * @see https://dom.spec.whatwg.org/#eventdef-htmlslotelement-slotchange
+   */
+  onSlotChange?: AttrEventHandler<Event, T>;
+  "on-slotchange"?: this["onSlotChange"];
+  onslotchange?: AttrString;
+
+  /**
+   * Fired when a media element's data downloading has been stalled due to an issue, such as a lack of data.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-stalled
+   */
+  onStalled?: AttrEventHandler<Event, T>;
+  "on-stalled"?: this["onStalled"];
+  onstalled?: AttrString;
+
+  /**
+   * Fired at a form element when it is submitted
+   * @see https://html.spec.whatwg.org/multipage/indices.html#event-submit
+   */
+  onSubmit?: AttrEventHandler<SubmitEvent, T>;
+  "on-submit"?: this["onSubmit"];
+  onsubmit?: AttrString;
+
+  /**
+   * Fired when the user agent intentionally does not download media data.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-suspend
+   */
+  onSuspend?: AttrEventHandler<Event, T>;
+  "on-suspend"?: this["onSuspend"];
+  onsuspend?: AttrString;
+
+  /**
+   * Fired when the current playback position of a media element changes as part of normal playback or due to a seek operation.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-timeupdate
+   */
+  onTimeUpdate?: AttrEventHandler<Event, T>;
+  "on-timeupdate"?: this["onTimeUpdate"];
+  ontimeupdate?: AttrString;
+
+  /**
+   * Fired at details elements when they open or close; fired on elements with the popover attribute when they are transitioning between showing and hidden
+   * @see https://html.spec.whatwg.org/multipage/indices.html#event-toggle
+   */
+  onToggle?: AttrEventHandler<Event, T>;
+  "on-toggle"?: this["onToggle"];
+  ontoggle?: AttrString;
+
+  /**
+   * Fired when a touch event is interrupted, such as by a modal window or an incoming phone call.
+   * @see https://w3c.github.io/touch-events/#event-touchcancel
+   */
+  onTouchCancel?: AttrEventHandler<TouchEvent, T>;
+  "on-touchcancel"?: this["onTouchCancel"];
+
+  /**
+   * Fired when a finger is lifted from a touch surface.
+   * @see https://w3c.github.io/touch-events/#event-touchend
+   */
+  onTouchEnd?: AttrEventHandler<TouchEvent, T>;
+  "on-touchend"?: this["onTouchEnd"];
+
+  /**
+   * Fired when a finger is moved along a touch surface.
+   * @see https://w3c.github.io/touch-events/#event-touchmove
+   */
+  onTouchMove?: AttrEventHandler<TouchEvent, T>;
+  "on-touchmove"?: this["onTouchMove"];
+
+  /**
+   * Fired when a finger is placed on a touch surface.
+   * @see https://w3c.github.io/touch-events/#event-touchstart
+   */
+  onTouchStart?: AttrEventHandler<TouchEvent, T>;
+  "on-touchstart"?: this["onTouchStart"];
+
+  /**
+   * Fired when a CSS transition is canceled.
+   * @see https://drafts.csswg.org/css-transitions/#transitioncancel
+   */
+  onTransitionCancel?: AttrEventHandler<TransitionEvent, T>;
+  "on-transitioncancel"?: this["onTransitionCancel"];
+
+  /**
+   * Fired when a CSS transition has completed.
+   * @see https://drafts.csswg.org/css-transitions/#transitionend
+   */
+  onTransitionEnd?: AttrEventHandler<TransitionEvent, T>;
+  "on-transitionend"?: this["onTransitionEnd"];
+
+  /**
+   * Fired when a CSS transition is first created, i.e. before any transition-delay has begun.
+   * @see https://drafts.csswg.org/css-transitions/#transitionrun
+   */
+  onTransitionRun?: AttrEventHandler<TransitionEvent, T>;
+  "on-transitionrun"?: this["onTransitionRun"];
+
+  /**
+   * Fired when a CSS transition has actually started, i.e., after any transition-delay has ended.
+   * @see https://drafts.csswg.org/css-transitions/#transitionstart
+   */
+  onTransitionStart?: AttrEventHandler<TransitionEvent, T>;
+  "on-transitionstart"?: this["onTransitionStart"];
+
+  /**
+   * Fired when the volume level or muted state of a media element changes.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-volumechange
+   */
+  onVolumeChange?: AttrEventHandler<Event, T>;
+  "on-volumechange"?: this["onVolumeChange"];
+  onvolumechange?: AttrString;
+
+  /**
+   * Fired when a media element is waiting for data to continue playback, such as when buffering.
+   * @see https://html.spec.whatwg.org/multipage/media.html#event-media-waiting
+   */
+  onWaiting?: AttrEventHandler<Event, T>;
+  "on-waiting"?: this["onWaiting"];
+  onwaiting?: AttrString;
+
+  /**
+   * Fired when a user rotates a mouse wheel or similar input device over an element.
+   * @see https://w3c.github.io/uievents/#event-type-wheel
+   */
+  onWheel?: AttrEventHandler<WheelEvent, T>;
+  "on-wheel"?: this["onWheel"];
+  onwheel?: AttrString;
+
+  /**
+   * Identifies the currently active element when DOM focus is on a composite widget, textbox, group, or application.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-activedescendant
+   */
+  "aria-activedescendant"?: AttrString;
+  /**
+   * Indicates whether assistive technologies will present all, or only parts of, the changed region based on the change notifications defined by the aria-relevant attribute.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-atomic
+   * @see aria-relevant
+   */
+  "aria-atomic"?: AttrBooleanString;
+  /**
+   * Indicates whether inputting text could trigger display of one or more predictions of the user's intended value for an input and specifies how predictions would be
+   * presented if they are made.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-autocomplete
+   */
+  "aria-autocomplete"?: AttrMissing | "both" | "inline" | "list" | "none";
+  /**
+   * Indicates an element is being modified and that assistive technologies MAY want to wait until the modifications are complete before exposing them to the user.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-busy
+   */
+  "aria-busy"?: AttrBooleanString;
+  /**
+   * Indicates the current "checked" state of checkboxes, radio buttons, and other widgets.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-checked
+   */
+  "aria-checked"?: AttrTriState;
+  /**
+   * Defines the total number of columns in a table, grid, or treegrid.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-colcount
+   */
+  "aria-colcount"?: AttrStringOrNumber;
+  /**
+   * Defines an element's column index or position with respect to the total number of columns within a table, grid, or treegrid.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-colindex
+   */
+  "aria-colindex"?: AttrStringOrNumber;
+  /**
+   * Defines a human readable text alternative of aria-colindex.
+   * @see https://w3c.github.io/aria/#aria-colindextext
+   * @see aria-colindex
+   */
+  "aria-colindextext"?: AttrString;
+  /**
+   * Defines the number of columns spanned by a cell or gridcell within a table, grid, or treegrid.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-colspan
+   */
+  "aria-colspan"?: AttrStringOrNumber;
+  /**
+   * Identifies the element (or elements) whose contents or presence are controlled by the current element.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-controls
+   * @see aria-owns
+   */
+  "aria-controls"?: AttrString;
+  /**
+   * Indicates the element that represents the current item within a container or set of related elements.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-current
+   */
+  "aria-current"?:
+    | AttrBooleanString
+    | "date"
+    | "location"
+    | "page"
+    | "step"
+    | "time"
+    | "true";
+  /**
+   * Identifies the element (or elements) that describes the object.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-describedby
+   * @see aria-labelledby
+   */
+  "aria-describedby"?: AttrString;
+  /**
+   * Defines a string value that describes or annotates the current element.
+   * @see https://w3c.github.io/aria/#aria-description
+   * @see aria-describedby
+   */
+  "aria-description"?: AttrString;
+  /**
+   * Identifies the element that provides a detailed, extended description for the object.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-details
+   * @see aria-describedby
+   */
+  "aria-details"?: AttrString;
+  /**
+   * Indicates that the element is perceivable but disabled, so it is not editable or otherwise operable.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-disabled
+   */
+  "aria-disabled"?: AttrBooleanString;
+  /**
+   * @deprecated Indicates what functions can be performed when a dragged object is released on the drop target.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-dropeffect
+   * */
+  "aria-dropeffect"?:
+    | AttrMissing
+    | "copy"
+    | "execute"
+    | "link"
+    | "move"
+    | "none"
+    | "popup";
+  /**
+   * Identifies the element that provides an error message for the object.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-errormessage
+   * @see aria-invalid
+   * @see aria-describedby
+   */
+  "aria-errormessage"?: AttrString;
+  /**
+   * Indicates whether the element, or another grouping element it controls, is currently expanded or collapsed.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-expanded
+   * @see aria-controls
+   */
+  "aria-expanded"?: AttrBooleanString;
+  /**
+   * Identifies the next element (or elements) in an alternate reading order of content which, at the user's discretion,
+   * allows assistive technology to override the general default of reading in document source order.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-flowto
+   */
+  "aria-flowto"?: AttrString;
+  /**
+   * @deprecated Indicates an element's "grabbed" state in a drag-and-drop operation.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-grabbed
+   */
+  "aria-grabbed"?: AttrBooleanString;
+  /**
+   * Indicates the availability and type of interactive popup element, such as menu or dialog, that can be triggered by an element.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-haspopup
+   */
+  "aria-haspopup"?:
+    | AttrBooleanString
+    | "dialog"
+    | "grid"
+    | "listbox"
+    | "menu"
+    | "tree";
+  /**
+   * Indicates whether the element is exposed to an accessibility API.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-hidden
+   * @see aria-disabled
+   */
+  "aria-hidden"?: AttrBooleanString;
+  /**
+   * Indicates the entered value does not conform to the format expected by the application.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-invalid
+   * @see aria-errormessage
+   */
+  "aria-invalid"?: AttrBooleanString | "grammar" | "spelling";
+  /**
+   * Indicates keyboard shortcuts that an author has implemented to activate or give focus to an element.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-keyshortcuts
+   */
+  "aria-keyshortcuts"?: AttrString;
+  /**
+   * Defines a string value that labels the current element.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-label
+   * @see aria-labelledby
+   */
+  "aria-label"?: AttrString;
+  /**
+   * Identifies the element (or elements) that labels the current element.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-labelledby
+   * @see aria-decribedby
+   */
+  "aria-labelledby"?: AttrString;
+  /**
+   * Defines the hierarchical level of an element within a structure.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-level
+   */
+  "aria-level"?: AttrString;
+  /**
+   * Indicates that an element will be updated, and describes the types of updates the user agents, assistive technologies,
+   * and user can expect from the live region.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-live
+   */
+  "aria-live"?: AttrMissing | "assertive" | "off" | "polite";
+  /**
+   * Indicates whether an element is modal when displayed.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-modal
+   */
+  "aria-modal"?: AttrBooleanString;
+  /**
+   * Indicates whether a text box accepts multiple lines of input or only a single line.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-multiline
+   */
+  "aria-multiline"?: AttrBooleanString;
+  /**
+   * Indicates that the user may select more than one item from the current selectable descendants.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-multiselectable
+   */
+  "aria-multiselectable"?: AttrBooleanString;
+  /**
+   * Indicates whether the element's orientation is horizontal, vertical, or unknown/ambiguous.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-orientation
+   */
+  "aria-orientation"?: AttrMissing | "horizontal" | "vertical";
+  /**
+   * Identifies an element (or elements) in order to define a visual, functional, or contextual parent/child relationship
+   * between DOM elements where the DOM hierarchy cannot be used to represent the relationship.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-owns
+   */
+  "aria-owns"?: AttrString;
+  /**
+   * Defines a short hint (a word or short phrase) intended to aid the user with data entry when the control has no value.
+   * A hint could be a sample value or a brief description of the expected format.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-placeholder
+   */
+  "aria-placeholder"?: AttrString;
+  /**
+   * Defines an element's number or position in the current set of listitems or treeitems.
+   * Not required if all elements in the set are present in the DOM.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-posinset
+   */
+  "aria-posinset"?: AttrStringOrNumber;
+  /**
+   * Indicates the current "pressed" state of toggle buttons.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-pressed
+   */
+  "aria-pressed"?: AttrTriState;
+  /**
+   * Indicates that the element is not editable, but is otherwise operable.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-readonly
+   */
+  "aria-readonly"?: AttrBooleanString;
+  /**
+   * Indicates what notifications the user agent will trigger when the accessibility tree within a live region is modified.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-relevant
+   */
+  "aria-relevant"?:
+    | AttrMissing
+    | "additions removals"
+    | "additions text"
+    | "additions"
+    | "all"
+    | "removals additions"
+    | "removals text"
+    | "removals"
+    | "text additions"
+    | "text removals"
+    | "text";
+  /**
+   * Indicates that user input is required on the element before a form may be submitted.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-required
+   */
+  "aria-required"?: AttrBooleanString;
+  /**
+   * Defines a human-readable, author-localized description for the role of an element.
+   */
+  "aria-roledescription"?: AttrString;
+  /**
+   * Defines the total number of rows in a table, grid, or treegrid.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-rowcount
+   */
+  "aria-rowcount"?: AttrStringOrNumber;
+  /**
+   * Defines an element's row index or position with respect to the total number of rows within a table, grid, or treegrid.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-rowindex
+   */
+  "aria-rowindex"?: AttrStringOrNumber;
+  /**
+   * Defines a human readable text alternative of aria-rowindex.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-rowindextext
+   * @see aria-rowindex
+   */
+  "aria-rowindextext"?: AttrString;
+  /**
+   * Defines the number of rows spanned by a cell or gridcell within a table, grid, or treegrid.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-rowspan
+   */
+  "aria-rowspan"?: AttrStringOrNumber;
+  /**
+   * Indicates the current "selected" state of various widgets.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-selected
+   */
+  "aria-selected"?: AttrBooleanString;
+  /**
+   * Defines the number of items in the current set of listitems or treeitems.
+   * Not required if all elements in the set are present in the DOM.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-setsize
+   */
+  "aria-setsize"?: AttrStringOrNumber;
+  /**
+   * Indicates if items in a table or grid are sorted in ascending or descending order.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-sort
+   */
+  "aria-sort"?: "ascending" | "descending" | "none" | "other";
+  /**
+   * Defines the maximum allowed value for a range widget.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-valuemax
+   * @see aria-valuenow
+   */
+  "aria-valuemax"?: AttrStringOrNumber;
+  /**
+   * Defines the minimum allowed value for a range widget.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-valuemin
+   * @see aria-valuenow
+   */
+  "aria-valuemin"?: AttrStringOrNumber;
+  /**
+   * Defines the current value for a range widget.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-valuenow
+   * @see aria-valuetext
+   * @see aria-valuemin
+   * @see aria-valuemax
+   */
+  "aria-valuenow"?: AttrStringOrNumber;
+  /**
+   * Defines the human readable text alternative of aria-valuenow for a range widget.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#aria-valuetext
+   * @see aria-valuenow
+   */
+  "aria-valuetext"?: AttrString;
+  /**
+   * Defines the ARIA role of an element.
+   * @see https://www.w3.org/TR/wai-aria-1.1/#role_definitions
+   */
+  role?:
+    | AttrMissing
+    | "alert"
+    | "alertdialog"
+    | "application"
+    | "article"
+    | "banner"
+    | "button"
+    | "cell"
+    | "checkbox"
+    | "columnheader"
+    | "combobox"
+    | "complementary"
+    | "contentinfo"
+    | "definition"
+    | "dialog"
+    | "directory"
+    | "document"
+    | "feed"
+    | "figure"
+    | "form"
+    | "grid"
+    | "gridcell"
+    | "group"
+    | "heading"
+    | "img"
+    | "link"
+    | "list"
+    | "listbox"
+    | "listitem"
+    | "log"
+    | "main"
+    | "marquee"
+    | "math"
+    | "menu"
+    | "menubar"
+    | "menuitem"
+    | "menuitemcheckbox"
+    | "menuitemradio"
+    | "meter"
+    | "navigation"
+    | "none"
+    | "note"
+    | "option"
+    | "presentation"
+    | "progressbar"
+    | "radio"
+    | "radiogroup"
+    | "region"
+    | "row"
+    | "rowgroup"
+    | "rowheader"
+    | "scrollbar"
+    | "search"
+    | "searchbox"
+    | "separator"
+    | "slider"
+    | "spinbutton"
+    | "status"
+    | "switch"
+    | "tab"
+    | "table"
+    | "tablist"
+    | "tabpanel"
+    | "term"
+    | "textbox"
+    | "timer"
+    | "toolbar"
+    | "tooltip"
+    | "tree"
+    | "treegrid"
+    | "treeitem";
+}
 type AttrMissing = undefined | null | false;
 type AttrClass =
   | AttrMissing

@@ -55,7 +55,7 @@ declare global {
         next: Return extends { valueChange?(next: infer Next): any }
           ? Next
           : never,
-      ): void;
+      );
       update(input: Marko.TemplateInput<Input>): void;
       destroy(): void;
     };
