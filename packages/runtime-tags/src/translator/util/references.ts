@@ -29,6 +29,7 @@ import {
   getOrCreateSection,
   isDynamicClosure,
   isSameOrChildSection,
+  isSerializedSection,
   type Section,
   sectionUtil,
 } from "./sections";
@@ -913,9 +914,10 @@ export function finalizeReferences() {
         let currentSection = section;
 
         while (currentSection !== sourceSection) {
-          const upstreamReason =
-            !currentSection.upstreamExpression ||
-            getSerializeSourcesForExpr(currentSection.upstreamExpression);
+          const upstreamReason = currentSection.downstreamBinding
+            ? isSerializedSection(currentSection) || undefined
+            : !currentSection.upstreamExpression ||
+              getSerializeSourcesForExpr(currentSection.upstreamExpression);
           if (upstreamReason === true) {
             serializeReason = true;
             break;
@@ -947,9 +949,10 @@ export function finalizeReferences() {
         let currentSection = section;
 
         while (currentSection !== sourceSection) {
-          const upstreamReason =
-            !currentSection.upstreamExpression ||
-            getSerializeSourcesForExpr(currentSection.upstreamExpression);
+          const upstreamReason = currentSection.downstreamBinding
+            ? isSerializedSection(currentSection) || undefined
+            : !currentSection.upstreamExpression ||
+              getSerializeSourcesForExpr(currentSection.upstreamExpression);
           if (upstreamReason === true) {
             serializeReason = true;
             break;

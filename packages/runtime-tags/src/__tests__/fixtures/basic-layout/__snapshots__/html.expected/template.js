@@ -17,10 +17,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
       _$.resumeClosestBranch($scope1_id);
     })
   });
-  _$.writeScope($scope0_id, {
-    name,
+  _$.serializeGuard($serialize, /* name */0) && _$.writeScope($scope0_id, {
     "ClosureScopes:name": _$.serializeIf($serialize, /* input.name */0) && $name_closures
-  }, "__tests__/template.marko", 0, {
-    name: "1:10"
-  });
+  }, "__tests__/template.marko", 0);
 });
