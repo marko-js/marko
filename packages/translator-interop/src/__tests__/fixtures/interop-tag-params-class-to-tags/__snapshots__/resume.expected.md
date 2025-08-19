@@ -27,7 +27,7 @@
     <!--F/-->
     <!--M/-->
     <script>
-      WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.a=[0,{m5c:"s0-0",input_content:_._.$compat_renderBody,count:0}]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w()
+      WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.b=[0,{m5c:"s0-0","ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":_._.$compat_renderBody,input_content:_._.$compat_renderBody,count:0},_.a]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w()
     </script>
   </body>
 </html>
@@ -61,11 +61,12 @@ container.querySelector("#tags").click();
       >
         1 * 0 = 0
       </button>
+      <!--Ms]1 #text/2-->
     </div>
     <!--F/-->
     <!--M/-->
     <script>
-      WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.a=[0,{m5c:"s0-0",input_content:_._.$compat_renderBody,count:0}]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w()
+      WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.b=[0,{m5c:"s0-0","ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":_._.$compat_renderBody,input_content:_._.$compat_renderBody,count:0},_.a]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w()
     </script>
   </body>
 </html>
@@ -74,10 +75,6 @@ container.querySelector("#tags").click();
 # Mutations
 ```
 UPDATE html/body/button/#text "0" => "1"
-INSERT html/body/div/#text0, html/body/div/#text3
-REMOVE #comment after html/body/div/#text3
-INSERT html/body/div/#text1
-INSERT html/body/div/#text2
 ```
 
 # Render
@@ -107,11 +104,12 @@ container.querySelector("#class").click();
       >
         1 * 0 = 0
       </button>
+      <!--Ms]1 #text/2-->
     </div>
     <!--F/-->
     <!--M/-->
     <script>
-      WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.a=[0,{m5c:"s0-0",input_content:_._.$compat_renderBody,count:0}]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w()
+      WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.b=[0,{m5c:"s0-0","ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":_._.$compat_renderBody,input_content:_._.$compat_renderBody,count:0},_.a]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w()
     </script>
   </body>
 </html>
@@ -145,11 +143,12 @@ container.querySelector("#tags").click();
       >
         1 * 0 = 0
       </button>
+      <!--Ms]1 #text/2-->
     </div>
     <!--F/-->
     <!--M/-->
     <script>
-      WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.a=[0,{m5c:"s0-0",input_content:_._.$compat_renderBody,count:0}]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w()
+      WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.b=[0,{m5c:"s0-0","ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":_._.$compat_renderBody,input_content:_._.$compat_renderBody,count:0},_.a]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w()
     </script>
   </body>
 </html>
@@ -187,11 +186,12 @@ container.querySelector("#class").click();
       >
         1 * 0 = 0
       </button>
+      <!--Ms]1 #text/2-->
     </div>
     <!--F/-->
     <!--M/-->
     <script>
-      WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.a=[0,{m5c:"s0-0",input_content:_._.$compat_renderBody,count:0}]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w()
+      WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.b=[0,{m5c:"s0-0","ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":_._.$compat_renderBody,input_content:_._.$compat_renderBody,count:0},_.a]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w()
     </script>
   </body>
 </html>
@@ -225,11 +225,12 @@ container.querySelector("#tags").click();
       >
         1 * 0 = 0
       </button>
+      <!--Ms]1 #text/2-->
     </div>
     <!--F/-->
     <!--M/-->
     <script>
-      WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.a=[0,{m5c:"s0-0",input_content:_._.$compat_renderBody,count:0}]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w()
+      WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.b=[0,{m5c:"s0-0","ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":_._.$compat_renderBody,input_content:_._.$compat_renderBody,count:0},_.a]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w()
     </script>
   </body>
 </html>

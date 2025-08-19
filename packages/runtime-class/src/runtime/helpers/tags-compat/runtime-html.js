@@ -79,7 +79,9 @@ exports.p = function (htmlCompat) {
     }
     return (input, ...args) => {
       const out = defaultCreateOut(htmlCompat.$global());
+      const branchId = htmlCompat.peekNextScopeId();
       let customEvents;
+      htmlCompat.nextScopeId();
 
       if (renderer5) {
         const normalizedInput = {};
@@ -107,7 +109,7 @@ exports.p = function (htmlCompat) {
       const component = componentsContext.___components[0];
       if (component) {
         component.___component.___customEvents = customEvents;
-        htmlCompat.writeSetScopeForComponent(component.id);
+        htmlCompat.writeSetScopeForComponent(branchId, component.id);
       }
 
       initComponentsTag({}, out);
