@@ -59,6 +59,20 @@ function mount(
       renderId: DEFAULT_RENDER_ID,
       ...$global,
     };
+
+    if (MARKO_DEBUG) {
+      if (!String($global.runtimeId).match(/^[_$a-z][_$a-z0-9]*$/i)) {
+        throw new Error(
+          `Invalid runtimeId: "${$global.runtimeId}". The runtimeId must be a valid JavaScript identifier.`,
+        );
+      }
+
+      if (!String($global.renderId).match(/^[_$a-z][_$a-z0-9]*$/i)) {
+        throw new Error(
+          `Invalid renderId: "${$global.renderId}". The renderId must be a valid JavaScript identifier.`,
+        );
+      }
+    }
   } else {
     $global = {
       ___nextScopeId: 0,
