@@ -36,12 +36,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   _$.write("</div>");
   _$.writeEffect($scope0_id, "__tests__/template.marko_0");
   _$.writeScope($scope0_id, {
-    b,
-    c,
     "ClosureScopes:c": $c_closures
-  }, "__tests__/template.marko", 0, {
-    b: "2:7",
-    c: "3:5"
-  });
+  }, "__tests__/template.marko", 0);
   _$.resumeClosestBranch($scope0_id);
 });
