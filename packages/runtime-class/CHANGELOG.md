@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.46
+
+### Patch Changes
+
+- [#2766](https://github.com/marko-js/marko/pull/2766) [`6027c1e`](https://github.com/marko-js/marko/commit/6027c1e9817879b7d08931f7cefa45d10719df39) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Tags api compat runtime fixes.
+
 ## 5.37.45
 
 ### Patch Changes
