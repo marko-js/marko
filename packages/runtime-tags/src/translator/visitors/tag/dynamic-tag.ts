@@ -7,6 +7,7 @@ import {
   loadFileForTag,
 } from "@marko/compiler/babel-utils";
 
+import { isEventHandler } from "../../../common/helpers";
 import { WalkCode } from "../../../common/types";
 import { generateUidIdentifier } from "../../util/generate-uid";
 import { getAccessorPrefix } from "../../util/get-accessor-char";
@@ -87,6 +88,12 @@ export default {
         BindingType.dom,
         tagSection,
       ));
+
+      getProgram().node.extra.isInteractive ||=
+        hasVar ||
+        tag.node.attributes.some(
+          (attr) => t.isMarkoSpreadAttribute(attr) || isEventHandler(attr.name),
+        );
 
       if (hasVar) {
         trackVarReferences(tag, BindingType.derived);

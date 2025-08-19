@@ -1,6 +1,7 @@
 import { types as t } from "@marko/compiler";
 import {
   getFile,
+  getProgram,
   getTemplateId,
   isNativeTag,
 } from "@marko/compiler/babel-utils";
@@ -85,6 +86,8 @@ export default {
       filename as string,
       `${section.id}/${name.slice(1)}`,
     );
+
+    getProgram().node.extra.isInteractive = true;
   },
 } satisfies TemplateVisitor<t.Function>;
 
