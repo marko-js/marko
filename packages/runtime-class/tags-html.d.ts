@@ -2576,7 +2576,7 @@ declare global {
        * @see Marko.Body
        */
       content?:
-        | AttrMissing
+        | AttrString
         | Marko.Body<[], void>
         | Marko.Template<Record<any, never>, void>;
 
