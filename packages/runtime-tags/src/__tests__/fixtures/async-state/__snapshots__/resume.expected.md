@@ -20,10 +20,27 @@
     <!--M_]2 #text/0-->
     <!--M_]1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:clickCount":0,"#BranchAccessor":"#text/1"},clickCount:0,"ClosureScopes:clickCount":_.d=new Set},_.b],_.b._=_.a,_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.a),(_.d).add(_.b),_.c),"__tests__/template.marko_0_clickCount",1];REORDER_RUNTIME(M._);M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalScope:#text/1": _.b = {
+            "ClosureSignalIndex:clickCount": 0,
+            "#BranchAccessor": "#text/1"
+          },
+          clickCount: 0,
+          "ClosureScopes:clickCount": _.d = new Set
+        }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
+          "__tests__/template.marko_2_renderer"
+          ](_.a), (_.d).add(_.b), _.c),
+        "__tests__/template.marko_0_clickCount",
+        1
+      ];
+      REORDER_RUNTIME(M._);
+      M._.w()
     </script>
     <script>
-      M._.r.push(_=&gt;(_.e=[1,_.f={}],(_.b["ConditionalScope:#text/0"]=_.f),_.e));M._.w()
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
+        .f), _.e));
+      M._.w()
     </script>
   </body>
 </html>
@@ -59,10 +76,27 @@ container.querySelector("button").click();
     <!--M_]2 #text/0-->
     <!--M_]1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:clickCount":0,"#BranchAccessor":"#text/1"},clickCount:0,"ClosureScopes:clickCount":_.d=new Set},_.b],_.b._=_.a,_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.a),(_.d).add(_.b),_.c),"__tests__/template.marko_0_clickCount",1];REORDER_RUNTIME(M._);M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalScope:#text/1": _.b = {
+            "ClosureSignalIndex:clickCount": 0,
+            "#BranchAccessor": "#text/1"
+          },
+          clickCount: 0,
+          "ClosureScopes:clickCount": _.d = new Set
+        }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
+          "__tests__/template.marko_2_renderer"
+          ](_.a), (_.d).add(_.b), _.c),
+        "__tests__/template.marko_0_clickCount",
+        1
+      ];
+      REORDER_RUNTIME(M._);
+      M._.w()
     </script>
     <script>
-      M._.r.push(_=&gt;(_.e=[1,_.f={}],(_.b["ConditionalScope:#text/0"]=_.f),_.e));M._.w()
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
+        .f), _.e));
+      M._.w()
     </script>
   </body>
 </html>
@@ -89,10 +123,27 @@ container.querySelector("button").click();
     <!--M_]2 #text/0-->
     <!--M_]1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:clickCount":0,"#BranchAccessor":"#text/1"},clickCount:0,"ClosureScopes:clickCount":_.d=new Set},_.b],_.b._=_.a,_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.a),(_.d).add(_.b),_.c),"__tests__/template.marko_0_clickCount",1];REORDER_RUNTIME(M._);M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalScope:#text/1": _.b = {
+            "ClosureSignalIndex:clickCount": 0,
+            "#BranchAccessor": "#text/1"
+          },
+          clickCount: 0,
+          "ClosureScopes:clickCount": _.d = new Set
+        }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
+          "__tests__/template.marko_2_renderer"
+          ](_.a), (_.d).add(_.b), _.c),
+        "__tests__/template.marko_0_clickCount",
+        1
+      ];
+      REORDER_RUNTIME(M._);
+      M._.w()
     </script>
     <script>
-      M._.r.push(_=&gt;(_.e=[1,_.f={}],(_.b["ConditionalScope:#text/0"]=_.f),_.e));M._.w()
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
+        .f), _.e));
+      M._.w()
     </script>
   </body>
 </html>
@@ -128,10 +179,27 @@ REMOVE #document-fragment/#text after html/body/#text0
     <!--M_]2 #text/0-->
     <!--M_]1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:clickCount":0,"#BranchAccessor":"#text/1"},clickCount:0,"ClosureScopes:clickCount":_.d=new Set},_.b],_.b._=_.a,_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.a),(_.d).add(_.b),_.c),"__tests__/template.marko_0_clickCount",1];REORDER_RUNTIME(M._);M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalScope:#text/1": _.b = {
+            "ClosureSignalIndex:clickCount": 0,
+            "#BranchAccessor": "#text/1"
+          },
+          clickCount: 0,
+          "ClosureScopes:clickCount": _.d = new Set
+        }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
+          "__tests__/template.marko_2_renderer"
+          ](_.a), (_.d).add(_.b), _.c),
+        "__tests__/template.marko_0_clickCount",
+        1
+      ];
+      REORDER_RUNTIME(M._);
+      M._.w()
     </script>
     <script>
-      M._.r.push(_=&gt;(_.e=[1,_.f={}],(_.b["ConditionalScope:#text/0"]=_.f),_.e));M._.w()
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
+        .f), _.e));
+      M._.w()
     </script>
   </body>
 </html>
@@ -168,10 +236,27 @@ container.querySelector("button").click();
     <!--M_]2 #text/0-->
     <!--M_]1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:clickCount":0,"#BranchAccessor":"#text/1"},clickCount:0,"ClosureScopes:clickCount":_.d=new Set},_.b],_.b._=_.a,_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.a),(_.d).add(_.b),_.c),"__tests__/template.marko_0_clickCount",1];REORDER_RUNTIME(M._);M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalScope:#text/1": _.b = {
+            "ClosureSignalIndex:clickCount": 0,
+            "#BranchAccessor": "#text/1"
+          },
+          clickCount: 0,
+          "ClosureScopes:clickCount": _.d = new Set
+        }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
+          "__tests__/template.marko_2_renderer"
+          ](_.a), (_.d).add(_.b), _.c),
+        "__tests__/template.marko_0_clickCount",
+        1
+      ];
+      REORDER_RUNTIME(M._);
+      M._.w()
     </script>
     <script>
-      M._.r.push(_=&gt;(_.e=[1,_.f={}],(_.b["ConditionalScope:#text/0"]=_.f),_.e));M._.w()
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
+        .f), _.e));
+      M._.w()
     </script>
   </body>
 </html>
@@ -198,10 +283,27 @@ container.querySelector("button").click();
     <!--M_]2 #text/0-->
     <!--M_]1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:clickCount":0,"#BranchAccessor":"#text/1"},clickCount:0,"ClosureScopes:clickCount":_.d=new Set},_.b],_.b._=_.a,_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.a),(_.d).add(_.b),_.c),"__tests__/template.marko_0_clickCount",1];REORDER_RUNTIME(M._);M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalScope:#text/1": _.b = {
+            "ClosureSignalIndex:clickCount": 0,
+            "#BranchAccessor": "#text/1"
+          },
+          clickCount: 0,
+          "ClosureScopes:clickCount": _.d = new Set
+        }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
+          "__tests__/template.marko_2_renderer"
+          ](_.a), (_.d).add(_.b), _.c),
+        "__tests__/template.marko_0_clickCount",
+        1
+      ];
+      REORDER_RUNTIME(M._);
+      M._.w()
     </script>
     <script>
-      M._.r.push(_=&gt;(_.e=[1,_.f={}],(_.b["ConditionalScope:#text/0"]=_.f),_.e));M._.w()
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
+        .f), _.e));
+      M._.w()
     </script>
   </body>
 </html>
@@ -237,10 +339,27 @@ REMOVE #document-fragment/#text after html/body/#text0
     <!--M_]2 #text/0-->
     <!--M_]1 #text/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:clickCount":0,"#BranchAccessor":"#text/1"},clickCount:0,"ClosureScopes:clickCount":_.d=new Set},_.b],_.b._=_.a,_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.a),(_.d).add(_.b),_.c),"__tests__/template.marko_0_clickCount",1];REORDER_RUNTIME(M._);M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalScope:#text/1": _.b = {
+            "ClosureSignalIndex:clickCount": 0,
+            "#BranchAccessor": "#text/1"
+          },
+          clickCount: 0,
+          "ClosureScopes:clickCount": _.d = new Set
+        }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
+          "__tests__/template.marko_2_renderer"
+          ](_.a), (_.d).add(_.b), _.c),
+        "__tests__/template.marko_0_clickCount",
+        1
+      ];
+      REORDER_RUNTIME(M._);
+      M._.w()
     </script>
     <script>
-      M._.r.push(_=&gt;(_.e=[1,_.f={}],(_.b["ConditionalScope:#text/0"]=_.f),_.e));M._.w()
+      M._.r.push(_ =&gt; (_.e = [1, _.f = {}], (_.b["ConditionalScope:#text/0"] = _
+        .f), _.e));
+      M._.w()
     </script>
   </body>
 </html>

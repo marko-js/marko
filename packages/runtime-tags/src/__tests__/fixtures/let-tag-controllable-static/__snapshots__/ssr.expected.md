@@ -18,7 +18,16 @@
     </button>
     <!--M_*1 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={y:1}],_.a["TagVariableChange:y"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),"__tests__/template.marko_0_y",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
+          y: 1
+        }], _.a["TagVariableChange:y"] = _._[
+          "__tests__/template.marko_0/valueChange"
+          ](_.a), _.b),
+        "__tests__/template.marko_0_y",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

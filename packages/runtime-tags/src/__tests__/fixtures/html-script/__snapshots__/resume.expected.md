@@ -5,13 +5,12 @@
     <script
       type="importmap"
     >
-      
-  {
-    "imports": {
-      "0": "https://markojs.com",
-    }
-  }
-
+      {
+        "imports":
+        {
+          "0": "https://markojs.com",
+        }
+      }
     </script>
     <!--M_*1 #script/0-->
   </head>
@@ -21,7 +20,15 @@
       <!--M_*1 #text/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{count:0}]),"__tests__/template.marko_0_count",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0,
+        {
+          count: 0
+        }]),
+        "__tests__/template.marko_0_count",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -38,13 +45,12 @@ container.querySelector("script").click();
     <script
       type="importmap"
     >
-      
-  {
-    "imports": {
-      "1": "https://markojs.com",
-    }
-  }
-
+      {
+        "imports":
+        {
+          "1": "https://markojs.com",
+        }
+      }
     </script>
     <!--M_*1 #script/0-->
   </head>
@@ -54,7 +60,15 @@ container.querySelector("script").click();
       <!--M_*1 #text/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{count:0}]),"__tests__/template.marko_0_count",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0,
+        {
+          count: 0
+        }]),
+        "__tests__/template.marko_0_count",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -77,13 +91,12 @@ container.querySelector("script").click();
     <script
       type="importmap"
     >
-      
-  {
-    "imports": {
-      "2": "https://markojs.com",
-    }
-  }
-
+      {
+        "imports":
+        {
+          "2": "https://markojs.com",
+        }
+      }
     </script>
     <!--M_*1 #script/0-->
   </head>
@@ -93,7 +106,15 @@ container.querySelector("script").click();
       <!--M_*1 #text/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{count:0}]),"__tests__/template.marko_0_count",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0,
+        {
+          count: 0
+        }]),
+        "__tests__/template.marko_0_count",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -116,13 +137,12 @@ container.querySelector("script").click();
     <script
       type="importmap"
     >
-      
-  {
-    "imports": {
-      "3": "https://markojs.com",
-    }
-  }
-
+      {
+        "imports":
+        {
+          "3": "https://markojs.com",
+        }
+      }
     </script>
     <!--M_*1 #script/0-->
   </head>
@@ -132,7 +152,15 @@ container.querySelector("script").click();
       <!--M_*1 #text/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{count:0}]),"__tests__/template.marko_0_count",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0,
+        {
+          count: 0
+        }]),
+        "__tests__/template.marko_0_count",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

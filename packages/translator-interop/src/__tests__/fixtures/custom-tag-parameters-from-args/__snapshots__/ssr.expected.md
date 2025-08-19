@@ -23,7 +23,19 @@
     </div>
     <!--Ms]1 #text/3-->
     <script>
-      WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/3":_.a={},"ConditionalRenderer:#text/3":_._.$compat_renderBody,input_content:_._.$compat_renderBody,x:1,y:10},_.a]),"__tests__/components/custom-tag.marko_0_x_y",1];M.s.w()
+      WALKER_RUNTIME("M")("s");
+      M.s.r = [_ =&gt; (_.b = [0,
+        {
+          "ConditionalScope:#text/3": _.a = {},
+          "ConditionalRenderer:#text/3": _._.$compat_renderBody,
+          input_content: _._.$compat_renderBody,
+          x: 1,
+          y: 10
+        }, _.a]),
+        "__tests__/components/custom-tag.marko_0_x_y",
+        1
+      ];
+      M.s.w()
     </script>
   </body>
 </html>

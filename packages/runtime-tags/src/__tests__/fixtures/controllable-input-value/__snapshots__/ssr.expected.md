@@ -18,7 +18,17 @@
       <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={"ControlledType:#input/0":2,value:"hello"}],_.a["ControlledHandler:#input/0"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),"__tests__/template.marko_0",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
+          "ControlledType:#input/0": 2,
+          value: "hello"
+        }], _.a["ControlledHandler:#input/0"] = _._[
+          "__tests__/template.marko_0/valueChange"
+          ](_.a), _.b),
+        "__tests__/template.marko_0",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

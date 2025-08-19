@@ -15,7 +15,19 @@
       <!--M_*1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"#scopeOffset/1":3,"#childScope/0":_.b={x:1}},_.b],_.b["#TagVariable"]=_._["__tests__/template.marko_0_data/var"](_.a),_.c),"__tests__/tags/child.marko_0_x",2];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "#scopeOffset/1": 3,
+          "#childScope/0": _.b = {
+            x: 1
+          }
+        }, _.b], _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_0_data/var"
+          ](_.a), _.c),
+        "__tests__/tags/child.marko_0_x",
+        2
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -42,7 +54,19 @@ container.querySelector("button.inc").click();
       <!--M_*1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"#scopeOffset/1":3,"#childScope/0":_.b={x:1}},_.b],_.b["#TagVariable"]=_._["__tests__/template.marko_0_data/var"](_.a),_.c),"__tests__/tags/child.marko_0_x",2];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "#scopeOffset/1": 3,
+          "#childScope/0": _.b = {
+            x: 1
+          }
+        }, _.b], _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_0_data/var"
+          ](_.a), _.c),
+        "__tests__/tags/child.marko_0_x",
+        2
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -74,7 +98,19 @@ container.querySelector("button.inc").click();
       <!--M_*1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"#scopeOffset/1":3,"#childScope/0":_.b={x:1}},_.b],_.b["#TagVariable"]=_._["__tests__/template.marko_0_data/var"](_.a),_.c),"__tests__/tags/child.marko_0_x",2];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "#scopeOffset/1": 3,
+          "#childScope/0": _.b = {
+            x: 1
+          }
+        }, _.b], _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_0_data/var"
+          ](_.a), _.c),
+        "__tests__/tags/child.marko_0_x",
+        2
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -106,7 +142,19 @@ container.querySelector("button.inc").click();
       <!--M_*1 #text/2-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"#scopeOffset/1":3,"#childScope/0":_.b={x:1}},_.b],_.b["#TagVariable"]=_._["__tests__/template.marko_0_data/var"](_.a),_.c),"__tests__/tags/child.marko_0_x",2];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "#scopeOffset/1": 3,
+          "#childScope/0": _.b = {
+            x: 1
+          }
+        }, _.b], _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_0_data/var"
+          ](_.a), _.c),
+        "__tests__/tags/child.marko_0_x",
+        2
+      ];
+      M._.w()
     </script>
   </body>
 </html>

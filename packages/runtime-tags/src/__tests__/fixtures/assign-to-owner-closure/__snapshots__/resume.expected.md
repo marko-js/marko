@@ -7,7 +7,15 @@
     <!--M_*2 #button/0-->
     <!--M_|1 #text/0 2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/0":0,"ConditionalScope:#text/0":_.b={}},_.b],_.b._=_.a,_.c),"__tests__/template.marko_1",2];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalRenderer:#text/0": 0,
+          "ConditionalScope:#text/0": _.b = {}
+        }, _.b], _.b._ = _.a, _.c),
+        "__tests__/template.marko_1",
+        2
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -25,7 +33,15 @@ container.querySelector("button").click();
     <!--M_|1 #text/0 2-->
     <!--M_*2 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#text/0":0,"ConditionalScope:#text/0":_.b={}},_.b],_.b._=_.a,_.c),"__tests__/template.marko_1",2];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalRenderer:#text/0": 0,
+          "ConditionalScope:#text/0": _.b = {}
+        }, _.b], _.b._ = _.a, _.c),
+        "__tests__/template.marko_1",
+        2
+      ];
+      M._.w()
     </script>
   </body>
 </html>

@@ -16,7 +16,15 @@
       <!--M_*2 #button/0-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,1,{clickCount:0}]),"__tests__/tags/counter.marko_0_clickCount",2];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0, 1,
+        {
+          clickCount: 0
+        }]),
+        "__tests__/tags/counter.marko_0_clickCount",
+        2
+      ];
+      M._.w()
     </script>
   </body>
 </html>

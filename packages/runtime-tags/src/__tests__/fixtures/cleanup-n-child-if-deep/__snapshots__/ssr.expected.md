@@ -64,7 +64,44 @@
     </div>
     <!--M_|1 #text/4 2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.h=[0,_.c={"ConditionalRenderer:#text/4":0,"ConditionalScope:#text/4":_.a={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.f={},"ClosureSignalIndex:showInner":0}},showOuter:!0,showMiddle:!0,showInner:!0,"ClosureScopes:showInner":_.i=new Set},_.a,_.d={name:"Outer","#ClosestBranchId":2},_.b,_.e={name:"Middle","#ClosestBranchId":4},_.f,_.g={name:"Inner","#ClosestBranchId":6}],_.b._=_.a,_.a._=_.c,_.c.write=_.d.write=_.e.write=_.g.write=_._["__tests__/template.marko_0/write"](_.c),(_.i).add(_.b),_.h),"__tests__/tags/child.marko_0_name_write",3,5,7,"__tests__/template.marko_0_showInner",1,"__tests__/template.marko_0_showMiddle",1,"__tests__/template.marko_0_showOuter",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.h = [0, _.c = {
+            "ConditionalRenderer:#text/4": 0,
+            "ConditionalScope:#text/4": _.a = {
+              "ConditionalRenderer:#text/1": 0,
+              "ConditionalScope:#text/1": _.b = {
+                "ConditionalRenderer:#text/1": 0,
+                "ConditionalScope:#text/1": _.f = {},
+                "ClosureSignalIndex:showInner": 0
+              }
+            },
+            showOuter: !0,
+            showMiddle: !0,
+            showInner: !0,
+            "ClosureScopes:showInner": _.i = new Set
+          }, _.a, _.d = {
+            name: "Outer",
+            "#ClosestBranchId": 2
+          }, _.b, _.e = {
+            name: "Middle",
+            "#ClosestBranchId": 4
+          }, _.f, _.g = {
+            name: "Inner",
+            "#ClosestBranchId": 6
+          }], _.b._ = _.a, _.a._ = _.c, _.c.write = _.d.write = _.e.write = _
+          .g.write = _._[
+            "__tests__/template.marko_0/write"
+            ](_.c), (_.i).add(_.b), _.h),
+        "__tests__/tags/child.marko_0_name_write",
+        3, 5, 7,
+        "__tests__/template.marko_0_showInner",
+        1,
+        "__tests__/template.marko_0_showMiddle",
+        1,
+        "__tests__/template.marko_0_showOuter",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

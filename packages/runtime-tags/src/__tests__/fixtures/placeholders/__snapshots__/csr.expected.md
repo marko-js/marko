@@ -15,9 +15,7 @@ replaced
     hi
   </span>
   <script>
-    
     'Hello &lt;b&gt; &lt;/script&gt;'
-  
   </script>
   <style>
     

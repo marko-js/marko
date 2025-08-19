@@ -13,7 +13,9 @@
       <!--M_*1 #text/1-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{}])]
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0,
+      {}])]
     </script>
   </body>
 </html>

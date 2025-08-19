@@ -11,7 +11,16 @@
     </button>
     <!--M_*1 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={bar:0}],_.a.$fooChange=_._["__tests__/template.marko_0/foo"](_.a),_.b),"__tests__/template.marko_0_bar_$fooChange",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
+          bar: 0
+        }], _.a.$fooChange = _._[
+          "__tests__/template.marko_0/foo"
+          ](_.a), _.b),
+        "__tests__/template.marko_0_bar_$fooChange",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -34,7 +43,16 @@ container.querySelector("button").click();
     </button>
     <!--M_*1 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={bar:0}],_.a.$fooChange=_._["__tests__/template.marko_0/foo"](_.a),_.b),"__tests__/template.marko_0_bar_$fooChange",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
+          bar: 0
+        }], _.a.$fooChange = _._[
+          "__tests__/template.marko_0/foo"
+          ](_.a), _.b),
+        "__tests__/template.marko_0_bar_$fooChange",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -61,7 +79,16 @@ container.querySelector("button").click();
     </button>
     <!--M_*1 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={bar:0}],_.a.$fooChange=_._["__tests__/template.marko_0/foo"](_.a),_.b),"__tests__/template.marko_0_bar_$fooChange",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
+          bar: 0
+        }], _.a.$fooChange = _._[
+          "__tests__/template.marko_0/foo"
+          ](_.a), _.b),
+        "__tests__/template.marko_0_bar_$fooChange",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -88,7 +115,16 @@ container.querySelector("button").click();
     </button>
     <!--M_*1 #button/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={bar:0}],_.a.$fooChange=_._["__tests__/template.marko_0/foo"](_.a),_.b),"__tests__/template.marko_0_bar_$fooChange",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
+          bar: 0
+        }], _.a.$fooChange = _._[
+          "__tests__/template.marko_0/foo"
+          ](_.a), _.b),
+        "__tests__/template.marko_0_bar_$fooChange",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

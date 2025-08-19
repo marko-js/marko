@@ -25,7 +25,28 @@
        hello
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.c={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.a={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:count":0}},outer:!0,inner:!0,count:0,"ClosureScopes:count":_.e=new Set},_.a,_.b],_.b._=_.a,_.a._=_.c,(_.e).add(_.b),_.d),"__tests__/template.marko_2_count",3,"__tests__/template.marko_1_inner",2,"__tests__/template.marko_0_outer",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.d = [0, _.c = {
+          "ConditionalRenderer:#text/1": 0,
+          "ConditionalScope:#text/1": _.a = {
+            "ConditionalRenderer:#text/1": 0,
+            "ConditionalScope:#text/1": _.b = {
+              "ClosureSignalIndex:count": 0
+            }
+          },
+          outer: !0,
+          inner: !0,
+          count: 0,
+          "ClosureScopes:count": _.e = new Set
+        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        "__tests__/template.marko_2_count",
+        3,
+        "__tests__/template.marko_1_inner",
+        2,
+        "__tests__/template.marko_0_outer",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -66,7 +87,28 @@ container.querySelector("#count").click();
        hello
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.c={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.a={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:count":0}},outer:!0,inner:!0,count:0,"ClosureScopes:count":_.e=new Set},_.a,_.b],_.b._=_.a,_.a._=_.c,(_.e).add(_.b),_.d),"__tests__/template.marko_2_count",3,"__tests__/template.marko_1_inner",2,"__tests__/template.marko_0_outer",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.d = [0, _.c = {
+          "ConditionalRenderer:#text/1": 0,
+          "ConditionalScope:#text/1": _.a = {
+            "ConditionalRenderer:#text/1": 0,
+            "ConditionalScope:#text/1": _.b = {
+              "ClosureSignalIndex:count": 0
+            }
+          },
+          outer: !0,
+          inner: !0,
+          count: 0,
+          "ClosureScopes:count": _.e = new Set
+        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        "__tests__/template.marko_2_count",
+        3,
+        "__tests__/template.marko_1_inner",
+        2,
+        "__tests__/template.marko_0_outer",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -107,7 +149,28 @@ container.querySelector("#count").click();
        hello
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.c={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.a={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:count":0}},outer:!0,inner:!0,count:0,"ClosureScopes:count":_.e=new Set},_.a,_.b],_.b._=_.a,_.a._=_.c,(_.e).add(_.b),_.d),"__tests__/template.marko_2_count",3,"__tests__/template.marko_1_inner",2,"__tests__/template.marko_0_outer",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.d = [0, _.c = {
+          "ConditionalRenderer:#text/1": 0,
+          "ConditionalScope:#text/1": _.a = {
+            "ConditionalRenderer:#text/1": 0,
+            "ConditionalScope:#text/1": _.b = {
+              "ClosureSignalIndex:count": 0
+            }
+          },
+          outer: !0,
+          inner: !0,
+          count: 0,
+          "ClosureScopes:count": _.e = new Set
+        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        "__tests__/template.marko_2_count",
+        3,
+        "__tests__/template.marko_1_inner",
+        2,
+        "__tests__/template.marko_0_outer",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -142,7 +205,28 @@ container.querySelector("#inner").click();
        hello
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.c={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.a={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:count":0}},outer:!0,inner:!0,count:0,"ClosureScopes:count":_.e=new Set},_.a,_.b],_.b._=_.a,_.a._=_.c,(_.e).add(_.b),_.d),"__tests__/template.marko_2_count",3,"__tests__/template.marko_1_inner",2,"__tests__/template.marko_0_outer",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.d = [0, _.c = {
+          "ConditionalRenderer:#text/1": 0,
+          "ConditionalScope:#text/1": _.a = {
+            "ConditionalRenderer:#text/1": 0,
+            "ConditionalScope:#text/1": _.b = {
+              "ClosureSignalIndex:count": 0
+            }
+          },
+          outer: !0,
+          inner: !0,
+          count: 0,
+          "ClosureScopes:count": _.e = new Set
+        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        "__tests__/template.marko_2_count",
+        3,
+        "__tests__/template.marko_1_inner",
+        2,
+        "__tests__/template.marko_0_outer",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -183,7 +267,28 @@ container.querySelector("#inner").click();
        hello
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.c={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.a={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:count":0}},outer:!0,inner:!0,count:0,"ClosureScopes:count":_.e=new Set},_.a,_.b],_.b._=_.a,_.a._=_.c,(_.e).add(_.b),_.d),"__tests__/template.marko_2_count",3,"__tests__/template.marko_1_inner",2,"__tests__/template.marko_0_outer",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.d = [0, _.c = {
+          "ConditionalRenderer:#text/1": 0,
+          "ConditionalScope:#text/1": _.a = {
+            "ConditionalRenderer:#text/1": 0,
+            "ConditionalScope:#text/1": _.b = {
+              "ClosureSignalIndex:count": 0
+            }
+          },
+          outer: !0,
+          inner: !0,
+          count: 0,
+          "ClosureScopes:count": _.e = new Set
+        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        "__tests__/template.marko_2_count",
+        3,
+        "__tests__/template.marko_1_inner",
+        2,
+        "__tests__/template.marko_0_outer",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -224,7 +329,28 @@ container.querySelector("#count").click();
        hello
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.c={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.a={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:count":0}},outer:!0,inner:!0,count:0,"ClosureScopes:count":_.e=new Set},_.a,_.b],_.b._=_.a,_.a._=_.c,(_.e).add(_.b),_.d),"__tests__/template.marko_2_count",3,"__tests__/template.marko_1_inner",2,"__tests__/template.marko_0_outer",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.d = [0, _.c = {
+          "ConditionalRenderer:#text/1": 0,
+          "ConditionalScope:#text/1": _.a = {
+            "ConditionalRenderer:#text/1": 0,
+            "ConditionalScope:#text/1": _.b = {
+              "ClosureSignalIndex:count": 0
+            }
+          },
+          outer: !0,
+          inner: !0,
+          count: 0,
+          "ClosureScopes:count": _.e = new Set
+        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        "__tests__/template.marko_2_count",
+        3,
+        "__tests__/template.marko_1_inner",
+        2,
+        "__tests__/template.marko_0_outer",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -252,7 +378,28 @@ container.querySelector("#outer").click();
        hello
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.c={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.a={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:count":0}},outer:!0,inner:!0,count:0,"ClosureScopes:count":_.e=new Set},_.a,_.b],_.b._=_.a,_.a._=_.c,(_.e).add(_.b),_.d),"__tests__/template.marko_2_count",3,"__tests__/template.marko_1_inner",2,"__tests__/template.marko_0_outer",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.d = [0, _.c = {
+          "ConditionalRenderer:#text/1": 0,
+          "ConditionalScope:#text/1": _.a = {
+            "ConditionalRenderer:#text/1": 0,
+            "ConditionalScope:#text/1": _.b = {
+              "ClosureSignalIndex:count": 0
+            }
+          },
+          outer: !0,
+          inner: !0,
+          count: 0,
+          "ClosureScopes:count": _.e = new Set
+        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        "__tests__/template.marko_2_count",
+        3,
+        "__tests__/template.marko_1_inner",
+        2,
+        "__tests__/template.marko_0_outer",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -295,7 +442,28 @@ container.querySelector("#outer").click();
        hello
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.c={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.a={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:count":0}},outer:!0,inner:!0,count:0,"ClosureScopes:count":_.e=new Set},_.a,_.b],_.b._=_.a,_.a._=_.c,(_.e).add(_.b),_.d),"__tests__/template.marko_2_count",3,"__tests__/template.marko_1_inner",2,"__tests__/template.marko_0_outer",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.d = [0, _.c = {
+          "ConditionalRenderer:#text/1": 0,
+          "ConditionalScope:#text/1": _.a = {
+            "ConditionalRenderer:#text/1": 0,
+            "ConditionalScope:#text/1": _.b = {
+              "ClosureSignalIndex:count": 0
+            }
+          },
+          outer: !0,
+          inner: !0,
+          count: 0,
+          "ClosureScopes:count": _.e = new Set
+        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        "__tests__/template.marko_2_count",
+        3,
+        "__tests__/template.marko_1_inner",
+        2,
+        "__tests__/template.marko_0_outer",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -335,7 +503,28 @@ container.querySelector("#count").click();
        hello
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,_.c={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.a={"ConditionalRenderer:#text/1":0,"ConditionalScope:#text/1":_.b={"ClosureSignalIndex:count":0}},outer:!0,inner:!0,count:0,"ClosureScopes:count":_.e=new Set},_.a,_.b],_.b._=_.a,_.a._=_.c,(_.e).add(_.b),_.d),"__tests__/template.marko_2_count",3,"__tests__/template.marko_1_inner",2,"__tests__/template.marko_0_outer",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.d = [0, _.c = {
+          "ConditionalRenderer:#text/1": 0,
+          "ConditionalScope:#text/1": _.a = {
+            "ConditionalRenderer:#text/1": 0,
+            "ConditionalScope:#text/1": _.b = {
+              "ClosureSignalIndex:count": 0
+            }
+          },
+          outer: !0,
+          inner: !0,
+          count: 0,
+          "ClosureScopes:count": _.e = new Set
+        }, _.a, _.b], _.b._ = _.a, _.a._ = _.c, (_.e).add(_.b), _.d),
+        "__tests__/template.marko_2_count",
+        3,
+        "__tests__/template.marko_1_inner",
+        2,
+        "__tests__/template.marko_0_outer",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

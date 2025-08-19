@@ -18,7 +18,18 @@
     </button>
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={x:1,"ClosureScopes:x":_.c=new Set},_.d={_:_.a,"ClosureSignalIndex:x":0}],(_.c).add(_.d),_.b),"__tests__/template.marko_0_x",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
+          x: 1,
+          "ClosureScopes:x": _.c = new Set
+        }, _.d = {
+          _: _.a,
+          "ClosureSignalIndex:x": 0
+        }], (_.c).add(_.d), _.b),
+        "__tests__/template.marko_0_x",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

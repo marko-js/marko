@@ -104,7 +104,68 @@
       <!--M_*31 #li/0-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.M=[0,_.h={"LoopScopeMap:#text/0":new Map(_.a=[[0,_.i={}],[1,_.j={}],[2,_.k={}],[3,_.l={}],[4,_.m={}],[5,_.n={}]]),"LoopScopeMap:#text/1":new Map(_.b=[[0,_.o={}],[1,_.p={}],[2,_.q={}],[3,_.r={}]]),"LoopScopeMap:#text/2":new Map(_.c=[[0,_.s={"LoopScopeMap:#ul/0":new Map(_.d=[[0,_.t={}],[1,_.u={}],[2,_.v={}],[3,_.w={}]])}],[1,_.x={"LoopScopeMap:#ul/0":new Map(_.e=[[0,_.y={}],[1,_.z={}],[2,_.A={}],[3,_.B={}]])}],[2,_.C={"LoopScopeMap:#ul/0":new Map(_.f=[[0,_.D={}],[1,_.E={}],[2,_.F={}],[3,_.G={}]])}],[3,_.H={"LoopScopeMap:#ul/0":new Map(_.g=[[0,_.I={}],[1,_.J={}],[2,_.K={}],[3,_.L={}]])}]])},_.i,_.j,_.k,_.l,_.m,_.n,_.o,_.p,_.q,_.r,_.s,_.t,_.u,_.v,_.w,_.x,_.y,_.z,_.A,_.B,_.C,_.D,_.E,_.F,_.G,_.H,_.I,_.J,_.K,_.L],_.h.$hoisted_el3=_._["__tests__/template.marko_0_$hoisted_el3/hoist"](_.h),_.M),"__tests__/template.marko_0_$hoisted_el3",1,"__tests__/template.marko_0",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.M = [0, _.h = {
+            "LoopScopeMap:#text/0": new Map(_.a = [
+              [0, _.i = {}],
+              [1, _.j = {}],
+              [2, _.k = {}],
+              [3, _.l = {}],
+              [4, _.m = {}],
+              [5, _.n = {}]
+            ]),
+            "LoopScopeMap:#text/1": new Map(_.b = [
+              [0, _.o = {}],
+              [1, _.p = {}],
+              [2, _.q = {}],
+              [3, _.r = {}]
+            ]),
+            "LoopScopeMap:#text/2": new Map(_.c = [
+              [0, _.s = {
+                "LoopScopeMap:#ul/0": new Map(_.d = [
+                  [0, _.t = {}],
+                  [1, _.u = {}],
+                  [2, _.v = {}],
+                  [3, _.w = {}]
+                ])
+              }],
+              [1, _.x = {
+                "LoopScopeMap:#ul/0": new Map(_.e = [
+                  [0, _.y = {}],
+                  [1, _.z = {}],
+                  [2, _.A = {}],
+                  [3, _.B = {}]
+                ])
+              }],
+              [2, _.C = {
+                "LoopScopeMap:#ul/0": new Map(_.f = [
+                  [0, _.D = {}],
+                  [1, _.E = {}],
+                  [2, _.F = {}],
+                  [3, _.G = {}]
+                ])
+              }],
+              [3, _.H = {
+                "LoopScopeMap:#ul/0": new Map(_.g = [
+                  [0, _.I = {}],
+                  [1, _.J = {}],
+                  [2, _.K = {}],
+                  [3, _.L = {}]
+                ])
+              }]
+            ])
+          }, _.i, _.j, _.k, _.l, _.m, _.n, _.o, _.p, _.q, _.r, _.s, _.t, _
+          .u, _.v, _.w, _.x, _.y, _.z, _.A, _.B, _.C, _.D, _.E, _.F, _.G, _
+          .H, _.I, _.J, _.K, _.L
+        ], _.h.$hoisted_el3 = _._[
+          "__tests__/template.marko_0_$hoisted_el3/hoist"
+          ](_.h), _.M),
+        "__tests__/template.marko_0_$hoisted_el3",
+        1,
+        "__tests__/template.marko_0",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

@@ -48,7 +48,21 @@
       <!--M_*7 #li/0-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,2,{open:!0},2,{open:!0},{open:!0}]),"__tests__/tags/comments.marko_1_open",6,3,7];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0, 2,
+        {
+          open: !0
+        }, 2,
+        {
+          open: !0
+        },
+        {
+          open: !0
+        }]),
+        "__tests__/tags/comments.marko_1_open",
+        6, 3, 7
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -108,7 +122,21 @@ container.querySelector(`#c-${id} > button`).click();
       <!--M_*7 #li/0-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,2,{open:!0},2,{open:!0},{open:!0}]),"__tests__/tags/comments.marko_1_open",6,3,7];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0, 2,
+        {
+          open: !0
+        }, 2,
+        {
+          open: !0
+        },
+        {
+          open: !0
+        }]),
+        "__tests__/tags/comments.marko_1_open",
+        6, 3, 7
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -172,7 +200,21 @@ container.querySelector(`#c-${id} > button`).click();
       <!--M_*7 #li/0-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,2,{open:!0},2,{open:!0},{open:!0}]),"__tests__/tags/comments.marko_1_open",6,3,7];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0, 2,
+        {
+          open: !0
+        }, 2,
+        {
+          open: !0
+        },
+        {
+          open: !0
+        }]),
+        "__tests__/tags/comments.marko_1_open",
+        6, 3, 7
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -237,7 +279,21 @@ container.querySelector(`#c-${id} > button`).click();
       <!--M_*7 #li/0-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,2,{open:!0},2,{open:!0},{open:!0}]),"__tests__/tags/comments.marko_1_open",6,3,7];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0, 2,
+        {
+          open: !0
+        }, 2,
+        {
+          open: !0
+        },
+        {
+          open: !0
+        }]),
+        "__tests__/tags/comments.marko_1_open",
+        6, 3, 7
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -303,7 +359,21 @@ container.querySelector(`#c-${id} > button`).click();
       <!--M_*7 #li/0-->
     </ul>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,2,{open:!0},2,{open:!0},{open:!0}]),"__tests__/tags/comments.marko_1_open",6,3,7];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0, 2,
+        {
+          open: !0
+        }, 2,
+        {
+          open: !0
+        },
+        {
+          open: !0
+        }]),
+        "__tests__/tags/comments.marko_1_open",
+        6, 3, 7
+      ];
+      M._.w()
     </script>
   </body>
 </html>
