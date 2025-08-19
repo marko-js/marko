@@ -96,7 +96,7 @@ function filterArguments<A>(args: (A | Falsy)[]) {
 
 export function getCompatRuntimeFile() {
   const markoOpts = getMarkoOpts();
-  return `marko/src/runtime/helpers/tags-compat/${
+  return `marko/${markoOpts.optimize ? "dist" : "src"}/runtime/helpers/tags-compat/${
     isOutputHTML() ? "html" : "dom"
   }${markoOpts.optimize ? "" : "-debug"}.${markoOpts.modules === "esm" ? "mjs" : "js"}`;
 }

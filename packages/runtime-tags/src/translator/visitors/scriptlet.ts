@@ -22,7 +22,7 @@ export default {
     );
 
     if (scriptlet.node.target === "client") {
-      getProgram().node.extra.isInteractive ||= true;
+      getProgram().node.extra.isInteractive = true;
     }
   },
   translate: {
