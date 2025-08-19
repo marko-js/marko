@@ -22,7 +22,16 @@
     <!--M_*6 #text/1-->
     other
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,3,{a:"a",v:1},1,{a:"b",v:2}])]
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0, 3,
+      {
+        a: "a",
+        v: 1
+      }, 1,
+      {
+        a: "b",
+        v: 2
+      }])]
     </script>
   </body>
 </html>

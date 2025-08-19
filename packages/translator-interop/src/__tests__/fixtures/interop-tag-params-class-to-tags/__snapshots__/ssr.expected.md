@@ -30,7 +30,19 @@
     <!--F/-->
     <!--M/-->
     <script>
-      WALKER_RUNTIME("M")("s");M.s.r=[_=&gt;(_.b=[0,{m5c:"s0-0","ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":_._.$compat_renderBody,input_content:_._.$compat_renderBody,count:0},_.a]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w()
+      WALKER_RUNTIME("M")("s");
+      M.s.r = [_ =&gt; (_.b = [0,
+        {
+          m5c: "s0-0",
+          "ConditionalScope:#text/2": _.a = {},
+          "ConditionalRenderer:#text/2": _._.$compat_renderBody,
+          input_content: _._.$compat_renderBody,
+          count: 0
+        }, _.a]), "$compat_setScope", 1,
+        "__tests__/components/tags-layout.marko_0_count",
+        1
+      ];
+      M.s.w()
     </script>
   </body>
 </html>

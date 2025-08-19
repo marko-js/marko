@@ -24,7 +24,15 @@
     </button>
     <!--M_*2 #button/2-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,1,{y:1}]),"__tests__/template.marko_1_y",2];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0, 1,
+        {
+          y: 1
+        }]),
+        "__tests__/template.marko_1_y",
+        2
+      ];
+      M._.w()
     </script>
   </body>
 </html>

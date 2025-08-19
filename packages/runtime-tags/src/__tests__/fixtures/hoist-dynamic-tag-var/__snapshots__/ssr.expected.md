@@ -21,7 +21,52 @@
     <!--M_*11 #div/0-->
     <!--M_]10 #text/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.j=[0,_.g={"ConditionalScope:#text/0":_.i={"ConditionalScope:#text/0":_.a={"ConditionalScope:#text/0":_.b={},"ConditionalRenderer:#text/0":"__tests__/tags/child.marko","#scopeOffset/1":5}},"ConditionalScope:#text/2":_.c={"ConditionalScope:#text/0":_.d={},"ConditionalRenderer:#text/0":"__tests__/tags/child.marko","#scopeOffset/1":9},"ConditionalScope:#text/3":_.e={"ConditionalScope:#text/0":_.f={},"ConditionalRenderer:#text/0":"__tests__/tags/child.marko","#scopeOffset/1":12},"#childScope/1":_.h={}},_.i,_.a,_.b,1,_.h,_.c,_.d,1,_.e,_.f,1,{_:_.g}],_.b["#TagVariable"]=_._["__tests__/template.marko_2_setHtml/var"](_.a),_.a.setHtml=_._["__tests__/tags/child.marko_0/_return"](_.b),_.d["#TagVariable"]=_._["__tests__/template.marko_3_setHtml2/var"](_.c),_.c.setHtml2=_._["__tests__/tags/child.marko_0/_return"](_.d),_.f["#TagVariable"]=_._["__tests__/template.marko_4_setHtml3/var"](_.e),_.e.setHtml3=_._["__tests__/tags/child.marko_0/_return"](_.f),_.h.input_value=_._["__tests__/template.marko_0_$hoisted_setHtml/hoist"](_.g),_.j),"__tests__/tags/thing.marko_0_input_value",6,"__tests__/template.marko_5",13,"__tests__/template.marko_0",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.j = [0, _.g = {
+          "ConditionalScope:#text/0": _.i = {
+            "ConditionalScope:#text/0": _.a = {
+              "ConditionalScope:#text/0": _.b = {},
+              "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+              "#scopeOffset/1": 5
+            }
+          },
+          "ConditionalScope:#text/2": _.c = {
+            "ConditionalScope:#text/0": _.d = {},
+            "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+            "#scopeOffset/1": 9
+          },
+          "ConditionalScope:#text/3": _.e = {
+            "ConditionalScope:#text/0": _.f = {},
+            "ConditionalRenderer:#text/0": "__tests__/tags/child.marko",
+            "#scopeOffset/1": 12
+          },
+          "#childScope/1": _.h = {}
+        }, _.i, _.a, _.b, 1, _.h, _.c, _.d, 1, _.e, _.f, 1,
+        {
+          _: _.g
+        }], _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_2_setHtml/var"
+          ](_.a), _.a.setHtml = _._[
+          "__tests__/tags/child.marko_0/_return"
+          ](_.b), _.d["#TagVariable"] = _._[
+          "__tests__/template.marko_3_setHtml2/var"
+          ](_.c), _.c.setHtml2 = _._[
+          "__tests__/tags/child.marko_0/_return"
+          ](_.d), _.f["#TagVariable"] = _._[
+          "__tests__/template.marko_4_setHtml3/var"
+          ](_.e), _.e.setHtml3 = _._[
+          "__tests__/tags/child.marko_0/_return"
+          ](_.f), _.h.input_value = _._[
+          "__tests__/template.marko_0_$hoisted_setHtml/hoist"
+          ](_.g), _.j),
+        "__tests__/tags/thing.marko_0_input_value",
+        6,
+        "__tests__/template.marko_5",
+        13,
+        "__tests__/template.marko_0",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

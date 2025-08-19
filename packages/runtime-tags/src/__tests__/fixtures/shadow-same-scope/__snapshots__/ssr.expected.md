@@ -37,7 +37,24 @@
       <!--M_*1 #button/6-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{count:0,$count:0,$count2:0,$count3:0}]),"__tests__/template.marko_0_$count3",1,"__tests__/template.marko_0_$count2",1,"__tests__/template.marko_0_$count",1,"__tests__/template.marko_0_count",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0,
+        {
+          count: 0,
+          $count: 0,
+          $count2: 0,
+          $count3: 0
+        }]),
+        "__tests__/template.marko_0_$count3",
+        1,
+        "__tests__/template.marko_0_$count2",
+        1,
+        "__tests__/template.marko_0_$count",
+        1,
+        "__tests__/template.marko_0_count",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

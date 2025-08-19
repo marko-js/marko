@@ -16,7 +16,19 @@
     />
     <!--M_*1 #input/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#div/0":0,"ConditionalScope:#div/0":_.b={},"ControlledType:#input/1":2,value:"Hello"},_.b],_.b._=_.a,_.a["ControlledHandler:#input/1"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),"__tests__/template.marko_0",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalRenderer:#div/0": 0,
+          "ConditionalScope:#div/0": _.b = {},
+          "ControlledType:#input/1": 2,
+          value: "Hello"
+        }, _.b], _.b._ = _.a, _.a["ControlledHandler:#input/1"] = _._[
+          "__tests__/template.marko_0/valueChange"
+          ](_.a), _.c),
+        "__tests__/template.marko_0",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -39,7 +51,19 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
     <input />
     <!--M_*1 #input/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#div/0":0,"ConditionalScope:#div/0":_.b={},"ControlledType:#input/1":2,value:"Hello"},_.b],_.b._=_.a,_.a["ControlledHandler:#input/1"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),"__tests__/template.marko_0",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalRenderer:#div/0": 0,
+          "ConditionalScope:#div/0": _.b = {},
+          "ControlledType:#input/1": 2,
+          value: "Hello"
+        }, _.b], _.b._ = _.a, _.a["ControlledHandler:#input/1"] = _._[
+          "__tests__/template.marko_0/valueChange"
+          ](_.a), _.c),
+        "__tests__/template.marko_0",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -72,7 +96,19 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
     />
     <!--M_*1 #input/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#div/0":0,"ConditionalScope:#div/0":_.b={},"ControlledType:#input/1":2,value:"Hello"},_.b],_.b._=_.a,_.a["ControlledHandler:#input/1"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),"__tests__/template.marko_0",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalRenderer:#div/0": 0,
+          "ConditionalScope:#div/0": _.b = {},
+          "ControlledType:#input/1": 2,
+          value: "Hello"
+        }, _.b], _.b._ = _.a, _.a["ControlledHandler:#input/1"] = _._[
+          "__tests__/template.marko_0/valueChange"
+          ](_.a), _.c),
+        "__tests__/template.marko_0",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -106,7 +142,19 @@ input.dispatchEvent(new input.ownerDocument.defaultView.Event("input", {
     />
     <!--M_*1 #input/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalRenderer:#div/0":0,"ConditionalScope:#div/0":_.b={},"ControlledType:#input/1":2,value:"Hello"},_.b],_.b._=_.a,_.a["ControlledHandler:#input/1"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.c),"__tests__/template.marko_0",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalRenderer:#div/0": 0,
+          "ConditionalScope:#div/0": _.b = {},
+          "ControlledType:#input/1": 2,
+          value: "Hello"
+        }, _.b], _.b._ = _.a, _.a["ControlledHandler:#input/1"] = _._[
+          "__tests__/template.marko_0/valueChange"
+          ](_.a), _.c),
+        "__tests__/template.marko_0",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

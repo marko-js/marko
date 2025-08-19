@@ -19,7 +19,21 @@
     <button />
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,{"ConditionalScope:#text/0":_.a={"ConditionalScope:#span/0":_.b={},"ConditionalRenderer:#span/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/0":"span",tagName:"span",className:"A"},_.a,_.b]),"__tests__/template.marko_0_tagName",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0,
+        {
+          "ConditionalScope:#text/0": _.a = {
+            "ConditionalScope:#span/0": _.b = {},
+            "ConditionalRenderer:#span/0": "__tests__/template.marko_1_renderer"
+          },
+          "ConditionalRenderer:#text/0": "span",
+          tagName: "span",
+          className: "A"
+        }, _.a, _.b]),
+        "__tests__/template.marko_0_tagName",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

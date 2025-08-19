@@ -25,7 +25,19 @@
       <!--M_*1 #text/4-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/2":_.b={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko","#scopeOffset/3":3,x:1},_.b],_.b["#TagVariable"]=_._["__tests__/template.marko_0_y/var"](_.a),_.c),"__tests__/template.marko_0_x",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalScope:#text/2": _.b = {},
+          "ConditionalRenderer:#text/2": "__tests__/tags/custom-tag.marko",
+          "#scopeOffset/3": 3,
+          x: 1
+        }, _.b], _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_0_y/var"
+          ](_.a), _.c),
+        "__tests__/template.marko_0_x",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -62,7 +74,19 @@ container.querySelector("button").click();
       <!--M_*1 #text/4-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/2":_.b={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko","#scopeOffset/3":3,x:1},_.b],_.b["#TagVariable"]=_._["__tests__/template.marko_0_y/var"](_.a),_.c),"__tests__/template.marko_0_x",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalScope:#text/2": _.b = {},
+          "ConditionalRenderer:#text/2": "__tests__/tags/custom-tag.marko",
+          "#scopeOffset/3": 3,
+          x: 1
+        }, _.b], _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_0_y/var"
+          ](_.a), _.c),
+        "__tests__/template.marko_0_x",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -105,7 +129,19 @@ container.querySelector("button").click();
       <!--M_*1 #text/4-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/2":_.b={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko","#scopeOffset/3":3,x:1},_.b],_.b["#TagVariable"]=_._["__tests__/template.marko_0_y/var"](_.a),_.c),"__tests__/template.marko_0_x",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalScope:#text/2": _.b = {},
+          "ConditionalRenderer:#text/2": "__tests__/tags/custom-tag.marko",
+          "#scopeOffset/3": 3,
+          x: 1
+        }, _.b], _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_0_y/var"
+          ](_.a), _.c),
+        "__tests__/template.marko_0_x",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -148,7 +184,19 @@ container.querySelector("button").click();
       <!--M_*1 #text/4-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.c=[0,_.a={"ConditionalScope:#text/2":_.b={},"ConditionalRenderer:#text/2":"__tests__/tags/custom-tag.marko","#scopeOffset/3":3,x:1},_.b],_.b["#TagVariable"]=_._["__tests__/template.marko_0_y/var"](_.a),_.c),"__tests__/template.marko_0_x",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.c = [0, _.a = {
+          "ConditionalScope:#text/2": _.b = {},
+          "ConditionalRenderer:#text/2": "__tests__/tags/custom-tag.marko",
+          "#scopeOffset/3": 3,
+          x: 1
+        }, _.b], _.b["#TagVariable"] = _._[
+          "__tests__/template.marko_0_y/var"
+          ](_.a), _.c),
+        "__tests__/template.marko_0_x",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

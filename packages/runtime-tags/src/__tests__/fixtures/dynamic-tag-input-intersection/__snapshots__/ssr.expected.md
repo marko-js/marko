@@ -25,7 +25,37 @@
     </span>
     <!--M_'5 #text/0 6-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.f=[0,1,{"ConditionalScope:#text/0":_.b={"ConditionalScope:#div/0":_.c={},"ConditionalRenderer:#div/0":"__tests__/tags/my-tag.marko_1_renderer"},"ConditionalRenderer:#text/0":"div",inputContent:_._["__tests__/template.marko_1_renderer"](_.a={}),htmlInput:{}},_.b,_.c,{"ConditionalScope:#text/0":_.d={"ConditionalScope:#span/0":_.e={},"ConditionalRenderer:#span/0":"__tests__/tags/my-tag.marko_1_renderer"},"ConditionalRenderer:#text/0":"span",inputAs:"span",inputContent:_._["__tests__/template.marko_2_renderer"](_.a),htmlInput:{}},_.d,_.e]),"__tests__/tags/my-tag.marko_0_inputContent",2,5];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.f = [0, 1,
+        {
+          "ConditionalScope:#text/0": _.b = {
+            "ConditionalScope:#div/0": _.c = {},
+            "ConditionalRenderer:#div/0": "__tests__/tags/my-tag.marko_1_renderer"
+          },
+          "ConditionalRenderer:#text/0": "div",
+          inputContent: _._[
+            "__tests__/template.marko_1_renderer"
+            ](_.a = {}),
+          htmlInput:
+          {}
+        }, _.b, _.c,
+        {
+          "ConditionalScope:#text/0": _.d = {
+            "ConditionalScope:#span/0": _.e = {},
+            "ConditionalRenderer:#span/0": "__tests__/tags/my-tag.marko_1_renderer"
+          },
+          "ConditionalRenderer:#text/0": "span",
+          inputAs: "span",
+          inputContent: _._[
+            "__tests__/template.marko_2_renderer"
+            ](_.a),
+          htmlInput:
+          {}
+        }, _.d, _.e]),
+        "__tests__/tags/my-tag.marko_0_inputContent",
+        2, 5
+      ];
+      M._.w()
     </script>
   </body>
 </html>

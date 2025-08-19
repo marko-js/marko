@@ -22,7 +22,27 @@
     </button>
     <!--M_*1 #button/1-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={mult:2,"ClosureScopes:mult":_.c=new Set},2,_.d={item:1,_:_.a,"ClosureSignalIndex:mult":0},1,_.e={item:2,_:_.a,"ClosureSignalIndex:mult":0},1,_.f={item:3,_:_.a,"ClosureSignalIndex:mult":0}],(_.c).add(_.d),(_.c).add(_.e),(_.c).add(_.f),_.b),"__tests__/template.marko_0_mult",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
+          mult: 2,
+          "ClosureScopes:mult": _.c = new Set
+        }, 2, _.d = {
+          item: 1,
+          _: _.a,
+          "ClosureSignalIndex:mult": 0
+        }, 1, _.e = {
+          item: 2,
+          _: _.a,
+          "ClosureSignalIndex:mult": 0
+        }, 1, _.f = {
+          item: 3,
+          _: _.a,
+          "ClosureSignalIndex:mult": 0
+        }], (_.c).add(_.d), (_.c).add(_.e), (_.c).add(_.f), _.b),
+        "__tests__/template.marko_0_mult",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

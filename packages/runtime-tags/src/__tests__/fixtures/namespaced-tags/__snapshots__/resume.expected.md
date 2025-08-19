@@ -59,7 +59,36 @@
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.g = [0,
+        {
+          "ConditionalScope:#text/2": _.a = {
+            "ConditionalScope:#a/0": _.b = {},
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+          },
+          "ConditionalRenderer:#text/2": "a",
+          "ConditionalScope:#text/4": _.c = {
+            "ConditionalScope:#a/0": _.d = {},
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+          },
+          "ConditionalRenderer:#text/4": "a",
+          "ConditionalScope:#text/5": _.e = {
+            "ConditionalScope:#div/0": _.f = {},
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+          },
+          "ConditionalRenderer:#text/5": "div",
+          input_value: "\x3Ca href=#&gt;\x3C/a&gt;",
+          Parent: "div",
+          Child: "a"
+        }, _.a, _.b, _.c, _.d, _.e, _.f]),
+        "__tests__/template.marko_0_Parent_Child",
+        1,
+        "__tests__/template.marko_0_Child",
+        1,
+        "__tests__/template.marko_0_Parent",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -135,7 +164,36 @@ container.querySelector(".toggle-parent").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.g = [0,
+        {
+          "ConditionalScope:#text/2": _.a = {
+            "ConditionalScope:#a/0": _.b = {},
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+          },
+          "ConditionalRenderer:#text/2": "a",
+          "ConditionalScope:#text/4": _.c = {
+            "ConditionalScope:#a/0": _.d = {},
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+          },
+          "ConditionalRenderer:#text/4": "a",
+          "ConditionalScope:#text/5": _.e = {
+            "ConditionalScope:#div/0": _.f = {},
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+          },
+          "ConditionalRenderer:#text/5": "div",
+          input_value: "\x3Ca href=#&gt;\x3C/a&gt;",
+          Parent: "div",
+          Child: "a"
+        }, _.a, _.b, _.c, _.d, _.e, _.f]),
+        "__tests__/template.marko_0_Parent_Child",
+        1,
+        "__tests__/template.marko_0_Child",
+        1,
+        "__tests__/template.marko_0_Parent",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -212,7 +270,36 @@ container.querySelector(".toggle-parent").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.g = [0,
+        {
+          "ConditionalScope:#text/2": _.a = {
+            "ConditionalScope:#a/0": _.b = {},
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+          },
+          "ConditionalRenderer:#text/2": "a",
+          "ConditionalScope:#text/4": _.c = {
+            "ConditionalScope:#a/0": _.d = {},
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+          },
+          "ConditionalRenderer:#text/4": "a",
+          "ConditionalScope:#text/5": _.e = {
+            "ConditionalScope:#div/0": _.f = {},
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+          },
+          "ConditionalRenderer:#text/5": "div",
+          input_value: "\x3Ca href=#&gt;\x3C/a&gt;",
+          Parent: "div",
+          Child: "a"
+        }, _.a, _.b, _.c, _.d, _.e, _.f]),
+        "__tests__/template.marko_0_Parent_Child",
+        1,
+        "__tests__/template.marko_0_Child",
+        1,
+        "__tests__/template.marko_0_Parent",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -289,7 +376,36 @@ container.querySelector(".toggle-parent").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.g = [0,
+        {
+          "ConditionalScope:#text/2": _.a = {
+            "ConditionalScope:#a/0": _.b = {},
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+          },
+          "ConditionalRenderer:#text/2": "a",
+          "ConditionalScope:#text/4": _.c = {
+            "ConditionalScope:#a/0": _.d = {},
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+          },
+          "ConditionalRenderer:#text/4": "a",
+          "ConditionalScope:#text/5": _.e = {
+            "ConditionalScope:#div/0": _.f = {},
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+          },
+          "ConditionalRenderer:#text/5": "div",
+          input_value: "\x3Ca href=#&gt;\x3C/a&gt;",
+          Parent: "div",
+          Child: "a"
+        }, _.a, _.b, _.c, _.d, _.e, _.f]),
+        "__tests__/template.marko_0_Parent_Child",
+        1,
+        "__tests__/template.marko_0_Child",
+        1,
+        "__tests__/template.marko_0_Parent",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -352,7 +468,36 @@ container.querySelector(".toggle-child").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.g = [0,
+        {
+          "ConditionalScope:#text/2": _.a = {
+            "ConditionalScope:#a/0": _.b = {},
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+          },
+          "ConditionalRenderer:#text/2": "a",
+          "ConditionalScope:#text/4": _.c = {
+            "ConditionalScope:#a/0": _.d = {},
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+          },
+          "ConditionalRenderer:#text/4": "a",
+          "ConditionalScope:#text/5": _.e = {
+            "ConditionalScope:#div/0": _.f = {},
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+          },
+          "ConditionalRenderer:#text/5": "div",
+          input_value: "\x3Ca href=#&gt;\x3C/a&gt;",
+          Parent: "div",
+          Child: "a"
+        }, _.a, _.b, _.c, _.d, _.e, _.f]),
+        "__tests__/template.marko_0_Parent_Child",
+        1,
+        "__tests__/template.marko_0_Child",
+        1,
+        "__tests__/template.marko_0_Parent",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -423,7 +568,36 @@ container.querySelector(".toggle-child").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.g = [0,
+        {
+          "ConditionalScope:#text/2": _.a = {
+            "ConditionalScope:#a/0": _.b = {},
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+          },
+          "ConditionalRenderer:#text/2": "a",
+          "ConditionalScope:#text/4": _.c = {
+            "ConditionalScope:#a/0": _.d = {},
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+          },
+          "ConditionalRenderer:#text/4": "a",
+          "ConditionalScope:#text/5": _.e = {
+            "ConditionalScope:#div/0": _.f = {},
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+          },
+          "ConditionalRenderer:#text/5": "div",
+          input_value: "\x3Ca href=#&gt;\x3C/a&gt;",
+          Parent: "div",
+          Child: "a"
+        }, _.a, _.b, _.c, _.d, _.e, _.f]),
+        "__tests__/template.marko_0_Parent_Child",
+        1,
+        "__tests__/template.marko_0_Child",
+        1,
+        "__tests__/template.marko_0_Parent",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -490,7 +664,36 @@ container.querySelector(".toggle-child").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.g = [0,
+        {
+          "ConditionalScope:#text/2": _.a = {
+            "ConditionalScope:#a/0": _.b = {},
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+          },
+          "ConditionalRenderer:#text/2": "a",
+          "ConditionalScope:#text/4": _.c = {
+            "ConditionalScope:#a/0": _.d = {},
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+          },
+          "ConditionalRenderer:#text/4": "a",
+          "ConditionalScope:#text/5": _.e = {
+            "ConditionalScope:#div/0": _.f = {},
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+          },
+          "ConditionalRenderer:#text/5": "div",
+          input_value: "\x3Ca href=#&gt;\x3C/a&gt;",
+          Parent: "div",
+          Child: "a"
+        }, _.a, _.b, _.c, _.d, _.e, _.f]),
+        "__tests__/template.marko_0_Parent_Child",
+        1,
+        "__tests__/template.marko_0_Child",
+        1,
+        "__tests__/template.marko_0_Parent",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

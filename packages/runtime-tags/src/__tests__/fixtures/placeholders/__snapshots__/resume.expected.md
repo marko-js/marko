@@ -18,9 +18,7 @@
         hi
       </span>
       <script>
-        
-    'Hello &lt;b&gt; \x3C/script&gt;'
-  
+        'Hello &lt;b&gt; \x3C/script&gt;'
       </script>
       <style>
         

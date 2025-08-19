@@ -24,7 +24,18 @@
       <!--M_*1 #text/3-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{count:0,multiplier:1}]),"__tests__/template.marko_0_count",1,"__tests__/template.marko_0_multiplier",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0,
+        {
+          count: 0,
+          multiplier: 1
+        }]),
+        "__tests__/template.marko_0_count",
+        1,
+        "__tests__/template.marko_0_multiplier",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -60,7 +71,18 @@ container.querySelector("button#count").click();
       <!--M_*1 #text/3-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{count:0,multiplier:1}]),"__tests__/template.marko_0_count",1,"__tests__/template.marko_0_multiplier",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0,
+        {
+          count: 0,
+          multiplier: 1
+        }]),
+        "__tests__/template.marko_0_count",
+        1,
+        "__tests__/template.marko_0_multiplier",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -100,7 +122,18 @@ container.querySelector("button#count").click();
       <!--M_*1 #text/3-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{count:0,multiplier:1}]),"__tests__/template.marko_0_count",1,"__tests__/template.marko_0_multiplier",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0,
+        {
+          count: 0,
+          multiplier: 1
+        }]),
+        "__tests__/template.marko_0_count",
+        1,
+        "__tests__/template.marko_0_multiplier",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
@@ -140,7 +173,18 @@ container.querySelector("button#multiplier").click();
       <!--M_*1 #text/3-->
     </div>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.a=[0,{count:0,multiplier:1}]),"__tests__/template.marko_0_count",1,"__tests__/template.marko_0_multiplier",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.a = [0,
+        {
+          count: 0,
+          multiplier: 1
+        }]),
+        "__tests__/template.marko_0_count",
+        1,
+        "__tests__/template.marko_0_multiplier",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

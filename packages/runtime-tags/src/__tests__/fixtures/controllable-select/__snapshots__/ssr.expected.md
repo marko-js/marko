@@ -32,7 +32,18 @@
       <!--M_*1 #text/1-->
     </span>
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,_.a={"ControlledType:#select/0":3,"ControlledValue:#select/0":"b",value:"b"}],_.a["ControlledHandler:#select/0"]=_._["__tests__/template.marko_0/valueChange"](_.a),_.b),"__tests__/template.marko_0",1];M._.w()
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0, _.a = {
+          "ControlledType:#select/0": 3,
+          "ControlledValue:#select/0": "b",
+          value: "b"
+        }], _.a["ControlledHandler:#select/0"] = _._[
+          "__tests__/template.marko_0/valueChange"
+          ](_.a), _.b),
+        "__tests__/template.marko_0",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>

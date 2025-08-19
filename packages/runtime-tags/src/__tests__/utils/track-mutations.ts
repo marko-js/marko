@@ -1,3 +1,4 @@
+import { js_beautify } from "js-beautify";
 import type { JSDOM } from "jsdom";
 import format, { plugins } from "pretty-format";
 
@@ -195,6 +196,23 @@ function normalizeTree(
       } else {
         target.removeAttribute("selected");
       }
+    } else if (
+      isScriptElement(target) &&
+      isScriptElement(source) &&
+      source.textContent
+    ) {
+      let depth = 0;
+      let parent = target.parentNode;
+      while (parent) {
+        parent = parent.parentNode;
+        depth++;
+      }
+      target.textContent = js_beautify(stripInlineRuntime(source.textContent), {
+        indent_size: 2,
+        indent_level: depth,
+        wrap_line_length: 80,
+        brace_style: "expand",
+      }).trimStart();
     }
   }
 
@@ -223,18 +241,17 @@ function getStatusString(
   sanitized?: boolean,
 ) {
   const updateString = getUpdateString(update);
-  const formattedHTML = stripInlineRuntime(
-    Array.from(
-      (sanitized ? cloneAndSanitize(container) : cloneAndNormalize(container))
-        .childNodes,
-      (node) =>
-        format(node, {
-          plugins: [DOMElement, DOMCollection],
-        }).trim(),
-    )
-      .filter(Boolean)
-      .join("\n"),
-  ).trim();
+  const formattedHTML = Array.from(
+    (sanitized ? cloneAndSanitize(container) : cloneAndNormalize(container))
+      .childNodes,
+    (node) =>
+      format(node, {
+        plugins: [DOMElement, DOMCollection],
+      }).trim(),
+  )
+    .filter(Boolean)
+    .join("\n")
+    .trim();
   const formattedMutations =
     !sanitized &&
     records
@@ -396,4 +413,8 @@ function isOptionElement(node: Element): node is HTMLOptionElement {
 
 function isTextAreaElement(node: Element): node is HTMLTextAreaElement {
   return node.tagName === "TEXTAREA";
+}
+
+function isScriptElement(node: Element): node is HTMLScriptElement {
+  return node.tagName === "SCRIPT";
 }

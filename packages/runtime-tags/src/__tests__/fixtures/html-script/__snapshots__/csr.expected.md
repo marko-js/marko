@@ -3,13 +3,12 @@
 <script
   type="importmap"
 >
-  
   {
-    "imports": {
+    "imports":
+    {
       "0": "https://markojs.com",
     }
   }
-
 </script>
 <div>
   0
@@ -29,13 +28,12 @@ container.querySelector("script").click();
 <script
   type="importmap"
 >
-  
   {
-    "imports": {
+    "imports":
+    {
       "1": "https://markojs.com",
     }
   }
-
 </script>
 <div>
   1
@@ -57,13 +55,12 @@ container.querySelector("script").click();
 <script
   type="importmap"
 >
-  
   {
-    "imports": {
+    "imports":
+    {
       "2": "https://markojs.com",
     }
   }
-
 </script>
 <div>
   2
@@ -85,13 +82,12 @@ container.querySelector("script").click();
 <script
   type="importmap"
 >
-  
   {
-    "imports": {
+    "imports":
+    {
       "3": "https://markojs.com",
     }
   }
-
 </script>
 <div>
   3

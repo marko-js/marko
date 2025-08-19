@@ -43,7 +43,15 @@
     </div>
     <!--M_|1 #text/1 7 6 5-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.e=[0,{"LoopScopeMap:#text/1":new Map(_.a=[[0,_.b={}],[1,_.c={}],[2,_.d={}]])},3,_.b,_.c,_.d])]
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.e = [0,
+      {
+        "LoopScopeMap:#text/1": new Map(_.a = [
+          [0, _.b = {}],
+          [1, _.c = {}],
+          [2, _.d = {}]
+        ])
+      }, 3, _.b, _.c, _.d])]
     </script>
   </body>
 </html>

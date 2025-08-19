@@ -24,7 +24,37 @@
     <!--M/-->
     <!--M_]1 #text/2-->
     <script>
-      $MC=(window.$MC||[]).concat({"p":"_","w":[["_0",0,{"count":0},{"f":1}]],"t":["__tests__/components/class-counter.marko"]});WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.b=[0,{"ConditionalScope:#text/2":_.a={m5c:"_0"},"ConditionalRenderer:#text/2":_._.$compat_renderer(_._["__tests__/components/class-counter.marko"]),count:0},_.a]),"$compat_setScope",2,"__tests__/template.marko_0_count",1];M._.w()
+      $MC = (window.$MC || []).concat(
+      {
+        "p": "_",
+        "w": [
+          ["_0", 0,
+          {
+            "count": 0
+          },
+          {
+            "f": 1
+          }]
+        ],
+        "t": [
+          "__tests__/components/class-counter.marko"
+        ]
+      });
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0,
+        {
+          "ConditionalScope:#text/2": _.a = {
+            m5c: "_0"
+          },
+          "ConditionalRenderer:#text/2": _._.$compat_renderer(_._[
+            "__tests__/components/class-counter.marko"
+            ]),
+          count: 0
+        }, _.a]), "$compat_setScope", 2,
+        "__tests__/template.marko_0_count",
+        1
+      ];
+      M._.w()
     </script>
   </body>
 </html>
