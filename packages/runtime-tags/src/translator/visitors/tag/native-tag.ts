@@ -989,7 +989,7 @@ function getUsedAttrs(tagName: string, tag: t.MarkoTag) {
       seen[attr.name] = attr;
       if (spreadProps) {
         spreadProps.push(toObjectProperty(attr.name, attr.value));
-      } else if (attr.name === "content") {
+      } else if (attr.name === "content" && tagName !== "meta") {
         staticContentAttr = attr;
       } else {
         maybeStaticAttrs.add(attr);

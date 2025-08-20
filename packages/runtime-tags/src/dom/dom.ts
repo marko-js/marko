@@ -255,16 +255,16 @@ function attrsInternal(
       case "style":
         styleAttr(el, value);
         break;
-      case "content": {
-        break;
-      }
       default: {
         if (isEventHandler(name)) {
           (events ||= scope[AccessorPrefix.EventAttributes + nodeAccessor] =
             {})[getEventHandlerName(name)] = value;
-        } else if (!skip?.test(name)) {
+        } else if (
+          !(skip?.test(name) || (name === "content" && el.tagName !== "META"))
+        ) {
           attr(el, name, value);
         }
+        break;
       }
     }
   }
