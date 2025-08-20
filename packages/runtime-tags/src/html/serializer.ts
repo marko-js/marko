@@ -478,22 +478,34 @@ function writeRoot(state: State, root: unknown) {
 
 function writeAssigned(state: State) {
   if (state.assigned.size) {
+    let inits = "";
+    let assigns = "";
     for (const valueRef of state.assigned) {
       if (valueRef.init) {
-        if (valueRef.assigns) {
-          state.buf.push(
-            "," + assignsToString(valueRef.assigns, valueRef.init),
-          );
-        } else {
-          state.buf.push("," + valueRef.init);
-        }
+        inits +=
+          "," +
+          (valueRef.assigns
+            ? assignsToString(valueRef.assigns, valueRef.init)
+            : valueRef.init);
         valueRef.init = "";
       } else if (valueRef.assigns) {
-        state.buf.push("," + assignsToString(valueRef.assigns, valueRef.id!));
+        assigns += "," + assignsToString(valueRef.assigns, valueRef.id!);
       }
+
+      valueRef.assigns = null;
     }
+
+    if (assigns) {
+      state.buf.push(assigns);
+    }
+
+    if (inits) {
+      state.buf.push(inits);
+    }
+
     state.assigned = new Set();
   }
+
   if (state.mutations.length) {
     for (const mutation of state.mutations) {
       const objectStartIndex = state.buf.push(
