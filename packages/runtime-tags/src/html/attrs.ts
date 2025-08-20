@@ -235,11 +235,15 @@ export function attrs(
       case "style":
         result += styleAttr(value);
         break;
-      case "":
-      case "content":
-        break;
       default:
-        if (!isVoid(value)) {
+        if (
+          name &&
+          !(
+            isVoid(value) ||
+            skip.test(name) ||
+            (name === "content" && tagName !== "meta")
+          )
+        ) {
           if (isEventHandler(name)) {
             if (!events) {
               events = {};
@@ -249,7 +253,7 @@ export function attrs(
             }
 
             events[getEventHandlerName(name)] = value;
-          } else if (!skip.test(name)) {
+          } else {
             result += nonVoidAttr(name, value);
           }
         }

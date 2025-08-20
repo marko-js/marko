@@ -1,4 +1,4 @@
-// size: 19296 (min) 7316 (brotli)
+// size: 19311 (min) 7353 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1060,14 +1060,14 @@ function attrsInternal(scope, nodeAccessor, nextAttrs) {
       case "style":
         styleAttr(el, value2);
         break;
-      case "content":
-        break;
       default:
         isEventHandler(name)
           ? ((events ||= scope["i" + nodeAccessor] = {})[
               getEventHandlerName(name)
             ] = value2)
-          : skip?.test(name) || attr(el, name, value2);
+          : skip?.test(name) ||
+            ("content" === name && "META" !== el.tagName) ||
+            attr(el, name, value2);
     }
   }
 }
