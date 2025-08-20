@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.50
+
+### Patch Changes
+
+- [#2771](https://github.com/marko-js/marko/pull/2771) [`ff7a879`](https://github.com/marko-js/marko/commit/ff7a87935eef0f7f2bc52c8c483c049a2f38f144) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure deserialized functions always called after normal assignments in the serializer.
+
 ## 6.0.49
 
 ### Patch Changes
