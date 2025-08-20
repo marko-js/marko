@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.47
+
+### Patch Changes
+
+- [#2769](https://github.com/marko-js/marko/pull/2769) [`7680160`](https://github.com/marko-js/marko/commit/76801609170a92baca0fe800ba273238abd3893e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Runtime types improvements. Add CI validation to runtime types files.
+
 ## 5.37.46
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.49
+
+### Patch Changes
+
+- [#2769](https://github.com/marko-js/marko/pull/2769) [`7680160`](https://github.com/marko-js/marko/commit/76801609170a92baca0fe800ba273238abd3893e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Runtime types improvements. Add CI validation to runtime types files.
+
+- [#2769](https://github.com/marko-js/marko/pull/2769) [`f139907`](https://github.com/marko-js/marko/commit/f1399079f977742ecf438ecef1a3227f6900d6bb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Special case meta tags content attribute to not be processed as body content.
+
 ## 6.0.48
 
 ### Patch Changes
