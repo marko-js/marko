@@ -1,0 +1,35 @@
+<!-- Test the refactored dynamic tag functionality -->
+
+<!-- Test 1: Basic dynamic tag with string renderer -->
+<${input.tagName} class="test-class" id="test-id">
+    Basic content
+</>
+
+<!-- Test 2: Dynamic tag with template renderer -->
+<${input.templateRenderer} name="John" age=25/>
+
+<!-- Test 3: Dynamic tag with void element -->
+<${input.voidTag} class="void-test" disabled/>
+
+<!-- Test 4: Dynamic tag with conditional renderer -->
+<${input.condition ? 'div' : 'span'} class="conditional">
+    Conditional content
+</>
+
+<!-- Test 5: Dynamic tag with textarea (special handling) -->
+<${input.textareaTag} value="Test value" class="textarea-test"/>
+
+<!-- Test 6: Dynamic tag with select (special handling) -->
+<${input.selectTag} value="option2" class="select-test">
+    <option value="option1">Option 1</option>
+    <option value="option2">Option 2</option>
+    <option value="option3">Option 3</option>
+</>
+
+<!-- Test 7: Dynamic tag with function renderer -->
+<${input.functionRenderer} message="Hello World"/>
+
+<!-- Test 8: Dynamic tag with content function -->
+<${input.contentTag} class="content-test">
+    ${input.dynamicContent}
+</>
