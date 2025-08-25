@@ -8,7 +8,7 @@ import {
   NodeType,
   type Scope,
 } from "../common/types";
-import { attrs } from "./dom";
+import { attrs, attrsAndContent } from "./dom";
 import {
   caughtError,
   pendingEffects,
@@ -304,7 +304,7 @@ export let dynamicTag = function dynamicTag(
       const childScope = scope[childScopeAccessor] as Scope;
       const args = getInput?.();
       if (typeof normalizedRenderer === "string") {
-        attrs(
+        (getContent ? attrs : attrsAndContent)(
           childScope,
           MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0,
           (inputIsArgs ? args[0] : args) || {},

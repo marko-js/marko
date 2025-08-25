@@ -115,7 +115,9 @@ export default {
         }
         throw tag
           .get("name")
-          .buildCodeFrameError("Unable to find entry point for custom tag.");
+          .buildCodeFrameError(
+            `Unable to find entry point for custom tag \`<${tagName}>\`.`,
+          );
       }
 
       const section = getOrCreateSection(tag);
@@ -522,7 +524,9 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
     }
     throw tag
       .get("name")
-      .buildCodeFrameError("Unable to find entry point for custom tag.");
+      .buildCodeFrameError(
+        `Unable to find entry point for custom tag \`<${tagName}>\`.`,
+      );
   }
 
   return relativePath;

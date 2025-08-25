@@ -1,4 +1,4 @@
-// size: 19311 (min) 7353 (brotli)
+// size: 19357 (min) 7340 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -87,6 +87,85 @@ function handleDelegated(ev) {
 function stripSpacesAndPunctuation(str) {
   return str.replace(/[^\p{L}\p{N}]/gu, "");
 }
+function createScope($global, closestBranch) {
+  let scope = { l: $global.p++, q: 1, k: closestBranch, $global: $global };
+  return (pendingScopes.push(scope), scope);
+}
+function skipScope(scope) {
+  return scope.$global.p++;
+}
+function findBranchWithKey(scope, key) {
+  let branch = scope.k;
+  for (; branch && !branch[key]; ) branch = branch.y;
+  return branch;
+}
+function destroyBranch(branch) {
+  (branch.y?.A?.delete(branch), destroyNestedBranches(branch));
+}
+function destroyNestedBranches(branch) {
+  ((branch.B = 1),
+    branch.A?.forEach(destroyNestedBranches),
+    branch.J?.forEach((scope) => {
+      for (let id in scope.z) scope.z[id]?.abort();
+    }));
+}
+function removeAndDestroyBranch(branch) {
+  (destroyBranch(branch), removeChildNodes(branch.h, branch.j));
+}
+function insertBranchBefore(branch, parentNode, nextSibling) {
+  insertChildNodes(parentNode, nextSibling, branch.h, branch.j);
+}
+function tempDetachBranch(branch) {
+  let fragment = new DocumentFragment();
+  ((fragment.namespaceURI = branch.h.parentNode.namespaceURI),
+    insertChildNodes(fragment, null, branch.h, branch.j));
+}
+var walker = document.createTreeWalker(document);
+function walk(startNode, walkCodes, branch) {
+  ((walker.currentNode = startNode), walkInternal(0, walkCodes, branch));
+}
+function walkInternal(currentWalkIndex, walkCodes, scope) {
+  let value2,
+    storedMultiplier = 0,
+    currentMultiplier = 0,
+    currentScopeIndex = 0;
+  for (; currentWalkIndex < walkCodes.length; )
+    if (
+      ((value2 = walkCodes.charCodeAt(currentWalkIndex++)),
+      (currentMultiplier = storedMultiplier),
+      (storedMultiplier = 0),
+      32 === value2)
+    ) {
+      let node = walker.currentNode;
+      ((scope[currentScopeIndex] = node),
+        (scope["j" + currentScopeIndex++] = () => node));
+    } else if (37 === value2 || 49 === value2)
+      (walker.currentNode.replaceWith(
+        (walker.currentNode = scope[currentScopeIndex++] = new Text()),
+      ),
+        49 === value2 && (scope[currentScopeIndex++] = skipScope(scope)));
+    else {
+      if (38 === value2) return currentWalkIndex;
+      if (47 === value2 || 48 === value2)
+        ((currentWalkIndex = walkInternal(
+          currentWalkIndex,
+          walkCodes,
+          (scope[currentScopeIndex++] = createScope(scope.$global, scope.k)),
+        )),
+          48 === value2 && (scope[currentScopeIndex++] = skipScope(scope)));
+      else if (value2 < 92)
+        for (value2 = 20 * currentMultiplier + value2 - 67; value2--; )
+          walker.nextNode();
+      else if (value2 < 107)
+        for (value2 = 10 * currentMultiplier + value2 - 97; value2--; )
+          walker.nextSibling();
+      else if (value2 < 117) {
+        for (value2 = 10 * currentMultiplier + value2 - 107; value2--; )
+          walker.parentNode();
+        walker.nextSibling();
+      } else storedMultiplier = 10 * currentMultiplier + value2 - 117;
+    }
+}
 var branchesEnabled,
   isResuming,
   registeredValues = {};
@@ -149,7 +228,7 @@ function init(runtimeId = "M") {
                     );
                   };
                 return {
-                  J() {
+                  K() {
                     if ("[" === visitToken)
                       (currentBranchId &&
                         visitDataIndex &&
@@ -183,12 +262,21 @@ function init(runtimeId = "M") {
                           start,
                           ~next ? next : visitData.length,
                         );
-                        ((curNode = endBranch(childScopeId, curNode).j),
-                          parentBranchIds.set(childScopeId, scopeId));
+                        if (
+                          ((curNode = endBranch(childScopeId, curNode).j),
+                          parentBranchIds.set(childScopeId, scopeId),
+                          "'" === visitToken)
+                        ) {
+                          let childBranch = scopeLookup[childScopeId];
+                          childBranch[0] =
+                            childBranch.h =
+                            childBranch.j =
+                              curNode;
+                        }
                       }
                     }
                   },
-                  p(scope) {
+                  t(scope) {
                     let parentBranchId =
                       scope.g || parentBranchIds.get(scopeId);
                     if (
@@ -227,7 +315,7 @@ function init(runtimeId = "M") {
                           (node) => () =>
                             node
                         )((visitScope[visitData] = visit.previousSibling)))
-                      : branches && branches.J());
+                      : branches && branches.K());
                 for (let serialized of (resumes = render.r || []))
                   if ("string" == typeof serialized) lastEffect = serialized;
                   else if ("number" == typeof serialized)
@@ -248,11 +336,11 @@ function init(runtimeId = "M") {
                                 scope,
                                 scopeLookup[scopeId],
                               )),
-                            branches && branches.p(scope))
+                            branches && branches.t(scope))
                         : (($global = scope || {}),
                           ($global.runtimeId = runtimeId),
                           ($global.renderId = renderId),
-                          ($global.q = 1e6));
+                          ($global.p = 1e6));
               } finally {
                 isResuming = visits.length = resumes.length = 0;
               }
@@ -551,39 +639,6 @@ function parseHTML(html2, ns) {
   let parser = (parsers[ns] ||= document.createElementNS(ns, "template"));
   return ((parser.innerHTML = html2), parser.content || parser);
 }
-function createScope($global, closestBranch) {
-  let scope = { l: $global.q++, t: 1, k: closestBranch, $global: $global };
-  return (pendingScopes.push(scope), scope);
-}
-function skipScope(scope) {
-  return scope.$global.q++;
-}
-function findBranchWithKey(scope, key) {
-  let branch = scope.k;
-  for (; branch && !branch[key]; ) branch = branch.y;
-  return branch;
-}
-function destroyBranch(branch) {
-  (branch.y?.A?.delete(branch), destroyNestedBranches(branch));
-}
-function destroyNestedBranches(branch) {
-  ((branch.B = 1),
-    branch.A?.forEach(destroyNestedBranches),
-    branch.K?.forEach((scope) => {
-      for (let id in scope.z) scope.z[id]?.abort();
-    }));
-}
-function removeAndDestroyBranch(branch) {
-  (destroyBranch(branch), removeChildNodes(branch.h, branch.j));
-}
-function insertBranchBefore(branch, parentNode, nextSibling) {
-  insertChildNodes(parentNode, nextSibling, branch.h, branch.j);
-}
-function tempDetachBranch(branch) {
-  let fragment = new DocumentFragment();
-  ((fragment.namespaceURI = branch.h.parentNode.namespaceURI),
-    insertChildNodes(fragment, null, branch.h, branch.j));
-}
 function schedule() {
   isScheduled || ((isScheduled = 1), queueMicrotask(flushAndWaitFrame));
 }
@@ -623,7 +678,7 @@ function value(valueAccessor, fn = () => {}) {
 }
 function intersection(id, fn, defaultPending = 1, scopeIdAccessor = "l") {
   return (scope) => {
-    scope.t
+    scope.q
       ? void 0 === scope[id]
         ? (scope[id] = defaultPending)
         : --scope[id] || fn(scope)
@@ -646,7 +701,7 @@ function loopClosure(valueAccessor, ownerLoopNodeAccessor, fn) {
           ownerScope,
           () => {
             for (let scope of scopes)
-              !scope.t && !scope.B && childSignal(scope);
+              !scope.q && !scope.B && childSignal(scope);
           },
           -1,
           0,
@@ -667,7 +722,7 @@ function conditionalClosure(
     ownerSignal = (scope) => {
       let ifScope = scope[scopeAccessor];
       ifScope &&
-        !ifScope.t &&
+        !ifScope.q &&
         scope[branchAccessor] === branch &&
         queueRender(ifScope, childSignal, -1);
     };
@@ -688,7 +743,7 @@ function dynamicClosure(...closureSignals) {
   return (scope) => {
     if (scope[___scopeInstancesAccessor])
       for (let childScope of scope[___scopeInstancesAccessor])
-        childScope.t ||
+        childScope.q ||
           queueRender(
             childScope,
             closureSignals[childScope[___signalIndexAccessor]],
@@ -762,52 +817,6 @@ function hoist(...path) {
         traverseAllHoisted(scope, path));
     return getOne;
   };
-}
-var walker = document.createTreeWalker(document);
-function walk(startNode, walkCodes, branch) {
-  ((walker.currentNode = startNode), walkInternal(0, walkCodes, branch));
-}
-function walkInternal(currentWalkIndex, walkCodes, scope) {
-  let value2,
-    storedMultiplier = 0,
-    currentMultiplier = 0,
-    currentScopeIndex = 0;
-  for (; currentWalkIndex < walkCodes.length; )
-    if (
-      ((value2 = walkCodes.charCodeAt(currentWalkIndex++)),
-      (currentMultiplier = storedMultiplier),
-      (storedMultiplier = 0),
-      32 === value2)
-    ) {
-      let node = walker.currentNode;
-      ((scope[currentScopeIndex] = node),
-        (scope["j" + currentScopeIndex++] = () => node));
-    } else if (37 === value2 || 49 === value2)
-      (walker.currentNode.replaceWith(
-        (walker.currentNode = scope[currentScopeIndex++] = new Text()),
-      ),
-        49 === value2 && (scope[currentScopeIndex++] = skipScope(scope)));
-    else {
-      if (38 === value2) return currentWalkIndex;
-      if (47 === value2 || 48 === value2)
-        ((currentWalkIndex = walkInternal(
-          currentWalkIndex,
-          walkCodes,
-          (scope[currentScopeIndex++] = createScope(scope.$global, scope.k)),
-        )),
-          48 === value2 && (scope[currentScopeIndex++] = skipScope(scope)));
-      else if (value2 < 92)
-        for (value2 = 20 * currentMultiplier + value2 - 67; value2--; )
-          walker.nextNode();
-      else if (value2 < 107)
-        for (value2 = 10 * currentMultiplier + value2 - 97; value2--; )
-          walker.nextSibling();
-      else if (value2 < 117) {
-        for (value2 = 10 * currentMultiplier + value2 - 107; value2--; )
-          walker.parentNode();
-        walker.nextSibling();
-      } else storedMultiplier = 10 * currentMultiplier + value2 - 117;
-    }
 }
 function createBranch($global, renderer, parentScope, parentNode) {
   let branch = createScope($global),
@@ -1360,7 +1369,11 @@ var dynamicTag = function (nodeAccessor, getContent, getTagVar, inputIsArgs) {
         let childScope = scope[childScopeAccessor],
           args = getInput?.();
         if ("string" == typeof normalizedRenderer)
-          attrs(childScope, 0, (inputIsArgs ? args[0] : args) || {});
+          (getContent ? attrs : attrsAndContent)(
+            childScope,
+            0,
+            (inputIsArgs ? args[0] : args) || {},
+          );
         else {
           for (let accessor in normalizedRenderer.G)
             normalizedRenderer.G[accessor](
@@ -1647,7 +1660,7 @@ function queueRender(scope, signal, signalKey, value2, scopeKey = scope.l) {
     existingRender = signalKey >= 0 && pendingRendersLookup.get(key);
   if (existingRender) existingRender.I = value2;
   else {
-    let render = { x: key, p: scope, N: signal, I: value2 },
+    let render = { x: key, t: scope, N: signal, I: value2 },
       i = pendingRenders.push(render) - 1;
     for (; i; ) {
       let parentIndex = (i - 1) >> 1,
@@ -1716,12 +1729,12 @@ function runRenders() {
       }
       pendingRenders[i] = item;
     }
-    render.p.k?.B || runRender(render);
+    render.t.k?.B || runRender(render);
   }
-  for (let scope of pendingScopes) scope.t = 0;
+  for (let scope of pendingScopes) scope.q = 0;
   pendingScopes = [];
 }
-var runRender = (render) => render.N(render.p, render.I),
+var runRender = (render) => render.N(render.t, render.I),
   enableCatch = () => {
     ((enableCatch = () => {}), enableBranches());
     let handlePendingTry = (fn, scope, branch) => {
@@ -1752,7 +1765,7 @@ var runRender = (render) => render.N(render.p, render.I),
         try {
           runRender2(render);
         } catch (error) {
-          renderCatch(render.p, error);
+          renderCatch(render.t, error);
         }
       })(runRender)));
   };
@@ -1762,7 +1775,7 @@ function resetAbortSignal(scope, id) {
 }
 function getAbortSignal(scope, id) {
   return (
-    scope.k && (scope.k.K ||= new Set()).add(scope),
+    scope.k && (scope.k.J ||= new Set()).add(scope),
     ((scope.z ||= {})[id] ||= new AbortController()).signal
   );
 }
@@ -1835,7 +1848,7 @@ var classIdToBranch = new Map(),
         ((component.effects = prepareEffects(() => {
           (branch
             ? (existing = 1)
-            : ((out.global.q ||= 0),
+            : ((out.global.p ||= 0),
               (branch = component.scope =
                 createAndSetupBranch(
                   out.global,
@@ -1866,8 +1879,8 @@ function mount(input = {}, reference, position) {
   switch (
     ($global
       ? (({ $global: $global, ...input } = input),
-        ($global = { q: 0, runtimeId: "M", renderId: "_", ...$global }))
-      : ($global = { q: 0, runtimeId: "M", renderId: "_" }),
+        ($global = { p: 0, runtimeId: "M", renderId: "_", ...$global }))
+      : ($global = { p: 0, runtimeId: "M", renderId: "_" }),
     position)
   ) {
     case "beforebegin":

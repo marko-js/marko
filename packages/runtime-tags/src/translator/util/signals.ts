@@ -352,11 +352,12 @@ export function getSignalFn(signal: Signal): t.Expression {
           const aliasId = t.identifier(alias.name);
           forEach(alias.excludeProperties, (name) => {
             const propId = toPropertyName(name);
-            const shorthand = propId.type === "Identifier";
+            const shorthand =
+              propId.type === "Identifier" && t.isValidIdentifier(name);
             props.push(
               t.objectProperty(
                 propId,
-                propId.type === "Identifier" ? propId : t.objectPattern([]),
+                shorthand ? propId : generateUidIdentifier(name),
                 false,
                 shorthand,
               ),

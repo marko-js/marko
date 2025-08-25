@@ -130,13 +130,13 @@ export function translateAttrs(
   }
 
   if (!seen.has(contentKey) && usesExport(templateExports, contentKey)) {
-    seen.add(contentKey);
     const contentExpression = buildContent(tag.get("body"));
     if (contentExpression) {
       const contentProp = t.objectProperty(
         t.identifier(contentKey),
         contentExpression,
       );
+      seen.add(contentKey);
       contentProps.add(contentProp);
       properties.push(contentProp);
     }
