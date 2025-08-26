@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.48
+
+### Patch Changes
+
+- [#2779](https://github.com/marko-js/marko/pull/2779) [`f388228`](https://github.com/marko-js/marko/commit/f388228adea301e8d115d862a889de2492fba4ea) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Misc tags api compat improvements.
+
 ## 5.37.47
 
 ### Patch Changes
