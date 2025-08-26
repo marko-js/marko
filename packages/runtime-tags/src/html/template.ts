@@ -245,7 +245,7 @@ class ServerRendered implements RenderedTemplate {
         if (boundary.signal.aborted) {
           boundary.onNext = NOOP;
           reject(boundary.signal.reason);
-        } else if (boundary.done) {
+        } else if (!boundary.count && boundary.done) {
           resolve(head.consume().flushHTML());
         }
       })();

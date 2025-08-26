@@ -200,7 +200,7 @@ export function patchDynamicTag(
     (originalDynamicTag) =>
     (scopeId, accessor, tag, input, content, inputIsArgs, resume) => {
       const patched = patch(scopeId, accessor, tag);
-      (patched as any).___id = tag;
+      if (patched !== tag) (patched as any).___id = tag;
       return originalDynamicTag(
         scopeId,
         accessor,

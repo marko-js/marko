@@ -1,4 +1,4 @@
-// size: 19357 (min) 7340 (brotli)
+// size: 19372 (min) 7370 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs2) {
@@ -1803,7 +1803,7 @@ var classIdToBranch = new Map(),
       ((branch.h = startNode), (branch.j = endNode));
     },
     runComponentEffects() {
-      runEffects(this.effects);
+      this.effects && runEffects(this.effects);
     },
     runComponentDestroy() {
       this.scope && destroyBranch(this.scope);
@@ -1830,13 +1830,12 @@ var classIdToBranch = new Map(),
       );
     },
     render(out, component, renderer, args) {
-      let existing,
-        branch = component.scope;
+      let branch = component.scope,
+        created = 0;
       if (
-        (branch ||
-          ((branch = classIdToBranch.get(component.id)),
-          branch &&
-            ((component.scope = branch), classIdToBranch.delete(component.id))),
+        (!branch &&
+          (branch = classIdToBranch.get(component.id)) &&
+          ((component.scope = branch), classIdToBranch.delete(component.id)),
         "object" == typeof args[0] && "renderBody" in args[0])
       ) {
         let input = args[0],
@@ -1846,19 +1845,19 @@ var classIdToBranch = new Map(),
       }
       if (
         ((component.effects = prepareEffects(() => {
-          (branch
-            ? (existing = 1)
-            : ((out.global.p ||= 0),
-              (branch = component.scope =
-                createAndSetupBranch(
-                  out.global,
-                  renderer,
-                  renderer.u,
-                  document.body,
-                ))),
+          (branch ||
+            ((created = 1),
+            (out.global.p ||= 0),
+            (branch = component.scope =
+              createAndSetupBranch(
+                out.global,
+                renderer,
+                renderer.u,
+                document.body,
+              ))),
             renderer.m?.(branch, renderer._ ? args[0] : args));
         })),
-        !existing)
+        created)
       )
         return toInsertNode(branch.h, branch.j);
     },

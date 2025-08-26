@@ -40,7 +40,9 @@ export const compat = {
     branch.___endNode = endNode;
   },
   runComponentEffects(this: any) {
-    runEffects(this.effects);
+    if (this.effects) {
+      runEffects(this.effects);
+    }
   },
   runComponentDestroy(this: any) {
     if (this.scope) {
@@ -74,17 +76,14 @@ export const compat = {
     return renderer;
   },
   render(out: any, component: any, renderer: Renderer, args: any) {
-    let branch: BranchScope = component.scope;
+    let branch: BranchScope | undefined = component.scope;
+    let created: 0 | 1 = 0;
 
-    if (!branch) {
-      branch = classIdToBranch.get(component.id)!;
-      if (branch) {
-        component.scope = branch;
-        classIdToBranch.delete(component.id);
-      }
+    if (!branch && (branch = classIdToBranch.get(component.id)!)) {
+      component.scope = branch;
+      classIdToBranch.delete(component.id);
     }
 
-    let existing: undefined | 1;
     if (typeof args[0] === "object" && "renderBody" in args[0]) {
       const input = args[0];
       const normalizedInput = (args[0] = {} as any);
@@ -95,6 +94,7 @@ export const compat = {
 
     component.effects = prepareEffects(() => {
       if (!branch) {
+        created = 1;
         out.global.___nextScopeId ||= 0;
         branch = component.scope = createAndSetupBranch(
           out.global,
@@ -102,14 +102,12 @@ export const compat = {
           renderer.___owner,
           document.body,
         );
-      } else {
-        existing = 1;
       }
 
       renderer.___params?.(branch, (renderer as any)._ ? args[0] : args);
     });
 
-    if (!existing) {
+    if (created) {
       return toInsertNode(branch.___startNode, branch.___endNode);
     }
   },

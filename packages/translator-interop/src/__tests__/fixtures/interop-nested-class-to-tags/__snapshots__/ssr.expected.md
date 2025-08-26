@@ -1,5 +1,5 @@
 # Write
-  <!--M#s0--><!--F#0--><button id=tags>0<!--Ms*1 #text/1--></button><!--Ms*1 #button/0--><div><!--Ms[2--><button id=class>0</button><!--Ms]1 #text/2--></div><!--F/--><!--M/--><script>WALKER_RUNTIME("M")("s");M.s.r=[_=>(_.b=[0,{m5c:"s0-0","ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":_._.$compat_renderBody,count:0},_.a]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w()</script>
+  <!--M#s0--><!--F#1--><button id=tags>0<!--Ms*1 #text/1--></button><!--Ms*1 #button/0--><div><!--Ms[2--><button id=class>0</button><!--Ms]1 #text/2--></div><!--F/--><!--M/--><script>WALKER_RUNTIME("M")("s");M.s.r=[_=>(_.b=[0,{m5c:"s0-0","ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":_._.$compat_renderBody,count:0},_.a]),"$compat_setScope",1,"__tests__/components/tags-layout.marko_0_count",1];M.s.w();$MC=(window.$MC||[]).concat({"w":[["s0",0,{},{"f":1}]],"t":["__tests__/template.marko"]})</script>
 
 # Render End
 ```html
@@ -7,7 +7,7 @@
   <head />
   <body>
     <!--M#s0-->
-    <!--F#0-->
+    <!--F#1-->
     <button
       id="tags"
     >
@@ -38,7 +38,20 @@
         "__tests__/components/tags-layout.marko_0_count",
         1
       ];
-      M.s.w()
+      M.s.w();
+      $MC = (window.$MC || []).concat(
+      {
+        "w": [
+          ["s0", 0,
+          {},
+          {
+            "f": 1
+          }]
+        ],
+        "t": [
+          "__tests__/template.marko"
+        ]
+      })
     </script>
   </body>
 </html>

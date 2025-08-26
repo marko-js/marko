@@ -30,8 +30,7 @@
                 1
               ]]
             ],
-            "f": 1,
-            "p": null
+            "f": 1
           }]
         ],
         "t": [
@@ -97,8 +96,7 @@ container.querySelector("#class-api").click();
                 1
               ]]
             ],
-            "f": 1,
-            "p": null
+            "f": 1
           }]
         ],
         "t": [
@@ -162,8 +160,7 @@ container.querySelector("#class-api").click();
                 1
               ]]
             ],
-            "f": 1,
-            "p": null
+            "f": 1
           }]
         ],
         "t": [

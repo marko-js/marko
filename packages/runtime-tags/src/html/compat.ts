@@ -15,6 +15,7 @@ import {
   fork,
   getChunk,
   getScopeId,
+  isInResumedBranch,
   nextScopeId,
   peekNextScopeId,
   State,
@@ -37,8 +38,16 @@ export const compat = {
   writeScript,
   nextScopeId,
   peekNextScopeId,
+  isInResumedBranch,
   isTagsAPI(fn: any) {
     return !!fn.___id;
+  },
+  onFlush(fn: (chunk: Chunk) => void) {
+    const { flushHTML } = Chunk.prototype;
+    Chunk.prototype.flushHTML = function () {
+      fn(this);
+      return flushHTML.call(this);
+    };
   },
   patchDynamicTag,
   writeSetScopeForComponent(branchId: number, m5c: string) {
@@ -69,6 +78,7 @@ export const compat = {
     classAPIOut: any,
     component: any,
     input: any,
+    toStringEvent: string,
   ) {
     const $global = classAPIOut.global;
     let state: State | undefined = ($global[K_TAGS_API_STATE] ||=
@@ -83,7 +93,7 @@ export const compat = {
     }
 
     const boundary = new Boundary(state);
-    const head = new Chunk(
+    let head = new Chunk(
       boundary,
       null,
       null /* TODO: this should grab the context from the previous chunk */,
@@ -108,24 +118,31 @@ export const compat = {
       } else {
         renderer(normalizedInput);
       }
-    });
 
-    const asyncOut = classAPIOut.beginAsync();
-    queueMicrotask(
+      const asyncOut = classAPIOut.beginAsync();
       (boundary.onNext = () => {
         if (boundary.signal.aborted) {
           asyncOut.error(boundary.signal.reason);
-        } else if (boundary.done) {
-          const { scripts, html } = head.consume().flushScript();
-          asyncOut.script(scripts);
-          asyncOut.write(html);
-
-          if (boundary.done) {
-            asyncOut.end();
-          }
+          boundary.onNext = NOOP;
+        } else if (!boundary.count) {
+          asyncOut.once(toStringEvent, (writer: any) => {
+            if (boundary.done) {
+              const { html, scripts } = head.flushScript();
+              writer.script(scripts);
+              writer.write(html);
+            } else {
+              asyncOut.error(
+                new Error("Cannot serialize promises with class/tags interop."),
+              );
+            }
+          });
+          head = head.consume();
+          asyncOut.write(head.html);
+          asyncOut.end();
+          head.html = "";
         }
-      }),
-    );
+      })();
+    });
   },
   registerRenderer(renderer: any, id: string) {
     return register(
@@ -138,3 +155,5 @@ export const compat = {
     register(RENDER_BODY_ID, fn);
   },
 };
+
+function NOOP() {}
