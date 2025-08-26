@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.51
+
+### Patch Changes
+
+- [#2777](https://github.com/marko-js/marko/pull/2777) [`e8856c8`](https://github.com/marko-js/marko/commit/e8856c820990c0d441279503fdf4b709e3894f1a) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Improve dynamic tag content
+
 ## 6.0.50
 
 ### Patch Changes
