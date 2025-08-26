@@ -4,24 +4,13 @@
   <head />
   <body>
     <!--Ms[2-->
+    <!--M#s1-->
     <h1>
       Hello world
     </h1>
+    <!--M/-->
     <!--Ms]1 #text/0-->
     <script>
-      $MC = (window.$MC || []).concat(
-      {
-        "w": [
-          ["s1", 0,
-          {},
-          {
-            "f": 1
-          }]
-        ],
-        "t": [
-          "__tests__/tags/components/hello-internal.marko"
-        ]
-      });
       WALKER_RUNTIME("M")("s");
       M.s.r = [_ =&gt; (_.b = [0,
       {
@@ -36,12 +25,4 @@
     </script>
   </body>
 </html>
-```
-
-# Mutations
-```
-INSERT html/body/#text0
-INSERT html/body/#text1
-REMOVE #comment after html/body/#comment0
-REMOVE #comment after html/body/#text1
 ```

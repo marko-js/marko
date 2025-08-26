@@ -53,7 +53,7 @@ exports.p = function (domCompat) {
       const tagsRenderer = domCompat.resolveRegistered(_.r, global);
       const newNode = domCompat.render(out, component, tagsRenderer, input);
 
-      out.bf(out.___assignedKey, component, !newNode);
+      out.bf("1", component, !newNode);
       if (newNode) {
         out.node({ ___actualize: () => newNode });
       }
@@ -124,7 +124,7 @@ exports.p = function (domCompat) {
   domCompat.init(noopRenderer);
 
   function renderAndMorph(scope, renderer, renderBody, input) {
-    const out = defaultCreateOut();
+    const out = defaultCreateOut(scope.$global);
     let host = domCompat.getStartNode(scope);
     let rootNode = host.fragment;
     if (!rootNode) {
@@ -132,7 +132,7 @@ exports.p = function (domCompat) {
         ___componentLookup[scope.m5c]);
       rootNode = component.___rootNode;
       host = rootNode.startNode;
-      domCompat.setScopeNodes(host, rootNode.endNode);
+      domCompat.setScopeNodes(host, rootNode.startNode, rootNode.endNode);
     }
     const existingComponent = scope.___marko5Component;
     const componentsContext = ___getComponentsContext(out);

@@ -3,8 +3,6 @@
 <html>
   <head />
   <body>
-    <!--M#s0-->
-    <!--F#0-->
     <button
       id="tags"
     >
@@ -13,7 +11,6 @@
     </button>
     <!--Ms*1 #button/0-->
     <div>
-      <!--Ms[2-->
       <button
         id="class"
       >
@@ -21,8 +18,6 @@
       </button>
       <!--Ms]1 #text/2-->
     </div>
-    <!--F/-->
-    <!--M/-->
     <script>
       WALKER_RUNTIME("M")("s");
       M.s.r = [_ =&gt; (_.b = [0,
@@ -35,12 +30,47 @@
         "__tests__/components/tags-layout.marko_0_count",
         1
       ];
-      M.s.w()
+      M.s.w();
+      $MC = (window.$MC || []).concat(
+      {
+        "w": [
+          ["s0", 0,
+          {},
+          {
+            "f": 1
+          }]
+        ],
+        "t": [
+          "__tests__/template.marko"
+        ]
+      })
     </script>
   </body>
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/#text0
+INSERT html/body/#text5
+REMOVE #comment before html/body/#text0
+REMOVE #comment after html/body/#text5
+INSERT html/body/div/#text0, html/body/div/#text3
+REMOVE #comment after html/body/div/#text3
+REMOVE button after html/body/div/#text3
+INSERT html/body/#text1
+INSERT html/body/#text4
+INSERT html/body/#text2
+INSERT html/body/#text3
+REMOVE #comment after html/body/#text2
+REMOVE #comment after html/body/div
+REMOVE html/body/#text4 after html/body/#text3
+INSERT html/body/#text4
+INSERT html/body/div/#text1
+INSERT html/body/div/#text2
+INSERT html/body/div/button
+INSERT html/body/div/button/#text
+```
 
 # Render
 ```js
@@ -50,8 +80,6 @@ container.querySelector("#tags").click();
 <html>
   <head />
   <body>
-    <!--M#s0-->
-    <!--F#0-->
     <button
       id="tags"
     >
@@ -60,7 +88,6 @@ container.querySelector("#tags").click();
     </button>
     <!--Ms*1 #button/0-->
     <div>
-      <!--Ms[2-->
       <button
         id="class"
       >
@@ -68,8 +95,6 @@ container.querySelector("#tags").click();
       </button>
       <!--Ms]1 #text/2-->
     </div>
-    <!--F/-->
-    <!--M/-->
     <script>
       WALKER_RUNTIME("M")("s");
       M.s.r = [_ =&gt; (_.b = [0,
@@ -82,7 +107,20 @@ container.querySelector("#tags").click();
         "__tests__/components/tags-layout.marko_0_count",
         1
       ];
-      M.s.w()
+      M.s.w();
+      $MC = (window.$MC || []).concat(
+      {
+        "w": [
+          ["s0", 0,
+          {},
+          {
+            "f": 1
+          }]
+        ],
+        "t": [
+          "__tests__/template.marko"
+        ]
+      })
     </script>
   </body>
 </html>
@@ -101,8 +139,6 @@ container.querySelector("#class").click();
 <html>
   <head />
   <body>
-    <!--M#s0-->
-    <!--F#0-->
     <button
       id="tags"
     >
@@ -111,16 +147,13 @@ container.querySelector("#class").click();
     </button>
     <!--Ms*1 #button/0-->
     <div>
-      <!--Ms[2-->
       <button
         id="class"
       >
-        0
+        1
       </button>
       <!--Ms]1 #text/2-->
     </div>
-    <!--F/-->
-    <!--M/-->
     <script>
       WALKER_RUNTIME("M")("s");
       M.s.r = [_ =&gt; (_.b = [0,
@@ -133,12 +166,38 @@ container.querySelector("#class").click();
         "__tests__/components/tags-layout.marko_0_count",
         1
       ];
-      M.s.w()
+      M.s.w();
+      $MC = (window.$MC || []).concat(
+      {
+        "w": [
+          ["s0", 0,
+          {},
+          {
+            "f": 1
+          }]
+        ],
+        "t": [
+          "__tests__/template.marko"
+        ]
+      })
     </script>
   </body>
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/div/#text0, html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+REMOVE button after html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+INSERT html/body/div/#text1
+INSERT html/body/div/#text2
+INSERT html/body/div/button
+INSERT html/body/div/button/#text
+```
 
 # Render
 ```js
@@ -148,8 +207,6 @@ container.querySelector("#tags").click();
 <html>
   <head />
   <body>
-    <!--M#s0-->
-    <!--F#0-->
     <button
       id="tags"
     >
@@ -158,16 +215,13 @@ container.querySelector("#tags").click();
     </button>
     <!--Ms*1 #button/0-->
     <div>
-      <!--Ms[2-->
       <button
         id="class"
       >
-        0
+        1
       </button>
       <!--Ms]1 #text/2-->
     </div>
-    <!--F/-->
-    <!--M/-->
     <script>
       WALKER_RUNTIME("M")("s");
       M.s.r = [_ =&gt; (_.b = [0,
@@ -180,7 +234,20 @@ container.querySelector("#tags").click();
         "__tests__/components/tags-layout.marko_0_count",
         1
       ];
-      M.s.w()
+      M.s.w();
+      $MC = (window.$MC || []).concat(
+      {
+        "w": [
+          ["s0", 0,
+          {},
+          {
+            "f": 1
+          }]
+        ],
+        "t": [
+          "__tests__/template.marko"
+        ]
+      })
     </script>
   </body>
 </html>
@@ -199,8 +266,6 @@ container.querySelector("#class").click();
 <html>
   <head />
   <body>
-    <!--M#s0-->
-    <!--F#0-->
     <button
       id="tags"
     >
@@ -209,16 +274,13 @@ container.querySelector("#class").click();
     </button>
     <!--Ms*1 #button/0-->
     <div>
-      <!--Ms[2-->
       <button
         id="class"
       >
-        0
+        2
       </button>
       <!--Ms]1 #text/2-->
     </div>
-    <!--F/-->
-    <!--M/-->
     <script>
       WALKER_RUNTIME("M")("s");
       M.s.r = [_ =&gt; (_.b = [0,
@@ -231,12 +293,38 @@ container.querySelector("#class").click();
         "__tests__/components/tags-layout.marko_0_count",
         1
       ];
-      M.s.w()
+      M.s.w();
+      $MC = (window.$MC || []).concat(
+      {
+        "w": [
+          ["s0", 0,
+          {},
+          {
+            "f": 1
+          }]
+        ],
+        "t": [
+          "__tests__/template.marko"
+        ]
+      })
     </script>
   </body>
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/div/#text0, html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+REMOVE button after html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+REMOVE #text after html/body/div/#text3
+INSERT html/body/div/#text1
+INSERT html/body/div/#text2
+INSERT html/body/div/button
+INSERT html/body/div/button/#text
+```
 
 # Render
 ```js
@@ -246,8 +334,6 @@ container.querySelector("#tags").click();
 <html>
   <head />
   <body>
-    <!--M#s0-->
-    <!--F#0-->
     <button
       id="tags"
     >
@@ -256,16 +342,13 @@ container.querySelector("#tags").click();
     </button>
     <!--Ms*1 #button/0-->
     <div>
-      <!--Ms[2-->
       <button
         id="class"
       >
-        0
+        2
       </button>
       <!--Ms]1 #text/2-->
     </div>
-    <!--F/-->
-    <!--M/-->
     <script>
       WALKER_RUNTIME("M")("s");
       M.s.r = [_ =&gt; (_.b = [0,
@@ -278,7 +361,20 @@ container.querySelector("#tags").click();
         "__tests__/components/tags-layout.marko_0_count",
         1
       ];
-      M.s.w()
+      M.s.w();
+      $MC = (window.$MC || []).concat(
+      {
+        "w": [
+          ["s0", 0,
+          {},
+          {
+            "f": 1
+          }]
+        ],
+        "t": [
+          "__tests__/template.marko"
+        ]
+      })
     </script>
   </body>
 </html>

@@ -4,7 +4,6 @@
   <head />
   <body>
     <!--M_[2-->
-    <!--M_[4-->
     <button
       id="class"
     >
@@ -32,7 +31,6 @@
       <!--M_*3 #button/1-->
     </div>
     <!--M_]1 #text/0-->
-    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {
@@ -81,8 +79,7 @@
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push(_ =&gt; (_.f = [-3, _.b, 2, _.g = {}], (_.b[
-        "ConditionalScope:#text/0"] = _.g), _.f), "$compat_setScope", 2);
+      M._.r.push("$compat_setScope", 2);
       M._.w()
     </script>
   </body>
@@ -91,10 +88,9 @@
 
 # Mutations
 ```
-INSERT html/body/#text2
 INSERT html/body/#text0
 INSERT html/body/#text1
-REMOVE #comment after html/body/#comment1
+REMOVE #comment after html/body/#comment0
 REMOVE #comment after html/body/#text1
 INSERT html/body/div/#text0
 INSERT html/body/div/#text3
@@ -115,7 +111,6 @@ container.querySelector("#tags").click();
   <head />
   <body>
     <!--M_[2-->
-    <!--M_[4-->
     <button
       id="class"
     >
@@ -143,7 +138,6 @@ container.querySelector("#tags").click();
       <!--M_*3 #button/1-->
     </div>
     <!--M_]1 #text/0-->
-    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {
@@ -192,8 +186,7 @@ container.querySelector("#tags").click();
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push(_ =&gt; (_.f = [-3, _.b, 2, _.g = {}], (_.b[
-        "ConditionalScope:#text/0"] = _.g), _.f), "$compat_setScope", 2);
+      M._.r.push("$compat_setScope", 2);
       M._.w()
     </script>
   </body>
@@ -214,7 +207,6 @@ container.querySelector("#class").click();
   <head />
   <body>
     <!--M_[2-->
-    <!--M_[4-->
     <button
       id="class"
     >
@@ -242,7 +234,6 @@ container.querySelector("#class").click();
       <!--M_*3 #button/1-->
     </div>
     <!--M_]1 #text/0-->
-    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {
@@ -291,8 +282,7 @@ container.querySelector("#class").click();
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push(_ =&gt; (_.f = [-3, _.b, 2, _.g = {}], (_.b[
-        "ConditionalScope:#text/0"] = _.g), _.f), "$compat_setScope", 2);
+      M._.r.push("$compat_setScope", 2);
       M._.w()
     </script>
   </body>
@@ -315,7 +305,6 @@ container.querySelector("#tags").click();
   <head />
   <body>
     <!--M_[2-->
-    <!--M_[4-->
     <button
       id="class"
     >
@@ -342,7 +331,6 @@ container.querySelector("#tags").click();
       </button>
       <!--M_*3 #button/1-->
     </div>
-    <!--M_]1 #text/0-->
     <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");
@@ -392,8 +380,7 @@ container.querySelector("#tags").click();
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push(_ =&gt; (_.f = [-3, _.b, 2, _.g = {}], (_.b[
-        "ConditionalScope:#text/0"] = _.g), _.f), "$compat_setScope", 2);
+      M._.r.push("$compat_setScope", 2);
       M._.w()
     </script>
   </body>
@@ -415,7 +402,6 @@ container.querySelector("#class").click();
   <head />
   <body>
     <!--M_[2-->
-    <!--M_[4-->
     <button
       id="class"
     >
@@ -443,7 +429,6 @@ container.querySelector("#class").click();
       <!--M_*3 #button/1-->
     </div>
     <!--M_]1 #text/0-->
-    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {
@@ -492,8 +477,7 @@ container.querySelector("#class").click();
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push(_ =&gt; (_.f = [-3, _.b, 2, _.g = {}], (_.b[
-        "ConditionalScope:#text/0"] = _.g), _.f), "$compat_setScope", 2);
+      M._.r.push("$compat_setScope", 2);
       M._.w()
     </script>
   </body>
@@ -516,7 +500,6 @@ container.querySelector("#tags").click();
   <head />
   <body>
     <!--M_[2-->
-    <!--M_[4-->
     <button
       id="class"
     >
@@ -544,7 +527,6 @@ container.querySelector("#tags").click();
       <!--M_*3 #button/1-->
     </div>
     <!--M_]1 #text/0-->
-    <!--M_]1 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.b = {
@@ -593,8 +575,7 @@ container.querySelector("#tags").click();
           "r": ["w", 0, 2, "renderBody"]
         }]
       });
-      M._.r.push(_ =&gt; (_.f = [-3, _.b, 2, _.g = {}], (_.b[
-        "ConditionalScope:#text/0"] = _.g), _.f), "$compat_setScope", 2);
+      M._.r.push("$compat_setScope", 2);
       M._.w()
     </script>
   </body>

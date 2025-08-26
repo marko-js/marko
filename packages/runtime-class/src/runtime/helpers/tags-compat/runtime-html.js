@@ -1,4 +1,7 @@
-const initComponentsTag = require("../../../core-tags/components/init-components-tag");
+const {
+  ___getInitComponentsCodeForDefs,
+  ___addComponentsFromContext,
+} = require("@internal/components-entry");
 const {
   ___getComponentsContext,
 } = require("../../components/ComponentsContext");
@@ -7,15 +10,44 @@ const defaultCreateOut = require("../../createOut");
 const dynamicTag5 = require("../dynamic-tag");
 
 exports.p = function (htmlCompat) {
+  const outsByGlobal = new WeakMap();
   const isMarko6 = (fn) => htmlCompat.isTagsAPI(fn);
   const isMarko5 = (fn) => !isMarko6(fn);
   const writeHTML = (result) => {
-    const state = result.out._state;
-    const writer = state.writer;
-    state.events.emit("___toString", writer);
-    htmlCompat.writeScript(writer._scripts);
+    const { out } = result;
+    const $global = out.global;
+    const outs = outsByGlobal.get($global);
+    const writer = out._state.writer;
     htmlCompat.write(writer._content);
+    writer._content = "";
+    if (outs) {
+      outs.push(out);
+    } else {
+      outsByGlobal.set($global, [out]);
+    }
   };
+
+  htmlCompat.onFlush((chunk) => {
+    const { $global } = chunk.boundary.state;
+    const outs = outsByGlobal.get($global);
+    if (outs) {
+      chunk.render(() => {
+        const defs = [];
+        outsByGlobal.delete($global);
+        for (const out of outs) {
+          if (out.___components) {
+            ___addComponentsFromContext(out.___components, defs);
+          }
+
+          out._state.events.emit("___toString", out._state.writer);
+          chunk.writeScript(out._state.writer._content);
+          chunk.writeScript(out._state.writer._scripts);
+        }
+
+        chunk.writeScript(___getInitComponentsCodeForDefs($global, defs));
+      });
+    }
+  });
 
   dynamicTag5.___runtimeCompat = function tagsToVdom(
     tagsRenderer,
@@ -44,9 +76,16 @@ exports.p = function (htmlCompat) {
     function (_, out, componentDef, component) {
       const input = _.i;
       const tagsRenderer = _.r;
-      const willRerender = componentDef._wrr;
-      out.bf(out.___assignedKey, component, willRerender);
-      htmlCompat.render(tagsRenderer, willRerender, out, component, input);
+      const willRerender = componentDef._wrr || htmlCompat.isInResumedBranch();
+      out.bf("1", component, willRerender);
+      htmlCompat.render(
+        tagsRenderer,
+        willRerender,
+        out,
+        component,
+        input,
+        "___toString",
+      );
       out.ef();
     },
     // eslint-disable-next-line no-constant-condition
@@ -64,8 +103,9 @@ exports.p = function (htmlCompat) {
   );
 
   htmlCompat.patchDynamicTag(function getRenderer(scopeId, accessor, tag) {
-    const renderer = tag._ || tag.renderBody || tag;
-    if (isMarko6(renderer)) return renderer;
+    if (!tag || isMarko6(tag._ || tag.content || tag)) {
+      return tag;
+    }
 
     const renderer5 =
       tag._ ||
@@ -79,15 +119,15 @@ exports.p = function (htmlCompat) {
     }
     return (input, ...args) => {
       const out = defaultCreateOut(htmlCompat.$global());
-      const branchId = htmlCompat.peekNextScopeId();
+      const branchId = htmlCompat.nextScopeId();
       let customEvents;
-      htmlCompat.nextScopeId();
 
       if (renderer5) {
-        const normalizedInput = {};
+        const originalInput = input;
+        input = {};
 
-        for (const key in input) {
-          const value = input[key];
+        for (const key in originalInput) {
+          const value = originalInput[key];
           if (/^on[-A-Z]/.test(key)) {
             if (typeof value === "function") {
               (customEvents || (customEvents = [])).push([
@@ -97,22 +137,25 @@ exports.p = function (htmlCompat) {
               value.toJSON = htmlCompat.toJSON;
             }
           } else {
-            normalizedInput[key === "content" ? "renderBody" : key] = value;
+            input[key === "content" ? "renderBody" : key] = value;
           }
         }
-        renderer5(normalizedInput, out);
+      }
+
+      if (renderer5) {
+        renderer5(input, out);
       } else {
         renderBody5(out, input, ...args);
       }
 
       const componentsContext = ___getComponentsContext(out);
-      const component = componentsContext.___components[0];
-      if (component) {
-        component.___component.___customEvents = customEvents;
-        htmlCompat.writeSetScopeForComponent(branchId, component.id);
+      const componentDef = componentsContext.___components[0];
+      if (componentDef) {
+        componentDef.___component.___customEvents = customEvents;
+        componentDef._wrr = true;
+        componentDef.___flags |= 1; // FLAG_WILL_RERENDER_IN_BROWSER
+        htmlCompat.writeSetScopeForComponent(branchId, componentDef.id);
       }
-
-      initComponentsTag({}, out);
 
       let async;
       out.once("finish", (result) => {

@@ -231,6 +231,11 @@ export function resumeClosestBranch(scopeId: number) {
 }
 
 const branchIdKey = Symbol();
+
+export function isInResumedBranch() {
+  return $chunk?.context?.[branchIdKey] !== undefined;
+}
+
 export function withBranchId<T>(branchId: number, cb: () => T): T {
   return withContext(branchIdKey, branchId, cb);
 }
@@ -1009,7 +1014,6 @@ export class Chunk {
   }
 
   flushScript() {
-    flushSerializer(this.boundary);
     const { boundary, effects } = this;
     const { state } = boundary;
     const { $global, runtimePrefix, nonceAttr } = state;
