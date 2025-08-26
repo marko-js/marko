@@ -1,6 +1,5 @@
 ---
 "@marko/runtime-tags": patch
-"marko": patch
 "@marko/translator-interop-class-tags": patch
 ---
 
