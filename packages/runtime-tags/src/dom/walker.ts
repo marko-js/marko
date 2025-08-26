@@ -129,7 +129,7 @@ function walkInternal(
   }
 }
 
-function getDebugKey(index: number, node: Node | string) {
+export function getDebugKey(index: number, node: Node | string) {
   if (typeof node === "string") {
     return `${node}/${index}`;
   } else if (node.nodeType === NodeType.Text) {

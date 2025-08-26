@@ -31,6 +31,7 @@ export enum ResumeSymbol {
   BranchStart = "[",
   BranchEnd = "]",
   BranchSingleNode = "|",
+  BranchNativeTag = "'",
   BranchSingleNodeOnlyChildInParent = "=",
 }
 

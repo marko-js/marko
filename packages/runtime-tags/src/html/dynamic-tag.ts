@@ -55,55 +55,58 @@ export let dynamicTag = (
     const input = ((inputIsArgs
       ? (inputOrArgs as unknown[])[0]
       : inputOrArgs) || {}) as Record<string, unknown>;
-    const renderContent =
-      content || normalizeDynamicRenderer<ServerRenderer>(input.content);
     nextScopeId();
-    write(`<${renderer}${attrs(input, accessor, scopeId, renderer)}>`);
+    write(
+      `<${renderer}${attrs(input, MARKO_DEBUG ? `#${renderer}/0` : 0, branchId, renderer)}>`,
+    );
 
     if (!voidElementsReg.test(renderer)) {
-      const renderNativeTag = () => {
-        if (renderer === "textarea") {
-          if (MARKO_DEBUG && content) {
-            throw new Error(
-              "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
-            );
-          }
-          write(
-            controllable_textarea_value(
-              scopeId,
-              accessor,
-              input.value,
-              input.valueChange,
-            ),
+      const renderContent =
+        content || normalizeDynamicRenderer<ServerRenderer>(input.content);
+      if (renderer === "textarea") {
+        if (MARKO_DEBUG && renderContent) {
+          throw new Error(
+            "A dynamic tag rendering a `<textarea>` cannot have `content` and must use the `value` attribute instead.",
           );
-        } else if (renderContent) {
-          if (typeof renderContent !== "function") {
-            throw new Error(
-              `Body content is not supported for the \`<${renderer}>\` tag.`,
-            );
-          }
-          if (
-            renderer === "select" &&
-            ("value" in input || "valueChange" in input)
-          ) {
-            controllable_select_value(
-              scopeId,
-              accessor,
-              input.value,
-              input.valueChange,
-              renderContent,
-            );
-          } else {
-            renderContent();
-          }
         }
-      };
-
-      if (shouldResume) {
-        withBranchId(branchId, renderNativeTag);
-      } else {
-        renderNativeTag();
+        write(
+          controllable_textarea_value(
+            branchId,
+            MARKO_DEBUG ? `#${renderer}/0` : 0,
+            input.value,
+            input.valueChange,
+          ),
+        );
+      } else if (renderContent) {
+        if (typeof renderContent !== "function") {
+          throw new Error(
+            `Body content is not supported for the \`<${renderer}>\` tag.`,
+          );
+        }
+        if (
+          renderer === "select" &&
+          ("value" in input || "valueChange" in input)
+        ) {
+          controllable_select_value(
+            branchId,
+            MARKO_DEBUG ? `#${renderer}/0` : 0,
+            input.value,
+            input.valueChange,
+            renderContent,
+          );
+        } else {
+          dynamicTag(
+            branchId,
+            MARKO_DEBUG ? `#${renderer}/0` : 0,
+            renderContent,
+            [],
+            0,
+            1,
+            serializeReason,
+          );
+        }
       }
+
       write(`</${renderer}>`);
     } else if (MARKO_DEBUG && content) {
       throw new Error(
@@ -114,7 +117,7 @@ export let dynamicTag = (
     if (shouldResume) {
       write(
         state.mark(
-          ResumeSymbol.BranchSingleNode,
+          ResumeSymbol.BranchNativeTag,
           scopeId + " " + accessor + " " + branchId,
         ),
       );

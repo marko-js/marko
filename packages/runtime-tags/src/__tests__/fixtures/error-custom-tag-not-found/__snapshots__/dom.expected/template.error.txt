@@ -1,4 +1,4 @@
 
     at packages/runtime-tags/src/__tests__/fixtures/error-custom-tag-not-found/template.marko:1:2
     > 1 | <buton/>
-        |  ^^^^^ Unable to find entry point for custom tag.
+        |  ^^^^^ Unable to find entry point for custom tag `<buton>`.

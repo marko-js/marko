@@ -14,9 +14,11 @@
           href="#bar"
           ns="http://www.w3.org/2000/svg"
         >
+          <!--M_[3-->
           Hi
+          <!--M_]2 #a/0-->
         </a>
-        <!--M_|1 #text/2 2-->
+        <!--M_'1 #text/2 2-->
       </svg>
       <math>
         <a
@@ -27,17 +29,21 @@
           href="#bar"
           ns="http://www.w3.org/1998/Math/MathML"
         >
+          <!--M_[5-->
           Hi
+          <!--M_]4 #a/0-->
         </a>
-        <!--M_|1 #text/4 4-->
+        <!--M_'1 #text/4 4-->
       </math>
       <div>
+        <!--M_[7-->
         <a
           href="#"
           ns="http://www.w3.org/1999/xhtml"
         />
+        <!--M_]6 #div/0-->
       </div>
-      <!--M_|1 #text/5 6-->
+      <!--M_'1 #text/5 6-->
       <button
         class="toggle-parent"
       >
@@ -53,7 +59,7 @@
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
     </script>
   </body>
 </html>
@@ -86,9 +92,11 @@ container.querySelector(".toggle-parent").click();
           href="#bar"
           ns="http://www.w3.org/2000/svg"
         >
+          <!--M_[3-->
           Hi
+          <!--M_]2 #a/0-->
         </a>
-        <!--M_|1 #text/2 2-->
+        <!--M_'1 #text/2 2-->
       </svg>
       <math>
         <a
@@ -99,9 +107,11 @@ container.querySelector(".toggle-parent").click();
           href="#bar"
           ns="http://www.w3.org/1998/Math/MathML"
         >
+          <!--M_[5-->
           Hi
+          <!--M_]4 #a/0-->
         </a>
-        <!--M_|1 #text/4 4-->
+        <!--M_'1 #text/4 4-->
       </math>
       <svg>
         <a
@@ -109,7 +119,7 @@ container.querySelector(".toggle-parent").click();
           ns="http://www.w3.org/2000/svg"
         />
       </svg>
-      <!--M_|1 #text/5 6-->
+      <!--M_'1 #text/5 6-->
       <button
         class="toggle-parent"
       >
@@ -125,7 +135,7 @@ container.querySelector(".toggle-parent").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
     </script>
   </body>
 </html>
@@ -159,9 +169,11 @@ container.querySelector(".toggle-parent").click();
           href="#bar"
           ns="http://www.w3.org/2000/svg"
         >
+          <!--M_[3-->
           Hi
+          <!--M_]2 #a/0-->
         </a>
-        <!--M_|1 #text/2 2-->
+        <!--M_'1 #text/2 2-->
       </svg>
       <math>
         <a
@@ -172,9 +184,11 @@ container.querySelector(".toggle-parent").click();
           href="#bar"
           ns="http://www.w3.org/1998/Math/MathML"
         >
+          <!--M_[5-->
           Hi
+          <!--M_]4 #a/0-->
         </a>
-        <!--M_|1 #text/4 4-->
+        <!--M_'1 #text/4 4-->
       </math>
       <div>
         <a
@@ -182,7 +196,7 @@ container.querySelector(".toggle-parent").click();
           ns="http://www.w3.org/1999/xhtml"
         />
       </div>
-      <!--M_|1 #text/5 6-->
+      <!--M_'1 #text/5 6-->
       <button
         class="toggle-parent"
       >
@@ -198,7 +212,7 @@ container.querySelector(".toggle-parent").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
     </script>
   </body>
 </html>
@@ -232,9 +246,11 @@ container.querySelector(".toggle-parent").click();
           href="#bar"
           ns="http://www.w3.org/2000/svg"
         >
+          <!--M_[3-->
           Hi
+          <!--M_]2 #a/0-->
         </a>
-        <!--M_|1 #text/2 2-->
+        <!--M_'1 #text/2 2-->
       </svg>
       <math>
         <a
@@ -245,9 +261,11 @@ container.querySelector(".toggle-parent").click();
           href="#bar"
           ns="http://www.w3.org/1998/Math/MathML"
         >
+          <!--M_[5-->
           Hi
+          <!--M_]4 #a/0-->
         </a>
-        <!--M_|1 #text/4 4-->
+        <!--M_'1 #text/4 4-->
       </math>
       <svg>
         <a
@@ -255,7 +273,7 @@ container.querySelector(".toggle-parent").click();
           ns="http://www.w3.org/2000/svg"
         />
       </svg>
-      <!--M_|1 #text/5 6-->
+      <!--M_'1 #text/5 6-->
       <button
         class="toggle-parent"
       >
@@ -271,7 +289,7 @@ container.querySelector(".toggle-parent").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
     </script>
   </body>
 </html>
@@ -302,7 +320,7 @@ container.querySelector(".toggle-child").click();
           ns="http://www.w3.org/2000/svg"
         />
         Hi
-        <!--M_|1 #text/2 2-->
+        <!--M_'1 #text/2 2-->
       </svg>
       <math>
         <a
@@ -310,7 +328,7 @@ container.querySelector(".toggle-child").click();
           ns="http://www.w3.org/1998/Math/MathML"
         />
         Hi
-        <!--M_|1 #text/4 4-->
+        <!--M_'1 #text/4 4-->
       </math>
       <svg>
         <a
@@ -318,7 +336,7 @@ container.querySelector(".toggle-child").click();
           ns="http://www.w3.org/2000/svg"
         />
       </svg>
-      <!--M_|1 #text/5 6-->
+      <!--M_'1 #text/5 6-->
       <button
         class="toggle-parent"
       >
@@ -334,7 +352,7 @@ container.querySelector(".toggle-child").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
     </script>
   </body>
 </html>
@@ -368,7 +386,7 @@ container.querySelector(".toggle-child").click();
         >
           Hi
         </a>
-        <!--M_|1 #text/2 2-->
+        <!--M_'1 #text/2 2-->
       </svg>
       <math>
         <a
@@ -381,7 +399,7 @@ container.querySelector(".toggle-child").click();
         >
           Hi
         </a>
-        <!--M_|1 #text/4 4-->
+        <!--M_'1 #text/4 4-->
       </math>
       <svg>
         <a
@@ -389,7 +407,7 @@ container.querySelector(".toggle-child").click();
           ns="http://www.w3.org/2000/svg"
         />
       </svg>
-      <!--M_|1 #text/5 6-->
+      <!--M_'1 #text/5 6-->
       <button
         class="toggle-parent"
       >
@@ -405,7 +423,7 @@ container.querySelector(".toggle-child").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
     </script>
   </body>
 </html>
@@ -440,7 +458,7 @@ container.querySelector(".toggle-child").click();
           ns="http://www.w3.org/2000/svg"
         />
         Hi
-        <!--M_|1 #text/2 2-->
+        <!--M_'1 #text/2 2-->
       </svg>
       <math>
         <a
@@ -448,7 +466,7 @@ container.querySelector(".toggle-child").click();
           ns="http://www.w3.org/1998/Math/MathML"
         />
         Hi
-        <!--M_|1 #text/4 4-->
+        <!--M_'1 #text/4 4-->
       </math>
       <svg>
         <a
@@ -456,7 +474,7 @@ container.querySelector(".toggle-child").click();
           ns="http://www.w3.org/2000/svg"
         />
       </svg>
-      <!--M_|1 #text/5 6-->
+      <!--M_'1 #text/5 6-->
       <button
         class="toggle-parent"
       >
@@ -472,7 +490,7 @@ container.querySelector(".toggle-child").click();
     </div>
     <!--M_*1 #div/0-->
     <script>
-      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.d=[0,{"ConditionalScope:#text/2":_.a={},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.b={},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.c={},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,1,_.b,1,_.c,{"#ClosestBranchId":6}]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
+      WALKER_RUNTIME("M")("_");M._.r=[_=&gt;(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#&gt;\x3C/a&gt;",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()
     </script>
   </body>
 </html>

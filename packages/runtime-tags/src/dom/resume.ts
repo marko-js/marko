@@ -7,6 +7,7 @@ import {
   type Scope,
 } from "../common/types";
 import type { Signal } from "./signals";
+import { getDebugKey } from "./walker";
 
 type Resumes = (number | Scope)[];
 type ResumeFn = (ctx: object) => Resumes;
@@ -114,6 +115,7 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                   currentBranchId = branchStack.pop();
                 } else {
                   /**
+                   * visitToken === ResumeSymbol.BranchNativeTag ||
                    * visitToken === ResumeSymbol.BranchSingleNode ||
                    * visitToken === ResumeSymbol.BranchSingleNodeOnlyChildInParent
                    */
@@ -133,6 +135,15 @@ export function init(runtimeId = DEFAULT_RUNTIME_ID) {
                     );
                     curNode = endBranch(childScopeId, curNode).___endNode;
                     parentBranchIds.set(childScopeId, scopeId);
+
+                    if (visitToken === ResumeSymbol.BranchNativeTag) {
+                      const childBranch = scopeLookup[childScopeId];
+                      // const childTag = curNode.previousSibling as Element;
+                      childBranch[MARKO_DEBUG ? getDebugKey(0, curNode) : 0] =
+                        childBranch.___startNode =
+                        childBranch.___endNode =
+                          curNode;
+                    }
                   }
                 }
               },
