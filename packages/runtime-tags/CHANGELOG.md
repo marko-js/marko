@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.52
+
+### Patch Changes
+
+- [#2779](https://github.com/marko-js/marko/pull/2779) [`157fbf5`](https://github.com/marko-js/marko/commit/157fbf58a1587dbd6ae02913a1212647dae3c78b) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid serializing closures when it is known the section will not serialize.
+
+- [#2779](https://github.com/marko-js/marko/pull/2779) [`f388228`](https://github.com/marko-js/marko/commit/f388228adea301e8d115d862a889de2492fba4ea) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Misc tags api compat improvements.
+
 ## 6.0.51
 
 ### Patch Changes
