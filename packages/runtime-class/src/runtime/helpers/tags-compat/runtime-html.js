@@ -10,43 +10,55 @@ const defaultCreateOut = require("../../createOut");
 const dynamicTag5 = require("../dynamic-tag");
 
 exports.p = function (htmlCompat) {
-  const outsByGlobal = new WeakMap();
+  const writersByGlobal = new WeakMap();
   const isMarko6 = (fn) => htmlCompat.isTagsAPI(fn);
   const isMarko5 = (fn) => !isMarko6(fn);
-  const writeHTML = (result) => {
-    const { out } = result;
-    const $global = out.global;
-    const outs = outsByGlobal.get($global);
-    const writer = out._state.writer;
+  const writeClassAPIResultToTagsAPI = (result) => {
+    const { writer } = result.out._state;
     htmlCompat.write(writer._content);
-    writer._content = "";
-    if (outs) {
-      outs.push(out);
-    } else {
-      outsByGlobal.set($global, [out]);
+    htmlCompat.writeScript(writer._script);
+    writer._content = writer._scripts = "";
+  };
+  const flushScripts = ($global, flushDefs) => {
+    const writers = writersByGlobal.get($global);
+    if (!writers) return "";
+
+    const { classAPI, tagsAPI } = writers;
+    let scripts = "";
+    let componentDefs = flushDefs;
+
+    if (classAPI.length) {
+      componentDefs = flushDefs ? flushDefs.concat(classAPI) : classAPI;
+      writers.classAPI = [];
     }
+
+    if (componentDefs) {
+      scripts = ___getInitComponentsCodeForDefs($global, componentDefs);
+    }
+
+    if (tagsAPI.length) {
+      const [chunk] = tagsAPI;
+      for (let i = 1; i < tagsAPI.length; i++) {
+        chunk.append(tagsAPI[i]);
+      }
+
+      if (!chunk.boundary.done) {
+        throw new Error(
+          "Cannot serialize promise across tags/class compat layer.",
+        );
+      }
+
+      scripts = concatScripts(chunk.flushScript().scripts, scripts);
+      writers.tagsAPI = [];
+    }
+
+    return scripts;
   };
 
   htmlCompat.onFlush((chunk) => {
-    const { $global } = chunk.boundary.state;
-    const outs = outsByGlobal.get($global);
-    if (outs) {
-      chunk.render(() => {
-        const defs = [];
-        outsByGlobal.delete($global);
-        for (const out of outs) {
-          if (out.___components) {
-            ___addComponentsFromContext(out.___components, defs);
-          }
-
-          out._state.events.emit("___toString", out._state.writer);
-          chunk.writeScript(out._state.writer._content);
-          chunk.writeScript(out._state.writer._scripts);
-        }
-
-        chunk.writeScript(___getInitComponentsCodeForDefs($global, defs));
-      });
-    }
+    chunk.render(() => {
+      chunk.writeScript(flushScripts(chunk.boundary.state.$global));
+    });
   });
 
   dynamicTag5.___runtimeCompat = function tagsToVdom(
@@ -74,6 +86,21 @@ exports.p = function (htmlCompat) {
   const TagsCompatId = "tags-compat";
   const TagsCompat = createRenderer(
     function (_, out, componentDef, component) {
+      // class to tags
+      const $global = out.global;
+      let writers = writersByGlobal.get($global);
+      if (!writers) {
+        writersByGlobal.set($global, (writers = { classAPI: [], tagsAPI: [] }));
+        out.prependListener("___toString", (writer) => {
+          const defs = writer._data?.componentDefs;
+          const scripts = flushScripts($global, defs);
+          if (scripts) {
+            if (defs) writer._data.componentDefs = undefined;
+            writer.script(scripts);
+          }
+        });
+      }
+
       const input = _.i;
       const tagsRenderer = _.r;
       const willRerender = componentDef._wrr || htmlCompat.isInResumedBranch();
@@ -84,7 +111,7 @@ exports.p = function (htmlCompat) {
         out,
         component,
         input,
-        "___toString",
+        writers.tagsAPI,
       );
       out.ef();
     },
@@ -118,7 +145,15 @@ exports.p = function (htmlCompat) {
       htmlCompat.registerRenderBody(renderBody5);
     }
     return (input, ...args) => {
-      const out = defaultCreateOut(htmlCompat.$global());
+      // tags to class
+      const $global = htmlCompat.$global();
+      htmlCompat.ensureState($global);
+      let writers = writersByGlobal.get($global);
+      if (!writers) {
+        writersByGlobal.set($global, (writers = { classAPI: [], tagsAPI: [] }));
+      }
+
+      const out = defaultCreateOut($global);
       const branchId = htmlCompat.nextScopeId();
       let customEvents;
 
@@ -159,9 +194,15 @@ exports.p = function (htmlCompat) {
 
       let async;
       out.once("finish", (result) => {
+        if (result.out.___components) {
+          ___addComponentsFromContext(
+            result.out.___components,
+            writers.classAPI,
+          );
+        }
         if (!async) {
           async = false;
-          writeHTML(result);
+          writeClassAPIResultToTagsAPI(result);
         }
       });
 
@@ -169,10 +210,14 @@ exports.p = function (htmlCompat) {
 
       if (async !== false) {
         async = true;
-        htmlCompat.fork(scopeId, accessor, out, writeHTML);
+        htmlCompat.fork(scopeId, accessor, out, writeClassAPIResultToTagsAPI);
       }
     };
   });
 
   return htmlCompat.registerRenderer;
 };
+
+function concatScripts(a, b) {
+  return a ? (b ? a + ";" + b : a) : b;
+}

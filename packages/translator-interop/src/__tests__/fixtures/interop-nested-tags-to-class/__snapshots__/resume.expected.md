@@ -34,7 +34,8 @@
           m5c: "_0-2",
           _: _.b,
           "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), "$compat_setScope", 3,
+        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        3,
         "__tests__/template.marko_1_count",
         3
       ];
@@ -128,7 +129,8 @@ container.querySelector("#tags").click();
           m5c: "_0-2",
           _: _.b,
           "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), "$compat_setScope", 3,
+        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        3,
         "__tests__/template.marko_1_count",
         3
       ];
@@ -211,7 +213,8 @@ container.querySelector("#class").click();
           m5c: "_0-2",
           _: _.b,
           "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), "$compat_setScope", 3,
+        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        3,
         "__tests__/template.marko_1_count",
         3
       ];
@@ -294,7 +297,8 @@ container.querySelector("#tags").click();
           m5c: "_0-2",
           _: _.b,
           "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), "$compat_setScope", 3,
+        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        3,
         "__tests__/template.marko_1_count",
         3
       ];
@@ -377,7 +381,8 @@ container.querySelector("#class").click();
           m5c: "_0-2",
           _: _.b,
           "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), "$compat_setScope", 3,
+        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        3,
         "__tests__/template.marko_1_count",
         3
       ];
@@ -460,7 +465,8 @@ container.querySelector("#tags").click();
           m5c: "_0-2",
           _: _.b,
           "ClosureSignalIndex:count": 0
-        }], (_.d).add(_.e), _.c), "$compat_setScope", 3,
+        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        3,
         "__tests__/template.marko_1_count",
         3
       ];

@@ -47,7 +47,8 @@
           baseCount: 0,
           _: _.b,
           "ClosureSignalIndex:multiplier": 0
-        }], (_.d).add(_.e), _.c), "$compat_setScope", 3,
+        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        3,
         "__tests__/template.marko_1_multiplier",
         3
       ];
@@ -154,7 +155,8 @@ container.querySelector("#tags").click();
           baseCount: 0,
           _: _.b,
           "ClosureSignalIndex:multiplier": 0
-        }], (_.d).add(_.e), _.c), "$compat_setScope", 3,
+        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        3,
         "__tests__/template.marko_1_multiplier",
         3
       ];
@@ -250,7 +252,8 @@ container.querySelector("#class").click();
           baseCount: 0,
           _: _.b,
           "ClosureSignalIndex:multiplier": 0
-        }], (_.d).add(_.e), _.c), "$compat_setScope", 3,
+        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        3,
         "__tests__/template.marko_1_multiplier",
         3
       ];
@@ -348,7 +351,8 @@ container.querySelector("#tags").click();
           baseCount: 0,
           _: _.b,
           "ClosureSignalIndex:multiplier": 0
-        }], (_.d).add(_.e), _.c), "$compat_setScope", 3,
+        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        3,
         "__tests__/template.marko_1_multiplier",
         3
       ];
@@ -445,7 +449,8 @@ container.querySelector("#class").click();
           baseCount: 0,
           _: _.b,
           "ClosureSignalIndex:multiplier": 0
-        }], (_.d).add(_.e), _.c), "$compat_setScope", 3,
+        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        3,
         "__tests__/template.marko_1_multiplier",
         3
       ];
@@ -543,7 +548,8 @@ container.querySelector("#tags").click();
           baseCount: 0,
           _: _.b,
           "ClosureSignalIndex:multiplier": 0
-        }], (_.d).add(_.e), _.c), "$compat_setScope", 3,
+        }], (_.d).add(_.e), _.c), _ =&gt; (_.f = [-3, _.b]), "$compat_setScope",
+        3,
         "__tests__/template.marko_1_multiplier",
         3
       ];
