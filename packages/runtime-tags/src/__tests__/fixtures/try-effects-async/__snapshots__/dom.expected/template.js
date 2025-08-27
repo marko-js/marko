@@ -1,5 +1,5 @@
 export const $template = "<button>inc</button><div></div><!><!>";
-export const $walks = /* get, over(1), get, over(1), replace, over(1) */" b b%bD";
+export const $walks = /* get, over(1), get, over(1), replace, over(2) */" b b%c";
 import { resolveAfter } from "../../utils/resolve";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 _$.enableCatch();
@@ -7,11 +7,11 @@ const $value$await$content = /* @__PURE__ */_$.value("value", ($scope, value) =>
   throw new Error("ERROR!");
 })() : value));
 const $params3$await$content = /* @__PURE__ */_$.value("$params3", ($scope, $params3) => $value$await$content($scope, $params3[0]));
-const $await_content = /* @__PURE__ */_$.createRenderer("Async: <!>", /* over(1), replace */"b%", 0, $params3$await$content);
+const $await_content = /* @__PURE__ */_$.createRenderer("Async: <!>", /* over(1), replace, over(1) */"b%b", 0, $params3$await$content);
 const $err$catch$content = /* @__PURE__ */_$.value("err", ($scope, err) => _$.data($scope["#text/0"], err));
 const $params2$catch$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $err$catch$content($scope, $params2[0]));
-const $catch_content = _$.registerContent("__tests__/template.marko_3_renderer", " ", /* get */" ", 0, $params2$catch$content);
-const $placeholder_content = _$.registerContent("__tests__/template.marko_2_renderer", "LOADING...");
+const $catch_content = _$.registerContent("__tests__/template.marko_3_renderer", " ", /* get, over(1) */" b", 0, $params2$catch$content);
+const $placeholder_content = _$.registerContent("__tests__/template.marko_2_renderer", "LOADING...", /* over(1) */"b");
 const $await$try$content = /* @__PURE__ */_$.awaitTag("#text/0", $await_content);
 const $clickCount$try$content_effect = _$.effect("__tests__/template.marko_1_clickCount", ($scope, {
   _: {
@@ -23,7 +23,7 @@ const $clickCount$try$content = /* @__PURE__ */_$.dynamicClosureRead("clickCount
   $clickCount$try$content_effect($scope);
 });
 const $setup$try$content = $clickCount$try$content;
-const $try_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", $setup$try$content);
+const $try_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* over(1), replace, over(2) */"b%c", $setup$try$content);
 const $clickCount_closure = /* @__PURE__ */_$.dynamicClosure($clickCount$try$content);
 const $clickCount_effect = _$.effect("__tests__/template.marko_0_clickCount", ($scope, {
   clickCount

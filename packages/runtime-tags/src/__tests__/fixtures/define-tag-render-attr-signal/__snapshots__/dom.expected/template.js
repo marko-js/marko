@@ -1,10 +1,10 @@
 export const $template = "<!><!><button> </button>";
-export const $walks = /* replace, over(1), get, next(1), get, out(1) */"D%b D l";
+export const $walks = /* over(1), replace, over(1), get, next(1), get, out(1) */"b%b D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $number$define$content = /* @__PURE__ */_$.value("number", ($scope, number) => _$.data($scope["#text/0"], number));
 const $params2$define$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $temp$define$content($scope, $params2?.[0]));
 const $temp$define$content = /* @__PURE__ */_$.value("$temp", ($scope, $temp) => $number$define$content($scope, $temp.number));
-const $define_content = _$.registerContent("__tests__/template.marko_1_renderer", "<div> </div>", /* next(1), get */"D ", 0, $params2$define$content);
+const $define_content = _$.registerContent("__tests__/template.marko_1_renderer", "<div> </div>", /* next(1), get, out(1) */"D l", 0, $params2$define$content);
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
 const $expr_x_MyTag = /* @__PURE__ */_$.intersection(5, $scope => {
   const {

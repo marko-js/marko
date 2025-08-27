@@ -1,9 +1,9 @@
 export const $template = "<button>hide</button><!><!>";
-export const $walks = /* get, over(1), replace, over(1) */" b%bD";
+export const $walks = /* get, over(1), replace, over(2) */" b%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $message_text$if$content = /* @__PURE__ */_$.conditionalClosure("message_text", "#text/1", 0, ($scope, message_text) => _$.data($scope["#text/0"], message_text));
 const $setup$if$content = $message_text$if$content;
-const $if_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", $setup$if$content);
+const $if_content = /* @__PURE__ */_$.createRenderer(" ", /* get, over(1) */" b", $setup$if$content);
 const $message = /* @__PURE__ */_$.state("message/2", ($scope, message) => $message_text($scope, message?.text));
 const $message_text = /* @__PURE__ */_$.value("message_text", $message_text$if$content);
 const $if = /* @__PURE__ */_$.conditional("#text/1", $if_content);

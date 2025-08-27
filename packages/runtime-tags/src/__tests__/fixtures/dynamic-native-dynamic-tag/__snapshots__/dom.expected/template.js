@@ -1,7 +1,7 @@
 export const $template = "<!><!><button></button>";
-export const $walks = /* replace, over(1), get, over(1) */"D%b b";
+export const $walks = /* over(1), replace, over(1), get, over(1) */"b%b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const $tagName_content = _$.registerContent("__tests__/template.marko_1_renderer", "body content");
+const $tagName_content = _$.registerContent("__tests__/template.marko_1_renderer", "body content", /* over(1) */"b");
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", $tagName_content);
 const $expr_tagName_className = /* @__PURE__ */_$.intersection(4, $scope => {
   const {

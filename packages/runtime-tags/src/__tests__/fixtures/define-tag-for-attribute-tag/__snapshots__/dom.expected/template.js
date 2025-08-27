@@ -2,7 +2,7 @@ export const $template = `${_child_template}<button>Toggle</button>`;
 export const $walks = /* beginChild, _child_walks, endChild, get, over(1) */`/${_child_walks}& b`;
 import { $setup as _child, $input_thing as _child_input_thing, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const $define_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<span>The thing</span>");
+const $define_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<span>The thing</span>", /* over(1) */"b");
 const $myThing = /* @__PURE__ */_$.value("myThing", ($scope, myThing) => _child_input_thing($scope["#childScope/0"], myThing));
 const $selected_effect = _$.effect("__tests__/template.marko_0_selected", ($scope, {
   selected

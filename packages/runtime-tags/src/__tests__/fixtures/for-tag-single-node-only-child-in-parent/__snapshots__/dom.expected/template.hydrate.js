@@ -1,5 +1,5 @@
-// size: 222 (min) 158 (brotli)
-const $for_content = _$.createRenderer("<div></div>"),
+// size: 226 (min) 161 (brotli)
+const $for_content = _$.createRenderer("<div></div>", "b"),
   $for = _$.loopOf(0, $for_content),
   $children_effect = _$.effect("a0", ($scope, { 1: children }) => {
     1 === children.length && $children($scope, (children = [...children, 2]));

@@ -1,5 +1,5 @@
 export const $template = "<!><!><!>";
-export const $walks = /* replace, over(1) */"D%bD";
+export const $walks = /* over(1), replace, over(2) */"b%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_a_b$if$content = /* @__PURE__ */_$.intersection(1, $scope => {
   const {
@@ -16,7 +16,7 @@ const $setup$if$content = $scope => {
   $a$if$content._($scope);
   $b$if$content._($scope);
 };
-const $if_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", $setup$if$content);
+const $if_content = /* @__PURE__ */_$.createRenderer(" ", /* get, over(1) */" b", $setup$if$content);
 const $a = /* @__PURE__ */_$.state("a/1", $a$if$content);
 const $b = /* @__PURE__ */_$.state("b/2", $b$if$content);
 const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);

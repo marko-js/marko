@@ -1,4 +1,4 @@
-// size: 397 (min) 234 (brotli)
+// size: 399 (min) 236 (brotli)
 const $clickCount$else$content = _$.conditionalClosure(
     1,
     0,
@@ -8,7 +8,7 @@ const $clickCount$else$content = _$.conditionalClosure(
   $setup$else$content = $clickCount$else$content,
   $else_content = _$.createRenderer(
     "<span>The button was clicked <!> times.</span>",
-    "Db%",
+    "Db%l",
     $setup$else$content,
   ),
   $clickCount$if$content_effect = _$.effect(
@@ -29,7 +29,7 @@ const $clickCount$else$content = _$.conditionalClosure(
   $setup$if$content = $clickCount$if$content,
   $if_content = _$.createRenderer(
     "<button> </button>",
-    " D ",
+    " D l",
     $setup$if$content,
   ),
   $if = _$.conditional(0, $if_content, $else_content),

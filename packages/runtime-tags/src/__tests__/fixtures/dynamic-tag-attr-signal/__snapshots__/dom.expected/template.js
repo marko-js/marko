@@ -1,5 +1,5 @@
 export const $template = "<!><p>paragraph</p><button></button>";
-export const $walks = /* get, over(1), get, over(1) */"D b b";
+export const $walks = /* over(1), get, over(1), get, over(1) */"b b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $className_effect = _$.effect("__tests__/template.marko_0_className", ($scope, {
   className

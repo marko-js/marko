@@ -1,5 +1,5 @@
 export const $template = `<!>${_myLet_template}${_myTag_template}<!>`;
-export const $walks = /* beginChildWithVar, _myLet_walks, endChild, beginChild, _myTag_walks, endChild */`D0${_myLet_walks}&/${_myTag_walks}&D`;
+export const $walks = /* over(1), beginChildWithVar, _myLet_walks, endChild, beginChild, _myTag_walks, endChild, over(1) */`b0${_myLet_walks}&/${_myTag_walks}&b`;
 import { $setup as _myLet, $input_value as _myLet_input_value, $template as _myLet_template, $walks as _myLet_walks } from "./tags/my-let.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $setup as _myTag, $input_content as _myTag_input_content, $template as _myTag_template, $walks as _myTag_walks } from "./tags/my-tag.marko";
@@ -15,7 +15,7 @@ const $count$mytag$content = /* @__PURE__ */_$.dynamicClosureRead("count", ($sco
   $count$mytag$content_effect($scope);
 });
 const $setup$mytag$content = $count$mytag$content;
-const $mytag_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get */" D ", $setup$mytag$content);
+const $mytag_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<button> </button>", /* get, next(1), get, out(1) */" D l", $setup$mytag$content);
 const $count_closure = /* @__PURE__ */_$.dynamicClosure($count$mytag$content);
 const $count = _$.registerBoundSignal("__tests__/template.marko_0_count/var", /* @__PURE__ */_$.value("count", $count_closure));
 export function $setup($scope) {

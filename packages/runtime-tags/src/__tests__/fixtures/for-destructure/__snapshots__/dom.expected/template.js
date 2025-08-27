@@ -8,7 +8,7 @@ const $temp$for$content = /* @__PURE__ */_$.value("$temp", ($scope, $temp) => {
   $name$for$content($scope, $temp.name);
   $description$for$content($scope, $temp.description);
 });
-const $for_content = /* @__PURE__ */_$.createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace */"D%c%", 0, $params2$for$content);
+const $for_content = /* @__PURE__ */_$.createRenderer("<div><!>: <!></div>", /* next(1), replace, over(2), replace, out(1) */"D%c%l", 0, $params2$for$content);
 const $id = $scope => {};
 const $for = /* @__PURE__ */_$.loopOf("#text/0", $for_content);
 const $items_effect = _$.effect("__tests__/template.marko_0_items", ($scope, {

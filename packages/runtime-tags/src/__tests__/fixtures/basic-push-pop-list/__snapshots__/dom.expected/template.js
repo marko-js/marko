@@ -3,7 +3,7 @@ export const $walks = /* next(1), replace, over(1), get, over(1), get, out(1) */
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $item$for$content = /* @__PURE__ */_$.value("item", ($scope, item) => _$.data($scope["#text/0"], item));
 const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $item$for$content($scope, $params2[0]));
-const $for_content = /* @__PURE__ */_$.createRenderer(" ", /* get */" ", 0, $params2$for$content);
+const $for_content = /* @__PURE__ */_$.createRenderer(" ", /* get, over(1) */" b", 0, $params2$for$content);
 const $expr_id_items_effect = _$.effect("__tests__/template.marko_0_id_items", ($scope, {
   id,
   items

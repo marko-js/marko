@@ -1,4 +1,4 @@
-// size: 451 (min) 242 (brotli)
+// size: 452 (min) 243 (brotli)
 const $name$for$content = _$.value(4, ($scope, name) =>
     _$.data($scope[0], name),
   ),
@@ -14,7 +14,7 @@ const $name$for$content = _$.value(4, ($scope, name) =>
   }),
   $for_content = _$.createRenderer(
     "<div><!>: <!></div>",
-    "D%c%",
+    "D%c%l",
     0,
     $params2$for$content,
   ),

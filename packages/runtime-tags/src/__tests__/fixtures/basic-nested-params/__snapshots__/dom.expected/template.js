@@ -6,7 +6,7 @@ const $outer$child$content = /* @__PURE__ */_$.dynamicClosureRead("outer", ($sco
 const $inner$child$content = /* @__PURE__ */_$.value("inner", ($scope, inner) => _$.data($scope["#text/1"], inner));
 const $setup$child$content2 = $outer$child$content;
 const $params3$child$content = /* @__PURE__ */_$.value("$params3", ($scope, $params3) => $inner$child$content($scope, $params3[0]));
-const $child_content2 = _$.registerContent("__tests__/template.marko_2_renderer", "<div><!>.<!></div>", /* next(1), replace, over(2), replace */"D%c%", $setup$child$content2, $params3$child$content);
+const $child_content2 = _$.registerContent("__tests__/template.marko_2_renderer", "<div><!>.<!></div>", /* next(1), replace, over(2), replace, out(1) */"D%c%l", $setup$child$content2, $params3$child$content);
 const $setup$child$content = $scope => {
   _child($scope["#childScope/0"]);
   _child_input_content($scope["#childScope/0"], $child_content2($scope));

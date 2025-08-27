@@ -1,5 +1,5 @@
 export const $template = "<div></div><!><!>";
-export const $walks = /* get, over(1), replace, over(1) */" b%bD";
+export const $walks = /* get, over(1), replace, over(2) */" b%c";
 export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $input_test_style$if$content = /* @__PURE__ */_$.conditionalClosure("input_test_style", "#text/1", 0, ($scope, input_test_style) => _$.styleAttr($scope["#div/0"], input_test_style));
@@ -9,7 +9,7 @@ const $setup$if$content = $scope => {
   $input_test_style$if$content._($scope);
   $input_test_content$if$content._($scope);
 };
-const $if_content = /* @__PURE__ */_$.createRenderer("<div id=test><!></div>", /* get, next(1), replace */" D%", $setup$if$content);
+const $if_content = /* @__PURE__ */_$.createRenderer("<div id=test><!></div>", /* get, next(1), replace, out(1) */" D%l", $setup$if$content);
 export const $input_style = /* @__PURE__ */_$.value("input_style", ($scope, input_style) => _$.styleAttr($scope["#div/0"], input_style));
 const $if = /* @__PURE__ */_$.conditional("#text/1", $if_content);
 export const $input_test = /* @__PURE__ */_$.value("input_test", ($scope, input_test) => {

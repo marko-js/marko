@@ -1,4 +1,4 @@
-// size: 893 (min) 458 (brotli)
+// size: 894 (min) 459 (brotli)
 const $setup$if$content = ($scope) => {
     ($scope[0],
       $comment_comments$if$content._($scope),
@@ -68,7 +68,7 @@ const $setup$if$content = ($scope) => {
     0,
     createRenderer(
       "<li><span> </span><button> </button><!></li>",
-      " E l D l%",
+      " E l D l%l",
       $setup$for$content,
       $params2$for$content,
     ),

@@ -1,4 +1,4 @@
-// size: 596 (min) 332 (brotli)
+// size: 597 (min) 333 (brotli)
 const $dynamicTag = _$.dynamicTag(0, 0, 0, 1),
   $expr_content_value = _$.intersection(5, ($scope) => {
     const { 3: content, 4: value } = $scope;
@@ -19,7 +19,7 @@ const $dynamicTag = _$.dynamicTag(0, 0, 0, 1),
   $child_content2 = _$.registerContent(
     "b0",
     "<div><!>.<!></div>",
-    "D%c%",
+    "D%c%l",
     $setup$child$content2,
     $params3$child$content,
   ),

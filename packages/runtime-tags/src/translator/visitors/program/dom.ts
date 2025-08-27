@@ -29,14 +29,12 @@ import {
 } from "../../util/signals";
 import { toPropertyName } from "../../util/to-property-name";
 import type { TemplateVisitor } from "../../util/visitors";
-import { visit } from "../../util/walks";
 import * as writer from "../../util/writer";
 import { scopeIdentifier } from ".";
 
 export default {
   translate: {
     exit(program) {
-      visit(program);
       const section = getSectionForBody(program)!;
       const { walks, writes, setup } = writer.getSectionMeta(section);
       const domExports = program.node.extra.domExports!;

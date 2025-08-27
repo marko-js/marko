@@ -1,5 +1,5 @@
 export const $template = `<!>${_thing_template}<!><!><!>`;
-export const $walks = /* beginChild, _thing_walks, endChild, replace, over(1), replace, over(1) */`D/${_thing_walks}&%b%bD`;
+export const $walks = /* over(1), beginChild, _thing_walks, endChild, replace, over(1), replace, over(2) */`b/${_thing_walks}&%b%c`;
 import Child from "./tags/child.marko";
 import Thing from "./tags/thing.marko";
 import { $setup as _thing, $input_content as _thing_input_content, $template as _thing_template, $walks as _thing_walks } from "./tags/thing.marko";
@@ -10,26 +10,26 @@ const $setHtml3$inputshowsectionnull$content = _$.registerBoundSignal("__tests__
 const $setup$inputshowsectionnull$content = $scope => {
   $dynamicTag$inputshowsectionnull$content($scope, 1 && Child);
 };
-const $inputshowsectionnull_content = _$.registerContent("__tests__/template.marko_4_renderer", "<!><!><!>", /* dynamicTagWithVar */"D1D", $setup$inputshowsectionnull$content, 0, "ClosureScopes:4");
+const $inputshowsectionnull_content = _$.registerContent("__tests__/template.marko_4_renderer", "<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $setup$inputshowsectionnull$content, 0, "ClosureScopes:4");
 const $get$hoisted_setHtml2 = _$.hoist("setHtml2", "ClosureScopes:3", "ClosureScopes:2");
 const $dynamicTag$thing$content2 = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => $setHtml2$thing$content);
 const $setHtml2$thing$content = _$.registerBoundSignal("__tests__/template.marko_3_setHtml2/var", /* @__PURE__ */_$.value("setHtml2"));
 const $setup$thing$content2 = $scope => {
   $dynamicTag$thing$content2($scope, 1 && Child);
 };
-const $thing_content2 = /* @__PURE__ */_$.createContent("__tests__/template.marko_3_renderer", "<!><!><!>", /* dynamicTagWithVar */"D1D", $setup$thing$content2, 0, "ClosureScopes:3");
+const $thing_content2 = /* @__PURE__ */_$.createContent("__tests__/template.marko_3_renderer", "<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $setup$thing$content2, 0, "ClosureScopes:3");
 const $setup$inputshowThingnull$content = $scope => {
   _thing($scope["#childScope/0"]);
   _thing_input_content($scope["#childScope/0"], $thing_content2($scope));
 };
-const $inputshowThingnull_content = _$.registerContent("__tests__/template.marko_2_renderer", `<!>${_thing_template}<!>`, /* beginChild, _thing_walks, endChild */`D/${_thing_walks}&D`, $setup$inputshowThingnull$content, 0, "ClosureScopes:2");
+const $inputshowThingnull_content = _$.registerContent("__tests__/template.marko_2_renderer", `<!>${_thing_template}<!>`, /* over(1), beginChild, _thing_walks, endChild, over(1) */`b/${_thing_walks}&b`, $setup$inputshowThingnull$content, 0, "ClosureScopes:2");
 const $get$hoisted_setHtml3 = _$.register("__tests__/template.marko_0_$hoisted_setHtml/hoist", _$.hoist("setHtml", "ClosureScopes:1"));
 const $dynamicTag$thing$content = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => $setHtml$thing$content);
 const $setHtml$thing$content = _$.registerBoundSignal("__tests__/template.marko_1_setHtml/var", /* @__PURE__ */_$.value("setHtml"));
 const $setup$thing$content = $scope => {
   $dynamicTag$thing$content($scope, 1 && Child);
 };
-const $thing_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<!><!><!>", /* dynamicTagWithVar */"D1D", $setup$thing$content, 0, "ClosureScopes:1");
+const $thing_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<!><!><!>", /* over(1), dynamicTagWithVar, over(2) */"b1c", $setup$thing$content, 0, "ClosureScopes:1");
 const $hoisted_setHtml4_effect = _$.effect("__tests__/template.marko_0_$hoisted_setHtml", ({
   $hoisted_setHtml
 }) => {

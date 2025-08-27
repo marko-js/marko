@@ -6,7 +6,7 @@ const $opt$for$content = /* @__PURE__ */_$.value("opt", ($scope, opt) => {
   _$.data($scope["#text/1"], opt);
 });
 const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $opt$for$content($scope, $params2[0]));
-const $for_content = /* @__PURE__ */_$.createRenderer("<option> </option>", /* get, next(1), get */" D ", 0, $params2$for$content);
+const $for_content = /* @__PURE__ */_$.createRenderer("<option> </option>", /* get, next(1), get, out(1) */" D l", 0, $params2$for$content);
 const $for = /* @__PURE__ */_$.loopOf("#select/0", $for_content);
 const $options_effect = _$.effect("__tests__/template.marko_0_options", ($scope, {
   options

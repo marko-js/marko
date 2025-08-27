@@ -1,4 +1,4 @@
-// size: 474 (min) 271 (brotli)
+// size: 475 (min) 272 (brotli)
 const $expr_x_y_effect = _$.effect("a0", ($scope, { 7: x, 8: y }) =>
     _$.on($scope[0], "click", function () {
       ($x($scope, ++x), $y($scope, ++y));
@@ -33,7 +33,7 @@ const $expr_x_y_effect = _$.effect("a0", ($scope, { 7: x, 8: y }) =>
 (_$.registerContent(
   "b0",
   "<div>Counts: <!>,<!></div>",
-  "Db%c%",
+  "Db%c%l",
   0,
   $params2$customtag$content,
 ),

@@ -1,9 +1,9 @@
 export const $template = "<!><!><button> </button>";
-export const $walks = /* replace, over(1), get, next(1), get, out(1) */"D%b D l";
+export const $walks = /* over(1), replace, over(1), get, next(1), get, out(1) */"b%b D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $x$define$content = /* @__PURE__ */_$.dynamicClosureRead("x", ($scope, x) => _$.data($scope["#text/0"], x));
 const $setup$define$content = $x$define$content;
-const $define_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<div> </div>", /* next(1), get */"D ", $setup$define$content);
+const $define_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<div> </div>", /* next(1), get, out(1) */"D l", $setup$define$content);
 const $x_closure = /* @__PURE__ */_$.dynamicClosure($x$define$content);
 const $x_effect = _$.effect("__tests__/template.marko_0_x", ($scope, {
   x

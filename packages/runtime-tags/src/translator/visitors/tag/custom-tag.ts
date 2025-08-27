@@ -219,7 +219,6 @@ export default {
   },
   translate: {
     enter(tag) {
-      walks.visit(tag);
       if (isOutputHTML()) {
         writer.flushBefore(tag);
       }

@@ -1,6 +1,6 @@
 import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 export const $template = "<!><!><!>";
-export const $walks = /* replace, over(1) */"D%bD";
+export const $walks = /* over(1), replace, over(2) */"b%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import _classLayout from "./components/class-layout.marko";
 _$.register("__tests__/components/class-layout.marko", _classLayout);
@@ -16,7 +16,7 @@ const $count$classlayout$content = /* @__PURE__ */_$.dynamicClosureRead("count",
   $count$classlayout$content_effect($scope);
 });
 const $setup$classlayout$content = $count$classlayout$content;
-const $classlayout_content = _$.registerContent("__tests__/template.marko_1_renderer", "<button id=tags> </button>", /* get, next(1), get */" D ", $setup$classlayout$content);
+const $classlayout_content = _$.registerContent("__tests__/template.marko_1_renderer", "<button id=tags> </button>", /* get, next(1), get, out(1) */" D l", $setup$classlayout$content);
 const $count_closure = /* @__PURE__ */_$.dynamicClosure($count$classlayout$content);
 const $count = /* @__PURE__ */_$.state("count/1", $count_closure);
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", $classlayout_content);

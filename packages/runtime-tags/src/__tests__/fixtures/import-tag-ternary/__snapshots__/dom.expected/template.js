@@ -1,5 +1,5 @@
 export const $template = "<!><!><!>";
-export const $walks = /* replace, over(1) */"D%bD";
+export const $walks = /* over(1), replace, over(2) */"b%c";
 import baz from "./tags/baz.marko";
 import foo from "./tags/foo.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";

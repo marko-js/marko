@@ -1,4 +1,4 @@
-// size: 347 (min) 207 (brotli)
+// size: 352 (min) 210 (brotli)
 _$.enableCatch();
 const $value$await$content = _$.value(2, ($scope, value) =>
     _$.data($scope[0], value),
@@ -6,8 +6,8 @@ const $value$await$content = _$.value(2, ($scope, value) =>
   $params2$await$content = _$.value(1, ($scope, $params2) =>
     $value$await$content($scope, $params2[0]),
   ),
-  $await_content = _$.createRenderer(" ", " ", 0, $params2$await$content);
-_$.registerContent("a0", "LOADING...");
+  $await_content = _$.createRenderer(" ", " b", 0, $params2$await$content);
+_$.registerContent("a0", "LOADING...", "b");
 const $await$try$content = _$.awaitTag(0, $await_content),
   $clickCount$try$content = _$.dynamicClosureRead(2, ($scope, clickCount) =>
     $await$try$content($scope, resolveAfter(clickCount, 1)),

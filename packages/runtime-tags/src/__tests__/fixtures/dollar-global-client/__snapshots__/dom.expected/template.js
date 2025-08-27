@@ -4,11 +4,11 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $setup$if$content2 = $scope => {
   _$.data($scope["#text/0"], $scope.$global.x);
 };
-const $if_content2 = /* @__PURE__ */_$.createRenderer("<span class=hidden> </span>", /* next(1), get */"D ", $setup$if$content2);
+const $if_content2 = /* @__PURE__ */_$.createRenderer("<span class=hidden> </span>", /* next(1), get, out(1) */"D l", $setup$if$content2);
 const $setup$if$content = $scope => {
   _$.data($scope["#text/0"], $scope.$global.x);
 };
-const $if_content = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", $setup$if$content);
+const $if_content = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get, out(1) */"D l", $setup$if$content);
 const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);
 const $if2 = /* @__PURE__ */_$.conditional("#text/1", $if_content2);
 const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {

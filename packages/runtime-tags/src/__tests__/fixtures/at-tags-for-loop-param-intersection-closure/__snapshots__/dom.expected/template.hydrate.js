@@ -1,4 +1,4 @@
-// size: 305 (min) 205 (brotli)
+// size: 306 (min) 205 (brotli)
 const $expr_mult_item$item$content = _$.intersection(1, ($scope) => {
     const {
       _: { 3: mult },
@@ -8,7 +8,7 @@ const $expr_mult_item$item$content = _$.intersection(1, ($scope) => {
   }),
   $mult$item$content = _$.dynamicClosureRead(3, $expr_mult_item$item$content),
   $setup$item$content = $mult$item$content;
-_$.localClosures(_$.registerContent("b0", " ", " ", $setup$item$content), {
+_$.localClosures(_$.registerContent("b0", " ", " b", $setup$item$content), {
   5: $expr_mult_item$item$content,
 });
 const $mult_closure = _$.dynamicClosure($mult$item$content),

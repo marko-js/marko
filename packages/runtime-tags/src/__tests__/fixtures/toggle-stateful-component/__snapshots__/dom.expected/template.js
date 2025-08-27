@@ -7,7 +7,7 @@ const $setup$if$content = $scope => {
   $onCount$if$content._($scope);
 };
 const $onCount$if$content = /* @__PURE__ */_$.conditionalClosure("onCount", "#div/0", 0, ($scope, onCount) => _counter_input_onCount($scope["#childScope/0"], onCount));
-const $if_content = /* @__PURE__ */_$.createRenderer(`<div>${_counter_template}</div>`, /* next(1), beginChild, _counter_walks, endChild */`D/${_counter_walks}&`, $setup$if$content);
+const $if_content = /* @__PURE__ */_$.createRenderer(`<div>${_counter_template}</div>`, /* next(1), beginChild, _counter_walks, endChild, out(1) */`D/${_counter_walks}&l`, $setup$if$content);
 const $if = /* @__PURE__ */_$.conditional("#div/0", $if_content);
 const $show = /* @__PURE__ */_$.state("show/1", ($scope, show) => $if($scope, show ? 0 : 1));
 const $onCount2 = /* @__PURE__ */_$.value("onCount");

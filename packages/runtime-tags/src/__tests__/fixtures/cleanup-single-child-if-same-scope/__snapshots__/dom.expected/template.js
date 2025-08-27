@@ -1,5 +1,5 @@
 export const $template = "<button>Toggle</button><pre></pre><!><!>";
-export const $walks = /* get, over(1), get, over(1), replace, over(1) */" b b%bD";
+export const $walks = /* get, over(1), get, over(1), replace, over(2) */" b b%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $setup$if$content_effect = _$.effect("__tests__/template.marko_1", $scope => {
   $scope._["#pre/1"].innerHTML += '\nmounted';
@@ -11,7 +11,7 @@ const $setup$if$content = $scope => {
   _$.resetAbortSignal($scope, 0);
   $setup$if$content_effect($scope);
 };
-const $if_content = /* @__PURE__ */_$.createRenderer("<div>child</div>", 0, $setup$if$content);
+const $if_content = /* @__PURE__ */_$.createRenderer("<div>child</div>", /* over(1) */"b", $setup$if$content);
 const $if = /* @__PURE__ */_$.conditional("#text/2", $if_content);
 const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
   show

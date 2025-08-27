@@ -1,7 +1,7 @@
 export const $template = "<div>Before <!></div>";
 export const $walks = /* get, next(1), over(1), replace, out(1) */" Db%l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const $for_content = /* @__PURE__ */_$.createRenderer("Child");
+const $for_content = /* @__PURE__ */_$.createRenderer("Child", /* over(1) */"b");
 const $for = /* @__PURE__ */_$.loopOf("#text/1", $for_content);
 const $children_effect = _$.effect("__tests__/template.marko_0_children", ($scope, {
   children

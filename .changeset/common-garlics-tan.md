@@ -1,0 +1,6 @@
+---
+"@marko/translator-interop-class-tags": patch
+"@marko/runtime-tags": patch
+---
+
+Fix walk strings when interopolating child walks, and optimized for simple dynamic tags

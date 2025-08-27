@@ -32,7 +32,7 @@ const $name = _$.value(3, ($scope, name) => _$.data($scope[0], name)),
   $outer$for$content2 = _$.value(2, $outer$for$content),
   $for_content = _$.createRenderer(
     "<!><!><!>",
-    "D%D",
+    "b%c",
     $setup$for$content2,
     $params2$for$content,
   ),

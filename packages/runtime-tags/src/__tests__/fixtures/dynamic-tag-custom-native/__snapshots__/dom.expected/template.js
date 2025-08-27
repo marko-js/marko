@@ -1,5 +1,5 @@
 export const $template = "<button></button><!><!>";
-export const $walks = /* get, over(1), replace, over(1) */" b%bD";
+export const $walks = /* get, over(1), replace, over(2) */" b%c";
 import child from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/1");

@@ -1,4 +1,4 @@
-// size: 848 (min) 405 (brotli)
+// size: 850 (min) 409 (brotli)
 const $setup$else$content_effect = _$.effect("a0", ($scope) =>
     _$.on($scope[0], "click", function () {
       $editing$for$content($scope._, !0);
@@ -12,7 +12,7 @@ const $setup$else$content_effect = _$.effect("a0", ($scope) =>
   ),
   $else_content = _$.createRenderer(
     "<button>Increment <!></button>",
-    " Db%",
+    " Db%l",
     $setup$else$content,
   ),
   $expr_counts_count_i$if$content_effect = _$.effect(
@@ -61,7 +61,7 @@ const $setup$else$content_effect = _$.effect("a0", ($scope) =>
   },
   $if_content = _$.createRenderer(
     "<button>Confirm <!></button>",
-    " Db%",
+    " Db%l",
     $setup$if$content,
   ),
   $if$for$content = _$.conditional(0, $if_content, $else_content),
@@ -81,7 +81,7 @@ const $setup$else$content_effect = _$.effect("a0", ($scope) =>
   $i$for$content = _$.value(3, $i$if$content),
   $for_content = _$.createRenderer(
     "<!><!><!>",
-    "D%D",
+    "b%c",
     $setup$for$content,
     $params2$for$content,
   ),

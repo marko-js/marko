@@ -1,5 +1,5 @@
 export const $template = "<!><!><!>";
-export const $walks = /* replace, over(1) */"D%bD";
+export const $walks = /* over(1), replace, over(2) */"b%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $y$define$content_effect = _$.effect("__tests__/template.marko_1_y", ($scope, {
   y
@@ -17,7 +17,7 @@ const $setup$define$content = $scope => {
 const $name$define$content = /* @__PURE__ */_$.value("name", ($scope, name) => _$.data($scope["#text/0"], name));
 const $params2$define$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $temp$define$content($scope, $params2?.[0]));
 const $temp$define$content = /* @__PURE__ */_$.value("$temp", ($scope, $temp) => $name$define$content($scope, $temp.name));
-const $define_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<div>Hello <!> <!></div><button> </button>", /* next(1), over(1), replace, over(2), replace, out(1), get, next(1), get */"Db%c%l D ", $setup$define$content, $params2$define$content);
+const $define_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<div>Hello <!> <!></div><button> </button>", /* next(1), over(1), replace, over(2), replace, out(1), get, next(1), get, out(1) */"Db%c%l D l", $setup$define$content, $params2$define$content);
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
 const $MyTag = /* @__PURE__ */_$.value("MyTag", ($scope, MyTag) => $dynamicTag($scope, MyTag, () => ({
   name: "Ryan"

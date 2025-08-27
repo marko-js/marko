@@ -1,4 +1,4 @@
-// size: 1293 (min) 508 (brotli)
+// size: 1295 (min) 507 (brotli)
 const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   $expr_name_write_effect = _$.effect("a0", ($scope, { 5: name, 6: write }) => {
     (write(`${name} mounted`),
@@ -48,7 +48,7 @@ const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   ),
   $if_content2 = _$.createRenderer(
     `<div>${$template}<!></div>`,
-    "D/D%lD%lD%l&%",
+    "D/D%lD%lD%l&%l",
     $setup$if$content2,
   ),
   $setup$if$content = ($scope) => {
@@ -69,7 +69,7 @@ const $template = "<div><!> a</div><span><!> a</span><p><!> a</p>",
   ),
   $if_content = _$.createRenderer(
     `<div>${$template}<!></div>`,
-    "D/D%lD%lD%l&%",
+    "D/D%lD%lD%l&%l",
     $setup$if$content,
   ),
   $if = _$.conditional(4, $if_content),

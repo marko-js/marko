@@ -1,4 +1,4 @@
-// size: 481 (min) 237 (brotli)
+// size: 482 (min) 239 (brotli)
 const $setup$tagselect$content_effect = _$.effect("a2", ($scope) => {
     (_$.attrsEvents($scope, 0),
       _$.attrsEvents($scope, 1),
@@ -7,7 +7,7 @@ const $setup$tagselect$content_effect = _$.effect("a2", ($scope) => {
   $tagselect_content = _$.registerContent(
     "a1",
     "<option>A</option><option>B</option><option>C</option>",
-    " b b ",
+    " b b b",
     ($scope) => {
       (_$.attrs($scope, 0, { value: "a" }),
         _$.attrs($scope, 1, { value: "b" }),

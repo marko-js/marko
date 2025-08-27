@@ -1,5 +1,5 @@
 export const $template = `<!>${_thing_template}<!><!><!>`;
-export const $walks = /* beginChild, _thing_walks, endChild, replace, over(1), replace, over(1) */`D/${_thing_walks}&%b%bD`;
+export const $walks = /* over(1), beginChild, _thing_walks, endChild, replace, over(1), replace, over(2) */`b/${_thing_walks}&%b%c`;
 import Thing from "./tags/thing.marko";
 import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
@@ -22,7 +22,7 @@ const $setup$inputshowThingnull$content = $scope => {
   _thing($scope["#childScope/0"]);
   _thing_input_content($scope["#childScope/0"], $thing_content2($scope));
 };
-const $inputshowThingnull_content = _$.registerContent("__tests__/template.marko_2_renderer", `<!>${_thing_template}<!>`, /* beginChild, _thing_walks, endChild */`D/${_thing_walks}&D`, $setup$inputshowThingnull$content, 0, "ClosureScopes:2");
+const $inputshowThingnull_content = _$.registerContent("__tests__/template.marko_2_renderer", `<!>${_thing_template}<!>`, /* over(1), beginChild, _thing_walks, endChild, over(1) */`b/${_thing_walks}&b`, $setup$inputshowThingnull$content, 0, "ClosureScopes:2");
 const $get$hoisted_setHtml3 = _$.register("__tests__/template.marko_0_$hoisted_setHtml/hoist", _$.hoist("setHtml", "ClosureScopes:1"));
 const $setHtml$thing$content = _$.registerBoundSignal("__tests__/template.marko_1_setHtml/var", /* @__PURE__ */_$.value("setHtml"));
 const $setup$thing$content = $scope => {

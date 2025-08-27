@@ -1,5 +1,5 @@
 export const $template = "<!><!><button class=once> </button><!><button class=twice> </button>";
-export const $walks = /* dynamicTagWithVar, over(1), get, next(1), get, out(1), dynamicTagWithVar, over(1), get, next(1), get, out(1) */"D1b D l1b D l";
+export const $walks = /* over(1), dynamicTagWithVar, over(1), get, next(1), get, out(1), dynamicTagWithVar, over(1), get, next(1), get, out(1) */"b1b D l1b D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_value_call$define$content2 = /* @__PURE__ */_$.intersection(4, $scope => {
   const {

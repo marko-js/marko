@@ -1,5 +1,5 @@
-// size: 254 (min) 180 (brotli)
-const $tagName_content = _$.registerContent("a0", "body content"),
+// size: 258 (min) 175 (brotli)
+const $tagName_content = _$.registerContent("a0", "body content", "b"),
   $dynamicTag = _$.dynamicTag(0, $tagName_content),
   $expr_tagName_className = _$.intersection(4, ($scope) => {
     const { 2: tagName, 3: className } = $scope;

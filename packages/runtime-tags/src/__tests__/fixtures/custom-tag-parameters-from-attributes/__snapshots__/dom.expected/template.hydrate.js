@@ -1,4 +1,4 @@
-// size: 436 (min) 274 (brotli)
+// size: 437 (min) 287 (brotli)
 const $dynamicTag = _$.dynamicTag(2),
   $expr_input_content_input_name_x = _$.intersection(
     8,
@@ -37,7 +37,7 @@ const $dynamicTag = _$.dynamicTag(2),
 (_$.registerContent(
   "b0",
   "<div>Count (<!>): <!></div>",
-  "Db%c%",
+  "Db%c%l",
   0,
   $params2$customtag$content,
 ),

@@ -1,5 +1,5 @@
 export const $template = "<button>Push</button><!><!>";
-export const $walks = /* get, over(1), replace, over(1) */" b%bD";
+export const $walks = /* get, over(1), replace, over(2) */" b%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $setup as _child, $name as _child_input_name, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 const $setup$for$content = $scope => {
@@ -24,7 +24,7 @@ const $items$for$content = /* @__PURE__ */_$.loopClosure("items", "#text/1", ($s
 const $setup$for$content2 = $items$for$content;
 const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $outer$for$content2($scope, $params2[0]));
 const $outer$for$content2 = /* @__PURE__ */_$.value("outer", $outer$for$content);
-const $for_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", $setup$for$content2, $params2$for$content);
+const $for_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* over(1), replace, over(2) */"b%c", $setup$for$content2, $params2$for$content);
 const $for = /* @__PURE__ */_$.loopOf("#text/1", $for_content);
 const $items_effect = _$.effect("__tests__/template.marko_0_items", ($scope, {
   items

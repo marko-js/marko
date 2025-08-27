@@ -1,5 +1,5 @@
 export const $template = `<!>${_list_template}<button>Multiplier: <!></button>`;
-export const $walks = /* beginChild, _list_walks, endChild, get, next(1), over(1), replace, out(1) */`D/${_list_walks}& Db%l`;
+export const $walks = /* over(1), beginChild, _list_walks, endChild, get, next(1), over(1), replace, out(1) */`b/${_list_walks}& Db%l`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $setup as _list, $input_item as _list_input_item, $template as _list_template, $walks as _list_walks } from "./tags/list/index.marko";
 const $expr_mult_item$item$content = /* @__PURE__ */_$.intersection(1, $scope => {
@@ -13,7 +13,7 @@ const $expr_mult_item$item$content = /* @__PURE__ */_$.intersection(1, $scope =>
 });
 const $mult$item$content = /* @__PURE__ */_$.dynamicClosureRead("mult", $expr_mult_item$item$content);
 const $setup$item$content = $mult$item$content;
-const $item_content = _$.localClosures(_$.registerContent("__tests__/template.marko_1_renderer", " ", /* get */" ", $setup$item$content), {
+const $item_content = _$.localClosures(_$.registerContent("__tests__/template.marko_1_renderer", " ", /* get, over(1) */" b", $setup$item$content), {
   item: $expr_mult_item$item$content
 });
 const $mult_closure = /* @__PURE__ */_$.dynamicClosure($mult$item$content);

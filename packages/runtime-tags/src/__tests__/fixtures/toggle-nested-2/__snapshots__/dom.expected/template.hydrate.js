@@ -1,4 +1,4 @@
-// size: 615 (min) 298 (brotli)
+// size: 616 (min) 299 (brotli)
 const $count$if$content_effect = _$.effect(
     "a0",
     (
@@ -23,7 +23,7 @@ const $count$if$content_effect = _$.effect(
   $setup$if$content = $count$if$content,
   $if_content2 = _$.createRenderer(
     "<button id=count> </button>",
-    " D ",
+    " D l",
     $setup$if$content,
   ),
   $if$if$content = _$.conditional(1, $if_content2),
@@ -38,7 +38,7 @@ const $count$if$content_effect = _$.effect(
   $setup$if$content2 = $inner$if$content,
   $if_content = _$.createRenderer(
     "<button id=inner></button><!><!>",
-    " b%D",
+    " b%c",
     $setup$if$content2,
   ),
   $if = _$.conditional(1, $if_content),

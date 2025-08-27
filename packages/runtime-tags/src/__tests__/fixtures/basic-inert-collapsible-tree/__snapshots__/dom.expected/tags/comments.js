@@ -66,7 +66,7 @@ const $comment$for$content = /* @__PURE__ */_$.value("comment", ($scope, comment
   $comment_text$for$content($scope, comment?.text);
   $comment_comments$for$content($scope, comment?.comments);
 });
-const $for_content = /* @__PURE__ */_$.createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace */" E l D l%", $setup$for$content, $params2$for$content);
+const $for_content = /* @__PURE__ */_$.createRenderer("<li><span> </span><button> </button><!></li>", /* get, next(2), get, out(1), get, next(1), get, out(1), replace, out(1) */" E l D l%l", $setup$for$content, $params2$for$content);
 const $for = /* @__PURE__ */_$.loopOf("#ul/0", $for_content);
 export const $input_comments = /* @__PURE__ */_$.value("input_comments", ($scope, input_comments) => $for($scope, [input_comments]));
 export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {

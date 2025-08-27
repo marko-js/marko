@@ -1,4 +1,4 @@
-// size: 437 (min) 247 (brotli)
+// size: 438 (min) 254 (brotli)
 const $attrs_effect = _$.effect("a0", ($scope) => _$.attrsEvents($scope, 0)),
   $attrs = _$.value(5, ($scope, attrs) => {
     (_$.attrs($scope, 0, attrs), $attrs_effect($scope));
@@ -19,7 +19,7 @@ const $attrs_effect = _$.effect("a0", ($scope) => _$.attrsEvents($scope, 0)),
   $FancyButton_content = _$.registerContent(
     "b1",
     " ",
-    " ",
+    " b",
     $setup$FancyButton$content,
   ),
   $clickCount_closure = _$.dynamicClosure($clickCount$FancyButton$content),

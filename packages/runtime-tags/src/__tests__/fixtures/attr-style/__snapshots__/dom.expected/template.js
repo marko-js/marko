@@ -1,10 +1,10 @@
 export const $template = `<div></div><div style=width:100px></div><div style="color: green"></div>${_customTag_template}${_customTag_template}${_customTag_template}<!><!>`;
-export const $walks = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(1) */` d/${_customTag_walks}&/${_customTag_walks}&/${_customTag_walks}&%bD`;
+export const $walks = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(2) */` d/${_customTag_walks}&/${_customTag_walks}&/${_customTag_walks}&%c`;
 import CustomTag from "./tags/custom-tag.marko";
 const TestTag = CustomTag;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $setup as _customTag, $input_style as _customTag_input_style, $input_test as _customTag_input_test, $template as _customTag_template, $walks as _customTag_walks } from "./tags/custom-tag.marko";
-const $test_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello");
+const $test_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello", /* over(1) */"b");
 export const $input_color = /* @__PURE__ */_$.value("input_color", ($scope, input_color) => {
   _$.styleItem($scope["#div/0"], "color", input_color);
   _customTag_input_style($scope["#childScope/1"], {

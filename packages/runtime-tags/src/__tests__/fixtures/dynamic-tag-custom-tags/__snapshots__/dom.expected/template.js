@@ -1,5 +1,5 @@
 export const $template = "<!><!><button></button>";
-export const $walks = /* replace, over(1), get, over(1) */"D%b b";
+export const $walks = /* over(1), replace, over(1), get, over(1) */"b%b b";
 import child1 from "./tags/child1.marko";
 import child2 from "./tags/child2.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
