@@ -1,5 +1,11 @@
 # Change Log
 
+## 5.37.49
+
+### Patch Changes
+
+- [#2783](https://github.com/marko-js/marko/pull/2783) [`506539c`](https://github.com/marko-js/marko/commit/506539cbb17ca1cc01fb52f387a5f572c6daf0da) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve class/tags interop serialization orchestration and flushing.
+
 ## 5.37.48
 
 ### Patch Changes
