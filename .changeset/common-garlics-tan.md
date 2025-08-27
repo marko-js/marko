@@ -3,4 +3,4 @@
 "@marko/runtime-tags": patch
 ---
 
-Fix walk strings
+Fix walk strings when interopolating child walks, and optimized for simple dynamic tags
