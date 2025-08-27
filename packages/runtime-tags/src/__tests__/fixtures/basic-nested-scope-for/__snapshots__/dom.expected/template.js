@@ -1,5 +1,5 @@
 export const $template = "<!><!><!>";
-export const $walks = /* replace, over(1) */"D%bD";
+export const $walks = /* over(1), replace, over(2) */"b%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_selected_num$for$content = /* @__PURE__ */_$.intersection(4, $scope => {
   const {
@@ -24,7 +24,7 @@ const $num$for$content = /* @__PURE__ */_$.value("num", ($scope, num) => {
 const $selected$for$content = /* @__PURE__ */_$.loopClosure("selected", "#text/0", $expr_selected_num$for$content);
 const $setup$for$content = $selected$for$content;
 const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $num$for$content($scope, $params2[0]));
-const $for_content = /* @__PURE__ */_$.createRenderer("<button> </button>", /* get, next(1), get */" D ", $setup$for$content, $params2$for$content);
+const $for_content = /* @__PURE__ */_$.createRenderer("<button> </button>", /* get, next(1), get, out(1) */" D l", $setup$for$content, $params2$for$content);
 const $selected = /* @__PURE__ */_$.state("selected/1", $selected$for$content);
 const $for = /* @__PURE__ */_$.loopOf("#text/0", $for_content);
 export function $setup($scope) {

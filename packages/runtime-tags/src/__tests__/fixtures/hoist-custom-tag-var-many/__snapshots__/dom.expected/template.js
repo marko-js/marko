@@ -1,5 +1,5 @@
 export const $template = "<!><!><hr><!><hr><!><!>";
-export const $walks = /* replace, over(2), replace, over(2), replace, over(1) */"D%c%c%bD";
+export const $walks = /* over(1), replace, over(2), replace, over(2), replace, over(2) */"b%c%c%c";
 import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $get$hoisted_setHtml = _$.register("__tests__/template.marko_0_$hoisted_setHtml3/hoist", _$.hoist("setHtml3", "LoopScopeMap:#ul/0", "LoopScopeMap:#text/2"));
@@ -15,7 +15,7 @@ const $setup$for$content4 = $scope => {
   $for$for$content($scope, [3, 0, 1]);
 };
 const $params2$for$content = /* @__PURE__ */_$.value("$params2");
-const $for_content3 = /* @__PURE__ */_$.createRenderer("<ul></ul>", /* get */" ", $setup$for$content4, $params2$for$content);
+const $for_content3 = /* @__PURE__ */_$.createRenderer("<ul></ul>", /* get, over(1) */" b", $setup$for$content4, $params2$for$content);
 const $get$hoisted_setHtml2 = _$.hoist("setHtml2", "LoopScopeMap:#text/1");
 const $setHtml2$for$content = _$.registerBoundSignal("__tests__/template.marko_2_setHtml2/var", /* @__PURE__ */_$.value("setHtml2"));
 const $setup$for$content2 = $scope => {

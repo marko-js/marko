@@ -3,7 +3,7 @@ export const $walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $x$for$content = /* @__PURE__ */_$.value("x", ($scope, x) => _$.data($scope["#text/0"], x));
 const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $x$for$content($scope, $params2[0]));
-const $for_content = /* @__PURE__ */_$.createRenderer("<li> </li>", /* next(1), get */"D ", 0, $params2$for$content);
+const $for_content = /* @__PURE__ */_$.createRenderer("<li> </li>", /* next(1), get, out(1) */"D l", 0, $params2$for$content);
 const $open_effect = _$.effect("__tests__/template.marko_0_open", ($scope, {
   open
 }) => _$.on($scope["#button/1"], "click", function () {

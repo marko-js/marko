@@ -1,4 +1,4 @@
-// size: 242 (min) 175 (brotli)
+// size: 250 (min) 178 (brotli)
 const $dynamicTag = _$.dynamicTag(0),
   $expr_inputAs_inputClass_htmlInput_content = _$.intersection(
     9,
@@ -16,6 +16,6 @@ const $dynamicTag = _$.dynamicTag(0),
 (_$.effect("a1", ($scope, { 5: inputContent }) =>
   $content($scope, inputContent),
 ),
-  _$.registerContent("b0", "Span"),
-  _$.registerContent("b1", "Div"),
+  _$.registerContent("b0", "Span", "b"),
+  _$.registerContent("b1", "Div", "b"),
   init());

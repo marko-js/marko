@@ -1,4 +1,4 @@
-// size: 568 (min) 329 (brotli)
+// size: 569 (min) 327 (brotli)
 const $expr_input_onCount_clickCount_effect = _$.effect(
     "a0",
     ($scope, { 4: input_onCount, 5: clickCount }) =>
@@ -35,7 +35,7 @@ const $input_onCount = _$.value(4, $expr_input_onCount_clickCount),
   ),
   $if_content = _$.createRenderer(
     "<div><button> </button></div>",
-    "D/ D l&",
+    "D/ D l&l",
     $setup$if$content,
   ),
   $if = _$.conditional(0, $if_content),

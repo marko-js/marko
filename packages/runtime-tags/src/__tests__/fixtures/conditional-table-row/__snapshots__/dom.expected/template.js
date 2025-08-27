@@ -1,7 +1,7 @@
 export const $template = "<table><tbody></tbody></table><button>Toggle</button>";
 export const $walks = /* next(1), get, out(1), get, over(1) */"D l b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const $if_content = /* @__PURE__ */_$.createRenderer("<tr><td>Hi</td></tr>");
+const $if_content = /* @__PURE__ */_$.createRenderer("<tr><td>Hi</td></tr>", /* over(1) */"b");
 const $if = /* @__PURE__ */_$.conditional("#tbody/0", $if_content);
 const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
   show

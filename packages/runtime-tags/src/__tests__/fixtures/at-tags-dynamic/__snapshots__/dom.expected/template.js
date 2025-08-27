@@ -1,15 +1,15 @@
 export const $template = `<!>${_hello_template}<!>`;
-export const $walks = /* beginChild, _hello_walks, endChild */`D/${_hello_walks}&D`;
+export const $walks = /* over(1), beginChild, _hello_walks, endChild, over(1) */`b/${_hello_walks}&b`;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $setup as _hello, $input_list_item as _hello_input_list_item, $input_col as _hello_input_col, $template as _hello_template, $walks as _hello_walks } from "./tags/hello/index.marko";
-const $row_content2 = _$.registerContent("__tests__/template.marko_4_renderer", "Outside");
-const $row_content = _$.localClosures(_$.registerContent("__tests__/template.marko_3_renderer", " ", /* get */" "), {
+const $row_content2 = _$.registerContent("__tests__/template.marko_4_renderer", "Outside", /* over(1) */"b");
+const $row_content = _$.localClosures(_$.registerContent("__tests__/template.marko_3_renderer", " ", /* get, over(1) */" b"), {
   row($scope, row) {
     _$.data($scope["#text/0"], row);
   }
 });
-const $item_content2 = _$.registerContent("__tests__/template.marko_2_renderer", "bar");
-const $item_content = _$.registerContent("__tests__/template.marko_1_renderer", "foo");
+const $item_content2 = _$.registerContent("__tests__/template.marko_2_renderer", "bar", /* over(1) */"b");
+const $item_content = _$.registerContent("__tests__/template.marko_1_renderer", "foo", /* over(1) */"b");
 export function $setup($scope) {
   _hello($scope["#childScope/0"]);
   let $item;

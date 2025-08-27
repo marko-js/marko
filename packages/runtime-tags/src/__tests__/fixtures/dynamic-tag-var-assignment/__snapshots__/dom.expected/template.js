@@ -1,5 +1,5 @@
 export const $template = "<!><!><button class=reset>reset</button>";
-export const $walks = /* dynamicTagWithVar, over(1), get, over(1) */"D1b b";
+export const $walks = /* over(1), dynamicTagWithVar, over(1), get, over(1) */"b1b b";
 import Counter from "./tags/counter.marko";
 const getCounter = $getCounter;
 import * as _$ from "@marko/runtime-tags/debug/dom";

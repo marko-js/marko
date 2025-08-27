@@ -1,5 +1,5 @@
 export const $template = "<!><!><div> </div>";
-export const $walks = /* replace, over(1), next(1), get, out(1) */"D%bD l";
+export const $walks = /* over(1), replace, over(1), next(1), get, out(1) */"b%bD l";
 export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");

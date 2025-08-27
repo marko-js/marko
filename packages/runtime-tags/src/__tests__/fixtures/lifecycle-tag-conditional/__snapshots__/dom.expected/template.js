@@ -1,5 +1,5 @@
 export const $template = "<!><!><div id=ref></div><button id=increment>Increment</button><button id=toggle>Toggle</button>";
-export const $walks = /* replace, over(2), get, over(1), get, over(1) */"D%c b b";
+export const $walks = /* over(1), replace, over(2), get, over(1), get, over(1) */"b%c b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $x$if$content_effect = _$.effect("__tests__/template.marko_1_x", ($scope, {
   _: {

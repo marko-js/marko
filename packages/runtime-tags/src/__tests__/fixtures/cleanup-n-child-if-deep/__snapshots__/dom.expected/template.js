@@ -1,5 +1,5 @@
 export const $template = "<button id=outer>Toggle Outer</button><button id=middle>Toggle Middle</button><button id=inner>Toggle Inner</button><pre></pre><!><!>";
-export const $walks = /* get, over(1), get, over(1), get, over(1), get, over(1), replace, over(1) */" b b b b%bD";
+export const $walks = /* get, over(1), get, over(1), get, over(1), get, over(1), replace, over(2) */" b b b b%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $setup as _child, $write as _child_input_write, $name as _child_input_name, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 const $setup$if$content3 = $scope => {
@@ -18,7 +18,7 @@ const $setup$if$content2 = $scope => {
 const $write$if$content2 = /* @__PURE__ */_$.dynamicClosureRead("write", ($scope, write) => _child_input_write($scope["#childScope/0"], write), $scope => $scope._._);
 const $if$if$content = /* @__PURE__ */_$.conditional("#text/1", $if_content3);
 const $showInner$if$content = /* @__PURE__ */_$.dynamicClosureRead("showInner", ($scope, showInner) => $if$if$content($scope, showInner ? 0 : 1), $scope => $scope._._);
-const $if_content2 = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, $setup$if$content2);
+const $if_content2 = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace, out(1) */`D/${_child_walks}&%l`, $setup$if$content2);
 const $setup$if$content = $scope => {
   _child($scope["#childScope/0"]);
   _child_input_name($scope["#childScope/0"], "Outer");
@@ -28,7 +28,7 @@ const $setup$if$content = $scope => {
 const $write$if$content = /* @__PURE__ */_$.conditionalClosure("write", "#text/4", 0, ($scope, write) => _child_input_write($scope["#childScope/0"], write));
 const $if$if$content2 = /* @__PURE__ */_$.conditional("#text/1", $if_content2);
 const $showMiddle$if$content = /* @__PURE__ */_$.conditionalClosure("showMiddle", "#text/4", 0, ($scope, showMiddle) => $if$if$content2($scope, showMiddle ? 0 : 1));
-const $if_content = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace */`D/${_child_walks}&%`, $setup$if$content);
+const $if_content = /* @__PURE__ */_$.createRenderer(`<div>${_child_template}<!></div>`, /* next(1), beginChild, _child_walks, endChild, replace, out(1) */`D/${_child_walks}&%l`, $setup$if$content);
 const $if = /* @__PURE__ */_$.conditional("#text/4", $if_content);
 const $showOuter_effect = _$.effect("__tests__/template.marko_0_showOuter", ($scope, {
   showOuter

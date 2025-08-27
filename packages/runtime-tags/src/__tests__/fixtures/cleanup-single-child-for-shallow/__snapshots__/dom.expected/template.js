@@ -1,5 +1,5 @@
 export const $template = "<button>Toggle</button><div></div><!><!>";
-export const $walks = /* get, over(1), get, over(1), replace, over(1) */" b b%bD";
+export const $walks = /* get, over(1), get, over(1), replace, over(2) */" b b%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $setup as _child, $write as _child_input_write, $name as _child_input_name, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 const $setup$for$content = $scope => {

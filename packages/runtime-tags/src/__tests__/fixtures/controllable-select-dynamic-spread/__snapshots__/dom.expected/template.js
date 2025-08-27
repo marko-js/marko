@@ -1,5 +1,5 @@
 export const $template = "<!><!><span> </span>";
-export const $walks = /* replace, over(1), next(1), get, out(1) */"D%bD l";
+export const $walks = /* over(1), replace, over(1), next(1), get, out(1) */"b%bD l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $setup$tagselect$content_effect = _$.effect("__tests__/template.marko_1", $scope => {
   _$.attrsEvents($scope, "#option/0");
@@ -18,7 +18,7 @@ const $setup$tagselect$content = $scope => {
   });
   $setup$tagselect$content_effect($scope);
 };
-const $tagselect_content = _$.registerContent("__tests__/template.marko_1_renderer", "<option>A</option><option>B</option><option>C</option>", /* get, over(1), get, over(1), get */" b b ", $setup$tagselect$content);
+const $tagselect_content = _$.registerContent("__tests__/template.marko_1_renderer", "<option>A</option><option>B</option><option>C</option>", /* get, over(1), get, over(1), get, over(1) */" b b b", $setup$tagselect$content);
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", $tagselect_content);
 const $expr_value_tag = /* @__PURE__ */_$.intersection(4, $scope => {
   const {

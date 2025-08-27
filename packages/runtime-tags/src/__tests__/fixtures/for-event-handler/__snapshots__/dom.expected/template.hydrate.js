@@ -1,4 +1,4 @@
-// size: 283 (min) 196 (brotli)
+// size: 284 (min) 197 (brotli)
 const $num$for$content_effect = _$.effect("a0", ($scope, { _: { 1: num } }) =>
     _$.on($scope[0], "click", function () {
       $num($scope._, ++num);
@@ -12,7 +12,7 @@ const $num$for$content_effect = _$.effect("a0", ($scope, { _: { 1: num } }) =>
   ),
   $for_content = _$.createRenderer(
     "<button> </button>",
-    " D ",
+    " D l",
     $setup$for$content,
     $params2$for$content,
   ),

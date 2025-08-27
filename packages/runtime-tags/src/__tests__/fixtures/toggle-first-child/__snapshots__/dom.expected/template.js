@@ -4,7 +4,7 @@ export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $value$if$content = /* @__PURE__ */_$.conditionalClosure("value", "#text/0", 0, ($scope, value) => _$.data($scope["#text/0"], value));
 const $setup$if$content = $value$if$content;
-const $if_content = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", $setup$if$content);
+const $if_content = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get, out(1) */"D l", $setup$if$content);
 const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);
 export const $value = /* @__PURE__ */_$.value("value", ($scope, value) => {
   $if($scope, value ? 0 : 1);

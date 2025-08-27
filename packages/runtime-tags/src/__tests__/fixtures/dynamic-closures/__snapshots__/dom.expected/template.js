@@ -10,12 +10,12 @@ const $setup$if$content = $scope => {
 };
 const $b$if$content = /* @__PURE__ */_$.dynamicClosureRead("b", ($scope, b) => _$.data($scope["#text/1"], b), $scope => $scope._._);
 const $c$if$content = /* @__PURE__ */_$.dynamicClosureRead("c", ($scope, c) => _$.data($scope["#text/2"], c), $scope => $scope._._);
-const $if_content2 = /* @__PURE__ */_$.createRenderer("<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", $setup$if$content);
+const $if_content2 = /* @__PURE__ */_$.createRenderer("<!> <!> <!>", /* replace, over(2), replace, over(2), replace, over(1) */"%c%c%b", $setup$if$content);
 const $if$if$content = /* @__PURE__ */_$.conditional("#text/0", $if_content2);
 const $setup$if$content2 = $scope => {
   $if$if$content($scope, Math.random() ? 0 : 1);
 };
-const $if_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", $setup$if$content2);
+const $if_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* over(1), replace, over(2) */"b%c", $setup$if$content2);
 const $setup$customtag$content = $scope => {
   _$.data($scope["#text/0"], a);
   $b$customtag$content($scope);
@@ -23,7 +23,7 @@ const $setup$customtag$content = $scope => {
 };
 const $b$customtag$content = /* @__PURE__ */_$.dynamicClosureRead("b", ($scope, b) => _$.data($scope["#text/1"], b));
 const $c$customtag$content = /* @__PURE__ */_$.dynamicClosureRead("c", ($scope, c) => _$.data($scope["#text/2"], c));
-const $customtag_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<!> <!> <!>", /* replace, over(2), replace, over(2), replace */"%c%c%", $setup$customtag$content);
+const $customtag_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<!> <!> <!>", /* replace, over(2), replace, over(2), replace, over(1) */"%c%c%b", $setup$customtag$content);
 const $b = /* @__PURE__ */_$.value("b");
 const $c_closure = /* @__PURE__ */_$.dynamicClosure($c$customtag$content, $c$if$content);
 const $c = /* @__PURE__ */_$.state("c/4", $c_closure);

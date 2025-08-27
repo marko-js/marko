@@ -1,6 +1,6 @@
 import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 export const $template = "<!><!><!>";
-export const $walks = /* replace, over(1) */"D%bD";
+export const $walks = /* over(1), replace, over(2) */"b%c";
 import _helloInternal from "./components/hello-internal.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 _$.register("__tests__/tags/components/hello-internal.marko", _helloInternal);

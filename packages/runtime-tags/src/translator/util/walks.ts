@@ -18,7 +18,13 @@ const [getWalkComment] = createSectionState<(string | t.Expression)[]>(
   "walkComment",
   () => [],
 );
-const [getSteps] = createSectionState<Step[]>("steps", () => []);
+const [getSteps] = createSectionState<Step[]>("steps", (section) => {
+  if (section.content?.startType === ContentType.Dynamic) {
+    return [Step.Enter, Step.Exit];
+  }
+
+  return [];
+});
 
 export enum Step {
   Enter,
@@ -50,20 +56,26 @@ type VisitCodes =
   | WalkCode.DynamicTagWithVar;
 
 export function enter(path: t.NodePath<any>) {
-  getSteps(getSection(path)).push(Step.Enter);
+  const steps = getSteps(getSection(path));
+  steps.push(Step.Enter);
 }
 
 export function exit(path: t.NodePath<any>) {
-  getSteps(getSection(path)).push(Step.Exit);
+  const steps = getSteps(getSection(path));
+  steps.push(Step.Exit);
 }
 
 export function enterShallow(path: t.NodePath<any>) {
-  getSteps(getSection(path)).push(Step.Enter, Step.Exit);
+  const section = getSection(path);
+  const steps = getSteps(section);
+  steps.push(Step.Enter, Step.Exit);
 }
 
 export function injectWalks(tag: t.NodePath<t.MarkoTag>, expr: t.Expression) {
-  const walks = getWalks(getSection(tag));
-  const walkComment = getWalkComment(getSection(tag));
+  const section = getSection(tag);
+  const walks = getWalks(section);
+  const walkComment = getWalkComment(section);
+  visitInternal(section);
   walkComment.push(
     `${walkCodeToName[tag.node.var ? WalkCode.BeginChildWithVar : WalkCode.BeginChild]}`,
     (expr as t.Identifier).name,
@@ -80,7 +92,7 @@ export function injectWalks(tag: t.NodePath<t.MarkoTag>, expr: t.Expression) {
 
 export function visit(
   path: t.NodePath<t.MarkoTag | t.MarkoPlaceholder | t.Program>,
-  code?: VisitCodes,
+  code: VisitCodes,
 ) {
   // const { binding } = path.node.extra!;
   // if (code && (!binding || binding.type !== BindingType.dom)) {
@@ -94,62 +106,64 @@ export function visit(
   }
 
   const section = getSection(path);
-  const steps = getSteps(section);
   const walks = getWalks(section);
   const walkComment = getWalkComment(section);
+  visitInternal(section);
 
+  if (code !== WalkCode.Get) {
+    writeTo(path)`<!>`;
+  }
+
+  walkComment.push(`${walkCodeToName[code]}`);
+  appendLiteral(walks, String.fromCharCode(code));
+}
+
+function visitInternal(section: Section) {
+  const steps = getSteps(section);
+  if (!steps.length) return;
+
+  const walks = getWalks(section);
+  const walkComment = getWalkComment(section);
+  const walkCodes: WalkCode[] = [];
   let walkString = "";
+  let depth = 0;
 
-  if (steps.length) {
-    const walkCodes: WalkCode[] = [];
-    let depth = 0;
-
-    for (const step of steps) {
-      if (step === Step.Enter) {
-        depth++;
-        walkCodes.push(WalkCode.Next);
+  for (const step of steps) {
+    if (step === Step.Enter) {
+      depth++;
+      walkCodes.push(WalkCode.Next);
+    } else {
+      depth--;
+      if (depth >= 0) {
+        // delete back to and including previous NEXT
+        walkCodes.length = walkCodes.lastIndexOf(WalkCode.Next);
+        walkCodes.push(WalkCode.Over);
       } else {
-        depth--;
-        if (depth >= 0) {
-          // delete back to and including previous NEXT
-          walkCodes.length = walkCodes.lastIndexOf(WalkCode.Next);
-          walkCodes.push(WalkCode.Over);
-        } else {
-          // delete back to previous OUT
-          walkCodes.length = walkCodes.lastIndexOf(WalkCode.Out) + 1;
-          walkCodes.push(WalkCode.Out);
-          depth = 0;
-        }
+        // delete back to previous OUT
+        walkCodes.length = walkCodes.lastIndexOf(WalkCode.Out) + 1;
+        walkCodes.push(WalkCode.Out);
+        depth = 0;
       }
     }
-
-    let current = walkCodes[0];
-    let count = 0;
-
-    for (const walk of walkCodes) {
-      if (walk !== current) {
-        walkComment.push(`${walkCodeToName[current]}(${count})`);
-        walkString += nCodeString(current, count);
-        current = walk;
-        count = 1;
-      } else {
-        count++;
-      }
-    }
-
-    walkComment.push(`${walkCodeToName[current]}(${count})`);
-    walkString += nCodeString(current, count);
-    steps.length = 0;
   }
 
-  if (code !== undefined) {
-    if (code !== WalkCode.Get) {
-      writeTo(path)`<!>`;
+  let current = walkCodes[0];
+  let count = 0;
+
+  for (const walk of walkCodes) {
+    if (walk !== current) {
+      walkComment.push(`${walkCodeToName[current]}(${count})`);
+      walkString += nCodeString(current, count);
+      current = walk;
+      count = 1;
+    } else {
+      count++;
     }
-    walkComment.push(`${walkCodeToName[code]}`);
-    walkString += String.fromCharCode(code);
   }
 
+  walkComment.push(`${walkCodeToName[current]}(${count})`);
+  walkString += nCodeString(current, count);
+  steps.length = 0;
   appendLiteral(walks, walkString);
 }
 
@@ -184,16 +198,13 @@ function toCharString(number: number, startCode: number, rangeSize: number) {
 }
 
 export function getWalkString(section: Section) {
-  const prefix =
-    section.content?.startType === ContentType.Dynamic
-      ? String.fromCharCode(WalkCode.Next + 1)
-      : "";
-  const postfix =
-    section.content?.endType === ContentType.Dynamic
-      ? String.fromCharCode(WalkCode.Next + 1)
-      : "";
+  if (section.content?.endType === ContentType.Dynamic) {
+    getSteps(section).push(Step.Enter, Step.Exit);
+  }
+
+  visitInternal(section);
   const walks = getWalks(section);
-  const walkLiteral = normalizeStringExpression([prefix, ...walks, postfix]);
+  const walkLiteral = normalizeStringExpression(walks);
   if (walkLiteral && (walkLiteral as t.StringLiteral).value !== "") {
     withLeadingComment(walkLiteral, getWalkComment(section).join(", "));
   }

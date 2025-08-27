@@ -8,7 +8,7 @@ const $setup$define$content = $scope => {
   $count$define$content($scope);
 };
 const $count$define$content = /* @__PURE__ */_$.dynamicClosureRead("count", ($scope, count) => _$.data($scope["#text/0"], count));
-const $define_content = _$.registerContent("__tests__/template.marko_1_renderer", "<!> <!>", /* replace, over(2), replace */"%c%", $setup$define$content);
+const $define_content = _$.registerContent("__tests__/template.marko_1_renderer", "<!> <!>", /* replace, over(2), replace, over(1) */"%c%b", $setup$define$content);
 const $expr_count_MyThing = /* @__PURE__ */_$.intersection(3, $scope => {
   const {
     count,

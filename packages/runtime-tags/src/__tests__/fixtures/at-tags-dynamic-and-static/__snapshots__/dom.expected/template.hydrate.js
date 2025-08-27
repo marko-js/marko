@@ -1,6 +1,6 @@
-// size: 137 (min) 89 (brotli)
-(_$.registerContent("b0", "other"),
-  _$.localClosures(_$.registerContent("b1", "<!>:<!>", "%c%"), {
+// size: 142 (min) 114 (brotli)
+(_$.registerContent("b0", "other", "b"),
+  _$.localClosures(_$.registerContent("b1", "<!>:<!>", "%c%b"), {
     2($scope, a) {
       _$.data($scope[0], a);
     },

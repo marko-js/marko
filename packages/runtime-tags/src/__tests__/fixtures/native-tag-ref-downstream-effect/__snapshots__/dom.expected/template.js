@@ -1,5 +1,5 @@
 export const $template = "<div></div><!><!>";
-export const $walks = /* get, over(1), replace, over(1) */" b%bD";
+export const $walks = /* get, over(1), replace, over(2) */" b%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $setup$if$content_effect = _$.effect("__tests__/template.marko_1", $scope => ($scope._["#div/0"].textContent = "hello"));
 const $setup$if$content = $setup$if$content_effect;

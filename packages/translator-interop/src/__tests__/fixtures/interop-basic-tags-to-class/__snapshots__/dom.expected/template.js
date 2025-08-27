@@ -1,6 +1,6 @@
 import "marko/src/runtime/helpers/tags-compat/dom-debug.mjs";
 export const $template = "<button id=tags> </button><!><!>";
-export const $walks = /* get, next(1), get, out(1), replace, over(1) */" D l%bD";
+export const $walks = /* get, next(1), get, out(1), replace, over(2) */" D l%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import _classCounter from "./components/class-counter.marko";
 _$.register("__tests__/components/class-counter.marko", _classCounter);

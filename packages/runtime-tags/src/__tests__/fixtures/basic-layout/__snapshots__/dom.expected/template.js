@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $setup as _layout, $content as _layout_input_content, $template as _layout_template, $walks as _layout_walks } from "./tags/layout.marko";
 const $name$layout$content = /* @__PURE__ */_$.dynamicClosureRead("name", ($scope, name) => _$.data($scope["#text/0"], name));
 const $setup$layout$content = $name$layout$content;
-const $layout_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<h1>Hello <!></h1>", /* next(1), over(1), replace */"Db%", $setup$layout$content);
+const $layout_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", "<h1>Hello <!></h1>", /* next(1), over(1), replace, out(1) */"Db%l", $setup$layout$content);
 export function $setup($scope) {
   _layout($scope["#childScope/0"]);
   _layout_input_content($scope["#childScope/0"], $layout_content($scope));

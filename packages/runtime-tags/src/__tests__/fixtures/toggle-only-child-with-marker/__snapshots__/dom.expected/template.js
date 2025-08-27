@@ -1,7 +1,7 @@
 export const $template = "<button></button>";
 export const $walks = /* get, over(1) */" b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const $if_content = /* @__PURE__ */_$.createRenderer("<span id=count>0</span>");
+const $if_content = /* @__PURE__ */_$.createRenderer("<span id=count>0</span>", /* over(1) */"b");
 const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => _$.on($scope["#button/0"], "click", function () {
   document.getElementById("count").textContent++;
 }));

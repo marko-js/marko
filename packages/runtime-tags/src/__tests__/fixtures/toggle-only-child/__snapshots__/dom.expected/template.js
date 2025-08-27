@@ -3,7 +3,7 @@ export const $walks = /* get, over(1), get, over(1) */" b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $value$if$content = /* @__PURE__ */_$.conditionalClosure("value", "#div/0", 0, ($scope, value) => _$.data($scope["#text/0"], value));
 const $setup$if$content = $value$if$content;
-const $if_content = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", $setup$if$content);
+const $if_content = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get, out(1) */"D l", $setup$if$content);
 const $if = /* @__PURE__ */_$.conditional("#div/0", $if_content);
 const $value = /* @__PURE__ */_$.state("value/5", ($scope, value) => {
   _$.controllable_input_value($scope, "#input/1", value, $valueChange($scope));

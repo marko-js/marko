@@ -1,5 +1,5 @@
 export const $template = `<!><!>${_thing_template}<!><!><!><!>`;
-export const $walks = /* replace, over(1), beginChild, _thing_walks, endChild, replace, over(1), replace, over(1), replace, over(1) */`D%b/${_thing_walks}&%b%b%bD`;
+export const $walks = /* over(1), replace, over(1), beginChild, _thing_walks, endChild, replace, over(1), replace, over(1), replace, over(2) */`b%b/${_thing_walks}&%b%b%c`;
 import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $setup as _thing, $input_value as _thing_input_value, $template as _thing_template, $walks as _thing_walks } from "./tags/thing.marko";
@@ -30,7 +30,7 @@ const $if_content2 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginC
 const $if$if$content = /* @__PURE__ */_$.conditional("#text/0", $if_content2);
 const $input_show$if$content = /* @__PURE__ */_$.conditionalClosure("input_show", "#text/0", 0, ($scope, input_show) => $if$if$content($scope, input_show ? 0 : 1));
 const $setup$if$content5 = $input_show$if$content;
-const $if_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* replace */"D%D", $setup$if$content5);
+const $if_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* over(1), replace, over(2) */"b%c", $setup$if$content5);
 const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);
 export const $input_show = /* @__PURE__ */_$.value("input_show", ($scope, input_show) => {
   $if($scope, input_show ? 0 : 1);

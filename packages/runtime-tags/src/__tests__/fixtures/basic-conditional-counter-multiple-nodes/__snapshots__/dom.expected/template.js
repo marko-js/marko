@@ -1,9 +1,9 @@
 export const $template = "<button class=inc></button><button class=toggle></button><!><!>";
-export const $walks = /* get, over(1), get, over(1), replace, over(1) */" b b%bD";
+export const $walks = /* get, over(1), get, over(1), replace, over(2) */" b b%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $count$if$content = /* @__PURE__ */_$.conditionalClosure("count", "#text/2", 0, ($scope, count) => _$.data($scope["#text/0"], count));
 const $setup$if$content = $count$if$content;
-const $if_content = /* @__PURE__ */_$.createRenderer("The count is <!>", /* over(1), replace */"b%", $setup$if$content);
+const $if_content = /* @__PURE__ */_$.createRenderer("The count is <!>", /* over(1), replace, over(1) */"b%b", $setup$if$content);
 const $if = /* @__PURE__ */_$.conditional("#text/2", $if_content);
 const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
   show

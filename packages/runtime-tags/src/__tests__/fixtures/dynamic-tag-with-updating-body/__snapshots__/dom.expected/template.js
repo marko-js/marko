@@ -1,5 +1,5 @@
 export const $template = "<!><!><button id=changeTag></button>";
-export const $walks = /* replace, over(1), get, over(1) */"D%b b";
+export const $walks = /* over(1), replace, over(1), get, over(1) */"b%b b";
 import { $setup as _counter, $template as _counter_template, $walks as _counter_walks } from "./tags/counter.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $setup$tagName$content = $scope => {

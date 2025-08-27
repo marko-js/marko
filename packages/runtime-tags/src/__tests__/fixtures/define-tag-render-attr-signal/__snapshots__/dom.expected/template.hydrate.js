@@ -1,4 +1,4 @@
-// size: 364 (min) 229 (brotli)
+// size: 365 (min) 228 (brotli)
 const $number$define$content = _$.value(3, ($scope, number) =>
     _$.data($scope[0], number),
   ),
@@ -8,7 +8,7 @@ const $number$define$content = _$.value(3, ($scope, number) =>
   $temp$define$content = _$.value(2, ($scope, $temp) =>
     $number$define$content($scope, $temp.number),
   );
-_$.registerContent("a0", "<div> </div>", "D ", 0, $params2$define$content);
+_$.registerContent("a0", "<div> </div>", "D l", 0, $params2$define$content);
 const $dynamicTag = _$.dynamicTag(0),
   $expr_x_MyTag = _$.intersection(5, ($scope) => {
     const { 3: x, 4: MyTag } = $scope;

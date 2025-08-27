@@ -1,10 +1,10 @@
 export const $template = "<!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!><!>";
-export const $walks = /* replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1) */"D%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%bD";
+export const $walks = /* over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(1), replace, over(2) */"b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%b%c";
 import tagA from "./tags/tag-a/index.marko";
 import tagB from "./tags/tag-b/index.marko";
 const foo = '';
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const $showTagAtagA_content = _$.registerContent("__tests__/template.marko_1_renderer", "Body content");
+const $showTagAtagA_content = _$.registerContent("__tests__/template.marko_1_renderer", "Body content", /* over(1) */"b");
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
 const $expr_content_other = /* @__PURE__ */_$.intersection(29, $scope => {
   const {

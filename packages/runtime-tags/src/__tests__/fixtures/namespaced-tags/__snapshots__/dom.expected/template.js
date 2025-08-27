@@ -1,11 +1,11 @@
 export const $template = "<div><svg><!><!></svg><math><!><!></math><!><button class=toggle-parent>Toggle Parent</button><button class=toggle-child>Toggle Child</button></div>";
 export const $walks = /* get, next(2), replace, over(1), replace, out(1), next(1), replace, over(1), replace, out(1), replace, over(1), get, over(1), get, out(1) */" E%b%lD%b%l%b b l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const $Child_content2 = _$.registerContent("__tests__/template.marko_3_renderer", "Hi");
-const $Child_content = _$.registerContent("__tests__/template.marko_2_renderer", "Hi");
+const $Child_content2 = _$.registerContent("__tests__/template.marko_3_renderer", "Hi", /* over(1) */"b");
+const $Child_content = _$.registerContent("__tests__/template.marko_2_renderer", "Hi", /* over(1) */"b");
 const $input_value$Parent$content = /* @__PURE__ */_$.dynamicClosureRead("input_value", ($scope, input_value) => _$.html($scope, input_value, "#text/0"));
 const $setup$Parent$content = $input_value$Parent$content;
-const $Parent_content = _$.registerContent("__tests__/template.marko_1_renderer", " ", /* get */" ", $setup$Parent$content);
+const $Parent_content = _$.registerContent("__tests__/template.marko_1_renderer", " ", /* get, over(1) */" b", $setup$Parent$content);
 const $dynamicTag3 = /* @__PURE__ */_$.dynamicTag("#text/5", $Parent_content);
 const $expr_Parent_Child_effect = _$.effect("__tests__/template.marko_0_Parent_Child", ($scope, {
   Parent,

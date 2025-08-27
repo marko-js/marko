@@ -1,5 +1,5 @@
 export const $template = "<div></div><!><!>";
-export const $walks = /* get, over(1), replace, over(1) */" b%bD";
+export const $walks = /* get, over(1), replace, over(2) */" b%c";
 export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $get_output = _$.nodeRef("__tests__/template.marko_0/#div", "Getter:#div/0");

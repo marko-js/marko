@@ -1,12 +1,12 @@
 export const $template = "<!><!><!><div></div>";
-export const $walks = /* replace, over(1), replace, over(1), get, over(1) */"D%b%b b";
+export const $walks = /* over(1), replace, over(1), replace, over(1), get, over(1) */"b%b%b b";
 export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
-const $else_content = /* @__PURE__ */_$.createRenderer("C");
-const $elseif_content = /* @__PURE__ */_$.createRenderer("B");
-const $if_content3 = /* @__PURE__ */_$.createRenderer("A");
-const $if_content2 = /* @__PURE__ */_$.createRenderer("World");
-const $if_content = /* @__PURE__ */_$.createRenderer("Hello");
+const $else_content = /* @__PURE__ */_$.createRenderer("C", /* over(1) */"b");
+const $elseif_content = /* @__PURE__ */_$.createRenderer("B", /* over(1) */"b");
+const $if_content3 = /* @__PURE__ */_$.createRenderer("A", /* over(1) */"b");
+const $if_content2 = /* @__PURE__ */_$.createRenderer("World", /* over(1) */"b");
+const $if_content = /* @__PURE__ */_$.createRenderer("Hello", /* over(1) */"b");
 const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);
 const $if2 = /* @__PURE__ */_$.conditional("#text/1", $if_content2);
 const $expr_input_a_input_b = /* @__PURE__ */_$.intersection(7, $scope => {

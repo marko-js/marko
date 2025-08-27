@@ -1,5 +1,5 @@
 export const $template = "<!><!><!>";
-export const $walks = /* replace, over(1), replace, over(1) */"%b%bD";
+export const $walks = /* replace, over(1), replace, over(2) */"%b%c";
 export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 export const $name = /* @__PURE__ */_$.value("name", ($scope, name) => _$.data($scope["#text/0"], name));

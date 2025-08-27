@@ -1,10 +1,10 @@
 export const $template = `<div class=a></div><div class="a b"></div><div class="a b c"></div>${_customTag_template}${_customTag_template}<!><!>`;
-export const $walks = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(1) */` d/${_customTag_walks}&/${_customTag_walks}&%bD`;
+export const $walks = /* get, over(3), beginChild, _customTag_walks, endChild, beginChild, _customTag_walks, endChild, replace, over(2) */` d/${_customTag_walks}&/${_customTag_walks}&%c`;
 import CustomTag from "./tags/custom-tag.marko";
 const TestTag = CustomTag;
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $setup as _customTag, $input_class as _customTag_input_class, $input_test as _customTag_input_test, $template as _customTag_template, $walks as _customTag_walks } from "./tags/custom-tag.marko";
-const $test_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello");
+const $test_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello", /* over(1) */"b");
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3");
 const $expr_c_d = /* @__PURE__ */_$.intersection(8, $scope => {
   const {

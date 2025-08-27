@@ -1,2 +1,2 @@
-// size: 38 (min) 42 (brotli)
-_$.registerContent("a0", "Hello World");
+// size: 42 (min) 46 (brotli)
+_$.registerContent("a0", "Hello World", "b");

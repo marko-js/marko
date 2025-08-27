@@ -1,9 +1,14 @@
-// size: 401 (min) 225 (brotli)
+// size: 402 (min) 226 (brotli)
 const $x$for$content = _$.value(2, ($scope, x) => _$.data($scope[0], x)),
   $params2$for$content = _$.value(1, ($scope, $params2) =>
     $x$for$content($scope, $params2[0]),
   ),
-  $for_content = _$.createRenderer("<li> </li>", "D ", 0, $params2$for$content),
+  $for_content = _$.createRenderer(
+    "<li> </li>",
+    "D l",
+    0,
+    $params2$for$content,
+  ),
   $open_effect = _$.effect("a0", ($scope, { 3: open }) =>
     _$.on($scope[1], "click", function () {
       $open($scope, (open = !open));

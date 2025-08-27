@@ -1,4 +1,4 @@
-// size: 363 (min) 219 (brotli)
+// size: 364 (min) 224 (brotli)
 _$.enableCatch();
 const $err$catch$content = _$.value(2, ($scope, err) =>
     _$.data($scope[0], err),
@@ -6,7 +6,7 @@ const $err$catch$content = _$.value(2, ($scope, err) =>
   $params2$catch$content = _$.value(1, ($scope, $params2) =>
     $err$catch$content($scope, $params2[0]),
   );
-_$.registerContent("a0", " ", " ", 0, $params2$catch$content);
+_$.registerContent("a0", " ", " b", 0, $params2$catch$content);
 const $clickCount$try$content_effect = _$.effect(
     "a1",
     ($scope, { _: { 2: clickCount } }) => {

@@ -1,5 +1,5 @@
 export const $template = "<button class=inc><!>,<!></button><!><!>";
-export const $walks = /* get, next(1), replace, over(2), replace, out(1), replace, over(1) */" D%c%l%bD";
+export const $walks = /* get, next(1), replace, over(2), replace, out(1), replace, over(2) */" D%c%l%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_x_y_effect = _$.effect("__tests__/components/custom-tag.marko_0_x_y", ($scope, {
   x,

@@ -4,10 +4,10 @@ export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $value2$if$content = /* @__PURE__ */_$.dynamicClosureRead("value2", ($scope, value2) => _$.data($scope["#text/0"], value2), $scope => $scope._._);
 const $setup$if$content = $value2$if$content;
-const $if_content3 = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", $setup$if$content);
+const $if_content3 = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get, out(1) */"D l", $setup$if$content);
 const $value1$if$content = /* @__PURE__ */_$.dynamicClosureRead("value1", ($scope, value1) => _$.data($scope["#text/0"], value1), $scope => $scope._._);
 const $setup$if$content2 = $value1$if$content;
-const $if_content2 = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get */"D ", $setup$if$content2);
+const $if_content2 = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get, out(1) */"D l", $setup$if$content2);
 const $if$if$content = /* @__PURE__ */_$.conditional("#text/0", $if_content2);
 const $value1$if$content2 = /* @__PURE__ */_$.conditionalClosure("value1", "#div/0", 0, ($scope, value1) => $if$if$content($scope, value1 ? 0 : 1));
 const $if$if$content2 = /* @__PURE__ */_$.conditional("#text/1", $if_content3);
@@ -16,7 +16,7 @@ const $setup$if$content3 = $scope => {
   $value1$if$content2._($scope);
   $value2$if$content2._($scope);
 };
-const $if_content = /* @__PURE__ */_$.createRenderer("<!><!><!><!>", /* replace, over(1), replace */"D%b%D", $setup$if$content3);
+const $if_content = /* @__PURE__ */_$.createRenderer("<!><!><!><!>", /* over(1), replace, over(1), replace, over(2) */"b%b%c", $setup$if$content3);
 const $if = /* @__PURE__ */_$.conditional("#div/0", $if_content);
 export const $show = /* @__PURE__ */_$.value("show", ($scope, show) => $if($scope, show ? 0 : 1));
 export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {

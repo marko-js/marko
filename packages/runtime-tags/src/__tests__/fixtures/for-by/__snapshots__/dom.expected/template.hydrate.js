@@ -1,4 +1,4 @@
-// size: 1064 (min) 353 (brotli)
+// size: 1069 (min) 360 (brotli)
 const getStringBy = $getStringBy,
   getFunctionBy = $getFunctionBy,
   getMissingBy = $getMissingBy,
@@ -9,7 +9,7 @@ const getStringBy = $getStringBy,
   $temp5$for$content = _$.value(2, ($scope, $temp5) =>
     $text$for$content5($scope, $temp5.text),
   ),
-  $for_content5 = _$.createRenderer(" ", " ", 0, $params6$for$content),
+  $for_content5 = _$.createRenderer(" ", " b", 0, $params6$for$content),
   $text$for$content4 = _$.value(3, ($scope, text) => _$.data($scope[0], text)),
   $params5$for$content = _$.value(1, ($scope, $params5) =>
     $temp4$for$content($scope, $params5?.[0]),
@@ -17,7 +17,7 @@ const getStringBy = $getStringBy,
   $temp4$for$content = _$.value(2, ($scope, $temp4) =>
     $text$for$content4($scope, $temp4.text),
   ),
-  $for_content4 = _$.createRenderer(" ", " ", 0, $params5$for$content),
+  $for_content4 = _$.createRenderer(" ", " b", 0, $params5$for$content),
   $text$for$content3 = _$.value(3, ($scope, text) => _$.data($scope[0], text)),
   $params4$for$content = _$.value(1, ($scope, $params4) =>
     $temp3$for$content($scope, $params4?.[0]),
@@ -25,7 +25,7 @@ const getStringBy = $getStringBy,
   $temp3$for$content = _$.value(2, ($scope, $temp3) =>
     $text$for$content3($scope, $temp3.text),
   ),
-  $for_content3 = _$.createRenderer(" ", " ", 0, $params4$for$content),
+  $for_content3 = _$.createRenderer(" ", " b", 0, $params4$for$content),
   $text$for$content2 = _$.value(3, ($scope, text) => _$.data($scope[0], text)),
   $params3$for$content = _$.value(1, ($scope, $params3) =>
     $temp2$for$content($scope, $params3?.[0]),
@@ -33,7 +33,7 @@ const getStringBy = $getStringBy,
   $temp2$for$content = _$.value(2, ($scope, $temp2) =>
     $text$for$content2($scope, $temp2.text),
   ),
-  $for_content2 = _$.createRenderer(" ", " ", 0, $params3$for$content),
+  $for_content2 = _$.createRenderer(" ", " b", 0, $params3$for$content),
   $text$for$content = _$.value(3, ($scope, text) => _$.data($scope[0], text)),
   $params2$for$content = _$.value(1, ($scope, $params2) =>
     $temp$for$content($scope, $params2?.[0]),
@@ -41,7 +41,7 @@ const getStringBy = $getStringBy,
   $temp$for$content = _$.value(2, ($scope, $temp) =>
     $text$for$content($scope, $temp.text),
   ),
-  $for_content = _$.createRenderer(" ", " ", 0, $params2$for$content),
+  $for_content = _$.createRenderer(" ", " b", 0, $params2$for$content),
   $for = _$.loopOf(0, $for_content),
   $for2 = _$.loopOf(1, $for_content2),
   $for3 = _$.loopOf(2, $for_content3),

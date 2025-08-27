@@ -1,10 +1,10 @@
 export const $template = "<div></div><!><!>";
-export const $walks = /* get, over(1), replace, over(1) */" b%bD";
+export const $walks = /* get, over(1), replace, over(2) */" b%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 _$.enableCatch();
 const $err$catch$content = /* @__PURE__ */_$.value("err", ($scope, err) => _$.data($scope["#text/0"], err));
 const $params2$catch$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $err$catch$content($scope, $params2[0]));
-const $catch_content = _$.registerContent("__tests__/template.marko_2_renderer", " ", /* get */" ", 0, $params2$catch$content);
+const $catch_content = _$.registerContent("__tests__/template.marko_2_renderer", " ", /* get, over(1) */" b", 0, $params2$catch$content);
 const $clickCount$try$content_effect = _$.effect("__tests__/template.marko_1_clickCount", ($scope, {
   _: {
     clickCount
@@ -22,7 +22,7 @@ const $clickCount$try$content = /* @__PURE__ */_$.dynamicClosureRead("clickCount
   $clickCount$try$content_effect($scope);
 });
 const $setup$try$content = $clickCount$try$content;
-const $try_content = /* @__PURE__ */_$.createRenderer("<button>inc</button> -- <!>", /* get, over(2), replace */" c%", $setup$try$content);
+const $try_content = /* @__PURE__ */_$.createRenderer("<button>inc</button> -- <!>", /* get, over(2), replace, over(1) */" c%b", $setup$try$content);
 const $clickCount_closure = /* @__PURE__ */_$.dynamicClosure($clickCount$try$content);
 const $clickCount = /* @__PURE__ */_$.state("clickCount/2", $clickCount_closure);
 const $try = /* @__PURE__ */_$.createTry("#text/1", $try_content);

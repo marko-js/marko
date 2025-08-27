@@ -1,16 +1,16 @@
-// size: 335 (min) 197 (brotli)
+// size: 337 (min) 194 (brotli)
 const $setup$if$content2 = ($scope) => {
     _$.data($scope[0], $scope.$global.x);
   },
   $if_content2 = _$.createRenderer(
     "<span class=hidden> </span>",
-    "D ",
+    "D l",
     $setup$if$content2,
   ),
   $setup$if$content = ($scope) => {
     _$.data($scope[0], $scope.$global.x);
   },
-  $if_content = _$.createRenderer("<span> </span>", "D ", $setup$if$content),
+  $if_content = _$.createRenderer("<span> </span>", "D l", $setup$if$content),
   $if = _$.conditional(0, $if_content),
   $if2 = _$.conditional(1, $if_content2),
   $show_effect = _$.effect("a0", ($scope, { 3: show }) =>
