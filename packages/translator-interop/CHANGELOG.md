@@ -1,5 +1,17 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.41
+
+### Patch Changes
+
+- [#2781](https://github.com/marko-js/marko/pull/2781) [`0265d6b`](https://github.com/marko-js/marko/commit/0265d6b67e7020447dc236f8aa682a39ae450914) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix walk strings when interopolating child walks, and optimized for simple dynamic tags
+
+- [#2783](https://github.com/marko-js/marko/pull/2783) [`506539c`](https://github.com/marko-js/marko/commit/506539cbb17ca1cc01fb52f387a5f572c6daf0da) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve class/tags interop serialization orchestration and flushing.
+
+- Updated dependencies [[`0265d6b`](https://github.com/marko-js/marko/commit/0265d6b67e7020447dc236f8aa682a39ae450914), [`506539c`](https://github.com/marko-js/marko/commit/506539cbb17ca1cc01fb52f387a5f572c6daf0da)]:
+  - @marko/runtime-tags@6.0.53
+  - marko@5.37.49
+
 ## 0.2.40
 
 ### Patch Changes
