@@ -39,6 +39,20 @@ export const compat = {
   nextScopeId,
   peekNextScopeId,
   isInResumedBranch,
+  ensureState($global: any) {
+    let state: State | undefined = ($global[K_TAGS_API_STATE] ||=
+      getChunk()?.boundary.state);
+    if (!state) {
+      $global.runtimeId ||= DEFAULT_RUNTIME_ID;
+      $global.renderId ||=
+        $global.componentIdPrefix ||
+        $global.widgetIdPrefix ||
+        DEFAULT_RENDER_ID;
+      $global[K_TAGS_API_STATE] = state = new State($global);
+    }
+
+    return state;
+  },
   isTagsAPI(fn: any) {
     return !!fn.___id;
   },
@@ -78,21 +92,9 @@ export const compat = {
     classAPIOut: any,
     component: any,
     input: any,
-    toStringEvent: string,
+    completeChunks: Chunk[],
   ) {
-    const $global = classAPIOut.global;
-    let state: State | undefined = ($global[K_TAGS_API_STATE] ||=
-      getChunk()?.boundary.state);
-    if (!state) {
-      $global.runtimeId ||= DEFAULT_RUNTIME_ID;
-      $global.renderId ||=
-        $global.componentIdPrefix ||
-        $global.widgetIdPrefix ||
-        DEFAULT_RENDER_ID;
-      $global[K_TAGS_API_STATE] = state = new State($global);
-    }
-
-    const boundary = new Boundary(state);
+    const boundary = new Boundary(this.ensureState(classAPIOut.global));
     let head = new Chunk(
       boundary,
       null,
@@ -125,21 +127,11 @@ export const compat = {
           asyncOut.error(boundary.signal.reason);
           boundary.onNext = NOOP;
         } else if (!boundary.count) {
-          asyncOut.once(toStringEvent, (writer: any) => {
-            if (boundary.done) {
-              const { html, scripts } = head.flushScript();
-              writer.script(scripts);
-              writer.write(html);
-            } else {
-              asyncOut.error(
-                new Error("Cannot serialize promises with class/tags interop."),
-              );
-            }
-          });
-          head = head.consume();
+          completeChunks.push((head = head.consume()));
           asyncOut.write(head.html);
+          asyncOut.script(head.scripts);
           asyncOut.end();
-          head.html = "";
+          head.html = head.scripts = "";
         }
       })();
     });
