@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.42
+
+### Patch Changes
+
+- [#2784](https://github.com/marko-js/marko/pull/2784) [`bbde0e8`](https://github.com/marko-js/marko/commit/bbde0e8415931c3fbb5432007dda196dfd5a9e3d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure interop class/tags init happens after all modules load.
+
+- Updated dependencies [[`bbde0e8`](https://github.com/marko-js/marko/commit/bbde0e8415931c3fbb5432007dda196dfd5a9e3d), [`bbde0e8`](https://github.com/marko-js/marko/commit/bbde0e8415931c3fbb5432007dda196dfd5a9e3d), [`bbde0e8`](https://github.com/marko-js/marko/commit/bbde0e8415931c3fbb5432007dda196dfd5a9e3d)]:
+  - @marko/runtime-tags@6.0.54
+  - marko@5.37.50
+
 ## 0.2.41
 
 ### Patch Changes

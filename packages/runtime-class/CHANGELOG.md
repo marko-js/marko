@@ -1,5 +1,13 @@
 # Change Log
 
+## 5.37.50
+
+### Patch Changes
+
+- [#2784](https://github.com/marko-js/marko/pull/2784) [`bbde0e8`](https://github.com/marko-js/marko/commit/bbde0e8415931c3fbb5432007dda196dfd5a9e3d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Allow split components to rerender if the template has been loaded.
+
+- [#2784](https://github.com/marko-js/marko/pull/2784) [`bbde0e8`](https://github.com/marko-js/marko/commit/bbde0e8415931c3fbb5432007dda196dfd5a9e3d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure interop class/tags init happens after all modules load.
+
 ## 5.37.49
 
 ### Patch Changes
