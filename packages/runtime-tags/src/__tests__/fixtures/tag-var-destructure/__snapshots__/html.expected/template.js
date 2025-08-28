@@ -1,5 +1,4 @@
 function noop(_) {}
-_$.register(noop, "__tests__/template.marko_0/noop");
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default _$.createTemplate("__tests__/template.marko", input => {
   const $scope0_id = _$.nextScopeId();

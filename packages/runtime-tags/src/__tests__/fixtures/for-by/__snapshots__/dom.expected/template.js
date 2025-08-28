@@ -1,8 +1,14 @@
 export const $template = "<div><div class=by-string></div><div class=by-function></div><div class=by-unknown-string></div><div class=by-unknown-function></div><div class=by-unknown-missing></div><button>Rotate</button></div>";
 export const $walks = /* next(1), get, over(1), get, over(1), get, over(1), get, over(1), get, over(1), get, out(1) */"D b b b b b l";
-const getStringBy = $getStringBy;
-const getFunctionBy = $getFunctionBy;
-const getMissingBy = $getMissingBy;
+function getStringBy() {
+  return "id";
+}
+function getFunctionBy() {
+  return item => item.id;
+}
+function getMissingBy() {
+  return undefined;
+}
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $text$for$content5 = /* @__PURE__ */_$.value("text", ($scope, text) => _$.data($scope["#text/0"], text));
 const $params6$for$content = /* @__PURE__ */_$.value("$params6", ($scope, $params6) => $temp5$for$content($scope, $params6?.[0]));
@@ -54,16 +60,4 @@ export function $setup($scope) {
     text: "third"
   }]);
 }
-function $getStringBy() {
-  return "id";
-}
-function $getFunctionBy() {
-  return item => item.id;
-}
-function $getMissingBy() {
-  return undefined;
-}
-_$.register("__tests__/template.marko_0/getStringBy", $getStringBy);
-_$.register("__tests__/template.marko_0/getFunctionBy", $getFunctionBy);
-_$.register("__tests__/template.marko_0/getMissingBy", $getMissingBy);
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

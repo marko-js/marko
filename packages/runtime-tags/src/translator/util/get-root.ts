@@ -55,6 +55,27 @@ export function getFnRoot(path: t.NodePath<t.Node>) {
   return fnPath;
 }
 
+export function getDeclarationRoot(path: t.NodePath<t.Node>) {
+  let curPath = path;
+  let declPath:
+    | undefined
+    | t.NodePath<t.FunctionDeclaration | t.VariableDeclaration>;
+  while (!isMarko(curPath)) {
+    if (isFunctionOrVariableDeclaration(curPath)) {
+      declPath = curPath;
+    }
+
+    const parentPath = curPath.parentPath;
+    if (parentPath) {
+      curPath = parentPath;
+    } else {
+      break;
+    }
+  }
+
+  return declPath;
+}
+
 export function isMarko(path: t.NodePath<any>): path is MarkoExprRootPath {
   switch (path.type) {
     case "MarkoTag":
@@ -70,7 +91,7 @@ export function isMarko(path: t.NodePath<any>): path is MarkoExprRootPath {
 }
 
 function isFunction(
-  path: t.NodePath<any>,
+  path: t.NodePath<t.Node>,
 ): path is t.NodePath<
   t.FunctionExpression | t.ArrowFunctionExpression | t.ObjectMember
 > {
@@ -80,6 +101,19 @@ function isFunction(
     case "FunctionExpression":
     case "ArrowFunctionExpression":
     case "ObjectMethod":
+      return true;
+    default:
+      return false;
+  }
+}
+
+function isFunctionOrVariableDeclaration(
+  path: t.NodePath<t.Node>,
+): path is t.NodePath<t.FunctionDeclaration | t.VariableDeclaration> {
+  switch (path.type) {
+    case "FunctionDeclaration":
+      return !(path.node as t.FunctionDeclaration).declare;
+    case "VariableDeclaration":
       return true;
     default:
       return false;

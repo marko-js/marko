@@ -1,8 +1,7 @@
-// size: 1069 (min) 360 (brotli)
-const getStringBy = $getStringBy,
-  getFunctionBy = $getFunctionBy,
-  getMissingBy = $getMissingBy,
-  $text$for$content5 = _$.value(3, ($scope, text) => _$.data($scope[0], text)),
+// size: 942 (min) 289 (brotli)
+const $text$for$content5 = _$.value(3, ($scope, text) =>
+    _$.data($scope[0], text),
+  ),
   $params6$for$content = _$.value(1, ($scope, $params6) =>
     $temp5$for$content($scope, $params6?.[0]),
   ),
@@ -47,7 +46,7 @@ const getStringBy = $getStringBy,
   $for3 = _$.loopOf(2, $for_content3),
   $for4 = _$.loopOf(3, $for_content4),
   $for5 = _$.loopOf(4, $for_content5),
-  $items_effect = _$.effect("a3", ($scope, { 6: items }) =>
+  $items_effect = _$.effect("a0", ($scope, { 6: items }) =>
     _$.on($scope[5], "click", function () {
       $items($scope, (items = [...items.slice(1), items[0]]));
     }),
@@ -55,19 +54,9 @@ const getStringBy = $getStringBy,
   $items = _$.state(6, ($scope, items) => {
     ($for($scope, [items, "id"]),
       $for2($scope, [items, (item) => item.id]),
-      $for3($scope, [items, getStringBy()]),
-      $for4($scope, [items, getFunctionBy()]),
-      $for5($scope, [items, getMissingBy()]),
+      $for3($scope, [items, "id"]),
+      $for4($scope, [items, (item) => item.id]),
+      $for5($scope, [items, void 0]),
       $items_effect($scope));
   });
-function $getStringBy() {
-  return "id";
-}
-function $getFunctionBy() {
-  return (item) => item.id;
-}
-function $getMissingBy() {}
-(_$.register("a0", $getStringBy),
-  _$.register("a1", $getFunctionBy),
-  _$.register("a2", $getMissingBy),
-  init());
+init();
