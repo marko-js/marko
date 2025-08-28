@@ -1,5 +1,15 @@
 # @marko/translator-interop-class-tags
 
+## 0.2.43
+
+### Patch Changes
+
+- [#2786](https://github.com/marko-js/marko/pull/2786) [`df07bb6`](https://github.com/marko-js/marko/commit/df07bb6ec8928bec35de4711cd57ed4cfd038581) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure tags api runtime compat always walks after running class api init code.
+
+- Updated dependencies [[`df07bb6`](https://github.com/marko-js/marko/commit/df07bb6ec8928bec35de4711cd57ed4cfd038581)]:
+  - marko@5.37.51
+  - @marko/runtime-tags@6.0.55
+
 ## 0.2.42
 
 ### Patch Changes
