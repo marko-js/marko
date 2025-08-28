@@ -70,17 +70,19 @@ exports.p = function (htmlCompat) {
       return tagsRenderer;
     }
 
-    if (!tagsRenderer && renderBody) {
-      renderBody.toJSON = htmlCompat.toJSON;
-    }
-
-    return (input, out) =>
+    return (input, out) => {
+      if (!tagsRenderer && renderBody) {
+        renderBody.toJSON = htmlCompat.toJSON(
+          htmlCompat.ensureState(out.global),
+        );
+      }
       TagsCompat(
         args
           ? { i: args, r: (args) => (tagsRenderer || renderBody)(...args) }
           : { i: input, r: tagsRenderer || renderBody },
         out,
       );
+    };
   };
 
   const TagsCompatId = "tags-compat";
@@ -147,7 +149,7 @@ exports.p = function (htmlCompat) {
     return (input, ...args) => {
       // tags to class
       const $global = htmlCompat.$global();
-      htmlCompat.ensureState($global);
+      const state = htmlCompat.ensureState($global);
       let writers = writersByGlobal.get($global);
       if (!writers) {
         writersByGlobal.set($global, (writers = { classAPI: [], tagsAPI: [] }));
@@ -169,7 +171,7 @@ exports.p = function (htmlCompat) {
                 key[2] === "-" ? key.slice(3) : key.slice(2).toLowerCase(),
                 value,
               ]);
-              value.toJSON = htmlCompat.toJSON;
+              value.toJSON = htmlCompat.toJSON(state);
             }
           } else {
             input[key === "content" ? "renderBody" : key] = value;

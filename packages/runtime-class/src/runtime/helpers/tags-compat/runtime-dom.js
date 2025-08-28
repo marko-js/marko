@@ -50,7 +50,7 @@ exports.p = function (domCompat) {
   const TagsCompat = createRenderer(
     function (_, out, componentDef, component) {
       const input = Array.isArray(_.i) ? _.i : [_.i];
-      const tagsRenderer = domCompat.resolveRegistered(_.r, global);
+      const tagsRenderer = domCompat.resolveRegistered(_.r, out.global);
       const newNode = domCompat.render(out, component, tagsRenderer, input);
 
       out.bf("1", component, !newNode);

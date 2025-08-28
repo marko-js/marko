@@ -43,7 +43,7 @@ export default (entryFile, isHydrate) => {
 };
 
 export const entryBuilder = {
-  build(entryFile) {
+  build(entryFile, exportInit) {
     const state = entryFile[kEntryState];
     if (!state) {
       throw entryFile.path.buildCodeFrameError(
@@ -53,6 +53,7 @@ export const entryBuilder = {
     const { markoOpts } = entryFile;
     const entryMarkoMeta = entryFile.metadata.marko;
     const { body } = state;
+    let didExportInit = false;
     entryMarkoMeta.watchFiles = [...state.watchFiles];
     entryMarkoMeta.deps = [...state.lassoDeps];
 
@@ -69,19 +70,29 @@ export const entryBuilder = {
 
       body.unshift(markoComponentsImport);
 
-      if (markoOpts.hydrateInit) {
+      if (markoOpts.hydrateInit || exportInit) {
+        const initExpression = t.callExpression(
+          initId,
+          markoOpts.runtimeId ? [t.stringLiteral(markoOpts.runtimeId)] : [],
+        );
         markoComponentsImport.specifiers.push(
           t.importSpecifier(initId, initId),
         );
+
         body.push(
-          t.expressionStatement(
-            t.callExpression(
-              initId,
-              markoOpts.runtimeId ? [t.stringLiteral(markoOpts.runtimeId)] : [],
-            ),
-          ),
+          exportInit
+            ? t.exportDefaultDeclaration(
+                t.arrowFunctionExpression([], initExpression),
+              )
+            : t.expressionStatement(initExpression),
         );
       }
+    } else if (exportInit) {
+      body.push(
+        t.exportDefaultDeclaration(
+          t.arrowFunctionExpression([], t.blockStatement([])),
+        ),
+      );
     }
 
     return body;

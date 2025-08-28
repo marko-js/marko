@@ -20,7 +20,7 @@ type EntryFile = t.BabelFile & {
 const kState: unique symbol = Symbol();
 
 export default {
-  build(entryFile: EntryFile) {
+  build(entryFile: EntryFile, exportInit?: boolean) {
     const state = entryFile[kState];
     if (!state) {
       throw entryFile.path.buildCodeFrameError(
@@ -42,12 +42,22 @@ export default {
         ),
       );
       const { runtimeId } = entryFile.markoOpts;
+      const initExpression = t.callExpression(
+        t.identifier("init"),
+        runtimeId ? [t.stringLiteral(runtimeId)] : [],
+      );
+
       body.push(
-        t.expressionStatement(
-          t.callExpression(
-            t.identifier("init"),
-            runtimeId ? [t.stringLiteral(runtimeId)] : [],
-          ),
+        exportInit
+          ? t.exportDefaultDeclaration(
+              t.arrowFunctionExpression([], initExpression),
+            )
+          : t.expressionStatement(initExpression),
+      );
+    } else if (exportInit) {
+      body.push(
+        t.exportDefaultDeclaration(
+          t.arrowFunctionExpression([], t.blockStatement([])),
         ),
       );
     }

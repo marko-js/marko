@@ -92,7 +92,7 @@ function patchTranslateProgram(visitor: t.Visitor) {
             statements: t.Statement[],
           ) => {
             return t.importDeclaration(
-              [],
+              [t.importDefaultSpecifier(t.identifier(`init${name}`))],
               t.stringLiteral(
                 resolveVirtualDependency!(filename, {
                   code: generate(t.program(statements) as any, generatorOpts)
@@ -103,8 +103,16 @@ function patchTranslateProgram(visitor: t.Visitor) {
             );
           };
           return [
-            importHydrateProgram("5", internalEntryBuilder5.build(entryFile)),
-            importHydrateProgram("6", internalEntryBuilder6.build(entryFile)),
+            importHydrateProgram(
+              "6",
+              internalEntryBuilder6.build(entryFile, true),
+            ),
+            importHydrateProgram(
+              "5",
+              internalEntryBuilder5.build(entryFile, true),
+            ),
+            t.callExpression(t.identifier("init6"), []),
+            t.callExpression(t.identifier("init5"), []),
           ];
         } else {
           return internalEntryBuilder5.build(entryFile);

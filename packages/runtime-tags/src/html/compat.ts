@@ -22,6 +22,7 @@ import {
   write,
   writeEffect,
   writeScope,
+  writeScopeToState,
   writeScript,
 } from "./writer";
 
@@ -68,23 +69,25 @@ export const compat = {
     writeScope(branchId, { m5c });
     writeEffect(branchId, SET_SCOPE_REGISTER_ID);
   },
-  toJSON(this: WeakKey) {
-    let compatRegistered = COMPAT_REGISTRY.get(this);
-    if (!compatRegistered) {
-      const registered = getRegistered(this);
-      if (registered) {
-        const scopeId = getScopeId(registered.scope as Scope);
-        if (scopeId !== undefined) {
-          writeScope(scopeId, {});
+  toJSON(state: State) {
+    return function toJSON(this: WeakKey) {
+      let compatRegistered = COMPAT_REGISTRY.get(this);
+      if (!compatRegistered) {
+        const registered = getRegistered(this);
+        if (registered) {
+          const scopeId = getScopeId(registered.scope as Scope);
+          if (scopeId !== undefined) {
+            writeScopeToState(state, scopeId, {});
+          }
+          COMPAT_REGISTRY.set(
+            this,
+            (compatRegistered = [registered.id, scopeId]),
+          );
         }
-        COMPAT_REGISTRY.set(
-          this,
-          (compatRegistered = [registered.id, scopeId]),
-        );
       }
-    }
 
-    return compatRegistered;
+      return compatRegistered;
+    };
   },
   render(
     renderer: ServerRenderer,
