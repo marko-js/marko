@@ -19,6 +19,18 @@
     </button>
     <!--M_]1 #text/2-->
     <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0,
+      {
+        "ConditionalScope:#text/2": _.a = {
+          m5c: "_0"
+        },
+        "ConditionalRenderer:#text/2": _._.$compat_renderer(_._[
+          "__tests__/components/class-counter.marko"
+          ]),
+        count: 0
+      }, _.a])];
+      M._.w();
       $MC = (window.$MC || []).concat(
       {
         "p": "_",
@@ -35,20 +47,9 @@
           "__tests__/components/class-counter.marko"
         ]
       });
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
-        {
-          "ConditionalScope:#text/2": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/2": _._.$compat_renderer(_._[
-            "__tests__/components/class-counter.marko"
-            ]),
-          count: 0
-        }, _.a]), "$compat_setScope", 2,
+      M._.r.push("$compat_setScope", 2,
         "__tests__/template.marko_0_count",
-        1
-      ];
+        1);
       M._.w()
     </script>
   </body>
@@ -87,6 +88,18 @@ container.querySelector("#tags").click();
     </button>
     <!--M_]1 #text/2-->
     <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0,
+      {
+        "ConditionalScope:#text/2": _.a = {
+          m5c: "_0"
+        },
+        "ConditionalRenderer:#text/2": _._.$compat_renderer(_._[
+          "__tests__/components/class-counter.marko"
+          ]),
+        count: 0
+      }, _.a])];
+      M._.w();
       $MC = (window.$MC || []).concat(
       {
         "p": "_",
@@ -103,20 +116,9 @@ container.querySelector("#tags").click();
           "__tests__/components/class-counter.marko"
         ]
       });
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
-        {
-          "ConditionalScope:#text/2": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/2": _._.$compat_renderer(_._[
-            "__tests__/components/class-counter.marko"
-            ]),
-          count: 0
-        }, _.a]), "$compat_setScope", 2,
+      M._.r.push("$compat_setScope", 2,
         "__tests__/template.marko_0_count",
-        1
-      ];
+        1);
       M._.w()
     </script>
   </body>
@@ -153,6 +155,18 @@ container.querySelector("#class").click();
     </button>
     <!--M_]1 #text/2-->
     <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0,
+      {
+        "ConditionalScope:#text/2": _.a = {
+          m5c: "_0"
+        },
+        "ConditionalRenderer:#text/2": _._.$compat_renderer(_._[
+          "__tests__/components/class-counter.marko"
+          ]),
+        count: 0
+      }, _.a])];
+      M._.w();
       $MC = (window.$MC || []).concat(
       {
         "p": "_",
@@ -169,20 +183,9 @@ container.querySelector("#class").click();
           "__tests__/components/class-counter.marko"
         ]
       });
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
-        {
-          "ConditionalScope:#text/2": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/2": _._.$compat_renderer(_._[
-            "__tests__/components/class-counter.marko"
-            ]),
-          count: 0
-        }, _.a]), "$compat_setScope", 2,
+      M._.r.push("$compat_setScope", 2,
         "__tests__/template.marko_0_count",
-        1
-      ];
+        1);
       M._.w()
     </script>
   </body>
@@ -218,6 +221,18 @@ container.querySelector("#tags").click();
     </button>
     <!--M_]1 #text/2-->
     <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0,
+      {
+        "ConditionalScope:#text/2": _.a = {
+          m5c: "_0"
+        },
+        "ConditionalRenderer:#text/2": _._.$compat_renderer(_._[
+          "__tests__/components/class-counter.marko"
+          ]),
+        count: 0
+      }, _.a])];
+      M._.w();
       $MC = (window.$MC || []).concat(
       {
         "p": "_",
@@ -234,20 +249,9 @@ container.querySelector("#tags").click();
           "__tests__/components/class-counter.marko"
         ]
       });
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
-        {
-          "ConditionalScope:#text/2": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/2": _._.$compat_renderer(_._[
-            "__tests__/components/class-counter.marko"
-            ]),
-          count: 0
-        }, _.a]), "$compat_setScope", 2,
+      M._.r.push("$compat_setScope", 2,
         "__tests__/template.marko_0_count",
-        1
-      ];
+        1);
       M._.w()
     </script>
   </body>
@@ -284,6 +288,18 @@ container.querySelector("#class").click();
     </button>
     <!--M_]1 #text/2-->
     <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0,
+      {
+        "ConditionalScope:#text/2": _.a = {
+          m5c: "_0"
+        },
+        "ConditionalRenderer:#text/2": _._.$compat_renderer(_._[
+          "__tests__/components/class-counter.marko"
+          ]),
+        count: 0
+      }, _.a])];
+      M._.w();
       $MC = (window.$MC || []).concat(
       {
         "p": "_",
@@ -300,20 +316,9 @@ container.querySelector("#class").click();
           "__tests__/components/class-counter.marko"
         ]
       });
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
-        {
-          "ConditionalScope:#text/2": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/2": _._.$compat_renderer(_._[
-            "__tests__/components/class-counter.marko"
-            ]),
-          count: 0
-        }, _.a]), "$compat_setScope", 2,
+      M._.r.push("$compat_setScope", 2,
         "__tests__/template.marko_0_count",
-        1
-      ];
+        1);
       M._.w()
     </script>
   </body>
@@ -349,6 +354,18 @@ container.querySelector("#tags").click();
     </button>
     <!--M_]1 #text/2-->
     <script>
+      WALKER_RUNTIME("M")("_");
+      M._.r = [_ =&gt; (_.b = [0,
+      {
+        "ConditionalScope:#text/2": _.a = {
+          m5c: "_0"
+        },
+        "ConditionalRenderer:#text/2": _._.$compat_renderer(_._[
+          "__tests__/components/class-counter.marko"
+          ]),
+        count: 0
+      }, _.a])];
+      M._.w();
       $MC = (window.$MC || []).concat(
       {
         "p": "_",
@@ -365,20 +382,9 @@ container.querySelector("#tags").click();
           "__tests__/components/class-counter.marko"
         ]
       });
-      WALKER_RUNTIME("M")("_");
-      M._.r = [_ =&gt; (_.b = [0,
-        {
-          "ConditionalScope:#text/2": _.a = {
-            m5c: "_0"
-          },
-          "ConditionalRenderer:#text/2": _._.$compat_renderer(_._[
-            "__tests__/components/class-counter.marko"
-            ]),
-          count: 0
-        }, _.a]), "$compat_setScope", 2,
+      M._.r.push("$compat_setScope", 2,
         "__tests__/template.marko_0_count",
-        1
-      ];
+        1);
       M._.w()
     </script>
   </body>
