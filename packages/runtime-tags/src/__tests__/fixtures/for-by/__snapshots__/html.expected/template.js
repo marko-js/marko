@@ -1,15 +1,12 @@
 function getStringBy() {
   return "id";
 }
-_$.register(getStringBy, "__tests__/template.marko_0/getStringBy");
 function getFunctionBy() {
   return item => item.id;
 }
-_$.register(getFunctionBy, "__tests__/template.marko_0/getFunctionBy");
 function getMissingBy() {
   return undefined;
 }
-_$.register(getMissingBy, "__tests__/template.marko_0/getMissingBy");
 import * as _$ from "@marko/runtime-tags/debug/html";
 export default _$.createTemplate("__tests__/template.marko", input => {
   const $scope0_id = _$.nextScopeId();

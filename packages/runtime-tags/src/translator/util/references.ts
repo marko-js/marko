@@ -2,6 +2,7 @@ import { types as t } from "@marko/compiler";
 import { getProgram } from "@marko/compiler/babel-utils";
 
 import { toAccess } from "../../html/serializer";
+import { finalizeFunctionRegistry } from "../visitors/function";
 import type { InputSerializeReasons } from "../visitors/program";
 import { forEachIdentifierPath } from "./for-each-identifier";
 import { generateUid } from "./generate-uid";
@@ -690,8 +691,9 @@ export function finalizeReferences() {
       for (const node of nodes) {
         const extra = node?.extra;
         if (isReferencedExtra(extra)) {
-          isEffect ||= extra.isEffect;
           const additionalReads = readsByExpression.get(extra);
+          setCanonicalExtra(extra, targetExtra);
+          isEffect ||= extra.isEffect;
           if (additionalReads) {
             reads = concat(reads, additionalReads);
             readsByExpression.delete(extra);
@@ -1063,6 +1065,7 @@ export function finalizeReferences() {
     }
   });
 
+  finalizeFunctionRegistry();
   mergedReferences.clear();
   readsByExpression.clear();
   readsByFn.clear();
@@ -1608,6 +1611,18 @@ export function isRegisteredFnExtra(
   extra: t.NodeExtra | undefined,
 ): extra is RegisteredFnExtra {
   return isReferencedExtra(extra) && extra.registerId !== undefined;
+}
+
+export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {
+  while (extra.merged) {
+    extra = extra.merged as T;
+  }
+
+  return extra;
+}
+
+function setCanonicalExtra(extra: t.NodeExtra, merged: t.NodeExtra) {
+  extra.merged = merged;
 }
 
 function addNumericPropertiesUntil(props: Opt<string>, len: number) {
