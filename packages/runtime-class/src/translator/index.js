@@ -428,31 +428,43 @@ export const translate = {
         );
       }
 
-      path.pushContainer(
-        "body",
-        t.expressionStatement(
-          t.assignmentExpression(
-            "=",
-            templateRendererMember,
-            t.callExpression(rendererIdentifier, [
-              t.functionExpression(
-                null,
-                [
-                  t.identifier("input"),
-                  t.identifier("out"),
-                  file._componentDefIdentifier,
-                  file._componentInstanceIdentifier,
-                  t.identifier("state"),
-                  t.identifier("$global"),
-                ],
-                renderBlock.node,
-              ),
-              t.objectExpression(templateRenderOptionsProps),
-              componentIdentifier,
-            ]),
+      let rendererAssignment = t.assignmentExpression(
+        "=",
+        templateRendererMember,
+        t.callExpression(rendererIdentifier, [
+          t.functionExpression(
+            null,
+            [
+              t.identifier("input"),
+              t.identifier("out"),
+              file._componentDefIdentifier,
+              file._componentInstanceIdentifier,
+              t.identifier("state"),
+              t.identifier("$global"),
+            ],
+            renderBlock.node,
           ),
-        ),
+          t.objectExpression(templateRenderOptionsProps),
+          componentIdentifier,
+        ]),
       );
+
+      if (!isHTML && componentBrowserFile && !meta.implicitSplitComponent) {
+        rendererAssignment = t.assignmentExpression(
+          "=",
+          t.memberExpression(
+            importDefault(
+              file,
+              resolveRelativePath(file, componentBrowserFile),
+              "marko_split_component",
+            ),
+            t.identifier("renderer"),
+          ),
+          rendererAssignment,
+        );
+      }
+
+      path.pushContainer("body", t.expressionStatement(rendererAssignment));
 
       if (meta.implicitSplitComponent && isHTML) {
         renderBlock.unshiftContainer(

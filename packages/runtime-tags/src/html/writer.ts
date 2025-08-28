@@ -505,7 +505,14 @@ function writeBranchEnd(
 }
 
 let writeScope = (scopeId: number, partialScope: PartialScope) => {
-  const { state } = $chunk.boundary;
+  return writeScopeToState($chunk.boundary.state, scopeId, partialScope);
+};
+
+export function writeScopeToState(
+  state: State,
+  scopeId: number,
+  partialScope: PartialScope,
+) {
   const { scopes } = state;
   let scope: ScopeInternals | undefined = scopes.get(scopeId);
   state.needsMainRuntime = true;
@@ -525,7 +532,7 @@ let writeScope = (scopeId: number, partialScope: PartialScope) => {
   }
 
   return scope;
-};
+}
 
 if (MARKO_DEBUG) {
   writeScope = (
