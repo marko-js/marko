@@ -89,6 +89,16 @@ export const compat = {
       return compatRegistered;
     };
   },
+  flushScript($global: any) {
+    const boundary = new Boundary(this.ensureState($global));
+    if (!boundary.done) {
+      throw new Error(
+        "Cannot serialize promise across tags/class compat layer.",
+      );
+    }
+
+    return new Chunk(boundary, null, null).flushScript().scripts;
+  },
   render(
     renderer: ServerRenderer,
     willRerender: boolean,
