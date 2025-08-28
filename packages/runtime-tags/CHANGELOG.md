@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.54
+
+### Patch Changes
+
+- [#2784](https://github.com/marko-js/marko/pull/2784) [`bbde0e8`](https://github.com/marko-js/marko/commit/bbde0e8415931c3fbb5432007dda196dfd5a9e3d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with compat layer scope serialized async.
+
+- [#2784](https://github.com/marko-js/marko/pull/2784) [`bbde0e8`](https://github.com/marko-js/marko/commit/bbde0e8415931c3fbb5432007dda196dfd5a9e3d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure interop class/tags init happens after all modules load.
+
 ## 6.0.53
 
 ### Patch Changes
