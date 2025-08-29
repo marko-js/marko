@@ -55,6 +55,10 @@ export default {
 
     if (varBinding) {
       setBindingValueExpr(varBinding, tagExtra);
+      tagExtra.downstream = {
+        bindings: varBinding,
+        excludeProperties: undefined,
+      };
     }
   },
   translate: {

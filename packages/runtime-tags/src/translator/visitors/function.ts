@@ -89,9 +89,12 @@ export function finalizeFunctionRegistry() {
       const refExtra = getCanonicalExtra(exprExtra);
       if (seenExtras.has(refExtra)) continue;
       seenExtras.add(refExtra);
-      // TODO: need to check if this expression is truly serialized.
-      shouldSerialize = true;
-      break;
+
+      if (refExtra.downstream) {
+        // TODO: need to check if this expression is truly serialized.
+        shouldSerialize = true;
+        break;
+      }
     }
 
     if (shouldSerialize) {
@@ -147,6 +150,7 @@ function getStaticDeclRefs(
 
           const tag = getTagFromMarkoRoot(markoRoot);
           if (!tag) continue;
+          if (isCoreTagName(tag, "let")) return true;
 
           switch (analyzeTagNameType(tag)) {
             case TagNameType.DynamicTag:

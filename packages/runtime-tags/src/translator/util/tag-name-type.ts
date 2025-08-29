@@ -7,6 +7,8 @@ import {
   resolveTagImport,
 } from "@marko/compiler/babel-utils";
 
+import { isCoreTag } from "./is-core-tag";
+
 declare module "@marko/compiler/dist/types" {
   export interface MarkoTagExtra {
     tagNameType?: TagNameType;
@@ -53,7 +55,7 @@ export default function analyzeTagNameType(tag: t.NodePath<t.MarkoTag>) {
       extra.tagNameType = TagNameType.DynamicTag;
     }
 
-    if (extra.tagNameType === TagNameType.CustomTag) {
+    if (extra.tagNameType === TagNameType.CustomTag && !isCoreTag(tag)) {
       const childFile = loadFileForTag(tag);
       if (!childFile) {
         extra.tagNameType = TagNameType.DynamicTag;

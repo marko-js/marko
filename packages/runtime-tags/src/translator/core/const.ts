@@ -64,6 +64,10 @@ export default {
     if (binding) {
       if (!valueExtra.nullable) binding.nullable = false;
       setBindingValueExpr(binding, valueExtra);
+      valueExtra.downstream = {
+        bindings: binding,
+        excludeProperties: undefined,
+      };
     }
   },
   translate: {
