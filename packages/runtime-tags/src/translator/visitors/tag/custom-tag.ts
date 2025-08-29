@@ -19,10 +19,16 @@ import {
   type AttrTagLookup,
   getAttrTagIdentifier,
 } from "../../util/nested-attribute-tags";
-import { filterMap, fromIter, mapToString } from "../../util/optional";
+import {
+  filterMap,
+  fromIter,
+  mapToString,
+  type Opt,
+} from "../../util/optional";
 import {
   type Binding,
   BindingType,
+  bindingUtil,
   createBinding,
   dropReferences,
   getAllTagReferenceNodes,
@@ -545,11 +551,16 @@ function analyzeAttrs(
   }
 
   if (!templateExport.props || tag.node.arguments?.length) {
-    inputExpr.value = mergeReferences(
+    const extra = (inputExpr.value = mergeReferences(
       section,
       tag.node,
       getAllTagReferenceNodes(tag.node),
-    );
+    ));
+
+    extra.downstream = {
+      bindings: templateExport.binding,
+      excludeProperties: undefined,
+    };
     return;
   }
 
@@ -635,7 +646,26 @@ function analyzeAttrs(
     ] of nodeReferencesByGroup) {
       const groupExtra = mergeReferences(section, node, referenceNodes);
       const groupKnownValue: InputExpr = { value: groupExtra };
+      let bindings: Opt<Binding>;
       rootAttrExprs.add(groupExtra);
+
+      for (const tagName of group) {
+        const attrName = tagName.slice(1);
+        const templateExportAttr = templateExport.props[attrName];
+        if (!templateExportAttr) {
+          bindings = templateExport.binding;
+          break;
+        }
+
+        bindings = bindingUtil.add(bindings, templateExportAttr.binding);
+      }
+
+      if (bindings) {
+        groupExtra.downstream = {
+          bindings,
+          excludeProperties: undefined,
+        };
+      }
 
       for (const name of group) {
         known[attrTagLookup[name].name] = groupKnownValue;
@@ -659,13 +689,18 @@ function analyzeAttrs(
   for (let i = attributes.length; i--; ) {
     const attr = attributes[i];
     if (t.isMarkoAttribute(attr)) {
-      if (seen.has(attr.name) || !templateExport.props[attr.name]) {
+      const templateExportAttr = templateExport.props[attr.name];
+      if (!templateExportAttr || seen.has(attr.name)) {
         // drop references for duplicated attributes and unused attributes.
         dropReferences(attr.value);
         continue;
       }
 
       seen.add(attr.name);
+      (attr.value.extra ??= {}).downstream = {
+        bindings: templateExportAttr.binding,
+        excludeProperties: undefined,
+      };
     }
 
     if (spreadReferenceNodes) {
@@ -680,7 +715,15 @@ function analyzeAttrs(
   }
 
   if (spreadReferenceNodes) {
-    inputExpr.value = mergeReferences(section, tag.node, spreadReferenceNodes);
+    const extra = (inputExpr.value = mergeReferences(
+      section,
+      tag.node,
+      spreadReferenceNodes,
+    ));
+    extra.downstream = {
+      bindings: templateExport.binding,
+      excludeProperties: seen,
+    };
   }
 }
 

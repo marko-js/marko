@@ -17,10 +17,23 @@ export function getMarkoRoot(path: t.NodePath<t.Node>) {
 
 export function getExprRoot(path: t.NodePath<t.Node>) {
   let curPath = path;
+  let assignmentPath: t.NodePath<t.AssignmentPattern> | undefined;
   while (!isMarko(curPath.parentPath!)) {
+    if (curPath.isAssignmentPattern()) {
+      assignmentPath = curPath;
+    }
     // TODO: eventually this should be updated to handle default assignments in a destructure.
     curPath = curPath.parentPath!;
   }
+
+  if (
+    assignmentPath &&
+    curPath.parentPath.isMarkoTag() &&
+    (curPath.key === "var" || curPath.listKey === "params")
+  ) {
+    return assignmentPath;
+  }
+
   return curPath;
 }
 

@@ -18,6 +18,7 @@ import {
   findSorted,
   forEach,
   type Many,
+  type OneMany,
   type Opt,
   push,
   Sorted,
@@ -121,6 +122,10 @@ declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     section?: Section;
     referencedBindings?: ReferencedBindings;
+    downstream?: {
+      bindings: OneMany<Binding>;
+      excludeProperties: undefined | Set<string>;
+    };
     binding?: Binding;
     assignment?: Binding;
     assignmentTo?: Binding;
@@ -569,6 +574,13 @@ function createBindingsAndTrackReferences(
         property,
         undefined,
       );
+
+      if (lVal.left.extra?.binding) {
+        (lVal.right.extra ??= {}).downstream = {
+          bindings: lVal.left.extra.binding,
+          excludeProperties: undefined,
+        };
+      }
       break;
   }
 }
@@ -690,13 +702,15 @@ export function finalizeReferences() {
       let { isEffect } = targetExtra;
       for (const node of nodes) {
         const extra = node?.extra;
-        if (isReferencedExtra(extra)) {
-          const additionalReads = readsByExpression.get(extra);
+        if (extra) {
           setCanonicalExtra(extra, targetExtra);
-          isEffect ||= extra.isEffect;
-          if (additionalReads) {
-            reads = concat(reads, additionalReads);
-            readsByExpression.delete(extra);
+          if (isReferencedExtra(extra)) {
+            const additionalReads = readsByExpression.get(extra);
+            isEffect ||= extra.isEffect;
+            if (additionalReads) {
+              reads = concat(reads, additionalReads);
+              readsByExpression.delete(extra);
+            }
           }
         }
       }
