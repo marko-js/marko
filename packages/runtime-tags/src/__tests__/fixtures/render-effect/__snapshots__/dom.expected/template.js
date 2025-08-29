@@ -4,10 +4,8 @@ import { $setup as _renderEffect, $input as _renderEffect_input, $template as _r
 export function $setup($scope) {
   _renderEffect($scope["#childScope/0"]);
   _renderEffect_input($scope["#childScope/0"], {
-    value: $renderEffect
+    value: function () {}
   });
 }
 import * as _$ from "@marko/runtime-tags/debug/dom";
-function $renderEffect() {}
-_$.register("__tests__/template.marko_0/renderEffect", $renderEffect);
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);

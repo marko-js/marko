@@ -80,8 +80,10 @@ export default {
       } else if (refs.size) {
         getReferencesByFn().set(fnExtra, refs);
       }
-    } else {
+    } else if (shouldAlwaysRegister(markoRoot)) {
       registerFunction(fnExtra);
+    } else {
+      getReferencesByFn().set(fnExtra, new Set([(exprRoot.node.extra ??= {})]));
     }
   },
 } satisfies TemplateVisitor<t.Function>;
@@ -95,16 +97,9 @@ export function finalizeFunctionRegistry() {
       if (seenExtras.has(refExtra)) continue;
       seenExtras.add(refExtra);
 
-      if (refExtra.downstream) {
-        const { bindings, excludeProperties } = refExtra.downstream;
-        if (
-          Array.isArray(bindings)
-            ? bindings.some((binding) => couldSerializeBinding(binding))
-            : couldSerializeBinding(bindings, excludeProperties)
-        ) {
-          shouldRegister = true;
-          break;
-        }
+      if (couldSerializeDownstream(refExtra.downstream)) {
+        shouldRegister = true;
+        break;
       }
     }
 
@@ -112,6 +107,19 @@ export function finalizeFunctionRegistry() {
       registerFunction(fnExtra);
     }
   }
+}
+
+function couldSerializeDownstream(downstream: t.NodeExtra["downstream"]) {
+  if (downstream) {
+    return Array.isArray(downstream.bindings)
+      ? downstream.bindings.some((binding) => couldSerializeBinding(binding))
+      : couldSerializeBinding(
+          downstream.bindings,
+          downstream.excludeProperties,
+        );
+  }
+
+  return false;
 }
 
 function couldSerializeBinding(
@@ -122,11 +130,20 @@ function couldSerializeBinding(
     return true;
   }
 
+  for (const expr of binding.downstreamExpressions) {
+    if (expr.isEffect || couldSerializeDownstream(expr.downstream)) {
+      return true;
+    }
+  }
+
+  for (const alias of binding.aliases) {
+    if (couldSerializeBinding(alias)) {
+      return true;
+    }
+  }
+
   for (const [name, propBinding] of binding.propertyAliases) {
-    if (
-      !excludeProperties?.has(name) &&
-      getBindingSerializeReason(propBinding.section, propBinding)
-    ) {
+    if (!excludeProperties?.has(name) && couldSerializeBinding(propBinding)) {
       return true;
     }
   }
@@ -176,37 +193,43 @@ function getStaticDeclRefs(
             if (getStaticDeclRefs(fnExtra, ref, refs) === true) {
               return true;
             }
-            continue;
+          } else if (shouldAlwaysRegister(markoRoot)) {
+            return true;
+          } else {
+            refs.add((exprRoot.node.extra ??= {}));
           }
-
-          const tag = getTagFromMarkoRoot(markoRoot);
-          if (!tag) continue;
-          if (isCoreTagName(tag, "let")) return true;
-
-          switch (analyzeTagNameType(tag)) {
-            case TagNameType.DynamicTag:
-            case TagNameType.NativeTag:
-              // Passing a function to a dynamic tag could always be potentially serialized.
-              // Native tag event handlers are skipped in the `canIgnoreRegister`
-              // if it's anything else we need to unconditionally serialize.
-              return true;
-            case TagNameType.AttributeTag:
-              if (
-                analyzeTagNameType(getAttributeTagParent(tag)) ===
-                TagNameType.DynamicTag
-              ) {
-                return true;
-              }
-              break;
-          }
-
-          refs.add((exprRoot.node.extra ??= {}));
         }
       }
     }
   }
 
   return refs;
+}
+
+function shouldAlwaysRegister(markoRoot: MarkoExprRootPath) {
+  const tag = getTagFromMarkoRoot(markoRoot);
+  if (!tag) return false;
+  if (isCoreTagName(tag, "let")) return true;
+  if (isCoreTagName(tag, "return")) return true;
+
+  switch (analyzeTagNameType(tag)) {
+    case TagNameType.DynamicTag:
+    case TagNameType.NativeTag:
+      // Passing a function to a dynamic tag could always be potentially serialized.
+      // Native tag event handlers are skipped in the `canIgnoreRegister`
+      // if it's anything else we need to unconditionally serialize.
+      return true;
+    case TagNameType.AttributeTag:
+      if (
+        analyzeTagNameType(getAttributeTagParent(tag)) ===
+        TagNameType.DynamicTag
+      ) {
+        return true;
+      }
+      break;
+  }
+
+  return false;
 }
 
 function getTagFromMarkoRoot(
