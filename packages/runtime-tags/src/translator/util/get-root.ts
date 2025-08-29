@@ -1,5 +1,5 @@
 import type { types as t } from "@marko/compiler";
-type MarkoExprRootPath = t.NodePath<
+export type MarkoExprRootPath = t.NodePath<
   | t.MarkoTag
   | t.MarkoTagBody
   | t.MarkoAttribute

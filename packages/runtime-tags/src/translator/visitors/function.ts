@@ -1,22 +1,21 @@
 import { types as t } from "@marko/compiler";
-import {
-  getFile,
-  getTemplateId,
-  isNativeTag,
-} from "@marko/compiler/babel-utils";
+import { getFile, getTemplateId } from "@marko/compiler/babel-utils";
 
 import { generateUid } from "../util/generate-uid";
+import { getAttributeTagParent } from "../util/get-parent-tag";
 import {
   getDeclarationRoot,
   getExprRoot,
   getFnRoot,
   getMarkoRoot,
+  type MarkoExprRootPath,
 } from "../util/get-root";
 import { isCoreTagName } from "../util/is-core-tag";
 import isInvokedFunction from "../util/is-invoked-function";
 import { getCanonicalExtra, type RegisteredFnExtra } from "../util/references";
 import { getSection } from "../util/sections";
 import { createProgramState } from "../util/state";
+import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import type { TemplateVisitor } from "../util/visitors";
 
 declare module "@marko/compiler/dist/types" {
@@ -43,37 +42,11 @@ const [getReferencesByFn] = createProgramState(
 export default {
   analyze(fn) {
     // bail on closures
-    if (fn !== getFnRoot(fn)) {
-      return;
-    }
+    if (fn !== getFnRoot(fn)) return;
 
     const exprRoot = getExprRoot(fn);
     const markoRoot = getMarkoRoot(exprRoot);
-
-    if (
-      !markoRoot ||
-      // bail within a placeholder
-      markoRoot.isMarkoPlaceholder() ||
-      // bail within a server only statement
-      (markoRoot.isMarkoScriptlet() && markoRoot.node.target === "server") ||
-      // bail within the tag name
-      (markoRoot.isMarkoTag() && markoRoot.node.name == exprRoot.node)
-    ) {
-      return;
-    }
-
-    if (
-      isMarkoAttribute(markoRoot) &&
-      ((isNativeTag(markoRoot.parentPath) &&
-        // TODO: all native tag functions should avoid registration but right now change handlers require it.
-        /^on[A-Z-]/.test(markoRoot.node.name)) ||
-        isCoreTagName(markoRoot.parentPath, "script") ||
-        isCoreTagName(markoRoot.parentPath, "lifecycle") ||
-        isCoreTagName(markoRoot.parentPath, "for"))
-    ) {
-      // Native tags, script, lifecycle, and for loops aren't registered here since handle pulling in the function themselves.
-      return;
-    }
+    if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) return;
 
     const { node } = fn;
     const section = getSection(fn);
@@ -97,7 +70,9 @@ export default {
 
     if (markoRoot.isMarkoScriptlet()) {
       const refs = getStaticDeclRefs(fnExtra, fn);
-      if (refs.size) {
+      if (refs === true) {
+        registerFunction(fnExtra);
+      } else if (refs.size) {
         getReferencesByFn().set(fnExtra, refs);
       }
     } else {
@@ -125,11 +100,32 @@ export function finalizeFunctionRegistry() {
   }
 }
 
+function canIgnoreRegister(
+  markoRoot: MarkoExprRootPath,
+  exprRoot: t.NodePath<t.Node>,
+) {
+  return (
+    // bail within a placeholder
+    markoRoot.isMarkoPlaceholder() ||
+    // bail within a server only statement
+    (markoRoot.isMarkoScriptlet() && markoRoot.node.target === "server") ||
+    // bail within the tag name
+    (markoRoot.isMarkoTag() && markoRoot.node.name == exprRoot.node) ||
+    (isMarkoAttribute(markoRoot) &&
+      ((analyzeTagNameType(markoRoot.parentPath) === TagNameType.NativeTag &&
+        // TODO: all native tag functions should avoid registration but right now change handlers require it.
+        /^on[A-Z-]/.test(markoRoot.node.name)) ||
+        isCoreTagName(markoRoot.parentPath, "script") ||
+        isCoreTagName(markoRoot.parentPath, "lifecycle") ||
+        isCoreTagName(markoRoot.parentPath, "for")))
+  );
+}
+
 function getStaticDeclRefs(
   fnExtra: RegisteredFnExtra,
   path: t.NodePath<t.Node>,
   refs = new Set<t.NodeExtra>(),
-) {
+): Set<t.NodeExtra> | true {
   const decl = getDeclarationRoot(path);
   if (decl) {
     const ids = decl.getOuterBindingIdentifiers();
@@ -141,27 +137,32 @@ function getStaticDeclRefs(
           if (isInvokedFunction(ref)) continue;
           const exprRoot = getExprRoot(ref);
           const markoRoot = getMarkoRoot(exprRoot);
-          if (!markoRoot) continue;
+          if (!markoRoot || canIgnoreRegister(markoRoot, exprRoot)) continue;
           if (markoRoot.isMarkoScriptlet()) {
-            if (markoRoot.node.target !== "server") {
-              getStaticDeclRefs(fnExtra, ref, refs);
+            if (getStaticDeclRefs(fnExtra, ref, refs) === true) {
+              return true;
             }
             continue;
           }
 
-          if (
-            markoRoot.isMarkoPlaceholder() ||
-            (markoRoot.isMarkoTag() && markoRoot.node.name === exprRoot.node)
-          ) {
-            continue;
-          }
+          const tag = getTagFromMarkoRoot(markoRoot);
+          if (!tag) continue;
 
-          if (isMarkoAttribute(markoRoot)) {
-            if (isNativeTag(markoRoot.parentPath)) {
-              if (/^on[A-Z-]/.test(markoRoot.node.name)) {
-                continue;
+          switch (analyzeTagNameType(tag)) {
+            case TagNameType.DynamicTag:
+            case TagNameType.NativeTag:
+              // Passing a function to a dynamic tag could always be potentially serialized.
+              // Native tag event handlers are skipped in the `canIgnoreRegister`
+              // if it's anything else we need to unconditionally serialize.
+              return true;
+            case TagNameType.AttributeTag:
+              if (
+                analyzeTagNameType(getAttributeTagParent(tag)) ===
+                TagNameType.DynamicTag
+              ) {
+                return true;
               }
-            }
+              break;
           }
 
           refs.add((exprRoot.node.extra ??= {}));
@@ -171,6 +172,16 @@ function getStaticDeclRefs(
   }
 
   return refs;
+}
+
+function getTagFromMarkoRoot(
+  markoRoot: MarkoExprRootPath,
+): t.NodePath<t.MarkoTag> | undefined {
+  let cur = markoRoot;
+  do {
+    if (cur.isMarkoTag()) return cur;
+    cur = cur.parentPath as MarkoExprRootPath;
+  } while (cur);
 }
 
 function registerFunction(fnExtra: RegisteredFnExtra) {
