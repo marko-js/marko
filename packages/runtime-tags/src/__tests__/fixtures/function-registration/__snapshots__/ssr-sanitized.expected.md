@@ -6,4 +6,7 @@
 <div>
   4
 </div>
+<button>
+  before
+</button>
 ```

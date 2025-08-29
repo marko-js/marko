@@ -146,14 +146,25 @@ function getStaticDeclRefs(
             if (markoRoot.node.target !== "server") {
               getStaticDeclRefs(fnExtra, ref, refs);
             }
-          } else if (
-            !(
-              markoRoot.isMarkoPlaceholder() ||
-              (markoRoot.isMarkoTag() && markoRoot.node.name === exprRoot.node)
-            )
-          ) {
-            refs.add((exprRoot.node.extra ??= {}));
+            continue;
           }
+
+          if (
+            markoRoot.isMarkoPlaceholder() ||
+            (markoRoot.isMarkoTag() && markoRoot.node.name === exprRoot.node)
+          ) {
+            continue;
+          }
+
+          if (isMarkoAttribute(markoRoot)) {
+            if (isNativeTag(markoRoot.parentPath)) {
+              if (/^on[A-Z-]/.test(markoRoot.node.name)) {
+                continue;
+              }
+            }
+          }
+
+          refs.add((exprRoot.node.extra ??= {}));
         }
       }
     }
