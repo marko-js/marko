@@ -12,8 +12,13 @@ import {
 } from "../util/get-root";
 import { isCoreTagName } from "../util/is-core-tag";
 import isInvokedFunction from "../util/is-invoked-function";
-import { getCanonicalExtra, type RegisteredFnExtra } from "../util/references";
+import {
+  type Binding,
+  getCanonicalExtra,
+  type RegisteredFnExtra,
+} from "../util/references";
 import { getSection } from "../util/sections";
+import { getBindingSerializeReason } from "../util/serialize-reasons";
 import { createProgramState } from "../util/state";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import type { TemplateVisitor } from "../util/visitors";
@@ -84,23 +89,49 @@ export default {
 export function finalizeFunctionRegistry() {
   for (const [fnExtra, exprExtras] of getReferencesByFn()) {
     const seenExtras = new Set<t.NodeExtra>();
-    let shouldSerialize = false;
+    let shouldRegister = false;
     for (const exprExtra of exprExtras) {
       const refExtra = getCanonicalExtra(exprExtra);
       if (seenExtras.has(refExtra)) continue;
       seenExtras.add(refExtra);
 
       if (refExtra.downstream) {
-        // TODO: need to check if this expression is truly serialized.
-        shouldSerialize = true;
-        break;
+        const { bindings, excludeProperties } = refExtra.downstream;
+        if (
+          Array.isArray(bindings)
+            ? bindings.some((binding) => couldSerializeBinding(binding))
+            : couldSerializeBinding(bindings, excludeProperties)
+        ) {
+          shouldRegister = true;
+          break;
+        }
       }
     }
 
-    if (shouldSerialize) {
+    if (shouldRegister) {
       registerFunction(fnExtra);
     }
   }
+}
+
+function couldSerializeBinding(
+  binding: Binding,
+  excludeProperties?: Set<string> | undefined,
+) {
+  if (getBindingSerializeReason(binding.section, binding)) {
+    return true;
+  }
+
+  for (const [name, propBinding] of binding.propertyAliases) {
+    if (
+      !excludeProperties?.has(name) &&
+      getBindingSerializeReason(propBinding.section, propBinding)
+    ) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 function canIgnoreRegister(
