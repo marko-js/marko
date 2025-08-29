@@ -4,5 +4,11 @@ static function sum(a, b) {
 
 static const add1 = v => (0, sum)(1, v);
 
+static function updateText(ev) {
+  ev.target.textContent = "after";
+}
+
 div -- ${sum(1, 2)}
 div -- ${add1(3)}
+
+button onClick=updateText -- before

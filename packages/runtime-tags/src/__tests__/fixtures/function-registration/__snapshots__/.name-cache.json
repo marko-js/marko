@@ -2,7 +2,8 @@
   "vars": {
     "props": {
       "$_$": "r",
-      "$init": "m"
+      "$init": "m",
+      "$updateText": "t"
     }
   }
 }
