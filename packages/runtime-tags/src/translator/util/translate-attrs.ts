@@ -1,10 +1,10 @@
 import { types as t } from "@marko/compiler";
-import { isAttributeTag, isTransparentTag } from "@marko/compiler/babel-utils";
+import { isAttributeTag } from "@marko/compiler/babel-utils";
 
 import { buildForRuntimeCall, getForType } from "../core/for";
 import { scopeIdentifier, type TemplateExports } from "../visitors/program";
 import { getKnownAttrValues } from "./get-known-attr-values";
-import { getParentTag } from "./get-parent-tag";
+import { getAttributeTagParent } from "./get-parent-tag";
 import { getTagName } from "./get-tag-name";
 import { isOutputHTML } from "./marko-config";
 // TODO: should this move here.
@@ -421,7 +421,7 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
         serialized
           ? getScopeIdIdentifier(
               getSection(
-                getNonAttributeTagParent(
+                getAttributeTagParent(
                   body.parentPath as t.NodePath<t.MarkoTag>,
                 ),
               )!,
@@ -451,15 +451,4 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
       );
     }
   }
-}
-
-function getNonAttributeTagParent(
-  tag: t.NodePath<t.MarkoTag>,
-): t.NodePath<t.MarkoTag> {
-  let cur: t.NodePath<t.MarkoTag> = tag;
-  while (isAttributeTag(cur) || isTransparentTag(cur)) {
-    cur = getParentTag(cur)!;
-  }
-
-  return cur;
 }
