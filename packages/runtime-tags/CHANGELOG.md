@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.56
+
+### Patch Changes
+
+- [#2789](https://github.com/marko-js/marko/pull/2789) [`5446f78`](https://github.com/marko-js/marko/commit/5446f784c6f40dc128427933ee011aea2778dace) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Reduce function registrations.
+
 ## 6.0.55
 
 ### Patch Changes
