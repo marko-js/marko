@@ -1,5 +1,5 @@
 // size: 165 (min) 133 (brotli)
-const $count_effect = _$.effect("a1", ($scope, { 1: count }) =>
+const $count_effect = _$.effect("a0", ($scope, { 1: count }) =>
     _$.on($scope[0], "click", function () {
       $count($scope, ++count);
     }),
