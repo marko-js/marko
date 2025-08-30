@@ -1,5 +1,13 @@
 # @marko/runtime-tags
 
+## 6.0.57
+
+### Patch Changes
+
+- [#2793](https://github.com/marko-js/marko/pull/2793) [`663c3b1`](https://github.com/marko-js/marko/commit/663c3b14c7f8be6d8805adf3cd90fdd6511fab20) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with mutating tag variables within an intersection.
+
+- [#2793](https://github.com/marko-js/marko/pull/2793) [`d7271e7`](https://github.com/marko-js/marko/commit/d7271e7198008f3181c971e5f99c927e1296ef8d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Refactor function registration, ensure functions passed as return value are registered.
+
 ## 6.0.56
 
 ### Patch Changes
