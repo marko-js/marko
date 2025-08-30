@@ -13,12 +13,11 @@ import {
 import { isCoreTagName } from "../util/is-core-tag";
 import isInvokedFunction from "../util/is-invoked-function";
 import {
-  type Binding,
+  couldSerializeExtra,
   getCanonicalExtra,
   type RegisteredFnExtra,
 } from "../util/references";
 import { getSection } from "../util/sections";
-import { getBindingSerializeReason } from "../util/serialize-reasons";
 import { createProgramState } from "../util/state";
 import analyzeTagNameType, { TagNameType } from "../util/tag-name-type";
 import type { TemplateVisitor } from "../util/visitors";
@@ -90,14 +89,9 @@ export default {
 
 export function finalizeFunctionRegistry() {
   for (const [fnExtra, exprExtras] of getReferencesByFn()) {
-    const seenExtras = new Set<t.NodeExtra>();
     let shouldRegister = false;
     for (const exprExtra of exprExtras) {
-      const refExtra = getCanonicalExtra(exprExtra);
-      if (seenExtras.has(refExtra)) continue;
-      seenExtras.add(refExtra);
-
-      if (couldSerializeDownstream(refExtra.downstream)) {
+      if (couldSerializeExtra(getCanonicalExtra(exprExtra))) {
         shouldRegister = true;
         break;
       }
@@ -107,48 +101,6 @@ export function finalizeFunctionRegistry() {
       registerFunction(fnExtra);
     }
   }
-}
-
-function couldSerializeDownstream(downstream: t.NodeExtra["downstream"]) {
-  if (downstream) {
-    return Array.isArray(downstream.bindings)
-      ? downstream.bindings.some((binding) => couldSerializeBinding(binding))
-      : couldSerializeBinding(
-          downstream.bindings,
-          downstream.excludeProperties,
-        );
-  }
-
-  return false;
-}
-
-function couldSerializeBinding(
-  binding: Binding,
-  excludeProperties?: Set<string> | undefined,
-) {
-  if (getBindingSerializeReason(binding.section, binding)) {
-    return true;
-  }
-
-  for (const expr of binding.downstreamExpressions) {
-    if (expr.isEffect || couldSerializeDownstream(expr.downstream)) {
-      return true;
-    }
-  }
-
-  for (const alias of binding.aliases) {
-    if (couldSerializeBinding(alias)) {
-      return true;
-    }
-  }
-
-  for (const [name, propBinding] of binding.propertyAliases) {
-    if (!excludeProperties?.has(name) && couldSerializeBinding(propBinding)) {
-      return true;
-    }
-  }
-
-  return false;
 }
 
 function canIgnoreRegister(

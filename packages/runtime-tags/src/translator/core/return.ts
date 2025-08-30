@@ -71,6 +71,7 @@ export default {
     }
 
     if (attrs.valueChange) {
+      (attrs.valueChange.extra ??= {}).isEffect = true;
       // TODO: this should be based on the parent actually mutating the tag variable.
       forceSectionSerialize(
         getOrCreateSection(tag),

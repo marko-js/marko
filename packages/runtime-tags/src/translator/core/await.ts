@@ -14,7 +14,7 @@ import {
   BindingType,
   createBinding,
   getScopeAccessorLiteral,
-  setBindingValueExpr,
+  setBindingDownstream,
   trackParamsReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
@@ -102,7 +102,7 @@ export default {
     const paramsBinding = trackParamsReferences(tagBody, BindingType.param);
 
     if (paramsBinding) {
-      setBindingValueExpr(paramsBinding, valueExtra);
+      setBindingDownstream(paramsBinding, valueExtra);
     }
 
     bodySection.upstreamExpression = valueAttr.value.extra;

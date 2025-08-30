@@ -18,7 +18,6 @@ import {
   findSorted,
   forEach,
   type Many,
-  type OneMany,
   type Opt,
   push,
   Sorted,
@@ -122,10 +121,7 @@ declare module "@marko/compiler/dist/types" {
   export interface NodeExtra {
     section?: Section;
     referencedBindings?: ReferencedBindings;
-    downstream?: {
-      bindings: OneMany<Binding>;
-      excludeProperties: undefined | Set<string>;
-    };
+    downstream?: Opt<Binding>;
     binding?: Binding;
     assignment?: Binding;
     assignmentTo?: Binding;
@@ -576,10 +572,10 @@ function createBindingsAndTrackReferences(
       );
 
       if (lVal.left.extra?.binding) {
-        (lVal.right.extra ??= {}).downstream = {
-          bindings: lVal.left.extra.binding,
-          excludeProperties: undefined,
-        };
+        setBindingDownstream(
+          lVal.left.extra.binding,
+          (lVal.right.extra ??= {}),
+        );
       }
       break;
   }
@@ -732,18 +728,6 @@ export function finalizeReferences() {
         binding.downstreamExpressions.add(expr);
       });
     }
-  }
-
-  for (const [fn, reads] of readsByFn) {
-    fn.referencedBindingsInFunction = resolveReferencedBindings(
-      fn,
-      reads,
-      intersectionsBySection,
-    );
-
-    forEach(fn.referencedBindingsInFunction, (binding) =>
-      forceBindingSerialize(binding.section, binding),
-    );
   }
 
   for (const binding of bindings) {
@@ -1080,6 +1064,19 @@ export function finalizeReferences() {
   });
 
   finalizeFunctionRegistry();
+  for (const [fn, reads] of readsByFn) {
+    fn.referencedBindingsInFunction = resolveReferencedBindings(
+      fn,
+      reads,
+      intersectionsBySection,
+    );
+    if (fn.registerId) {
+      forEach(fn.referencedBindingsInFunction, (binding) =>
+        forceBindingSerialize(binding.section, binding),
+      );
+    }
+  }
+
   mergedReferences.clear();
   readsByExpression.clear();
   readsByFn.clear();
@@ -1111,11 +1108,16 @@ export const intersectionMeta = new WeakMap<
   { id: number; scopeOffset: Binding | undefined }
 >();
 
-export function setBindingValueExpr(
+export function setBindingDownstream(
   binding: Binding,
-  valueExpr: boolean | Opt<t.NodeExtra>,
+  expr: boolean | Opt<t.NodeExtra>,
 ) {
-  bindingValueExprs.set(binding, valueExpr || false);
+  bindingValueExprs.set(binding, expr || false);
+  if (expr && expr !== true) {
+    forEach(expr, (expr) => {
+      expr.downstream = bindingUtil.add(expr.downstream, binding);
+    });
+  }
 }
 
 const resolvedSources = new WeakSet<Binding>();
@@ -1633,6 +1635,59 @@ export function getCanonicalExtra<T extends t.NodeExtra>(extra: T): T {
   }
 
   return extra;
+}
+
+const couldSerializeLookup = new WeakMap<t.NodeExtra | Binding, boolean>();
+export function couldSerializeExtra(extra: t.NodeExtra) {
+  let couldSerialize = couldSerializeLookup.get(extra);
+  if (couldSerialize === undefined) {
+    couldSerializeLookup.set(
+      extra,
+      (couldSerialize =
+        extra === getProgram().node.extra?.returnValueExpr ||
+        !!find(extra.downstream, couldSerializeBinding)),
+    );
+  }
+
+  return couldSerialize;
+}
+
+export function couldSerializeBinding(binding: Binding) {
+  let couldSerialize = couldSerializeLookup.get(binding);
+  if (couldSerialize === undefined) {
+    if (getBindingSerializeReason(binding.section, binding)) {
+      couldSerialize = true;
+    } else {
+      for (const expr of binding.downstreamExpressions) {
+        if (expr.isEffect || couldSerializeExtra(expr)) {
+          couldSerialize = true;
+          break;
+        }
+      }
+
+      if (!couldSerialize) {
+        for (const alias of binding.aliases) {
+          if (couldSerializeBinding(alias)) {
+            couldSerialize = true;
+            break;
+          }
+        }
+
+        if (!couldSerialize) {
+          for (const [, propBinding] of binding.propertyAliases) {
+            if (couldSerializeBinding(propBinding)) {
+              couldSerialize = true;
+              break;
+            }
+          }
+        }
+      }
+    }
+
+    couldSerializeLookup.set(binding, (couldSerialize ??= false));
+  }
+
+  return couldSerialize;
 }
 
 function setCanonicalExtra(extra: t.NodeExtra, merged: t.NodeExtra) {

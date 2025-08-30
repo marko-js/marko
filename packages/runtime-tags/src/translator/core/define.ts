@@ -7,7 +7,7 @@ import {
   BindingType,
   getAllTagReferenceNodes,
   mergeReferences,
-  setBindingValueExpr,
+  setBindingDownstream,
   trackParamsReferences,
   trackVarReferences,
 } from "../util/references";
@@ -54,11 +54,7 @@ export default {
     );
 
     if (varBinding) {
-      setBindingValueExpr(varBinding, tagExtra);
-      tagExtra.downstream = {
-        bindings: varBinding,
-        excludeProperties: undefined,
-      };
+      setBindingDownstream(varBinding, tagExtra);
     }
   },
   translate: {

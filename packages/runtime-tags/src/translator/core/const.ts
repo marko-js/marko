@@ -10,7 +10,7 @@ import evaluate from "../util/evaluate";
 import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
-  setBindingValueExpr,
+  setBindingDownstream,
   trackVarReferences,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
@@ -63,11 +63,7 @@ export default {
 
     if (binding) {
       if (!valueExtra.nullable) binding.nullable = false;
-      setBindingValueExpr(binding, valueExtra);
-      valueExtra.downstream = {
-        bindings: binding,
-        excludeProperties: undefined,
-      };
+      setBindingDownstream(binding, valueExtra);
     }
   },
   translate: {

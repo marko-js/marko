@@ -22,7 +22,7 @@ import {
   getScopeAccessorLiteral,
   kBranchSerializeReason,
   mergeReferences,
-  setBindingValueExpr,
+  setBindingDownstream,
   trackParamsReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
@@ -106,7 +106,7 @@ export default {
       getAllTagReferenceNodes(tag.node),
     );
     if (paramsBinding) {
-      setBindingValueExpr(paramsBinding, tagExtra);
+      setBindingDownstream(paramsBinding, tagExtra);
     }
     bodySection.sectionAccessor = {
       binding: nodeBinding,
