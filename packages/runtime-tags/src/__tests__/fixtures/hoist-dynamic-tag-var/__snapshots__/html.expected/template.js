@@ -11,7 +11,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
         if (input.show) {
           const $scope2_id = _$.nextScopeId();
           const $Child_scope = _$.peekNextScopeId();
-          const setHtml = _$.dynamicTag($scope2_id, "#text/0", 1 && Child, {});
+          let setHtml = _$.dynamicTag($scope2_id, "#text/0", 1 && Child, {});
           _$.setTagVar($scope2_id, "#scopeOffset/1", $Child_scope, "__tests__/template.marko_2_setHtml/var");
           _$.writeScope($scope2_id, {
             setHtml
@@ -35,7 +35,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
     if (true) {
       const $scope3_id = _$.nextScopeId();
       const $Child_scope2 = _$.peekNextScopeId();
-      const setHtml2 = _$.dynamicTag($scope3_id, "#text/0", 1 && Child, {});
+      let setHtml2 = _$.dynamicTag($scope3_id, "#text/0", 1 && Child, {});
       _$.setTagVar($scope3_id, "#scopeOffset/1", $Child_scope2, "__tests__/template.marko_3_setHtml2/var");
       _$.writeScope($scope3_id, {
         setHtml2
@@ -49,7 +49,7 @@ export default _$.createTemplate("__tests__/template.marko", (input, $serialize)
     if (true) {
       const $scope4_id = _$.nextScopeId();
       const $Child_scope3 = _$.peekNextScopeId();
-      const setHtml3 = _$.dynamicTag($scope4_id, "#text/0", 1 && Child, {});
+      let setHtml3 = _$.dynamicTag($scope4_id, "#text/0", 1 && Child, {});
       _$.setTagVar($scope4_id, "#scopeOffset/1", $Child_scope3, "__tests__/template.marko_4_setHtml3/var");
       _$.writeScope($scope4_id, {
         setHtml3

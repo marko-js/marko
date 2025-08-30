@@ -4,7 +4,7 @@ export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", 0, 0, 1);
 const $expr_content_value = /* @__PURE__ */_$.intersection(5, $scope => {
-  const {
+  let {
     content,
     value
   } = $scope;

@@ -2,7 +2,7 @@ export const $template = "<div><button class=a> </button> + <button class=b> </b
 export const $walks = /* next(1), get, next(1), get, out(1), over(1), get, next(1), get, out(1), over(1), replace, out(1) */"D D lb D lb%l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_a_b = /* @__PURE__ */_$.intersection(7, $scope => {
-  const {
+  let {
     a,
     b
   } = $scope;

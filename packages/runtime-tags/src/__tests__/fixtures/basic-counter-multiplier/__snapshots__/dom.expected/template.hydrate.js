@@ -1,9 +1,9 @@
-// size: 307 (min) 179 (brotli)
+// size: 305 (min) 181 (brotli)
 const $multipliedCount = _$.value(7, ($scope, multipliedCount) =>
     _$.data($scope[3], multipliedCount),
   ),
   $expr_count_multiplier = _$.intersection(6, ($scope) => {
-    const { 4: count, 5: multiplier } = $scope;
+    let { 4: count, 5: multiplier } = $scope;
     $multipliedCount($scope, count * multiplier);
   }),
   $count_effect = _$.effect("a0", ($scope, { 4: count }) =>

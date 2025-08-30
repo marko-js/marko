@@ -1,6 +1,6 @@
-// size: 442 (min) 177 (brotli)
+// size: 440 (min) 178 (brotli)
 const $expr_checkedValue_$checkedValueChange = _$.intersection(6, ($scope) => {
-    const { 4: checkedValue, 5: $checkedValueChange } = $scope;
+    let { 4: checkedValue, 5: $checkedValueChange } = $scope;
     (_$.controllable_input_checkedValue(
       $scope,
       0,

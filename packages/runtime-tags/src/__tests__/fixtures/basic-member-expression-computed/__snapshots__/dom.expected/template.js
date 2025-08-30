@@ -10,7 +10,7 @@ const $expr_items_index_effect = _$.effect("__tests__/template.marko_0_items_ind
   $index($scope, index = (index + 1) % newItems.length);
 }));
 const $expr_items_index = /* @__PURE__ */_$.intersection(6, $scope => {
-  const {
+  let {
     items,
     index
   } = $scope;

@@ -26,7 +26,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   };
   let clickOnceCount = 0;
   const $Once_scope = _$.peekNextScopeId();
-  const onClickOnce = _$.dynamicTag($scope0_id, "#text/0", Once, {
+  let onClickOnce = _$.dynamicTag($scope0_id, "#text/0", Once, {
     value: _$.register(function () {
       clickOnceCount++;
     }, "__tests__/template.marko_0/onClickOnce", $scope0_id)
@@ -58,7 +58,7 @@ export default _$.createTemplate("__tests__/template.marko", input => {
   };
   let clickTwiceCount = 0;
   const $Twice_scope = _$.peekNextScopeId();
-  const onClickTwice = _$.dynamicTag($scope0_id, "#text/4", Twice, {
+  let onClickTwice = _$.dynamicTag($scope0_id, "#text/4", Twice, {
     value: _$.register(function () {
       clickTwiceCount++;
     }, "__tests__/template.marko_0/onClickTwice", $scope0_id)

@@ -3,7 +3,7 @@ export const $walks = /* over(1), beginChild, _list_walks, endChild, get, next(1
 import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $setup as _list, $input_item as _list_input_item, $template as _list_template, $walks as _list_walks } from "./tags/list/index.marko";
 const $expr_mult_item$item$content = /* @__PURE__ */_$.intersection(1, $scope => {
-  const {
+  let {
     _: {
       mult
     },

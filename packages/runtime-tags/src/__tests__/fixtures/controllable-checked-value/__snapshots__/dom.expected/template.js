@@ -2,7 +2,7 @@ export const $template = "<input type=radio><input type=radio><input type=radio>
 export const $walks = /* get, over(1), get, over(1), get, over(1), next(1), get, out(1) */" b b bD l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_checkedValue_$checkedValueChange = /* @__PURE__ */_$.intersection(6, $scope => {
-  const {
+  let {
     checkedValue,
     $checkedValueChange
   } = $scope;

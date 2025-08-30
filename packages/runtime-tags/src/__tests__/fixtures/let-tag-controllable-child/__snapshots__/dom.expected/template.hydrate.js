@@ -1,4 +1,4 @@
-// size: 563 (min) 251 (brotli)
+// size: 561 (min) 251 (brotli)
 const $state_effect = _$.effect("a0", ($scope, { 11: state }) =>
     _$.on($scope[0], "click", function () {
       $state($scope, ++state);
@@ -8,7 +8,7 @@ const $state_effect = _$.effect("a0", ($scope, { 11: state }) =>
     (_$.data($scope[2], state), $state_effect($scope));
   }),
   $expr_input_value_input_valueChange = _$.intersection(10, ($scope) => {
-    const { 8: input_value, 9: input_valueChange } = $scope;
+    let { 8: input_value, 9: input_valueChange } = $scope;
     $state($scope, input_value, input_valueChange);
   }),
   $input_value = _$.value(8, ($scope, input_value) => {

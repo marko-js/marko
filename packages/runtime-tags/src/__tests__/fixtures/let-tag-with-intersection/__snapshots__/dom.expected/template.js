@@ -3,7 +3,7 @@ export const $walks = /* get, next(1), get, out(1), replace, over(2), replace, o
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $a = /* @__PURE__ */_$.value("a", ($scope, a) => _$.data($scope["#text/4"], a));
 const $expr_y_z = /* @__PURE__ */_$.intersection(8, $scope => {
-  const {
+  let {
     y,
     z
   } = $scope;

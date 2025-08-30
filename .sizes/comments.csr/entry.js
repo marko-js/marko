@@ -1,11 +1,11 @@
-// size: 894 (min) 459 (brotli)
+// size: 890 (min) 458 (brotli)
 const $setup$if$content = ($scope) => {
     ($scope[0],
       $comment_comments$if$content._($scope),
       $id$if$content._($scope));
   },
   $expr_comment_comments_id$if$content = intersection(1, ($scope) => {
-    const {
+    let {
       _: { 8: comment_comments, 11: id },
     } = $scope;
     $input$1($scope[0], { comments: comment_comments, path: id });
@@ -27,7 +27,7 @@ const $setup$if$content = ($scope) => {
     (attr($scope[0], "id", id), $id$if$content($scope));
   }),
   $expr_input_path_i$for$content = intersection(10, ($scope) => {
-    const {
+    let {
       _: { 4: input_path },
       9: i,
     } = $scope;

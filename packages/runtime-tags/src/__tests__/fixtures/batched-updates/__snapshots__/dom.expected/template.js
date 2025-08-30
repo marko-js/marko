@@ -9,7 +9,7 @@ const $expr_a_b_effect = _$.effect("__tests__/template.marko_0_a_b", ($scope, {
   $b($scope, ++b)
 }));
 const $expr_a_b = /* @__PURE__ */_$.intersection(4, $scope => {
-  const {
+  let {
     a,
     b
   } = $scope;

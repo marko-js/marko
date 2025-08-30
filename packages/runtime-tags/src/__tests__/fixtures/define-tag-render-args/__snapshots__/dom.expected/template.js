@@ -12,7 +12,7 @@ const $params2$define$content = /* @__PURE__ */_$.value("$params2", ($scope, $pa
 const $define_content = _$.registerContent("__tests__/template.marko_1_renderer", "<div><!>|<!>|<!></div>", /* next(1), replace, over(2), replace, over(2), replace, out(1) */"D%c%c%l", 0, $params2$define$content);
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", 0, 0, 1);
 const $expr_x_MyTag = /* @__PURE__ */_$.intersection(5, $scope => {
-  const {
+  let {
     x,
     MyTag
   } = $scope;

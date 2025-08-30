@@ -12,7 +12,7 @@ const $state = /* @__PURE__ */_$.state("state/11", ($scope, state) => {
   $state_effect($scope);
 });
 const $expr_input_value_input_valueChange = /* @__PURE__ */_$.intersection(10, $scope => {
-  const {
+  let {
     input_value,
     input_valueChange
   } = $scope;

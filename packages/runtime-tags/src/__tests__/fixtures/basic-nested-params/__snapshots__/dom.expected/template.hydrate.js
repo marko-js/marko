@@ -1,7 +1,7 @@
-// size: 597 (min) 333 (brotli)
+// size: 595 (min) 322 (brotli)
 const $dynamicTag = _$.dynamicTag(0, 0, 0, 1),
   $expr_content_value = _$.intersection(5, ($scope) => {
-    const { 3: content, 4: value } = $scope;
+    let { 3: content, 4: value } = $scope;
     $dynamicTag($scope, content, () => [value]);
   }),
   $content = _$.value(3, $expr_content_value),

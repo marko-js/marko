@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $define_content = /* @__PURE__ */_$.createContent("__tests__/tags/my-tag.marko_1_renderer", "default", /* over(1) */"b");
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
 const $expr_inputAs_inputClass_htmlInput_content = /* @__PURE__ */_$.intersection(9, $scope => {
-  const {
+  let {
     inputAs,
     inputClass,
     htmlInput,

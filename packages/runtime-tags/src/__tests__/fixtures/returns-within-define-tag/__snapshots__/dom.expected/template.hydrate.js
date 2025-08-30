@@ -1,6 +1,6 @@
-// size: 1194 (min) 427 (brotli)
+// size: 1186 (min) 426 (brotli)
 const $expr_value_call$define$content2 = _$.intersection(4, ($scope) => {
-    const { 2: value, 3: call } = $scope;
+    let { 2: value, 3: call } = $scope;
     _$.tagVarSignal($scope, $_return2($scope));
   }),
   $call$define$content2 = _$.state(3, $expr_value_call$define$content2),
@@ -21,7 +21,7 @@ _$.registerContent(
   $params3$define$content,
 );
 const $expr_value_call$define$content = _$.intersection(4, ($scope) => {
-    const { 2: value, 3: call } = $scope;
+    let { 2: value, 3: call } = $scope;
     _$.tagVarSignal($scope, $_return($scope));
   }),
   $call$define$content = _$.state(3, $expr_value_call$define$content),
@@ -43,7 +43,7 @@ _$.registerContent(
 );
 const $dynamicTag = _$.dynamicTag(0, 0, () => $onClickOnce2),
   $expr_Once_clickOnceCount = _$.intersection(10, ($scope) => {
-    const { 8: Once, 9: clickOnceCount } = $scope;
+    let { 8: Once, 9: clickOnceCount } = $scope;
     $dynamicTag($scope, Once, () => ({ value: $onClickOnce($scope) }));
   }),
   $clickOnceCount = _$.state(9, ($scope, clickOnceCount) => {
@@ -51,7 +51,7 @@ const $dynamicTag = _$.dynamicTag(0, 0, () => $onClickOnce2),
   }),
   $dynamicTag2 = _$.dynamicTag(4, 0, () => $onClickTwice2),
   $expr_Twice_clickTwiceCount = _$.intersection(14, ($scope) => {
-    const { 12: Twice, 13: clickTwiceCount } = $scope;
+    let { 12: Twice, 13: clickTwiceCount } = $scope;
     $dynamicTag2($scope, Twice, () => ({ value: $onClickTwice($scope) }));
   }),
   $clickTwiceCount = _$.state(13, ($scope, clickTwiceCount) => {

@@ -11,7 +11,7 @@ const $y = /* @__PURE__ */_$.state("y/6", ($scope, y) => {
   $y_effect($scope);
 });
 const $expr_x_handler = /* @__PURE__ */_$.intersection(5, $scope => {
-  const {
+  let {
     x,
     handler
   } = $scope;

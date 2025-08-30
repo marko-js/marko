@@ -12,7 +12,7 @@ const $count = /* @__PURE__ */_$.state("count1/12", ($scope, count1) => {
   $count_effect($scope);
 });
 const $expr_input_count1_input_count1Change = /* @__PURE__ */_$.intersection(8, $scope => {
-  const {
+  let {
     input_count1,
     input_count1Change
   } = $scope;
@@ -30,7 +30,7 @@ const $count2 = /* @__PURE__ */_$.state("count2/13", ($scope, count2) => {
   $count2_effect($scope);
 });
 const $expr_input_count2_input_count2Change = /* @__PURE__ */_$.intersection(11, $scope => {
-  const {
+  let {
     input_count2,
     input_count2Change
   } = $scope;

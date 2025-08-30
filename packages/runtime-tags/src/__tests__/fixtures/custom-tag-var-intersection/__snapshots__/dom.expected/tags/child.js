@@ -2,7 +2,7 @@ export const $template = "<button class=inc> </button>";
 export const $walks = /* get, next(1), get, out(1) */" D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_input_extra_x = /* @__PURE__ */_$.intersection(6, $scope => {
-  const {
+  let {
     input_extra,
     x
   } = $scope;

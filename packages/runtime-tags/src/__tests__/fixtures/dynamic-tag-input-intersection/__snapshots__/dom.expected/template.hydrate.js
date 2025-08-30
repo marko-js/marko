@@ -1,9 +1,9 @@
-// size: 250 (min) 178 (brotli)
+// size: 248 (min) 181 (brotli)
 const $dynamicTag = _$.dynamicTag(0),
   $expr_inputAs_inputClass_htmlInput_content = _$.intersection(
     9,
     ($scope) => {
-      const { 3: inputAs, 4: inputClass, 6: htmlInput, 8: content } = $scope;
+      let { 3: inputAs, 4: inputClass, 6: htmlInput, 8: content } = $scope;
       $dynamicTag($scope, inputAs || "div", () => ({
         ...htmlInput,
         class: ["foo", inputClass],

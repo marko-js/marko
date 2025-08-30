@@ -9,7 +9,7 @@ const $setup$if$content = $scope => {
   $id$if$content._($scope);
 };
 const $expr_comment_comments_id$if$content = /* @__PURE__ */_$.intersection(1, $scope => {
-  const {
+  let {
     _: {
       comment_comments,
       id
@@ -28,7 +28,7 @@ const $id$for$content = /* @__PURE__ */_$.value("id", ($scope, id) => {
   $id$if$content($scope);
 });
 const $expr_input_path_i$for$content = /* @__PURE__ */_$.intersection(10, $scope => {
-  const {
+  let {
     _: {
       input_path
     },

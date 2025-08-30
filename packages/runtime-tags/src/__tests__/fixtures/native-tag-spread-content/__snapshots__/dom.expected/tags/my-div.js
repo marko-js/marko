@@ -4,7 +4,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $define_content = _$.registerContent("__tests__/tags/my-div.marko_1_renderer", "Custom content", /* over(1) */"b");
 const $expr_input_CustomContent_content_effect = _$.effect("__tests__/tags/my-div.marko_0_input_CustomContent_content", $scope => _$.attrsEvents($scope, "#p/5"));
 const $expr_input_CustomContent_content = /* @__PURE__ */_$.intersection(11, $scope => {
-  const {
+  let {
     input,
     CustomContent_content
   } = $scope;

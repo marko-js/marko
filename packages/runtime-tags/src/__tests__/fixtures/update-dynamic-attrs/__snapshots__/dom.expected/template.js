@@ -3,7 +3,7 @@ export const $walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_input_value_a_effect = _$.effect("__tests__/template.marko_0_input_value_a", $scope => _$.attrsEvents($scope, "#div/1"));
 const $expr_input_value_a = /* @__PURE__ */_$.intersection(7, $scope => {
-  const {
+  let {
     input_value,
     a
   } = $scope;
