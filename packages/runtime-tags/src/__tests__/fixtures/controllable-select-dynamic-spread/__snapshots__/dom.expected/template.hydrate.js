@@ -1,4 +1,4 @@
-// size: 482 (min) 239 (brotli)
+// size: 480 (min) 238 (brotli)
 const $setup$tagselect$content_effect = _$.effect("a2", ($scope) => {
     (_$.attrsEvents($scope, 0),
       _$.attrsEvents($scope, 1),
@@ -17,7 +17,7 @@ const $setup$tagselect$content_effect = _$.effect("a2", ($scope) => {
   ),
   $dynamicTag = _$.dynamicTag(0, $tagselect_content),
   $expr_value_tag = _$.intersection(4, ($scope) => {
-    const { 2: value, 3: tag } = $scope;
+    let { 2: value, 3: tag } = $scope;
     $dynamicTag($scope, tag ? "select" : {}, () => ({
       value: value,
       valueChange: $valueChange($scope),

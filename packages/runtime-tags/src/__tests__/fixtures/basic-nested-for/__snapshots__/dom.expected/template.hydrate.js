@@ -1,10 +1,10 @@
-// size: 528 (min) 302 (brotli)
+// size: 526 (min) 301 (brotli)
 const $name = _$.value(3, ($scope, name) => _$.data($scope[0], name)),
   $setup$for$content = ($scope) => {
     ($scope[0], $outer$for$content._($scope));
   },
   $expr_outer_inner$for$content = _$.intersection(3, ($scope) => {
-    const {
+    let {
       _: { 2: outer },
       2: inner,
     } = $scope;

@@ -5,7 +5,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $inputAsdiv_content = _$.registerContent("__tests__/tags/wrapper.marko_1_renderer", "hi", /* over(1) */"b");
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", $inputAsdiv_content);
 const $expr_inputAs_htmlInput = /* @__PURE__ */_$.intersection(5, $scope => {
-  const {
+  let {
     inputAs,
     htmlInput
   } = $scope;

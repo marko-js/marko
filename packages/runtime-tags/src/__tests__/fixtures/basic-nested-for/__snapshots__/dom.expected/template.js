@@ -7,7 +7,7 @@ const $setup$for$content = $scope => {
   $outer$for$content._($scope);
 };
 const $expr_outer_inner$for$content = /* @__PURE__ */_$.intersection(3, $scope => {
-  const {
+  let {
     _: {
       outer
     },

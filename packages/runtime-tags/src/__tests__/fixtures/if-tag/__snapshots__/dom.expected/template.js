@@ -10,7 +10,7 @@ const $if_content = /* @__PURE__ */_$.createRenderer("Hello", /* over(1) */"b");
 const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);
 const $if2 = /* @__PURE__ */_$.conditional("#text/1", $if_content2);
 const $expr_input_a_input_b = /* @__PURE__ */_$.intersection(7, $scope => {
-  const {
+  let {
     input_a,
     input_b
   } = $scope;
@@ -21,7 +21,7 @@ export const $input_a = /* @__PURE__ */_$.value("input_a", $expr_input_a_input_b
 export const $input_b = /* @__PURE__ */_$.value("input_b", $expr_input_a_input_b);
 const $if3 = /* @__PURE__ */_$.conditional("#div/2", $if_content3, $elseif_content, $else_content);
 const $expr_input_x_input_y = /* @__PURE__ */_$.intersection(10, $scope => {
-  const {
+  let {
     input_x,
     input_y
   } = $scope;

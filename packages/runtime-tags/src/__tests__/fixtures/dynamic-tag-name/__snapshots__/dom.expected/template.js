@@ -7,7 +7,7 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 const $showTagAtagA_content = _$.registerContent("__tests__/template.marko_1_renderer", "Body content", /* over(1) */"b");
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
 const $expr_content_other = /* @__PURE__ */_$.intersection(29, $scope => {
-  const {
+  let {
     content,
     other
   } = $scope;
@@ -20,7 +20,7 @@ export const $content = /* @__PURE__ */_$.value("content", $expr_content_other);
 const $dynamicTag11 = /* @__PURE__ */_$.dynamicTag("#text/10");
 const $dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/1");
 const $expr_x_other = /* @__PURE__ */_$.intersection(30, $scope => {
-  const {
+  let {
     x,
     other
   } = $scope;
@@ -32,7 +32,7 @@ const $expr_x_other = /* @__PURE__ */_$.intersection(30, $scope => {
 const $dynamicTag3 = /* @__PURE__ */_$.dynamicTag("#text/2");
 const $dynamicTag4 = /* @__PURE__ */_$.dynamicTag("#text/3");
 const $expr_show_other = /* @__PURE__ */_$.intersection(31, $scope => {
-  const {
+  let {
     show,
     other
   } = $scope;
@@ -47,7 +47,7 @@ const $expr_show_other = /* @__PURE__ */_$.intersection(31, $scope => {
 });
 const $dynamicTag5 = /* @__PURE__ */_$.dynamicTag("#text/4");
 const $expr_isLarge_other = /* @__PURE__ */_$.intersection(33, $scope => {
-  const {
+  let {
     isLarge,
     other
   } = $scope;
@@ -60,7 +60,7 @@ const $dynamicTag6 = /* @__PURE__ */_$.dynamicTag("#text/5");
 const $dynamicTag7 = /* @__PURE__ */_$.dynamicTag("#text/6");
 const $dynamicTag8 = /* @__PURE__ */_$.dynamicTag("#text/7", $showTagAtagA_content);
 const $expr_showTagA_other = /* @__PURE__ */_$.intersection(32, $scope => {
-  const {
+  let {
     showTagA,
     other
   } = $scope;
@@ -79,7 +79,7 @@ const $expr_showTagA_other = /* @__PURE__ */_$.intersection(32, $scope => {
 });
 const $dynamicTag9 = /* @__PURE__ */_$.dynamicTag("#text/8");
 const $expr_tag_other = /* @__PURE__ */_$.intersection(34, $scope => {
-  const {
+  let {
     tag,
     other
   } = $scope;
@@ -90,7 +90,7 @@ const $expr_tag_other = /* @__PURE__ */_$.intersection(34, $scope => {
 });
 const $dynamicTag10 = /* @__PURE__ */_$.dynamicTag("#text/9");
 const $expr_other_largeHeading = /* @__PURE__ */_$.intersection(37, $scope => {
-  const {
+  let {
     other,
     largeHeading
   } = $scope;
@@ -102,7 +102,7 @@ const $expr_other_largeHeading = /* @__PURE__ */_$.intersection(37, $scope => {
 const $dynamicTag12 = /* @__PURE__ */_$.dynamicTag("#text/11");
 const $dynamicTag13 = /* @__PURE__ */_$.dynamicTag("#text/12");
 const $expr_level_other = /* @__PURE__ */_$.intersection(35, $scope => {
-  const {
+  let {
     level,
     other
   } = $scope;
@@ -117,7 +117,7 @@ const $expr_level_other = /* @__PURE__ */_$.intersection(35, $scope => {
 });
 const $dynamicTag14 = /* @__PURE__ */_$.dynamicTag("#text/13");
 const $expr_other_tagConstA = /* @__PURE__ */_$.intersection(39, $scope => {
-  const {
+  let {
     other,
     tagConstA
   } = $scope;
@@ -128,7 +128,7 @@ const $expr_other_tagConstA = /* @__PURE__ */_$.intersection(39, $scope => {
 });
 const $dynamicTag15 = /* @__PURE__ */_$.dynamicTag("#text/14");
 const $expr_other_tagConstB = /* @__PURE__ */_$.intersection(41, $scope => {
-  const {
+  let {
     other,
     tagConstB
   } = $scope;

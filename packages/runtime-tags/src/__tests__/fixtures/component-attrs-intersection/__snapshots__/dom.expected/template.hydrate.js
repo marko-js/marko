@@ -1,6 +1,6 @@
-// size: 187 (min) 145 (brotli)
+// size: 185 (min) 149 (brotli)
 const $expr_value_dummy = _$.intersection(5, ($scope) => {
-    const { 3: value, 4: dummy } = $scope;
+    let { 3: value, 4: dummy } = $scope;
     _$.data($scope[0], value);
   }),
   $value = _$.value(3, $expr_value_dummy),

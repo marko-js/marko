@@ -5,7 +5,7 @@ import child2 from "./tags/child2.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
 const $expr_tagName_val = /* @__PURE__ */_$.intersection(4, $scope => {
-  const {
+  let {
     tagName,
     val
   } = $scope;

@@ -1,4 +1,4 @@
-// size: 499 (min) 253 (brotli)
+// size: 497 (min) 253 (brotli)
 const $setup$1 = () => {},
   $value$1 = _$.value(3, ($scope, value) => _$.data($scope[0], value)),
   $input$1 = _$.value(2, ($scope, input) => $value$1($scope, input.value));
@@ -21,7 +21,7 @@ var child2 = _$.createTemplate(
 );
 const $dynamicTag = _$.dynamicTag(0),
   $expr_tagName_val = _$.intersection(4, ($scope) => {
-    const { 2: tagName, 3: val } = $scope;
+    let { 2: tagName, 3: val } = $scope;
     $dynamicTag($scope, tagName, () => ({ value: val }));
   }),
   $tagName_effect = _$.effect("c0", ($scope, { 2: tagName }) =>

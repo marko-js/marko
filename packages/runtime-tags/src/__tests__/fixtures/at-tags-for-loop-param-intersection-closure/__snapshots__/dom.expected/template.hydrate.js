@@ -1,6 +1,6 @@
-// size: 306 (min) 205 (brotli)
+// size: 304 (min) 204 (brotli)
 const $expr_mult_item$item$content = _$.intersection(1, ($scope) => {
-    const {
+    let {
       _: { 3: mult },
       5: item,
     } = $scope;

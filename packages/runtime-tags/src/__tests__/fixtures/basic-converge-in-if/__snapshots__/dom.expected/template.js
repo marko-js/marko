@@ -2,7 +2,7 @@ export const $template = "<!><!><!>";
 export const $walks = /* over(1), replace, over(2) */"b%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_a_b$if$content = /* @__PURE__ */_$.intersection(1, $scope => {
-  const {
+  let {
     _: {
       a,
       b

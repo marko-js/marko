@@ -2,7 +2,7 @@ export const $template = "<span>child</span>";
 export const $walks = /* over(1) */"b";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_x_y = /* @__PURE__ */_$.intersection(2, $scope => {
-  const {
+  let {
     x,
     y
   } = $scope;

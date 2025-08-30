@@ -3,7 +3,7 @@ export const $walks = /* get, next(1), over(1), replace, out(1), get, over(1), n
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $multipliedCount = /* @__PURE__ */_$.value("multipliedCount", ($scope, multipliedCount) => _$.data($scope["#text/3"], multipliedCount));
 const $expr_count_multiplier = /* @__PURE__ */_$.intersection(6, $scope => {
-  const {
+  let {
     count,
     multiplier
   } = $scope;

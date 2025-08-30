@@ -1,4 +1,4 @@
-// size: 959 (min) 467 (brotli)
+// size: 957 (min) 469 (brotli)
 const $expr_name_write_effect = _$.effect(
     "a0",
     ($scope, { 3: name, 4: write }) =>
@@ -22,7 +22,7 @@ const $expr_name_write_effect = _$.effect(
     ($scope) => $scope._._,
   ),
   $expr_outerItem_middleItem$for$content = _$.intersection(3, ($scope) => {
-    const {
+    let {
       _: { 3: outerItem },
       2: middleItem,
     } = $scope;

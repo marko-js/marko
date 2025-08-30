@@ -241,7 +241,7 @@ export default {
             ]),
           );
           statements.push(
-            t.variableDeclaration("const", [
+            t.variableDeclaration("let", [
               t.variableDeclarator(node.var, dynamicTagExpr),
             ]),
             t.expressionStatement(

@@ -2,7 +2,7 @@ export const $template = "<div> </div>";
 export const $walks = /* next(1), get, out(1) */"D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_value_dummy = /* @__PURE__ */_$.intersection(5, $scope => {
-  const {
+  let {
     value,
     dummy
   } = $scope;

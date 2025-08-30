@@ -1,6 +1,6 @@
-// size: 279 (min) 176 (brotli)
+// size: 277 (min) 175 (brotli)
 const $expr_input_count = _$.intersection(5, ($scope) => {
-    const { 3: input, 4: count } = $scope;
+    let { 3: input, 4: count } = $scope;
     _$.data($scope[1], input.format(count));
   }),
   $count_effect = _$.effect("a0", ($scope, { 4: count }) =>

@@ -3,7 +3,7 @@ export const $walks = /* get, over(1) */" b";
 export const $setup = () => {};
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_input_foo_input_bar = /* @__PURE__ */_$.intersection(5, $scope => {
-  const {
+  let {
     input_foo,
     input_bar
   } = $scope;

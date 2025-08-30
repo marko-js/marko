@@ -3,7 +3,7 @@ export const $walks = /* get, next(1), get, out(1), replace, over(2) */" D l%c";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2");
 const $expr_input_content_input_name_x = /* @__PURE__ */_$.intersection(8, $scope => {
-  const {
+  let {
     input_content,
     input_name,
     x

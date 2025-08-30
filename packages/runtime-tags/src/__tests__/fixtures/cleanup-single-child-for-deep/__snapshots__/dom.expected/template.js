@@ -9,7 +9,7 @@ const $setup$for$content2 = $scope => {
 };
 const $write$for$content2 = /* @__PURE__ */_$.dynamicClosureRead("write", ($scope, write) => _child_input_write($scope["#childScope/0"], write), $scope => $scope._._);
 const $expr_outerItem_middleItem$for$content = /* @__PURE__ */_$.intersection(3, $scope => {
-  const {
+  let {
     _: {
       outerItem
     },

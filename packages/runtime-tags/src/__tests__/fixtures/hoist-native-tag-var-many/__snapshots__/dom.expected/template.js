@@ -3,7 +3,7 @@ export const $walks = /* over(1), replace, over(2), replace, over(2), replace, o
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $get$hoisted_el = _$.register("__tests__/template.marko_0_$hoisted_el3/hoist", _$.hoist("Getter:#li/0", "LoopScopeMap:#ul/0", "LoopScopeMap:#text/2"));
 const $expr_i_j$for$content = /* @__PURE__ */_$.intersection(3, $scope => {
-  const {
+  let {
     _: {
       i
     },

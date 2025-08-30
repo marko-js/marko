@@ -505,7 +505,7 @@ export function getSignalFn(signal: Signal): t.Expression {
 
   if (isIntersection && signal.renderReferencedBindings) {
     signal.render.unshift(
-      t.variableDeclaration("const", [
+      t.variableDeclaration("let", [
         t.variableDeclarator(
           createScopeReadPattern(section, signal.renderReferencedBindings),
           scopeIdentifier,

@@ -1,4 +1,4 @@
-// size: 346 (min) 198 (brotli)
+// size: 344 (min) 198 (brotli)
 const $y_effect = _$.effect("a1", ($scope, { 7: y }) =>
     _$.on($scope[0], "click", function () {
       $y($scope, ++y);
@@ -8,7 +8,7 @@ const $y_effect = _$.effect("a1", ($scope, { 7: y }) =>
     (_$.data($scope[2], y), $y_effect($scope));
   }),
   $expr_x_yChange = _$.intersection(6, ($scope) => {
-    const { 4: x, 5: yChange } = $scope;
+    let { 4: x, 5: yChange } = $scope;
     $y($scope, x, yChange);
   }),
   $x = _$.state(4, ($scope, x) => {

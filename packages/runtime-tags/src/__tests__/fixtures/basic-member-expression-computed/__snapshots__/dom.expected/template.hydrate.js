@@ -1,4 +1,4 @@
-// size: 277 (min) 192 (brotli)
+// size: 275 (min) 194 (brotli)
 const $expr_items_index_effect = _$.effect(
     "a0",
     ($scope, { 3: items, 5: index }) =>
@@ -9,7 +9,7 @@ const $expr_items_index_effect = _$.effect(
       }),
   ),
   $expr_items_index = _$.intersection(6, ($scope) => {
-    const { 3: items, 5: index } = $scope;
+    let { 3: items, 5: index } = $scope;
     (_$.data($scope[1], items[index]), $expr_items_index_effect($scope));
   }),
   $items = _$.state(3, ($scope, items) => {

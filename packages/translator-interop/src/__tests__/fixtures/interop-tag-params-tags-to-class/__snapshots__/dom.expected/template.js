@@ -6,7 +6,7 @@ import _classLayout from "./components/class-layout.marko";
 _$.register("__tests__/components/class-layout.marko", _classLayout);
 const $message$classlayout$content = /* @__PURE__ */_$.value("message", ($scope, message) => _$.data($scope["#text/0"], message));
 const $expr_multiplier_baseCount$classlayout$content = /* @__PURE__ */_$.intersection(7, $scope => {
-  const {
+  let {
     _: {
       multiplier
     },

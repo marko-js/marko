@@ -3,7 +3,7 @@ export const $walks = /* beginChild, _checkbox_walks, endChild, beginChild, _che
 import { $setup as _checkbox, $input as _checkbox_input, $template as _checkbox_template, $walks as _checkbox_walks } from "./tags/checkbox.marko";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_checkedValue_$checkedValueChange = /* @__PURE__ */_$.intersection(6, $scope => {
-  const {
+  let {
     checkedValue,
     $checkedValueChange
   } = $scope;

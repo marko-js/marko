@@ -1,7 +1,7 @@
-// size: 306 (min) 178 (brotli)
+// size: 304 (min) 179 (brotli)
 const $a = _$.value(9, ($scope, a) => _$.data($scope[4], a)),
   $expr_y_z = _$.intersection(8, ($scope) => {
-    const { 6: y, 7: z } = $scope;
+    let { 6: y, 7: z } = $scope;
     $a($scope, y + z);
   }),
   $y = _$.value(6, ($scope, y) => {

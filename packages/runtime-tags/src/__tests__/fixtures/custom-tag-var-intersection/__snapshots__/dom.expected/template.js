@@ -4,7 +4,7 @@ import { $setup as _child, $input_extra as _child_input_extra, $template as _chi
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $message = /* @__PURE__ */_$.value("message", ($scope, message) => _$.data($scope["#text/2"], message));
 const $expr_name_data = /* @__PURE__ */_$.intersection(5, $scope => {
-  const {
+  let {
     name,
     data
   } = $scope;

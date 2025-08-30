@@ -11,7 +11,7 @@ const $expr_x_y_effect = _$.effect("__tests__/tags/custom-tag.marko_0_x_y", ($sc
 const $expr_x_y = /* @__PURE__ */_$.intersection(9, $expr_x_y_effect);
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3", 0, 0, 1);
 const $expr_input_content_x_y = /* @__PURE__ */_$.intersection(10, $scope => {
-  const {
+  let {
     input_content,
     x,
     y

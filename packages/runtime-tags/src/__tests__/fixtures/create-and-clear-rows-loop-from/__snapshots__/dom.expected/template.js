@@ -7,7 +7,7 @@ const $params2$for$content = /* @__PURE__ */_$.value("$params2", ($scope, $param
 const $for_content = /* @__PURE__ */_$.createRenderer("<!>, ", /* replace, over(2) */"%c", 0, $params2$for$content);
 const $for = /* @__PURE__ */_$.loopTo("#div/0", $for_content);
 const $expr_input_from_input_to_input_step = /* @__PURE__ */_$.intersection(6, $scope => {
-  const {
+  let {
     input_from,
     input_to,
     input_step

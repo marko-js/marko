@@ -9,7 +9,7 @@ const $user = /* @__PURE__ */_$.value("user", ($scope, user) => {
 });
 const $fullName = /* @__PURE__ */_$.value("fullName", ($scope, fullName) => _$.data($scope["#text/0"], fullName));
 const $expr_user_fullName_user_firstName_user_middleName_user_lastName = /* @__PURE__ */_$.intersection(6, $scope => {
-  const {
+  let {
     user_fullName,
     user_firstName,
     user_middleName,

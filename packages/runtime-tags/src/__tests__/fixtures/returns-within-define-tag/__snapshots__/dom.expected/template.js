@@ -2,7 +2,7 @@ export const $template = "<!><!><button class=once> </button><!><button class=tw
 export const $walks = /* over(1), dynamicTagWithVar, over(1), get, next(1), get, out(1), dynamicTagWithVar, over(1), get, next(1), get, out(1) */"b1b D l1b D l";
 import * as _$ from "@marko/runtime-tags/debug/dom";
 const $expr_value_call$define$content2 = /* @__PURE__ */_$.intersection(4, $scope => {
-  const {
+  let {
     value,
     call
   } = $scope;
@@ -17,7 +17,7 @@ const $params3$define$content = /* @__PURE__ */_$.value("$params3", ($scope, $pa
 const $temp2$define$content = /* @__PURE__ */_$.value("$temp2", ($scope, $temp2) => $value$define$content2($scope, $temp2.value));
 const $define_content2 = _$.registerContent("__tests__/template.marko_2_renderer", 0, 0, $setup$define$content2, $params3$define$content);
 const $expr_value_call$define$content = /* @__PURE__ */_$.intersection(4, $scope => {
-  const {
+  let {
     value,
     call
   } = $scope;
@@ -33,7 +33,7 @@ const $temp$define$content = /* @__PURE__ */_$.value("$temp", ($scope, $temp) =>
 const $define_content = _$.registerContent("__tests__/template.marko_1_renderer", 0, 0, $setup$define$content, $params2$define$content);
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => $onClickOnce2);
 const $expr_Once_clickOnceCount = /* @__PURE__ */_$.intersection(10, $scope => {
-  const {
+  let {
     Once,
     clickOnceCount
   } = $scope;
@@ -48,7 +48,7 @@ const $clickOnceCount = /* @__PURE__ */_$.state("clickOnceCount/9", ($scope, cli
 });
 const $dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/4", 0, () => $onClickTwice2);
 const $expr_Twice_clickTwiceCount = /* @__PURE__ */_$.intersection(14, $scope => {
-  const {
+  let {
     Twice,
     clickTwiceCount
   } = $scope;

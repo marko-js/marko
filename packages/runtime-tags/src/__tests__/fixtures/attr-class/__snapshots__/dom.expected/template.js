@@ -7,7 +7,7 @@ import { $setup as _customTag, $input_class as _customTag_input_class, $input_te
 const $test_content = _$.registerContent("__tests__/template.marko_1_renderer", "Hello", /* over(1) */"b");
 const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/3");
 const $expr_c_d = /* @__PURE__ */_$.intersection(8, $scope => {
-  const {
+  let {
     c,
     d
   } = $scope;
