@@ -11,7 +11,7 @@ import {
 } from "@marko/compiler/babel-utils";
 import path from "path";
 
-import { generateUidIdentifier } from "../../util/generate-uid";
+import { generateUid, generateUidIdentifier } from "../../util/generate-uid";
 import { getTagName } from "../../util/get-tag-name";
 import { isOutputHTML } from "../../util/marko-config";
 import {
@@ -21,6 +21,7 @@ import {
 } from "../../util/nested-attribute-tags";
 import {
   filterMap,
+  forEach,
   fromIter,
   mapToString,
   type Opt,
@@ -36,7 +37,7 @@ import {
   getScopeAccessorLiteral,
   type InputBinding,
   mergeReferences,
-  setBindingValueExpr,
+  setBindingDownstream,
   trackParamsReferences,
   trackVarReferences,
 } from "../../util/references";
@@ -157,7 +158,7 @@ export default {
 
         if (varBinding) {
           const varSerializeReason = getProgram().node.extra.returnValueExpr;
-          setBindingValueExpr(varBinding, varSerializeReason);
+          setBindingDownstream(varBinding, varSerializeReason);
           addBindingSerializeReasonExpr(
             section,
             childScopeBinding,
@@ -186,7 +187,7 @@ export default {
             childInputBinding,
             inputExpr,
           );
-          setBindingValueExpr(varBinding, varSerializeReason);
+          setBindingDownstream(varBinding, varSerializeReason);
           addBindingSerializeReasonExpr(
             section,
             childScopeBinding,
@@ -557,10 +558,7 @@ function analyzeAttrs(
       getAllTagReferenceNodes(tag.node),
     ));
 
-    extra.downstream = {
-      bindings: templateExport.binding,
-      excludeProperties: undefined,
-    };
+    setBindingDownstream(templateExport.binding, extra);
     return;
   }
 
@@ -661,10 +659,9 @@ function analyzeAttrs(
       }
 
       if (bindings) {
-        groupExtra.downstream = {
-          bindings,
-          excludeProperties: undefined,
-        };
+        forEach(bindings, (binding) => {
+          setBindingDownstream(binding, groupExtra);
+        });
       }
 
       for (const name of group) {
@@ -697,10 +694,10 @@ function analyzeAttrs(
       }
 
       seen.add(attr.name);
-      (attr.value.extra ??= {}).downstream = {
-        bindings: templateExportAttr.binding,
-        excludeProperties: undefined,
-      };
+      setBindingDownstream(
+        templateExportAttr.binding,
+        (attr.value.extra ??= {}),
+      );
     }
 
     if (spreadReferenceNodes) {
@@ -720,10 +717,21 @@ function analyzeAttrs(
       tag.node,
       spreadReferenceNodes,
     ));
-    extra.downstream = {
-      bindings: templateExport.binding,
-      excludeProperties: seen,
-    };
+    let spreadBinding = templateExport.binding;
+    if (seen.size) {
+      spreadBinding = createBinding(
+        generateUid(`${getTagName(tag)}_attrs`),
+        spreadBinding.type,
+        spreadBinding.section,
+        spreadBinding,
+        undefined,
+        fromIter(seen),
+        spreadReferenceNodes[0].loc,
+        true,
+      );
+    }
+
+    setBindingDownstream(spreadBinding, extra);
   }
 }
 

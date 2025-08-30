@@ -12,7 +12,7 @@ import { isOutputDOM } from "../util/marko-config";
 import {
   BindingType,
   mergeReferences,
-  setBindingValueExpr,
+  setBindingDownstream,
   trackVarReferences,
 } from "../util/references";
 import runtimeInfo from "../util/runtime-info";
@@ -92,7 +92,7 @@ export default {
 
     const tagSection = getOrCreateSection(tag);
     const binding = trackVarReferences(tag, BindingType.let)!;
-    setBindingValueExpr(
+    setBindingDownstream(
       binding,
       mergeReferences(tagSection, tag.node, [
         valueAttr?.value,

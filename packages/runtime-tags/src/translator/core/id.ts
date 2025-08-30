@@ -11,7 +11,7 @@ import { assertNoBodyContent } from "../util/assert";
 import { isOutputHTML } from "../util/marko-config";
 import {
   BindingType,
-  setBindingValueExpr,
+  setBindingDownstream,
   trackVarReferences,
 } from "../util/references";
 import { callRuntime } from "../util/runtime";
@@ -43,7 +43,7 @@ export default {
 
     const binding = trackVarReferences(tag, BindingType.derived);
     if (binding) {
-      setBindingValueExpr(binding, false);
+      setBindingDownstream(binding, false);
     }
   },
   translate: {
