@@ -18,7 +18,7 @@ import { skip, traverseContains } from "../util/traverse";
 import { scopeIdentifier } from "../visitors/program";
 
 const htmlScriptTagAlternateMsg =
-  " For a native html `script` tag use the `html-script` core tag instead.";
+  " For a native html [`<script>` tag](https://next.markojs.com/docs/reference/core-tag#script) use the `html-script` core tag instead.";
 
 export default {
   parse(tag) {
@@ -30,7 +30,7 @@ export default {
         if (child.type !== "MarkoText") {
           throw tag.hub.file.hub.buildError(
             child,
-            "Unexpected content in `script` tag. Only javascript and typescript is supported." +
+            "Unexpected content in [`<script>` tag](https://next.markojs.com/docs/reference/core-tag#script). Only javascript and typescript is supported." +
               htmlScriptTagAlternateMsg,
             SyntaxError,
           );
@@ -63,7 +63,7 @@ export default {
     if (node.var) {
       throw tag.hub.buildError(
         node.var,
-        "The `script` tag does not support a tag variable reference." +
+        "The [`<script>` tag](https://next.markojs.com/docs/reference/core-tag#script) does not support a tag variable reference." +
           htmlScriptTagAlternateMsg,
       );
     }
@@ -80,7 +80,7 @@ export default {
       } else {
         throw tag.hub.buildError(
           attr,
-          "The `script` tag does not support html attributes." +
+          "The [`<script>` tag](https://next.markojs.com/docs/reference/core-tag#script) does not support html attributes." +
             htmlScriptTagAlternateMsg,
         );
       }

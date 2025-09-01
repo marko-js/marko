@@ -32,13 +32,17 @@ export default {
     if (!node.var) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The `id` tag requires a tag variable.");
+        .buildCodeFrameError(
+          "The [`<id>` tag](https://next.markojs.com/docs/reference/core-tag#id) requires a [tag variable](https://next.markojs.com/docs/reference/language#tag-variables).",
+        );
     }
 
     if (!t.isIdentifier(node.var)) {
       throw tag
         .get("var")
-        .buildCodeFrameError("The `id` tag cannot be destructured");
+        .buildCodeFrameError(
+          "The [`<id>` tag](https://next.markojs.com/docs/reference/core-tag#id) cannot be destructured.",
+        );
     }
 
     const binding = trackVarReferences(tag, BindingType.derived);
@@ -73,7 +77,7 @@ export default {
       displayText: "id/<name>",
       description: "Use to create a unique identifier.",
       snippet: "id/${1:name}",
-      descriptionMoreURL: "https://markojs.com/docs/core-tags/#id",
+      descriptionMoreURL: "https://next.markojs.com/docs/reference/core-tag#id",
     },
   ],
   types: runtimeInfo.name + "/tags/id.d.marko",

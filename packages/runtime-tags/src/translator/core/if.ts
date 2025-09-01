@@ -308,7 +308,8 @@ export const IfTag = {
     {
       snippet: "if=${1:condition}",
       description: "Use to display content only if the condition is met.",
-      descriptionMoreURL: "https://markojs.com/docs/core-tags/#if-else-if-else",
+      descriptionMoreURL:
+        "https://next.markojs.com/docs/reference/core-tag#if--else",
     },
   ],
 } satisfies Tag;
@@ -320,7 +321,8 @@ export const ElseIfTag = {
       snippet: "else-if=${1:condition}",
       description:
         "Use after an <if> or <else-if> tag to display content if those conditions do not match and this one does.",
-      descriptionMoreURL: "https://markojs.com/docs/core-tags/#if-else-if-else",
+      descriptionMoreURL:
+        "https://next.markojs.com/docs/reference/core-tag#if--else",
     },
   ],
 };
@@ -331,7 +333,8 @@ export const ElseTag = {
     {
       description:
         "Use after an <if> or <else-if> tag to display content if those conditions do not match.",
-      descriptionMoreURL: "https://markojs.com/docs/core-tags/#if-else-if-else",
+      descriptionMoreURL:
+        "https://next.markojs.com/docs/reference/core-tag#if--else",
     },
   ],
 };
@@ -367,7 +370,7 @@ function assertHasPrecedingCondition(tag: t.NodePath<t.MarkoTag>) {
     (getTagName(prev) !== "else" && !prev.node.attributes.length)
   ) {
     throw tag.buildCodeFrameError(
-      `The \`<${getTagName(tag)}>\` must have a preceding \`<if=cond>\`, \`<else-if=cond>\`, or \`<else if=cond>\`.`,
+      `The [\`<${getTagName(tag)}>\` tag](https://next.markojs.com/docs/reference/core-tag#if--else) must have a preceding \`<if=cond>\` or \`<else if=cond>\`.`,
     );
   }
 }
@@ -377,7 +380,7 @@ function assertHasBody(tag: t.NodePath<t.MarkoTag>) {
     throw tag
       .get("name")
       .buildCodeFrameError(
-        `The \`${getTagName(tag)}\` tag requires body content.`,
+        `The [\`${getTagName(tag)}\` tag](https://next.markojs.com/docs/reference/core-tag#if--else) requires [body content](https://next.markojs.com/docs/reference/language#tag-content).`,
       );
   }
 }
@@ -389,13 +392,15 @@ function assertHasValueAttribute(tag: t.NodePath<t.MarkoTag>) {
   if (!t.isMarkoAttribute(valueAttr) || !valueAttr.default) {
     throw tag
       .get("name")
-      .buildCodeFrameError(`The \`${getTagName(tag)}\` tag requires a value.`);
+      .buildCodeFrameError(
+        `The [\`${getTagName(tag)}\` tag](https://next.markojs.com/docs/reference/core-tag#if--else) requires a [\`value=\` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).`,
+      );
   }
 
   if (node.attributes.length > 1) {
     const start = node.attributes[1].loc?.start;
     const end = node.attributes[node.attributes.length - 1].loc?.end;
-    const msg = `The \`${getTagName(tag)}\` tag only supports the \`value\` attribute.`;
+    const msg = `The [\`${getTagName(tag)}\` tag](https://next.markojs.com/docs/reference/core-tag#if--else) only supports the [\`value=\` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).`;
 
     if (start == null || end == null) {
       throw tag.get("name").buildCodeFrameError(msg);
@@ -419,7 +424,7 @@ function assertOptionalIfAttribute(tag: t.NodePath<t.MarkoTag>) {
   ) {
     const start = node.attributes[1].loc?.start;
     const end = node.attributes[node.attributes.length - 1].loc?.end;
-    const msg = `The \`${getTagName(tag)}\` tag only supports an \`if=\` attribute.`;
+    const msg = `The [\`${getTagName(tag)}\` tag](https://next.markojs.com/docs/reference/core-tag#if--else) only supports an \`if=\` attribute.`;
 
     if (start == null || end == null) {
       throw tag.get("name").buildCodeFrameError(msg);

@@ -113,7 +113,7 @@ export function markNode(
 ) {
   if (nodeBinding.type !== BindingType.dom) {
     throw path.buildCodeFrameError(
-      "Tried to mark a node that was not determined to need a mark during analyze.",
+      "POTENTIAL MARKO BUG: Tried to mark a node that was not determined to need a mark during analyze.",
     );
   }
 

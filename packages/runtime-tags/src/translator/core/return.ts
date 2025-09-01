@@ -42,13 +42,13 @@ export default {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            "The `return` tag can not be used in a native tag.",
+            "The [`<return>` tag](https://next.markojs.com/docs/reference/core-tag#return) can not be used in a [native tag](https://next.markojs.com/docs/reference/native-tag).",
           );
       } else if (isControlFlowTag(parentTag)) {
         throw tag
           .get("name")
           .buildCodeFrameError(
-            `The \`return\` tag can not be used under an \`${parentTag.get("name").toString()}\` tag.`,
+            `The [\`<return>\` tag](https://next.markojs.com/docs/reference/core-tag#return) can not be used under the \`<${parentTag.get("name").toString()}>\` tag.`,
           );
       }
     }
@@ -57,7 +57,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          `Cannot have multiple \`return\` tags ${tag.parent.type === "Program" ? "for the template" : "within a tag's body content"}.`,
+          `Cannot have multiple [\`<return>\` tags](https://next.markojs.com/docs/reference/core-tag#return) ${tag.parent.type === "Program" ? "for the template" : "within a tag's body content"}.`,
         );
     } else {
       tagsWithReturn.add(tag.parentPath);
@@ -67,7 +67,9 @@ export default {
     if (!attrs.value) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The `return` tag requires a value.");
+        .buildCodeFrameError(
+          "The [`<return>` tag](https://next.markojs.com/docs/reference/core-tag#return) requires a [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
+        );
     }
 
     if (attrs.valueChange) {
@@ -150,7 +152,8 @@ export default {
       displayText: "return=<value>",
       description: "Provides a value for use in a parent template.",
       snippet: "return=${1:value}",
-      descriptionMoreURL: "https://markojs.com/docs/core-tags/#return",
+      descriptionMoreURL:
+        "https://next.markojs.com/docs/reference/core-tag#return",
     },
   ],
 } as Tag;

@@ -29,13 +29,17 @@ export default {
     if (!node.var) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The `const` tag requires a tag variable.");
+        .buildCodeFrameError(
+          "The [`<const>` tag](https://next.markojs.com/docs/reference/core-tag#const) requires a [tag variable](https://next.markojs.com/docs/reference/language#tag-variables).",
+        );
     }
 
     if (!valueAttr) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The `const` tag requires a value.");
+        .buildCodeFrameError(
+          "The [`<const>` tag](https://next.markojs.com/docs/reference/core-tag#const) requires a [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
+        );
     }
 
     if (
@@ -46,7 +50,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The `const` tag only supports the `value` attribute.",
+          "The [`<const>` tag](https://next.markojs.com/docs/reference/core-tag#const) only supports the [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
         );
     }
 
@@ -94,7 +98,8 @@ export default {
   autocomplete: [
     {
       description: "Use to create an constant binding.",
-      descriptionMoreURL: "https://markojs.com/docs/core-tags/#const",
+      descriptionMoreURL:
+        "https://next.markojs.com/docs/reference/core-tag#const",
     },
   ],
   types: runtimeInfo.name + "/tags/const.d.marko",

@@ -80,7 +80,7 @@ export default {
         break;
       default:
         throw tag.buildCodeFrameError(
-          "Invalid `for` tag, missing an `of=`, `in=`, `to=` attribute.",
+          "The [`<for>` tag](https://next.markojs.com/docs/reference/core-tag#for) requires an `of=`, `in=`, or `to=` attribute.",
         );
     }
 
@@ -333,17 +333,17 @@ export default {
       description:
         "Use to iterate over lists, object properties, or between ranges.",
       descriptionMoreURL:
-        "https://markojs.com/docs/core-tags/#iterating-over-a-list",
+        "https://next.markojs.com/docs/reference/core-tag#for",
     },
     {
       snippet: "for|${1:name, value}| in=${3:object}",
       descriptionMoreURL:
-        "https://markojs.com/docs/core-tags/#iterating-over-an-objects-properties",
+        "https://next.markojs.com/docs/reference/core-tag#for",
     },
     {
       snippet: "for|${1:index}| to=${2:number}",
       descriptionMoreURL:
-        "https://markojs.com/docs/core-tags/#iterating-between-a-range-of-numbers",
+        "https://next.markojs.com/docs/reference/core-tag#for",
     },
   ],
 } satisfies Tag;
