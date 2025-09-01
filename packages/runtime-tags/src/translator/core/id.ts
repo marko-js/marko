@@ -55,7 +55,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The `id` tag only supports the `value` attribute.",
+          "The [`<id>`](https://next.markojs.com/docs/reference/core-tag#id) tag only supports the [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
         );
     }
 
