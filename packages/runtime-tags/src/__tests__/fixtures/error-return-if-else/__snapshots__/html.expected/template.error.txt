@@ -2,7 +2,7 @@
     at packages/runtime-tags/src/__tests__/fixtures/error-return-if-else/template.marko:2:4
       1 | <if=input.show>
     > 2 |   <return=1/>
-        |    ^^^^^^ The `return` tag can not be used under an `"if"` tag.
+        |    ^^^^^^ The [`<return>` tag](https://next.markojs.com/docs/reference/core-tag#return) can not be used under the `<"if">` tag.
       3 | </if>
       4 | <else>
       5 |   <return=2/>

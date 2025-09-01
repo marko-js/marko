@@ -3,7 +3,7 @@
       1 | <style>
       2 |   body {
     > 3 |     color: ${"green"}
-        |            ^^^^^^^^^^ The `style` tag currently only supports static content. For a native html `style` tag use the `html-style` core tag instead.
+        |            ^^^^^^^^^^ The [`<style>` tag](https://next.markojs.com/docs/reference/core-tag#style) currently only supports static content. For a native html [`<style>` tag](https://next.markojs.com/docs/reference/core-tag#style) use the `html-style` core tag instead.
       4 |   }
       5 | </style>
       6 |

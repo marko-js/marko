@@ -2,5 +2,5 @@
     at packages/runtime-tags/src/__tests__/fixtures/error-elseif-no-default-value/template.marko:2:2
       1 | <if=false>Skipped</if>
     > 2 | <else-if>Hello World</else-if>
-        |  ^^^^^^^ The `else-if` tag requires a value.
+        |  ^^^^^^^ The [`else-if` tag](https://next.markojs.com/docs/reference/core-tag#if--else) requires a [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).
       3 |
