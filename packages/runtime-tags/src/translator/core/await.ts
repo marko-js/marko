@@ -63,7 +63,9 @@ export default {
     if (!valueAttr) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The `await` tag requires a value.");
+        .buildCodeFrameError(
+          "The [`<await>` tag](https://next.markojs.com/docs/reference/core-tag#await) requires a [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
+        );
     }
 
     if (
@@ -74,14 +76,16 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The `await` tag only supports the `value` attribute.",
+          "The [`<await>` tag](https://next.markojs.com/docs/reference/core-tag#await) only supports the [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
         );
     }
 
     if (!node.body.body.length) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The `await` tag requires body content.");
+        .buildCodeFrameError(
+          "The [`<await>` tag](https://next.markojs.com/docs/reference/core-tag#await) requires [content](https://next.markojs.com/docs/reference/language#tag-content).",
+        );
     }
 
     if (
@@ -91,7 +95,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The `await` tag only supports a single parameter.",
+          "The [`<await>` tag](https://next.markojs.com/docs/reference/core-tag#await) only supports a single parameter.",
         );
     }
 
@@ -201,7 +205,8 @@ export default {
   autocomplete: [
     {
       description: "Use to consume asynchronous an data.",
-      descriptionMoreURL: "https://markojs.com/docs/core-tags/#await",
+      descriptionMoreURL:
+        "https://next.markojs.com/docs/reference/core-tag#await",
     },
   ],
   types: runtimeInfo.name + "/tags/await.d.marko",

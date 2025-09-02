@@ -2,5 +2,5 @@
     at packages/runtime-tags/src/__tests__/fixtures/error-else-no-content/template.marko:2:2
       1 | <if=false>Skipped</if>
     > 2 | <else />
-        |  ^^^^ The `else` tag requires body content.
+        |  ^^^^ The [`else` tag](https://next.markojs.com/docs/reference/core-tag#if--else) requires [body content](https://next.markojs.com/docs/reference/language#tag-content).
       3 |

@@ -1,5 +1,5 @@
 
     at packages/runtime-tags/src/__tests__/fixtures/error-let-no-tag-var/template.marko:1:2
     > 1 | <let=0/>
-        |  ^^^ The `let` tag requires a tag variable.
+        |  ^^^ The [`<let>` tag](https://next.markojs.com/docs/reference/core-tag#let) requires a [tag variable](https://next.markojs.com/docs/reference/language#tag-variables).
       2 |

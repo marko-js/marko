@@ -117,13 +117,13 @@ export default {
           throw tag
             .get("name")
             .buildCodeFrameError(
-              `Local variables must be in a dynamic tag unless they are PascalCase. Use \`<\${${tagName}}/>\` or rename to \`${tagName.charAt(0).toUpperCase() + tagName.slice(1)}\`.`,
+              `Local variables must be in a [dynamic tag](https://next.markojs.com/docs/reference/language#dynamic-tags) unless they are PascalCase. Use \`<\${${tagName}}/>\` or rename to \`${tagName.charAt(0).toUpperCase() + tagName.slice(1)}\`.`,
             );
         }
         throw tag
           .get("name")
           .buildCodeFrameError(
-            `Unable to find entry point for custom tag \`<${tagName}>\`.`,
+            `Unable to find entry point for [custom tag](https://next.markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName}>\`.`,
           );
       }
 
@@ -525,13 +525,13 @@ export function getTagRelativePath(tag: t.NodePath<t.MarkoTag>) {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          `Local variables must be in a dynamic tag unless they are PascalCase. Use \`<\${${tagName}}/>\` or rename to \`${tagName.charAt(0).toUpperCase() + tagName.slice(1)}\`.`,
+          `Local variables must be in a [dynamic tag](https://next.markojs.com/docs/reference/language#dynamic-tags) unless they are PascalCase. Use \`<\${${tagName}}/>\` or rename to \`${tagName.charAt(0).toUpperCase() + tagName.slice(1)}\`.`,
         );
     }
     throw tag
       .get("name")
       .buildCodeFrameError(
-        `Unable to find entry point for custom tag \`<${tagName}>\`.`,
+        `Unable to find entry point for [custom tag](https://next.markojs.com/docs/reference/custom-tag#relative-custom-tags) \`<${tagName}>\`.`,
       );
   }
 

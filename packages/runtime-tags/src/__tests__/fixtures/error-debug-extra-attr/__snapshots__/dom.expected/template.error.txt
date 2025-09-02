@@ -2,5 +2,5 @@
     at packages/runtime-tags/src/__tests__/fixtures/error-debug-extra-attr/template.marko:2:2
       1 | <const/x=0/>
     > 2 | <debug=x y=1/>
-        |  ^^^^^ The `debug` tag only supports the `value` attribute.
+        |  ^^^^^ The [`<debug>` tag](https://next.markojs.com/docs/reference/core-tag#debug) only supports the [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).
       3 |

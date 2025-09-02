@@ -23,7 +23,9 @@ export default {
     if (!valueAttr) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The `log` tag requires a value.");
+        .buildCodeFrameError(
+          "The [`<log>` tag](https://next.markojs.com/docs/reference/core-tag#log) requires a [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
+        );
     }
 
     if (
@@ -34,7 +36,7 @@ export default {
       throw tag
         .get("name")
         .buildCodeFrameError(
-          "The `log` tag only supports the `value` attribute.",
+          "The [`<log>` tag](https://next.markojs.com/docs/reference/core-tag#log) only supports the [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
         );
     }
   },
@@ -68,7 +70,8 @@ export default {
   autocomplete: [
     {
       description: "Use to log a value to the console.",
-      descriptionMoreURL: "https://markojs.com/docs/core-tags/#log",
+      descriptionMoreURL:
+        "https://next.markojs.com/docs/reference/core-tag#log",
     },
   ],
   types: runtimeInfo.name + "/tags/log.d.marko",

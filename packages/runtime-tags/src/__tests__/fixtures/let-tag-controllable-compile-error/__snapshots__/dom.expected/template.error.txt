@@ -2,7 +2,7 @@
     at packages/runtime-tags/src/__tests__/fixtures/let-tag-controllable-compile-error/template.marko:2:22
       1 | <let/x=1/>
     > 2 | <let/y=x valueChange=5 />
-        |                      ^ The `let` tag `valueChange` attribute must be a function.
+        |                      ^ The [`<let>` tag](https://next.markojs.com/docs/reference/core-tag#let) [`valueChange=` attribute](https://next.markojs.com/docs/reference/core-tag#controllable-let) must be a function.
       3 | <button onClick() { y++; }>
       4 |   ${x}|${y}
       5 | </button>

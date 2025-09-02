@@ -1,5 +1,5 @@
 
     at packages/runtime-tags/src/__tests__/fixtures/error-id-no-tag-var/template.marko:1:2
     > 1 | <id/>
-        |  ^^ The `id` tag requires a tag variable.
+        |  ^^ The [`<id>` tag](https://next.markojs.com/docs/reference/core-tag#id) requires a [tag variable](https://next.markojs.com/docs/reference/language#tag-variables).
       2 |

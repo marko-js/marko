@@ -1,5 +1,5 @@
 
     at packages/runtime-tags/src/__tests__/fixtures/error-return-no-default-value/template.marko:1:2
     > 1 | <return/>
-        |  ^^^^^^ The `return` tag requires a value.
+        |  ^^^^^^ The [`<return>` tag](https://next.markojs.com/docs/reference/core-tag#return) requires a [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).
       2 |

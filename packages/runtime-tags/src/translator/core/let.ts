@@ -48,7 +48,7 @@ export default {
           const start = attr.loc?.start;
           const end = attr.loc?.end;
           const msg =
-            "The `let` tag only supports the `value` attribute and its change handler.";
+            "The [`<let>` tag](https://next.markojs.com/docs/reference/core-tag#let) only supports the [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value) and its change handler.";
 
           if (start == null || end == null) {
             throw tag.get("name").buildCodeFrameError(msg);
@@ -71,13 +71,17 @@ export default {
     if (!tagVar) {
       throw tag
         .get("name")
-        .buildCodeFrameError("The `let` tag requires a tag variable.");
+        .buildCodeFrameError(
+          "The [`<let>` tag](https://next.markojs.com/docs/reference/core-tag#let) requires a [tag variable](https://next.markojs.com/docs/reference/language#tag-variables).",
+        );
     }
 
     if (!t.isIdentifier(tagVar)) {
       throw tag
         .get("var")
-        .buildCodeFrameError("The `let` tag variable cannot be destructured.");
+        .buildCodeFrameError(
+          "The [`<let>` tag](https://next.markojs.com/docs/reference/core-tag#let) variable cannot be destructured.",
+        );
     }
 
     if (valueChangeAttr && computeNode(valueChangeAttr.value)) {
@@ -86,7 +90,7 @@ export default {
         .find((attr) => attr.node === valueChangeAttr)!
         .get("value")
         .buildCodeFrameError(
-          "The `let` tag `valueChange` attribute must be a function.",
+          "The [`<let>` tag](https://next.markojs.com/docs/reference/core-tag#let) [`valueChange=` attribute](https://next.markojs.com/docs/reference/core-tag#controllable-let) must be a function.",
         );
     }
 
@@ -162,7 +166,8 @@ export default {
   autocomplete: [
     {
       description: "Use to create a mutable binding.",
-      descriptionMoreURL: "https://markojs.com/docs/core-tags/#let",
+      descriptionMoreURL:
+        "https://next.markojs.com/docs/reference/core-tag#let",
     },
   ],
   types: runtimeInfo.name + "/tags/let.d.marko",
