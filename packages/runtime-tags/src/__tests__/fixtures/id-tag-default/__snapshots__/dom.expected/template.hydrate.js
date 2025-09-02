@@ -1,4 +1,4 @@
-// size: 315 (min) 182 (brotli)
+// size: 315 (min) 181 (brotli)
 const $sometimesBar = _$.value(8, ($scope, sometimesBar) =>
     _$.attr($scope[2], "id", sometimesBar),
   ),
@@ -10,12 +10,12 @@ const $sometimesBar = _$.value(8, ($scope, sometimesBar) =>
   ),
   $expr_bar_baz = _$.intersection(6, $expr_bar_baz_effect),
   $bar = _$.state(4, ($scope, bar) => {
-    ($sometimesBar($scope, bar ?? _$.nextTagId($scope)), $expr_bar_baz($scope));
+    ($sometimesBar($scope, bar || _$.nextTagId($scope)), $expr_bar_baz($scope));
   }),
   $sometimesBaz = _$.value(9, ($scope, sometimesBaz) =>
     _$.attr($scope[3], "id", sometimesBaz),
   ),
   $baz = _$.state(5, ($scope, baz) => {
-    ($sometimesBaz($scope, baz ?? _$.nextTagId($scope)), $expr_bar_baz($scope));
+    ($sometimesBaz($scope, baz || _$.nextTagId($scope)), $expr_bar_baz($scope));
   });
 init();

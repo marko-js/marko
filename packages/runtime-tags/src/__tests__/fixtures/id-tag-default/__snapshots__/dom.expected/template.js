@@ -11,18 +11,18 @@ const $expr_bar_baz_effect = _$.effect("__tests__/template.marko_0_bar_baz", ($s
 }));
 const $expr_bar_baz = /* @__PURE__ */_$.intersection(6, $expr_bar_baz_effect);
 const $bar = /* @__PURE__ */_$.state("bar/4", ($scope, bar) => {
-  $sometimesBar($scope, bar ?? _$.nextTagId($scope));
+  $sometimesBar($scope, bar || _$.nextTagId($scope));
   $expr_bar_baz($scope);
 });
 const $sometimesBaz = /* @__PURE__ */_$.value("sometimesBaz", ($scope, sometimesBaz) => _$.attr($scope["#div/3"], "id", sometimesBaz));
 const $baz = /* @__PURE__ */_$.state("baz/5", ($scope, baz) => {
-  $sometimesBaz($scope, baz ?? _$.nextTagId($scope));
+  $sometimesBaz($scope, baz || _$.nextTagId($scope));
   $expr_bar_baz($scope);
 });
 const $alwaysFoo = /* @__PURE__ */_$.value("alwaysFoo", ($scope, alwaysFoo) => _$.attr($scope["#div/1"], "id", alwaysFoo));
 export function $setup($scope) {
   $bar($scope, undefined);
   $baz($scope, "baz");
-  $alwaysFoo($scope, "foo" ?? _$.nextTagId($scope));
+  $alwaysFoo($scope, "foo" || _$.nextTagId($scope));
 }
 export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
