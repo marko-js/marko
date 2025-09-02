@@ -77,7 +77,7 @@ export default {
           t.variableDeclaration("const", [
             t.variableDeclarator(
               node.var!,
-              valueAttr ? t.logicalExpression("??", valueAttr.value, id) : id,
+              valueAttr ? t.logicalExpression("||", valueAttr.value, id) : id,
             ),
           ]),
         );
@@ -92,7 +92,7 @@ export default {
             section,
             value.extra?.referencedBindings,
             source,
-            t.logicalExpression("??", value, id),
+            t.logicalExpression("||", value, id),
           );
         } else {
           addValue(section, undefined, source, id);
