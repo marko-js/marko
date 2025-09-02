@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.0.58
+
+### Patch Changes
+
+- [#2797](https://github.com/marko-js/marko/pull/2797) [`803b187`](https://github.com/marko-js/marko/commit/803b187049fdb3e001f6ab0f2ffac26fb56c5428) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with injected change handlers from object patterns.
+
+- [#2797](https://github.com/marko-js/marko/pull/2797) [`803b187`](https://github.com/marko-js/marko/commit/803b187049fdb3e001f6ab0f2ffac26fb56c5428) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with implicit change handlers on input being treated as a derived instead of input.
+
+- [#2796](https://github.com/marko-js/marko/pull/2796) [`9e5a532`](https://github.com/marko-js/marko/commit/9e5a53259eec7bfd5139a0ac4fb8587be08c4470) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add links to the docs in error messages
+
 ## 6.0.57
 
 ### Patch Changes
