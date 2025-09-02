@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.59
+
+### Patch Changes
+
+- [#2795](https://github.com/marko-js/marko/pull/2795) [`22028ab`](https://github.com/marko-js/marko/commit/22028ab95f4aa24a668a3021e4647c8524e2a97a) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Allow override value for <id> tag
+
 ## 6.0.58
 
 ### Patch Changes
