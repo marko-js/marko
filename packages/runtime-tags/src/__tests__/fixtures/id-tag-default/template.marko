@@ -1,0 +1,16 @@
+let/bar
+let/baz="baz"
+
+id/alwaysFoo="foo"
+id/sometimesBar=bar
+id/sometimesBaz=baz
+
+button onClick() {
+  bar = bar ? null : "bar"
+  baz = baz ? null : "baz"
+} -- toggle
+
+
+div id=alwaysFoo -- foo
+div id=sometimesBar -- bar
+div id=sometimesBaz -- baz

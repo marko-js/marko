@@ -1,13 +1,13 @@
 import { types as t } from "@marko/compiler";
 import {
   assertNoArgs,
-  assertNoAttributes,
   assertNoAttributeTags,
   assertNoParams,
   type Tag,
 } from "@marko/compiler/babel-utils";
 
 import { assertNoBodyContent } from "../util/assert";
+import evaluate from "../util/evaluate";
 import { isOutputHTML } from "../util/marko-config";
 import {
   BindingType,
@@ -24,11 +24,12 @@ export default {
   analyze(tag) {
     assertNoArgs(tag);
     assertNoParams(tag);
-    assertNoAttributes(tag);
     assertNoBodyContent(tag);
     assertNoAttributeTags(tag);
 
     const { node } = tag;
+    const [valueAttr] = node.attributes;
+
     if (!node.var) {
       throw tag
         .get("name")
@@ -45,9 +46,22 @@ export default {
         );
     }
 
+    if (
+      tag.node.attributes.length > 1 ||
+      (tag.node.attributes.length === 1 &&
+        (!t.isMarkoAttribute(valueAttr) ||
+          (!valueAttr.default && valueAttr.name !== "value")))
+    ) {
+      throw tag
+        .get("name")
+        .buildCodeFrameError(
+          "The [`<id>` tag](https://next.markojs.com/docs/reference/core-tag#id) only supports the [`value=` attribute](https://next.markojs.com/docs/reference/language#shorthand-value).",
+        );
+    }
+
     const binding = trackVarReferences(tag, BindingType.derived);
     if (binding) {
-      setBindingDownstream(binding, false);
+      setBindingDownstream(binding, !!valueAttr && evaluate(valueAttr.value));
     }
   },
   translate: {
@@ -56,14 +70,34 @@ export default {
       const id = isOutputHTML()
         ? callRuntime("nextTagId")
         : callRuntime("nextTagId", scopeIdentifier);
+      const [valueAttr] = tag.node.attributes;
 
       if (isOutputHTML()) {
         tag.replaceWith(
-          t.variableDeclaration("const", [t.variableDeclarator(node.var!, id)]),
+          t.variableDeclaration("const", [
+            t.variableDeclarator(
+              node.var!,
+              valueAttr ? t.logicalExpression("||", valueAttr.value, id) : id,
+            ),
+          ]),
         );
       } else {
+        const section = getSection(tag);
         const source = initValue(node.var!.extra!.binding!);
-        addValue(getSection(tag), undefined, source, id);
+
+        if (valueAttr) {
+          const { value } = valueAttr;
+
+          addValue(
+            section,
+            value.extra?.referencedBindings,
+            source,
+            t.logicalExpression("||", value, id),
+          );
+        } else {
+          addValue(section, undefined, source, id);
+        }
+
         tag.remove();
       }
     },
