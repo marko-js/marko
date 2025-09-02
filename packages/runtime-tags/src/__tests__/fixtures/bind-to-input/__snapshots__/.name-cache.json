@@ -1,0 +1,18 @@
+{
+  "vars": {
+    "props": {
+      "$_$": "t",
+      "$init": "e",
+      "$$x_effect": "r",
+      "$$x$1": "n",
+      "$$expr_count_$countChange": "o",
+      "$$count": "a",
+      "$$valueChange": "i",
+      "$$x$counter$content": "m",
+      "$$x_closure": "s",
+      "$$x": "c",
+      "$$x$counter$content2": "u",
+      "$$expr_$countChange_count": "d"
+    }
+  }
+}

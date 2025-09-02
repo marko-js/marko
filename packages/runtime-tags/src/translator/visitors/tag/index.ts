@@ -17,6 +17,7 @@ import CustomTag from "./custom-tag";
 import DynamicTag from "./dynamic-tag";
 import NativeTag from "./native-tag";
 
+type StringOrIdPath = t.NodePath<t.StringLiteral> | t.NodePath<t.Identifier>;
 const TAG_NAME_IDENTIFIER_REG = /^[A-Z][a-zA-Z0-9_$]*$/;
 const BINDING_CHANGE_HANDLER = new WeakMap<
   t.Identifier,
@@ -216,11 +217,26 @@ function getChangeHandler(
       );
 
     const existingChangedAttr = BINDING_CHANGE_HANDLER.get(binding.identifier);
-
     if (!existingChangedAttr) {
+      const bindingIdentifierPath =
+        binding.path.getOuterBindingIdentifierPaths()[binding.identifier.name];
+      const changeAttrExpr = bindingIdentifierPath
+        ? bindingIdentifierPath.parentPath === binding.path
+          ? buildChangeHandlerFunction(attr.value)
+          : bindingIdentifierPath.parentPath!.isObjectProperty()
+            ? getChangeHandlerFromObjectPattern(
+                bindingIdentifierPath.parentPath!,
+              )
+            : undefined
+        : undefined;
+
+      if (!changeAttrExpr) {
+        throw tag.hub.buildError(attr.value, "Unable to bind to value.");
+      }
+
       const changeHandlerAttr = t.markoAttribute(
         changeAttrName,
-        buildChangeHandlerFunction(attr.value),
+        changeAttrExpr,
       );
       BINDING_CHANGE_HANDLER.set(binding.identifier, changeHandlerAttr);
       return changeHandlerAttr;
@@ -307,4 +323,59 @@ function buildChangeHandlerFunction(id: t.Identifier) {
       ),
     ]),
   );
+}
+
+function getChangeHandlerFromObjectPattern(
+  parent: t.NodePath<t.ObjectProperty>,
+) {
+  let changeKey: t.Identifier;
+  const pattern = parent.parentPath as t.NodePath<t.ObjectPattern>;
+  if (parent.node.computed) {
+    changeKey = generateUidIdentifier(`dynamicChange`);
+    pattern.pushContainer(
+      "properties",
+      t.objectProperty(
+        t.binaryExpression(
+          "+",
+          parent.get("key").node,
+          t.stringLiteral("Change"),
+        ),
+        changeKey,
+        true,
+      ),
+    );
+  } else {
+    const key = parent.get("key") as StringOrIdPath;
+    const searchKey = `${getStringOrIdentifierValue(key)}Change`;
+    for (const prop of pattern.get("properties")) {
+      if (prop.isObjectProperty()) {
+        const propKey = prop.get("key");
+        const propValue = prop.get("value");
+        if (
+          !prop.node.computed &&
+          getStringOrIdentifierValue(propKey as StringOrIdPath) === searchKey &&
+          propValue.isIdentifier()
+        ) {
+          changeKey = propValue.node;
+          break;
+        }
+      }
+    }
+
+    if (!changeKey!) {
+      pattern.unshiftContainer(
+        "properties",
+        t.objectProperty(
+          t.stringLiteral(searchKey),
+          (changeKey = generateUidIdentifier(searchKey)),
+        ),
+      );
+    }
+  }
+
+  return changeKey;
+}
+
+function getStringOrIdentifierValue(path: StringOrIdPath) {
+  return path.isStringLiteral() ? path.node.value : path.node.name;
 }

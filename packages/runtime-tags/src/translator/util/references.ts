@@ -396,7 +396,9 @@ function trackAssignment(
           binding.upstreamAlias.propertyAliases.get(changePropName) ||
           createBinding(
             generateUid(changePropName),
-            BindingType.derived,
+            binding.type === BindingType.input
+              ? binding.type
+              : BindingType.derived,
             binding.section,
             binding.upstreamAlias,
             changePropName,
