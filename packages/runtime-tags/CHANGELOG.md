@@ -1,5 +1,11 @@
 # @marko/runtime-tags
 
+## 6.0.60
+
+### Patch Changes
+
+- [#2801](https://github.com/marko-js/marko/pull/2801) [`eef940f`](https://github.com/marko-js/marko/commit/eef940f805548b3f1f96d544e0905638ac02af31) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with closure signals not being written due to incorrect binding sort order.
+
 ## 6.0.59
 
 ### Patch Changes
