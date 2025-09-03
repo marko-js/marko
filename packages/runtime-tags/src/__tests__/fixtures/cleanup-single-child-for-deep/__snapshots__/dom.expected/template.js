@@ -4,8 +4,8 @@ import * as _$ from "@marko/runtime-tags/debug/dom";
 import { $setup as _child, $write as _child_input_write, $name as _child_input_name, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
 const $setup$for$content2 = $scope => {
   _child($scope["#childScope/0"]);
-  $outerItem$for$content2._($scope);
   $write$for$content2($scope);
+  $outerItem$for$content2._($scope);
 };
 const $write$for$content2 = /* @__PURE__ */_$.dynamicClosureRead("write", ($scope, write) => _child_input_write($scope["#childScope/0"], write), $scope => $scope._._);
 const $expr_outerItem_middleItem$for$content = /* @__PURE__ */_$.intersection(3, $scope => {

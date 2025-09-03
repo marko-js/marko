@@ -1228,9 +1228,9 @@ export const bindingUtil = new Sorted(function compareBindings(
     ? 0
     : a.section.id - b.section.id ||
         (a.type !== b.type &&
-          (a.type === BindingType.dom || b.type === BindingType.dom))
-      ? a.type - b.type || a.id - b.id
-      : a.id - b.id;
+        (a.type === BindingType.dom || b.type === BindingType.dom)
+          ? a.type - b.type || a.id - b.id
+          : a.id - b.id);
 });
 
 const propsUtil = new Sorted(function compareProps(a: string, b: string) {
