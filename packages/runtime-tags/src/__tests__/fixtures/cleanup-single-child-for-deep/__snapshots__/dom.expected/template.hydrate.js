@@ -1,4 +1,4 @@
-// size: 957 (min) 469 (brotli)
+// size: 957 (min) 471 (brotli)
 const $expr_name_write_effect = _$.effect(
     "a0",
     ($scope, { 3: name, 4: write }) =>
@@ -14,7 +14,7 @@ const $expr_name_write_effect = _$.effect(
   }),
   $write$1 = _$.value(4, $expr_name_write),
   $setup$for$content2 = ($scope) => {
-    ($scope[0], $outerItem$for$content2._($scope), $write$for$content2($scope));
+    ($scope[0], $write$for$content2($scope), $outerItem$for$content2._($scope));
   },
   $write$for$content2 = _$.dynamicClosureRead(
     4,
