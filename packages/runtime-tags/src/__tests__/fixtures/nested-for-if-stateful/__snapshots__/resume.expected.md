@@ -1,9 +1,9 @@
 # Render
 ```html
-<!--M_[2-->
 <html>
   <head />
   <body>
+    <!--M_[-->
     <button>
       Increment 
       <!---->
@@ -12,7 +12,7 @@
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
-    <!--M_[4 -->
+    <!--M_[2-->
     <button>
       Increment 
       <!---->
@@ -21,7 +21,7 @@
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
-    <!--M_[6 -->
+    <!--M_[4-->
     <button>
       Increment 
       <!---->
@@ -30,7 +30,7 @@
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.i = [0, _.d = {
@@ -69,6 +69,8 @@
 
 # Mutations
 ```
+REMOVE html/body/#comment0 before html
+INSERT html/body/#comment0
 INSERT html/body/#text0
 INSERT html/body/#text1
 INSERT html/body/#text2
@@ -80,16 +82,16 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
-<!--M_[2-->
 <html>
   <head />
   <body>
+    <!--M_[-->
     <button>
       Confirm 1
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
-    <!--M_[4 -->
+    <!--M_[2-->
     <button>
       Increment 
       <!---->
@@ -98,7 +100,7 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
-    <!--M_[6 -->
+    <!--M_[4-->
     <button>
       Increment 
       <!---->
@@ -107,7 +109,7 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.i = [0, _.d = {
@@ -157,22 +159,22 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
-<!--M_[2-->
 <html>
   <head />
   <body>
+    <!--M_[-->
     <button>
       Confirm 1
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
-    <!--M_[4 -->
+    <!--M_[2-->
     <button>
       Confirm 1
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
-    <!--M_[6 -->
+    <!--M_[4-->
     <button>
       Increment 
       <!---->
@@ -181,7 +183,7 @@ buttonIndex = (buttonIndex + 1) % 3;
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.i = [0, _.d = {
@@ -231,28 +233,28 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
-<!--M_[2-->
 <html>
   <head />
   <body>
+    <!--M_[-->
     <button>
       Confirm 1
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
-    <!--M_[4 -->
+    <!--M_[2-->
     <button>
       Confirm 1
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
-    <!--M_[6 -->
+    <!--M_[4-->
     <button>
       Confirm 1
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.i = [0, _.d = {
@@ -302,28 +304,28 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
-<!--M_[2-->
 <html>
   <head />
   <body>
+    <!--M_[-->
     <button>
       Increment 1
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
-    <!--M_[4 -->
+    <!--M_[2-->
     <button>
       Confirm 1
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
-    <!--M_[6 -->
+    <!--M_[4-->
     <button>
       Confirm 1
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.i = [0, _.d = {
@@ -373,28 +375,28 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
-<!--M_[2-->
 <html>
   <head />
   <body>
+    <!--M_[-->
     <button>
       Increment 1
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
-    <!--M_[4 -->
+    <!--M_[2-->
     <button>
       Increment 1
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
-    <!--M_[6 -->
+    <!--M_[4-->
     <button>
       Confirm 1
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.i = [0, _.d = {
@@ -444,28 +446,28 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
-<!--M_[2-->
 <html>
   <head />
   <body>
+    <!--M_[-->
     <button>
       Increment 1
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
-    <!--M_[4 -->
+    <!--M_[2-->
     <button>
       Increment 1
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
-    <!--M_[6 -->
+    <!--M_[4-->
     <button>
       Increment 1
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.i = [0, _.d = {
@@ -515,28 +517,28 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
-<!--M_[2-->
 <html>
   <head />
   <body>
+    <!--M_[-->
     <button>
       Confirm 2
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
-    <!--M_[4 -->
+    <!--M_[2-->
     <button>
       Increment 1
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
-    <!--M_[6 -->
+    <!--M_[4-->
     <button>
       Increment 1
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.i = [0, _.d = {
@@ -586,28 +588,28 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
-<!--M_[2-->
 <html>
   <head />
   <body>
+    <!--M_[-->
     <button>
       Confirm 2
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
-    <!--M_[4 -->
+    <!--M_[2-->
     <button>
       Confirm 2
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
-    <!--M_[6 -->
+    <!--M_[4-->
     <button>
       Increment 1
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.i = [0, _.d = {
@@ -657,28 +659,28 @@ container.querySelectorAll("button")[buttonIndex].click();
 buttonIndex = (buttonIndex + 1) % 3;
 ```
 ```html
-<!--M_[2-->
 <html>
   <head />
   <body>
+    <!--M_[-->
     <button>
       Confirm 2
     </button>
     <!--M_*3 #button/0-->
     <!--M_|2 #text/0 3-->
-    <!--M_[4 -->
+    <!--M_[2-->
     <button>
       Confirm 2
     </button>
     <!--M_*5 #button/0-->
     <!--M_|4 #text/0 5-->
-    <!--M_[6 -->
+    <!--M_[4-->
     <button>
       Confirm 2
     </button>
     <!--M_*7 #button/0-->
     <!--M_|6 #text/0 7-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 6-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.i = [0, _.d = {

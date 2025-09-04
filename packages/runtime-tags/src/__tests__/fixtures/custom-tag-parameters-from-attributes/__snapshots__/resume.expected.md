@@ -10,7 +10,7 @@
       <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
-    <!--M_[3-->
+    <!--M_[-->
     <div>
       Count (
       <!---->
@@ -21,7 +21,7 @@
       1
       <!--M_*3 #text/1-->
     </div>
-    <!--M_]2 #text/2-->
+    <!--M_]2 #text/2 3-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, 1,
@@ -43,6 +43,10 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/#text
+```
 
 # Render
 ```js
@@ -59,7 +63,7 @@ container.querySelector("button").click();
       <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
-    <!--M_[3-->
+    <!--M_[-->
     <div>
       Count (
       <!---->
@@ -70,7 +74,7 @@ container.querySelector("button").click();
       2
       <!--M_*3 #text/1-->
     </div>
-    <!--M_]2 #text/2-->
+    <!--M_]2 #text/2 3-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, 1,
@@ -113,7 +117,7 @@ container.querySelector("button").click();
       <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
-    <!--M_[3-->
+    <!--M_[-->
     <div>
       Count (
       <!---->
@@ -124,7 +128,7 @@ container.querySelector("button").click();
       3
       <!--M_*3 #text/1-->
     </div>
-    <!--M_]2 #text/2-->
+    <!--M_]2 #text/2 3-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, 1,
@@ -167,7 +171,7 @@ container.querySelector("button").click();
       <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
-    <!--M_[3-->
+    <!--M_[-->
     <div>
       Count (
       <!---->
@@ -178,7 +182,7 @@ container.querySelector("button").click();
       4
       <!--M_*3 #text/1-->
     </div>
-    <!--M_]2 #text/2-->
+    <!--M_]2 #text/2 3-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, 1,

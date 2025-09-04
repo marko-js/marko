@@ -10,12 +10,12 @@
   </head>
   <body>
     a
-    <!--M_[2-->
+    <!--M_[-->
     bcd
-    <!--M_[3-->
+    <!--M_[-->
     efg
-    <!--M_]2 #text/1-->
-    <!--M_]1 #text/0-->
+    <!--M_]2 #text/1 3-->
+    <!--M_]1 #text/0 2-->
     h
     <script>
       WALKER_RUNTIME("M")("_");
@@ -47,5 +47,6 @@
 
 # Mutations
 ```
+INSERT html/body/#text8
 INSERT html/body/#text7
 ```

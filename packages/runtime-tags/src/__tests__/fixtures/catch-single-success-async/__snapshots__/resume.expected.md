@@ -4,7 +4,7 @@
   <head />
   <body>
     a
-    <!--M_[2-->
+    <!--M_[-->
     <!--M_!^b-->
     b
     <script>
@@ -19,8 +19,13 @@
     </script>
     cd
     <!--M_!b-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     fgh
   </body>
 </html>
+```
+
+# Mutations
+```
+INSERT html/body/#text3
 ```

@@ -4,24 +4,24 @@
 <html>
   <head />
   <body>
-    <!--M_[4-->
+    <!--M_[-->
     <div>
       Hello world
     </div>
     <!--M_*4 #div/0-->
-    <!--M_]3 #text/0-->
-    <!--M_[8-->
+    <!--M_]3 #text/0 4-->
+    <!--M_[-->
     <div>
       Hello world
     </div>
     <!--M_*8 #div/0-->
-    <!--M_]7 #text/0-->
-    <!--M_[11-->
+    <!--M_]7 #text/0 8-->
+    <!--M_[-->
     <div>
       Hello world
     </div>
     <!--M_*11 #div/0-->
-    <!--M_]10 #text/0-->
+    <!--M_]10 #text/0 11-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.j = [0, _.g = {
@@ -78,6 +78,9 @@
 ```
 REMOVE html/body/#comment0 before html
 INSERT html/body/#comment0
+INSERT html/body/#text0
+INSERT html/body/#text1
+INSERT html/body/#text2
 INSERT html/body/div2/#text
 INSERT html/body/div0/#text
 INSERT html/body/div1/#text

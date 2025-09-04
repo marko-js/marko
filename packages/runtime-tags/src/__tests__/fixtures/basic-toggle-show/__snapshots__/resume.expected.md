@@ -4,9 +4,9 @@
   <head />
   <body>
     <div>
-      <!--M_[2-->
+      <!--M_[-->
       Hello!
-      <!--M_]1 #text/0-->
+      <!--M_]1 #text/0 2-->
       <button>
         Toggle
       </button>
@@ -29,6 +29,10 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/div/#text1
+```
 
 # Render
 ```js
@@ -39,7 +43,7 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      <!--M_]1 #text/0-->
+      <!--M_]1 #text/0 2-->
       <button>
         Toggle
       </button>
@@ -67,6 +71,7 @@ container.querySelector("button").click();
 REMOVE html/body/div/#comment0 after #text
 INSERT html/body/div/#comment0
 REMOVE #comment after html/body/div/#comment0
+REMOVE #text after html/body/div/#comment0
 REMOVE #text after html/body/div/#comment0
 ```
 
@@ -117,7 +122,7 @@ container.querySelector("button").click();
   <head />
   <body>
     <div>
-      <!--M_]1 #text/0-->
+      <!--M_]1 #text/0 2-->
       <button>
         Toggle
       </button>

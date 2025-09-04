@@ -3,13 +3,13 @@
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       id="class-api"
     >
       0
     </button>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <div
       id="tags-api"
     >
@@ -57,6 +57,7 @@
 
 # Mutations
 ```
+INSERT html/body/#text2
 INSERT html/body/#text0
 INSERT html/body/#text1
 REMOVE #comment after html/body/#comment0
@@ -71,13 +72,13 @@ container.querySelector("#class-api").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       id="class-api"
     >
       1
     </button>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <div
       id="tags-api"
     >
@@ -137,13 +138,13 @@ container.querySelector("#class-api").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       id="class-api"
     >
       2
     </button>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <div
       id="tags-api"
     >

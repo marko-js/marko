@@ -8,9 +8,9 @@
     </button>
     <!--M_*1 #button/0-->
     <div>
-      <!--M_[3-->
+      <!--M_[-->
       <div>
-        <!--M_[5-->
+        <!--M_[-->
         <div>
           1
           <!--M_*5 #text/0-->
@@ -19,9 +19,9 @@
           2
           <!--M_*5 #text/1-->
         </div>
-        <!--M_]4 #text/0-->
+        <!--M_]4 #text/0 5-->
       </div>
-      <!--M_]2 #text/0-->
+      <!--M_]2 #text/0 3-->
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
@@ -57,6 +57,11 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/div/div/#text
+INSERT html/body/div/#text
+```
 
 # Render
 ```js
@@ -71,9 +76,9 @@ container.querySelector("button").click();
     </button>
     <!--M_*1 #button/0-->
     <div>
-      <!--M_[3-->
+      <!--M_[-->
       <div>
-        <!--M_[5-->
+        <!--M_[-->
         <div>
           2
           <!--M_*5 #text/0-->
@@ -82,9 +87,9 @@ container.querySelector("button").click();
           2
           <!--M_*5 #text/1-->
         </div>
-        <!--M_]4 #text/0-->
+        <!--M_]4 #text/0 5-->
       </div>
-      <!--M_]2 #text/0-->
+      <!--M_]2 #text/0 3-->
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
@@ -138,9 +143,9 @@ container.querySelector("button").click();
     </button>
     <!--M_*1 #button/0-->
     <div>
-      <!--M_[3-->
+      <!--M_[-->
       <div>
-        <!--M_[5-->
+        <!--M_[-->
         <div>
           3
           <!--M_*5 #text/0-->
@@ -149,9 +154,9 @@ container.querySelector("button").click();
           2
           <!--M_*5 #text/1-->
         </div>
-        <!--M_]4 #text/0-->
+        <!--M_]4 #text/0 5-->
       </div>
-      <!--M_]2 #text/0-->
+      <!--M_]2 #text/0 3-->
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
@@ -205,9 +210,9 @@ container.querySelector("button").click();
     </button>
     <!--M_*1 #button/0-->
     <div>
-      <!--M_[3-->
+      <!--M_[-->
       <div>
-        <!--M_[5-->
+        <!--M_[-->
         <div>
           4
           <!--M_*5 #text/0-->
@@ -216,9 +221,9 @@ container.querySelector("button").click();
           2
           <!--M_*5 #text/1-->
         </div>
-        <!--M_]4 #text/0-->
+        <!--M_]4 #text/0 5-->
       </div>
-      <!--M_]2 #text/0-->
+      <!--M_]2 #text/0 3-->
     </div>
     <script>
       WALKER_RUNTIME("M")("_");

@@ -1,11 +1,11 @@
 # Write
 ```html
-  <!--M_[2--><div>1<!--M_*2 #text/0--></div><!--M_]1 #text/0--><button>1<!--M_*1 #text/2--></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d=[0,_.a={"ConditionalScope:#text/0":_.c={},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_content",x:1,MyTag:_.b={}},_.c],_.b.content=_._["__tests__/template.marko_1_content"](_.a),_.d),"__tests__/template.marko_0_x",1];M._.w()</script>
+  <!--M_[--><div>1<!--M_*2 #text/0--></div><!--M_]1 #text/0 2--><button>1<!--M_*1 #text/2--></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d=[0,_.a={"ConditionalScope:#text/0":_.c={},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_content",x:1,MyTag:_.b={}},_.c],_.b.content=_._["__tests__/template.marko_1_content"](_.a),_.d),"__tests__/template.marko_0_x",1];M._.w()</script>
 ```
 
 # Render End
 ```html
-<!--M_[2-->
+<!--M_[-->
 <html>
   <head />
   <body>
@@ -13,7 +13,7 @@
       1
       <!--M_*2 #text/0-->
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <button>
       1
       <!--M_*1 #text/2-->

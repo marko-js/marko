@@ -3,14 +3,14 @@
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <div>
       Child 1 has 
       <!---->
       3
       <!--M_*2 #text/0-->
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <button />
     <!--M_*1 #button/1-->
     <script>
@@ -37,6 +37,7 @@
 ```
 REMOVE html/body/#comment0 before html
 INSERT html/body/#comment0
+INSERT html/body/#text
 ```
 
 # Render
@@ -50,7 +51,7 @@ container.querySelector("button").click();
     <div>
       Child 2 has 3
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <button />
     <!--M_*1 #button/1-->
     <script>
@@ -78,6 +79,7 @@ container.querySelector("button").click();
 INSERT html/body/div
 REMOVE #comment after html/body/div
 REMOVE div after html/body/div
+REMOVE #text after html/body/div
 UPDATE html/body/div/#text1 "" => "3"
 ```
 
@@ -92,7 +94,7 @@ container.querySelector("button").click();
     <div>
       Child 1 has 3
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <button />
     <!--M_*1 #button/1-->
     <script>

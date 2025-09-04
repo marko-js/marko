@@ -11,7 +11,7 @@
       mounted
     </div>
     <!--M_*1 #div/1-->
-    <!--M_[2-->
+    <!--M_[-->
     <div>
       a
     </div>
@@ -21,7 +21,7 @@
     <p>
       c
     </p>
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -51,6 +51,7 @@
 
 # Mutations
 ```
+INSERT html/body/#text
 INSERT html/body/div0/#text
 ```
 
@@ -70,7 +71,7 @@ container.querySelector("button").click();
       destroyed
     </div>
     <!--M_*1 #div/1-->
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -100,7 +101,7 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-REMOVE html/body/#comment2 after p
+REMOVE html/body/#comment2 after #text
 INSERT html/body/#comment2
 REMOVE #text in html/body/div
 INSERT html/body/div/#text
@@ -108,6 +109,7 @@ REMOVE #comment after html/body/#comment2
 REMOVE div after html/body/#comment2
 REMOVE span after html/body/#comment2
 REMOVE p after html/body/#comment2
+REMOVE #text after html/body/#comment2
 ```
 
 # Render
@@ -186,7 +188,7 @@ container.querySelector("button").click();
       destroyed
     </div>
     <!--M_*1 #div/1-->
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {

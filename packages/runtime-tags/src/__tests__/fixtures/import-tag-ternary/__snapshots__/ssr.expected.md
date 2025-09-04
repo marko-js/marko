@@ -1,18 +1,18 @@
 # Write
 ```html
-  <!--M_[2--><div>baz</div><!--M_]1 #text/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"__tests__/tags/baz.marko"},_.a])]</script>
+  <!--M_[--><div>baz</div><!--M_]1 #text/0 2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.b=[0,{"ConditionalScope:#text/0":_.a={},"ConditionalRenderer:#text/0":"__tests__/tags/baz.marko"},_.a])]</script>
 ```
 
 # Render End
 ```html
-<!--M_[2-->
+<!--M_[-->
 <html>
   <head />
   <body>
     <div>
       baz
     </div>
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.b = [0,

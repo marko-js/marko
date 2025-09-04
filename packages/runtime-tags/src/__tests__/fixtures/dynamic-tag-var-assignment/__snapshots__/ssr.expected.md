@@ -1,11 +1,11 @@
 # Write
 ```html
-  <!--M_[2--><button class=inc>1<!--M_*2 #text/1--></button><!--M_*2 #button/0--><!--M_]1 #text/0--><button class=reset>reset</button><!--M_*1 #button/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.b={"ConditionalScope:#text/0":_.a={x:1},"ConditionalRenderer:#text/0":"__tests__/tags/counter.marko","#scopeOffset/1":3},_.a],_.a["#TagVariableChange"]=_._["__tests__/tags/counter.marko_0/valueChange"](_.a),_.a["#TagVariable"]=_._["__tests__/template.marko_0_count/var"](_.b),_.c),"__tests__/tags/counter.marko_0_x",2,"__tests__/template.marko_0",1];M._.w()</script>
+  <!--M_[--><button class=inc>1<!--M_*2 #text/1--></button><!--M_*2 #button/0--><!--M_]1 #text/0 2--><button class=reset>reset</button><!--M_*1 #button/2--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.b={"ConditionalScope:#text/0":_.a={x:1},"ConditionalRenderer:#text/0":"__tests__/tags/counter.marko","#scopeOffset/1":3},_.a],_.a["#TagVariableChange"]=_._["__tests__/tags/counter.marko_0/valueChange"](_.a),_.a["#TagVariable"]=_._["__tests__/template.marko_0_count/var"](_.b),_.c),"__tests__/tags/counter.marko_0_x",2,"__tests__/template.marko_0",1];M._.w()</script>
 ```
 
 # Render End
 ```html
-<!--M_[2-->
+<!--M_[-->
 <html>
   <head />
   <body>
@@ -16,7 +16,7 @@
       <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <button
       class="reset"
     >

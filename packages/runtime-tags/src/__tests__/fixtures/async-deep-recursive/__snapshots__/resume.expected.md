@@ -12,26 +12,26 @@
     <div
       data-level="4"
     >
-      <!--M_[4-->
+      <!--M_[-->
       <div
         data-level="3"
       >
-        <!--M_[8-->
+        <!--M_[-->
         <div
           data-level="2"
         >
-          <!--M_[13-->
+          <!--M_[-->
           <div
             data-level="1"
           >
-            <!--M_[17-->
-            <!--M_]16 #text/1-->
+            <!--M_[-->
+            <!--M_]16 #text/1 17-->
           </div>
-          <!--M_]12 #text/1-->
+          <!--M_]12 #text/1 13-->
         </div>
-        <!--M_]7 #text/1-->
+        <!--M_]7 #text/1 8-->
       </div>
-      <!--M_]3 #text/1-->
+      <!--M_]3 #text/1 4-->
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
@@ -88,4 +88,11 @@
     </script>
   </body>
 </html>
+```
+
+# Mutations
+```
+INSERT html/body/div/div/#text
+INSERT html/body/div/#text
+INSERT html/body/div/div/div/#text
 ```

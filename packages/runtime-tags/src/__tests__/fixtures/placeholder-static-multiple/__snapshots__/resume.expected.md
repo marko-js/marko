@@ -4,8 +4,8 @@
   <head />
   <body>
     <div>
-      <!--M_[2-->
-      <!--M_]1 #div/0-->
+      <!--M_[-->
+      <!--M_)1 #div/0-->
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
@@ -27,7 +27,8 @@
   <head />
   <body>
     <div>
-      <!--M_[2-->
+      <!--M_[-->
+      <!--M_)1 #div/0-->
       ABCD
     </div>
     <script>
@@ -46,6 +47,5 @@
 # Mutations
 ```
 INSERT html/body/div/#text0, html/body/div/#text1, html/body/div/#text2
-REMOVE #comment after html/body/div/#text2
 UPDATE html/body/div/#text1 "" => "C"
 ```

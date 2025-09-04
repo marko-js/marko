@@ -19,7 +19,7 @@
       >
         1 * 0 = 0
       </button>
-      <!--Ms]1 #text/2-->
+      <!--Ms]1 #text/2 2-->
     </div>
     <script>
       WALKER_RUNTIME("M")("s");
@@ -55,6 +55,7 @@
 
 # Mutations
 ```
+INSERT #text
 INSERT html/body/#text0
 INSERT html/body/#text5
 REMOVE #comment before html/body/#text0
@@ -63,6 +64,7 @@ INSERT html/body/div/#text0, html/body/div/#text3
 REMOVE #comment after html/body/div/#text3
 REMOVE h1 after html/body/div/#text3
 REMOVE button after html/body/div/#text3
+REMOVE #text after html/body/div/#text3
 INSERT html/body/#text1
 INSERT html/body/#text4
 INSERT html/body/#text2
@@ -107,7 +109,7 @@ container.querySelector("#tags").click();
       >
         1 * 1 = 1
       </button>
-      <!--Ms]1 #text/2-->
+      <!--Ms]1 #text/2 2-->
     </div>
     <script>
       WALKER_RUNTIME("M")("s");
@@ -172,7 +174,7 @@ container.querySelector("#class").click();
       >
         2 * 1 = 2
       </button>
-      <!--Ms]1 #text/2-->
+      <!--Ms]1 #text/2 2-->
     </div>
     <script>
       WALKER_RUNTIME("M")("s");
@@ -251,7 +253,7 @@ container.querySelector("#tags").click();
       >
         2 * 2 = 4
       </button>
-      <!--Ms]1 #text/2-->
+      <!--Ms]1 #text/2 2-->
     </div>
     <script>
       WALKER_RUNTIME("M")("s");
@@ -316,7 +318,7 @@ container.querySelector("#class").click();
       >
         3 * 2 = 6
       </button>
-      <!--Ms]1 #text/2-->
+      <!--Ms]1 #text/2 2-->
     </div>
     <script>
       WALKER_RUNTIME("M")("s");
@@ -395,7 +397,7 @@ container.querySelector("#tags").click();
       >
         3 * 3 = 9
       </button>
-      <!--Ms]1 #text/2-->
+      <!--Ms]1 #text/2 2-->
     </div>
     <script>
       WALKER_RUNTIME("M")("s");

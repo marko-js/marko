@@ -3,12 +3,12 @@
 <html>
   <head />
   <body>
-    <!--M_[3-->
+    <!--M_[-->
     y: 
     <!---->
     1
     <!--M_*3 #text/0-->
-    <!--M_]2 #text/0-->
+    <!--M_]2 #text/0 3-->
     <button>
       Toggle
     </button>
@@ -36,6 +36,7 @@
 ```
 REMOVE html/body/#comment0 before html
 INSERT html/body/#comment0
+INSERT html/body/#text2
 ```
 
 # Render
@@ -46,8 +47,7 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_]2 #text/0-->
-    <!--M_*3 #text/0-->
+    <!--M_]2 #text/0 3-->
     <button>
       Toggle
     </button>
@@ -73,8 +73,10 @@ container.querySelector("button").click();
 
 # Mutations
 ```
-REMOVE html/body/#comment0 after html/body/#comment1
+REMOVE html/body/#comment0 after #text
 INSERT html/body/#comment0
+REMOVE #comment after html/body/#comment0
+REMOVE #text after html/body/#comment0
 REMOVE #comment after html/body/#comment0
 REMOVE #text after html/body/#comment0
 REMOVE #comment after html/body/#comment0
@@ -90,7 +92,6 @@ container.querySelector("button").click();
   <head />
   <body>
     y: 1
-    <!--M_*3 #text/0-->
     <button>
       Toggle
     </button>
@@ -129,8 +130,7 @@ container.querySelector("button").click();
 <html>
   <head />
   <body>
-    <!--M_]2 #text/0-->
-    <!--M_*3 #text/0-->
+    <!--M_]2 #text/0 3-->
     <button>
       Toggle
     </button>

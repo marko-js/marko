@@ -17,16 +17,16 @@
       0
     </div>
     <!--M_*1 #div/1-->
-    <!--M_[2-->
+    <!--M_[-->
     <!--M_!^b-->
-    <!--M_[4-->
+    <!--M_[-->
     Async: 
     <!---->
     0
     <!--M_*4 #text/0-->
-    <!--M_]2 #text/0-->
+    <!--M_]2 #text/0 4-->
     <!--M_!b-->
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -64,6 +64,8 @@
 
 # Mutations
 ```
+INSERT html/body/#text3
+INSERT html/body/#text2
 INSERT html/body/div/#text
 ```
 
@@ -89,16 +91,16 @@ container.querySelector("button").click();
       0
     </div>
     <!--M_*1 #div/1-->
-    <!--M_[2-->
+    <!--M_[-->
     <!--M_!^b-->
-    <!--M_[4-->
+    <!--M_[-->
     Async: 
     <!---->
     0
     <!--M_*4 #text/0-->
-    <!--M_]2 #text/0-->
+    <!--M_]2 #text/0 4-->
     <!--M_!b-->
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -155,7 +157,7 @@ container.querySelector("button").click();
     </div>
     <!--M_*1 #div/1-->
     LOADING...
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -201,8 +203,10 @@ REMOVE #document-fragment/#text0 after html/body/#text
 REMOVE #document-fragment/#comment3 after html/body/#text
 REMOVE #document-fragment/#text1 after html/body/#text
 REMOVE #document-fragment/#comment4 after html/body/#text
+REMOVE #document-fragment/#text2 after html/body/#text
 REMOVE #document-fragment/#comment5 after html/body/#text
 REMOVE #document-fragment/#comment6 after html/body/#text
+REMOVE #document-fragment/#text3 after html/body/#text
 ```
 
 # Render ASYNC
@@ -224,16 +228,16 @@ REMOVE #document-fragment/#comment6 after html/body/#text
       1
     </div>
     <!--M_*1 #div/1-->
-    <!--M_[2-->
+    <!--M_[-->
     <!--M_!^b-->
-    <!--M_[4-->
+    <!--M_[-->
     Async: 
     <!---->
     1
     <!--M_*4 #text/0-->
-    <!--M_]2 #text/0-->
+    <!--M_]2 #text/0 4-->
     <!--M_!b-->
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -271,8 +275,8 @@ REMOVE #document-fragment/#comment6 after html/body/#text
 
 # Mutations
 ```
-INSERT html/body/#comment2, html/body/#comment3, html/body/#comment4, html/body/#text0, html/body/#comment5, html/body/#text1, html/body/#comment6, html/body/#comment7, html/body/#comment8
-REMOVE #text after html/body/#comment8
+INSERT html/body/#comment2, html/body/#comment3, html/body/#comment4, html/body/#text0, html/body/#comment5, html/body/#text1, html/body/#comment6, html/body/#text2, html/body/#comment7, html/body/#comment8, html/body/#text3
+REMOVE #text after html/body/#text3
 REMOVE #text in html/body/div
 INSERT html/body/div/#text
 ```
@@ -299,16 +303,16 @@ container.querySelector("button").click();
       1
     </div>
     <!--M_*1 #div/1-->
-    <!--M_[2-->
+    <!--M_[-->
     <!--M_!^b-->
-    <!--M_[4-->
+    <!--M_[-->
     Async: 
     <!---->
     1
     <!--M_*4 #text/0-->
-    <!--M_]2 #text/0-->
+    <!--M_]2 #text/0 4-->
     <!--M_!b-->
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -365,7 +369,7 @@ container.querySelector("button").click();
     </div>
     <!--M_*1 #div/1-->
     LOADING...
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -411,8 +415,10 @@ REMOVE #document-fragment/#text0 after html/body/#text
 REMOVE #document-fragment/#comment3 after html/body/#text
 REMOVE #document-fragment/#text1 after html/body/#text
 REMOVE #document-fragment/#comment4 after html/body/#text
+REMOVE #document-fragment/#text2 after html/body/#text
 REMOVE #document-fragment/#comment5 after html/body/#text
 REMOVE #document-fragment/#comment6 after html/body/#text
+REMOVE #document-fragment/#text3 after html/body/#text
 ```
 
 # Render ASYNC
@@ -435,7 +441,7 @@ REMOVE #document-fragment/#comment6 after html/body/#text
     </div>
     <!--M_*1 #div/1-->
     Error: ERROR!
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {

@@ -1,7 +1,7 @@
 # Render
 ```html
-<!--M_[2-->
-<!--M_]1 #text/0-->
+<!--M_[-->
+<!--M_]1 #text/0 2-->
 <html>
   <head />
   <body>
@@ -12,8 +12,8 @@
       <!--M_*1 #text/3-->
     </button>
     <!--M_*1 #button/2-->
-    <!--M_[4-->
-    <!--M_]1 #text/4-->
+    <!--M_[-->
+    <!--M_]1 #text/4 4-->
     <button
       class="twice"
     >
@@ -72,8 +72,8 @@
 container.querySelector("button.once").click();
 ```
 ```html
-<!--M_[2-->
-<!--M_]1 #text/0-->
+<!--M_[-->
+<!--M_]1 #text/0 2-->
 <html>
   <head />
   <body>
@@ -84,8 +84,8 @@ container.querySelector("button.once").click();
       <!--M_*1 #text/3-->
     </button>
     <!--M_*1 #button/2-->
-    <!--M_[4-->
-    <!--M_]1 #text/4-->
+    <!--M_[-->
+    <!--M_]1 #text/4 4-->
     <button
       class="twice"
     >
@@ -148,8 +148,8 @@ UPDATE html/body/button0/#text "0" => "1"
 container.querySelector("button.once").click();
 ```
 ```html
-<!--M_[2-->
-<!--M_]1 #text/0-->
+<!--M_[-->
+<!--M_]1 #text/0 2-->
 <html>
   <head />
   <body>
@@ -160,8 +160,8 @@ container.querySelector("button.once").click();
       <!--M_*1 #text/3-->
     </button>
     <!--M_*1 #button/2-->
-    <!--M_[4-->
-    <!--M_]1 #text/4-->
+    <!--M_[-->
+    <!--M_]1 #text/4 4-->
     <button
       class="twice"
     >
@@ -220,8 +220,8 @@ container.querySelector("button.once").click();
 container.querySelector("button.twice").click();
 ```
 ```html
-<!--M_[2-->
-<!--M_]1 #text/0-->
+<!--M_[-->
+<!--M_]1 #text/0 2-->
 <html>
   <head />
   <body>
@@ -232,8 +232,8 @@ container.querySelector("button.twice").click();
       <!--M_*1 #text/3-->
     </button>
     <!--M_*1 #button/2-->
-    <!--M_[4-->
-    <!--M_]1 #text/4-->
+    <!--M_[-->
+    <!--M_]1 #text/4 4-->
     <button
       class="twice"
     >
@@ -296,8 +296,8 @@ UPDATE html/body/button1/#text "0" => "1"
 container.querySelector("button.twice").click();
 ```
 ```html
-<!--M_[2-->
-<!--M_]1 #text/0-->
+<!--M_[-->
+<!--M_]1 #text/0 2-->
 <html>
   <head />
   <body>
@@ -308,8 +308,8 @@ container.querySelector("button.twice").click();
       <!--M_*1 #text/3-->
     </button>
     <!--M_*1 #button/2-->
-    <!--M_[4-->
-    <!--M_]1 #text/4-->
+    <!--M_[-->
+    <!--M_]1 #text/4 4-->
     <button
       class="twice"
     >
@@ -372,8 +372,8 @@ UPDATE html/body/button1/#text "1" => "2"
 container.querySelector("button.twice").click();
 ```
 ```html
-<!--M_[2-->
-<!--M_]1 #text/0-->
+<!--M_[-->
+<!--M_]1 #text/0 2-->
 <html>
   <head />
   <body>
@@ -384,8 +384,8 @@ container.querySelector("button.twice").click();
       <!--M_*1 #text/3-->
     </button>
     <!--M_*1 #button/2-->
-    <!--M_[4-->
-    <!--M_]1 #text/4-->
+    <!--M_[-->
+    <!--M_]1 #text/4 4-->
     <button
       class="twice"
     >

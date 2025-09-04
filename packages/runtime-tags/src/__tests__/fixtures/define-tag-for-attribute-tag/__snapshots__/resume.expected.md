@@ -4,11 +4,11 @@
   <head />
   <body>
     <div>
-      <!--M_[3-->
+      <!--M_[-->
       <span>
         The thing
       </span>
-      <!--M_]2 #text/1-->
+      <!--M_]2 #text/1 3-->
     </div>
     <!--M_*2 #div/0-->
     <button>
@@ -34,6 +34,10 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/div/#text
+```
 
 # Render
 ```js
@@ -46,11 +50,11 @@ container.querySelector("button").click();
     <div
       class="selected"
     >
-      <!--M_[3-->
+      <!--M_[-->
       <span>
         The thing
       </span>
-      <!--M_]2 #text/1-->
+      <!--M_]2 #text/1 3-->
     </div>
     <!--M_*2 #div/0-->
     <button>
@@ -92,11 +96,11 @@ container.querySelector("button").click();
     <div
       class=""
     >
-      <!--M_[3-->
+      <!--M_[-->
       <span>
         The thing
       </span>
-      <!--M_]2 #text/1-->
+      <!--M_]2 #text/1 3-->
     </div>
     <!--M_*2 #div/0-->
     <button>
@@ -138,11 +142,11 @@ container.querySelector("button").click();
     <div
       class="selected"
     >
-      <!--M_[3-->
+      <!--M_[-->
       <span>
         The thing
       </span>
-      <!--M_]2 #text/1-->
+      <!--M_]2 #text/1 3-->
     </div>
     <!--M_*2 #div/0-->
     <button>

@@ -3,7 +3,7 @@
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       class="inc"
     >
@@ -11,7 +11,7 @@
       <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <button
       class="reset"
     >
@@ -46,6 +46,7 @@
 ```
 REMOVE html/body/#comment0 before html
 INSERT html/body/#comment0
+INSERT html/body/#text
 ```
 
 # Render
@@ -56,7 +57,7 @@ container.querySelector("button.inc").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       class="inc"
     >
@@ -64,7 +65,7 @@ container.querySelector("button.inc").click();
       <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <button
       class="reset"
     >
@@ -108,7 +109,7 @@ container.querySelector("button.inc").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       class="inc"
     >
@@ -116,7 +117,7 @@ container.querySelector("button.inc").click();
       <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <button
       class="reset"
     >
@@ -160,7 +161,7 @@ container.querySelector("button.reset").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       class="inc"
     >
@@ -168,7 +169,7 @@ container.querySelector("button.reset").click();
       <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <button
       class="reset"
     >
@@ -212,7 +213,7 @@ container.querySelector("button.inc").click();
 <html>
   <head />
   <body>
-    <!--M_[2-->
+    <!--M_[-->
     <button
       class="inc"
     >
@@ -220,7 +221,7 @@ container.querySelector("button.inc").click();
       <!--M_*2 #text/1-->
     </button>
     <!--M_*2 #button/0-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     <button
       class="reset"
     >

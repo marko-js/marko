@@ -11,12 +11,12 @@
       class="toggle"
     />
     <!--M_*1 #button/1-->
-    <!--M_[2-->
+    <!--M_[-->
     The count is 
     <!---->
     0
     <!--M_*2 #text/0-->
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -36,6 +36,10 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/#text2
+```
 
 # Render
 ```js
@@ -53,12 +57,12 @@ container.querySelector("button.inc").click();
       class="toggle"
     />
     <!--M_*1 #button/1-->
-    <!--M_[2-->
+    <!--M_[-->
     The count is 
     <!---->
     1
     <!--M_*2 #text/0-->
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -99,8 +103,7 @@ container.querySelector("button.toggle").click();
       class="toggle"
     />
     <!--M_*1 #button/1-->
-    <!--M_]1 #text/2-->
-    <!--M_*2 #text/0-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -122,8 +125,10 @@ container.querySelector("button.toggle").click();
 
 # Mutations
 ```
-REMOVE html/body/#comment2 after html/body/#comment3
+REMOVE html/body/#comment2 after #text
 INSERT html/body/#comment2
+REMOVE #comment after html/body/#comment2
+REMOVE #text after html/body/#comment2
 REMOVE #comment after html/body/#comment2
 REMOVE #text after html/body/#comment2
 REMOVE #comment after html/body/#comment2
@@ -146,8 +151,7 @@ container.querySelector("button.inc").click();
       class="toggle"
     />
     <!--M_*1 #button/1-->
-    <!--M_]1 #text/2-->
-    <!--M_*2 #text/0-->
+    <!--M_]1 #text/2 2-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -185,7 +189,6 @@ container.querySelector("button.toggle").click();
     />
     <!--M_*1 #button/1-->
     The count is 2
-    <!--M_*2 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {
@@ -229,7 +232,6 @@ container.querySelector("button.inc").click();
     />
     <!--M_*1 #button/1-->
     The count is 3
-    <!--M_*2 #text/0-->
     <script>
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.c = [0, _.a = {

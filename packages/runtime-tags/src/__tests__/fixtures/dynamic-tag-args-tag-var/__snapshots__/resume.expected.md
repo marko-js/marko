@@ -10,14 +10,14 @@
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
-    <!--M_[2-->
+    <!--M_[-->
     <div>
       Child: 
       <!---->
       1
       <!--M_*2 #text/0-->
     </div>
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <div>
       Parent: 
       <!---->
@@ -43,6 +43,10 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/#text
+```
 
 # Render
 ```js
@@ -59,14 +63,14 @@ container.querySelector("button").click();
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
-    <!--M_[2-->
+    <!--M_[-->
     <div>
       Child: 
       <!---->
       2
       <!--M_*2 #text/0-->
     </div>
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <div>
       Parent: 
       <!---->
@@ -114,14 +118,14 @@ container.querySelector("button").click();
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
-    <!--M_[2-->
+    <!--M_[-->
     <div>
       Child: 
       <!---->
       3
       <!--M_*2 #text/0-->
     </div>
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <div>
       Parent: 
       <!---->
@@ -169,14 +173,14 @@ container.querySelector("button").click();
       <!--M_*1 #text/1-->
     </button>
     <!--M_*1 #button/0-->
-    <!--M_[2-->
+    <!--M_[-->
     <div>
       Child: 
       <!---->
       4
       <!--M_*2 #text/0-->
     </div>
-    <!--M_]1 #text/2-->
+    <!--M_]1 #text/2 2-->
     <div>
       Parent: 
       <!---->

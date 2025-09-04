@@ -4,10 +4,10 @@
   <head />
   <body>
     Before
-    <!--M_[2-->
+    <!--M_[-->
     ERROR!
     <!--M_*3 #text/0-->
-    <!--M_]1 #text/0-->
+    <!--M_]1 #text/0 2-->
     After
     <script>
       WALKER_RUNTIME("M")("_");
@@ -22,4 +22,9 @@
     </script>
   </body>
 </html>
+```
+
+# Mutations
+```
+INSERT html/body/#text2
 ```

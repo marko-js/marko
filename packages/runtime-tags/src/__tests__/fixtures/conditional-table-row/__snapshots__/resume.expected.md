@@ -5,7 +5,7 @@
   <body>
     <table>
       <tbody>
-        <!--M_=1 #tbody/0-->
+        <!--M_}1 #tbody/0-->
       </tbody>
     </table>
     <button>
@@ -38,7 +38,7 @@ container.querySelector("button").click();
   <body>
     <table>
       <tbody>
-        <!--M_=1 #tbody/0-->
+        <!--M_}1 #tbody/0-->
         <tr>
           <td>
             Hi

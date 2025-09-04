@@ -7,7 +7,7 @@
       data-children="1"
     >
       <div />
-      <!--M_=1 #div/0 2-->
+      <!--M_}1 #div/0 2-->
     </div>
     <script>
       WALKER_RUNTIME("M")("_");
@@ -37,7 +37,7 @@
       data-children="2"
     >
       <div />
-      <!--M_=1 #div/0 2-->
+      <!--M_}1 #div/0 2-->
       <div />
     </div>
     <script>

@@ -6,9 +6,9 @@
     <span
       class="A"
     >
-      <!--M_[3-->
+      <!--M_[-->
       body content
-      <!--M_]2 #span/0-->
+      <!--M_]2 #span/0 3-->
     </span>
     <!--M_'1 #text/0 2-->
     <button />
@@ -34,6 +34,10 @@
 </html>
 ```
 
+# Mutations
+```
+INSERT html/body/span/#text1
+```
 
 # Render
 ```js

@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div data-children=1><div></div><!--M_=1 #div/0 2--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,{"LoopScopeMap:#div/0":new Map(_.a=[[0,_.b={}]]),children:[1]},_.b]),"__tests__/template.marko_0_children",1];M._.w()</script>
+  <div data-children=1><div></div><!--M_}1 #div/0 2--></div><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,{"LoopScopeMap:#div/0":new Map(_.a=[[0,_.b={}]]),children:[1]},_.b]),"__tests__/template.marko_0_children",1];M._.w()</script>
 ```
 
 # Render End
@@ -12,7 +12,7 @@
       data-children="1"
     >
       <div />
-      <!--M_=1 #div/0 2-->
+      <!--M_}1 #div/0 2-->
     </div>
     <script>
       WALKER_RUNTIME("M")("_");

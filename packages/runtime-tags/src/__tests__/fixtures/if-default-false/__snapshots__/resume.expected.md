@@ -5,7 +5,7 @@
   <body>
     <button />
     <!--M_*1 #button/0-->
-    <!--M_[2-->
+    <!--M_[-->
     <!--M_]1 #text/1-->
     <script>
       WALKER_RUNTIME("M")("_");
@@ -33,7 +33,7 @@ container.querySelector("button").click();
   <body>
     <button />
     <!--M_*1 #button/0-->
-    <!--M_[2-->
+    <!--M_[-->
     hi
     <script>
       WALKER_RUNTIME("M")("_");
@@ -66,7 +66,7 @@ container.querySelector("button").click();
   <body>
     <button />
     <!--M_*1 #button/0-->
-    <!--M_[2-->
+    <!--M_[-->
     <!--M_]1 #text/1-->
     <script>
       WALKER_RUNTIME("M")("_");
@@ -99,7 +99,7 @@ container.querySelector("button").click();
   <body>
     <button />
     <!--M_*1 #button/0-->
-    <!--M_[2-->
+    <!--M_[-->
     hi
     <script>
       WALKER_RUNTIME("M")("_");
