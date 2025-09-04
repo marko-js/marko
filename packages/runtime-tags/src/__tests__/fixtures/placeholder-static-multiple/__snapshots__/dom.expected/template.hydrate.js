@@ -1,11 +1,11 @@
-// size: 193 (min) 147 (brotli)
-const $mounted$if$content = _$.conditionalClosure(1, 0, 0, ($scope, mounted) =>
-    _$.data($scope[0], mounted && "C"),
+// size: 180 (min) 142 (brotli)
+const $if_content__mounted = _._if_closure(1, 0, 0, ($scope, mounted) =>
+    _._text($scope[0], mounted && "C"),
   ),
-  $setup$if$content = $mounted$if$content,
-  $if_content = _$.createRenderer("AB<!>D", "b%c", $setup$if$content),
-  $if = _$.conditional(0, $if_content),
-  $mounted = _$.state(1, ($scope, mounted) => {
-    ($if($scope, mounted ? 0 : 1), $mounted$if$content($scope));
+  $if_content__setup = $if_content__mounted,
+  $if_content = _._content_branch("AB<!>D", "b%c", $if_content__setup),
+  $if = _._if(0, $if_content),
+  $mounted = _._let(1, ($scope, mounted) => {
+    ($if($scope, mounted ? 0 : 1), $if_content__mounted($scope));
   });
-(_$.effect("a0", ($scope) => $mounted($scope, !0)), init());
+(_._script("a0", ($scope) => $mounted($scope, !0)), init());
