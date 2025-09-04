@@ -1,5 +1,15 @@
 # @marko/runtime-tags
 
+## 6.0.61
+
+### Patch Changes
+
+- [#2807](https://github.com/marko-js/marko/pull/2807) [`7ddccab`](https://github.com/marko-js/marko/commit/7ddccabf97951c68d5d836414384a9571374f6ef) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Fix text placeholders
+
+- [#2803](https://github.com/marko-js/marko/pull/2803) [`81ec94e`](https://github.com/marko-js/marko/commit/81ec94eea973abc93584534f253b9fbd43df14f6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Ensure binding resolution does not leak across files.
+
+- [#2806](https://github.com/marko-js/marko/pull/2806) [`61ffaf5`](https://github.com/marko-js/marko/commit/61ffaf55d7ac056e9c263a14ceb62f3530d87ce7) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Rename all exposed runtime apis to be snake case for easier reading.
+
 ## 6.0.60
 
 ### Patch Changes
