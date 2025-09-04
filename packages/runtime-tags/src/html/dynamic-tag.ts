@@ -45,12 +45,14 @@ export let _dynamic_tag = (
 
   const state = getState()!;
   const branchId = _peek_scope_id();
+  let rendered = false;
   let result: unknown;
 
   if (typeof renderer === "string") {
     const input = ((inputIsArgs
       ? (inputOrArgs as unknown[])[0]
       : inputOrArgs) || {}) as Record<string, unknown>;
+    rendered = true;
     _scope_id();
     _html(
       `<${renderer}${_attrs(input, MARKO_DEBUG ? `#${renderer}/0` : 0, branchId, renderer)}>`,
@@ -113,7 +115,7 @@ export let _dynamic_tag = (
     if (shouldResume) {
       _html(
         state.mark(
-          ResumeSymbol.BranchNativeTag,
+          ResumeSymbol.BranchEndNativeTag,
           scopeId + " " + accessor + " " + branchId,
         ),
       );
@@ -122,7 +124,7 @@ export let _dynamic_tag = (
     // TODO: this needs to set result the element getter
   } else {
     if (shouldResume) {
-      _html(state.mark(ResumeSymbol.BranchStart, branchId + ""));
+      _html(state.mark(ResumeSymbol.BranchStart, ""));
     }
 
     const render = () => {
@@ -150,13 +152,18 @@ export let _dynamic_tag = (
       }
     };
     result = shouldResume ? withBranchId(branchId, render) : render();
+    rendered = _peek_scope_id() !== branchId;
 
     if (shouldResume) {
-      _html(state.mark(ResumeSymbol.BranchEnd, scopeId + " " + accessor));
+      _html(
+        state.mark(
+          ResumeSymbol.BranchEnd,
+          scopeId + " " + accessor + (rendered ? " " + branchId : ""),
+        ),
+      );
     }
   }
 
-  const rendered = _peek_scope_id() !== branchId;
   if (rendered) {
     if (shouldResume) {
       _scope(scopeId, {

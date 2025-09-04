@@ -1,4 +1,4 @@
-// size: 19225 (min) 7339 (brotli)
+// size: 19238 (min) 7351 (brotli)
 var empty = [],
   rest = Symbol();
 function attrTag(attrs) {
@@ -186,136 +186,104 @@ function init(runtimeId = "M") {
             scopeId,
             visit,
             visitText,
-            visitData,
-            visitDataIndex,
-            visitToken,
+            visitType,
             visitScope,
+            lastToken,
+            lastTokenIndex,
             render = (resumeRender[renderId] =
               renders2[renderId] || renders2(renderId)),
             walk2 = render.w,
-            commentPrefixLen = render.i.length,
             scopeLookup = (render.s = {}),
             serializeContext = { _: registeredValues },
             branches =
               branchesEnabled &&
               (() => {
-                let lastEndNode,
-                  currentBranchId,
-                  branchStack = [],
-                  branchIds = new Set(),
-                  parentBranchIds = new Map(),
-                  endBranch = (branchId, reference) => {
-                    let prevNode,
-                      branch = (scopeLookup[branchId] ||= {}),
-                      endNode = reference;
-                    for (
-                      ;
-                      (prevNode = endNode.previousSibling) !== branch.h &&
-                      ~visits.indexOf((endNode = prevNode));
+                let branchParents = new Map(),
+                  branchStarts = [],
+                  orphanBranches = [],
+                  endBranch = (singleNode) => {
+                    let branchId,
+                      branch,
+                      parent = visit.parentNode,
+                      startVisit = visit,
+                      i = orphanBranches.length,
+                      claimed = 0;
+                    for (; (branchId = +lastToken); ) {
+                      if (
+                        ((branch = scopeLookup[branchId] ||= {}), singleNode)
+                      ) {
+                        for (
+                          ;
+                          startVisit.previousSibling &&
+                          ~visits.indexOf(
+                            (startVisit = startVisit.previousSibling),
+                          );
 
-                    );
-                    return (
-                      (branch.j = lastEndNode =
-                        endNode === lastEndNode
-                          ? reference.parentNode.insertBefore(
-                              new Text(),
-                              reference,
-                            )
-                          : endNode),
-                      (branch.h ||= lastEndNode),
-                      branchIds.add(branchId),
-                      branch
-                    );
+                        );
+                        ((branch.j = branch.h = startVisit),
+                          "'" === visitType && (branch[0] = startVisit));
+                      } else
+                        ((startVisit = branchStarts.pop()),
+                          parent !== startVisit.parentNode &&
+                            parent.prepend(startVisit),
+                          (branch.h = startVisit),
+                          (branch.j =
+                            visit.previousSibling === startVisit
+                              ? startVisit
+                              : parent.insertBefore(new Text(), visit)));
+                      for (; i-- && orphanBranches[i] > branchId; )
+                        (branchParents.set(orphanBranches[i], branchId),
+                          claimed++);
+                      (orphanBranches.push(branchId),
+                        branchParents.set(branchId, 0),
+                        nextToken());
+                    }
+                    orphanBranches.splice(i, claimed);
                   };
                 return {
                   K() {
-                    if ("[" === visitToken)
-                      (currentBranchId &&
-                        visitDataIndex &&
-                        (endBranch(currentBranchId, visit),
-                        (currentBranchId = branchStack.pop())),
-                        currentBranchId &&
-                          (branchStack.push(currentBranchId),
-                          parentBranchIds.set(scopeId, currentBranchId)),
-                        (currentBranchId = scopeId),
-                        (visitScope.h = visit));
-                    else if ("]" === visitToken) {
-                      let curParent = visit.parentNode,
-                        startNode = endBranch(currentBranchId, visit).h;
-                      ((visitScope[visitData] = visit),
-                        curParent !== startNode.parentNode &&
-                          curParent.prepend(startNode),
-                        (currentBranchId = branchStack.pop()));
-                    } else {
-                      let next = visitData.indexOf(" "),
-                        curNode = visit;
-                      for (
-                        visitScope[
-                          ~next ? visitData.slice(0, next) : visitData
-                        ] = "=" === visitToken ? visit.parentNode : visit;
-                        ~next;
-
-                      ) {
-                        let start = next + 1;
-                        next = visitData.indexOf(" ", start);
-                        let childScopeId = +visitData.slice(
-                          start,
-                          ~next ? next : visitData.length,
-                        );
-                        if (
-                          ((curNode = endBranch(childScopeId, curNode).j),
-                          parentBranchIds.set(childScopeId, scopeId),
-                          "'" === visitToken)
-                        ) {
-                          let childBranch = scopeLookup[childScopeId];
-                          childBranch[0] =
-                            childBranch.h =
-                            childBranch.j =
-                              curNode;
-                        }
-                      }
-                    }
+                    "[" === visitType
+                      ? (endBranch(), branchStarts.push(visit))
+                      : ((visitScope[nextToken()] =
+                          ")" === visitType || "}" === visitType
+                            ? visit.parentNode
+                            : visit),
+                        nextToken(),
+                        endBranch("]" !== visitType && ")" !== visitType));
                   },
                   t(scope) {
-                    let parentBranchId =
-                      scope.g || parentBranchIds.get(scopeId);
-                    if (
-                      (parentBranchId &&
-                        (scope.k = scopeLookup[parentBranchId]),
-                      branchIds.has(scopeId))
-                    ) {
-                      let branch = scope,
-                        parentBranch = branch.k;
-                      ((scope.k = branch),
-                        parentBranch &&
-                          ((branch.y = parentBranch),
-                          (parentBranch.A ||= new Set()).add(branch)));
-                    }
+                    ((scope.k =
+                      scopeLookup[scope.g || branchParents.get(scopeId)]),
+                      branchParents.has(scopeId) &&
+                        (scope.k &&
+                          ((scope.y = scope.k).A ||= new Set()).add(scope),
+                        (scope.k = scope)));
                   },
                 };
               })(),
-            lastScopeId = 0;
+            lastScopeId = 0,
+            nextToken = () =>
+              (lastToken = visitText.slice(
+                lastTokenIndex,
+                (lastTokenIndex = visitText.indexOf(" ", lastTokenIndex) + 1)
+                  ? lastTokenIndex - 1
+                  : visitText.length,
+              ));
           return (
             (render.w = () => {
               try {
                 for (visit of (walk2(), (isResuming = 1), (visits = render.v)))
-                  ((visitText = visit.data),
-                    (visitDataIndex = visitText.indexOf(" ") + 1),
-                    (scopeId = +visitText.slice(
-                      commentPrefixLen + 1,
-                      visitDataIndex ? visitDataIndex - 1 : visitText.length,
-                    )),
-                    (visitData = visitDataIndex
-                      ? visitText.slice(visitDataIndex)
-                      : ""),
-                    (visitToken = visitText[commentPrefixLen]),
-                    (visitScope = scopeLookup[scopeId] ||= { l: scopeId }),
-                    "*" === visitToken
-                      ? (visitScope["j" + visitData] = (
+                  ((lastTokenIndex = render.i.length),
+                    (visitText = visit.data),
+                    (visitType = visitText[lastTokenIndex++]),
+                    (scopeId = +nextToken()) &&
+                      (visitScope = scopeLookup[scopeId] ||= { l: scopeId }),
+                    "*" === visitType
+                      ? (visitScope["j" + nextToken()] = (
                           (node) => () =>
                             node
-                        )((visitScope[visitData] = visit.previousSibling)))
-                      : branches && branches.K());
+                        )((visitScope[lastToken] = visit.previousSibling)))
+                      : branchesEnabled && branches.K());
                 for (let serialized of (resumes = render.r || []))
                   if ("string" == typeof serialized) lastEffect = serialized;
                   else if ("number" == typeof serialized)
@@ -336,7 +304,7 @@ function init(runtimeId = "M") {
                                 scope,
                                 scopeLookup[scopeId],
                               )),
-                            branches && branches.t(scope))
+                            branchesEnabled && branches.t(scope))
                         : (($global = scope || {}),
                           ($global.runtimeId = runtimeId),
                           ($global.renderId = renderId),
