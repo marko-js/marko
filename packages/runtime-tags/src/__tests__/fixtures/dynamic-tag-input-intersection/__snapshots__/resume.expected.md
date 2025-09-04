@@ -25,11 +25,11 @@
         {
           "ConditionalScope:#text/0": _.b = {
             "ConditionalScope:#div/0": _.c = {},
-            "ConditionalRenderer:#div/0": "__tests__/tags/my-tag.marko_1_renderer"
+            "ConditionalRenderer:#div/0": "__tests__/tags/my-tag.marko_1_content"
           },
           "ConditionalRenderer:#text/0": "div",
           inputContent: _._[
-            "__tests__/template.marko_1_renderer"
+            "__tests__/template.marko_1_content"
             ](_.a = {}),
           htmlInput:
           {}
@@ -37,12 +37,12 @@
         {
           "ConditionalScope:#text/0": _.d = {
             "ConditionalScope:#span/0": _.e = {},
-            "ConditionalRenderer:#span/0": "__tests__/tags/my-tag.marko_1_renderer"
+            "ConditionalRenderer:#span/0": "__tests__/tags/my-tag.marko_1_content"
           },
           "ConditionalRenderer:#text/0": "span",
           inputAs: "span",
           inputContent: _._[
-            "__tests__/template.marko_2_renderer"
+            "__tests__/template.marko_2_content"
             ](_.a),
           htmlInput:
           {}
@@ -80,11 +80,11 @@
         {
           "ConditionalScope:#text/0": _.b = {
             "ConditionalScope:#div/0": _.c = {},
-            "ConditionalRenderer:#div/0": "__tests__/tags/my-tag.marko_1_renderer"
+            "ConditionalRenderer:#div/0": "__tests__/tags/my-tag.marko_1_content"
           },
           "ConditionalRenderer:#text/0": "div",
           inputContent: _._[
-            "__tests__/template.marko_1_renderer"
+            "__tests__/template.marko_1_content"
             ](_.a = {}),
           htmlInput:
           {}
@@ -92,12 +92,12 @@
         {
           "ConditionalScope:#text/0": _.d = {
             "ConditionalScope:#span/0": _.e = {},
-            "ConditionalRenderer:#span/0": "__tests__/tags/my-tag.marko_1_renderer"
+            "ConditionalRenderer:#span/0": "__tests__/tags/my-tag.marko_1_content"
           },
           "ConditionalRenderer:#text/0": "span",
           inputAs: "span",
           inputContent: _._[
-            "__tests__/template.marko_2_renderer"
+            "__tests__/template.marko_2_content"
             ](_.a),
           htmlInput:
           {}

@@ -1,23 +1,23 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   const MyTag = {
-    content: _$.createContent("__tests__/template.marko_1_renderer", ({
+    content: _._content("__tests__/template.marko_1_content", ({
       name
     }) => {
-      const $scope1_id = _$.nextScopeId();
+      const $scope1_id = _._scope_id();
       let y = 1;
-      _$.write(`<div>Hello <!>${_$.escapeXML(name)}${_$.markResumeNode($scope1_id, "#text/0")} <!>${_$.escapeXML(y)}${_$.markResumeNode($scope1_id, "#text/1")}</div><button>${_$.escapeXML(y)}${_$.markResumeNode($scope1_id, "#text/3")}</button>${_$.markResumeNode($scope1_id, "#button/2")}`);
-      _$.writeEffect($scope1_id, "__tests__/template.marko_1_y");
-      _$.writeScope($scope1_id, {
+      _._html(`<div>Hello <!>${_._escape(name)}${_._el_resume($scope1_id, "#text/0")} <!>${_._escape(y)}${_._el_resume($scope1_id, "#text/1")}</div><button>${_._escape(y)}${_._el_resume($scope1_id, "#text/3")}</button>${_._el_resume($scope1_id, "#button/2")}`);
+      _._script($scope1_id, "__tests__/template.marko_1_y");
+      _._scope($scope1_id, {
         y
       }, "__tests__/template.marko", "1:2", {
         y: "2:8"
       });
-      _$.resumeClosestBranch($scope1_id);
+      _._resume_branch($scope1_id);
     })
   };
-  _$.dynamicTag($scope0_id, "#text/0", MyTag, {
+  _._dynamic_tag($scope0_id, "#text/0", MyTag, {
     name: "Ryan"
   }, 0, 0, 0);
 });

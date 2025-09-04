@@ -1,11 +1,11 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/tags/layout.marko", (input, $serialize) => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/tags/layout.marko", (input, $serialize) => {
+  const $scope0_id = _._scope_id();
   const {
     content
   } = input;
-  _$.write("<body>");
-  _$.dynamicTag($scope0_id, "#text/0", content, {}, 0, 0, _$.serializeGuard($serialize, /* content */0));
-  _$.writeTrailers("</body>");
-  _$.serializeGuard($serialize, /* content */0) && _$.writeScope($scope0_id, {}, "__tests__/tags/layout.marko", 0);
+  _._html("<body>");
+  _._dynamic_tag($scope0_id, "#text/0", content, {}, 0, 0, _._serialize_guard($serialize, /* content */0));
+  _._trailers("</body>");
+  _._serialize_guard($serialize, /* content */0) && _._scope($scope0_id, {}, "__tests__/tags/layout.marko", 0);
 });

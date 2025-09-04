@@ -1,5 +1,5 @@
-// size: 100 (min) 56 (brotli)
-(_$.enableCatch(),
-  _$.enableCatch(),
-  _$.registerContent("a0", "_A_", "b"),
-  _$.registerContent("a1", "_B_", "b"));
+// size: 104 (min) 71 (brotli)
+(_._enable_catch(),
+  _._enable_catch(),
+  _._content_resume("a0", "_A_", "b"),
+  _._content_resume("a1", "_B_", "b"));

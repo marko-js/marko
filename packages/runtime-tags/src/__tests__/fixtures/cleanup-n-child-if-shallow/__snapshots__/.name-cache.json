@@ -1,16 +1,16 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "e",
-      "$$input_effect": "r",
-      "$$input": "n",
-      "$$setup$if$content": "o",
-      "$$if_content": "i",
-      "$$if": "a",
-      "$$show_effect": "c",
-      "$$show": "m",
-      "$$write": "d"
+      "$_": "t",
+      "$init": "n",
+      "$$input__script": "r",
+      "$$input": "i",
+      "$$if_content__setup": "o",
+      "$$if_content": "e",
+      "$$if": "s",
+      "$$show__script": "a",
+      "$$show": "c",
+      "$$write": "m"
     }
   }
 }

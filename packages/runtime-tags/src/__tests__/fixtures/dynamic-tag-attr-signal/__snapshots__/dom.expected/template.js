@@ -1,16 +1,16 @@
 export const $template = "<!><p>paragraph</p><button></button>";
 export const $walks = /* over(1), get, over(1), get, over(1) */"b b b";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $className_effect = _$.effect("__tests__/template.marko_0_className", ($scope, {
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $className__script = _._script("__tests__/template.marko_0_className", ($scope, {
   className
-}) => _$.on($scope["#button/1"], "click", function () {
+}) => _._on($scope["#button/1"], "click", function () {
   $className($scope, className = className === "A" ? "B" : "A");
 }));
-const $className = /* @__PURE__ */_$.state("className/2", ($scope, className) => {
-  _$.classAttr($scope["#p/0"], className);
-  $className_effect($scope);
+const $className = /* @__PURE__ */_._let("className/2", ($scope, className) => {
+  _._attr_class($scope["#p/0"], className);
+  $className__script($scope);
 });
 export function $setup($scope) {
   $className($scope, "A");
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

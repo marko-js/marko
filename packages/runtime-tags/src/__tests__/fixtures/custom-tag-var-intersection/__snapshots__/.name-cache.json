@@ -1,13 +1,13 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "a",
-      "$$expr_input_extra_x": "o",
-      "$$x_effect": "n",
-      "$$x": "e",
-      "$$expr_name_data": "i",
-      "$$message": "r"
+      "$_": "t",
+      "$init": "o",
+      "$$input_extra__OR__x": "r",
+      "$$x__script": "_",
+      "$$x": "m",
+      "$$message": "e",
+      "$$name__OR__data": "n"
     }
   }
 }

@@ -1,28 +1,28 @@
 export const $template = "a<!>e<!>g";
 export const $walks = /* over(1), replace, over(2), replace, over(2) */"b%c%c";
 import { resolveAfter } from "../../utils/resolve";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-_$.enableCatch();
-const $data$await$content2 = /* @__PURE__ */_$.value("data", ($scope, data) => _$.data($scope["#text/0"], data));
-const $params3$await$content = /* @__PURE__ */_$.value("$params3", ($scope, $params3) => $data$await$content2($scope, $params3[0]));
-const $await_content2 = /* @__PURE__ */_$.createRenderer(" ", /* get, over(1) */" b", 0, $params3$await$content);
-const $data$await$content = /* @__PURE__ */_$.value("data", ($scope, data) => _$.data($scope["#text/0"], data));
-const $params2$await$content = /* @__PURE__ */_$.value("$params2", ($scope, $params2) => $data$await$content($scope, $params2[0]));
-const $await_content = /* @__PURE__ */_$.createRenderer(" ", /* get, over(1) */" b", 0, $params2$await$content);
-const $placeholder_content = _$.registerContent("__tests__/template.marko_2_renderer", "_A_", /* over(1) */"b");
-const $await$try$content = /* @__PURE__ */_$.awaitTag("#text/0", $await_content);
-const $setup$try$content = $scope => {
-  $await$try$content($scope, resolveAfter("c", 2));
+import * as _ from "@marko/runtime-tags/debug/dom";
+_._enable_catch();
+const $await_content2__data = /* @__PURE__ */_._const("data", ($scope, data) => _._text($scope["#text/0"], data));
+const $await_content2__$params = /* @__PURE__ */_._const("$params3", ($scope, $params3) => $await_content2__data($scope, $params3[0]));
+const $await_content2 = /* @__PURE__ */_._content_branch(" ", /* get, over(1) */" b", 0, $await_content2__$params);
+const $await_content__data = /* @__PURE__ */_._const("data", ($scope, data) => _._text($scope["#text/0"], data));
+const $await_content__$params = /* @__PURE__ */_._const("$params2", ($scope, $params2) => $await_content__data($scope, $params2[0]));
+const $await_content = /* @__PURE__ */_._content_branch(" ", /* get, over(1) */" b", 0, $await_content__$params);
+const $placeholder_content = _._content_resume("__tests__/template.marko_2_content", "_A_", /* over(1) */"b");
+const $try_content__await = /* @__PURE__ */_._await("#text/0", $await_content);
+const $try_content__setup = $scope => {
+  $try_content__await($scope, resolveAfter("c", 2));
 };
-const $try_content = /* @__PURE__ */_$.createRenderer("b<!>d", /* over(1), replace, over(2) */"b%c", $setup$try$content);
-const $try = /* @__PURE__ */_$.createTry("#text/0", $try_content);
-const $await = /* @__PURE__ */_$.awaitTag("#text/1", $await_content2);
+const $try_content = /* @__PURE__ */_._content_branch("b<!>d", /* over(1), replace, over(2) */"b%c", $try_content__setup);
+const $try = /* @__PURE__ */_._try("#text/0", $try_content);
+const $await = /* @__PURE__ */_._await("#text/1", $await_content2);
 export function $setup($scope) {
   $try($scope, {
-    placeholder: _$.attrTag({
+    placeholder: _.attrTag({
       content: $placeholder_content($scope)
     })
   });
   $await($scope, resolveAfter("f", 1));
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

@@ -8,7 +8,7 @@ import {
   NodeType,
   type Scope,
 } from "../common/types";
-import { attrs, attrsAndContent } from "./dom";
+import { _attrs, _attrs_content } from "./dom";
 import {
   caughtError,
   pendingEffects,
@@ -33,9 +33,9 @@ import {
   removeAndDestroyBranch,
   tempDetachBranch,
 } from "./scope";
-import { setTagVar, type Signal, subscribeToScopeSet } from "./signals";
+import { _var, type Signal, subscribeToScopeSet } from "./signals";
 
-export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
+export function _await(nodeAccessor: Accessor, renderer: Renderer) {
   const promiseAccessor = AccessorPrefix.Promise + nodeAccessor;
   const branchAccessor = AccessorPrefix.ConditionalScope + nodeAccessor;
   return (scope: Scope, promise: Promise<unknown>) => {
@@ -163,7 +163,7 @@ export function awaitTag(nodeAccessor: Accessor, renderer: Renderer) {
   };
 }
 
-export function createTry(nodeAccessor: Accessor, tryContent: Renderer) {
+export function _try(nodeAccessor: Accessor, content: Renderer) {
   const branchAccessor = AccessorPrefix.ConditionalScope + nodeAccessor;
 
   return (scope: Scope, input: { catch: unknown; placeholder: unknown }) => {
@@ -171,7 +171,7 @@ export function createTry(nodeAccessor: Accessor, tryContent: Renderer) {
       setConditionalRenderer(
         scope,
         nodeAccessor,
-        tryContent,
+        content,
         createAndSetupBranch,
       );
     }
@@ -221,7 +221,7 @@ export function renderCatch(scope: Scope, error: unknown) {
   }
 }
 
-export function conditional(nodeAccessor: Accessor, ...branches: Renderer[]) {
+export function _if(nodeAccessor: Accessor, ...branches: Renderer[]) {
   const branchAccessor = AccessorPrefix.ConditionalRenderer + nodeAccessor;
   enableBranches();
   return (scope: Scope, newBranch: number) => {
@@ -237,12 +237,12 @@ export function conditional(nodeAccessor: Accessor, ...branches: Renderer[]) {
 }
 
 export function patchDynamicTag(
-  fn: <T extends typeof dynamicTag>(cond: T) => T,
+  fn: <T extends typeof _dynamic_tag>(cond: T) => T,
 ) {
   // Injection point for compat layer.
-  dynamicTag = fn(dynamicTag);
+  _dynamic_tag = fn(_dynamic_tag);
 }
-export let dynamicTag = function dynamicTag(
+export let _dynamic_tag = function dynamicTag(
   nodeAccessor: Accessor,
   getContent?: ((scope: Scope) => Renderer) | 0,
   getTagVar?: (() => Signal<unknown>) | 0,
@@ -268,7 +268,7 @@ export let dynamicTag = function dynamicTag(
       );
 
       if (getTagVar) {
-        setTagVar(scope, childScopeAccessor, getTagVar());
+        _var(scope, childScopeAccessor, getTagVar());
       }
 
       if (typeof normalizedRenderer === "string") {
@@ -304,7 +304,7 @@ export let dynamicTag = function dynamicTag(
       const childScope = scope[childScopeAccessor] as Scope;
       const args = getInput?.();
       if (typeof normalizedRenderer === "string") {
-        (getContent ? attrs : attrsAndContent)(
+        (getContent ? _attrs : _attrs_content)(
           childScope,
           MARKO_DEBUG ? `#${normalizedRenderer}/0` : 0,
           (inputIsArgs ? args[0] : args) || {},
@@ -384,7 +384,7 @@ export function setConditionalRenderer<T>(
   }
 }
 
-export function loopOf(nodeAccessor: Accessor, renderer: Renderer) {
+export function _for_of(nodeAccessor: Accessor, renderer: Renderer) {
   return loop<[all: unknown[], by?: (item: unknown, index: number) => unknown]>(
     nodeAccessor,
     renderer,
@@ -400,7 +400,7 @@ export function loopOf(nodeAccessor: Accessor, renderer: Renderer) {
   );
 }
 
-export function loopIn(nodeAccessor: Accessor, renderer: Renderer) {
+export function _for_in(nodeAccessor: Accessor, renderer: Renderer) {
   return loop<[obj: {}, by?: (key: string, v: unknown) => unknown]>(
     nodeAccessor,
     renderer,
@@ -409,7 +409,7 @@ export function loopIn(nodeAccessor: Accessor, renderer: Renderer) {
   );
 }
 
-export function loopTo(nodeAccessor: Accessor, renderer: Renderer) {
+export function _for_to(nodeAccessor: Accessor, renderer: Renderer) {
   return loop<
     [to: number, from: number, step: number, by?: (v: number) => unknown]
   >(nodeAccessor, renderer, ([to, from, step, by = byFirstArg], cb) =>

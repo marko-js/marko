@@ -5,5 +5,5 @@ export function $setup($scope) {
   _hello($scope["#childScope/0"]);
   _hello_input_name($scope["#childScope/0"], "Frank");
 }
-import * as _$ from "@marko/runtime-tags/debug/dom";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+import * as _ from "@marko/runtime-tags/debug/dom";
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

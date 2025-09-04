@@ -37,16 +37,16 @@
                 "ConditionalScope:#text/0": _.c = {
                   "ClosureSignalIndex:outer": 0
                 },
-                "ConditionalRenderer:#text/0": "__tests__/template.marko_2_renderer"
+                "ConditionalRenderer:#text/0": "__tests__/template.marko_2_content"
               },
               "ClosureSignalIndex:y": 0
             },
-            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
         }, _.e, _.b, _.d, _.c], _.b._ = _.a, _.c._ = _.b, _.d.content = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.b), _.e.content = _._[
-          "__tests__/template.marko_1_renderer"
+          "__tests__/template.marko_1_content"
           ](_.a), (_.g).add(_.c), (_.h).add(_.b), _.f),
         "__tests__/template.marko_0_x",
         1
@@ -100,16 +100,16 @@ container.querySelector("button").click();
                 "ConditionalScope:#text/0": _.c = {
                   "ClosureSignalIndex:outer": 0
                 },
-                "ConditionalRenderer:#text/0": "__tests__/template.marko_2_renderer"
+                "ConditionalRenderer:#text/0": "__tests__/template.marko_2_content"
               },
               "ClosureSignalIndex:y": 0
             },
-            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
         }, _.e, _.b, _.d, _.c], _.b._ = _.a, _.c._ = _.b, _.d.content = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.b), _.e.content = _._[
-          "__tests__/template.marko_1_renderer"
+          "__tests__/template.marko_1_content"
           ](_.a), (_.g).add(_.c), (_.h).add(_.b), _.f),
         "__tests__/template.marko_0_x",
         1
@@ -167,16 +167,16 @@ container.querySelector("button").click();
                 "ConditionalScope:#text/0": _.c = {
                   "ClosureSignalIndex:outer": 0
                 },
-                "ConditionalRenderer:#text/0": "__tests__/template.marko_2_renderer"
+                "ConditionalRenderer:#text/0": "__tests__/template.marko_2_content"
               },
               "ClosureSignalIndex:y": 0
             },
-            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
         }, _.e, _.b, _.d, _.c], _.b._ = _.a, _.c._ = _.b, _.d.content = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.b), _.e.content = _._[
-          "__tests__/template.marko_1_renderer"
+          "__tests__/template.marko_1_content"
           ](_.a), (_.g).add(_.c), (_.h).add(_.b), _.f),
         "__tests__/template.marko_0_x",
         1
@@ -234,16 +234,16 @@ container.querySelector("button").click();
                 "ConditionalScope:#text/0": _.c = {
                   "ClosureSignalIndex:outer": 0
                 },
-                "ConditionalRenderer:#text/0": "__tests__/template.marko_2_renderer"
+                "ConditionalRenderer:#text/0": "__tests__/template.marko_2_content"
               },
               "ClosureSignalIndex:y": 0
             },
-            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content"
           }
         }, _.e, _.b, _.d, _.c], _.b._ = _.a, _.c._ = _.b, _.d.content = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.b), _.e.content = _._[
-          "__tests__/template.marko_1_renderer"
+          "__tests__/template.marko_1_content"
           ](_.a), (_.g).add(_.c), (_.h).add(_.b), _.f),
         "__tests__/template.marko_0_x",
         1

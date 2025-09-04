@@ -1,28 +1,28 @@
-// size: 324 (min) 202 (brotli)
-const $dynamicTag = _$.dynamicTag(0, 0, 0, 1),
-  $input_item = _$.value(3, ($scope, input_item) =>
+// size: 331 (min) 212 (brotli)
+const $dynamicTag = _._dynamic_tag(0, 0, 0, 1),
+  $input_item = _._const(3, ($scope, input_item) =>
     $dynamicTag($scope, input_item, () => [1]),
   ),
-  $y$item$content = _$.value(2, ($scope, y) => _$.data($scope[0], y)),
-  $params2$item$content = _$.value(1, ($scope, $params2) =>
-    $y$item$content($scope, $params2[0]),
+  $item_content__y = _._const(2, ($scope, y) => _._text($scope[0], y)),
+  $item_content__$params = _._const(1, ($scope, $params2) =>
+    $item_content__y($scope, $params2[0]),
   ),
-  $item_content = _$.registerContent(
+  $item_content = _._content_resume(
     "b0",
     "y: <!>",
     "b%b",
     0,
-    $params2$item$content,
+    $item_content__$params,
   ),
-  $x_effect = _$.effect("b1", ($scope, { 2: x }) =>
-    _$.on($scope[1], "click", function () {
+  $x__script = _._script("b1", ($scope, { 2: x }) =>
+    _._on($scope[1], "click", function () {
       $x($scope, (x = !x));
     }),
   ),
-  $x = _$.state(2, ($scope, x) => {
+  $x = _._let(2, ($scope, x) => {
     let $item;
-    (x && ($item = _$.attrTag({ content: $item_content($scope) })),
+    (x && ($item = _.attrTag({ content: $item_content($scope) })),
       $input_item($scope[0], $item),
-      $x_effect($scope));
+      $x__script($scope));
   });
 init();

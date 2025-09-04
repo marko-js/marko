@@ -48,7 +48,7 @@
             ],
             "f": 1,
             "r": [
-              "__tests__/template.marko_1_renderer",
+              "__tests__/template.marko_1_content",
               1
             ]
           }]
@@ -133,7 +133,7 @@ container.querySelector("button").click();
             ],
             "f": 1,
             "r": [
-              "__tests__/template.marko_1_renderer",
+              "__tests__/template.marko_1_content",
               1
             ]
           }]
@@ -207,7 +207,7 @@ container.querySelector("button").click();
             ],
             "f": 1,
             "r": [
-              "__tests__/template.marko_1_renderer",
+              "__tests__/template.marko_1_content",
               1
             ]
           }]
@@ -281,7 +281,7 @@ container.querySelector("button").click();
             ],
             "f": 1,
             "r": [
-              "__tests__/template.marko_1_renderer",
+              "__tests__/template.marko_1_content",
               1
             ]
           }]

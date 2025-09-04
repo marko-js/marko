@@ -1,19 +1,19 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "a",
-      "$$dynamicTag2": "e",
-      "$$dynamicTag": "i",
-      "$$input_content": "o",
-      "$$setup": "r",
-      "$$_return": "n",
-      "$$get$hoisted_setHtml": "c",
-      "$$setHtml3$inputshowsectionnull$content": "s",
-      "$$get$hoisted_setHtml2": "g",
-      "$$setHtml2$thing$content": "m",
-      "$$setup$thing$content2": "f",
-      "$$thing_content2": "u"
+      "$_": "t",
+      "$init": "o",
+      "$$dynamicTag": "c",
+      "$$dynamicTag2": "r",
+      "$$input_content": "n",
+      "$$setup": "_",
+      "$$_return": "a",
+      "$$get$hoisted_setHtml": "s",
+      "$$inputshowsectionnull_content__setHtml": "m",
+      "$$get$hoisted_setHtml2": "i",
+      "$$thing_content2__setHtml": "e",
+      "$$thing_content2__setup": "u",
+      "$$thing_content2": "d"
     }
   }
 }

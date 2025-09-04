@@ -46,8 +46,8 @@ declare module "@marko/compiler/dist/types" {
   }
 }
 
-type HTMLMethod = "escapeXML" | "toString";
-type DOMMethod = "html" | "data";
+type HTMLMethod = "_escape" | "_unescaped";
+type DOMMethod = "_html" | "_text";
 
 export default {
   analyze(placeholder) {
@@ -94,11 +94,11 @@ export default {
       const canWriteHTML = isHTML || (confident && node.escape);
       const method = canWriteHTML
         ? node.escape
-          ? "escapeXML"
-          : "toString"
+          ? "_escape"
+          : "_unescaped"
         : node.escape
-          ? "data"
-          : "html";
+          ? "_text"
+          : "_html";
 
       if (confident && canWriteHTML) {
         write`${getHTMLRuntime()[method as HTMLMethod](computed)}`;
@@ -113,7 +113,7 @@ export default {
             if (markerSerializeReason === true || markerSerializeReason.state) {
               write`<!>`;
             } else {
-              write`${callRuntime("commentSeparator", getSerializeGuard(markerSerializeReason, true))}`;
+              write`${callRuntime("_sep", getSerializeGuard(markerSerializeReason, true))}`;
             }
           }
           walks.visit(placeholder, WalkCode.Replace);
@@ -135,9 +135,9 @@ export default {
             getSection(placeholder),
             valueExtra.referencedBindings,
             t.expressionStatement(
-              method === "data"
+              method === "_text"
                 ? callRuntime(
-                    "data",
+                    "_text",
                     t.memberExpression(
                       scopeIdentifier,
                       getScopeAccessorLiteral(nodeBinding!),
@@ -146,7 +146,7 @@ export default {
                     value,
                   )
                 : callRuntime(
-                    "html",
+                    "_html",
                     scopeIdentifier,
                     value,
                     getScopeAccessorLiteral(nodeBinding!),

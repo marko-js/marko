@@ -1,19 +1,19 @@
 export const $template = "<input type=checkbox><span> </span>";
 export const $walks = /* get, over(1), next(1), get, out(1) */" bD l";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $checked = /* @__PURE__ */_$.state("checked/2", ($scope, checked) => {
-  _$.controllable_input_checked($scope, "#input/0", checked, $checkedChange($scope));
-  _$.data($scope["#text/1"], String(checked));
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $checked = /* @__PURE__ */_._let("checked/2", ($scope, checked) => {
+  _._attr_input_checked($scope, "#input/0", checked, $checkedChange($scope));
+  _._text($scope["#text/1"], String(checked));
 });
-const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => _$.controllable_input_checked_effect($scope, "#input/0"));
+const $setup__script = _._script("__tests__/template.marko_0", $scope => _._attr_input_checked_script($scope, "#input/0"));
 export function $setup($scope) {
   $checked($scope, false);
-  $setup_effect($scope);
+  $setup__script($scope);
 }
 function $checkedChange($scope) {
   return _new_checked => {
     $checked($scope, _new_checked);
   };
 }
-_$.register("__tests__/template.marko_0/checkedChange", $checkedChange);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+_._resume("__tests__/template.marko_0/checkedChange", $checkedChange);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

@@ -8,77 +8,80 @@ describe("runtime-tags/html/content", () => {
   describe("escapeXML", () => {
     it("should return &zwj; for falseish values", () => {
       for (const value of falseishValues) {
-        assert.equal(helpers.escapeXML(value), "&zwj;");
+        assert.equal(helpers._escape(value), "&zwj;");
       }
     });
 
     it("should escape < and & characters", () => {
       assert.equal(
-        helpers.escapeXML("foo < bar & baz"),
+        helpers._escape("foo < bar & baz"),
         "foo &lt; bar &amp; baz",
       );
     });
 
     it("should toString anything else", () => {
-      assert.equal(helpers.escapeXML(0), "0");
-      assert.equal(helpers.escapeXML(42), "42");
-      assert.equal(helpers.escapeXML(true), "true");
-      assert.equal(helpers.escapeXML("foo"), "foo");
-      assert.equal(helpers.escapeXML({}), "[object Object]");
+      assert.equal(helpers._escape(0), "0");
+      assert.equal(helpers._escape(42), "42");
+      assert.equal(helpers._escape(true), "true");
+      assert.equal(helpers._escape("foo"), "foo");
+      assert.equal(helpers._escape({}), "[object Object]");
     });
   });
 
   describe("escapeScript", () => {
     it("should return empty string for falseish values", () => {
       for (const value of falseishValues) {
-        assert.equal(helpers.escapeScript(value), "");
+        assert.equal(helpers._escape_script(value), "");
       }
     });
 
     it("should escape </script", () => {
       assert.equal(
-        helpers.escapeScript("foo </script> bar"),
+        helpers._escape_script("foo </script> bar"),
         "foo \\x3C/script> bar",
       );
     });
 
     it("should allow normally escaped html stuff", () => {
-      assert.equal(helpers.escapeScript("foo < bar & baz"), "foo < bar & baz");
+      assert.equal(
+        helpers._escape_script("foo < bar & baz"),
+        "foo < bar & baz",
+      );
     });
 
     it("should toString anything else", () => {
-      assert.equal(helpers.escapeScript(0), "0");
-      assert.equal(helpers.escapeScript(42), "42");
-      assert.equal(helpers.escapeScript(true), "true");
-      assert.equal(helpers.escapeScript("foo"), "foo");
-      assert.equal(helpers.escapeScript({}), "[object Object]");
+      assert.equal(helpers._escape_script(0), "0");
+      assert.equal(helpers._escape_script(42), "42");
+      assert.equal(helpers._escape_script(true), "true");
+      assert.equal(helpers._escape_script("foo"), "foo");
+      assert.equal(helpers._escape_script({}), "[object Object]");
     });
   });
 
   describe("escapeStyle", () => {
     it("should return empty string for falseish values", () => {
       for (const value of falseishValues) {
-        assert.equal(helpers.escapeStyle(value), "");
+        assert.equal(helpers._escape_style(value), "");
       }
     });
 
     it("should escape </style", () => {
       assert.equal(
-        helpers.escapeStyle("foo </style> bar"),
+        helpers._escape_style("foo </style> bar"),
         "foo \\3C/style> bar",
       );
     });
 
     it("should allow normally escaped html stuff", () => {
-      assert.equal(helpers.escapeStyle("foo < bar & baz"), "foo < bar & baz");
+      assert.equal(helpers._escape_style("foo < bar & baz"), "foo < bar & baz");
     });
 
     it("should toString anything else", () => {
-      assert.equal(helpers.escapeStyle(0), "0");
-      assert.equal(helpers.escapeStyle(42), "42");
-      assert.equal(helpers.escapeStyle(true), "true");
-      assert.equal(helpers.escapeStyle("foo"), "foo");
-      assert.equal(helpers.escapeStyle({}), "[object Object]");
+      assert.equal(helpers._escape_style(0), "0");
+      assert.equal(helpers._escape_style(42), "42");
+      assert.equal(helpers._escape_style(true), "true");
+      assert.equal(helpers._escape_style("foo"), "foo");
+      assert.equal(helpers._escape_style({}), "[object Object]");
     });
   });
 });

@@ -1,8 +1,8 @@
 {
   "vars": {
     "props": {
-      "$_$": "a",
-      "$init": "t",
+      "$_": "t",
+      "$init": "r",
       "$$tagName": "e"
     }
   }

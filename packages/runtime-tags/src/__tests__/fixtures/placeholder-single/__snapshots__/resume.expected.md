@@ -21,7 +21,7 @@
           "#BranchAccessor": "#text/0"
         }
       }, _.b], _.b["#PlaceholderContent"] = _._[
-        "__tests__/template.marko_2_renderer"
+        "__tests__/template.marko_2_content"
         ](_.a), _.c)];
       REORDER_RUNTIME(M._);
       M._.w()

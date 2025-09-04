@@ -412,8 +412,8 @@ function buildContent(body: t.NodePath<t.MarkoTagBody>) {
     if (isOutputHTML()) {
       const serialized = isSerializedSection(bodySection);
       return callRuntime(
-        serialized ? "registerContent" : "createContent",
-        t.stringLiteral(getResumeRegisterId(bodySection, "renderer")),
+        serialized ? "_content_resume" : "_content",
+        t.stringLiteral(getResumeRegisterId(bodySection, "content")),
         t.arrowFunctionExpression(
           body.node.params,
           t.blockStatement(body.node.body),

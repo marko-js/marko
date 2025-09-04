@@ -9,19 +9,19 @@ import { patchDynamicTag } from "./dynamic-tag";
 import { getRegistered, register } from "./serializer";
 import { isTemplate, type ServerRenderer } from "./template";
 import {
+  _await,
+  _html,
+  _peek_scope_id,
+  _scope,
+  _scope_id,
+  _script,
   $global,
   Boundary,
   Chunk,
-  fork,
   getChunk,
   getScopeId,
   isInResumedBranch,
-  nextScopeId,
-  peekNextScopeId,
   State,
-  write,
-  writeEffect,
-  writeScope,
   writeScopeToState,
   writeScript,
 } from "./writer";
@@ -34,11 +34,11 @@ const COMPAT_REGISTRY = new WeakMap<
 
 export const compat = {
   $global,
-  fork,
-  write,
+  fork: _await,
+  write: _html,
   writeScript,
-  nextScopeId,
-  peekNextScopeId,
+  nextScopeId: _scope_id,
+  peekNextScopeId: _peek_scope_id,
   isInResumedBranch,
   ensureState($global: any) {
     let state: State | undefined = ($global[K_TAGS_API_STATE] ||=
@@ -66,8 +66,8 @@ export const compat = {
   },
   patchDynamicTag,
   writeSetScopeForComponent(branchId: number, m5c: string) {
-    writeScope(branchId, { m5c });
-    writeEffect(branchId, SET_SCOPE_REGISTER_ID);
+    _scope(branchId, { m5c });
+    _script(branchId, SET_SCOPE_REGISTER_ID);
   },
   toJSON(state: State) {
     return function toJSON(this: WeakKey) {
@@ -123,9 +123,9 @@ export const compat = {
 
     head.render(() => {
       if (willRerender) {
-        const scopeId = peekNextScopeId();
-        writeScope(scopeId, { m5c: component.id });
-        writeEffect(scopeId, SET_SCOPE_REGISTER_ID);
+        const scopeId = _peek_scope_id();
+        _scope(scopeId, { m5c: component.id });
+        _script(scopeId, SET_SCOPE_REGISTER_ID);
       }
 
       if (isTemplate(renderer) && willRerender) {

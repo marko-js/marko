@@ -1,13 +1,13 @@
 export const $template = "<div><svg><!><!></svg><math><!><!></math><!><button class=toggle-parent>Toggle Parent</button><button class=toggle-child>Toggle Child</button></div>";
 export const $walks = /* get, next(2), replace, over(1), replace, out(1), next(1), replace, over(1), replace, out(1), replace, over(1), get, over(1), get, out(1) */" E%b%lD%b%l%b b l";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $Child_content2 = _$.registerContent("__tests__/template.marko_3_renderer", "Hi", /* over(1) */"b");
-const $Child_content = _$.registerContent("__tests__/template.marko_2_renderer", "Hi", /* over(1) */"b");
-const $input_value$Parent$content = /* @__PURE__ */_$.dynamicClosureRead("input_value", ($scope, input_value) => _$.html($scope, input_value, "#text/0"));
-const $setup$Parent$content = $input_value$Parent$content;
-const $Parent_content = _$.registerContent("__tests__/template.marko_1_renderer", " ", /* get, over(1) */" b", $setup$Parent$content);
-const $dynamicTag3 = /* @__PURE__ */_$.dynamicTag("#text/5", $Parent_content);
-const $expr_Parent_Child_effect = _$.effect("__tests__/template.marko_0_Parent_Child", ($scope, {
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $Child_content2 = _._content_resume("__tests__/template.marko_3_content", "Hi", /* over(1) */"b");
+const $Child_content = _._content_resume("__tests__/template.marko_2_content", "Hi", /* over(1) */"b");
+const $Parent_content__input_value = /* @__PURE__ */_._closure_get("input_value", ($scope, input_value) => _._html($scope, input_value, "#text/0"));
+const $Parent_content__setup = $Parent_content__input_value;
+const $Parent_content = _._content_resume("__tests__/template.marko_1_content", " ", /* get, over(1) */" b", $Parent_content__setup);
+const $dynamicTag3 = /* @__PURE__ */_._dynamic_tag("#text/5", $Parent_content);
+const $Parent__OR__Child__script = _._script("__tests__/template.marko_0_Parent_Child", ($scope, {
   Parent,
   Child
 }) => {
@@ -19,43 +19,43 @@ const $expr_Parent_Child_effect = _$.effect("__tests__/template.marko_0_Parent_C
     }
   }
 });
-const $expr_Parent_Child = /* @__PURE__ */_$.intersection(13, $expr_Parent_Child_effect);
-const $Parent_effect = _$.effect("__tests__/template.marko_0_Parent", ($scope, {
+const $Parent__OR__Child = /* @__PURE__ */_._or(13, $Parent__OR__Child__script);
+const $Parent__script = _._script("__tests__/template.marko_0_Parent", ($scope, {
   Parent
-}) => _$.on($scope["#button/6"], "click", function () {
+}) => _._on($scope["#button/6"], "click", function () {
   $Parent($scope, Parent = Parent === "div" ? "svg" : "div");
 }));
-const $Parent = /* @__PURE__ */_$.state("Parent/11", ($scope, Parent) => {
+const $Parent = /* @__PURE__ */_._let("Parent/11", ($scope, Parent) => {
   $dynamicTag3($scope, Parent);
-  $expr_Parent_Child($scope);
-  $Parent_effect($scope);
+  $Parent__OR__Child($scope);
+  $Parent__script($scope);
 });
-const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/2", $Child_content);
-const $dynamicTag2 = /* @__PURE__ */_$.dynamicTag("#text/4", $Child_content2);
-const $Child_effect = _$.effect("__tests__/template.marko_0_Child", ($scope, {
+const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/2", $Child_content);
+const $dynamicTag2 = /* @__PURE__ */_._dynamic_tag("#text/4", $Child_content2);
+const $Child__script = _._script("__tests__/template.marko_0_Child", ($scope, {
   Child
-}) => _$.on($scope["#button/7"], "click", function () {
+}) => _._on($scope["#button/7"], "click", function () {
   $Child($scope, Child = Child === "a" ? null : "a");
 }));
-const $Child = /* @__PURE__ */_$.state("Child/12", ($scope, Child) => {
+const $Child = /* @__PURE__ */_._let("Child/12", ($scope, Child) => {
   $dynamicTag($scope, Child, () => ({
     href: "#bar"
   }));
   $dynamicTag2($scope, Child, () => ({
     href: "#bar"
   }));
-  $expr_Parent_Child($scope);
-  $Child_effect($scope);
+  $Parent__OR__Child($scope);
+  $Child__script($scope);
 });
 export function $setup($scope) {
   $Parent($scope, "div");
   $Child($scope, "a");
 }
-const $input_value_closure = /* @__PURE__ */_$.dynamicClosure($input_value$Parent$content);
-export const $input_value = /* @__PURE__ */_$.value("input_value", ($scope, input_value) => {
-  _$.html($scope, input_value, "#text/1");
-  _$.html($scope, input_value, "#text/3");
-  $input_value_closure($scope);
+const $input_value__closure = /* @__PURE__ */_._closure($Parent_content__input_value);
+export const $input_value = /* @__PURE__ */_._const("input_value", ($scope, input_value) => {
+  _._html($scope, input_value, "#text/1");
+  _._html($scope, input_value, "#text/3");
+  $input_value__closure($scope);
 });
-export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_value($scope, input.value));
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);
+export const $input = /* @__PURE__ */_._const("input", ($scope, input) => $input_value($scope, input.value));
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

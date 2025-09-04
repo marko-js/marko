@@ -1,14 +1,14 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", (input, $serialize) => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", (input, $serialize) => {
+  const $scope0_id = _._scope_id();
   const {
     tagName
   } = input;
-  _$.dynamicTag($scope0_id, "#text/0", tagName, {
+  _._dynamic_tag($scope0_id, "#text/0", tagName, {
     class: ["a", "b"]
-  }, _$.registerContent("__tests__/template.marko_1_renderer", () => {
-    const $scope1_id = _$.nextScopeId();
-    _$.write("Hello World");
-  }, $scope0_id), 0, _$.serializeGuard($serialize, /* tagName */0));
-  _$.serializeGuard($serialize, /* tagName */0) && _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+  }, _._content_resume("__tests__/template.marko_1_content", () => {
+    const $scope1_id = _._scope_id();
+    _._html("Hello World");
+  }, $scope0_id), 0, _._serialize_guard($serialize, /* tagName */0));
+  _._serialize_guard($serialize, /* tagName */0) && _._scope($scope0_id, {}, "__tests__/template.marko", 0);
 });

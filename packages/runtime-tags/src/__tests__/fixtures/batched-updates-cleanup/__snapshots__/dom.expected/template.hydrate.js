@@ -1,17 +1,17 @@
-// size: 265 (min) 179 (brotli)
-const $message$if$content = _$.conditionalClosure(3, 1, 0, ($scope, message) =>
-    _$.data($scope[0], message),
+// size: 252 (min) 173 (brotli)
+const $if_content__message = _._if_closure(3, 1, 0, ($scope, message) =>
+    _._text($scope[0], message),
   ),
-  $setup$if$content = $message$if$content,
-  $if_content = _$.createRenderer("<span> </span>", "D l", $setup$if$content),
-  $if = _$.conditional(1, $if_content),
-  $show_effect = _$.effect("a0", ($scope, { 2: show }) =>
-    _$.on($scope[0], "click", function () {
+  $if_content__setup = $if_content__message,
+  $if_content = _._content_branch("<span> </span>", "D l", $if_content__setup),
+  $if = _._if(1, $if_content),
+  $show__script = _._script("a0", ($scope, { 2: show }) =>
+    _._on($scope[0], "click", function () {
       ($message($scope, "bye"), $show($scope, (show = !show)));
     }),
   ),
-  $show = _$.state(2, ($scope, show) => {
-    ($if($scope, show ? 0 : 1), $show_effect($scope));
+  $show = _._let(2, ($scope, show) => {
+    ($if($scope, show ? 0 : 1), $show__script($scope));
   }),
-  $message = _$.state(3, $message$if$content);
+  $message = _._let(3, $if_content__message);
 init();

@@ -1,3 +1,3 @@
-// size: 70 (min) 68 (brotli)
-const $x = _$.state(1, ($scope, x) => _$.data($scope[0], x));
-(_$.effect("a0", ($scope) => $x($scope, 2)), init());
+// size: 71 (min) 73 (brotli)
+const $x = _._let(1, ($scope, x) => _._text($scope[0], x));
+(_._script("a0", ($scope) => $x($scope, 2)), init());

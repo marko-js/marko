@@ -1,80 +1,87 @@
-// size: 957 (min) 471 (brotli)
-const $expr_name_write_effect = _$.effect(
+// size: 937 (min) 445 (brotli)
+const $name__OR__write__script = _._script(
     "a0",
     ($scope, { 3: name, 4: write }) =>
-      (_$.getAbortSignal($scope, 0).onabort = () => {
+      (_.$signal($scope, 0).onabort = () => {
         write(`destroyed ${name}`);
       }),
   ),
-  $expr_name_write = _$.intersection(5, ($scope) => {
-    (_$.resetAbortSignal($scope, 0), $expr_name_write_effect($scope));
+  $name__OR__write = _._or(5, ($scope) => {
+    (_.$signalReset($scope, 0), $name__OR__write__script($scope));
   }),
-  $name = _$.value(3, ($scope, name) => {
-    (_$.data($scope[0], name), $expr_name_write($scope));
+  $name = _._const(3, ($scope, name) => {
+    (_._text($scope[0], name), $name__OR__write($scope));
   }),
-  $write$1 = _$.value(4, $expr_name_write),
-  $setup$for$content2 = ($scope) => {
-    ($scope[0], $write$for$content2($scope), $outerItem$for$content2._($scope));
+  $write$1 = _._const(4, $name__OR__write),
+  $for_content2__setup = ($scope) => {
+    ($scope[0],
+      $for_content2__write($scope),
+      $for_content2__outerItem._($scope));
   },
-  $write$for$content2 = _$.dynamicClosureRead(
+  $for_content2__write = _._closure_get(
     4,
     ($scope, write) => $write$1($scope[0], write),
     ($scope) => $scope._._,
   ),
-  $expr_outerItem_middleItem$for$content = _$.intersection(3, ($scope) => {
+  $for_content2__outerItem__OR__middleItem = _._or(3, ($scope) => {
     let {
       _: { 3: outerItem },
       2: middleItem,
     } = $scope;
     $name($scope[0], `${outerItem}.${middleItem}`);
   }),
-  $outerItem$for$content2 = _$.loopClosure(
+  $for_content2__outerItem = _._for_closure(
     3,
     1,
-    $expr_outerItem_middleItem$for$content,
+    $for_content2__outerItem__OR__middleItem,
   ),
-  $middleItem$for$content = _$.value(2, $expr_outerItem_middleItem$for$content),
-  $params3$for$content = _$.value(1, ($scope, $params3) =>
-    $middleItem$for$content($scope, $params3[0]),
+  $for_content2__middleItem = _._const(
+    2,
+    $for_content2__outerItem__OR__middleItem,
   ),
-  $for_content2 = _$.createRenderer(
+  $for_content2__$params = _._const(1, ($scope, $params3) =>
+    $for_content2__middleItem($scope, $params3[0]),
+  ),
+  $for_content2 = _._content_branch(
     "<div><div> </div></div>",
     "D/D l&l",
-    $setup$for$content2,
-    $params3$for$content,
+    $for_content2__setup,
+    $for_content2__$params,
   ),
-  $setup$for$content = ($scope) => {
-    ($scope[0], $items$for$content._($scope), $write$for$content._($scope));
+  $for_content__setup = ($scope) => {
+    ($scope[0], $for_content__items._($scope), $for_content__write._($scope));
   },
-  $write$for$content = _$.loopClosure(4, 2, ($scope, write) =>
+  $for_content__write = _._for_closure(4, 2, ($scope, write) =>
     $write$1($scope[0], write),
   ),
-  $outerItem$for$content = _$.value(3, ($scope, outerItem) => {
-    ($name($scope[0], `${outerItem}`), $outerItem$for$content2($scope));
+  $for_content__outerItem = _._const(3, ($scope, outerItem) => {
+    ($name($scope[0], `${outerItem}`), $for_content2__outerItem($scope));
   }),
-  $for$for$content = _$.loopOf(1, $for_content2),
-  $items$for$content = _$.loopClosure(3, 2, ($scope, items) =>
-    $for$for$content($scope, [items]),
+  $for_content__for = _._for_of(1, $for_content2),
+  $for_content__items = _._for_closure(3, 2, ($scope, items) =>
+    $for_content__for($scope, [items]),
   ),
-  $params2$for$content = _$.value(2, ($scope, $params2) =>
-    $outerItem$for$content($scope, $params2[0]),
+  $for_content__$params = _._const(2, ($scope, $params2) =>
+    $for_content__outerItem($scope, $params2[0]),
   ),
-  $for_content = _$.createRenderer(
+  $for_content = _._content_branch(
     "<div><div> </div><!></div>",
     "D/D l&%l",
-    $setup$for$content,
-    $params2$for$content,
+    $for_content__setup,
+    $for_content__$params,
   ),
-  $for = _$.loopOf(2, $for_content),
-  $items_effect = _$.effect("b1", ($scope, { 3: items }) =>
-    _$.on($scope[0], "click", function () {
+  $for = _._for_of(2, $for_content),
+  $items__script = _._script("b1", ($scope, { 3: items }) =>
+    _._on($scope[0], "click", function () {
       $items($scope, (items = items.length ? items.slice(0, -1) : [1, 2, 3]));
     }),
   ),
-  $items = _$.state(3, ($scope, items) => {
-    ($for($scope, [items]), $items$for$content($scope), $items_effect($scope));
+  $items = _._let(3, ($scope, items) => {
+    ($for($scope, [items]),
+      $for_content__items($scope),
+      $items__script($scope));
   });
-(_$.register("b0", function ($scope) {
+(_._resume("b0", function ($scope) {
   return function (msg) {
     $scope[1].innerHTML += "\n" + msg;
   };

@@ -1,21 +1,21 @@
-// size: 850 (min) 409 (brotli)
-const $setup$else$content_effect = _$.effect("a0", ($scope) =>
-    _$.on($scope[0], "click", function () {
-      $editing$for$content($scope._, !0);
+// size: 811 (min) 403 (brotli)
+const $else_content__setup__script = _._script("a0", ($scope) =>
+    _._on($scope[0], "click", function () {
+      $for_content__editing($scope._, !0);
     }),
   ),
-  $setup$else$content = ($scope) => {
-    ($count$else$content._($scope), $setup$else$content_effect($scope));
+  $else_content__setup = ($scope) => {
+    ($else_content__count._($scope), $else_content__setup__script($scope));
   },
-  $count$else$content = _$.conditionalClosure(2, 0, 1, ($scope, count) =>
-    _$.data($scope[1], count),
+  $else_content__count = _._if_closure(2, 0, 1, ($scope, count) =>
+    _._text($scope[1], count),
   ),
-  $else_content = _$.createRenderer(
+  $else_content = _._content_branch(
     "<button>Increment <!></button>",
     " Db%l",
-    $setup$else$content,
+    $else_content__setup,
   ),
-  $expr_counts_count_i$if$content_effect = _$.effect(
+  $if_content__counts__OR__count__OR__i__script = _._script(
     "a1",
     (
       $scope,
@@ -27,67 +27,68 @@ const $setup$else$content_effect = _$.effect("a0", ($scope) =>
         },
       },
     ) =>
-      _$.on($scope[0], "click", function () {
+      _._on($scope[0], "click", function () {
         ($counts(
           $scope._._,
           (counts = [...counts.slice(0, i), count + 1, ...counts.slice(i + 1)]),
         ),
-          $editing$for$content($scope._, !1));
+          $for_content__editing($scope._, !1));
       }),
   ),
-  $expr_counts_count_i$if$content = _$.intersection(
+  $if_content__counts__OR__count__OR__i = _._or(
     2,
-    $expr_counts_count_i$if$content_effect,
+    $if_content__counts__OR__count__OR__i__script,
     2,
   ),
-  $counts$if$content = _$.dynamicClosureRead(
+  $if_content__counts = _._closure_get(
     1,
-    $expr_counts_count_i$if$content,
+    $if_content__counts__OR__count__OR__i,
     ($scope) => $scope._._,
   ),
-  $count$if$content = _$.conditionalClosure(2, 0, 0, ($scope, count) => {
-    (_$.data($scope[1], count + 1), $expr_counts_count_i$if$content($scope));
+  $if_content__count = _._if_closure(2, 0, 0, ($scope, count) => {
+    (_._text($scope[1], count + 1),
+      $if_content__counts__OR__count__OR__i($scope));
   }),
-  $i$if$content = _$.conditionalClosure(
+  $if_content__i = _._if_closure(
     3,
     0,
     0,
-    $expr_counts_count_i$if$content,
+    $if_content__counts__OR__count__OR__i,
   ),
-  $setup$if$content = ($scope) => {
-    ($counts$if$content($scope),
-      $count$if$content._($scope),
-      $i$if$content._($scope));
+  $if_content__setup = ($scope) => {
+    ($if_content__counts($scope),
+      $if_content__count._($scope),
+      $if_content__i._($scope));
   },
-  $if_content = _$.createRenderer(
+  $if_content = _._content_branch(
     "<button>Confirm <!></button>",
     " Db%l",
-    $setup$if$content,
+    $if_content__setup,
   ),
-  $if$for$content = _$.conditional(0, $if_content, $else_content),
-  $editing$for$content = _$.state(4, ($scope, editing) =>
-    $if$for$content($scope, editing ? 0 : 1),
+  $for_content__if = _._if(0, $if_content, $else_content),
+  $for_content__editing = _._let(4, ($scope, editing) =>
+    $for_content__if($scope, editing ? 0 : 1),
   ),
-  $setup$for$content = ($scope) => {
-    $editing$for$content($scope, !1);
+  $for_content__setup = ($scope) => {
+    $for_content__editing($scope, !1);
   },
-  $params2$for$content = _$.value(1, ($scope, $params2) => {
-    ($count$for$content($scope, $params2[0]),
-      $i$for$content($scope, $params2[1]));
+  $for_content__$params = _._const(1, ($scope, $params2) => {
+    ($for_content__count($scope, $params2[0]),
+      $for_content__i($scope, $params2[1]));
   }),
-  $count$for$content = _$.value(2, ($scope) => {
-    ($count$if$content($scope), $count$else$content($scope));
+  $for_content__count = _._const(2, ($scope) => {
+    ($if_content__count($scope), $else_content__count($scope));
   }),
-  $i$for$content = _$.value(3, $i$if$content),
-  $for_content = _$.createRenderer(
+  $for_content__i = _._const(3, $if_content__i),
+  $for_content = _._content_branch(
     "<!><!><!>",
     "b%c",
-    $setup$for$content,
-    $params2$for$content,
+    $for_content__setup,
+    $for_content__$params,
   ),
-  $for = _$.loopOf(0, $for_content),
-  $counts_closure = _$.dynamicClosure($counts$if$content),
-  $counts = _$.state(1, ($scope, counts) => {
-    ($for($scope, [counts]), $counts_closure($scope));
+  $for = _._for_of(0, $for_content),
+  $counts__closure = _._closure($if_content__counts),
+  $counts = _._let(1, ($scope, counts) => {
+    ($for($scope, [counts]), $counts__closure($scope));
   });
 init();

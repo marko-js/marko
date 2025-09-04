@@ -1,6 +1,6 @@
 # Write
 ```html
-  <div><svg><a href=#></a><a href=#bar><!--M_[3-->Hi<!--M_]2 #a/0--></a><!--M_'1 #text/2 2--></svg><math><a href=#></a><a href=#bar><!--M_[5-->Hi<!--M_]4 #a/0--></a><!--M_'1 #text/4 4--></math><div><!--M_[7--><a href=#></a><!--M_]6 #div/0--></div><!--M_'1 #text/5 6--><button class=toggle-parent>Toggle Parent</button><!--M_*1 #button/6--><button class=toggle-child>Toggle Child</button><!--M_*1 #button/7--></div><!--M_*1 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_renderer"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_renderer"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_renderer"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#>\x3C/a>",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()</script>
+  <div><svg><a href=#></a><a href=#bar><!--M_[3-->Hi<!--M_]2 #a/0--></a><!--M_'1 #text/2 2--></svg><math><a href=#></a><a href=#bar><!--M_[5-->Hi<!--M_]4 #a/0--></a><!--M_'1 #text/4 4--></math><div><!--M_[7--><a href=#></a><!--M_]6 #div/0--></div><!--M_'1 #text/5 6--><button class=toggle-parent>Toggle Parent</button><!--M_*1 #button/6--><button class=toggle-child>Toggle Child</button><!--M_*1 #button/7--></div><!--M_*1 #div/0--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.g=[0,{"ConditionalScope:#text/2":_.a={"ConditionalScope:#a/0":_.b={},"ConditionalRenderer:#a/0":"__tests__/template.marko_2_content"},"ConditionalRenderer:#text/2":"a","ConditionalScope:#text/4":_.c={"ConditionalScope:#a/0":_.d={},"ConditionalRenderer:#a/0":"__tests__/template.marko_3_content"},"ConditionalRenderer:#text/4":"a","ConditionalScope:#text/5":_.e={"ConditionalScope:#div/0":_.f={},"ConditionalRenderer:#div/0":"__tests__/template.marko_1_content"},"ConditionalRenderer:#text/5":"div",input_value:"\x3Ca href=#>\x3C/a>",Parent:"div",Child:"a"},_.a,_.b,_.c,_.d,_.e,_.f]),"__tests__/template.marko_0_Parent_Child",1,"__tests__/template.marko_0_Child",1,"__tests__/template.marko_0_Parent",1];M._.w()</script>
 ```
 
 # Render End
@@ -63,17 +63,17 @@
         {
           "ConditionalScope:#text/2": _.a = {
             "ConditionalScope:#a/0": _.b = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_2_content"
           },
           "ConditionalRenderer:#text/2": "a",
           "ConditionalScope:#text/4": _.c = {
             "ConditionalScope:#a/0": _.d = {},
-            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_renderer"
+            "ConditionalRenderer:#a/0": "__tests__/template.marko_3_content"
           },
           "ConditionalRenderer:#text/4": "a",
           "ConditionalScope:#text/5": _.e = {
             "ConditionalScope:#div/0": _.f = {},
-            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#div/0": "__tests__/template.marko_1_content"
           },
           "ConditionalRenderer:#text/5": "div",
           input_value: "\x3Ca href=#&gt;\x3C/a&gt;",

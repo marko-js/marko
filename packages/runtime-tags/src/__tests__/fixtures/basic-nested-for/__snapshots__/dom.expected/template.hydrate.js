@@ -1,48 +1,50 @@
-// size: 526 (min) 301 (brotli)
-const $name = _$.value(3, ($scope, name) => _$.data($scope[0], name)),
-  $setup$for$content = ($scope) => {
-    ($scope[0], $outer$for$content._($scope));
+// size: 530 (min) 290 (brotli)
+const $name = _._const(3, ($scope, name) => _._text($scope[0], name)),
+  $for_content2__setup = ($scope) => {
+    ($scope[0], $for_content2__outer._($scope));
   },
-  $expr_outer_inner$for$content = _$.intersection(3, ($scope) => {
+  $for_content2__outer__OR__inner = _._or(3, ($scope) => {
     let {
       _: { 2: outer },
       2: inner,
     } = $scope;
     $name($scope[0], `${outer}.${inner}`);
   }),
-  $outer$for$content = _$.loopClosure(2, 0, $expr_outer_inner$for$content),
-  $inner$for$content = _$.value(2, $expr_outer_inner$for$content),
-  $params3$for$content = _$.value(1, ($scope, $params3) =>
-    $inner$for$content($scope, $params3[0]),
+  $for_content2__outer = _._for_closure(2, 0, $for_content2__outer__OR__inner),
+  $for_content2__inner = _._const(2, $for_content2__outer__OR__inner),
+  $for_content2__$params = _._const(1, ($scope, $params3) =>
+    $for_content2__inner($scope, $params3[0]),
   ),
-  $for_content2 = _$.createRenderer(
+  $for_content2 = _._content_branch(
     "<div> </div>",
     "/D l&",
-    $setup$for$content,
-    $params3$for$content,
+    $for_content2__setup,
+    $for_content2__$params,
   ),
-  $for$for$content = _$.loopOf(0, $for_content2),
-  $items$for$content = _$.loopClosure(2, 1, ($scope, items) =>
-    $for$for$content($scope, [items]),
+  $for_content__for = _._for_of(0, $for_content2),
+  $for_content__items = _._for_closure(2, 1, ($scope, items) =>
+    $for_content__for($scope, [items]),
   ),
-  $setup$for$content2 = $items$for$content,
-  $params2$for$content = _$.value(1, ($scope, $params2) =>
-    $outer$for$content2($scope, $params2[0]),
+  $for_content__setup = $for_content__items,
+  $for_content__$params = _._const(1, ($scope, $params2) =>
+    $for_content__outer($scope, $params2[0]),
   ),
-  $outer$for$content2 = _$.value(2, $outer$for$content),
-  $for_content = _$.createRenderer(
+  $for_content__outer = _._const(2, $for_content2__outer),
+  $for_content = _._content_branch(
     "<!><!><!>",
     "b%c",
-    $setup$for$content2,
-    $params2$for$content,
+    $for_content__setup,
+    $for_content__$params,
   ),
-  $for = _$.loopOf(1, $for_content),
-  $items_effect = _$.effect("b0", ($scope, { 2: items }) =>
-    _$.on($scope[0], "click", function () {
+  $for = _._for_of(1, $for_content),
+  $items__script = _._script("b0", ($scope, { 2: items }) =>
+    _._on($scope[0], "click", function () {
       $items($scope, (items = [...items, items.length]));
     }),
   ),
-  $items = _$.state(2, ($scope, items) => {
-    ($for($scope, [items]), $items$for$content($scope), $items_effect($scope));
+  $items = _._let(2, ($scope, items) => {
+    ($for($scope, [items]),
+      $for_content__items($scope),
+      $items__script($scope));
   });
 init();

@@ -8,26 +8,26 @@ import {
 import { type Accessor, AccessorPrefix, ControlledType } from "../common/types";
 import { escapeTextAreaValue } from "./content";
 import {
+  _attr_content,
+  _html,
+  _scope,
   getContext,
   withContext,
-  write,
-  writeContent,
-  writeScope,
 } from "./writer";
 
-export function classAttr(value: unknown) {
+export function _attr_class(value: unknown) {
   return stringAttr("class", classValue(value));
 }
 
-export function styleAttr(value: unknown) {
+export function _attr_style(value: unknown) {
   return stringAttr("style", styleValue(value));
 }
 
-export function optionValueAttr(value: unknown) {
+export function _attr_option_value(value: unknown) {
   const selectedValue = getContext(kSelectedValue);
 
   return (
-    attr("value", value) +
+    _attr("value", value) +
     (!isVoid(value) &&
     (Array.isArray(selectedValue)
       ? selectedValue.includes(value)
@@ -38,7 +38,7 @@ export function optionValueAttr(value: unknown) {
 }
 
 const kSelectedValue = Symbol("selectedValue");
-export function controllable_select_value(
+export function _attr_select_value(
   scopeId: number,
   nodeAccessor: Accessor,
   value: unknown,
@@ -60,7 +60,7 @@ export function controllable_select_value(
   }
 }
 
-export function controllable_textarea_value(
+export function _attr_textarea_value(
   scopeId: number,
   nodeAccessor: Accessor,
   value: unknown,
@@ -79,7 +79,7 @@ export function controllable_textarea_value(
   return escapeTextAreaValue(value);
 }
 
-export function controllable_input_value(
+export function _attr_input_value(
   scopeId: number,
   nodeAccessor: Accessor,
   value: unknown,
@@ -94,10 +94,10 @@ export function controllable_input_value(
       valueChange,
     );
   }
-  return attr("value", value);
+  return _attr("value", value);
 }
 
-export function controllable_input_checked(
+export function _attr_input_checked(
   scopeId: number,
   nodeAccessor: Accessor,
   checked: unknown,
@@ -112,10 +112,10 @@ export function controllable_input_checked(
       checkedChange,
     );
   }
-  return attr("checked", checked);
+  return _attr("checked", checked);
 }
 
-export function controllable_input_checkedValue(
+export function _attr_input_checkedValue(
   scopeId: number,
   nodeAccessor: Accessor,
   checkedValue: unknown,
@@ -123,7 +123,7 @@ export function controllable_input_checkedValue(
   value: unknown,
 ) {
   const multiple = Array.isArray(checkedValue);
-  const valueAttr = attr("value", value);
+  const valueAttr = _attr("value", value);
   if (checkedValueChange) {
     writeControlledScope(
       ControlledType.InputCheckedValue,
@@ -139,7 +139,7 @@ export function controllable_input_checkedValue(
     : valueAttr;
 }
 
-export function controllable_detailsOrDialog_open(
+export function _attr_details_or_dialog_open(
   scopeId: number,
   nodeAccessor: Accessor,
   open: unknown,
@@ -154,14 +154,14 @@ export function controllable_detailsOrDialog_open(
       openChange,
     );
   }
-  return attr("open", open);
+  return _attr("open", open);
 }
 
-export function attr(name: string, value: unknown) {
+export function _attr(name: string, value: unknown) {
   return isVoid(value) ? "" : nonVoidAttr(name, value);
 }
 
-export function attrs(
+export function _attrs(
   data: Record<string, unknown>,
   nodeAccessor: Accessor,
   scopeId: number,
@@ -173,14 +173,14 @@ export function attrs(
   switch (tagName) {
     case "input":
       if (data.checkedChange) {
-        result += controllable_input_checked(
+        result += _attr_input_checked(
           scopeId,
           nodeAccessor,
           data.checked,
           data.checkedChange,
         );
       } else if (data.checkedValue || data.checkedValueChange) {
-        result += controllable_input_checkedValue(
+        result += _attr_input_checkedValue(
           scopeId,
           nodeAccessor,
           data.checkedValue,
@@ -188,7 +188,7 @@ export function attrs(
           data.value,
         );
       } else if (data.valueChange) {
-        result += controllable_input_value(
+        result += _attr_input_value(
           scopeId,
           nodeAccessor,
           data.value,
@@ -207,14 +207,14 @@ export function attrs(
       break;
     case "option":
       if (data.value) {
-        result += optionValueAttr(data.value);
+        result += _attr_option_value(data.value);
         skip = /^value$|[\s/>"'=]/;
       }
       break;
     case "details":
     case "dialog":
       if (data.openChange) {
-        result += controllable_detailsOrDialog_open(
+        result += _attr_details_or_dialog_open(
           scopeId,
           nodeAccessor,
           data.open,
@@ -230,10 +230,10 @@ export function attrs(
 
     switch (name) {
       case "class":
-        result += classAttr(value);
+        result += _attr_class(value);
         break;
       case "style":
-        result += styleAttr(value);
+        result += _attr_style(value);
         break;
       default:
         if (
@@ -247,7 +247,7 @@ export function attrs(
           if (isEventHandler(name)) {
             if (!events) {
               events = {};
-              writeScope(scopeId, {
+              _scope(scopeId, {
                 [AccessorPrefix.EventAttributes + nodeAccessor]: events,
               });
             }
@@ -263,18 +263,18 @@ export function attrs(
   return result;
 }
 
-export function writeAttrsAndContent(
+export function _attrs_content(
   data: Record<string, unknown>,
   nodeAccessor: Accessor,
   scopeId: number,
   tagName: string,
   serializeReason?: 1 | 0,
 ) {
-  write(`${attrs(data, nodeAccessor, scopeId, tagName)}>`);
-  writeContent(nodeAccessor, scopeId, data?.content, serializeReason);
+  _html(`${_attrs(data, nodeAccessor, scopeId, tagName)}>`);
+  _attr_content(nodeAccessor, scopeId, data?.content, serializeReason);
 }
 
-export function partialAttrs(
+export function _attrs_partial(
   data: Record<string, unknown>,
   skip: Record<string, 1>,
   nodeAccessor: Accessor,
@@ -286,10 +286,10 @@ export function partialAttrs(
     if (!skip[key]) partial[key] = data[key];
   }
 
-  return attrs(partial, nodeAccessor, scopeId, tagName);
+  return _attrs(partial, nodeAccessor, scopeId, tagName);
 }
 
-export function writePartialAttrsAndContent(
+export function _attrs_partial_content(
   data: Record<string, unknown>,
   skip: Record<string, 1>,
   nodeAccessor: Accessor,
@@ -297,8 +297,8 @@ export function writePartialAttrsAndContent(
   tagName: string,
   serializeReason?: 1 | 0,
 ) {
-  write(`${partialAttrs(data, skip, nodeAccessor, scopeId, tagName)}>`);
-  writeContent(nodeAccessor, scopeId, data?.content, serializeReason);
+  _html(`${_attrs_partial(data, skip, nodeAccessor, scopeId, tagName)}>`);
+  _attr_content(nodeAccessor, scopeId, data?.content, serializeReason);
 }
 
 function writeControlledScope(
@@ -308,7 +308,7 @@ function writeControlledScope(
   value: unknown,
   valueChange: unknown,
 ) {
-  writeScope(scopeId, {
+  _scope(scopeId, {
     [AccessorPrefix.ControlledType + nodeAccessor]: type,
     [AccessorPrefix.ControlledValue + nodeAccessor]: value,
     [AccessorPrefix.ControlledHandler + nodeAccessor]: valueChange,

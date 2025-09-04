@@ -1,35 +1,35 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/tags/my-div.marko", input => {
-  const $scope0_id = _$.nextScopeId();
-  _$.write("<div");
-  _$.writeAttrsAndContent(input, "#div/0", $scope0_id, "div");
-  _$.write(`</div>${_$.markResumeNode($scope0_id, "#div/0")}<button`);
-  _$.writeAttrsAndContent({
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/tags/my-div.marko", input => {
+  const $scope0_id = _._scope_id();
+  _._html("<div");
+  _._attrs_content(input, "#div/0", $scope0_id, "div");
+  _._html(`</div>${_._el_resume($scope0_id, "#div/0")}<button`);
+  _._attrs_content({
     foo: 1,
     ...input
   }, "#button/1", $scope0_id, "button");
-  _$.write(`</button>${_$.markResumeNode($scope0_id, "#button/1")}<span${_$.attrs(input, "#span/2", $scope0_id, "span")}>Overridden</span>${_$.markResumeNode($scope0_id, "#span/2")}<output${_$.attrs(input, "#output/3", $scope0_id, "output")}>`);
-  _$.writeContent("#output/3", $scope0_id, undefined);
-  _$.write(`</output>${_$.markResumeNode($scope0_id, "#output/3")}`);
+  _._html(`</button>${_._el_resume($scope0_id, "#button/1")}<span${_._attrs(input, "#span/2", $scope0_id, "span")}>Overridden</span>${_._el_resume($scope0_id, "#span/2")}<output${_._attrs(input, "#output/3", $scope0_id, "output")}>`);
+  _._attr_content("#output/3", $scope0_id, undefined);
+  _._html(`</output>${_._el_resume($scope0_id, "#output/3")}`);
   const CustomContent = {
-    content: _$.registerContent("__tests__/tags/my-div.marko_1_renderer", () => {
-      const $scope1_id = _$.nextScopeId();
-      _$.write("Custom content");
+    content: _._content_resume("__tests__/tags/my-div.marko_1_content", () => {
+      const $scope1_id = _._scope_id();
+      _._html("Custom content");
     }, $scope0_id)
   };
-  _$.write(`<strong${_$.attrs(input, "#strong/4", $scope0_id, "strong")}>`);
-  _$.writeContent("#strong/4", $scope0_id, CustomContent.content);
-  _$.write(`</strong>${_$.markResumeNode($scope0_id, "#strong/4")}<p`);
-  _$.writeAttrsAndContent({
+  _._html(`<strong${_._attrs(input, "#strong/4", $scope0_id, "strong")}>`);
+  _._attr_content("#strong/4", $scope0_id, CustomContent.content);
+  _._html(`</strong>${_._el_resume($scope0_id, "#strong/4")}<p`);
+  _._attrs_content({
     content: CustomContent.content,
     ...input
   }, "#p/5", $scope0_id, "p");
-  _$.write(`</p>${_$.markResumeNode($scope0_id, "#p/5")}<em>`);
-  _$.writeContent("#em/6", $scope0_id, CustomContent, 0);
-  _$.write("</em>");
-  _$.writeEffect($scope0_id, "__tests__/tags/my-div.marko_0_input_CustomContent_content");
-  _$.writeEffect($scope0_id, "__tests__/tags/my-div.marko_0_input");
-  _$.writeScope($scope0_id, {
+  _._html(`</p>${_._el_resume($scope0_id, "#p/5")}<em>`);
+  _._attr_content("#em/6", $scope0_id, CustomContent, 0);
+  _._html("</em>");
+  _._script($scope0_id, "__tests__/tags/my-div.marko_0_input_CustomContent_content");
+  _._script($scope0_id, "__tests__/tags/my-div.marko_0_input");
+  _._scope($scope0_id, {
     input,
     CustomContent_content: CustomContent?.content
   }, "__tests__/tags/my-div.marko", 0, {

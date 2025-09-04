@@ -8,11 +8,11 @@ import { patchDynamicTag } from "./control-flow";
 import { toInsertNode } from "./dom";
 import { prepareEffects, queueEffect, runEffects } from "./queue";
 import {
+  _content_branch,
   createAndSetupBranch,
-  createRenderer,
   type Renderer,
 } from "./renderer";
-import { getRegisteredWithScope, register } from "./resume";
+import { _resume, getRegisteredWithScope } from "./resume";
 import { destroyBranch } from "./scope";
 const classIdToBranch = new Map<string, BranchScope>();
 
@@ -20,14 +20,14 @@ export const compat = {
   patchDynamicTag,
   queueEffect,
   init(warp10Noop: any) {
-    register(SET_SCOPE_REGISTER_ID, (branch: BranchScope & { m5c: string }) => {
+    _resume(SET_SCOPE_REGISTER_ID, (branch: BranchScope & { m5c: string }) => {
       classIdToBranch.set(branch.m5c, branch);
     });
 
-    register(RENDER_BODY_ID, warp10Noop);
+    _resume(RENDER_BODY_ID, warp10Noop);
   },
   registerRenderer(fn: any) {
-    register(RENDERER_REGISTER_ID, fn);
+    _resume(RENDERER_REGISTER_ID, fn);
   },
   isRenderer(renderer: any) {
     return renderer.___clone;
@@ -67,7 +67,7 @@ export const compat = {
     params: NonNullable<Renderer["___params"]>,
     clone: () => { startNode: ChildNode; endNode: ChildNode },
   ) {
-    const renderer = createRenderer(0, 0, 0, params);
+    const renderer = _content_branch(0, 0, 0, params);
     renderer.___clone = (branch) => {
       const cloned = clone();
       branch.___startNode = cloned.startNode;

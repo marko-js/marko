@@ -272,7 +272,7 @@ export default {
           translateVar(
             tag,
             callRuntime(
-              "nodeRef",
+              "_el",
               getterId && getScopeIdIdentifier(tagSection),
               getterId && t.stringLiteral(getterId),
             ),
@@ -349,7 +349,7 @@ export default {
 
           if (value || valueChange) {
             writeAtStartOfBody = callRuntime(
-              "controllable_textarea_value",
+              "_attr_textarea_value",
               getScopeIdIdentifier(getSection(tag)),
               getScopeAccessorLiteral(nodeBinding!),
               value,
@@ -364,14 +364,14 @@ export default {
           const valueReferences = value.extra?.referencedBindings;
 
           if (tagName === "option" && name === "value") {
-            write`${callRuntime("optionValueAttr", value)}`;
+            write`${callRuntime("_attr_option_value", value)}`;
             continue;
           }
 
           switch (name) {
             case "class":
             case "style": {
-              const helper = `${name}Attr` as const;
+              const helper = `_attr_${name}` as const;
               if (confident) {
                 write`${getHTMLRuntime()[helper](computed)}`;
               } else {
@@ -381,11 +381,11 @@ export default {
             }
             default:
               if (confident) {
-                write`${getHTMLRuntime().attr(name, computed)}`;
+                write`${getHTMLRuntime()._attr(name, computed)}`;
               } else if (isEventHandler(name)) {
                 addHTMLEffectCall(tagSection, valueReferences);
               } else {
-                write`${callRuntime("attr", t.stringLiteral(name), value)}`;
+                write`${callRuntime("_attr", t.stringLiteral(name), value)}`;
               }
 
               break;
@@ -400,9 +400,9 @@ export default {
 
           if (isOpenOnly || hasChildren || usedAttrs.staticContentAttr) {
             if (skipExpression) {
-              write`${callRuntime("partialAttrs", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(tagSection), tag.node.name)}`;
+              write`${callRuntime("_attrs_partial", spreadExpression, skipExpression, visitAccessor, getScopeIdIdentifier(tagSection), tag.node.name)}`;
             } else {
-              write`${callRuntime("attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(tagSection), tag.node.name)}`;
+              write`${callRuntime("_attrs", spreadExpression, visitAccessor, getScopeIdIdentifier(tagSection), tag.node.name)}`;
             }
           }
         }
@@ -424,7 +424,7 @@ export default {
             (tag.node.body.body as t.Statement[]) = [
               t.expressionStatement(
                 callRuntime(
-                  "writeContent",
+                  "_attr_content",
                   visitAccessor,
                   getScopeIdIdentifier(tagSection),
                   usedAttrs.staticContentAttr.value,
@@ -446,7 +446,7 @@ export default {
               skipExpression
                 ? t.expressionStatement(
                     callRuntime(
-                      "writePartialAttrsAndContent",
+                      "_attrs_partial_content",
                       spreadExpression,
                       skipExpression,
                       visitAccessor,
@@ -457,7 +457,7 @@ export default {
                   )
                 : t.expressionStatement(
                     callRuntime(
-                      "writeAttrsAndContent",
+                      "_attrs_content",
                       spreadExpression,
                       visitAccessor,
                       getScopeIdIdentifier(tagSection),
@@ -509,7 +509,7 @@ export default {
           tag.insertBefore(
             t.expressionStatement(
               callRuntime(
-                "controllable_select_value",
+                "_attr_select_value",
                 getScopeIdIdentifier(getSection(tag)),
                 getScopeAccessorLiteral(nodeBinding!),
                 selectArgs.value,
@@ -575,7 +575,7 @@ export default {
                 t.variableDeclarator(
                   getterFnIdentifier,
                   callRuntime(
-                    "nodeRef",
+                    "_el",
                     t.stringLiteral(getterId),
                     t.stringLiteral(
                       getAccessorPrefix().Getter +
@@ -654,7 +654,7 @@ export default {
             tagSection,
             undefined,
             t.expressionStatement(
-              callRuntime(`${helper}_effect`, scopeIdentifier, visitAccessor),
+              callRuntime(`${helper}_script`, scopeIdentifier, visitAccessor),
             ),
           );
         }
@@ -667,7 +667,7 @@ export default {
           switch (name) {
             case "class":
             case "style": {
-              const helper = `${name}Attr` as const;
+              const helper = `_attr_${name}` as const;
               if (confident) {
                 write`${getHTMLRuntime()[helper](computed)}`;
               } else {
@@ -701,7 +701,7 @@ export default {
                       const value = meta.dynamicValues[key];
                       stmt = t.expressionStatement(
                         callRuntime(
-                          `${name}Item`,
+                          `_attr_${name}_item`,
                           nodeExpr,
                           t.stringLiteral(key),
                           value,
@@ -718,7 +718,7 @@ export default {
 
                       stmt = t.expressionStatement(
                         callRuntime(
-                          `${name}Items`,
+                          `_attr_${name}_items`,
                           nodeExpr,
                           t.objectExpression(props),
                         ),
@@ -735,7 +735,7 @@ export default {
             }
             default:
               if (confident) {
-                write`${getHTMLRuntime().attr(name, computed)}`;
+                write`${getHTMLRuntime()._attr(name, computed)}`;
               } else if (isEventHandler(name)) {
                 addStatement(
                   "effect",
@@ -743,7 +743,7 @@ export default {
                   valueReferences,
                   t.expressionStatement(
                     callRuntime(
-                      "on",
+                      "_on",
                       t.memberExpression(scopeIdentifier, visitAccessor!, true),
                       t.stringLiteral(getEventHandlerName(name)),
                       value,
@@ -757,7 +757,7 @@ export default {
                   valueReferences,
                   t.expressionStatement(
                     callRuntime(
-                      "attr",
+                      "_attr",
                       t.memberExpression(scopeIdentifier, visitAccessor!, true),
                       t.stringLiteral(name),
                       value,
@@ -784,8 +784,8 @@ export default {
               t.expressionStatement(
                 callRuntime(
                   canHaveAttrContent
-                    ? "partialAttrsAndContent"
-                    : "partialAttrs",
+                    ? "_attrs_partial_content"
+                    : "_attrs_partial",
                   scopeIdentifier,
                   visitAccessor,
                   spreadExpression,
@@ -800,7 +800,7 @@ export default {
               tagExtra.referencedBindings,
               t.expressionStatement(
                 callRuntime(
-                  canHaveAttrContent ? "attrsAndContent" : "attrs",
+                  canHaveAttrContent ? "_attrs_content" : "_attrs",
                   scopeIdentifier,
                   visitAccessor,
                   spreadExpression,
@@ -814,7 +814,7 @@ export default {
             tagSection,
             tagExtra.referencedBindings,
             t.expressionStatement(
-              callRuntime("attrsEvents", scopeIdentifier, visitAccessor),
+              callRuntime("_attrs_script", scopeIdentifier, visitAccessor),
             ),
             false,
           );
@@ -828,7 +828,7 @@ export default {
             contentAttrValue.extra?.referencedBindings,
             t.expressionStatement(
               callRuntime(
-                "insertContent",
+                "_attr_content",
                 scopeIdentifier,
                 visitAccessor,
                 contentAttrValue,
@@ -900,7 +900,7 @@ function getRelatedControllable(
       if (attrs.checked || attrs.checkedChange) {
         return {
           special: false,
-          helper: "controllable_input_checked",
+          helper: "_attr_input_checked",
           attrs: [attrs.checked, attrs.checkedChange],
         } as const;
       }
@@ -908,7 +908,7 @@ function getRelatedControllable(
       if (attrs.checkedValue || attrs.checkedValueChange) {
         return {
           special: true,
-          helper: "controllable_input_checkedValue",
+          helper: "_attr_input_checkedValue",
           attrs: [attrs.checkedValue, attrs.checkedValueChange, attrs.value],
         } as const;
       }
@@ -916,7 +916,7 @@ function getRelatedControllable(
       if (attrs.value || attrs.valueChange) {
         return {
           special: false,
-          helper: "controllable_input_value",
+          helper: "_attr_input_value",
           attrs: [attrs.value, attrs.valueChange],
         } as const;
       }
@@ -925,7 +925,7 @@ function getRelatedControllable(
       if (attrs.value || attrs.valueChange) {
         return {
           special: true,
-          helper: "controllable_select_value",
+          helper: "_attr_select_value",
           attrs: [attrs.value, attrs.valueChange],
         } as const;
       }
@@ -934,7 +934,7 @@ function getRelatedControllable(
       if (attrs.value || attrs.valueChange) {
         return {
           special: true,
-          helper: "controllable_textarea_value",
+          helper: "_attr_textarea_value",
           attrs: [attrs.value, attrs.valueChange],
         } as const;
       }
@@ -944,7 +944,7 @@ function getRelatedControllable(
       if (attrs.open || attrs.openChange) {
         return {
           special: false,
-          helper: "controllable_detailsOrDialog_open",
+          helper: `_attr_${tagName}_open`,
           attrs: [attrs.open, attrs.openChange],
         } as const;
       }

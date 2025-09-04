@@ -1,18 +1,18 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   let value = "b";
-  _$.controllable_select_value($scope0_id, "#select/0", value, _$.register(function (v) {
+  _._attr_select_value($scope0_id, "#select/0", value, _._resume(function (v) {
     value = v;
   }, "__tests__/template.marko_0/valueChange", $scope0_id), () => {
-    _$.write(`<select><option${_$.optionValueAttr("a")}>A</option><option${_$.optionValueAttr("b")}>B</option><option${_$.optionValueAttr("c")}>C</option></select>`);
+    _._html(`<select><option${_._attr_option_value("a")}>A</option><option${_._attr_option_value("b")}>B</option><option${_._attr_option_value("c")}>C</option></select>`);
   });
-  _$.write(`${_$.markResumeNode($scope0_id, "#select/0")}<span>${_$.escapeXML(value)}${_$.markResumeNode($scope0_id, "#text/1")}</span>`);
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0");
-  _$.writeScope($scope0_id, {
+  _._html(`${_._el_resume($scope0_id, "#select/0")}<span>${_._escape(value)}${_._el_resume($scope0_id, "#text/1")}</span>`);
+  _._script($scope0_id, "__tests__/template.marko_0");
+  _._scope($scope0_id, {
     value
   }, "__tests__/template.marko", 0, {
     value: "1:6"
   });
-  _$.resumeClosestBranch($scope0_id);
+  _._resume_branch($scope0_id);
 });

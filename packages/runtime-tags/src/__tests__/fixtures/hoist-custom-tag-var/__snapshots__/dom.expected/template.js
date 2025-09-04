@@ -1,46 +1,46 @@
 export const $template = `<!><!>${_thing_template}<!><!><!><!>`;
 export const $walks = /* over(1), replace, over(1), beginChild, _thing_walks, endChild, replace, over(1), replace, over(1), replace, over(2) */`b%b/${_thing_walks}&%b%b%c`;
 import { $setup as _child, $template as _child_template, $walks as _child_walks } from "./tags/child.marko";
-import * as _$ from "@marko/runtime-tags/debug/dom";
+import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _thing, $input_value as _thing_input_value, $template as _thing_template, $walks as _thing_walks } from "./tags/thing.marko";
-const $setup$if$content4_effect = _$.effect("__tests__/template.marko_5", $scope => $get$hoisted_setHtml($scope._)("Hello world"));
-const $setup$if$content4 = $setup$if$content4_effect;
-const $if_content5 = /* @__PURE__ */_$.createRenderer(0, 0, $setup$if$content4);
-const $get$hoisted_setHtml = _$.hoist("setHtml3", "ConditionalScope:#text/3");
-const $setHtml3$if$content = _$.registerBoundSignal("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_$.value("setHtml3"));
-const $setup$if$content3 = $scope => {
-  _$.setTagVar($scope, "#childScope/0", $setHtml3$if$content);
+const $if_content5__setup__script = _._script("__tests__/template.marko_5", $scope => $get$hoisted_setHtml($scope._)("Hello world"));
+const $if_content5__setup = $if_content5__setup__script;
+const $if_content5 = /* @__PURE__ */_._content_branch(0, 0, $if_content5__setup);
+const $get$hoisted_setHtml = _._hoist("setHtml3", "ConditionalScope:#text/3");
+const $if_content4__setHtml = _._var_resume("__tests__/template.marko_4_setHtml3/var", /* @__PURE__ */_._const("setHtml3"));
+const $if_content4__setup = $scope => {
+  _._var($scope, "#childScope/0", $if_content4__setHtml);
   _child($scope["#childScope/0"]);
 };
-const $if_content4 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $setup$if$content3);
-const $get$hoisted_setHtml2 = _$.hoist("setHtml2", "ConditionalScope:#text/2");
-const $setHtml2$if$content = _$.registerBoundSignal("__tests__/template.marko_3_setHtml2/var", /* @__PURE__ */_$.value("setHtml2"));
-const $setup$if$content2 = $scope => {
-  _$.setTagVar($scope, "#childScope/0", $setHtml2$if$content);
+const $if_content4 = /* @__PURE__ */_._content_branch(_child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $if_content4__setup);
+const $get$hoisted_setHtml2 = _._hoist("setHtml2", "ConditionalScope:#text/2");
+const $if_content3__setHtml = _._var_resume("__tests__/template.marko_3_setHtml2/var", /* @__PURE__ */_._const("setHtml2"));
+const $if_content3__setup = $scope => {
+  _._var($scope, "#childScope/0", $if_content3__setHtml);
   _child($scope["#childScope/0"]);
 };
-const $if_content3 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $setup$if$content2);
-const $get$hoisted_setHtml3 = _$.register("__tests__/template.marko_0_$hoisted_setHtml/hoist", _$.hoist("setHtml", "ConditionalScope:#text/0", "ConditionalScope:#text/0"));
-const $setHtml$if$content = _$.registerBoundSignal("__tests__/template.marko_2_setHtml/var", /* @__PURE__ */_$.value("setHtml"));
-const $setup$if$content = $scope => {
-  _$.setTagVar($scope, "#childScope/0", $setHtml$if$content);
+const $if_content3 = /* @__PURE__ */_._content_branch(_child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $if_content3__setup);
+const $get$hoisted_setHtml3 = _._resume("__tests__/template.marko_0_$hoisted_setHtml/hoist", _._hoist("setHtml", "ConditionalScope:#text/0", "ConditionalScope:#text/0"));
+const $if_content2__setHtml = _._var_resume("__tests__/template.marko_2_setHtml/var", /* @__PURE__ */_._const("setHtml"));
+const $if_content2__setup = $scope => {
+  _._var($scope, "#childScope/0", $if_content2__setHtml);
   _child($scope["#childScope/0"]);
 };
-const $if_content2 = /* @__PURE__ */_$.createRenderer(_child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $setup$if$content);
-const $if$if$content = /* @__PURE__ */_$.conditional("#text/0", $if_content2);
-const $input_show$if$content = /* @__PURE__ */_$.conditionalClosure("input_show", "#text/0", 0, ($scope, input_show) => $if$if$content($scope, input_show ? 0 : 1));
-const $setup$if$content5 = $input_show$if$content;
-const $if_content = /* @__PURE__ */_$.createRenderer("<!><!><!>", /* over(1), replace, over(2) */"b%c", $setup$if$content5);
-const $if = /* @__PURE__ */_$.conditional("#text/0", $if_content);
-export const $input_show = /* @__PURE__ */_$.value("input_show", ($scope, input_show) => {
+const $if_content2 = /* @__PURE__ */_._content_branch(_child_template, /* beginChildWithVar, _child_walks, endChild */`0${_child_walks}&`, $if_content2__setup);
+const $if_content__if = /* @__PURE__ */_._if("#text/0", $if_content2);
+const $if_content__input_show = /* @__PURE__ */_._if_closure("input_show", "#text/0", 0, ($scope, input_show) => $if_content__if($scope, input_show ? 0 : 1));
+const $if_content__setup = $if_content__input_show;
+const $if_content = /* @__PURE__ */_._content_branch("<!><!><!>", /* over(1), replace, over(2) */"b%c", $if_content__setup);
+const $if = /* @__PURE__ */_._if("#text/0", $if_content);
+export const $input_show = /* @__PURE__ */_._const("input_show", ($scope, input_show) => {
   $if($scope, input_show ? 0 : 1);
-  $input_show$if$content($scope);
+  $if_content__input_show($scope);
 });
-const $if2 = /* @__PURE__ */_$.conditional("#text/2", $if_content3);
-const $if3 = /* @__PURE__ */_$.conditional("#text/3", $if_content4);
-const $if4 = /* @__PURE__ */_$.conditional("#text/4", $if_content5);
-const $hoisted_setHtml4 = /* @__PURE__ */_$.value("$hoisted_setHtml", ($scope, $hoisted_setHtml) => _thing_input_value($scope["#childScope/1"], $hoisted_setHtml));
-const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => {
+const $if2 = /* @__PURE__ */_._if("#text/2", $if_content3);
+const $if3 = /* @__PURE__ */_._if("#text/3", $if_content4);
+const $if4 = /* @__PURE__ */_._if("#text/4", $if_content5);
+const $hoisted_setHtml4 = /* @__PURE__ */_._const("$hoisted_setHtml", ($scope, $hoisted_setHtml) => _thing_input_value($scope["#childScope/1"], $hoisted_setHtml));
+const $setup__script = _._script("__tests__/template.marko_0", $scope => {
   $get$hoisted_setHtml3($scope)("Hello world");
   $get$hoisted_setHtml2($scope)("Hello world");
 });
@@ -50,7 +50,7 @@ export function $setup($scope) {
   $if3($scope, true ? 0 : 1);
   $if4($scope, true ? 0 : 1);
   $hoisted_setHtml4($scope, $get$hoisted_setHtml3($scope));
-  $setup_effect($scope);
+  $setup__script($scope);
 }
-export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_show($scope, input.show));
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);
+export const $input = /* @__PURE__ */_._const("input", ($scope, input) => $input_show($scope, input.show));
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

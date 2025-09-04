@@ -1,14 +1,14 @@
 export const $template = _myButton_template;
 export const $walks = /* beginChild, _myButton_walks, endChild */`/${_myButton_walks}&`;
-import * as _$ from "@marko/runtime-tags/debug/dom";
+import * as _ from "@marko/runtime-tags/debug/dom";
 import { $setup as _myButton, $content as _myButton_input_content, $onClick as _myButton_input_onClick, $template as _myButton_template, $walks as _myButton_walks } from "./tags/my-button.marko";
-const $clickCount$mybutton$content = /* @__PURE__ */_$.dynamicClosureRead("clickCount", ($scope, clickCount) => _$.data($scope["#text/0"], clickCount));
-const $setup$mybutton$content = $clickCount$mybutton$content;
-const $mybutton_content = /* @__PURE__ */_$.createContent("__tests__/template.marko_1_renderer", " ", /* get, over(1) */" b", $setup$mybutton$content);
-const $clickCount_closure = /* @__PURE__ */_$.dynamicClosure($clickCount$mybutton$content);
-const $clickCount = /* @__PURE__ */_$.state("clickCount/1", ($scope, clickCount) => {
+const $mybutton_content__clickCount = /* @__PURE__ */_._closure_get("clickCount", ($scope, clickCount) => _._text($scope["#text/0"], clickCount));
+const $mybutton_content__setup = $mybutton_content__clickCount;
+const $mybutton_content = /* @__PURE__ */_._content("__tests__/template.marko_1_content", " ", /* get, over(1) */" b", $mybutton_content__setup);
+const $clickCount__closure = /* @__PURE__ */_._closure($mybutton_content__clickCount);
+const $clickCount = /* @__PURE__ */_._let("clickCount/1", ($scope, clickCount) => {
   _myButton_input_onClick($scope["#childScope/0"], $onClick($scope));
-  $clickCount_closure($scope);
+  $clickCount__closure($scope);
 });
 export function $setup($scope) {
   _myButton($scope["#childScope/0"]);
@@ -22,5 +22,5 @@ function $onClick($scope, {
     $clickCount($scope, ++clickCount)
   };
 }
-_$.register("__tests__/template.marko_0/onClick", $onClick);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+_._resume("__tests__/template.marko_0/onClick", $onClick);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

@@ -1,5 +1,5 @@
-// size: 61 (min) 65 (brotli)
-_$.registerBoundSignal(
+// size: 55 (min) 58 (brotli)
+_._var_resume(
   "b0",
-  _$.value(3, ($scope, data) => _$.data($scope[2], data)),
+  _._const(3, ($scope, data) => _._text($scope[2], data)),
 );

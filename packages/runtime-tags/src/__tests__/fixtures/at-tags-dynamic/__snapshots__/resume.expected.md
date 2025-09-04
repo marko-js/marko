@@ -91,7 +91,7 @@
               color: "red"
             },
             content: _._[
-              "__tests__/template.marko_1_renderer"
+              "__tests__/template.marko_1_content"
               ](_.a = {}),
             *[(_.b = [, _.d = {
               style:
@@ -99,7 +99,7 @@
                 color: "blue"
               },
               content: _._[
-                "__tests__/template.marko_2_renderer"
+                "__tests__/template.marko_2_content"
                 ](_.a)
             }, _.e = {
               style:
@@ -107,7 +107,7 @@
                 color: "green"
               },
               content: _._[
-                "__tests__/template.marko_2_renderer"
+                "__tests__/template.marko_2_content"
                 ](_.a)
             }], Symbol.iterator)]()
             {
@@ -127,12 +127,12 @@
             row: _.g = {
               row: "a",
               content: _._[
-                "__tests__/template.marko_3_renderer"
+                "__tests__/template.marko_3_content"
                 ](_.a),
               *[(_.f = [, _.l = {
                 row: "b",
                 content: _._[
-                  "__tests__/template.marko_3_renderer"
+                  "__tests__/template.marko_3_content"
                   ](_.a)
               }], Symbol.iterator)]()
               {
@@ -144,12 +144,12 @@
               row: _.k = {
                 row: "c",
                 content: _._[
-                  "__tests__/template.marko_3_renderer"
+                  "__tests__/template.marko_3_content"
                   ](_.a),
                 *[(_.j = [, _.n = {
                   row: "d",
                   content: _._[
-                    "__tests__/template.marko_3_renderer"
+                    "__tests__/template.marko_3_content"
                     ](_.a)
                 }], Symbol.iterator)]()
                 {
@@ -161,7 +161,7 @@
               row: _.p = {
                 row: -1,
                 content: _._[
-                  "__tests__/template.marko_4_renderer"
+                  "__tests__/template.marko_4_content"
                   ](_.a),
                 *[Symbol.iterator]()
                 {

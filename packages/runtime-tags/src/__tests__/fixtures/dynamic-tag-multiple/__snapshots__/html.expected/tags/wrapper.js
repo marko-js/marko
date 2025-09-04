@@ -1,17 +1,17 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/tags/wrapper.marko", (input, $serialize) => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/tags/wrapper.marko", (input, $serialize) => {
+  const $scope0_id = _._scope_id();
   const {
     as: inputAs,
     ...htmlInput
   } = input;
-  _$.dynamicTag($scope0_id, "#text/0", inputAs || "div", htmlInput, _$.registerContent("__tests__/tags/wrapper.marko_1_renderer", () => {
-    const $scope1_id = _$.nextScopeId();
-    _$.write("hi");
-  }, $scope0_id), 0, _$.serializeGuard($serialize, /* inputAs,htmlInput */0));
-  _$.serializeGuard($serialize, /* inputAs,htmlInput */0) && _$.writeScope($scope0_id, {
-    inputAs: _$.serializeIf($serialize, /* input */2) && inputAs,
-    htmlInput: _$.serializeIf($serialize, /* input.as */1) && htmlInput
+  _._dynamic_tag($scope0_id, "#text/0", inputAs || "div", htmlInput, _._content_resume("__tests__/tags/wrapper.marko_1_content", () => {
+    const $scope1_id = _._scope_id();
+    _._html("hi");
+  }, $scope0_id), 0, _._serialize_guard($serialize, /* inputAs,htmlInput */0));
+  _._serialize_guard($serialize, /* inputAs,htmlInput */0) && _._scope($scope0_id, {
+    inputAs: _._serialize_if($serialize, /* input */2) && inputAs,
+    htmlInput: _._serialize_if($serialize, /* input.as */1) && htmlInput
   }, "__tests__/tags/wrapper.marko", 0, {
     inputAs: "1:13",
     htmlInput: "1:25"

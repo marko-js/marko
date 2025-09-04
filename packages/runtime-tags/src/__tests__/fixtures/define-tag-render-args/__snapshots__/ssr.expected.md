@@ -1,6 +1,6 @@
 # Write
 ```html
-  <!--M_[2--><div>1<!--M_*2 #text/0-->|<!>Hello<!--M_*2 #text/1-->|<!>1<!--M_*2 #text/2--></div><!--M_]1 #text/0--><button>1<!--M_*1 #text/2--></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d=[0,_.a={"ConditionalScope:#text/0":_.c={},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_renderer",x:1,MyTag:_.b={}},_.c],_.b.content=_._["__tests__/template.marko_1_renderer"](_.a),_.d),"__tests__/template.marko_0_x",1];M._.w()</script>
+  <!--M_[2--><div>1<!--M_*2 #text/0-->|<!>Hello<!--M_*2 #text/1-->|<!>1<!--M_*2 #text/2--></div><!--M_]1 #text/0--><button>1<!--M_*1 #text/2--></button><!--M_*1 #button/1--><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.d=[0,_.a={"ConditionalScope:#text/0":_.c={},"ConditionalRenderer:#text/0":"__tests__/template.marko_1_content",x:1,MyTag:_.b={}},_.c],_.b.content=_._["__tests__/template.marko_1_content"](_.a),_.d),"__tests__/template.marko_0_x",1];M._.w()</script>
 ```
 
 # Render End
@@ -31,11 +31,11 @@
       WALKER_RUNTIME("M")("_");
       M._.r = [_ =&gt; (_.d = [0, _.a = {
           "ConditionalScope:#text/0": _.c = {},
-          "ConditionalRenderer:#text/0": "__tests__/template.marko_1_renderer",
+          "ConditionalRenderer:#text/0": "__tests__/template.marko_1_content",
           x: 1,
           MyTag: _.b = {}
         }, _.c], _.b.content = _._[
-          "__tests__/template.marko_1_renderer"
+          "__tests__/template.marko_1_content"
           ](_.a), _.d),
         "__tests__/template.marko_0_x",
         1

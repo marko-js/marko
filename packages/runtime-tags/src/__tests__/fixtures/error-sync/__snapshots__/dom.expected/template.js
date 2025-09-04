@@ -6,5 +6,5 @@ export function $setup($scope) {
     throw new Error("ERROR!");
   })());
 }
-import * as _$ from "@marko/runtime-tags/debug/dom";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+import * as _2 from "@marko/runtime-tags/debug/dom";
+export default /* @__PURE__ */_2._template("__tests__/template.marko", $template, $walks, $setup);

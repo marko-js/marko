@@ -19,7 +19,7 @@
         {
           "ConditionalScope:#text/0": _.a = {
             "ConditionalScope:#span/0": _.b = {},
-            "ConditionalRenderer:#span/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content"
           },
           "ConditionalRenderer:#text/0": "span",
           tagName: "span",
@@ -57,7 +57,7 @@ container.querySelector("button").click();
         {
           "ConditionalScope:#text/0": _.a = {
             "ConditionalScope:#span/0": _.b = {},
-            "ConditionalRenderer:#span/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content"
           },
           "ConditionalRenderer:#text/0": "span",
           tagName: "span",
@@ -102,7 +102,7 @@ container.querySelector("button").click();
         {
           "ConditionalScope:#text/0": _.a = {
             "ConditionalScope:#span/0": _.b = {},
-            "ConditionalRenderer:#span/0": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#span/0": "__tests__/template.marko_1_content"
           },
           "ConditionalRenderer:#text/0": "span",
           tagName: "span",

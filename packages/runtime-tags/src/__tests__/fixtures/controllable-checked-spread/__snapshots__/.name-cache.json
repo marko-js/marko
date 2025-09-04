@@ -1,11 +1,11 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "e",
-      "$$input_effect": "r",
-      "$$input": "a",
-      "$$checked": "o",
+      "$_": "t",
+      "$init": "r",
+      "$$input__script": "e",
+      "$$input": "o",
+      "$$checked": "c",
       "$$checkedChange": "m"
     }
   }

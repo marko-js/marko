@@ -1,16 +1,16 @@
-// size: 210 (min) 122 (brotli)
-const $c$if$content = _$.dynamicClosureRead(
+// size: 195 (min) 120 (brotli)
+const $if_content2__c = _._closure_get(
     4,
-    ($scope, c) => _$.data($scope[2], c),
+    ($scope, c) => _._text($scope[2], c),
     ($scope) => $scope._._,
   ),
-  $c$customtag$content = _$.dynamicClosureRead(4, ($scope, c) =>
-    _$.data($scope[2], c),
+  $customtag_content__c = _._closure_get(4, ($scope, c) =>
+    _._text($scope[2], c),
   ),
-  $c_closure = _$.dynamicClosure($c$customtag$content, $c$if$content),
-  $c = _$.state(4, $c_closure);
-(_$.effect("b1", ($scope) =>
-  _$.on($scope[0], "click", function () {
+  $c__closure = _._closure($customtag_content__c, $if_content2__c),
+  $c = _._let(4, $c__closure);
+(_._script("b1", ($scope) =>
+  _._on($scope[0], "click", function () {
     $c($scope, 4);
   }),
 ),

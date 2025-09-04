@@ -1,37 +1,37 @@
 export const $template = "<button></button>";
 export const $walks = /* get, over(1) */" b";
 let sideEffect = 3;
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $setup$define$content = $scope => {
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $define_content__setup = $scope => {
   debugger;
-  _$.data($scope["#text/1"], sideEffect++);
-  $count$define$content($scope);
+  _._text($scope["#text/1"], sideEffect++);
+  $define_content__count($scope);
 };
-const $count$define$content = /* @__PURE__ */_$.dynamicClosureRead("count", ($scope, count) => _$.data($scope["#text/0"], count));
-const $define_content = _$.registerContent("__tests__/template.marko_1_renderer", "<!> <!>", /* replace, over(2), replace, over(1) */"%c%b", $setup$define$content);
-const $expr_count_MyThing = /* @__PURE__ */_$.intersection(3, $scope => {
+const $define_content__count = /* @__PURE__ */_._closure_get("count", ($scope, count) => _._text($scope["#text/0"], count));
+const $define_content = _._content_resume("__tests__/template.marko_1_content", "<!> <!>", /* replace, over(2), replace, over(1) */"%c%b", $define_content__setup);
+const $count__OR__MyThing = /* @__PURE__ */_._or(3, $scope => {
   let {
     count,
     MyThing
   } = $scope;
-  _$.insertContent($scope, "#button/0", (count, MyThing));
+  _._attr_content($scope, "#button/0", (count, MyThing));
 });
-const $count_closure = /* @__PURE__ */_$.dynamicClosure($count$define$content);
-const $count_effect = _$.effect("__tests__/template.marko_0_count", ($scope, {
+const $count__closure = /* @__PURE__ */_._closure($define_content__count);
+const $count__script = _._script("__tests__/template.marko_0_count", ($scope, {
   count
-}) => _$.on($scope["#button/0"], "click", function () {
+}) => _._on($scope["#button/0"], "click", function () {
   $count($scope, ++count)
 }));
-const $count = /* @__PURE__ */_$.state("count/1", $scope => {
-  $expr_count_MyThing($scope);
-  $count_closure($scope);
-  $count_effect($scope);
+const $count = /* @__PURE__ */_._let("count/1", $scope => {
+  $count__OR__MyThing($scope);
+  $count__closure($scope);
+  $count__script($scope);
 });
-const $MyThing = /* @__PURE__ */_$.value("MyThing", $expr_count_MyThing);
+const $MyThing = /* @__PURE__ */_._const("MyThing", $count__OR__MyThing);
 export function $setup($scope) {
   $count($scope, 0);
   $MyThing($scope, {
     content: $define_content($scope)
   });
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

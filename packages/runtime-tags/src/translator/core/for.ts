@@ -249,7 +249,7 @@ export default {
         const nodeRef = getOptimizedOnlyChildNodeBinding(tag, tagSection);
         setClosureSignalBuilder(tag, (closure, render) => {
           return callRuntime(
-            "loopClosure",
+            "_for_closure",
             getScopeAccessorLiteral(closure),
             getScopeAccessorLiteral(nodeRef),
             render,
@@ -390,22 +390,22 @@ function forTypeToRuntime(type: ForType) {
 function forTypeToHTMLResumeRuntime(type: ForType) {
   switch (type) {
     case "of":
-      return "resumeForOf";
+      return "_for_of";
     case "in":
-      return "resumeForIn";
+      return "_for_in";
     case "to":
-      return "resumeForTo";
+      return "_for_to";
   }
 }
 
 function forTypeToDOMRuntime(type: ForType) {
   switch (type) {
     case "of":
-      return "loopOf";
+      return "_for_of";
     case "in":
-      return "loopIn";
+      return "_for_in";
     case "to":
-      return "loopTo";
+      return "_for_to";
   }
 }
 

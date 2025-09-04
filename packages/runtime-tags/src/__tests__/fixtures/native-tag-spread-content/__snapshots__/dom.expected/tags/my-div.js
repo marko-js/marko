@@ -1,50 +1,50 @@
 export const $template = "<div></div><button></button><span>Overridden</span><output></output><strong></strong><p></p><em></em>";
 export const $walks = /* get, over(1), get, over(1), get, over(1), get, over(1), get, over(1), get, over(1), get, over(1) */" b b b b b b b";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $define_content = _$.registerContent("__tests__/tags/my-div.marko_1_renderer", "Custom content", /* over(1) */"b");
-const $expr_input_CustomContent_content_effect = _$.effect("__tests__/tags/my-div.marko_0_input_CustomContent_content", $scope => _$.attrsEvents($scope, "#p/5"));
-const $expr_input_CustomContent_content = /* @__PURE__ */_$.intersection(11, $scope => {
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $define_content = _._content_resume("__tests__/tags/my-div.marko_1_content", "Custom content", /* over(1) */"b");
+const $input__OR__CustomContent_content__script = _._script("__tests__/tags/my-div.marko_0_input_CustomContent_content", $scope => _._attrs_script($scope, "#p/5"));
+const $input__OR__CustomContent_content = /* @__PURE__ */_._or(11, $scope => {
   let {
     input,
     CustomContent_content
   } = $scope;
-  _$.attrsAndContent($scope, "#p/5", {
+  _._attrs_content($scope, "#p/5", {
     content: CustomContent_content,
     ...input
   });
-  $expr_input_CustomContent_content_effect($scope);
+  $input__OR__CustomContent_content__script($scope);
 });
-const $input_effect = _$.effect("__tests__/tags/my-div.marko_0_input", $scope => {
-  _$.attrsEvents($scope, "#div/0");
-  _$.attrsEvents($scope, "#button/1");
-  _$.attrsEvents($scope, "#span/2");
-  _$.attrsEvents($scope, "#output/3");
-  _$.attrsEvents($scope, "#strong/4");
+const $input__script = _._script("__tests__/tags/my-div.marko_0_input", $scope => {
+  _._attrs_script($scope, "#div/0");
+  _._attrs_script($scope, "#button/1");
+  _._attrs_script($scope, "#span/2");
+  _._attrs_script($scope, "#output/3");
+  _._attrs_script($scope, "#strong/4");
 });
-export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => {
-  _$.attrsAndContent($scope, "#div/0", input);
-  _$.attrsAndContent($scope, "#button/1", {
+export const $input = /* @__PURE__ */_._const("input", ($scope, input) => {
+  _._attrs_content($scope, "#div/0", input);
+  _._attrs_content($scope, "#button/1", {
     foo: 1,
     ...input
   });
-  _$.attrs($scope, "#span/2", input);
-  _$.attrs($scope, "#output/3", input);
-  _$.attrs($scope, "#strong/4", input);
-  $expr_input_CustomContent_content($scope);
-  $input_effect($scope);
+  _._attrs($scope, "#span/2", input);
+  _._attrs($scope, "#output/3", input);
+  _._attrs($scope, "#strong/4", input);
+  $input__OR__CustomContent_content($scope);
+  $input__script($scope);
 });
-const $CustomContent = /* @__PURE__ */_$.value("CustomContent", ($scope, CustomContent) => {
-  _$.insertContent($scope, "#em/6", CustomContent);
+const $CustomContent = /* @__PURE__ */_._const("CustomContent", ($scope, CustomContent) => {
+  _._attr_content($scope, "#em/6", CustomContent);
   $CustomContent_content($scope, CustomContent?.content);
 });
 export function $setup($scope) {
-  _$.insertContent($scope, "#output/3", undefined);
+  _._attr_content($scope, "#output/3", undefined);
   $CustomContent($scope, {
     content: $define_content($scope)
   });
 }
-const $CustomContent_content = /* @__PURE__ */_$.value("CustomContent_content", ($scope, CustomContent_content) => {
-  _$.insertContent($scope, "#strong/4", CustomContent_content);
-  $expr_input_CustomContent_content($scope);
+const $CustomContent_content = /* @__PURE__ */_._const("CustomContent_content", ($scope, CustomContent_content) => {
+  _._attr_content($scope, "#strong/4", CustomContent_content);
+  $input__OR__CustomContent_content($scope);
 });
-export default /* @__PURE__ */_$.createTemplate("__tests__/tags/my-div.marko", $template, $walks, $setup, $input);
+export default /* @__PURE__ */_._template("__tests__/tags/my-div.marko", $template, $walks, $setup, $input);

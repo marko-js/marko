@@ -1,22 +1,22 @@
 import _child from "./tags/child.marko";
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   let name = "Marko";
-  const $childScope = _$.peekNextScopeId();
+  const $childScope = _._peek_scope_id();
   let data = _child({
     extra: 1
   });
-  _$.setTagVar($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_data/var");
+  _._var($scope0_id, "#scopeOffset/1", $childScope, "__tests__/template.marko_0_data/var");
   const message = `${name} ${data}`;
-  _$.write(`<div>${_$.escapeXML(message)}${_$.markResumeNode($scope0_id, "#text/2")}</div>`);
-  _$.writeScope($scope0_id, {
+  _._html(`<div>${_._escape(message)}${_._el_resume($scope0_id, "#text/2")}</div>`);
+  _._scope($scope0_id, {
     name,
     data,
-    "#childScope/0": _$.writeExistingScope($childScope)
+    "#childScope/0": _._existing_scope($childScope)
   }, "__tests__/template.marko", 0, {
     name: "1:6",
     data: "2:8"
   });
-  _$.resumeClosestBranch($scope0_id);
+  _._resume_branch($scope0_id);
 });

@@ -1,16 +1,16 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   const arrA = [1, 2, 3];
-  _$.write("<div>");
-  _$.forOf(arrA, val => {
-    const $scope1_id = _$.nextScopeId();
-    _$.write(`<div>${_$.escapeXML(val)}</div>`);
+  _._html("<div>");
+  _.forOf(arrA, val => {
+    const $scope1_id = _._scope_id();
+    _._html(`<div>${_._escape(val)}</div>`);
   });
-  _$.write("</div><div>");
-  _$.forOf(arrA, val => {
-    const $scope2_id = _$.nextScopeId();
-    _$.write(`<div>${_$.escapeXML(val)}</div>`);
+  _._html("</div><div>");
+  _.forOf(arrA, val => {
+    const $scope2_id = _._scope_id();
+    _._html(`<div>${_._escape(val)}</div>`);
   });
-  _$.write("<div></div></div>");
+  _._html("<div></div></div>");
 });

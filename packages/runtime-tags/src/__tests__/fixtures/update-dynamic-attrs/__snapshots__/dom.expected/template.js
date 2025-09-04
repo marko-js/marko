@@ -1,36 +1,36 @@
 export const $template = "<div></div><div></div><div></div>";
 export const $walks = /* get, over(1), get, over(1), get, over(1) */" b b b";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $expr_input_value_a_effect = _$.effect("__tests__/template.marko_0_input_value_a", $scope => _$.attrsEvents($scope, "#div/1"));
-const $expr_input_value_a = /* @__PURE__ */_$.intersection(7, $scope => {
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $input_value__OR__a__script = _._script("__tests__/template.marko_0_input_value_a", $scope => _._attrs_script($scope, "#div/1"));
+const $input_value__OR__a = /* @__PURE__ */_._or(7, $scope => {
   let {
     input_value,
     a
   } = $scope;
-  _$.attrsAndContent($scope, "#div/1", {
+  _._attrs_content($scope, "#div/1", {
     a: a,
     ...input_value
   });
-  $expr_input_value_a_effect($scope);
+  $input_value__OR__a__script($scope);
 });
-const $a = /* @__PURE__ */_$.state("a/6", ($scope, a) => {
-  _$.attr($scope["#div/2"], "a", a);
-  $expr_input_value_a($scope);
+const $a = /* @__PURE__ */_._let("a/6", ($scope, a) => {
+  _._attr($scope["#div/2"], "a", a);
+  $input_value__OR__a($scope);
 });
 export function $setup($scope) {
   $a($scope, 0);
 }
-const $input_value_effect = _$.effect("__tests__/template.marko_0_input_value", $scope => {
-  _$.attrsEvents($scope, "#div/0");
-  _$.attrsEvents($scope, "#div/2");
+const $input_value__script = _._script("__tests__/template.marko_0_input_value", $scope => {
+  _._attrs_script($scope, "#div/0");
+  _._attrs_script($scope, "#div/2");
 });
-export const $input_value = /* @__PURE__ */_$.value("input_value", ($scope, input_value) => {
-  _$.attrsAndContent($scope, "#div/0", input_value);
-  _$.partialAttrsAndContent($scope, "#div/2", input_value, {
+export const $input_value = /* @__PURE__ */_._const("input_value", ($scope, input_value) => {
+  _._attrs_content($scope, "#div/0", input_value);
+  _._attrs_partial_content($scope, "#div/2", input_value, {
     a: 1
   });
-  $expr_input_value_a($scope);
-  $input_value_effect($scope);
+  $input_value__OR__a($scope);
+  $input_value__script($scope);
 });
-export const $input = /* @__PURE__ */_$.value("input", ($scope, input) => $input_value($scope, input.value));
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup, $input);
+export const $input = /* @__PURE__ */_._const("input", ($scope, input) => $input_value($scope, input.value));
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup, $input);

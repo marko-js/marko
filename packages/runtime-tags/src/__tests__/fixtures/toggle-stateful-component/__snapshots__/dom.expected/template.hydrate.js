@@ -1,17 +1,17 @@
-// size: 569 (min) 327 (brotli)
-const $expr_input_onCount_clickCount_effect = _$.effect(
+// size: 547 (min) 322 (brotli)
+const $input_onCount__OR__clickCount__script = _._script(
     "a0",
     ($scope, { 4: input_onCount, 5: clickCount }) =>
-      _$.on($scope[0], "click", function () {
+      _._on($scope[0], "click", function () {
         input_onCount($clickCount($scope, ++clickCount));
       }),
   ),
-  $expr_input_onCount_clickCount = _$.intersection(
+  $input_onCount__OR__clickCount = _._or(
     6,
-    $expr_input_onCount_clickCount_effect,
+    $input_onCount__OR__clickCount__script,
   ),
-  $clickCount = _$.state(5, ($scope, clickCount) => {
-    (_$.data(
+  $clickCount = _._let(5, ($scope, clickCount) => {
+    (_._text(
       $scope[1],
       ((() => {
         if (clickCount > 0)
@@ -21,26 +21,26 @@ const $expr_input_onCount_clickCount_effect = _$.effect(
       })(),
       clickCount),
     ),
-      $expr_input_onCount_clickCount($scope));
+      $input_onCount__OR__clickCount($scope));
   });
-const $input_onCount = _$.value(4, $expr_input_onCount_clickCount),
-  $setup$if$content = ($scope) => {
+const $input_onCount = _._const(4, $input_onCount__OR__clickCount),
+  $if_content__setup = ($scope) => {
     (!(function ($scope) {
       $clickCount($scope, 0);
     })($scope[0]),
-      $onCount$if$content._($scope));
+      $if_content__onCount._($scope));
   },
-  $onCount$if$content = _$.conditionalClosure(2, 0, 0, ($scope, onCount) =>
+  $if_content__onCount = _._if_closure(2, 0, 0, ($scope, onCount) =>
     $input_onCount($scope[0], onCount),
   ),
-  $if_content = _$.createRenderer(
+  $if_content = _._content_branch(
     "<div><button> </button></div>",
     "D/ D l&l",
-    $setup$if$content,
+    $if_content__setup,
   ),
-  $if = _$.conditional(0, $if_content),
-  $show = _$.state(1, ($scope, show) => $if($scope, show ? 0 : 1));
-(_$.register("b0", function ($scope) {
+  $if = _._if(0, $if_content),
+  $show = _._let(1, ($scope, show) => $if($scope, show ? 0 : 1));
+(_._resume("b0", function ($scope) {
   return function (count) {
     $show($scope, count < 1);
   };

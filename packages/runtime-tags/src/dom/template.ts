@@ -9,19 +9,19 @@ import {
 } from "../common/types";
 import { insertChildNodes } from "./dom";
 import { prepareEffects, runEffects } from "./queue";
-import { createBranch, createContent, type Renderer } from "./renderer";
-import { register } from "./resume";
+import { _content, createBranch, type Renderer } from "./renderer";
+import { _resume } from "./resume";
 import { removeAndDestroyBranch } from "./scope";
-import { type Signal, tagVarSignalChange } from "./signals";
+import { _var_change, type Signal } from "./signals";
 
-export const createTemplate = (
+export const _template = (
   id: string,
   template: string | 0,
   walks?: string | 0,
   setup?: ((scope: Scope) => void) | 0,
   inputSignal?: Signal<unknown>,
 ): Template => {
-  const renderer = createContent(
+  const renderer = _content(
     id,
     template,
     walks,
@@ -38,7 +38,7 @@ export const createTemplate = (
     };
   }
 
-  return register(id, renderer);
+  return _resume(id, renderer);
 };
 
 function mount(
@@ -133,7 +133,7 @@ function mount(
       return curValue;
     },
     set value(newValue) {
-      tagVarSignalChange(branch, newValue);
+      _var_change(branch, newValue);
     },
     update(newInput: unknown) {
       if (args) {

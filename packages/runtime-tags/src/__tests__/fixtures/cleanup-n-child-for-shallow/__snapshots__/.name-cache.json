@@ -1,19 +1,19 @@
 {
   "vars": {
     "props": {
-      "$_$": "e",
-      "$init": "t",
-      "$$expr_name_write_effect": "o",
-      "$$expr_name_write": "n",
-      "$$write$1": "a",
-      "$$name": "r",
-      "$$write$for$content": "i",
-      "$$item$for$content": "l",
-      "$$params2$for$content": "s",
-      "$$setup$for$content": "u",
-      "$$for_content": "c",
-      "$$for": "d",
-      "$$items_effect": "m",
+      "$_": "t",
+      "$init": "n",
+      "$$name__OR__write__script": "o",
+      "$$name__OR__write": "r",
+      "$$name": "_",
+      "$$write$1": "e",
+      "$$for_content__setup": "s",
+      "$$for_content__write": "c",
+      "$$for_content__item": "i",
+      "$$for_content__$params": "a",
+      "$$for_content": "m",
+      "$$for": "l",
+      "$$items__script": "u",
       "$$items": "f"
     }
   }

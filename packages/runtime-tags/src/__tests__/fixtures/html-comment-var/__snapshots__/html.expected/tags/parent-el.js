@@ -1,12 +1,12 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/tags/parent-el.marko", input => {
-  const $scope0_id = _$.nextScopeId();
-  const ref = _$.nodeRef();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/tags/parent-el.marko", input => {
+  const $scope0_id = _._scope_id();
+  const ref = _._el();
   let tagName = undefined;
-  _$.write(`<!--Body Text-->${_$.markResumeNode($scope0_id, "#comment/0")}`);
+  _._html(`<!--Body Text-->${_._el_resume($scope0_id, "#comment/0")}`);
   const $return = tagName;
-  _$.writeEffect($scope0_id, "__tests__/tags/parent-el.marko_0");
-  _$.writeScope($scope0_id, {}, "__tests__/tags/parent-el.marko", 0);
-  _$.resumeClosestBranch($scope0_id);
+  _._script($scope0_id, "__tests__/tags/parent-el.marko_0");
+  _._scope($scope0_id, {}, "__tests__/tags/parent-el.marko", 0);
+  _._resume_branch($scope0_id);
   return $return;
 });

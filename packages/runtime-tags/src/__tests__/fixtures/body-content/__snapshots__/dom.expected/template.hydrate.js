@@ -1,38 +1,37 @@
-// size: 438 (min) 254 (brotli)
-const $attrs_effect = _$.effect("a0", ($scope) => _$.attrsEvents($scope, 0)),
-  $attrs = _$.value(5, ($scope, attrs) => {
-    (_$.attrs($scope, 0, attrs), $attrs_effect($scope));
+// size: 434 (min) 260 (brotli)
+const $attrs__script = _._script("a0", ($scope) => _._attrs_script($scope, 0)),
+  $attrs = _._const(5, ($scope, attrs) => {
+    (_._attrs($scope, 0, attrs), $attrs__script($scope));
   }),
-  $dynamicTag = _$.dynamicTag(1),
-  $content = _$.value(4, $dynamicTag),
-  $input = _$.value(3, ($scope, input) => {
+  $dynamicTag = _._dynamic_tag(1),
+  $content = _._const(4, $dynamicTag),
+  $input = _._const(3, ($scope, input) => {
     ((({ content: content, ...attrs }) => {
       $attrs($scope, attrs);
     })(input),
       $content($scope, input.content));
   }),
-  $clickCount$FancyButton$content = _$.dynamicClosureRead(
-    1,
-    ($scope, clickCount) => _$.data($scope[0], clickCount),
+  $FancyButton_content__clickCount = _._closure_get(1, ($scope, clickCount) =>
+    _._text($scope[0], clickCount),
   ),
-  $setup$FancyButton$content = $clickCount$FancyButton$content,
-  $FancyButton_content = _$.registerContent(
+  $FancyButton_content__setup = $FancyButton_content__clickCount,
+  $FancyButton_content = _._content_resume(
     "b1",
     " ",
     " b",
-    $setup$FancyButton$content,
+    $FancyButton_content__setup,
   ),
-  $clickCount_closure = _$.dynamicClosure($clickCount$FancyButton$content),
-  $clickCount = _$.state(1, ($scope, clickCount) => {
+  $clickCount__closure = _._closure($FancyButton_content__clickCount),
+  $clickCount = _._let(1, ($scope, clickCount) => {
     ($input($scope[0], {
       onClick: $onClick($scope),
       content: $FancyButton_content($scope),
     }),
-      $clickCount_closure($scope));
+      $clickCount__closure($scope));
   });
 function $onClick($scope, { 1: clickCount } = $scope) {
   return function () {
     $clickCount($scope, ++clickCount);
   };
 }
-(_$.register("b0", $onClick), init());
+(_._resume("b0", $onClick), init());

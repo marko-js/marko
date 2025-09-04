@@ -13,13 +13,13 @@ export function $setup($scope) {
     format: formatNumber2
   });
 }
-import * as _$ from "@marko/runtime-tags/debug/dom";
+import * as _ from "@marko/runtime-tags/debug/dom";
 function $formatNumber(n) {
   return "$" + n.toFixed(2);
 }
 function $formatNumber2(n) {
   return "$" + n.toFixed(2);
 }
-_$.register("__tests__/template.marko_0/formatNumber", $formatNumber);
-_$.register("__tests__/template.marko_0/formatNumber2", $formatNumber2);
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+_._resume("__tests__/template.marko_0/formatNumber", $formatNumber);
+_._resume("__tests__/template.marko_0/formatNumber2", $formatNumber2);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

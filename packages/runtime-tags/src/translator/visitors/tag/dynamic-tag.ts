@@ -164,7 +164,7 @@ export default {
           getProgram().node.body.push(
             t.expressionStatement(
               callRuntime(
-                "register",
+                "_resume",
                 t.stringLiteral(loadFileForTag(tag)!.metadata.marko.id),
                 t.identifier((tagExpression as t.Identifier).name),
               ),
@@ -208,7 +208,7 @@ export default {
         );
         const dynamicTagExpr = hasTagArgs
           ? callRuntime(
-              "dynamicTag",
+              "_dynamic_tag",
               getScopeIdIdentifier(tagSection),
               getScopeAccessorLiteral(nodeBinding),
               tagExpression,
@@ -218,7 +218,7 @@ export default {
               serializeArg,
             )
           : callRuntime(
-              "dynamicTag",
+              "_dynamic_tag",
               getScopeIdIdentifier(tagSection),
               getScopeAccessorLiteral(nodeBinding),
               tagExpression,
@@ -236,7 +236,7 @@ export default {
             t.variableDeclaration("const", [
               t.variableDeclarator(
                 dynamicScopeIdentifier,
-                callRuntime("peekNextScopeId"),
+                callRuntime("_peek_scope_id"),
               ),
             ]),
           );
@@ -246,7 +246,7 @@ export default {
             ]),
             t.expressionStatement(
               callRuntime(
-                "setTagVar",
+                "_var",
                 getScopeIdIdentifier(tagSection),
                 getScopeAccessorLiteral(
                   tag.node.extra![kChildOffsetScopeBinding]!,
@@ -281,7 +281,7 @@ export default {
           );
           tagVarSignal.register = true;
           tagVarSignal.buildAssignment = (valueSection, value) => {
-            return t.callExpression(importRuntime("tagVarSignalChange"), [
+            return t.callExpression(importRuntime("_var_change"), [
               t.memberExpression(
                 getScopeExpression(tagVarSignal!.section, valueSection),
                 t.stringLiteral(
@@ -297,7 +297,7 @@ export default {
 
         signal.build = () => {
           return callRuntime(
-            "dynamicTag",
+            "_dynamic_tag",
             getScopeAccessorLiteral(nodeBinding),
             bodySection && t.identifier(bodySection.name),
             tagVarSignal

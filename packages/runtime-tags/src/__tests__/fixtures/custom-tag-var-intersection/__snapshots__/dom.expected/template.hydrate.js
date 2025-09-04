@@ -1,18 +1,18 @@
-// size: 324 (min) 214 (brotli)
-const $expr_input_extra_x = _$.intersection(6, ($scope) => {
+// size: 298 (min) 212 (brotli)
+const $input_extra__OR__x = _._or(6, ($scope) => {
     let { 4: input_extra, 5: x } = $scope;
-    _$.tagVarSignal($scope, x + input_extra);
+    _._return($scope, x + input_extra);
   }),
-  $x_effect = _$.effect("a0", ($scope, { 5: x }) =>
-    _$.on($scope[0], "click", function () {
+  $x__script = _._script("a0", ($scope, { 5: x }) =>
+    _._on($scope[0], "click", function () {
       $x($scope, ++x);
     }),
   ),
-  $x = _$.state(5, ($scope, x) => {
-    (_$.data($scope[1], x), $expr_input_extra_x($scope), $x_effect($scope));
+  $x = _._let(5, ($scope, x) => {
+    (_._text($scope[1], x), $input_extra__OR__x($scope), $x__script($scope));
   }),
-  $message = _$.value(6, ($scope, message) => _$.data($scope[2], message)),
-  $expr_name_data = _$.intersection(
+  $message = _._const(6, ($scope, message) => _._text($scope[2], message)),
+  $name__OR__data = _._or(
     5,
     ($scope) => {
       let { 3: name, 4: data } = $scope;
@@ -21,4 +21,4 @@ const $expr_input_extra_x = _$.intersection(6, ($scope) => {
     1,
     1,
   );
-(_$.registerBoundSignal("b0", _$.value(4, $expr_name_data)), init());
+(_._var_resume("b0", _._const(4, $name__OR__data)), init());

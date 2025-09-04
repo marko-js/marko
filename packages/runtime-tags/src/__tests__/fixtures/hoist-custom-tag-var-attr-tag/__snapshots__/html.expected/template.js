@@ -1,16 +1,16 @@
 import _child from "./tags/child.marko";
-import * as _$ from "@marko/runtime-tags/debug/html";
+import * as _ from "@marko/runtime-tags/debug/html";
 import _thing from "./tags/thing.marko";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
-  const $hoisted_setHtml = _$.hoist($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml/hoist");
-  const $what_content_subscribers = new Set();
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
+  const $hoisted_setHtml = _._hoist($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml/hoist");
+  const $what_content__subscribers = new Set();
   _thing({
-    what: _$.attrTag({
-      content: _$.registerContent("__tests__/template.marko_1_renderer", () => {
-        const $scope1_id = _$.nextScopeId();
+    what: _.attrTag({
+      content: _._content_resume("__tests__/template.marko_1_content", () => {
+        const $scope1_id = _._scope_id();
         let setHtml = _child({});
-        _$.writeSubscribe($what_content_subscribers, _$.writeScope($scope1_id, {
+        _._subscribe($what_content__subscribers, _._scope($scope1_id, {
           setHtml
         }, "__tests__/template.marko", "3:4", {
           setHtml: "4:12"
@@ -18,10 +18,10 @@ export default _$.createTemplate("__tests__/template.marko", input => {
       }, $scope0_id)
     })
   });
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml");
-  _$.writeScope($scope0_id, {
+  _._script($scope0_id, "__tests__/template.marko_0_$hoisted_setHtml");
+  _._scope($scope0_id, {
     $hoisted_setHtml,
-    "ClosureScopes:1": $what_content_subscribers
+    "ClosureScopes:1": $what_content__subscribers
   }, "__tests__/template.marko", 0, {
     $hoisted_setHtml: "4:12"
   });

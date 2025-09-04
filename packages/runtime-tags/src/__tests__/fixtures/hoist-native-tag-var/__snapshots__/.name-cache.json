@@ -1,17 +1,11 @@
 {
   "vars": {
     "props": {
-      "$_$": "o",
-      "$init": "e",
+      "$_": "o",
+      "$init": "r",
       "$id": "t",
-      "$$get$hoisted_el": "r",
-      "$$get$hoisted_el2": "s",
-      "$$input_effect": "i",
-      "$$input": "d",
-      "$$get_el": "l",
-      "$$setup$if$content": "n",
-      "$$if_content2": "a",
-      "$$if$if$content": "c"
+      "$$get$hoisted_el": "s",
+      "$$get$hoisted_el2": "i"
     }
   }
 }

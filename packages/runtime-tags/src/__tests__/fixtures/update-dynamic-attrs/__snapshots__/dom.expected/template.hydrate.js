@@ -1,6 +1,6 @@
-// size: 99 (min) 69 (brotli)
-(_$.effect("a0", ($scope) => _$.attrsEvents($scope, 1)),
-  _$.effect("a1", ($scope) => {
-    (_$.attrsEvents($scope, 0), _$.attrsEvents($scope, 2));
+// size: 107 (min) 74 (brotli)
+(_._script("a0", ($scope) => _._attrs_script($scope, 1)),
+  _._script("a1", ($scope) => {
+    (_._attrs_script($scope, 0), _._attrs_script($scope, 2));
   }),
   init());

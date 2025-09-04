@@ -1,7 +1,7 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
-  _$.write("<div id=foo></div>");
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0");
-  _$.resumeClosestBranch($scope0_id);
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
+  _._html("<div id=foo></div>");
+  _._script($scope0_id, "__tests__/template.marko_0");
+  _._resume_branch($scope0_id);
 });

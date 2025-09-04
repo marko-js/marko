@@ -63,14 +63,14 @@ export function consumeHTML(path: t.NodePath<any>) {
   if (writeResult && trailerResult) {
     return t.expressionStatement(
       t.sequenceExpression([
-        callRuntime("write", writeResult),
-        callRuntime("writeTrailers", trailerResult),
+        callRuntime("_html", writeResult),
+        callRuntime("_trailers", trailerResult),
       ]),
     );
   } else if (writeResult) {
-    return t.expressionStatement(callRuntime("write", writeResult));
+    return t.expressionStatement(callRuntime("_html", writeResult));
   } else if (trailerResult) {
-    return t.expressionStatement(callRuntime("writeTrailers", trailerResult));
+    return t.expressionStatement(callRuntime("_trailers", trailerResult));
   }
 }
 
@@ -121,7 +121,7 @@ export function markNode(
     if (reason) {
       const section = getSection(path);
       writeTo(path)`${callRuntime(
-        "markResumeNode",
+        "_el_resume",
         getScopeIdIdentifier(section),
         getScopeAccessorLiteral(nodeBinding),
         getSerializeGuard(reason, true),

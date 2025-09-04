@@ -1,11 +1,11 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
+      "$_": "t",
       "$init": "o",
-      "$$expr_selected_num$for$content": "a",
-      "$$selected$for$content": "e",
-      "$$selected": "r"
+      "$$for_content__selected__OR__num": "r",
+      "$$for_content__selected": "a",
+      "$$selected": "m"
     }
   }
 }

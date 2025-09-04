@@ -2,9 +2,9 @@ export const $template = "<!><!><button></button>";
 export const $walks = /* over(1), replace, over(1), get, over(1) */"b%b b";
 import child1 from "./tags/child1.marko";
 import child2 from "./tags/child2.marko";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0");
-const $expr_tagName_val = /* @__PURE__ */_$.intersection(4, $scope => {
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0");
+const $tagName__OR__val = /* @__PURE__ */_._or(4, $scope => {
   let {
     tagName,
     val
@@ -13,18 +13,18 @@ const $expr_tagName_val = /* @__PURE__ */_$.intersection(4, $scope => {
     value: val
   }));
 });
-const $tagName_effect = _$.effect("__tests__/template.marko_0_tagName", ($scope, {
+const $tagName__script = _._script("__tests__/template.marko_0_tagName", ($scope, {
   tagName
-}) => _$.on($scope["#button/1"], "click", function () {
+}) => _._on($scope["#button/1"], "click", function () {
   $tagName($scope, tagName = tagName === child1 ? child2 : child1);
 }));
-const $tagName = /* @__PURE__ */_$.state("tagName/2", $scope => {
-  $expr_tagName_val($scope);
-  $tagName_effect($scope);
+const $tagName = /* @__PURE__ */_._let("tagName/2", $scope => {
+  $tagName__OR__val($scope);
+  $tagName__script($scope);
 });
-const $val = /* @__PURE__ */_$.state("val/3", $expr_tagName_val);
+const $val = /* @__PURE__ */_._let("val/3", $tagName__OR__val);
 export function $setup($scope) {
   $tagName($scope, child1);
   $val($scope, 3);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

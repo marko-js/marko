@@ -1,16 +1,16 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$init": "e",
-      "$$expr_input_onCount_clickCount_effect": "n",
-      "$$expr_input_onCount_clickCount": "o",
+      "$_": "t",
+      "$init": "n",
+      "$$input_onCount__OR__clickCount__script": "o",
+      "$$input_onCount__OR__clickCount": "e",
       "$$clickCount": "r",
       "$$input_onCount": "i",
-      "$$onCount$if$content": "a",
-      "$$setup$if$content": "c",
-      "$$if_content": "s",
-      "$$if": "u",
+      "$$if_content__setup": "c",
+      "$$if_content__onCount": "s",
+      "$$if_content": "u",
+      "$$if": "_",
       "$$show": "m"
     }
   }

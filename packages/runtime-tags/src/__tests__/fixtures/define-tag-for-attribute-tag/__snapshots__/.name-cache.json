@@ -1,16 +1,16 @@
 {
   "vars": {
     "props": {
-      "$_$": "e",
-      "$init": "t",
-      "$$dynamicTag": "a",
-      "$$input_thing_content": "n",
+      "$_": "t",
+      "$init": "n",
       "$$input_thing_selected": "o",
-      "$$input_thing": "c",
-      "$$define_content": "s",
+      "$$dynamicTag": "c",
+      "$$input_thing_content": "e",
+      "$$input_thing": "s",
+      "$$define_content": "_",
       "$$myThing": "m",
-      "$$selected_effect": "r",
-      "$$selected": "l"
+      "$$selected__script": "a",
+      "$$selected": "i"
     }
   }
 }

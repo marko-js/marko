@@ -27,7 +27,7 @@
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b], _.b._ = _.a, _.b["#CatchContent"] = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_1_clickCount",
         2
@@ -75,7 +75,7 @@ container.querySelector("button").click();
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b], _.b._ = _.a, _.b["#CatchContent"] = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_1_clickCount",
         2
@@ -117,7 +117,7 @@ container.querySelector("button").click();
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b], _.b._ = _.a, _.b["#CatchContent"] = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_1_clickCount",
         2

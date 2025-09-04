@@ -1,33 +1,33 @@
-// size: 461 (min) 280 (brotli)
-const $input_effect = _$.effect("a0", ($scope, { 1: input }) => {
+// size: 445 (min) 279 (brotli)
+const $input__script = _._script("a0", ($scope, { 1: input }) => {
     (input.write("mounted"),
-      (_$.getAbortSignal($scope, 0).onabort = () => {
+      (_.$signal($scope, 0).onabort = () => {
         input.write("destroyed");
       }));
   }),
-  $input = _$.value(1, ($scope) => {
-    (_$.resetAbortSignal($scope, 0), $input_effect($scope));
+  $input = _._const(1, ($scope) => {
+    (_.$signalReset($scope, 0), $input__script($scope));
   }),
-  $setup$if$content = ($scope) => {
+  $if_content__setup = ($scope) => {
     ($scope[0], $input($scope[0], { write: $write($scope) }));
   },
-  $if_content = _$.createRenderer(
+  $if_content = _._content_branch(
     "<div>a</div><span>b</span><p>c</p>",
     "/d&",
-    $setup$if$content,
+    $if_content__setup,
   ),
-  $if = _$.conditional(2, $if_content),
-  $show_effect = _$.effect("b1", ($scope, { 3: show }) =>
-    _$.on($scope[0], "click", function () {
+  $if = _._if(2, $if_content),
+  $show__script = _._script("b1", ($scope, { 3: show }) =>
+    _._on($scope[0], "click", function () {
       $show($scope, (show = !show));
     }),
   ),
-  $show = _$.state(3, ($scope, show) => {
-    ($if($scope, show ? 0 : 1), $show_effect($scope));
+  $show = _._let(3, ($scope, show) => {
+    ($if($scope, show ? 0 : 1), $show__script($scope));
   });
 function $write($scope) {
   return function (state) {
     $scope._[1].innerHTML = state;
   };
 }
-(_$.register("b0", $write), init());
+(_._resume("b0", $write), init());

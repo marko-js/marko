@@ -1,8 +1,8 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _2 from "@marko/runtime-tags/debug/html";
+export default _2._template("__tests__/template.marko", input => {
+  const $scope0_id = _2._scope_id();
   const _ = (() => {
     throw new Error("ERROR!");
   })();
-  _$.write("a");
+  _2._html("a");
 });

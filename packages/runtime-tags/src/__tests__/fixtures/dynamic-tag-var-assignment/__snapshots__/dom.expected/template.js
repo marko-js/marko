@@ -4,14 +4,14 @@ import Counter from "./tags/counter.marko";
 function getCounter() {
   return Counter; // breaks tag name analysis.
 }
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $dynamicTag = /* @__PURE__ */_$.dynamicTag("#text/0", 0, () => $count);
-const $count = _$.registerBoundSignal("__tests__/template.marko_0_count/var", $scope => {});
-const $setup_effect = _$.effect("__tests__/template.marko_0", $scope => _$.on($scope["#button/2"], "click", function () {
-  _$.tagVarSignalChange($scope["ConditionalScope:#text/0"], 0);
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $dynamicTag = /* @__PURE__ */_._dynamic_tag("#text/0", 0, () => $count);
+const $count = _._var_resume("__tests__/template.marko_0_count/var", $scope => {});
+const $setup__script = _._script("__tests__/template.marko_0", $scope => _._on($scope["#button/2"], "click", function () {
+  _._var_change($scope["ConditionalScope:#text/0"], 0);
 }));
 export function $setup($scope) {
   $dynamicTag($scope, getCounter());
-  $setup_effect($scope);
+  $setup__script($scope);
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

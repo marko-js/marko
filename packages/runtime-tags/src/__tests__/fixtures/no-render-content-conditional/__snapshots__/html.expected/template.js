@@ -1,15 +1,15 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
+import * as _ from "@marko/runtime-tags/debug/html";
 import _child from "./tags/child.marko";
-export default _$.createTemplate("__tests__/template.marko", (input, $serialize) => {
-  const $scope0_id = _$.nextScopeId();
-  const output = _$.nodeRef($scope0_id, "__tests__/template.marko_0/#div");
-  _$.write(`<div></div>${_$.markResumeNode($scope0_id, "#div/0")}`);
-  const $childScope = _$.peekNextScopeId();
+export default _._template("__tests__/template.marko", (input, $serialize) => {
+  const $scope0_id = _._scope_id();
+  const output = _._el($scope0_id, "__tests__/template.marko_0/#div");
+  _._html(`<div></div>${_._el_resume($scope0_id, "#div/0")}`);
+  const $childScope = _._peek_scope_id();
   _child({
     foo: input.foo,
     output: output
-  }, _$.serializeGuard($serialize, /* input.foo */0));
-  _$.writeScope($scope0_id, {
-    "#childScope/1": _$.serializeIf($serialize, /* input.foo */0) && _$.writeExistingScope($childScope)
+  }, _._serialize_guard($serialize, /* input.foo */0));
+  _._scope($scope0_id, {
+    "#childScope/1": _._serialize_if($serialize, /* input.foo */0) && _._existing_scope($childScope)
   }, "__tests__/template.marko", 0);
 });

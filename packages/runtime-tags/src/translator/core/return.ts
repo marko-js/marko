@@ -120,7 +120,7 @@ export default {
             section,
             attrs.value.extra?.referencedBindings,
             t.expressionStatement(
-              callRuntime("tagVarSignal", scopeIdentifier, attrs.value),
+              callRuntime("_return", scopeIdentifier, attrs.value),
             ),
           );
         }
@@ -131,11 +131,7 @@ export default {
             section,
             attrs.valueChange.extra?.referencedBindings,
             t.expressionStatement(
-              callRuntime(
-                "setTagVarChange",
-                scopeIdentifier,
-                attrs.valueChange,
-              ),
+              callRuntime("_return_change", scopeIdentifier, attrs.valueChange),
             ),
           );
         }

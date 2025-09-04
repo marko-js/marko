@@ -15,7 +15,7 @@
           "#BranchAccessor": "#text/0"
         }
       }, _.b], _.b["#CatchContent"] = _._[
-        "__tests__/template.marko_2_renderer"
+        "__tests__/template.marko_2_content"
         ](_.a), _.c)]
     </script>
   </body>

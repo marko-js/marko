@@ -1,12 +1,12 @@
-// size: 160 (min) 107 (brotli)
-_$.enableCatch();
-const $error_message$catch$content = _$.value(3, ($scope, error_message) =>
-    _$.data($scope[0], error_message),
+// size: 166 (min) 112 (brotli)
+_._enable_catch();
+const $catch_content__error_message = _._const(3, ($scope, error_message) =>
+    _._text($scope[0], error_message),
   ),
-  $params2$catch$content = _$.value(1, ($scope, $params2) =>
-    $error$catch$content($scope, $params2[0]),
+  $catch_content__$params = _._const(1, ($scope, $params2) =>
+    $catch_content__error($scope, $params2[0]),
   ),
-  $error$catch$content = _$.value(2, ($scope, error) =>
-    $error_message$catch$content($scope, error?.message),
+  $catch_content__error = _._const(2, ($scope, error) =>
+    $catch_content__error_message($scope, error?.message),
   );
-_$.registerContent("a0", " ", " b", 0, $params2$catch$content);
+_._content_resume("a0", " ", " b", 0, $catch_content__$params);

@@ -21,7 +21,7 @@
           }
         }, _.b,
         {}], _.b["#CatchContent"] = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.a), _.c),
         "__tests__/template.marko_0",
         1

@@ -1,6 +1,6 @@
-// size: 253 (min) 149 (brotli)
-const $x_effect = _$.effect("a0", ($scope, { 3: x }) => {
-    (_$.lifecycle($scope, 5, {
+// size: 256 (min) 180 (brotli)
+const $x__script = _._script("a0", ($scope, { 3: x }) => {
+    (_._lifecycle($scope, 5, {
       onMount: function () {
         this.cur = x;
       },
@@ -8,12 +8,12 @@ const $x_effect = _$.effect("a0", ($scope, { 3: x }) => {
         ($prev($scope, this.cur), (this.cur = x));
       },
     }),
-      _$.on($scope[2], "click", function () {
+      _._on($scope[2], "click", function () {
         $x($scope, ++x);
       }));
   }),
-  $x = _$.state(3, ($scope, x) => {
-    (_$.data($scope[0], x), $x_effect($scope));
+  $x = _._let(3, ($scope, x) => {
+    (_._text($scope[0], x), $x__script($scope));
   }),
-  $prev = _$.state(4, ($scope, prev) => _$.data($scope[1], prev));
+  $prev = _._let(4, ($scope, prev) => _._text($scope[1], prev));
 init();

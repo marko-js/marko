@@ -1,16 +1,16 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
+      "$_": "t",
       "$init": "o",
-      "$$dynamicTag2": "e",
-      "$$dynamicTag": "r",
-      "$$input_content": "s",
+      "$$dynamicTag": "s",
+      "$$dynamicTag2": "n",
+      "$$input_content": "r",
       "$$get$hoisted_el": "a",
       "$$get$hoisted_el2": "i",
-      "$$child_content2": "n",
-      "$$hoisted_el2$inputshowChildnull$content_effect": "c",
-      "$$hoisted_el2$inputshowChildnull$content": "f"
+      "$$child_content2": "c",
+      "$$inputshowChildnull_content__$hoisted_el__script": "_",
+      "$$inputshowChildnull_content__$hoisted_el": "m"
     }
   }
 }

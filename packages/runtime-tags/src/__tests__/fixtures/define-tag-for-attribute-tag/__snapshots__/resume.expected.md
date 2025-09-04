@@ -22,7 +22,7 @@
           selected: !1,
           "#childScope/0": _.a = {
             "ConditionalScope:#text/1": _.b = {},
-            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_content"
           }
         }, _.a, _.b]),
         "__tests__/template.marko_0_selected",
@@ -64,7 +64,7 @@ container.querySelector("button").click();
           selected: !1,
           "#childScope/0": _.a = {
             "ConditionalScope:#text/1": _.b = {},
-            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_content"
           }
         }, _.a, _.b]),
         "__tests__/template.marko_0_selected",
@@ -110,7 +110,7 @@ container.querySelector("button").click();
           selected: !1,
           "#childScope/0": _.a = {
             "ConditionalScope:#text/1": _.b = {},
-            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_content"
           }
         }, _.a, _.b]),
         "__tests__/template.marko_0_selected",
@@ -156,7 +156,7 @@ container.querySelector("button").click();
           selected: !1,
           "#childScope/0": _.a = {
             "ConditionalScope:#text/1": _.b = {},
-            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_renderer"
+            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_content"
           }
         }, _.a, _.b]),
         "__tests__/template.marko_0_selected",

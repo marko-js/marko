@@ -1,27 +1,27 @@
-// size: 382 (min) 227 (brotli)
-const $item$for$content = _$.value(2, ($scope, item) =>
-    _$.data($scope[0], item),
+// size: 380 (min) 223 (brotli)
+const $for_content__item = _._const(2, ($scope, item) =>
+    _._text($scope[0], item),
   ),
-  $params2$for$content = _$.value(1, ($scope, $params2) =>
-    $item$for$content($scope, $params2[0]),
+  $for_content__$params = _._const(1, ($scope, $params2) =>
+    $for_content__item($scope, $params2[0]),
   ),
-  $for_content = _$.createRenderer(" ", " b", 0, $params2$for$content),
-  $expr_id_items_effect = _$.effect("a0", ($scope, { 3: id, 4: items }) =>
-    _$.on($scope[1], "click", function () {
+  $for_content = _._content_branch(" ", " b", 0, $for_content__$params),
+  $id__OR__items__script = _._script("a0", ($scope, { 3: id, 4: items }) =>
+    _._on($scope[1], "click", function () {
       const nextId = id + 1;
       ($id($scope, (id = nextId)),
         $items($scope, (items = [...items, nextId])));
     }),
   ),
-  $expr_id_items = _$.intersection(5, $expr_id_items_effect),
-  $id = _$.state(3, $expr_id_items),
-  $for = _$.loopOf(0, $for_content),
-  $items_effect = _$.effect("a1", ($scope, { 4: items }) =>
-    _$.on($scope[2], "click", function () {
+  $id__OR__items = _._or(5, $id__OR__items__script),
+  $id = _._let(3, $id__OR__items),
+  $for = _._for_of(0, $for_content),
+  $items__script = _._script("a1", ($scope, { 4: items }) =>
+    _._on($scope[2], "click", function () {
       $items($scope, (items = items.slice(0, -1)));
     }),
   ),
-  $items = _$.state(4, ($scope, items) => {
-    ($for($scope, [items]), $expr_id_items($scope), $items_effect($scope));
+  $items = _._let(4, ($scope, items) => {
+    ($for($scope, [items]), $id__OR__items($scope), $items__script($scope));
   });
 init();

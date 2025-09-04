@@ -29,7 +29,7 @@
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_0_clickCount",
         1
@@ -85,7 +85,7 @@ container.querySelector("button").click();
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_0_clickCount",
         1
@@ -132,7 +132,7 @@ container.querySelector("button").click();
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_0_clickCount",
         1
@@ -188,7 +188,7 @@ REMOVE #document-fragment/#text after html/body/#text0
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_0_clickCount",
         1
@@ -245,7 +245,7 @@ container.querySelector("button").click();
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_0_clickCount",
         1
@@ -292,7 +292,7 @@ container.querySelector("button").click();
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_0_clickCount",
         1
@@ -348,7 +348,7 @@ REMOVE #document-fragment/#text after html/body/#text0
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b], _.b._ = _.a, _.b["#PlaceholderContent"] = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_0_clickCount",
         1

@@ -1,16 +1,16 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
+      "$_": "t",
       "$init": "o",
-      "$$count$if$content": "a",
-      "$$if_content": "n",
-      "$$if": "e",
-      "$$count_effect": "c",
-      "$$count": "i",
-      "$$show_effect": "r",
-      "$$show": "m",
-      "$$setup$if$content": "s"
+      "$$if_content__count": "n",
+      "$$if_content__setup": "c",
+      "$$if_content": "i",
+      "$$if": "r",
+      "$$show__script": "_",
+      "$$show": "a",
+      "$$count__script": "m",
+      "$$count": "s"
     }
   }
 }

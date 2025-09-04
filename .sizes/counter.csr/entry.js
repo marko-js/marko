@@ -1,13 +1,13 @@
-// size: 184 (min) 156 (brotli)
-const $clickCount_effect = effect("a0", ($scope, { 2: clickCount }) =>
-    on($scope[0], "click", function () {
+// size: 184 (min) 158 (brotli)
+const $clickCount__script = _script("a0", ($scope, { 2: clickCount }) =>
+    _on($scope[0], "click", function () {
       $clickCount($scope, ++clickCount);
     }),
   ),
-  $clickCount = state(2, ($scope, clickCount) => {
-    (data($scope[1], clickCount), $clickCount_effect($scope));
+  $clickCount = _let(2, ($scope, clickCount) => {
+    (_text($scope[1], clickCount), $clickCount__script($scope));
   });
 function $setup($scope) {
   $clickCount($scope, 0);
 }
-createTemplate("a", "<div><button> </button></div>", "D D m", $setup).mount();
+_template("a", "<div><button> </button></div>", "D D m", $setup).mount();

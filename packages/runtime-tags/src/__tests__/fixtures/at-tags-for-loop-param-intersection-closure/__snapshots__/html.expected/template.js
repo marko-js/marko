@@ -1,36 +1,36 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
+import * as _ from "@marko/runtime-tags/debug/html";
 import _list from "./tags/list/index.marko";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
-  const $mult_closures = new Set();
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
+  const $mult__closures = new Set();
   let mult = 2;
   let $item;
-  _$.forOf([1, 2, 3], item => {
-    $item = _$.attrTags($item, {
-      content: _$.registerContent("__tests__/template.marko_1_renderer", () => {
-        const $scope1_id = _$.nextScopeId();
-        _$.write(`${_$.escapeXML(item * mult)}${_$.markResumeNode($scope1_id, "#text/0")}`);
-        _$.writeSubscribe($mult_closures, _$.writeScope($scope1_id, {
+  _.forOf([1, 2, 3], item => {
+    $item = _.attrTags($item, {
+      content: _._content_resume("__tests__/template.marko_1_content", () => {
+        const $scope1_id = _._scope_id();
+        _._html(`${_._escape(item * mult)}${_._el_resume($scope1_id, "#text/0")}`);
+        _._subscribe($mult__closures, _._scope($scope1_id, {
           item,
-          _: _$.ensureScopeWithId($scope0_id),
+          _: _._scope_with_id($scope0_id),
           "ClosureSignalIndex:mult": 0
         }, "__tests__/template.marko", "4:5", {
           item: "3:7"
         }));
-        _$.resumeClosestBranch($scope1_id);
+        _._resume_branch($scope1_id);
       }, $scope0_id)
     });
   });
   _list({
     item: $item
   });
-  _$.write(`<button>Multiplier: <!>${_$.escapeXML(mult)}${_$.markResumeNode($scope0_id, "#text/2")}</button>${_$.markResumeNode($scope0_id, "#button/1")}`);
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0_mult");
-  _$.writeScope($scope0_id, {
+  _._html(`<button>Multiplier: <!>${_._escape(mult)}${_._el_resume($scope0_id, "#text/2")}</button>${_._el_resume($scope0_id, "#button/1")}`);
+  _._script($scope0_id, "__tests__/template.marko_0_mult");
+  _._scope($scope0_id, {
     mult,
-    "ClosureScopes:mult": $mult_closures
+    "ClosureScopes:mult": $mult__closures
   }, "__tests__/template.marko", 0, {
     mult: "1:5"
   });
-  _$.resumeClosestBranch($scope0_id);
+  _._resume_branch($scope0_id);
 });

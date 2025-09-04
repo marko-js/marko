@@ -1,8 +1,8 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
+import * as _ from "@marko/runtime-tags/debug/html";
 import _counter from "./tags/counter.marko";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
-  _$.write("<div>");
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
+  _._html("<div>");
   _counter({});
-  _$.write("</div>");
+  _._html("</div>");
 });

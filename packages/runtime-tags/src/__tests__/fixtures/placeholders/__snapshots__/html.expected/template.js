@@ -1,10 +1,10 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", (input, $serialize) => {
-  const $scope0_id = _$.nextScopeId();
-  _$.write(`${_$.commentSeparator(_$.serializeGuard($serialize, /* input.x */0))}${_$.escapeXML(input.x)}${_$.markResumeNode($scope0_id, "#text/0", _$.serializeGuard($serialize, /* input.x */0))}<span>${_$.escapeXML(input.x)}${_$.markResumeNode($scope0_id, "#text/1", _$.serializeGuard($serialize, /* input.x */0))}<div></div></span><div><div>a</div>${_$.escapeXML(input.x)}${_$.markResumeNode($scope0_id, "#text/2", _$.serializeGuard($serialize, /* input.x */0))}Hello Text &lt;a/>${_$.commentSeparator(_$.serializeGuard($serialize, /* input.x */0))}${_$.toString(input.x)}${_$.markResumeNode($scope0_id, "#text/3", _$.serializeGuard($serialize, /* input.x */0))}Hello HTML <span>hi</span><script>
-    ${_$.escapeScript("'Hello <b> </script>'")}
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", (input, $serialize) => {
+  const $scope0_id = _._scope_id();
+  _._html(`${_._sep(_._serialize_guard($serialize, /* input.x */0))}${_._escape(input.x)}${_._el_resume($scope0_id, "#text/0", _._serialize_guard($serialize, /* input.x */0))}<span>${_._escape(input.x)}${_._el_resume($scope0_id, "#text/1", _._serialize_guard($serialize, /* input.x */0))}<div></div></span><div><div>a</div>${_._escape(input.x)}${_._el_resume($scope0_id, "#text/2", _._serialize_guard($serialize, /* input.x */0))}Hello Text &lt;a/>${_._sep(_._serialize_guard($serialize, /* input.x */0))}${_._unescaped(input.x)}${_._el_resume($scope0_id, "#text/3", _._serialize_guard($serialize, /* input.x */0))}Hello HTML <span>hi</span><script>
+    ${_._escape_script("'Hello <b> </script>'")}
   </script><style>
-    ${_$.escapeStyle(".test { content: 'Hello <b> </style>' }")}
+    ${_._escape_style(".test { content: 'Hello <b> </style>' }")}
   </style></div>`);
-  _$.serializeGuard($serialize, /* input.x */0) && _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+  _._serialize_guard($serialize, /* input.x */0) && _._scope($scope0_id, {}, "__tests__/template.marko", 0);
 });

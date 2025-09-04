@@ -11,5 +11,5 @@ export function $setup($scope) {
   _wrapper($scope["#childScope/3"]);
   _wrapper_input($scope["#childScope/3"], {});
 }
-import * as _$ from "@marko/runtime-tags/debug/dom";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+import * as _ from "@marko/runtime-tags/debug/dom";
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

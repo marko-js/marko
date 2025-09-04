@@ -20,7 +20,7 @@
             "ConditionalScope:#text/1": _.c = {
               "ClosureSignalIndex:clickCount": 0
             },
-            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_renderer",
+            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_content",
             attrs: _.d = {}
           }
         }, _.e, _.c], _.c._ = _.a, _.b.click = _.d.onClick = _._[
@@ -61,7 +61,7 @@ container.querySelector("button").click();
             "ConditionalScope:#text/1": _.c = {
               "ClosureSignalIndex:clickCount": 0
             },
-            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_renderer",
+            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_content",
             attrs: _.d = {}
           }
         }, _.e, _.c], _.c._ = _.a, _.b.click = _.d.onClick = _._[
@@ -106,7 +106,7 @@ container.querySelector("button").click();
             "ConditionalScope:#text/1": _.c = {
               "ClosureSignalIndex:clickCount": 0
             },
-            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_renderer",
+            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_content",
             attrs: _.d = {}
           }
         }, _.e, _.c], _.c._ = _.a, _.b.click = _.d.onClick = _._[
@@ -151,7 +151,7 @@ container.querySelector("button").click();
             "ConditionalScope:#text/1": _.c = {
               "ClosureSignalIndex:clickCount": 0
             },
-            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_renderer",
+            "ConditionalRenderer:#text/1": "__tests__/template.marko_1_content",
             attrs: _.d = {}
           }
         }, _.e, _.c], _.c._ = _.a, _.b.click = _.d.onClick = _._[

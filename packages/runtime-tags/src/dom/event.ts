@@ -3,7 +3,7 @@ import { rendering } from "./queue";
 type EventNames = keyof GlobalEventHandlersEventMap;
 const defaultDelegator = createDelegator();
 
-export function on<
+export function _on<
   T extends EventNames,
   H extends
     | false

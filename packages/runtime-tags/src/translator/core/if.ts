@@ -216,7 +216,7 @@ export const IfTag = {
 
             statement = t.expressionStatement(
               callRuntime(
-                "resumeConditional",
+                "_if",
                 cbNode,
                 getScopeIdIdentifier(ifTagSection),
                 getScopeAccessorLiteral(nodeBinding),
@@ -275,7 +275,7 @@ export const IfTag = {
               rendererIdentifiers.push(t.identifier(branchBodySection.name));
               setClosureSignalBuilder(branchTag, (closure, render) => {
                 return callRuntime(
-                  "conditionalClosure",
+                  "_if_closure",
                   getScopeAccessorLiteral(closure),
                   getScopeAccessorLiteral(nodeRef),
                   t.numericLiteral(i),
@@ -293,7 +293,7 @@ export const IfTag = {
           const signal = getSignal(ifTagSection, nodeRef, "if");
           signal.build = () => {
             return callRuntime(
-              "conditional",
+              "_if",
               getScopeAccessorLiteral(nodeRef),
               ...rendererIdentifiers.reverse(),
             );

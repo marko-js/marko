@@ -1,16 +1,16 @@
-// size: 201 (min) 142 (brotli)
-const $expr_bar_$fooChange_effect = _$.effect(
+// size: 193 (min) 160 (brotli)
+const $bar__OR__fooChange__script = _._script(
     "a1",
     ($scope, { 3: bar, 6: $fooChange }) =>
-      _$.on($scope[0], "click", function () {
+      _._on($scope[0], "click", function () {
         $fooChange(bar + 1);
       }),
   ),
-  $expr_bar_$fooChange = _$.intersection(7, $expr_bar_$fooChange_effect),
-  $bar = _$.state(3, ($scope, bar) => {
-    (_$.data($scope[2], bar), $expr_bar_$fooChange($scope));
+  $bar__OR__fooChange = _._or(7, $bar__OR__fooChange__script),
+  $bar = _._let(3, ($scope, bar) => {
+    (_._text($scope[2], bar), $bar__OR__fooChange($scope));
   });
-(_$.register("a0", function ($scope) {
+(_._resume("a0", function ($scope) {
   return function (v) {
     $bar($scope, v);
   };

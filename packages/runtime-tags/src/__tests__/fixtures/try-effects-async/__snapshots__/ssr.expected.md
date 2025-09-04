@@ -1,6 +1,6 @@
 # Write
 ```html
-  <button>inc</button><!--M_*1 #button/0--><div></div><!--M_*1 #div/1--><!--M_[2--><!--M_!^b--><!--M_!^c-->LOADING...<!--M_!c--><!--M_!b--><!--M_]1 #text/2--><style M_>t{display:none}</style><t M_=c><!--M_#d--></t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ConditionalScope:#text/2":_.b={"ClosureSignalIndex:clickCount":0,"#BranchAccessor":"#text/2"},clickCount:0,"ClosureScopes:clickCount":_.d=new Set},_.b],_.b._=_.a,_.b["#CatchContent"]=_._["__tests__/template.marko_3_renderer"](_.a),_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_renderer"](_.a),(_.d).add(_.b),_.c),"__tests__/template.marko_0_clickCount",1];REORDER_RUNTIME(M._);M._.j.c=_=>{_.push("__tests__/template.marko_1_clickCount",2)};M._.w()</script>
+  <button>inc</button><!--M_*1 #button/0--><div></div><!--M_*1 #div/1--><!--M_[2--><!--M_!^b--><!--M_!^c-->LOADING...<!--M_!c--><!--M_!b--><!--M_]1 #text/2--><style M_>t{display:none}</style><t M_=c><!--M_#d--></t><script>WALKER_RUNTIME("M")("_");M._.r=[_=>(_.c=[0,_.a={"ConditionalScope:#text/2":_.b={"ClosureSignalIndex:clickCount":0,"#BranchAccessor":"#text/2"},clickCount:0,"ClosureScopes:clickCount":_.d=new Set},_.b],_.b._=_.a,_.b["#CatchContent"]=_._["__tests__/template.marko_3_content"](_.a),_.b["#PlaceholderContent"]=_._["__tests__/template.marko_2_content"](_.a),(_.d).add(_.b),_.c),"__tests__/template.marko_0_clickCount",1];REORDER_RUNTIME(M._);M._.j.c=_=>{_.push("__tests__/template.marko_1_clickCount",2)};M._.w()</script>
 ```
 
 # Write
@@ -45,9 +45,9 @@
           clickCount: 0,
           "ClosureScopes:clickCount": _.d = new Set
         }, _.b], _.b._ = _.a, _.b["#CatchContent"] = _._[
-          "__tests__/template.marko_3_renderer"
+          "__tests__/template.marko_3_content"
           ](_.a), _.b["#PlaceholderContent"] = _._[
-          "__tests__/template.marko_2_renderer"
+          "__tests__/template.marko_2_content"
           ](_.a), (_.d).add(_.b), _.c),
         "__tests__/template.marko_0_clickCount",
         1

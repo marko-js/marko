@@ -11,27 +11,27 @@ import {
   ControlledType,
   type Scope,
 } from "../common/types";
-import { getAbortSignal } from "./abort-signal";
+import { $signal } from "./abort-signal";
 import { setConditionalRenderer } from "./control-flow";
 import {
-  controllable_detailsOrDialog_open,
-  controllable_detailsOrDialog_open_effect,
-  controllable_input_checked,
-  controllable_input_checked_effect,
-  controllable_input_checkedValue,
-  controllable_input_checkedValue_effect,
-  controllable_input_value,
-  controllable_input_value_effect,
-  controllable_select_value,
-  controllable_select_value_effect,
-  controllable_textarea_value,
+  _attr_details_or_dialog_open,
+  _attr_details_or_dialog_open_script,
+  _attr_input_checked,
+  _attr_input_checked_script,
+  _attr_input_checkedValue,
+  _attr_input_checkedValue_script,
+  _attr_input_value,
+  _attr_input_value_script,
+  _attr_select_value,
+  _attr_select_value_script,
+  _attr_textarea_value,
 } from "./controllable";
-import { on } from "./event";
+import { _on } from "./event";
 import { parseHTML } from "./parse-html";
 import { createAndSetupBranch, type Renderer } from "./renderer";
 import { subscribeToScopeSet } from "./signals";
 
-export function attr(element: Element, name: string, value: unknown) {
+export function _attr(element: Element, name: string, value: unknown) {
   setAttribute(element, name, normalizeAttrValue(value));
 }
 
@@ -50,38 +50,49 @@ export function setAttribute(
   }
 }
 
-export function classAttr(element: Element, value: unknown) {
+export function _attr_class(element: Element, value: unknown) {
   setAttribute(element, "class", classValue(value) || undefined);
 }
 
-export function classItems(element: Element, items: Record<string, unknown>) {
+export function _attr_class_items(
+  element: Element,
+  items: Record<string, unknown>,
+) {
   for (const key in items) {
-    classItem(element, key, items[key]);
+    _attr_class_item(element, key, items[key]);
   }
 }
 
-export function classItem(element: Element, name: string, value: unknown) {
+export function _attr_class_item(
+  element: Element,
+  name: string,
+  value: unknown,
+) {
   element.classList.toggle(name, !!value);
 }
 
-export function styleAttr(element: Element, value: unknown) {
+export function _attr_style(element: Element, value: unknown) {
   setAttribute(element, "style", styleValue(value) || undefined);
 }
 
-export function styleItems(
+export function _attr_style_items(
   element: HTMLElement,
   items: Record<string, unknown>,
 ) {
   for (const key in items) {
-    styleItem(element, key, items[key]);
+    _attr_style_item(element, key, items[key]);
   }
 }
 
-export function styleItem(element: HTMLElement, name: string, value: unknown) {
+export function _attr_style_item(
+  element: HTMLElement,
+  name: string,
+  value: unknown,
+) {
   element.style.setProperty(name, value || value === 0 ? value + "" : "");
 }
 
-export function data(node: Text | Comment, value: unknown) {
+export function _text(node: Text | Comment, value: unknown) {
   const normalizedValue = normalizeString(value);
   // TODO: benchmark if it is actually faster to check data first
   if (node.data !== normalizedValue) {
@@ -89,7 +100,7 @@ export function data(node: Text | Comment, value: unknown) {
   }
 }
 
-export function textContent(node: ParentNode, value: unknown) {
+export function _text_content(node: ParentNode, value: unknown) {
   const normalizedValue = normalizeString(value);
   // TODO: benchmark if it is actually faster to check data first
   if (node.textContent !== normalizedValue) {
@@ -97,7 +108,7 @@ export function textContent(node: ParentNode, value: unknown) {
   }
 }
 
-export function attrs(
+export function _attrs(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
@@ -115,13 +126,13 @@ export function attrs(
   attrsInternal(scope, nodeAccessor, nextAttrs);
 }
 
-export function attrsAndContent(
+export function _attrs_content(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
 ) {
-  attrs(scope, nodeAccessor, nextAttrs);
-  insertContent(scope, nodeAccessor, nextAttrs?.content);
+  _attrs(scope, nodeAccessor, nextAttrs);
+  _attr_content(scope, nodeAccessor, nextAttrs?.content);
 }
 
 function hasAttrAlias(
@@ -136,7 +147,7 @@ function hasAttrAlias(
   );
 }
 
-export function partialAttrs(
+export function _attrs_partial(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
@@ -159,14 +170,14 @@ export function partialAttrs(
   attrsInternal(scope, nodeAccessor, partial);
 }
 
-export function partialAttrsAndContent(
+export function _attrs_partial_content(
   scope: Scope,
   nodeAccessor: Accessor,
   nextAttrs: Record<string, unknown>,
   skip: Record<string, 1>,
 ) {
-  partialAttrs(scope, nodeAccessor, nextAttrs, skip);
-  insertContent(scope, nodeAccessor, nextAttrs?.content);
+  _attrs_partial(scope, nodeAccessor, nextAttrs, skip);
+  _attr_content(scope, nodeAccessor, nextAttrs?.content);
 }
 
 function attrsInternal(
@@ -180,7 +191,7 @@ function attrsInternal(
   switch (el.tagName) {
     case "INPUT":
       if ("checked" in nextAttrs || "checkedChange" in nextAttrs) {
-        controllable_input_checked(
+        _attr_input_checked(
           scope,
           nodeAccessor,
           nextAttrs.checked,
@@ -190,7 +201,7 @@ function attrsInternal(
         "checkedValue" in nextAttrs ||
         "checkedValueChange" in nextAttrs
       ) {
-        controllable_input_checkedValue(
+        _attr_input_checkedValue(
           scope,
           nodeAccessor,
           nextAttrs.checkedValue,
@@ -198,7 +209,7 @@ function attrsInternal(
           nextAttrs.value,
         );
       } else if ("value" in nextAttrs || "valueChange" in nextAttrs) {
-        controllable_input_value(
+        _attr_input_value(
           scope,
           nodeAccessor,
           nextAttrs.value,
@@ -211,7 +222,7 @@ function attrsInternal(
       break;
     case "SELECT":
       if ("value" in nextAttrs || "valueChange" in nextAttrs) {
-        controllable_select_value(
+        _attr_select_value(
           scope,
           nodeAccessor,
           nextAttrs.value,
@@ -222,7 +233,7 @@ function attrsInternal(
       break;
     case "TEXTAREA":
       if ("value" in nextAttrs || "valueChange" in nextAttrs) {
-        controllable_textarea_value(
+        _attr_textarea_value(
           scope,
           nodeAccessor,
           nextAttrs.value,
@@ -234,7 +245,7 @@ function attrsInternal(
     case "DETAILS":
     case "DIALOG":
       if ("open" in nextAttrs || "openChange" in nextAttrs) {
-        controllable_detailsOrDialog_open(
+        _attr_details_or_dialog_open(
           scope,
           nodeAccessor,
           nextAttrs.open,
@@ -250,10 +261,10 @@ function attrsInternal(
     const value = nextAttrs[name];
     switch (name) {
       case "class":
-        classAttr(el, value);
+        _attr_class(el, value);
         break;
       case "style":
-        styleAttr(el, value);
+        _attr_style(el, value);
         break;
       default: {
         if (isEventHandler(name)) {
@@ -262,7 +273,7 @@ function attrsInternal(
         } else if (
           !(skip?.test(name) || (name === "content" && el.tagName !== "META"))
         ) {
-          attr(el, name, value);
+          _attr(el, name, value);
         }
         break;
       }
@@ -270,7 +281,7 @@ function attrsInternal(
   }
 }
 
-export function insertContent(
+export function _attr_content(
   scope: Scope,
   nodeAccessor: Accessor,
   value: unknown,
@@ -289,7 +300,7 @@ export function insertContent(
   }
 }
 
-export function attrsEvents(scope: Scope, nodeAccessor: Accessor) {
+export function _attrs_script(scope: Scope, nodeAccessor: Accessor) {
   const el = scope[nodeAccessor] as Element;
   const events = scope[AccessorPrefix.EventAttributes + nodeAccessor] as Record<
     string,
@@ -298,28 +309,28 @@ export function attrsEvents(scope: Scope, nodeAccessor: Accessor) {
 
   switch (scope[AccessorPrefix.ControlledType + nodeAccessor]) {
     case ControlledType.InputChecked:
-      controllable_input_checked_effect(scope, nodeAccessor);
+      _attr_input_checked_script(scope, nodeAccessor);
       break;
     case ControlledType.InputCheckedValue:
-      controllable_input_checkedValue_effect(scope, nodeAccessor);
+      _attr_input_checkedValue_script(scope, nodeAccessor);
       break;
     case ControlledType.InputValue:
-      controllable_input_value_effect(scope, nodeAccessor);
+      _attr_input_value_script(scope, nodeAccessor);
       break;
     case ControlledType.SelectValue:
-      controllable_select_value_effect(scope, nodeAccessor);
+      _attr_select_value_script(scope, nodeAccessor);
       break;
     case ControlledType.DetailsOrDialogOpen:
-      controllable_detailsOrDialog_open_effect(scope, nodeAccessor);
+      _attr_details_or_dialog_open_script(scope, nodeAccessor);
       break;
   }
 
   for (const name in events) {
-    on(el, name as any, events[name] as any);
+    _on(el, name as any, events[name] as any);
   }
 }
 
-export function html(scope: Scope, value: unknown, accessor: Accessor) {
+export function _html(scope: Scope, value: unknown, accessor: Accessor) {
   const firstChild = scope[accessor] as ChildNode;
   const parentNode = firstChild.parentNode!;
   const lastChild = (scope[
@@ -354,26 +365,6 @@ export function normalizeClientRender(value: any) {
   }
 }
 
-export function props(scope: Scope, nodeIndex: number, index: number) {
-  const nextProps = scope[index] as Record<string, unknown>;
-  const prevProps = scope[index + "-"] as Record<string, unknown> | undefined;
-  const node = scope[nodeIndex] as Node;
-
-  if (prevProps) {
-    for (const name in prevProps) {
-      if (!(name in nextProps)) {
-        (node as any)[name] = undefined;
-      }
-    }
-  }
-  // https://jsperf.com/object-keys-vs-for-in-with-closure/194
-  for (const name in nextProps) {
-    (node as any)[name] = nextProps[name];
-  }
-
-  scope[index + "-"] = nextProps;
-}
-
 export function normalizeAttrValue(value: unknown) {
   if (value || value === 0) {
     return value === true ? "" : value + "";
@@ -383,7 +374,7 @@ export function normalizeAttrValue(value: unknown) {
 function normalizeString(value: unknown) {
   return value || value === 0 ? value + "" : "\u200d";
 }
-export function lifecycle(
+export function _lifecycle(
   scope: Scope,
   index: string | number,
   thisObj: Record<string, unknown> & {
@@ -399,10 +390,8 @@ export function lifecycle(
   } else {
     scope[index] = thisObj;
     thisObj.onMount?.();
-    getAbortSignal(
-      scope,
-      AccessorPrefix.LifecycleAbortController + index,
-    ).onabort = () => thisObj.onDestroy?.();
+    $signal(scope, AccessorPrefix.LifecycleAbortController + index).onabort =
+      () => thisObj.onDestroy?.();
   }
 }
 

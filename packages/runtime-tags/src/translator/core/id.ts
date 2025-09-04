@@ -68,8 +68,8 @@ export default {
     exit(tag) {
       const { node } = tag;
       const id = isOutputHTML()
-        ? callRuntime("nextTagId")
-        : callRuntime("nextTagId", scopeIdentifier);
+        ? callRuntime("_id")
+        : callRuntime("_id", scopeIdentifier);
       const [valueAttr] = tag.node.attributes;
 
       if (isOutputHTML()) {

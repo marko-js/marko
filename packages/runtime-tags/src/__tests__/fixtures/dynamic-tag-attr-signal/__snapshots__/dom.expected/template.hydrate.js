@@ -1,10 +1,10 @@
-// size: 139 (min) 128 (brotli)
-const $className_effect = _$.effect("a0", ($scope, { 2: className }) =>
-    _$.on($scope[1], "click", function () {
+// size: 142 (min) 119 (brotli)
+const $className__script = _._script("a0", ($scope, { 2: className }) =>
+    _._on($scope[1], "click", function () {
       $className($scope, (className = "A" === className ? "B" : "A"));
     }),
   ),
-  $className = _$.state(2, ($scope, className) => {
-    (_$.classAttr($scope[0], className), $className_effect($scope));
+  $className = _._let(2, ($scope, className) => {
+    (_._attr_class($scope[0], className), $className__script($scope));
   });
 init();

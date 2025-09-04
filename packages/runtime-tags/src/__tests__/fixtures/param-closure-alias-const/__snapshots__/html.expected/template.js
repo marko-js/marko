@@ -1,12 +1,12 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
-  _$.forOf(["foo"], foo => {
-    const $scope1_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
+  _.forOf(["foo"], foo => {
+    const $scope1_id = _._scope_id();
     if (true) {
-      const $scope2_id = _$.nextScopeId();
+      const $scope2_id = _._scope_id();
       const baz = foo;
-      _$.write(_$.escapeXML(baz));
+      _._html(_._escape(baz));
     }
   });
 });

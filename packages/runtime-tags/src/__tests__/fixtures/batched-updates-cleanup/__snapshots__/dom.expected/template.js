@@ -1,23 +1,23 @@
 export const $template = "<button></button><!><!>";
 export const $walks = /* get, over(1), replace, over(2) */" b%c";
-import * as _$ from "@marko/runtime-tags/debug/dom";
-const $message$if$content = /* @__PURE__ */_$.conditionalClosure("message", "#text/1", 0, ($scope, message) => _$.data($scope["#text/0"], message));
-const $setup$if$content = $message$if$content;
-const $if_content = /* @__PURE__ */_$.createRenderer("<span> </span>", /* next(1), get, out(1) */"D l", $setup$if$content);
-const $if = /* @__PURE__ */_$.conditional("#text/1", $if_content);
-const $show_effect = _$.effect("__tests__/template.marko_0_show", ($scope, {
+import * as _ from "@marko/runtime-tags/debug/dom";
+const $if_content__message = /* @__PURE__ */_._if_closure("message", "#text/1", 0, ($scope, message) => _._text($scope["#text/0"], message));
+const $if_content__setup = $if_content__message;
+const $if_content = /* @__PURE__ */_._content_branch("<span> </span>", /* next(1), get, out(1) */"D l", $if_content__setup);
+const $if = /* @__PURE__ */_._if("#text/1", $if_content);
+const $show__script = _._script("__tests__/template.marko_0_show", ($scope, {
   show
-}) => _$.on($scope["#button/0"], "click", function () {
+}) => _._on($scope["#button/0"], "click", function () {
   $message($scope, "bye");
   $show($scope, show = !show);
 }));
-const $show = /* @__PURE__ */_$.state("show/2", ($scope, show) => {
+const $show = /* @__PURE__ */_._let("show/2", ($scope, show) => {
   $if($scope, show ? 0 : 1);
-  $show_effect($scope);
+  $show__script($scope);
 });
-const $message = /* @__PURE__ */_$.state("message/3", $message$if$content);
+const $message = /* @__PURE__ */_._let("message/3", $if_content__message);
 export function $setup($scope) {
   $show($scope, true);
   $message($scope, "hi");
 }
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

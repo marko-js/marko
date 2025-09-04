@@ -1,15 +1,15 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", (input, $serialize) => {
-  const $scope0_id = _$.nextScopeId();
-  _$.write("<button>");
-  _$.resumeConditional(() => {
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", (input, $serialize) => {
+  const $scope0_id = _._scope_id();
+  _._html("<button>");
+  _._if(() => {
     if (input.show) {
-      const $scope1_id = _$.nextScopeId();
-      _$.write("<span id=count>0</span>");
-      _$.serializeGuard($serialize, /* input.show */0) && _$.writeScope($scope1_id, {}, "__tests__/template.marko", "2:4");
+      const $scope1_id = _._scope_id();
+      _._html("<span id=count>0</span>");
+      _._serialize_guard($serialize, /* input.show */0) && _._scope($scope1_id, {}, "__tests__/template.marko", "2:4");
       return 0;
     }
-  }, $scope0_id, "#button/0", _$.serializeGuard($serialize, /* input.show */0), 1, "</button>", 1);
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0");
-  _$.writeScope($scope0_id, {}, "__tests__/template.marko", 0);
+  }, $scope0_id, "#button/0", _._serialize_guard($serialize, /* input.show */0), 1, "</button>", 1);
+  _._script($scope0_id, "__tests__/template.marko_0");
+  _._scope($scope0_id, {}, "__tests__/template.marko", 0);
 });

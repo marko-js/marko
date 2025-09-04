@@ -1,6 +1,6 @@
-// size: 216 (min) 138 (brotli)
-const $clickCount_effect = _$.effect("a0", ($scope, { 4: clickCount }) =>
-    _$.on($scope[0], "click", function () {
+// size: 218 (min) 148 (brotli)
+const $clickCount__script = _._script("a0", ($scope, { 4: clickCount }) =>
+    _._on($scope[0], "click", function () {
       const last = $lastCount(
         $scope,
         ($clickCount($scope, ++clickCount), clickCount - 1),
@@ -8,13 +8,11 @@ const $clickCount_effect = _$.effect("a0", ($scope, { 4: clickCount }) =>
       $lastCount2($scope, last);
     }),
   ),
-  $clickCount = _$.state(4, ($scope, clickCount) => {
-    (_$.data($scope[1], clickCount), $clickCount_effect($scope));
+  $clickCount = _._let(4, ($scope, clickCount) => {
+    (_._text($scope[1], clickCount), $clickCount__script($scope));
   }),
-  $lastCount = _$.state(5, ($scope, lastCount) =>
-    _$.data($scope[2], lastCount),
-  ),
-  $lastCount2 = _$.state(6, ($scope, lastCount2) =>
-    _$.data($scope[3], lastCount2),
+  $lastCount = _._let(5, ($scope, lastCount) => _._text($scope[2], lastCount)),
+  $lastCount2 = _._let(6, ($scope, lastCount2) =>
+    _._text($scope[3], lastCount2),
   );
 init();

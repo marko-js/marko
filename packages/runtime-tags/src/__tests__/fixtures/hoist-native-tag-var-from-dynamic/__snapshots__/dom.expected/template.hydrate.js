@@ -1,32 +1,32 @@
-// size: 745 (min) 347 (brotli)
-const $dynamicTag = _$.dynamicTag(0),
-  $dynamicTag2 = _$.dynamicTag(1),
-  $input_content = _$.value(4, ($scope, input_content) => {
+// size: 751 (min) 332 (brotli)
+const $dynamicTag = _._dynamic_tag(0),
+  $dynamicTag2 = _._dynamic_tag(1),
+  $input_content = _._const(4, ($scope, input_content) => {
     ($dynamicTag($scope, input_content), $dynamicTag2($scope, input_content));
   }),
-  $get$hoisted_el = _$.hoist("j0", "a4");
-_$.registerContent("b0", "<p></p>", " b", 0, 0, "a4");
-const $get$hoisted_el2 = _$.register("b2", _$.hoist("j0", "a3"));
-_$.register("b3", _$.hoist("j0", "a3", "a2"));
-const $child_content2 = _$.createContent("b1", "<div></div>", " b", 0, 0, "a3"),
-  $hoisted_el2$inputshowChildnull$content_effect = _$.effect(
+  $get$hoisted_el = _._hoist("j0", "a4");
+_._content_resume("b0", "<p></p>", " b", 0, 0, "a4");
+const $get$hoisted_el2 = _._resume("b2", _._hoist("j0", "a3"));
+_._resume("b3", _._hoist("j0", "a3", "a2"));
+const $child_content2 = _._content("b1", "<div></div>", " b", 0, 0, "a3"),
+  $inputshowChildnull_content__$hoisted_el__script = _._script(
     "b5",
     ({ 1: $hoisted_el2 }) => {
       for (const element of 1) element().classList.add("inner");
     },
   ),
-  $hoisted_el2$inputshowChildnull$content = _$.value(
+  $inputshowChildnull_content__$hoisted_el = _._const(
     1,
-    $hoisted_el2$inputshowChildnull$content_effect,
+    $inputshowChildnull_content__$hoisted_el__script,
   );
-(_$.registerContent(
+(_._content_resume(
   "b4",
   "<!><!><!><!><!><!>",
   "b/b%b%c&b",
   ($scope) => {
     ($scope[0],
       $input_content($scope[0], $child_content2($scope)),
-      $hoisted_el2$inputshowChildnull$content(
+      $inputshowChildnull_content__$hoisted_el(
         $scope,
         $get$hoisted_el2($scope),
       ));
@@ -34,14 +34,14 @@ const $child_content2 = _$.createContent("b1", "<div></div>", " b", 0, 0, "a3"),
   0,
   "a2",
 ),
-  _$.register("b7", _$.hoist("j0", "a1")),
-  _$.effect("b8", ({ 7: $hoisted_el3 }) => {
+  _._resume("b7", _._hoist("j0", "a1")),
+  _._script("b8", ({ 7: $hoisted_el3 }) => {
     for (const element of 7) element().classList.add("outer");
   }),
-  _$.effect("b9", ({ 6: $hoisted_el }) => {
+  _._script("b9", ({ 6: $hoisted_el }) => {
     for (const element of 6) element().innerHTML = "Hoist from custom tag";
   }),
-  _$.effect("b10", ($scope) => {
+  _._script("b10", ($scope) => {
     {
       const element = $get$hoisted_el($scope)();
       element && (element.innerHTML = "Hoist from dynamic tag");

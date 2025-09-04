@@ -31,9 +31,9 @@
       M._.r = [_ =&gt; (_.c = [0, 1,
         {
           "ConditionalScope:#text/3": _.b = {},
-          "ConditionalRenderer:#text/3": "__tests__/template.marko_1_renderer",
+          "ConditionalRenderer:#text/3": "__tests__/template.marko_1_content",
           input_content: _._[
-            "__tests__/template.marko_1_renderer"
+            "__tests__/template.marko_1_content"
             ](_.a = {}),
           x: 1,
           y: 10
@@ -84,9 +84,9 @@ container.querySelector("button").click();
       M._.r = [_ =&gt; (_.c = [0, 1,
         {
           "ConditionalScope:#text/3": _.b = {},
-          "ConditionalRenderer:#text/3": "__tests__/template.marko_1_renderer",
+          "ConditionalRenderer:#text/3": "__tests__/template.marko_1_content",
           input_content: _._[
-            "__tests__/template.marko_1_renderer"
+            "__tests__/template.marko_1_content"
             ](_.a = {}),
           x: 1,
           y: 10
@@ -144,9 +144,9 @@ container.querySelector("button").click();
       M._.r = [_ =&gt; (_.c = [0, 1,
         {
           "ConditionalScope:#text/3": _.b = {},
-          "ConditionalRenderer:#text/3": "__tests__/template.marko_1_renderer",
+          "ConditionalRenderer:#text/3": "__tests__/template.marko_1_content",
           input_content: _._[
-            "__tests__/template.marko_1_renderer"
+            "__tests__/template.marko_1_content"
             ](_.a = {}),
           x: 1,
           y: 10
@@ -204,9 +204,9 @@ container.querySelector("button").click();
       M._.r = [_ =&gt; (_.c = [0, 1,
         {
           "ConditionalScope:#text/3": _.b = {},
-          "ConditionalRenderer:#text/3": "__tests__/template.marko_1_renderer",
+          "ConditionalRenderer:#text/3": "__tests__/template.marko_1_content",
           input_content: _._[
-            "__tests__/template.marko_1_renderer"
+            "__tests__/template.marko_1_content"
             ](_.a = {}),
           x: 1,
           y: 10

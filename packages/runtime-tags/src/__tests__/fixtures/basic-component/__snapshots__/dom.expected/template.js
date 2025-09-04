@@ -4,5 +4,5 @@ import { $setup as _counter, $template as _counter_template, $walks as _counter_
 export function $setup($scope) {
   _counter($scope["#childScope/0"]);
 }
-import * as _$ from "@marko/runtime-tags/debug/dom";
-export default /* @__PURE__ */_$.createTemplate("__tests__/template.marko", $template, $walks, $setup);
+import * as _ from "@marko/runtime-tags/debug/dom";
+export default /* @__PURE__ */_._template("__tests__/template.marko", $template, $walks, $setup);

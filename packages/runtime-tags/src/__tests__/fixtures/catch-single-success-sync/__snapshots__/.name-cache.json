@@ -1,8 +1,8 @@
 {
   "vars": {
     "props": {
-      "$_$": "t",
-      "$$params2$catch$content": "a"
+      "$_": "t",
+      "$$catch_content__$params": "o"
     }
   }
 }

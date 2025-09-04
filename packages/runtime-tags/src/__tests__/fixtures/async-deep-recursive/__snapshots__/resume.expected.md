@@ -43,7 +43,7 @@
           "#BranchAccessor": "#text/1"
         }
       }, _.b], _.b["#PlaceholderContent"] = _._[
-        "__tests__/tags/recurse.marko_4_renderer"
+        "__tests__/tags/recurse.marko_4_content"
         ](_.a), _.c), _ =&gt; (_.f = [1,
       {
         input_level: 3
@@ -52,7 +52,7 @@
           "#BranchAccessor": "#text/1"
         }
       }, _.e], _.e["#PlaceholderContent"] = _._[
-        "__tests__/tags/recurse.marko_4_renderer"
+        "__tests__/tags/recurse.marko_4_content"
         ](_.d), _.f)];
       REORDER_RUNTIME(M._);
       M._.w()
@@ -66,7 +66,7 @@
           "#BranchAccessor": "#text/1"
         }
       }, _.h], _.h["#PlaceholderContent"] = _._[
-        "__tests__/tags/recurse.marko_4_renderer"
+        "__tests__/tags/recurse.marko_4_content"
         ](_.g), _.i), _ =&gt; (_.l = [1,
       {
         input_level: 1
@@ -75,7 +75,7 @@
           "#BranchAccessor": "#text/1"
         }
       }, _.k], _.k["#PlaceholderContent"] = _._[
-        "__tests__/tags/recurse.marko_4_renderer"
+        "__tests__/tags/recurse.marko_4_content"
         ](_.j), _.l));
       M._.w()
     </script>

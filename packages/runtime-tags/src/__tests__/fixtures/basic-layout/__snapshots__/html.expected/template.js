@@ -1,23 +1,23 @@
-import * as _$ from "@marko/runtime-tags/debug/html";
+import * as _ from "@marko/runtime-tags/debug/html";
 import _layout from "./tags/layout.marko";
-export default _$.createTemplate("__tests__/template.marko", (input, $serialize) => {
-  const $scope0_id = _$.nextScopeId();
-  const $name_closures = new Set();
+export default _._template("__tests__/template.marko", (input, $serialize) => {
+  const $scope0_id = _._scope_id();
+  const $name__closures = new Set();
   const {
     name
   } = input;
   _layout({
-    content: _$.createContent("__tests__/template.marko_1_renderer", () => {
-      const $scope1_id = _$.nextScopeId();
-      _$.write(`<h1>Hello ${_$.commentSeparator(_$.serializeGuard($serialize, /* name */0))}${_$.escapeXML(name)}${_$.markResumeNode($scope1_id, "#text/0", _$.serializeGuard($serialize, /* name */0))}</h1>`);
-      _$.serializeGuard($serialize, /* name */0) && _$.writeSubscribe($name_closures, _$.writeScope($scope1_id, {
-        _: _$.ensureScopeWithId($scope0_id),
-        "ClosureSignalIndex:name": _$.serializeIf($serialize, /* input.name */0) && 0
+    content: _._content("__tests__/template.marko_1_content", () => {
+      const $scope1_id = _._scope_id();
+      _._html(`<h1>Hello ${_._sep(_._serialize_guard($serialize, /* name */0))}${_._escape(name)}${_._el_resume($scope1_id, "#text/0", _._serialize_guard($serialize, /* name */0))}</h1>`);
+      _._serialize_guard($serialize, /* name */0) && _._subscribe($name__closures, _._scope($scope1_id, {
+        _: _._scope_with_id($scope0_id),
+        "ClosureSignalIndex:name": _._serialize_if($serialize, /* input.name */0) && 0
       }, "__tests__/template.marko", "2:2"));
-      _$.resumeClosestBranch($scope1_id);
+      _._resume_branch($scope1_id);
     })
   });
-  _$.serializeGuard($serialize, /* name */0) && _$.writeScope($scope0_id, {
-    "ClosureScopes:name": _$.serializeIf($serialize, /* input.name */0) && $name_closures
+  _._serialize_guard($serialize, /* name */0) && _._scope($scope0_id, {
+    "ClosureScopes:name": _._serialize_if($serialize, /* input.name */0) && $name__closures
   }, "__tests__/template.marko", 0);
 });

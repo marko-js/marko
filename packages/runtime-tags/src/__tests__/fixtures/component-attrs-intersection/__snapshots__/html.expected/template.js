@@ -1,19 +1,19 @@
 import _displayIntersection from "./tags/display-intersection.marko";
-import * as _$ from "@marko/runtime-tags/debug/html";
-export default _$.createTemplate("__tests__/template.marko", input => {
-  const $scope0_id = _$.nextScopeId();
+import * as _ from "@marko/runtime-tags/debug/html";
+export default _._template("__tests__/template.marko", input => {
+  const $scope0_id = _._scope_id();
   let count = 0;
-  const $childScope = _$.peekNextScopeId();
+  const $childScope = _._peek_scope_id();
   _displayIntersection({
     value: count
   }, 1);
-  _$.write(`<button></button>${_$.markResumeNode($scope0_id, "#button/1")}`);
-  _$.writeEffect($scope0_id, "__tests__/template.marko_0_count");
-  _$.writeScope($scope0_id, {
+  _._html(`<button></button>${_._el_resume($scope0_id, "#button/1")}`);
+  _._script($scope0_id, "__tests__/template.marko_0_count");
+  _._scope($scope0_id, {
     count,
-    "#childScope/0": _$.writeExistingScope($childScope)
+    "#childScope/0": _._existing_scope($childScope)
   }, "__tests__/template.marko", 0, {
     count: "1:6"
   });
-  _$.resumeClosestBranch($scope0_id);
+  _._resume_branch($scope0_id);
 });
